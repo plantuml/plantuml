@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -39,6 +41,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -77,7 +80,7 @@ public class Boundary extends AbstractTextBlock {
 		path.moveTo(0, radius);
 		path.lineTo(left, radius);
 		path.setDeltaShadow(symbolContext.getDeltaShadow());
-		ug.apply(new UTranslate(x, y)).draw(path);
+		ug.apply(new UTranslate(x, y)).apply(new UChangeBackColor(null)).draw(path);
 
 		// final ULine line1 = new ULine(0, radius * 2);
 		// line1.setDeltaShadow(deltaShadow);

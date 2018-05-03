@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,15 +28,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4749 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
+
+import java.util.Collection;
 
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -60,7 +64,7 @@ public interface ILeaf extends IEntity {
 
 	public String getGeneric();
 
-	public void muteToType(LeafType newType, USymbol newSymbol);
+	public boolean muteToType(LeafType newType, USymbol newSymbol);
 
 	public void setGeneric(String generic);
 
@@ -70,9 +74,9 @@ public interface ILeaf extends IEntity {
 
 	public Neighborhood getNeighborhood();
 
-	public boolean hasPort();
+	public Collection<String> getPortShortNames();
 
-	public void setHasPort(boolean hasPort);
+	public void addPortShortName(String portShortName);
 
 	public void setVisibilityModifier(VisibilityModifier visibility);
 

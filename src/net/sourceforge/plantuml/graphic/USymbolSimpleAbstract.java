@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8066 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -41,7 +43,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 abstract class USymbolSimpleAbstract extends USymbol {
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		if (stereotype == null) {
 			throw new IllegalArgumentException();
 		}
@@ -77,8 +81,9 @@ abstract class USymbolSimpleAbstract extends USymbol {
 
 	abstract protected TextBlock getDrawing(final SymbolContext symbolContext);
 
-	public TextBlock asBig(final TextBlock title, TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4169 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -51,8 +53,7 @@ public class ComponentTextGroupingHeader extends AbstractComponentText {
 	private final Display stringsToDisplay;
 	private final FileFormat fileFormat;
 
-	public ComponentTextGroupingHeader(ComponentType type, Display stringsToDisplay,
-			FileFormat fileFormat) {
+	public ComponentTextGroupingHeader(ComponentType type, Display stringsToDisplay, FileFormat fileFormat) {
 		this.type = type;
 		this.stringsToDisplay = stringsToDisplay;
 		this.fileFormat = fileFormat;
@@ -90,7 +91,7 @@ public class ComponentTextGroupingHeader extends AbstractComponentText {
 			charArea.drawHLine('~', height - 1, 1, width - 1);
 		}
 
-		if (stringsToDisplay.size() > 1) {
+		if (stringsToDisplay.size() > 1 && stringsToDisplay.get(1) != null) {
 			final String comment = stringsToDisplay.get(1).toString();
 			charArea.drawStringLR(comment, text.length() + 7, 1);
 
@@ -102,7 +103,7 @@ public class ComponentTextGroupingHeader extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWidth(stringsToDisplay) + 2;
+		return StringUtils.getWcWidth(stringsToDisplay) + 2;
 	}
 
 }

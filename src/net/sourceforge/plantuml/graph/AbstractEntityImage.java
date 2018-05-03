@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19885 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -49,12 +51,12 @@ abstract class AbstractEntityImage {
 	private final IEntity entity;
 
 	final private HtmlColor red = HtmlColorUtils.MY_RED;
-	
+
 	final private HtmlColor yellow = HtmlColorUtils.MY_YELLOW;
 	private final HtmlColor yellowNote = HtmlColorUtils.COL_FBFB77;
 
-	final private UFont font14 = new UFont("SansSerif", Font.PLAIN, 14);
-	final private UFont font17 = new UFont("Courier", Font.BOLD, 17);
+	final private UFont font14 = UFont.sansSerif(14);
+	final private UFont font17 = UFont.courier(17).bold();
 	final private HtmlColor green = HtmlColorUtils.COL_ADD1B2;
 	final private HtmlColor violet = HtmlColorUtils.COL_B4A7E5;
 	final private HtmlColor blue = HtmlColorUtils.COL_A9DCDF;

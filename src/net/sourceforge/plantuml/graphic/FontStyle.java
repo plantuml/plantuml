@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -44,16 +46,22 @@ public enum FontStyle {
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
 
 	public UFont mutateFont(UFont font) {
+		if (this == PLAIN) {
+			return font.withStyle(Font.PLAIN);
+		}
 		if (this == ITALIC) {
-			return font.deriveStyle(font.getStyle() | Font.ITALIC);
+			return font.withStyle(font.getStyle() | Font.ITALIC);
 		}
 		if (this == BOLD) {
-			return font.deriveStyle(font.getStyle() | Font.BOLD);
+			return font.withStyle(font.getStyle() | Font.BOLD);
 		}
 		return font;
 	}
 
 	public String getActivationPattern() {
+		if (this == PLAIN) {
+			return "\\<[pP][lL][aA][iI][nN]\\>";
+		}
 		if (this == ITALIC) {
 			return "\\<[iI]\\>";
 		}
@@ -67,14 +75,15 @@ public enum FontStyle {
 			return "\\<[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 		}
 		if (this == BACKCOLOR) {
-			return "\\<[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
+			// return "\\<[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
+			return "\\<[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\>";
 		}
 		if (this == STRIKE) {
 			return "\\<(?:s|S|strike|STRIKE|del|DEL)(?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 		}
 		return null;
 	}
-	
+
 	public boolean canHaveExtendedColor() {
 		if (this == UNDERLINE) {
 			return true;
@@ -90,7 +99,6 @@ public enum FontStyle {
 		}
 		return false;
 	}
-
 
 	public String getCreoleSyntax() {
 		if (this == ITALIC) {
@@ -124,6 +132,9 @@ public enum FontStyle {
 	}
 
 	public String getDeactivationPattern() {
+		if (this == PLAIN) {
+			return "\\</[pP][lL][aA][iI][nN]\\>";
+		}
 		if (this == ITALIC) {
 			return "\\</[iI]\\>";
 		}
@@ -147,15 +158,11 @@ public enum FontStyle {
 
 	public static FontStyle getStyle(String line) {
 		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {
-			if (style == FontStyle.PLAIN) {
-				continue;
-			}
 			if (line.matches(style.getActivationPattern()) || line.matches(style.getDeactivationPattern())) {
 				return style;
 			}
 		}
 		throw new IllegalArgumentException(line);
 	}
-
 
 }

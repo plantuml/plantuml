@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -52,6 +54,30 @@ public class UFont {
 		this(new Font(fontFamily, fontStyle, fontSize), fontFamily);
 	}
 
+	public static UFont serif(int size) {
+		return new UFont("Serif", Font.PLAIN, size);
+	}
+
+	public static UFont sansSerif(int size) {
+		return new UFont("SansSerif", Font.PLAIN, size);
+	}
+
+	public static UFont courier(int size) {
+		return new UFont("Courier", Font.PLAIN, size);
+	}
+
+	public static UFont byDefault(int size) {
+		return sansSerif(12);
+	}
+
+	public UFont goTikz(int delta) {
+		return new UFont(new Font("Serif", getStyle(), getSize() + delta), "Serif");
+	}
+
+	public static UFont monospaced(int size) {
+		return new UFont("Monospaced", Font.PLAIN, size);
+	}
+
 	private UFont(Font font, String family) {
 		this.font = font;
 		this.family = family;
@@ -71,15 +97,23 @@ public class UFont {
 			return this;
 		}
 		final float current = font.getSize2D();
-		return deriveSize((float) (current * scale));
+		return withSize((float) (current * scale));
 	}
 
-	public UFont deriveSize(float size) {
+	public UFont withSize(float size) {
 		return new UFont(font.deriveFont(size), family);
 	}
 
-	public UFont deriveStyle(int style) {
+	public UFont withStyle(int style) {
 		return new UFont(font.deriveFont(style), family);
+	}
+
+	public UFont bold() {
+		return withStyle(Font.BOLD);
+	}
+
+	public UFont italic() {
+		return withStyle(Font.ITALIC);
 	}
 
 	public int getStyle() {

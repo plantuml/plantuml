@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,13 +28,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -42,16 +44,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
-import net.sourceforge.plantuml.CharSequence2Impl;
+import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
@@ -60,15 +63,19 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
-class PreprocessorInclude implements ReadLine {
+public class PreprocessorInclude implements ReadLine {
 
+	private static final Pattern2 includeDefPattern = MyPattern.cmpile("^[%s]*!includedef[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern2 includePatternStdlib = MyPattern.cmpile("^[%s]*!include[%s]+(\\<[^%g]+\\>)$");
 	private static final Pattern2 includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
 
 	private final ReadLine reader2;
 	private final String charset;
 	private final Defines defines;
+	private final List<String> config;
+	private final DefinitionsContainer definitionsContainer;
 
 	private int numLine = 0;
 
@@ -78,19 +85,24 @@ class PreprocessorInclude implements ReadLine {
 	private final Set<FileWithSuffix> filesUsedCurrent;
 	private final Set<FileWithSuffix> filesUsedGlobal;
 
-	public PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir) {
-		this(reader, defines, charset, newCurrentDir, new HashSet<FileWithSuffix>(), new HashSet<FileWithSuffix>());
+	public PreprocessorInclude(List<String> config, ReadLine reader, Defines defines, String charset,
+			File newCurrentDir, DefinitionsContainer definitionsContainer) {
+		this(config, reader, defines, charset, newCurrentDir, new HashSet<FileWithSuffix>(),
+				new HashSet<FileWithSuffix>(), definitionsContainer);
 	}
 
 	public Set<FileWithSuffix> getFilesUsedGlobal() {
 		return Collections.unmodifiableSet(filesUsedGlobal);
 	}
 
-	private PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir,
-			Set<FileWithSuffix> filesUsedCurrent, Set<FileWithSuffix> filesUsedGlobal) {
+	private PreprocessorInclude(List<String> config, ReadLine reader, Defines defines, String charset,
+			File newCurrentDir, Set<FileWithSuffix> filesUsedCurrent, Set<FileWithSuffix> filesUsedGlobal,
+			DefinitionsContainer definitionsContainer) {
+		this.config = config;
 		this.defines = defines;
 		this.charset = charset;
-		this.reader2 = reader;
+		this.reader2 = new ReadLineQuoteComment(reader);
+		this.definitionsContainer = definitionsContainer;
 		this.filesUsedCurrent = filesUsedCurrent;
 		this.filesUsedGlobal = filesUsedGlobal;
 		if (newCurrentDir == null) {
@@ -109,6 +121,11 @@ class PreprocessorInclude implements ReadLine {
 
 	public CharSequence2 readLine() throws IOException {
 		final CharSequence2 result = readLineInternal();
+		if (result != null && StartUtils.isArobaseStartDiagram(result) && config.size() > 0) {
+			final List<String> empty = new ArrayList<String>();
+			included = new PreprocessorInclude(empty, new ReadLineList(config, result.getLocation()), defines, charset,
+					null, filesUsedCurrent, filesUsedGlobal, definitionsContainer);
+		}
 		if (result != null && (StartUtils.isArobaseEndDiagram(result) || StartUtils.isArobaseStartDiagram(result))) {
 			// http://plantuml.sourceforge.net/qa/?qa=3389/error-generating-when-same-file-included-different-diagram
 			filesUsedCurrent.clear();
@@ -135,21 +152,30 @@ class PreprocessorInclude implements ReadLine {
 			assert included == null;
 			final Matcher2 m1 = includePattern.matcher(s);
 			if (m1.find()) {
-				return manageFileInclude(m1, s.getLocation(), false);
+				return manageFileInclude(s, m1, false);
 			}
 			final Matcher2 m2 = includeManyPattern.matcher(s);
 			if (m2.find()) {
-				return manageFileInclude(m2, s.getLocation(), true);
+				return manageFileInclude(s, m2, true);
+			}
+			final Matcher2 m3 = includeDefPattern.matcher(s);
+			if (m3.find()) {
+				return manageDefinitionInclude(s, m3);
+			}
+		} else {
+			final Matcher2 m1 = includePatternStdlib.matcher(s);
+			if (m1.find()) {
+				return manageFileInclude(s, m1, false);
 			}
 		}
 		final Matcher2 mUrl = includeURLPattern.matcher(s);
-		if (mUrl.find()) {
-			return manageUrlInclude(mUrl, s.getLocation());
+		if (s.getPreprocessorError() == null && mUrl.find()) {
+			return manageUrlInclude(s, mUrl);
 		}
 		return s;
 	}
 
-	private CharSequence2 manageUrlInclude(Matcher2 m, LineLocation lineLocation) throws IOException {
+	private CharSequence2 manageUrlInclude(CharSequence2 s, Matcher2 m) throws IOException {
 		String urlString = m.group(1);
 		urlString = defines.applyDefines(urlString).get(0);
 		//
@@ -161,17 +187,34 @@ class PreprocessorInclude implements ReadLine {
 		}
 		try {
 			final URL url = new URL(urlString);
-			included = new PreprocessorInclude(getReaderInclude(url, suf, lineLocation), defines, charset, null,
-					filesUsedCurrent, filesUsedGlobal);
+			included = new PreprocessorInclude(config, getReaderInclude(s, url, suf), defines, charset, null,
+					filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		} catch (MalformedURLException e) {
-			return CharSequence2Impl.errorPreprocessor("Cannot include url " + urlString, lineLocation);
+			return s.withErrorPreprocessor("Cannot include url " + urlString);
 		}
 		return this.readLine();
 	}
 
-	private CharSequence2 manageFileInclude(Matcher2 matcher, LineLocation lineLocation, boolean allowMany) throws IOException {
+	private CharSequence2 manageDefinitionInclude(CharSequence2 s, Matcher2 matcher) throws IOException {
+		final String definitionName = matcher.group(1);
+		final List<? extends CharSequence> definition = definitionsContainer.getDefinition(definitionName);
+		included = new PreprocessorInclude(config, new ReadLineList(definition, s.getLocation()), defines, charset,
+				null, filesUsedCurrent, filesUsedGlobal, definitionsContainer);
+		return this.readLine();
+	}
+
+	private CharSequence2 manageFileInclude(CharSequence2 s, Matcher2 matcher, boolean allowMany) throws IOException {
 		String fileName = matcher.group(1);
 		fileName = defines.applyDefines(fileName).get(0);
+		if (fileName.startsWith("<") && fileName.endsWith(">")) {
+			final ReadLine strlibReader = getReaderStdlibInclude(s, fileName.substring(1, fileName.length() - 1));
+			if (strlibReader == null) {
+				return s.withErrorPreprocessor("Cannot include " + fileName);
+			}
+			included = new PreprocessorInclude(config, strlibReader, defines, charset, null, filesUsedCurrent,
+					filesUsedGlobal, definitionsContainer);
+			return this.readLine();
+		}
 		final int idx = fileName.lastIndexOf('!');
 		String suf = null;
 		if (idx != -1) {
@@ -180,17 +223,16 @@ class PreprocessorInclude implements ReadLine {
 		}
 		final File f = FileSystem.getInstance().getFile(withEnvironmentVariable(fileName));
 		final FileWithSuffix f2 = new FileWithSuffix(f, suf);
-		if (f.exists() == false) {
-			return CharSequence2Impl.errorPreprocessor("Cannot include " + f.getAbsolutePath(), lineLocation);
+		if (f.exists() == false || f.isDirectory()) {
+			return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
 		} else if (allowMany == false && filesUsedCurrent.contains(f2)) {
 			// return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
 			return this.readLine();
-		} else {
-			filesUsedCurrent.add(f2);
-			filesUsedGlobal.add(f2);
-			included = new PreprocessorInclude(getReaderInclude(f, suf, lineLocation), defines, charset,
-					f.getParentFile(), filesUsedCurrent, filesUsedGlobal);
 		}
+		filesUsedCurrent.add(f2);
+		filesUsedGlobal.add(f2);
+		included = new PreprocessorInclude(config, getReaderInclude(s, f, suf), defines, charset, f.getParentFile(),
+				filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		return this.readLine();
 	}
 
@@ -211,7 +253,7 @@ class PreprocessorInclude implements ReadLine {
 		return s;
 	}
 
-	private static String getenv(String var) {
+	public static String getenv(String var) {
 		final String env = System.getProperty(var);
 		if (StringUtils.isNotEmpty(env)) {
 			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);
@@ -223,29 +265,86 @@ class PreprocessorInclude implements ReadLine {
 		return null;
 	}
 
-	private ReadLine getReaderInclude(final File f, String suf, LineLocation parent) throws IOException {
-		if (StartDiagramExtractReader.containsStartDiagram(f, charset)) {
-			return new StartDiagramExtractReader(f, suf, charset);
-		}
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new ReadLineReader(new FileReader(f), f.getAbsolutePath(), parent);
-		}
-		Log.info("Using charset " + charset);
-		return new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(), parent);
+	private InputStream getStdlibInputStream(String filename) {
+		return StdlibOld.getResourceAsStream(filename);
 	}
 
-	private ReadLine getReaderInclude(final URL url, String suf, LineLocation parent) throws IOException {
-		if (StartDiagramExtractReader.containsStartDiagram(url, charset)) {
-			return new StartDiagramExtractReader(url, suf, charset);
+	private InputStream getStdlibInputStreamOld(String filename) {
+		if (filename.endsWith(".puml") == false) {
+			filename = filename + ".puml";
 		}
-		final InputStream is = url.openStream();
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new ReadLineReader(new InputStreamReader(is), url.toString(), parent);
+		InputStream is = PreprocessorInclude.class.getResourceAsStream("/stdlib/" + filename);
+		if (is == null) {
+			is = PreprocessorInclude.class.getResourceAsStream("/stdlib/" + filename.toLowerCase());
 		}
-		Log.info("Using charset " + charset);
-		return new ReadLineReader(new InputStreamReader(is, charset), url.toString(), parent);
+		return is;
+	}
+
+	private ReadLine getReaderStdlibInclude(CharSequence2 s, String filename) {
+		InputStream is = getStdlibInputStream(filename);
+		if (is == null) {
+			return null;
+		}
+		try {
+			if (StartDiagramExtractReader.containsStartDiagram(s, is)) {
+				is = getStdlibInputStream(filename);
+				return new StartDiagramExtractReader(s, is);
+			}
+			is = getStdlibInputStream(filename);
+			if (is == null) {
+				return null;
+			}
+			return new ReadLineReader(new InputStreamReader(is), filename);
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
+		}
+	}
+
+	// private ReadLine getReaderStdlibInclude2(CharSequence2 s, String filename) {
+	// InputStream is = DummyEmptyStdlibFile.class.getResourceAsStream(filename);
+	// if (is == null) {
+	// is = DummyEmptyStdlibFile.class.getResourceAsStream(filename.toLowerCase());
+	// }
+	// if (is == null) {
+	// return null;
+	// }
+	// return new ReadLineReader(new InputStreamReader(is), filename);
+	// }
+
+	private ReadLine getReaderInclude(CharSequence2 s, final File f, String suf) {
+		try {
+			if (StartDiagramExtractReader.containsStartDiagram(s, f, charset)) {
+				return new StartDiagramExtractReader(s, f, suf, charset);
+			}
+			if (charset == null) {
+				Log.info("Using default charset");
+				return new ReadLineReader(new FileReader(f), f.getAbsolutePath(), s.getLocation());
+			}
+			Log.info("Using charset " + charset);
+			return new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
+					s.getLocation());
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
+		}
+
+	}
+
+	private ReadLine getReaderInclude(CharSequence2 s, final URL url, String suf) {
+		try {
+			if (StartDiagramExtractReader.containsStartDiagram(s, url, charset)) {
+				return new StartDiagramExtractReader(s, url, suf, charset);
+			}
+			final InputStream is = url.openStream();
+			if (charset == null) {
+				Log.info("Using default charset");
+				return new ReadLineReader(new InputStreamReader(is), url.toString(), s.getLocation());
+			}
+			Log.info("Using charset " + charset);
+			return new ReadLineReader(new InputStreamReader(is, charset), url.toString(), s.getLocation());
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
+		}
+
 	}
 
 	public int getLineNumber() {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20196 $
  *
  */
 package net.sourceforge.plantuml.version;
@@ -38,15 +40,30 @@ import java.util.Date;
 
 public class Version {
 
+	private static final int MAJOR_SEPARATOR = 1000000;
+
 	public static int version() {
-		return 8046;
+		return 1201804;
+	}
+
+	public static int versionPatched() {
+		if (beta() != 0) {
+			return version() + 1;
+		}
+		return version();
 	}
 
 	public static String versionString() {
 		if (beta() != 0) {
-			return "" + (version() + 1) + "beta" + beta();
+			return dotted(version() + 1) + "beta" + beta();
 		}
-		return "" + version();
+		return dotted(version());
+	}
+
+	private static String dotted(int nb) {
+		final String minor = "" + nb % MAJOR_SEPARATOR;
+		final String major = "" + nb / MAJOR_SEPARATOR;
+		return major + "." + minor.substring(0, 4) + "." + minor.substring(4);
 	}
 
 	public static String versionString(int size) {
@@ -57,26 +74,26 @@ public class Version {
 		return sb.toString();
 	}
 
-	private static int beta() {
+	public static int beta() {
 		final int beta = 0;
 		return beta;
 	}
 
-	private static String int2shortString(int v) {
-		return Integer.toString(v % 36, 36);
+	public static String etag() {
+		return Integer.toString(version() % MAJOR_SEPARATOR - 201670, 36) + Integer.toString(beta(), 36);
 	}
 
 	public static String turningId() {
-		return int2shortString(version()) + int2shortString(beta());
+		return etag();
 	}
 
 	public static long compileTime() {
-		return 1469468610162L;
+		return 1525191499228L;
 	}
 
 	public static String compileTimeString() {
 		if (beta() != 0) {
-			return versionString();
+			return "Unknown compile time";
 		}
 		return new Date(Version.compileTime()).toString();
 	}

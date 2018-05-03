@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4041 $
  *
  */
 package net.sourceforge.plantuml.logo;
@@ -45,7 +47,6 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -59,7 +60,9 @@ public class PSystemLogo extends AbstractPSystem {
 	public PSystemLogo() {
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		final int width = 640;
 		final int height = 480;
 		final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, Color.WHITE);
@@ -77,7 +80,6 @@ public class PSystemLogo extends AbstractPSystem {
 		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
 
-
 	// private GraphicStrings getGraphicStrings() throws IOException {
 	// final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
 	// final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
@@ -88,12 +90,11 @@ public class PSystemLogo extends AbstractPSystem {
 	// }
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Logo)", getClass());
+		return new DiagramDescription("(Logo)");
 	}
 
 	public void doCommandLine(String line) {
 		lines.add(line);
 	}
-
 
 }

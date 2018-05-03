@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8515 $
  *
  */
 package net.sourceforge.plantuml.flashcode;
@@ -38,13 +40,13 @@ import java.util.Hashtable;
 
 import net.sourceforge.plantuml.Log;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import ext.plantuml.com.google.zxing.BarcodeFormat;
+import ext.plantuml.com.google.zxing.EncodeHintType;
+import ext.plantuml.com.google.zxing.WriterException;
+import ext.plantuml.com.google.zxing.client.j2se.MatrixToImageWriter;
+import ext.plantuml.com.google.zxing.common.BitMatrix;
+import ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
+import ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 

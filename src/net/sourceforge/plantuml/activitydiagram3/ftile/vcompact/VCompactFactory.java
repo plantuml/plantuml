@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
@@ -42,6 +44,8 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
+import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -51,6 +55,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleEnd;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleSpot;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStop;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateIn;
@@ -87,6 +92,12 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileCircleStop(skinParam(), color, swimlane);
 	}
 
+	public Ftile spot(Swimlane swimlane, String spot) {
+		// final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityBackground);
+		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
+		return new FtileCircleSpot(skinParam(), swimlane, spot, font);
+	}
+
 	public Ftile end(Swimlane swimlane) {
 		final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityEnd);
 		return new FtileCircleEnd(skinParam(), color, swimlane);
@@ -112,13 +123,14 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileAssemblySimple(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
-			HtmlColor color, LinkRendering backRepeatLinkRendering) {
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test,
+			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward,
+			boolean noOut) {
 		return repeat;
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HtmlColor color) {
+			LinkRendering afterEndwhile, HtmlColor color, Instruction specialOut) {
 		return whileBlock;
 	}
 
@@ -132,15 +144,11 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileForkInner(ftiles);
 	}
 
-	public Ftile createFork(Swimlane swimlane, List<Ftile> all) {
+	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
 		return new FtileForkInner(all);
 	}
 
-	public Ftile createSplit(List<Ftile> all) {
-		return new FtileForkInner(all);
-	}
-
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote,
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
 			HtmlColor borderColor) {
 		return list;
 	}
@@ -162,5 +170,4 @@ public class VCompactFactory implements FtileFactory {
 	public ISkinParam skinParam() {
 		return skinParam;
 	}
-
 }

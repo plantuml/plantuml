@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -40,6 +42,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -69,8 +72,9 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			cluster.drawU(ug, new UStroke(1.5), dotData.getUmlDiagramType(), dotData.getSkinParam());
 		}
 
-		final HtmlColor color = rose.getHtmlColor(dotData.getSkinParam(), getArrowColorParam(), null);
-		
+		final HtmlColor color = HtmlColorUtils.noGradient(rose.getHtmlColor(dotData.getSkinParam(),
+				getArrowColorParam(), null));
+
 		for (Shape shape : dotStringFactory.getBibliotekon().allShapes()) {
 			final double minX = shape.getMinX();
 			final double minY = shape.getMinY();
@@ -92,15 +96,15 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 
 	private ColorParam getArrowColorParam() {
 		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS) {
-			return ColorParam.classArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			return ColorParam.objectArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
-			return ColorParam.usecaseArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			return ColorParam.activityArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
-			return ColorParam.stateArrow;
+			return ColorParam.arrow;
 		}
 		throw new IllegalStateException();
 	}
@@ -117,8 +121,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {

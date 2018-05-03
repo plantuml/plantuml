@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,22 +28,24 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4636 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 
 class Step1MessageExo extends Step1Abstract {
@@ -56,9 +63,11 @@ class Step1MessageExo extends Step1Abstract {
 						message.getLabelNumbered()), getLivingParticipantBox(), message.getType(), message.getUrl(),
 				message.isShortArrow(), message.getArrowConfiguration());
 
-		if (message.getNote() != null) {
-			final ISkinParam skinParam = message.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
-			setNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, null, skinParam, message.getNote()));
+		final List<NoteOnMessage> noteOnMessages = message.getNoteOnMessages();
+		for (NoteOnMessage noteOnMessage : noteOnMessages) {
+			final ISkinParam skinParam = noteOnMessage.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
+			addNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, null, skinParam,
+					noteOnMessage.getDisplay()));
 			// throw new UnsupportedOperationException();
 		}
 
@@ -106,12 +115,16 @@ class Step1MessageExo extends Step1Abstract {
 	}
 
 	private Arrow createArrow() {
-		if (getMessage().getNote() == null) {
+		if (getMessage().getNoteOnMessages().size() == 0) {
 			return messageArrow;
 		}
-		final NoteBox toto = createNoteBox(getStringBounder(), messageArrow, getNote(), getMessage().getNotePosition(),
-				getMessage().getUrlNote());
-		return new ArrowAndNoteBox(getStringBounder(), messageArrow, toto);
+		final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+		for (int i = 0; i < getNotes().size(); i++) {
+			final Component note = getNotes().get(i);
+			final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+			noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));
+		}
+		return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBoxes);
 	}
 
 	private ArrowConfiguration getArrowType(MessageExo m) {

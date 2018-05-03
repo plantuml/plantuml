@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10930 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -38,153 +40,224 @@ import java.util.List;
 
 public class QuoteUtils {
 
-	private static final List<String> quotes = Arrays
-			.asList(//
-			"He's dead, Jim.", //
-					"By Grabthar's hammer, by the sons of Worvan, you shall be avenged.", //
-					"Roads? Where we're going, we don't need roads.", //
-					"The time is out of joint.", //
-					"C'est curieux chez les marins ce besoin de faire des phrases.", //
-					"I'm talking about the other Peter, the one on the other side.", //
-					"May the Force be with you!", //
-					"Never give up, never surrender...", //
-					"Hasta la vista, baby.", //
-					"Hey, Doc, we better back up. We don't have enough road to get up to 88.", //
-					"Greetings, Professor Falken. Shall we play a game?", //
-					"I can't change the law of physics!", //
-					"A strange game. The only winning move is not to play.", //
-					"I'm the Gatekeeper, are you the Keymaster?", //
-					"I am the Master Control Program. No one User wrote me.", //
-					"Life? Don't talk to me about life.", //
-					"I always thought something was fundamentally wrong with the universe.", //
-					"A robot may not injure a human being or, through inaction, allow a human being to come to harm.", //
-					"Surrender may be our only option.", //
-					"Six by nine. Forty two.", //
-					"It's life, Jim, but not as we know it.", //
-					"Don't Panic!", //
-					"What do you mean? An African or European swallow?", //
-					"You forgot to say please...", //
-					"You have died of dysentery.", //
-					"Wouldn't you prefer a nice game of chess?", //
-					"When you have eliminated the impossible, whatever remains, however improbable, must be the truth.", //
-					"I know now why you cry. But it's something I can never do.", //
-					"Resistance is futile. You will be assimilated.", //
-					"Anything different is good.", //
-					"Cracked by Aldo Reset and Laurent Rueil.", //
-					"I'm both. I'm a celebrity in an emergency.", //
-					"Do you know this great great polish actor, Joseph Tura?", //
-					"To infinity and beyond!", //
-					"Space: the final frontier...", //
-					"Sur mon billet, tenez, y a ecrit Saint-Lazare, c'est mes yeux ou quoi ?", //
-					"The boy is important. He has to live.", //
-					"Once upon a time in a galaxy far, far away...", //
-					"And you know there's a long long way ahead of you...", //
-					"An allergy to oxygen? Elm blight?", //
-					"But alors you are French!", //
-					"N'ai-je donc tant vecu que pour cette infamie?", //
-					"Something is rotten in the State of Denmark.", //
-					"Hey, what do you want? Miracles?", //
-					"1.21 gigawatts! 1.21 gigawatts. Great Scott! ", //
-					"What the hell is a gigawatt?", //
-					"I need a vacation.", //
-					"On devrait jamais quitter Montauban.", //
-					"My force is a platform that you can climb on...", //
-					"There's something weird, and it don't look good...", //
-					"Et rien vraiment ne change mais tout est different", //
-					"Beam me up, Scotty.", //
-					"There is no spoon.", //
-					"Follow the white rabbit.", //
-					"Never send a human to do a machine's job.", //
-					"Guru meditation. Press left mouse button to continue.", //
-					"I don't think we're in Kansas anymore.", //
-					"Luke, I am your father.", //
-					"Blood, Sweat and Tears", //
-					"Houston, we have a problem.", //
-					"Boot failure, press any key to continue", //
-					"Big mistake!", //
-					"How many UML designers does it take to change a lightbulb ?", //
-					"Do you like movies about gladiators ?", //
-					"The spirit of learning is a lasting frontier.", //
-					"It is curious for sailors this need for making sentences.", //
-					"Hoping for the best, but expecting the worst", //
-					"The will to go on when I'm hurt deep inside.", //
-					"If it bleeds, we can kill it.", //
-					"Houston, I have a bad feeling about this mission.", //
-					"Mama always said life was like a box of chocolates. You never know what you're gonna get.", //
-					"By the way, is there anyone on board who knows how to fly a plane?", //
-					"Dave, this conversation can serve no purpose anymore. Goodbye.", //
-					"It can only be attributable to human error.", //
-					"Looks like I picked the wrong week to quit smoking.", //
-					"You humans act so strange. Everything you create is used to destroy.", //
-					"Where did you learn how to negotiate like that?", //
-					"Sir, are you classified as human?", //
-					"We're not gonna make it, are we?", //
-					"It's in your nature to destroy yourselves.", //
-					"The more contact I have with humans, the more I learn.", //
-					"Would it save you a lot of time if I just gave up and went mad now?", //
-					"Reality is frequently inaccurate.", //
-					"Don't believe anything you read on the net. Except this. Well, including this, I suppose.", //
-					"A cup of tea would restore my normality.", //
-					"Anything that thinks logically can be fooled by something else that thinks at least as logically as it does.", //
-					"In an infinite Universe anything can happen.", //
-					"Sometimes if you received an answer, the question might be taken away.", //
-					"Please call me Eddie if it will help you to relax.", //
-					"I don't believe it. Prove it to me and I still won't believe it.", //
-					"Totally mad, utter nonsense. But we'll do it because it's brilliant nonsense.", //
-					"This sentence is not true.", //
-					"I would rather die standing than live on my knees.", //
-					"You are being watched.", //
-					"Did you feed them after midnight?", //
-					"How do you explain school to higher intelligence?", //
-					"People sometimes make mistakes.", //
-					"Look, I don't have time for a conversation right now.", //
-					"All problems in computer science can be solved by another level of indirection", //
-					"...except for the problem of too many levels of indirection", //
-					"I know because I built it", //
-					"Even the smallest person can change the course of the future.", //
-					"If you are a friend, you speak the password, and the doors will open.", //
-					"You Shall Not Pass", //
-					"73.6% Of All Statistics Are Made Up", //
-					"We can neither confirm nor deny that this is crashing", //
-					"When the beating of your heart echoes the beating of the drums", //
-					"Never trust a computer you can't throw out a window", //
-					"Yeah, I'm calm. I'm a calm person. Is there some reason I shouldn't be calm?", //
-					"Everybody just stay calm. The situation is under control.", //
-					"Hippy, you think everything is a conspiracy.", //
-					"These guys are about as much fun as a tax audit.", //
-					"There is something down there! Something not us.", //
-					"I saw a glimpse of my future and everything's changed for me now.", //
-					"In space no one can hear you scream", //
-					"I can't lie to you about your chances, but... you have my sympathies.", //
-					"There is an explanation for this, you know.", //
-					"Bishop: I'm afraid I have some bad news.", //
-					"Do me a favour. Disconnect me. I could be reworked, but I'll never be top of the line again.", //
-					"Take it easy, don't push the little button on the joystick!", //
-					"I'm a very private person.", //
-					"To sculpt an elephant from a big block of marble, just knock away all the bits that don't look like an elephant.", //
-					"Who said you could talk to me? Have I got something on my face ?", //
-					"We've been through worst", //
-					"United we stand", //
-					"We shall never surrender", //
-					"Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.", //
-					"Humor: seventy-five percent. [Confirmed] Self destruct sequence in T minus 10, 9... ", //
-					"It's... complicated.", //
-					"Do not open until 1985", //
-					"I still mess up but I'll just start again", //
-					"I won't give up, no I won't give in; Till I reach the end; And then I'll start again", //
-					"I wanna try even though I could fail", //
-					"Sometimes we come last but we did our best", //
-					"If you see something, say something", //
-					"In theory there is no difference between theory and practice. But, in practice, there is.", //
-					"Daylight, I must wait for the sunrise. I must think of a new life. And I mustn't give in.", //
-					"If I cannot bring you comfort then at least I bring you hope", //
-					"We all must learn from small misfortune, count the blessings that are real", //
-					"Prepare Three Sealed Envelopes...", //
-					"You know that thing you just did? Don't do that", //
-					"It took me a long time to understand that if you want to do this job well you have to stay detached.", //
-					"Do you like your morning tea weak or strong ?", //
-					"Winter is coming" //
-			);
+	static private final List<String> quotes = Arrays
+			.asList("Ur'f qrnq, Wvz.",
+					"Ol Tenogune'f unzzre, ol gur fbaf bs Jbeina, lbh funyy or niratrq.",
+					"Ebnqf? Jurer jr'er tbvat, jr qba'g arrq ebnqf.",
+					"Gur gvzr vf bhg bs wbvag.",
+					"P'rfg phevrhk purm yrf znevaf pr orfbva qr snver qrf cuenfrf.",
+					"V'z gnyxvat nobhg gur bgure Crgre, gur bar ba gur bgure fvqr.",
+					"Znl gur Sbepr or jvgu lbh!",
+					"Arire tvir hc, arire fheeraqre...",
+					"Unfgn yn ivfgn, onol.",
+					"Url, Qbp, jr orggre onpx hc. Jr qba'g unir rabhtu ebnq gb trg hc gb 88.",
+					"Terrgvatf, Cebsrffbe Snyxra. Funyy jr cynl n tnzr?",
+					"V pna'g punatr gur ynj bs culfvpf!",
+					"N fgenatr tnzr. Gur bayl jvaavat zbir vf abg gb cynl.",
+					"V'z gur Tngrxrrcre, ner lbh gur Xrlznfgre?",
+					"V nz gur Znfgre Pbageby Cebtenz. Ab bar Hfre jebgr zr.",
+					"Yvsr? Qba'g gnyx gb zr nobhg yvsr.",
+					"V nyjnlf gubhtug fbzrguvat jnf shaqnzragnyyl jebat jvgu gur havirefr.",
+					"N ebobg znl abg vawher n uhzna orvat be, guebhtu vanpgvba, nyybj n uhzna orvat gb pbzr gb unez.",
+					"Fheeraqre znl or bhe bayl bcgvba.",
+					"Fvk ol avar. Sbegl gjb.",
+					"Vg'f yvsr, Wvz, ohg abg nf jr xabj vg.",
+					"Qba'g Cnavp!",
+					"Jung qb lbh zrna? Na Nsevpna be Rhebcrna fjnyybj?",
+					"V arrq lbhe obbgf lbhe pybgurf naq lbhe zbgbeplpyr",
+					"Lbh sbetbg gb fnl cyrnfr...",
+					"Lbh unir qvrq bs qlfragrel.",
+					"Jbhyqa'g lbh cersre n avpr tnzr bs purff?",
+					"Jura lbh unir ryvzvangrq gur vzcbffvoyr, jungrire erznvaf, ubjrire vzcebonoyr, zhfg or gur gehgu.",
+					"V xabj abj jul lbh pel. Ohg vg'f fbzrguvat V pna arire qb.",
+					"Erfvfgnapr vf shgvyr. Lbh jvyy or nffvzvyngrq.",
+					"Nalguvat qvssrerag vf tbbq.",
+					"Penpxrq ol Nyqb Erfrg naq Ynherag Ehrvy.",
+					"V'z obgu. V'z n pryroevgl va na rzretrapl.",
+					"Qb lbh xabj guvf terng terng cbyvfu npgbe, Wbfrcu Ghen?",
+					"Gb vasvavgl naq orlbaq!",
+					"Fcnpr: gur svany sebagvre...",
+					"Fhe zba ovyyrg, grarm, l n rpevg Fnvag-Ynmner, p'rfg zrf lrhk bh dhbv ?",
+					"Gur obl vf vzcbegnag. Ur unf gb yvir.",
+					"Bapr hcba n gvzr va n tnynkl sne, sne njnl...",
+					"Naq lbh xabj gurer'f n ybat ybat jnl nurnq bs lbh...",
+					"Na nyyretl gb bkltra? Ryz oyvtug?",
+					"Ohg nybef lbh ner Serapu!",
+					"A'nv-wr qbap gnag irph dhr cbhe prggr vasnzvr?",
+					"Fbzrguvat vf ebggra va gur Fgngr bs Qraznex.",
+					"Url, jung qb lbh jnag? Zvenpyrf?",
+					"1.21 tvtnjnggf! 1.21 tvtnjnggf. Terng Fpbgg! ",
+					"Jung gur uryy vf n tvtnjngg?",
+					"V arrq n inpngvba.",
+					"Ba qrienvg wnznvf dhvggre Zbagnhona.",
+					"Zl sbepr vf n cyngsbez gung lbh pna pyvzo ba...",
+					"Gurer'f fbzrguvat jrveq, naq vg qba'g ybbx tbbq...",
+					"Rg evra ienvzrag ar punatr znvf gbhg rfg qvssrerag",
+					"Ornz zr hc, Fpbggl.",
+					"Gurer vf ab fcbba.",
+					"Sbyybj gur juvgr enoovg.",
+					"Arire fraq n uhzna gb qb n znpuvar'f wbo.",
+					"Theh zrqvgngvba. Cerff yrsg zbhfr ohggba gb pbagvahr.",
+					"V qba'g guvax jr'er va Xnafnf nalzber.",
+					"Yhxr, V nz lbhe sngure.",
+					"Oybbq, Fjrng naq Grnef",
+					"Ubhfgba, jr unir n ceboyrz.",
+					"Xrlobneq snvyher, cerff nal xrl gb pbagvahr",
+					"Ovt zvfgnxr!",
+					"Ubj znal HZY qrfvtaref qbrf vg gnxr gb punatr n yvtugohyo ?",
+					"Qb lbh yvxr zbivrf nobhg tynqvngbef ?",
+					"Gur fcvevg bs yrneavat vf n ynfgvat sebagvre.",
+					"Vg vf phevbhf sbe fnvybef guvf arrq sbe znxvat fragraprf.",
+					"Ubcvat sbe gur orfg, ohg rkcrpgvat gur jbefg",
+					"Gur jvyy gb tb ba jura V'z uheg qrrc vafvqr.",
+					"Vs vg oyrrqf, jr pna xvyy vg.",
+					"Ubhfgba, V unir n onq srryvat nobhg guvf zvffvba.",
+					"Znzn nyjnlf fnvq yvsr jnf yvxr n obk bs pubpbyngrf. Lbh arire xabj jung lbh'er tbaan trg.",
+					"Ol gur jnl, vf gurer nalbar ba obneq jub xabjf ubj gb syl n cynar?",
+					"Qnir, guvf pbairefngvba pna freir ab checbfr nalzber. Tbbqolr.",
+					"Vg pna bayl or nggevohgnoyr gb uhzna reebe.",
+					"Ybbxf yvxr V cvpxrq gur jebat jrrx gb dhvg fzbxvat.",
+					"Lbh uhznaf npg fb fgenatr. Rirelguvat lbh perngr vf hfrq gb qrfgebl.",
+					"Jurer qvq lbh yrnea ubj gb artbgvngr yvxr gung?",
+					"Fve, ner lbh pynffvsvrq nf uhzna?",
+					"Jr'er abg tbaan znxr vg, ner jr?",
+					"Vg'f va lbhe angher gb qrfgebl lbhefryirf.",
+					"Gur zber pbagnpg V unir jvgu uhznaf, gur zber V yrnea.",
+					"Jbhyq vg fnir lbh n ybg bs gvzr vs V whfg tnir hc naq jrag znq abj?",
+					"Ernyvgl vf serdhragyl vanpphengr.",
+					"Qba'g oryvrir nalguvat lbh ernq ba gur arg. Rkprcg guvf. Jryy, vapyhqvat guvf, V fhccbfr.",
+					"N phc bs grn jbhyq erfgber zl abeznyvgl.",
+					"Nalguvat gung guvaxf ybtvpnyyl pna or sbbyrq ol fbzrguvat ryfr gung guvaxf ng yrnfg nf ybtvpnyyl nf vg qbrf.",
+					"Va na vasvavgr Havirefr nalguvat pna unccra.",
+					"Fbzrgvzrf vs lbh erprvirq na nafjre, gur dhrfgvba zvtug or gnxra njnl.",
+					"Cyrnfr pnyy zr Rqqvr vs vg jvyy uryc lbh gb erynk.",
+					"V qba'g oryvrir vg. Cebir vg gb zr naq V fgvyy jba'g oryvrir vg.",
+					"Gbgnyyl znq, hggre abafrafr. Ohg jr'yy qb vg orpnhfr vg'f oevyyvnag abafrafr.",
+					"Guvf fragrapr vf abg gehr.",
+					"V jbhyq engure qvr fgnaqvat guna yvir ba zl xarrf.",
+					"Lbh ner orvat jngpurq.",
+					"Qvq lbh srrq gurz nsgre zvqavtug?",
+					"Ubj qb lbh rkcynva fpubby gb uvture vagryyvtrapr?",
+					"Crbcyr fbzrgvzrf znxr zvfgnxrf.",
+					"Ybbx, V qba'g unir gvzr sbe n pbairefngvba evtug abj.",
+					"Nyy ceboyrzf va pbzchgre fpvrapr pna or fbyirq ol nabgure yriry bs vaqverpgvba",
+					"...rkprcg sbe gur ceboyrz bs gbb znal yriryf bs vaqverpgvba",
+					"V xabj orpnhfr V ohvyg vg",
+					"Rira gur fznyyrfg crefba pna punatr gur pbhefr bs gur shgher.",
+					"Vs lbh ner n sevraq, lbh fcrnx gur cnffjbeq, naq gur qbbef jvyy bcra.",
+					"Lbh Funyy Abg Cnff",
+					"73.6% Bs Nyy Fgngvfgvpf Ner Znqr Hc",
+					"Jr pna arvgure pbasvez abe qral gung guvf vf penfuvat",
+					"Jura gur orngvat bs lbhe urneg rpubrf gur orngvat bs gur qehzf",
+					"Arire gehfg n pbzchgre lbh pna'g guebj bhg n jvaqbj",
+					"Lrnu, V'z pnyz. V'z n pnyz crefba. Vf gurer fbzr ernfba V fubhyqa'g or pnyz?",
+					"Rirelobql whfg fgnl pnyz. Gur fvghngvba vf haqre pbageby.",
+					"Uvccl, lbh guvax rirelguvat vf n pbafcvenpl.",
+					"Gurfr thlf ner nobhg nf zhpu sha nf n gnk nhqvg.",
+					"Gurer vf fbzrguvat qbja gurer! Fbzrguvat abg hf.",
+					"V fnj n tyvzcfr bs zl shgher naq rirelguvat'f punatrq sbe zr abj.",
+					"Va fcnpr ab bar pna urne lbh fpernz",
+					"V pna'g yvr gb lbh nobhg lbhe punaprf, ohg... lbh unir zl flzcnguvrf.",
+					"Gurer vf na rkcynangvba sbe guvf, lbh xabj.",
+					"V'z nsenvq V unir fbzr onq arjf.",
+					"Qb zr n snibhe. Qvfpbaarpg zr. V pbhyq or erjbexrq, ohg V'yy arire or gbc bs gur yvar ntnva.",
+					"Gnxr vg rnfl, qba'g chfu gur yvggyr ohggba ba gur wblfgvpx!",
+					"V'z n irel cevingr crefba.",
+					"Gb fphycg na ryrcunag sebz n ovt oybpx bs zneoyr, whfg xabpx njnl nyy gur ovgf gung qba'g ybbx yvxr na ryrcunag.",
+					"Jub fnvq lbh pbhyq gnyx gb zr? Unir V tbg fbzrguvat ba zl snpr ?",
+					"Jr'ir orra guebhtu jbefg",
+					"Havgrq jr fgnaq",
+					"Jr funyy arire fheeraqre",
+					"Nofbyhgr ubarfgl vfa'g nyjnlf gur zbfg qvcybzngvp abe gur fnsrfg sbez bs pbzzhavpngvba jvgu rzbgvbany orvatf.",
+					"Vg'f... pbzcyvpngrq.",
+					"Qb abg bcra hagvy 1985",
+					"V fgvyy zrff hc ohg V'yy whfg fgneg ntnva",
+					"V jba'g tvir hc, ab V jba'g tvir va; Gvyy V ernpu gur raq; Naq gura V'yy fgneg ntnva",
+					"V jnaan gel rira gubhtu V pbhyq snvy",
+					"Fbzrgvzrf jr pbzr ynfg ohg jr qvq bhe orfg",
+					"Vs lbh frr fbzrguvat, fnl fbzrguvat",
+					"Va gurbel gurer vf ab qvssrerapr orgjrra gurbel naq cenpgvpr. Ohg, va cenpgvpr, gurer vf.",
+					"Vs V pnaabg oevat lbh pbzsbeg gura ng yrnfg V oevat lbh ubcr",
+					"Jr nyy zhfg yrnea sebz fznyy zvfsbeghar, pbhag gur oyrffvatf gung ner erny",
+					"Cercner Guerr Frnyrq Rairybcrf...",
+					"Lbh xabj gung guvat lbh whfg qvq? Qba'g qb gung",
+					"Vg gbbx zr n ybat gvzr gb haqrefgnaq gung vs lbh jnag gb qb guvf wbo jryy lbh unir gb fgnl qrgnpurq.",
+					"Qb lbh yvxr lbhe zbeavat grn jrnx be fgebat ?", "Jvagre vf pbzvat",
+					"Jung sbbyf gurfr zbegnyf or!", "Fbzrguvat jvpxrq guvf jnl pbzrf.",
+					"V guvax V trg vg, jung jnf vg? Cbxre Avtug? Onpurybe Cnegl?",
+					"Vg'f nyevtug gb or fpnerq. Erzrzore, gurer vf ab pbhentr jvgubhg srne.",
+					"Guebhtu ernqvarff naq qvfpvcyvar jr ner znfgref bs bhe sngr.",
+					"Jvgu terng cbjre pbzrf terng erfcbafvovyvgl",
+					"Vs n znpuvar pna yrnea gur inyhr bs uhzna yvsr, znlor jr pna gbb ?",
+					"Bayl tbvat sbejneq 'pnhfr jr pna'g svaq erirefr.",
+					"Jr'er abg tbaan fvg va fvyrapr, jr'er abg tbaan yvir jvgu srne",
+					"Oba, qnaf qvk zvahgrf wr abhf pbafvqrer pbzzr qrsvavgvirzrag creqhf.",
+					"Pn fren fherzrag ovra dhnaq pn fren svav.",
+					"Vg'f gur ynfg cvrpr bs gur chmmyr ohg lbh whfg pna'g znxr vg svg",
+					"Qbpgbe fnlf lbh'er pherq ohg lbh fgvyy srry gur cnva",
+					"Vf negvsvpvny vagryyvtrapr gur rknpg bccbfvgr bs angheny fghcvqvgl ?",
+					"Sbeprzrag, pn qrcraq, pn qrcnffr...",
+					"Gurer'f orra n cnggrea bs vafhobeqvangr orunivbe erpragyl.", "Ab. Jr ner abg na rssrpgvir grnz.",
+					"Bhe wbo vf abg gb erzrzore... erzrzore?",
+					"Guvf vf zvffvba pbageby. Ubj ner lbh nyy qbvat guvf ybiryl zbeavat?",
+					"Vs lbh pbhyq frr lbhe jubyr yvsr ynvq bhg va sebag bs lbh, jbhyq lbh punatr guvatf?",
+					"Vf guvf n aba-mreb-fhz tnzr?", "Abj gung'f n cebcre vagebqhpgvba.",
+					"Rirelguvat unf punatrq naq vg jba'g fgbc punatvat nalgvzr fbba.",
+					"Jung znxrf lbh qvssrerag znxrf lbh qnatrebhf", "Qviretrapr vf rkgerzryl qnatrebhf",
+					"V'z Qviretrag. Naq V pna'g or pbagebyyrq", "Znl gur bqqf or rire va lbhe snibe",
+					"Ab WninFpevcg senzrjbexf jrer perngrq qhevat gur jevgvat bs guvf zrffntr.",
+					"P'rfg cerffr-cherr dhv g'nf vagreebtr ?",
+					"Ybbx, nygreangvir snpgf ner abg snpgf. Gurl'er snyfrubbqf",
+					"Guvf vf abg n penfu, guvf vf zber bs na nygreangvir erfhyg.",
+					"Lbh yrnearq gb cebtenz va SBEGENA qvqa'g lbh?",
+					"Guvf oht vf n srngher nf qrfpevorq ol gur znexrgvat qrcnegzrag.",
+					"Abg rirelobql haqrefgnaqf gur uhzbe bs cebtenzzref.",
+					"Vs lbh yvir na beqvanel yvsr, nyy lbh'yy unir ner beqvanel fgbevrf.",
+					"Pbzr jvgu zr vs lbh jnag gb yvir", "Gh y'nf gebhir bh pryhv-yn ?",
+					"Qb lbh ernyyl guvax lbh unir n punapr ntnvafg hf, Ze. Pbjobl?",
+					"Nggragvba, jubrire lbh ner, guvf punaary vf erfreirq sbe rzretrapl pnyyf bayl.",
+					"Qbrf vg fbhaq yvxr V'z beqrevat n cvmmn? ", "Jr'er tbaan arrq fbzr zber SOV thlf, V thrff.",
+					"Trg ernql sbe ehfu ubhe",
+					"V unir gb jnea lbh, V'ir urneq eryngvbafuvcf onfrq ba vagrafr rkcrevraprf arire jbex.",
+					"Nalguvat ryfr ohg gur onfrzrag gung'yy xrrc guvf ryringbe sebz snyyvat?",
+					"Vf guvf grfgvat jurgure V'z n ercyvpnag be n yrfovna, Ze. Qrpxneq? ",
+					"V'ir qbar... dhrfgvbanoyr guvatf", "Jbhyq lbh... yvxr gb or hctenqrq?",
+					"Snhg erpbaanvger... p'rfg qh oehgny!",
+					"Fv ba oevpbynvg cyhf fbhirag, ba nhenvg zbvaf yn grgr nhk orgvfrf.",
+					"Wr invf yhv snver har beqbaanapr, rg har frirer...",
+					"Znvf vy pbaanvg cnf Enbhy, pr zrp! vy in nibve ha erirvy cravoyr.",
+					"W'nv ibhyh rger qvcybzngr n pnhfr qr ibhf gbhf, rivgre dhr yr fnat pbhyr.",
+					"Vtabenapr oevatf punbf, abg xabjyrqtr.", "Yrneavat vf nyjnlf n cnvashy cebprff.",
+					"V'z fbeel, ner lbh sebz gur cnfg ?", "Unir lbh gevrq gheavat vg bss naq ba ntnva ?",
+					"Vs lbh qba'g xabj jurer lbh ner tbvat nal ebnq pna gnxr lbh gurer",
+					"Xrrc pnyz naq cerff Pgey-Nyg-Qry", "Vs lbh glcr Tbbtyr vagb Tbbtyr, lbh pna oernx gur Vagrearg.",
+					"V unir cneg bs n cyna.", "V'z cerggl fher gur nafjre vf: V nz Tebbg.",
+					"Nalguvat gung pna cbffvoyl tb jebat, qbrf", "Cyhf pn engr, cyhf ba n qr punapr dhr pn znepur",
+					"Fb V thrff gur sbeghar gryyre'f evtug...", "Jura rirelguvat'f tbar jebat fbzrubj...",
+					"V qba'g jnag gb yvir ba guvf cynarg nalzber",
+					"Oba, p'rfg y'urher bh yrf fbhiravef fr enzrarag...",
+					"Fhpprff pbafvfgf bs tbvat sebz snvyher gb snvyher jvgubhg ybff bs raguhfvnfz",
+					"Vs lbh'er tbvat guebhtu uryy, xrrc tbvat",
+					"Jre xnzcsg, xnaa ireyvrera. Jre avpug xnzcsg, ung fpuba ireybera.",
+					"P'rfg nh cvrq qh zhe dhr y'ba ibvg yr zvrhk yr zhe.",
+					"Jr xabj ubj uhznaf jbex. Gurl ner nyy fb cerqvpgnoyr.",
+					"Gur qbtznf bs gur dhvrg cnfg ner vanqrdhngr gb gur fgbezl cerfrag",
+					"Ab jnl gb cerirag guvf, fnlf bayl angvba jurer guvf erthyneyl unccraf",
+					"L'n dhrydhrf dhrfgvbaf dhv erfgrag fbhf fvyrapr...",
+					"Vs gurer vf ab fbyhgvba, gurer vf ab ceboyrz",
+					"V unir zrzbevrf, ohg V pna'g gryy vs gurl'er erny.", "L n pbzzr ha tbhg nzre ra abhf",
+					"L n qrf fvyraprf dhv qvfrag ornhpbhc", "V frr lbh'ir unq fbzr qvfpvcyvanel ceboyrzf va gur cnfg.",
+					"Cercnengvba vf gur xrl gb fhpprffshy, vapbafcvphbhf gvzr geniry.",
+					"Vg'f arire gbb yngr gb or jub lbh zvtug unir orra.",
+					"Rg cbhe nyyre purm Zvpxrl vyf ibag fherzrag cnf pbafgehver har tner gbhf yrf 100 zrgerf",
+					"Nyy lbhe onfr ner orybat gb hf", "Znqr ba Rnegu ol uhznaf", "Jvaaref Qba'g Hfr Qehtf",
+					"Lbh xabj jung fhecevfrq zr gur zbfg? Vg jnfa'g zrrgvat gurz. Vg jnf zrrgvat lbh.",
+					"Va jne gurer ner ab jvaaref, bayl jvqbjf",
+					"Vs lbh guvax guvf Havirefr vf onq, lbh fubhyq frr fbzr bs gur bguref", "Cnp-Zna'f n onq thl?",
+					"Zl ernyvgl vf whfg qvssrerag guna lbhef",
+					"Uvfgbel vf n avtugzner sebz juvpu V nz gelvat gb njnxr",
+					"L'ra n dh'bag rffnlr, vyf bag rh qrf ceboyrzrf",
+					"Gb ree vf uhzna, ohg gb ernyyl sbhy guvatf hc erdhverf n pbzchgre.");
 
 	private QuoteUtils() {
 	}

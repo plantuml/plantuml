@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.jungle;
@@ -37,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
@@ -71,7 +74,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 
 	public static SheetBlock1 getTextBlock(final Display display) {
 		final Rose rose = new Rose();
-		final SkinParam skinParam = new SkinParam();
+		final SkinParam skinParam = SkinParam.create(null);
 		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
 		final UFont fontNote = skinParam.getFont(null, false, FontParam.NOTE);
 
@@ -79,7 +82,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 
 		final Sheet sheet9 = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(display);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet9, 0, 0);
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet9, LineBreakStrategy.NONE, 0);
 		return sheetBlock1;
 	}
 

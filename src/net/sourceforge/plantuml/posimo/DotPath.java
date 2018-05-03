@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.posimo;
@@ -43,9 +45,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
@@ -56,6 +58,7 @@ import net.sourceforge.plantuml.svek.ClusterPosition;
 import net.sourceforge.plantuml.svek.MinFinder;
 import net.sourceforge.plantuml.svek.PointAndAngle;
 import net.sourceforge.plantuml.svek.PointDirected;
+import net.sourceforge.plantuml.svek.SvgResult;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
@@ -64,16 +67,13 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 public class DotPath implements UShape, Moveable {
 
 	static class TriPoints {
-		public TriPoints(String p1, String p2, String p, double deltaY) {
-			final StringTokenizer st1 = new StringTokenizer(p1, ",");
-			x1 = Double.parseDouble(st1.nextToken());
-			y1 = Double.parseDouble(st1.nextToken()) + deltaY;
-			final StringTokenizer st2 = new StringTokenizer(p2, ",");
-			x2 = Double.parseDouble(st2.nextToken());
-			y2 = Double.parseDouble(st2.nextToken()) + deltaY;
-			final StringTokenizer st = new StringTokenizer(p, ",");
-			x = Double.parseDouble(st.nextToken());
-			y = Double.parseDouble(st.nextToken()) + deltaY;
+		public TriPoints(Point2D.Double p1, Point2D.Double p2, Point2D.Double p) {
+			x1 = p1.getX();
+			y1 = p1.getY();
+			x2 = p2.getX();
+			y2 = p2.getY();
+			x = p.getX();
+			y = p.getY();
 		}
 
 		private final double x1;
@@ -91,6 +91,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	private final List<CubicCurve2D.Double> beziers = new ArrayList<CubicCurve2D.Double>();
+	private String comment;
 
 	public DotPath() {
 		this(new ArrayList<CubicCurve2D.Double>());
@@ -126,28 +127,25 @@ public class DotPath implements UShape, Moveable {
 		return new Point2D.Double(x, y);
 	}
 
-	public DotPath(String init, double deltaY) {
-		if (isPathConsistent(init) == false) {
+	public DotPath(SvgResult fullSvg) {
+		if (isPathConsistent(fullSvg.getSvg()) == false) {
 			throw new IllegalArgumentException();
 		}
-		final int posC = init.indexOf("C");
+		final int posC = fullSvg.indexOf("C", 0);
 		if (posC == -1) {
 			throw new IllegalArgumentException();
 		}
-		final StringTokenizer st = new StringTokenizer(init.substring(1, posC), ",");
-		final double startX = Double.parseDouble(st.nextToken());
-		final double startY = Double.parseDouble(st.nextToken()) + deltaY;
+		final Point2D start = fullSvg.substring(1, posC).getNextPoint();
 
-		final StringTokenizer st2 = new StringTokenizer(init.substring(posC + 1), " ");
 		final List<TriPoints> triPoints = new ArrayList<TriPoints>();
-		while (st2.hasMoreTokens()) {
-			final String p1 = st2.nextToken();
-			final String p2 = st2.nextToken();
-			final String p = st2.nextToken();
-			triPoints.add(new TriPoints(p1, p2, p, deltaY));
+		for (Iterator<Point2D.Double> it = fullSvg.substring(posC + 1).getPoints(" ").iterator(); it.hasNext();) {
+			final Point2D.Double p1 = it.next();
+			final Point2D.Double p2 = it.next();
+			final Point2D.Double p = it.next();
+			triPoints.add(new TriPoints(p1, p2, p));
 		}
-		double x = startX;
-		double y = startY;
+		double x = start.getX();
+		double y = start.getY();
 		for (TriPoints p : triPoints) {
 			final CubicCurve2D.Double bezier = new CubicCurve2D.Double(x, y, p.x1, p.y1, p.x2, p.y2, p.x, p.y);
 			beziers.add(bezier);
@@ -404,7 +402,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public UPath toUPath() {
-		final UPath result = new UPath();
+		final UPath result = new UPath(comment);
 		boolean start = true;
 		for (CubicCurve2D.Double bez : beziers) {
 			if (start) {
@@ -664,6 +662,10 @@ public class DotPath implements UShape, Moveable {
 			}
 		}
 		return Collections.unmodifiableList(result);
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

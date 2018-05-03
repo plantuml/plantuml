@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12869 $
  *
  */
 package net.sourceforge.plantuml;
@@ -42,11 +44,17 @@ public class GeneratedImageImpl implements GeneratedImage {
 	private final File pngFile;
 	private final String description;
 	private final BlockUml blockUml;
+	private final int status;
 
-	public GeneratedImageImpl(File pngFile, String description, BlockUml blockUml) {
+	public final int getStatus() {
+		return status;
+	}
+
+	public GeneratedImageImpl(File pngFile, String description, BlockUml blockUml, int status) {
 		this.blockUml = blockUml;
 		this.pngFile = pngFile;
 		this.description = description;
+		this.status = status;
 	}
 
 	public File getPngFile() {
@@ -60,7 +68,7 @@ public class GeneratedImageImpl implements GeneratedImage {
 	public int lineErrorRaw() {
 		final Diagram system = blockUml.getDiagram();
 		if (system instanceof PSystemError) {
-			return ((PSystemError) system).getHigherErrorPosition() + blockUml.getStartLine();
+			return ((PSystemError) system).getHigherErrorPosition2().getPosition();
 		}
 		return -1;
 	}
@@ -89,4 +97,7 @@ public class GeneratedImageImpl implements GeneratedImage {
 		return this2.pngFile.equals(this.pngFile) && this2.description.equals(this.description);
 	}
 
+	public BlockUml getBlockUml() {
+		return blockUml;
+	}
 }

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * Modified by : Arno Peterson
  * 
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -83,14 +86,16 @@ public class ClusterDecoration {
 	public final static int marginTitleY1 = 3;
 	public final static int marginTitleY2 = 3;
 
-	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, boolean shadowing) {
+	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, boolean shadowing, double roundCorner,
+			HorizontalAlignment titleAlignment) {
 		final SymbolContext biColor = new SymbolContext(backColor, borderColor);
 		if (symbol == null) {
 			throw new UnsupportedOperationException();
 		}
-		final SymbolContext symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke);
-		symbol.asBig(title, stereo, maxX - minX, maxY - minY, symbolContext)
-				.drawU(ug.apply(new UTranslate(minX, minY)));
+		final SymbolContext symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke)
+				.withCorner(roundCorner, 0);
+		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext).drawU(
+				ug.apply(new UTranslate(minX, minY)));
 		// return;
 		// }
 		// if (style == PackageStyle.NODE) {

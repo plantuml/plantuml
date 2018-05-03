@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19636 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -45,12 +47,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.Splash;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.stats.StatsUtils;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -97,6 +102,10 @@ public class PlantUmlTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 
+		if (option.isSplash()) {
+			Splash.createSplash();
+		}
+
 		this.log("Starting PlantUML");
 
 		try {
@@ -115,6 +124,9 @@ public class PlantUmlTask extends Task {
 			if (executorService != null) {
 				executorService.shutdown();
 				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+				if (option.isSplash()) {
+					Splash.disposeSplash();
+				}
 			}
 			this.log("Nb images generated: " + nbFiles.get());
 		} catch (IOException e) {
@@ -179,8 +191,8 @@ public class PlantUmlTask extends Task {
 		if (OptionFlags.getInstance().isVerbose()) {
 			this.log("Processing " + f.getAbsolutePath());
 		}
-		final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
-				option.getConfig(), option.getCharset(), option.getFileFormatOption());
+		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+				option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
 
 		if (option.isCheckOnly()) {
 			return sourceFileReader.hasError();
@@ -189,6 +201,7 @@ public class PlantUmlTask extends Task {
 			return doFile(f, sourceFileReader);
 		}
 
+		Splash.incTotal(1);
 		executorService.submit(new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return doFile(f, sourceFileReader);
@@ -211,6 +224,7 @@ public class PlantUmlTask extends Task {
 				error = true;
 			}
 		}
+		Splash.incDone(error);
 		if (error) {
 			myLog("Error: " + f.getCanonicalPath());
 		}
@@ -287,40 +301,43 @@ public class PlantUmlTask extends Task {
 
 	public void setFormat(String s) {
 		if ("scxml".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.SCXML);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.SCXML));
 		}
 		if ("xmi".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.XMI_STANDARD);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));
 		}
 		if ("xmi:argo".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.XMI_ARGO);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
 		}
 		if ("xmi:start".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.XMI_STAR);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
 		}
 		if ("eps".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.EPS);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS));
+		}
+		if ("braille".equalsIgnoreCase(s)) {
+			option.setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));
 		}
 		if ("pdf".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.PDF);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.PDF));
 		}
 		if ("latex".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.LATEX);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX));
 		}
 		if ("latex:nopreamble".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.LATEX_NO_PREAMBLE);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
 		}
 		if ("eps:text".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.EPS_TEXT);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));
 		}
 		if ("svg".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.SVG);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));
 		}
 		if ("txt".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.ATXT);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));
 		}
 		if ("utxt".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.UTXT);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
 		}
 	}
 
@@ -345,10 +362,10 @@ public class PlantUmlTask extends Task {
 		setNbThread(s);
 	}
 
-	public void setSuggestEngine(String s) {
-		OptionFlags.getInstance().setUseSuggestEngine(
-				"true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s));
-	}
+//	public void setSuggestEngine(String s) {
+//		OptionFlags.getInstance().setUseSuggestEngine(
+//				"true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s));
+//	}
 
 	public void setFailFast(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
@@ -368,6 +385,35 @@ public class PlantUmlTask extends Task {
 	public void setOverwrite(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
 		OptionFlags.getInstance().setOverwrite(flag);
+	}
+
+	public void setFileSeparator(String s) {
+		OptionFlags.getInstance().setFileSeparator(s);
+	}
+
+	public void setHtmlStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		StatsUtils.setHtmlStats(flag);
+	}
+
+	public void setXmlStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		StatsUtils.setXmlStats(flag);
+	}
+
+	public void setRealTimeStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		StatsUtils.setRealTimeStats(flag);
+	}
+
+	public void setEnableStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		OptionFlags.getInstance().setEnableStats(flag);
+	}
+
+	public void setSplash(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		option.setSplash(flag);
 	}
 
 }

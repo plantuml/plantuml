@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7920 $
  *
  */
 package net.sourceforge.plantuml.descdiagram;
@@ -36,7 +38,9 @@ package net.sourceforge.plantuml.descdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
+import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandEndPackage;
@@ -49,6 +53,7 @@ import net.sourceforge.plantuml.command.note.FactoryNoteOnEntityCommand;
 import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.descdiagram.command.CommandArchimate;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
@@ -75,6 +80,8 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandPage());
 		cmds.add(new CommandLinkElement());
+		cmds.add(new CommandHideShow2());
+		cmds.add(new CommandRemoveRestore());
 		//
 		cmds.add(new CommandPackageWithUSymbol());
 		cmds.add(new CommandEndPackage());
@@ -107,7 +114,9 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
-		cmds.add(new CommandHideShowSpecificClass());
+		// cmds.add(new CommandHideShowSpecificClass());
+
+		cmds.add(new CommandArchimate());
 
 		return cmds;
 	}

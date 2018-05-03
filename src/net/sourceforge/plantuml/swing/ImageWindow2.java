@@ -5,6 +5,11 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5885 $
  *
  */
 package net.sourceforge.plantuml.swing;
@@ -74,6 +76,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.version.PSystemVersion;
@@ -82,6 +85,7 @@ class ImageWindow2 extends JFrame {
 
 	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
 	private final static String KEY_ZOOM_FIT = "zoomfit";
+	private final static String KEY_WIDTH_FIT = "widthfit";
 
 	private SimpleLine2 simpleLine2;
 	private final JScrollPane scrollPane;
@@ -89,13 +93,17 @@ class ImageWindow2 extends JFrame {
 	private final JButton copy = new JButton("Copy");
 	private final JButton previous = new JButton("Previous");
 	private final JCheckBox zoomFitButt = new JCheckBox("Zoom fit");
+	private final JCheckBox widthFitButt = new JCheckBox("Width fit");
+	private final JButton zoomMore = new JButton("+");
+	private final JButton zoomLess = new JButton("-");
 	private final MainWindow2 main;
 
 	private final ListModel listModel;
 	private int index;
+	private int zoomFactor = 0;
 
 	private enum SizeMode {
-		FULL_SIZE, ZOOM_FIT
+		FULL_SIZE, ZOOM_FIT, WIDTH_FIT
 	};
 
 	private SizeMode sizeMode = SizeMode.FULL_SIZE;
@@ -115,6 +123,9 @@ class ImageWindow2 extends JFrame {
 		north.add(copy);
 		north.add(next);
 		north.add(zoomFitButt);
+		north.add(widthFitButt);
+		north.add(zoomMore);
+		north.add(zoomLess);
 		copy.setFocusable(false);
 		copy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -136,7 +147,29 @@ class ImageWindow2 extends JFrame {
 		zoomFitButt.setFocusable(false);
 		zoomFitButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				widthFitButt.setSelected(false);
 				zoomFit();
+			}
+		});
+		widthFitButt.setFocusable(false);
+		widthFitButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				zoomFitButt.setSelected(false);
+				zoomFit();
+			}
+		});
+		zoomMore.setFocusable(false);
+		zoomMore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				zoomFactor++;
+				refreshImage(false);
+			}
+		});
+		zoomLess.setFocusable(false);
+		zoomLess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				zoomFactor--;
+				refreshImage(false);
 			}
 		});
 
@@ -155,7 +188,6 @@ class ImageWindow2 extends JFrame {
 			}
 		});
 
-
 		this.addComponentListener(new java.awt.event.ComponentAdapter() {
 			public void componentResized(java.awt.event.ComponentEvent e) {
 				super.componentResized(e);
@@ -167,6 +199,11 @@ class ImageWindow2 extends JFrame {
 		zoomFitButt.setSelected(zoomChecked);
 		if (zoomChecked) {
 			sizeMode = SizeMode.ZOOM_FIT;
+		}
+		final boolean widthZoomChecked = prefs.getBoolean(KEY_WIDTH_FIT, false);
+		widthFitButt.setSelected(widthZoomChecked);
+		if (widthZoomChecked) {
+			sizeMode = SizeMode.WIDTH_FIT;
 		}
 
 		this.setFocusable(true);
@@ -230,10 +267,15 @@ class ImageWindow2 extends JFrame {
 	}
 
 	private void zoomFit() {
-		final boolean selected = zoomFitButt.isSelected();
-		prefs.putBoolean(KEY_ZOOM_FIT, selected);
-		if (selected) {
+		final boolean selectedZoom = zoomFitButt.isSelected();
+		final boolean selectedWidth = widthFitButt.isSelected();
+		prefs.putBoolean(KEY_ZOOM_FIT, selectedZoom);
+		prefs.putBoolean(KEY_WIDTH_FIT, selectedWidth);
+		zoomFactor = 0;
+		if (selectedZoom) {
 			sizeMode = SizeMode.ZOOM_FIT;
+		} else if (selectedWidth) {
+			sizeMode = SizeMode.WIDTH_FIT;
 		} else {
 			sizeMode = SizeMode.FULL_SIZE;
 		}
@@ -274,21 +316,26 @@ class ImageWindow2 extends JFrame {
 				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
 				final Dimension newImgDim = ImageHelper
 						.getScaledDimension(imageDim, scrollPane.getViewport().getSize());
-				final RenderingHints hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION,
-						RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-				hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-				image = ImageHelper.getScaledInstance(image, newImgDim, hints, true);
+				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), true);
+			} else if (sizeMode == SizeMode.WIDTH_FIT) {
+				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
+				final Dimension newImgDim = ImageHelper.getScaledDimensionWidthFit(imageDim, scrollPane.getViewport()
+						.getSize());
+				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), false);
+			} else if (zoomFactor != 0) {
+				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
+				final Dimension newImgDim = ImageHelper.getScaledDimension(imageDim, getZoom());
+				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), false);
 			}
 		} catch (IOException ex) {
 			final String msg = "Error reading file: " + ex.toString();
-			final GraphicStrings error = GraphicStrings.createDefault(Arrays.asList(msg), false);
+			final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList(msg), false);
 			final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, error.getBackcolor(),
 					null, null, 0, 0, null, false);
 			imageBuilder.setUDrawable(error);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), baos);
+				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, baos);
 				baos.close();
 				image = ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
 			} catch (IOException e) {
@@ -297,7 +344,7 @@ class ImageWindow2 extends JFrame {
 		}
 		final ImageIcon imageIcon = new ImageIcon(image, simpleLine2.toString());
 		final ScrollablePicture scrollablePicture = new ScrollablePicture(imageIcon, 1);
-		
+
 		scrollablePicture.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				super.mousePressed(me);
@@ -306,20 +353,35 @@ class ImageWindow2 extends JFrame {
 			}
 		});
 		scrollablePicture.addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseDragged(MouseEvent me) {
-                super.mouseDragged(me);
-                final int diffX = me.getX() - startX;
-                final int diffY = me.getY() - startY;
+			public void mouseDragged(MouseEvent me) {
+				super.mouseDragged(me);
+				final int diffX = me.getX() - startX;
+				final int diffY = me.getY() - startY;
 
 				final JScrollBar hbar = scrollPane.getHorizontalScrollBar();
 				hbar.setValue(hbar.getValue() - diffX);
 				final JScrollBar vbar = scrollPane.getVerticalScrollBar();
 				vbar.setValue(vbar.getValue() - diffY);
-            }
-        });
+			}
+		});
 
-		
 		return scrollablePicture;
+	}
+
+	private RenderingHints getHints() {
+		final RenderingHints hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		return hints;
+	}
+
+	private double getZoom() {
+		// if (zoomFactor <= -10) {
+		// return 0.05;
+		// }
+		// return 1.0 + zoomFactor / 10.0;
+		return Math.pow(1.1, zoomFactor);
 	}
 
 	private void copy() {

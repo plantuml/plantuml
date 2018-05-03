@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.sprite;
@@ -53,8 +55,7 @@ public class RessourcesUtils {
 		if (path.startsWith("/") || path.endsWith("/")) {
 			throw new IllegalArgumentException();
 		}
-		final URL resource = Version.class.getClassLoader().getResource("net/sourceforge/plantuml/version/logo.png");
-		final String protocol = resource.getProtocol();
+		final String protocol = getProtocol();
 		if ("file".equals(protocol)) {
 			final URL local = Version.class.getClassLoader().getResource(path);
 			try {
@@ -76,6 +77,11 @@ public class RessourcesUtils {
 			}
 		}
 		return Collections.<String> emptySet();
+	}
+
+	private static String getProtocol() {
+		final URL resource = Version.class.getClassLoader().getResource("net/sourceforge/plantuml/version/logo.png");
+		return resource.getProtocol();
 	}
 
 	private static Set<String> listFiles(JarFile jarFile, String path) {

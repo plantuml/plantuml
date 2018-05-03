@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5079 $
  *
  */
 package net.sourceforge.plantuml.xmi;
@@ -41,8 +43,10 @@ import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public final class CucaDiagramXmiMaker {
@@ -55,11 +59,17 @@ public final class CucaDiagramXmiMaker {
 		this.fileFormat = fileFormat;
 	}
 
+	public static String getModel(UmlDiagram classDiagram) {
+		return "model1";
+	}
+
 	public void createFiles(OutputStream fos) throws IOException {
 		try {
 			final IXmiClassDiagram xmi;
 			if (diagram instanceof StateDiagram) {
 				xmi = new XmiStateDiagram((StateDiagram) diagram);
+			} else if (diagram instanceof DescriptionDiagram) {
+				xmi = new XmiDescriptionDiagram((DescriptionDiagram) diagram);
 			} else if (fileFormat == FileFormat.XMI_STANDARD) {
 				xmi = new XmiClassDiagramStandard((ClassDiagram) diagram);
 			} else if (fileFormat == FileFormat.XMI_ARGO) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4167 $
  *
  */
 package net.sourceforge.plantuml.postit;
@@ -48,10 +50,8 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -71,7 +71,8 @@ public class PostItDiagram extends UmlDiagram {
 	}
 
 	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException {
+	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
 		final UGraphic ug = createImage(fileFormatOption);
 		drawU(ug);
 		if (ug instanceof UGraphicG2d) {
@@ -79,16 +80,16 @@ public class PostItDiagram extends UmlDiagram {
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, this.getDpi(fileFormatOption));
 		} else if (ug instanceof UGraphicSvg) {
 			final UGraphicSvg svg = (UGraphicSvg) ug;
-			svg.createXml(os);
+			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
 		} else if (ug instanceof UGraphicEps) {
 			final UGraphicEps eps = (UGraphicEps) ug;
 			os.write(eps.getEPSCode().getBytes());
 		}
-		return new ImageDataSimple();
+		return ImageDataSimple.ok();
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("Board of post-it", getClass());
+		return new DiagramDescription("Board of post-it");
 	}
 
 	public Area getDefaultArea() {
@@ -118,7 +119,7 @@ public class PostItDiagram extends UmlDiagram {
 				.getMappedColor(this.getSkinParam().getBackgroundColor());
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
-			final double height = getDefaultArea().heightWhenWidthIs(width, TextBlockUtils.getDummyStringBounder());
+			final double height = getDefaultArea().heightWhenWidthIs(width, fileFormatOption.getDefaultStringBounder());
 			final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, backColor);
 
 			final Graphics2D graphics2D = builder.getGraphics2D();

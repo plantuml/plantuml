@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,13 +28,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
  */
 package net.sourceforge.plantuml.ditaa;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -56,10 +62,11 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		if (startLine != null && (startLine.contains("-S") || startLine.contains("--no-shadows"))) {
 			dropShadows = false;
 		}
+		final float scale = extractScale(startLine);
 		if (getDiagramType() == DiagramType.UML) {
 			return null;
 		} else if (getDiagramType() == DiagramType.DITAA) {
-			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows);
+			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
 		} else {
 			throw new IllegalStateException(getDiagramType().name());
 		}
@@ -76,7 +83,8 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			if (line.contains("-S") || line.contains("--no-shadows")) {
 				dropShadows = false;
 			}
-			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows);
+			final float scale = extractScale(line);
+			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
 		}
 		if (system == null) {
 			return null;
@@ -84,4 +92,16 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		return system.add(line);
 	}
 
+	private float extractScale(String line) {
+		if (line == null) {
+			return 1;
+		}
+		final Pattern p = Pattern.compile("scale=([\\d.]+)");
+		final Matcher m = p.matcher(line);
+		if (m.find()) {
+			final String number = m.group(1);
+			return Float.parseFloat(number);
+		}
+		return 1;
+	}
 }

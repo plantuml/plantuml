@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.posimo;
@@ -50,9 +52,9 @@ public class DecorInterfaceProvider implements Decor {
 	// private final double distanceCircle = 16;
 
 	public DecorInterfaceProvider(LinkStyle style) {
-		if (style != LinkStyle.__toremove_INTERFACE_PROVIDER && style != LinkStyle.__toremove_INTERFACE_USER) {
-			throw new IllegalArgumentException();
-		}
+//		if (style != LinkStyle.__toremove_INTERFACE_PROVIDER && style != LinkStyle.__toremove_INTERFACE_USER) {
+//			throw new IllegalArgumentException();
+//		}
 		this.style = style;
 	}
 
@@ -62,9 +64,9 @@ public class DecorInterfaceProvider implements Decor {
 		final double cornerX2 = start.getX() - radius2 - 0 * Math.sin(direction * Math.PI / 180.0);
 		final double cornerY2 = start.getY() - radius2 - 0 * Math.cos(direction * Math.PI / 180.0);
 
-		if (style == LinkStyle.__toremove_INTERFACE_USER) {
-			direction += 180;
-		}
+//		if (style == LinkStyle.__toremove_INTERFACE_USER) {
+//			direction += 180;
+//		}
 		if (direction >= 360) {
 			direction -= 360;
 		}

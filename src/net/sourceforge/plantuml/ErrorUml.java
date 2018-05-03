@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3824 $
  *
  */
 package net.sourceforge.plantuml;
@@ -39,35 +41,35 @@ import net.sourceforge.plantuml.suggest.SuggestEngineStatus;
 public class ErrorUml {
 
 	private final String error;
-	private final int position;
 	private final ErrorUmlType type;
 	private SuggestEngineResult suggest;
 	private final LineLocation lineLocation;
+//	private final int startLine;
 
-	public ErrorUml(ErrorUmlType type, String error, int position, LineLocation lineLocation) {
+	public ErrorUml(ErrorUmlType type, String error, LineLocation lineLocation) {
 		if (error == null || type == null || StringUtils.isEmpty(error)) {
 			throw new IllegalArgumentException();
 		}
+//		this.startLine = startLine;
 		this.error = error;
 		this.type = type;
-		this.position = position;
 		this.lineLocation = lineLocation;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		final ErrorUml this2 = (ErrorUml) obj;
-		return this.type == this2.type && this.position == this2.position && this.error.equals(this2.error);
+		return this.type == this2.type && this.getPosition() == this2.getPosition() && this.error.equals(this2.error);
 	}
 
 	@Override
 	public int hashCode() {
-		return error.hashCode() + type.hashCode() + position + (suggest == null ? 0 : suggest.hashCode());
+		return error.hashCode() + type.hashCode() + getPosition() + (suggest == null ? 0 : suggest.hashCode());
 	}
 
 	@Override
 	public String toString() {
-		return type.toString() + " " + position + " " + error + " " + suggest;
+		return type.toString() + " " + getPosition() + " " + error + " " + suggest;
 	}
 
 	public final String getError() {
@@ -78,11 +80,11 @@ public class ErrorUml {
 		return type;
 	}
 
-	public int getPosition() {
-		return position;
+	public final int getPosition() {
+		return lineLocation.getPosition();
 	}
 
-	public LineLocation getLineLocation() {
+	public final LineLocation getLineLocation() {
 		return lineLocation;
 	}
 
@@ -97,6 +99,5 @@ public class ErrorUml {
 	public void setSuggest(SuggestEngineResult suggest) {
 		this.suggest = suggest;
 	}
-
 
 }

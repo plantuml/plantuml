@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,16 +28,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -49,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class LiveBoxFinder implements UGraphic {
 
-	public boolean isSpecialTxt() {
+	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
 
@@ -97,8 +100,10 @@ public class LiveBoxFinder implements UGraphic {
 			((GroupingTile) shape).drawU(this);
 		} else if (shape instanceof TileWithUpdateStairs) {
 			((TileWithUpdateStairs) shape).updateStairs(stringBounder, y);
+		} else if (shape instanceof NotesTile) {
+			// Nothing ?
 		} else if (shape instanceof Tile) {
-			System.err.println("OtherTile " + shape);
+			Log.error("OtherTile " + shape);
 		} else {
 			throw new UnsupportedOperationException(shape.getClass().getName());
 		}

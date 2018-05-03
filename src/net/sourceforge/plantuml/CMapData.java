@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8368 $
  *
  */
 package net.sourceforge.plantuml;
@@ -58,24 +60,21 @@ public class CMapData {
 		stringBuilder.append(s);
 	}
 
-	public void appendUrl(int seq, Url url, double scale) {
+	private void appendUrl(int seq, Url url, double scale) {
 		appendString("<area shape=\"rect\" id=\"id");
 		appendLong(seq);
 		appendString("\" href=\"");
 		appendString(url.getUrl());
 		appendString("\" title=\"");
-		final String tooltip = url.getTooltip().replaceAll("\\\\n", "\n").replaceAll("&", "&#38;")
+		final String tooltip = url.getTooltip().replaceAll("\\\\n", BackSlash.NEWLINE).replaceAll("&", "&#38;")
 				.replaceAll("\"", "&#34;").replaceAll("\'", "&#39;");
 		appendString(tooltip);
 		appendString("\" alt=\"\" coords=\"");
 		appendString(url.getCoords(scale));
 		appendString("\"/>");
 
-		appendString("\n");
+		appendString(BackSlash.NEWLINE);
 	}
-
-	// private CMapData() {
-	// }
 
 	public static CMapData cmapString(Set<Url> allUrlEncountered, double scale) {
 		final CMapData cmapdata = new CMapData();
@@ -85,6 +84,9 @@ public class CMapData {
 
 		int seq = 1;
 		for (Url u : all) {
+			if (u.hasData() == false) {
+				continue;
+			}
 			cmapdata.appendUrl(seq, u, scale);
 			seq++;
 		}

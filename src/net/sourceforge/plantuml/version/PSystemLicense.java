@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,15 +28,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -40,15 +42,11 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemLicense extends AbstractPSystem {
 
@@ -58,26 +56,26 @@ public class PSystemLicense extends AbstractPSystem {
 		strings.addAll(License.getCurrent().getText());
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final GraphicStrings result = getGraphicStrings();
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
+		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	public static PSystemLicense create() throws IOException {
 		return new PSystemLicense();
 	}
 
-	private GraphicStrings getGraphicStrings() throws IOException {
-		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-		return new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON,
-				null, GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
+	private TextBlockBackcolored getGraphicStrings() throws IOException {
+		return GraphicStrings.createBlackOnWhite(strings);
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(License)", getClass());
+		return new DiagramDescription("(License)");
 	}
 
 }

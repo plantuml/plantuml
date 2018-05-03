@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,49 +28,44 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4636 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public abstract class AbstractMessage implements EventWithDeactivate {
 
-	final private Display label;
-	final private ArrowConfiguration arrowConfiguration;
+	private final Display label;
+	private final ArrowConfiguration arrowConfiguration;
+	private final Set<LifeEventType> lifeEventsType = EnumSet.noneOf(LifeEventType.class);
 
-	final private Set<LifeEventType> lifeEventsType = EnumSet.noneOf(LifeEventType.class);
-
-	private Display notes;
-	private NotePosition notePosition;
-	private HtmlColor noteBackColor;
-	private Url urlNote;
-	private NoteStyle noteStyle;
-	private final Url url;
+	private Url url;
 	private final String messageNumber;
 	private boolean parallel = false;
 
+	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
+
 	public AbstractMessage(Display label, ArrowConfiguration arrowConfiguration, String messageNumber) {
-		this.url = label.initUrl();
-		this.label = label.removeHeadingUrl(url);
+		this.url = null;
+		this.label = label;
 		this.arrowConfiguration = arrowConfiguration;
 		this.messageNumber = messageNumber;
+	}
+	
+	public final void setUrl(Url url) {
+		this.url = url;
 	}
 
 	public void goParallel() {
@@ -78,14 +78,20 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 
 	final public Url getUrl() {
 		if (url == null) {
-			return urlNote;
+			for (NoteOnMessage n : noteOnMessages) {
+				if (n.getUrlNote() != null) {
+					return n.getUrlNote();
+				}
+			}
 		}
 		return url;
 	}
 
 	public boolean hasUrl() {
-		if (notes != null && notes.hasUrl()) {
-			return true;
+		for (NoteOnMessage n : noteOnMessages) {
+			if (n.hasUrl()) {
+				return true;
+			}
 		}
 		if (label != null && label.hasUrl()) {
 			return true;
@@ -153,42 +159,19 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 		return arrowConfiguration;
 	}
 
-	public final Display getNote() {
-		return notes == null ? notes : notes;
-	}
-	
-	public final NoteStyle getNoteStyle() {
-		return noteStyle;
-	}
-
-	public final Url getUrlNote() {
-		return urlNote;
+	public final List<NoteOnMessage> getNoteOnMessages() {
+		return noteOnMessages;
 	}
 
 	public final void setNote(Display strings, NotePosition notePosition, NoteStyle noteStyle, String backcolor, Url url) {
 		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {
 			throw new IllegalArgumentException();
 		}
-		this.noteStyle = noteStyle;
-		this.notes = strings;
-		this.urlNote = url;
-		this.notePosition = overideNotePosition(notePosition);
-		this.noteBackColor = HtmlColorSet.getInstance().getColorIfValid(backcolor);
+		this.noteOnMessages
+				.add(new NoteOnMessage(strings, overideNotePosition(notePosition), noteStyle, backcolor, url));
 	}
 
 	protected NotePosition overideNotePosition(NotePosition notePosition) {
-		return notePosition;
-	}
-
-	private final HtmlColor getSpecificBackColor() {
-		return noteBackColor;
-	}
-
-	public SkinParamBackcolored getSkinParamNoteBackcolored(ISkinParam skinParam) {
-		return new SkinParamBackcolored(skinParam, getSpecificBackColor());
-	}
-
-	public final NotePosition getNotePosition() {
 		return notePosition;
 	}
 

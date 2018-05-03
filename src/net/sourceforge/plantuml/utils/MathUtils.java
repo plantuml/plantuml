@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6719 $
  *
  */
 package net.sourceforge.plantuml.utils;
@@ -49,6 +51,22 @@ public class MathUtils {
 
 	public static double max(double a, double b, double c, double d, double e) {
 		return max(max(a, b, c), max(d, e));
+	}
+
+	public static double min(double a, double b) {
+		return Math.min(a, b);
+	}
+
+	public static double min(double a, double b, double c) {
+		return min(min(a, b), c);
+	}
+
+	public static double min(double a, double b, double c, double d) {
+		return min(min(a, b), min(c, d));
+	}
+
+	public static double min(double a, double b, double c, double d, double e) {
+		return min(min(a, b, c), min(d, e));
 	}
 
 	public static double limitation(double v, double min, double max) {

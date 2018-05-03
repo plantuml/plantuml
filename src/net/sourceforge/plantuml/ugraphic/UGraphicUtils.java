@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4129 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -46,7 +48,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -54,26 +55,19 @@ import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 
 public abstract class UGraphicUtils {
 
-	public static UDrawable translate(final UDrawable d, final double dx, final double dy) {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				d.drawU(ug.apply(new UTranslate(dx, dy)));
-			}
-		};
-
-	}
-
-	public static void writeImage(OutputStream os, String metadata, FileFormatOption fileFormatOption,
+	public static void writeImage(OutputStream os, String metadata, FileFormatOption fileFormatOption, long seed,
 			ColorMapper colorMapper, HtmlColor background, TextBlock image) throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
 			final BufferedImage im = createImage(colorMapper, background, image);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(colorMapper
-					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget());
+			final Dimension2D size = computeSize(colorMapper, background, image);
+			final UGraphicSvg svg = new UGraphicSvg(true, size, colorMapper, StringUtils.getAsHtml(colorMapper
+					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
+					fileFormatOption.getHoverColor(), seed);
 			image.drawU(svg);
-			svg.createXml(os);
+			svg.createXml(os, fileFormatOption.isWithMetadata() ? metadata : null);
 		} else if (fileFormat == FileFormat.EPS) {
 			final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 			image.drawU(ug);
@@ -88,16 +82,12 @@ public abstract class UGraphicUtils {
 	}
 
 	private static BufferedImage createImage(ColorMapper colorMapper, HtmlColor background, TextBlock image) {
-		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, colorMapper.getMappedColor(background));
-		Graphics2D g2d = builder.getGraphics2D();
+		final Dimension2D size = computeSize(colorMapper, background, image);
 
-		final UGraphicG2d tmp = new UGraphicG2d(colorMapper, g2d, 1.0);
-		final Dimension2D size = image.calculateDimension(tmp.getStringBounder());
-		g2d.dispose();
-
-		builder = new EmptyImageBuilder(size.getWidth(), size.getHeight(), colorMapper.getMappedColor(background));
+		final EmptyImageBuilder builder = new EmptyImageBuilder(size.getWidth(), size.getHeight(),
+				colorMapper.getMappedColor(background));
 		final BufferedImage im = builder.getBufferedImage();
-		g2d = builder.getGraphics2D();
+		final Graphics2D g2d = builder.getGraphics2D();
 
 		final UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, 1.0);
 		image.drawU(ug);
@@ -105,22 +95,14 @@ public abstract class UGraphicUtils {
 		return im;
 	}
 
-	// public static void writeImage(OutputStream os, UGraphic ug, String metadata, int dpi) throws IOException {
-	// if (ug instanceof UGraphicG2d) {
-	// final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
-	// PngIO.write(im, os, metadata, dpi);
-	// } else if (ug instanceof UGraphicSvg) {
-	// final UGraphicSvg svg = (UGraphicSvg) ug;
-	// svg.createXml(os);
-	// } else if (ug instanceof UGraphicEps) {
-	// final UGraphicEps eps = (UGraphicEps) ug;
-	// os.write(eps.getEPSCode().getBytes());
-	// } else if (ug instanceof UGraphicHtml5) {
-	// final UGraphicHtml5 html5 = (UGraphicHtml5) ug;
-	// os.write(html5.generateHtmlCode().getBytes());
-	// } else {
-	// throw new UnsupportedOperationException();
-	// }
-	// }
+	private static Dimension2D computeSize(ColorMapper colorMapper, HtmlColor background, TextBlock image) {
+		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, colorMapper.getMappedColor(background));
+		final Graphics2D g2d = builder.getGraphics2D();
+
+		final UGraphicG2d tmp = new UGraphicG2d(colorMapper, g2d, 1.0);
+		final Dimension2D size = image.calculateDimension(tmp.getStringBounder());
+		g2d.dispose();
+		return size;
+	}
 
 }

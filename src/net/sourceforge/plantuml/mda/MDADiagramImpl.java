@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.mda;
@@ -71,7 +73,7 @@ public class MDADiagramImpl implements MDADiagram {
 	private MDADiagramImpl(ClassDiagram classDiagram) {
 		final EntityFactory entityFactory = classDiagram.getEntityFactory();
 		packages.add(new MDAPackageImpl(entityFactory.getRootGroup()));
-		for (IGroup group : entityFactory.getGroups().values()) {
+		for (IGroup group : entityFactory.getGroupsvalues()) {
 			packages.add(new MDAPackageImpl(group));
 		}
 	}

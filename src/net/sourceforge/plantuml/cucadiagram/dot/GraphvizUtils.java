@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20173 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -115,7 +117,21 @@ public class GraphvizUtils {
 		return null;
 	}
 
+	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<Integer>();
+
+	public static void removeLocalLimitSize() {
+		limitSize.remove();
+	}
+
+	public static void setLocalImageLimit(int value) {
+		limitSize.set(value);
+	}
+
 	public static int getenvImageLimit() {
+		final Integer local = limitSize.get();
+		if (local != null) {
+			return local;
+		}
 		final String env = System.getProperty("PLANTUML_LIMIT_SIZE");
 		if (StringUtils.isNotEmpty(env) && env.matches("\\d+")) {
 			return Integer.parseInt(env);

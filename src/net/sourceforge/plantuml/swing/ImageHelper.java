@@ -5,6 +5,11 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Zane D. Purvis
  *
- * Revision $Revision: 5885 $
  *
  */
 package net.sourceforge.plantuml.swing;
@@ -143,7 +145,6 @@ public class ImageHelper {
 	 *            dimensions of the area the image is to be drawn in.
 	 */
 	public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
-
 		final int originalWidth = imgSize.width;
 		final int originaHeight = imgSize.height;
 		final int boundWidth = boundary.width;
@@ -168,5 +169,28 @@ public class ImageHelper {
 		}
 
 		return new Dimension(newWidth, newHeight);
+	}
+
+	public static Dimension getScaledDimensionWidthFit(Dimension imgSize, Dimension boundary) {
+		final int originalWidth = imgSize.width;
+		final int originaHeight = imgSize.height;
+		final int boundWidth = boundary.width;
+		final int boundHeight = boundary.height;
+		int newWidth = originalWidth;
+		int newHeight = originaHeight;
+
+		// first check if we need to scale width
+		if (originalWidth != boundWidth) {
+			// scale width to fit
+			newWidth = boundWidth;
+			// scale height to maintain aspect ratio
+			newHeight = (newWidth * originaHeight) / originalWidth;
+		}
+
+		return new Dimension(newWidth, newHeight);
+	}
+
+	public static Dimension getScaledDimension(Dimension dim, double zoom) {
+		return new Dimension((int) (dim.getWidth() * zoom), (int) (dim.getHeight() * zoom));
 	}
 }

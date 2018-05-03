@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -49,8 +54,10 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 	private final Component comp;
 	private double endY;
 	private final boolean isParallel;
+	private final List<Component> notes = new ArrayList<Component>();
 
-	public GroupingGraphicalElementHeader(double currentY, Component comp, InGroupableList inGroupableList, boolean isParallel) {
+	public GroupingGraphicalElementHeader(double currentY, Component comp, InGroupableList inGroupableList,
+			boolean isParallel) {
 		super(currentY, inGroupableList);
 		this.comp = comp;
 		this.isParallel = isParallel;
@@ -63,7 +70,12 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
-		return comp.getPreferredWidth(stringBounder) + 5;
+		double width = comp.getPreferredWidth(stringBounder);
+		for (Component note : notes) {
+			final Dimension2D dimNote = note.getPreferredDimension(stringBounder);
+			width += dimNote.getWidth();
+		}
+		return width + 5;
 	}
 
 	@Override
@@ -78,7 +90,7 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 		}
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double x1 = getInGroupableList().getMinX(stringBounder);
-		final double x2 = getInGroupableList().getMaxX(stringBounder);
+		final double x2 = getInGroupableList().getMaxX(stringBounder) - getInGroupableList().getHack2();
 		ug = ug.apply(new UTranslate(x1, getStartingY()));
 		double height = comp.getPreferredHeight(stringBounder);
 		if (endY > 0) {
@@ -89,10 +101,21 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 		}
 		final Dimension2D dim = new Dimension2DDouble(x2 - x1, height);
 		comp.drawU(ug, new Area(dim), context);
+		for (Component note : notes) {
+			final Dimension2D dimNote = note.getPreferredDimension(stringBounder);
+			note.drawU(ug.apply(new UTranslate(x2 - x1, 0)), new Area(dimNote), context);
+		}
 	}
 
 	public void setEndY(double y) {
 		this.endY = y;
+	}
+
+	public void addNotes(StringBounder stringBounder, Collection<Component> notes) {
+		for (Component note : notes) {
+			this.notes.add(note);
+			getInGroupableList().changeHack2(note.getPreferredWidth(stringBounder));
+		}
 	}
 
 }

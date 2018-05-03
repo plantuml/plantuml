@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7558 $
  *
  */
 package net.sourceforge.plantuml.command.note;
@@ -120,12 +122,9 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 			position = Position.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)));
 		}
 		Url url = null;
-		if (note.size() > 0) {
+		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-			url = urlBuilder.getUrl(note.getFirst499().toString());
-		}
-		if (url != null) {
-			note = note.subExtract(1, 0);
+			url = urlBuilder.getUrl(arg.get("URL", 0));
 		}
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		link.addNote(note.toDisplay(), position, colors);

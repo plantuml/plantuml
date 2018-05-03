@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,20 +28,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3835 $
  *
  */
 package net.sourceforge.plantuml.salt.factory;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Dictionary;
 import net.sourceforge.plantuml.salt.Positionner2;
 import net.sourceforge.plantuml.salt.Terminated;
+import net.sourceforge.plantuml.salt.Terminator;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementPyramid;
 import net.sourceforge.plantuml.salt.element.ElementText;
@@ -52,12 +56,17 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 		if (ready() == false) {
 			throw new IllegalStateException();
 		}
-		final String header = getDataSource().next().getElement();
+		final Terminated<String> tmp = getDataSource().next();
+		final String header = tmp.getElement();
 		assert header.startsWith("{");
+		String title = null;
 
 		TableStrategy strategy = TableStrategy.DRAW_NONE;
 		if (header.length() == 2) {
 			strategy = TableStrategy.fromChar(header.charAt(1));
+		}
+		if (strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE && tmp.getTerminator() == Terminator.NEWCOL) {
+			title = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getDataSource().next().getElement(), "\"");
 		}
 
 		final Positionner2 positionner = new Positionner2();
@@ -71,7 +80,8 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 			}
 		}
 		final Terminated<String> next = getDataSource().next();
-		return new Terminated<Element>(new ElementPyramid(positionner, strategy), next.getTerminator());
+		return new Terminated<Element>(new ElementPyramid(positionner, strategy, title, getDictionary()),
+				next.getTerminator());
 	}
 
 	private boolean isStar(Element element) {
@@ -83,7 +93,8 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 
 	public boolean ready() {
 		final String text = getDataSource().peek(0).getElement();
-		if (text.equals("{") || text.equals("{+") || text.equals("{#") || text.equals("{!") || text.equals("{-")) {
+		if (text.equals("{") || text.equals("{+") || text.equals("{^") || text.equals("{#") || text.equals("{!")
+				|| text.equals("{-")) {
 			final String text1 = getDataSource().peek(1).getElement();
 			if (text1.matches("[NSEW]=|T")) {
 				return false;

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4636 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
@@ -36,11 +38,11 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -55,32 +57,28 @@ public class CommunicationTileSelfNoteRight implements TileWithUpdateStairs {
 	private final Message message;
 	private final Skin skin;
 	private final ISkinParam skinParam;
-	private final Display notes;
+	private final NoteOnMessage noteOnMessage;
 
-	// private final NotePosition notePosition;
-	// private final LivingSpace livingSpace;
-	
 	public Event getEvent() {
 		return message;
 	}
 
-
-	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Skin skin, ISkinParam skinParam) {
+	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Skin skin, ISkinParam skinParam,
+			NoteOnMessage noteOnMessage) {
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.notes = message.getNote();
-		// this.notePosition = message.getNotePosition();
+		this.noteOnMessage = noteOnMessage;
 	}
-	
+
 	public void updateStairs(StringBounder stringBounder, double y) {
 		tile.updateStairs(stringBounder, y);
 	}
 
-
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null, message.getSkinParamNoteBackcolored(skinParam), notes);
+		final Component comp = skin.createComponent(ComponentType.NOTE, null,
+				noteOnMessage.getSkinParamNoteBackcolored(skinParam), noteOnMessage.getDisplay());
 		return comp;
 	}
 

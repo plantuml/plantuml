@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20186 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -61,9 +63,27 @@ public class UPolygon extends AbstractShadowable {
 		this.name = name;
 	}
 
+	public Point2D checkMiddleContactForSpecificTriangle(Point2D center) {
+		for (int i = 0; i < all.size() - 1; i++) {
+			final Point2D.Double pt1 = all.get(i);
+			final Point2D.Double pt2 = all.get(i + 1);
+			final Point2D.Double middle = new Point2D.Double((pt1.getX() + pt2.getX()) / 2,
+					(pt1.getY() + pt2.getY()) / 2);
+			final double delta = middle.distance(center);
+			if (delta < 1) {
+				return all.get((i - 1) % all.size());
+			}
+		}
+		return null;
+	}
+
 	public void addPoint(double x, double y) {
 		all.add(new Point2D.Double(x, y));
 		manageMinMax(x, y);
+	}
+
+	public void addPoint(Point2D point) {
+		addPoint(point.getX(), point.getY());
 	}
 
 	private void manageMinMax(double x, double y) {
@@ -136,4 +156,5 @@ public class UPolygon extends AbstractShadowable {
 		}
 		return points;
 	}
+
 }

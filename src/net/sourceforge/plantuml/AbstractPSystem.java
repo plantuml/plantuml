@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,34 +28,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19886 $
  *
  */
 package net.sourceforge.plantuml;
 
-import java.util.Properties;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class AbstractPSystem implements Diagram {
 
 	private UmlSource source;
+	private Scale scale;
 
 	private String getVersion() {
 		final StringBuilder toAppend = new StringBuilder();
@@ -58,15 +64,10 @@ public abstract class AbstractPSystem implements Diagram {
 		toAppend.append(Version.versionString());
 		toAppend.append("(" + Version.compileTimeString() + ")\n");
 		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
-		final Properties p = System.getProperties();
-		toAppend.append(p.getProperty("java.runtime.name"));
-		toAppend.append('\n');
-		toAppend.append(p.getProperty("java.vm.name"));
-		toAppend.append('\n');
-		toAppend.append(p.getProperty("java.runtime.version"));
-		toAppend.append('\n');
-		toAppend.append(p.getProperty("os.name"));
-
+		for (String name : OptionPrint.interestingProperties()) {
+			toAppend.append(name);
+			toAppend.append(BackSlash.CHAR_NEWLINE);
+		}
 		return toAppend.toString();
 	}
 
@@ -74,11 +75,18 @@ public abstract class AbstractPSystem implements Diagram {
 		if (source == null) {
 			return getVersion();
 		}
-		return source.getPlainString() + "\n" + getVersion();
+		return source.getPlainString() + BackSlash.NEWLINE + getVersion();
 	}
 
 	final public UmlSource getSource() {
 		return source;
+	}
+
+	final public long seed() {
+		if (source == null) {
+			return 42;
+		}
+		return getSource().seed();
 	}
 
 	final public void setSource(UmlSource source) {
@@ -99,11 +107,10 @@ public abstract class AbstractPSystem implements Diagram {
 	public String getWarningOrError() {
 		return null;
 	}
-	
+
 	public String checkFinalError() {
 		return null;
 	}
-
 
 	public void makeDiagramReady() {
 	}
@@ -120,5 +127,29 @@ public abstract class AbstractPSystem implements Diagram {
 	public boolean hasUrl() {
 		return false;
 	}
+
+	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		final long now = System.currentTimeMillis();
+		try {
+			return exportDiagramNow(os, index, fileFormatOption, seed());
+		} finally {
+			if (OptionFlags.getInstance().isEnableStats()) {
+				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
+						fileFormatOption.getFileFormat());
+			}
+		}
+	}
+
+	final public void setScale(Scale scale) {
+		this.scale = scale;
+	}
+
+	final public Scale getScale() {
+		return scale;
+	}
+
+	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption,
+			long seed) throws IOException;
 
 }

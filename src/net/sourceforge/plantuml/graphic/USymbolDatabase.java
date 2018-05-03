@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8066 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -49,8 +51,6 @@ class USymbolDatabase extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.DATABASE;
 	}
-
-
 
 	private void drawDatabase(UGraphic ug, double width, double height, boolean shadowing) {
 		final UPath shape = new UPath();
@@ -109,10 +109,12 @@ class USymbolDatabase extends USymbol {
 	}
 
 	private Margin getMargin() {
-		return new Margin(10, 10, 20, 5);
+		return new Margin(10, 10, 24, 5);
 	}
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -133,8 +135,9 @@ class USymbolDatabase extends USymbol {
 		};
 	}
 
-	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

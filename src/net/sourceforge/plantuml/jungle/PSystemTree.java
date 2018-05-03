@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,8 +28,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -40,11 +43,9 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UDrawableUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -58,22 +59,24 @@ public class PSystemTree extends AbstractPSystem {
 	private final Rendering rendering = Rendering.NEEDLE;
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Tree)", getClass());
+		return new DiagramDescription("(Tree)");
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE, null, null,
 				5, 5, null, false);
 		if (rendering == Rendering.NEEDLE) {
 			final UDrawable tmp = Needle.getNeedle(root, 200, 0, 60);
-			final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
+			final LimitFinder limitFinder = new LimitFinder(fileFormat.getDefaultStringBounder(), true);
 			tmp.drawU(limitFinder);
 			final double minY = limitFinder.getMinY();
 			builder.setUDrawable(UDrawableUtils.move(tmp, 0, -minY));
 		} else {
 			builder.setUDrawable(new GTileOneLevelFactory().createGTile(root));
 		}
-		return builder.writeImageTOBEMOVED(fileFormat, os);
+		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	public CommandExecutionResult addParagraph(int level, String label) {

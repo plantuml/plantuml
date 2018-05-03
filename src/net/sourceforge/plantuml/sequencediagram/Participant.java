@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,15 +28,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19161 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
+
+import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -39,6 +43,7 @@ import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -54,8 +59,13 @@ public class Participant implements SpecificBackcolorable {
 	private int initialLife = 0;
 
 	private Stereotype stereotype;
+	private boolean stereotypePositionTop;
+	private final Set<EntityPortion> hiddenPortions;
+	private final int order;
 
-	public Participant(ParticipantType type, String code, Display display) {
+	public Participant(ParticipantType type, String code, Display display, Set<EntityPortion> hiddenPortions, int order) {
+		this.hiddenPortions = hiddenPortions;
+		this.order = order;
 		if (type == null) {
 			throw new IllegalArgumentException();
 		}
@@ -80,10 +90,15 @@ public class Participant implements SpecificBackcolorable {
 	}
 
 	public Display getDisplay(boolean underlined) {
-		if (underlined) {
-			return display.underlined();
+		Display result = underlined ? display.underlined() : display;
+		if (stereotype != null && hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {
+			if (stereotypePositionTop) {
+				result = result.addFirst(stereotype);
+			} else {
+				result = result.add(stereotype);
+			}
 		}
-		return display;
+		return result;
 	}
 
 	public ParticipantType getType() {
@@ -91,9 +106,6 @@ public class Participant implements SpecificBackcolorable {
 	}
 
 	public final void setStereotype(Stereotype stereotype, boolean stereotypePositionTop) {
-		// if (type == ParticipantType.ACTOR) {
-		// return;
-		// }
 		if (this.stereotype != null) {
 			throw new IllegalStateException();
 		}
@@ -101,11 +113,7 @@ public class Participant implements SpecificBackcolorable {
 			throw new IllegalArgumentException();
 		}
 		this.stereotype = stereotype;
-		if (stereotypePositionTop) {
-			display = display.addFirst(stereotype);
-		} else {
-			display = display.add(stereotype);
-		}
+		this.stereotypePositionTop = stereotypePositionTop;
 	}
 
 	public final int getInitialLife() {
@@ -171,6 +179,10 @@ public class Participant implements SpecificBackcolorable {
 			result.forceColor(ColorParam.participantBorder, stereoBorderColor);
 		}
 		return result;
+	}
+
+	public int getOrder() {
+		return order;
 	}
 
 }

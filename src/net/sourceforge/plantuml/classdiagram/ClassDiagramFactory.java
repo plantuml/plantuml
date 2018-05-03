@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10006 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -44,6 +46,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultiline
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2.Mode;
 import net.sourceforge.plantuml.classdiagram.command.CommandDiamondAssociation;
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandImport;
@@ -51,6 +54,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkLollipop;
 import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
+import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
@@ -67,7 +71,9 @@ import net.sourceforge.plantuml.command.note.FactoryNoteOnEntityCommand;
 import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
 import net.sourceforge.plantuml.command.note.FactoryTipOnEntityCommand;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandNewpage;
+import net.sourceforge.plantuml.descdiagram.command.CommandPackageWithUSymbol;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObject;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObjectMultilines;
 
@@ -87,10 +93,12 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
-		cmds.add(new CommandHideShowSpecificStereotype());
+//		cmds.add(new CommandHideShowSpecificStereotype());
 		cmds.add(new CommandPage());
 		cmds.add(new CommandAddMethod());
 
+		cmds.add(new CommandHideShow2());
+		cmds.add(new CommandRemoveRestore());
 		cmds.add(new CommandCreateClass());
 		cmds.add(new CommandCreateEntityObject());
 
@@ -105,6 +113,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandPackage());
 		cmds.add(new CommandEndPackage());
 		cmds.add(new CommandPackageEmpty());
+		cmds.add(new CommandPackageWithUSymbol());
 
 		cmds.add(new CommandNamespace());
 		cmds.add(new CommandStereotype());
@@ -115,7 +124,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandImport());
 
 		final FactoryTipOnEntityCommand factoryTipOnEntityCommand = new FactoryTipOnEntityCommand(new RegexLeaf(
-				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([^%s]+)"));
+				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([%g][^%g]+[%g]|[^%s]+)"));
 		cmds.add(factoryTipOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryTipOnEntityCommand.createMultiLine(false));
 
@@ -137,9 +146,12 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandDiamondAssociation());
 
-		cmds.add(new CommandHideShowSpecificClass());
+//		cmds.add(new CommandHideShowSpecificClass());
 
 		cmds.add(new CommandNamespaceSeparator());
+
+		cmds.add(new CommandCreateElementMultilines(0));
+		cmds.add(new CommandCreateElementMultilines(1));
 
 		return cmds;
 	}

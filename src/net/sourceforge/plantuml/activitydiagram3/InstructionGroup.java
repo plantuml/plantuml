@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,21 +28,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNotes;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -54,7 +58,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	private final LinkRendering linkRendering;
 
 	private final Display test;
-	private Display headerNote = Display.NULL;
+	private PositionedNote note = null;
 
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
 			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering) {
@@ -72,7 +76,11 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return factory.createGroup(list.createFtile(factory), test, backColor, titleColor, headerNote, borderColor);
+		Ftile tmp = list.createFtile(factory);
+		if (note != null) {
+			tmp = new FtileWithNotes(tmp, Collections.singleton(note), factory.skinParam());
+		}
+		return factory.createGroup(tmp, test, backColor, titleColor, null, borderColor);
 	}
 
 	public Instruction getParent() {
@@ -87,12 +95,12 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 		return linkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (list.isEmpty()) {
-			this.headerNote = note;
+			this.note = new PositionedNote(note, position, type, colors, swimlaneNote);
 			return true;
 		}
-		return list.addNote(note, position, type, colors);
+		return list.addNote(note, position, type, colors, swimlaneNote);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4161 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -55,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -83,22 +86,24 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacter() + ")?"), //
-				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class)[%s]+"), //
+				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
+				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class|entity)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY1", "[%g](.+)[%g]"), //
+								new RegexLeaf("DISPLAY1", CommandCreateClass.DISPLAY_WITH_GENERIC), //
 								new RegexLeaf("[%s]+as[%s]+"), //
 								new RegexLeaf("CODE1", "(" + CommandCreateClass.CODE + ")")), //
 						new RegexConcat(//
 								new RegexLeaf("CODE2", "(" + CommandCreateClass.CODE + ")"), //
 								new RegexLeaf("[%s]+as[%s]+"), // //
-								new RegexLeaf("DISPLAY2", "[%g](.+)[%g]")), //
+								new RegexLeaf("DISPLAY2", CommandCreateClass.DISPLAY_WITH_GENERIC)), //
 						new RegexLeaf("CODE3", "(" + CommandCreateClass.CODE + ")"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
 				new RegexLeaf("GENERIC", "(?:[%s]*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
@@ -124,21 +129,21 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		}
 		if (lines.size() > 1) {
 			lines = lines.subExtract(1, 1);
-			final Url url;
-			if (lines.size() > 0) {
-				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-				url = urlBuilder.getUrl(lines.getFirst499().toString());
-			} else {
-				url = null;
-			}
-			if (url != null) {
-				lines = lines.subExtract(1, 0);
-			}
+			final Url url = null;
+			// if (lines.size() > 0) {
+			// final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			// url = urlBuilder.getUrl(lines.getFirst499().toString());
+			// } else {
+			// url = null;
+			// }
+			// if (url != null) {
+			// lines = lines.subExtract(1, 0);
+			// }
 			for (CharSequence s : lines) {
-				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
+				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s)) {
 					diagram.setVisibilityModifierPresent(true);
 				}
-				entity.getBodier().addFieldOrMethod(s.toString());
+				entity.getBodier().addFieldOrMethod(s.toString(), entity);
 			}
 			if (url != null) {
 				entity.addUrl(url);
@@ -147,8 +152,20 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		manageExtends("EXTENDS", diagram, line0, entity);
 		manageExtends("IMPLEMENTS", diagram, line0, entity);
+		addTags(entity, line0.get("TAGS", 0));
 
 		return CommandExecutionResult.ok();
+	}
+
+	public static void addTags(IEntity entity, String tags) {
+		if (tags == null) {
+			return;
+		}
+		for (String tag : tags.split("[ ]+")) {
+			assert tag.startsWith("$");
+			tag = tag.substring(1);
+			entity.addStereotag(new Stereotag(tag));
+		}
 	}
 
 	public static void manageExtends(String keyword, ClassDiagram system, RegexResult arg, final IEntity entity) {
@@ -158,7 +175,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			if (mode == Mode.IMPLEMENTS) {
 				type2 = LeafType.INTERFACE;
 			}
-			if (mode == Mode.EXTENDS && entity.getEntityType() == LeafType.INTERFACE) {
+			if (mode == Mode.EXTENDS && entity.getLeafType() == LeafType.INTERFACE) {
 				type2 = LeafType.INTERFACE;
 			}
 			final String codes = arg.get(keyword, 2);
@@ -166,8 +183,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				final Code other = Code.of(StringUtils.trin(s));
 				final IEntity cl2 = system.getOrCreateLeaf(other, type2, null);
 				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
-				if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {
-					typeLink = typeLink.getDashed();
+				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE) {
+					typeLink = typeLink.goDashed();
 				}
 				final Link link = new Link(cl2, entity, typeLink, Display.NULL, 2, null, null,
 						system.getLabeldistance(), system.getLabelangle());
@@ -182,19 +199,22 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final String visibilityString = arg.get("VISIBILITY", 0);
 		VisibilityModifier visibilityModifier = null;
 		if (visibilityString != null) {
-			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString.charAt(0), false);
+			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + "FOO", false);
 		}
 
 		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
+		final String genericOption = arg.getLazzy("DISPLAY", 1);
+		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
-		final String generic = arg.get("GENERIC", 0);
 
 		final ILeaf result;
 		if (diagram.leafExist(code)) {
 			result = diagram.getOrCreateLeaf(code, null, null);
-			result.muteToType(type, null);
+			if (result.muteToType(type, null) == false) {
+				return null;
+			}
 		} else {
 			result = diagram.createLeaf(code, Display.getWithNewlines(display), type, null);
 		}

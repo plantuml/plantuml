@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19863 $
  *
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Font;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
@@ -66,6 +67,7 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -73,10 +75,9 @@ import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -97,12 +98,14 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private DisplayPositionned legend = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 
 	private final Pragma pragma = new Pragma();
-	private Scale scale;
 	private Animation animation;
 
-	private final SkinParam skinParam = new SkinParam();
+	private final SkinParam skinParam = SkinParam.create(getUmlDiagramType());
 
 	final public void setTitle(DisplayPositionned title) {
+		if (DisplayPositionned.isNull(title) || title.getDisplay().isWhite()) {
+			return;
+		}
 		this.title = title;
 	}
 
@@ -175,14 +178,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return pragma;
 	}
 
-	final public void setScale(Scale scale) {
-		this.scale = scale;
-	}
-
-	final public Scale getScale() {
-		return scale;
-	}
-
 	final public void setAnimation(Iterable<CharSequence> animationData) {
 		try {
 			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
@@ -216,8 +211,17 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		this.hideUnlinkedData = hideUnlinkedData;
 	}
 
-	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
+
+		final HtmlColor hover = getSkinParam().getHoverPathColor();
+		fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
+		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
+		if (hover != null) {
+			fileFormatOption = fileFormatOption.withHoverColor(StringUtils.getAsHtml(getSkinParam().getColorMapper()
+					.getMappedColor(hover)));
+		}
 
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
 			return exportDiagramInternalPdf(os, index);
@@ -229,23 +233,28 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			return imageData;
 		} catch (UnparsableGraphvizException e) {
 			e.printStackTrace();
-			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
+			exportDiagramError(os, e.getCause(), fileFormatOption, seed, e.getGraphvizVersion());
 		} catch (Exception e) {
 			e.printStackTrace();
-			exportDiagramError(os, e, fileFormatOption, null);
+			exportDiagramError(os, e, fileFormatOption, seed, null);
 		}
-		return new ImageDataSimple();
+		return ImageDataSimple.error();
 	}
 
-	public void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String graphvizVersion) throws IOException {
-		exportDiagramError(os, exception, fileFormat, getMetadata(), getFlashData(),
-				getFailureText1(exception, graphvizVersion));
+		exportDiagramError(os, exception, fileFormat, seed, getMetadata(), getFlashData(),
+				getFailureText1(exception, graphvizVersion, getFlashData()));
 	}
 
-	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String metadata, String flash, List<String> strings) throws IOException {
-		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
+
+		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
+			exportDiagramErrorText(os, exception, strings);
+			return;
+		}
+
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
@@ -257,8 +266,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			GraphvizCrash.addDecodeHint(strings);
 		}
 
-		final GraphicStrings graphicStrings = new GraphicStrings(strings, font, HtmlColorUtils.BLACK,
-				HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON, IconLoader.getRandom(),
+		final TextBlockBackcolored graphicStrings = GraphicStrings.createBlackOnWhite(strings, IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 
 		if (im == null) {
@@ -273,7 +281,19 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 				}
 			});
 		}
-		imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
+	}
+
+	private static void exportDiagramErrorText(OutputStream os, Throwable exception, List<String> strings) {
+		final PrintWriter pw = new PrintWriter(os);
+		exception.printStackTrace(pw);
+		pw.println();
+		pw.println();
+		for (String s : strings) {
+			s = s.replaceAll("\\</?\\w+?\\>", "");
+			pw.println(s);
+		}
+		pw.flush();
 	}
 
 	public String getFlashData() {
@@ -284,8 +304,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return source.getPlainString();
 	}
 
-	static private List<String> getFailureText1(Throwable exception, String graphvizVersion) {
-		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception);
+	static private List<String> getFailureText1(Throwable exception, String graphvizVersion, String textDiagram) {
+		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception, textDiagram);
 		strings.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
 		if (exception instanceof EmptySvgException) {
 			strings.add("Because dot/GraphViz returns an empty string.");
@@ -305,8 +325,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return strings;
 	}
 
-	public static List<String> getFailureText2(Throwable exception) {
-		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception);
+	public static List<String> getFailureText2(Throwable exception, String textDiagram) {
+		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception, textDiagram);
 		strings.add("PlantUML (" + Version.versionString() + ") has crashed.");
 		GraphvizCrash.checkOldVersionWarning(strings);
 		strings.add(" ");
@@ -351,8 +371,9 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException;
 
-	final protected void exportCmap(File suggestedFile, final ImageData cmapdata) throws FileNotFoundException {
-		final String name = changeName(suggestedFile.getAbsolutePath());
+	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
+			throws FileNotFoundException {
+		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());
 		final File cmapFile = new File(name);
 		PrintWriter pw = null;
 		try {

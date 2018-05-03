@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,24 +28,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19462 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,14 +58,14 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
-import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.StdlibOld;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
+import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.swing.MainWindow2;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
@@ -72,7 +75,25 @@ public class Run {
 
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
 		final long start = System.currentTimeMillis();
+		saveCommandLine(argsArray);
 		final Option option = new Option(argsArray);
+		ProgressBar.setEnable(option.isTextProgressBar());
+		if (OptionFlags.getInstance().getExtractStdLib()) {
+			StdlibOld.extractStdLib();
+			return;
+		}
+		if (OptionFlags.getInstance().isDumpStats()) {
+			StatsUtils.dumpStats();
+			return;
+		}
+		if (OptionFlags.getInstance().isLoopStats()) {
+			StatsUtils.loopStats();
+			return;
+		}
+		if (OptionFlags.getInstance().isDumpHtmlStats()) {
+			StatsUtils.outHtml();
+			return;
+		}
 		if (OptionFlags.getInstance().isEncodesprite()) {
 			encodeSprite(option.getResult());
 			return;
@@ -97,6 +118,7 @@ public class Run {
 			return;
 		}
 
+		forceOpenJdkResourceLoad();
 		boolean error = false;
 		boolean forceQuit = false;
 		if (option.isPattern()) {
@@ -115,10 +137,13 @@ public class Run {
 				}
 			}
 			new MainWindow2(option, dir);
-		} else if (option.isPipe() || option.isSyntax()) {
-			managePipe(option);
+		} else if (option.isPipe() || option.isPipeMap() || option.isSyntax()) {
+			error = managePipe(option);
 			forceQuit = true;
 		} else if (option.isFailfast2()) {
+			if (option.isSplash()) {
+				Splash.createSplash();
+			}
 			final long start2 = System.currentTimeMillis();
 			option.setCheckOnly(true);
 			error = manageAllFiles(option);
@@ -132,6 +157,9 @@ public class Run {
 			}
 			forceQuit = true;
 		} else {
+			if (option.isSplash()) {
+				Splash.createSplash();
+			}
 			error = manageAllFiles(option);
 			forceQuit = true;
 		}
@@ -149,6 +177,30 @@ public class Run {
 		if (forceQuit && OptionFlags.getInstance().isSystemExit()) {
 			System.exit(0);
 		}
+	}
+
+	private static String commandLine = "";
+
+	public static final String getCommandLine() {
+		return commandLine;
+	}
+
+	private static void saveCommandLine(String[] argsArray) {
+		final StringBuilder sb = new StringBuilder();
+		for (String s : argsArray) {
+			sb.append(s);
+			sb.append(" ");
+		}
+		commandLine = sb.toString();
+	}
+
+	public static void forceOpenJdkResourceLoad() {
+		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+		final Graphics2D gg = imDummy.createGraphics();
+		final String text = "Alice";
+		final Font font = new Font("SansSerif", Font.PLAIN, 12);
+		final FontMetrics fm = gg.getFontMetrics(font);
+		final Rectangle2D rect = fm.getStringBounds(text, gg);
 	}
 
 	private static void encodeSprite(List<String> result) throws IOException {
@@ -197,7 +249,7 @@ public class Run {
 	private static void goFtp(Option option) throws IOException {
 		final int ftpPort = option.getFtpPort();
 		System.err.println("ftpPort=" + ftpPort);
-		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormat());
+		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormatOption().getFileFormat());
 		ftpServer.go();
 	}
 
@@ -233,58 +285,9 @@ public class Run {
 		}
 	}
 
-	private static void managePipe(Option option) throws IOException {
+	private static boolean managePipe(Option option) throws IOException {
 		final String charset = option.getCharset();
-		final BufferedReader br;
-		if (charset == null) {
-			br = new BufferedReader(new InputStreamReader(System.in));
-		} else {
-			br = new BufferedReader(new InputStreamReader(System.in, charset));
-		}
-		managePipe(option, br, System.out);
-	}
-
-	public static void managePipe(Option option, final BufferedReader br, final PrintStream ps) throws IOException {
-		final StringBuilder sb = new StringBuilder();
-		String s = null;
-		while ((s = br.readLine()) != null) {
-			sb.append(s);
-			sb.append("\n");
-		}
-		String source = sb.toString();
-		if (source.contains("@startuml") == false) {
-			source = "@startuml\n" + source + "\n@enduml";
-		}
-		final SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), source, option.getConfig());
-
-		if (option.isSyntax()) {
-			final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
-			if (system instanceof UmlDiagram) {
-				ps.println(((UmlDiagram) system).getUmlDiagramType().name());
-				ps.println(system.getDescription());
-			} else if (system instanceof PSystemError) {
-				ps.println("ERROR");
-				final PSystemError sys = (PSystemError) system;
-				ps.println(sys.getHigherErrorPosition());
-				for (ErrorUml er : sys.getErrorsUml()) {
-					ps.println(er.getError());
-				}
-			} else {
-				ps.println("OTHER");
-				ps.println(system.getDescription());
-			}
-		} else if (option.isPipe()) {
-			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
-			if ("(error)".equalsIgnoreCase(result)) {
-				System.err.println("ERROR");
-				final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
-				final PSystemError sys = (PSystemError) system;
-				System.err.println(sys.getHigherErrorPosition());
-				for (ErrorUml er : sys.getErrorsUml()) {
-					System.err.println(er.getError());
-				}
-			}
-		}
+		return new Pipe(option, System.out, System.in, charset).managePipe();
 	}
 
 	private static boolean manageAllFiles(Option option) throws IOException, InterruptedException {
@@ -307,11 +310,12 @@ public class Run {
 	}
 
 	private static boolean processArgs(Option option) throws IOException, InterruptedException {
-		if (option.isDecodeurl() == false && option.getNbThreads() > 0 && option.isCheckOnly() == false
-				&& OptionFlags.getInstance().isMetadata() == false) {
+		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
+				&& OptionFlags.getInstance().isExtractFromMetadata() == false) {
 			return multithread(option);
 		}
 		boolean errorGlobal = false;
+		final List<File> files = new ArrayList<File>();
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
 				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
@@ -320,19 +324,22 @@ public class Run {
 				System.out.println("@enduml");
 			} else {
 				final FileGroup group = new FileGroup(s, option.getExcludes(), option);
-				for (File f : group.getFiles()) {
-					try {
-						final boolean error = manageFileInternal(f, option);
-						if (error) {
-							errorGlobal = true;
-						}
-						if (error && option.isFailfastOrFailfast2()) {
-							return true;
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+				incTotal(group.getFiles().size());
+				files.addAll(group.getFiles());
+			}
+		}
+		for (File f : files) {
+			try {
+				final boolean error = manageFileInternal(f, option);
+				if (error) {
+					errorGlobal = true;
 				}
+				incDone(error);
+				if (error && option.isFailfastOrFailfast2()) {
+					return true;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		return errorGlobal;
@@ -345,6 +352,7 @@ public class Run {
 		for (String s : option.getResult()) {
 			final FileGroup group = new FileGroup(s, option.getExcludes(), option);
 			for (final File f : group.getFiles()) {
+				incTotal(1);
 				executor.submit(new Runnable() {
 					public void run() {
 						if (errors.get() && option.isFailfastOrFailfast2()) {
@@ -360,6 +368,7 @@ public class Run {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
+						incDone(errors.get());
 					}
 				});
 			}
@@ -369,8 +378,18 @@ public class Run {
 		return errors.get();
 	}
 
+	private static void incDone(boolean error) {
+		Splash.incDone(error);
+		ProgressBar.incDone(error);
+	}
+
+	private static void incTotal(int nb) {
+		Splash.incTotal(nb);
+		ProgressBar.incTotal(nb);
+	}
+
 	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {
-		if (OptionFlags.getInstance().isMetadata()) {
+		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			System.out.println("------------------------");
 			System.out.println(f);
 			// new Metadata().readAndDisplayMetadata(f);
@@ -381,16 +400,16 @@ public class Run {
 		}
 		final ISourceFileReader sourceFileReader;
 		if (option.getOutputFile() == null) {
-			sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f, option.getOutputDir(),
+			sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, option.getOutputDir(),
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		} else {
-			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(), f, option.getOutputFile(),
+			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(f), f, option.getOutputFile(),
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		}
+		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
 		if (option.isComputeurl()) {
-			final List<String> urls = sourceFileReader.getEncodedUrl();
-			for (String s : urls) {
-				System.out.println(s);
+			for (BlockUml s : sourceFileReader.getBlocks()) {
+				System.out.println(s.getEncodedUrl());
 			}
 			return false;
 		}

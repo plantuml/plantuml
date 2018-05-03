@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -63,6 +66,11 @@ public class FtileDiamondInside extends AbstractFtile {
 	private final TextBlock east;
 	private final TextBlock north;
 	private final TextBlock south;
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.emptyList();
+	}
 
 	public FtileDiamondInside(ISkinParam skinParam, HtmlColor backColor, HtmlColor borderColor, Swimlane swimlane,
 			TextBlock label) {
@@ -153,13 +161,24 @@ public class FtileDiamondInside extends AbstractFtile {
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry dimDiamonAlone = calculateDimensionAlone(stringBounder);
 		final Dimension2D dimWest = west.calculateDimension(stringBounder);
 		final Dimension2D dimEast = east.calculateDimension(stringBounder);
 		final double northHeight = north.calculateDimension(stringBounder).getHeight();
 		return dimDiamonAlone.incHeight(northHeight);
 		// return dimDiamonAlone.incHeight(northHeight).addMarginX(dimWest.getWidth(), dimEast.getWidth());
+	}
+
+	public double getEastLabelWidth(StringBounder stringBounder) {
+		final Dimension2D dimEast = east.calculateDimension(stringBounder);
+		return dimEast.getWidth();
+	}
+
+	public double getSouthLabelHeight(StringBounder stringBounder) {
+		final Dimension2D dimSouth = south.calculateDimension(stringBounder);
+		return dimSouth.getHeight();
 	}
 
 }

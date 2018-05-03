@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8066 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -36,8 +38,12 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolRect extends USymbol {
@@ -60,26 +66,45 @@ class USymbolRect extends USymbol {
 		return skinParameter;
 	}
 
-	private void drawRect(UGraphic ug, double width, double height, boolean shadowing) {
-		final URectangle shape = new URectangle(width, height);
+	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double roundCorner,
+			double diagonalCorner) {
+		final Shadowable shape = diagonalCorner > 0 ? getDiagonalShape(width, height, diagonalCorner) : new URectangle(
+				width, height, roundCorner, roundCorner);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
 		ug.draw(shape);
 	}
 
+	private Shadowable getDiagonalShape(double width, double height, double diagonalCorner) {
+		final UPath result = new UPath();
+		result.moveTo(diagonalCorner, 0);
+		result.lineTo(width - diagonalCorner, 0);
+		result.lineTo(width, diagonalCorner);
+		result.lineTo(width, height - diagonalCorner);
+		result.lineTo(width - diagonalCorner, height);
+		result.lineTo(diagonalCorner, height);
+		result.lineTo(0, height - diagonalCorner);
+		result.lineTo(0, diagonalCorner);
+		result.lineTo(diagonalCorner, 0);
+		return result;
+	}
+
 	private Margin getMargin() {
 		return new Margin(10, 10, 10, 10);
 	}
 
+	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereotypeAlignement);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -93,13 +118,15 @@ class USymbolRect extends USymbol {
 		};
 	}
 
-	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, final HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner(), 0);
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereoX;
 				final double posStereoY;
@@ -112,7 +139,14 @@ class USymbolRect extends USymbol {
 				}
 				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-				final double posTitle = (width - dimTitle.getWidth()) / 2;
+				final double posTitle;
+				if (labelAlignment == HorizontalAlignment.LEFT) {
+					posTitle = 3;
+				} else if (labelAlignment == HorizontalAlignment.RIGHT) {
+					posTitle = width - dimTitle.getWidth() - 3;
+				} else {
+					posTitle = (width - dimTitle.getWidth()) / 2;
+				}
 				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));
 			}
 
@@ -120,6 +154,11 @@ class USymbolRect extends USymbol {
 				return new Dimension2DDouble(width, height);
 			}
 		};
+	}
+
+	@Override
+	public boolean manageHorizontalLine() {
+		return true;
 	}
 
 }

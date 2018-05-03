@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -38,11 +40,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Log;
 
@@ -59,51 +58,6 @@ public class SvekUtils {
 				pw.close();
 			}
 		}
-	}
-
-	static class PointListIterator implements Iterator<List<Point2D.Double>> {
-
-		private final String text;
-		private final double yDelta;
-		private int pos = 0;
-
-		public PointListIterator(String text, double yDelta) {
-			this.text = text;
-			this.yDelta = yDelta;
-		}
-
-		public boolean hasNext() {
-			return true;
-		}
-
-		public List<Point2D.Double> next() {
-			final List<Point2D.Double> result = extractPointsList(text, pos, yDelta);
-			pos = text.indexOf(pointsString, pos) + pointsString.length() + 1;
-			return result;
-		}
-
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-	}
-
-	final private static String pointsString = "points=\"";
-
-	public static List<Point2D.Double> extractPointsList(final String svg, final int starting, double yDelta) {
-		final int p2 = svg.indexOf(pointsString, starting);
-		final int p3 = svg.indexOf("\"", p2 + pointsString.length());
-		final String points = svg.substring(p2 + pointsString.length(), p3);
-		final List<Point2D.Double> pointsList = getPoints(points, yDelta);
-		return pointsList;
-	}
-
-	public static List<Point2D.Double> extractD(final String svg, final int starting, double yDelta) {
-		final int p2 = svg.indexOf("d=\"", starting);
-		final int p3 = svg.indexOf("\"", p2 + "d=\"".length());
-		final String points = svg.substring(p2 + "d=\"".length(), p3);
-		final List<Point2D.Double> pointsList = getPoints(points, yDelta);
-		return pointsList;
 	}
 
 	static public double getValue(String svg, int starting, String varName) {
@@ -158,19 +112,6 @@ public class SvekUtils {
 			if (points.get(i).y < result) {
 				result = points.get(i).y;
 			}
-		}
-		return result;
-	}
-
-	static private List<Point2D.Double> getPoints(String points, double yDelta) {
-		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
-		final StringTokenizer st = new StringTokenizer(points, " MC");
-		while (st.hasMoreTokens()) {
-			final String t = st.nextToken();
-			final StringTokenizer st2 = new StringTokenizer(t, ",");
-			final double x = Double.parseDouble(st2.nextToken());
-			final double y = Double.parseDouble(st2.nextToken()) + yDelta;
-			result.add(new Point2D.Double(x, y));
 		}
 		return result;
 	}

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,23 +28,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10269 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
@@ -52,14 +54,7 @@ public class TileImageSvg extends AbstractTextBlock implements TextBlock {
 	}
 
 	private UImageSvg createSvg(File svgFile) throws IOException {
-		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
-		final StringBuilder sb = new StringBuilder();
-		String s;
-		while ((s = br.readLine()) != null) {
-			sb.append(s);
-		}
-		br.close();
-		return new UImageSvg(sb.toString());
+		return new UImageSvg(new SvgString(FileUtils.readSvg(svgFile), 1));
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

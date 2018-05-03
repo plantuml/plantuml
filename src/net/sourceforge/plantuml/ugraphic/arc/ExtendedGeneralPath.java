@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Thierry Kormann
  * 
- * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.arc;
@@ -68,7 +70,7 @@ import java.util.Arrays;
  * <code>GeneralPath</code>. Elliptical arc is implemented using an <code>Arc2D</code> in double precision.
  * 
  * <p>
- * <b>Warning</b> : An elliptical arc may be composed of several path segments. For futher details, see the SVG
+ * <b>Warning</b> : An elliptical arc may be composed of several path segments. For further details, see the SVG
  * Appendix&nbsp;F.6
  * 
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
@@ -415,7 +417,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 						// Change MOVETO to LINETO.
 						type = PathIterator.SEG_LINETO;
 					} else {
-						// Redundent segment (move to current loc) drop it...
+						// Redundant segment (move to current loc) drop it...
 						if (pi.isDone()) {
 							break; // Nothing interesting
 						}

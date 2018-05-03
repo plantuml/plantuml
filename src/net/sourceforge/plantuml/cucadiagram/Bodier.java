@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7755 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -43,8 +45,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.TextBlockVertical2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class Bodier {
@@ -55,6 +57,7 @@ public class Bodier {
 	private List<Member> methodsToDisplay;
 	private List<Member> fieldsToDisplay;
 	private final boolean manageModifier;
+	private ILeaf leaf;
 
 	public void muteClassToObject() {
 		methodsToDisplay = null;
@@ -68,11 +71,28 @@ public class Bodier {
 		this.manageModifier = type == null ? false : type.manageModifier();
 	}
 
-	public void addFieldOrMethod(String s) {
+	public void setLeaf(ILeaf leaf) {
+		if (leaf == null) {
+			throw new IllegalArgumentException();
+		}
+		this.leaf = leaf;
+
+	}
+
+	public void addFieldOrMethod(String s, IEntity leaf) {
+		if (leaf == null) {
+			throw new IllegalArgumentException();
+		}
 		// Empty cache
 		methodsToDisplay = null;
 		fieldsToDisplay = null;
 		rawBody.add(s);
+		if (leaf instanceof ILeaf) {
+			if (this.leaf != null && this.leaf != leaf) {
+				throw new IllegalArgumentException();
+			}
+			this.leaf = (ILeaf) leaf;
+		}
 	}
 
 	private boolean isBodyEnhanced() {
@@ -103,7 +123,7 @@ public class Bodier {
 				if (s.length() == 0 && methodsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new MemberImpl(s, true, manageModifier, true);
+				final Member m = new MemberImpl(s, true, manageModifier);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					methodsToDisplay.add(m);
 				}
@@ -131,7 +151,7 @@ public class Bodier {
 				if (s.length() == 0 && fieldsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new MemberImpl(s, false, manageModifier, true);
+				final Member m = new MemberImpl(s, false, manageModifier);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					fieldsToDisplay.add(m);
 				}
@@ -158,25 +178,48 @@ public class Bodier {
 				return true;
 			}
 		}
-		return true;
+		return false;
+	}
+
+	private List<String> rawBodyWithoutHidden() {
+		if (hides == null || hides.size() == 0) {
+			return rawBody;
+		}
+		final List<String> result = new ArrayList<String>();
+		for (String s : rawBody) {
+			final Member m = new MemberImpl(s, isMethod(s), manageModifier);
+			if (hides.contains(m.getVisibilityModifier()) == false) {
+				result.add(s);
+			}
+
+		}
+		return result;
 	}
 
 	public TextBlock getBody(final FontParam fontParam, final ISkinParam skinParam, final boolean showMethods,
 			final boolean showFields, Stereotype stereotype) {
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
-				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier, stereotype);
+				return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf);
 			}
 			return null;
 		}
-		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam, stereotype);
+		if (leaf == null) {
+			throw new IllegalStateException();
+		}
+		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
+				stereotype, leaf);
 		if (type == LeafType.OBJECT) {
+			if (showFields == false) {
+				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
+			}
 			return fields.asBlockMemberImpl();
 		}
 		if (type.isLikeClass() == false) {
 			throw new UnsupportedOperationException();
 		}
-		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam, stereotype);
+		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
+				stereotype, leaf);
 		if (showFields && showMethods == false) {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {
@@ -187,7 +230,11 @@ public class Bodier {
 
 		final TextBlock bb1 = fields.asBlockMemberImpl();
 		final TextBlock bb2 = methods.asBlockMemberImpl();
-		return new TextBlockVertical2(bb1, bb2, HorizontalAlignment.LEFT);
+		return TextBlockUtils.mergeTB(bb1, bb2, HorizontalAlignment.LEFT);
+	}
+
+	public List<String> getRawBody() {
+		return Collections.unmodifiableList(rawBody);
 	}
 
 }

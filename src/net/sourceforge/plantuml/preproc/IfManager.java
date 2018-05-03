@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -39,12 +41,15 @@ import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.version.Version;
 
 class IfManager implements ReadLine {
 
-	protected static final Pattern2 ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+([A-Za-z_][A-Za-z_0-9]*)$");
-	protected static final Pattern2 elsePattern = MyPattern.cmpile("^[%s]*!else$");
-	protected static final Pattern2 endifPattern = MyPattern.cmpile("^[%s]*!endif$");
+	protected static final Pattern2 ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+(.+)$");
+	protected static final Pattern2 ifcomparePattern = MyPattern
+			.cmpile("^[%s]*!if[%s]+\\%(\\w+)\\%[%s]*(\\<|\\<=|\\>|\\>=|=|==|!=|\\<\\>)[%s]*(\\d+)$");
+	protected static final Pattern2 elsePattern = MyPattern.cmpile("^[%s]*!else[%s]*$");
+	protected static final Pattern2 endifPattern = MyPattern.cmpile("^[%s]*!endif[%s]*$");
 
 	private final Defines defines;
 	private final ReadLine source;
@@ -56,7 +61,7 @@ class IfManager implements ReadLine {
 		this.source = source;
 	}
 
-	final public CharSequence2	 readLine() throws IOException {
+	final public CharSequence2 readLine() throws IOException {
 		if (child != null) {
 			final CharSequence2 s = child.readLine();
 			if (s != null) {
@@ -74,7 +79,21 @@ class IfManager implements ReadLine {
 			return null;
 		}
 
-		final Matcher2 m = ifdefPattern.matcher(s);
+		Matcher2 m = ifcomparePattern.matcher(s);
+		if (m.find()) {
+			final int value1 = getValue(m.group(1));
+			final String operator = m.group(2);
+			final int value2 = Integer.parseInt(m.group(3));
+			final boolean ok = new NumericCompare(operator).isCompareOk(value1, value2);
+			if (ok) {
+				child = new IfManagerPositif(source, defines);
+			} else {
+				child = new IfManagerNegatif(source, defines);
+			}
+			return this.readLine();
+		}
+
+		m = ifdefPattern.matcher(s);
 		if (m.find()) {
 			boolean ok = defines.isDefine(m.group(2));
 			if (m.group(1) != null) {
@@ -85,16 +104,17 @@ class IfManager implements ReadLine {
 			} else {
 				child = new IfManagerNegatif(source, defines);
 			}
-			// child = new IfManager(source, defines, ok ? IfPart.IF :
-			// IfPart.SKIP);
 			return this.readLine();
 		}
 
-		// m = endifPattern.matcher(s);
-		// if (m.find()) {
-		// return null;
-		// }
 		return s;
+	}
+
+	private int getValue(final String arg) {
+		if (arg.equalsIgnoreCase("PLANTUML_VERSION")) {
+			return Version.versionPatched();
+		}
+		return 0;
 	}
 
 	public void close() throws IOException {

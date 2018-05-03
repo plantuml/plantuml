@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19254 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -80,25 +82,28 @@ public class PngIO {
 
 	public static void write(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData)
 			throws IOException {
-		if (metadata != null && checkPNGMetadata()) {
+		if (forceImageIO == false && metadata != null && checkPNGMetadata()) {
 			PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, debugData);
 		} else {
 			ImageIO.write(image, "png", os);
 		}
-
 	}
+
+	public static boolean forceImageIO = false;
 
 	static boolean checkPNGMetadata() {
 		try {
 			final Class cl = Class.forName("com.sun.imageio.plugins.png.PNGMetadata");
 			if (cl == null) {
 				Log.info("Cannot load com.sun.imageio.plugins.png.PNGMetadata");
+				forceImageIO = true;
 				return false;
 			}
 			Log.info("Ok for com.sun.imageio.plugins.png.PNGMetadata");
 			return true;
 		} catch (Exception e) {
 			Log.info("Error loading com.sun.imageio.plugins.png.PNGMetadata " + e);
+			forceImageIO = true;
 			return false;
 		}
 	}

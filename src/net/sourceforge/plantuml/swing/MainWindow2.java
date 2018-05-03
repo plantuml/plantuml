@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6533 $
  *
  */
 package net.sourceforge.plantuml.swing;
@@ -106,7 +108,7 @@ public class MainWindow2 extends JFrame {
 	}
 
 	private String getDefaultFileExtensions() {
-		return "txt, tex, java, htm, html, c, h, cpp, apt, pu";
+		return "txt, tex, java, htm, html, c, h, cpp, apt, pu, puml, hpp, hh";
 	}
 
 	private void changeExtensions(String ext) {
@@ -287,7 +289,6 @@ public class MainWindow2 extends JFrame {
 		final JFileChooser chooser = new JFileChooser();
 		chooser.setDialogType(JFileChooser.CUSTOM_DIALOG);
 		chooser.setDialogTitle("Directory to watch:");
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
 		final String currentPath = prefs.get(KEY_DIR, ".");
 		chooser.setCurrentDirectory(new File(currentPath));
@@ -296,7 +297,11 @@ public class MainWindow2 extends JFrame {
 		Log.info("Closing OpenDialog");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			final File dir = chooser.getSelectedFile();
-			changeDir(dir);
+			if (dir.isDirectory()) {
+				changeDir(dir);
+			} else {
+				changeDir(dir.getParentFile());
+			}
 		}
 
 	}

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,8 +28,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -36,11 +39,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -51,10 +56,10 @@ import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
@@ -68,7 +73,8 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class SequenceDiagram extends UmlDiagram {
 
-	private final Map<String, Participant> participants = new LinkedHashMap<String, Participant>();
+	// private final Map<String, Participant> participants = new LinkedHashMap<String, Participant>();
+	private final List<Participant> participantsList = new ArrayList<Participant>();
 
 	private final List<Event> events = new ArrayList<Event>();
 
@@ -83,13 +89,22 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public Participant getOrCreateParticipant(String code, Display display) {
-		Participant result = participants.get(code);
+		Participant result = participantsget(code);
 		if (result == null) {
-			result = new Participant(ParticipantType.PARTICIPANT, code, display);
-			participants.put(code, result);
+			result = new Participant(ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0);
+			addWithOrder(result);
 			participantEnglobers2.put(result, participantEnglober);
 		}
 		return result;
+	}
+
+	private Participant participantsget(String code) {
+		for (Participant p : participantsList) {
+			if (p.getCode().equals(code)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	private EventWithDeactivate lastEventWithDeactivate;
@@ -98,22 +113,36 @@ public class SequenceDiagram extends UmlDiagram {
 		return lastEventWithDeactivate;
 	}
 
-	public Participant createNewParticipant(ParticipantType type, String code, Display display) {
-		if (participants.containsKey(code)) {
+	public Participant createNewParticipant(ParticipantType type, String code, Display display, int order) {
+		if (participantsget(code) != null) {
 			throw new IllegalArgumentException();
 		}
 		if (Display.isNull(display)) {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(code);
 		}
-		final Participant result = new Participant(type, code, display);
-		participants.put(code, result);
+		final Participant result = new Participant(type, code, display, hiddenPortions, order);
+		addWithOrder(result);
 		participantEnglobers2.put(result, participantEnglober);
 		return result;
 	}
 
-	public Map<String, Participant> participants() {
-		return Collections.unmodifiableMap(participants);
+	private void addWithOrder(final Participant result) {
+		for (int i = 0; i < participantsList.size(); i++) {
+			if (result.getOrder() < participantsList.get(i).getOrder()) {
+				participantsList.add(i, result);
+				return;
+			}
+		}
+		participantsList.add(result);
+	}
+
+	public Collection<Participant> participants() {
+		return Collections.unmodifiableCollection(participantsList);
+	}
+
+	public boolean participantsContainsKey(String code) {
+		return participantsget(code) != null;
 	}
 
 	public String addMessage(AbstractMessage m) {
@@ -297,7 +326,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(" + participants.size() + " participants)", getClass());
+		return new DiagramDescription("(" + participantsList.size() + " participants)");
 	}
 
 	public boolean changeSkin(String className) {
@@ -317,45 +346,30 @@ public class SequenceDiagram extends UmlDiagram {
 		return skin2;
 	}
 
-	private boolean autonumber = false;
-	private int messageNumber;
-	private int incrementMessageNumber;
+	private final AutoNumber autoNumber = new AutoNumber();
 
-	private DecimalFormat decimalFormat;
-
-	public final void autonumberGo(int startingNumber, int increment, DecimalFormat decimalFormat) {
-		this.autonumber = true;
-		this.messageNumber = startingNumber;
-		this.incrementMessageNumber = increment;
-		this.decimalFormat = decimalFormat;
+	public final void autonumberGo(DottedNumber startingNumber, int increment, DecimalFormat decimalFormat) {
+		autoNumber.go(startingNumber, increment, decimalFormat);
 	}
 
 	public final void autonumberStop() {
-		this.autonumber = false;
+		autoNumber.stop();
 	}
 
-	public final void autonumberResume(DecimalFormat decimalFormat) {
-		this.autonumber = true;
-		if (decimalFormat != null) {
-			this.decimalFormat = decimalFormat;
-		}
+	public final AutoNumber getAutoNumber() {
+		return autoNumber;
 	}
 
-	public final void autonumberResume(int increment, DecimalFormat decimalFormat) {
-		this.autonumber = true;
-		this.incrementMessageNumber = increment;
-		if (decimalFormat != null) {
-			this.decimalFormat = decimalFormat;
-		}
-	}
+	// public final void autonumberResume(DecimalFormat decimalFormat) {
+	// autoNumber.resume(decimalFormat);
+	// }
+	//
+	// public final void autonumberResume(int increment, DecimalFormat decimalFormat) {
+	// autoNumber.resume(increment, decimalFormat);
+	// }
 
 	public String getNextMessageNumber() {
-		if (autonumber == false) {
-			return null;
-		}
-		final int result = messageNumber;
-		messageNumber += incrementMessageNumber;
-		return decimalFormat.format(result);
+		return autoNumber.getNextMessageNumber();
 	}
 
 	public boolean isShowFootbox() {
@@ -415,7 +429,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void removeHiddenParticipants() {
-		for (Participant p : new ArrayList<Participant>(participants.values())) {
+		for (Participant p : new ArrayList<Participant>(participantsList)) {
 			if (isAlone(p)) {
 				remove(p);
 			}
@@ -423,7 +437,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	private void remove(Participant p) {
-		final boolean ok = participants.values().remove(p);
+		final boolean ok = participantsList.remove(p);
 		if (ok == false) {
 			throw new IllegalArgumentException();
 		}
@@ -440,12 +454,13 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void putParticipantInLast(String code) {
-		final Participant p = participants.get(code);
+		final Participant p = participantsget(code);
 		if (p == null) {
 			throw new IllegalArgumentException(code);
 		}
-		participants.remove(code);
-		participants.put(code, p);
+		final boolean ok = participantsList.remove(p);
+		assert ok;
+		addWithOrder(p);
 		participantEnglobers2.put(p, participantEnglober);
 	}
 
@@ -464,7 +479,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public boolean hasUrl() {
-		for (Participant p : participants.values()) {
+		for (Participant p : participantsList) {
 			if (p.getUrl() != null) {
 				return true;
 			}
@@ -486,7 +501,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public boolean isOk() {
-		if (participants.size() == 0) {
+		if (participantsList.size() == 0) {
 			return false;
 		}
 		return true;
@@ -502,8 +517,7 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		return dpiFactor;
 	}
-	
-	
+
 	@Override
 	public String checkFinalError() {
 		if (this.isHideUnlinkedData()) {
@@ -512,5 +526,17 @@ public class SequenceDiagram extends UmlDiagram {
 		return super.checkFinalError();
 	}
 
+	private final Set<EntityPortion> hiddenPortions = EnumSet.<EntityPortion> noneOf(EntityPortion.class);
 
+	public void hideOrShow(Set<EntityPortion> portions, boolean show) {
+		if (show) {
+			hiddenPortions.removeAll(portions);
+		} else {
+			hiddenPortions.addAll(portions);
+		}
+	}
+
+	public Display manageVariable(Display labels) {
+		return labels.replace("%autonumber%", autoNumber.getCurrentMessageNumber(false));
+	}
 }

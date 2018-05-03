@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -39,7 +41,7 @@ public enum LeafType {
 
 	EMPTY_PACKAGE,
 
-	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP, NOTE, TIPS, OBJECT, ASSOCIATION, ENUM,
+	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP, NOTE, TIPS, OBJECT, ASSOCIATION, ENUM, CIRCLE,
 	
 	USECASE, 
 
@@ -51,21 +53,21 @@ public enum LeafType {
 
 	STATE, STATE_CONCURRENT, PSEUDO_STATE, STATE_CHOICE, STATE_FORK_JOIN,
 
-	BLOCK,
+	BLOCK, ENTITY,
 
 	STILL_UNKNOWN;
 
-	public static LeafType getLeafType(String arg0) {
-		arg0 = StringUtils.goUpperCase(arg0);
-		if (arg0.startsWith("ABSTRACT")) {
+	public static LeafType getLeafType(String type) {
+		type = StringUtils.goUpperCase(type);
+		if (type.startsWith("ABSTRACT")) {
 			return LeafType.ABSTRACT_CLASS;
 		}
-		return LeafType.valueOf(arg0);
+		return LeafType.valueOf(type);
 	}
 
 	public boolean isLikeClass() {
 		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS
-				|| this == LeafType.INTERFACE || this == LeafType.ENUM;
+				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY;
 	}
 
 	public String toHtml() {
@@ -75,7 +77,7 @@ public enum LeafType {
 
 	public boolean manageModifier() {
 		if (this == ANNOTATION || this == ABSTRACT_CLASS || this == CLASS || this == INTERFACE || this == ENUM
-				|| this == OBJECT) {
+				|| this == OBJECT || this == ENTITY) {
 			return true;
 		}
 		return false;

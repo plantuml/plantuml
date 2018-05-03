@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -35,9 +40,9 @@ import smetana.core.Bucket;
 import smetana.core.CType;
 import smetana.core.JUtils;
 import smetana.core.__array_of_double__;
-import smetana.core.__array_of_integer__;
-import smetana.core.__array_of_ptr__;
-import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_integer_impl__;
+import smetana.core.__array_of_ptr_impl__;
+import smetana.core.__array_of_struct_impl__;
 
 public class BucketToAreaFactory {
 
@@ -97,7 +102,7 @@ public class BucketToAreaFactory {
 		}
 		if (bucket.inlineStruct()) {
 			final Class theClass = bucket.ctype.getTypeClass();
-			return new StarStruct(theClass, parent);
+			return JUtils.create(theClass, parent);
 		}
 		if (bucket.ctype.isArrayOfCString()) {
 			return null;
@@ -124,11 +129,11 @@ public class BucketToAreaFactory {
 		JUtils.LOG("BucketToAreaFactory:createAreaArray: type=" + bucket.ctype);
 		if (bucket.ctype.getType().matches("char \\w+\\[\\d+\\]")) {
 			// Array of char
-			return __array_of_integer__.mallocInteger(arrayLength);
+			return __array_of_integer_impl__.mallocInteger(arrayLength);
 		}
 		if (bucket.ctype.getType().matches("int \\w+\\[\\d+\\]")) {
 			// Array of int
-			return __array_of_integer__.mallocInteger(arrayLength);
+			return __array_of_integer_impl__.mallocInteger(arrayLength);
 		}
 		if (bucket.ctype.getType().matches("double \\w+\\[\\d+\\]")) {
 			// Array of double
@@ -140,7 +145,7 @@ public class BucketToAreaFactory {
 			JUtils.LOG("element=" + element);
 			final Class theClass = CType.getClassFrom(element);
 			JUtils.LOG("theClass=" + theClass);
-			return __array_of_ptr__.malloc_empty(arrayLength);
+			return __array_of_ptr_impl__.malloc_empty(arrayLength);
 		}
 		if (bucket.ctype.getType().matches("\\w+ \\w+\\[\\d+\\]")) {
 			// Array of Struct
@@ -148,7 +153,7 @@ public class BucketToAreaFactory {
 			JUtils.LOG("element=" + element);
 			final Class theClass = CType.getClassFrom(element);
 			JUtils.LOG("theClass=" + theClass);
-			return __array_of_struct__.malloc(theClass, arrayLength);
+			return __array_of_struct_impl__.malloc(theClass, arrayLength);
 		}
 		throw new UnsupportedOperationException();
 	}

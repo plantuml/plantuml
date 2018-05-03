@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,48 +28,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8770 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
 public class Namespace {
-
-	private final String namespace;
-
-	private Namespace(String namespace) {
-		if (namespace == null) {
-			throw new IllegalArgumentException();
-		}
-		this.namespace = namespace;
-	}
-
-	public final String getNamespace() {
-		return namespace;
-	}
-
-	public static Namespace of(String namespace) {
-		return new Namespace(namespace);
-	}
-
-	@Override
-	public int hashCode() {
-		return namespace.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		final Namespace other = (Namespace) obj;
-		return this.namespace.equals(other.namespace);
-	}
-
-	public boolean isMain() {
-		return namespace.length() == 0;
-	}
 
 }

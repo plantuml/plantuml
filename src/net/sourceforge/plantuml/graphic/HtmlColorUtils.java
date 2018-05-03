@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,16 +28,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7946 $
  *
  */
 package net.sourceforge.plantuml.graphic;
-
 
 public class HtmlColorUtils {
 
@@ -61,6 +62,7 @@ public class HtmlColorUtils {
 	public static final HtmlColor COL_FBFB77;
 	public static final HtmlColor COL_ADD1B2;
 	public static final HtmlColor COL_A9DCDF;
+	public static final HtmlColor COL_E3664A;
 	public static final HtmlColor COL_EB937F;
 	public static final HtmlColor COL_B4A7E5;
 	public static final HtmlColor COL_527BC6;
@@ -68,7 +70,6 @@ public class HtmlColorUtils {
 	public static final HtmlColor COL_D7E0F2;
 	public static final HtmlColor COL_989898;
 	public static final HtmlColor COL_BBBBBB;
-	
 
 	static {
 
@@ -99,6 +100,7 @@ public class HtmlColorUtils {
 		COL_FBFB77 = set.getColorIfValid("#FBFB77");
 		COL_ADD1B2 = set.getColorIfValid("#ADD1B2");
 		COL_A9DCDF = set.getColorIfValid("#A9DCDF");
+		COL_E3664A = set.getColorIfValid("#E3664A");
 		COL_EB937F = set.getColorIfValid("#EB937F");
 		COL_B4A7E5 = set.getColorIfValid("#B4A7E5");
 		COL_527BC6 = set.getColorIfValid("#527BC6");
@@ -107,6 +109,13 @@ public class HtmlColorUtils {
 		COL_989898 = set.getColorIfValid("#989898");
 		COL_BBBBBB = set.getColorIfValid("#BBBBBB");
 
+	}
+
+	public static HtmlColor noGradient(HtmlColor color) {
+		if (color instanceof HtmlColorGradient) {
+			return ((HtmlColorGradient) color).getColor1();
+		}
+		return color;
 	}
 
 }

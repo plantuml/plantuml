@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -36,8 +38,6 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -54,7 +54,7 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 
 	// private Stereotype stereotype;
 
-	private final Url url;
+	private Url url;
 
 	public Note(Participant p, NotePosition position, Display strings) {
 		this(p, null, position, strings);
@@ -68,19 +68,7 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		this.p = p;
 		this.p2 = p2;
 		this.position = position;
-		if (strings != null && strings.size() > 0) {
-			final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
-			final String s = strings.asStringWithHiddenNewLine();
-			this.url = urlBuilder.getUrl(s);
-		} else {
-			this.url = null;
-		}
-
-		if (this.url == null) {
-			this.strings = strings;
-		} else {
-			this.strings = strings.removeUrlHiddenNewLineUrl();
-		}
+		this.strings = strings;
 	}
 
 	public Participant getParticipant() {
@@ -147,6 +135,10 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 	@Override
 	public String toString() {
 		return super.toString() + " " + strings;
+	}
+
+	public void setUrl(Url url) {
+		this.url = url;
 	}
 
 }

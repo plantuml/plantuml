@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8066 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -36,6 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -50,9 +53,9 @@ class USymbolFrame extends USymbol {
 		return SkinParameter.FRAME;
 	}
 
-
-	private void drawFrame(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing) {
-		final URectangle shape = new URectangle(width, height);
+	private void drawFrame(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing,
+			double roundCorner) {
+		final URectangle shape = new URectangle(width, height, roundCorner, roundCorner);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
@@ -77,7 +80,7 @@ class USymbolFrame extends USymbol {
 		polygon.lineTo(textWidth - cornersize, textHeight);
 
 		polygon.lineTo(0, textHeight);
-		ug.draw(polygon);
+		ug.apply(new UChangeBackColor(null)).draw(polygon);
 
 	}
 
@@ -92,14 +95,17 @@ class USymbolFrame extends USymbol {
 		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);
 	}
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
-				ug = new UGraphicStencil(ug, getRectangleStencil(dim), new UStroke());
+				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
-				drawFrame(ug, dim.getWidth(), dim.getHeight(), new Dimension2DDouble(0, 0), symbolContext.isShadowing());
+				drawFrame(ug, dim.getWidth(), dim.getHeight(), new Dimension2DDouble(0, 0),
+						symbolContext.isShadowing(), symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -113,8 +119,9 @@ class USymbolFrame extends USymbol {
 		};
 	}
 
-	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -122,7 +129,8 @@ class USymbolFrame extends USymbol {
 				final Dimension2D dim = calculateDimension(stringBounder);
 				ug = symbolContext.apply(ug);
 				final Dimension2D dimTitle = title.calculateDimension(stringBounder);
-				drawFrame(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.isShadowing());
+				drawFrame(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				title.drawU(ug.apply(new UTranslate(3, 1)));
 
 				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
@@ -136,11 +144,10 @@ class USymbolFrame extends USymbol {
 			}
 		};
 	}
-	
+
 	@Override
 	public boolean manageHorizontalLine() {
 		return true;
 	}
-
 
 }

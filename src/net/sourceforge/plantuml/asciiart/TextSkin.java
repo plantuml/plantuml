@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19529 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -53,11 +55,18 @@ public class TextSkin implements Skin {
 
 	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
-		if (type == ComponentType.PARTICIPANT_HEAD || type == ComponentType.PARTICIPANT_TAIL) {
-			return new ComponentTextParticipant(type, stringsToDisplay, fileFormat);
-		}
 		if (type == ComponentType.ACTOR_HEAD || type == ComponentType.ACTOR_TAIL) {
-			return new ComponentTextActor(type, stringsToDisplay, fileFormat);
+			return new ComponentTextActor(type, stringsToDisplay, fileFormat,
+					fileFormat == FileFormat.UTXT ? AsciiShape.STICKMAN_UNICODE : AsciiShape.STICKMAN);
+		}
+		if (type == ComponentType.BOUNDARY_HEAD || type == ComponentType.BOUNDARY_TAIL) {
+			return new ComponentTextShape(type, stringsToDisplay, AsciiShape.BOUNDARY);
+		}
+		if (type == ComponentType.DATABASE_HEAD || type == ComponentType.DATABASE_TAIL) {
+			return new ComponentTextShape(type, stringsToDisplay, AsciiShape.DATABASE);
+		}
+		if (type.name().endsWith("_HEAD") || type.name().endsWith("_TAIL")) {
+			return new ComponentTextParticipant(type, stringsToDisplay, fileFormat);
 		}
 		if (type.isArrow()
 				&& (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL
@@ -69,13 +78,13 @@ public class TextSkin implements Skin {
 			return new ComponentTextSelfArrow(type, config, stringsToDisplay, fileFormat);
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
-			return new ComponentTextLine(fileFormat);
+			return new ComponentTextLine(type, fileFormat);
 		}
 		if (type == ComponentType.CONTINUE_LINE) {
-			return new ComponentTextLine(fileFormat);
+			return new ComponentTextLine(type, fileFormat);
 		}
 		if (type == ComponentType.DELAY_LINE) {
-			return new ComponentTextLine(fileFormat);
+			return new ComponentTextLine(type, fileFormat);
 		}
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
 			return new ComponentTextActiveLine(fileFormat);
@@ -106,6 +115,12 @@ public class TextSkin implements Skin {
 		}
 		if (type == ComponentType.NEWPAGE) {
 			return new ComponentTextNewpage(fileFormat);
+		}
+		if (type == ComponentType.DELAY_TEXT) {
+			return new ComponentTextDelay(type, stringsToDisplay, fileFormat);
+		}
+		if (type == ComponentType.DESTROY) {
+			return new ComponentTextDestroy();
 		}
 		throw new UnsupportedOperationException(type.toString());
 	}

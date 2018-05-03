@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 13958 $
  *
  */
 package net.sourceforge.plantuml;
@@ -36,13 +38,13 @@ package net.sourceforge.plantuml;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.asciiart.Wcwidth;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -56,33 +58,6 @@ public class StringUtils {
 
 	public static String getPlateformDependentAbsolutePath(File file) {
 		return file.getAbsolutePath();
-	}
-
-	public static List<String> getWithNewlines(CharSequence s) {
-		if (s == null) {
-			return null;
-		}
-		final List<String> result = new ArrayList<String>();
-		final StringBuilder current = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			if (c == '\\' && i < s.length() - 1) {
-				final char c2 = s.charAt(i + 1);
-				i++;
-				if (c2 == 'n') {
-					result.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == 't') {
-					current.append('\t');
-				} else if (c2 == '\\') {
-					current.append(c2);
-				}
-			} else {
-				current.append(c);
-			}
-		}
-		result.add(current.toString());
-		return Collections.unmodifiableList(result);
 	}
 
 	final static public List<String> getSplit(Pattern2 pattern, String line) {
@@ -274,6 +249,9 @@ public class StringUtils {
 	}
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s) {
+		if (s == null) {
+			return s;
+		}
 		return eventuallyRemoveStartingAndEndingDoubleQuote(s, "\"([:");
 	}
 
@@ -295,10 +273,6 @@ public class StringUtils {
 		return '\u0006';
 	}
 
-	public static char hiddenNewLine() {
-		return '\u0009';
-	}
-
 	public static String hideComparatorCharacters(String s) {
 		s = s.replace('<', hiddenLesserThan());
 		s = s.replace('>', hiddenBiggerThan());
@@ -311,11 +285,25 @@ public class StringUtils {
 		return s;
 	}
 
-	public static int getWidth(Display stringsToDisplay) {
+	private static int getWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
-			if (result < s.length()) {
+			if (s != null && result < s.length()) {
 				result = s.length();
+			}
+		}
+		return result;
+	}
+
+	public static int getWcWidth(Display stringsToDisplay) {
+		int result = 1;
+		for (CharSequence s : stringsToDisplay) {
+			if (s == null) {
+				continue;
+			}
+			final int length = Wcwidth.length(s);
+			if (result < length) {
+				result = length;
 			}
 		}
 		return result;
@@ -338,6 +326,15 @@ public class StringUtils {
 		if (uml.startsWith("@startuml\nversion\n")) {
 			return false;
 		}
+		if (uml.startsWith("@startuml\nlicense\n")) {
+			return false;
+		}
+		if (uml.startsWith("@startuml\nlicence\n")) {
+			return false;
+		}
+		if (uml.startsWith("@startuml\nauthor\n")) {
+			return false;
+		}
 		if (uml.startsWith("@startuml\ncheckversion")) {
 			return false;
 		}
@@ -348,6 +345,23 @@ public class StringUtils {
 			return false;
 		}
 		return true;
+	}
+
+	public static int getPragmaRevision(String uml) {
+		uml = uml.toLowerCase();
+		final String header = "@startuml\n!pragma revision ";
+		if (uml.startsWith(header) == false) {
+			return -1;
+		}
+		int x1 = header.length();
+		int x2 = x1;
+		while (x2 < uml.length() && Character.isDigit(uml.charAt(x2))) {
+			x2++;
+		}
+		if (x1 == x2) {
+			return -1;
+		}
+		return Integer.parseInt(uml.substring(x1, x2));
 	}
 
 	public static List<String> splitComma(String s) {
@@ -416,19 +430,34 @@ public class StringUtils {
 		return st;
 	}
 
+	public static String rot(String s) {
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M')) {
+				c += 13;
+			} else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z')) {
+				c -= 13;
+			} else if (c > 126) {
+				throw new IllegalArgumentException(s);
+			}
+			sb.append(c);
+		}
+		return sb.toString();
+	}
+
 	public static String manageGuillemet(String st) {
-		return st.replaceAll("\\<\\<\\s?([^<>]+?)\\s?\\>\\>", "\u00AB$1\u00BB");
+		return st.replaceAll("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>", "\u00AB$1\u00BB");
 	}
 
 	public static String manageUnicodeNotationUplus(String s) {
-		final Pattern pattern = Pattern.compile("\\<U\\+([0-9a-fA-F]{4})\\>");
+		final Pattern pattern = Pattern.compile("\\<U\\+([0-9a-fA-F]{4,5})\\>");
 		final Matcher matcher = pattern.matcher(s);
 		final StringBuffer result = new StringBuffer();
 		while (matcher.find()) {
 			final String num = matcher.group(1);
 			final int value = Integer.parseInt(num, 16);
-			final char c = (char) value;
-			matcher.appendReplacement(result, "" + c);
+			matcher.appendReplacement(result, new String(Character.toChars(value)));
 		}
 		matcher.appendTail(result);
 		return result.toString();
@@ -472,14 +501,6 @@ public class StringUtils {
 			return arg.toString();
 		}
 		return arg.subSequence(i, j + 1).toString();
-	}
-
-	public static List<String> splitHiddenNewLine(String s) {
-		return Arrays.asList(s.split("" + hiddenNewLine()));
-	}
-
-	public static String manageNewLine(String string) {
-		return string.replace(hiddenNewLine(), '\n');
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html

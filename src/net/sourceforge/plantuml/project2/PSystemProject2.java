@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6104 $
  *
  */
 package net.sourceforge.plantuml.project2;
@@ -40,13 +42,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.png.PngIO;
@@ -67,19 +69,23 @@ public class PSystemProject2 extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Project)", getClass());
+		return new DiagramDescription("(Project)");
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormatOption) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+			throws IOException {
 		final GanttDiagram2 diagram = new GanttDiagram2(project);
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
 			final BufferedImage im = createImage(diagram);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false, 1.0, fileFormatOption.getSvgLinkTarget());
+			final UGraphicSvg svg = new UGraphicSvg(true, new Dimension2DDouble(0, 0), colorMapper,
+					StringUtils.getAsHtml(background), false, 1.0, fileFormatOption.getSvgLinkTarget(),
+					fileFormatOption.getHoverColor(), seed());
 			diagram.draw(svg, 0, 0);
-			svg.createXml(os);
+			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
 		} else if (fileFormat == FileFormat.EPS) {
 			final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 			diagram.draw(eps, 0, 0);
@@ -91,7 +97,7 @@ public class PSystemProject2 extends AbstractPSystem {
 		} else {
 			throw new UnsupportedOperationException();
 		}
-		return new ImageDataSimple();
+		return ImageDataSimple.ok();
 	}
 
 	private BufferedImage createImage(GanttDiagram2 diagram) {

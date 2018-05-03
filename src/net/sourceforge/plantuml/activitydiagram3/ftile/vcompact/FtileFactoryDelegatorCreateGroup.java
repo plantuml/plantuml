@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.Collections;
+
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
@@ -50,10 +55,14 @@ public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote,
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
 			HtmlColor borderColor) {
-		final HtmlColor arrowColor = rose.getHtmlColor(skinParam(), ColorParam.activityArrow);
-		return new FtileGroup(list, name, headerNote, arrowColor, backColor, titleColor, skinParam(), borderColor);
+		final HtmlColor arrowColor = rose.getHtmlColor(skinParam(), ColorParam.arrow);
+		Ftile result = new FtileGroup(list, name, null, arrowColor, backColor, titleColor, skinParam(), borderColor);
+		if (note != null) {
+			result = new FtileWithNotes(result, Collections.singleton(note), skinParam());
+		}
+		return result;
 	}
 
 }

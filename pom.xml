@@ -36,7 +36,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>8046-SNAPSHOT</version>
+    <version>1.2018.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -118,6 +118,13 @@
                     <include>net/sourceforge/plantuml/fun/*.png</include>
                     <include>sprites/archimate/*.png</include>
                     <include>net/sourceforge/plantuml/dedication/*.png</include>
+                    <include>net/sourceforge/plantuml/math/*.js</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>stdlib/**/*.repx</include>
                 </includes>
             </resource>
         </resources>        

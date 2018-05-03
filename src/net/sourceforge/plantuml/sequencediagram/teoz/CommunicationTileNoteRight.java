@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4636 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
@@ -36,11 +38,11 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -55,8 +57,8 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs, TileWit
 	private final AbstractMessage message;
 	private final Skin skin;
 	private final ISkinParam skinParam;
-	private final Display notes;
 	private final LivingSpace livingSpace;
+	private final NoteOnMessage noteOnMessage;
 
 	public Event getEvent() {
 		return message;
@@ -67,12 +69,12 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs, TileWit
 	}
 
 	public CommunicationTileNoteRight(TileWithUpdateStairs tile, AbstractMessage message, Skin skin,
-			ISkinParam skinParam, LivingSpace livingSpace) {
+			ISkinParam skinParam, LivingSpace livingSpace, NoteOnMessage noteOnMessage) {
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.notes = message.getNote();
+		this.noteOnMessage = noteOnMessage;
 		this.livingSpace = livingSpace;
 	}
 
@@ -82,7 +84,7 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs, TileWit
 
 	private Component getComponent(StringBounder stringBounder) {
 		final Component comp = skin.createComponent(ComponentType.NOTE, null,
-				message.getSkinParamNoteBackcolored(skinParam), notes);
+				noteOnMessage.getSkinParamNoteBackcolored(skinParam), noteOnMessage.getDisplay());
 		return comp;
 	}
 

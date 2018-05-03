@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,8 +28,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -58,11 +61,11 @@ public class CommandLinkBlock extends SingleLineCommand<CompositeDiagram> {
 		final String deco2 = arg.get(3);
 		LinkType linkType = new LinkType(getLinkDecor(deco1), getLinkDecor(deco2));
 		
-		if ("*)".equals(deco1)) {
-			linkType = linkType.getInterfaceProvider();
-		} else if ("(*".equals(deco2)) {
-			linkType = linkType.getInterfaceUser();
-		}
+//		if ("*)".equals(deco1)) {
+//			linkType = linkType.getInterfaceProvider();
+//		} else if ("(*".equals(deco2)) {
+//			linkType = linkType.getInterfaceUser();
+//		}
 
 		final String queue = arg.get(2);
 

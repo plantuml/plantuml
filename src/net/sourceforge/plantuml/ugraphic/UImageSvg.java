@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,55 +28,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import net.sourceforge.plantuml.SvgString;
 
 public class UImageSvg implements UShape {
 
-	private final String svg;
+	private final SvgString svg;
 
-	public UImageSvg(String svg) {
-		if (svg.startsWith("<?xml")) {
-			final int idx = svg.indexOf("<svg");
-			svg = svg.substring(idx);
-		}
-		this.svg = svg;
+	public UImageSvg(SvgString tmp) {
+		this.svg = tmp;
 	}
 
-	public final String getSvg() {
-		if (svg.startsWith("<svg")) {
-			final int idx = svg.indexOf(">");
-			return "<svg>" + svg.substring(idx + 1);
-		}
+	public final SvgString getSvg() {
 		return svg;
 	}
 
-	private int getData(String name) {
-		final Pattern p = Pattern.compile("(?i)" + name + "\\W+(\\d+)");
-		final Matcher m = p.matcher(svg);
-		if (m.find()) {
-			final String s = m.group(1);
-			return Integer.parseInt(s);
-		}
-		throw new IllegalStateException("Cannot find " + name);
-	}
-
 	public int getHeight() {
-		return getData("height");
+		return svg.getData("height");
 	}
 
 	public int getWidth() {
-		return getData("width");
+		return svg.getData("width");
 	}
 
 }

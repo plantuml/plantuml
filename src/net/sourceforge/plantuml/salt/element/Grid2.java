@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3835 $
  *
  */
 package net.sourceforge.plantuml.salt.element;
@@ -56,7 +58,7 @@ public class Grid2 {
 		final double xmax = colsStart.get(colsStart.size() - 1);
 		final double ymin = rowsStart.get(0);
 		final double ymax = rowsStart.get(rowsStart.size() - 1);
-		if (strategy == TableStrategy.DRAW_OUTSIDE) {
+		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE) {
 			ug.apply(new UTranslate(xmin, ymin)).draw(new ULine(xmax - xmin, 0));
 			ug.apply(new UTranslate(xmin, ymax)).draw(new ULine(xmax - xmin, 0));
 			ug.apply(new UTranslate(xmin, ymin)).draw(new ULine(0, ymax - ymin));

@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -247,7 +252,7 @@ throw new UnsupportedOperationException();
 
 //1 1cni5q244gsprpvtjsq7gs17m
 // Agmemdisc_t AgMemDisc =     
-/*public static final __struct__<Agmemdisc_s> AgMemDisc = __struct__.from(Agmemdisc_s.class);
+/*public static final __struct__<Agmemdisc_s> AgMemDisc = JUtils.from(Agmemdisc_s.class);
 static {
 	AgMemDisc.setPtr("open", function(mem__c.class, "memopen"));
 	AgMemDisc.setPtr("alloc", function(mem__c.class, "memalloc"));

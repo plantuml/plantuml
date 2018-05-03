@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,48 +28,102 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.preproc;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class Defines {
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.api.ApiWarning;
+import net.sourceforge.plantuml.version.Version;
 
-	private final Map<String, String> values = new LinkedHashMap<String, String>();
-	private final Map<String, String> savedState = new LinkedHashMap<String, String>();
+public class Defines implements Truth {
 
-	public void define(String name, List<String> value) {
-		values.put(name, addLineReturn(value));
+	private final Map<String, String> environment = new LinkedHashMap<String, String>();
+	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
+	private final Map<String, Define> savedState = new LinkedHashMap<String, Define>();
+
+	@Deprecated
+	@ApiWarning(willBeRemoved = "in next major release")
+	public Defines() {
+		environment.put("PLANTUML_VERSION", "" + Version.versionString());
 	}
 
-	private String addLineReturn(List<String> value) {
-		if (value == null) {
-			return null;
-		}
-		final StringBuilder sb = new StringBuilder();
-		for (final Iterator<String> it = value.iterator(); it.hasNext();) {
-			sb.append(it.next());
-			if (it.hasNext()) {
-				sb.append('\n');
-			}
-		}
-		return sb.toString();
+	@Override
+	public String toString() {
+		return values.keySet().toString();
 	}
 
-	public boolean isDefine(String name) {
+	public static Defines createEmpty() {
+		return new Defines();
+	}
+
+	public void overrideFilename(String filename) {
+		if (filename != null) {
+			environment.put("filename", filename);
+			environment.put("filenameNoExtension", nameNoExtension(filename));
+		}
+	}
+
+	public void importFrom(Defines other) {
+		this.environment.putAll(other.environment);
+		this.values.putAll(other.values);
+	}
+
+	public Defines cloneMe() {
+		final Defines result = new Defines();
+		result.importFrom(this);
+		return result;
+	}
+
+	public static Defines createWithFileName(File file) {
+		if (file == null) {
+			throw new IllegalArgumentException();
+		}
+		final Defines result = createEmpty();
+		result.overrideFilename(file.getName());
+		result.environment.put("filedate", new Date(file.lastModified()).toString());
+		// result.environment.put("filename", file.getName());
+		// result.environment.put("filenameNoExtension", nameNoExtension(file));
+		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
+		return result;
+	}
+
+	private static String nameNoExtension(String name) {
+		final int x = name.lastIndexOf('.');
+		if (x == -1) {
+			return name;
+		}
+		return name.substring(0, x);
+	}
+
+	public void define(String name, List<String> value, boolean emptyParentheses) {
+		values.put(name, new Define(name, value, emptyParentheses));
+	}
+
+	public boolean isDefine(String expression) {
+		try {
+			final EvalBoolean eval = new EvalBoolean(expression, this);
+			return eval.eval();
+		} catch (IllegalArgumentException e) {
+			Log.info("Error in " + expression);
+			return false;
+		}
+	}
+
+	public boolean isTrue(String name) {
 		for (String key : values.keySet()) {
 			if (key.equals(name) || key.startsWith(name + "(")) {
 				return true;
@@ -78,41 +137,42 @@ public class Defines {
 	}
 
 	public List<String> applyDefines(String line) {
-		for (Map.Entry<String, String> ent : values.entrySet()) {
-			final String key = ent.getKey();
-			if (ent.getValue() == null) {
-				continue;
-			}
-			final String value = Matcher.quoteReplacement(ent.getValue());
-			if (key.contains("(")) {
-				line = applyMethod(line, key, value);
-			} else {
-				final String regex = "\\b" + key + "\\b";
-				line = line.replaceAll(regex, value);
-			}
+		line = manageDate(line);
+		line = manageEnvironment(line);
+		for (Map.Entry<String, Define> ent : values.entrySet()) {
+			final Define def = ent.getValue();
+			line = def.apply(line);
 		}
 		return Arrays.asList(line.split("\n"));
 	}
 
-	private String applyMethod(String line, final String key, final String value) {
-		final StringTokenizer st = new StringTokenizer(key, "(),");
-		final String fctName = st.nextToken();
-		String newValue = value;
-		final StringBuilder regex = new StringBuilder("\\b" + fctName + "\\(");
-		int i = 1;
-
-		while (st.hasMoreTokens()) {
-			regex.append("(?:(?:\\s*\"([^\"]*)\"\\s*)|(?:\\s*'([^']*)'\\s*)|\\s*" + "((?:\\([^()]*\\)|[^,])*?)" + ")");
-			final String var1 = st.nextToken();
-			final String var2 = "(##" + var1 + "\\b)|(\\b" + var1 + "##)|(\\b" + var1 + "\\b)";
-			newValue = newValue.replaceAll(var2, "\\$" + i + "\\$" + (i + 1) + "\\$" + (i + 2));
-			i += 3;
-			if (st.hasMoreTokens()) {
-				regex.append(",");
-			}
+	private String manageEnvironment(String line) {
+		for (Map.Entry<String, String> ent : environment.entrySet()) {
+			final String key = Pattern.quote("%" + ent.getKey() + "%");
+			line = line.replaceAll(key, ent.getValue());
 		}
-		regex.append("\\)");
-		line = line.replaceAll(regex.toString(), newValue);
+		return line;
+	}
+
+	private static final String DATE = "(?i)%date(\\[(.+?)\\])?%";
+	private final static Pattern datePattern = Pattern.compile(DATE);
+
+	private String manageDate(String line) {
+		final Matcher m = datePattern.matcher(line);
+		if (m.find()) {
+			final String format = m.group(2);
+			String replace;
+			if (format == null) {
+				replace = new Date().toString();
+			} else {
+				try {
+					replace = new SimpleDateFormat(format).format(new Date());
+				} catch (Exception e) {
+					replace = "(BAD DATE PATTERN:" + format + ")";
+				}
+			}
+			line = line.replaceAll(DATE, replace);
+		}
 		return line;
 	}
 

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7558 $
  *
  */
 package net.sourceforge.plantuml.command.note;
@@ -38,6 +40,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -57,6 +60,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -80,7 +84,10 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$") //
@@ -98,7 +105,10 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
 				new RegexLeaf("$") //
 		);
@@ -134,13 +144,10 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				lines = lines.removeEmptyColumns();
 
 				Url url = null;
-				if (lines.size() > 0) {
+				if (line0.get("URL", 0) != null) {
 					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
 							ModeUrl.STRICT);
-					url = urlBuilder.getUrl(lines.getFirst499().toString());
-				}
-				if (url != null) {
-					lines = lines.subExtract(1, 0);
+					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
 				return executeInternal(line0, system, url, lines);
@@ -174,12 +181,13 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 		if (url != null) {
 			note.addUrl(url);
 		}
+		CommandCreateClassMultilines.addTags(note, line0.get("TAGS", 0));
 
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
 				diagram.getSkinParam().getRankdir());
 		final Link link;
 
-		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getDashed();
+		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 		if (position == Position.RIGHT) {
 			link = new Link(cl1, note, type, Display.NULL, 1);
 			link.setHorizontalSolitary(true);

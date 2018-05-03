@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -30,15 +35,23 @@
  */
 package smetana.core;
 
+import h.Agdesc_s;
+import h.Agiddisc_s;
+import h.Agmemdisc_s;
+import h.Agtag_s;
+import h.STStarArrayOfPointer;
+import h.ST_Agtag_s;
+import h._dtdisc_s;
+import h._dtmethod_s;
+import h.nlist_t;
 import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStar;
-import smetana.core.amiga.StarStruct;
 
 public class Memory {
 
-	public static __ptr__ malloc(Class cl) {
-		JUtils.LOG("MEMORY::malloc " + cl);
-		return StarStruct.malloc(cl);
+	public static __ptr__ malloc(Class theClass) {
+		JUtils.LOG("MEMORY::malloc " + theClass);
+		return JUtils.create(theClass, null);
 	}
 
 	public static __ptr__ malloc(size_t size) {
@@ -47,24 +60,30 @@ public class Memory {
 
 	public static __ptr__ realloc(__ptr__ old, size_t size) {
 		if (old instanceof StarArrayOfPtr) {
-			((StarArrayOfPtr) old).realloc(((size_t_array_of_something) size).getNb());
+			// System.err.println("size="+size);
+			// ((StarArrayOfPtr) old).realloc(((size_t_array_of_something) size).getNb());
+			((StarArrayOfPtr) old).realloc(size);
 			return old;
 		}
 		if (old instanceof StarStar) {
 			((StarStar) old).realloc(((size_t_array_of_array_of_something_empty) size).getNb());
 			return old;
 		}
-		throw new UnsupportedOperationException();
+		if (old instanceof STStarArrayOfPointer) {
+			((STStarArrayOfPointer) old).realloc(size.getInternalNb());
+			return old;
+		}
+		throw new UnsupportedOperationException("" + old.getClass());
 	}
 
 	public static void free(Object arg) {
 	}
 
 	public static int identityHashCode(CString data) {
-		if (data==null) {
+		if (data == null) {
 			return 0;
 		}
-		//int result = 2 * System.identityHashCode(data);
+		// int result = 2 * System.identityHashCode(data);
 		int result = data.getUid();
 		Z.z().all.put(result, data);
 		// System.err.println("Memory::identityHashCode data=" + data);

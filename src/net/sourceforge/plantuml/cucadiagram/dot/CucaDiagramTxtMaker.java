@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5079 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -45,13 +47,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Member;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.posimo.Block;
 import net.sourceforge.plantuml.posimo.Cluster;
 import net.sourceforge.plantuml.posimo.GraphvizSolverB;
@@ -64,6 +70,7 @@ public final class CucaDiagramTxtMaker {
 	// private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
 	private final UGraphicTxt globalUg = new UGraphicTxt();
+	private final PortionShower portionShower;
 
 	private static double getXPixelPerChar() {
 		return 5;
@@ -73,9 +80,15 @@ public final class CucaDiagramTxtMaker {
 		return 10;
 	}
 
+	private boolean showMember(IEntity entity) {
+		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
+		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
+		return showMethods || showFields;
+	}
+
 	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
-		// this.diagram = diagram;
 		this.fileFormat = fileFormat;
+		this.portionShower = diagram;
 
 		final Cluster root = new Cluster(null, 0, 0);
 		int uid = 0;
@@ -120,20 +133,22 @@ public final class CucaDiagramTxtMaker {
 		final int h = getHeight(ent);
 		ug.getCharArea().drawBoxSimple(0, 0, w, h);
 		ug.getCharArea().drawStringsLR(ent.getDisplay().as(), 1, 1);
-		int y = 2;
-		ug.getCharArea().drawHLine('-', y, 1, w - 1);
-		y++;
-		for (Member att : ent.getBodier().getFieldsToDisplay()) {
-			final List<String> disp = StringUtils.getWithNewlines(att.getDisplay(true));
-			ug.getCharArea().drawStringsLR(disp, 1, y);
-			y += StringUtils.getHeight(disp);
-		}
-		ug.getCharArea().drawHLine('-', y, 1, w - 1);
-		y++;
-		for (Member att : ent.getBodier().getMethodsToDisplay()) {
-			final List<String> disp = StringUtils.getWithNewlines(att.getDisplay(true));
-			ug.getCharArea().drawStringsLR(disp, 1, y);
-			y += StringUtils.getHeight(disp);
+		if (showMember(ent)) {
+			int y = 2;
+			ug.getCharArea().drawHLine('-', y, 1, w - 1);
+			y++;
+			for (Member att : ent.getBodier().getFieldsToDisplay()) {
+				final List<String> disp = BackSlash.getWithNewlines(att.getDisplay(true));
+				ug.getCharArea().drawStringsLR(disp, 1, y);
+				y += StringUtils.getHeight(disp);
+			}
+			ug.getCharArea().drawHLine('-', y, 1, w - 1);
+			y++;
+			for (Member att : ent.getBodier().getMethodsToDisplay()) {
+				final List<String> disp = BackSlash.getWithNewlines(att.getDisplay(true));
+				ug.getCharArea().drawStringsLR(disp, 1, y);
+				y += StringUtils.getHeight(disp);
+			}
 		}
 	}
 
@@ -148,27 +163,33 @@ public final class CucaDiagramTxtMaker {
 
 	private int getHeight(IEntity entity) {
 		int result = StringUtils.getHeight(entity.getDisplay());
-		for (Member att : entity.getBodier().getMethodsToDisplay()) {
-			result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
+		if (showMember(entity)) {
+			for (Member att : entity.getBodier().getMethodsToDisplay()) {
+				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
+			}
+			result++;
+			for (Member att : entity.getBodier().getFieldsToDisplay()) {
+				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
+			}
+			result++;
 		}
-		for (Member att : entity.getBodier().getFieldsToDisplay()) {
-			result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
-		}
-		return result + 4;
+		return result + 2;
 	}
 
 	private int getWidth(IEntity entity) {
-		int result = StringUtils.getWidth(entity.getDisplay());
-		for (Member att : entity.getBodier().getMethodsToDisplay()) {
-			final int w = StringUtils.getWidth(Display.getWithNewlines(att.getDisplay(true)));
-			if (w > result) {
-				result = w;
+		int result = StringUtils.getWcWidth(entity.getDisplay());
+		if (showMember(entity)) {
+			for (Member att : entity.getBodier().getMethodsToDisplay()) {
+				final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
+				if (w > result) {
+					result = w;
+				}
 			}
-		}
-		for (Member att : entity.getBodier().getFieldsToDisplay()) {
-			final int w = StringUtils.getWidth(Display.getWithNewlines(att.getDisplay(true)));
-			if (w > result) {
-				result = w;
+			for (Member att : entity.getBodier().getFieldsToDisplay()) {
+				final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
+				if (w > result) {
+					result = w;
+				}
 			}
 		}
 		return result + 2;

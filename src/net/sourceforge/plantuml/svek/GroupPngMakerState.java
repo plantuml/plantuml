@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -50,16 +52,16 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.Member;
-import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
+import net.sourceforge.plantuml.graphic.TextBlockWidthAdapter;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -69,6 +71,7 @@ public final class GroupPngMakerState {
 
 	private final CucaDiagram diagram;
 	private final IGroup group;
+	private final StringBounder stringBounder;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
@@ -85,8 +88,9 @@ public final class GroupPngMakerState {
 
 	}
 
-	public GroupPngMakerState(CucaDiagram diagram, IGroup group) {
+	public GroupPngMakerState(CucaDiagram diagram, IGroup group, StringBounder stringBounder) {
 		this.diagram = diagram;
+		this.stringBounder = stringBounder;
 		this.group = group;
 		if (group.isGroup() == false) {
 			throw new IllegalArgumentException();
@@ -121,8 +125,8 @@ public final class GroupPngMakerState {
 				diagram.getPragma());
 
 		final DotDataImageBuilder svek2 = new DotDataImageBuilder(dotData, diagram.getEntityFactory(),
-				diagram.getSource(), diagram.getPragma());
-		
+				diagram.getSource(), diagram.getPragma(), stringBounder);
+
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE) {
 			// return new InnerStateConcurrent(svek2.createFile());
 			return svek2.buildImage(null, new String[0]);
@@ -139,14 +143,7 @@ public final class GroupPngMakerState {
 		final Stereotype stereo = group.getStereotype();
 		final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
 				ColorParam.stateBackground, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
-		final List<Member> members = ((IEntity) group).getBodier().getFieldsToDisplay();
-		final TextBlockWidth attribute;
-		if (members.size() == 0) {
-			attribute = new TextBlockEmpty();
-		} else {
-			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-					group.getStereotype());
-		}
+		final TextBlockWidth attribute = getAttributes(skinParam);
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
@@ -163,13 +160,26 @@ public final class GroupPngMakerState {
 
 	}
 
+	private TextBlockWidth getAttributes(final ISkinParam skinParam) {
+		final List<String> details = ((IEntity) group).getBodier().getRawBody();
+
+		if (details.size() == 0) {
+			return new TextBlockEmpty();
+		}
+		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE, null);
+		final Display display = details.size() == 1 ? Display.getWithNewlines(details.get(0)) : Display.create(details);
+		final TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+		return new TextBlockWidthAdapter(result, 0);
+
+	}
+
 	private IEntityImage buildImageForConcurrentState(DotData dotData) {
 		final List<IEntityImage> inners = new ArrayList<IEntityImage>();
 		for (ILeaf inner : dotData.getLeafs()) {
 			inners.add(inner.getSvekImage());
 		}
 		return new CucaDiagramFileMakerSvek2InternalImage(inners, dotData.getTopParent().getConcurrentSeparator(),
-				dotData.getSkinParam());
+				dotData.getSkinParam(), group.getStereotype());
 
 	}
 
@@ -178,7 +188,7 @@ public final class GroupPngMakerState {
 			if (leaf instanceof IGroup == false) {
 				return false;
 			}
-			if (((IGroup) leaf).getEntityType() != LeafType.STATE_CONCURRENT) {
+			if (((IGroup) leaf).getLeafType() != LeafType.STATE_CONCURRENT) {
 				return false;
 			}
 		}

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6070 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -47,7 +49,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class DirWatcher2 {
@@ -65,6 +66,7 @@ public class DirWatcher2 {
 		this.pattern = pattern;
 		final int nb = Option.defaultNbThreads();
 		this.executorService = Executors.newFixedThreadPool(nb);
+
 	}
 
 	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException, InterruptedException {
@@ -80,7 +82,7 @@ public class DirWatcher2 {
 				final FileWatcher watcher = modifieds.get(f);
 
 				if (watcher == null || watcher.hasChanged()) {
-					final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f,
+					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f,
 							option.getOutputDir(), option.getConfig(), option.getCharset(),
 							option.getFileFormatOption());
 					modifieds.put(f, new FileWatcher(Collections.singleton(f)));
@@ -90,7 +92,8 @@ public class DirWatcher2 {
 									try {
 										final List<GeneratedImage> generatedImages = sourceFileReader
 												.getGeneratedImages();
-										final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
+										final Set<File> files = FileWithSuffix.convert(sourceFileReader
+												.getIncludedFiles());
 										files.add(f);
 										modifieds.put(f, new FileWatcher(files));
 										return Collections.unmodifiableList(generatedImages);

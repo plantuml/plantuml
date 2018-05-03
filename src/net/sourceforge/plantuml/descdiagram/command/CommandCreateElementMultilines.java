@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4161 $
  *
  */
 package net.sourceforge.plantuml.descdiagram.command;
@@ -37,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -50,12 +53,11 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 
-public class CommandCreateElementMultilines extends CommandMultilines2<DescriptionDiagram> {
+public class CommandCreateElementMultilines extends CommandMultilines2<AbstractEntityDiagram> {
 
 	private final int type;
 
@@ -89,7 +91,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 					new RegexLeaf("[%s]*"), //
 					ColorParser.exp1(), //
 					new RegexLeaf("[%s]*"), //
-					new RegexLeaf("DESC", "as[%s]*[%g](.*)$"));
+					new RegexLeaf("DESC", "as[%s]*[%g]([^%g]*)$"));
 		}
 		if (type == 1) {
 			return new RegexConcat(new RegexLeaf("^"), //
@@ -105,7 +107,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 		throw new IllegalArgumentException();
 	}
 
-	public CommandExecutionResult executeNow(DescriptionDiagram diagram, BlocLines lines) {
+	public CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
@@ -139,7 +141,13 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 
 		final String stereotype = line0.get("STEREO", 0);
 
+		if (CommandCreateElementFull.existsWithBadType(diagram, code, type, usymbol)) {
+			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+		}
 		final ILeaf result = diagram.createLeaf(code, display, type, usymbol);
+		if (result == null) {
+			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+		}
 		result.setUSymbol(usymbol);
 		if (stereotype != null) {
 			result.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram

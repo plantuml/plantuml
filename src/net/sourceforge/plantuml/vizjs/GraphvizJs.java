@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19398 $
  *
  */
 package net.sourceforge.plantuml.vizjs;
@@ -90,6 +92,7 @@ public class GraphvizJs implements Graphviz {
 			os.write(svg.getBytes());
 			return ProcessState.TERMINATED_OK();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new GraphvizJsRuntimeException(e);
 		}
 	}
@@ -126,12 +129,16 @@ public class GraphvizJs implements Graphviz {
 				return true;
 			}
 
-			public boolean modeSafe() {
+			public boolean useXLabelInsteadOfLabel() {
 				return modeSafe;
 			}
 
 			public boolean isVizjs() {
 				return true;
+			}
+
+			public boolean ignoreHorizontalLinks() {
+				return false;
 			}
 		};
 	}

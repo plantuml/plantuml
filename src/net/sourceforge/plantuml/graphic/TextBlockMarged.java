@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -50,7 +52,7 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 	private final double y1;
 	private final double y2;
 
-	public TextBlockMarged(TextBlock textBlock, double x1, double x2, double y1, double y2) {
+	TextBlockMarged(TextBlock textBlock, double x1, double x2, double y1, double y2) {
 		this.textBlock = textBlock;
 		this.x1 = x1;
 		this.x2 = x2;
@@ -69,8 +71,8 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-		final Rectangle2D parent = textBlock.getInnerPosition(member, stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		final Rectangle2D parent = textBlock.getInnerPosition(member, stringBounder, strategy);
 		if (parent == null) {
 			return null;
 		}

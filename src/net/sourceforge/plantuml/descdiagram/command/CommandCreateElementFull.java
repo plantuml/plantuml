@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7715 $
  *
  */
 package net.sourceforge.plantuml.descdiagram.command;
@@ -38,6 +40,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -47,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
@@ -58,7 +62,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "artifact|actor|folder|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface";
+	public static final String ALL_TYPES = "artifact|actor|folder|card|file|package|rectangle|node|frame|cloud|database|queue|stack|storage|agent|usecase|component|boundary|control|entity|interface|circle|collections";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
@@ -67,6 +71,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("SYMBOL", "(?:(" + ALL_TYPES + "|\\(\\))[%s]+)?"), //
+				color2().getRegex(), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CODE_WITH_QUOTE), //
@@ -98,13 +103,17 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
-	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
-	private static final String CODE = "(" + CODE_CORE + ")";
-	private static final String CODE_WITH_QUOTE = "(" + CODE_CORE + "|[%g][^%g]+[%g])";
+	private static ColorParser color2() {
+		return ColorParser.simpleColor(ColorType.BACK, "COLOR2");
+	}
 
-	private static final String DISPLAY_CORE = "[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
-	private static final String DISPLAY = "(" + DISPLAY_CORE + ")";
-	private static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
+	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
+	public static final String CODE = "(" + CODE_CORE + ")";
+	public static final String CODE_WITH_QUOTE = "(" + CODE_CORE + "|[%g].+?[%g])";
+
+	private static final String DISPLAY_CORE = "[%g].+?[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
+	public static final String DISPLAY = "(" + DISPLAY_CORE + ")";
+	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
 
 	@Override
 	final protected boolean isForbidden(CharSequence line) {
@@ -140,65 +149,18 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		if (symbol == null) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.ACTOR;
-		} else if (symbol.equalsIgnoreCase("artifact")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ARTIFACT;
-		} else if (symbol.equalsIgnoreCase("folder")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.FOLDER;
-		} else if (symbol.equalsIgnoreCase("package")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.PACKAGE;
-		} else if (symbol.equalsIgnoreCase("rectangle")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.RECTANGLE;
-		} else if (symbol.equalsIgnoreCase("node")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.NODE;
-		} else if (symbol.equalsIgnoreCase("frame")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.FRAME;
-		} else if (symbol.equalsIgnoreCase("cloud")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.CLOUD;
-		} else if (symbol.equalsIgnoreCase("database")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.DATABASE;
-		} else if (symbol.equalsIgnoreCase("queue")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.QUEUE;
-		} else if (symbol.equalsIgnoreCase("storage")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.STORAGE;
-		} else if (symbol.equalsIgnoreCase("agent")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.AGENT;
-		} else if (symbol.equalsIgnoreCase("actor")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ACTOR;
-		} else if (symbol.equalsIgnoreCase("component")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = diagram.getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1;
-		} else if (symbol.equalsIgnoreCase("boundary")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.BOUNDARY;
-		} else if (symbol.equalsIgnoreCase("control")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.CONTROL;
-		} else if (symbol.equalsIgnoreCase("entity")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ENTITY_DOMAIN;
-		} else if (symbol.equalsIgnoreCase("interface")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.INTERFACE;
-		} else if (symbol.equalsIgnoreCase("()")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.INTERFACE;
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("circle")) {
+			type = LeafType.CIRCLE;
+			usymbol = null;
 		} else {
-			throw new IllegalStateException();
+			type = LeafType.DESCRIPTION;
+			usymbol = USymbol.getFromString(symbol, diagram.getSkinParam().useUml2ForComponent());
+			if (usymbol == null) {
+				throw new IllegalStateException();
+			}
 		}
 
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));
@@ -211,6 +173,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		}
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
+		if (existsWithBadType(diagram, code, type, usymbol)) {
+			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+		}
 		final IEntity entity = diagram.getOrCreateLeaf(code, type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
@@ -238,6 +203,21 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 		return CommandExecutionResult.ok();
+	}
+
+	public static boolean existsWithBadType(AbstractEntityDiagram diagram, final Code code, LeafType type,
+			USymbol usymbol) {
+		if (diagram.leafExist(code) == false) {
+			return false;
+		}
+		final ILeaf other = diagram.getLeafsget(code);
+		if (other.getLeafType() != type) {
+			return true;
+		}
+		if (usymbol != null && other.getUSymbol() != usymbol) {
+			return true;
+		}
+		return false;
 	}
 
 	private char getCharEncoding(final String codeRaw) {

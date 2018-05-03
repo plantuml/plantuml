@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -65,7 +67,7 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 		final ExtendedGeneralPath p = new ExtendedGeneralPath();
 		final MinMaxDouble minMax = new MinMaxDouble();
 		minMax.manage(x, y);
-		boolean hasBezier = false;
+		boolean slowShadow = false;
 		for (USegment seg : shape) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
@@ -78,7 +80,7 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 			} else if (type == USegmentType.SEG_CUBICTO) {
 				p.curveTo(x + coord[0], y + coord[1], x + coord[2], y + coord[3], x + coord[4], y + coord[5]);
 				minMax.manage(x + coord[4], y + coord[5]);
-				hasBezier = true;
+				slowShadow = true;
 			} else if (type == USegmentType.SEG_ARCTO) {
 				p.arcTo(coord[0], coord[1], coord[2], coord[3] != 0, coord[4] != 0, x + coord[5], y + coord[6]);
 			} else {
@@ -94,8 +96,12 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 		}
 
 		// Shadow
+		final HtmlColor back = param.getBackcolor();
+		if (back != null) {
+			slowShadow = true;
+		}
 		if (shape.getDeltaShadow() != 0) {
-			if (hasBezier) {
+			if (slowShadow) {
 				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);
 			} else {
 				double lastX = 0;
@@ -119,7 +125,6 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 			}
 		}
 
-		final HtmlColor back = param.getBackcolor();
 		if (back instanceof HtmlColorGradient) {
 			final HtmlColorGradient gr = (HtmlColorGradient) back;
 			final char policy = gr.getPolicy();

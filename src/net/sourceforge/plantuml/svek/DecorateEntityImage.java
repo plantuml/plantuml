@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -42,6 +44,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -56,15 +59,15 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 	private double deltaX;
 	private double deltaY;
 
-	public static DecorateEntityImage addTop(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
+	public static TextBlock addTop(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
 		return new DecorateEntityImage(original, text, horizontal, null, null);
 	}
 
-	public static DecorateEntityImage addBottom(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
+	public static TextBlock addBottom(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
 		return new DecorateEntityImage(original, null, null, text, horizontal);
 	}
 
-	public static DecorateEntityImage add(TextBlock original, TextBlock text, HorizontalAlignment horizontal,
+	public static TextBlock add(TextBlock original, TextBlock text, HorizontalAlignment horizontal,
 			VerticalAlignment verticalAlignment) {
 		if (verticalAlignment == VerticalAlignment.TOP) {
 			return addTop(original, text, horizontal);
@@ -72,7 +75,12 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 		return addBottom(original, text, horizontal);
 	}
 
-	public DecorateEntityImage(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1, TextBlock text2,
+	public static TextBlock addTopAndBottom(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1,
+			TextBlock text2, HorizontalAlignment horizontal2) {
+		return new DecorateEntityImage(original, text1, horizontal1, text2, horizontal2);
+	}
+
+	private DecorateEntityImage(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1, TextBlock text2,
 			HorizontalAlignment horizontal2) {
 		this.original = original;
 		this.horizontal1 = horizontal1;
@@ -137,6 +145,11 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 		final Dimension2D dimText = Dimension2DDouble.mergeTB(getTextDim(text1, stringBounder),
 				getTextDim(text2, stringBounder));
 		return Dimension2DDouble.mergeTB(dimOriginal, dimText);
+	}
+
+	@Override
+	public MinMax getMinMax(StringBounder stringBounder) {
+		return MinMax.fromDim(calculateDimension(stringBounder));
 	}
 
 	public final double getDeltaX() {

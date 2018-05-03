@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3;
@@ -64,6 +66,8 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	private final Swimlane swimlane;
 	private final ISkinParam skinParam;
 
+	private Instruction specialOut;
+
 	public void overwriteYes(Display yes) {
 		this.yes = yes;
 	}
@@ -94,11 +98,11 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile tmp = factory.decorateOut(repeatList.createFtile(factory), endInlinkRendering);
-		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color);
+		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut);
 		if (getPositionedNotes().size() > 0) {
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false);
 		}
-		if (killed) {
+		if (killed || specialOut != null) {
 			return new FtileKilled(tmp);
 		}
 		return tmp;
@@ -134,11 +138,11 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (repeatList.isEmpty()) {
-			return super.addNote(note, position, type, colors);
+			return super.addNote(note, position, type, colors, swimlaneNote);
 		} else {
-			return repeatList.addNote(note, position, type, colors);
+			return repeatList.addNote(note, position, type, colors, swimlaneNote);
 		}
 	}
 
@@ -156,6 +160,10 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	public Instruction getLast() {
 		return repeatList.getLast();
+	}
+
+	public void setSpecial(Instruction special) {
+		this.specialOut = special;
 	}
 
 }

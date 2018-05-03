@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7736 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.entity;
@@ -46,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
+import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -63,24 +66,28 @@ public class EntityFactory {
 	private int rawLayout;
 
 	private final IGroup rootGroup = new GroupRoot(this);
-	private final Set<LeafType> hiddenTypes;
-	private final Set<String> hiddenStereotype;
+	private final List<HideOrShow2> hides2;
+	private final List<HideOrShow2> removed;
 
-	public EntityFactory(Set<LeafType> hiddenTypes, Set<String> hiddenStereotype) {
-		this.hiddenTypes = hiddenTypes;
-		this.hiddenStereotype = hiddenStereotype;
+	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed) {
+		this.hides2 = hides2;
+		this.removed = removed;
 	}
 
 	public boolean isHidden(ILeaf leaf) {
-		if (hiddenTypes.contains(leaf.getEntityType())) {
-			return true;
+		boolean hidden = false;
+		for (HideOrShow2 hide : hides2) {
+			hidden = hide.apply(hidden, leaf);
 		}
-		final Stereotype stereotype = leaf.getStereotype();
-		if (stereotype != null && hiddenStereotype.contains(stereotype.getLabel(false))) {
-			return true;
-		}
-		return false;
+		return hidden;
+	}
 
+	public boolean isRemoved(ILeaf leaf) {
+		boolean result = false;
+		for (HideOrShow2 hide : removed) {
+			result = hide.apply(result, leaf);
+		}
+		return result;
 	}
 
 	public ILeaf createLeaf(Code code, Display display, LeafType entityType, IGroup parentContainer,
@@ -92,6 +99,7 @@ public class EntityFactory {
 		final LongCode longCode = getLongCode(code, namespaceSeparator);
 		final EntityImpl result = new EntityImpl(this, code, bodier, parentContainer, entityType, longCode,
 				namespaceSeparator, rawLayout);
+		bodier.setLeaf(result);
 		result.setDisplay(display);
 		return result;
 	}
@@ -125,8 +133,12 @@ public class EntityFactory {
 		return rootGroup;
 	}
 
-	public final Map<Code, ILeaf> getLeafs() {
-		return Collections.unmodifiableMap(leafs);
+	public final ILeaf getLeafsget(Code code) {
+		return leafs.get(code);
+	}
+
+	public final Collection<ILeaf> getLeafsvalues() {
+		return Collections.unmodifiableCollection(leafs.values());
 	}
 
 	public void addLeaf(ILeaf entity) {
@@ -155,8 +167,12 @@ public class EntityFactory {
 		}
 	}
 
-	public final Map<Code, IGroup> getGroups() {
-		return Collections.unmodifiableMap(groups);
+	public final Collection<IGroup> getGroupsvalues() {
+		return Collections.unmodifiableCollection(groups.values());
+	}
+
+	public final IGroup getGroupsget(Code code) {
+		return groups.get(code);
 	}
 
 	public final List<Link> getLinks() {
@@ -175,7 +191,7 @@ public class EntityFactory {
 	}
 
 	public IGroup muteToGroup(Code code, Code namespace2, GroupType type, IGroup parent) {
-		final ILeaf leaf = getLeafs().get(code);
+		final ILeaf leaf = leafs.get(code);
 		((EntityImpl) leaf).muteToGroup(namespace2, type, parent);
 		final IGroup result = (IGroup) leaf;
 		removeLeaf(code);

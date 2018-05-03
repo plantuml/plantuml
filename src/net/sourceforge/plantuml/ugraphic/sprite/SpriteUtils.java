@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,18 +28,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.sprite;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+
+import net.sourceforge.plantuml.BackSlash;
 
 public class SpriteUtils {
 
@@ -50,7 +54,7 @@ public class SpriteUtils {
 		final List<String> result = level.encode(img);
 		for (String s : result) {
 			sb.append(s);
-			sb.append("\n");
+			sb.append(BackSlash.NEWLINE);
 		}
 		sb.append("}\n");
 		return sb.toString();
@@ -62,12 +66,12 @@ public class SpriteUtils {
 		final List<String> list = level.encodeZ(img);
 		if (list.size() == 1) {
 			sb.append(list.get(0));
-			sb.append("\n");
+			sb.append(BackSlash.NEWLINE);
 		} else {
 			sb.append("{\n");
 			for (String s : list) {
 				sb.append(s);
-				sb.append("\n");
+				sb.append(BackSlash.NEWLINE);
 			}
 			sb.append("}\n");
 		}

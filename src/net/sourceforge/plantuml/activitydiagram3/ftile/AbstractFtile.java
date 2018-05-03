@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,39 +28,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
+import net.sourceforge.plantuml.AlignParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 
-	private final boolean shadowing;
 	private final ISkinParam skinParam;
 
-	private AbstractFtile(boolean shadowing) {
-		this.shadowing = shadowing;
-		this.skinParam = null;
-	}
-
 	public AbstractFtile(ISkinParam skinParam) {
-		this.shadowing = skinParam.shadowing();
 		this.skinParam = skinParam;
 	}
 
@@ -79,7 +78,7 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 	}
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("" + getClass());
 	}
 
 	public final UStroke getThickness() {
@@ -89,5 +88,38 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 		}
 		return thickness;
 	}
+
+	public List<WeldingPoint> getWeldingPoints() {
+		return Collections.emptyList();
+	}
+
+	public Collection<Ftile> getMyChildren() {
+		throw new UnsupportedOperationException("" + getClass());
+	}
+
+	public HorizontalAlignment arrowHorizontalAlignment() {
+		return skinParam.getHorizontalAlignment(AlignParam.ARROW_MESSAGE_ALIGN, null);
+	}
+
+	private FtileGeometry cachedGeometry;
+
+	final public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		if (cachedGeometry == null) {
+			cachedGeometry = calculateDimensionFtile(stringBounder);
+		}
+		return cachedGeometry;
+	}
+
+	abstract protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder);
+
+	@Override
+	final public MinMax getMinMax(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+		// return getMinMaxFtile(stringBounder);
+	}
+
+	// protected MinMax getMinMaxFtile(StringBounder stringBounder) {
+	// throw new UnsupportedOperationException();
+	// }
 
 }

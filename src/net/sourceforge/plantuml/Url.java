@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6396 $
  *
  */
 package net.sourceforge.plantuml;
@@ -52,27 +54,27 @@ public class Url implements EnsureVisible {
 		if (url.contains("{")) {
 			throw new IllegalArgumentException(url);
 		}
+		url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(url, "\"");
 		this.url = url;
 		if (tooltip == null) {
 			this.tooltip = url;
 		} else {
-			this.tooltip = StringUtils.manageNewLine(tooltip);
+			this.tooltip = BackSlash.manageNewLine(tooltip);
 		}
-		if (label == null) {
+		if (label == null || label.length() == 0) {
 			this.label = url;
 		} else {
 			this.label = label;
 		}
 	}
-	
+
 	public static boolean isLatex(String pendingUrl) {
 		return pendingUrl.startsWith("latex://");
 	}
-	
+
 	public boolean isLatex() {
 		return isLatex(url);
 	}
-
 
 	public final String getUrl() {
 		return url;
@@ -93,7 +95,7 @@ public class Url implements EnsureVisible {
 
 	public String getCoords(double scale) {
 		if (DotMaker2.isJunit() && visible.getCoords(1.0).contains("0,0,0,0")) {
-			throw new IllegalStateException();
+			throw new IllegalStateException(toString());
 		}
 		return visible.getCoords(scale);
 	}
@@ -110,6 +112,10 @@ public class Url implements EnsureVisible {
 
 	public void ensureVisible(double x, double y) {
 		visible.ensureVisible(x, y);
+	}
+
+	public boolean hasData() {
+		return visible.hasData();
 	}
 
 	public static final Comparator<Url> SURFACE_COMPARATOR = new Comparator<Url>() {

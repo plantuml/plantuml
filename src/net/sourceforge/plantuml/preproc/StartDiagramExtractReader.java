@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3835 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -37,6 +39,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
@@ -49,15 +52,19 @@ public class StartDiagramExtractReader implements ReadLine {
 	private final ReadLine raw;
 	private boolean finished = false;
 
-	public StartDiagramExtractReader(File f, String uid, String charset) throws IOException {
-		this(getReadLine(f, charset), uid, charset);
+	public StartDiagramExtractReader(CharSequence2 s, File f, String uid, String charset) {
+		this(getReadLine(s, f, charset), uid);
 	}
 
-	public StartDiagramExtractReader(URL url, String uid, String charset) throws IOException {
-		this(getReadLine(url, charset), uid, charset);
+	public StartDiagramExtractReader(CharSequence2 s, URL url, String uid, String charset) {
+		this(getReadLine(s, url, charset), uid);
 	}
 
-	private StartDiagramExtractReader(ReadLine raw, String suf, String charset) throws IOException {
+	public StartDiagramExtractReader(CharSequence2 s, InputStream is) {
+		this(getReadLine(s, is), null);
+	}
+
+	private StartDiagramExtractReader(ReadLine raw, String suf) {
 		int bloc = 0;
 		String uid = null;
 		if (suf != null && suf.matches("\\d+")) {
@@ -70,13 +77,18 @@ public class StartDiagramExtractReader implements ReadLine {
 		}
 		this.raw = raw;
 		CharSequence2 s = null;
-		while ((s = raw.readLine()) != null) {
-			if (StartUtils.isArobaseStartDiagram(s) && checkUid(uid, s)) {
-				if (bloc == 0) {
-					return;
+		try {
+			while ((s = raw.readLine()) != null) {
+				if (StartUtils.isArobaseStartDiagram(s) && checkUid(uid, s)) {
+					if (bloc == 0) {
+						return;
+					}
+					bloc--;
 				}
-				bloc--;
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.error("Error " + e);
 		}
 		finished = true;
 	}
@@ -91,35 +103,51 @@ public class StartDiagramExtractReader implements ReadLine {
 		return false;
 	}
 
-	private static ReadLine getReadLine(File f, String charset) throws IOException {
-
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new UncommentReadLine(new ReadLineReader(new FileReader(f), f.getAbsolutePath()));
+	private static ReadLine getReadLine(CharSequence2 s, File f, String charset) {
+		try {
+			if (charset == null) {
+				Log.info("Using default charset");
+				return new UncommentReadLine(new ReadLineReader(new FileReader(f), f.getAbsolutePath()));
+			}
+			Log.info("Using charset " + charset);
+			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset),
+					f.getAbsolutePath()));
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
 		}
-		Log.info("Using charset " + charset);
-		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset),
-				f.getAbsolutePath()));
 	}
 
-	private static ReadLine getReadLine(URL url, String charset) throws IOException {
-
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream()), url.toString()));
-		}
-		Log.info("Using charset " + charset);
-		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream(), charset),
-				url.toString()));
+	private static ReadLine getReadLine(CharSequence2 s, InputStream is) {
+		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(is), null));
 	}
 
-	static public boolean containsStartDiagram(File f, String charset) throws IOException {
-		final ReadLine r = getReadLine(f, charset);
+	private static ReadLine getReadLine(CharSequence2 s, URL url, String charset) {
+		try {
+			if (charset == null) {
+				Log.info("Using default charset");
+				return new UncommentReadLine(
+						new ReadLineReader(new InputStreamReader(url.openStream()), url.toString()));
+			}
+			Log.info("Using charset " + charset);
+			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream(), charset),
+					url.toString()));
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
+		}
+	}
+
+	static public boolean containsStartDiagram(CharSequence2 s, File f, String charset) throws IOException {
+		final ReadLine r = getReadLine(s, f, charset);
 		return containsStartDiagram(r);
 	}
 
-	static public boolean containsStartDiagram(URL url, String charset) throws IOException {
-		final ReadLine r = getReadLine(url, charset);
+	static public boolean containsStartDiagram(CharSequence2 s, URL url, String charset) throws IOException {
+		final ReadLine r = getReadLine(s, url, charset);
+		return containsStartDiagram(r);
+	}
+
+	static public boolean containsStartDiagram(CharSequence2 s, InputStream is) throws IOException {
+		final ReadLine r = getReadLine(s, is);
 		return containsStartDiagram(r);
 	}
 

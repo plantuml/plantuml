@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram;
@@ -39,7 +41,6 @@ import java.util.List;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -68,7 +70,7 @@ public class ActivityDiagram extends CucaDiagram {
 		final IEntity result;
 		if (leafExist(code)) {
 			result = getOrCreateLeafDefault(code, type, null);
-			if (result.getEntityType() != type) {
+			if (result.getLeafType() != type) {
 				// throw new IllegalArgumentException("Already known: " + code + " " + result.getType() + " " + type);
 				return null;
 			}
@@ -99,11 +101,11 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	private void updateLasts(final IEntity result) {
-		if (result.getEntityType() == LeafType.NOTE) {
+		if (result.getLeafType() == LeafType.NOTE) {
 			return;
 		}
 		this.lastEntityConsulted = result;
-		if (result.getEntityType() == LeafType.BRANCH) {
+		if (result.getLeafType() == LeafType.BRANCH) {
 			lastEntityBrancheConsulted = result;
 		}
 	}
@@ -125,7 +127,7 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(" + getLeafssize() + " activities)", getClass());
+		return new DiagramDescription("(" + getLeafssize() + " activities)");
 	}
 
 	public IEntity getLastEntityConsulted() {
@@ -153,8 +155,9 @@ public class ActivityDiagram extends CucaDiagram {
 	public IEntity createInnerActivity() {
 		// Log.println("createInnerActivity A");
 		final Code code = Code.of("##" + UniqueSequence.getValue());
-		final IEntity g = getOrCreateGroup(code, Display.getWithNewlines(code), GroupType.INNER_ACTIVITY,
-				getCurrentGroup());
+		gotoGroup2(code, Display.getWithNewlines(code), GroupType.INNER_ACTIVITY, getCurrentGroup(),
+				NamespaceStrategy.SINGLE);
+		final IEntity g = getCurrentGroup();
 		// g.setRankdir(Rankdir.LEFT_TO_RIGHT);
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
@@ -174,7 +177,8 @@ public class ActivityDiagram extends CucaDiagram {
 		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY) {
 			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
 		}
-		getOrCreateGroup(code, Display.getWithNewlines("code"), GroupType.CONCURRENT_ACTIVITY, getCurrentGroup());
+		gotoGroup2(code, Display.getWithNewlines("code"), GroupType.CONCURRENT_ACTIVITY, getCurrentGroup(),
+				NamespaceStrategy.SINGLE);
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
 	}

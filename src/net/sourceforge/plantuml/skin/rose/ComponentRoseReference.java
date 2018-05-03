@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -36,6 +38,7 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -63,8 +66,8 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 
 	public ComponentRoseReference(FontConfiguration font, SymbolContext symbolContext, FontConfiguration header,
 			Display stringsToDisplay, HorizontalAlignment position, ISkinSimple spriteContainer, HtmlColor background) {
-		super(stringsToDisplay.subList(1, stringsToDisplay.size()), font, HorizontalAlignment.LEFT, 4, 4, 4,
-				spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, stringsToDisplay.subList(1, stringsToDisplay.size()), font, HorizontalAlignment.LEFT, 4, 4,
+				4, spriteContainer, false, null, null);
 		this.position = position;
 		this.symbolContext = symbolContext;
 		this.background = background;

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8126 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -141,6 +143,15 @@ public class UHorizontalLine implements UShape {
 		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);
 		ug.apply(new UTranslate(startingX, y)).draw(new ULine(endingX - startingX, 0));
 	}
+
+//	public void drawTitleInternalForFootprint(UGraphic ug, double x, double y) {
+//		if (title == null || blankTitle) {
+//			return;
+//		}
+//		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+//		final double y1 = y - dimTitle.getHeight() / 2 - 0.5;
+//		title.drawU(ug.apply(new UTranslate(skipAtStart, y1)));
+//	}
 
 	public void drawTitleInternal(UGraphic ug, double startingX, double endingX, double y, boolean clearArea) {
 		if (title == null || blankTitle) {

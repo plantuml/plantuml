@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
@@ -54,15 +56,15 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 		if (notes.size() == 0) {
 			throw new IllegalArgumentException();
 		}
-		if (notes.size() > 1) {
-			throw new IllegalArgumentException();
-		}
+		// if (notes.size() > 1) {
+		// throw new IllegalArgumentException();
+		// }
 		ISkinParam skinParam = skinParam();
-		final PositionedNote note = notes.iterator().next();
-		if (note.getColors() != null) {
-			skinParam = note.getColors().mute(skinParam);
-		}
 		if (ftile == null) {
+			final PositionedNote note = notes.iterator().next();
+			if (note.getColors() != null) {
+				skinParam = note.getColors().mute(skinParam);
+			}
 			return new FtileNoteAlone(skinParam.shadowing(), note.getDisplay(), skinParam,
 					note.getType() == NoteType.NOTE, swimlane);
 		}

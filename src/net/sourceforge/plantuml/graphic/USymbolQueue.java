@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8066 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -36,6 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,10 +53,9 @@ class USymbolQueue extends USymbol {
 		return SkinParameter.QUEUE;
 	}
 
-
 	private final double dx = 5;
 
-	private void drawDatabase(UGraphic ug, double width, double height, boolean shadowing) {
+	private void drawQueue(UGraphic ug, double width, double height, boolean shadowing) {
 		final UPath shape = new UPath();
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
@@ -82,48 +84,62 @@ class USymbolQueue extends USymbol {
 		return closing;
 	}
 
-	class MyUGraphicDatabase extends AbstractUGraphicHorizontalLine {
+	class MyUGraphicQueue extends AbstractUGraphicHorizontalLine implements Stencil {
 
-		private final double endingX;
+		private final double x1;
+		private final double x2;
+		private final double fullHeight;
 
 		@Override
 		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
-			return new MyUGraphicDatabase(ug, endingX);
+			return new MyUGraphicQueue(ug, x1, x2, fullHeight);
 		}
 
-		public MyUGraphicDatabase(UGraphic ug, double endingX) {
+		public MyUGraphicQueue(UGraphic ug, double x1, double x2, double fullHeight) {
 			super(ug);
-			this.endingX = endingX;
+			this.x1 = x1;
+			this.x2 = x2;
+			this.fullHeight = fullHeight;
 		}
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
-			// final UPath closing = getClosingPath(endingX);
-			// ug = ug.apply(translate);
-			// ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(new UTranslate(0, -15)).draw(closing);
-			// if (line.isDouble()) {
-			// ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(new UTranslate(0, -15 + 2))
-			// .draw(closing);
-			// }
-			line.drawTitleInternal(ug, 0, endingX, 0, true);
+			line.drawLineInternal(ug, this, translate.getDy(), line.getStroke());
 		}
 
+		public double getStartingX(StringBounder stringBounder, double y) {
+			return 0;
+		}
+
+		public double getEndingX(StringBounder stringBounder, double y) {
+			final double factor2;
+			final double halfHeight = fullHeight / 2;
+			if (y <= halfHeight) {
+				factor2 = 1 - (y / halfHeight);
+			} else {
+				factor2 = (y - halfHeight) / halfHeight;
+			}
+			return (x2 - x1) * factor2 + x1;
+		}
 	}
 
 	private Margin getMargin() {
 		return new Margin(5, 15, 5, 5);
 	}
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawDatabase(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawQueue(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
-				final UGraphic ug2 = new MyUGraphicDatabase(ug, dim.getWidth());
+				final UGraphic ug2 = new MyUGraphicQueue(ug, dim.getWidth() - 2 * dx, dim.getWidth() - dx,
+						dim.getHeight());
 				tb.drawU(ug2.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
@@ -135,8 +151,9 @@ class USymbolQueue extends USymbol {
 		};
 	}
 
-	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		throw new UnsupportedOperationException();
 		// return new TextBlock() {
 		//
@@ -162,10 +179,5 @@ class USymbolQueue extends USymbol {
 	public boolean manageHorizontalLine() {
 		return true;
 	}
-
-	// @Override
-	// public int suppHeightBecauseOfShape() {
-	// return 15;
-	// }
 
 }

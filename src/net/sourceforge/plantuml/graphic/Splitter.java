@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -67,6 +69,8 @@ public class Splitter {
 	static final String htmlTag;
 
 	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";
+	public static final String mathPattern = "\\<math\\>(.+?)\\</math\\>";
+	public static final String latexPattern = "\\<latex\\>(.+?)\\</latex\\>";
 
 	private static final Pattern2 tagOrText;
 
@@ -74,9 +78,6 @@ public class Splitter {
 		final StringBuilder sb = new StringBuilder("(?i)");
 
 		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {
-			if (style == FontStyle.PLAIN) {
-				continue;
-			}
 			sb.append(style.getActivationPattern());
 			sb.append('|');
 			sb.append(style.getDeactivationPattern());
@@ -102,8 +103,8 @@ public class Splitter {
 		sb.append('|');
 		sb.append(fontFamilyPattern);
 		sb.append('|');
-		sb.append(spritePattern);
-		sb.append('|');
+		// sb.append(spritePattern);
+		// sb.append('|');
 		sb.append(linkPattern);
 		sb.append('|');
 		sb.append(svgAttributePattern);
@@ -145,7 +146,7 @@ public class Splitter {
 		String s = cmd.getText();
 		final Collection<Text> result = new ArrayList<Text>();
 		while (true) {
-			final int x = s.indexOf(Text.NEWLINE.getText());
+			final int x = s.indexOf(Text.TEXT_BS_BS_N.getText());
 			if (x == -1) {
 				result.add(new Text(s));
 				return result;
@@ -153,7 +154,7 @@ public class Splitter {
 			if (x > 0) {
 				result.add(new Text(s.substring(0, x)));
 			}
-			result.add(Text.NEWLINE);
+			result.add(Text.TEXT_BS_BS_N);
 			s = s.substring(x + 2);
 		}
 	}

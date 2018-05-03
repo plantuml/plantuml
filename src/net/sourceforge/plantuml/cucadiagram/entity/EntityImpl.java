@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7755 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.entity;
@@ -36,9 +38,12 @@ package net.sourceforge.plantuml.cucadiagram.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -56,6 +61,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LongCode;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -99,14 +105,23 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// Other
 	private boolean nearDecoration = false;
-	private boolean hasPort = false;
+	private final Collection<String> portShortNames = new HashSet<String>();
 	private int xposition;
 	private IEntityImage svekImage;
 
-	private boolean removed = false;
 	private USymbol symbol;
 	private final int rawLayout;
 	private char concurrentSeparator;
+
+	private Set<Stereotag> tags = new LinkedHashSet<Stereotag>();
+
+	public void addStereotag(Stereotag tag) {
+		this.tags.add(tag);
+	}
+
+	public Set<Stereotag> stereotags() {
+		return Collections.unmodifiableSet(tags);
+	}
 
 	// Back to Entity
 	public final boolean isTop() {
@@ -153,23 +168,28 @@ final class EntityImpl implements ILeaf, IGroup {
 		this.parentContainer = container;
 	}
 
-	public LeafType getEntityType() {
+	public LeafType getLeafType() {
 		return leafType;
 	}
 
-	public void muteToType(LeafType newType, USymbol newSymbol) {
+	public boolean muteToType(LeafType newType, USymbol newSymbol) {
 		checkNotGroup();
 		if (newType == null) {
 			throw new IllegalArgumentException();
 		}
 		if (leafType != LeafType.STILL_UNKNOWN) {
+			if (newType == this.leafType) {
+				return true;
+			}
 			if (leafType != LeafType.ANNOTATION && leafType != LeafType.ABSTRACT_CLASS && leafType != LeafType.CLASS
 					&& leafType != LeafType.ENUM && leafType != LeafType.INTERFACE) {
-				throw new IllegalArgumentException("type=" + leafType);
+				return false;
+				// throw new IllegalArgumentException("type=" + leafType);
 			}
 			if (newType != LeafType.ANNOTATION && newType != LeafType.ABSTRACT_CLASS && newType != LeafType.CLASS
 					&& newType != LeafType.ENUM && newType != LeafType.INTERFACE && newType != LeafType.OBJECT) {
-				throw new IllegalArgumentException("newtype=" + newType);
+				return false;
+				// throw new IllegalArgumentException("newtype=" + newType);
 			}
 		}
 		if (leafType == LeafType.CLASS && newType == LeafType.OBJECT) {
@@ -177,6 +197,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 		this.leafType = newType;
 		this.symbol = newSymbol;
+		return true;
 	}
 
 	public Code getCode() {
@@ -329,7 +350,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	public Collection<ILeaf> getLeafsDirect() {
 		checkGroup();
 		final List<ILeaf> result = new ArrayList<ILeaf>();
-		for (ILeaf ent : entityFactory.getLeafs().values()) {
+		for (ILeaf ent : entityFactory.getLeafsvalues()) {
 			if (ent.isGroup()) {
 				throw new IllegalStateException();
 			}
@@ -343,7 +364,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	public Collection<IGroup> getChildren() {
 		checkGroup();
 		final Collection<IGroup> result = new ArrayList<IGroup>();
-		for (IGroup g : entityFactory.getGroups().values()) {
+		for (IGroup g : entityFactory.getGroupsvalues()) {
 			if (g != this && g.getParentContainer() == this) {
 				result.add(g);
 			}
@@ -411,7 +432,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// ---- other
 
-	public void overideImage(IEntityImage img, LeafType leafType) {
+	public void overrideImage(IEntityImage img, LeafType leafType) {
 		checkGroup();
 		this.svekImage = img;
 		this.url = null;
@@ -423,7 +444,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 
 		entityFactory.removeGroup(this.getCode());
-		for (ILeaf ent : new ArrayList<ILeaf>(entityFactory.getLeafs().values())) {
+		for (ILeaf ent : new ArrayList<ILeaf>(entityFactory.getLeafsvalues())) {
 			if (this != ent && this == ent.getParentContainer()) {
 				entityFactory.removeLeaf(ent.getCode());
 			}
@@ -445,17 +466,10 @@ final class EntityImpl implements ILeaf, IGroup {
 		this.parentContainer = parentContainer;
 	}
 
-	public boolean isHidden() {
-		if (entityFactory.isHidden(this)) {
-			return true;
-		}
-		if (stereotype != null) {
-			return stereotype.isHidden();
-		}
-		return false;
-	}
-
 	public USymbol getUSymbol() {
+		if (getLeafType() == LeafType.CIRCLE) {
+			return USymbol.INTERFACE;
+		}
 		if (symbol != null && stereotype != null && stereotype.getSprite() != null) {
 			return symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
 		}
@@ -470,32 +484,67 @@ final class EntityImpl implements ILeaf, IGroup {
 		return SingleStrategy.SQUARRE;
 	}
 
-	public boolean isRemoved() {
+	public boolean isHidden() {
+		if (parentContainer != null && parentContainer.isHidden()) {
+			return true;
+		}
+		return isHiddenInternal();
+	}
+
+	private boolean isHiddenInternal() {
 		if (isGroup()) {
-			if (removed) {
+			if (entityFactory.isHidden(this)) {
 				return true;
 			}
 			if (getLeafsDirect().size() == 0) {
 				return false;
 			}
 			for (ILeaf leaf : getLeafsDirect()) {
-				if (leaf.isRemoved() == false) {
+				if (((EntityImpl) leaf).isHiddenInternal() == false) {
 					return false;
 				}
 			}
 			for (IGroup g : getChildren()) {
-				if (g.isRemoved() == false) {
+				if (((EntityImpl) g).isHiddenInternal() == false) {
 					return false;
 				}
 			}
 			return true;
 		}
-		return removed;
+		return entityFactory.isHidden(this);
 	}
 
-	public void setRemoved(boolean removed) {
-		this.removed = removed;
+	public boolean isRemoved() {
+		if (parentContainer != null && parentContainer.isRemoved()) {
+			return true;
+		}
+		return isRemovedInternal();
 	}
+	
+	private boolean isRemovedInternal() {
+		if (isGroup()) {
+			if (entityFactory.isRemoved(this)) {
+				return true;
+			}
+			if (getLeafsDirect().size() == 0) {
+				return false;
+			}
+			for (ILeaf leaf : getLeafsDirect()) {
+				if (((EntityImpl) leaf).isRemovedInternal() == false) {
+					return false;
+				}
+			}
+			for (IGroup g : getChildren()) {
+				if (((EntityImpl) g).isRemovedInternal() == false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return entityFactory.isRemoved(this);
+	}
+
+
 
 	private int layer;
 
@@ -578,17 +627,13 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 	}
 
-	// public void setSpecificLineStroke(UStroke specificLineStroke) {
-	// colors = colors.addSpecificLineStroke(specificLineStroke);
-	// }
-
-	public boolean hasPort() {
+	public Collection<String> getPortShortNames() {
 		checkNotGroup();
-		return hasPort;
+		return Collections.unmodifiableCollection(portShortNames);
 	}
 
-	public void setHasPort(boolean hasPort) {
-		this.hasPort = hasPort;
+	public void addPortShortName(String portShortName) {
+		portShortNames.add(portShortName);
 	}
 
 	private VisibilityModifier visibility;

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4041 $
  *
  */
 package net.sourceforge.plantuml.jcckit;
@@ -48,7 +50,6 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 
 public class PSystemJcckit extends AbstractPSystem {
@@ -63,7 +64,9 @@ public class PSystemJcckit extends AbstractPSystem {
 		prop = new PropertiesBasedConfigData(p);
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		// Sets up a Graphics2DPlotCanvas
@@ -79,7 +82,7 @@ public class PSystemJcckit extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(JCCKit)", getClass());
+		return new DiagramDescription("(JCCKit)");
 	}
 
 }

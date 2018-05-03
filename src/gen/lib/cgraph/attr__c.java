@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -78,6 +83,8 @@ import h.Agobj_s;
 import h.Agraph_s;
 import h.Agrec_s;
 import h.Agsym_s;
+import h.ST_Agdesc_s;
+import h.ST_Agtag_s;
 import h._dt_s;
 import h._dtdisc_s;
 import smetana.core.CString;
@@ -220,7 +227,7 @@ public class attr__c {
 
 //1 cwbgwzo8cprw4eobs3iji59dp
 // Dtdisc_t AgDataDictDisc = 
-/*static public final __struct__<_dtdisc_s> AgDataDictDisc = __struct__.from(_dtdisc_s.class);
+/*static public final __struct__<_dtdisc_s> AgDataDictDisc = JUtils.from(_dtdisc_s.class);
 static {
 	AgDataDictDisc.setInt("key", OFFSET.create(Agsym_s.class, "name").toInt());
 	AgDataDictDisc.setInt("size", -1);
@@ -236,7 +243,7 @@ static {
 public final static CString DataDictName = new CString("_AG_datadict");
 //1 1qn6s7dwoq08ugdjnmsvdgj6u
 // static Agdesc_t ProtoDesc = 
-/*static final public __struct__<Agdesc_s> ProtoDesc = __struct__.from(Agdesc_s.class);
+/*static final public __struct__<Agdesc_s> ProtoDesc = JUtils.from(Agdesc_s.class);
 static {
 	ProtoDesc.setInt("directed", 1);
 	ProtoDesc.setInt("strict", 0);
@@ -715,7 +722,7 @@ try {
     /* Agdatadict_t *dd; */
     /* Agrec_t                      *attr; */
     Agraph_s context;
-    g.getStruct("desc").setInt("has_attrs", 1);
+    ((ST_Agdesc_s)g.getStruct("desc")).has_attrs = 1;
     /* dd = */ agmakedatadict(g);
     if (N(context = agparent(g)))
 	context = g;
@@ -904,7 +911,7 @@ try {
 
     agstrfree(g, data.getArrayOfCString("str").plus(sym.getInt("id")).getCString());
     data.getArrayOfCString("str").plus(sym.getInt("id")).setCString(agstrdup(g, value));
-    if (hdr.getStruct("tag").getInt("objtype") == AGRAPH) {
+    if (((ST_Agtag_s)hdr.getStruct("tag")).objtype == AGRAPH) {
 	/* also update dict default */
 	_dt_s dict;
 	dict = (_dt_s) agdatadict(g, false).getPtr("dict.g");

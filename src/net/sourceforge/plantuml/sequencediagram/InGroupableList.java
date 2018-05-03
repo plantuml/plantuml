@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4259 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -193,9 +195,9 @@ public class InGroupableList implements InGroupable {
 		final double max = getMaxXInternal(stringBounder);
 		assert max - min >= 0;
 		if (max - min < minWidth) {
-			return min + minWidth;
+			return min + minWidth + hack2;
 		}
-		return max;
+		return max + hack2;
 	}
 
 	private final double getMaxXInternal(StringBounder stringBounder) {
@@ -213,6 +215,16 @@ public class InGroupableList implements InGroupable {
 			m += MARGIN5;
 		}
 		return m;
+	}
+
+	private double hack2;
+
+	public void changeHack2(double hack2) {
+		this.hack2 += hack2;
+	}
+
+	public double getHack2() {
+		return hack2;
 	}
 
 }

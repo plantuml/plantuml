@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4768 $
  *
  */
 package net.sourceforge.plantuml.core;
@@ -36,9 +38,13 @@ package net.sourceforge.plantuml.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -55,12 +61,15 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
  * So the diagram does not have to be a UML one.
  * 
  * @author Arnaud Roques
- *
+ * 
  */
 final public class UmlSource {
 
 	final private List<String> source;
 	final private List<CharSequence2> source2;
+
+	// final private int startLine;
+	// final private LineLocation startLocation;
 
 	/**
 	 * Build the source from a text.
@@ -69,8 +78,11 @@ final public class UmlSource {
 	 *            the source of the diagram
 	 * @param checkEndingBackslash
 	 *            <code>true</code> if an ending backslash means that a line has to be collapsed with the following one.
+	 * @param startLine
 	 */
-	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash) {
+	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash, int startLine) {
+		// this.startLocation = source.get(0).getLocation();
+		// this.startLine = startLine;
 		final List<String> tmp = new ArrayList<String>();
 		final List<CharSequence2> tmp2 = new ArrayList<CharSequence2>();
 
@@ -125,9 +137,20 @@ final public class UmlSource {
 		for (String s : source) {
 			sb.append(s);
 			sb.append('\r');
-			sb.append('\n');
+			sb.append(BackSlash.CHAR_NEWLINE);
 		}
 		return sb.toString();
+	}
+
+	public long seed() {
+		long h = 1125899906842597L; // prime
+		final String string = getPlainString();
+		final int len = string.length();
+
+		for (int i = 0; i < len; i++) {
+			h = 31 * h + string.charAt(i);
+		}
+		return h;
 	}
 
 	/**
@@ -137,8 +160,20 @@ final public class UmlSource {
 	 *            line number, starting at 0
 	 * @return
 	 */
-	public String getLine(int n) {
+	private String getLine(int n) {
+		if (n < 0 || n >= source.size()) {
+			return "";
+		}
 		return source.get(n);
+	}
+
+	public String getLine(LineLocation n) {
+		for (CharSequence2 s : source2) {
+			if (s.getLocation().compareTo(n) == 0) {
+				return s.toString();
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -190,4 +225,20 @@ final public class UmlSource {
 		return Display.empty();
 	}
 
+	public boolean isStartDef() {
+		return source.get(0).startsWith("@startdef");
+	}
+
+	public String getId() {
+		final Pattern p = Pattern.compile("id=([\\w]+)\\b");
+		final Matcher m = p.matcher(source.get(0));
+		if (m.find()) {
+			return m.group(1);
+		}
+		return null;
+	}
+
+	// public final int getStartLine() {
+	// return startLine;
+	// }
 }

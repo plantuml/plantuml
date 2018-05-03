@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -33,6 +38,7 @@ package smetana.core.amiga;
 
 import smetana.core.UnsupportedC;
 import smetana.core.__array_of_ptr__;
+import smetana.core.__array_of_ptr_impl__;
 import smetana.core.__ptr__;
 
 public class StarStar extends UnsupportedC implements Area {
@@ -44,10 +50,7 @@ public class StarStar extends UnsupportedC implements Area {
 	}
 
 	public static StarStar array_of_array_of_something_empty(final Class cl, int nb) {
-		// if (allocated) {
-		// return new StarStar(__array__.malloc(cl, nb));
-		// }
-		return new StarStar(__array_of_ptr__.malloc_empty(nb));
+		return new StarStar(__array_of_ptr_impl__.malloc_empty(nb));
 	}
 
 	public String toString() {

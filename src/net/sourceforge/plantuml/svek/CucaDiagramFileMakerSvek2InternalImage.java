@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -39,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -54,6 +57,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	private final List<IEntityImage> inners;
 	private final Separator separator;
 	private final ISkinParam skinParam;
+	private final Stereotype stereotype;
 
 	static enum Separator {
 		VERTICAL, HORIZONTAL;
@@ -97,19 +101,20 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 		}
 	}
 
-	private HtmlColor getColor(ColorParam colorParam) {
-		return new Rose().getHtmlColor(skinParam, colorParam);
+	private HtmlColor getColor(ColorParam colorParam, Stereotype stereotype) {
+		return new Rose().getHtmlColor(skinParam, colorParam, stereotype);
 	}
 
 	public CucaDiagramFileMakerSvek2InternalImage(List<IEntityImage> inners, char concurrentSeparator,
-			ISkinParam skinParam) {
+			ISkinParam skinParam, Stereotype stereotype) {
 		this.separator = Separator.fromChar(concurrentSeparator);
 		this.skinParam = skinParam;
+		this.stereotype = stereotype;
 		this.inners = inners;
 	}
 
 	public void drawU(UGraphic ug) {
-		final HtmlColor dotColor = getColor(ColorParam.stateBorder);
+		final HtmlColor dotColor = getColor(ColorParam.stateBorder, stereotype);
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
@@ -142,8 +147,8 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 		return false;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public ShapeType getShapeType() {

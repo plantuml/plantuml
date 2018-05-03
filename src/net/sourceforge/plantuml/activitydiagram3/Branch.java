@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3;
@@ -39,6 +41,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -51,27 +54,33 @@ public class Branch {
 	private final InstructionList list;
 	private final Display labelTest;
 	private final Display labelPositive;
+	private final Display inlabel;
 	private final HtmlColor color;
 	private LinkRendering inlinkRendering = LinkRendering.none();
 
 	private Ftile ftile;
 
-	public boolean isOnlySingleStop() {
-		return list.isOnlySingleStop();
-	}
-
-	public Branch(Swimlane swimlane, Display labelPositive, Display labelTest, HtmlColor color) {
+	public Branch(Swimlane swimlane, Display labelPositive, Display labelTest, HtmlColor color, Display inlabel) {
 		if (labelPositive == null) {
 			throw new IllegalArgumentException();
 		}
 		if (labelTest == null) {
 			throw new IllegalArgumentException();
 		}
+		if (inlabel == null) {
+			throw new IllegalArgumentException();
+		}
+		this.inlabel = inlabel;
 		this.list = new InstructionList(swimlane);
 		this.labelTest = labelTest;
 		this.labelPositive = labelPositive;
 		this.color = color;
 	}
+	
+	public Collection<WeldingPoint> getWeldingPoints() {
+		return ftile.getWeldingPoints();
+	}
+
 
 	public void add(Instruction ins) {
 		list.add(ins);
@@ -81,8 +90,8 @@ public class Branch {
 		return list.kill();
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		return list.addNote(note, position, type, colors);
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+		return list.addNote(note, position, type, colors, swimlaneNote);
 	}
 
 	public final void setInlinkRendering(LinkRendering inlinkRendering) {
@@ -116,6 +125,10 @@ public class Branch {
 		return inlinkRendering == null ? null : inlinkRendering.getRainbow();
 	}
 
+	public Display getInlabel() {
+		return inlabel;
+	}
+
 	public final Ftile getFtile() {
 		return ftile;
 	}
@@ -134,6 +147,10 @@ public class Branch {
 
 	public Instruction getLast() {
 		return list.getLast();
+	}
+
+	public boolean isOnlySingleStopOrSpot() {
+		return list.isOnlySingleStopOrSpot();
 	}
 
 }

@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -45,13 +50,18 @@ public class size_t_array_of_array_of_something_allocated implements size_t {
 	public boolean isZero() {
 		return nb == 0;
 	}
+	
+	public int getInternalNb() {
+		return nb;
+	}
+
 
 	public __ptr__ realloc(Object old) {
 		throw new UnsupportedOperationException();
 	}
 
 	public __array_of_struct__ malloc() {
-		return __array_of_struct__.malloc(cl, nb);
+		return __array_of_struct_impl__.malloc(cl, nb);
 	}
 
 	public size_t negate() {

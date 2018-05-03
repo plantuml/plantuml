@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,38 +28,54 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
  */
 package net.sourceforge.plantuml;
 
+import java.awt.Color;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.eggs.PSystemWelcome;
+import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemError extends AbstractPSystem {
 
-	private final int higherErrorPosition;
+	private final LineLocation higherErrorPosition;
 	private final List<ErrorUml> printedErrors;
 	private final List<String> debugLines = new ArrayList<String>();
 
@@ -65,20 +86,20 @@ public class PSystemError extends AbstractPSystem {
 	private PSystemError(UmlSource source, List<ErrorUml> all, List<String> debugLines) {
 		this.setSource(source);
 
-		final int higherErrorPositionExecution = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR, all);
-		final int higherErrorPositionSyntax = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR, all);
+		final LineLocation execution = getHigherErrorPosition2(ErrorUmlType.EXECUTION_ERROR, all);
+		final LineLocation syntax = getHigherErrorPosition2(ErrorUmlType.SYNTAX_ERROR, all);
 
-		if (higherErrorPositionExecution == Integer.MIN_VALUE && higherErrorPositionSyntax == Integer.MIN_VALUE) {
+		if (execution == null && syntax == null) {
 			throw new IllegalStateException();
 		}
 
-		if (higherErrorPositionExecution >= higherErrorPositionSyntax) {
-			higherErrorPosition = higherErrorPositionExecution;
-			printedErrors = getErrorsAt(higherErrorPositionExecution, ErrorUmlType.EXECUTION_ERROR, all);
+		if (execution != null && (syntax == null || execution.compareTo(syntax) >= 0)) {
+			higherErrorPosition = execution;
+			printedErrors = getErrorsAt2(execution, ErrorUmlType.EXECUTION_ERROR, all);
 		} else {
-			assert higherErrorPositionSyntax > higherErrorPositionExecution;
-			higherErrorPosition = higherErrorPositionSyntax;
-			printedErrors = getErrorsAt(higherErrorPositionSyntax, ErrorUmlType.SYNTAX_ERROR, all);
+			// assert syntax.compareTo(execution) > 0;
+			higherErrorPosition = syntax;
+			printedErrors = getErrorsAt2(syntax, ErrorUmlType.SYNTAX_ERROR, all);
 		}
 
 		if (debugLines != null) {
@@ -101,7 +122,9 @@ public class PSystemError extends AbstractPSystem {
 		return "red";
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();
@@ -111,11 +134,70 @@ public class PSystemError extends AbstractPSystem {
 
 		}
 		final boolean useRed = fileFormat.isUseRedForError();
-		final GraphicStrings result = GraphicStrings.createDefault(getHtmlStrings(useRed), useRed);
+		final TextBlockBackcolored result = GraphicStrings.createForError(getHtmlStrings(useRed), useRed);
+
+		TextBlock udrawable;
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
-		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		if (getSource().getTotalLineCount() < 5) {
+			udrawable = addWelcome(result);
+		} else {
+			udrawable = result;
+		}
+		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
+		if (min == 0) {
+			udrawable = addMessage(udrawable);
+		}
+		imageBuilder.setUDrawable(udrawable);
+		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
+		((ImageDataAbstract) imageData).setStatus(400);
+		return imageData;
+	}
+
+	private TextBlockBackcolored getWelcome() throws IOException {
+		return new PSystemWelcome(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
+	}
+
+	private TextBlock addWelcome(final TextBlockBackcolored result) throws IOException {
+		final TextBlockBackcolored welcome = getWelcome();
+		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);
+	}
+
+	private TextBlock addMessage(final TextBlock source) throws IOException {
+		final TextBlock message = getMessage();
+		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
+		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
+		return result;
+	}
+
+	private TextBlockBackcolored getMessage() {
+		final UImage message = new UImage(PSystemVersion.getTime());
+		final HtmlColor backImage = new HtmlColorSimple(new Color(message.getImage().getRGB(0, 0)), false);
+		final double imWidth = message.getWidth();
+		final double imHeight = message.getHeight();
+		return new TextBlockBackcolored() {
+
+			public void drawU(UGraphic ug) {
+				ug.apply(new UTranslate(1, 1)).draw(message);
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+				return null;
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(imWidth + 1, imHeight + 1);
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return MinMax.fromMax(imWidth + 1, imHeight + 1);
+			}
+
+			public HtmlColor getBackcolor() {
+				return backImage;
+			}
+		};
+
 	}
 
 	private List<String> getTextStrings() {
@@ -124,21 +206,24 @@ public class PSystemError extends AbstractPSystem {
 			result.add(" ");
 		}
 
-		final int limit = 4;
-		int start;
-		final int skip = higherErrorPosition - limit + 1;
-		if (skip <= 0) {
-			start = 0;
-		} else {
-			if (skip == 1) {
-				result.add("... (skipping 1 line) ...");
-			} else {
-				result.add("... (skipping " + skip + " lines) ...");
-			}
-			start = higherErrorPosition - limit + 1;
-		}
-		for (int i = start; i < higherErrorPosition; i++) {
-			result.add(getSource().getLine(i));
+		// final int limit = 4;
+		// int start;
+		// final int skip = higherErrorPosition - limit + 1;
+		// if (skip <= 0) {
+		// start = 0;
+		// } else {
+		// if (skip == 1) {
+		// result.add("... (skipping 1 line) ...");
+		// } else {
+		// result.add("... (skipping " + skip + " lines) ...");
+		// }
+		// start = higherErrorPosition - limit + 1;
+		// }
+		// for (int i = start; i < higherErrorPosition; i++) {
+		// result.add(getSource().getLine(i));
+		// }
+		for (String s : getPartialCode()) {
+			result.add(s);
 		}
 		final String errorLine = getSource().getLine(higherErrorPosition);
 		final String err = StringUtils.hideComparatorCharacters(errorLine);
@@ -199,37 +284,60 @@ public class PSystemError extends AbstractPSystem {
 		}
 	}
 
+	private List<String> getPartialCode() {
+		List<String> result = new ArrayList<String>();
+		for (Iterator<CharSequence2> it = getSource().iterator2(); it.hasNext();) {
+			final CharSequence2 s = it.next();
+			if (s.getLocation().compareTo(higherErrorPosition) < 0) {
+				result.add(s.toString());
+			}
+		}
+		final int limit = 4;
+		if (result.size() > limit) {
+			final int skip = result.size() - limit + 1;
+			final String skipMessage;
+			if (skip == 1) {
+				skipMessage = "... (skipping 1 line) ...";
+			} else {
+				skipMessage = "... (skipping " + skip + " lines) ...";
+			}
+			result = new ArrayList<String>(result.subList(skip, result.size()));
+			result.add(0, skipMessage);
+		}
+		return result;
+
+	}
+
 	private List<String> getHtmlStrings(boolean useRed) {
 		final List<String> htmlStrings = new ArrayList<String>(getStack());
 		if (htmlStrings.size() > 0) {
 			htmlStrings.add("----");
 		}
 
-		final int limit = 4;
-		int start;
-		final int skip = higherErrorPosition - limit + 1;
-		if (skip <= 0) {
-			start = 0;
-		} else {
-			if (skip == 1) {
-				htmlStrings.add("... (skipping 1 line) ...");
-			} else {
-				htmlStrings.add("... (skipping " + skip + " lines) ...");
-			}
-			start = higherErrorPosition - limit + 1;
-		}
-		for (int i = start; i < higherErrorPosition; i++) {
-			htmlStrings.add(StringUtils.hideComparatorCharacters(getSource().getLine(i)));
+		// final int limit = 4;
+		// int start;
+		// final int skip = higherErrorPosition - limit + 1;
+		// if (skip <= 0) {
+		// start = 0;
+		// } else {
+		// if (skip == 1) {
+		// htmlStrings.add("... (skipping 1 line) ...");
+		// } else {
+		// htmlStrings.add("... (skipping " + skip + " lines) ...");
+		// }
+		// start = higherErrorPosition - limit + 1;
+		// }
+		// for (int i = start; i < higherErrorPosition; i++) {
+		// htmlStrings.add(StringUtils.hideComparatorCharacters(getSource().getLine(i)));
+		// }
+		for (String s : getPartialCode()) {
+			htmlStrings.add(StringUtils.hideComparatorCharacters(s));
 		}
 		final String errorLine = getSource().getLine(higherErrorPosition);
 		final String err = StringUtils.hideComparatorCharacters(errorLine);
 		if (StringUtils.isNotEmpty(err)) {
 			htmlStrings.add("<w:" + getRed(useRed) + ">" + err + "</w>");
 		}
-		// final StringBuilder underscore = new StringBuilder();
-		// for (int i = 0; i < errorLine.length(); i++) {
-		// underscore.append("^");
-		// }
 		final Collection<String> textErrors = new LinkedHashSet<String>();
 		for (ErrorUml er : printedErrors) {
 			textErrors.add(er.getError());
@@ -283,23 +391,40 @@ public class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
-	private int getHigherErrorPosition(ErrorUmlType type, List<ErrorUml> all) {
-		int max = Integer.MIN_VALUE;
+	// private int getHigherErrorPosition(ErrorUmlType type, List<ErrorUml> all) {
+	// int max = Integer.MIN_VALUE;
+	// for (ErrorUml error : getErrors(type, all)) {
+	// if (error.getPosition() > max) {
+	// max = error.getPosition();
+	// }
+	// }
+	// return max;
+	// }
+
+	private LineLocation getHigherErrorPosition2(ErrorUmlType type, List<ErrorUml> all) {
+		LineLocation max = null;
 		for (ErrorUml error : getErrors(type, all)) {
-			if (error.getPosition() > max) {
-				max = error.getPosition();
+			if (max == null || error.getLineLocation().compareTo(max) > 0) {
+				max = error.getLineLocation();
 			}
 		}
-		// if (max == Integer.MIN_VALUE) {
-		// throw new IllegalStateException();
-		// }
 		return max;
 	}
 
-	private List<ErrorUml> getErrorsAt(int position, ErrorUmlType type, List<ErrorUml> all) {
+	// private List<ErrorUml> getErrorsAt(int position, ErrorUmlType type, List<ErrorUml> all) {
+	// final List<ErrorUml> result = new ArrayList<ErrorUml>();
+	// for (ErrorUml error : getErrors(type, all)) {
+	// if (error.getPosition() == position && StringUtils.isNotEmpty(error.getError())) {
+	// result.add(error);
+	// }
+	// }
+	// return result;
+	// }
+
+	private List<ErrorUml> getErrorsAt2(LineLocation position, ErrorUmlType type, List<ErrorUml> all) {
 		final List<ErrorUml> result = new ArrayList<ErrorUml>();
 		for (ErrorUml error : getErrors(type, all)) {
-			if (error.getPosition() == position && StringUtils.isNotEmpty(error.getError())) {
+			if (error.getLineLocation().compareTo(position) == 0 && StringUtils.isNotEmpty(error.getError())) {
 				result.add(error);
 			}
 		}
@@ -307,10 +432,10 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Error)", getClass());
+		return new DiagramDescription("(Error)");
 	}
 
-	public final int getHigherErrorPosition() {
+	public final LineLocation getHigherErrorPosition2() {
 		return higherErrorPosition;
 	}
 
@@ -322,15 +447,15 @@ public class PSystemError extends AbstractPSystem {
 	public String getWarningOrError() {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(getDescription());
-		sb.append('\n');
+		sb.append(BackSlash.CHAR_NEWLINE);
 		for (CharSequence t : getTitle().getDisplay()) {
 			sb.append(t);
-			sb.append('\n');
+			sb.append(BackSlash.CHAR_NEWLINE);
 		}
-		sb.append('\n');
+		sb.append(BackSlash.CHAR_NEWLINE);
 		for (String s : getSuggest()) {
 			sb.append(s);
-			sb.append('\n');
+			sb.append(BackSlash.CHAR_NEWLINE);
 		}
 		return sb.toString();
 	}

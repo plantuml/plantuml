@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20057 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -72,6 +74,7 @@ public class Link implements Hideable, Removeable {
 	private Display note;
 	private Position notePosition;
 	private Colors noteColors;
+	private NoteLinkStrategy noteLinkStrategy;
 
 	private boolean invis = false;
 	private double weight = 1.0;
@@ -116,11 +119,11 @@ public class Link implements Hideable, Removeable {
 		this.type = type;
 		if (Display.isNull(label)) {
 			this.label = Display.NULL;
-		} else if (doWeHaveToRemoveUrlAtStart(label)) {
-			this.url = label.initUrl();
-			this.label = label.removeHeadingUrl(url);
+			// } else if (doWeHaveToRemoveUrlAtStart(label)) {
+			// this.url = label.initUrl();
+			// this.label = label.removeHeadingUrl(url).manageGuillemet();
 		} else {
-			this.label = label;
+			this.label = label.manageGuillemet();
 		}
 		this.length = length;
 		this.qualifier1 = qualifier1;
@@ -139,16 +142,16 @@ public class Link implements Hideable, Removeable {
 		// }
 	}
 
-	private static boolean doWeHaveToRemoveUrlAtStart(Display label) {
-		if (label.size() == 0) {
-			return false;
-		}
-		final String s = label.get(0).toString();
-		if (s.matches("^\\[\\[\\S+\\]\\].+$")) {
-			return true;
-		}
-		return false;
-	}
+	// private static boolean doWeHaveToRemoveUrlAtStart(Display label) {
+	// if (label.size() == 0) {
+	// return false;
+	// }
+	// final String s = label.get(0).toString();
+	// if (s.matches("^\\[\\[\\S+\\]\\].+$")) {
+	// return true;
+	// }
+	// return false;
+	// }
 
 	public Link getInv() {
 		// if (getLength() == 1) {
@@ -157,18 +160,23 @@ public class Link implements Hideable, Removeable {
 		// }
 		final Link result = new Link(cl2, cl1, getType().getInversed(), label, length, qualifier2, qualifier1,
 				labeldistance, labelangle, specificColor);
-		result.inverted = true;
+		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;
+		result.url = this.url;
 		return result;
 	}
 
 	public void goDashed() {
-		type = type.getDashed();
+		type = type.goDashed();
 	}
 
 	public void goDotted() {
-		type = type.getDotted();
+		type = type.goDotted();
+	}
+
+	public void goThickness(double thickness) {
+		type = type.goThickness(thickness);
 	}
 
 	private boolean hidden = false;
@@ -182,7 +190,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public void goBold() {
-		type = type.getBold();
+		type = type.goBold();
 	}
 
 	public String getLabeldistance() {
@@ -331,6 +339,10 @@ public class Link implements Hideable, Removeable {
 		return note;
 	}
 
+	public final NoteLinkStrategy getNoteLinkStrategy() {
+		return noteLinkStrategy;
+	}
+
 	public final Colors getNoteColors() {
 		return noteColors;
 	}
@@ -343,13 +355,15 @@ public class Link implements Hideable, Removeable {
 		this.note = note;
 		this.notePosition = position;
 		this.noteColors = colors;
+		this.noteLinkStrategy = NoteLinkStrategy.NORMAL;
 	}
 
-	// public final void addNote(String n, Position position, Colors colors) {
-	// this.note = Display.getWithNewlines(n);
-	// this.notePosition = position;
-	// this.noteColors = colors;
-	// }
+	public final void addNoteFrom(Link other, NoteLinkStrategy strategy) {
+		this.note = other.note;
+		this.notePosition = other.notePosition;
+		this.noteColors = other.noteColors;
+		this.noteLinkStrategy = strategy;
+	}
 
 	public boolean isAutoLinkOfAGroup() {
 		if (getEntity1().isGroup() == false) {
@@ -365,7 +379,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean containsType(LeafType type) {
-		if (getEntity1().getEntityType() == type || getEntity2().getEntityType() == type) {
+		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type) {
 			return true;
 		}
 		return false;
@@ -377,6 +391,20 @@ public class Link implements Hideable, Removeable {
 		}
 		return false;
 	}
+
+//	public boolean containsWithDecors(ILeaf leaf) {
+//		LinkType linkType = this.getType();
+//		if (isInverted()) {
+//			linkType = linkType.getInversed();
+//		}
+//		if (getEntity2() == leaf && linkType.getDecor1() != LinkDecor.NONE) {
+//			return true;
+//		}
+//		if (getEntity1() == leaf && linkType.getDecor2() != LinkDecor.NONE) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public IEntity getOther(IEntity entity) {
 		if (getEntity1() == entity) {
@@ -541,10 +569,10 @@ public class Link implements Hideable, Removeable {
 		this.port1 = port1;
 		this.port2 = port2;
 		if (port1 != null) {
-			((ILeaf) cl1).setHasPort(true);
+			((ILeaf) cl1).addPortShortName(port1);
 		}
 		if (port2 != null) {
-			((ILeaf) cl2).setHasPort(true);
+			((ILeaf) cl2).addPortShortName(port2);
 		}
 	}
 

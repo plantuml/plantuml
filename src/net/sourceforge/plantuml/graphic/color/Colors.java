@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7946 $
  *
  */
 package net.sourceforge.plantuml.graphic.color;
@@ -64,6 +66,10 @@ public class Colors {
 		return new Colors();
 	}
 
+	public boolean isEmpty() {
+		return map.isEmpty();
+	}
+
 	private Colors copy() {
 		final Colors result = new Colors();
 		result.map.putAll(this.map);
@@ -97,11 +103,11 @@ public class Colors {
 			}
 		}
 		if (data.contains("line.dashed")) {
-			lineStyle = LinkStyle.DASHED;
+			lineStyle = LinkStyle.DASHED();
 		} else if (data.contains("line.dotted")) {
-			lineStyle = LinkStyle.DOTTED;
+			lineStyle = LinkStyle.DOTTED();
 		} else if (data.contains("line.bold")) {
-			lineStyle = LinkStyle.BOLD;
+			lineStyle = LinkStyle.BOLD();
 		}
 	}
 
@@ -124,7 +130,7 @@ public class Colors {
 		if (lineStyle == null) {
 			return null;
 		}
-		return LinkStyle.getStroke(lineStyle);
+		return lineStyle.getStroke3();
 	}
 
 	// public Colors addSpecificLineStroke(UStroke specificStroke) {
@@ -164,7 +170,7 @@ public class Colors {
 			throw new IllegalArgumentException();
 		}
 		final Colors result = copy();
-		result.lineStyle = LinkStyle.valueOf(StringUtils.goUpperCase(s));
+		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(s));
 		return result;
 
 	}
@@ -176,7 +182,7 @@ public class Colors {
 		if (colors.lineStyle == null) {
 			return ug;
 		}
-		return ug.apply(LinkStyle.getStroke(colors.lineStyle));
+		return ug.apply(colors.lineStyle.getStroke3());
 	}
 
 	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param) {
@@ -231,6 +237,13 @@ public class Colors {
 
 	public Boolean getShadowing() {
 		return shadowing;
+	}
+
+	public UStroke muteStroke(UStroke stroke) {
+		if (lineStyle == null) {
+			return stroke;
+		}
+		return lineStyle.muteStroke(stroke);
 	}
 
 }

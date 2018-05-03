@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
  *
  */
 package net.sourceforge.plantuml.compositediagram.command;
@@ -42,6 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 
 public class CommandCreatePackageBlock extends SingleLineCommand<CompositeDiagram> {
 
@@ -57,7 +60,8 @@ public class CommandCreatePackageBlock extends SingleLineCommand<CompositeDiagra
 		if (display == null) {
 			display = code.getFullName();
 		}
-		diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage);
+		diagram.gotoGroup2(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
+				NamespaceStrategy.SINGLE);
 		return CommandExecutionResult.ok();
 	}
 

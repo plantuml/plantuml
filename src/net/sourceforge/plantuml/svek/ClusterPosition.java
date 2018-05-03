@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -185,6 +187,30 @@ public class ClusterPosition {
 			return true;
 		}
 		return false;
+	}
+
+	public Side getClosestSide(Point2D pt) {
+		final double distNorth = Math.abs(minY - pt.getY());
+		final double distSouth = Math.abs(maxY - pt.getY());
+		final double distWest = Math.abs(minX - pt.getX());
+		final double distEast = Math.abs(maxX - pt.getX());
+		if (isSmallerThan(distNorth, distWest, distEast, distSouth)) {
+			return Side.NORTH;
+		}
+		if (isSmallerThan(distSouth, distNorth, distWest, distEast)) {
+			return Side.SOUTH;
+		}
+		if (isSmallerThan(distEast, distNorth, distWest, distSouth)) {
+			return Side.EAST;
+		}
+		if (isSmallerThan(distWest, distNorth, distEast, distSouth)) {
+			return Side.WEST;
+		}
+		return null;
+	}
+
+	private boolean isSmallerThan(double value, double a, double b, double c) {
+		return value <= a && value <= b && value <= c;
 	}
 
 }

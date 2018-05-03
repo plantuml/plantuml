@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -46,6 +51,11 @@ public class size_t_array_of_array_of_something_empty implements size_t {
 	public boolean isZero() {
 		return nb == 0;
 	}
+	
+	public int getInternalNb() {
+		return nb;
+	}
+
 
 	public __ptr__ realloc(Object old) {
 		JUtils.LOG("realloc old1=" + old);

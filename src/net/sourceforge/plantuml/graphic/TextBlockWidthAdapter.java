@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7163 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -37,26 +39,26 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class TextBlockWidthAdapter extends AbstractTextBlock implements TextBlock {
+public class TextBlockWidthAdapter implements TextBlockWidth {
 
-	private final TextBlockWidth textBlockWidth;
+	private final TextBlock textBlock;
 	private final double width;
 
-	// public final void setWidth(double width) {
-	// this.width = width;
-	// }
-
-	public TextBlockWidthAdapter(TextBlockWidth textBlockWidth, double widthToUse) {
-		this.textBlockWidth = textBlockWidth;
+	public TextBlockWidthAdapter(TextBlock textBlock, double widthToUse) {
+		this.textBlock = textBlock;
 		this.width = widthToUse;
 	}
 
 	public void drawU(UGraphic ug) {
-		textBlockWidth.asTextBlock(width).drawU(ug);
+		textBlock.drawU(ug);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return textBlockWidth.calculateDimension(stringBounder);
+		return textBlock.calculateDimension(stringBounder);
+	}
+
+	public TextBlock asTextBlock(double widthToUse) {
+		return textBlock;
 	}
 
 }

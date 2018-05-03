@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 20057 $
  *
  */
 package net.sourceforge.plantuml;
@@ -41,14 +43,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class OptionFlags {
+
+	private static final OptionFlags singleton = new OptionFlags();
 
 	// static public final boolean PBBACK = false;
 	// static public boolean GRAPHVIZCACHE = false;
 	// static public final boolean TRACE_DOT = false;
 
 	static public boolean ALLOW_INCLUDE = true;
+
+	static public void setMaxPixel(int max) {
+		ImageBuilder.setMaxPixel(max);
+	}
 
 	static public final boolean USE_HECTOR = false;
 	static public boolean ADD_NICE_FOR_DOT = false;
@@ -58,33 +67,37 @@ public class OptionFlags {
 	static public final boolean FORCE_TEOZ = false;
 	static public final boolean USE_INTERFACE_EYE1 = false;
 	static public final boolean USE_INTERFACE_EYE2 = false;
-	static public final boolean SWI2 = false;
+	// static public final boolean SWI2 = false;
 	// static public final boolean USE_COMPOUND = false;
 	static public final boolean OMEGA_CROSSING = false;
-	// static public final boolean LINK_BETWEEN_FIELDS = true;
 
+	// static public final boolean LINK_BETWEEN_FIELDS = true;
 	// static public final boolean USE_JDOT = false;
 
 	public void reset() {
 		reset(false);
+		GraphvizUtils.setDotExecutable(null);
 	}
 
 	public final void setDotExecutable(String dotExecutable) {
 		GraphvizUtils.setDotExecutable(dotExecutable);
 	}
 
+	private OptionFlags() {
+		reset(true);
+	}
+
 	private void reset(boolean exit) {
 		// keepTmpFiles = false;
 		verbose = false;
-		metadata = false;
+		extractFromMetadata = false;
 		word = false;
 		systemExit = exit;
-		GraphvizUtils.setDotExecutable(null);
 		gui = false;
 		quiet = false;
 		checkDotError = false;
 		printFonts = false;
-		useSuggestEngine = true;
+		// useSuggestEngine = true;
 		// failOnError = false;
 		encodesprite = false;
 		// PIC_LINE = false;
@@ -94,38 +107,30 @@ public class OptionFlags {
 		return false;
 	}
 
-	private static final OptionFlags singleton = new OptionFlags();
-
 	// private boolean keepTmpFiles;
 	private boolean verbose;
-	private boolean metadata;
+	private boolean extractFromMetadata;
 	private boolean word;
 	private boolean systemExit;
 	private boolean gui;
 	private boolean quiet;
 	private boolean checkDotError;
 	private boolean printFonts;
-	private boolean useSuggestEngine;
-	// private boolean failOnError;
+	// private boolean useSuggestEngine;
 	private boolean encodesprite;
+	private boolean dumpHtmlStats;
+	private boolean dumpStats;
+	private boolean loopStats;
 	private boolean overwrite;
+	private boolean enableStats = defaultForStats();
+	private boolean extractStdLib;
+	private String fileSeparator = "_";
+	private long timeoutMs = 15 * 60 * 1000L; // 15 minutes
 	private File logData;
-
-	private OptionFlags() {
-		reset(true);
-	}
 
 	public static OptionFlags getInstance() {
 		return singleton;
 	}
-
-	// public synchronized final boolean isKeepTmpFiles() {
-	// return keepTmpFiles;
-	// }
-	//
-	// public synchronized final void setKeepTmpFiles(boolean keepTmpFiles) {
-	// this.keepTmpFiles = keepTmpFiles;
-	// }
 
 	public final boolean isVerbose() {
 		return verbose;
@@ -135,12 +140,12 @@ public class OptionFlags {
 		this.verbose = verbose;
 	}
 
-	public final boolean isMetadata() {
-		return metadata;
+	public final boolean isExtractFromMetadata() {
+		return extractFromMetadata;
 	}
 
-	public final void setMetadata(boolean metadata) {
-		this.metadata = metadata;
+	public final void setExtractFromMetadata(boolean extractFromMetadata) {
+		this.extractFromMetadata = extractFromMetadata;
 	}
 
 	public final boolean isWord() {
@@ -221,17 +226,6 @@ public class OptionFlags {
 		}
 	}
 
-	// public static void logErrorFile(final PSystemError systemError, PrintStream ps) {
-	// ps.println(systemError.getDescription());
-	// for (CharSequence t : systemError.getTitle()) {
-	// ps.println(t);
-	// }
-	// systemError.print(ps);
-	// for (String s : systemError.getSuggest()) {
-	// ps.println(s);
-	// }
-	// }
-
 	public final void setLogData(File logData) {
 		this.logData = logData;
 		logData.delete();
@@ -257,20 +251,16 @@ public class OptionFlags {
 		this.printFonts = printFonts;
 	}
 
-	public final boolean isUseSuggestEngine() {
-		return useSuggestEngine;
+	public final boolean isUseSuggestEngine2() {
+		return false;
 	}
 
-	public final void setUseSuggestEngine(boolean useSuggestEngine) {
-		this.useSuggestEngine = useSuggestEngine;
-	}
-
-	// public final boolean isFailOnError() {
-	// return failOnError;
+	// public final boolean isUseSuggestEngine() {
+	// return useSuggestEngine;
 	// }
 	//
-	// public final void setFailOnError(boolean failOnError) {
-	// this.failOnError = failOnError;
+	// public final void setUseSuggestEngine(boolean useSuggestEngine) {
+	// this.useSuggestEngine = useSuggestEngine;
 	// }
 
 	public final boolean isEncodesprite() {
@@ -289,4 +279,67 @@ public class OptionFlags {
 		this.overwrite = overwrite;
 	}
 
+	public final String getFileSeparator() {
+		return fileSeparator;
+	}
+
+	public final void setFileSeparator(String fileSeparator) {
+		this.fileSeparator = fileSeparator;
+	}
+
+	public final boolean isDumpHtmlStats() {
+		return dumpHtmlStats;
+	}
+
+	public final void setDumpHtmlStats(boolean value) {
+		this.dumpHtmlStats = value;
+	}
+
+	public final boolean isDumpStats() {
+		return dumpStats;
+	}
+
+	public final void setDumpStats(boolean dumpStats) {
+		this.dumpStats = dumpStats;
+	}
+
+	public final boolean isLoopStats() {
+		return loopStats;
+	}
+
+	public final void setLoopStats(boolean loopStats) {
+		this.loopStats = loopStats;
+	}
+
+	private static boolean defaultForStats() {
+		return isTrue(System.getProperty("PLANTUML_STATS")) || isTrue(System.getenv("PLANTUML_STATS"));
+	}
+
+	private static boolean isTrue(final String value) {
+		return "on".equalsIgnoreCase(value) || "true".equalsIgnoreCase(value);
+	}
+
+	public boolean isEnableStats() {
+		return enableStats;
+	}
+
+	public void setEnableStats(boolean enableStats) {
+		this.enableStats = enableStats;
+	}
+
+	public final long getTimeoutMs() {
+		return timeoutMs;
+	}
+
+	public final void setTimeoutMs(long timeoutMs) {
+		this.timeoutMs = timeoutMs;
+	}
+
+	public void setExtractStdLib(boolean extractStdLib) {
+		this.extractStdLib = extractStdLib;
+	}
+
+	public boolean getExtractStdLib() {
+		return extractStdLib;
+	}
 }

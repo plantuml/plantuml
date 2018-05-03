@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4041 $
  *
  */
 package net.sourceforge.plantuml.acearth;
@@ -49,12 +51,11 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 
-import com.ctreber.acearth.ACearth;
-import com.ctreber.acearth.ConfigurationACearth;
-import com.ctreber.acearth.plugins.markers.Marker;
+import ext.plantuml.com.ctreber.acearth.ACearth;
+import ext.plantuml.com.ctreber.acearth.ConfigurationACearth;
+import ext.plantuml.com.ctreber.acearth.plugins.markers.Marker;
 
 public class PSystemXearth extends AbstractPSystem {
 
@@ -76,8 +77,10 @@ public class PSystemXearth extends AbstractPSystem {
 		this.config = config;
 		this.markers = markers;
 	}
-	
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		final ACearth earth = new ACearth(markers);
 		final ConfigurationACearth conf = earth.getConf();
 		conf.setInt("imageWidth", width);
@@ -105,7 +108,6 @@ public class PSystemXearth extends AbstractPSystem {
 		return new ImageDataSimple(width, height);
 	}
 
-
 	private Date extractGmt(String s) {
 		final SimpleDateFormat timeFormat;
 		if (s.matches("\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}")) {
@@ -125,8 +127,7 @@ public class PSystemXearth extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(XEarth)", getClass());
+		return new DiagramDescription("(XEarth)");
 	}
-
 
 }

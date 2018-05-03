@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20161 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
@@ -43,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -108,8 +111,9 @@ public class StateDiagram extends AbstractEntityDiagram {
 	}
 
 	public IEntity getHistorical(Code codeGroup) {
-		final IEntity g = getOrCreateGroup(codeGroup, Display.getWithNewlines(codeGroup), GroupType.STATE,
-				getRootGroup());
+		gotoGroup2(codeGroup, Display.getWithNewlines(codeGroup), GroupType.STATE, getRootGroup(),
+				NamespaceStrategy.SINGLE);
+		final IEntity g = getCurrentGroup();
 		final IEntity result = getOrCreateLeaf(Code.of("*historical*" + g.getCode().getFullName()),
 				LeafType.PSEUDO_STATE, null);
 		endGroup();
@@ -123,13 +127,14 @@ public class StateDiagram extends AbstractEntityDiagram {
 			super.endGroup();
 		}
 		getCurrentGroup().setConcurrentSeparator(direction);
-		final IGroup conc1 = getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""),
-				GroupType.CONCURRENT_STATE, getCurrentGroup());
+		gotoGroup2(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
+				getCurrentGroup(), NamespaceStrategy.SINGLE);
+		final IGroup conc1 = getCurrentGroup();
 		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
-			getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
-					getCurrentGroup());
+			gotoGroup2(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
+					getCurrentGroup(), NamespaceStrategy.SINGLE);
 		}
 		// printlink("AFTER");
 		return true;

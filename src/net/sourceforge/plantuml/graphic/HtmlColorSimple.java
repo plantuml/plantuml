@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7946 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -38,7 +40,6 @@ import java.awt.Color;
 import net.sourceforge.plantuml.ugraphic.ColorChangerMonochrome;
 
 public class HtmlColorSimple implements HtmlColor {
-
 
 	private final Color color;
 	private final boolean monochrome;
@@ -56,12 +57,10 @@ public class HtmlColorSimple implements HtmlColor {
 		return this.color.equals(((HtmlColorSimple) other).color);
 	}
 
-
-	HtmlColorSimple(Color c, boolean monochrome) {
+	public HtmlColorSimple(Color c, boolean monochrome) {
 		this.color = c;
 		this.monochrome = monochrome;
 	}
-
 
 	public Color getColor999() {
 		return color;
@@ -72,6 +71,19 @@ public class HtmlColorSimple implements HtmlColor {
 			throw new IllegalStateException();
 		}
 		return new HtmlColorSimple(new ColorChangerMonochrome().getChangedColor(color), true);
+	}
+
+	public HtmlColorSimple opposite() {
+		final Color mono = new ColorChangerMonochrome().getChangedColor(color);
+		final int grayScale = 255 - mono.getGreen() > 127 ? 255 : 0;
+		return new HtmlColorSimple(new Color(grayScale, grayScale, grayScale), true);
+	}
+
+	public double distance(HtmlColorSimple other) {
+		final int diffRed = Math.abs(this.color.getRed() - other.color.getRed());
+		final int diffGreen = Math.abs(this.color.getGreen() - other.color.getGreen());
+		final int diffBlue = Math.abs(this.color.getBlue() - other.color.getBlue());
+		return diffRed * .3 + diffGreen * .59 + diffBlue * .11;
 	}
 
 }

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,21 +28,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 20003 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -46,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
+import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
@@ -56,11 +61,14 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
+import net.sourceforge.plantuml.ugraphic.ColorMapperReverse;
+import net.sourceforge.plantuml.ugraphic.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
@@ -74,48 +82,71 @@ public class SkinParam implements ISkinParam {
 	private final Map<String, String> params = new HashMap<String, String>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
 	private String dotExecutable;
+	private final UmlDiagramType type;
 
 	public String getDotExecutable() {
 		return dotExecutable;
 	}
 
 	public void setDotExecutable(String dotExecutable) {
+		Log.info("Overwritting dot in skinparam " + dotExecutable);
 		this.dotExecutable = dotExecutable;
 	}
 
 	public void setParam(String key, String value) {
-		params.put(cleanForKey(key), StringUtils.trin(value));
+		for (String key2 : cleanForKey(key)) {
+			params.put(key2, StringUtils.trin(value));
+		}
 	}
 
-	public static SkinParam noShadowing() {
-		final SkinParam result = new SkinParam();
+	private SkinParam(UmlDiagramType type) {
+		this.type = type;
+	}
+
+	public static SkinParam create(UmlDiagramType type) {
+		return new SkinParam(type);
+	}
+
+	public static SkinParam noShadowing(UmlDiagramType type) {
+		final SkinParam result = new SkinParam(type);
 		result.setParam("shadowing", "false");
 		return result;
 	}
 
-	static String cleanForKey(String key) {
+	private final Map<String, List<String>> cacheCleanForKey = new HashMap<String, List<String>>();
+
+	List<String> cleanForKey(String key) {
+		List<String> result = cacheCleanForKey.get(key);
+		if (result == null) {
+			result = cleanForKeySlow(key);
+			cacheCleanForKey.put(key, result);
+		}
+		return result;
+	}
+
+	List<String> cleanForKeySlow(String key) {
 		key = StringUtils.trin(StringUtils.goLowerCase(key));
 		key = key.replaceAll("_|\\.|\\s", "");
 		// key = replaceSmart(key, "partition", "package");
 		key = replaceSmart(key, "sequenceparticipant", "participant");
 		key = replaceSmart(key, "sequenceactor", "actor");
-		if (key.contains("arrow")) {
-			key = key.replaceAll("activityarrow|objectarrow|classarrow|componentarrow|statearrow|usecasearrow",
-					"genericarrow");
+		key = key.replaceAll("activityarrow", "arrow");
+		key = key.replaceAll("objectarrow", "arrow");
+		key = key.replaceAll("classarrow", "arrow");
+		key = key.replaceAll("componentarrow", "arrow");
+		key = key.replaceAll("statearrow", "arrow");
+		key = key.replaceAll("usecasearrow", "arrow");
+		key = key.replaceAll("sequencearrow", "arrow");
+		final Matcher2 mm = stereoPattern.matcher(key);
+		final List<String> result = new ArrayList<String>();
+		while (mm.find()) {
+			final String s = mm.group(1);
+			result.add(key.replaceAll(stereoPatternString, "") + "<<" + s + ">>");
 		}
-		// // key = key.replaceAll("activityarrow", "genericarrow");
-		// // key = key.replaceAll("objectarrow", "genericarrow");
-		// // key = key.replaceAll("classarrow", "genericarrow");
-		// // key = key.replaceAll("componentarrow", "genericarrow");
-		// // key = key.replaceAll("statearrow", "genericarrow");
-		// // key = key.replaceAll("usecasearrow", "genericarrow");
-		final Matcher2 m = stereoPattern.matcher(key);
-		if (m.find()) {
-			final String s = m.group(1);
-			key = key.replaceAll(stereoPatternString, "");
-			key += "<<" + s + ">>";
+		if (result.size() == 0) {
+			result.add(key);
 		}
-		return key;
+		return Collections.unmodifiableList(result);
 	}
 
 	private static String replaceSmart(String s, String src, String target) {
@@ -142,7 +173,13 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public String getValue(String key) {
-		return params.get(cleanForKey(key));
+		for (String key2 : cleanForKey(key)) {
+			final String result = params.get(key2);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
 	}
 
 	static String humanName(String key) {
@@ -174,8 +211,20 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return null;
 		}
-		final boolean acceptTransparent = param == ColorParam.background;
+		final boolean acceptTransparent = param == ColorParam.background
+				|| param == ColorParam.sequenceGroupBodyBackground || param == ColorParam.sequenceBoxBackground;
 		return getIHtmlColorSet().getColorIfValid(value, acceptTransparent);
+	}
+
+	public char getCircledCharacter(Stereotype stereotype) {
+		if (stereotype == null) {
+			throw new IllegalArgumentException();
+		}
+		final String value2 = getValue("spotchar" + stereotype.getLabel(false));
+		if (value2 != null && value2.length() > 0) {
+			return value2.charAt(0);
+		}
+		return 0;
 	}
 
 	public Colors getColors(ColorParam param, Stereotype stereotype) {
@@ -331,10 +380,6 @@ public class SkinParam implements ISkinParam {
 		return 10;
 	}
 
-	private boolean isMonochrome() {
-		return "true".equals(getValue("monochrome"));
-	}
-
 	public static Collection<String> getPossibleValues() {
 		final Set<String> result = new TreeSet<String>();
 		result.add("Monochrome");
@@ -345,6 +390,45 @@ public class SkinParam implements ISkinParam {
 		result.add("DefaultFontStyle");
 		result.add("DefaultFontSize");
 		result.add("DefaultFontColor");
+		result.add("MinClassWidth");
+		result.add("MinClassWidth");
+		result.add("Dpi");
+		result.add("DefaultTextAlignment");
+		result.add("Shadowing");
+		result.add("NoteShadowing");
+		result.add("Handwritten");
+		result.add("CircledCharacterRadius");
+		result.add("ClassAttributeIconSize");
+		result.add("Linetype");
+		result.add("PackageStyle");
+		result.add("ComponentStyle");
+		result.add("StereotypePosition");
+		result.add("Nodesep");
+		result.add("Ranksep");
+		result.add("RoundCorner");
+		result.add("TitleBorderRoundCorner");
+		result.add("MaxMessageSize");
+		result.add("Style");
+		result.add("SequenceParticipant");
+		result.add("ConditionStyle");
+		result.add("SameClassWidth");
+		result.add("HyperlinkUnderline");
+		result.add("Padding");
+		result.add("Guillemet");
+		result.add("SvglinkTarget");
+		result.add("DefaultMonospacedFontName");
+		result.add("TabSize");
+		result.add("MaxAsciiMessageLength");
+		result.add("ColorArrowSeparationSpace");
+		result.add("ResponseMessageBelowArrow");
+		result.add("GenericDisplay");
+		result.add("PathHoverColor");
+		result.add("SwimlaneWidth");
+		result.add("PageBorderColor");
+		result.add("PageExternalColor");
+		result.add("PageMargin");
+
+		
 		for (FontParam p : EnumSet.allOf(FontParam.class)) {
 			final String h = humanName(p.name());
 			result.add(h + "FontStyle");
@@ -386,7 +470,7 @@ public class SkinParam implements ISkinParam {
 		return DotSplines.SPLINES;
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param) {
+	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection) {
 		final String value;
 		switch (param) {
 		case SEQUENCE_MESSAGE_ALIGN:
@@ -397,6 +481,22 @@ public class SkinParam implements ISkinParam {
 			break;
 		default:
 			value = getValue(param.name());
+		}
+		if ("direction".equalsIgnoreCase(value)) {
+			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
+				return HorizontalAlignment.LEFT;
+			}
+			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+				return HorizontalAlignment.RIGHT;
+			}
+		}
+		if ("reversedirection".equalsIgnoreCase(value)) {
+			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
+				return HorizontalAlignment.RIGHT;
+			}
+			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+				return HorizontalAlignment.LEFT;
+			}
 		}
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
 		if (result == null) {
@@ -426,10 +526,22 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public ColorMapper getColorMapper() {
-		if (isMonochrome()) {
-			return new ColorMapperMonochrome();
+		final String monochrome = getValue("monochrome");
+		if ("true".equals(monochrome)) {
+			return new ColorMapperMonochrome(false);
 		}
-		return new ColorMapperIdentity();
+		if ("reverse".equals(monochrome)) {
+			return new ColorMapperMonochrome(true);
+		}
+		final String value = getValue("reversecolor");
+		if (value == null) {
+			return new ColorMapperIdentity();
+		}
+		final ColorOrder order = ColorOrder.fromString(value);
+		if (order == null) {
+			return new ColorMapperIdentity();
+		}
+		return new ColorMapperReverse(order);
 	}
 
 	public boolean shadowing() {
@@ -550,35 +662,97 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
-	public double getRoundCorner() {
-		final String value = getValue("roundcorner");
-		if (value != null && value.matches("\\d+")) {
-			return Double.parseDouble(value);
+	public double getDiagonalCorner(CornerParam param, Stereotype stereotype) {
+		final String key = param.getDiagonalKey();
+		Double result = getCornerInternal(key, param, stereotype);
+		if (result != null) {
+			return result;
 		}
-		return 0;
+		result = getCornerInternal(key, param, null);
+		if (result != null) {
+			return result;
+		}
+		if (param == CornerParam.DEFAULT) {
+			return 0;
+		}
+		return getDiagonalCorner(CornerParam.DEFAULT, stereotype);
 	}
 
-	public UStroke getThickness(LineParam param, Stereotype stereotype) {
-		if (stereotype != null) {
-			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "thickness" + stereotype.getLabel(false));
-			if (value2 != null && value2.matches("[\\d.]+")) {
-				return new UStroke(Double.parseDouble(value2));
-			}
+	public double getRoundCorner(CornerParam param, Stereotype stereotype) {
+		final String key = param.getRoundKey();
+		Double result = getCornerInternal(key, param, stereotype);
+		if (result != null) {
+			return result;
 		}
-		final String value = getValue(param.name() + "thickness");
-		if (value != null && value.matches("[\\d.]+")) {
-			return new UStroke(Double.parseDouble(value));
+		result = getCornerInternal(key, param, null);
+		if (result != null) {
+			return result;
+		}
+		if (param == CornerParam.DEFAULT) {
+			return 0;
+		}
+		return getRoundCorner(CornerParam.DEFAULT, stereotype);
+	}
+
+	private Double getCornerInternal(String key, CornerParam param, Stereotype stereotype) {
+		if (stereotype != null) {
+			key += stereotype.getLabel(false);
+		}
+		final String value = getValue(key);
+		if (value != null && value.matches("\\d+")) {
+			return Double.parseDouble(value);
 		}
 		return null;
 	}
 
-	public double maxMessageSize() {
-		final String value = getValue("maxmessagesize");
-		if (value != null && value.matches("-?\\d+")) {
-			return Double.parseDouble(value);
+	public UStroke getThickness(LineParam param, Stereotype stereotype) {
+		LinkStyle style = null;
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+
+			final String styleValue = getValue(param.name() + "style" + stereotype.getLabel(false));
+			if (styleValue != null) {
+				style = LinkStyle.fromString2(styleValue);
+			}
+
+			final String value2 = getValue(param.name() + "thickness" + stereotype.getLabel(false));
+			if (value2 != null && value2.matches("[\\d.]+")) {
+				if (style == null) {
+					style = LinkStyle.NORMAL();
+				}
+				return style.goThickness(Double.parseDouble(value2)).getStroke3();
+			}
 		}
-		return 0;
+		final String value = getValue(param.name() + "thickness");
+		if (value != null && value.matches("[\\d.]+")) {
+			if (style == null) {
+				style = LinkStyle.NORMAL();
+			}
+			return style.goThickness(Double.parseDouble(value)).getStroke3();
+		}
+		if (style == null) {
+			final String styleValue = getValue(param.name() + "style");
+			if (styleValue != null) {
+				style = LinkStyle.fromString2(styleValue);
+			}
+		}
+		if (style != null && style.isNormal() == false) {
+			return style.getStroke3();
+		}
+		return null;
+	}
+
+	public LineBreakStrategy maxMessageSize() {
+		String value = getValue("wrapmessagewidth");
+		if (value == null) {
+			value = getValue("maxmessagesize");
+		}
+		return new LineBreakStrategy(value);
+	}
+
+	public LineBreakStrategy wrapWidth() {
+		final String value = getValue("wrapwidth");
+		return new LineBreakStrategy(value);
 	}
 
 	public boolean strictUmlStyle() {
@@ -658,14 +832,6 @@ public class SkinParam implements ISkinParam {
 		return true;
 	}
 
-	public double getPadding() {
-		final String value = getValue("padding");
-		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
-			return Double.parseDouble(value);
-		}
-		return 0;
-	}
-
 	public int groupInheritance() {
 		final String value = getValue("groupinheritance");
 		int result = Integer.MAX_VALUE;
@@ -732,6 +898,92 @@ public class SkinParam implements ISkinParam {
 			return Integer.parseInt(value);
 		}
 		return 0;
+	}
+
+	public SplitParam getSplitParam() {
+		final String border = getValue("pageBorderColor");
+		final String external = getValue("pageExternalColor");
+
+		final String marginString = getValue("pageMargin");
+		int margin = 0;
+		if (marginString != null && marginString.matches("\\d+")) {
+			margin = Integer.parseInt(marginString);
+		}
+
+		return new SplitParam(getIHtmlColorSet().getColorIfValid(border), getIHtmlColorSet().getColorIfValid(external),
+				margin);
+	}
+
+	public int swimlaneWidth() {
+		final String value = getValue("swimlanewidth");
+		if ("same".equalsIgnoreCase(value)) {
+			return -1;
+		}
+		if (value != null && value.matches("\\d+")) {
+			return Integer.parseInt(value);
+		}
+		return 0;
+	}
+
+	public UmlDiagramType getUmlDiagramType() {
+		return type;
+	}
+
+	public HtmlColor getHoverPathColor() {
+		final String value = getValue("pathhovercolor");
+		if (value == null) {
+			return null;
+		}
+		return getIHtmlColorSet().getColorIfValid(value, false);
+	}
+
+	public double getPadding() {
+		final String value = getValue("padding");
+		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public double getPadding(PaddingParam param) {
+		final String value = getValue(param.getSkinName());
+		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public boolean useRankSame() {
+		return false;
+	}
+
+	public boolean displayGenericWithOldFashion() {
+		final String value = getValue("genericDisplay");
+		if ("old".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean responseMessageBelowArrow() {
+		final String value = getValue("responsemessagebelowarrow");
+		if ("true".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	public TikzFontDistortion getTikzFontDistortion() {
+		final String value = getValue("tikzFont");
+		return TikzFontDistortion.fromValue(value);
+	}
+
+	public boolean svgDimensionStyle() {
+		final String value = getValue("svgdimensionstyle");
+		if ("false".equalsIgnoreCase(value)) {
+			return false;
+		}
+		return true;
 	}
 
 }

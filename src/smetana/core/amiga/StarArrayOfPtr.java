@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -31,12 +36,14 @@
 
 package smetana.core.amiga;
 
+import h.ST_boxf;
 import smetana.core.AllH;
 import smetana.core.UnsupportedC;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__array_of_struct__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
+import smetana.core.size_t;
 
 public class StarArrayOfPtr extends UnsupportedC implements Area, AllH {
 
@@ -50,12 +57,16 @@ public class StarArrayOfPtr extends UnsupportedC implements Area, AllH {
 		array.realloc(nb);
 	}
 
+	public void realloc(size_t nb) {
+		array.realloc(nb);
+	}
+
 	public String getUID36() {
 		return array.getUID36();
 	}
 
 	public void memcopyFrom(Area source) {
-		throw new UnsupportedOperationException();
+		((StarStruct) array.getInternal(0)).memcopyFrom(source);
 	}
 
 	public final __array_of_ptr__ getInternalArray() {
@@ -138,7 +149,11 @@ public class StarArrayOfPtr extends UnsupportedC implements Area, AllH {
 	}
 
 	public __struct__ getStruct(String fieldName) {
-		return ((__ptr__) array.getInternal(0)).getStruct(fieldName);
+		__ptr__ TMP = (__ptr__) array.getInternal(0);
+		if (TMP instanceof ST_boxf) {
+			return ((ST_boxf) TMP).getStructInternal(fieldName);
+		}
+		return TMP.getStruct(fieldName);
 	}
 
 	public void setDouble(String fieldName, double data) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4604 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -44,12 +46,16 @@ public class LinkType {
 	private final LinkHat hat2;
 	private final LinkMiddleDecor middleDecor;
 
+	public boolean isDoubleDecorated() {
+		return decor1 != LinkDecor.NONE && decor2 != LinkDecor.NONE;
+	}
+
 	public LinkType(LinkDecor decor1, LinkDecor decor2) {
 		this(LinkHat.NONE, decor1, decor2, LinkHat.NONE);
 	}
 
 	public LinkType(LinkHat hat1, LinkDecor decor1, LinkDecor decor2, LinkHat hat2) {
-		this(hat1, decor1, LinkStyle.NORMAL, LinkMiddleDecor.NONE, decor2, hat2);
+		this(hat1, decor1, LinkStyle.NORMAL(), LinkMiddleDecor.NONE, decor2, hat2);
 	}
 
 	public LinkType withoutDecors1() {
@@ -82,6 +88,9 @@ public class LinkType {
 
 	private LinkType(LinkHat hat1, LinkDecor decor1, LinkStyle style, LinkMiddleDecor middleDecor, LinkDecor decor2,
 			LinkHat hat2) {
+		if (style == null) {
+			throw new IllegalArgumentException();
+		}
 		this.decor1 = decor1;
 		this.style = style;
 		this.decor2 = decor2;
@@ -90,41 +99,45 @@ public class LinkType {
 		this.hat2 = hat2;
 	}
 
-	public boolean isDashed() {
-		return style == LinkStyle.DASHED;
-	}
-
-	public boolean isDotted() {
-		return style == LinkStyle.DOTTED;
-	}
-
-	public boolean isBold() {
-		return style == LinkStyle.BOLD;
-	}
+	// private boolean isDashed() {
+	// return style == LinkStyle.DASHED;
+	// }
+	//
+	// private boolean isDotted() {
+	// return style == LinkStyle.DOTTED;
+	// }
+	//
+	// private boolean isBold() {
+	// return style == LinkStyle.BOLD;
+	// }
 
 	public boolean isInvisible() {
-		return style == LinkStyle.INVISIBLE;
+		return style.isInvisible();
 	}
 
-	public LinkType getDashed() {
-		return new LinkType(hat1, decor1, LinkStyle.DASHED, middleDecor, decor2, hat2);
+	public LinkType goDashed() {
+		return new LinkType(hat1, decor1, LinkStyle.DASHED(), middleDecor, decor2, hat2);
 	}
 
-	public LinkType getDotted() {
-		return new LinkType(hat1, decor1, LinkStyle.DOTTED, middleDecor, decor2, hat2);
+	public LinkType goDotted() {
+		return new LinkType(hat1, decor1, LinkStyle.DOTTED(), middleDecor, decor2, hat2);
 	}
 
-	public LinkType getBold() {
-		return new LinkType(hat1, decor1, LinkStyle.BOLD, middleDecor, decor2, hat2);
+	public LinkType goThickness(double thickness) {
+		return new LinkType(hat1, decor1, style.goThickness(thickness), middleDecor, decor2, hat2);
 	}
 
-	public LinkType getInterfaceProvider() {
-		return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_PROVIDER, middleDecor, decor2, hat2);
+	public LinkType goBold() {
+		return new LinkType(hat1, decor1, LinkStyle.BOLD(), middleDecor, decor2, hat2);
 	}
 
-	public LinkType getInterfaceUser() {
-		return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_USER, middleDecor, decor2, hat2);
-	}
+	// public LinkType getInterfaceProvider() {
+	// return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_PROVIDER, middleDecor, decor2, hat2);
+	// }
+	//
+	// public LinkType getInterfaceUser() {
+	// return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_USER, middleDecor, decor2, hat2);
+	// }
 
 	public LinkType getInversed() {
 		return new LinkType(hat2, decor2, style, middleDecor, decor1, hat1);
@@ -147,7 +160,7 @@ public class LinkType {
 	}
 
 	public LinkType getInvisible() {
-		return new LinkType(hat1, decor1, LinkStyle.INVISIBLE, middleDecor, decor2, hat2);
+		return new LinkType(hat1, decor1, LinkStyle.INVISIBLE(), middleDecor, decor2, hat2);
 	}
 
 	public String getSpecificDecorationSvek() {
@@ -167,14 +180,17 @@ public class LinkType {
 			sb.append("arrowtail=empty");
 			sb.append(",arrowhead=none");
 			sb.append(",dir=back");
-		} else if (isEmpty1 == false && isEmpty2) {
-			sb.append("arrowtail=none");
-			sb.append(",arrowhead=empty");
+			// } else if (isEmpty1 == false && isEmpty2) {
+			// sb.append("arrowtail=none");
+			// sb.append(",arrowhead=empty");
 		}
 
 		final double arrowsize = Math.max(decor1.getArrowSize(), decor2.getArrowSize());
 		if (arrowsize > 0) {
-			sb.append(",arrowsize=" + arrowsize);
+			if (sb.length() > 0) {
+				sb.append(",");
+			}
+			sb.append("arrowsize=" + arrowsize);
 		}
 		return sb.toString();
 	}
@@ -191,8 +207,8 @@ public class LinkType {
 		return decor2;
 	}
 
-	public boolean isExtendsOrAgregationOrCompositionOrPlus() {
-		return isExtends() || isAgregationOrComposition() || isPlus();
+	public boolean isExtendsOrAggregationOrCompositionOrPlus() {
+		return isExtends() || isAggregationOrComposition() || isPlus();
 	}
 
 	private boolean isExtends() {
@@ -203,7 +219,7 @@ public class LinkType {
 		return decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS;
 	}
 
-	private boolean isAgregationOrComposition() {
+	private boolean isAggregationOrComposition() {
 		return decor1 == LinkDecor.AGREGATION || decor2 == LinkDecor.AGREGATION || decor1 == LinkDecor.COMPOSITION
 				|| decor2 == LinkDecor.COMPOSITION;
 	}
@@ -216,17 +232,14 @@ public class LinkType {
 		return new LinkType(LinkHat.NONE, LinkDecor.NONE, style, middleDecor, decor2, hat2);
 	}
 
-	public UStroke getStroke() {
-		if (style == LinkStyle.DASHED) {
-			return new UStroke(7, 7, 1);
+	public UStroke getStroke3(UStroke defaultThickness) {
+		if (style.isThicknessOverrided()) {
+			return style.getStroke3();
 		}
-		if (style == LinkStyle.DOTTED) {
-			return new UStroke(1, 3, 1);
+		if (defaultThickness == null) {
+			return style.getStroke3();
 		}
-		if (style == LinkStyle.BOLD) {
-			return new UStroke(2);
-		}
-		return new UStroke();
+		return style.goThickness(defaultThickness.getThickness()).getStroke3();
 	}
 
 	public LinkMiddleDecor getMiddleDecor() {

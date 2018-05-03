@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19946 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -36,9 +38,11 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -60,8 +64,8 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	public ComponentRoseGroupingElse(HtmlColor groupBorder, FontConfiguration smallFont, CharSequence comment,
 			ISkinSimple spriteContainer, HtmlColor backgroundColor) {
-		super(comment == null ? null : "[" + comment + "]", smallFont, HorizontalAlignment.LEFT, 5, 5, 1,
-				spriteContainer, 0, null, null);
+		super(LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
+				HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, null, null);
 		this.groupBorder = groupBorder;
 		this.backgroundColor = backgroundColor;
 		// this.stroke = stroke;
@@ -69,6 +73,9 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
+		if (backgroundColor instanceof HtmlColorTransparent) {
+			return;
+		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight());
 		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backgroundColor)).draw(rect);

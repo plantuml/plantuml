@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -63,6 +68,7 @@ import h.gvlayout_features_t;
 import h.gvplugin_installed_t;
 import h.layout_type;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.__struct__;
 
@@ -171,8 +177,8 @@ public class gvlayout__c {
 
 //3 2g20jitdi8afuoei8p1mcfg9l
 // int gvlayout_select(GVC_t * gvc, const char *layout) 
-private final static __struct__<gvlayout_features_t> dotgen_features = __struct__.from(gvlayout_features_t.class);
-private final static __struct__<gvlayout_engine_s> dotgen_engine = __struct__.from(gvlayout_engine_s.class);
+private final static __struct__<gvlayout_features_t> dotgen_features = JUtils.from(gvlayout_features_t.class);
+private final static __struct__<gvlayout_engine_s> dotgen_engine = JUtils.from(gvlayout_engine_s.class);
 static {
 dotgen_features.setInt("flags", 1<<0);
 dotgen_engine.setPtr("layout", function(gen.lib.dotgen.dotinit__c.class, "dot_layout"));

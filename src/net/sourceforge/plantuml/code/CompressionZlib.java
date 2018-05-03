@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3827 $
  *
  */
 package net.sourceforge.plantuml.code;
@@ -40,7 +42,13 @@ import java.util.zip.Inflater;
 
 public class CompressionZlib implements Compression {
 
+	private static boolean USE_ZOPFLI = false;
+	private static final int COMPRESSION_LEVEL = 9;
+
 	public byte[] compress(byte[] in) {
+		if (USE_ZOPFLI) {
+			return new CompressionZopfliZlib().compress(in);
+		}
 		if (in.length == 0) {
 			return null;
 		}
@@ -58,7 +66,7 @@ public class CompressionZlib implements Compression {
 
 	private byte[] tryCompress(byte[] in, final int len) {
 		// Compress the bytes
-		final Deflater compresser = new Deflater(9, true);
+		final Deflater compresser = new Deflater(COMPRESSION_LEVEL, true);
 		compresser.setInput(in);
 		compresser.finish();
 
@@ -88,6 +96,9 @@ public class CompressionZlib implements Compression {
 	}
 
 	private byte[] tryDecompress(byte[] in, final int len) throws IOException {
+		if (len > 200000) {
+			throw new IOException("OutOfMemory");
+		}
 		// Decompress the bytes
 		final byte[] tmp = new byte[len];
 		final Inflater decompresser = new Inflater(true);

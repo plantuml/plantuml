@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4041 $
  *
  */
 package net.sourceforge.plantuml.creole;
@@ -41,8 +43,10 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -59,25 +63,27 @@ public class PSystemCreole extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Creole)", getClass());
+		return new DiagramDescription("(Creole)");
 	}
 
 	public void doCommandLine(String line) {
 		lines.add(line);
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		final Display display = Display.create(lines);
-		final UFont font = new UFont("Serif", Font.PLAIN, 14);
+		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.FULL)
+		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL)
 				.createSheet(display);
-		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, 0, 0);
+		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 0, 0, null,
 				false);
 		builder.setUDrawable(sheetBlock);
-		return builder.writeImageTOBEMOVED(fileFormat, os);
+		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
 		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1, dim, null, false);

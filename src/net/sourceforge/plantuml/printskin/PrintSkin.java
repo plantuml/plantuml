@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19885 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -49,7 +51,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -75,7 +76,7 @@ import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 class PrintSkin extends AbstractPSystem {
 
-	private static final UFont FONT1 = new UFont("SansSerif", Font.PLAIN, 10);
+	private static final UFont FONT1 = UFont.sansSerif(10);
 
 	final private Skin skin;
 	final private List<String> toPrint;
@@ -94,7 +95,9 @@ class PrintSkin extends AbstractPSystem {
 	//
 	// }
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormatOption) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+			throws IOException {
 		final BufferedImage im = createImage();
 		final ImageData imageData = new ImageDataSimple(im.getWidth(), (int) maxYpos);
 		PngIO.write(im.getSubimage(0, 0, imageData.getWidth(), imageData.getHeight()), os, 96);
@@ -125,7 +128,7 @@ class PrintSkin extends AbstractPSystem {
 	private void printComponent(ComponentType type) {
 		println(type.name());
 		final Component comp = skin.createComponent(type, ArrowConfiguration.withDirectionNormal(),
-				SkinParam.noShadowing(), Display.create(toPrint));
+				SkinParam.noShadowing(null), Display.create(toPrint));
 		if (comp == null) {
 			println("null");
 			return;
@@ -159,7 +162,7 @@ class PrintSkin extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("Printing of " + skin.getClass().getName(), getClass());
+		return new DiagramDescription("Printing of " + skin.getClass().getName());
 	}
 
 	public PrintSkin(String className, List<String> toPrint) {

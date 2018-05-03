@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10446 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
@@ -36,6 +38,8 @@ package net.sourceforge.plantuml.statediagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
+import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
@@ -66,6 +70,9 @@ public class StateDiagramFactory extends UmlDiagramFactory {
 		final List<Command> cmds = new ArrayList<Command>();
 		cmds.add(new CommandFootboxIgnored());
 		cmds.add(new CommandRankDir());
+		cmds.add(new CommandHideEmptyDescription());
+		cmds.add(new CommandHideShow2());
+		cmds.add(new CommandRemoveRestore());
 		cmds.add(new CommandCreateState());
 		// addCommand(new CommandLinkState());
 		cmds.add(new CommandLinkState());
@@ -80,8 +87,6 @@ public class StateDiagramFactory extends UmlDiagramFactory {
 				));
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
-
-		cmds.add(new CommandHideEmptyDescription());
 
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -52,6 +54,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParamForecolored;
 import net.sourceforge.plantuml.SkinParamSameClassWidth;
+import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -79,9 +82,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -123,17 +124,15 @@ public final class DotDataImageBuilder {
 	private final Pragma pragma;
 	private Map<Code, Double> maxX;
 
-	static private final StringBounder stringBounder;
+	private final StringBounder stringBounder;
 
-	static {
-		stringBounder = StringBounderUtils.asStringBounder();
-	}
-
-	public DotDataImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma) {
+	public DotDataImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma,
+			StringBounder stringBounder) {
 		this.dotData = dotData;
 		this.entityFactory = entityFactory;
 		this.source = source;
 		this.pragma = pragma;
+		this.stringBounder = stringBounder;
 	}
 
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
@@ -149,14 +148,14 @@ public final class DotDataImageBuilder {
 			}
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
+				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
 
 				final Line line = new Line(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
 						labelFont, dotStringFactory.getBibliotekon(), dotData.getPragma());
 
 				dotStringFactory.getBibliotekon().addLine(line);
 
-				if (link.getEntity1().isGroup() == false && link.getEntity1().getEntityType() == LeafType.NOTE
+				if (link.getEntity1().isGroup() == false && link.getEntity1().getLeafType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity1())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
@@ -164,7 +163,7 @@ public final class DotDataImageBuilder {
 						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 						line.setOpale(true);
 					}
-				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getEntityType() == LeafType.NOTE
+				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getLeafType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity2())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
@@ -263,7 +262,7 @@ public final class DotDataImageBuilder {
 		msg.add(" ");
 		msg.add("java -jar plantuml.jar -testdot");
 		msg.add(" ");
-		return GraphicStrings.createDefault(msg, false);
+		return GraphicStrings.createForError(msg, false);
 	}
 
 	private void printEntities(DotStringFactory dotStringFactory, Collection<ILeaf> entities2) {
@@ -282,7 +281,8 @@ public final class DotDataImageBuilder {
 		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder),
+				ent.getEntityPosition());
 		dotStringFactory.addShape(shape);
 		dotStringFactory.getBibliotekon().putShape(ent, shape);
 	}
@@ -300,7 +300,7 @@ public final class DotDataImageBuilder {
 
 			return createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(), dotData,
 					dotStringFactory.getBibliotekon(), dotStringFactory.getGraphvizVersion(),
-					dotData.getUmlDiagramType());
+					dotData.getUmlDiagramType(), dotData.getLinks());
 		}
 		return ent.getSvekImage();
 	}
@@ -308,7 +308,7 @@ public final class DotDataImageBuilder {
 	private double getMaxWidth(DotStringFactory dotStringFactory) {
 		double result = 0;
 		for (ILeaf ent : dotData.getLeafs()) {
-			if (ent.getEntityType().isLikeClass() == false) {
+			if (ent.getLeafType().isLikeClass() == false) {
 				continue;
 			}
 			final IEntityImage im = new EntityImageClass(dotStringFactory.getGraphvizVersion(), ent,
@@ -323,11 +323,11 @@ public final class DotDataImageBuilder {
 
 	public static IEntityImage createEntityImageBlock(ILeaf leaf, ISkinParam skinParam,
 			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
-			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType) {
+			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
 		if (leaf.isRemoved()) {
 			throw new IllegalStateException();
 		}
-		if (leaf.getEntityType().isLikeClass()) {
+		if (leaf.getLeafType().isLikeClass()) {
 			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, (ILeaf) leaf, skinParam,
 					portionShower);
 			final Neighborhood neighborhood = leaf.getNeighborhood();
@@ -336,13 +336,13 @@ public final class DotDataImageBuilder {
 			}
 			return entityImageClass;
 		}
-		if (leaf.getEntityType() == LeafType.NOTE) {
+		if (leaf.getLeafType() == LeafType.NOTE) {
 			return new EntityImageNote(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.ACTIVITY) {
+		if (leaf.getLeafType() == LeafType.ACTIVITY) {
 			return new EntityImageActivity(leaf, skinParam, bibliotekon);
 		}
-		if (leaf.getEntityType() == LeafType.STATE) {
+		if (leaf.getLeafType() == LeafType.STATE) {
 			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
 				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
@@ -356,73 +356,80 @@ public final class DotDataImageBuilder {
 			return new EntityImageState(leaf, skinParam);
 
 		}
-		if (leaf.getEntityType() == LeafType.CIRCLE_START) {
+		if (leaf.getLeafType() == LeafType.CIRCLE_START) {
 			ColorParam param = ColorParam.activityStart;
 			if (umlDiagramType == UmlDiagramType.STATE) {
 				param = ColorParam.stateStart;
 			}
 			return new EntityImageCircleStart(leaf, skinParam, param);
 		}
-		if (leaf.getEntityType() == LeafType.CIRCLE_END) {
+		if (leaf.getLeafType() == LeafType.CIRCLE_END) {
 			ColorParam param = ColorParam.activityEnd;
 			if (umlDiagramType == UmlDiagramType.STATE) {
 				param = ColorParam.stateEnd;
 			}
 			return new EntityImageCircleEnd(leaf, skinParam, param);
 		}
-		if (leaf.getEntityType() == LeafType.BRANCH || leaf.getEntityType() == LeafType.STATE_CHOICE) {
+		if (leaf.getLeafType() == LeafType.BRANCH || leaf.getLeafType() == LeafType.STATE_CHOICE) {
 			return new EntityImageBranch(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.LOLLIPOP) {
+		if (leaf.getLeafType() == LeafType.LOLLIPOP) {
 			return new EntityImageLollipopInterface(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.DESCRIPTION) {
+		if (leaf.getLeafType() == LeafType.CIRCLE) {
+			return new EntityImageDescription(leaf, skinParam, portionShower, links);
+		}
+
+		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
 			if (OptionFlags.USE_INTERFACE_EYE1 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye1(leaf, skinParam, bibliotekon);
 			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
 			} else {
-				return new EntityImageDescription(leaf, skinParam, portionShower);
+				return new EntityImageDescription(leaf, skinParam, portionShower, links);
 			}
 		}
-		if (leaf.getEntityType() == LeafType.USECASE) {
+		if (leaf.getLeafType() == LeafType.USECASE) {
 			return new EntityImageUseCase(leaf, skinParam);
 		}
 		// if (leaf.getEntityType() == LeafType.CIRCLE_INTERFACE) {
 		// return new EntityImageCircleInterface(leaf, skinParam);
 		// }
-		if (leaf.getEntityType() == LeafType.OBJECT) {
-			return new EntityImageObject(leaf, skinParam);
+		if (leaf.getLeafType() == LeafType.OBJECT) {
+			return new EntityImageObject(leaf, skinParam, portionShower);
 		}
-		if (leaf.getEntityType() == LeafType.SYNCHRO_BAR || leaf.getEntityType() == LeafType.STATE_FORK_JOIN) {
+		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN) {
 			return new EntityImageSynchroBar(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.ARC_CIRCLE) {
+		if (leaf.getLeafType() == LeafType.ARC_CIRCLE) {
 			return new EntityImageArcCircle(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.POINT_FOR_ASSOCIATION) {
+		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION) {
 			return new EntityImageAssociationPoint(leaf, skinParam);
 		}
 		if (leaf.isGroup()) {
 			return new EntityImageGroup(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.EMPTY_PACKAGE) {
+		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null) {
-				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, HtmlColorUtils.BLACK),
-						portionShower);
+				// final HtmlColor black = HtmlColorUtils.BLACK;
+				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getUSymbol().getColorParamBorder(),
+						leaf.getStereotype());
+				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
+						links);
 			}
-			return new EntityImageEmptyPackage(leaf, skinParam);
+			return new EntityImageEmptyPackage(leaf, skinParam, portionShower);
 		}
-		if (leaf.getEntityType() == LeafType.ASSOCIATION) {
+		if (leaf.getLeafType() == LeafType.ASSOCIATION) {
 			return new EntityImageAssociation(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.PSEUDO_STATE) {
+		if (leaf.getLeafType() == LeafType.PSEUDO_STATE) {
 			return new EntityImagePseudoState(leaf, skinParam);
 		}
-		if (leaf.getEntityType() == LeafType.TIPS) {
+		if (leaf.getLeafType() == LeafType.TIPS) {
 			return new EntityImageTips(leaf, skinParam, bibliotekon);
 		}
-		throw new UnsupportedOperationException(leaf.getEntityType().toString());
+		throw new UnsupportedOperationException(leaf.getLeafType().toString());
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {
@@ -446,6 +453,9 @@ public final class DotDataImageBuilder {
 				final USymbol symbol = g.getUSymbol();
 				folder.setUSymbol(symbol);
 				folder.setStereotype(g.getStereotype());
+				if (g.getUrl99() != null) {
+					folder.addUrl(g.getUrl99());
+				}
 				if (g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK) == null) {
 					final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
 					final HtmlColor c1 = dotData.getSkinParam().getHtmlColor(param, g.getStereotype(), false);
@@ -480,7 +490,7 @@ public final class DotDataImageBuilder {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(),
-						g.getStereotype());
+						g.getStereotype(), null);
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();

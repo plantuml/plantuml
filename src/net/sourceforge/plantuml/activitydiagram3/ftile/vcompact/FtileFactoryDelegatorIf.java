@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
@@ -67,12 +69,12 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 		final Branch branch0 = thens.get(0);
 
-		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
+		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
 		final HtmlColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(skinParam(),
-				ColorParam.activityBackground) : branch0.getColor();
+				ColorParam.activityDiamondBackground) : branch0.getColor();
 		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
-		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
+		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 		// .changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 		if (thens.size() > 1) {
 			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
@@ -82,7 +84,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 					conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
 		}
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
-				: FontParam.ACTIVITY_ARROW;
+				: FontParam.ARROW;
 		final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null)
 				.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 

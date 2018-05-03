@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4041 $
  *
  */
 package net.sourceforge.plantuml.openiconic;
@@ -39,7 +41,6 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -55,22 +56,24 @@ public class PSystemOpenIconic extends AbstractPSystem {
 		this.factor = factor;
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		final OpenIcon icon = OpenIcon.retrieve(iconName);
 		// final Dimension2D dim = new Dimension2DDouble(100, 100);
 
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0,
-				null, null, null, 5, 5, null, false);
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 5, 5,
+				null, false);
 		imageBuilder.setUDrawable(icon.asTextBlock(HtmlColorUtils.BLACK, factor));
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 
-//		UGraphic2 ug = fileFormat.createUGraphic(dim);
-//		ug = (UGraphic2) ug.apply(new UTranslate(10, 10));
-//		// ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-//		// ug.draw(new URectangle(7, 6));
-//		icon.asTextBlock(HtmlColorUtils.BLACK, factor).drawU(ug);
-//		ug.writeImageTOBEMOVED(os, null, 96);
-//		return new ImageDataSimple(dim);
+		// UGraphic2 ug = fileFormat.createUGraphic(dim);
+		// ug = (UGraphic2) ug.apply(new UTranslate(10, 10));
+		// // ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		// // ug.draw(new URectangle(7, 6));
+		// icon.asTextBlock(HtmlColorUtils.BLACK, factor).drawU(ug);
+		// ug.writeImageTOBEMOVED(os, null, 96);
+		// return new ImageDataSimple(dim);
 	}
 
 	// private GraphicStrings getGraphicStrings() throws IOException {
@@ -81,7 +84,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 	// }
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Open iconic)", getClass());
+		return new DiagramDescription("(Open iconic)");
 	}
 
 }

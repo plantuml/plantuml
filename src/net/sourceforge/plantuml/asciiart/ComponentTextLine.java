@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4169 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -38,16 +40,25 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class ComponentTextLine extends AbstractComponentText {
 
-	private final FileFormat fileFormat;
+	private static final int MAGIC_NUMBER = -3;
+	private char using;
 
-	public ComponentTextLine(FileFormat fileFormat) {
-		this.fileFormat = fileFormat;
+	public ComponentTextLine(ComponentType type, FileFormat fileFormat) {
+		if (fileFormat == FileFormat.UTXT) {
+			using = '\u2502';
+		} else {
+			using = '|';
+		}
+		if (type == ComponentType.DELAY_LINE) {
+			using = '.';
+		}
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
@@ -55,11 +66,12 @@ public class ComponentTextLine extends AbstractComponentText {
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight();
-		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawVLine('\u2502', (width - 1) / 2, 0, height - 1);
-		} else {
-			charArea.drawVLine('|', (width - 1) / 2, 0, height - 1);
-		}
+		charArea.drawVLine(using, (width - 1) / 2, MAGIC_NUMBER, height);
+//		if (using == '.') {
+//			charArea.drawVLine(using, (width - 1) / 2, -3, height);
+//		} else {
+//			charArea.drawVLine(using, (width - 1) / 2, 0, height);
+//		}
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

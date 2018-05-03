@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.posimo;
@@ -127,25 +129,26 @@ public class PathDrawerInterface implements PathDrawer {
 		}
 
 		final LinkStyle style = linkType.getStyle();
-		if (style == LinkStyle.__toremove_INTERFACE_PROVIDER || style == LinkStyle.__toremove_INTERFACE_USER) {
-			final Decor decor = new DecorInterfaceProvider(style);
-			final Map<Point2D, Double> all = dotPath.somePoints();
-			final Point2D p = getFarest(outPoint, inPoint, all.keySet());
+//		if (style == LinkStyle.__toremove_INTERFACE_PROVIDER || style == LinkStyle.__toremove_INTERFACE_USER) {
+//			final Decor decor = new DecorInterfaceProvider(style);
+//			final Map<Point2D, Double> all = dotPath.somePoints();
+//			final Point2D p = getFarest(outPoint, inPoint, all.keySet());
+//
+//			ug = ug.apply(new UChangeBackColor(rose.getHtmlColor(param, ColorParam.background)));
+//			ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
+//
+//			decor.drawDecor(ug, p, all.get(p));
+//		}
 
-			ug = ug.apply(new UChangeBackColor(rose.getHtmlColor(param, ColorParam.background)));
-			ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
-
-			decor.drawDecor(ug, p, all.get(p));
-		}
-
-		ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
-		if (linkType.isDashed()) {
-			goDash(ug);
-		}
-		ug.draw(dotPath);
-		if (linkType.isDashed()) {
-			noDash(ug);
-		}
+		throw new UnsupportedOperationException();
+//		ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
+//		if (linkType.isDashed()) {
+//			goDash(ug);
+//		}
+//		ug.draw(dotPath);
+//		if (linkType.isDashed()) {
+//			noDash(ug);
+//		}
 	}
 
 	private double atan2(final Point2D endPath, final Point2D inPoint) {

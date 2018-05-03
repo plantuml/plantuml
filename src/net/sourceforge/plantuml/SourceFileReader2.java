@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,41 +28,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4771 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.plantuml.code.Transcoder;
-import net.sourceforge.plantuml.code.TranscoderUtil;
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
-public class SourceFileReader2 implements ISourceFileReader {
-
-	private final File file;
-	private final File outputFile;
-
-	private final BlockUmlBuilder builder;
-	private FileFormatOption fileFormatOption;
+public class SourceFileReader2 extends SourceFileReaderAbstract implements ISourceFileReader {
 
 	public SourceFileReader2(Defines defines, final File file, File outputFile, List<String> config, String charset,
 			FileFormatOption fileFormatOption) throws IOException {
@@ -73,65 +57,10 @@ public class SourceFileReader2 implements ISourceFileReader {
 				.getParentFile(), file.getAbsolutePath());
 	}
 
-	public boolean hasError() {
-		for (final BlockUml b : builder.getBlockUmls()) {
-			if (b.getDiagram() instanceof PSystemError) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public List<GeneratedImage> getGeneratedImages() throws IOException {
-		Log.info("Reading file: " + file);
-
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
-
-		for (BlockUml blockUml : builder.getBlockUmls()) {
-			final File suggested = outputFile;
-
-			final Diagram system = blockUml.getDiagram();
-			OptionFlags.getInstance().logData(file, system);
-
-			for (File f : PSystemUtils.exportDiagrams(system, suggested, fileFormatOption)) {
-				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml);
-				result.add(generatedImage);
-			}
-
-		}
-
-		Log.info("Number of image(s): " + result.size());
-
-		return Collections.unmodifiableList(result);
-	}
-
-	public List<String> getEncodedUrl() throws IOException {
-		final List<String> result = new ArrayList<String>();
-		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
-		for (BlockUml blockUml : builder.getBlockUmls()) {
-			final String source = blockUml.getDiagram().getSource().getPlainString();
-			final String encoded = transcoder.encode(source);
-			result.add(encoded);
-		}
-		return Collections.unmodifiableList(result);
-	}
-
-	private Reader getReader(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new InputStreamReader(new FileInputStream(file));
-		}
-		Log.info("Using charset " + charset);
-		return new InputStreamReader(new FileInputStream(file), charset);
-	}
-
-	public final void setFileFormatOption(FileFormatOption fileFormatOption) {
-		this.fileFormatOption = fileFormatOption;
-	}
-
-	public final Set<FileWithSuffix> getIncludedFiles2() {
-		return builder.getIncludedFiles();
+	@Override
+	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
+		final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());
+		return suggested;
 	}
 
 }

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5019 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -60,22 +62,23 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, RegexResult arg) {
 
-		final String codeString = arg.get("CODE", 0);
-		if (codeString.equals("class")) {
-			diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-		} else if (codeString.equals("interface")) {
-			diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-		} else {
-			final Code code = Code.of(codeString);
-			IEntity hidden = diagram.getEntityFactory().getLeafs().get(code);
-			if (hidden == null) {
-				hidden = diagram.getEntityFactory().getGroups().get(code);
-			}
-			if (hidden == null) {
-				return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
-			}
-			diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-		}
-		return CommandExecutionResult.ok();
+//		final String codeString = arg.get("CODE", 0);
+//		if (codeString.equals("class")) {
+//			diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+//		} else if (codeString.equals("interface")) {
+//			diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+//		} else {
+//			final Code code = Code.of(codeString);
+//			IEntity hidden = diagram.getEntityFactory().getLeafsget(code);
+//			if (hidden == null) {
+//				hidden = diagram.getEntityFactory().getGroupsget(code);
+//			}
+//			if (hidden == null) {
+//				return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
+//			}
+//			diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+//		}
+//		return CommandExecutionResult.ok();
+		throw new UnsupportedOperationException();
 	}
 }

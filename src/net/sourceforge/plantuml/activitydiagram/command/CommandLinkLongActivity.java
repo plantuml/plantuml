@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,18 +28,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5031 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
@@ -60,7 +63,9 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
@@ -90,11 +95,9 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 
 				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-				new RegexLeaf("ARROW_STYLE1",
-						"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
+				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-				new RegexLeaf("ARROW_STYLE2",
-						"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
+				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("ARROW_BODY2", "([-.]*)\\>"), //
 
 				new RegexLeaf("[%s]*"), //
@@ -126,7 +129,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			urlActivity = extractUrl(diagram, desc0);
 			if (urlActivity == null) {
 				sb.append(desc0);
-				sb.append("\\n");
+				sb.append(BackSlash.BS_BS_N);
 			}
 		}
 		int i = 0;
@@ -140,15 +143,15 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			}
 			sb.append(cs);
 			if (i < lines.size() - 2) {
-				sb.append("\\n");
+				sb.append(BackSlash.BS_BS_N);
 			}
 		}
 
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
 				.toString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
-			if (sb.length() > 0 && sb.toString().endsWith("\\n") == false) {
-				sb.append("\\n");
+			if (sb.length() > 0 && sb.toString().endsWith(BackSlash.BS_BS_N) == false) {
+				sb.append(BackSlash.BS_BS_N);
 			}
 			sb.append(lineLast.get(0));
 		}
@@ -162,7 +165,8 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
 		}
 		if (partition != null) {
-			diagram.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE, null);
+			diagram.gotoGroup2(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE, null,
+					NamespaceStrategy.SINGLE);
 		}
 		final IEntity entity2 = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.ACTIVITY, null);
 		if (partition != null) {
@@ -176,7 +180,8 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			entity2.setStereotype(new Stereotype(lineLast.get(2)));
 		}
 		if (lineLast.get(4) != null) {
-			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(lineLast.get(4)));
+			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet()
+					.getColorIfValid(lineLast.get(4)));
 		}
 
 		if (entity1 == null || entity2 == null) {
@@ -195,7 +200,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 		if (arrow.contains(".")) {
-			type = type.getDotted();
+			type = type.goDotted();
 		}
 		Link link = new Link(entity1, entity2, type, linkLabel, lenght);
 		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");

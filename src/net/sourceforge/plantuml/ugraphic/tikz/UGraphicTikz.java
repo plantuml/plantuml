@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,8 +28,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -34,10 +37,11 @@ package net.sourceforge.plantuml.ugraphic.tikz;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -58,16 +62,19 @@ import net.sourceforge.plantuml.ugraphic.UText;
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer, UGraphic2 {
 
 	private final StringBounder stringBounder;
+	private final TikzFontDistortion tikzFontDistortion;
 
-	private UGraphicTikz(ColorMapper colorMapper, TikzGraphics tikz) {
+	private UGraphicTikz(ColorMapper colorMapper, TikzGraphics tikz, TikzFontDistortion tikzFontDistortion) {
 		super(colorMapper, tikz);
-		this.stringBounder = TextBlockUtils.getDummyStringBounder();
+		this.tikzFontDistortion = tikzFontDistortion;
+		this.stringBounder = FileFormat.LATEX.getDefaultStringBounder(tikzFontDistortion);
 		register();
 
 	}
 
-	public UGraphicTikz(ColorMapper colorMapper, boolean withPreamble) {
-		this(colorMapper, new TikzGraphics(withPreamble));
+	public UGraphicTikz(ColorMapper colorMapper, double scale, boolean withPreamble,
+			TikzFontDistortion tikzFontDistortion) {
+		this(colorMapper, new TikzGraphics(scale, withPreamble), tikzFontDistortion);
 
 	}
 
@@ -78,6 +85,7 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	private UGraphicTikz(UGraphicTikz other) {
 		super(other);
+		this.tikzFontDistortion = other.tikzFontDistortion;
 		this.stringBounder = other.stringBounder;
 		register();
 	}
@@ -93,7 +101,8 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		registerDriver(UImageSvg.class, new DriverNoneTikz());
 		registerDriver(UPath.class, new DriverUPathTikz());
 		registerDriver(DotPath.class, new DriverDotPathTikz());
-		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
+		// registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
+		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());
 	}
 
 	public StringBounder getStringBounder() {
@@ -116,8 +125,12 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		getGraphicObject().createData(os);
 	}
 
-	public boolean isSpecialTxt() {
-		return true;
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		if ("SPECIALTXT".equalsIgnoreCase(propertyName)) {
+			return true;
+		}
+		return false;
 	}
 
 }

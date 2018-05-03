@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
@@ -57,6 +59,10 @@ public class Worm implements Iterable<Point2D.Double> {
 
 	private final List<Point2D.Double> points = new ArrayList<Point2D.Double>();
 
+	public boolean isPureHorizontal() {
+		return points.size() == 2 && points.get(0).getY() == points.get(1).getY();
+	}
+
 	public void drawInternalOneColor(UGraphic ug, HtmlColorAndStyle color, double stroke, Direction emphasizeDirection,
 			UPolygon endDecoration) {
 		final HtmlColor color2 = color.getColor();
@@ -64,15 +70,15 @@ public class Worm implements Iterable<Point2D.Double> {
 			throw new IllegalArgumentException();
 		}
 		final LinkStyle style = color.getStyle();
-		if (style == LinkStyle.INVISIBLE) {
+		if (style.isInvisible()) {
 			return;
 		}
 		ug = ug.apply(new UChangeColor(color2));
 		ug = ug.apply(new UChangeBackColor(color2));
-		if (style == LinkStyle.NORMAL) {
+		if (style.isNormal()) {
 			ug = ug.apply(new UStroke(stroke));
 		} else {
-			ug = ug.apply(LinkStyle.getStroke(style, stroke));
+			ug = ug.apply(style.goThickness(stroke).getStroke3());
 		}
 		boolean drawn = false;
 		for (int i = 0; i < points.size() - 1; i++) {
@@ -253,18 +259,18 @@ public class Worm implements Iterable<Point2D.Double> {
 		return points.get(points.size() - 1);
 	}
 
-	public Worm merge(Worm other) {
+	public Worm merge(Worm other, MergeStrategy merge) {
 		if (Snake.same(this.getLast(), other.getFirst()) == false) {
 			throw new IllegalArgumentException();
 		}
 		final Worm result = new Worm();
 		result.points.addAll(this.points);
 		result.points.addAll(other.points);
-		result.mergeMe();
+		result.mergeMe(merge);
 		return result;
 	}
 
-	private void mergeMe() {
+	private void mergeMe(MergeStrategy merge) {
 		boolean change = false;
 		do {
 			change = false;
@@ -277,6 +283,9 @@ public class Worm implements Iterable<Point2D.Double> {
 			change = change || removePattern5();
 			change = change || removePattern6();
 			change = change || removePattern7();
+			if (merge == MergeStrategy.FULL) {
+				change = change || removePattern8();
+			}
 		} while (change);
 	}
 
@@ -411,6 +420,23 @@ public class Worm implements Iterable<Point2D.Double> {
 		for (int i = 0; i < points.size() - 2; i++) {
 			if (isForwardAndBackwardAt(i)) {
 				points.remove(i + 1);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean removePattern8() {
+		for (int i = 0; i < points.size() - 4; i++) {
+			final List<Direction> patternAt = getPatternAt(i);
+			if (Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)
+					|| Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.DOWN)
+							.equals(patternAt)) {
+				final Point2D.Double newPoint = new Point2D.Double(points.get(i + 3).x, points.get(i + 1).y);
+				points.remove(i + 3);
+				points.remove(i + 2);
+				points.remove(i + 1);
+				points.add(i + 1, newPoint);
 				return true;
 			}
 		}

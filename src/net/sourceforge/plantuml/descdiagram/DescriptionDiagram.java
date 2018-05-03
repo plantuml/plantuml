@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 8532 $
  *
  */
 package net.sourceforge.plantuml.descdiagram;
@@ -43,14 +45,12 @@ import net.sourceforge.plantuml.graphic.USymbol;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
-	private String namespaceSeparator = null;
-
 	@Override
 	public ILeaf getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
-		if (namespaceSeparator != null) {
-			code = code.withSeparator(namespaceSeparator);
+		if (getNamespaceSeparator() != null) {
+			code = code.withSeparator(getNamespaceSeparator());
 		}
-		if (namespaceSeparator != null && code.getFullName().contains(namespaceSeparator)) {
+		if (getNamespaceSeparator() != null && code.getFullName().contains(getNamespaceSeparator())) {
 			// System.err.println("code=" + code);
 			final Code fullyCode = code;
 			// final String namespace = fullyCode.getNamespace(getLeafs());
@@ -104,7 +104,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 
 	private boolean isUsecase() {
 		for (ILeaf leaf : getLeafsvalues()) {
-			final LeafType type = leaf.getEntityType();
+			final LeafType type = leaf.getLeafType();
 			final USymbol usymbol = leaf.getUSymbol();
 			if (type == LeafType.USECASE || usymbol == USymbol.ACTOR) {
 				return true;
@@ -119,7 +119,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		final LeafType defaultType = isUsecase() ? LeafType.DESCRIPTION : LeafType.DESCRIPTION;
 		final USymbol defaultSymbol = isUsecase() ? USymbol.ACTOR : USymbol.INTERFACE;
 		for (ILeaf leaf : getLeafsvalues()) {
-			if (leaf.getEntityType() == LeafType.STILL_UNKNOWN) {
+			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN) {
 				leaf.muteToType(defaultType, defaultSymbol);
 			}
 		}
@@ -134,14 +134,6 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.DESCRIPTION;
-	}
-
-	public void setNamespaceSeparator(String namespaceSeparator) {
-		this.namespaceSeparator = namespaceSeparator;
-	}
-
-	public String getNamespaceSeparator() {
-		return namespaceSeparator;
 	}
 
 }

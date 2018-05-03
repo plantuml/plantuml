@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
-public class ULine extends AbstractShadowable implements Scalable {
+public class ULine extends AbstractShadowable implements Scalable, UShapeSized {
 
 	private final double dx;
 	private final double dy;
@@ -67,6 +69,14 @@ public class ULine extends AbstractShadowable implements Scalable {
 
 	public double getLength() {
 		return Math.sqrt(dx * dx + dy * dy);
+	}
+
+	public double getWidth() {
+		return dx;
+	}
+
+	public double getHeight() {
+		return dy;
 	}
 
 }

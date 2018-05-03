@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -43,27 +45,58 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.CornerParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class TextBlockUtils {
+
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor,
+			HtmlColor backgroundColor, double cornersize) {
+		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize);
+	}
+
+	public static TextBlock title(FontConfiguration font, Display stringsToDisplay, ISkinParam skinParam) {
+		UStroke stroke = skinParam.getThickness(LineParam.titleBorder, null);
+		final Rose rose = new Rose();
+		HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.titleBorder);
+		final HtmlColor backgroundColor = rose.getHtmlColor(skinParam, ColorParam.titleBackground);
+		final TextBlockTitle result = new TextBlockTitle(font, stringsToDisplay, skinParam);
+		if (stroke == null && borderColor == null) {
+			return result;
+		}
+		if (stroke == null) {
+			stroke = new UStroke(1.5);
+		}
+		if (borderColor == null) {
+			borderColor = HtmlColorUtils.BLACK;
+		}
+		final double corner = skinParam.getRoundCorner(CornerParam.titleBorder, null);
+		return withMargin(bordered(result, stroke, borderColor, backgroundColor, corner), 2, 2);
+	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
 		return new TextBlockMarged(textBlock, marginX, marginX, marginY, marginY);
 	}
 
-	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {
-		return new TextBlockMinWidth(textBlock, minWidth, horizontalAlignment);
-	}
-
 	public static TextBlock withMargin(TextBlock textBlock, double marginX1, double marginX2, double marginY1,
 			double marginY2) {
 		return new TextBlockMarged(textBlock, marginX1, marginX2, marginY1, marginY2);
+	}
+
+	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {
+		return new TextBlockMinWidth(textBlock, minWidth, horizontalAlignment);
 	}
 
 	public static TextBlock empty(final double width, final double height) {
@@ -96,15 +129,13 @@ public class TextBlockUtils {
 	}
 
 	private static final Graphics2D gg;
-	private static final StringBounder dummyStringBounder;
 
 	static {
 		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		gg = imDummy.createGraphics();
-		dummyStringBounder = StringBounderUtils.asStringBounder();
 	}
 
-	public static boolean isEmpty(TextBlock text) {
+	public static boolean isEmpty(TextBlock text, StringBounder dummyStringBounder) {
 		if (text == null) {
 			return true;
 		}
@@ -112,20 +143,8 @@ public class TextBlockUtils {
 		return dim.getHeight() == 0 && dim.getWidth() == 0;
 	}
 
-	public static StringBounder getDummyStringBounder() {
-		return dummyStringBounder;
-	}
-
 	public static FontRenderContext getFontRenderContext() {
 		return gg.getFontRenderContext();
-	}
-
-	public static MinMax getMinMax(TextBlock tb) {
-		return getMinMax(tb, dummyStringBounder);
-	}
-
-	public static Dimension2D getDimension(TextBlock tb) {
-		return tb.calculateDimension(dummyStringBounder);
 	}
 
 	public static LineMetrics getLineMetrics(UFont font, String text) {
@@ -146,14 +165,19 @@ public class TextBlockUtils {
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return bloc.calculateDimension(stringBounder);
 			}
+			
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return bloc.getMinMax(stringBounder);
+			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-				if (display.startsWith(member)) {
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+				if (strategy.check(display, member)) {
 					final Dimension2D dim = calculateDimension(stringBounder);
 					return new Rectangle2D.Double(0, 0, dim.getWidth(), dim.getHeight());
 				}
 				return null;
 			}
+
 		};
 	}
 

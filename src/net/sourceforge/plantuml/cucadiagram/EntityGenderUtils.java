@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3829 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -38,7 +40,7 @@ public class EntityGenderUtils {
 	static public EntityGender byEntityType(final LeafType type) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getEntityType() == type;
+				return test.getLeafType() == type;
 			}
 		};
 	}
@@ -111,13 +113,13 @@ public class EntityGenderUtils {
 		};
 	}
 
-	static public EntityGender emptyMembers() {
-		return new EntityGender() {
-			public boolean contains(IEntity test) {
-				return test.getBodier().getMethodsToDisplay().size() == 0
-						&& test.getBodier().getFieldsToDisplay().size() == 0;
-			}
-		};
-	}
+//	static public EntityGender emptyMembers() {
+//		return new EntityGender() {
+//			public boolean contains(IEntity test) {
+//				return test.getBodier().getMethodsToDisplay().size() == 0
+//						&& test.getBodier().getFieldsToDisplay().size() == 0;
+//			}
+//		};
+//	}
 
 }

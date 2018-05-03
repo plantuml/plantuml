@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -51,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UParamNull;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -75,7 +78,7 @@ public class Footprint {
 			this.translate = translate;
 		}
 
-		public boolean isSpecialTxt() {
+		public boolean matchesProperty(String propertyName) {
 			return false;
 		}
 
@@ -107,10 +110,13 @@ public class Footprint {
 				drawText(x, y, (UText) shape);
 			} else if (shape instanceof UHorizontalLine) {
 				// Definitively a Horizontal line
+//				line.drawTitleInternalForFootprint(this, x, y);
 			} else if (shape instanceof ULine) {
 				// Probably a Horizontal line
 			} else if (shape instanceof UImage) {
 				drawImage(x, y, (UImage) shape);
+			} else if (shape instanceof UPath) {
+				drawPath(x, y, (UPath) shape);
 			} else {
 				throw new UnsupportedOperationException(shape.getClass().toString());
 			}
@@ -145,6 +151,11 @@ public class Footprint {
 			addPoint(x, y + image.getHeight());
 			addPoint(x + image.getWidth(), y);
 			addPoint(x + image.getWidth(), y + image.getHeight());
+		}
+
+		private void drawPath(double x, double y, UPath path) {
+			addPoint(x + path.getMinX(), y + path.getMinY());
+			addPoint(x + path.getMaxX(), y + path.getMaxY());
 		}
 
 		public void flushUg() {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -44,6 +46,11 @@ public class Ports {
 		all.putAll(other.all);
 	}
 
+	@Override
+	public String toString() {
+		return all.toString();
+	}
+
 	public Ports translateY(double deltaY) {
 		final Ports result = new Ports();
 		for (Map.Entry<String, PortGeometry> ent : all.entrySet()) {
@@ -53,6 +60,9 @@ public class Ports {
 	}
 
 	public void add(String portName, double position, double height) {
+		if (portName == null) {
+			throw new IllegalArgumentException();
+		}
 		all.put(portName, new PortGeometry(position, height));
 	}
 

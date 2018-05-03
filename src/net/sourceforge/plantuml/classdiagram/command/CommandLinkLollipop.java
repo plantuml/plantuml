@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5436 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -81,7 +83,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 	private static String optionalKeywords(UmlDiagramType type) {
 		if (type == UmlDiagramType.CLASS) {
-			return "(interface|enum|annotation|abstract[%s]+class|abstract|class)";
+			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|entity)";
 		}
 		if (type == UmlDiagramType.OBJECT) {
 			return "(object)";
@@ -183,7 +185,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	// return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(a);
 	// }
 	// return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(a) +
-	// "\\n"
+	// BackSlash.VV1
 	// + StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(b);
 	// }
 

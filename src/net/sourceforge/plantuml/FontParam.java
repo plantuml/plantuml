@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml;
@@ -45,8 +47,9 @@ interface FontParamConstant {
 public enum FontParam {
 	ACTIVITY(12, Font.PLAIN), //
 	ACTIVITY_DIAMOND(11, Font.PLAIN), //
-	ACTIVITY_ARROW(11, Font.PLAIN), //
-	GENERIC_ARROW(13, Font.PLAIN), //
+	// ACTIVITY_ARROW(11, Font.PLAIN), //
+	// GENERIC_ARROW(13, Font.PLAIN), //
+	ARROW(13, Font.PLAIN), //
 	CIRCLED_CHARACTER(17, Font.BOLD, FontParamConstant.COLOR, "Monospaced"), //
 	OBJECT_ATTRIBUTE(10, Font.PLAIN), //
 	OBJECT(12, Font.PLAIN), //
@@ -65,6 +68,7 @@ public enum FontParam {
 	ARTIFACT(14, Font.PLAIN), //
 	CLOUD(14, Font.PLAIN), //
 	FOLDER(14, Font.PLAIN), //
+	FILE(14, Font.PLAIN), //
 	FRAME(14, Font.PLAIN), //
 	STORAGE(14, Font.PLAIN), //
 	BOUNDARY(14, Font.PLAIN), //
@@ -72,10 +76,12 @@ public enum FontParam {
 	ENTITY(14, Font.PLAIN), //
 	AGENT(14, Font.PLAIN), //
 	RECTANGLE(14, Font.PLAIN), //
+	CARD(14, Font.PLAIN), //
 	NODE(14, Font.PLAIN), //
 	DATABASE(14, Font.PLAIN), //
 	QUEUE(14, Font.PLAIN), //
-	SEQUENCE_ARROW(13, Font.PLAIN), //
+	STACK(14, Font.PLAIN), //
+	// SEQUENCE_ARROW(13, Font.PLAIN), //
 	SEQUENCE_BOX(13, Font.BOLD), //
 	SEQUENCE_DIVIDER(13, Font.BOLD), //
 	SEQUENCE_REFERENCE(13, Font.PLAIN), //
@@ -102,15 +108,17 @@ public enum FontParam {
 	ENTITY_STEREOTYPE(14, Font.ITALIC), //
 	AGENT_STEREOTYPE(14, Font.ITALIC), //
 	RECTANGLE_STEREOTYPE(14, Font.ITALIC), //
+	CARD_STEREOTYPE(14, Font.ITALIC), //
 	NODE_STEREOTYPE(14, Font.ITALIC), //
 	FOLDER_STEREOTYPE(14, Font.ITALIC), //
+	FILE_STEREOTYPE(14, Font.ITALIC), //
 	FRAME_STEREOTYPE(14, Font.ITALIC), //
 	DATABASE_STEREOTYPE(14, Font.ITALIC), //
 	QUEUE_STEREOTYPE(14, Font.ITALIC), //
+	STACK_STEREOTYPE(14, Font.ITALIC), //
 	ACTOR_STEREOTYPE(14, Font.ITALIC), //
 	SEQUENCE_STEREOTYPE(14, Font.ITALIC), //
 	PARTITION(14, Font.PLAIN); //
-
 
 	private final int defaultSize;
 	private final int fontStyle;
@@ -129,6 +137,9 @@ public enum FontParam {
 	}
 
 	public final int getDefaultSize(ISkinParam skinParam) {
+		if (this == ARROW && skinParam.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+			return 11;
+		}
 		if (this == CLASS_ATTRIBUTE) {
 			return 11;
 		}

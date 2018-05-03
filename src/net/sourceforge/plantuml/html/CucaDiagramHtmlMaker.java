@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5079 $
  *
  */
 package net.sourceforge.plantuml.html;
@@ -42,6 +44,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.FileImageData;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -60,7 +63,7 @@ public final class CucaDiagramHtmlMaker {
 		this.dir = dir;
 	}
 
-	public List<File> create() throws IOException {
+	public List<FileImageData> create() throws IOException {
 		dir.mkdirs();
 		if (dir.exists() == false) {
 			throw new IOException("Cannot create " + dir);
@@ -74,14 +77,14 @@ public final class CucaDiagramHtmlMaker {
 		printAllType(pw, LeafType.ABSTRACT_CLASS);
 		printAllType(pw, LeafType.CLASS);
 		htmlClose(pw);
-		return Arrays.asList(dir);
+		return Arrays.asList(new FileImageData(dir, null));
 	}
 
 	private void printAllType(final PrintWriter pw, LeafType type) throws IOException {
 		if (hasSome(type)) {
 			pw.println("<h2>" + type.toHtml() + "</h2>");
 			for (final IEntity ent : diagram.getLeafsvalues()) {
-				if (ent.getEntityType() != type) {
+				if (ent.getLeafType() != type) {
 					continue;
 				}
 				export(ent);
@@ -103,7 +106,7 @@ public final class CucaDiagramHtmlMaker {
 
 	private boolean hasSome(final LeafType type) {
 		for (IEntity ent : diagram.getLeafsvalues()) {
-			if (ent.getEntityType() == type) {
+			if (ent.getLeafType() == type) {
 				return true;
 			}
 		}
@@ -115,7 +118,7 @@ public final class CucaDiagramHtmlMaker {
 		final PrintWriter pw = new PrintWriter(f);
 		pw.println("<html>");
 		pw.println("<title>" + StringUtils.unicodeForHtml(entity.getCode().getFullName()) + "</title>");
-		pw.println("<h2>" + entity.getEntityType().toHtml() + "</h2>");
+		pw.println("<h2>" + entity.getLeafType().toHtml() + "</h2>");
 		for (CharSequence s : entity.getDisplay()) {
 			pw.println(StringUtils.unicodeForHtml(s.toString()));
 			pw.println("<br>");
@@ -206,8 +209,8 @@ public final class CucaDiagramHtmlMaker {
 			if (link.contains(ent) == false) {
 				continue;
 			}
-			if (link.getEntity1().getEntityType() == LeafType.NOTE
-					|| link.getEntity2().getEntityType() == LeafType.NOTE) {
+			if (link.getEntity1().getLeafType() == LeafType.NOTE
+					|| link.getEntity2().getLeafType() == LeafType.NOTE) {
 				result.add(link.getOther(ent));
 			}
 		}
@@ -220,8 +223,8 @@ public final class CucaDiagramHtmlMaker {
 			if (link.contains(ent) == false) {
 				continue;
 			}
-			if (link.getEntity1().getEntityType() == LeafType.NOTE
-					|| link.getEntity2().getEntityType() == LeafType.NOTE) {
+			if (link.getEntity1().getLeafType() == LeafType.NOTE
+					|| link.getEntity2().getLeafType() == LeafType.NOTE) {
 				continue;
 			}
 			result.add(link);

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -151,25 +153,6 @@ public class ParticipantBox implements Pushable {
 				new Area(new Dimension2DDouble(head.getPreferredWidth(stringBounder), head
 						.getPreferredHeight(stringBounder))), new SimpleContext2D(false));
 		// ug.translate(-outMargin, 0);
-	}
-
-	public void drawLineUTOBEREMOVED_4243(UGraphic ug, double startingY, double endingY, boolean showTail, double myDelta) {
-		throw new UnsupportedOperationException();
-//		ug = ug.apply(new UTranslate(startingX, 0));
-//		if (delays.size() > 0) {
-//			final StringBounder stringBounder = ug.getStringBounder();
-//			for (GraphicalDelayText delay : delays) {
-//				if (delay.getStartingY() - myDelta >= startingY) {
-//					drawLine(ug, startingY, delay.getStartingY() - myDelta, line);
-//					drawLine(ug, delay.getStartingY() - myDelta, delay.getEndingY(stringBounder) - myDelta, delayLine);
-//					startingY = delay.getEndingY(stringBounder) - myDelta;
-//				}
-//			}
-//			if (delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta > startingY) {
-//				startingY = delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta;
-//			}
-//		}
-//		drawLine(ug, startingY, endingY, line);
 	}
 
 	public void drawLineU22(UGraphic ug, double startingY, final double endingY, boolean showTail, double myDelta) {

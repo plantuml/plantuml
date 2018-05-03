@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10765 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -40,12 +42,11 @@ import java.io.OutputStream;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.api.MyRunnable;
 import net.sourceforge.plantuml.api.TimeoutExecutor;
 
 public class ProcessRunner {
-	// http://steveliles.github.io/invoking_processes_from_java.html
-	public static long TIMEOUT = 15 * 60 * 1000L;
 
 	private final String[] cmd;
 
@@ -70,7 +71,9 @@ public class ProcessRunner {
 		this.state = ProcessState.RUNNING();
 		final MainThread mainThread = new MainThread(cmd, dir, redirection, in);
 		try {
-			final boolean done = new TimeoutExecutor(TIMEOUT).executeNow(mainThread);
+			// http://steveliles.github.io/invoking_processes_from_java.html
+			final long timeoutMs = OptionFlags.getInstance().getTimeoutMs();
+			final boolean done = new TimeoutExecutor(timeoutMs).executeNow(mainThread);
 		} finally {
 			changeState.lock();
 			try {
@@ -214,7 +217,7 @@ public class ProcessRunner {
 		}
 
 		public String getString() {
-			if (sb==null) {
+			if (sb == null) {
 				return "";
 			}
 			return sb.toString();

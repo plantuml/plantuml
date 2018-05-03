@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9885 $
  *
  */
 package net.sourceforge.plantuml.api;
@@ -37,30 +39,18 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.core.ImageData;
 
-public class ImageDataSimple implements ImageData {
-
-	private final int width;
-	private final int height;
+public class ImageDataSimple extends ImageDataAbstract {
 
 	public ImageDataSimple(int width, int height) {
-		this.width = width;
-		this.height = height;
-	}
-
-	public ImageDataSimple() {
-		this(0, 0);
+		super(width, height);
 	}
 
 	public ImageDataSimple(Dimension2D dim) {
-		this((int) dim.getWidth(), (int) dim.getHeight());
+		super(dim);
 	}
 
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
+	private ImageDataSimple() {
+		this(0, 0);
 	}
 
 	public boolean containsCMapData() {
@@ -73,6 +63,16 @@ public class ImageDataSimple implements ImageData {
 
 	public String getWarningOrError() {
 		return null;
+	}
+
+	public static ImageData error() {
+		final ImageDataSimple result = new ImageDataSimple();
+		result.setStatus(503);
+		return result;
+	}
+
+	public static ImageData ok() {
+		return new ImageDataSimple();
 	}
 
 }

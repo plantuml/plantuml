@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4246 $
  *
  */
 package net.sourceforge.plantuml;
@@ -41,6 +43,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -100,8 +103,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getDotExecutable();
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param) {
-		return skinParam.getHorizontalAlignment(param);
+	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection) {
+		return skinParam.getHorizontalAlignment(param, arrowDirection);
 	}
 
 	public ColorMapper getColorMapper() {
@@ -144,16 +147,24 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getRanksep();
 	}
 
-	public double getRoundCorner() {
-		return skinParam.getRoundCorner();
+	public double getRoundCorner(CornerParam param, Stereotype stereotype) {
+		return skinParam.getRoundCorner(param, stereotype);
+	}
+
+	public double getDiagonalCorner(CornerParam param, Stereotype stereotype) {
+		return skinParam.getDiagonalCorner(param, stereotype);
 	}
 
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {
 		return skinParam.getThickness(param, stereotype);
 	}
 
-	public double maxMessageSize() {
+	public LineBreakStrategy maxMessageSize() {
 		return skinParam.maxMessageSize();
+	}
+
+	public LineBreakStrategy wrapWidth() {
+		return skinParam.wrapWidth();
 	}
 
 	public boolean strictUmlStyle() {
@@ -238,6 +249,50 @@ public class SkinParamDelegator implements ISkinParam {
 
 	public int colorArrowSeparationSpace() {
 		return skinParam.colorArrowSeparationSpace();
+	}
+
+	public SplitParam getSplitParam() {
+		return skinParam.getSplitParam();
+	}
+
+	public int swimlaneWidth() {
+		return skinParam.swimlaneWidth();
+	}
+
+	public UmlDiagramType getUmlDiagramType() {
+		return skinParam.getUmlDiagramType();
+	}
+
+	public HtmlColor getHoverPathColor() {
+		return skinParam.getHoverPathColor();
+	}
+
+	public double getPadding(PaddingParam param) {
+		return skinParam.getPadding(param);
+	}
+
+	public boolean useRankSame() {
+		return skinParam.useRankSame();
+	}
+
+	public boolean displayGenericWithOldFashion() {
+		return skinParam.displayGenericWithOldFashion();
+	}
+
+	public TikzFontDistortion getTikzFontDistortion() {
+		return skinParam.getTikzFontDistortion();
+	}
+
+	public boolean responseMessageBelowArrow() {
+		return skinParam.responseMessageBelowArrow();
+	}
+
+	public boolean svgDimensionStyle() {
+		return skinParam.svgDimensionStyle();
+	}
+
+	public char getCircledCharacter(Stereotype stereotype) {
+		return skinParam.getCircledCharacter(stereotype);
 	}
 
 }

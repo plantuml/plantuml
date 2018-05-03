@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek.extremity;
@@ -56,10 +58,10 @@ class ExtremityTriangle extends Extremity {
 		this.contact = new Point2D.Double(p1.getX(), p1.getY());
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
-		final int xAile = 8;
-		final int yOuverture = 3;
-		polygon.addPoint(-xAile, -yOuverture);
-		polygon.addPoint(-xAile, yOuverture);
+		final int xWing = 8;
+		final int yAperture = 3;
+		polygon.addPoint(-xWing, -yAperture);
+		polygon.addPoint(-xWing, yAperture);
 		polygon.addPoint(0, 0);
 		polygon.rotate(angle + Math.PI / 2);
 		polygon = polygon.translate(p1.getX(), p1.getY());

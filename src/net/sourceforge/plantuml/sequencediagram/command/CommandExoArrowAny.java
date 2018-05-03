@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4636 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -117,8 +122,15 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		// }
 		// }
 
-		final String error = diagram.addMessage(new MessageExo(p, messageExoType, labels, config, diagram
-				.getNextMessageNumber(), isShortArrow(arg)));
+		final MessageExo msg = new MessageExo(p, messageExoType, labels, config, diagram.getNextMessageNumber(),
+				isShortArrow(arg));
+		if (arg.get("URL", 0) != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
+			msg.setUrl(urlLink);
+		}
+		
+		final String error = diagram.addMessage(msg);
 		if (error != null) {
 			return CommandExecutionResult.error(error);
 		}

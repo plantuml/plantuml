@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4749 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -37,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
@@ -47,11 +50,13 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
+import net.sourceforge.plantuml.graphic.TextBlockWithUrl;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.Ports;
@@ -79,13 +84,16 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 	private final List<Member> members = new ArrayList<Member>();
 	private final HorizontalAlignment align;
 	private final Stereotype stereotype;
+	private final ILeaf leaf;
 
-	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam, Stereotype stereotype) {
-		this(members, fontParam, skinParam, HorizontalAlignment.LEFT, stereotype);
+	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam, Stereotype stereotype,
+			ILeaf leaf) {
+		this(members, fontParam, skinParam, HorizontalAlignment.LEFT, stereotype, leaf);
 	}
 
 	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam,
-			HorizontalAlignment align, Stereotype stereotype) {
+			HorizontalAlignment align, Stereotype stereotype, ILeaf leaf) {
+		this.leaf = leaf;
 		this.stereotype = stereotype;
 		this.align = align;
 		this.skinParam = skinParam;
@@ -128,10 +136,18 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 	public Ports getPorts(StringBounder stringBounder) {
 		final Ports result = new Ports();
 		double y = 0;
+		final Election election = new Election();
+		for (Member m : members) {
+			election.addCandidate(m.getDisplay(false), m);
+		}
+		final Map<Member, String> memberWithPort = election.getAllElected(leaf.getPortShortNames());
 		for (Member m : members) {
 			final TextBlock bloc = createTextBlock(m);
 			final Dimension2D dim = bloc.calculateDimension(stringBounder);
-			result.add(m.getPort(), y, dim.getHeight());
+			final String port = memberWithPort.get(m);
+			if (port != null) {
+				result.add(port, y, dim.getHeight());
+			}
 			y += dim.getHeight();
 		}
 		return result;
@@ -150,7 +166,8 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		if (m.isStatic()) {
 			config = config.underline();
 		}
-		TextBlock bloc = Display.getWithNewlines(s).create(config, align, skinParam, CreoleMode.SIMPLE_LINE);
+		TextBlock bloc = Display.getWithNewlines(s).create(config, align, skinParam, CreoleMode.SIMPLE_LINE,
+				skinParam.wrapWidth());
 		bloc = TextBlockUtils.fullInnerPosition(bloc, m.getDisplay(false));
 		return new TextBlockTracer(m, bloc);
 	}
@@ -181,13 +198,13 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		}
 
 		@Override
-		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-			return bloc.getInnerPosition(member, stringBounder);
+		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			return bloc.getInnerPosition(member, stringBounder, strategy);
 		}
 
 	}
 
-	private TextBlock getUBlock(final VisibilityModifier modifier) {
+	private TextBlock getUBlock(final VisibilityModifier modifier, Url url) {
 		if (modifier == null) {
 			return new AbstractTextBlock() {
 
@@ -203,8 +220,8 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 				modifier.getBackground());
 		final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
-		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back);
-		return uBlock;
+		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back, url != null);
+		return TextBlockWithUrl.withUrl(uBlock, url);
 	}
 
 	public TextBlock asTextBlock(final double widthToUse) {
@@ -221,7 +238,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		final ULayoutGroup group = getLayout(stringBounder);
 		final Dimension2D dim = calculateDimension(stringBounder);
 		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);
@@ -235,7 +252,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			for (Member att : members) {
 				final TextBlock bloc = createTextBlock(att);
 				final VisibilityModifier modifier = att.getVisibilityModifier();
-				group.add(getUBlock(modifier));
+				group.add(getUBlock(modifier, att.getUrl()));
 				group.add(bloc);
 			}
 		} else {

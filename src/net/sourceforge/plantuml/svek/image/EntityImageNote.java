@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -42,6 +44,8 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
@@ -70,14 +74,12 @@ import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
-	private final int cornersize = 10;
 	private final HtmlColor noteBackgroundColor;
 	private final HtmlColor borderColor;
 	private final int marginX1 = 6;
@@ -111,7 +113,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			textBlock = new TextBlockEmpty();
 		} else {
 			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, getSkinParam(), HorizontalAlignment.LEFT,
-					new FontConfiguration(getSkinParam(), FontParam.NOTE, null));
+					new FontConfiguration(getSkinParam(), FontParam.NOTE, null), getSkinParam().wrapWidth());
 		}
 	}
 
@@ -184,7 +186,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		final UGraphic ug2 = new UGraphicStencil(ug, this, new UStroke());
+		final UGraphic ug2 = UGraphicStencil.create(ug, this, new UStroke());
 		if (opaleLine == null || opaleLine.isOpale() == false) {
 			drawNormal(ug2);
 		} else {
@@ -208,12 +210,18 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -shape.getMinX(),
 					-shape.getMinY());
 			final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(), true);
+			opale.setRoundCorner(getRoundCorner());
 			opale.setOpale(strategy, pp1, projection);
-			opale.drawU(Colors.applyStroke(ug2, getEntity().getColors(skinParam)));
+			final UGraphic stroked = applyStroke(ug2);
+			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors(skinParam)));
 		}
 		if (url != null) {
 			ug.closeAction();
 		}
+	}
+
+	private double getRoundCorner() {
+		return skinParam.getRoundCorner(CornerParam.DEFAULT, null);
 	}
 
 	private static Point2D move(Point2D pt, double dx, double dy) {
@@ -222,27 +230,25 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private void drawNormal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final UPolygon polygon = getPolygonNormal(stringBounder);
+		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),
+				getRoundCorner());
 		if (withShadow) {
 			polygon.setDeltaShadow(4);
 		}
 		ug = ug.apply(new UChangeBackColor(noteBackgroundColor)).apply(new UChangeColor(borderColor));
-		ug.draw(polygon);
+		final UGraphic stroked = applyStroke(ug);
+		stroked.draw(polygon);
+		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));
 
-		ug.apply(new UTranslate(getTextWidth(stringBounder) - cornersize, 0)).draw(new ULine(0, cornersize));
-		ug.apply(new UTranslate(getTextWidth(stringBounder), cornersize)).draw(new ULine(-cornersize, 0));
 		getTextBlock().drawU(ug.apply(new UTranslate(marginX1, marginY)));
 	}
 
-	private UPolygon getPolygonNormal(final StringBounder stringBounder) {
-		final UPolygon polygon = new UPolygon();
-		polygon.addPoint(0, 0);
-		polygon.addPoint(0, getTextHeight(stringBounder));
-		polygon.addPoint(getTextWidth(stringBounder), getTextHeight(stringBounder));
-		polygon.addPoint(getTextWidth(stringBounder), cornersize);
-		polygon.addPoint(getTextWidth(stringBounder) - cornersize, 0);
-		polygon.addPoint(0, 0);
-		return polygon;
+	private UGraphic applyStroke(UGraphic ug) {
+		final UStroke stroke = skinParam.getThickness(LineParam.noteBorder, null);
+		if (stroke == null) {
+			return ug;
+		}
+		return ug.apply(stroke);
 	}
 
 	private Direction getOpaleStrategy(double width, double height, Point2D pt) {
@@ -268,10 +274,6 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
-	}
-
-	public int getShield() {
-		return 0;
 	}
 
 	private Line opaleLine;

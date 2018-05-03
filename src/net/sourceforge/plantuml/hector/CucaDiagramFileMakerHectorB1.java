@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.hector;
@@ -153,7 +155,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 		final double y2 = getY(pinLink.getPin2());
 
 		final Rose rose = new Rose();
-		final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.classArrow);
+		final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.arrow);
 		final List<Box2D> b = new ArrayList<Box2D>();
 		final SmartConnection connection = new SmartConnection(x1, y1, x2, y2, b);
 		connection.draw(ug, color);
@@ -161,7 +163,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 
 	private IEntityImage computeImage(final ILeaf leaf) {
 		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
-				false, diagram, null, null, null);
+				false, diagram, null, null, null, diagram.getLinks());
 		return image;
 	}
 }

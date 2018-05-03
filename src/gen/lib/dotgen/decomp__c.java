@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -47,7 +52,6 @@ import static gen.lib.common.utils__c.UF_find;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
-import static smetana.core.Macro.ALLOC_empty;
 import static smetana.core.Macro.GD_comp;
 import static smetana.core.Macro.GD_n_nodes;
 import static smetana.core.Macro.GD_nlist;
@@ -65,11 +69,14 @@ import static smetana.core.Macro.UNSUPPORTED;
 import h.Agedge_s;
 import h.Agnode_s;
 import h.Agraph_s;
+import h.ST_elist;
 import h.boxf;
 import h.elist;
 import h.pointf;
+import smetana.core.JUtils;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__struct__;
 
 public class decomp__c {
@@ -337,7 +344,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -375,7 +382,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -415,7 +422,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -766,10 +773,10 @@ public static void end_component() {
 ENTERING("5o8hxpr6ppi15pinuy79m7u04","end_component");
 try {
     int i;
-    i = GD_comp(Z.z().G_decomp).getInt("size");
-    GD_comp(Z.z().G_decomp).setInt("size", 1+GD_comp(Z.z().G_decomp).getInt("size"));
-    GD_comp(Z.z().G_decomp).setPtr("list", ALLOC_empty(GD_comp(Z.z().G_decomp).getInt("size"), GD_comp(Z.z().G_decomp).getPtr("list"), Agnode_s.class));
-    GD_comp(Z.z().G_decomp).getArrayOfPtr("list").plus(i).setPtr(GD_nlist(Z.z().G_decomp));
+    i = GD_comp(Z.z().G_decomp).size;
+    GD_comp(Z.z().G_decomp).size = 1+GD_comp(Z.z().G_decomp).size;
+    GD_comp(Z.z().G_decomp).reallocEmpty(GD_comp(Z.z().G_decomp).size, Agnode_s.class);
+    GD_comp(Z.z().G_decomp).setInList(i ,GD_nlist(Z.z().G_decomp));
 } finally {
 LEAVING("5o8hxpr6ppi15pinuy79m7u04","end_component");
 }
@@ -784,7 +791,7 @@ public static void search_component(Agraph_s g, Agnode_s n) {
 ENTERING("c5u5lnfbu0pmlk6vsvyrdj8ep","search_component");
 try {
     int c, i;
-    __array_of_struct__ vec = __array_of_struct__.malloc(elist.class, 4);
+    __array_of_struct__ vec = __array_of_struct_impl__.malloc(elist.class, 4);
     Agnode_s other;
     Agedge_s e;
     add_to_component(n);
@@ -793,8 +800,8 @@ try {
     vec.plus(2).setStruct(ND_flat_out(n));
     vec.plus(3).setStruct(ND_flat_in(n));
     for (c = 0; c <= 3; c++) {
-	if (vec.plus(c).getStruct().getPtr("list")!=null)
-	    for (i = 0; (e = (Agedge_s) vec.plus(c).getStruct().getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    	if (((ST_elist) vec.plus(c).getStruct()).listNotNull())
+    	    for (i = 0; (e = (Agedge_s) ((ST_elist) vec.plus(c).getStruct()).getFromList(i))!=null; i++) {
 		if (EQ(other = aghead(e), n))
 		    other = agtail(e);
 		if ((ND_mark(other) != Z.z().Cmark) && (EQ(other, UF_find(other))))
@@ -820,7 +827,7 @@ try {
     if (++Z.z().Cmark == 0)
 	Z.z().Cmark = 1;
     GD_n_nodes(g, 0);
-    GD_comp(g).setInt("size", 0);
+    GD_comp(g).size = 0;
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
 	v = n;
 	if ((pass > 0) && (subg = ND_clust(v))!=null)

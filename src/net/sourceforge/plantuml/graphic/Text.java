@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,25 +28,24 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.graphic;
+
+import net.sourceforge.plantuml.BackSlash;
 
 public class Text implements HtmlCommand {
 
 	private final String text;
 
-	public static final Text NEWLINE = new Text("\\n");
+	public static final Text TEXT_BS_BS_N = new Text(BackSlash.BS_BS_N);
 
 	Text(String text) {
 		this.text = text.replaceAll("\\\\\\[", "[").replaceAll("\\\\\\]", "]");
-		if (text.indexOf('\n') != -1) {
+		if (text.indexOf(BackSlash.CHAR_NEWLINE) != -1) {
 			throw new IllegalArgumentException();
 		}
 		if (text.length() == 0) {
@@ -55,6 +59,6 @@ public class Text implements HtmlCommand {
 	}
 
 	public boolean isNewline() {
-		return text.equals("\\n");
+		return text.equals(BackSlash.BS_BS_N);
 	}
 }

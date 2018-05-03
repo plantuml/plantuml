@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7637 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -39,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -58,12 +61,14 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	private final ISkinSimple spriteContainer;
 
 	private final HorizontalAlignment align;
+	private final LineBreakStrategy lineBreakStrategy;
 
 	// private final List<Url> urls = new ArrayList<Url>();
 
 	public BodyEnhanced2(Display rawBody, FontParam fontParam, ISkinSimple spriteContainer, HorizontalAlignment align,
-			FontConfiguration titleConfig) {
+			FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy) {
 		this.rawBody2 = rawBody;
+		this.lineBreakStrategy = lineBreakStrategy;
 		this.spriteContainer = spriteContainer;
 
 		this.titleConfig = titleConfig;
@@ -119,7 +124,7 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	private TextBlock getTextBlock(Display members2, StringBounder stringBounder) {
-		final TextBlock result = members2.create(titleConfig, align, spriteContainer);
+		final TextBlock result = members2.create(titleConfig, align, spriteContainer, lineBreakStrategy);
 		return result;
 	}
 

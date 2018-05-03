@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4639 $
  * 
  */
 package net.sourceforge.plantuml.syntax;
@@ -61,20 +63,29 @@ public class LanguageDescriptor {
 		type.add("object");
 		type.add("artifact");
 		type.add("folder");
-		type.add("rect");
+		type.add("rectangle");
 		type.add("node");
 		type.add("frame");
 		type.add("cloud");
 		type.add("database");
 		type.add("storage");
 		type.add("agent");
+		type.add("stack");
 		type.add("boundary");
 		type.add("control");
 		type.add("entity");
 		type.add("card");
+		type.add("file");
+		type.add("package");
+		type.add("queue");
+		type.add("archimate");
 
 		keyword.add("@startuml");
 		keyword.add("@enduml");
+		keyword.add("@startdot");
+		keyword.add("@enddot");
+		keyword.add("@startsalt");
+		keyword.add("@endsalt");
 		keyword.add("as");
 		keyword.add("also");
 		keyword.add("autonumber");
@@ -138,13 +149,20 @@ public class LanguageDescriptor {
 		keyword.add("fork");
 		keyword.add("again");
 		keyword.add("kill");
+		keyword.add("order");
 
+		preproc.add("!exit");
 		preproc.add("!include");
+		preproc.add("!pragma");
 		preproc.add("!define");
 		preproc.add("!undef");
+		preproc.add("!if");
 		preproc.add("!ifdef");
 		preproc.add("!endif");
 		preproc.add("!ifndef");
+		preproc.add("!else");
+		preproc.add("!definelong");
+		preproc.add("!enddefinelong");
 	}
 
 	public void print(PrintStream ps) {

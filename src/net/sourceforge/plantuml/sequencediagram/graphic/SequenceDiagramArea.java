@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -36,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.png.PngTitler;
 import net.sourceforge.plantuml.utils.MathUtils;
 
@@ -156,15 +158,15 @@ public class SequenceDiagramArea {
 		throw new IllegalStateException();
 	}
 
-	public void initFooter(PngTitler pngTitler) {
-		final Dimension2D dim = pngTitler.getTextDimension(TextBlockUtils.getDummyStringBounder());
+	public void initFooter(PngTitler pngTitler, StringBounder stringBounder) {
+		final Dimension2D dim = pngTitler.getTextDimension(stringBounder);
 		if (dim != null) {
 			setFooterArea(dim.getWidth(), dim.getHeight(), 3);
 		}
 	}
 
-	public void initHeader(PngTitler pngTitler) {
-		final Dimension2D dim = pngTitler.getTextDimension(TextBlockUtils.getDummyStringBounder());
+	public void initHeader(PngTitler pngTitler, StringBounder stringBounder) {
+		final Dimension2D dim = pngTitler.getTextDimension(stringBounder);
 		if (dim != null) {
 			setHeaderArea(dim.getWidth(), dim.getHeight(), 3);
 		}

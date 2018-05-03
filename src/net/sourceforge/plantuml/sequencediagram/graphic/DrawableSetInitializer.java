@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19978 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -39,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamBackcoloredReference;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -59,6 +62,7 @@ import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
@@ -194,8 +198,9 @@ class DrawableSetInitializer {
 			}
 		}
 
+		takeParticipantEngloberPadding(stringBounder);
 		constraintSet.takeConstraintIntoAccount(stringBounder);
-		takeParticipantEngloberTitleWidth3(stringBounder);
+		takeParticipantEngloberTitleWidth(stringBounder);
 
 		prepareMissingSpace(stringBounder);
 
@@ -204,8 +209,23 @@ class DrawableSetInitializer {
 		return drawableSet;
 	}
 
-	private void takeParticipantEngloberTitleWidth3(StringBounder stringBounder) {
-		for (Englober pe : drawableSet.getExistingParticipantEnglober()) {
+	private void takeParticipantEngloberPadding(StringBounder stringBounder) {
+		final double padding = drawableSet.getSkinParam().getPadding(PaddingParam.BOX);
+		if (padding == 0) {
+			return;
+		}
+		for (Englober pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())
+					.getParticipantBox();
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE())
+					.getParticipantBox();
+			constraintSet.pushToLeftParticipantBox(padding, first, true);
+			constraintSet.pushToLeftParticipantBox(padding, last, false);
+		}
+	}
+
+	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
+		for (Englober pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
 			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
 					pe.getParticipantEnglober());
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())
@@ -388,6 +408,13 @@ class DrawableSetInitializer {
 			// MODIF42
 			inGroupableStack.addElement((GroupingGraphicalElementElse) element);
 		} else if (m.getType() == GroupingType.END) {
+			final List<Component> notes = new ArrayList<Component>();
+			for (NoteOnMessage noteOnMessage : m.getNoteOnMessages()) {
+				final ISkinParam sk = noteOnMessage.getSkinParamNoteBackcolored(drawableSet.getSkinParam());
+				final Component note = drawableSet.getSkin().createComponent(
+						noteOnMessage.getNoteStyle().getNoteComponentType(), null, sk, noteOnMessage.getDisplay());
+				notes.add(note);
+			}
 			if (m.isParallel()) {
 				freeY2 = ((FrontierStack) freeY2).closeBar();
 			}
@@ -395,6 +422,7 @@ class DrawableSetInitializer {
 					.getEvent(m.getGroupingStart());
 			if (groupingHeaderStart != null) {
 				groupingHeaderStart.setEndY(freeY2.getFreeY(range));
+				groupingHeaderStart.addNotes(stringBounder, notes);
 			}
 			element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),
 					inGroupableStack.getTopGroupingStructure(), m.isParallel());
@@ -571,6 +599,9 @@ class DrawableSetInitializer {
 		} else if (p.getType() == ParticipantType.ENTITY) {
 			headType = ComponentType.ENTITY_HEAD;
 			tailType = ComponentType.ENTITY_TAIL;
+		} else if (p.getType() == ParticipantType.QUEUE) {
+			headType = ComponentType.QUEUE_HEAD;
+			tailType = ComponentType.QUEUE_TAIL;
 		} else if (p.getType() == ParticipantType.DATABASE) {
 			headType = ComponentType.DATABASE_HEAD;
 			tailType = ComponentType.DATABASE_TAIL;

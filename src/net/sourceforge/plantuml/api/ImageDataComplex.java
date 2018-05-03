@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9885 $
  *
  */
 package net.sourceforge.plantuml.api;
@@ -36,33 +38,16 @@ package net.sourceforge.plantuml.api;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.CMapData;
-import net.sourceforge.plantuml.core.ImageData;
 
-public class ImageDataComplex implements ImageData {
+public class ImageDataComplex extends ImageDataAbstract {
 
-	private final Dimension2D info;
 	private final CMapData cmap;
 	private final String warningOrError;
 
-//	public ImageDataComplex(Dimension2D info, CMapData cmap) {
-//		this(info, cmap, null);
-//	}
-
 	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError) {
-		if (info==null) {
-			throw new IllegalArgumentException();
-		}
-		this.info = info;
+		super(info);
 		this.cmap = cmap;
 		this.warningOrError = warningOrError;
-	}
-
-	public int getWidth() {
-		return (int) info.getWidth();
-	}
-
-	public int getHeight() {
-		return (int) info.getHeight();
 	}
 
 	public boolean containsCMapData() {

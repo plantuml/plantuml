@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5436 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -38,6 +40,9 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -50,12 +55,11 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -64,46 +68,40 @@ import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
+	private static final String SINGLE = "[.\\\\]{0,2}[\\p{L}0-9_]+(?:[.\\\\]{1,2}[\\p{L}0-9_]+)*";
+	private static final String COUPLE = "\\([%s]*(" + SINGLE + ")[%s]*,[%s]*(" + SINGLE + ")[%s]*\\)";
+
 	public CommandLinkClass(UmlDiagramType umlDiagramType) {
 		super(getRegexConcat(umlDiagramType));
 	}
 
 	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
-		return new RegexConcat(
-				new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
-				new RegexOr(
-				//
-						new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-								+ getClassIdentifier()),
-						new RegexLeaf("COUPLE1",
-								"\\([%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*,[%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*\\)")),
-				new RegexLeaf("[%s]*"), //
+		return new RegexConcat(new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
+				new RegexOr( //
+						new RegexLeaf("ENT1", getClassIdentifier()),//
+						new RegexLeaf("COUPLE1", COUPLE)), new RegexLeaf("[%s]*"), //
 				new RegexLeaf("FIRST_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
 				new RegexLeaf("[%s]*"), //
 
 				new RegexConcat(
-						//
-						new RegexLeaf("ARROW_HEAD1", "([%s]+o|[#\\[<*+^]|[<\\[]\\|)?"), //
+				//
+						new RegexLeaf("ARROW_HEAD1", "([%s]+[ox]|[)#\\[<*+^}]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
-						new RegexLeaf("ARROW_STYLE1",
-								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
+						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
 						new RegexLeaf("INSIDE", "(?:(0|\\(0\\)|\\(0|0\\))(?=[-=.~]))?"), //
-						new RegexLeaf("ARROW_STYLE2",
-								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
+						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
-						new RegexLeaf("ARROW_HEAD2", "(o[%s]+|[#\\]>*+^]|\\|[>\\]])?")), //
+						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[(#\\]>*+^\\{]|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
 
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"),
-				new RegexLeaf("[%s]*"), //
-				new RegexOr(
-						new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-								+ getClassIdentifier()),
-						new RegexLeaf("COUPLE2",
-								"\\([%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*,[%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*\\)")),
+				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"), new RegexLeaf("[%s]*"), //
+				new RegexOr( //
+						new RegexLeaf("ENT2", getClassIdentifier()), //
+						new RegexLeaf("COUPLE2", COUPLE)), //
 				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
 				new RegexLeaf("$"));
@@ -121,28 +119,31 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return "(?:\\.|::|\\\\|\\\\\\\\)";
 	}
 
-	private static String optionalKeywords(UmlDiagramType type) {
-		if (type == UmlDiagramType.CLASS) {
-			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|object)";
-		}
-		if (type == UmlDiagramType.OBJECT) {
-			return "(object)";
-		}
-		throw new IllegalArgumentException();
-	}
-
-	private LeafType getTypeIfObject(String type) {
-		if ("object".equalsIgnoreCase(type)) {
-			return LeafType.OBJECT;
-		}
-		return null;
-	}
+	// private static String optionalKeywords(UmlDiagramType type) {
+	// if (type == UmlDiagramType.CLASS) {
+	// return "(interface|enum|annotation|abstract[%s]+class|abstract|class|object|entity)";
+	// }
+	// if (type == UmlDiagramType.OBJECT) {
+	// return "(object)";
+	// }
+	// throw new IllegalArgumentException();
+	// }
+	//
+	// private LeafType getTypeIfObject(String type) {
+	// if ("object".equalsIgnoreCase(type)) {
+	// return LeafType.OBJECT;
+	// }
+	// return null;
+	// }
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 
-		Code ent1 = Code.of(arg.get("ENT1", 1));
-		Code ent2 = Code.of(arg.get("ENT2", 1));
+		Code ent1 = Code.of(arg.get("ENT1", 0));
+		Code ent2 = Code.of(arg.get("ENT2", 0));
+		if (ent1 == null && ent2 == null) {
+			return executeArgSpecial3(diagram, arg);
+		}
 
 		if (ent1 == null) {
 			return executeArgSpecial1(diagram, arg);
@@ -152,7 +153,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 		ent1 = ent1.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
 		ent2 = ent2.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
-		if (diagram.isGroup(ent1) && diagram.isGroup(ent2)) {
+		if (isGroupButNotTheCurrentGroup(diagram, ent1) && isGroupButNotTheCurrentGroup(diagram, ent2)) {
 			return executePackageLink(diagram, arg);
 		}
 
@@ -168,35 +169,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			ent2 = removeMemberPart(diagram, ent2);
 		}
 
-		final String type1 = arg.get("ENT1", 0);
-		final LeafType typeIfObject1 = getTypeIfObject(type1);
+		final IEntity cl1 = isGroupButNotTheCurrentGroup(diagram, ent1) ? diagram.getGroup(Code.of(StringUtils
+				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\""))) : diagram.getOrCreateLeaf(
+				ent1, null, null);
 
-		final IEntity cl1 = diagram.isGroup(ent1) ? diagram.getGroup(Code.of(StringUtils
-				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1), "\""))) : diagram.getOrCreateLeaf(
-				ent1, typeIfObject1, null);
-
-		final String type2 = arg.get("ENT2", 0);
-		LeafType typeIfObject2 = getTypeIfObject(type2);
-		if (diagram.leafExist(ent2) == false && cl1.getEntityType() == LeafType.OBJECT && typeIfObject2 == null) {
-			typeIfObject2 = LeafType.OBJECT;
-		}
-
-		final IEntity cl2 = diagram.isGroup(ent2) ? diagram.getGroup(Code.of(StringUtils
-				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1), "\""))) : diagram.getOrCreateLeaf(
-				ent2, typeIfObject2, null);
-
-		if (arg.get("ENT1", 0) != null) {
-			final LeafType type = LeafType.getLeafType(arg.get("ENT1", 0));
-			if (type != LeafType.OBJECT) {
-				((ILeaf) cl1).muteToType(type, null);
-			}
-		}
-		if (arg.get("ENT2", 0) != null) {
-			final LeafType type = LeafType.getLeafType(arg.get("ENT2", 0));
-			if (type != LeafType.OBJECT) {
-				((ILeaf) cl2).muteToType(type, null);
-			}
-		}
+		final IEntity cl2 = isGroupButNotTheCurrentGroup(diagram, ent2) ? diagram.getGroup(Code.of(StringUtils
+				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\""))) : diagram.getOrCreateLeaf(
+				ent2, null, null);
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 
@@ -270,6 +249,11 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(labelLink), queue, firstLabel, secondLabel,
 				diagram.getLabeldistance(), diagram.getLabelangle());
+		if (arg.get("URL", 0) != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url url = urlBuilder.getUrl(arg.get("URL", 0));
+			link.setUrl(url);
+		}
 		link.setPortMembers(port1, port2);
 
 		if (dir == Direction.LEFT || dir == Direction.UP) {
@@ -282,6 +266,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		addLink(diagram, link, arg.get("HEADER", 0));
 
 		return CommandExecutionResult.ok();
+	}
+
+	private boolean isGroupButNotTheCurrentGroup(AbstractClassOrObjectDiagram diagram, Code code) {
+		if (diagram.getCurrentGroup().getCode().equals(code)) {
+			return false;
+		}
+		return diagram.isGroup(code);
 	}
 
 	private Code removeMemberPart(AbstractClassOrObjectDiagram diagram, Code code) {
@@ -328,9 +319,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final IEntity cl1 = diagram.getGroup(Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
-				arg.get("ENT1", 1), "\"")));
+				arg.get("ENT1", 0), "\"")));
 		final IEntity cl2 = diagram.getGroup(Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
-				arg.get("ENT2", 1), "\"")));
+				arg.get("ENT2", 0), "\"")));
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -359,24 +350,22 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private CommandExecutionResult executeArgSpecial1(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
-		final Code clName1 = Code.of(arg.get("COUPLE1", 0));
-		final Code clName2 = Code.of(arg.get("COUPLE1", 1));
-		if (diagram.leafExist(clName1) == false) {
-			return CommandExecutionResult.error("No class " + clName1);
+		final Code clName1A = Code.of(arg.get("COUPLE1", 0));
+		final Code clName1B = Code.of(arg.get("COUPLE1", 1));
+		if (diagram.leafExist(clName1A) == false) {
+			return CommandExecutionResult.error("No class " + clName1A);
 		}
-		if (diagram.leafExist(clName2) == false) {
-			return CommandExecutionResult.error("No class " + clName2);
+		if (diagram.leafExist(clName1B) == false) {
+			return CommandExecutionResult.error("No class " + clName1B);
 		}
 
-		final Code ent2 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1), "\""));
+		final Code ent2 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\""));
 		final IEntity cl2 = diagram.getOrCreateLeaf(ent2, null, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
-		// final int length = getQueueLength(arg);
-		// final String weight = arg.get("HEADER").get(0);
 
-		final boolean result = diagram.associationClass(1, clName1, clName2, cl2, linkType, label);
+		final boolean result = diagram.associationClass(1, clName1A, clName1B, cl2, linkType, label);
 		if (result == false) {
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 		}
@@ -384,25 +373,47 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeArgSpecial2(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
-		final Code clName1 = Code.of(arg.get("COUPLE2", 0));
-		final Code clName2 = Code.of(arg.get("COUPLE2", 1));
-		if (diagram.leafExist(clName1) == false) {
-			return CommandExecutionResult.error("No class " + clName1);
+	private CommandExecutionResult executeArgSpecial3(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+		final Code clName1A = Code.of(arg.get("COUPLE1", 0));
+		final Code clName1B = Code.of(arg.get("COUPLE1", 1));
+		final Code clName2A = Code.of(arg.get("COUPLE2", 0));
+		final Code clName2B = Code.of(arg.get("COUPLE2", 1));
+		if (diagram.leafExist(clName1A) == false) {
+			return CommandExecutionResult.error("No class " + clName1A);
 		}
-		if (diagram.leafExist(clName2) == false) {
-			return CommandExecutionResult.error("No class " + clName2);
+		if (diagram.leafExist(clName1B) == false) {
+			return CommandExecutionResult.error("No class " + clName1B);
+		}
+		if (diagram.leafExist(clName2A) == false) {
+			return CommandExecutionResult.error("No class " + clName2A);
+		}
+		if (diagram.leafExist(clName2B) == false) {
+			return CommandExecutionResult.error("No class " + clName2B);
 		}
 
-		final Code ent1 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1), "\""));
+		final LinkType linkType = getLinkType(arg);
+		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
+
+		return diagram.associationClass(clName1A, clName1B, clName2A, clName2B, linkType, label);
+	}
+
+	private CommandExecutionResult executeArgSpecial2(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+		final Code clName2A = Code.of(arg.get("COUPLE2", 0));
+		final Code clName2B = Code.of(arg.get("COUPLE2", 1));
+		if (diagram.leafExist(clName2A) == false) {
+			return CommandExecutionResult.error("No class " + clName2A);
+		}
+		if (diagram.leafExist(clName2B) == false) {
+			return CommandExecutionResult.error("No class " + clName2B);
+		}
+
+		final Code ent1 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\""));
 		final IEntity cl1 = diagram.getOrCreateLeaf(ent1, null, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
-		// final int length = getQueueLength(arg);
-		// final String weight = arg.get("HEADER").get(0);
 
-		final boolean result = diagram.associationClass(2, clName1, clName2, cl1, linkType, label);
+		final boolean result = diagram.associationClass(2, clName2A, clName2B, cl1, linkType, label);
 		if (result == false) {
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 		}
@@ -418,6 +429,21 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if ("<|".equals(s)) {
 			return LinkDecor.EXTENDS;
 		}
+		if ("}".equals(s)) {
+			return LinkDecor.CROWFOOT;
+		}
+		if ("}o".equals(s)) {
+			return LinkDecor.CIRCLE_CROWFOOT;
+		}
+		if ("}|".equals(s)) {
+			return LinkDecor.LINE_CROWFOOT;
+		}
+		if ("|o".equals(s)) {
+			return LinkDecor.CIRCLE_LINE;
+		}
+		if ("||".equals(s)) {
+			return LinkDecor.DOUBLE_LINE;
+		}
 		if ("<".equals(s)) {
 			return LinkDecor.ARROW;
 		}
@@ -430,11 +456,17 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if ("o".equals(s)) {
 			return LinkDecor.AGREGATION;
 		}
+		if ("x".equals(s)) {
+			return LinkDecor.NOT_NAVIGABLE;
+		}
 		if ("*".equals(s)) {
 			return LinkDecor.COMPOSITION;
 		}
 		if ("#".equals(s)) {
-			return LinkDecor.SQUARRE;
+			return LinkDecor.SQUARE;
+		}
+		if (")".equals(s)) {
+			return LinkDecor.PARENTHESIS;
 		}
 		return LinkDecor.NONE;
 	}
@@ -450,6 +482,21 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (">".equals(s)) {
 			return LinkDecor.ARROW;
 		}
+		if ("{".equals(s)) {
+			return LinkDecor.CROWFOOT;
+		}
+		if ("o{".equals(s)) {
+			return LinkDecor.CIRCLE_CROWFOOT;
+		}
+		if ("|{".equals(s)) {
+			return LinkDecor.LINE_CROWFOOT;
+		}
+		if ("o|".equals(s)) {
+			return LinkDecor.CIRCLE_LINE;
+		}
+		if ("||".equals(s)) {
+			return LinkDecor.DOUBLE_LINE;
+		}
 		if ("^".equals(s)) {
 			return LinkDecor.EXTENDS;
 		}
@@ -459,11 +506,17 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if ("o".equals(s)) {
 			return LinkDecor.AGREGATION;
 		}
+		if ("x".equals(s)) {
+			return LinkDecor.NOT_NAVIGABLE;
+		}
 		if ("*".equals(s)) {
 			return LinkDecor.COMPOSITION;
 		}
 		if ("#".equals(s)) {
-			return LinkDecor.SQUARRE;
+			return LinkDecor.SQUARE;
+		}
+		if ("(".equals(s)) {
+			return LinkDecor.PARENTHESIS;
 		}
 		return LinkDecor.NONE;
 	}
@@ -474,7 +527,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		LinkType result = new LinkType(decors2, decors1);
 		if (arg.get("ARROW_BODY1", 0).contains(".") || arg.get("ARROW_BODY2", 0).contains(".")) {
-			result = result.getDashed();
+			result = result.goDashed();
 		}
 		final String middle = arg.get("INSIDE", 0);
 		if ("0".equals(middle)) {
@@ -553,6 +606,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				// Do nothing
 			} else if (s.equalsIgnoreCase("norank")) {
 				link.goNorank();
+			} else if (s.startsWith("thickness=")) {
+				link.goThickness(Double.parseDouble(s.substring("thickness=".length())));
 			} else {
 				link.setSpecificColor(s);
 				if (colors != null) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml;
@@ -44,11 +46,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.api.ApiWarning;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.stats.StatsUtils;
 
 public class Option {
 
@@ -59,6 +63,9 @@ public class Option {
 	private boolean computeurl = false;
 	private boolean decodeurl = false;
 	private boolean pipe = false;
+	private String pipeDelimitor;
+	private boolean pipeMap = false;
+	private boolean pipeNoStdErr = false;
 	private boolean syntax = false;
 	private boolean checkOnly = false;
 	private boolean failfast = false;
@@ -66,25 +73,33 @@ public class Option {
 	private boolean pattern = false;
 	private boolean duration = false;
 	private boolean debugsvek = false;
+	private boolean splash = false;
+	private boolean textProgressBar = false;
 	private int nbThreads = 0;
 	private int ftpPort = -1;
+	private boolean hideMetadata = false;
+	private boolean checkMetadata = false;
+	private int imageIndex = 0;
 
 	private File outputDir = null;
 	private File outputFile = null;
+	private String filename;
 
 	private final List<String> result = new ArrayList<String>();
 
 	public Option() {
 	}
 
-	private FileFormat fileFormat = FileFormat.PNG;
+	private FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
 
-	public FileFormat getFileFormat() {
-		return fileFormat;
+	@Deprecated
+	@ApiWarning(willBeRemoved = "in next major release")
+	final public void setFileFormat(FileFormat fileFormat) {
+		setFileFormatOption(new FileFormatOption(fileFormat));
 	}
 
-	public void setFileFormat(FileFormat fileFormat) {
-		this.fileFormat = fileFormat;
+	final public void setFileFormatOption(FileFormatOption newFormat) {
+		this.fileFormatOption = newFormat;
 	}
 
 	public Option(String... arg) throws InterruptedException, IOException {
@@ -94,37 +109,41 @@ public class Option {
 		for (int i = 0; i < arg.length; i++) {
 			String s = arg[i];
 			if (s.equalsIgnoreCase("-tsvg") || s.equalsIgnoreCase("-svg")) {
-				setFileFormat(FileFormat.SVG);
+				setFileFormatOption(new FileFormatOption(FileFormat.SVG));
+			} else if (s.equalsIgnoreCase("-tsvg:nornd") || s.equalsIgnoreCase("-svg:nornd")) {
+				setFileFormatOption(new FileFormatOption(FileFormat.SVG));
 			} else if (s.equalsIgnoreCase("-thtml") || s.equalsIgnoreCase("-html")) {
-				setFileFormat(FileFormat.HTML);
+				setFileFormatOption(new FileFormatOption(FileFormat.HTML));
 			} else if (s.equalsIgnoreCase("-tscxml") || s.equalsIgnoreCase("-scxml")) {
-				setFileFormat(FileFormat.SCXML);
+				setFileFormatOption(new FileFormatOption(FileFormat.SCXML));
 			} else if (s.equalsIgnoreCase("-txmi") || s.equalsIgnoreCase("-xmi")) {
-				setFileFormat(FileFormat.XMI_STANDARD);
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));
 			} else if (s.equalsIgnoreCase("-txmi:argo") || s.equalsIgnoreCase("-xmi:argo")) {
-				setFileFormat(FileFormat.XMI_ARGO);
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
 			} else if (s.equalsIgnoreCase("-txmi:star") || s.equalsIgnoreCase("-xmi:star")) {
-				setFileFormat(FileFormat.XMI_STAR);
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
 			} else if (s.equalsIgnoreCase("-teps") || s.equalsIgnoreCase("-eps")) {
-				setFileFormat(FileFormat.EPS);
+				setFileFormatOption(new FileFormatOption(FileFormat.EPS));
 			} else if (s.equalsIgnoreCase("-teps:text") || s.equalsIgnoreCase("-eps:text")) {
-				setFileFormat(FileFormat.EPS_TEXT);
+				setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));
 			} else if (s.equalsIgnoreCase("-ttxt") || s.equalsIgnoreCase("-txt")) {
-				setFileFormat(FileFormat.ATXT);
+				setFileFormatOption(new FileFormatOption(FileFormat.ATXT));
 			} else if (s.equalsIgnoreCase("-tutxt") || s.equalsIgnoreCase("-utxt")) {
-				setFileFormat(FileFormat.UTXT);
+				setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
+			} else if (s.equalsIgnoreCase("-braille") || s.equalsIgnoreCase("-tbraille")) {
+				setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));
 			} else if (s.equalsIgnoreCase("-png") || s.equalsIgnoreCase("-tpng")) {
-				setFileFormat(FileFormat.PNG);
+				setFileFormatOption(new FileFormatOption(FileFormat.PNG));
 			} else if (s.equalsIgnoreCase("-vdx") || s.equalsIgnoreCase("-tvdx")) {
-				setFileFormat(FileFormat.VDX);
+				setFileFormatOption(new FileFormatOption(FileFormat.VDX));
 			} else if (s.equalsIgnoreCase("-latex") || s.equalsIgnoreCase("-tlatex")) {
-				setFileFormat(FileFormat.LATEX);
+				setFileFormatOption(new FileFormatOption(FileFormat.LATEX));
 			} else if (s.equalsIgnoreCase("-latex:nopreamble") || s.equalsIgnoreCase("-tlatex:nopreamble")) {
-				setFileFormat(FileFormat.LATEX_NO_PREAMBLE);
+				setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
 			} else if (s.equalsIgnoreCase("-base64") || s.equalsIgnoreCase("-tbase64")) {
-				setFileFormat(FileFormat.BASE64);
+				setFileFormatOption(new FileFormatOption(FileFormat.BASE64));
 			} else if (s.equalsIgnoreCase("-pdf") || s.equalsIgnoreCase("-tpdf")) {
-				setFileFormat(FileFormat.PDF);
+				setFileFormatOption(new FileFormatOption(FileFormat.PDF));
 			} else if (s.equalsIgnoreCase("-overwrite")) {
 				OptionFlags.getInstance().setOverwrite(true);
 			} else if (s.equalsIgnoreCase("-output") || s.equalsIgnoreCase("-o")) {
@@ -151,6 +170,12 @@ public class Option {
 					continue;
 				}
 				charset = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);
+			} else if (s.equalsIgnoreCase("-filename")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				filename = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);
 			} else if (s.startsWith("-o") && s.length() > 3) {
 				s = s.substring(2);
 				outputDir = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
@@ -173,6 +198,15 @@ public class Option {
 				} else if (nb.matches("\\d+")) {
 					this.nbThreads = Integer.parseInt(nb);
 				}
+			} else if (s.equalsIgnoreCase("-timeout")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				final String timeSeconds = arg[i];
+				if (timeSeconds.matches("\\d+")) {
+					OptionFlags.getInstance().setTimeoutMs(Integer.parseInt(timeSeconds) * 1000L);
+				}
 			} else if (s.equalsIgnoreCase("-failfast")) {
 				this.failfast = true;
 			} else if (s.equalsIgnoreCase("-failfast2")) {
@@ -185,6 +219,8 @@ public class Option {
 					continue;
 				}
 				initConfig(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
+			} else if (s.startsWith("-I")) {
+				initInclude(s.substring(2));
 			} else if (s.equalsIgnoreCase("-computeurl") || s.equalsIgnoreCase("-encodeurl")) {
 				this.computeurl = true;
 			} else if (s.startsWith("-x")) {
@@ -194,6 +230,16 @@ public class Option {
 				OptionFlags.getInstance().setVerbose(true);
 			} else if (s.equalsIgnoreCase("-pipe") || s.equalsIgnoreCase("-p")) {
 				pipe = true;
+			} else if (s.equalsIgnoreCase("-pipedelimitor")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				pipeDelimitor = arg[i];
+			} else if (s.equalsIgnoreCase("-pipemap")) {
+				pipeMap = true;
+			} else if (s.equalsIgnoreCase("-pipenostderr")) {
+				pipeNoStdErr = true;
 			} else if (s.equalsIgnoreCase("-pattern")) {
 				pattern = true;
 			} else if (s.equalsIgnoreCase("-syntax")) {
@@ -206,7 +252,7 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-keepfiles") || s.equalsIgnoreCase("-keepfile")) {
 				System.err.println("-keepfiles option has been removed. Please consider -debugsvek instead");
 			} else if (s.equalsIgnoreCase("-metadata")) {
-				OptionFlags.getInstance().setMetadata(true);
+				OptionFlags.getInstance().setExtractFromMetadata(true);
 			} else if (s.equalsIgnoreCase("-logdata")) {
 				i++;
 				if (i == arg.length) {
@@ -217,6 +263,7 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-word")) {
 				OptionFlags.getInstance().setWord(true);
 				OptionFlags.getInstance().setQuiet(true);
+				this.charset = "UTF-8";
 			} else if (s.equalsIgnoreCase("-quiet")) {
 				OptionFlags.getInstance().setQuiet(true);
 			} else if (s.equalsIgnoreCase("-decodeurl")) {
@@ -243,10 +290,47 @@ public class Option {
 				OptionFlags.getInstance().setGui(true);
 			} else if (s.equalsIgnoreCase("-encodesprite")) {
 				OptionFlags.getInstance().setEncodesprite(true);
-			} else if (s.equalsIgnoreCase("-nosuggestengine")) {
-				OptionFlags.getInstance().setUseSuggestEngine(false);
+				// } else if (s.equalsIgnoreCase("-nosuggestengine")) {
+				// OptionFlags.getInstance().setUseSuggestEngine(false);
 			} else if (s.equalsIgnoreCase("-printfonts")) {
 				OptionFlags.getInstance().setPrintFonts(true);
+			} else if (s.equalsIgnoreCase("-dumphtmlstats")) {
+				OptionFlags.getInstance().setDumpHtmlStats(true);
+			} else if (s.equalsIgnoreCase("-dumpstats")) {
+				OptionFlags.getInstance().setDumpStats(true);
+			} else if (s.equalsIgnoreCase("-loopstats")) {
+				OptionFlags.getInstance().setLoopStats(true);
+			} else if (s.equalsIgnoreCase("-enablestats")) {
+				OptionFlags.getInstance().setEnableStats(true);
+			} else if (s.equalsIgnoreCase("-disablestats")) {
+				OptionFlags.getInstance().setEnableStats(false);
+			} else if (s.equalsIgnoreCase("-extractstdlib")) {
+				OptionFlags.getInstance().setExtractStdLib(true);
+			} else if (s.equalsIgnoreCase("-htmlstats")) {
+				StatsUtils.setHtmlStats(true);
+			} else if (s.equalsIgnoreCase("-xmlstats")) {
+				StatsUtils.setXmlStats(true);
+			} else if (s.equalsIgnoreCase("-realtimestats")) {
+				StatsUtils.setRealTimeStats(true);
+			} else if (s.equalsIgnoreCase("-useseparatorminus")) {
+				OptionFlags.getInstance().setFileSeparator("-");
+			} else if (s.equalsIgnoreCase("-splash")) {
+				splash = true;
+			} else if (s.equalsIgnoreCase("-progress")) {
+				textProgressBar = true;
+			} else if (s.equalsIgnoreCase("-nometadata")) {
+				hideMetadata = true;
+			} else if (s.equalsIgnoreCase("-checkmetadata")) {
+				checkMetadata = true;
+			} else if (s.equalsIgnoreCase("-pipeimageindex")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				final String nb = arg[i];
+				if (nb.matches("\\d+")) {
+					this.imageIndex = Integer.parseInt(nb);
+				}
 			} else if (StringUtils.goLowerCase(s).startsWith("-ftp")) {
 				final int x = s.indexOf(':');
 				if (x == -1) {
@@ -267,10 +351,10 @@ public class Option {
 		return ftpPort;
 	}
 
-	public void initConfig(String filename) throws IOException {
+	private void addInConfig(final FileReader source) throws IOException {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(filename));
+			br = new BufferedReader(source);
 			String s = null;
 			while ((s = br.readLine()) != null) {
 				config.add(s);
@@ -279,6 +363,21 @@ public class Option {
 			if (br != null) {
 				br.close();
 			}
+		}
+	}
+
+	public void initConfig(String filename) throws IOException {
+		addInConfig(new FileReader(filename));
+	}
+
+	private void initInclude(String filename) throws IOException {
+		if (filename.contains("*")) {
+			final FileGroup group = new FileGroup(filename, Collections.<String> emptyList(), null);
+			for (File f : group.getFiles()) {
+				addInConfig(new FileReader(f));
+			}
+		} else {
+			addInConfig(new FileReader(filename));
 		}
 	}
 
@@ -310,7 +409,7 @@ public class Option {
 	}
 
 	public final static String getPattern() {
-		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu)$";
+		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu|pump|hpp|hh)$";
 	}
 
 	public void setOutputDir(File f) {
@@ -321,11 +420,19 @@ public class Option {
 		return Collections.unmodifiableList(excludes);
 	}
 
-	public Defines getDefaultDefines() {
-		final Defines result = new Defines();
+	public Defines getDefaultDefines(File f) {
+		final Defines result = Defines.createWithFileName(f);
 		for (Map.Entry<String, String> ent : defines.entrySet()) {
-			result.define(ent.getKey(), Arrays.asList(ent.getValue()));
+			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false);
+		}
+		return result;
+	}
 
+	public Defines getDefaultDefines() {
+		final Defines result = Defines.createEmpty();
+		result.overrideFilename(filename);
+		for (Map.Entry<String, String> ent : defines.entrySet()) {
+			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false);
 		}
 		return result;
 	}
@@ -363,6 +470,10 @@ public class Option {
 		return pipe;
 	}
 
+	public final boolean isPipeMap() {
+		return pipeMap;
+	}
+
 	public final boolean isSyntax() {
 		return syntax;
 	}
@@ -372,9 +483,11 @@ public class Option {
 	}
 
 	public FileFormatOption getFileFormatOption() {
-		final FileFormatOption fileFormatOption = new FileFormatOption(getFileFormat());
 		if (debugsvek) {
 			fileFormatOption.setDebugSvek(true);
+		}
+		if (hideMetadata) {
+			fileFormatOption.hideMetadata();
 		}
 		return fileFormatOption;
 	}
@@ -429,6 +542,38 @@ public class Option {
 
 	boolean isDebugSvek() {
 		return debugsvek;
+	}
+
+	public final boolean isSplash() {
+		return splash;
+	}
+
+	public final void setSplash(boolean splash) {
+		this.splash = splash;
+	}
+
+	public final boolean isTextProgressBar() {
+		return textProgressBar;
+	}
+
+	public String getPipeDelimitor() {
+		return pipeDelimitor;
+	}
+
+	public final boolean isPipeNoStdErr() {
+		return pipeNoStdErr;
+	}
+
+	public final int getImageIndex() {
+		return imageIndex;
+	}
+
+	public final void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public final boolean isCheckMetadata() {
+		return checkMetadata;
 	}
 
 }

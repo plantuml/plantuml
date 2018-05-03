@@ -4,6 +4,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
@@ -55,6 +60,7 @@ import h._dthold_s;
 import h._dtlink_s;
 import smetana.core.CFunction;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -139,7 +145,7 @@ try {
 	_dtlink_s	root, t;
 	int		cmp, lk, sz, ky;
 	_dtlink_s	l, r, me=null;
-	final __struct__<_dtlink_s> link = __struct__.from(_dtlink_s.class);
+	final __struct__<_dtlink_s> link = JUtils.from(_dtlink_s.class);
 	Object		o, k, key = null;
 	int		n, minp; //, turn[(sizeof(size_t)*8 - 2)];
 	Dtcompar_f	cmpf;
@@ -551,7 +557,7 @@ LEAVING("abqfzg1d1vkzk51225tcdlik5","dttree");
 
 //1 5kf1n1yhdy9ojgc0mc3pyowaz
 // Dtmethod_t		_Dttree = 
-/*public static final __struct__<_dtmethod_s> _Dttree = __struct__.from(_dtmethod_s.class);
+/*public static final __struct__<_dtmethod_s> _Dttree = JUtils.from(_dtmethod_s.class);
 static {
 	_Dttree.setPtr("searchf", function(dttree__c.class, "dttree"));
 	_Dttree.setInt("type", 0000004);

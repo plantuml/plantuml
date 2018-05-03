@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -38,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -48,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -70,25 +74,32 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	final private Url url;
 
-	static private final UStroke stroke = new UStroke(1.5);
-
 	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.USECASE, skinParam,
-				HorizontalAlignment.CENTER, stereotype, true, false, false);
+				HorizontalAlignment.CENTER, stereotype, true, false, entity);
 
 		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.desc = tmp;
 		} else {
 			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet()))
-					.create(new FontConfiguration(getSkinParam(), FontParam.ACTOR_STEREOTYPE, stereotype),
+					.create(new FontConfiguration(getSkinParam(), FontParam.USECASE_STEREOTYPE, stereotype),
 							HorizontalAlignment.CENTER, skinParam);
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}
 		this.url = entity.getUrl99();
 
+	}
+
+	private UStroke getStroke() {
+		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
+
+		if (stroke == null) {
+			stroke = new UStroke(1.5);
+		}
+		return stroke;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -98,7 +109,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing2(SkinParameter.USECASE)) {
 			ellipse.setDeltaShadow(3);
 		}
 
@@ -106,8 +117,12 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			ug.startUrl(url);
 		}
 
-		ug = ug.apply(stroke).apply(
-				new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBorder, getStereo())));
+		ug = ug.apply(getStroke());
+		HtmlColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
+		if (linecolor == null) {
+			linecolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBorder, getStereo());
+		}
+		ug = ug.apply(new UChangeColor(linecolor));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBackground, getStereo());
@@ -124,10 +139,6 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	public ShapeType getShapeType() {
 		return ShapeType.OVAL;
-	}
-
-	public int getShield() {
-		return 0;
 	}
 
 	static class MyUGraphicEllipse extends AbstractUGraphicHorizontalLine {
@@ -183,6 +194,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
+			final UStroke stroke = new UStroke(1.5);
 			line.drawLineInternal(ug.apply(translate), getStencil2(translate), 0, stroke);
 		}
 

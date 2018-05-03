@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5616 $
  *
  */
 package net.sourceforge.plantuml.xmi;
@@ -96,7 +98,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 		// visibility="public" isSpecification="false" isRoot="false"
 		// isLeaf="false" isAbstract="false">
 		final Element model = document.createElement("UML:Model");
-		model.setAttribute("xmi.id", "model1");
+		model.setAttribute("xmi.id", CucaDiagramXmiMaker.getModel(diagram));
 		model.setAttribute("name", "PlantUML "+Version.versionString());
 		content.appendChild(model);
 
@@ -149,7 +151,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", "model1");
+		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(diagram));
 		if (Display.isNull(link.getLabel()) == false) {
 			association.setAttribute("name", forXMI(link.getLabel()));
 		}
@@ -208,7 +210,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());
-		cla.setAttribute("namespace", "model1");
+		cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(diagram));
 
 		final Element feature = document.createElement("UML:Classifier.feature");
 		cla.appendChild(feature);

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 10459 $
  *
  */
 package net.sourceforge.plantuml;
@@ -44,7 +46,6 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 
 public class NewpagedDiagram extends AbstractPSystem {
@@ -95,7 +96,9 @@ public class NewpagedDiagram extends AbstractPSystem {
 		return diagrams.size();
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
 	}
 
@@ -115,7 +118,7 @@ public class NewpagedDiagram extends AbstractPSystem {
 			}
 			sb.append(d.getDescription());
 		}
-		return new DiagramDescriptionImpl(sb.toString(), getClass());
+		return new DiagramDescription(sb.toString());
 	}
 
 	public String getWarningOrError() {

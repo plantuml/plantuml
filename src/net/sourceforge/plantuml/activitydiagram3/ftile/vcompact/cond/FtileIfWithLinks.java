@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
@@ -49,6 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -106,7 +109,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = new Snake(color, usingArrow);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, usingArrow);
 			snake.addPoint(x1, y1);
 			snake.addPoint(x2, y1);
 			snake.addPoint(x2, y2);
@@ -115,7 +118,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		}
 
 		private Point2D getP1(StringBounder stringBounder) {
-			final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 			final double diamondWidth = dimDiamond1.getWidth();
 			final double x;
 			if (getFtile2() == tile1) {
@@ -125,8 +128,9 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			} else {
 				throw new IllegalStateException();
 			}
+			final double half = (dimDiamond1.getOutY() - dimDiamond1.getInY()) / 2;
 			return getTranslateDiamond1(stringBounder)
-					.getTranslated(new Point2D.Double(x, dimDiamond1.getHeight() / 2));
+					.getTranslated(new Point2D.Double(x, dimDiamond1.getInY() + half));
 		}
 
 		private Point2D getP2(final StringBounder stringBounder) {
@@ -154,17 +158,18 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (originalDirection != newDirection) {
 				final double delta = (originalDirection == Direction.RIGHT ? -1 : 1) * Diamond.diamondHalfSize;
 				final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
-				final Snake small = new Snake(color);
+				final Snake small = new Snake(arrowHorizontalAlignment(), color);
 				small.addPoint(p1);
 				small.addPoint(p1.getX() + delta, p1.getY());
 				small.addPoint(p1.getX() + delta, p1.getY() + dimDiamond1.getHeight() * .75);
 				ug.draw(small);
 				p1 = small.getLast();
 			}
-			final Snake snake = new Snake(color, usingArrow);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, usingArrow);
 			snake.addPoint(p1);
 			snake.addPoint(p2.getX(), p1.getY());
 			snake.addPoint(p2);
+			snake.goUnmergeable(MergeStrategy.LIMITED);
 			ug.draw(snake);
 
 		}
@@ -197,7 +202,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final double y2 = p2.getY();
 
 			final UPolygon arrow = x2 > x1 ? Arrows.asToRight() : Arrows.asToLeft();
-			final Snake snake = new Snake(myArrowColor, arrow);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor, arrow);
 			if (branchEmpty) {
 				snake.emphasizeDirection(Direction.DOWN);
 			}
@@ -252,31 +257,35 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (originalDirection == newDirection) {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Diamond.diamondHalfSize;
 				final Point2D mp2bc = new Point2D.Double(mp2b.getX() + delta, mp2b.getY());
-				final Snake snake = new Snake(myArrowColor);
+				final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 				final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 				snake.addPoint(mp1a);
 				snake.addPoint(mp1a.getX(), middle);
 				snake.addPoint(mp2bc.getX(), middle);
 				snake.addPoint(mp2bc);
+				snake.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(snake);
-				final Snake small = new Snake(myArrowColor, arrow);
+				final Snake small = new Snake(arrowHorizontalAlignment(), myArrowColor, arrow);
 				small.addPoint(mp2bc);
 				small.addPoint(mp2bc.getX(), mp2b.getY());
 				small.addPoint(mp2b);
+				small.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(small);
 			} else {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Diamond.diamondHalfSize;
 				final Point2D mp2bb = new Point2D.Double(mp2b.getX() + delta, mp2b.getY() - 1.5
 						* Diamond.diamondHalfSize);
-				final Snake snake = new Snake(myArrowColor);
+				final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 				snake.addPoint(mp1a);
 				snake.addPoint(mp1a.getX(), mp2bb.getY());
 				snake.addPoint(mp2bb);
+				snake.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(snake);
-				final Snake small = new Snake(myArrowColor, arrow);
+				final Snake small = new Snake(arrowHorizontalAlignment(), myArrowColor, arrow);
 				small.addPoint(mp2bb);
 				small.addPoint(mp2bb.getX(), mp2b.getY());
 				small.addPoint(mp2b);
+				small.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(small);
 
 			}
@@ -311,7 +320,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = new Snake(myArrowColor);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 			if (branchEmpty) {
 				snake.emphasizeDirection(Direction.DOWN);
 			}
@@ -337,7 +346,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final Point2D mp1a = translate1.getTranslated(p1);
 			final Point2D mp2b = translate2.getTranslated(p2);
 
-			final Snake snake = new Snake(myArrowColor);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 			// snake.emphasizeDirection(Direction.DOWN);
 
 			final double x1 = mp1a.getX();
@@ -348,6 +357,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			snake.addPoint(x1, y2);
 			snake.addPoint(mp2b);
 			snake.addPoint(x2, dimTotal.getHeight());
+			snake.goUnmergeable(MergeStrategy.LIMITED);
 
 			ug.draw(snake);
 		}
@@ -368,18 +378,17 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		final List<Connection> conns = new ArrayList<Connection>();
 		conns.add(new ConnectionHorizontalThenVertical(tile1, branch1));
 		conns.add(new ConnectionHorizontalThenVertical(tile2, branch2));
-		if (tile1.calculateDimension(stringBounder).hasPointOut()
-				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
+		final boolean hasPointOut1 = tile1.calculateDimension(stringBounder).hasPointOut();
+		final boolean hasPointOut2 = tile2.calculateDimension(stringBounder).hasPointOut();
+		if (hasPointOut1 && hasPointOut2) {
 			conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getInlinkRenderingColorAndStyle(), branch1
 					.isEmpty()));
 			conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColorAndStyle(), branch2
 					.isEmpty()));
-		} else if (tile1.calculateDimension(stringBounder).hasPointOut()
-				&& tile2.calculateDimension(stringBounder).hasPointOut() == false) {
+		} else if (hasPointOut1 && hasPointOut2 == false) {
 			conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
 					branch1.isEmpty()));
-		} else if (tile1.calculateDimension(stringBounder).hasPointOut() == false
-				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
+		} else if (hasPointOut1 == false && hasPointOut2) {
 			conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
 					branch2.isEmpty()));
 		}

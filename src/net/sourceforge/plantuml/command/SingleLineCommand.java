@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -91,7 +93,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		lines = lines.removeInnerComments();
 		final String line = StringUtils.trin(lines.getFirst499());
 		if (isForbidden(line)) {
-			return CommandExecutionResult.error("Forbidden line " + line);
+			return CommandExecutionResult.error("Syntax error: " + line);
 		}
 		final List<String> arg = getSplit(line);
 		if (arg == null) {

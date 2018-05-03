@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3;
@@ -49,8 +51,8 @@ public class WithNote {
 
 	private final Collection<PositionedNote> notes = new ArrayList<PositionedNote>();
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		this.notes.add(new PositionedNote(note, position, type, colors));
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+		this.notes.add(new PositionedNote(note, position, type, colors, swimlaneNote));
 		return true;
 	}
 
@@ -63,6 +65,10 @@ public class WithNote {
 
 	public Collection<PositionedNote> getPositionedNotes() {
 		return Collections.unmodifiableCollection(notes);
+	}
+
+	public boolean hasNotes() {
+		return notes.size() > 0;
 	}
 
 }

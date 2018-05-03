@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4639 $
  * 
  */
 package net.sourceforge.plantuml.oregon;
@@ -188,7 +190,7 @@ public class OregonBasicGame implements BasicGame {
 				if (c < 11 + 2 * rnd()) {
 					c1 = 1;
 				}
-				printb("Cold weather... Brrrrrrr! ... You " + (c1 == 1 ? "dont't " : "")
+				printb("Cold weather... Brrrrrrr! ... You " + (c1 == 1 ? "don't " : "")
 						+ "have enough clothing to keep warm.");
 				if (c1 == 1) {
 					dealWithIllness2880(j);
@@ -809,19 +811,19 @@ public class OregonBasicGame implements BasicGame {
 			c = skb.inputInt(screen);
 			if (c <= 24) {
 				print("Your family is going to be mighty cold in.");
-				print("the montains.");
+				print("the mountains.");
 				print("Better spend a bit more.");
 				continue;
 			}
 			if (a + f + b + c > 345) {
-				print("That leaves nothing for medecine.");
+				print("That leaves nothing for medicine.");
 				continue;
 			}
 			break;
 		} while (true);
 		do {
 			print();
-			screen.print("How much for medecine, bandage, repair parts, etc. ?");
+			screen.print("How much for medicine, bandage, repair parts, etc. ?");
 			r = skb.inputInt(screen);
 			if (r <= 5) {
 				print("That's not at all wise.");

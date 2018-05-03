@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.sprite;
@@ -55,7 +57,7 @@ public class SpriteMonochrome implements Sprite {
 	private final int grayLevel;
 	private final int pixels[][];
 
-	SpriteMonochrome(int width, int height, int grayLevel) {
+	public SpriteMonochrome(int width, int height, int grayLevel) {
 		if (grayLevel != 2 && grayLevel != 4 && grayLevel != 8 && grayLevel != 16) {
 			throw new IllegalArgumentException();
 		}
@@ -65,7 +67,41 @@ public class SpriteMonochrome implements Sprite {
 		this.pixels = new int[height][width];
 	}
 
-	void setPixel(int x, int y, int level) {
+	public SpriteMonochrome xSymetric() {
+		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				result.setPixel(i, j, this.getPixel(i, j));
+			}
+		}
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width / 2; i++) {
+				final int i2 = width - 1 - i;
+				final int level = result.getPixel(i, j) ^ result.getPixel(i2, j);
+				result.setPixel(i2, j, level);
+			}
+		}
+		return result;
+	}
+
+	public SpriteMonochrome ySymetric() {
+		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				result.setPixel(i, j, this.getPixel(i, j));
+			}
+		}
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height / 2; j++) {
+				final int j2 = height - 1 - j;
+				final int level = result.getPixel(i, j) ^ result.getPixel(i, j2);
+				result.setPixel(i, j2, level);
+			}
+		}
+		return result;
+	}
+
+	public void setPixel(int x, int y, int level) {
 		if (x < 0 || x >= width) {
 			return;
 		}
@@ -78,11 +114,21 @@ public class SpriteMonochrome implements Sprite {
 		pixels[y][x] = level;
 	}
 
+	public int getPixel(int x, int y) {
+		if (x >= width) {
+			throw new IllegalArgumentException("x=" + x + " width=" + width);
+		}
+		if (y >= height) {
+			throw new IllegalArgumentException("y=" + y + " height=" + height);
+		}
+		return pixels[y][x];
+	}
+
 	public int getHeight() {
 		return height;
 	}
 
-	int getWidth() {
+	public int getWidth() {
 		return width;
 	}
 

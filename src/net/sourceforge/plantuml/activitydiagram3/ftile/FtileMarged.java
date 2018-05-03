@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,16 +28,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -51,6 +55,12 @@ public class FtileMarged extends AbstractFtile {
 		this.tile = tile;
 		this.margin1 = margin1;
 		this.margin2 = margin2;
+	}
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.singleton(tile);
+		// return tile.getMyChildren();
 	}
 
 	@Override
@@ -75,14 +85,28 @@ public class FtileMarged extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry orig = tile.calculateDimension(stringBounder);
 		return new FtileGeometry(orig.getWidth() + margin1 + margin2, orig.getHeight(), orig.getLeft() + margin1,
 				orig.getInY(), orig.getOutY());
 	}
 
+	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+		if (child == tile) {
+			return getTranslate();
+		}
+		UTranslate result = tile.getTranslateFor(child, stringBounder);
+		result = result.compose(getTranslate());
+		return result;
+	}
+
+	private UTranslate getTranslate() {
+		return new UTranslate(margin1, 0);
+	}
+
 	public void drawU(UGraphic ug) {
-		ug.apply(new UTranslate(margin1, 0)).draw(tile);
+		ug.apply(getTranslate()).draw(tile);
 	}
 
 }

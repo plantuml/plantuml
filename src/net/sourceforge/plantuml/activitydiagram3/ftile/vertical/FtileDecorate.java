@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -42,7 +46,9 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -81,10 +87,6 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 		return ftile.getInnerConnections();
 	}
 
-	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-		return ftile.getTranslateFor(child, stringBounder);
-	}
-
 	public Set<Swimlane> getSwimlanes() {
 		return ftile.getSwimlanes();
 	}
@@ -108,5 +110,28 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 	protected final Ftile getFtileDelegated() {
 		return ftile;
 	}
+
+	public List<WeldingPoint> getWeldingPoints() {
+		return ftile.getWeldingPoints();
+	}
+
+	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+		if (child == ftile) {
+			return new UTranslate();
+		}
+		return ftile.getTranslateFor(child, stringBounder);
+	}
+
+	public Collection<Ftile> getMyChildren() {
+		if (this == ftile) {
+			throw new IllegalStateException();
+		}
+		return Collections.singleton(ftile);
+	}
+	
+	public HorizontalAlignment arrowHorizontalAlignment() {
+		return ftile.arrowHorizontalAlignment();
+	}
+
 
 }

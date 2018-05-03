@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -42,6 +44,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -50,10 +53,12 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.WithPorts;
@@ -70,7 +75,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
 	final private TextBlock body;
-	final private int shield;
+	final private Margins shield;
 	final private EntityImageClassHeader2 header;
 	final private Url url;
 	final private double roundCorner;
@@ -80,8 +85,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.lineConfig = entity;
-		this.roundCorner = getSkinParam().getRoundCorner();
-		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? 16 : 0;
+		this.roundCorner = getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
+		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? Margins.uniform(16)
+				: Margins.NONE;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields,
@@ -105,8 +111,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-		final Rectangle2D result = body.getInnerPosition(member, stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		final Rectangle2D result = body.getInnerPosition(member, stringBounder, strategy);
 		if (result == null) {
 			return result;
 		}
@@ -134,7 +140,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner);
+		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner, getEntity().getCode()
+				.getFullName());
 		if (getSkinParam().shadowing()) {
 			rect.setDeltaShadow(4);
 		}
@@ -157,14 +164,16 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		if (headerBackcolor == null) {
 			headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
 		}
+		UGraphic ugHeader = ug;
 		if (headerBackcolor != null) {
 			final Shadowable rect2 = new URectangle(widthTotal, dimHeader.getHeight());
-			ug.apply(new UChangeBackColor(headerBackcolor)).apply(stroke).draw(rect2);
+			ugHeader = ugHeader.apply(new UChangeBackColor(headerBackcolor));
+			ugHeader.apply(stroke).draw(rect2);
 		}
-		header.drawU(ug, dimTotal.getWidth(), dimHeader.getHeight());
+		header.drawU(ugHeader, dimTotal.getWidth(), dimHeader.getHeight());
 
 		if (body != null) {
-			final UGraphic ug2 = new UGraphicStencil(ug, this, stroke);
+			final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);
 			final UTranslate translate = new UTranslate(0, dimHeader.getHeight());
 			body.drawU(ug2.apply(translate));
 		}
@@ -187,13 +196,14 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	public ShapeType getShapeType() {
-		if (((ILeaf) getEntity()).hasPort()) {
+		if (((ILeaf) getEntity()).getPortShortNames().size() > 0) {
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 		}
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
+	@Override
+	public Margins getShield(StringBounder stringBounder) {
 		return shield;
 	}
 

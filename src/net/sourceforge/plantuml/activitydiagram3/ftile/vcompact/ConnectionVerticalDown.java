@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
@@ -73,7 +75,7 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 	}
 
 	private Snake getSimpleSnake() {
-		final Snake snake = new Snake(color, Arrows.asToDown());
+		final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToDown());
 		snake.setLabel(textBlock);
 		snake.addPoint(p1);
 		snake.addPoint(p2);
@@ -81,7 +83,7 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 	}
 
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		final Snake snake = new Snake(color, Arrows.asToDown());
+		final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToDown());
 		snake.setLabel(textBlock);
 		final Point2D mp1a = translate1.getTranslated(p1);
 		final Point2D mp2b = translate2.getTranslated(p2);

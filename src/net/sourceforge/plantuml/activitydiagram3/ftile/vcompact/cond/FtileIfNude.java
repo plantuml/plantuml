@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.awt.geom.Dimension2D;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,6 +61,11 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		this.tile1 = tile1;
 		this.tile2 = tile2;
 		this.in = in;
+	}
+	
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Arrays.asList(tile1, tile2);
 	}
 
 	public boolean hasTwoBranches(StringBounder stringBounder) {
@@ -119,7 +128,8 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		ug.apply(getTranslate2(stringBounder)).draw(tile2);
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		if (tile1.calculateDimension(stringBounder).hasPointOut()
 				|| tile2.calculateDimension(stringBounder).hasPointOut()) {

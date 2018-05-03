@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19971 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -37,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -61,17 +64,16 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	private final UFont font;
 	private final HtmlColor fontColor;
 
-	public AbstractTextualComponent(CharSequence label, FontConfiguration font,
+	public AbstractTextualComponent(LineBreakStrategy maxMessageSize, CharSequence label, FontConfiguration font,
 			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
-			ISkinSimple spriteContainer, double maxMessageSize, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
-		this(Display.getWithNewlines(label == null ? "" : label.toString()), font, horizontalAlignment, marginX1,
-				marginX2, marginY, spriteContainer, maxMessageSize, false, fontForStereotype, htmlColorForStereotype);
+			ISkinSimple spriteContainer, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		this(maxMessageSize, Display.getWithNewlines(label == null ? "" : label.toString()), font, horizontalAlignment,
+				marginX1, marginX2, marginY, spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 	}
 
-	public AbstractTextualComponent(Display strings, FontConfiguration font, HorizontalAlignment horizontalAlignment,
-			int marginX1, int marginX2, int marginY, ISkinSimple spriteContainer, double maxMessageSize,
-			boolean enhanced, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+	public AbstractTextualComponent(LineBreakStrategy maxMessageSize, Display strings, FontConfiguration font,
+			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
+			ISkinSimple spriteContainer, boolean enhanced, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		this.font = font.getFont();
 		this.fontColor = font.getColor();
 		this.marginX1 = marginX1;
@@ -82,7 +84,8 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else if (enhanced) {
-			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font);
+			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font,
+					maxMessageSize);
 		} else {
 			textBlock = strings.create(font, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
 					fontForStereotype, htmlColorForStereotype);

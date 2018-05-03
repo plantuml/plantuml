@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11025 $
  *
  */
 package net.sourceforge.plantuml.creole;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -48,10 +49,12 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TileImageSvg;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -68,7 +71,7 @@ public class AtomImg implements Atom {
 	}
 
 	public static Atom create(String src, final ImgValign valign, final int vspace, final double scale) {
-		final UFont font = new UFont("Monospaced", Font.PLAIN, 14);
+		final UFont font = UFont.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
 		if (src.startsWith(DATA_IMAGE_PNG_BASE64)) {
@@ -86,20 +89,19 @@ public class AtomImg implements Atom {
 			if (f.exists() == false) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
-					final byte image[] = getFile(src);
-					return build(src, fc, image, scale);
+					// final byte image[] = getFile(src);
+					return build(src, fc, new URL(src), scale);
 				}
-				return AtomText.create("(File not found: " + f + ")", fc);
+				return AtomText.create("(File not found: " + f.getCanonicalPath() + ")", fc);
 			}
 			if (f.getName().endsWith(".svg")) {
-				// return new AtomImg(new TileImageSvg(f));
-				throw new UnsupportedOperationException();
+				return new AtomImgSvg(new TileImageSvg(f));
 			}
-			final BufferedImage read = ImageIO.read(f);
+			final BufferedImage read = FileUtils.ImageIO_read(f);
 			if (read == null) {
-				return AtomText.create("(Cannot decode: " + f + ")", fc);
+				return AtomText.create("(Cannot decode: " + f.getCanonicalPath() + ")", fc);
 			}
-			return new AtomImg(ImageIO.read(f), scale);
+			return new AtomImg(FileUtils.ImageIO_read(f), scale);
 		} catch (IOException e) {
 			return AtomText.create("ERROR " + e.toString(), fc);
 		}
@@ -114,8 +116,16 @@ public class AtomImg implements Atom {
 		return new AtomImg(read, scale);
 	}
 
+	private static Atom build(String source, final FontConfiguration fc, URL url, double scale) throws IOException {
+		final BufferedImage read = FileUtils.ImageIO_read(url);
+		if (read == null) {
+			return AtomText.create("(Cannot decode: " + source + ")", fc);
+		}
+		return new AtomImg(read, scale);
+	}
+
 	// Added by Alain Corbiere
-	static byte[] getFile(String host) throws IOException {
+	private static byte[] getFile(String host) throws IOException {
 		final ByteArrayOutputStream image = new ByteArrayOutputStream();
 		InputStream input = null;
 		try {

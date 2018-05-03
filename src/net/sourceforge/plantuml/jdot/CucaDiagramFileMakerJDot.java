@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml.jdot;
@@ -46,6 +48,7 @@ import h.Agnodeinfo_t;
 import h.Agraph_s;
 import h.Agraphinfo_t;
 import h.GVC_s;
+import h.ST_boxf;
 import h.boxf;
 
 import java.awt.geom.Dimension2D;
@@ -65,6 +68,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
@@ -116,7 +120,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 
-	private final StringBounder stringBounder = TextBlockUtils.getDummyStringBounder();
+	private final StringBounder stringBounder;
 	private final Map<ILeaf, Agnode_s> nodes = new LinkedHashMap<ILeaf, Agnode_s>();
 	private final Map<Link, Agedge_s> edges = new LinkedHashMap<Link, Agedge_s>();
 	private final Map<IGroup, Agraph_s> clusters = new LinkedHashMap<IGroup, Agraph_s>();
@@ -170,8 +174,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	}
 
-	public CucaDiagramFileMakerJDot(CucaDiagram diagram) {
+	public CucaDiagramFileMakerJDot(CucaDiagram diagram, StringBounder stringBounder) {
 		this.diagram = diagram;
+		this.stringBounder = stringBounder;
 		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
 
 		printGroups(diagram.getRootGroup());
@@ -182,11 +187,11 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 	public void drawGroup(UGraphic ug, YMirror ymirror, IGroup group, Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
 		final __ptr__ data = Macro.AGDATA(gr).castTo(Agraphinfo_t.class);
-		final __struct__<boxf> bb = data.getStruct("bb");
-		final double llx = bb.getStruct("LL").getDouble("x");
-		double lly = bb.getStruct("LL").getDouble("y");
-		final double urx = bb.getStruct("UR").getDouble("x");
-		double ury = bb.getStruct("UR").getDouble("y");
+		final ST_boxf bb = (ST_boxf) data.getStruct("bb");
+		final double llx = bb.LL.x;
+		double lly = bb.LL.y;
+		final double urx = bb.UR.x;
+		double ury = bb.UR.y;
 		if (ymirror != null) {
 			final double tmpUry = ury;
 			ury = ymirror.getMirrored(lly);
@@ -247,7 +252,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-						g.getStereotype());
+						g.getStereotype(), null);
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
@@ -289,6 +294,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private void exportEntity(Agraph_s g, ILeaf leaf) {
 		final Shape shape = dotStringFactory.getBibliotekon().getShape(leaf);
+		// System.err.println("exportEntity " + leaf);
 		final Agnode_s node = agnode(g, new CString(shape.getUid()), true);
 		agsafeset(node, new CString("shape"), new CString("box"), new CString(""));
 		final String width = "" + (shape.getWidth() / 72);
@@ -306,7 +312,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final IEntityImage image = printEntityInternal(ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder),
+				ent.getEntityPosition());
 		dotStringFactory.addShape(shape);
 		getBibliotekon().putShape(ent, shape);
 	}
@@ -429,20 +436,20 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 			final double scale = 1;
 
-			final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale, null,
+			final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), scale,
 					fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, 0, 10,
-					diagram.getAnimation(), diagram.getSkinParam().handwritten());
+					diagram.getAnimation());
 
 			imageBuilder.setUDrawable(new Drawing(null));
-			final Dimension2D dim = imageBuilder.getFinalDimension();
+			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);
 
 			imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 
-			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 		} catch (Throwable e) {
-			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.getMetadata(), diagram.getFlashData(),
-					getFailureText3(e));
-			return new ImageDataSimple();
+			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
+					diagram.getFlashData(), getFailureText3(e));
+			return ImageDataSimple.error();
 		} finally {
 			Z.close();
 		}
@@ -481,10 +488,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 	private TextBlock getLabel(Link link) {
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 		ISkinParam skinParam = diagram.getSkinParam();
-		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
+		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
 		final TextBlock label = link.getLabel().create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
-		if (TextBlockUtils.isEmpty(label)) {
+		if (TextBlockUtils.isEmpty(label, stringBounder)) {
 			return label;
 		}
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
@@ -516,6 +523,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			return null;
 		}
 		final Agedge_s e = agedge(g, n, m, null, true);
+		// System.err.println("createEdge " + link);
 		agsafeset(e, new CString("arrowtail"), new CString("none"), new CString(""));
 		agsafeset(e, new CString("arrowhead"), new CString("none"), new CString(""));
 
@@ -528,7 +536,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		// + (length - 1) + " ");
 
 		final TextBlock label = getLabel(link);
-		if (TextBlockUtils.isEmpty(label) == false) {
+		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {
 			final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
@@ -544,7 +552,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		exception.printStackTrace();
 		final List<String> strings = new ArrayList<String>();
 		strings.add("An error has occured : " + exception);
-		final String quote = QuoteUtils.getSomeQuote();
+		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		strings.add("<i>" + quote);
 		strings.add(" ");
 		GraphvizCrash.addProperties(strings);
@@ -564,7 +572,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final IEntityImage image = printEntityInternal(ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder),
+				ent.getEntityPosition());
 		// dotStringFactory.addShape(shape);
 		getBibliotekon().putShape(ent, shape);
 	}
@@ -586,7 +595,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			}
 
 			return DotDataImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
-					diagram, getBibliotekon(), null, diagram.getUmlDiagramType());
+					diagram, getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
 		}
 		return ent.getSvekImage();
 	}

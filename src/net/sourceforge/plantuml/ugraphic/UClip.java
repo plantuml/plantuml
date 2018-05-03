@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,8 +28,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -32,6 +35,7 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class UClip implements UChange {
@@ -56,11 +60,10 @@ public class UClip implements UChange {
 	public UClip translate(double dx, double dy) {
 		return new UClip(x + dx, y + dy, width, height);
 	}
-	
+
 	public UClip translate(UTranslate translate) {
 		return translate(translate.getDx(), translate.getDy());
 	}
-
 
 	public final double getX() {
 		return x;
@@ -76,6 +79,10 @@ public class UClip implements UChange {
 
 	public final double getHeight() {
 		return height;
+	}
+
+	public boolean isInside(Point2D pt) {
+		return isInside(pt.getX(), pt.getY());
 	}
 
 	public boolean isInside(double xp, double yp) {
@@ -109,6 +116,13 @@ public class UClip implements UChange {
 			return line;
 		}
 		if (isInside(line.x1, line.y1) == false && isInside(line.x2, line.y2) == false) {
+			if (line.x1 == line.x2) {
+				final double newy1 = getClippedY(line.y1);
+				final double newy2 = getClippedY(line.y2);
+				if (newy1 != newy2) {
+					return new Line2D.Double(line.x1, newy1, line.x2, newy2);
+				}
+			}
 			return null;
 		}
 		if (line.x1 != line.x2 && line.y1 != line.y2) {
@@ -146,6 +160,10 @@ public class UClip implements UChange {
 			return y + height;
 		}
 		return yp;
+	}
+
+	public boolean isInside(double x, double y, UPath shape) {
+		return isInside(x + shape.getMinX(), y + shape.getMinY()) && isInside(x + shape.getMaxX(), y + shape.getMaxY());
 	}
 
 }

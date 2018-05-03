@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20127 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -38,23 +40,23 @@ import java.util.Map;
 
 public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 
-	private final O g2d;
+	private final O graphic;
 
 	private final Map<Class<? extends UShape>, UDriver<O>> drivers = new HashMap<Class<? extends UShape>, UDriver<O>>();
 
-	public AbstractUGraphic(ColorMapper colorMapper, O g2d) {
+	public AbstractUGraphic(ColorMapper colorMapper, O graphic) {
 		super(colorMapper);
-		this.g2d = g2d;
+		this.graphic = graphic;
 	}
 
 	protected AbstractUGraphic(AbstractUGraphic<O> other) {
 		super(other);
-		this.g2d = other.g2d;
+		this.graphic = other.graphic;
 		// this.drivers.putAll(other.drivers);
 	}
 
 	protected final O getGraphicObject() {
-		return g2d;
+		return graphic;
 	}
 
 	protected boolean manageHiddenAutomatically() {
@@ -84,9 +86,9 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		if (shape instanceof Scalable) {
 			final double scale = getParam().getScale();
 			shape = ((Scalable) shape).getScaled(scale);
-			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
 		} else {
-			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
 		}
 		afterDraw();
 	}

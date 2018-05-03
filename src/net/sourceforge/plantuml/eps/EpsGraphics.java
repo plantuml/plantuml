@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4207 $
  *
  */
 package net.sourceforge.plantuml.eps;
@@ -39,6 +41,7 @@ import java.awt.image.BufferedImage;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -72,9 +75,9 @@ public class EpsGraphics {
 
 	public EpsGraphics() {
 		header.append("%!PS-Adobe-3.0 EPSF-3.0\n");
-		header.append("%%Creator: PlantUML v" + Version.versionString(10) + "\n");
+		header.append("%%Creator: PlantUML v" + Version.versionString(15) + BackSlash.NEWLINE);
 		header.append("%%Title: noTitle\n");
-		// header.append("%%CreationDate: " + new Date() + "\n");
+		// header.append("%%CreationDate: " + new Date() + BackSlash.BS_N);
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 1 index mul 7 index add", true));
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 2 index mul 7 index add", true));
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 3 index mul 7 index add", true));
@@ -121,7 +124,7 @@ public class EpsGraphics {
 	public void close() {
 		checkCloseDone();
 
-		header.append("%%BoundingBox: 0 0 " + maxX + " " + maxY + "\n");
+		header.append("%%BoundingBox: 0 0 " + maxX + " " + maxY + BackSlash.NEWLINE);
 		// header.append("%%DocumentData: Clean7Bit\n");
 		// header.append("%%DocumentProcessColors: Black\n");
 		header.append("%%ColorUsage: Color\n");
@@ -361,6 +364,10 @@ public class EpsGraphics {
 			appendColor(fillcolor);
 			epsRectangleInternal(x, y, width, height, rx, ry, true);
 			append("closepath eofill", true);
+			if (dashSpace != 0 && dashVisible != 0) {
+				append("[] 0 setdash", true);
+			}
+
 		}
 
 		if (color != null) {
@@ -368,6 +375,9 @@ public class EpsGraphics {
 			appendColor(color);
 			epsRectangleInternal(x, y, width, height, rx, ry, false);
 			append("closepath stroke", true);
+			if (dashSpace != 0 && dashVisible != 0) {
+				append("[] 0 setdash", true);
+			}
 		}
 	}
 
@@ -438,20 +448,26 @@ public class EpsGraphics {
 	}
 
 	private void roundRectangle(double x, double y, double width, double height, double rx, double ry) {
+		if (dashSpace != 0 && dashVisible != 0) {
+			append("[" + (int) dashSpace + " " + (int) dashVisible + "] 0 setdash", true);
+		}
 		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " " + format((rx + ry) / 2)
 				+ " roundrect", true);
 		roundrectUsed = true;
 	}
 
 	private void simpleRectangle(double x, double y, double width, double height, boolean fill) {
+		if (dashSpace != 0 && dashVisible != 0) {
+			append("[" + (int) dashSpace + " " + (int) dashVisible + "] 0 setdash", true);
+		}
 		if ((dashSpace == 0 && dashVisible == 0) || fill) {
 			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
 			simplerectUsed = true;
-		} else {
-			epsVLine(y, x, x + width);
-			epsVLine(y + height, x, x + width);
-			epsHLine(x, y, y + height);
-			epsHLine(x + width, y, y + height);
+			// } else {
+			// epsVLine(y, x, x + width);
+			// epsVLine(y + height, x, x + width);
+			// epsHLine(x, y, y + height);
+			// epsHLine(x + width, y, y + height);
 		}
 	}
 
@@ -552,7 +568,7 @@ public class EpsGraphics {
 		if (checkConsistence && s.indexOf("  ") != -1) {
 			throw new IllegalArgumentException(s);
 		}
-		body.append(s + "\n");
+		body.append(s + BackSlash.NEWLINE);
 	}
 
 	final public void linetoNoMacro(double x1, double y1) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,17 +28,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -42,23 +45,25 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
 
-	private final int cornersize = 10;
 	private final double paddingX;
 	private final double paddingY;
 	private final SymbolContext symbolContext;
+	private final double roundCorner;
 
-	public ComponentRoseNote(SymbolContext symbolContext, FontConfiguration font, Display strings, double paddingX, double paddingY,
-			ISkinSimple spriteContainer) {
-		super(strings, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, 0, true, null, null);
+	public ComponentRoseNote(SymbolContext symbolContext, FontConfiguration font, Display strings, double paddingX,
+			double paddingY, ISkinSimple spriteContainer, double roundCorner) {
+		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, true, null,
+				null);
+		this.roundCorner = roundCorner;
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
 		this.symbolContext = symbolContext;
@@ -100,21 +105,14 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 			x2 = (int) (area.getDimensionToUse().getWidth() - 2 * getPaddingX());
 		}
 
-		final UPolygon polygon = new UPolygon();
-		polygon.addPoint(0, 0);
-		polygon.addPoint(0, textHeight);
-		polygon.addPoint(x2, textHeight);
-		polygon.addPoint(x2, cornersize);
-		polygon.addPoint(x2 - cornersize, 0);
-		polygon.addPoint(0, 0);
+		final UPath polygon = Opale.getPolygonNormal(x2, textHeight, roundCorner);
 		polygon.setDeltaShadow(symbolContext.getDeltaShadow());
 
 		ug = symbolContext.apply(ug);
 		ug.draw(polygon);
 
-		ug.apply(new UTranslate(x2 - cornersize, 0)).draw(new ULine(0, cornersize));
-		ug.apply(new UTranslate(x2, cornersize)).draw(new ULine(-cornersize, 0));
-		UGraphic ug2 = new UGraphicStencil(ug, this, new UStroke());
+		ug.draw(Opale.getCorner(x2, roundCorner));
+		UGraphic ug2 = UGraphicStencil.create(ug, this, new UStroke());
 		ug2 = ug2.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY()));
 
 		getTextBlock().drawU(ug2);

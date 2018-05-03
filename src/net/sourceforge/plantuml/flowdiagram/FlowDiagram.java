@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.flowdiagram;
@@ -47,7 +49,6 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.golem.MinMaxGolem;
 import net.sourceforge.plantuml.golem.Path;
@@ -57,9 +58,11 @@ import net.sourceforge.plantuml.golem.TileArea;
 import net.sourceforge.plantuml.golem.TileGeometry;
 import net.sourceforge.plantuml.golem.TilesField;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -78,12 +81,12 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	private final Map<Tile, ActivityBox> tilesBoxes = new HashMap<Tile, ActivityBox>();
 	private Tile lastTile;
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		throw new UnsupportedOperationException();
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("Flow Diagram", getClass());
+		return new DiagramDescription("Flow Diagram");
 	}
 
 	@Override
@@ -121,9 +124,11 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException {
-		UGraphicUtils.writeImage(os, null, fileFormatOption, new ColorMapperIdentity(), HtmlColorUtils.WHITE, this);
-		return new ImageDataSimple();
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		UGraphicUtils.writeImage(os, null, fileFormatOption, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
+				this);
+		return ImageDataSimple.ok();
 	}
 
 	public void drawU(UGraphic ug) {
@@ -142,8 +147,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			final Dimension2D dimBox = box.calculateDimension(stringBounder);
 			final double deltaX = SINGLE_SIZE_X * 2 - dimBox.getWidth();
 			final double deltaY = SINGLE_SIZE_Y * 2 - dimBox.getHeight();
-			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2), (y + ymin
-					* SINGLE_SIZE_Y + deltaY / 2))));
+			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2),
+					(y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
 		}
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.MY_RED));
 		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.MY_RED));
@@ -205,4 +210,9 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		final MinMaxGolem minMax = getMinMax();
 		return new Dimension2DDouble(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);
 	}
+
+	public MinMax getMinMax(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
 }

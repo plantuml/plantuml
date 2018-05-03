@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10006 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -51,14 +53,16 @@ public abstract class PSystemAbstractFactory implements PSystemFactory {
 	}
 
 	final protected AbstractPSystem buildEmptyError(UmlSource source, LineLocation lineLocation) {
-		final PSystemError result = new PSystemError(source, new ErrorUml(ErrorUmlType.SYNTAX_ERROR,
-				"Empty description", 1, lineLocation), null);
+		final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Empty description", /* 1, */lineLocation);
+		final PSystemError result = new PSystemError(source, err, null);
 		result.setSource(source);
 		return result;
 	}
-	
-	final protected PSystemError buildEmptyError(UmlSource source, String err, LineLocation lineLocation) {
-		final PSystemError result = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, err, 1, lineLocation), null);
+
+	final protected PSystemError buildExecutionError(UmlSource source, String stringError, LineLocation lineLocation) {
+		final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, stringError, /* 1, */
+		lineLocation);
+		final PSystemError result = new PSystemError(source, err, null);
 		result.setSource(source);
 		return result;
 	}

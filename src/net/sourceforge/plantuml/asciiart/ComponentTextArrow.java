@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -23,12 +28,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4169 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -94,7 +96,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight();
-		final int textWidth = StringUtils.getWidth(stringsToDisplay);
+		final int textWidth = StringUtils.getWcWidth(stringsToDisplay);
 
 		final int yarrow = height - 2;
 		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);
@@ -123,7 +125,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		final int width = StringUtils.getWidth(stringsToDisplay) + 2;
+		final int width = StringUtils.getWcWidth(stringsToDisplay) + 2;
 		if (maxAsciiMessageLength > 0) {
 			return Math.min(maxAsciiMessageLength, width);
 		}
