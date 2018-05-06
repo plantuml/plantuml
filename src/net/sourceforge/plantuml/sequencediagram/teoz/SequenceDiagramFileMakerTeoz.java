@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -168,7 +168,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				ug = ug.apply(new UTranslate(0, heightEnglober2));
 
 				printAligned(ug, HorizontalAlignment.CENTER, caption);
-				
+
 				if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {
 					printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
 					ug = goDown(ug, legend);
@@ -233,7 +233,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private TextBlock getTitle() {
-		if (DisplayPositionned.isNull(diagram.getTitle())) {
+		if (diagram.getTitle().isNull()) {
 			return new ComponentAdapter(null);
 		}
 		final TextBlock compTitle = TextBlockUtils.title(new FontConfiguration(getSkinParam(),
@@ -250,17 +250,16 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	public TextBlock getFooterOrHeader(final FontParam param) {
-		if (DisplayPositionned.isNull(diagram.getFooterOrHeaderTeoz(param))) {
+		if (diagram.getFooterOrHeaderTeoz(param).isNull()) {
 			return new TeozLayer(null, stringBounder, param);
 		}
-		final Display display = diagram.getFooterOrHeaderTeoz(param).getDisplay();
+		final DisplaySection display = diagram.getFooterOrHeaderTeoz(param);
 		final HtmlColor hyperlinkColor = getSkinParam().getHyperlinkColor();
 		final HtmlColor titleColor = getSkinParam().getFontHtmlColor(null, param);
 		final String fontFamily = getSkinParam().getFont(null, false, param).getFamily(null);
 		final int fontSize = getSkinParam().getFont(null, false, param).getSize();
-		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, diagram
-				.getFooterOrHeaderTeoz(param).getHorizontalAlignment(), hyperlinkColor, getSkinParam()
-				.useUnderlineForHyperlink());
+		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
+				getSkinParam().useUnderlineForHyperlink());
 		return new TeozLayer(pngTitler, stringBounder, param);
 	}
 

@@ -39,9 +39,8 @@ import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -51,43 +50,38 @@ public class PngTitler {
 
 	private final HtmlColor textColor;
 	private final HtmlColor hyperlinkColor;
-	private final Display text;
+	private final DisplaySection text;
 	private final int fontSize;
 	private final String fontFamily;
-	private final HorizontalAlignment horizontalAlignment;
 	private final boolean useUnderlineForHyperlink;
 
-	public PngTitler(HtmlColor textColor, Display text, int fontSize, String fontFamily,
-			HorizontalAlignment horizontalAlignment, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+	public PngTitler(HtmlColor textColor, DisplaySection text, int fontSize, String fontFamily,
+			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
 		this.textColor = textColor;
 		this.text = text;
 		this.fontSize = fontSize;
 		this.fontFamily = fontFamily;
-		this.horizontalAlignment = horizontalAlignment;
 		this.hyperlinkColor = hyperlinkColor;
 		this.useUnderlineForHyperlink = useUnderlineForHyperlink;
 
 	}
 
 	public Dimension2D getTextDimension(StringBounder stringBounder) {
-		final TextBlock textBloc = getTextBlock();
+		final TextBlock textBloc = getRibbonBlock();
 		if (textBloc == null) {
 			return null;
 		}
 		return textBloc.calculateDimension(stringBounder);
 	}
 
-	public TextBlock getTextBlock() {
-		if (Display.isNull(text) || text.size() == 0) {
-			return null;
-		}
+	public TextBlock getRibbonBlock() {
 		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-		return text.create(new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
-				horizontalAlignment, new SpriteContainerEmpty());
+		return text.createRibbon(new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
+				new SpriteContainerEmpty());
 	}
 
 	private double getOffsetX(double imWidth, StringBounder stringBounder) {
-		final TextBlock textBloc = getTextBlock();
+		final TextBlock textBloc = getRibbonBlock();
 		if (textBloc == null) {
 			return 0;
 		}
@@ -100,7 +94,7 @@ public class PngTitler {
 	}
 
 	private double getOffsetY(StringBounder stringBounder) {
-		final TextBlock textBloc = getTextBlock();
+		final TextBlock textBloc = getRibbonBlock();
 		if (textBloc == null) {
 			return 0;
 		}

@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
@@ -93,9 +94,9 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	private DisplayPositionned title = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 	private DisplayPositionned caption = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
-	private DisplayPositionned header = DisplayPositionned.none(HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
-	private DisplayPositionned footer = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 	private DisplayPositionned legend = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
+	private final DisplaySection header = DisplaySection.none();
+	private final DisplaySection footer = DisplaySection.none();
 
 	private final Pragma pragma = new Pragma();
 	private Animation animation;
@@ -103,7 +104,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private final SkinParam skinParam = SkinParam.create(getUmlDiagramType());
 
 	final public void setTitle(DisplayPositionned title) {
-		if (DisplayPositionned.isNull(title) || title.getDisplay().isWhite()) {
+		if (title.isNull() || title.getDisplay().isWhite()) {
 			return;
 		}
 		this.title = title;
@@ -146,23 +147,15 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		skinParam.setParam(StringUtils.goLowerCase(key), value);
 	}
 
-	public final DisplayPositionned getHeader() {
+	public final DisplaySection getHeader() {
 		return header;
 	}
 
-	public final void setHeader(DisplayPositionned header) {
-		this.header = header;
-	}
-
-	public final DisplayPositionned getFooter() {
+	public final DisplaySection getFooter() {
 		return footer;
 	}
 
-	public final void setFooter(DisplayPositionned footer) {
-		this.footer = footer;
-	}
-
-	public final DisplayPositionned getFooterOrHeaderTeoz(FontParam param) {
+	public final DisplaySection getFooterOrHeaderTeoz(FontParam param) {
 		if (param == FontParam.FOOTER) {
 			return getFooter();
 		}

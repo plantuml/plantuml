@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 
 public interface Annotated {
 
@@ -45,8 +46,8 @@ public interface Annotated {
 
 	public DisplayPositionned getLegend();
 
-	public DisplayPositionned getHeader();
+	public DisplaySection getHeader();
 
-	public DisplayPositionned getFooter();
+	public DisplaySection getFooter();
 
 }

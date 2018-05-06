@@ -39,9 +39,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 
@@ -64,8 +62,7 @@ public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 		lines = lines.subExtract(1, 1);
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setFooter(new DisplayPositionned(strings, HorizontalAlignment.fromString(align,
-					HorizontalAlignment.CENTER), VerticalAlignment.BOTTOM));
+			diagram.getFooter().put(strings, HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty footer");

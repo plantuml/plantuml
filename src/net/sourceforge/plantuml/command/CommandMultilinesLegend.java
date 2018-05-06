@@ -79,7 +79,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 			if (alignment == null) {
 				alignment = HorizontalAlignment.CENTER;
 			}
-			diagram.setLegend(new DisplayPositionned(strings, alignment, valignment));
+			diagram.setLegend(DisplayPositionned.single(strings, alignment, valignment));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No legend defined");

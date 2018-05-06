@@ -39,17 +39,59 @@ import java.io.IOException;
 
 public class TranscoderSmart implements Transcoder {
 
-	private final Transcoder oldOne = new TranscoderImpl(new AsciiEncoder(), new CompressionHuffman());
-	private final Transcoder zlibBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new CompressionZlib());
-	private final Transcoder zlib = new TranscoderImpl(new AsciiEncoder(), new CompressionZlib());
-	private final Transcoder brotliBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new CompressionBrotli());
+	// Legacy encoder
+	private final Transcoder oldOne = new TranscoderImpl(new AsciiEncoder(), new ArobaseStringCompressor(),
+			new CompressionHuffman());
+	private final Transcoder zlib = new TranscoderImpl(new AsciiEncoder(), new ArobaseStringCompressor(),
+			new CompressionZlib());
+	private final Transcoder brotli = new TranscoderImpl(new AsciiEncoder(), new ArobaseStringCompressor(),
+			new CompressionBrotli());
+	
+	
+	private final Transcoder zlibBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new ArobaseStringCompressor(),
+			new CompressionZlib());
+	private final Transcoder brotliBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new ArobaseStringCompressor(),
+			new CompressionBrotli());
+	private final Transcoder base64only = new TranscoderImpl(new AsciiEncoderBase64(), new ArobaseStringCompressor(),
+			new CompressionNone());
+	private final Transcoder hexOnly = new TranscoderImpl(new AsciiEncoderHex(), new ArobaseStringCompressor(),
+			new CompressionNone());
 
 	public String decode(String code) throws IOException {
-		if (code.startsWith("0")) {
-			return zlibBase64.decode(code.substring(1));
+		// Work in progress
+		// See https://github.com/plantuml/plantuml/issues/117
+
+		// Two char headers
+		if (code.startsWith("0A")) {
+			return zlibBase64.decode(code.substring(2));
 		}
-		if (code.startsWith("1")) {
-			return brotliBase64.decode(code.substring(1));
+		if (code.startsWith("0B")) {
+			return brotliBase64.decode(code.substring(2));
+		}
+		if (code.startsWith("0C")) {
+			return base64only.decode(code.substring(2));
+		}
+		if (code.startsWith("0D")) {
+			return hexOnly.decode(code.substring(2));
+		}
+		// Text prefix
+		// Just a wild try: use them only for testing
+		if (code.startsWith("-zlib-")) {
+			return zlibBase64.decode(code.substring("-zlib-".length()));
+		}
+		if (code.startsWith("-brotli-")) {
+			return brotliBase64.decode(code.substring("-brotli-".length()));
+		}
+		if (code.startsWith("-base64-")) {
+			return base64only.decode(code.substring("-base64-".length()));
+		}
+		if (code.startsWith("-hex-")) {
+			return hexOnly.decode(code.substring("-hex-".length()));
+		}
+
+		// Legacy decoding : you should not use it any more.
+		if (code.startsWith("0")) {
+			return brotli.decode(code.substring(1));
 		}
 		try {
 			return zlib.decode(code);
@@ -60,6 +102,8 @@ public class TranscoderSmart implements Transcoder {
 	}
 
 	public String encode(String text) throws IOException {
+		// Right now, we still use the legacy encoding.
+		// This will be changed in the incoming months
 		return zlib.encode(text);
 	}
 }

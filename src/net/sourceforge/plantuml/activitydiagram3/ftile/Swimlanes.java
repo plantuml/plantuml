@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -424,5 +425,16 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	public Swimlane getCurrentSwimlane() {
 		return currentSwimlane;
 	}
+	
+	private MinMax cachedMinMax;
+
+	@Override
+	public MinMax getMinMax(StringBounder stringBounder) {
+		if (cachedMinMax == null) {
+			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder);
+		}
+		return cachedMinMax;
+	}
+
 
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -65,7 +66,7 @@ public class AnnotatedWorker {
 
 	private TextBlock addLegend(TextBlock original) {
 		final DisplayPositionned legend = annotated.getLegend();
-		if (DisplayPositionned.isNull(legend)) {
+		if (legend.isNull()) {
 			return original;
 		}
 		final TextBlock text = EntityImageLegend.create(legend.getDisplay(), getSkinParam());
@@ -79,7 +80,7 @@ public class AnnotatedWorker {
 
 	private TextBlock addCaption(TextBlock original) {
 		final DisplayPositionned caption = annotated.getCaption();
-		if (DisplayPositionned.isNull(caption)) {
+		if (caption.isNull()) {
 			return original;
 		}
 		final TextBlock text = getCaption();
@@ -89,7 +90,7 @@ public class AnnotatedWorker {
 
 	public TextBlock getCaption() {
 		final DisplayPositionned caption = annotated.getCaption();
-		if (DisplayPositionned.isNull(caption)) {
+		if (caption.isNull()) {
 			return TextBlockUtils.empty(0, 0);
 		}
 		return caption.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.CAPTION, null),
@@ -98,7 +99,7 @@ public class AnnotatedWorker {
 
 	private TextBlock addTitle(TextBlock original) {
 		final DisplayPositionned title = annotated.getTitle();
-		if (DisplayPositionned.isNull(title)) {
+		if (title.isNull()) {
 			return original;
 		}
 		ISkinParam skinParam = getSkinParam();
@@ -109,20 +110,18 @@ public class AnnotatedWorker {
 	}
 
 	private TextBlock addHeaderAndFooter(TextBlock original) {
-		final DisplayPositionned footer = annotated.getFooter();
-		final DisplayPositionned header = annotated.getHeader();
-		if (DisplayPositionned.isNull(footer) && DisplayPositionned.isNull(header)) {
+		final DisplaySection footer = annotated.getFooter();
+		final DisplaySection header = annotated.getHeader();
+		if (footer.isNull() && header.isNull()) {
 			return original;
 		}
 		TextBlock textFooter = null;
-		if (DisplayPositionned.isNull(footer) == false) {
-			textFooter = footer.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.FOOTER, null),
-					footer.getHorizontalAlignment(), getSkinParam());
+		if (footer.isNull() == false) {
+			textFooter = footer.createRibbon(new FontConfiguration(getSkinParam(), FontParam.FOOTER, null), getSkinParam());
 		}
 		TextBlock textHeader = null;
-		if (DisplayPositionned.isNull(header) == false) {
-			textHeader = header.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.HEADER, null),
-					header.getHorizontalAlignment(), getSkinParam());
+		if (header.isNull() == false) {
+			textHeader = header.createRibbon(new FontConfiguration(getSkinParam(), FontParam.HEADER, null), getSkinParam());
 		}
 
 		return DecorateEntityImage.addTopAndBottom(original, textHeader, header.getHorizontalAlignment(), textFooter,

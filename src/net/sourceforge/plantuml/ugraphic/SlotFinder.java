@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class SlotFinder implements UGraphic {
-	
+
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
@@ -87,7 +87,13 @@ public class SlotFinder implements UGraphic {
 		final double x = translate.getDx();
 		final double y = translate.getDy();
 		if (shape instanceof URectangle) {
-			drawRectangle(x, y, (URectangle) shape);
+			final URectangle rect = (URectangle) shape;
+			if (rect.isIgnoreForCompression()) {
+				drawRectangle(x, y, new URectangle(rect.getWidth(), 2));
+				drawRectangle(x, y + rect.getHeight() - 2, new URectangle(rect.getWidth(), 2));
+				return;
+			}
+			drawRectangle(x, y, rect);
 		} else if (shape instanceof UPolygon) {
 			drawPolygon(x, y, (UPolygon) shape);
 		} else if (shape instanceof UEllipse) {

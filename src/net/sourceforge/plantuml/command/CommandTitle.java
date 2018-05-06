@@ -51,9 +51,8 @@ public class CommandTitle extends SingleLineCommand<UmlDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		diagram.setTitle(new DisplayPositionned(Display.getWithNewlines(arg.get(0)), HorizontalAlignment.CENTER,
+		diagram.setTitle(DisplayPositionned.single(Display.getWithNewlines(arg.get(0)), HorizontalAlignment.CENTER,
 				VerticalAlignment.TOP));
 		return CommandExecutionResult.ok();
 	}
-
 }

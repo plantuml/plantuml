@@ -37,7 +37,9 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -72,6 +74,7 @@ public class Player implements TextBlock, TimeProjected {
 	private final Set<ChangeState> changes = new TreeSet<ChangeState>();
 	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
 	private final List<TimingNote> notes = new ArrayList<TimingNote>();
+	private final Map<String, String> statesLabel = new LinkedHashMap<String, String>();
 
 	public Player(String code, String full, TimingStyle type, ISkinParam skinParam, TimingRuler ruler) {
 		this.code = code;
@@ -143,7 +146,7 @@ public class Player implements TextBlock, TimeProjected {
 		if (type == TimingStyle.CONCISE) {
 			result = new Ribbon(ruler, skinParam, notes);
 		} else if (type == TimingStyle.ROBUST) {
-			result = new Histogram(ruler, skinParam);
+			result = new Histogram(ruler, skinParam, statesLabel.values());
 		} else {
 			throw new IllegalStateException();
 		}
@@ -177,6 +180,7 @@ public class Player implements TextBlock, TimeProjected {
 	}
 
 	public void setState(TimeTick now, String state, String comment, Colors color) {
+		state = decodeState(state);
 		if (now == null) {
 			this.initialState = state;
 			this.initialColors = color;
@@ -187,6 +191,14 @@ public class Player implements TextBlock, TimeProjected {
 			this.changes.add(new ChangeState(now, state, comment, color));
 		}
 
+	}
+
+	private String decodeState(String code) {
+		final String label = statesLabel.get(code);
+		if (label == null) {
+			return code;
+		}
+		return label;
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
@@ -204,6 +216,10 @@ public class Player implements TextBlock, TimeProjected {
 
 	public void addNote(TimeTick now, Display note, Position position) {
 		this.notes.add(new TimingNote(now, this, note, position, skinParam));
+	}
+
+	public void defineState(String stateCode, String label) {
+		statesLabel.put(stateCode, label);
 	}
 
 }

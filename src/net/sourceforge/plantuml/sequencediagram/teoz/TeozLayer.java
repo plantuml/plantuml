@@ -56,8 +56,8 @@ public class TeozLayer extends AbstractTextBlock implements TextBlock {
 		this.param = param;
 
 		dimension = new Dimension2DDouble(0, 0);
-		if (titler != null && titler.getTextBlock() != null) {
-			dimension = titler.getTextBlock().calculateDimension(stringBounder);
+		if (titler != null && titler.getRibbonBlock() != null) {
+			dimension = titler.getRibbonBlock().calculateDimension(stringBounder);
 		}
 	}
 
@@ -71,7 +71,7 @@ public class TeozLayer extends AbstractTextBlock implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 		if (titler != null) {
-			titler.getTextBlock().drawU(ug);
+			titler.getRibbonBlock().drawU(ug);
 		}
 	}
 
