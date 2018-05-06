@@ -489,7 +489,7 @@ public class SequenceDiagram extends UmlDiagram {
 				return true;
 			}
 		}
-		if (DisplayPositionned.isNull(getLegend()) == false && getLegend().hasUrl()) {
+		if (getLegend().isNull() == false && getLegend().hasUrl()) {
 			return true;
 		}
 		return false;

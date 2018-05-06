@@ -51,7 +51,7 @@ public class CommandCaption extends SingleLineCommand<UmlDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		diagram.setCaption(new DisplayPositionned(Display.getWithNewlines(arg.get(0)), HorizontalAlignment.CENTER,
+		diagram.setCaption(DisplayPositionned.single(Display.getWithNewlines(arg.get(0)), HorizontalAlignment.CENTER,
 				VerticalAlignment.BOTTOM));
 		return CommandExecutionResult.ok();
 	}

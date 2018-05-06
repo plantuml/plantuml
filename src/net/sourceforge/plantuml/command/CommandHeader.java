@@ -39,9 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandHeader extends SingleLineCommand<UmlDiagram> {
 
@@ -52,8 +50,8 @@ public class CommandHeader extends SingleLineCommand<UmlDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
 		final String align = arg.get(0);
-		diagram.setHeader(new DisplayPositionned(Display.getWithNewlines(arg.get(1)), HorizontalAlignment.fromString(
-				align, HorizontalAlignment.RIGHT), VerticalAlignment.TOP));
+		diagram.getHeader().put(Display.getWithNewlines(arg.get(1)),
+				HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT));
 		return CommandExecutionResult.ok();
 	}
 }

@@ -98,7 +98,14 @@ public class EntityImageDescription extends AbstractEntityImage {
 		this.links = links;
 		final Stereotype stereotype = entity.getStereotype();
 		USymbol symbol = getUSymbol(entity);
-		this.shapeType = symbol == USymbol.FOLDER ? ShapeType.FOLDER : ShapeType.RECTANGLE;
+		if (symbol == USymbol.FOLDER) {
+			this.shapeType = ShapeType.FOLDER;
+		} else if (symbol == USymbol.INTERFACE) {
+			this.shapeType = ShapeType.RECTANGLE;
+			// this.shapeType = ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE;
+		} else {
+			this.shapeType = ShapeType.RECTANGLE;
+		}
 		this.hideText = symbol == USymbol.INTERFACE;
 
 		final Display codeDisplay = Display.getWithNewlines(entity.getCode());

@@ -43,17 +43,17 @@ public class TranscoderImpl implements Transcoder {
 	private final URLEncoder urlEncoder;
 	private final StringCompressor stringCompressor;
 
-	private TranscoderImpl() {
-		this(new AsciiEncoder(), new StringCompressorNone(), new CompressionHuffman());
-	}
-
-	private TranscoderImpl(Compression compression) {
-		this(new AsciiEncoder(), new StringCompressorNone(), compression);
-	}
-
-	public TranscoderImpl(URLEncoder urlEncoder, Compression compression) {
-		this(urlEncoder, new ArobaseStringCompressor(), compression);
-	}
+//	private TranscoderImpl() {
+//		this(new AsciiEncoder(), new StringCompressorNone(), new CompressionHuffman());
+//	}
+//
+//	private TranscoderImpl(Compression compression) {
+//		this(new AsciiEncoder(), new StringCompressorNone(), compression);
+//	}
+//
+//	private TranscoderImpl(URLEncoder urlEncoder, Compression compression) {
+//		this(urlEncoder, new ArobaseStringCompressor(), compression);
+//	}
 
 	public TranscoderImpl(URLEncoder urlEncoder, StringCompressor stringCompressor, Compression compression) {
 		this.compression = compression;

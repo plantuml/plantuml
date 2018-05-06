@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -163,7 +164,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 		final DisplayPositionned legend = diagram.getLegend();
 		final TextBlock legendBlock;
-		if (DisplayPositionned.isNull(legend)) {
+		if (legend.isNull()) {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			legendBlock = EntityImageLegend.create(legend.getDisplay(), diagram.getSkinParam());
@@ -203,7 +204,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 				final double delta1 = Math.max(0, dimLegend.getWidth() - area.getWidth());
 
-				final boolean legendTop = DisplayPositionned.isNull(legend) == false
+				final boolean legendTop = legend.isNull() == false
 						&& legend.getVerticalAlignment() == VerticalAlignment.TOP;
 
 				double sequenceAreaY = area.getSequenceAreaY();
@@ -216,7 +217,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				drawHeader(area, ug, index);
 				drawFooter(area, ug, index);
 
-				if (DisplayPositionned.isNull(legend) == false) {
+				if (legend.isNull() == false) {
 					final double delta2;
 					if (legend.getHorizontalAlignment() == HorizontalAlignment.LEFT) {
 						delta2 = 0;
@@ -236,7 +237,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {
 		final PngTitler pngTitler = getPngTitler(FontParam.FOOTER, page);
-		final TextBlock text = pngTitler.getTextBlock();
+		final TextBlock text = pngTitler.getRibbonBlock();
 		if (text == null) {
 			return;
 		}
@@ -246,7 +247,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {
 		final PngTitler pngTitler = getPngTitler(FontParam.HEADER, page);
-		final TextBlock text = pngTitler.getTextBlock();
+		final TextBlock text = pngTitler.getRibbonBlock();
 		if (text == null) {
 			return;
 		}
@@ -286,9 +287,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(null, fontParam);
 		final String fontFamily = diagram.getSkinParam().getFont(null, false, fontParam).getFamily(null);
 		final int fontSize = diagram.getSkinParam().getFont(null, false, fontParam).getSize();
-		final Display display = diagram.getFooterOrHeaderTeoz(fontParam).getDisplay().withPage(page + 1, pages.size());
-		return new PngTitler(titleColor, display, fontSize, fontFamily, diagram.getFooterOrHeaderTeoz(fontParam)
-				.getHorizontalAlignment(), hyperlinkColor, diagram.getSkinParam().useUnderlineForHyperlink());
+		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
+		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor, diagram.getSkinParam()
+				.useUnderlineForHyperlink());
 	}
 
 }

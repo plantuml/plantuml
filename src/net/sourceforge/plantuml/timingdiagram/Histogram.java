@@ -40,6 +40,7 @@ import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,16 +67,18 @@ public class Histogram implements TimeDrawing {
 	private final List<ChangeState> changes = new ArrayList<ChangeState>();
 	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
 
-	private List<String> allStates = new ArrayList<String>();
+	private List<String> allStates;
 	private final double stepHeight = 20;
 
 	private final ISkinParam skinParam;
 	private final TimingRuler ruler;
 	private String initialState;
 
-	public Histogram(TimingRuler ruler, ISkinParam skinParam) {
+	public Histogram(TimingRuler ruler, ISkinParam skinParam, Collection<String> someStates) {
 		this.ruler = ruler;
 		this.skinParam = skinParam;
+		this.allStates = new ArrayList<String>(someStates);
+		Collections.reverse(allStates);
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {

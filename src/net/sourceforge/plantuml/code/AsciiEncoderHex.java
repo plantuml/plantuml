@@ -30,30 +30,33 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.code;
 
-import java.util.List;
+public class AsciiEncoderHex implements URLEncoder {
 
-import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
-
-public class CommandFooter extends SingleLineCommand<UmlDiagram> {
-
-	public CommandFooter() {
-		super("(?i)^(?:(left|right|center)?[%s]*)footer(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
+	public String encode(byte data[]) {
+		if (data == null) {
+			return "";
+		}
+		final StringBuilder result = new StringBuilder(data.length * 2);
+		for (byte b : data) {
+			final String val = Integer.toHexString(b & 0xFF);
+			if (val.length() == 1) {
+				result.append("0");
+			}
+			result.append(val);
+		}
+		return result.toString();
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		final String align = arg.get(0);
-		diagram.getFooter().put(Display.getWithNewlines(arg.get(1)),
-				HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER));
-		return CommandExecutionResult.ok();
+	public byte[] decode(String s) {
+		final byte result[] = new byte[s.length() / 2];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = (byte) Integer.parseInt(s.substring(i * 2, i * 2 + 2), 16);
+		}
+		return result;
 	}
 }

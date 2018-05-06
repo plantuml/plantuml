@@ -363,7 +363,8 @@ public class DotStringFactory implements Moveable {
 		for (Shape sh : bibliotekon.allShapes()) {
 			int idx = svg.indexOf("<title>" + sh.getUid() + "</title>");
 			if (sh.getType() == ShapeType.RECTANGLE || sh.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
-					|| sh.getType() == ShapeType.FOLDER || sh.getType() == ShapeType.DIAMOND) {
+					|| sh.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || sh.getType() == ShapeType.FOLDER
+					|| sh.getType() == ShapeType.DIAMOND) {
 				final List<Point2D.Double> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 				final double minX = SvekUtils.getMinX(points);
 				final double minY = SvekUtils.getMinY(points);

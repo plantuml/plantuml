@@ -57,7 +57,7 @@ public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setTitle(new DisplayPositionned(strings, HorizontalAlignment.CENTER, VerticalAlignment.TOP));
+			diagram.setTitle(DisplayPositionned.single(strings, HorizontalAlignment.CENTER, VerticalAlignment.TOP));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No title defined");

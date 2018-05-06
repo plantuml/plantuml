@@ -99,9 +99,9 @@ public abstract class AbstractPSystem implements Diagram {
 
 	public DisplayPositionned getTitle() {
 		if (source == null) {
-			return new DisplayPositionned(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
+			return DisplayPositionned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 		}
-		return new DisplayPositionned(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
+		return DisplayPositionned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 	}
 
 	public String getWarningOrError() {

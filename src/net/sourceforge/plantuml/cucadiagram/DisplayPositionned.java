@@ -44,11 +44,16 @@ public class DisplayPositionned {
 	private final HorizontalAlignment horizontalAlignment;
 	private final VerticalAlignment verticalAlignment;
 
-	public DisplayPositionned(Display display, HorizontalAlignment horizontalAlignment,
+	private DisplayPositionned(Display display, HorizontalAlignment horizontalAlignment,
 			VerticalAlignment verticalAlignment) {
 		this.display = display;
 		this.horizontalAlignment = horizontalAlignment;
 		this.verticalAlignment = verticalAlignment;
+	}
+
+	public static DisplayPositionned single(Display display, HorizontalAlignment horizontalAlignment,
+			VerticalAlignment verticalAlignment) {
+		return new DisplayPositionned(display, horizontalAlignment, verticalAlignment);
 	}
 
 	public static DisplayPositionned none(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) {
@@ -67,8 +72,8 @@ public class DisplayPositionned {
 		return verticalAlignment;
 	}
 
-	public static boolean isNull(DisplayPositionned data) {
-		return data == null || Display.isNull(data.display);
+	public boolean isNull() {
+		return Display.isNull(display);
 	}
 
 	public boolean hasUrl() {

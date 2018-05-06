@@ -99,7 +99,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
 		this.shield = shield;
-		if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS) {
+		if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS
+				&& type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -119,6 +120,10 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	public void appendShape(StringBuilder sb, StringBounder stringBounder) {
 		if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
 			appendLabelHtmlSpecialForLink(sb, stringBounder);
+			return;
+		}
+		if (type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE) {
+			appendHtml(sb);
 			return;
 		}
 		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
@@ -232,7 +237,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	private void appendShapeInternal(StringBuilder sb) {
 		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
 			throw new UnsupportedOperationException();
-		} else if (type == ShapeType.RECTANGLE || type == ShapeType.FOLDER) {
+		} else if (type == ShapeType.RECTANGLE || type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
+				|| type == ShapeType.FOLDER) {
 			sb.append("shape=rect");
 		} else if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
 			throw new UnsupportedOperationException();

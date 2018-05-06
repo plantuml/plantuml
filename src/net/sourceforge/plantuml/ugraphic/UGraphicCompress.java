@@ -64,6 +64,13 @@ public class UGraphicCompress extends UGraphicDelegator {
 	public void draw(UShape shape) {
 		final double x = translate.getDx();
 		final double y = translate.getDy();
+		if (shape instanceof URectangle) {
+			final URectangle rect = (URectangle) shape;
+			if (rect.isIgnoreForCompression()) {
+				final double y2 = ct(y + rect.getHeight());
+				shape = rect.withWidth(y2 - ct(y));
+			}
+		}
 		if (shape instanceof ULine) {
 			drawLine(x, y, (ULine) shape);
 		} else {

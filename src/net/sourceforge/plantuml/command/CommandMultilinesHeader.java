@@ -39,9 +39,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandMultilinesHeader extends CommandMultilines<UmlDiagram> {
 
@@ -64,8 +62,7 @@ public class CommandMultilinesHeader extends CommandMultilines<UmlDiagram> {
 		lines = lines.subExtract(1, 1);
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setHeader(new DisplayPositionned(strings, HorizontalAlignment.fromString(align,
-					HorizontalAlignment.RIGHT), VerticalAlignment.TOP));
+			diagram.getHeader().put(strings, HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty header");

@@ -33,27 +33,42 @@
  * 
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.List;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
+public class CommandDefineStateLong extends SingleLineCommand2<TimingDiagram> {
 
-public class CommandFooter extends SingleLineCommand<UmlDiagram> {
+	public CommandDefineStateLong() {
+		super(getRegexConcat());
+	}
 
-	public CommandFooter() {
-		super("(?i)^(?:(left|right|center)?[%s]*)footer(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("PLAYER", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("[%s]+has[%s]+"), //
+				new RegexLeaf("LABEL", "[%g]([^%g]+)[%g]"), //
+				new RegexLeaf("[%s]+as[%s]+"), //
+				new RegexLeaf("STATE", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		final String align = arg.get(0);
-		diagram.getFooter().put(Display.getWithNewlines(arg.get(1)),
-				HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER));
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+		final String playerCode = arg.get("PLAYER", 0);
+		final Player player = diagram.getPlayer(playerCode);
+		if (player == null) {
+			return CommandExecutionResult.error("Unknown " + playerCode);
+		}
+		final String label = arg.get("LABEL", 0);
+		final String stateCode = arg.get("STATE", 0);
+		player.defineState(stateCode, label);
+
 		return CommandExecutionResult.ok();
 	}
+
 }
