@@ -105,6 +105,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
 			return ColorParam.arrow;
+		} else if (dotData.getUmlDiagramType() == UmlDiagramType.PROBLEM) {
+			return ColorParam.arrow;
 		}
 		throw new IllegalStateException();
 	}

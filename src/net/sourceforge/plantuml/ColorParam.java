@@ -165,7 +165,20 @@ public enum ColorParam {
 	iconPublicBackground(HtmlColorUtils.COL_84BE84),
 	iconIEMandatory(HtmlColorUtils.BLACK),
 	
-	arrowLollipop(HtmlColorUtils.WHITE);
+	arrowLollipop(HtmlColorUtils.WHITE), 
+	
+	machineBackground(HtmlColorUtils.WHITE), 
+	machineBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	requirementBackground(HtmlColorUtils.WHITE), 
+	requirementBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	designedBackground(HtmlColorUtils.WHITE), 
+	designedBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	domainBackground(HtmlColorUtils.WHITE), 
+	domainBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	lexicalBackground(HtmlColorUtils.WHITE), 
+	lexicalBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	biddableBackground(HtmlColorUtils.WHITE), 
+	biddableBorder(HtmlColorUtils.BLACK, ColorType.LINE);
 
 	private final boolean isBackground;
 	private final HtmlColor defaultValue;

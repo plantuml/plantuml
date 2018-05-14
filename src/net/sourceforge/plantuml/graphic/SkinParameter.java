@@ -119,6 +119,24 @@ public class SkinParameter {
 	public static final SkinParameter INTERFACE = new SkinParameter("INTERFACE", ColorParam.interfaceBackground,
 			ColorParam.interfaceBorder, FontParam.INTERFACE, FontParam.INTERFACE_STEREOTYPE);
 
+	public static final SkinParameter MACHINE = new SkinParameter("MACHINE", ColorParam.machineBackground,
+			ColorParam.machineBorder, FontParam.MACHINE, FontParam.MACHINE_STEREOTYPE);
+
+	public static final SkinParameter REQUIREMENT = new SkinParameter("REQUIREMENT", ColorParam.requirementBackground,
+			ColorParam.requirementBorder, FontParam.REQUIREMENT, FontParam.REQUIREMENT_STEREOTYPE);
+	
+	public static final SkinParameter DOMAIN = new SkinParameter("DOMAIN", ColorParam.domainBackground,
+			ColorParam.domainBorder, FontParam.DOMAIN, FontParam.DOMAIN_STEREOTYPE);
+	
+	public static final SkinParameter DESIGNED = new SkinParameter("DESIGNED", ColorParam.designedBackground,
+			ColorParam.designedBorder, FontParam.DESIGNED, FontParam.DESIGNED_STEREOTYPE);
+
+	public static final SkinParameter BIDDABLE = new SkinParameter("BIDDABLE", ColorParam.biddableBackground,
+			ColorParam.biddableBorder, FontParam.BIDDABLE, FontParam.BIDDABLE_STEREOTYPE);
+	
+	public static final SkinParameter LEXICAL = new SkinParameter("LEXICAL", ColorParam.lexicalBackground,
+			ColorParam.lexicalBorder, FontParam.LEXICAL, FontParam.LEXICAL_STEREOTYPE);
+		
 	private final ColorParam colorParamBorder;
 	private final ColorParam colorParamBack;
 	private final FontParam fontParam;

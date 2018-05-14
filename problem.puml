@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+domain "Monitor" as M <<Machine>>
+domain "Display" as D1 <<Designed>>
+domain "Collect" as D2 <<Causal>>
+domain "Pilot" as P <<Biddable>>
+domain "Table" as TT <<Lexical>>
+domain "XYZ" as XYZ <<(C)>>
+requirement "R1" as R1
+M -- D1: a
+D1 -[dashed]- R1: a
+D2 <-[dashed]- R1: b
+TT -[dashed]- R1: c
+P -[dashed]- R1: d
+M -- TT: c
+M -- D2: b
+M -- P: d
+@enduml
