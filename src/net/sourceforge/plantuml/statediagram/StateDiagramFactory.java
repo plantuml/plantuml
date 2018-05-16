@@ -74,7 +74,6 @@ public class StateDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandHideShow2());
 		cmds.add(new CommandRemoveRestore());
 		cmds.add(new CommandCreateState());
-		// addCommand(new CommandLinkState());
 		cmds.add(new CommandLinkState());
 		cmds.add(new CommandCreatePackageState());
 		cmds.add(new CommandEndState());

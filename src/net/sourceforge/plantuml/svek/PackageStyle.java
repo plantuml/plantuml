@@ -51,7 +51,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public enum PackageStyle {
 
-	FOLDER, RECTANGLE, NODE, FRAME, CLOUD, DATABASE, AGENT, STORAGE, COMPONENT1, COMPONENT2, ARTIFACT, CARD;
+	FOLDER, RECTANGLE, NODE, FRAME, CLOUD, DATABASE, AGENT, STORAGE, COMPONENT1, COMPONENT2, ARTIFACT, CARD,
+	DOMAIN, REQUIREMENT;
 
 	public static PackageStyle fromString(String value) {
 		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {
@@ -87,6 +88,12 @@ public enum PackageStyle {
 		if (this == FOLDER) {
 			return USymbol.FOLDER;
 		}
+		if (this == DOMAIN) {
+			return USymbol.DOMAIN;
+		}
+		if (this == REQUIREMENT) {
+			return USymbol.REQUIREMENT;
+		}
 		return null;
 	}
 
@@ -116,6 +123,10 @@ public enum PackageStyle {
 			drawRect(ug, width, height, shadowing);
 		} else if (this == ARTIFACT) {
 			drawArtifact(ug, width, height, shadowing);
+		} else if (this == DOMAIN) {
+			drawRect(ug, width, height, shadowing);
+		} else if (this == REQUIREMENT) {
+			drawCloud(ug, width, height, shadowing);
 		} else {
 			// drawNode(ug, xTheoricalPosition, yTheoricalPosition, width, height, shadowing);
 			throw new UnsupportedOperationException();

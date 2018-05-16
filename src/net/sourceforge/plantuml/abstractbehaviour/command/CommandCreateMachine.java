@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.problemdiagram.command;
+package net.sourceforge.plantuml.abstractbehaviour.command;
 /** 
  * Author:  Yijun Yu
  */

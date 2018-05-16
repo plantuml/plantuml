@@ -57,7 +57,7 @@ public enum LeafType {
 
 	STILL_UNKNOWN, 
 	
-	MACHINE, DOMAIN, REQUIREMENT, DESIGNED, LEXICAL, CAUSAL, BIDDABLE;
+	DOMAIN, REQUIREMENT;
 
 	public static LeafType getLeafType(String type) {
 		type = StringUtils.goUpperCase(type);

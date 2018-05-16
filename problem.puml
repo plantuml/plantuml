@@ -1,18 +1,24 @@
 @startuml
 left to right direction
-domain "Monitor" as M <<Machine>>
-domain "Display" as D1 <<Designed>>
-domain "Collect" as D2 <<Causal>>
-domain "Pilot" as P <<Biddable>>
-domain "Table" as TT <<Lexical>>
-domain "XYZ" as XYZ <<(C)>>
-requirement "R1" as R1
-M -- D1: a
-D1 -[dashed]- R1: a
-D2 <-[dashed]- R1: b
-TT -[dashed]- R1: c
-P -[dashed]- R1: d
-M -- TT: c
-M -- D2: b
-M -- P: d
+domain "Monitor" as M <<Machine>> {
+	domain "Google Map" as D1 <<Machine>> {
+		[*] -> Displayed
+	}
+	domain "Onboard LiveBox" as D2 <<Machine>>
+}
+domain "Map" as D3 <<Causal>>
+domain "Path" as D4 <<Lexical>>
+domain "Drone" as D5 <<Biddable>>
+requirement "Requirements" as R {
+	requirement "Display flight paths on a map" as R1
+	requirement "Collect flight paths from a drone" as R2
+}
+R1 -[dashed]left-> D3: c 
+D4 -[dashed]-> R1: d
+R2 -[dashed]left-> D4: d
+D5 -[dashed]-> R2: e
+Displayed --> D3: c1
+Displayed --> D4: d1
+D2 --> D4: d2
+D2 --> D5: e1
 @enduml

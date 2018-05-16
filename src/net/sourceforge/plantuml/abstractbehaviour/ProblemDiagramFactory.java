@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.problemdiagram;
+package net.sourceforge.plantuml.abstractbehaviour;
 
 import java.util.List;
 
