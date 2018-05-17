@@ -1,7 +1,6 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -13,17 +12,16 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.BoxedCharacter;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -35,14 +33,16 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageBiddable extends AbstractEntityImage  {
 	final private TextBlock name;
+	final private TextBlock tag;
 	final private TextBlock stereo;
 	final private Url url;
 
 	public EntityImageBiddable(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
+		FontConfiguration fc = new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype);
 		this.name = TextBlockUtils.withMargin(
-				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
+				entity.getDisplay().create(fc,
 						HorizontalAlignment.CENTER, skinParam), 2, 2);
 		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.stereo = null;
@@ -51,6 +51,10 @@ public class EntityImageBiddable extends AbstractEntityImage  {
 					new FontConfiguration(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 		}
+		this.tag = new BoxedCharacter('C', stereotype.getRadius(),
+				stereotype.getCircledFont(), stereotype.getHtmlColor(), null, 
+				fc.getColor());
+		
 		this.url = entity.getUrl99();
 	}
 
@@ -71,7 +75,8 @@ public class EntityImageBiddable extends AbstractEntityImage  {
 		final Dimension2D nameDim = name.calculateDimension(stringBounder);
 		final Dimension2D stereoDim = stereo == null ? new Dimension2DDouble(0, 0) : stereo
 				.calculateDimension(stringBounder);
-		final Dimension2D nameAndStereo = new Dimension2DDouble(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
+		final Dimension2D nameAndStereo = new Dimension2DDouble(
+				Math.max(nameDim.getWidth(), stereoDim.getWidth()),
 				nameDim.getHeight() + stereoDim.getHeight());
 		return nameAndStereo;
 	}
@@ -88,7 +93,7 @@ public class EntityImageBiddable extends AbstractEntityImage  {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimTitle = getTitleDimension(stringBounder);
-
+		final Dimension2D dimTag = getTagDimension(stringBounder);
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final URectangle rect = new URectangle(widthTotal, heightTotal, 0, 0);
@@ -104,15 +109,24 @@ public class EntityImageBiddable extends AbstractEntityImage  {
 		}
 
 		final UStroke stroke = getStroke();
-		ug.apply(stroke).draw(rect);		
+		ug.apply(stroke).draw(rect);	
 
 		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
 		header.add(name);
 		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());
-
+		final ULayoutGroup footer = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
+		footer.add(tag);
+		footer.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimTag.getWidth(), dimTitle.getHeight())), 
+				dimTag.getWidth(), dimTag.getHeight());
 		if (url != null) {
 			ug.closeAction();
 		}
+	}
+
+	private Dimension2D getTagDimension(StringBounder stringBounder) {
+		final Dimension2D tagDim = tag == null ? new Dimension2DDouble(0, 0) : tag
+				.calculateDimension(stringBounder);
+		return tagDim;
 	}
 
 	public ShapeType getShapeType() {
@@ -123,7 +137,8 @@ public class EntityImageBiddable extends AbstractEntityImage  {
 		final Dimension2D dimTitle = getTitleDimension(stringBounder);
 		final double width = dimTitle.getWidth();
 		final double height = dimTitle.getHeight();
-		return new Dimension2DDouble(width, height);
+		final Dimension2D dimTag = getTagDimension(stringBounder);
+		return new Dimension2DDouble(width, height + dimTag.getHeight());
 	}
 
 }

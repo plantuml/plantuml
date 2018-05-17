@@ -67,15 +67,6 @@ public class CommandCreateDomain extends SingleLineCommand2<ProblemDiagram> {
 		if (diagram.leafExist(Code.of(code))) {
 			return CommandExecutionResult.error("Object already exists : " + code);
 		}
-		if (stereotype!=null && stereotype.startsWith("<<L")) {
-			display = display + "\n<size:8> <&circle-x></size>";
-		}
-		if (stereotype!=null && stereotype.startsWith("<<B")) {
-			display = display + "\n<size:8> <&bold></size>";
-		}
-		if (stereotype!=null && stereotype.startsWith("<<C")) {
-			display = display + "\n<size:12> <&cog></size>";
-		}
 		Display d = Display.getWithNewlines(display);
 		final String urlString = arg.get("URL", 0);
 		final String group = arg.get("GROUP", 0);

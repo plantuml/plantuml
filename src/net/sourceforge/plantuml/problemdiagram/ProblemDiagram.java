@@ -11,7 +11,7 @@ public class ProblemDiagram extends ObjectDiagram {
 
 	public ILeaf getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
 		if (type == null) {
-			type = LeafType.STATE;
+			type = LeafType.OBJECT;
 		}
 		return getOrCreateLeafDefault(code, type, symbol);
 	}
