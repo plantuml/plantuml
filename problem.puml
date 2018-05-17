@@ -1,9 +1,9 @@
 @startuml
-!include PF.puml
+'!include PF.puml
 title Composition of two designed domains
 left to right direction
 domain "Monitor" as M <<Machine>> {
-	domain "Google Map" as D1 <<Designed>>
+	domain "Google Map" as D1 <<Causal>>
 	domain "Onboard LiveBox" as D2 <<Designed>>
 }
 domain "Map" as D3 <<Causal>>
@@ -13,12 +13,12 @@ requirement "Requirements" as R {
 	requirement "Display flight paths on a map" as R1
 	requirement "Collect flight paths from a drone" as R2
 }
-R1 -[dashed]left-> D3: c 
-D4 -[dashed]-> R1: d
-R2 -[dashed]left-> D4: d
-D5 -[dashed]-> R2: e
-D1 --> D3: c1
-D1 --> D4: d1
-D2 --> D4: d2
-D2 --> D5: e1
+R1 -l-> D3: c 
+D4 -- R1: d
+R2 -l-> D4: d
+D5 -- R2: e
+D1 -- D3: c1
+D1 -- D4: d1
+D2 -- D4: d2
+D2 -- D5: e1
 @enduml
