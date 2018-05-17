@@ -1,0 +1,21 @@
+@startuml
+!include PF.puml
+title <&caret-right> Problem Diagram R1<&caret-left>
+
+requirement "Collect and display drone flight paths on a map" as R1
+domain "Google Map" as D1 	<<Designed>>
+domain "Onboard LiveBox" as D2 	<<Designed>>
+domain "Drone"   as D3 	<<Biddable>>
+domain "Path"    as D4 	<<Lexical>>
+domain "Map"     as D5 	<<Causal>>
+domain "Monitor" as M 	<<Machine>>
+M -- D1: 		a1
+M -- D2: 		b1
+D1 -- D4: 		d1
+D4 <-[dashed]- R1: 	d
+D2 -- D3: 		e1
+D3 -[dashed]- R1: 	e
+D2 -- D4:		d2
+D5 <-[dashed]- R1: 	c
+D1 -- D5:		c1
+@enduml

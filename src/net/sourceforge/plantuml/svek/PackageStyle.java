@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public enum PackageStyle {
 
 	FOLDER, RECTANGLE, NODE, FRAME, CLOUD, DATABASE, AGENT, STORAGE, COMPONENT1, COMPONENT2, ARTIFACT, CARD,
-	DOMAIN, REQUIREMENT;
+	DOMAIN, REQUIREMENT, MACHINE;
 
 	public static PackageStyle fromString(String value) {
 		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {
@@ -93,6 +93,9 @@ public enum PackageStyle {
 		}
 		if (this == REQUIREMENT) {
 			return USymbol.REQUIREMENT;
+		}
+		if (this == MACHINE) {
+			return USymbol.MACHINE;
 		}
 		return null;
 	}

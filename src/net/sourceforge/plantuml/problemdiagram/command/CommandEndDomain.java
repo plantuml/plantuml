@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.abstractbehaviour.command;
+package net.sourceforge.plantuml.problemdiagram.command;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.problemdiagram.ProblemDiagram;
 
-public class CommandEndMachine extends SingleLineCommand<ProblemDiagram> {
+public class CommandEndDomain extends SingleLineCommand<ProblemDiagram> {
 
-	public CommandEndMachine() {
+	public CommandEndDomain() {
 		super("(?i)^(\\})$");
 	}
 

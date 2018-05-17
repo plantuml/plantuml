@@ -608,6 +608,9 @@ class DrawableSetInitializer {
 		} else if (p.getType() == ParticipantType.COLLECTIONS) {
 			headType = ComponentType.COLLECTIONS_HEAD;
 			tailType = ComponentType.COLLECTIONS_TAIL;
+		} else if (p.getType() == ParticipantType.REQUIREMENT) {
+			headType = ComponentType.COLLECTIONS_HEAD;
+			tailType = ComponentType.COLLECTIONS_TAIL;
 		} else {
 			throw new IllegalArgumentException();
 		}

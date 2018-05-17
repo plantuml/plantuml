@@ -1,0 +1,5 @@
+skinparam monochrome true
+skinparam shadowing false
+'skinparam backgroundColor transparent
+hide footbox
+left to right direction

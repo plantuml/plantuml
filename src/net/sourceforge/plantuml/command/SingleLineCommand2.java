@@ -100,8 +100,6 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (system instanceof PSystemError) {
 			return CommandExecutionResult.error("PSystemError cannot be cast");
 		}
-		// System.err.println("lines="+lines);
-		// System.err.println("pattern="+pattern.getPattern());
 		return executeArg(system, arg);
 	}
 

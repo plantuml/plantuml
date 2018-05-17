@@ -1,17 +1,14 @@
-package net.sourceforge.plantuml.problemdiagram.command;
-/** 
- * Author:  Yijun Yu
- */
+package net.sourceforge.plantuml.abstractbehaviour2.command;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.abstractbehaviour2.AbstractBehaviour2Diagram;
 import net.sourceforge.plantuml.classdiagram.command.GenericRegexProducer;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -22,23 +19,20 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.problemdiagram.ProblemDiagram;
-import net.sourceforge.plantuml.statediagram.command.CommandCreateState;
 
-public class CommandCreateMachine extends SingleLineCommand2<ProblemDiagram> {
+public class CommandCreateAbstractBehaviour2 extends SingleLineCommand2<AbstractBehaviour2Diagram> {
 	public static final String DISPLAY_WITH_GENERIC = "[%g](.+?)(?:\\<(" + GenericRegexProducer.PATTERN + ")\\>)?[%g]";
 	public static final String CODE = "[^%s{}%g<>]+";
 
-	public CommandCreateMachine() {
+	public CommandCreateAbstractBehaviour2() {
 		super(getRegexConcat());
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("TYPE", // TODO yy 
-						"(requirement|domain|req|dom)[%s]+"), //
+						"(reqs|doms)[%s]+"), //
 				new RegexLeaf("DISPLAY", DISPLAY_WITH_GENERIC),
 				new RegexLeaf("[%s]+as[%s]+"), //
 				new RegexLeaf("CODE", "([a-zA-Z0-9]+)"),
@@ -48,12 +42,13 @@ public class CommandCreateMachine extends SingleLineCommand2<ProblemDiagram> {
 				//	requirement: FR, NFR, quality
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("GROUP", "(\\{)?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ProblemDiagram diagram, RegexResult arg) {
-		final String type = arg.get("TYPE", 0);
+	protected CommandExecutionResult executeArg(AbstractBehaviour2Diagram diagram, RegexResult arg) {
+		String type = arg.get("TYPE", 0);
 		String display = arg.getLazzy("DISPLAY", 0);
 		String code = arg.getLazzy("CODE", 0);
 		if (code == null) {
@@ -63,9 +58,6 @@ public class CommandCreateMachine extends SingleLineCommand2<ProblemDiagram> {
 		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
-//		System.out.println(display);
-//		System.out.println(code);
-//		System.out.println(stereotype);
 		if (diagram.leafExist(Code.of(code))) {
 			return CommandExecutionResult.error("Object already exists : " + code);
 		}
@@ -84,13 +76,13 @@ public class CommandCreateMachine extends SingleLineCommand2<ProblemDiagram> {
 		IEntity entity;
 		if (group!=null) {
 			final IGroup currentGroup = diagram.getCurrentGroup();
-			diagram.gotoGroup2(Code.of(code), d, (type.equalsIgnoreCase("domain") || type.equalsIgnoreCase("dom")) 
+			diagram.gotoGroup2(Code.of(code), d, type.equalsIgnoreCase("doms") 
 					? GroupType.DOMAIN: GroupType.REQUIREMENT, 
 					currentGroup, NamespaceStrategy.SINGLE);
 			entity = diagram.getCurrentGroup();
 		} else {		
 			entity = diagram.createLeaf(Code.of(code), d, 
-				(type.equalsIgnoreCase("domain") || type.equalsIgnoreCase("dom")) 
+				type.equalsIgnoreCase("doms")
 					? LeafType.DOMAIN: LeafType.REQUIREMENT, null);
 		}
 		if (stereotype != null) {
@@ -104,6 +96,11 @@ public class CommandCreateMachine extends SingleLineCommand2<ProblemDiagram> {
 			entity.addUrl(url);
 		}
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		if (type.equalsIgnoreCase("doms")) {
+			if (stereotype.equalsIgnoreCase("<<Machine>>")) {
+				type = "machine";
+			}
+		}
 		USymbol usymbol = USymbol.getFromString(type, 
 				diagram.getSkinParam().useUml2ForComponent());
 		entity.setUSymbol(usymbol);

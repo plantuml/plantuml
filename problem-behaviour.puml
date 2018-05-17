@@ -1,0 +1,18 @@
+@startuml
+title Composition of two designed doms
+dom "Google Map" as D1 <<Designed>>
+dom "Onboard LiveBox" as D2 <<Designed>>
+dom "Map" as D3 <<Causal>>
+dom "Path" as D4 <<Lexical>>
+dom "Drone" as D5 <<Biddable>>
+req "Display flight paths on a map" as R1
+req "Collect flight paths from a drone" as R2
+R1 --> D3: c 
+D4 --> R1: d
+R2 --> D4: d
+D5 --> R2: e
+D5 --> D2: e1
+D2 --> D4: d2
+D4 --> D1: d1
+D1 --> D3: c1
+@enduml
