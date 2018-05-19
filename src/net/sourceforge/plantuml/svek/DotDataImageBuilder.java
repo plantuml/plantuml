@@ -94,9 +94,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageActivity;
 import net.sourceforge.plantuml.svek.image.EntityImageArcCircle;
 import net.sourceforge.plantuml.svek.image.EntityImageAssociation;
 import net.sourceforge.plantuml.svek.image.EntityImageAssociationPoint;
-import net.sourceforge.plantuml.svek.image.EntityImageBiddable;
 import net.sourceforge.plantuml.svek.image.EntityImageBranch;
-import net.sourceforge.plantuml.svek.image.EntityImageCausal;
 import net.sourceforge.plantuml.svek.image.EntityImageCircleEnd;
 import net.sourceforge.plantuml.svek.image.EntityImageCircleStart;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
@@ -105,7 +103,6 @@ import net.sourceforge.plantuml.svek.image.EntityImageDesignedDomain;
 import net.sourceforge.plantuml.svek.image.EntityImageDomain;
 import net.sourceforge.plantuml.svek.image.EntityImageEmptyPackage;
 import net.sourceforge.plantuml.svek.image.EntityImageGroup;
-import net.sourceforge.plantuml.svek.image.EntityImageLexical;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye1;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye2;
@@ -460,20 +457,20 @@ public final class DotDataImageBuilder {
 						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<X>>")	
 						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Given>>")	
 		)) {
-				return new EntityImageLexical(leaf, skinParam);
+				return new EntityImageDomain(leaf, skinParam, 'X');
 		} else if (leaf.getLeafType() == LeafType.DOMAIN
 				&& leaf.getStereotype()!=null && (leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<C>>")
 						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Causal>>")
 		)) {
-				return new EntityImageCausal(leaf, skinParam);
+				return new EntityImageDomain(leaf, skinParam, 'C');
 		} else if (leaf.getLeafType() == LeafType.DOMAIN 
 			&& leaf.getStereotype()!=null && (leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<B>>")
 					|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Biddable>>")
 					|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Uncertain>>")
 		)) {
-			return new EntityImageBiddable(leaf, skinParam);
+			return new EntityImageDomain(leaf, skinParam, 'B');
 		} else if (leaf.getLeafType() == LeafType.DOMAIN) {
-			return new EntityImageDomain(leaf, skinParam);
+			return new EntityImageDomain(leaf, skinParam, 'P');
 		} else
 			throw new UnsupportedOperationException(leaf.getLeafType().toString());
 	}

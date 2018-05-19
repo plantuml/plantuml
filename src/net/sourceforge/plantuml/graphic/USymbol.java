@@ -78,9 +78,13 @@ public abstract class USymbol {
 	public final static USymbol QUEUE = record("QUEUE", SkinParameter.QUEUE, new USymbolQueue());
 	public final static USymbol STACK = record("STACK", SkinParameter.STACK, new USymbolStack());
 	public final static USymbol TOGETHER = record("TOGETHER", SkinParameter.QUEUE, new USymbolTogether());
-	public final static USymbol DOMAIN = record("DOMAIN", SkinParameter.QUEUE, new USymbolDomain(SkinParameter.DOMAIN, HorizontalAlignment.CENTER));
+	public final static USymbol DOMAIN = record("DOMAIN", SkinParameter.QUEUE, new USymbolDomain(SkinParameter.DOMAIN, 'P'));
+	public final static USymbol LEXICAL_DOMAIN = record("LEXICAL", SkinParameter.QUEUE, new USymbolDomain(SkinParameter.DOMAIN, 'X'));
+	public final static USymbol BIDDABLE_DOMAIN = record("BIDDABLE", SkinParameter.QUEUE, new USymbolDomain(SkinParameter.DOMAIN, 'B'));
+	public final static USymbol CAUSAL_DOMAIN = record("CAUSAL", SkinParameter.QUEUE, new USymbolDomain(SkinParameter.DOMAIN, 'C'));
+	public final static USymbol DESIGNED_DOMAIN = record("DESIGNED", SkinParameter.QUEUE, new USymbolDomain(SkinParameter.DOMAIN, 'P'));
 	public final static USymbol REQUIREMENT = record("REQUIREMENT", SkinParameter.QUEUE, new USymbolRequirement());
-	public final static USymbol MACHINE = record("MACHINE", SkinParameter.QUEUE, new USymbolMachine(SkinParameter.MACHINE, HorizontalAlignment.CENTER));
+	public final static USymbol MACHINE = record("MACHINE", SkinParameter.QUEUE, new USymbolMachine(SkinParameter.MACHINE));
 
 	abstract public SkinParameter getSkinParameter();
 
@@ -238,6 +242,14 @@ public abstract class USymbol {
 			usymbol = USymbol.INTERFACE;
 		} else if (symbol.equalsIgnoreCase("domain")) {
 			usymbol = USymbol.DOMAIN;
+		} else if (symbol.equalsIgnoreCase("designed")) {
+			usymbol = USymbol.DESIGNED_DOMAIN;
+		} else if (symbol.equalsIgnoreCase("lexical")) {
+			usymbol = USymbol.LEXICAL_DOMAIN;
+		} else if (symbol.equalsIgnoreCase("biddable")) {
+			usymbol = USymbol.BIDDABLE_DOMAIN;
+		} else if (symbol.equalsIgnoreCase("causal")) {
+			usymbol = USymbol.CAUSAL_DOMAIN;
 		} else if (symbol.equalsIgnoreCase("requirement")) {
 			usymbol = USymbol.REQUIREMENT;
 		} else if (symbol.equalsIgnoreCase("machine")) {

@@ -49,16 +49,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class USymbolMachine extends USymbol {
 
 	private final SkinParameter skinParameter;
-	private final HorizontalAlignment stereotypeAlignement;
 
-	public USymbolMachine(SkinParameter skinParameter, HorizontalAlignment stereotypeAlignement) {
+	public USymbolMachine(SkinParameter skinParameter) {
 		this.skinParameter = skinParameter;
-		this.stereotypeAlignement = stereotypeAlignement;
-	}
-
-	@Override
-	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
-		return new USymbolMachine(skinParameter, alignment);
 	}
 
 	@Override
@@ -108,8 +101,6 @@ class USymbolMachine extends USymbol {
 				drawRect(ug.apply(new UTranslate(4, 0)), 4, dim.getHeight(), symbolContext.isShadowing(),
 						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
 				final Margin margin = getMargin();
-//				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereotypeAlignement);
-//				tb.drawU(ug.apply(new UTranslate(margin.getX1()+8, margin.getY1())));
 				label.drawU(ug.apply(new UTranslate(margin.getX1()+8, margin.getY1())));
 			}
 
@@ -134,18 +125,6 @@ class USymbolMachine extends USymbol {
 						symbolContext.getRoundCorner(), 0);
 				drawRect(ug.apply(new UTranslate(4, 0)), 4, dim.getHeight(), symbolContext.isShadowing(),
 						symbolContext.getRoundCorner(), 0);
-								
-//				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
-//				final double posStereoX;
-//				final double posStereoY;
-//				if (stereotypeAlignement == HorizontalAlignment.RIGHT) {
-//					posStereoX = width - dimStereo.getWidth() - getMargin().getX1() / 2;
-//					posStereoY = getMargin().getY1() / 2;
-//				} else {
-//					posStereoX = (width - dimStereo.getWidth()) / 2;
-//					posStereoY = 2;
-//				}
-//				stereotype.drawU(ug.apply(new UTranslate(posStereoX + 8, posStereoY)));
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 				final double posTitle;
 				if (labelAlignment == HorizontalAlignment.LEFT) {
@@ -155,7 +134,6 @@ class USymbolMachine extends USymbol {
 				} else {
 					posTitle = (width - dimTitle.getWidth()) / 2;
 				}
-//				title.drawU(ug.apply(new UTranslate(posTitle + 8, 2 + dimStereo.getHeight())));
 				title.drawU(ug.apply(new UTranslate(posTitle + 8, 0)));
 			}
 

@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -49,16 +50,11 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class USymbolDomain extends USymbol {
 
 	private final SkinParameter skinParameter;
-	private final HorizontalAlignment stereotypeAlignement;
-
-	public USymbolDomain(SkinParameter skinParameter, HorizontalAlignment stereotypeAlignement) {
+	private final char typeLetter;
+	
+	public USymbolDomain(SkinParameter skinParameter, char typeLetter) {
 		this.skinParameter = skinParameter;
-		this.stereotypeAlignement = stereotypeAlignement;
-	}
-
-	@Override
-	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
-		return new USymbolDomain(skinParameter, alignment);
+		this.typeLetter = typeLetter;
 	}
 
 	@Override
@@ -105,9 +101,18 @@ class USymbolDomain extends USymbol {
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
 						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
-				final Margin margin = getMargin();
-				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereotypeAlignement);
-				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
+				if (typeLetter == 'P')
+					drawRect(ug, 4, dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner(), 0);
+				else {
+					BoxedCharacter tag = new BoxedCharacter(typeLetter, 
+							8, UFont.byDefault(8), 
+							skinParameter.getColorParamBack().getDefaultValue(),
+							null, 
+							skinParameter.getColorParamBorder().getDefaultValue());
+					tag.drawU(ug.apply(new UTranslate(dim.getWidth() - tag.getPreferredWidth(ug.getStringBounder()), 
+							dim.getHeight() - tag.getPreferredHeight(ug.getStringBounder()))));
+				}
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -127,17 +132,18 @@ class USymbolDomain extends USymbol {
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
 						symbolContext.getRoundCorner(), 0);
-				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
-				final double posStereoX;
-				final double posStereoY;
-				if (stereotypeAlignement == HorizontalAlignment.RIGHT) {
-					posStereoX = width - dimStereo.getWidth() - getMargin().getX1() / 2;
-					posStereoY = getMargin().getY1() / 2;
-				} else {
-					posStereoX = (width - dimStereo.getWidth()) / 2;
-					posStereoY = 2;
+				if (typeLetter == 'P')
+					drawRect(ug, 4, dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner(), 0);
+				else {
+					BoxedCharacter tag = new BoxedCharacter(typeLetter, 
+							8, UFont.byDefault(8), 
+							skinParameter.getColorParamBack().getDefaultValue(),
+							null, 
+							skinParameter.getColorParamBorder().getDefaultValue());
+					tag.drawU(ug.apply(new UTranslate(dim.getWidth() - tag.getPreferredWidth(ug.getStringBounder()), 
+							dim.getHeight() - tag.getPreferredHeight(ug.getStringBounder()))));
 				}
-				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 				final double posTitle;
 				if (labelAlignment == HorizontalAlignment.LEFT) {
@@ -147,11 +153,11 @@ class USymbolDomain extends USymbol {
 				} else {
 					posTitle = (width - dimTitle.getWidth()) / 2;
 				}
-				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));
+				title.drawU(ug.apply(new UTranslate(posTitle, 2)));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
+				return new Dimension2DDouble(width+6, height);
 			}
 		};
 	}

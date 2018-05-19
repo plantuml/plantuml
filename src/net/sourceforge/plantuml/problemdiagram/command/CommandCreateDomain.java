@@ -97,6 +97,18 @@ public class CommandCreateDomain extends SingleLineCommand2<ProblemDiagram> {
 			if (stereotype!=null && stereotype.equalsIgnoreCase("<<Machine>>")) {
 				type = "machine";
 			}
+			if (stereotype!=null && stereotype.equalsIgnoreCase("<<Causal>>")) {
+				type = "causal";
+			}
+			if (stereotype!=null && stereotype.equalsIgnoreCase("<<Designed>>")) {
+				type = "designed";
+			}
+			if (stereotype!=null && stereotype.equalsIgnoreCase("<<Lexical>>")) {
+				type = "lexical";
+			}
+			if (stereotype!=null && stereotype.equalsIgnoreCase("<<Biddable>>")) {
+				type = "biddable";
+			}
 		}
 		USymbol usymbol = USymbol.getFromString(type, 
 				diagram.getSkinParam().useUml2ForComponent());
