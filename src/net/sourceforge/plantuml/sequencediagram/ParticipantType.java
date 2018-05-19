@@ -45,7 +45,9 @@ public enum ParticipantType {
 	ENTITY(ColorParam.entityBackground), //
 	QUEUE(ColorParam.queueBackground), //
 	DATABASE(ColorParam.databaseBackground), //
-	COLLECTIONS(ColorParam.collectionsBackground);
+	COLLECTIONS(ColorParam.collectionsBackground),
+	DOMAIN(ColorParam.collectionsBackground),
+	REQUIREMENT(ColorParam.collectionsBackground);;
 
 	private final ColorParam background;
 

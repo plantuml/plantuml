@@ -1,0 +1,12 @@
+@startuml
+!include PF.puml
+title Problem Diagram R1.1
+requirement "Collect drone flight paths" as R
+domain "Drone <size:8><&bold></size>" as D3
+domain "Path <size:12><&circle-x></size>"  as D4
+domain "Onboard LiveBox" as M <<Machine>>
+D4 <-[dashed]- R: 	d
+D3 -[dashed]- R: 	e
+M -- D4:		d2
+M -- D3: 		e1
+@enduml

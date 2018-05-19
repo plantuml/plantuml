@@ -1,0 +1,13 @@
+@startuml
+!include PF.puml
+title <&caret-right> Problem Diagram R1-2<&caret-left>
+
+requirement "Display paths on a map" as R1
+domain "Path"    as D4 	<<Lexical>>
+domain "Map"     as D5 	<<Causal>>
+domain "Google Map" as M 	<<Machine>>
+M -- D4: 		d1
+D4 -[dashed]- R1: 	d
+D5 <-[dashed]- R1: 	c
+M -- D5:		c1
+@enduml

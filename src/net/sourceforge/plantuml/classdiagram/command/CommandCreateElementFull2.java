@@ -129,6 +129,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 			symbol = "actor";
 		} else if (codeChar == '[' || codeDisplay == '[') {
 			symbol = "component";
+		} else if (codeChar == '|' || codeDisplay == '|') {
+			symbol = "domain";
 		} else {
 			symbol = arg.get("SYMBOL", 0);
 		}

@@ -1,0 +1,21 @@
+@startuml
+doms "Monitor" as M <<Machine>> {
+	doms "Google Map" as D1 <<Designed>>
+	doms "Onboard LiveBox" as D2 <<Designed>>
+}
+doms "Map" as D3 <<Causal>>
+doms "Path" as D4 <<Lexical>>
+doms "Drone" as D5 <<Biddable>>
+reqs "Requirements" as R {
+	reqs "Display flight paths on a map" as R1
+	reqs "Collect flight paths from a drone" as R2
+}
+R1 -[dashed]left-> D3: c 
+D4 -[dashed]-> R1: d
+R2 -[dashed]left-> D4: d
+D5 -[dashed]-> R2: e
+D1 --> D3: c1
+D1 --> D4: d1
+D2 --> D4: d2
+D2 --> D5: e1
+@enduml

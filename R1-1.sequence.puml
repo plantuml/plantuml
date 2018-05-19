@@ -1,0 +1,14 @@
+@startuml
+hide footbox
+participant "Onboard LiveBox" as LB
+participant "Drone" as D
+participant "Path" as P
+D -> LB: d2: takeoff(initial location)
+LB -> P: e1: save(initial location)
+loop
+    D -> LB: d2: send(location)
+    LB -> P: e1: save(location)
+end
+D -> LB: d2: landing(final location)
+LB -> P: e1: save(final location)
+@enduml
