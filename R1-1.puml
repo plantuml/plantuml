@@ -1,12 +1,39 @@
 @startuml
 !include PF.puml
-title Problem Diagram R1.1
+title Problem Diagram
 requirement "Collect drone flight paths" as R
-domain "Drone <size:8><&bold></size>" as D3
-domain "Path <size:12><&circle-x></size>"  as D4
+domain "Drone collocated \n with Smartphone" as D31 <<Designed>> {
+    domain "Drone" as D3 <<Biddable>>
+    domain "Smartphone" as D321 <<Causal>> {
+        domain "LiveBox App" as D32 <<Designed>>
+    }
+}
+'D3 -- D321: f
+'note bottom on link
+'   assume that the smartphone and the drone are always collocated
+'end note
+domain "Path"  as D4 <<Lexical>>
 domain "Onboard LiveBox" as M <<Machine>>
-D4 <-[dashed]- R: 	d
-D3 -[dashed]- R: 	e
-M -- D4:		d2
-M -- D3: 		e1
+D4 <-- R: 	d
+note bottom on link
+   the flight path consists of
+   zero to many geolocations
+end note   
+D3 -- R: e
+note bottom on link
+   the drone's geolocation includes 
+   latitude, longitude, altitude
+   and the timestamp
+end note  
+M -- D4: d2
+note bottom on link
+   <(geolocation, timestamp)> 
+   by the order of timestamps
+end note
+M -- D32: e1
+note bottom on link
+   (geolocation, timestamp) from 
+   the smart phone as a payload 
+   of the drone
+end note
 @enduml
