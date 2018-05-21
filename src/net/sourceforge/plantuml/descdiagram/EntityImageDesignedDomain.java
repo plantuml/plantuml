@@ -127,10 +127,10 @@ public class EntityImageDesignedDomain extends AbstractEntityImage {
 		final URectangle rect = new URectangle(widthTotal, heightTotal, 0, 0);
 		URectangle rect2 = new URectangle(4, heightTotal, 0, 0);
 
-		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.designedDomainBorder, getStereo())));
+		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.designedBorder, getStereo())));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.designedDomainBackground, getStereo());
+			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.designedBackground, getStereo());
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 		if (url != null) {

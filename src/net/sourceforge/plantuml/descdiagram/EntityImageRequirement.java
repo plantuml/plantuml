@@ -78,14 +78,14 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.USECASE, skinParam,
+		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.REQUIREMENT, skinParam,
 				HorizontalAlignment.CENTER, stereotype, true, false, entity);
 
 		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.desc = tmp;
 		} else {
 			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet()))
-					.create(new FontConfiguration(getSkinParam(), FontParam.USECASE_STEREOTYPE, stereotype),
+					.create(new FontConfiguration(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),
 							HorizontalAlignment.CENTER, skinParam);
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}
@@ -94,7 +94,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 	}
 
 	private UStroke getStroke() {
-		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
+		UStroke stroke = getSkinParam().getThickness(LineParam.requirementBorder, getStereo());
 		if (stroke == null) {
 			stroke = new UStroke(7, 7, 1.5);
 //			stroke = new UStroke(1.5);
@@ -120,12 +120,12 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		ug = ug.apply(getStroke());
 		HtmlColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (linecolor == null) {
-			linecolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBorder, getStereo());
+			linecolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.requirementBorder, getStereo());
 		}
 		ug = ug.apply(new UChangeColor(linecolor));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBackground, getStereo());
+			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.requirementBackground, getStereo());
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
