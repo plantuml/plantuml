@@ -247,4 +247,28 @@ public class Stereotype implements CharSequence {
 		return null;
 	}
 
+	public boolean isBiddableOrUncertain() {
+		return label.equalsIgnoreCase("<<B>>") || label.equalsIgnoreCase("<<Biddable>>")
+				|| label.equalsIgnoreCase("<<Uncertain>>");
+	}
+
+	public boolean isCausal() {
+		return label.equalsIgnoreCase("<<C>>") || label.equalsIgnoreCase("<<Causal>>");
+	}
+
+	public boolean isLexicalOrGiven() {
+		return label.equalsIgnoreCase("<<L>>") || label.equalsIgnoreCase("<<Lexical>>")
+				|| label.equalsIgnoreCase("<<X>>") || label.equalsIgnoreCase("<<Given>>");
+	}
+
+	public boolean isDesignedOrSolved() {
+		return label.equalsIgnoreCase("<<D>>") || label.equalsIgnoreCase("<<Designed>>")
+				|| label.equalsIgnoreCase("<<Nested>>") || label.equalsIgnoreCase("<<Solved>>");
+	}
+
+	public boolean isMachineOrSpecification() {
+		return label.equalsIgnoreCase("M") || label.equalsIgnoreCase("<<Machine>>") || label.equalsIgnoreCase("<<S>>")
+				|| label.equalsIgnoreCase("<<Spec>>") || label.equalsIgnoreCase("<<Specification>>");
+	}
+
 }

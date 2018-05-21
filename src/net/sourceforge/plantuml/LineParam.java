@@ -57,7 +57,8 @@ public enum LineParam {
 	rectangleBorder,
 	componentBorder,
 	cardBorder,
-	agentBorder;
+	agentBorder,
+	domainBorder, designedDomainBorder, machineBorder, requirementBorder;
 //	sequenceBoxBorder(0.1);
 	
 }
