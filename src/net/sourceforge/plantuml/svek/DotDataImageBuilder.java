@@ -78,6 +78,10 @@ import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.descdiagram.EntityImageDesignedDomain;
+import net.sourceforge.plantuml.descdiagram.EntityImageDomain;
+import net.sourceforge.plantuml.descdiagram.EntityImageMachine;
+import net.sourceforge.plantuml.descdiagram.EntityImageRequirement;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -429,7 +433,28 @@ public final class DotDataImageBuilder {
 		if (leaf.getLeafType() == LeafType.TIPS) {
 			return new EntityImageTips(leaf, skinParam, bibliotekon);
 		}
-		throw new UnsupportedOperationException(leaf.getLeafType().toString());
+		// TODO Clean
+		if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isMachineOrSpecification()) {
+			return new EntityImageMachine(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isDesignedOrSolved()) {
+			return new EntityImageDesignedDomain(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.REQUIREMENT) {
+			return new EntityImageRequirement(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isLexicalOrGiven()) {
+			return new EntityImageDomain(leaf, skinParam, 'X');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isCausal()) {
+			return new EntityImageDomain(leaf, skinParam, 'C');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isBiddableOrUncertain()) {
+			return new EntityImageDomain(leaf, skinParam, 'B');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN) {
+			return new EntityImageDomain(leaf, skinParam, 'P');
+		} else
+			throw new UnsupportedOperationException(leaf.getLeafType().toString());
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {
