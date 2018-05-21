@@ -101,7 +101,7 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	private void updateLasts(final IEntity result) {
-		if (result.getLeafType() == LeafType.NOTE) {
+		if (result == null || result.getLeafType() == LeafType.NOTE) {
 			return;
 		}
 		this.lastEntityConsulted = result;

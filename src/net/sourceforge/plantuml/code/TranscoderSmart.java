@@ -76,8 +76,8 @@ public class TranscoderSmart implements Transcoder {
 		}
 		// Text prefix
 		// Just a wild try: use them only for testing
-		if (code.startsWith("-zlib-")) {
-			return zlibBase64.decode(code.substring("-zlib-".length()));
+		if (code.startsWith("-deflate-")) {
+			return zlibBase64.decode(code.substring("-deflate-".length()));
 		}
 		if (code.startsWith("-brotli-")) {
 			return brotliBase64.decode(code.substring("-brotli-".length()));

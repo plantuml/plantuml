@@ -113,6 +113,9 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 
 		final IEntity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
+		if (entity1 == null) {
+			return CommandExecutionResult.error("No such entity");
+		}
 
 		if (line0.get("STEREOTYPE", 0) != null) {
 			entity1.setStereotype(new Stereotype(line0.get("STEREOTYPE", 0)));
@@ -168,7 +171,11 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			diagram.gotoGroup2(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE, null,
 					NamespaceStrategy.SINGLE);
 		}
-		final IEntity entity2 = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.ACTIVITY, null);
+		final IEntity entity2 = diagram.getOrCreate(code, Display.getWithNewlines(display), LeafType.ACTIVITY);
+		if (entity2 == null) {
+			return CommandExecutionResult.error("No such entity");
+		}
+
 		if (partition != null) {
 			diagram.endGroup();
 		}
@@ -182,10 +189,6 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		if (lineLast.get(4) != null) {
 			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet()
 					.getColorIfValid(lineLast.get(4)));
-		}
-
-		if (entity1 == null || entity2 == null) {
-			return CommandExecutionResult.error("No such entity");
 		}
 
 		final String arrowBody1 = CommandLinkClass.notNull(line0.get("ARROW_BODY1", 0));

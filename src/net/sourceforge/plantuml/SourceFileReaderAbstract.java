@@ -103,7 +103,7 @@ public abstract class SourceFileReaderAbstract {
 	}
 
 	private List<GeneratedImage> getCrashedImage(BlockUml blockUml, Throwable t, File outputFile) throws IOException {
-		final GeneratedImage image = new GeneratedImageImpl(outputFile, "Crash Error", blockUml, 503);
+		final GeneratedImage image = new GeneratedImageImpl(outputFile, "Crash Error", blockUml, FileImageData.CRASH);
 		OutputStream os = null;
 		try {
 			os = new BufferedOutputStream(new FileOutputStream(outputFile));
@@ -150,7 +150,8 @@ public abstract class SourceFileReaderAbstract {
 			}
 
 			OptionFlags.getInstance().logData(file, system);
-			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
+			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption,
+					checkMetadata);
 			if (exportDiagrams.size() > 1) {
 				cpt += exportDiagrams.size() - 1;
 			}
@@ -159,7 +160,7 @@ public abstract class SourceFileReaderAbstract {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
 				final File f = fdata.getFile();
 				exportWarnOrErrIfWord(f, system);
-				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getImageData().getStatus());
+				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getStatus());
 				result.add(generatedImage);
 			}
 

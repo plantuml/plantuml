@@ -150,7 +150,7 @@ public class PSystemError extends AbstractPSystem {
 		}
 		imageBuilder.setUDrawable(udrawable);
 		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
-		((ImageDataAbstract) imageData).setStatus(400);
+		((ImageDataAbstract) imageData).setStatus(FileImageData.ERROR);
 		return imageData;
 	}
 

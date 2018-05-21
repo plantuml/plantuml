@@ -195,12 +195,24 @@ public class Run {
 	}
 
 	public static void forceOpenJdkResourceLoad() {
-		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-		final Graphics2D gg = imDummy.createGraphics();
-		final String text = "Alice";
-		final Font font = new Font("SansSerif", Font.PLAIN, 12);
-		final FontMetrics fm = gg.getFontMetrics(font);
-		final Rectangle2D rect = fm.getStringBounds(text, gg);
+		if (isOpenJdkRunning()) {
+			// see https://github.com/plantuml/plantuml/issues/123
+			Log.info("Forcing resource load on OpenJdk");
+			final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+			final Graphics2D gg = imDummy.createGraphics();
+			final String text = "Alice";
+			final Font font = new Font("SansSerif", Font.PLAIN, 12);
+			final FontMetrics fm = gg.getFontMetrics(font);
+			final Rectangle2D rect = fm.getStringBounds(text, gg);
+		}
+	}
+
+	public static boolean isOpenJdkRunning() {
+		final String jvmName = System.getProperty("java.vm.name");
+		if (jvmName != null && jvmName.toLowerCase().contains("openjdk")) {
+			return true;
+		}
+		return false;
 	}
 
 	private static void encodeSprite(List<String> result) throws IOException {
