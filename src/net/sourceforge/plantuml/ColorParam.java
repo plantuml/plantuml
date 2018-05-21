@@ -167,15 +167,18 @@ public enum ColorParam {
 	
 	arrowLollipop(HtmlColorUtils.WHITE),
 	
-	domainBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	domainBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	designedDomainBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	designedDomainBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	machineBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	machineBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	requirementBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	requirementBorder(HtmlColorUtils.MY_RED, ColorType.LINE);
-
+	machineBackground(HtmlColorUtils.WHITE), 
+	machineBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	requirementBackground(HtmlColorUtils.WHITE), 
+	requirementBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	designedBackground(HtmlColorUtils.WHITE), 
+	designedBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	domainBackground(HtmlColorUtils.WHITE), 
+	domainBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	lexicalBackground(HtmlColorUtils.WHITE), 
+	lexicalBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	biddableBackground(HtmlColorUtils.WHITE), 
+	biddableBorder(HtmlColorUtils.BLACK, ColorType.LINE);
 
 	private final boolean isBackground;
 	private final HtmlColor defaultValue;
