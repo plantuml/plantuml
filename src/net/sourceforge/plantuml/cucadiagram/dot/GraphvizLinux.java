@@ -48,12 +48,15 @@ class GraphvizLinux extends AbstractGraphviz {
 	@Override
 	protected File specificDotExe() {
 		final File usrLocalBinDot = new File("/usr/local/bin/dot");
-
 		if (usrLocalBinDot.exists()) {
 			return usrLocalBinDot;
 		}
 		final File usrBinDot = new File("/usr/bin/dot");
-		return usrBinDot;
+		if (usrBinDot.exists()) {
+			return usrBinDot;
+		}
+		final File optLocalBinDot = new File("/opt/local/bin/dot");
+		return optLocalBinDot;
 	}
 
 }

@@ -40,6 +40,9 @@ import java.io.File;
 import net.sourceforge.plantuml.core.ImageData;
 
 public class FileImageData {
+	
+	public static final int ERROR = 400;
+	public static final int CRASH = 503;
 
 	private final File file;
 	private final ImageData imageData;
@@ -55,6 +58,13 @@ public class FileImageData {
 
 	public ImageData getImageData() {
 		return imageData;
+	}
+
+	public int getStatus() {
+		if (imageData == null) {
+			return 0;
+		}
+		return imageData.getStatus();
 	}
 
 }
