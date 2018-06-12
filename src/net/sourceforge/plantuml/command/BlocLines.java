@@ -43,7 +43,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class BlocLines implements Iterable<CharSequence> {
@@ -94,7 +93,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public CharSequence getFirst499() {
-		if (lines.size()==0) {
+		if (lines.size() == 0) {
 			return null;
 		}
 		return lines.get(0);
@@ -232,38 +231,19 @@ public class BlocLines implements Iterable<CharSequence> {
 		return lines.iterator();
 	}
 
-	@Deprecated
-	public BlocLines removeComments() {
+	public BlocLines eventuallyMoveBracket() {
+		if (size() < 2) {
+			return this;
+		}
+		final String first = StringUtils.trin(getFirst499());
+		final String second = StringUtils.trin(get499(1));
+		if (first.endsWith("{") == false && second.equals("{")) {
+			final String vline = first + " {";
+			final List<CharSequence> result = new ArrayList<CharSequence>();
+			result.add(vline);
+			result.addAll(this.lines.subList(2, this.lines.size()));
+			return new BlocLines(result);
+		}
 		return this;
-//		final List<CharSequence> copy = new ArrayList<CharSequence>();
-//		boolean inComment = false;
-//		for (CharSequence cs : lines) {
-//			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_SINGLE_LINE)) {
-//				continue;
-//			}
-//			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_START)) {
-//				inComment = true;
-//				continue;
-//			}
-//			if (inComment && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_END)) {
-//				inComment = false;
-//				continue;
-//			}
-//			if (inComment == false) {
-//				copy.add(cs);
-//			}
-//		}
-//		return new BlocLines(copy);
 	}
-
-	@Deprecated
-	public BlocLines removeInnerComments() {
-		return this;
-//		final List<CharSequence> copy = new ArrayList<CharSequence>();
-//		for (CharSequence cs : lines) {
-//			copy.add(MyPattern.removeAll(cs, CommandMultilinesComment.INNER_COMMENT));
-//		}
-//		return new BlocLines(copy);
-	}
-
 }

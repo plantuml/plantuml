@@ -108,7 +108,13 @@ public class Option {
 		}
 		for (int i = 0; i < arg.length; i++) {
 			String s = arg[i];
-			if (s.equalsIgnoreCase("-tsvg") || s.equalsIgnoreCase("-svg")) {
+			if (s.equalsIgnoreCase("-headless")) {
+				// Useless because done in Run.java
+				if (i != 0) {
+					Log.error("Warning: -headless flag must be the first one in the command line");
+				}
+				System.setProperty("java.awt.headless", "true");
+			} else if (s.equalsIgnoreCase("-tsvg") || s.equalsIgnoreCase("-svg")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.SVG));
 			} else if (s.equalsIgnoreCase("-tsvg:nornd") || s.equalsIgnoreCase("-svg:nornd")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.SVG));
@@ -306,6 +312,12 @@ public class Option {
 				OptionFlags.getInstance().setEnableStats(false);
 			} else if (s.equalsIgnoreCase("-extractstdlib")) {
 				OptionFlags.getInstance().setExtractStdLib(true);
+			} else if (s.equalsIgnoreCase("-stdlib")) {
+				OptionFlags.getInstance().setStdLib(true);
+			} else if (s.equalsIgnoreCase("-clipboard")) {
+				OptionFlags.getInstance().setClipboard(true);
+			} else if (s.equalsIgnoreCase("-clipboardloop")) {
+				OptionFlags.getInstance().setClipboardLoop(true);
 			} else if (s.equalsIgnoreCase("-htmlstats")) {
 				StatsUtils.setHtmlStats(true);
 			} else if (s.equalsIgnoreCase("-xmlstats")) {

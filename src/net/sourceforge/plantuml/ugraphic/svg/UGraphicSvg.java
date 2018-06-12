@@ -70,6 +70,10 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	private final boolean textAsPath2;
 	private final String target;
 
+	public double dpiFactor() {
+		return 1;
+	}
+
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
 		return new UGraphicSvg(this);

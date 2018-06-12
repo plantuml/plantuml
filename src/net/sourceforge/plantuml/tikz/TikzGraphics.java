@@ -345,6 +345,7 @@ public class TikzGraphics {
 		text = text.replaceAll("<", "\\\\textless ");
 		text = text.replaceAll(">", "\\\\textgreater ");
 		text = text.replaceAll("&", "\\\\&");
+		text = text.replaceAll("%", "\\\\%");
 		text = text.replaceAll("~", "\\\\~{}");
 		return text;
 	}

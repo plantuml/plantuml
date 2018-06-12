@@ -50,6 +50,7 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("PARALLEL", "(&%s*)?"), //
 				new RegexLeaf("PARTICIPANT", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("ARROW_SUPPCIRCLE", "([%s]+[ox])?"), //

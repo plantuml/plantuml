@@ -137,7 +137,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				return "(?i)^[%s]*(end[%s]?note)$";
 			}
 
-			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 				lines = lines.subExtract(1, 1);

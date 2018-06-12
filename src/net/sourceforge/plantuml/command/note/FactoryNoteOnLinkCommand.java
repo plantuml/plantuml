@@ -87,7 +87,7 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 				return "(?i)^[%s]*end[%s]?note$";
 			}
 
-			public CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines) {
 				final String line0 = lines.getFirst499().toString();
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();

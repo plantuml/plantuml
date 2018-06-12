@@ -167,7 +167,7 @@ public class DrawableSet {
 				pending.add(ent.getKey());
 				continue;
 			}
-			pending = new Englober(englober, ent.getKey(), getSkinParam(), skin, stringBounder);
+			pending = Englober.createPuma(englober, ent.getKey(), getSkinParam(), skin, stringBounder);
 			result.add(pending);
 		}
 		return Collections.unmodifiableList(result);

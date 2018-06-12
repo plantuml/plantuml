@@ -54,7 +54,7 @@ public class SyntaxResult {
 	private String description;
 	// private int errorLinePosition;
 	private Collection<String> errors = new TreeSet<String>();
-	private List<String> suggest;
+	// private List<String> suggest;
 	private boolean hasCmapData;
 	private PSystemError systemError;
 	private LineLocation lineLocation;
@@ -71,13 +71,13 @@ public class SyntaxResult {
 		return description;
 	}
 
-//	public int getErrorLinePosition() {
-//		return errorLinePosition;
-//	}
+	// public int getErrorLinePosition() {
+	// return errorLinePosition;
+	// }
 
-	public List<String> getSuggest() {
-		return suggest;
-	}
+	// public List<String> getSuggest() {
+	// return suggest;
+	// }
 
 	public Collection<String> getErrors() {
 		return Collections.unmodifiableCollection(errors);
@@ -95,17 +95,17 @@ public class SyntaxResult {
 		this.description = description;
 	}
 
-//	public void setErrorLinePosition(int errorLinePosition) {
-//		this.errorLinePosition = errorLinePosition;
-//	}
+	// public void setErrorLinePosition(int errorLinePosition) {
+	// this.errorLinePosition = errorLinePosition;
+	// }
 
 	public void addErrorText(String error) {
 		this.errors.add(error);
 	}
 
-	public void setSuggest(List<String> suggest) {
-		this.suggest = suggest;
-	}
+	// public void setSuggest(List<String> suggest) {
+	// this.suggest = suggest;
+	// }
 
 	public final boolean hasCmapData() {
 		return hasCmapData;

@@ -40,4 +40,6 @@ public interface INumberAnalyzed {
 
 	public long getMean();
 
+	public long getSliddingMean();
+
 }

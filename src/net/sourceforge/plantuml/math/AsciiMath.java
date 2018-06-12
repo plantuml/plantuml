@@ -82,8 +82,12 @@ public class AsciiMath implements ScientificEquation {
 		final ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
 		engine.eval(JAVASCRIPT_CODE);
 		final Invocable inv = (Invocable) engine;
-		this.tex = (String) inv.invokeFunction("plantuml", form);
+		this.tex = patchColor((String) inv.invokeFunction("plantuml", form));
 		this.builder = new LatexBuilder(tex);
+	}
+
+	private String patchColor(String latex) {
+		return latex.replace("\\color{", "\\textcolor{");
 	}
 
 	public Dimension2D getDimension() {

@@ -50,13 +50,24 @@ public class ReadLineReader implements ReadLine {
 	private final BufferedReader br;
 	private LineLocationImpl location;
 
-	public ReadLineReader(Reader reader, String desc, LineLocation parent) {
+	private ReadLineReader(Reader reader, String description, LineLocation parent) {
+		if (description == null) {
+			description = "?";
+		}
 		br = new BufferedReader(reader);
-		location = new LineLocationImpl(desc, parent);
+		location = new LineLocationImpl(description, parent);
 	}
 
-	public ReadLineReader(Reader reader, String desc) {
+	private ReadLineReader(Reader reader, String desc) {
 		this(reader, desc, null);
+	}
+
+	public static ReadLine create(Reader reader, String description) {
+		return new ReadLineReader(reader, description, null);
+	}
+
+	public static ReadLine create(Reader reader, String description, LineLocation parent) {
+		return new ReadLineReader(reader, description, parent);
 	}
 
 	public CharSequence2 readLine() throws IOException {

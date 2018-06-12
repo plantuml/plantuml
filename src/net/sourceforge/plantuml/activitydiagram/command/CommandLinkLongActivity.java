@@ -108,7 +108,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexLeaf("$"));
 	}
 
-	public CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 

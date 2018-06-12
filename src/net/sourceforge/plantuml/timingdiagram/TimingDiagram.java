@@ -93,24 +93,13 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
 				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
 				getAnimation());
-		// imageBuilder.setUDrawable(getUDrawable());
 
 		TextBlock result = getTextBlock();
-		// TextBlock result = new TextBlockCompressed(getTextBlock());
-		// result = new TextBlockRecentred(result);
 		final ISkinParam skinParam = getSkinParam();
 		result = new AnnotatedWorker(this, skinParam).addAdd(result);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
-	}
-
-	private UDrawable getUDrawable() {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				drawInternal(ug);
-			}
-		};
 	}
 
 	private TextBlockBackcolored getTextBlock() {

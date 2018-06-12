@@ -34,6 +34,7 @@
  *
  */
 package net.sourceforge.plantuml.pdf;
+
 import java.io.File;
 import java.lang.reflect.Method;
 
@@ -50,6 +51,9 @@ public class PdfConverter {
 		}
 
 		try {
+			// https://stackoverflow.com/questions/12579468/how-to-set-log4j-property-file
+			System.setProperty("log4j.debug", "false");
+
 			final Class<?> clSVGConverter = Class.forName("org.apache.batik.apps.rasterizer.SVGConverter");
 
 			final Object converter = clSVGConverter.newInstance();

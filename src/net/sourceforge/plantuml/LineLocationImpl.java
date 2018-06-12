@@ -43,9 +43,6 @@ public class LineLocationImpl implements LineLocation {
 
 	@Override
 	public String toString() {
-		if (desc == null) {
-			return "[?] : " + position;
-		}
 		return desc + " : " + position;
 	}
 
@@ -54,6 +51,9 @@ public class LineLocationImpl implements LineLocation {
 	}
 
 	private LineLocationImpl(String desc, LineLocation parent, int position) {
+		if (desc == null) {
+			throw new IllegalArgumentException();
+		}
 		this.parent = parent;
 		this.desc = desc;
 		this.position = position;

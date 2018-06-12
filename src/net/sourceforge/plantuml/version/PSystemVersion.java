@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.PreprocessorInclude;
-import net.sourceforge.plantuml.preproc.StdlibOld;
+import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -174,7 +174,7 @@ public class PSystemVersion extends AbstractPSystem {
 		}
 		strings.add(" ");
 		strings.add("<b>Stdlib:");
-		StdlibOld.addInfoVersion(strings);
+		Stdlib.addInfoVersion(strings, false);
 		strings.add(" ");
 
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
@@ -185,6 +185,14 @@ public class PSystemVersion extends AbstractPSystem {
 		for (String v : OptionPrint.interestingValues()) {
 			strings.add(v);
 		}
+
+		return new PSystemVersion(true, strings);
+	}
+
+	public static PSystemVersion createStdLib() {
+		final List<String> strings = new ArrayList<String>();
+		Stdlib.addInfoVersion(strings, true);
+		strings.add(" ");
 
 		return new PSystemVersion(true, strings);
 	}

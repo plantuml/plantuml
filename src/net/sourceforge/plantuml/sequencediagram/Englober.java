@@ -61,11 +61,17 @@ public class Englober {
 	final private TileArguments tileArguments;
 	final private Real core1;
 	final private Real core2;
+	final private boolean isTeoz;
+	private double marginX = 0;
 
-	@Deprecated
-	public Englober(ParticipantEnglober participantEnglober, Participant first, ISkinParam skinParam, Skin skin,
+	public static Englober createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Skin skin,
 			StringBounder stringBounder) {
-		this(participantEnglober, first, convertFunctionToBeRemoved(skinParam, skin, stringBounder));
+		return new Englober(englober, first, convertFunctionToBeRemoved(skinParam, skin, stringBounder), false);
+	}
+
+	public static Englober createTeoz(ParticipantEnglober participantEnglober, Participant first,
+			TileArguments tileArguments) {
+		return new Englober(participantEnglober, first, tileArguments, true);
 	}
 
 	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Skin skin, StringBounder stringBounder) {
@@ -73,10 +79,12 @@ public class Englober {
 		return result;
 	}
 
-	public Englober(ParticipantEnglober participantEnglober, Participant first, TileArguments tileArguments) {
+	private Englober(ParticipantEnglober participantEnglober, Participant first, TileArguments tileArguments,
+			boolean isTeoz) {
 		if (tileArguments == null) {
 			throw new IllegalArgumentException();
 		}
+		this.isTeoz = isTeoz;
 		this.participantEnglober = participantEnglober;
 		this.participants.add(first);
 		this.tileArguments = tileArguments;
@@ -163,6 +171,13 @@ public class Englober {
 	}
 
 	private double getPreferredWidth() {
+		if (isTeoz) {
+			return 10;
+		}
+		return getTitleWidth();
+	}
+
+	private double getTitleWidth() {
 		return getComponent().getPreferredWidth(tileArguments.getStringBounder());
 	}
 
@@ -181,14 +196,22 @@ public class Englober {
 	}
 
 	private Real getX2() {
-		return RealUtils.max(getPosD(), core2);
+		return RealUtils.max(getPosD(), core2).addFixed(marginX);
 	}
 
 	private Real getX1() {
-		return RealUtils.min(getPosB(), core1);
+		return RealUtils.min(getPosB(), core1).addFixed(-marginX);
 	}
 
 	public void addInternalConstraints() {
+		assert isTeoz;
+		final double titleWidth = getTitleWidth();
+		final double x1 = getX1().getCurrentValue();
+		final double x2 = getX2().getCurrentValue();
+		final double actualWidth = x2 - x1;
+		if (titleWidth > actualWidth + 20) {
+			this.marginX = (titleWidth - actualWidth - 20) / 2;
+		}
 		getX1().ensureBiggerThan(getPosAA().addFixed(10));
 		final Real posZZ = getPosZZ();
 		final Real limit = getX2().addFixed(10);

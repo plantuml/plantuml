@@ -114,14 +114,19 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf("IMPLEMENTS", "([%s]+(implements)[%s]+(" + CODES + "))?"), //
 				new RegexLeaf("[%s]*\\{[%s]*$"));
 	}
+	
+	@Override
+	public boolean syntaxWithFinalBracket() {
+		return true;
+	}
+
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
-	public CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
-		lines = lines.removeComments();
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {

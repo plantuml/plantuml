@@ -72,7 +72,7 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 				new RegexLeaf("$"));
 	}
 
-	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());

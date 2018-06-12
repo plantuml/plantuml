@@ -56,7 +56,7 @@ public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 		return "(?i)^end[%s]?note$";
 	}
 
-	public CommandExecutionResult executeNow(final TimingDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(final TimingDiagram diagram, BlocLines lines) {
 
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		lines = lines.subExtract(1, 1);

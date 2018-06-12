@@ -106,14 +106,17 @@ public class StripeTable implements Stripe {
 		return line.substring(idx2 + 1);
 	}
 
+	private static final String hiddenBar = "\uE000";
+
 	private void analyzeAndAddInternal(String line, Mode mode) {
+		line = line.replace("\\|", hiddenBar);
 		HtmlColor lineBackColor = getBackOrFrontColor(line, 0);
 		if (lineBackColor != null) {
 			line = withouBackColor(line);
 		}
 		table.newLine(lineBackColor);
 		for (final StringTokenizer st = new StringTokenizer(line, "|"); st.hasMoreTokens();) {
-			String v = st.nextToken();
+			String v = st.nextToken().replace(hiddenBar.charAt(0), '|');
 			HtmlColor cellBackColor = getBackOrFrontColor(v, 0);
 			if (cellBackColor != null) {
 				v = withouBackColor(v);

@@ -192,7 +192,7 @@ public enum SpriteGrayLevel {
 				if (strings.get(line).charAt(col) != '0') {
 					final String s = "" + strings.get(line).charAt(col);
 					final int x = Integer.parseInt(StringUtils.goUpperCase(s), 16);
-					result.setPixel(col, line, x);
+					result.setGrey(col, line, x);
 				}
 			}
 		}
@@ -209,8 +209,8 @@ public enum SpriteGrayLevel {
 				final int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));
 				final int w1 = v / 8;
 				final int w2 = v % 8;
-				result.setPixel(col, line * 2, w1);
-				result.setPixel(col, line * 2 + 1, w2);
+				result.setGrey(col, line * 2, w1);
+				result.setGrey(col, line * 2 + 1, w2);
 
 			}
 		}
@@ -229,9 +229,9 @@ public enum SpriteGrayLevel {
 				v = v % 16;
 				final int w2 = v / 4;
 				final int w3 = v % 4;
-				result.setPixel(col, line * 3, w1);
-				result.setPixel(col, line * 3 + 1, w2);
-				result.setPixel(col, line * 3 + 2, w3);
+				result.setGrey(col, line * 3, w1);
+				result.setGrey(col, line * 3 + 1, w2);
+				result.setGrey(col, line * 3 + 2, w3);
 
 			}
 		}
@@ -288,7 +288,7 @@ public enum SpriteGrayLevel {
 		int cpt = 0;
 		for (int line = 0; line < result.getHeight(); line++) {
 			for (int col = 0; col < result.getWidth(); col++) {
-				result.setPixel(col, line, img[cpt++]);
+				result.setGrey(col, line, img[cpt++]);
 
 			}
 		}

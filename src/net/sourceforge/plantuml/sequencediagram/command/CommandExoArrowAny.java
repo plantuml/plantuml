@@ -129,7 +129,12 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 			final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
 			msg.setUrl(urlLink);
 		}
-		
+
+		final boolean parallel = arg.get("PARALLEL", 0) != null;
+		if (parallel) {
+			msg.goParallel();
+		}
+
 		final String error = diagram.addMessage(msg);
 		if (error != null) {
 			return CommandExecutionResult.error(error);

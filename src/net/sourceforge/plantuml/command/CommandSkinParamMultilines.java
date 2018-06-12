@@ -98,7 +98,6 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 
 		lines = lines.subExtract(1, 1);
-		lines = lines.removeComments();
 		lines = lines.trim(true);
 
 		for (CharSequence s : lines) {

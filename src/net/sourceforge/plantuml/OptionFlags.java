@@ -123,7 +123,10 @@ public class OptionFlags {
 	private boolean loopStats;
 	private boolean overwrite;
 	private boolean enableStats = defaultForStats();
+	private boolean stdLib;
 	private boolean extractStdLib;
+	private boolean clipboardLoop;
+	private boolean clipboard;
 	private String fileSeparator = "_";
 	private long timeoutMs = 15 * 60 * 1000L; // 15 minutes
 	private File logData;
@@ -339,7 +342,31 @@ public class OptionFlags {
 		this.extractStdLib = extractStdLib;
 	}
 
-	public boolean getExtractStdLib() {
+	public boolean isExtractStdLib() {
 		return extractStdLib;
+	}
+
+	public final boolean isClipboardLoop() {
+		return clipboardLoop;
+	}
+
+	public final void setClipboardLoop(boolean clipboardLoop) {
+		this.clipboardLoop = clipboardLoop;
+	}
+
+	public final boolean isClipboard() {
+		return clipboard;
+	}
+
+	public final void setClipboard(boolean clipboard) {
+		this.clipboard = clipboard;
+	}
+
+	public final boolean isStdLib() {
+		return stdLib;
+	}
+
+	public final void setStdLib(boolean stdLib) {
+		this.stdLib = stdLib;
 	}
 }

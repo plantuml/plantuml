@@ -52,6 +52,10 @@ public class UGraphicHandwritten implements UGraphic {
 
 	private final UGraphic ug;
 
+	public double dpiFactor() {
+		return ug.dpiFactor();
+	}
+
 	public UGraphicHandwritten(UGraphic ug) {
 		this.ug = ug;
 	}

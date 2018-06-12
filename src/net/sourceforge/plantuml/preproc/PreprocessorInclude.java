@@ -266,7 +266,7 @@ public class PreprocessorInclude implements ReadLine {
 	}
 
 	private InputStream getStdlibInputStream(String filename) {
-		return StdlibOld.getResourceAsStream(filename);
+		return Stdlib.getResourceAsStream(filename);
 	}
 
 	private InputStream getStdlibInputStreamOld(String filename) {
@@ -285,16 +285,17 @@ public class PreprocessorInclude implements ReadLine {
 		if (is == null) {
 			return null;
 		}
+		final String description = "<" + filename + ">";
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(s, is)) {
+			if (StartDiagramExtractReader.containsStartDiagram(s, is, description)) {
 				is = getStdlibInputStream(filename);
-				return new StartDiagramExtractReader(s, is);
+				return new StartDiagramExtractReader(s, is, description);
 			}
 			is = getStdlibInputStream(filename);
 			if (is == null) {
 				return null;
 			}
-			return new ReadLineReader(new InputStreamReader(is), filename);
+			return ReadLineReader.create(new InputStreamReader(is), filename);
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());
 		}
@@ -318,10 +319,10 @@ public class PreprocessorInclude implements ReadLine {
 			}
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new ReadLineReader(new FileReader(f), f.getAbsolutePath(), s.getLocation());
+				return ReadLineReader.create(new FileReader(f), f.getAbsolutePath(), s.getLocation());
 			}
 			Log.info("Using charset " + charset);
-			return new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
+			return ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
 					s.getLocation());
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());
@@ -337,10 +338,10 @@ public class PreprocessorInclude implements ReadLine {
 			final InputStream is = url.openStream();
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new ReadLineReader(new InputStreamReader(is), url.toString(), s.getLocation());
+				return ReadLineReader.create(new InputStreamReader(is), url.toString(), s.getLocation());
 			}
 			Log.info("Using charset " + charset);
-			return new ReadLineReader(new InputStreamReader(is, charset), url.toString(), s.getLocation());
+			return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());
 		}

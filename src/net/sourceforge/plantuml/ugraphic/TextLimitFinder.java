@@ -45,6 +45,11 @@ public class TextLimitFinder implements UGraphic {
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
+	
+	public double dpiFactor() {
+		return 1;
+	}
+
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {

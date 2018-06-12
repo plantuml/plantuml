@@ -50,6 +50,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("PARALLEL", "(&%s*)?"), //
 				new RegexLeaf("SHORT", "([?\\[\\]][ox]?)?"), //
 				new RegexOr( //
 						new RegexConcat( //

@@ -49,6 +49,26 @@ public class MinMax {
 	private final double minX;
 	private final double minY;
 
+	public boolean doesHorizontalCross(Point2D.Double pt1, Point2D.Double pt2) {
+		if (pt1.getY() != pt2.getY()) {
+			throw new IllegalArgumentException();
+		}
+		if (pt1.getX() == pt2.getX()) {
+			throw new IllegalArgumentException();
+		}
+		final double y = pt1.getY();
+		if (y < minY || y > maxY) {
+			return false;
+		}
+		if (pt1.getX() < minX && pt2.getX() > maxX) {
+			return true;
+		}
+		if (pt2.getX() < minX && pt1.getX() > maxX) {
+			return true;
+		}
+		return false;
+	}
+
 	public static MinMax getEmpty(boolean initToZero) {
 		if (initToZero) {
 			return new MinMax(0, 0, 0, 0);
@@ -81,7 +101,8 @@ public class MinMax {
 	}
 
 	public MinMax addMinMax(MinMax other) {
-		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX), Math.max(other.maxY, maxY));
+		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX), Math.max(
+				other.maxY, maxY));
 	}
 
 	public static MinMax fromMax(double maxX, double maxY) {

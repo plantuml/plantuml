@@ -73,6 +73,10 @@ public class Footprint {
 		private final UTranslate translate;
 		private final List<Point2D.Double> all;
 
+		public double dpiFactor() {
+			return 1;
+		}
+
 		private MyUGraphic(List<Point2D.Double> all, UTranslate translate) {
 			this.all = all;
 			this.translate = translate;

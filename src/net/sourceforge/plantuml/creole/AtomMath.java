@@ -90,11 +90,12 @@ public class AtomMath implements Atom {
 			back = getColor(background == null ? ug.getParam().getBackcolor() : background, Color.WHITE);
 		}
 		final Color fore = getColor(foreground, Color.BLACK);
+		final double dpiFactor = ug.dpiFactor();
 		if (isSvg) {
 			final SvgString svg = math.getSvg(scale, fore, back);
 			ug.draw(new UImageSvg(svg));
 		} else {
-			ug.draw(new UImage(math.getImage(scale, fore, back)));
+			ug.draw(new UImage(math.getImage(scale * dpiFactor, fore, back)));
 		}
 	}
 

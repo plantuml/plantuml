@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -74,14 +76,15 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	final private Url url;
 
-	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.USECASE, skinParam,
 				HorizontalAlignment.CENTER, stereotype, true, false, entity);
 
-		if (stereotype == null || stereotype.getLabel(false) == null) {
+		if (stereotype == null || stereotype.getLabel(false) == null
+				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			this.desc = tmp;
 		} else {
 			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet()))

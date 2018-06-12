@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.CompressionTransform;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -271,6 +272,10 @@ public class Snake implements UShape {
 
 	public void emphasizeDirection(Direction direction) {
 		this.emphasizeDirection = direction;
+	}
+
+	public boolean doesHorizontalCross(MinMax minMax) {
+		return worm.doesHorizontalCross(minMax);
 	}
 
 }

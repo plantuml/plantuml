@@ -113,7 +113,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				return "(?i)^end[%s]?(note|hnote|rnote)$";
 			}
 
-			public CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
 				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();

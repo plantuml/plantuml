@@ -40,9 +40,6 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -75,6 +72,7 @@ import javax.swing.WindowConstants;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.ImageSelection;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -441,31 +439,4 @@ class ImageWindow2 extends JFrame {
 		// scrollPane.repaint();
 	}
 
-}
-
-// This class is used to hold an image while on the clipboard.
-class ImageSelection implements Transferable {
-	private Image image;
-
-	public ImageSelection(Image image) {
-		this.image = image;
-	}
-
-	// Returns supported flavors
-	public DataFlavor[] getTransferDataFlavors() {
-		return new DataFlavor[] { DataFlavor.imageFlavor };
-	}
-
-	// Returns true if flavor is supported
-	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		return DataFlavor.imageFlavor.equals(flavor);
-	}
-
-	// Returns image
-	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-		if (!DataFlavor.imageFlavor.equals(flavor)) {
-			throw new UnsupportedFlavorException(flavor);
-		}
-		return image;
-	}
 }

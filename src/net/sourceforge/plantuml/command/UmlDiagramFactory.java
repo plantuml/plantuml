@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.NewpagedDiagram;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
@@ -53,9 +52,6 @@ import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.suggest.SuggestEngine;
-import net.sourceforge.plantuml.suggest.SuggestEngineResult;
-import net.sourceforge.plantuml.suggest.SuggestEngineStatus;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
@@ -103,7 +99,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 				sys.setSource(source);
 				return sys;
 			}
-			sys = executeOneLine(sys, source, it);
+			sys = executeFewLines(sys, source, it);
 			if (sys instanceof PSystemError) {
 				return sys;
 			}
@@ -113,90 +109,57 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	}
 
-	private AbstractPSystem executeOneLine(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it) {
-		final CommandControl commandControl = isValid2(it);
-		if (commandControl == CommandControl.NOT_OK) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", /* it.currentNum(), */it.peek()
-					.getLocation());
-			if (OptionFlags.getInstance().isUseSuggestEngine2()) {
-				final SuggestEngine engine = new SuggestEngine(source, this);
-				final SuggestEngineResult result = engine.tryToSuggest(sys);
-				if (result.getStatus() == SuggestEngineStatus.ONE_SUGGESTION) {
-					err.setSuggest(result);
-				}
-			}
-			sys = new PSystemError(source, err, null);
-		} else if (commandControl == CommandControl.OK_PARTIAL) {
-			final IteratorCounter2 saved = it.cloneMe();
-			final CommandExecutionResult result = manageMultiline2(it, sys);
-			if (result.isOk() == false) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-				/* it.currentNum() - 1, */saved.next().getLocation());
-				sys = new PSystemError(source, err, null);
+	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it) {
+		final Step step = getCandidate(it);
+		if (step == null) {
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", it.peek().getLocation());
+			return new PSystemError(source, err, null);
+		}
 
-			}
-		} else if (commandControl == CommandControl.OK) {
-			final CharSequence line = it.next();
-			final BlocLines lines = BlocLines.single(line);
-			Command cmd = getFirstCommandOkForLines(lines);
-			final CommandExecutionResult result = sys.executeCommand(cmd, lines);
-			if (result.isOk() == false) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-				/* it.currentNum() - 1, */((CharSequence2) line).getLocation());
-				sys = new PSystemError(source, err,
-						result.getDebugLines());
-			}
-			if (result.getNewDiagram() != null) {
-				sys = result.getNewDiagram();
-			}
-		} else {
-			assert false;
+		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines);
+		if (result.isOk() == false) {
+			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
+					((CharSequence2) step.blocLines.getFirst499()).getLocation());
+			sys = new PSystemError(source, err, result.getDebugLines());
+		}
+		if (result.getNewDiagram() != null) {
+			sys = result.getNewDiagram();
 		}
 		return sys;
+
 	}
 
-	public CommandControl isValid2(final IteratorCounter2 it) {
-		final BlocLines lines = BlocLines.single(it.peek());
-		for (Command cmd : cmds) {
-			final CommandControl result = cmd.isValid(lines);
-			if (result == CommandControl.OK) {
-				return result;
-			}
-			if (result == CommandControl.OK_PARTIAL && isMultilineCommandOk(it.cloneMe(), cmd) != null) {
-				return result;
-			}
+	static class Step {
+		final Command command;
+		final BlocLines blocLines;
+
+		Step(Command command, BlocLines blocLines) {
+			this.command = command;
+			this.blocLines = blocLines;
 		}
-		return CommandControl.NOT_OK;
+
 	}
 
-	public CommandControl goForwardMultiline(final IteratorCounter2 it) {
-		final BlocLines lines = BlocLines.single(it.peek());
+	private Step getCandidate(final IteratorCounter2 it) {
+		final BlocLines single = BlocLines.single(it.peek());
 		for (Command cmd : cmds) {
-			final CommandControl result = cmd.isValid(lines);
+			final CommandControl result = cmd.isValid(single);
 			if (result == CommandControl.OK) {
-				throw new IllegalStateException();
+				it.next();
+				return new Step(cmd, single);
 			}
-			if (result == CommandControl.OK_PARTIAL && isMultilineCommandOk(it, cmd) != null) {
-				return result;
-			}
-		}
-		return CommandControl.NOT_OK;
-		// throw new IllegalStateException();
-	}
-
-	private CommandExecutionResult manageMultiline2(IteratorCounter2 it, AbstractPSystem system) {
-		for (Command cmd : cmds) {
-			if (isMultilineCommandOk(it.cloneMe(), cmd) != null) {
-				final BlocLines lines = isMultilineCommandOk(it, cmd);
-				if (system instanceof NewpagedDiagram) {
-					final NewpagedDiagram newpagedDiagram = (NewpagedDiagram) system;
-					return cmd.execute(newpagedDiagram.getLastDiagram(), lines);
-
+			if (result == CommandControl.OK_PARTIAL) {
+				final IteratorCounter2 cloned = it.cloneMe();
+				final BlocLines lines = isMultilineCommandOk(cloned, cmd);
+				if (lines == null) {
+					continue;
 				}
-				return cmd.execute(system, lines);
+				it.copyStateFrom(cloned);
+				assert lines != null;
+				return new Step(cmd, lines);
 			}
 		}
-		return CommandExecutionResult.ok();
+		return null;
 	}
 
 	private BlocLines isMultilineCommandOk(IteratorCounter2 it, Command cmd) {
@@ -236,38 +199,14 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	// -----------------------------------
 
-	final public CommandControl isValid(BlocLines lines) {
-		for (Command cmd : cmds) {
-			final CommandControl result = cmd.isValid(lines);
-			if (result == CommandControl.OK) {
-				return result;
-			}
-			if (result == CommandControl.OK_PARTIAL) {
-				return result;
-			}
-		}
-		return CommandControl.NOT_OK;
-
-	}
-
-	private Command getFirstCommandOkForLines(BlocLines lines) {
-		for (Command cmd : cmds) {
-			final CommandControl result = cmd.isValid(lines);
-			if (result == CommandControl.OK) {
-				return cmd;
-			}
-		}
-		throw new IllegalArgumentException();
-	}
-
 	protected abstract List<Command> createCommands();
 
 	public abstract AbstractPSystem createEmptyDiagram();
 
 	final protected void addCommonCommands(List<Command> cmds) {
 		cmds.add(new CommandNope());
-//		cmds.add(new CommandComment());
-//		cmds.add(new CommandMultilinesComment());
+		// cmds.add(new CommandComment());
+		// cmds.add(new CommandMultilinesComment());
 		cmds.add(new CommandPragma());
 		cmds.add(new CommandTitle());
 		cmds.add(new CommandCaption());
