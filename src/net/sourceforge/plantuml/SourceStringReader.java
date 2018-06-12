@@ -83,7 +83,7 @@ public class SourceStringReader {
 		synchronized (SourceStringReader.class) {
 			try {
 				final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
-						newCurrentDir, null);
+						newCurrentDir, "string");
 				this.blocks = builder.getBlockUmls();
 			} catch (IOException e) {
 				Log.error("error " + e);

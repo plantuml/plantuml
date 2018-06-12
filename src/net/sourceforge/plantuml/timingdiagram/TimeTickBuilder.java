@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class TimeTickBuilder {
 
-	private static final String WITHOUT_AROBASE = "(\\+?)(\\d+\\.?\\d*)";
+	private static final String WITHOUT_AROBASE = "(\\+?)(-?\\d+\\.?\\d*)";
 	private static final String WITH_AROBASE = "@" + WITHOUT_AROBASE;
 
 	public static RegexLeaf expressionAtWithoutArobase(String name) {

@@ -193,44 +193,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 			return;
 		}
 
-		// if (OptionFlags.SWI2) {
-		//
-		// final SlotFinderX slotFinder = new SlotFinderX(ug.getStringBounder());
-		// drawWhenSwimlanes(slotFinder, full);
-		// final SlotSet slotX = slotFinder.getXSlotSet().reverse();
-		// //
-		// // // final SlotSet ysSlotSet = slotFinder.getYSlotSet().reverse().smaller(5.0);
-		// //
-		// System.err.println("slotX=" + slotX);
-		//
-		// printDebug(ug, slotX, HtmlColorUtils.GRAY, full);
-		//
-		// double x2 = 0;
-		// double y2 = 0;
-		// final double stepy = 40;
-		// int i = 0;
-		// final SlotSet deconnectedSwimlanes = new SlotSet();
-		// for (Swimlane swimlane : swimlanes) {
-		// final UGraphic ug2 = ug.apply(new UChangeColor(HtmlColorUtils.GREEN)).apply(
-		// new UChangeBackColor(HtmlColorUtils.GREEN));
-		// final double totalWidth = swimlane.getTotalWidth();
-		// final SlotSet slot2 = slotX.filter(x2 + separationMargin, x2 + totalWidth - separationMargin);
-		// deconnectedSwimlanes.addAll(slot2);
-		// // ug2.apply(new UTranslate(x2, y2)).draw(new URectangle(totalWidth, stepy));
-		// x2 += totalWidth;
-		// y2 += stepy;
-		// i++;
-		// }
-		// // printDebug(ug, deconnectedSwimlanes, HtmlColorUtils.GRAY, full);
-		//
-		// //
-		// final CompressionTransform compressionTransform = new CompressionTransform(deconnectedSwimlanes);
-		// // ug = new UGraphicCompress2(ug, compressionTransform);
-		// drawWhenSwimlanes(ug, full);
-		// } else {
 		drawWhenSwimlanes(ug, full);
-		// }
-		// getCollisionDetector(ug, titleHeightTranslate).drawDebug(ug);
 	}
 
 	static private void printDebug(UGraphic ug, SlotSet slot, HtmlColor col, TextBlock full) {
@@ -257,13 +220,11 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 						+ titleHeightTranslate.getDy()));
 			}
 
-			// if (OptionFlags.SWI2 == false) {
 			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
 					skinParam);
 			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
 			final double posTitle = x2 + (swimlane.getTotalWidth() - titleWidth) / 2;
 			swTitle.drawU(ug.apply(new UTranslate(posTitle, 0)));
-			// }
 
 			drawSeparation(ug.apply(new UTranslate(x2, 0)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
 
@@ -273,6 +234,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 		}
 		drawSeparation(ug.apply(new UTranslate(x2, 0)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
+
 		final Cross cross = new Cross(ug.apply(titleHeightTranslate));
 		full.drawU(cross);
 		cross.flushUg();
@@ -321,32 +283,6 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		}
 	}
 
-	private void computeSizeOld(UGraphic ug, TextBlock full) {
-		double x1 = 0;
-		final StringBounder stringBounder = ug.getStringBounder();
-		for (Swimlane swimlane : swimlanes) {
-
-			final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
-			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(new UGraphicForSnake(
-					limitFinder), swimlane);
-			full.drawU(interceptor);
-			interceptor.flushUg();
-			final MinMax minMax = limitFinder.getMinMax();
-
-			final double drawingWidth = minMax.getWidth() + 2 * separationMargin;
-			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
-					skinParam);
-			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
-			final double totalWidth = Math.max(drawingWidth, titleWidth + 2 * separationMargin);
-
-			final UTranslate translate = new UTranslate(x1 - minMax.getMinX() + separationMargin
-					+ (totalWidth - drawingWidth) / 2.0, 0);
-			swimlane.setTranslateAndWidth(translate, totalWidth);
-
-			x1 += totalWidth;
-		}
-	}
-
 	private UTranslate getTitleHeightTranslate(final StringBounder stringBounder) {
 		double titlesHeight = 0;
 		for (Swimlane swimlane : swimlanes) {
@@ -359,26 +295,6 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		return titleHeightTranslate;
 	}
 
-	private CollisionDetector getCollisionDetector(UGraphic ug, final UTranslate titleHeightTranslate) {
-		final FtileFactory factory = getFtileFactory(ug.getStringBounder());
-		final TextBlock full = root.createFtile(factory);
-		ug = new UGraphicForSnake(ug);
-
-		final CollisionDetector collisionDetector = new CollisionDetector(ug.getStringBounder());
-
-		for (Swimlane swimlane : swimlanes) {
-			full.drawU(new UGraphicInterceptorOneSwimlane(collisionDetector, swimlane).apply(swimlane.getTranslate())
-					.apply(titleHeightTranslate));
-		}
-
-		collisionDetector.setManageSnakes(true);
-		final Cross cross = new Cross(collisionDetector.apply(titleHeightTranslate));
-		full.drawU(cross);
-		cross.flushUg();
-
-		return collisionDetector;
-	}
-
 	private void drawSeparation(UGraphic ug, double height) {
 		HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneBorder, null, false);
 		if (color == null) {
@@ -388,20 +304,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		ug.apply(thickness).apply(new UChangeColor(color)).draw(new ULine(0, height));
 	}
 
-	// private Dimension2D cachedDimension;
-
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return getMinMax(stringBounder).getDimension();
-		// if (cachedDimension == null) {
-		// cachedDimension = calculateDimensionSlow(stringBounder);
-		// }
-		// return cachedDimension;
 	}
-
-	// private Dimension2D calculateDimensionSlow(StringBounder stringBounder) {
-	// final Dimension2D result = TextBlockUtils.getMinMax(this, stringBounder).getDimension();
-	// return result;
-	// }
 
 	public Instruction getCurrent() {
 		return currentInstruction;
@@ -425,7 +330,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	public Swimlane getCurrentSwimlane() {
 		return currentSwimlane;
 	}
-	
+
 	private MinMax cachedMinMax;
 
 	@Override
@@ -435,6 +340,5 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		}
 		return cachedMinMax;
 	}
-
 
 }

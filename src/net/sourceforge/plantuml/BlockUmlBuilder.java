@@ -63,7 +63,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		Preprocessor includer = null;
 		this.defines = defines;
 		try {
-			reader2 = new UncommentReadLine(new ReadLineReader(reader, desc));
+			reader2 = new UncommentReadLine(ReadLineReader.create(reader, desc));
 			includer = new Preprocessor(config, reader2, charset, defines, newCurrentDir, this);
 			init(includer);
 		} finally {

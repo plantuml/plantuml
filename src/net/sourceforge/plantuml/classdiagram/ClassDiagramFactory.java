@@ -99,21 +99,23 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandHideShow2());
 		cmds.add(new CommandRemoveRestore());
+		cmds.add(new CommandCreateClassMultilines());
+		cmds.add(new CommandCreateEntityObjectMultilines());
 		cmds.add(new CommandCreateClass());
 		cmds.add(new CommandCreateEntityObject());
 
 		cmds.add(new CommandAllowMixing());
 		cmds.add(new CommandLayoutNewLine());
 
-		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));
-		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));
-		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
-		cmds.add(factoryNoteCommand.createSingleLine());
-
 		cmds.add(new CommandPackage());
 		cmds.add(new CommandEndPackage());
 		cmds.add(new CommandPackageEmpty());
 		cmds.add(new CommandPackageWithUSymbol());
+		
+		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));
+		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));
+		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
+		cmds.add(factoryNoteCommand.createSingleLine());
 
 		cmds.add(new CommandNamespace());
 		cmds.add(new CommandStereotype());
@@ -136,9 +138,6 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
 		cmds.add(factoryNoteCommand.createMultiLine(false));
-
-		cmds.add(new CommandCreateClassMultilines());
-		cmds.add(new CommandCreateEntityObjectMultilines());
 
 		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());

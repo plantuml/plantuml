@@ -162,7 +162,19 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 		if (nb.get() == 0) {
 			return 0;
 		}
+		// Bad
 		return sum.get() / nb.get();
+	}
+
+	public final long getSliddingMean() {
+		if (nb.get() == 0) {
+			return 0;
+		}
+		if (nb.get() < SLIDING_WINDOW) {
+			return sum.get() / nb.get();
+		}
+		// Bad
+		return sliddingSum.get() / nb.get();
 	}
 
 	final public String getName() {

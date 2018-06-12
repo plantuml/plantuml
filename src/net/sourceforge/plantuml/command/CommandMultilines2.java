@@ -55,6 +55,10 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		this.starting = patternStart;
 	}
 
+	public boolean syntaxWithFinalBracket() {
+		return false;
+	}
+
 	public abstract String getPatternEnd();
 
 	public String[] getDescription() {
@@ -65,6 +69,16 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		lines = lines.cleanList2(strategy);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
+		}
+		if (syntaxWithFinalBracket()) {
+			if (lines.size() == 1 && StringUtils.trin(lines.getFirst499()).endsWith("{") == false) {
+				final String vline = lines.get499(0).toString() + " {";
+				if (isValid(BlocLines.single(vline)) == CommandControl.OK_PARTIAL) {
+					return CommandControl.OK_PARTIAL;
+				}
+				return CommandControl.NOT_OK;
+			}
+			lines = lines.eventuallyMoveBracket();
 		}
 		final CharSequence first = lines.getFirst499();
 		if (first == null) {
@@ -89,10 +103,13 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {
 		lines = lines.cleanList2(strategy);
+		if (syntaxWithFinalBracket()) {
+			lines = lines.eventuallyMoveBracket();
+		}
 		return executeNow(system, lines);
 	}
 
-	public abstract CommandExecutionResult executeNow(S system, BlocLines lines);
+	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines);
 
 	protected boolean isCommandForbidden() {
 		return false;

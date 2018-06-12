@@ -29,7 +29,6 @@
 package net.sourceforge.plantuml.api;
 
 import java.util.StringTokenizer;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.prefs.Preferences;
@@ -38,7 +37,7 @@ import net.sourceforge.plantuml.Log;
 
 public class NumberAnalyzed implements INumberAnalyzed {
 
-	private static final int SLIDING_WINDOW = 512;
+	private static final int SLIDING_WINDOW = 1024;
 
 	private long nb;
 	private long sum;
@@ -209,6 +208,16 @@ public class NumberAnalyzed implements INumberAnalyzed {
 			return 0;
 		}
 		return sum / nb;
+	}
+
+	synchronized public final long getSliddingMean() {
+		if (nb == 0) {
+			return 0;
+		}
+		if (nb < SLIDING_WINDOW) {
+			return sum / nb;
+		}
+		return sliddingSum / nb;
 	}
 
 	public final long getStandardDeviation() {

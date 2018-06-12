@@ -53,6 +53,9 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 			if (line.matches("(?i)^version\\s*$")) {
 				return PSystemVersion.createShowVersion();
 			}
+			if (line.matches("(?i)^stdlib\\s*$")) {
+				return PSystemVersion.createStdLib();
+			}
 			if (line.matches("(?i)^testdot\\s*$")) {
 				return PSystemVersion.createTestDot();
 			}
@@ -79,5 +82,4 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 		}
 		return null;
 	}
-
 }

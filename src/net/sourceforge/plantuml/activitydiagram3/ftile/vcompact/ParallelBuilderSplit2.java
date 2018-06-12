@@ -111,7 +111,8 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		}
 
 		final Rainbow thinColor = result.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
-		final Ftile out = new FtileThinSplit(skinParam(), thinColor.getColor(), getList().get(0).getSwimlaneIn());
+		// final Ftile out = new FtileThinSplit(skinParam(), thinColor.getColor(), getList().get(0).getSwimlaneIn());
+		final Ftile out = new FtileThinSplit(skinParam(), thinColor.getColor(), swimlane());
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<Connection>();
 		double x = 0;

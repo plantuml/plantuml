@@ -47,6 +47,18 @@ public class SpriteUtils {
 	private SpriteUtils() {
 	}
 
+	public static String encodeColor(BufferedImage img, String name) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/color] {\n");
+		final List<String> result = SpriteColorBuilder4096.encodeColor(img);
+		for (String s : result) {
+			sb.append(s);
+			sb.append(BackSlash.NEWLINE);
+		}
+		sb.append("}\n");
+		return sb.toString();
+	}
+
 	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor()

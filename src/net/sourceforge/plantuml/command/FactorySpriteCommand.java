@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteColorBuilder4096;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 
 public final class FactorySpriteCommand implements SingleMultiFactoryCommand<UmlDiagram> {
@@ -54,7 +55,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("sprite[%s]+\\$?"), //
 				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
-				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(\\d+)(z)?\\])?"), //
+				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\])?"), //
 				new RegexLeaf("[%s]*\\{"), //
 				new RegexLeaf("$"));
 	}
@@ -63,7 +64,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("sprite[%s]+\\$?"), //
 				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
-				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(\\d+)(z)\\])?"), //
+				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\])?"), //
 				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("DATA", "([-_A-Za-z0-9]+)"), //
 				new RegexLeaf("$"));
@@ -88,7 +89,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 				return "(?i)^end[%s]?sprite|\\}$";
 			}
 
-			public CommandExecutionResult executeNow(final UmlDiagram system, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final UmlDiagram system, BlocLines lines) {
 				lines = lines.trim(true);
 				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 
@@ -112,15 +113,19 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 			} else {
 				final int width = Integer.parseInt(line0.get("DIM", 0));
 				final int height = Integer.parseInt(line0.get("DIM", 1));
-				final int nbColor = Integer.parseInt(line0.get("DIM", 2));
-				if (nbColor != 4 && nbColor != 8 && nbColor != 16) {
-					return CommandExecutionResult.error("Only 4, 8 or 16 graylevel are allowed.");
-				}
-				final SpriteGrayLevel level = SpriteGrayLevel.get(nbColor);
-				if (line0.get("DIM", 3) == null) {
-					sprite = level.buildSprite(width, height, strings);
+				if (line0.get("DIM", 4) == null) {
+					final int nbLevel = Integer.parseInt(line0.get("DIM", 2));
+					if (nbLevel != 4 && nbLevel != 8 && nbLevel != 16) {
+						return CommandExecutionResult.error("Only 4, 8 or 16 graylevel are allowed.");
+					}
+					final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);
+					if (line0.get("DIM", 3) == null) {
+						sprite = level.buildSprite(width, height, strings);
+					} else {
+						sprite = level.buildSpriteZ(width, height, concat(strings));
+					}
 				} else {
-					sprite = level.buildSpriteZ(width, height, concat(strings));
+					sprite = SpriteColorBuilder4096.buildSprite(strings);
 				}
 			}
 			system.addSprite(line0.get("NAME", 0), sprite);

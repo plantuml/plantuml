@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.sequencediagram.Grouping;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -64,7 +65,7 @@ public class GroupingTile implements TileWithCallbackY {
 	private static final int EXTERNAL_MARGINX2 = 9;
 	private static final int MARGINX = 16;
 	private static final int MARGINY = 10;
-	private final List<Tile> tiles = new ArrayList<Tile>();
+	private List<Tile> tiles = new ArrayList<Tile>();
 	private final Real min;
 	private final Real max;
 	private final GroupingStart start;
@@ -102,16 +103,20 @@ public class GroupingTile implements TileWithCallbackY {
 			}
 			for (Tile tile : TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this)) {
 				tiles.add(tile);
-				bodyHeight += tile.getPreferredHeight(stringBounder);
-				if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
-					allElses.add(tile);
-					continue;
-				}
-				min2.add(tile.getMinX(stringBounder).addFixed(-MARGINX));
-				final Real m = tile.getMaxX(stringBounder);
-				// max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
-				max2.add(m.addFixed(MARGINX));
 			}
+		}
+		tiles = mergeParallel(tiles);
+		for (Tile tile : tiles) {
+			bodyHeight += tile.getPreferredHeight(stringBounder);
+			final Event ev = tile.getEvent();
+			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
+				allElses.add(tile);
+				continue;
+			}
+			min2.add(tile.getMinX(stringBounder).addFixed(-MARGINX));
+			final Real m = tile.getMaxX(stringBounder);
+			// max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
+			max2.add(m.addFixed(MARGINX));
 		}
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		final double width = dim1.getWidth();
@@ -152,9 +157,9 @@ public class GroupingTile implements TileWithCallbackY {
 		double h = dim1.getHeight() + MARGINY / 2;
 		for (Tile tile : tiles) {
 			ug.apply(new UTranslate(0, h)).draw(tile);
-			h += tile.getPreferredHeight(stringBounder);
+			final double preferredHeight = tile.getPreferredHeight(stringBounder);
+			h += preferredHeight;
 		}
-
 	}
 
 	private double getTotalHeight(StringBounder stringBounder) {
@@ -213,21 +218,37 @@ public class GroupingTile implements TileWithCallbackY {
 
 	public static double fillPositionelTiles(StringBounder stringBounder, double y, List<Tile> tiles,
 			final List<YPositionedTile> positionedTiles) {
-		double lastY = y;
-		for (Tile tile : tiles) {
-			if (tile.getEvent().isParallel()) {
-				y = lastY;
-			}
+		for (Tile tile : mergeParallel(tiles)) {
 			positionedTiles.add(new YPositionedTile(tile, y));
 			if (tile instanceof GroupingTile) {
 				final GroupingTile groupingTile = (GroupingTile) tile;
-				fillPositionelTiles(stringBounder, y, groupingTile.tiles, new ArrayList<YPositionedTile>());
+				final double headerHeight = groupingTile.getPreferredDimensionIfEmpty(stringBounder).getHeight();
+				fillPositionelTiles(stringBounder, y + headerHeight, groupingTile.tiles,
+						new ArrayList<YPositionedTile>());
 			}
-			lastY = y;
 			y += tile.getPreferredHeight(stringBounder);
 		}
 		return y;
 
+	}
+
+	private static List<Tile> mergeParallel(List<Tile> tiles) {
+		TileParallel pending = null;
+		final List<Tile> result = new ArrayList<Tile>();
+		for (Tile tile : tiles) {
+			if (tile instanceof TileParallel == false && tile.getEvent().isParallel()) {
+				if (pending == null) {
+					pending = new TileParallel();
+					pending.add(result.get(result.size() - 1));
+					result.set(result.size() - 1, pending);
+				}
+				pending.add(tile);
+			} else {
+				result.add(tile);
+				pending = null;
+			}
+		}
+		return result;
 	}
 
 	// public double getStartY() {

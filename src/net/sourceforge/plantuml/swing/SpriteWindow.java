@@ -111,6 +111,7 @@ public class SpriteWindow extends JFrame {
 			return;
 		}
 		final StringBuilder sb = new StringBuilder();
+		encodeColor(img, sb);
 		encode(img, SpriteGrayLevel.GRAY_16, sb);
 		encodeCompressed(img, SpriteGrayLevel.GRAY_16, sb);
 		encode(img, SpriteGrayLevel.GRAY_8, sb);
@@ -118,6 +119,12 @@ public class SpriteWindow extends JFrame {
 		encode(img, SpriteGrayLevel.GRAY_4, sb);
 		encodeCompressed(img, SpriteGrayLevel.GRAY_4, sb);
 		printData(sb.toString());
+	}
+
+	private void encodeColor(BufferedImage img, StringBuilder sb) {
+		sb.append("\n");
+		sb.append(SpriteUtils.encodeColor(img, "demo"));
+		
 	}
 
 	private void encodeCompressed(BufferedImage img, SpriteGrayLevel level, StringBuilder sb) {

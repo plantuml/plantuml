@@ -64,7 +64,7 @@ public class Englobers {
 				pending.add(p);
 				continue;
 			}
-			pending = new Englober(englober, p, tileArguments);
+			pending = Englober.createTeoz(englober, p, tileArguments);
 			englobers.add(pending);
 		}
 	}

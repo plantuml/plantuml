@@ -150,8 +150,8 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		registerDriver(UPixel.class, new DriverPixelG2d());
 		registerDriver(UPolygon.class, new DriverPolygonG2d(dpiFactor, this));
 		registerDriver(UEllipse.class, new DriverEllipseG2d(dpiFactor, this));
-		registerDriver(UImageSvg.class, new DriverImageG2d(this));
-		registerDriver(UImage.class, new DriverImageG2d(this));
+		registerDriver(UImageSvg.class, new DriverImageG2d(dpiFactor, this));
+		registerDriver(UImage.class, new DriverImageG2d(dpiFactor, this));
 		registerDriver(DotPath.class, new DriverDotPathG2d(this));
 		registerDriver(UPath.class, new DriverPathG2d(dpiFactor));
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterG2d());
@@ -220,6 +220,11 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 		final BufferedImage im = getBufferedImage();
 		PngIO.write(im, os, metadata, dpi);
+	}
+
+	@Override
+	public double dpiFactor() {
+		return dpiFactor;
 	}
 
 }

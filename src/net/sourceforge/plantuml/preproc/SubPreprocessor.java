@@ -145,10 +145,10 @@ public class SubPreprocessor implements ReadLine {
 		try {
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new ReadLineReader(new FileReader(f), f.getAbsolutePath(), s.getLocation());
+				return ReadLineReader.create(new FileReader(f), f.getAbsolutePath(), s.getLocation());
 			}
 			Log.info("Using charset " + charset);
-			return new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
+			return ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
 					s.getLocation());
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());

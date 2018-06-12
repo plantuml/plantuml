@@ -44,6 +44,10 @@ public class SlotFinderX implements UGraphic {
 		return false;
 	}
 
+	public double dpiFactor() {
+		return 1;
+	}
+
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
 			return new SlotFinderX(stringBounder, xslot, yslot, translate.compose((UTranslate) change));

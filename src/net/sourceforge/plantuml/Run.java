@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
-import net.sourceforge.plantuml.preproc.StdlibOld;
+import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtils;
@@ -74,12 +74,28 @@ import net.sourceforge.plantuml.version.Version;
 public class Run {
 
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
+		System.setProperty("log4j.debug", "false");
 		final long start = System.currentTimeMillis();
+		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless")) {
+			System.setProperty("java.awt.headless", "true");
+		}
 		saveCommandLine(argsArray);
 		final Option option = new Option(argsArray);
 		ProgressBar.setEnable(option.isTextProgressBar());
-		if (OptionFlags.getInstance().getExtractStdLib()) {
-			StdlibOld.extractStdLib();
+		if (OptionFlags.getInstance().isClipboardLoop()) {
+			ClipboardLoop.runLoop();
+			return;
+		}
+		if (OptionFlags.getInstance().isClipboard()) {
+			ClipboardLoop.runOnce();
+			return;
+		}
+		if (OptionFlags.getInstance().isExtractStdLib()) {
+			Stdlib.extractStdLib();
+			return;
+		}
+		if (OptionFlags.getInstance().isStdLib()) {
+			Stdlib.printStdLib();
 			return;
 		}
 		if (OptionFlags.getInstance().isDumpStats()) {

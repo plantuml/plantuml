@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -229,6 +230,17 @@ public class Worm implements Iterable<Point2D.Double> {
 
 	public Iterator<Point2D.Double> iterator() {
 		return Collections.unmodifiableCollection(points).iterator();
+	}
+
+	public boolean doesHorizontalCross(MinMax area) {
+		for (int i = 0; i < points.size() - 1; i++) {
+			final Point2D.Double pt1 = get(i);
+			final Point2D.Double pt2 = get(i + 1);
+			if (pt1.getY() == pt2.getY() && area.doesHorizontalCross(pt1, pt2)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int size() {

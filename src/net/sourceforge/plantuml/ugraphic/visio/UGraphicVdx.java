@@ -62,6 +62,10 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 
 	private final StringBounder stringBounder;
 
+	public double dpiFactor() {
+		return 1;
+	}
+
 	private UGraphicVdx(ColorMapper colorMapper, VisioGraphics visio) {
 		super(colorMapper, visio);
 		this.stringBounder = FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());

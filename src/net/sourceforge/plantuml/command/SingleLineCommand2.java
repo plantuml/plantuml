@@ -56,24 +56,47 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		this.pattern = pattern;
 	}
 
+	public boolean syntaxWithFinalBracket() {
+		return false;
+	}
+
 	public String[] getDescription() {
 		return new String[] { pattern.getPattern() };
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
+		if (lines.size() == 2 && syntaxWithFinalBracket()) {
+			return isValidBracket(lines);
+		}
 		if (lines.size() != 1) {
 			return CommandControl.NOT_OK;
 		}
-		lines = lines.removeInnerComments();
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
 		final String line = StringUtils.trin(lines.getFirst499());
+		if (syntaxWithFinalBracket() && line.endsWith("{") == false) {
+			final String vline = lines.get499(0).toString() + " {";
+			if (isValid(BlocLines.single(vline)) == CommandControl.OK) {
+				return CommandControl.OK_PARTIAL;
+			}
+			return CommandControl.NOT_OK;
+		}
 		final boolean result = pattern.match(line);
 		if (result) {
 			actionIfCommandValid();
 		}
 		return result ? CommandControl.OK : CommandControl.NOT_OK;
+	}
+
+	private CommandControl isValidBracket(BlocLines lines) {
+		assert lines.size() == 2;
+		assert syntaxWithFinalBracket();
+		if (StringUtils.trin(lines.get499(1)).equals("{") == false) {
+			return CommandControl.NOT_OK;
+		}
+		final String vline = lines.get499(0).toString() + " {";
+		return isValid(BlocLines.single(vline));
 	}
 
 	protected boolean isCommandForbidden() {
@@ -84,10 +107,13 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {
+		if (syntaxWithFinalBracket() && lines.size() == 2) {
+			assert StringUtils.trin(lines.get499(1)).equals("{");
+			lines = BlocLines.single(lines.getFirst499() + " {");
+		}
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		lines = lines.removeInnerComments();
 		final String line = StringUtils.trin(lines.getFirst499());
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Syntax error: " + line);

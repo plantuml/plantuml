@@ -40,8 +40,14 @@ import net.sourceforge.plantuml.CharSequence2;
 
 public class IteratorCounter2Impl implements IteratorCounter2 {
 
-	private final List<CharSequence2> data;
+	private List<CharSequence2> data;
 	private int nb;
+
+	public void copyStateFrom(IteratorCounter2 other) {
+		final IteratorCounter2Impl source = (IteratorCounter2Impl) other;
+		this.nb = source.nb;
+		this.data = source.data;
+	}
 
 	public IteratorCounter2Impl(List<CharSequence2> data) {
 		this(data, 0);

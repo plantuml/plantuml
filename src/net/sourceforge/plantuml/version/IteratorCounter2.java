@@ -48,4 +48,6 @@ public interface IteratorCounter2 extends Iterator<CharSequence2> {
 
 	public CharSequence2 peekPrevious();
 
+	public void copyStateFrom(IteratorCounter2 other);
+
 }

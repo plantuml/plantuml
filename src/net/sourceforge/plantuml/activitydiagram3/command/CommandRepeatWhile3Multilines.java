@@ -74,7 +74,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 	}
 
 	@Override
-	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.trim(false);
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast499().toString());

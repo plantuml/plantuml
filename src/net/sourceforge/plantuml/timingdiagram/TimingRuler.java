@@ -64,6 +64,11 @@ public class TimingRuler {
 	private long tickIntervalInPixels = 50;
 	private long tickUnitary;
 
+	public TimingRuler(ISkinParam skinParam) {
+		this.skinParam = skinParam;
+		this.times.add(new TimeTick(BigDecimal.ZERO));
+	}
+
 	public void scaleInPixels(long tick, long pixel) {
 		this.tickIntervalInPixels = pixel;
 		this.tickUnitary = tick;
@@ -81,7 +86,8 @@ public class TimingRuler {
 		if (times.size() == 0) {
 			return 1;
 		}
-		return (int) (1 + getMax().getTime().longValue() / tickUnitary());
+		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();
+		return (int) (1 + delta / tickUnitary());
 	}
 
 	public double getWidth() {
@@ -89,11 +95,8 @@ public class TimingRuler {
 	}
 
 	private double getPosInPixel(double time) {
+		time -= getMin().getTime().doubleValue();
 		return time / tickUnitary() * tickIntervalInPixels;
-	}
-
-	public TimingRuler(ISkinParam skinParam) {
-		this.skinParam = skinParam;
 	}
 
 	public void addTime(TimeTick time) {
@@ -104,7 +107,8 @@ public class TimingRuler {
 				if (highestCommonFactor == -1) {
 					highestCommonFactor = time.getTime().longValue();
 				} else {
-					highestCommonFactor = computeHighestCommonFactor(highestCommonFactor, time.getTime().longValue());
+					highestCommonFactor = computeHighestCommonFactor(highestCommonFactor,
+							Math.abs(time.getTime().longValue()));
 				}
 			}
 		}
@@ -158,10 +162,17 @@ public class TimingRuler {
 	}
 
 	private TimeTick getMax() {
-		if (times.size() == 0) {
-			throw new IllegalStateException("Empty list!");
-		}
+		// if (times.size() == 0) {
+		// throw new IllegalStateException("Empty list!");
+		// }
 		return times.last();
+	}
+
+	private TimeTick getMin() {
+		// if (times.size() == 0) {
+		// throw new IllegalStateException("Empty list!");
+		// }
+		return times.first();
 	}
 
 	private static long computeHighestCommonFactor(long a, long b) {

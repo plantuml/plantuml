@@ -51,6 +51,10 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private UClip clip;
 	private double scale = 1;
 
+	public double dpiFactor() {
+		return 1;
+	}
+
 	public UGraphic apply(UChange change) {
 		final AbstractCommonUGraphic copy = copyUGraphic();
 		if (change instanceof UTranslate) {
@@ -142,10 +146,9 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	public void flushUg() {
 
 	}
-	
+
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
-
 
 }

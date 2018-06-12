@@ -65,7 +65,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 	}
 
 	@Override
-	public CommandExecutionResult executeNow(UmlDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(UmlDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final String align = line0.get("ALIGN", 0);

@@ -107,7 +107,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		throw new IllegalArgumentException();
 	}
 
-	public CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));

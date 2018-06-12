@@ -82,6 +82,11 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				new RegexLeaf("[%s]*\\{$"));
 	}
 
+	@Override
+	public boolean syntaxWithFinalBracket() {
+		return true;
+	}
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}

@@ -47,6 +47,10 @@ public class LimitFinder implements UGraphic {
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
+	
+	public double dpiFactor() {
+		return 1;
+	}
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
@@ -60,6 +64,8 @@ public class LimitFinder implements UGraphic {
 		} else if (change instanceof UHidden) {
 			return new LimitFinder(this);
 		} else if (change instanceof UAntiAliasing) {
+			return new LimitFinder(this);
+		} else if (change instanceof UScale) {
 			return new LimitFinder(this);
 		} else if (change instanceof UClip) {
 			final LimitFinder copy = new LimitFinder(this);

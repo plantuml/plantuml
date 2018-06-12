@@ -60,6 +60,11 @@ public class UGraphicCrossing implements UGraphic {
 	private final UGraphic ug;
 	private final List<Pending> lines;
 	private final UTranslate translate;
+	
+	public double dpiFactor() {
+		return ug.dpiFactor();
+	}
+
 
 	static class Pending {
 		final UGraphic ug;

@@ -60,8 +60,8 @@ public class StartDiagramExtractReader implements ReadLine {
 		this(getReadLine(s, url, charset), uid);
 	}
 
-	public StartDiagramExtractReader(CharSequence2 s, InputStream is) {
-		this(getReadLine(s, is), null);
+	public StartDiagramExtractReader(CharSequence2 s, InputStream is, String desc) {
+		this(getReadLine(s, is, desc), null);
 	}
 
 	private StartDiagramExtractReader(ReadLine raw, String suf) {
@@ -107,29 +107,29 @@ public class StartDiagramExtractReader implements ReadLine {
 		try {
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new UncommentReadLine(new ReadLineReader(new FileReader(f), f.getAbsolutePath()));
+				return new UncommentReadLine(ReadLineReader.create(new FileReader(f), f.getAbsolutePath()));
 			}
 			Log.info("Using charset " + charset);
-			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset),
+			return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset),
 					f.getAbsolutePath()));
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());
 		}
 	}
 
-	private static ReadLine getReadLine(CharSequence2 s, InputStream is) {
-		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(is), null));
+	private static ReadLine getReadLine(CharSequence2 s, InputStream is, String description) {
+		return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(is), description));
 	}
 
 	private static ReadLine getReadLine(CharSequence2 s, URL url, String charset) {
 		try {
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new UncommentReadLine(
-						new ReadLineReader(new InputStreamReader(url.openStream()), url.toString()));
+				return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(url.openStream()),
+						url.toString()));
 			}
 			Log.info("Using charset " + charset);
-			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream(), charset),
+			return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(url.openStream(), charset),
 					url.toString()));
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());
@@ -146,8 +146,8 @@ public class StartDiagramExtractReader implements ReadLine {
 		return containsStartDiagram(r);
 	}
 
-	static public boolean containsStartDiagram(CharSequence2 s, InputStream is) throws IOException {
-		final ReadLine r = getReadLine(s, is);
+	static public boolean containsStartDiagram(CharSequence2 s, InputStream is, String description) throws IOException {
+		final ReadLine r = getReadLine(s, is, description);
 		return containsStartDiagram(r);
 	}
 

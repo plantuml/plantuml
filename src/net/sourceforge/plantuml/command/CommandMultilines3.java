@@ -91,7 +91,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		return executeNow(system, lines);
 	}
 
-	public abstract CommandExecutionResult executeNow(S system, BlocLines lines);
+	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines);
 
 	protected boolean isCommandForbidden() {
 		return false;

@@ -221,4 +221,8 @@ public class CollisionDetector implements UGraphic {
 		return false;
 	}
 
+	public double dpiFactor() {
+		return 1;
+	}
+
 }
