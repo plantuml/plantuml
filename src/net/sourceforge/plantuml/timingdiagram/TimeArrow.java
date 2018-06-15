@@ -38,11 +38,12 @@ import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -54,23 +55,26 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
+
 public class TimeArrow implements UDrawable {
 
 	private final Point2D start;
 	private final Point2D end;
 	private final Display label;
-	private final ISkinSimple spriteContainer;
+	private final ISkinParam spriteContainer;
+	private final HtmlColor color;
 
-	public static TimeArrow create(IntricatedPoint pt1, IntricatedPoint pt2, Display label, ISkinSimple spriteContainer) {
-		final TimeArrow arrow1 = new TimeArrow(pt1.getPointA(), pt2.getPointA(), label, spriteContainer);
-		final TimeArrow arrow2 = new TimeArrow(pt1.getPointA(), pt2.getPointB(), label, spriteContainer);
-		final TimeArrow arrow3 = new TimeArrow(pt1.getPointB(), pt2.getPointA(), label, spriteContainer);
-		final TimeArrow arrow4 = new TimeArrow(pt1.getPointB(), pt2.getPointB(), label, spriteContainer);
+	public static TimeArrow create(IntricatedPoint pt1, IntricatedPoint pt2, Display label, ISkinParam spriteContainer, HtmlColor color) {
+		final TimeArrow arrow1 = new TimeArrow(pt1.getPointA(), pt2.getPointA(), label, spriteContainer, color);
+		final TimeArrow arrow2 = new TimeArrow(pt1.getPointA(), pt2.getPointB(), label, spriteContainer, color);
+		final TimeArrow arrow3 = new TimeArrow(pt1.getPointB(), pt2.getPointA(), label, spriteContainer, color);
+		final TimeArrow arrow4 = new TimeArrow(pt1.getPointB(), pt2.getPointB(), label, spriteContainer, color);
 		return shorter(arrow1, arrow2, arrow3, arrow4);
 	}
 
-	private TimeArrow(Point2D start, Point2D end, Display label, ISkinSimple spriteContainer) {
+	private TimeArrow(Point2D start, Point2D end, Display label, ISkinParam spriteContainer, HtmlColor color) {
 		this.start = start;
+		this.color = color;		
 		this.end = end;
 		this.label = label;
 		this.spriteContainer = spriteContainer;
@@ -96,7 +100,7 @@ public class TimeArrow implements UDrawable {
 	}
 
 	public TimeArrow translate(UTranslate translate) {
-		return new TimeArrow(translate.getTranslated(start), translate.getTranslated(end), label, spriteContainer);
+		return new TimeArrow(translate.getTranslated(start), translate.getTranslated(end), label, spriteContainer, color);
 	}
 
 	public static Point2D onCircle(Point2D pt, double alpha) {
@@ -106,14 +110,19 @@ public class TimeArrow implements UDrawable {
 		return new Point2D.Double(x, y);
 	}
 
+	private HtmlColor getArrowColor() {
+		return color;
+	}
+
 	private FontConfiguration getFontConfiguration() {
 		final UFont font = UFont.serif(14);
-		return new FontConfiguration(font, HtmlColorUtils.BLUE, HtmlColorUtils.BLUE, false);
+
+		return new FontConfiguration(font, this.getArrowColor(), this.getArrowColor(), false);
 	}
 
 	public void drawU(UGraphic ug) {
 		final double angle = getAngle();
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UStroke());
+		ug = ug.apply(new UChangeColor(this.getArrowColor())).apply(new UStroke());
 		final ULine line = new ULine(end.getX() - start.getX(), end.getY() - start.getY());
 		ug.apply(new UTranslate(start)).draw(line);
 
@@ -126,7 +135,7 @@ public class TimeArrow implements UDrawable {
 		polygon.addPoint(pt2.getX(), pt2.getY());
 		polygon.addPoint(end.getX(), end.getY());
 
-		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.BLUE));
+		ug = ug.apply(new UChangeBackColor(this.getArrowColor()));
 		ug.draw(polygon);
 
 		final TextBlock textLabel = label.create(getFontConfiguration(), HorizontalAlignment.LEFT, spriteContainer);

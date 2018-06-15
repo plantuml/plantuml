@@ -35,17 +35,19 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
-
+import net.sourceforge.plantuml.graphic.HtmlColor;
 public class TimeMessage {
 
 	private final TickInPlayer tickInPlayer1;
 	private final TickInPlayer tickInPlayer2;
 	private final Display label;
+	private final HtmlColor color;
 
-	public TimeMessage(TickInPlayer tickInPlayer1, TickInPlayer tickInPlayer2, String label) {
+	public TimeMessage(TickInPlayer tickInPlayer1, TickInPlayer tickInPlayer2, String label, HtmlColor color) {
 		this.tickInPlayer1 = tickInPlayer1;
 		this.tickInPlayer2 = tickInPlayer2;
 		this.label = Display.getWithNewlines(label);
+		this.color = color;
 	}
 
 	public final Player getPlayer1() {
@@ -66,6 +68,10 @@ public class TimeMessage {
 
 	public final Display getLabel() {
 		return label;
+	}
+
+	public final HtmlColor getColor() {
+		return color;
 	}
 
 }

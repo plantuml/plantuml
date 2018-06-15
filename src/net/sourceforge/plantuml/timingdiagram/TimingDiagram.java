@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -67,6 +68,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class TimingDiagram extends UmlDiagram implements Clock {
 
@@ -186,7 +189,7 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		}
 
 		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),
-				message.getLabel(), getSkinParam());
+				message.getLabel(), getSkinParam(), message.getColor());
 		timeArrow.drawU(ug);
 
 	}
@@ -212,9 +215,14 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		lastPlayer = player;
 	}
 
-	public void createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
+	public void createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label, String arrow_style) {
+		HtmlColor color = HtmlColorSet.getInstance().getColorIfValid(arrow_style);
+		if(color == null) {
+			final Rose rose = new Rose();
+			color = rose.getHtmlColor(getSkinParam(), ColorParam.arrow);
+		}
 		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),
-				label);
+				label, color);
 		messages.add(message);
 	}
 
