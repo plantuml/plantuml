@@ -72,7 +72,6 @@ public class OptionFlags {
 	static public final boolean OMEGA_CROSSING = false;
 
 	// static public final boolean LINK_BETWEEN_FIELDS = true;
-	// static public final boolean USE_JDOT = false;
 
 	public void reset() {
 		reset(false);

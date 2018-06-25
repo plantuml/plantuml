@@ -40,7 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
-import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
+import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
@@ -116,12 +116,12 @@ abstract class Step1Abstract {
 	}
 
 	protected final NoteBox createNoteBox(StringBounder stringBounder, Arrow arrow, Component noteComp,
-			NoteOnMessage noteOnMessage) {
-		final LivingParticipantBox p = arrow.getParticipantAt(stringBounder, noteOnMessage.getNotePosition());
-		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, noteOnMessage.getNotePosition(),
-				noteOnMessage.getUrlNote());
+			Note noteOnMessage) {
+		final LivingParticipantBox p = arrow.getParticipantAt(stringBounder, noteOnMessage.getPosition());
+		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, noteOnMessage.getPosition(),
+				noteOnMessage.getUrl());
 
-		if (arrow instanceof MessageSelfArrow && noteOnMessage.getNotePosition() == NotePosition.RIGHT) {
+		if (arrow instanceof MessageSelfArrow && noteOnMessage.getPosition() == NotePosition.RIGHT) {
 			noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));
 		}
 		// if (arrow instanceof MessageExoArrow) {

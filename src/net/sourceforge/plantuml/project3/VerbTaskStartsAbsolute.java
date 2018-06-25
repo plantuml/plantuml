@@ -50,7 +50,7 @@ public class VerbTaskStartsAbsolute implements VerbPattern {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf("starts[%s]*(the[%s]*|on[%s]*)*");
+		return new RegexLeaf("starts[%s]*(the[%s]*|on[%s]*|at[%s]*)*");
 	}
 
 	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
@@ -58,7 +58,11 @@ public class VerbTaskStartsAbsolute implements VerbPattern {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final Task task = (Task) subject;
 				final DayAsDate start = (DayAsDate) complement;
-				task.setStart(start.asInstantDay(project.getStartingDate()));
+				final DayAsDate startingDate = project.getStartingDate();
+				if (startingDate == null) {
+					return CommandExecutionResult.error("No starting date for the project");
+				}
+				task.setStart(start.asInstantDay(startingDate));
 				return CommandExecutionResult.ok();
 			}
 

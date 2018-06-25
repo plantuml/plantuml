@@ -47,6 +47,18 @@ public class DaysAsDates implements Subject, Complement, Iterable<DayAsDate> {
 		this.date2 = date2;
 	}
 
+	public DaysAsDates(GanttDiagram gantt, DayAsDate date1, int count) {
+		this.date1 = date1;
+		DayAsDate tmp = date1;
+		while (count > 0) {
+			if (gantt.isOpen(tmp)) {
+				count--;
+			}
+			tmp = tmp.next();
+		}
+		this.date2 = tmp;
+	}
+
 	class MyIterator implements Iterator<DayAsDate> {
 
 		private DayAsDate current;

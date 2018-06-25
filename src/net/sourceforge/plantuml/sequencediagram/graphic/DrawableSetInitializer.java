@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Note;
-import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
@@ -409,10 +408,10 @@ class DrawableSetInitializer {
 			inGroupableStack.addElement((GroupingGraphicalElementElse) element);
 		} else if (m.getType() == GroupingType.END) {
 			final List<Component> notes = new ArrayList<Component>();
-			for (NoteOnMessage noteOnMessage : m.getNoteOnMessages()) {
-				final ISkinParam sk = noteOnMessage.getSkinParamNoteBackcolored(drawableSet.getSkinParam());
+			for (Note noteOnMessage : m.getNoteOnMessages()) {
+				final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(drawableSet.getSkinParam());
 				final Component note = drawableSet.getSkin().createComponent(
-						noteOnMessage.getNoteStyle().getNoteComponentType(), null, sk, noteOnMessage.getDisplay());
+						noteOnMessage.getStyle().getNoteComponentType(), null, sk, noteOnMessage.getStrings());
 				notes.add(note);
 			}
 			if (m.isParallel()) {

@@ -48,6 +48,7 @@ public class GroupingStart extends Grouping {
 	private final HtmlColor backColorGeneral;
 
 	final private GroupingStart parent;
+	private boolean parallel = false;
 
 	public GroupingStart(String title, String comment, HtmlColor backColorGeneral, HtmlColor backColorElement,
 			GroupingStart parent) {
@@ -83,15 +84,18 @@ public class GroupingStart extends Grouping {
 	public Url getUrl() {
 		return null;
 	}
-	
+
 	public boolean hasUrl() {
 		return false;
 	}
 
-
 	@Override
 	public boolean isParallel() {
-		return getTitle().equals("par2");
+		return parallel || getTitle().equals("par2");
+	}
+
+	public void goParallel() {
+		this.parallel = true;
 	}
 
 }

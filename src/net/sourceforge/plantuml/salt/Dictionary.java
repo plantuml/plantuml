@@ -64,7 +64,7 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 	}
 
 	public Sprite getSprite(String name) {
-		return null;
+		return sprites.get(name);
 	}
 
 	public String getValue(String key) {
@@ -93,6 +93,13 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 
 	public int getDpi() {
 		return 96;
+	}
+
+	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();
+
+	public void addSprite(String name, Sprite sprite) {
+		sprites.put(name, sprite);
+
 	}
 
 }

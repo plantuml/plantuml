@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -50,10 +52,15 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
+import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -63,6 +70,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 	private RegexConcat getRegexConcatMultiLine() {
 		return new RegexConcat(new RegexLeaf("^[%s]*"), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
@@ -73,6 +82,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 	private RegexConcat getRegexConcatSingleLine() {
 		return new RegexConcat(new RegexLeaf("^[%s]*"), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
@@ -124,10 +135,21 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 			final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
 			final Display display = system.manageVariable(lines.toDisplay());
+			final String backcolor0 = line0.get("COLOR", 0);
+			Colors colors = Colors.empty().add(ColorType.BACK, HtmlColorSet.getInstance().getColorIfValid(backcolor0));
+			final String stereotypeString = line0.get("STEREO", 0);
+			if (stereotypeString != null) {
+				final Stereotype stereotype = new Stereotype(stereotypeString);
+				colors = colors.applyStereotypeForNote(stereotype, system.getSkinParam(), FontParam.NOTE,
+						ColorParam.noteBackground, ColorParam.noteBorder);
+			}
+			final Note note = new Note(display, position, style);
+			note.setUrl(url);
+			note.setColors(colors);
 			if (m instanceof AbstractMessage) {
-				((AbstractMessage) m).setNote(display, position, style, line0.get("COLOR", 0), url);
+				((AbstractMessage) m).setNote(note);
 			} else {
-				((GroupingLeaf) m).setNote(display, position, style, line0.get("COLOR", 0), url);
+				((GroupingLeaf) m).setNote(note);
 			}
 		}
 

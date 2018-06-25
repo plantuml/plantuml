@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
@@ -118,18 +117,17 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 		return true;
 	}
 
-	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
+	private List<Note> noteOnMessages = new ArrayList<Note>();
 
-	public final void setNote(Display strings, NotePosition notePosition, NoteStyle noteStyle, String backcolor, Url url) {
-		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {
+	public final void setNote(Note note) {
+		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT) {
 			throw new IllegalArgumentException();
 		}
-		this.noteOnMessages.add(new NoteOnMessage(strings, notePosition, noteStyle, backcolor, url));
-	}
-	
-	public final List<NoteOnMessage> getNoteOnMessages() {
-		return noteOnMessages;
+		this.noteOnMessages.add(note);
 	}
 
+	public final List<Note> getNoteOnMessages() {
+		return noteOnMessages;
+	}
 
 }

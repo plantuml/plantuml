@@ -55,7 +55,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	private final String messageNumber;
 	private boolean parallel = false;
 
-	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
+	private List<Note> noteOnMessages = new ArrayList<Note>();
 
 	public AbstractMessage(Display label, ArrowConfiguration arrowConfiguration, String messageNumber) {
 		this.url = null;
@@ -63,7 +63,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 		this.arrowConfiguration = arrowConfiguration;
 		this.messageNumber = messageNumber;
 	}
-	
+
 	public final void setUrl(Url url) {
 		this.url = url;
 	}
@@ -78,9 +78,9 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 
 	final public Url getUrl() {
 		if (url == null) {
-			for (NoteOnMessage n : noteOnMessages) {
-				if (n.getUrlNote() != null) {
-					return n.getUrlNote();
+			for (Note n : noteOnMessages) {
+				if (n.getUrl() != null) {
+					return n.getUrl();
 				}
 			}
 		}
@@ -88,7 +88,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	}
 
 	public boolean hasUrl() {
-		for (NoteOnMessage n : noteOnMessages) {
+		for (Note n : noteOnMessages) {
 			if (n.hasUrl()) {
 				return true;
 			}
@@ -159,16 +159,16 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 		return arrowConfiguration;
 	}
 
-	public final List<NoteOnMessage> getNoteOnMessages() {
+	public final List<Note> getNoteOnMessages() {
 		return noteOnMessages;
 	}
 
-	public final void setNote(Display strings, NotePosition notePosition, NoteStyle noteStyle, String backcolor, Url url) {
-		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {
+	public final void setNote(Note note) {
+		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT) {
 			throw new IllegalArgumentException();
 		}
-		this.noteOnMessages
-				.add(new NoteOnMessage(strings, overideNotePosition(notePosition), noteStyle, backcolor, url));
+		note = note.withPosition(overideNotePosition(note.getPosition()));
+		this.noteOnMessages.add(note);
 	}
 
 	protected NotePosition overideNotePosition(NotePosition notePosition) {

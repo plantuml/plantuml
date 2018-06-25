@@ -70,8 +70,9 @@ public class ElementButton extends AbstractElementText implements Element {
 		}
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		ug = ug.apply(new UStroke(stroke));
-		ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#EEEEEE"))).apply(new UTranslate(stroke, stroke))
-				.draw(new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke, 10, 10));
+		ug = ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#EEEEEE")));
+		ug.apply(new UTranslate(stroke, stroke)).draw(
+				new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke, 10, 10));
 		final Dimension2D dimPureText = getPureTextDimension(ug.getStringBounder());
 		drawText(ug, (dim.getWidth() - dimPureText.getWidth()) / 2, stroke + marginY);
 	}

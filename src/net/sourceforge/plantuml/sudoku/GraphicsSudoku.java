@@ -43,11 +43,15 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
@@ -60,7 +64,10 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
+import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
+import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
 
 public class GraphicsSudoku {
 
@@ -72,8 +79,38 @@ public class GraphicsSudoku {
 		this.sudoku = sudoku;
 	}
 
-	public ImageData writeImage(OutputStream os) throws IOException {
-		final BufferedImage im = createImage();
+	public ImageData writeImageEps(OutputStream os) throws IOException {
+		final UGraphicEps ug = new UGraphicEps(new ColorMapperIdentity(), EpsStrategy.WITH_MACRO_AND_TEXT);
+		drawInternal(ug);
+		os.write(ug.getEPSCode().getBytes());
+		return ImageDataSimple.ok();
+	}
+
+	public ImageData writeImageSvg(OutputStream os) throws IOException {
+		final UGraphicSvg ug = new UGraphicSvg(true, new Dimension2DDouble(0, 0), new ColorMapperIdentity(),
+				(String) null, false, 1.0, null, null, 0);
+		drawInternal(ug);
+		ug.createXml(os, null);
+		return ImageDataSimple.ok();
+	}
+
+	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
+		final UGraphicTikz ug = new UGraphicTikz(new ColorMapperIdentity(), 1, fileFormat == FileFormat.LATEX,
+				TikzFontDistortion.getDefault());
+		drawInternal(ug);
+		ug.createTikz(os);
+		return ImageDataSimple.ok();
+	}
+
+	public ImageData writeImagePng(OutputStream os) throws IOException {
+		final EmptyImageBuilder builder = new EmptyImageBuilder(sudoWidth, sudoHeight + textTotalHeight, Color.WHITE);
+		final BufferedImage im = builder.getBufferedImage();
+		final Graphics2D g3d = builder.getGraphics2D();
+
+		final UGraphic ug = new UGraphicG2d(new ColorMapperIdentity(), g3d, 1.0);
+
+		drawInternal(ug);
+		g3d.dispose();
 		PngIO.write(im, os, 96);
 		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
@@ -89,17 +126,11 @@ public class GraphicsSudoku {
 
 	final private int textTotalHeight = 50;
 
-	private BufferedImage createImage() {
-		final int boldWidth = 3;
-		final int sudoHeight = 9 * cellHeight + 2 * yOffset + boldWidth;
-		final int sudoWidth = 9 * cellWidth + 2 * xOffset + boldWidth;
+	final private int boldWidth = 3;
+	final private int sudoHeight = 9 * cellHeight + 2 * yOffset + boldWidth;
+	final private int sudoWidth = 9 * cellWidth + 2 * xOffset + boldWidth;
 
-		final EmptyImageBuilder builder = new EmptyImageBuilder(sudoWidth, sudoHeight + textTotalHeight, Color.WHITE);
-		final BufferedImage im = builder.getBufferedImage();
-		final Graphics2D g3d = builder.getGraphics2D();
-
-		UGraphic ug = new UGraphicG2d(new ColorMapperIdentity(), g3d, 1.0);
-
+	private void drawInternal(UGraphic ug) {
 		ug = ug.apply(new UTranslate(xOffset, yOffset));
 
 		for (int x = 0; x < 9; x++) {
@@ -134,8 +165,6 @@ public class GraphicsSudoku {
 		final TextBlock textBlock = Display.create(texts).create(FontConfiguration.blackBlueTrue(font),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		textBlock.drawU(ug);
-		g3d.dispose();
-		return im;
 	}
 
 }

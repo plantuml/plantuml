@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
-import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
+import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -63,11 +63,11 @@ class Step1MessageExo extends Step1Abstract {
 						message.getLabelNumbered()), getLivingParticipantBox(), message.getType(), message.getUrl(),
 				message.isShortArrow(), message.getArrowConfiguration());
 
-		final List<NoteOnMessage> noteOnMessages = message.getNoteOnMessages();
-		for (NoteOnMessage noteOnMessage : noteOnMessages) {
-			final ISkinParam skinParam = noteOnMessage.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
+		final List<Note> noteOnMessages = message.getNoteOnMessages();
+		for (Note noteOnMessage : noteOnMessages) {
+			final ISkinParam skinParam = noteOnMessage.getSkinParamBackcolored(drawingSet.getSkinParam());
 			addNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, null, skinParam,
-					noteOnMessage.getDisplay()));
+					noteOnMessage.getStrings()));
 			// throw new UnsupportedOperationException();
 		}
 
@@ -121,7 +121,7 @@ class Step1MessageExo extends Step1Abstract {
 		final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 		for (int i = 0; i < getNotes().size(); i++) {
 			final Component note = getNotes().get(i);
-			final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+			final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);
 			noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));
 		}
 		return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBoxes);

@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -50,7 +51,18 @@ public class PSystemSudoku extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		return new GraphicsSudoku(sudoku).writeImage(os);
+		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
+		if (fileFormat.getFileFormat() == FileFormat.EPS) {
+			return sud.writeImageEps(os);
+		}
+		if (fileFormat.getFileFormat() == FileFormat.SVG) {
+			return sud.writeImageSvg(os);
+		}
+		if (fileFormat.getFileFormat() == FileFormat.LATEX
+				|| fileFormat.getFileFormat() == FileFormat.LATEX_NO_PREAMBLE) {
+			return sud.writeImageLatex(os, fileFormat.getFileFormat());
+		}
+		return sud.writeImagePng(os);
 	}
 
 	public DiagramDescription getDescription() {

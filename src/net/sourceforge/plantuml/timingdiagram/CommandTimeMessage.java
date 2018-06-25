@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 
 public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 
@@ -54,7 +55,9 @@ public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf("PART1", PLAYER_CODE), //
 				TimeTickBuilder.optionalExpressionAtWithArobase("TIME1"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("ARROW", "(-+)\\>"), //
+				new RegexLeaf("ARROW_BODY", "(-+)"), //
+				new RegexLeaf("ARROW_STYLE", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf("ARROW_HEAD", "\\>"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("PART2", PLAYER_CODE), //
 				TimeTickBuilder.optionalExpressionAtWithArobase("TIME2"), //
@@ -75,7 +78,8 @@ public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 		}
 		final TimeTick tick1 = TimeTickBuilder.parseTimeTick("TIME1", arg, diagram);
 		final TimeTick tick2 = TimeTickBuilder.parseTimeTick("TIME2", arg, diagram);
-		diagram.createTimeMessage(player1, tick1, player2, tick2, arg.get("MESSAGE", 0));
+		final TimeMessage result = diagram.createTimeMessage(player1, tick1, player2, tick2, arg.get("MESSAGE", 0));
+		result.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 		return CommandExecutionResult.ok();
 	}
 

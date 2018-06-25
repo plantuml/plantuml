@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
@@ -212,16 +213,20 @@ public class Englober {
 		if (titleWidth > actualWidth + 20) {
 			this.marginX = (titleWidth - actualWidth - 20) / 2;
 		}
-		getX1().ensureBiggerThan(getPosAA().addFixed(10));
+		getX1().ensureBiggerThan(getPosAA().addFixed(10 + padding()));
 		final Real posZZ = getPosZZ();
-		final Real limit = getX2().addFixed(10);
+		final Real limit = getX2().addFixed(10 + padding());
 		if (posZZ != null) {
 			posZZ.ensureBiggerThan(limit);
 		}
 	}
 
+	private double padding() {
+		return tileArguments.getSkinParam().getPadding(PaddingParam.BOX);
+	}
+
 	public void addConstraintAfter(Englober current) {
-		current.getX1().ensureBiggerThan(getX2().addFixed(10));
+		current.getX1().ensureBiggerThan(getX2().addFixed(10 + 2 * padding()));
 	}
 
 	public Real getMinX(StringBounder stringBounder) {

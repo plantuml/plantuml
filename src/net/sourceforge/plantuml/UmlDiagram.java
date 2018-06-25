@@ -85,7 +85,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.version.Version;
 
-public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Annotated {
+public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Annotated, WithSprite {
 
 	private boolean rotation;
 	private boolean hideUnlinkedData;

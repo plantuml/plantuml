@@ -89,6 +89,7 @@ import net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.ugraphic.html5.UGraphicHtml5;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
+import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
 
 public class ImageBuilder {
@@ -386,6 +387,8 @@ public class ImageBuilder {
 			return new UGraphicTikz(colorMapper, dpiFactor, false, fileFormatOption.getTikzFontDistortion());
 		case BRAILLE_PNG:
 			return new UGraphicBraille(colorMapper, fileFormat);
+		case ATXT:
+			return new UGraphicTxt();
 		default:
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}

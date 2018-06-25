@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class Note extends AbstractEvent implements Event, SpecificBackcolorable {
@@ -51,13 +50,17 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 
 	private final NotePosition position;
 	private NoteStyle style = NoteStyle.NORMAL;
-
-	// private Stereotype stereotype;
+	private Colors colors = Colors.empty();
 
 	private Url url;
 
 	public Note(Participant p, NotePosition position, Display strings) {
 		this(p, null, position, strings);
+	}
+
+	public Note(Display strings, NotePosition position, NoteStyle style) {
+		this(null, null, position, strings);
+		this.style = style;
 	}
 
 	public Note(Participant p, Participant p2, Display strings) {
@@ -69,6 +72,17 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		this.p2 = p2;
 		this.position = position;
 		this.strings = strings;
+	}
+
+	public Note withPosition(NotePosition newPosition) {
+		if (position == newPosition) {
+			return this;
+		}
+		final Note result = new Note(p, p2, newPosition, strings);
+		result.style = this.style;
+		result.url = this.url;
+		result.colors = this.colors;
+		return result;
 	}
 
 	public Participant getParticipant() {
@@ -90,14 +104,6 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 	public Colors getColors(ISkinParam skinParam) {
 		return colors;
 	}
-
-	// public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
-	// if (color != null) {
-	// this.colors = colors.add(type, color);
-	// }
-	// }
-
-	private Colors colors = Colors.empty();
 
 	public void setColors(Colors colors) {
 		this.colors = colors;
@@ -124,12 +130,7 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 	}
 
 	public ISkinParam getSkinParamBackcolored(ISkinParam skinParam) {
-		// return new SkinParamBackcolored(skinParam, getColors(skinParam).getColor(ColorType.BACK));
 		return colors.mute(skinParam);
-	}
-
-	public void setStereotype(Stereotype stereotype) {
-		// this.stereotype = stereotype;
 	}
 
 	@Override

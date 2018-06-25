@@ -35,8 +35,12 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.WithLinkType;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
-public class TimeMessage {
+public class TimeMessage extends WithLinkType {
 
 	private final TickInPlayer tickInPlayer1;
 	private final TickInPlayer tickInPlayer2;
@@ -46,6 +50,8 @@ public class TimeMessage {
 		this.tickInPlayer1 = tickInPlayer1;
 		this.tickInPlayer2 = tickInPlayer2;
 		this.label = Display.getWithNewlines(label);
+		this.setSpecificColor(HtmlColorUtils.BLUE);
+		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
 	}
 
 	public final Player getPlayer1() {
@@ -66,6 +72,11 @@ public class TimeMessage {
 
 	public final Display getLabel() {
 		return label;
+	}
+
+	@Override
+	public void goNorank() {
+		// Nothing to do
 	}
 
 }

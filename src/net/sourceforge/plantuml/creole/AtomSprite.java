@@ -39,29 +39,31 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class AtomSprite implements Atom {
 
-	private final TextBlock sprite;
 	private final FontConfiguration fontConfiguration;
+	private final Sprite sprite;
+	private final double scale;
 
-	public AtomSprite(TextBlock sprite, FontConfiguration fontConfiguration) {
-		this.sprite = sprite;
+	public AtomSprite(double scale, FontConfiguration fontConfiguration, Sprite sprite) {
+		this.scale = scale;
 		this.fontConfiguration = fontConfiguration;
+		this.sprite = sprite;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return sprite.calculateDimension(stringBounder);
+		return sprite.asTextBlock(fontConfiguration.getColor(), scale).calculateDimension(stringBounder);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-		return -3;
+		return 0;
 	}
 
 	public void drawU(UGraphic ug) {
-		sprite.drawU(ug);
+		sprite.asTextBlock(fontConfiguration.getColor(), scale * ug.dpiFactor()).drawU(ug);
 	}
-	
+
 }

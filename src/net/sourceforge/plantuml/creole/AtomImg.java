@@ -158,7 +158,7 @@ public class AtomImg implements Atom {
 
 	public void drawU(UGraphic ug) {
 		// final double h = calculateDimension(ug.getStringBounder()).getHeight();
-		ug.draw(new UImage(image).scale(scale));
+		ug.draw(new UImage(image).scale(scale * ug.dpiFactor()));
 		// tileImage.drawU(ug.apply(new UTranslate(0, -h)));
 	}
 

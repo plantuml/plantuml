@@ -217,7 +217,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			link.setUrl(urlLink);
 		}
 
-		CommandLinkClass.applyStyle(line0.getLazzy("ARROW_STYLE", 0), link);
+		link.applyStyle(line0.getLazzy("ARROW_STYLE", 0));
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

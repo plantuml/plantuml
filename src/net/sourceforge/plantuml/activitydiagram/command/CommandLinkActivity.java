@@ -167,7 +167,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			link.setUrl(urlLink);
 		}
 
-		CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
+		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.sequencediagram.Grouping;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
-import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -170,12 +169,12 @@ public class GroupingTile implements TileWithCallbackY {
 	private void drawAllElses(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double totalHeight = getTotalHeight(stringBounder);
-		final double suppHeight = getPreferredDimensionIfEmpty(stringBounder).getHeight() + MARGINY / 2;
+		// final double suppHeight = getPreferredDimensionIfEmpty(stringBounder).getHeight() + MARGINY / 2;
 		final List<Double> ys = new ArrayList<Double>();
 		for (Tile tile : tiles) {
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
-				ys.add(elseTile.getCallbackY() - y + suppHeight);
+				ys.add(elseTile.getCallbackY() - y + MARGINY / 2/* suppHeight */);
 			}
 		}
 		ys.add(totalHeight);
@@ -234,9 +233,10 @@ public class GroupingTile implements TileWithCallbackY {
 
 	private static List<Tile> mergeParallel(List<Tile> tiles) {
 		TileParallel pending = null;
+		tiles = removeEmptyCloseToParallel(tiles);
 		final List<Tile> result = new ArrayList<Tile>();
 		for (Tile tile : tiles) {
-			if (tile instanceof TileParallel == false && tile.getEvent().isParallel()) {
+			if (isParallel(tile)) {
 				if (pending == null) {
 					pending = new TileParallel();
 					pending.add(result.get(result.size() - 1));
@@ -249,6 +249,28 @@ public class GroupingTile implements TileWithCallbackY {
 			}
 		}
 		return result;
+	}
+
+	private static List<Tile> removeEmptyCloseToParallel(List<Tile> tiles) {
+		final List<Tile> result = new ArrayList<Tile>();
+		for (Tile tile : tiles) {
+			if (isParallel(tile)) {
+				removeHeadEmpty(result);
+			}
+			result.add(tile);
+		}
+		return result;
+
+	}
+
+	private static void removeHeadEmpty(List<Tile> tiles) {
+		while (tiles.size() > 0 && tiles.get(tiles.size() - 1) instanceof EmptyTile) {
+			tiles.remove(tiles.size() - 1);
+		}
+	}
+
+	private static boolean isParallel(Tile tile) {
+		return tile instanceof TileParallel == false && tile.getEvent().isParallel();
 	}
 
 	// public double getStartY() {

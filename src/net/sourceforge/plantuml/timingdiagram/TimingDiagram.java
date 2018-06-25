@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
@@ -52,13 +53,12 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockCompressed;
-import net.sourceforge.plantuml.graphic.TextBlockRecentred;
-import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -186,7 +186,7 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		}
 
 		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),
-				message.getLabel(), getSkinParam());
+				message.getLabel(), getSkinParam(), message);
 		timeArrow.drawU(ug);
 
 	}
@@ -212,10 +212,11 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		lastPlayer = player;
 	}
 
-	public void createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
+	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
 		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),
 				label);
 		messages.add(message);
+		return message;
 	}
 
 	public void addTime(TimeTick time) {

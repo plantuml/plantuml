@@ -66,4 +66,8 @@ public class ComplementColors implements Complement {
 	public boolean isOk() {
 		return center != null;
 	}
+
+	public HtmlColor getCenter() {
+		return center;
+	}
 }

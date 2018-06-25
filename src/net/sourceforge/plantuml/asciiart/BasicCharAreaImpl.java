@@ -86,7 +86,8 @@ public class BasicCharAreaImpl implements BasicCharArea {
 		if (wc == 2) {
 			return true;
 		}
-		throw new IllegalArgumentException("warning width=" + wc + " char=" + ((int) c));
+		return false;
+//		throw new IllegalArgumentException("warning width=" + wc + " char=" + ((int) c));
 	}
 
 	private void ensurePossible(int x, int y) {

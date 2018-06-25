@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.StringTokenizer;
-
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -60,7 +58,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -177,7 +174,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\""))) : diagram.getOrCreateLeaf(
 				ent2, null, null);
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		// Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -260,8 +257,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			link = link.getInv();
 		}
 		link.setLinkArrow(linkArrow);
-		colors = applyStyle(arg.getLazzy("ARROW_STYLE", 0), link, colors);
-		link.setColors(colors);
+		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
+		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 
 		addLink(diagram, link, arg.get("HEADER", 0));
 
@@ -332,18 +329,16 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			queue = getQueueLength(arg);
 		}
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-
 		final Display labelLink = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final Link link = new Link(cl1, cl2, linkType, labelLink, queue, firstLabel, secondLabel,
 				diagram.getLabeldistance(), diagram.getLabelangle());
+		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 
 		diagram.resetPragmaLabel();
 
-		colors = applyStyle(arg.getLazzy("ARROW_STYLE", 0), link, colors);
-		link.setColors(colors);
+		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 
 		addLink(diagram, link, arg.get("HEADER", 0));
 		return CommandExecutionResult.ok();
@@ -580,42 +575,6 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return "";
 		}
 		return s;
-	}
-
-	@Deprecated
-	public static Colors applyStyle(String arrowStyle, Link link) {
-		return applyStyle(arrowStyle, link, null);
-	}
-
-	public static Colors applyStyle(String arrowStyle, Link link, Colors colors) {
-		if (arrowStyle == null) {
-			return colors;
-		}
-		final StringTokenizer st = new StringTokenizer(arrowStyle, ",");
-		while (st.hasMoreTokens()) {
-			final String s = st.nextToken();
-			if (s.equalsIgnoreCase("dashed")) {
-				link.goDashed();
-			} else if (s.equalsIgnoreCase("bold")) {
-				link.goBold();
-			} else if (s.equalsIgnoreCase("dotted")) {
-				link.goDotted();
-			} else if (s.equalsIgnoreCase("hidden")) {
-				link.goHidden();
-			} else if (s.equalsIgnoreCase("plain")) {
-				// Do nothing
-			} else if (s.equalsIgnoreCase("norank")) {
-				link.goNorank();
-			} else if (s.startsWith("thickness=")) {
-				link.goThickness(Double.parseDouble(s.substring("thickness=".length())));
-			} else {
-				link.setSpecificColor(s);
-				if (colors != null) {
-					colors = colors.add(ColorType.LINE, HtmlColorSet.getInstance().getColorIfValid(s));
-				}
-			}
-		}
-		return colors;
 	}
 
 	private boolean isInversed(LinkDecor decors1, LinkDecor decors2) {

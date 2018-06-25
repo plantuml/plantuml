@@ -35,8 +35,12 @@
 package net.sourceforge.plantuml.ugraphic.txt;
 
 import java.awt.geom.Dimension2D;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
@@ -47,11 +51,12 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 
-public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
+public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer, UGraphic2 {
 
 	private final UmlCharArea charArea;
 
@@ -79,17 +84,19 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 		if (shape instanceof UText) {
 			final UText txt = (UText) shape;
 			final int y = ((int) (getTranslateY() + txt.getDescent())) / 10;
+			System.err.println("x=" + getDx());
 			if (txt.getFontConfiguration().containsStyle(FontStyle.WAVE)) {
 				charArea.drawHLine('^', y, getDx(), txt.getText().length());
-				charArea.drawStringLR(txt.getText(), 0, y + 1);
+				charArea.drawStringLR(txt.getText(), getDx(), y + 1);
 			} else {
-				charArea.drawStringLR(txt.getText(), 0, y);
+				charArea.drawStringLR(txt.getText(), getDx(), y);
 			}
 			return;
 		} else if (shape instanceof UImage) {
 			return;
 		}
-		throw new UnsupportedOperationException("cl=" + shape.getClass());
+		return;
+		// throw new UnsupportedOperationException("cl=" + shape.getClass());
 	}
 
 	public final UmlCharArea getCharArea() {
@@ -112,6 +119,11 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 
 	public Dimension2D getDimension() {
 		return new Dimension2DDouble(0, 0);
+	}
+
+	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+		final PrintStream ps = new PrintStream(os, true, "UTF-8");
+		getCharArea().print(ps);
 	}
 
 }

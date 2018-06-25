@@ -63,6 +63,30 @@ public class SignatureUtils {
 		}
 	}
 
+	public static String getMD5(String s) {
+		try {
+			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
+			msgDigest.update(s.getBytes("UTF-8"));
+			final byte[] digest = msgDigest.digest();
+			final StringBuilder result = new StringBuilder(32);
+			for (byte b : digest) {
+				final String tmp = Integer.toHexString(b & 0xFF);
+				if (tmp.length() == 1) {
+					result.append("0");
+				}
+				result.append(tmp);
+			}
+			assert result.length() == 32;
+			return result.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
 	public static String getSignatureSha512(File f) throws IOException {
 		final InputStream is = new FileInputStream(f);
 		try {
