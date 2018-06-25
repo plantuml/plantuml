@@ -107,6 +107,8 @@ public class LiveBoxFinder implements UGraphic {
 			((TileWithUpdateStairs) shape).updateStairs(stringBounder, y);
 		} else if (shape instanceof EmptyTile) {
 			// Nothing ?
+		} else if (shape instanceof TileParallel) {
+			// Nothing ?
 		} else if (shape instanceof NotesTile) {
 			// Nothing ?
 		} else if (shape instanceof Tile) {

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -137,7 +136,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
-		CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
+		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

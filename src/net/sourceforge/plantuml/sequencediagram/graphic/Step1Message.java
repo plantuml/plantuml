@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.Message;
-import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
+import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -78,11 +78,11 @@ class Step1Message extends Step1Abstract {
 					getLivingParticipantBox1(), getLivingParticipantBox2(), message.getUrl(), compAliveBox);
 		}
 
-		final List<NoteOnMessage> noteOnMessages = message.getNoteOnMessages();
-		for (NoteOnMessage noteOnMessage : noteOnMessages) {
-			final ISkinParam skinParam = noteOnMessage.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
-			addNote(drawingSet.getSkin().createComponent(noteOnMessage.getNoteStyle().getNoteComponentType(), null,
-					skinParam, noteOnMessage.getDisplay()));
+		final List<Note> noteOnMessages = message.getNoteOnMessages();
+		for (Note noteOnMessage : noteOnMessages) {
+			final ISkinParam skinParam = noteOnMessage.getSkinParamBackcolored(drawingSet.getSkinParam());
+			addNote(drawingSet.getSkin().createComponent(noteOnMessage.getStyle().getNoteComponentType(), null,
+					skinParam, noteOnMessage.getStrings()));
 		}
 
 	}
@@ -172,7 +172,7 @@ class Step1Message extends Step1Abstract {
 			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
-				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);
 				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));
 			}
 			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBoxes);
@@ -180,7 +180,7 @@ class Step1Message extends Step1Abstract {
 			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
-				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);
 				noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));
 			}
 			return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBoxes);
@@ -227,9 +227,9 @@ class Step1Message extends Step1Abstract {
 			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
-				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);
 				final NoteBox noteBox = createNoteBox(getStringBounder(), result, note, noteOnMessage);
-				if (noteOnMessage.getNotePosition() == NotePosition.RIGHT) {
+				if (noteOnMessage.getPosition() == NotePosition.RIGHT) {
 					noteBox.pushToRight(getParticipantBox2().getPreferredWidth(getStringBounder()) / 2);
 				}
 				noteBoxes.add(noteBox);

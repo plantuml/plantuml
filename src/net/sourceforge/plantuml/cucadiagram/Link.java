@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
-public class Link implements Hideable, Removeable {
+public class Link extends WithLinkType implements Hideable, Removeable {
 
 	final private IEntity cl1;
 	final private IEntity cl2;
@@ -63,7 +63,6 @@ public class Link implements Hideable, Removeable {
 	private String port1;
 	private String port2;
 
-	private LinkType type;
 	final private Display label;
 
 	private int length;
@@ -82,7 +81,6 @@ public class Link implements Hideable, Removeable {
 	private final String labeldistance;
 	private final String labelangle;
 
-	private HtmlColor specificColor;
 	private boolean constraint = true;
 	private boolean inverted = false;
 	private LinkArrow linkArrow = LinkArrow.NONE;
@@ -130,7 +128,7 @@ public class Link implements Hideable, Removeable {
 		this.qualifier2 = qualifier2;
 		this.labeldistance = labeldistance;
 		this.labelangle = labelangle;
-		this.specificColor = specificColor;
+		this.setSpecificColor(specificColor);
 		if (qualifier1 != null) {
 			((ILeaf) cl1).setNearDecoration(true);
 		}
@@ -159,7 +157,7 @@ public class Link implements Hideable, Removeable {
 		// cl2.setXposition(x-1);
 		// }
 		final Link result = new Link(cl2, cl1, getType().getInversed(), label, length, qualifier2, qualifier1,
-				labeldistance, labelangle, specificColor);
+				labeldistance, labelangle, getSpecificColor());
 		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;
@@ -167,30 +165,9 @@ public class Link implements Hideable, Removeable {
 		return result;
 	}
 
-	public void goDashed() {
-		type = type.goDashed();
-	}
-
-	public void goDotted() {
-		type = type.goDotted();
-	}
-
-	public void goThickness(double thickness) {
-		type = type.goThickness(thickness);
-	}
-
-	private boolean hidden = false;
-
-	public void goHidden() {
-		this.hidden = true;
-	}
-
+	@Override
 	public void goNorank() {
 		setConstraint(false);
-	}
-
-	public void goBold() {
-		type = type.goBold();
 	}
 
 	public String getLabeldistance() {
@@ -249,6 +226,7 @@ public class Link implements Hideable, Removeable {
 		return new EntityPort(bibliotekon.getShapeUid((ILeaf) cl2), port2);
 	}
 
+	@Override
 	public LinkType getType() {
 		if (opale) {
 			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
@@ -392,20 +370,6 @@ public class Link implements Hideable, Removeable {
 		return false;
 	}
 
-//	public boolean containsWithDecors(ILeaf leaf) {
-//		LinkType linkType = this.getType();
-//		if (isInverted()) {
-//			linkType = linkType.getInversed();
-//		}
-//		if (getEntity2() == leaf && linkType.getDecor1() != LinkDecor.NONE) {
-//			return true;
-//		}
-//		if (getEntity1() == leaf && linkType.getDecor2() != LinkDecor.NONE) {
-//			return true;
-//		}
-//		return false;
-//	}
-
 	public IEntity getOther(IEntity entity) {
 		if (getEntity1() == entity) {
 			return getEntity2();
@@ -437,14 +401,6 @@ public class Link implements Hideable, Removeable {
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}
 		return 0;
-	}
-
-	public HtmlColor getSpecificColor() {
-		return specificColor;
-	}
-
-	public void setSpecificColor(String s) {
-		this.specificColor = HtmlColorSet.getInstance().getColorIfValid(s);
 	}
 
 	public final boolean isConstraint() {
@@ -553,16 +509,6 @@ public class Link implements Hideable, Removeable {
 
 	public void setSametail(String sametail) {
 		this.sametail = sametail;
-	}
-
-	private Colors colors;
-
-	public void setColors(Colors colors) {
-		this.colors = colors;
-	}
-
-	public final Colors getColors() {
-		return colors;
 	}
 
 	public void setPortMembers(String port1, String port2) {

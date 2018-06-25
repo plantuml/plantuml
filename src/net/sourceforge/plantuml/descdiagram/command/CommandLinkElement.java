@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.descdiagram.command;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -60,7 +59,6 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
@@ -316,14 +314,12 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		colors = CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link, colors);
+		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
+		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 		if (arg.get("STEREOTYPE", 0) != null) {
 			final Stereotype stereotype = new Stereotype(arg.get("STEREOTYPE", 0));
-			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.arrow);
+			link.setColors(link.getColors().applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.arrow));
 		}
-
-		link.setColors(colors);
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
@@ -367,7 +363,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
-		CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
+		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}

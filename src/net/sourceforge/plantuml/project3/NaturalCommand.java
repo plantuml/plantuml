@@ -72,13 +72,15 @@ public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	public static Command create(SubjectPattern subject, VerbPattern verb, ComplementPattern complement) {
-		return new NaturalCommand(new RegexConcat(//
+		final RegexConcat pattern = new RegexConcat(//
 				new RegexLeaf("^"), //
 				subject.toRegex(), //
 				new RegexLeaf("[%s]+"), //
 				verb.toRegex(), //
 				new RegexLeaf("[%s]+"), //
 				complement.toRegex("0"), //
-				new RegexLeaf("$")), subject, verb, complement);
+				new RegexLeaf("$"));
+		// System.err.println("NaturalCommand="+pattern.getPattern());
+		return new NaturalCommand(pattern, subject, verb, complement);
 	}
 }

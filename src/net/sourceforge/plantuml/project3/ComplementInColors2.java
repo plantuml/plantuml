@@ -35,39 +35,22 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
-public class VerbIs implements VerbPattern {
+public class ComplementInColors2 implements ComplementPattern {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementClose());
+	public IRegex toRegex(String suffix) {
+		return new RegexLeaf("COMPLEMENT" + suffix, "colou?red[%s]+(?:in[%s+])?(#?\\w+)(?:/(#?\\w+))?");
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("is");
-	}
-
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				if (subject instanceof DayAsDate) {
-					final DayAsDate day = (DayAsDate) subject;
-					project.closeDayAsDate(day);
-				}
-				if (subject instanceof DaysAsDates) {
-					final DaysAsDates days = (DaysAsDates) subject;
-					for (DayAsDate d : days) {
-						project.closeDayAsDate(d);
-					}
-				}
-				return CommandExecutionResult.ok();
-			}
-		};
+	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+		final String color1 = arg.get("COMPLEMENT" + suffix, 0);
+		final String color2 = arg.get("COMPLEMENT" + suffix, 1);
+		final HtmlColor col1 = system.getIHtmlColorSet().getColorIfValid(color1);
+		final HtmlColor col2 = system.getIHtmlColorSet().getColorIfValid(color2);
+		return Failable.<Complement> ok(new ComplementColors(col1, col2));
 	}
 }

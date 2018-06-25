@@ -300,7 +300,7 @@ public class SequenceDiagram extends UmlDiagram {
 	private final List<GroupingStart> openGroupings = new ArrayList<GroupingStart>();
 
 	public boolean grouping(String title, String comment, GroupingType type, HtmlColor backColorGeneral,
-			HtmlColor backColorElement) {
+			HtmlColor backColorElement, boolean parallel) {
 		if (type != GroupingType.START && openGroupings.size() == 0) {
 			return false;
 		}
@@ -316,6 +316,9 @@ public class SequenceDiagram extends UmlDiagram {
 		events.add(g);
 
 		if (type == GroupingType.START) {
+			if (parallel) {
+				((GroupingStart) g).goParallel();
+			}
 			openGroupings.add(0, (GroupingStart) g);
 		} else if (type == GroupingType.END) {
 			openGroupings.remove(0);

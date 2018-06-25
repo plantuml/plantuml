@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
-import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
+import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -58,14 +58,14 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWith
 	private final Skin skin;
 	private final ISkinParam skinParam;
 	private final LivingSpace livingSpace;
-	private final NoteOnMessage noteOnMessage;
+	private final Note noteOnMessage;
 
 	public Event getEvent() {
 		return message;
 	}
 
 	public CommunicationTileNoteLeft(TileWithUpdateStairs tile, AbstractMessage message, Skin skin,
-			ISkinParam skinParam, LivingSpace livingSpace, NoteOnMessage noteOnMessage) {
+			ISkinParam skinParam, LivingSpace livingSpace, Note noteOnMessage) {
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
@@ -80,7 +80,7 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWith
 
 	private Component getComponent(StringBounder stringBounder) {
 		final Component comp = skin.createComponent(ComponentType.NOTE, null,
-				noteOnMessage.getSkinParamNoteBackcolored(skinParam), noteOnMessage.getDisplay());
+				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings());
 		return comp;
 	}
 

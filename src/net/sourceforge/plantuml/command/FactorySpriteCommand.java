@@ -40,7 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteColorBuilder4096;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 
-public final class FactorySpriteCommand implements SingleMultiFactoryCommand<UmlDiagram> {
+public final class FactorySpriteCommand implements SingleMultiFactoryCommand<WithSprite> {
 
 	private RegexConcat getRegexConcatMultiLine() {
 		return new RegexConcat(new RegexLeaf("^"), //
@@ -70,26 +70,26 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 				new RegexLeaf("$"));
 	}
 
-	public Command<UmlDiagram> createSingleLine() {
-		return new SingleLineCommand2<UmlDiagram>(getRegexConcatSingleLine()) {
+	public Command<WithSprite> createSingleLine() {
+		return new SingleLineCommand2<WithSprite>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final UmlDiagram system, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final WithSprite system, RegexResult arg) {
 				return executeInternal(system, arg, Arrays.asList((CharSequence) arg.get("DATA", 0)));
 			}
 
 		};
 	}
 
-	public Command<UmlDiagram> createMultiLine(boolean withBracket) {
-		return new CommandMultilines2<UmlDiagram>(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE) {
+	public Command<WithSprite> createMultiLine(boolean withBracket) {
+		return new CommandMultilines2<WithSprite>(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE) {
 
 			@Override
 			public String getPatternEnd() {
 				return "(?i)^end[%s]?sprite|\\}$";
 			}
 
-			protected CommandExecutionResult executeNow(final UmlDiagram system, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines) {
 				lines = lines.trim(true);
 				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 
@@ -104,7 +104,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 		};
 	}
 
-	private CommandExecutionResult executeInternal(UmlDiagram system, RegexResult line0,
+	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0,
 			final List<CharSequence> strings) {
 		try {
 			final Sprite sprite;

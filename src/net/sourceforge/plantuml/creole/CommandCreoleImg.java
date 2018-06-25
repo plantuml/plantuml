@@ -83,7 +83,7 @@ public class CommandCreoleImg implements Command {
 		if (s == null) {
 			return 1;
 		}
-		final Pattern p = Pattern.compile("scale=([0-9.]+)");
+		final Pattern p = Pattern.compile("(?:scale=|\\*)([0-9.]+)");
 		final Matcher m = p.matcher(s);
 		if (m.find()) {
 			return Double.parseDouble(m.group(1));

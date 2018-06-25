@@ -65,7 +65,7 @@ public class Splitter {
 	public static final String spritePattern = "\\<\\$" + SpriteUtils.SPRITE_NAME + "(?:\\{scale=(?:[0-9.]+)\\})?"
 			+ "\\>";
 	public static final String spritePattern2 = "\\<\\$(" + SpriteUtils.SPRITE_NAME + ")"
-			+ "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
+			+ "((?:\\{scale=|\\*)(?:[0-9.]+)\\}?)?" + "\\>";
 	static final String htmlTag;
 
 	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";

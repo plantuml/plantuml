@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Note;
-import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Reference;
@@ -96,8 +95,8 @@ public class TileBuilder {
 				result = new CommunicationTile(livingSpace1, livingSpace2, msg, skin, skinParam);
 				reverse = ((CommunicationTile) result).isReverse(stringBounder);
 			}
-			for (NoteOnMessage noteOnMessage : msg.getNoteOnMessages()) {
-				final NotePosition notePosition = noteOnMessage.getNotePosition();
+			for (Note noteOnMessage : msg.getNoteOnMessages()) {
+				final NotePosition notePosition = noteOnMessage.getPosition();
 				if (notePosition == NotePosition.LEFT) {
 					result = new CommunicationTileNoteLeft((TileWithUpdateStairs) result, msg, skin, skinParam,
 							reverse ? livingSpace2 : livingSpace1, noteOnMessage);
@@ -115,8 +114,8 @@ public class TileBuilder {
 			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
 			Tile result = null;
 			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments);
-			for (NoteOnMessage noteOnMessage : exo.getNoteOnMessages()) {
-				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getNotePosition();
+			for (Note noteOnMessage : exo.getNoteOnMessages()) {
+				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getPosition();
 				if (notePosition == NotePosition.LEFT) {
 					result = new CommunicationTileNoteLeft((TileWithUpdateStairs) result, exo, skin, skinParam,
 							livingSpace1, noteOnMessage);

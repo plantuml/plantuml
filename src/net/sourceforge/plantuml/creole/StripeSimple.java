@@ -179,7 +179,7 @@ public class StripeSimple implements Stripe {
 	public void addSprite(String src, double scale) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null) {
-			atoms.add(new AtomSprite(sprite.asTextBlock(fontConfiguration.getColor(), scale), fontConfiguration));
+			atoms.add(new AtomSprite(scale, fontConfiguration, sprite));
 		}
 	}
 
