@@ -42,7 +42,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -234,7 +236,7 @@ public class Run {
 	private static void encodeSprite(List<String> result) throws IOException {
 		SpriteGrayLevel level = SpriteGrayLevel.GRAY_16;
 		boolean compressed = false;
-		final File f;
+		final String path;
 		if (result.size() > 1 && result.get(0).matches("(4|8|16)z?")) {
 			if (result.get(0).startsWith("8")) {
 				level = SpriteGrayLevel.GRAY_8;
@@ -243,28 +245,56 @@ public class Run {
 				level = SpriteGrayLevel.GRAY_4;
 			}
 			compressed = StringUtils.goLowerCase(result.get(0)).endsWith("z");
-			f = new File(result.get(1));
+			path = result.get(1);
 		} else {
-			f = new File(result.get(0));
+			path = result.get(0);
 		}
-		final BufferedImage im = ImageIO.read(f);
-		final String name = getSpriteName(f);
+
+		final String http_Protocol = "http://";
+		final String https_Protocol = "https://";
+		final String fileName;
+		URL source;
+		final String lowerPath = StringUtils.goLowerCase(path);
+		if (lowerPath.startsWith(http_Protocol) || lowerPath.startsWith(https_Protocol)) {
+			source = new URL(path);
+			String p = source.getPath();
+			fileName = p.substring(p.lastIndexOf('/') + 1, p.length());
+		}
+		else {
+			File f = new File(path);
+			source = f.toURI().toURL();
+			fileName = f.getName();
+		}
+
+		InputStream stream = null;
+		final BufferedImage im;
+		try {
+			stream = source.openStream();
+			im = ImageIO.read(stream);
+		}
+		finally {
+			if (stream != null) {
+				stream.close();
+			}
+		}
+	
+		final String name = getSpriteName(fileName);
 		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level) : SpriteUtils.encode(im, name,
 				level);
 		System.out.println(s);
 	}
 
-	private static String getSpriteName(File f) {
-		final String s = getSpriteNameInternal(f);
+	private static String getSpriteName(String fileName) {
+		final String s = getSpriteNameInternal(fileName);
 		if (s.length() == 0) {
 			return "test";
 		}
 		return s;
 	}
 
-	private static String getSpriteNameInternal(File f) {
+	private static String getSpriteNameInternal(String fileName) {
 		final StringBuilder sb = new StringBuilder();
-		for (char c : f.getName().toCharArray()) {
+		for (char c : fileName.toCharArray()) {
 			if (("" + c).matches("[\\p{L}0-9_]")) {
 				sb.append(c);
 			} else {
@@ -291,7 +321,6 @@ public class Run {
 		for (String n : name) {
 			System.out.println("n=" + n);
 		}
-
 	}
 
 	private static void managePattern() {
