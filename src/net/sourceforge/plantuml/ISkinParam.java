@@ -51,6 +51,8 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public interface ISkinParam extends ISkinSimple {
 
+	public static final int SWIMLANE_WIDTH_SAME = -1;
+
 	public HtmlColor getHyperlinkColor();
 
 	public boolean useUnderlineForHyperlink();
@@ -67,7 +69,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam);
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection);
+	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection);
 
 	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue);
 
@@ -108,6 +110,8 @@ public interface ISkinParam extends ISkinSimple {
 	public LineBreakStrategy maxMessageSize();
 
 	public LineBreakStrategy wrapWidth();
+
+	public LineBreakStrategy swimlaneWrapTitleWidth();
 
 	public boolean strictUmlStyle();
 

@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+import net.sourceforge.plantuml.activitydiagram3.ftile.SwimlanesC;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -56,12 +56,13 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockCompressed;
 import net.sourceforge.plantuml.graphic.TextBlockRecentred;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
+import net.sourceforge.plantuml.ugraphic.comp.TextBlockCompressedOnXorY;
 
 public class ActivityDiagram3 extends UmlDiagram {
 
@@ -71,7 +72,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private SwimlaneStrategy swimlaneStrategy;
 
-	private final Swimlanes swinlanes = new Swimlanes(getSkinParam(), getPragma());
+	private final SwimlanesC swinlanes = new SwimlanesC(getSkinParam(), getPragma());
 
 	private void manageSwimlaneStrategy() {
 		if (swimlaneStrategy == null) {
@@ -191,8 +192,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 			throws IOException {
 		// BUG42
 		// COMPRESSION
-		// TextBlock result = swinlanes;
-		TextBlock result = new TextBlockCompressed(swinlanes);
+		TextBlock result = swinlanes;
+		// result = new TextBlockCompressedOnY(CompressionMode.ON_Y, result);
+		// result = new TextBlockCompressedOnXorY(CompressionMode.ON_X, result);
+		result = new TextBlockCompressedOnXorY(CompressionMode.ON_Y, result);
 		result = new TextBlockRecentred(result);
 		final ISkinParam skinParam = getSkinParam();
 		result = new AnnotatedWorker(this, skinParam).addAdd(result);

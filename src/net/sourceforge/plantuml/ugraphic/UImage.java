@@ -43,32 +43,19 @@ public class UImage implements UShape {
 
 	private final BufferedImage image;
 
-	// public final double getScale() {
-	// return scale;
-	// }
-
 	public UImage(BufferedImage image) {
 		this.image = image;
 	}
 
-	// public UImage(BufferedImage before, double scale) {
-	// this.image = before;
-	// this.scale = scale;
-	// // if (scale == 1) {
-	// // this.image = before;
-	// // return;
-	// // }
-	//
-	// // final int w = (int) Math.round(before.getWidth() * scale);
-	// // final int h = (int) Math.round(before.getHeight() * scale);
-	// // final BufferedImage after = new BufferedImage(w, h, before.getType());
-	// // final AffineTransform at = new AffineTransform();
-	// // at.scale(scale, scale);
-	// // final AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-	// // this.image = scaleOp.filter(before, after);
-	// }
-
 	public UImage scale(double scale) {
+		return scale(scale, AffineTransformOp.TYPE_BILINEAR);
+	}
+
+	public UImage scaleNearestNeighbor(double scale) {
+		return scale(scale, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+	}
+
+	private UImage scale(double scale, final int type) {
 		if (scale == 1) {
 			return this;
 		}
@@ -77,7 +64,7 @@ public class UImage implements UShape {
 		final BufferedImage after = new BufferedImage(w, h, image.getType());
 		final AffineTransform at = new AffineTransform();
 		at.scale(scale, scale);
-		final AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		final AffineTransformOp scaleOp = new AffineTransformOp(at, type);
 		return new UImage(scaleOp.filter(image, after));
 	}
 
@@ -92,9 +79,5 @@ public class UImage implements UShape {
 	public double getHeight() {
 		return image.getHeight() - 1;
 	}
-
-	// public UShape getScaled(double scale) {
-	// return scale(scale);
-	// }
 
 }

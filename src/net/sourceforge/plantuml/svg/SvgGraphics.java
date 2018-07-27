@@ -743,11 +743,11 @@ public class SvgGraphics {
 	private String manageScale(SvgString svg) {
 		final double svgScale = svg.getScale();
 		if (svgScale * scale == 1) {
-			return svg.getSvg();
+			return svg.getSvg(false);
 		}
 		final String s1 = "\\<g\\b";
 		final String s2 = "<g transform=\"scale(" + format(svgScale) + "," + format(svgScale) + ")\" ";
-		return svg.getSvg().replaceFirst(s1, s2);
+		return svg.getSvg(false).replaceFirst(s1, s2);
 	}
 
 	private String toBase64(BufferedImage image) throws IOException {

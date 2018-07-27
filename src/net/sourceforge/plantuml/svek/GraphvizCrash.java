@@ -184,7 +184,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		if (flashCode != null) {
 			final double h = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
 			ug = ug.apply(new UTranslate(0, h));
-			ug.draw(new UImage(flashCode));
+			ug.draw(new UImage(flashCode).scaleNearestNeighbor(3));
 		}
 	}
 

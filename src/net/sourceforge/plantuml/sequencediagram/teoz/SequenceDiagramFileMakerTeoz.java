@@ -148,8 +148,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(min1translate);
-				englobers.drawEnglobers(goDownForEnglobers(ug), main.calculateDimension(stringBounder).getHeight()
-						+ heightEnglober1 + heightEnglober2 / 2, new SimpleContext2D(true));
+
+				englobers.drawEnglobers(goDownAndCenterForEnglobers(ug), main.calculateDimension(stringBounder)
+						.getHeight() + heightEnglober1 + heightEnglober2 / 2, new SimpleContext2D(true));
 
 				printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
 				ug = goDown(ug, header);
@@ -182,13 +183,14 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	}
 
-	private UGraphic goDownForEnglobers(UGraphic ug) {
+	private UGraphic goDownAndCenterForEnglobers(UGraphic ug) {
 		ug = goDown(ug, title);
 		ug = goDown(ug, header);
 		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
 			ug = goDown(ug, legend);
 		}
-		return ug;
+		final double dx = (dimTotal.getWidth() - main.calculateDimension(stringBounder).getWidth()) / 2;
+		return ug.apply(new UTranslate(dx, 0));
 	}
 
 	private UGraphic goDown(UGraphic ug, TextBlock size) {

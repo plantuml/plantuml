@@ -76,9 +76,11 @@ public class Stdlib {
 		if (cached != null) {
 			final String cachedResult = cached.get();
 			if (cachedResult != null) {
+				// Log.info("Using cache for " + file);
 				return cachedResult;
 			}
 		}
+		Log.info("No cache for " + file);
 		final DataInputStream dataStream = getDataStream();
 		if (dataStream == null) {
 			return null;
@@ -94,6 +96,7 @@ public class Stdlib {
 			while (true) {
 				final String filename = dataStream.readUTF();
 				if (filename.equals(SEPARATOR)) {
+					Log.info("Not found " + filename);
 					return null;
 				}
 				if (filename.equalsIgnoreCase(file)) {
@@ -121,8 +124,10 @@ public class Stdlib {
 						}
 						final int width = Integer.parseInt(m.group(1));
 						final int height = Integer.parseInt(m.group(2));
-						final String sprite = readSprite(width, height, spriteStream);
-						if (found != null) {
+						if (found == null) {
+							skipSprite(width, height, spriteStream);
+						} else {
+							final String sprite = readSprite(width, height, spriteStream);
 							found.append(sprite);
 							found.append("}\n");
 						}
@@ -141,9 +146,14 @@ public class Stdlib {
 		fillMap(info);
 	}
 
-	private String readSprite(int width, int height, InputStream inputStream) throws IOException {
-		final StringBuilder result = new StringBuilder();
+	private void skipSprite(int width, int height, InputStream inputStream) throws IOException {
 		final int nbLines = (height + 1) / 2;
+		inputStream.skip(nbLines * width);
+	}
+
+	private String readSprite(int width, int height, InputStream inputStream) throws IOException {
+		final int nbLines = (height + 1) / 2;
+		final StringBuilder result = new StringBuilder();
 		int line = 0;
 		for (int j = 0; j < nbLines; j++) {
 			final StringBuilder sb1 = new StringBuilder();

@@ -48,8 +48,11 @@ public class SvgString {
 		this.scale = scale;
 	}
 
-	public String getSvg() {
+	public String getSvg(boolean raw) {
 		String result = svg;
+		if (raw) {
+			return result;
+		}
 		if (result.startsWith("<?xml")) {
 			final int idx = result.indexOf("<svg");
 			result = result.substring(idx);

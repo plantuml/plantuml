@@ -52,6 +52,10 @@ public class SuggestedFile {
 		this.initialCpt = initialCpt;
 	}
 
+	public SuggestedFile withPreprocFormat() {
+		return new SuggestedFile(outputFile, FileFormat.PREPROC, initialCpt);
+	}
+
 	@Override
 	public String toString() {
 		return outputFile.getAbsolutePath() + "[" + initialCpt + "]";

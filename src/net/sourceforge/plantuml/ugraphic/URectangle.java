@@ -44,8 +44,15 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 	private final double ry;
 	private final String comment;
 
-	public URectangle withWidth(double newHeight) {
+	public URectangle withHeight(double newHeight) {
 		final URectangle result = new URectangle(width, newHeight, rx, ry, comment);
+		result.ignoreForCompression = this.ignoreForCompression;
+		result.setDeltaShadow(this.getDeltaShadow());
+		return result;
+	}
+
+	public URectangle withWidth(double newWidth) {
+		final URectangle result = new URectangle(newWidth, height, rx, ry, comment);
 		result.ignoreForCompression = this.ignoreForCompression;
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;

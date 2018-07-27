@@ -36,12 +36,11 @@
 package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.svek.RoundedContainer;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class SkinParameter {

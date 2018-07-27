@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.util.List;

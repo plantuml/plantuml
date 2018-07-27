@@ -44,21 +44,27 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
-public class UncommentReadLine implements ReadLine {
+public class UncommentReadLine extends ReadLineInstrumented implements ReadLine {
+
+	private static final Pattern2 unpause = MyPattern.cmpile(StartUtils.PAUSE_PATTERN);
 
 	private final ReadLine raw;
-	private final Pattern2 start;
-	private final Pattern2 unpause;
+	// private final Pattern2 start;
 	private String headerToRemove;
 	private boolean paused;
 
 	public UncommentReadLine(ReadLine source) {
 		this.raw = source;
-		this.start = MyPattern.cmpile(StartUtils.START_PATTERN);
-		this.unpause = MyPattern.cmpile(StartUtils.PAUSE_PATTERN);
+		// this.start = MyPattern.cmpile(StartUtils.START_PATTERN);
 	}
 
-	public CharSequence2 readLine() throws IOException {
+	@Override
+	public String toString() {
+		return "UncommentReadLine of " + raw;
+	}
+
+	@Override
+	CharSequence2 readLineInst() throws IOException {
 		final CharSequence2 result = raw.readLine();
 
 		if (result == null) {
@@ -88,7 +94,8 @@ public class UncommentReadLine implements ReadLine {
 		return result;
 	}
 
-	public void close() throws IOException {
+	@Override
+	void closeInst() throws IOException {
 		this.raw.close();
 	}
 

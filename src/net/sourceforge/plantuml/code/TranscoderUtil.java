@@ -41,4 +41,8 @@ public class TranscoderUtil {
 		return new TranscoderSmart();
 	}
 
+	public static Transcoder getDefaultTranscoder2() {
+		return new TranscoderSmart2();
+	}
+
 }

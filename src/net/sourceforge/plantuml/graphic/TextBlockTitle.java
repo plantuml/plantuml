@@ -57,7 +57,8 @@ public class TextBlockTitle implements TextBlock {
 		if (stringsToDisplay.size() == 1 && stringsToDisplay.get(0).length() == 0) {
 			throw new IllegalArgumentException();
 		}
-		textBlock = stringsToDisplay.create(font, HorizontalAlignment.CENTER, spriteContainer, LineBreakStrategy.NONE,
+		final LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
+		textBlock = stringsToDisplay.create(font, HorizontalAlignment.CENTER, spriteContainer, lineBreak,
 				CreoleMode.FULL, null, null);
 	}
 

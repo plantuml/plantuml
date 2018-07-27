@@ -60,7 +60,7 @@ public class LifeEventTile implements TileWithUpdateStairs {
 	private final ISkinParam skinParam;
 
 	public void updateStairs(StringBounder stringBounder, double y) {
-		System.err.println("LifeEventTile::updateStairs " + lifeEvent + " " + livingSpace.getParticipant() + " y=" + y);
+		// System.err.println("LifeEventTile::updateStairs " + lifeEvent + " " + livingSpace.getParticipant() + " y=" + y);
 		livingSpace.addStepForLivebox(getEvent(), y);
 	}
 

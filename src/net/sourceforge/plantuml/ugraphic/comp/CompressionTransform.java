@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.comp;
 
 import java.util.List;
 

@@ -43,6 +43,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -67,11 +70,15 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.swing.MainWindow2;
+import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
+import net.sourceforge.plantuml.utils.Cypher;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {
+
+	private static Cypher cypher;
 
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
 		System.setProperty("log4j.debug", "false");
@@ -135,6 +142,9 @@ public class Run {
 		}
 
 		forceOpenJdkResourceLoad();
+		if (option.getPreprocessorOutputMode() == OptionPreprocOutputMode.CYPHER) {
+			cypher = new LanguageDescriptor().getCypher();
+		}
 		boolean error = false;
 		boolean forceQuit = false;
 		if (option.isPattern()) {
@@ -231,10 +241,13 @@ public class Run {
 		return false;
 	}
 
+	static private final String httpProtocol = "http://";
+	static private final String httpsProtocol = "https://";
+
 	private static void encodeSprite(List<String> result) throws IOException {
 		SpriteGrayLevel level = SpriteGrayLevel.GRAY_16;
 		boolean compressed = false;
-		final File f;
+		final String path;
 		if (result.size() > 1 && result.get(0).matches("(4|8|16)z?")) {
 			if (result.get(0).startsWith("8")) {
 				level = SpriteGrayLevel.GRAY_8;
@@ -243,28 +256,52 @@ public class Run {
 				level = SpriteGrayLevel.GRAY_4;
 			}
 			compressed = StringUtils.goLowerCase(result.get(0)).endsWith("z");
-			f = new File(result.get(1));
+			path = result.get(1);
 		} else {
-			f = new File(result.get(0));
+			path = result.get(0);
 		}
-		final BufferedImage im = ImageIO.read(f);
-		final String name = getSpriteName(f);
+
+		final String fileName;
+		final URL source;
+		final String lowerPath = StringUtils.goLowerCase(path);
+		if (lowerPath.startsWith(httpProtocol) || lowerPath.startsWith(httpsProtocol)) {
+			source = new URL(path);
+			final String p = source.getPath();
+			fileName = p.substring(p.lastIndexOf('/') + 1, p.length());
+		} else {
+			final File f = new File(path);
+			source = f.toURI().toURL();
+			fileName = f.getName();
+		}
+
+		InputStream stream = null;
+		final BufferedImage im;
+		try {
+			stream = source.openStream();
+			im = ImageIO.read(stream);
+		} finally {
+			if (stream != null) {
+				stream.close();
+			}
+		}
+
+		final String name = getSpriteName(fileName);
 		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level) : SpriteUtils.encode(im, name,
 				level);
 		System.out.println(s);
 	}
 
-	private static String getSpriteName(File f) {
-		final String s = getSpriteNameInternal(f);
+	private static String getSpriteName(String fileName) {
+		final String s = getSpriteNameInternal(fileName);
 		if (s.length() == 0) {
 			return "test";
 		}
 		return s;
 	}
 
-	private static String getSpriteNameInternal(File f) {
+	private static String getSpriteNameInternal(String fileName) {
 		final StringBuilder sb = new StringBuilder();
-		for (char c : f.getName().toCharArray()) {
+		for (char c : fileName.toCharArray()) {
 			if (("" + c).matches("[\\p{L}0-9_]")) {
 				sb.append(c);
 			} else {
@@ -291,7 +328,6 @@ public class Run {
 		for (String n : name) {
 			System.out.println("n=" + n);
 		}
-
 	}
 
 	private static void managePattern() {
@@ -356,6 +392,7 @@ public class Run {
 				files.addAll(group.getFiles());
 			}
 		}
+		Log.info("Found " + files.size() + " files");
 		for (File f : files) {
 			try {
 				final boolean error = manageFileInternal(f, option);
@@ -417,6 +454,7 @@ public class Run {
 	}
 
 	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {
+		Log.info("Working on " + f.getAbsolutePath());
 		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			System.out.println("------------------------");
 			System.out.println(f);
@@ -435,6 +473,7 @@ public class Run {
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		}
 		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
+
 		if (option.isComputeurl()) {
 			for (BlockUml s : sourceFileReader.getBlocks()) {
 				System.out.println(s.getEncodedUrl());
@@ -447,8 +486,31 @@ public class Run {
 			hasErrors(f, result);
 			return hasError;
 		}
+		if (option.getPreprocessorOutputMode() != null) {
+			extractPreproc(option, sourceFileReader);
+			return false;
+		}
 		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+
 		return hasErrors(f, result);
+	}
+
+	private static void extractPreproc(Option option, final ISourceFileReader sourceFileReader) throws IOException {
+		final String charset = option.getCharset();
+		for (BlockUml blockUml : sourceFileReader.getBlocks()) {
+			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)
+					.withPreprocFormat();
+			final File file = suggested.getFile(0);
+			Log.info("Export preprocessing source to " + file.getAbsolutePath());
+			final PrintWriter pw = charset == null ? new PrintWriter(file) : new PrintWriter(file, charset);
+			for (CharSequence s : blockUml.getDefinition(true)) {
+				if (cypher != null) {
+					s = cypher.cypher(s.toString());
+				}
+				pw.println(s);
+			}
+			pw.close();
+		}
 	}
 
 	private static boolean hasErrors(File f, final List<GeneratedImage> list) throws IOException {

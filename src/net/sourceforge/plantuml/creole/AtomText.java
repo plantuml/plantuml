@@ -291,7 +291,7 @@ public class AtomText implements Atom {
 	}
 
 	public List<AtomText> getSplitted(StringBounder stringBounder, LineBreakStrategy maxWidthAsString) {
-		final double maxWidth = maxWidthAsString.getMathWidth();
+		final double maxWidth = maxWidthAsString.getMaxWidth();
 		final List<AtomText> result = new ArrayList<AtomText>();
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder currentLine = new StringBuilder();

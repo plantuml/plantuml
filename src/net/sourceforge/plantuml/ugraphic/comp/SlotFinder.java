@@ -33,10 +33,28 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.comp;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.TextLimitFinder;
+import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UEmpty;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UParam;
+import net.sourceforge.plantuml.ugraphic.UParamNull;
+import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class SlotFinder implements UGraphic {
 
@@ -50,7 +68,7 @@ public class SlotFinder implements UGraphic {
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
-			return new SlotFinder(stringBounder, yslot, translate.compose((UTranslate) change));
+			return new SlotFinder(mode, stringBounder, slot, translate.compose((UTranslate) change));
 		} else if (change instanceof UStroke) {
 			return new SlotFinder(this);
 		} else if (change instanceof UChangeBackColor) {
@@ -61,22 +79,25 @@ public class SlotFinder implements UGraphic {
 		throw new UnsupportedOperationException();
 	}
 
-	private final SlotSet yslot;
+	private final SlotSet slot;
+
 	private final StringBounder stringBounder;
 	private final UTranslate translate;
+	private final CompressionMode mode;
 
-	public SlotFinder(StringBounder stringBounder) {
-		this(stringBounder, new SlotSet(), new UTranslate());
+	public SlotFinder(CompressionMode mode, StringBounder stringBounder) {
+		this(mode, stringBounder, new SlotSet(), new UTranslate());
 	}
 
-	private SlotFinder(StringBounder stringBounder, SlotSet yslot, UTranslate translate) {
+	private SlotFinder(CompressionMode mode, StringBounder stringBounder, SlotSet slot, UTranslate translate) {
 		this.stringBounder = stringBounder;
-		this.yslot = yslot;
+		this.slot = slot;
 		this.translate = translate;
+		this.mode = mode;
 	}
 
 	private SlotFinder(SlotFinder other) {
-		this(other.stringBounder, other.yslot, other.translate);
+		this(other.mode, other.stringBounder, other.slot, other.translate);
 	}
 
 	public StringBounder getStringBounder() {
@@ -92,12 +113,19 @@ public class SlotFinder implements UGraphic {
 		final double y = translate.getDy();
 		if (shape instanceof URectangle) {
 			final URectangle rect = (URectangle) shape;
-			if (rect.isIgnoreForCompression()) {
+			if (mode == CompressionMode.ON_X && rect.isIgnoreForCompression()) {
+				drawRectangle(x, y, new URectangle(2, rect.getHeight()));
+				drawRectangle(x + rect.getWidth() - 2, y, new URectangle(2, rect.getHeight()));
+				return;
+			}
+			if (mode == CompressionMode.ON_Y && rect.isIgnoreForCompression()) {
 				drawRectangle(x, y, new URectangle(rect.getWidth(), 2));
 				drawRectangle(x, y + rect.getHeight() - 2, new URectangle(rect.getWidth(), 2));
 				return;
 			}
-			drawRectangle(x, y, rect);
+			drawRectangle(x, y, (URectangle) shape);
+		} else if (shape instanceof UPath) {
+			drawPath(x, y, (UPath) shape);
 		} else if (shape instanceof UPolygon) {
 			drawPolygon(x, y, (UPolygon) shape);
 		} else if (shape instanceof UEllipse) {
@@ -109,26 +137,55 @@ public class SlotFinder implements UGraphic {
 		}
 	}
 
+	private void drawPath(double x, double y, UPath shape) {
+		if (mode == CompressionMode.ON_X) {
+			slot.addSlot(x + shape.getMinX(), x + shape.getMaxX());
+		} else {
+			slot.addSlot(y + shape.getMinY(), y + shape.getMaxY());
+		}
+
+	}
+
 	private void drawEmpty(double x, double y, UEmpty shape) {
-		yslot.addSlot(y, y + shape.getHeight());
+		if (mode == CompressionMode.ON_X) {
+			slot.addSlot(x, x + shape.getWidth());
+		} else {
+			slot.addSlot(y, y + shape.getHeight());
+		}
 	}
 
 	private void drawText(double x, double y, UText shape) {
 		final TextLimitFinder finder = new TextLimitFinder(stringBounder, false);
 		finder.apply(new UTranslate(x, y)).draw(shape);
-		yslot.addSlot(finder.getMinY(), finder.getMaxY());
+		if (mode == CompressionMode.ON_X) {
+			slot.addSlot(finder.getMinX(), finder.getMaxX());
+		} else {
+			slot.addSlot(finder.getMinY(), finder.getMaxY());
+		}
 	}
 
 	private void drawEllipse(double x, double y, UEllipse shape) {
-		yslot.addSlot(y, y + shape.getHeight());
+		if (mode == CompressionMode.ON_X) {
+			slot.addSlot(x, x + shape.getWidth());
+		} else {
+			slot.addSlot(y, y + shape.getHeight());
+		}
 	}
 
 	private void drawPolygon(double x, double y, UPolygon shape) {
-		yslot.addSlot(y + shape.getMinY(), y + shape.getMaxY());
+		if (mode == CompressionMode.ON_X) {
+			slot.addSlot(x + shape.getMinX(), x + shape.getMaxX());
+		} else {
+			slot.addSlot(y + shape.getMinY(), y + shape.getMaxY());
+		}
 	}
 
 	private void drawRectangle(double x, double y, URectangle shape) {
-		yslot.addSlot(y, y + shape.getHeight());
+		if (mode == CompressionMode.ON_X) {
+			slot.addSlot(x, x + shape.getWidth());
+		} else {
+			slot.addSlot(y, y + shape.getHeight());
+		}
 	}
 
 	public ColorMapper getColorMapper() {
@@ -141,8 +198,8 @@ public class SlotFinder implements UGraphic {
 	public void closeAction() {
 	}
 
-	public SlotSet getYSlotSet() {
-		return yslot;
+	public SlotSet getSlotSet() {
+		return slot;
 	}
 
 	public void flushUg() {

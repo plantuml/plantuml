@@ -95,7 +95,8 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public boolean isWhite() {
-		return display.size() == 0 || (display.size() == 1 && display.get(0).toString().matches("\\s*"));
+		return display == null || display.size() == 0
+				|| (display.size() == 1 && display.get(0).toString().matches("\\s*"));
 	}
 
 	public static Display empty() {
@@ -398,8 +399,8 @@ public class Display implements Iterable<CharSequence> {
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode modeSimpleLine, LineBreakStrategy maxMessageSize) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine,
-				null, null);
+		return create(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine, null,
+				null);
 	}
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,

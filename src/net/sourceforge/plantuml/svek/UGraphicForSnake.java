@@ -51,6 +51,11 @@ public class UGraphicForSnake extends UGraphicDelegator {
 	private final double dy;
 	private final List<PendingSnake> snakes;
 
+	@Override
+	public String toString() {
+		return super.toString() + " " + getUg();
+	}
+
 	public UTranslate getTranslation() {
 		return new UTranslate(dx, dy);
 	}

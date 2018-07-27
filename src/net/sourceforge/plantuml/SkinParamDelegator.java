@@ -103,7 +103,7 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getDotExecutable();
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection) {
+	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection) {
 		return skinParam.getHorizontalAlignment(param, arrowDirection);
 	}
 
@@ -293,6 +293,10 @@ public class SkinParamDelegator implements ISkinParam {
 
 	public char getCircledCharacter(Stereotype stereotype) {
 		return skinParam.getCircledCharacter(stereotype);
+	}
+
+	public LineBreakStrategy swimlaneWrapTitleWidth() {
+		return skinParam.swimlaneWrapTitleWidth();
 	}
 
 }

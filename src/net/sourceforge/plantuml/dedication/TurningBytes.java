@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-class TurningBytes {
+public class TurningBytes {
 
 	private final byte key[];
 	private int idx;

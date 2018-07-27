@@ -33,30 +33,42 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.comp;
 
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
+import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class UGraphicCompress extends UGraphicDelegator {
+public class UGraphicCompressOnXorY extends UGraphicDelegator {
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
-			return new UGraphicCompress(getUg(), compressionTransform, translate.compose((UTranslate) change));
+			return new UGraphicCompressOnXorY(mode, getUg(), compressionTransform, translate.compose((UTranslate) change));
 		} else if (change instanceof UStroke || change instanceof UChangeBackColor || change instanceof UChangeColor) {
-			return new UGraphicCompress(getUg().apply(change), compressionTransform, translate);
+			return new UGraphicCompressOnXorY(mode, getUg().apply(change), compressionTransform, translate);
 		}
 		throw new UnsupportedOperationException();
 	}
 
+	private final CompressionMode mode;
 	private final CompressionTransform compressionTransform;
 	private final UTranslate translate;
 
-	public UGraphicCompress(UGraphic ug, CompressionTransform compressionTransform) {
-		this(ug, compressionTransform, new UTranslate());
+	public UGraphicCompressOnXorY(CompressionMode mode, UGraphic ug, CompressionTransform compressionTransform) {
+		this(mode, ug, compressionTransform, new UTranslate());
 	}
 
-	private UGraphicCompress(UGraphic ug, CompressionTransform compressionTransform, UTranslate translate) {
+	private UGraphicCompressOnXorY(CompressionMode mode, UGraphic ug, CompressionTransform compressionTransform,
+			UTranslate translate) {
 		super(ug);
+		this.mode = mode;
 		this.compressionTransform = compressionTransform;
 		this.translate = translate;
 	}
@@ -67,19 +79,32 @@ public class UGraphicCompress extends UGraphicDelegator {
 		if (shape instanceof URectangle) {
 			final URectangle rect = (URectangle) shape;
 			if (rect.isIgnoreForCompression()) {
-				final double y2 = ct(y + rect.getHeight());
-				shape = rect.withWidth(y2 - ct(y));
+				if (mode == CompressionMode.ON_X) {
+					final double x2 = ct(x + rect.getWidth());
+					shape = rect.withWidth(x2 - ct(x));
+				} else {
+					final double y2 = ct(y + rect.getHeight());
+					shape = rect.withHeight(y2 - ct(y));
+				}
 			}
 		}
 		if (shape instanceof ULine) {
 			drawLine(x, y, (ULine) shape);
 		} else {
-			getUg().apply(new UTranslate(x, ct(y))).draw(shape);
+			if (mode == CompressionMode.ON_X) {
+				getUg().apply(new UTranslate(ct(x), y)).draw(shape);
+			} else {
+				getUg().apply(new UTranslate(x, ct(y))).draw(shape);
+			}
 		}
 	}
 
 	private void drawLine(double x, double y, ULine shape) {
-		drawLine(x, ct(y), x + shape.getDX(), ct(y + shape.getDY()));
+		if (mode == CompressionMode.ON_X) {
+			drawLine(ct(x), y, ct(x + shape.getDX()), y + shape.getDY());
+		} else {
+			drawLine(x, ct(y), x + shape.getDX(), ct(y + shape.getDY()));
+		}
 	}
 
 	private double ct(double v) {
@@ -92,15 +117,7 @@ public class UGraphicCompress extends UGraphicDelegator {
 			return;
 		}
 		assert y1 <= y2;
-		final double xmin = Math.min(x1, x2);
-		final double xmax = Math.max(x1, x2);
-		final double ymin = Math.min(y1, y2);
-		final double ymax = Math.max(y1, y2);
-		if (x2 >= x1) {
-			getUg().apply(new UTranslate(xmin, ymin)).draw(new ULine(xmax - xmin, ymax - ymin));
-		} else {
-			getUg().apply(new UTranslate(xmax, ymin)).draw(new ULine(-(xmax - xmin), ymax - ymin));
-		}
+		getUg().apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));
 	}
 
 }

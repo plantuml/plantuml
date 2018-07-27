@@ -173,9 +173,9 @@ public class BlockUml {
 		return data.get(0).toString().equalsIgnoreCase(signature);
 	}
 
-	public List<? extends CharSequence> getDefinition() {
-		if (data.get(0).toString().startsWith("@startdef") == false) {
-			throw new IllegalStateException();
+	public List<? extends CharSequence> getDefinition(boolean withHeader) {
+		if (withHeader) {
+			return Collections.unmodifiableList(data);
 		}
 		return Collections.unmodifiableList(data.subList(1, data.size() - 1));
 	}

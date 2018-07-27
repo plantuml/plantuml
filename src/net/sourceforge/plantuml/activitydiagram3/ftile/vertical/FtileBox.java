@@ -125,7 +125,7 @@ public class FtileBox extends AbstractFtile {
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
 		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(label);
-		this.tb = new SheetBlock2(new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), new MyStencil(), new UStroke(1));
+		this.tb = new SheetBlock2(new SheetBlock1(sheet, skinParam.wrapWidth(), skinParam.getPadding()), new MyStencil(), new UStroke(1));
 		this.print = label.toString();
 	}
 

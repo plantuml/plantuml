@@ -77,24 +77,24 @@ public class QBlocks {
 		}
 	}
 
-	public String encodeAscii() {
-		final StringBuilder sb = new StringBuilder();
-		final AsciiEncoder encoder = new AsciiEncoder();
-		for (QBlock rsa : all) {
-			sb.append(encoder.encode(rsa.getData()));
-			sb.append("!");
-		}
-		return sb.toString();
-	}
+//	public String encodeAscii() {
+//		final StringBuilder sb = new StringBuilder();
+//		final AsciiEncoder encoder = new AsciiEncoder();
+//		for (QBlock rsa : all) {
+//			sb.append(encoder.encode(rsa.getDataRaw()));
+//			sb.append("!");
+//		}
+//		return sb.toString();
+//	}
 
-	public static QBlocks descodeAscii(String s) {
-		final QBlocks result = new QBlocks();
-		final AsciiEncoder encoder = new AsciiEncoder();
-		for (String bl : s.split("!")) {
-			final BigInteger bigInteger = new BigInteger(encoder.decode(bl));
-			result.all.add(new QBlock(bigInteger));
-
-		}
-		return result;
-	}
+//	public static QBlocks descodeAscii(String s) {
+//		final QBlocks result = new QBlocks();
+//		final AsciiEncoder encoder = new AsciiEncoder();
+//		for (String bl : s.split("!")) {
+//			final BigInteger bigInteger = new BigInteger(encoder.decode(bl));
+//			result.all.add(new QBlock(bigInteger));
+//
+//		}
+//		return result;
+//	}
 }

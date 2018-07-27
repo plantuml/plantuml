@@ -42,18 +42,30 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
 
 public class SignatureUtils {
 
+	public static byte[] salting(String pass, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException,
+			UnsupportedEncodingException {
+		final int iterations = 10000;
+		final int keyLength = 512;
+		final SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		final PBEKeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, iterations, keyLength);
+		final SecretKey key = skf.generateSecret(spec);
+		return SignatureUtils.getSHA512raw(key.getEncoded());
+	}
+
 	public static String getSignature(String s) {
 		try {
-			final AsciiEncoder coder = new AsciiEncoder();
-			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
-			msgDigest.update(s.getBytes("UTF-8"));
-			final byte[] digest = msgDigest.digest();
-			return coder.encode(digest);
+			final byte[] digest = getMD5raw(s);
+			return toString(digest);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
@@ -63,21 +75,24 @@ public class SignatureUtils {
 		}
 	}
 
-	public static String getMD5(String s) {
+	public static String toString(byte data[]) {
+		final AsciiEncoder coder = new AsciiEncoder();
+		return coder.encode(data);
+	}
+
+	public static String toHexString(byte data[]) {
+		final StringBuilder sb = new StringBuilder(data.length * 2);
+		for (byte b : data) {
+			sb.append(String.format("%02x", b));
+		}
+		return sb.toString();
+	}
+
+	public static String getMD5Hex(String s) {
 		try {
-			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
-			msgDigest.update(s.getBytes("UTF-8"));
-			final byte[] digest = msgDigest.digest();
-			final StringBuilder result = new StringBuilder(32);
-			for (byte b : digest) {
-				final String tmp = Integer.toHexString(b & 0xFF);
-				if (tmp.length() == 1) {
-					result.append("0");
-				}
-				result.append(tmp);
-			}
-			assert result.length() == 32;
-			return result.toString();
+			final byte[] digest = getMD5raw(s);
+			assert digest.length == 16;
+			return toHexString(digest);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
@@ -85,6 +100,36 @@ public class SignatureUtils {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
 		}
+	}
+
+	public static String getSHA512Hex(String s) {
+		try {
+			final byte[] digest = getSHA512raw(s);
+			assert digest.length == 64;
+			return toHexString(digest);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	public static byte[] getMD5raw(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
+		msgDigest.update(s.getBytes("UTF-8"));
+		return msgDigest.digest();
+	}
+
+	public static byte[] getSHA512raw(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		return getSHA512raw(s.getBytes("UTF-8"));
+	}
+
+	public static byte[] getSHA512raw(byte data[]) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
+		msgDigest.update(data);
+		return msgDigest.digest();
 	}
 
 	public static String getSignatureSha512(File f) throws IOException {
@@ -98,14 +143,13 @@ public class SignatureUtils {
 
 	public static String getSignatureSha512(InputStream is) throws IOException {
 		try {
-			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
 			int read = 0;
 			while ((read = is.read()) != -1) {
 				msgDigest.update((byte) read);
 			}
 			final byte[] digest = msgDigest.digest();
-			return coder.encode(digest);
+			return toString(digest);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
@@ -130,7 +174,6 @@ public class SignatureUtils {
 
 	public static String getSignature(File f) throws IOException {
 		try {
-			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
 			final FileInputStream is = new FileInputStream(f);
 			int read = -1;
@@ -139,7 +182,7 @@ public class SignatureUtils {
 			}
 			is.close();
 			final byte[] digest = msgDigest.digest();
-			return coder.encode(digest);
+			return toString(digest);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
