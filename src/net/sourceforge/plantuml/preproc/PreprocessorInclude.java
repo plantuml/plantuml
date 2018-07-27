@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
-public class PreprocessorInclude implements ReadLine {
+public class PreprocessorInclude extends ReadLineInstrumented implements ReadLine {
 
 	private static final Pattern2 includeDefPattern = MyPattern.cmpile("^[%s]*!includedef[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
@@ -119,7 +119,8 @@ public class PreprocessorInclude implements ReadLine {
 		}
 	}
 
-	public CharSequence2 readLine() throws IOException {
+	@Override
+	CharSequence2 readLineInst() throws IOException {
 		final CharSequence2 result = readLineInternal();
 		if (result != null && StartUtils.isArobaseStartDiagram(result) && config.size() > 0) {
 			final List<String> empty = new ArrayList<String>();
@@ -266,21 +267,13 @@ public class PreprocessorInclude implements ReadLine {
 	}
 
 	private InputStream getStdlibInputStream(String filename) {
-		return Stdlib.getResourceAsStream(filename);
-	}
-
-	private InputStream getStdlibInputStreamOld(String filename) {
-		if (filename.endsWith(".puml") == false) {
-			filename = filename + ".puml";
-		}
-		InputStream is = PreprocessorInclude.class.getResourceAsStream("/stdlib/" + filename);
-		if (is == null) {
-			is = PreprocessorInclude.class.getResourceAsStream("/stdlib/" + filename.toLowerCase());
-		}
-		return is;
+		final InputStream result = Stdlib.getResourceAsStream(filename);
+		// Log.info("Loading sdlib " + filename + " ok");
+		return result;
 	}
 
 	private ReadLine getReaderStdlibInclude(CharSequence2 s, String filename) {
+		Log.info("Loading sdlib " + filename);
 		InputStream is = getStdlibInputStream(filename);
 		if (is == null) {
 			return null;
@@ -295,22 +288,11 @@ public class PreprocessorInclude implements ReadLine {
 			if (is == null) {
 				return null;
 			}
-			return ReadLineReader.create(new InputStreamReader(is), filename);
+			return ReadLineReader.create(new InputStreamReader(is), description);
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());
 		}
 	}
-
-	// private ReadLine getReaderStdlibInclude2(CharSequence2 s, String filename) {
-	// InputStream is = DummyEmptyStdlibFile.class.getResourceAsStream(filename);
-	// if (is == null) {
-	// is = DummyEmptyStdlibFile.class.getResourceAsStream(filename.toLowerCase());
-	// }
-	// if (is == null) {
-	// return null;
-	// }
-	// return new ReadLineReader(new InputStreamReader(is), filename);
-	// }
 
 	private ReadLine getReaderInclude(CharSequence2 s, final File f, String suf) {
 		try {
@@ -352,7 +334,8 @@ public class PreprocessorInclude implements ReadLine {
 		return numLine;
 	}
 
-	public void close() throws IOException {
+	@Override
+	void closeInst() throws IOException {
 		restoreCurrentDir();
 		reader2.close();
 	}

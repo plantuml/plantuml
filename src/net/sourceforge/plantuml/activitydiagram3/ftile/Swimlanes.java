@@ -71,7 +71,6 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.SlotSet;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -81,6 +80,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.comp.SlotSet;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Swimlanes extends AbstractTextBlock implements TextBlock {
@@ -216,21 +216,20 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 			if (back != null) {
 				final UGraphic background = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(back))
 						.apply(new UTranslate(x2, 0));
-				background.draw(new URectangle(swimlane.getTotalWidth(), dimensionFull.getHeight()
+				background.draw(new URectangle(swimlane.getActualWidth(), dimensionFull.getHeight()
 						+ titleHeightTranslate.getDy()));
 			}
 
-			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
-					skinParam);
+			final TextBlock swTitle = getTitle(swimlane);
 			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
-			final double posTitle = x2 + (swimlane.getTotalWidth() - titleWidth) / 2;
+			final double posTitle = x2 + (swimlane.getActualWidth() - titleWidth) / 2;
 			swTitle.drawU(ug.apply(new UTranslate(posTitle, 0)));
 
 			drawSeparation(ug.apply(new UTranslate(x2, 0)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
 
 			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane).apply(swimlane.getTranslate()).apply(
 					titleHeightTranslate));
-			x2 += swimlane.getTotalWidth();
+			x2 += swimlane.getActualWidth();
 
 		}
 		drawSeparation(ug.apply(new UTranslate(x2, 0)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
@@ -270,8 +269,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 			final MinMax minMax = swimlane.getMinMax();
 
 			final double drawingWidth = minMax.getWidth() + 2 * separationMargin;
-			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
-					skinParam);
+			final TextBlock swTitle = getTitle(swimlane);
 			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
 			final double totalWidth = MathUtils.max(swimlaneWidth, drawingWidth, titleWidth + 2 * separationMargin);
 
@@ -286,13 +284,17 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	private UTranslate getTitleHeightTranslate(final StringBounder stringBounder) {
 		double titlesHeight = 0;
 		for (Swimlane swimlane : swimlanes) {
-			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
-					skinParam);
+			final TextBlock swTitle = getTitle(swimlane);
 
 			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());
 		}
 		final UTranslate titleHeightTranslate = new UTranslate(0, titlesHeight);
 		return titleHeightTranslate;
+	}
+
+	private TextBlock getTitle(Swimlane swimlane) {
+		return swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam,
+				skinParam.wrapWidth());
 	}
 
 	private void drawSeparation(UGraphic ug, double height) {

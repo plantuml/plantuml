@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 
-public class SubPreprocessor implements ReadLine {
+public class SubPreprocessor extends ReadLineInstrumented implements ReadLine {
 
 	private static final String ID = "[A-Za-z_][A-Za-z_0-9]*";
 
@@ -79,7 +79,8 @@ public class SubPreprocessor implements ReadLine {
 		this.definitionsContainer = definitionsContainer;
 	}
 
-	public CharSequence2 readLine() throws IOException {
+	@Override
+	CharSequence2 readLineInst() throws IOException {
 		if (includedSub != null) {
 			final CharSequence2 s = includedSub.readLine();
 			if (s != null) {
@@ -176,7 +177,8 @@ public class SubPreprocessor implements ReadLine {
 		return result;
 	}
 
-	public void close() throws IOException {
+	@Override
+	void closeInst() throws IOException {
 		source.close();
 	}
 

@@ -146,7 +146,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		char separator = lineFirst ? '_' : 0;
 		TextBlock title = null;
 		List<Member> members = new ArrayList<Member>();
-		final LineBreakStrategy lineBreakStrategy = skinParam.wrapWidth();
+		// final LineBreakStrategy lineBreakStrategy = skinParam.wrapWidth();
 		for (ListIterator<String> it = rawBody.listIterator(); it.hasNext();) {
 			final String s = it.next();
 			if (manageHorizontalLine && isBlockSeparator(s)) {

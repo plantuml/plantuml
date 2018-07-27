@@ -137,6 +137,7 @@ public class SkinParam implements ISkinParam {
 		key = key.replaceAll("statearrow", "arrow");
 		key = key.replaceAll("usecasearrow", "arrow");
 		key = key.replaceAll("sequencearrow", "arrow");
+		key = key.replaceAll("align$", "alignment");
 		final Matcher2 mm = stereoPattern.matcher(key);
 		final List<String> result = new ArrayList<String>();
 		while (mm.find()) {
@@ -427,8 +428,10 @@ public class SkinParam implements ISkinParam {
 		result.add("PageBorderColor");
 		result.add("PageExternalColor");
 		result.add("PageMargin");
+		result.add("WrapWidth");
+		result.add("SwimlaneWidth");
+		result.add("SwimlaneWrapTitleWidth");
 
-		
 		for (FontParam p : EnumSet.allOf(FontParam.class)) {
 			final String h = humanName(p.name());
 			result.add(h + "FontStyle");
@@ -443,6 +446,10 @@ public class SkinParam implements ISkinParam {
 		for (LineParam p : EnumSet.allOf(LineParam.class)) {
 			final String h = capitalize(p.name());
 			result.add(h + "Thickness");
+		}
+		for (AlignmentParam p : EnumSet.allOf(AlignmentParam.class)) {
+			final String h = capitalize(p.name());
+			result.add(h);
 		}
 		return Collections.unmodifiableSet(result);
 	}
@@ -470,14 +477,14 @@ public class SkinParam implements ISkinParam {
 		return DotSplines.SPLINES;
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection) {
+	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection) {
 		final String value;
 		switch (param) {
-		case SEQUENCE_MESSAGE_ALIGN:
-			value = getArg(getValue(AlignParam.SEQUENCE_MESSAGE_ALIGN.name()), 0);
+		case sequenceMessageAlignment:
+			value = getArg(getValue(AlignmentParam.sequenceMessageAlignment.name()), 0);
 			break;
-		case SEQUENCE_MESSAGETEXT_ALIGN:
-			value = getArg(getValue(AlignParam.SEQUENCE_MESSAGE_ALIGN.name()), 1);
+		case sequenceMessageTextAlignment:
+			value = getArg(getValue(AlignmentParam.sequenceMessageAlignment.name()), 1);
 			break;
 		default:
 			value = getValue(param.name());
@@ -489,6 +496,9 @@ public class SkinParam implements ISkinParam {
 			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
 				return HorizontalAlignment.RIGHT;
 			}
+			if (arrowDirection == ArrowDirection.BOTH_DIRECTION) {
+				return HorizontalAlignment.CENTER;
+			}
 		}
 		if ("reversedirection".equalsIgnoreCase(value)) {
 			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
@@ -497,9 +507,14 @@ public class SkinParam implements ISkinParam {
 			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
 				return HorizontalAlignment.LEFT;
 			}
+			if (arrowDirection == ArrowDirection.BOTH_DIRECTION) {
+				return HorizontalAlignment.CENTER;
+			}
 		}
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
-		if (result == null) {
+		if (result == null && param == AlignmentParam.noteTextAlignment) {
+			return getDefaultTextAlignment(HorizontalAlignment.LEFT);
+		} else if (result == null) {
 			return param.getDefaultValue();
 		}
 		return result;
@@ -755,6 +770,11 @@ public class SkinParam implements ISkinParam {
 		return new LineBreakStrategy(value);
 	}
 
+	public LineBreakStrategy swimlaneWrapTitleWidth() {
+		final String value = getValue("swimlanewraptitlewidth");
+		return new LineBreakStrategy(value);
+	}
+
 	public boolean strictUmlStyle() {
 		final String value = getValue("style");
 		if ("strictuml".equalsIgnoreCase(value)) {
@@ -917,7 +937,7 @@ public class SkinParam implements ISkinParam {
 	public int swimlaneWidth() {
 		final String value = getValue("swimlanewidth");
 		if ("same".equalsIgnoreCase(value)) {
-			return -1;
+			return SWIMLANE_WIDTH_SAME;
 		}
 		if (value != null && value.matches("\\d+")) {
 			return Integer.parseInt(value);

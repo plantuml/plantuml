@@ -41,15 +41,19 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.TextSkin;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
+import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class SequenceDiagramTxtMaker implements FileMaker {
@@ -75,18 +79,18 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		}
 		for (Event ev : sequenceDiagram.events()) {
 			initializer.addEvent(ev);
-//			if (ev instanceof Message) {
-//				// TODO mieux faire
-//				final Message m = (Message) ev;
-//				for (LifeEvent lifeEvent : m.getLiveEvents()) {
-//					if (lifeEvent.getType() == LifeEventType.DESTROY
-//					/*
-//					 * || lifeEvent.getType() == LifeEventType.CREATE
-//					 */) {
-//						initializer.addEvent(lifeEvent);
-//					}
-//				}
-//			}
+			// if (ev instanceof Message) {
+			// // TODO mieux faire
+			// final Message m = (Message) ev;
+			// for (LifeEvent lifeEvent : m.getLiveEvents()) {
+			// if (lifeEvent.getType() == LifeEventType.DESTROY
+			// /*
+			// * || lifeEvent.getType() == LifeEventType.CREATE
+			// */) {
+			// initializer.addEvent(lifeEvent);
+			// }
+			// }
+			// }
 		}
 		drawableSet = initializer.createDrawableSet(dummyStringBounder);
 		// final List<Newpage> newpages = new ArrayList<Newpage>();
@@ -100,10 +104,24 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		final double tailHeight = drawableSet.getTailHeight(dummyStringBounder, diagram.isShowFootbox());
 		final double newpage2 = fullDimension.getHeight() - (diagram.isShowFootbox() ? tailHeight : 0) - headerHeight;
 		final Page page = new Page(headerHeight, 0, newpage2, tailHeight, 0, null);
-		//drawableSet.drawU_REMOVEDME_4243(ug, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
-		drawableSet.drawU22(ug, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
-	}
+		// drawableSet.drawU_REMOVEDME_4243(ug, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
 
+		final Display title = diagram.getTitle().getDisplay();
+
+		final UGraphicTxt ug2;
+		if (title.isWhite()) {
+			ug2 = ug;
+		} else {
+			ug2 = (UGraphicTxt) ug.apply(new UTranslate(0, title.as().size() + 1));
+		}
+		drawableSet.drawU22(ug2, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
+		if (title.isWhite() == false) {
+			final int widthTitle = StringUtils.getWcWidth(title);
+			final UmlCharArea charArea = ug.getCharArea();
+			charArea.drawStringsLR(title.as(), (int) ((fullDimension.getWidth() - widthTitle) / 2), 0);
+		}
+
+	}
 
 	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		if (fileFormat == FileFormat.UTXT) {

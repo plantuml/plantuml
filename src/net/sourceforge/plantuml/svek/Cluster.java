@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.AlignParam;
+import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
@@ -365,7 +365,7 @@ public class Cluster implements Moveable {
 				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
 						minX, minY, maxX, maxY, stroke2);
 				decoration.drawU(ug, back, borderColor, shadowing, roundCorner,
-						skinParam2.getHorizontalAlignment(AlignParam.PACKAGE_TITLE_ALIGNMENT, null));
+						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null));
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
@@ -742,7 +742,7 @@ public class Cluster implements Moveable {
 			sblabel.append(">");
 			label = sblabel.toString();
 			final HorizontalAlignment align = skinParam
-					.getHorizontalAlignment(AlignParam.PACKAGE_TITLE_ALIGNMENT, null);
+					.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null);
 			sb.append("labeljust=\"" + align.getGraphVizValue() + "\";");
 		} else {
 			label = "\"\"";

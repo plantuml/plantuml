@@ -30,34 +30,33 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.graphic;
+package net.sourceforge.plantuml.code;
 
-import java.awt.geom.Dimension2D;
+import java.io.IOException;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.CompressionTransform;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UGraphicCompress2;
+import net.sourceforge.plantuml.StringUtils;
 
-public class TextBlockCompressed2 extends AbstractTextBlock implements TextBlock {
+public class ArobaseStringCompressor2 implements StringCompressor {
 
-	private final TextBlock textBlock;
-	private final CompressionTransform compressionTransform;
-
-	public TextBlockCompressed2(TextBlock textBlock, CompressionTransform compressionTransform) {
-		this.textBlock = textBlock;
-		this.compressionTransform = compressionTransform;
+	public String compress(String data) throws IOException {
+		return clean2(data);
 	}
 
-	public void drawU(final UGraphic ug) {
-		textBlock.drawU(new UGraphicCompress2(ug, compressionTransform));
+	public String decompress(String s) throws IOException {
+		return clean2(s);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		return new Dimension2DDouble(compressionTransform.transform(dim.getWidth()), dim.getHeight());
+	private String clean2(String s) {
+		s = s.replace("\0", "");
+		s = StringUtils.trin(s);
+		s = s.replace("\r", "").replaceAll("\n+$", "");
+		if (s.startsWith("@start")) {
+			return s;
+		}
+		return "@startuml\n" + s + "\n@enduml";
 	}
+
 }

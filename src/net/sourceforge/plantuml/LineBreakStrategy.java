@@ -45,7 +45,11 @@ public class LineBreakStrategy {
 		this.value = value;
 	}
 
-	public double getMathWidth() {
+	public boolean isAuto() {
+		return "auto".equalsIgnoreCase(value);
+	}
+
+	public double getMaxWidth() {
 		if (value != null && value.matches("-?\\d+")) {
 			return Double.parseDouble(value);
 		}

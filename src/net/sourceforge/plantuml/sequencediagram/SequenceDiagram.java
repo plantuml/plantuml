@@ -280,7 +280,10 @@ public class SequenceDiagram extends UmlDiagram {
 				p.incInitialLife(new SymbolContext(backcolor, linecolor));
 				return null;
 			}
-			return "Only activate command can occur before message are send";
+			if (p.getInitialLife() == 0) {
+				return "You cannot deactivate here";
+			}
+			return null;
 		}
 		if (lifeEventType == LifeEventType.ACTIVATE && lastEventWithDeactivate instanceof Message) {
 			activationState.push((Message) lastEventWithDeactivate);

@@ -39,7 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.AlignParam;
+import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -98,7 +98,7 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 	}
 
 	public HorizontalAlignment arrowHorizontalAlignment() {
-		return skinParam.getHorizontalAlignment(AlignParam.ARROW_MESSAGE_ALIGN, null);
+		return skinParam.getHorizontalAlignment(AlignmentParam.arrowMessageAlignment, null);
 	}
 
 	private FtileGeometry cachedGeometry;

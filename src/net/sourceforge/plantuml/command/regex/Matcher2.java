@@ -40,6 +40,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.Log;
+
 public class Matcher2 {
 
 	private final static boolean INSTRUMENT = false;
@@ -80,6 +82,7 @@ public class Matcher2 {
 	}
 
 	private static final Map<String, Long> durations = new HashMap<String, Long>();
+	private static long printed;
 
 	private static synchronized void addTime(String id, long duration) {
 		Long total = durations.get(id);
@@ -88,10 +91,27 @@ public class Matcher2 {
 		}
 		total += duration;
 		durations.put(id, total);
-		if (total > 200) {
-			System.err.println("foo " + total + " " + id);
+		final String longest = getLongest();
+		if (longest == null) {
+			return;
+		}
+		if (durations.get(longest) > printed) {
+			Log.info("---------- Regex " + longest + " " + durations.get(longest) + "ms (" + durations.size() + ")");
+			printed = durations.get(longest);
 		}
 
+	}
+
+	private static String getLongest() {
+		long max = 0;
+		String result = null;
+		for (Map.Entry<String, Long> ent : durations.entrySet()) {
+			if (ent.getValue() > max) {
+				max = ent.getValue();
+				result = ent.getKey();
+			}
+		}
+		return result;
 	}
 
 	public String group(int n) {

@@ -42,6 +42,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
+import net.sourceforge.plantuml.utils.Cypher;
 
 public class LanguageDescriptor {
 
@@ -50,7 +51,7 @@ public class LanguageDescriptor {
 	private final Set<String> preproc = new TreeSet<String>();
 
 	public LanguageDescriptor() {
-		
+
 		type.add("actor");
 		type.add("participant");
 		type.add("usecase");
@@ -165,6 +166,26 @@ public class LanguageDescriptor {
 		preproc.add("!enddefinelong");
 	}
 
+	public Cypher getCypher() {
+		final Cypher cypher = new Cypher();
+		for (String s : type) {
+			cypher.addException(s);
+		}
+		for (String s : keyword) {
+			cypher.addException(s.replace("@", ""));
+		}
+		for (String s : preproc) {
+			cypher.addException(s.substring(1));
+		}
+		for (String s : SkinParam.getPossibleValues()) {
+			cypher.addException(s);
+		}
+		for (String s : new HtmlColorSetSimple().names()) {
+			cypher.addException(s);
+		}
+		return cypher;
+	}
+
 	public void print(PrintStream ps) {
 		print(ps, "type", type);
 		print(ps, "keyword", keyword);
@@ -175,7 +196,7 @@ public class LanguageDescriptor {
 	}
 
 	private static void print(PrintStream ps, String name, Collection<String> data) {
-		ps.println(";"+name);
+		ps.println(";" + name);
 		ps.println(";" + data.size());
 		for (String k : data) {
 			ps.println(k);

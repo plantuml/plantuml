@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import gen.lib.dotgen.dotinit__c;
-
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 

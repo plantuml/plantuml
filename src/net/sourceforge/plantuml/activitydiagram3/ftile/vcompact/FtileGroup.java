@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.awt.geom.Dimension2D;
 import java.util.Set;
 
-import net.sourceforge.plantuml.AlignParam;
+import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
@@ -196,7 +196,7 @@ public class FtileGroup extends AbstractFtile {
 
 		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(
 				skinParam().shadowing()).withStroke(stroke);
-		USymbol.FRAME.asBig(name, inner.skinParam().getHorizontalAlignment(AlignParam.PACKAGE_TITLE_ALIGNMENT, null),
+		USymbol.FRAME.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null),
 				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext).drawU(ug);
 
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);

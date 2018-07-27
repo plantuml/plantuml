@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
 
-	public static final String DONORS = "6vG70AmEU9ELAuNYZT_MZn6AGOgeeHNOWjgQuZoZA1P0SxnDhXdMoRgDdR45mND5SGKL8Az2C-THCiPX"
+	public static final String DONORS = "6wW70AmEU9ELAuNYZT_MZn6AGOgeeHNOWjgQuZoZA1P0SxnDhXdMoRgDdR45mND5SGKL8Az2C-THCiPX"
 			+ "qGYJjjcQVk6-VTu2CLLilsL2UtyTQ4BoLZ2km4tbpF_b0XiJv0R8GZti1NIZZNlZcZIc_NyMPXz_WHRm"
 			+ "DBfiMLGwq5cTNHLD233np1odb9A7OjnVaSBNZIs0buu7kTfO7U4RgRFlr0AQj6RJa9are5X6YaJpiT7Q"
 			+ "SO3jOnWuqM5T7JOGEvGuw1kC0-eRCKh65JJ8ZE9cRAZcdIS4J3YXmavyKPAQeuLaHXawq65jWGAyFnC4"
@@ -81,7 +81,7 @@ public class PSystemDonors extends AbstractPSystem {
 			+ "F7JnJ-yMjT1vT_j7wljDVYMrr2F6esimz9PTrczjikXOG6prZ0Kk0tPgjnkJ0vNSGgSsd1KznGbOzxRE"
 			+ "mN4jWukcTREIdQcT73Dh1nskINx8qO1HqPr83hwsEoFFU1G5zYVddLZrKD-757yNK2o62PvIeMmZfEWA"
 			+ "czF9f76hPzmTl8zRcozKj_7DXIS4XH-RQDDoWzUd0FSK-a5J1v0wgrNoqiR42E1tVFq6FS-j3ZpAQ6cL"
-			+ "SNQv8PRIf_S8y1ioyae0";
+			+ "SNQv8PRIf_S8y1ioyahsjhkX10q0";
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)

@@ -68,6 +68,7 @@ public class Option {
 	private boolean pipeNoStdErr = false;
 	private boolean syntax = false;
 	private boolean checkOnly = false;
+	private OptionPreprocOutputMode preprocessorOutput = null;
 	private boolean failfast = false;
 	private boolean failfast2 = false;
 	private boolean pattern = false;
@@ -332,6 +333,10 @@ public class Option {
 				textProgressBar = true;
 			} else if (s.equalsIgnoreCase("-nometadata")) {
 				hideMetadata = true;
+			} else if (s.equalsIgnoreCase("-preproc")) {
+				preprocessorOutput = OptionPreprocOutputMode.NORMAL;
+			} else if (s.equalsIgnoreCase("-cypher")) {
+				preprocessorOutput = OptionPreprocOutputMode.CYPHER;
 			} else if (s.equalsIgnoreCase("-checkmetadata")) {
 				checkMetadata = true;
 			} else if (s.equalsIgnoreCase("-pipeimageindex")) {
@@ -587,5 +592,13 @@ public class Option {
 	public final boolean isCheckMetadata() {
 		return checkMetadata;
 	}
+
+	public final OptionPreprocOutputMode getPreprocessorOutputMode() {
+		return preprocessorOutput;
+	}
+
+	// public final void setPreprocessorOutput(boolean preprocessorOutput) {
+	// this.preprocessorOutput = preprocessorOutput;
+	// }
 
 }

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -108,7 +109,12 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 			final Element salt = createElement(manageSprite());
 
 			final Dimension2D size = salt.getPreferredDimension(fileFormat.getDefaultStringBounder(), 0, 0);
-			final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE, null,
+
+			double scale = 1;
+			if (getScale() != null) {
+				scale = getScale().getScale(size.getWidth(), size.getHeight());
+			}
+			final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), scale, HtmlColorUtils.WHITE, null,
 					null, 5, 5, null, false);
 			builder.setUDrawable(new UDrawable() {
 
@@ -145,6 +151,10 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 			if (s.equals("hide stereotype")) {
 				// System.err.println("skipping " + s);
 			} else if (s.startsWith("skinparam ")) {
+				// System.err.println("skipping " + s);
+			} else if (s.startsWith("scale ")) {
+				final Double scale = Double.parseDouble(s.substring("scale ".length()));
+				this.setScale(new ScaleSimple(scale));
 				// System.err.println("skipping " + s);
 			} else if (s.startsWith("sprite $")) {
 				BlocLines bloc = BlocLines.single(s);

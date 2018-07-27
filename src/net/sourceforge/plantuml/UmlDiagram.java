@@ -270,7 +270,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 					graphicStrings.drawU(ug);
 					final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
 					ug = ug.apply(new UTranslate(0, height));
-					ug.draw(new UImage(im));
+					ug.draw(new UImage(im).scaleNearestNeighbor(3));
 				}
 			});
 		}

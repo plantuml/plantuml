@@ -50,7 +50,7 @@ public class Swimlane implements SpecificBackcolorable {
 	private Display display;
 
 	private UTranslate translate = new UTranslate();
-	private double totalWidth;
+	private double actualWidth;
 
 	public Swimlane(String name) {
 		this.name = name;
@@ -79,9 +79,9 @@ public class Swimlane implements SpecificBackcolorable {
 		return translate;
 	}
 
-	public final void setTranslateAndWidth(UTranslate translate, double totalWidth) {
+	public final void setTranslateAndWidth(UTranslate translate, double actualWidth) {
 		this.translate = translate;
-		this.totalWidth = totalWidth;
+		this.actualWidth = actualWidth;
 	}
 
 	public Colors getColors(ISkinParam skinParam) {
@@ -96,8 +96,8 @@ public class Swimlane implements SpecificBackcolorable {
 
 	private Colors colors = Colors.empty();
 
-	public final double getTotalWidth() {
-		return totalWidth;
+	public final double getActualWidth() {
+		return actualWidth;
 	}
 
 	public void setColors(Colors colors) {

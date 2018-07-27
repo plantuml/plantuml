@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.AlignParam;
+import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -100,9 +100,9 @@ public class Rose implements Skin {
 						config, param, param.maxMessageSize(), param.strictUmlStyle() == false);
 			}
 			final HorizontalAlignment messageHorizontalAlignment = param.getHorizontalAlignment(
-					AlignParam.SEQUENCE_MESSAGE_ALIGN, config.getArrowDirection());
+					AlignmentParam.sequenceMessageAlignment, config.getArrowDirection());
 			final HorizontalAlignment textHorizontalAlignment = param.getHorizontalAlignment(
-					AlignParam.SEQUENCE_MESSAGETEXT_ALIGN, config.getArrowDirection());
+					AlignmentParam.sequenceMessageTextAlignment, config.getArrowDirection());
 			return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay, config,
 					messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
 					param.strictUmlStyle() == false, param.responseMessageBelowArrow());
@@ -198,8 +198,9 @@ public class Rose implements Skin {
 					FontParam.DATABASE_STEREOTYPE));
 		}
 		if (type == ComponentType.NOTE) {
+			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null);
 			return new ComponentRoseNote(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
-					FontParam.NOTE), stringsToDisplay, paddingX, paddingY, param, roundCorner);
+					FontParam.NOTE), stringsToDisplay, paddingX, paddingY, param, roundCorner, alignment);
 		}
 		if (type == ComponentType.NOTE_HEXAGONAL) {
 			return new ComponentRoseNoteHexagonal(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
@@ -258,7 +259,7 @@ public class Rose implements Skin {
 		if (type == ComponentType.REFERENCE) {
 			return new ComponentRoseReference(getUFont2(param, FontParam.SEQUENCE_REFERENCE), getSymbolContext(param,
 					ColorParam.sequenceReferenceBorder), bigFont, stringsToDisplay, param.getHorizontalAlignment(
-					AlignParam.SEQUENCE_REFERENCE_ALIGN, null), param, getHtmlColor(param,
+					AlignmentParam.sequenceReferenceAlignment, null), param, getHtmlColor(param,
 					ColorParam.sequenceReferenceBackground));
 		}
 		// if (type == ComponentType.TITLE) {

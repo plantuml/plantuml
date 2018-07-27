@@ -62,6 +62,11 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 			if (line.matches("(?i)^checkversion\\s*$")) {
 				return PSystemVersion.createCheckVersions(null, null);
 			}
+			if (line.matches("(?i)^keygen(\\s+[0-9a-z]+)?\\s*$")) {
+				line = line.trim();
+				final String key = line.substring("keygen".length()).trim();
+				return new PSystemKeygen(key);
+			}
 			final Pattern p1 = Pattern.compile("(?i)^checkversion\\(proxy=([\\w.]+),port=(\\d+)\\)$");
 			final Matcher m1 = p1.matcher(line);
 			if (m1.matches()) {

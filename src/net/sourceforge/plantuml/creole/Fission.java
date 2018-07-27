@@ -58,7 +58,7 @@ public class Fission {
 	}
 
 	public List<Stripe> getSplitted(StringBounder stringBounder) {
-		final double valueMaxWidth = maxWidth.getMathWidth();
+		final double valueMaxWidth = maxWidth.getMaxWidth();
 		if (valueMaxWidth == 0) {
 			return Arrays.asList(stripe);
 		}

@@ -49,18 +49,18 @@ public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
-	
+
 	public EmptyImageBuilder(double width, double height, Color background) {
 		this((int) width, (int) height, background);
 	}
 
 	public EmptyImageBuilder(int width, int height, Color background) {
 		if (width > GraphvizUtils.getenvImageLimit()) {
-			Log.info("Width too large " + width);
+			Log.info("Width too large " + width + ". You should set PLANTUML_LIMIT_SIZE");
 			width = GraphvizUtils.getenvImageLimit();
 		}
 		if (height > GraphvizUtils.getenvImageLimit()) {
-			Log.info("Height too large " + height);
+			Log.info("Height too large " + height + ". You should set PLANTUML_LIMIT_SIZE");
 			height = GraphvizUtils.getenvImageLimit();
 		}
 		Log.info("Creating image " + width + "x" + height);

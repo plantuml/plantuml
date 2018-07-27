@@ -40,7 +40,7 @@ import java.io.IOException;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 
-public class ReadLineQuoteComment implements ReadLine {
+public class ReadLineQuoteComment extends ReadLineInstrumented implements ReadLine {
 
 	private final ReadLine raw;
 	private boolean longComment = false;
@@ -49,11 +49,13 @@ public class ReadLineQuoteComment implements ReadLine {
 		this.raw = source;
 	}
 
-	public void close() throws IOException {
+	@Override
+	void closeInst() throws IOException {
 		raw.close();
 	}
 
-	public CharSequence2 readLine() throws IOException {
+	@Override
+	CharSequence2 readLineInst() throws IOException {
 		while (true) {
 			final CharSequence2 result = raw.readLine();
 			if (result == null) {

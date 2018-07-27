@@ -49,7 +49,6 @@ public class Define {
 	private final boolean emptyParentheses;
 
 	public Define(String key, List<String> lines, boolean emptyParentheses) {
-		this.signature = new DefineSignature(key);
 		this.emptyParentheses = emptyParentheses;
 		if (lines == null) {
 			this.definition = null;
@@ -65,6 +64,7 @@ public class Define {
 			this.definition = sb.toString();
 			this.definitionQuoted = Matcher.quoteReplacement(definition);
 		}
+		this.signature = new DefineSignature(key, this.definitionQuoted);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class Define {
 		}
 		if (signature.isMethod()) {
 			for (Variables vars : signature.getVariationVariables()) {
-				line = vars.applyOn(line, signature.getFonctionName(), definitionQuoted);
+				line = vars.applyOn(line);
 			}
 		} else {
 			final String regex = "\\b" + signature.getKey() + "\\b" + (emptyParentheses ? "(\\(\\))?" : "");

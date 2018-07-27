@@ -43,19 +43,28 @@ import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.LineLocationImpl;
+import net.sourceforge.plantuml.Log;
 
-public class ReadLineReader implements ReadLine {
+public class ReadLineReader extends ReadLineInstrumented implements ReadLine {
 
 	// private static final int LIMIT = 850;
 	private final BufferedReader br;
 	private LineLocationImpl location;
+	private final String description;
 
 	private ReadLineReader(Reader reader, String description, LineLocation parent) {
 		if (description == null) {
 			description = "?";
 		}
-		br = new BufferedReader(reader);
-		location = new LineLocationImpl(description, parent);
+		this.br = new BufferedReader(reader);
+		this.location = new LineLocationImpl(description, parent);
+		this.description = description;
+		Log.info("Reading from " + description);
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + description;
 	}
 
 	private ReadLineReader(Reader reader, String desc) {
@@ -70,7 +79,8 @@ public class ReadLineReader implements ReadLine {
 		return new ReadLineReader(reader, description, parent);
 	}
 
-	public CharSequence2 readLine() throws IOException {
+	@Override
+	CharSequence2 readLineInst() throws IOException {
 		String s = br.readLine();
 		location = location.oneLineRead();
 		if (s == null) {
@@ -99,7 +109,8 @@ public class ReadLineReader implements ReadLine {
 		return new CharSequence2Impl(s, location);
 	}
 
-	public void close() throws IOException {
+	@Override
+	void closeInst() throws IOException {
 		br.close();
 	}
 

@@ -141,7 +141,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		for (BlockUml block : blocks) {
 			if (block.isStartDef(name)) {
 				this.defines.importFrom(block.getLocalDefines());
-				return block.getDefinition();
+				return block.getDefinition(false);
 			}
 		}
 		return Collections.emptyList();

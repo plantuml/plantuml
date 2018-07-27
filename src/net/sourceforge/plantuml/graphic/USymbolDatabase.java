@@ -146,11 +146,11 @@ class USymbolDatabase extends USymbol {
 				drawDatabase(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
-				stereotype.drawU(ug.apply(new UTranslate(posStereo, 0)));
+				stereotype.drawU(ug.apply(new UTranslate(posStereo, 2 + 20)));
 
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 				final double posTitle = (width - dimTitle.getWidth()) / 2;
-				title.drawU(ug.apply(new UTranslate(posTitle, 21)));
+				title.drawU(ug.apply(new UTranslate(posTitle, 2 + 20 + dimStereo.getHeight())));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {

@@ -60,9 +60,9 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	private final double roundCorner;
 
 	public ComponentRoseNote(SymbolContext symbolContext, FontConfiguration font, Display strings, double paddingX,
-			double paddingY, ISkinSimple spriteContainer, double roundCorner) {
-		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, true, null,
-				null);
+			double paddingY, ISkinSimple spriteContainer, double roundCorner, HorizontalAlignment horizontalAlignment) {
+		super(LineBreakStrategy.NONE, strings, font, horizontalAlignment,
+				horizontalAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, spriteContainer, true, null, null);
 		this.roundCorner = roundCorner;
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;

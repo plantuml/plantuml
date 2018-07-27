@@ -33,30 +33,32 @@
  * 
  *
  */
-package net.sourceforge.plantuml.graphic;
+package net.sourceforge.plantuml.ugraphic.comp;
 
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.CompressionTransform;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.SlotFinder;
-import net.sourceforge.plantuml.ugraphic.SlotSet;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UGraphicCompress;
 
-public class TextBlockCompressed extends AbstractTextBlock implements TextBlock {
+public class TextBlockCompressedOnXorY extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
+	private final CompressionMode mode;
 
-	public TextBlockCompressed(TextBlock textBlock) {
+	public TextBlockCompressedOnXorY(CompressionMode mode, TextBlock textBlock) {
 		this.textBlock = textBlock;
+		this.mode = mode;
 	}
 
 	public void drawU(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final CompressionTransform compressionTransform = getCompressionTransform(stringBounder);
-		textBlock.drawU(new UGraphicCompress(ug, compressionTransform));
+		textBlock.drawU(new UGraphicCompressOnXorY(mode, ug, compressionTransform));
 	}
 
 	private MinMax cachedMinMax;
@@ -79,9 +81,9 @@ public class TextBlockCompressed extends AbstractTextBlock implements TextBlock 
 	}
 
 	private CompressionTransform getCompressionTransformSlow(final StringBounder stringBounder) {
-		final SlotFinder slotFinder = new SlotFinder(stringBounder);
+		final SlotFinder slotFinder = new SlotFinder(mode, stringBounder);
 		textBlock.drawU(slotFinder);
-		final SlotSet ysSlotSet = slotFinder.getYSlotSet().reverse().smaller(5.0);
+		final SlotSet ysSlotSet = slotFinder.getSlotSet().reverse().smaller(5.0);
 		final CompressionTransform compressionTransform = new CompressionTransform(ysSlotSet);
 		return compressionTransform;
 	}
@@ -89,6 +91,10 @@ public class TextBlockCompressed extends AbstractTextBlock implements TextBlock 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final CompressionTransform compressionTransform = getCompressionTransform(stringBounder);
 		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		return new Dimension2DDouble(dim.getWidth(), compressionTransform.transform(dim.getHeight()));
+		if (mode == CompressionMode.ON_X) {
+			return new Dimension2DDouble(compressionTransform.transform(dim.getWidth()), dim.getHeight());
+		} else {
+			return new Dimension2DDouble(dim.getWidth(), compressionTransform.transform(dim.getHeight()));
+		}
 	}
 }
