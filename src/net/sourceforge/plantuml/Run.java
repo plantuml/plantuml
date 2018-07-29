@@ -285,10 +285,37 @@ public class Run {
 			}
 		}
 
-		final String name = getSpriteName(fileName);
+		int spriteNameIndex = getIndexCaseInsensitive("-spritename", result);
+		final String name;
+		if (spriteNameIndex > -1) {
+			if (result.size() <= (spriteNameIndex + 1)) {
+				throw new IllegalArgumentException ("if the parameter spritename is present, its value must be there too. E.g -spritename hello");
+			}
+
+			name = result.get(spriteNameIndex + 1);
+			for (char c : name.toCharArray()) {
+				if (!Character.toString(c).matches("[\\p{L}0-9_]")) {
+					throw new IllegalArgumentException ("The name of the sprite contains an illegal charater '"+ Character.toString(c) +"'. Only unicode letters, underscore and the number 0 to 9 are allowed.");
+				}
+			}
+		} else {
+			name = getSpriteName(fileName);
+		}
+
 		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level) : SpriteUtils.encode(im, name,
 				level);
 		System.out.println(s);
+	}
+
+	private static int getIndexCaseInsensitive(final String strToCompare, final List<String> list)
+	{
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).equalsIgnoreCase(strToCompare)) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 	private static String getSpriteName(String fileName) {
