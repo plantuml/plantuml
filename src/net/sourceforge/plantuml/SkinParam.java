@@ -1006,4 +1006,12 @@ public class SkinParam implements ISkinParam {
 		return true;
 	}
 
+	public boolean fixCircleLabelOverlapping() {
+		final String value = getValue("fixcirclelabeloverlapping");
+		if ("true".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
 }

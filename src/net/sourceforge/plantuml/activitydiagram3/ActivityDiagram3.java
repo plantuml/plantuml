@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockRecentred;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -389,10 +390,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor, HtmlColor borderColor) {
+	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor, HtmlColor borderColor, USymbol type) {
 		manageSwimlaneStrategy();
 		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor,
-				swinlanes.getCurrentSwimlane(), borderColor, nextLinkRenderer());
+				swinlanes.getCurrentSwimlane(), borderColor, nextLinkRenderer(), type);
 		current().add(instructionGroup);
 		setCurrent(instructionGroup);
 	}

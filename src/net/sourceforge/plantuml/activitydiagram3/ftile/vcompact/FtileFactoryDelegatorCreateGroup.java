@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
@@ -56,9 +57,9 @@ public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor) {
+			HtmlColor borderColor, USymbol type) {
 		final HtmlColor arrowColor = rose.getHtmlColor(skinParam(), ColorParam.arrow);
-		Ftile result = new FtileGroup(list, name, null, arrowColor, backColor, titleColor, skinParam(), borderColor);
+		Ftile result = new FtileGroup(list, name, null, arrowColor, backColor, titleColor, skinParam(), borderColor, type);
 		if (note != null) {
 			result = new FtileWithNotes(result, Collections.singleton(note), skinParam());
 		}

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.hector2.MinMax;
 import net.sourceforge.plantuml.hector2.layering.Layer;
 import net.sourceforge.plantuml.hector2.mpos.Distribution;
-import net.sourceforge.plantuml.svek.DotDataImageBuilder;
+import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -100,7 +100,7 @@ public class Foo2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	private IEntityImage computeImage(final ILeaf leaf) {
-		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
+		final IEntityImage image = GeneralImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
 				false, diagram, null, null, null, diagram.getLinks());
 		return image;
 	}

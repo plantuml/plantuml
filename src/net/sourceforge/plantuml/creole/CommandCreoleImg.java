@@ -70,7 +70,7 @@ public class CommandCreoleImg implements Command {
 			throw new IllegalStateException();
 		}
 		String src = m.group(2);
-		final double scale = getScale(m.group(3));
+		final double scale = getScale(m.group(3), 1);
 		if (src.toLowerCase().startsWith("src=")) {
 			src = src.substring(4);
 		}
@@ -79,16 +79,16 @@ public class CommandCreoleImg implements Command {
 		return line.substring(m.group(1).length());
 	}
 
-	public static double getScale(String s) {
+	public static double getScale(String s, double def) {
 		if (s == null) {
-			return 1;
+			return def;
 		}
 		final Pattern p = Pattern.compile("(?:scale=|\\*)([0-9.]+)");
 		final Matcher m = p.matcher(s);
 		if (m.find()) {
 			return Double.parseDouble(m.group(1));
 		}
-		return 1;
+		return def;
 	}
 
 }

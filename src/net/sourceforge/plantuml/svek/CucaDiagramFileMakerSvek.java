@@ -75,12 +75,12 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		}
 	}
 
-	private DotDataImageBuilder createDotDataImageBuilder(DotMode dotMode, StringBounder stringBounder) {
+	private GeneralImageBuilder createDotDataImageBuilder(DotMode dotMode, StringBounder stringBounder) {
 		final DotData dotData = new DotData(diagram.getEntityFactory().getRootGroup(), getOrderedLinks(),
 				diagram.getLeafsvalues(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram, diagram,
 				diagram.getColorMapper(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(),
 				dotMode, diagram.getNamespaceSeparator(), diagram.getPragma());
-		return new DotDataImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(),
+		return new GeneralImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(),
 				stringBounder);
 
 	}
@@ -94,7 +94,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		}
 
 		// System.err.println("FOO11 type=" + os.getClass());
-		DotDataImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL,
+		GeneralImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL,
 				fileFormatOption.getDefaultStringBounder());
 		BaseFile basefile = null;
 		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream) {

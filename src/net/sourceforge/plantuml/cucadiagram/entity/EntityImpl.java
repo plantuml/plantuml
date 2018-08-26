@@ -470,9 +470,9 @@ final class EntityImpl implements ILeaf, IGroup {
 		if (getLeafType() == LeafType.CIRCLE) {
 			return USymbol.INTERFACE;
 		}
-		if (symbol != null && stereotype != null && stereotype.getSprite() != null) {
-			return symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
-		}
+		// if (symbol != null && stereotype != null && stereotype.getSprite() != null) {
+		// return symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
+		// }
 		return symbol;
 	}
 
@@ -520,7 +520,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 		return isRemovedInternal();
 	}
-	
+
 	private boolean isRemovedInternal() {
 		if (isGroup()) {
 			if (entityFactory.isRemoved(this)) {
@@ -543,8 +543,6 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 		return entityFactory.isRemoved(this);
 	}
-
-
 
 	private int layer;
 

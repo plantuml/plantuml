@@ -83,6 +83,17 @@ public class Display implements Iterable<CharSequence> {
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
+	public Display replaceBackslashT() {
+		final Display result = new Display(this, defaultCreoleMode);
+		for (int i = 0; i < result.display.size(); i++) {
+			final CharSequence s = display.get(i);
+			if (s.toString().contains("\\t")) {
+				result.display.set(i, s.toString().replace("\\t", "\t"));
+			}
+		}
+		return result;
+	}
+
 	public Display replace(String src, String dest) {
 		final List<CharSequence> newDisplay = new ArrayList<CharSequence>();
 		for (CharSequence cs : display) {

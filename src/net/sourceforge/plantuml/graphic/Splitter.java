@@ -57,6 +57,7 @@ public class Splitter {
 	public static final String fontSizePattern2 = "\\<size[\\s:]+(\\d+)[%s]*\\>";
 	static final String fontSup = "\\<sup\\>";
 	static final String fontSub = "\\<sub\\>";
+	public static final String qrcodePattern = "\\<qrcode[\\s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
 	static final String imgPattern = "\\<img\\s+(src[%s]*=[%s]*[%q%g]?[^\\s%g>]+[%q%g]?[%s]*|vspace\\s*=\\s*[%q%g]?\\d+[%q%g]?\\s*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\>";
 	public static final String imgPatternNoSrcColon = "\\<img[\\s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
 	public static final String fontFamilyPattern = "\\<font[\\s:]+([^>]+)/?\\>";
@@ -96,6 +97,8 @@ public class Splitter {
 		sb.append(endFontPattern);
 		sb.append('|');
 		sb.append(endSupSub);
+		sb.append('|');
+		sb.append(qrcodePattern);
 		sb.append('|');
 		sb.append(imgPattern);
 		sb.append('|');

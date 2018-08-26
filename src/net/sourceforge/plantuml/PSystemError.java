@@ -71,7 +71,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
-import net.sourceforge.plantuml.version.LicenseInfo;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemError extends AbstractPSystem {
@@ -145,11 +144,10 @@ public class PSystemError extends AbstractPSystem {
 		} else {
 			udrawable = result;
 		}
-		if (LicenseInfo.retrieveQuick().isValid() == false) {
-			final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
-			if (min == 0) {
-				udrawable = addMessage(udrawable);
-			}
+		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
+		if (min == 0 /* && LicenseInfo.retrieveQuick().isValid() == false*/ ) {
+			udrawable = addMessage(udrawable);
+
 		}
 		imageBuilder.setUDrawable(udrawable);
 		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);

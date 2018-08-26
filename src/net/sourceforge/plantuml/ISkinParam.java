@@ -160,5 +160,7 @@ public interface ISkinParam extends ISkinSimple {
 	public boolean responseMessageBelowArrow();
 
 	public boolean svgDimensionStyle();
+	
+	public boolean fixCircleLabelOverlapping();
 
 }

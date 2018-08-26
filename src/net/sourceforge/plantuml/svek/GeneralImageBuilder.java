@@ -120,7 +120,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
-public final class DotDataImageBuilder {
+public final class GeneralImageBuilder {
 
 	private final DotData dotData;
 	private final EntityFactory entityFactory;
@@ -130,7 +130,7 @@ public final class DotDataImageBuilder {
 
 	private final StringBounder stringBounder;
 
-	public DotDataImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma,
+	public GeneralImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma,
 			StringBounder stringBounder) {
 		this.dotData = dotData;
 		this.entityFactory = entityFactory;

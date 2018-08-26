@@ -280,7 +280,7 @@ public enum License {
 		text.add("textual description in PlantUML language). Those images are not covered by");
 	}
 
-	private List<String> getHeaderStart(LicenseInfo licenseInfo) {
+	private List<String> getHeaderStart(LicenseInfo licenseInfo, boolean withQrcode) {
 		final List<String> text = new ArrayList<String>();
 		if (licenseInfo.isNone()) {
 			text.add("========================================================================");
@@ -304,7 +304,12 @@ public enum License {
 			text.add(" ");
 			text.add("http://plantuml.com/patreon (only 1$ per month!)");
 			text.add("http://plantuml.com/paypal");
-			text.add(" ");
+			if (withQrcode) {
+				text.add("\t\t<qrcode:http://plantuml.com/patreon>\t\t\t\t<qrcode:http://plantuml.com/paypal>");
+			} else {
+				text.add("");
+				text.add(" ");
+			}
 		}
 		return text;
 	}
@@ -451,9 +456,9 @@ public enum License {
 		return Collections.unmodifiableList(h);
 	}
 
-	public List<String> getText() {
-		final LicenseInfo licenseInfo = LicenseInfo.retrieveSlow();
-		final List<String> text = getHeaderStart(licenseInfo);
+	public List<String> getText(boolean withQrcode) {
+		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
+		final List<String> text = getHeaderStart(licenseInfo, withQrcode);
 		if (this == License.GPL) {
 			addGpl(licenseInfo, text);
 		} else if (this == License.GPLV2) {

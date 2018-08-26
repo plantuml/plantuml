@@ -124,7 +124,7 @@ public final class GroupPngMakerState {
 				diagram.isHideEmptyDescriptionForState(), DotMode.NORMAL, diagram.getNamespaceSeparator(),
 				diagram.getPragma());
 
-		final DotDataImageBuilder svek2 = new DotDataImageBuilder(dotData, diagram.getEntityFactory(),
+		final GeneralImageBuilder svek2 = new GeneralImageBuilder(dotData, diagram.getEntityFactory(),
 				diagram.getSource(), diagram.getPragma(), stringBounder);
 
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE) {

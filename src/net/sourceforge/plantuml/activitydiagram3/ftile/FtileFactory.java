@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 
 public interface FtileFactory {
@@ -89,6 +90,6 @@ public interface FtileFactory {
 	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label);
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor);
+			HtmlColor borderColor, USymbol type);
 
 }

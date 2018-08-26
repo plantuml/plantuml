@@ -75,19 +75,19 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
 		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
-		// .changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
-		if (thens.size() > 1) {
-			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
-				return FtileIfLongVertical.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
-						conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
-			return FtileIfLongHorizontal.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
-					conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
-		}
+
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ARROW;
 		final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null)
 				.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 
+		if (thens.size() > 1) {
+			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
+				return FtileIfLongVertical.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
+						conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
+			return FtileIfLongHorizontal.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
+					conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile, fcTest);
+		}
 		return ConditionalBuilder.create(swimlane, borderColor, backColor, arrowColor, getFactory(), conditionStyle,
 				thens.get(0), elseBranch, skinParam(), getStringBounder(), fcArrow, fcTest);
 	}

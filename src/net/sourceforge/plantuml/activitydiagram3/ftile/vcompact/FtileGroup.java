@@ -77,10 +77,12 @@ public class FtileGroup extends AbstractFtile {
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
 	private final UStroke stroke;
+	private final USymbol type;
 
 	public FtileGroup(Ftile inner, Display title, Display displayNote, HtmlColor arrowColor, HtmlColor backColor,
-			HtmlColor titleColor, ISkinParam skinParam, HtmlColor borderColor) {
+			HtmlColor titleColor, ISkinParam skinParam, HtmlColor borderColor, USymbol type) {
 		super(inner.skinParam());
+		this.type = type;
 		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
 		this.borderColor = borderColor == null ? HtmlColorUtils.BLACK : borderColor;
@@ -196,7 +198,7 @@ public class FtileGroup extends AbstractFtile {
 
 		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(
 				skinParam().shadowing()).withStroke(stroke);
-		USymbol.FRAME.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null),
+		type.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null),
 				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext).drawU(ug);
 
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);

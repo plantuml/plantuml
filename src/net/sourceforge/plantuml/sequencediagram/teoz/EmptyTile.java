@@ -45,12 +45,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class EmptyTile implements Tile {
 
 	private final double height;
+	private final Tile position;
 
-	private final Real origin;
-
-	public EmptyTile(double height, TileArguments tileArguments) {
-		this.origin = tileArguments.getOrigin();
+	public EmptyTile(double height, Tile position) {
 		this.height = height;
+		this.position = position;
 	}
 
 	public void drawU(UGraphic ug) {
@@ -64,11 +63,11 @@ public class EmptyTile implements Tile {
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-		return origin;
+		return position.getMinX(stringBounder);
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		return origin;
+		return position.getMaxX(stringBounder);
 	}
 
 	public Event getEvent() {

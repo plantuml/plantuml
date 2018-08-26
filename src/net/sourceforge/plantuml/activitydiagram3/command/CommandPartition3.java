@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -59,7 +60,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("partition"), //
+				new RegexLeaf("TYPE", "(partition|package|rectangle|card)"), //
 				new RegexLeaf("[%s]+"), //
 				new RegexOptional(//
 						new RegexConcat( //
@@ -71,6 +72,19 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 								new RegexLeaf("[%s]+"), //
 								color("BACK2").getRegex())), //
 				new RegexLeaf("[%s]*\\{?$"));
+	}
+
+	private USymbol getUSymbol(String type) {
+		if ("card".equalsIgnoreCase(type)) {
+			return USymbol.CARD;
+		}
+		if ("package".equalsIgnoreCase(type)) {
+			return USymbol.PACKAGE;
+		}
+		if ("rectangle".equalsIgnoreCase(type)) {
+			return USymbol.RECTANGLE;
+		}
+		return USymbol.FRAME;
 	}
 
 	private static ColorParser color(String id) {
@@ -101,8 +115,10 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 			borderColor = HtmlColorUtils.BLACK;
 		}
 
-		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor, borderColor);
+		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor, borderColor,
+				getUSymbol(arg.get("TYPE", 0)));
 
 		return CommandExecutionResult.ok();
 	}
+
 }

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -181,7 +182,6 @@ public class SpriteMonochrome implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HtmlColor backcolor, HtmlColor color) {
-		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		if (backcolor == null) {
 			backcolor = HtmlColorUtils.WHITE;
@@ -189,9 +189,28 @@ public class SpriteMonochrome implements Sprite {
 		if (color == null) {
 			color = HtmlColorUtils.BLACK;
 		}
+		// if (backcolor instanceof HtmlColorGradient) {
+		// return special(colorMapper, (HtmlColorGradient) backcolor, color);
+		// }
+		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		final HtmlColorGradient gradient = new HtmlColorGradient(backcolor, color, '\0');
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
+				final double coef = 1.0 * grey[line][col] / (grayLevel - 1);
+				final Color c = gradient.getColor(colorMapper, coef);
+				im.setRGB(col, line, c.getRGB());
+			}
+		}
+		return new UImage(im);
+	}
+
+	private UImage special(ColorMapper colorMapper, HtmlColorGradient backcolor, HtmlColor color) {
+		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		for (int col = 0; col < width; col++) {
+			for (int line = 0; line < height; line++) {
+				final HtmlColor backColorLocal = new HtmlColorSimple(backcolor.getColor(colorMapper, 1.0 * line
+						/ height), false);
+				final HtmlColorGradient gradient = new HtmlColorGradient(backColorLocal, color, '\0');
 				final double coef = 1.0 * grey[line][col] / (grayLevel - 1);
 				final Color c = gradient.getColor(colorMapper, coef);
 				im.setRGB(col, line, c.getRGB());

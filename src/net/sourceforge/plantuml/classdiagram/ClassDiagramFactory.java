@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2.Mode;
 import net.sourceforge.plantuml.classdiagram.command.CommandDiamondAssociation;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
-import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
-import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandImport;
 import net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
