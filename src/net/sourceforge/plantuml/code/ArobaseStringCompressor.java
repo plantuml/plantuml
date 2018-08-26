@@ -102,7 +102,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 	}
 
 	private String clean(String s) {
-		s = s.replace("\0", "");
+		// s = s.replace("\0", "");
 		s = StringUtils.trin(s);
 		s = clean1(s);
 		s = s.replaceAll("@enduml[^\\n\\r]*", "");

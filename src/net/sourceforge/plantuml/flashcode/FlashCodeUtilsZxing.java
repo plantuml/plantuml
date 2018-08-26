@@ -50,7 +50,12 @@ import ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 
+	private static final boolean USE_FLASH = true;
+
 	public BufferedImage exportFlashcode(String s) {
+		if (USE_FLASH == false) {
+			return null;
+		}
 		try {
 			final QRCodeWriter writer = new QRCodeWriter();
 			final Hashtable hints = new Hashtable();

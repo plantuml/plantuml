@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.rose.Rose;
 
@@ -167,8 +168,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor) {
-		return factory.createGroup(list, name, backColor, titleColor, note, borderColor);
+			HtmlColor borderColor, USymbol type) {
+		return factory.createGroup(list, name, backColor, titleColor, note, borderColor, type);
 	}
 
 	public StringBounder getStringBounder() {

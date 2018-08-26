@@ -37,11 +37,10 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -149,7 +148,7 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 		if (s == null) {
 			return null;
 		}
-		if (OptionFlags.ALLOW_INCLUDE) {
+		if (s.getPreprocessorError() == null && OptionFlags.ALLOW_INCLUDE) {
 			assert included == null;
 			final Matcher2 m1 = includePattern.matcher(s);
 			if (m1.find()) {
@@ -188,7 +187,7 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 		}
 		try {
 			final URL url = new URL(urlString);
-			included = new PreprocessorInclude(config, getReaderInclude(s, url, suf), defines, charset, null,
+			included = new PreprocessorInclude(config, getReaderInclude(url, s, suf), defines, charset, null,
 					filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		} catch (MalformedURLException e) {
 			return s.withErrorPreprocessor("Cannot include url " + urlString);
@@ -222,17 +221,17 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 			suf = fileName.substring(idx + 1);
 			fileName = fileName.substring(0, idx);
 		}
-		final File f = FileSystem.getInstance().getFile(withEnvironmentVariable(fileName));
-		final FileWithSuffix f2 = new FileWithSuffix(f, suf);
-		if (f.exists() == false || f.isDirectory()) {
-			return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
+		// final File f = FileSystem.getInstance().getFile(withEnvironmentVariable(fileName));
+		final FileWithSuffix f2 = new FileWithSuffix(withEnvironmentVariable(fileName), suf);
+		if (f2.fileOk() == false) {
+			return s.withErrorPreprocessor("Cannot include " + f2.getFile().getAbsolutePath());
 		} else if (allowMany == false && filesUsedCurrent.contains(f2)) {
 			// return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
 			return this.readLine();
 		}
 		filesUsedCurrent.add(f2);
 		filesUsedGlobal.add(f2);
-		included = new PreprocessorInclude(config, getReaderInclude(s, f, suf), defines, charset, f.getParentFile(),
+		included = new PreprocessorInclude(config, getReaderInclude(f2, s), defines, charset, f2.getParentFile(),
 				filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		return this.readLine();
 	}
@@ -280,9 +279,9 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 		}
 		final String description = "<" + filename + ">";
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(s, is, description)) {
+			if (StartDiagramExtractReader.containsStartDiagram(is, s, description)) {
 				is = getStdlibInputStream(filename);
-				return new StartDiagramExtractReader(s, is, description);
+				return StartDiagramExtractReader.build(is, s, description);
 			}
 			is = getStdlibInputStream(filename);
 			if (is == null) {
@@ -290,32 +289,32 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 			}
 			return ReadLineReader.create(new InputStreamReader(is), description);
 		} catch (IOException e) {
+			e.printStackTrace();
 			return new ReadLineSimple(s, e.toString());
 		}
 	}
 
-	private ReadLine getReaderInclude(CharSequence2 s, final File f, String suf) {
+	private ReadLine getReaderInclude(FileWithSuffix f2, CharSequence2 s) {
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(s, f, charset)) {
-				return new StartDiagramExtractReader(s, f, suf, charset);
+			if (StartDiagramExtractReader.containsStartDiagram(f2, s, charset)) {
+				return StartDiagramExtractReader.build(f2, s, charset);
 			}
-			if (charset == null) {
-				Log.info("Using default charset");
-				return ReadLineReader.create(new FileReader(f), f.getAbsolutePath(), s.getLocation());
+			final Reader reader = f2.getReader(charset);
+			if (reader == null) {
+				return new ReadLineSimple(s, "Cannot open " + f2.getDescription());
 			}
-			Log.info("Using charset " + charset);
-			return ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
-					s.getLocation());
+			return ReadLineReader.create(reader, f2.getDescription(), s.getLocation());
 		} catch (IOException e) {
+			e.printStackTrace();
 			return new ReadLineSimple(s, e.toString());
 		}
 
 	}
 
-	private ReadLine getReaderInclude(CharSequence2 s, final URL url, String suf) {
+	private ReadLine getReaderInclude(final URL url, CharSequence2 s, String suf) {
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(s, url, charset)) {
-				return new StartDiagramExtractReader(s, url, suf, charset);
+			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset)) {
+				return StartDiagramExtractReader.build(url, s, suf, charset);
 			}
 			final InputStream is = url.openStream();
 			if (charset == null) {
@@ -325,6 +324,7 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 			Log.info("Using charset " + charset);
 			return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 		} catch (IOException e) {
+			e.printStackTrace();
 			return new ReadLineSimple(s, e.toString());
 		}
 

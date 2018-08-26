@@ -90,13 +90,14 @@ public class PSystemKeygen extends AbstractPSystem {
 	}
 
 	private void drawInternal(UGraphic ug) throws IOException {
+		final LicenseInfo installed = LicenseInfo.retrieveSlow();
 		if (key.length() == 0) {
-			drawFlash(ug);
+			drawFlash(ug, installed);
 			return;
 		}
 		final LicenseInfo info = LicenseInfo.retrieve(key);
 		if (info.isNone()) {
-			drawFlash(ug);
+			drawFlash(ug, installed);
 			return;
 		}
 		final List<String> strings = header();
@@ -110,7 +111,6 @@ public class PSystemKeygen extends AbstractPSystem {
 			strings.add("<i>Error: Cannot store license key.</i>");
 		}
 
-		final LicenseInfo installed = LicenseInfo.retrieveSlow();
 		if (installed.isNone()) {
 			strings.add("No license currently installed.");
 			strings.add(" ");
@@ -138,7 +138,7 @@ public class PSystemKeygen extends AbstractPSystem {
 		return strings;
 	}
 
-	public void drawFlash(UGraphic ug) throws IOException {
+	private void drawFlash(UGraphic ug, LicenseInfo info) throws IOException {
 		final List<String> strings = header();
 		strings.add("To get your <i>Professional Edition License</i>,");
 		strings.add("please send this flashcode to <b>plantuml@gmail.com</b> :");
@@ -150,12 +150,12 @@ public class PSystemKeygen extends AbstractPSystem {
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage im = utils.exportFlashcode(Version.versionString() + "\n"
 				+ SignatureUtils.toHexString(Magic.signature()));
-		final UImage flash = new UImage(im).scaleNearestNeighbor(4);
-		ug.draw(flash);
+		if (im != null) {
+			final UImage flash = new UImage(im).scaleNearestNeighbor(4);
+			ug.draw(flash);
+			ug = ug.apply(new UTranslate(0, flash.getHeight()));
+		}
 
-		ug = ug.apply(new UTranslate(0, flash.getHeight()));
-
-		final LicenseInfo info = LicenseInfo.retrieveSlow();
 		if (info.isNone() == false) {
 			strings.clear();
 			strings.add("<u>Installed license</u>:");

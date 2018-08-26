@@ -37,28 +37,108 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.Log;
 
 public class FileWithSuffix {
 
 	private final File file;
 	private final String suffix;
+	private final String entry;
+
+	public Reader getReader(String charset) throws IOException {
+		if (entry == null) {
+			if (charset == null) {
+				Log.info("Using default charset");
+				return new FileReader(file);
+			}
+			Log.info("Using charset " + charset);
+			return new InputStreamReader(new FileInputStream(file), charset);
+		}
+		final InputStream is = getDataFromZip(file, entry);
+		if (is == null) {
+			return null;
+		}
+		if (charset == null) {
+			Log.info("Using default charset");
+			return new InputStreamReader(is);
+		}
+		Log.info("Using charset " + charset);
+		return new InputStreamReader(is, charset);
+	}
+
+	private InputStream getDataFromZip(File f, String name) throws IOException {
+		final ZipInputStream zis = new ZipInputStream(new FileInputStream(f));
+		ZipEntry ze = zis.getNextEntry();
+
+		while (ze != null) {
+			final String fileName = ze.getName();
+			if (ze.isDirectory()) {
+			} else if (fileName.equals(name)) {
+				return zis;
+			}
+			ze = zis.getNextEntry();
+		}
+		zis.closeEntry();
+		zis.close();
+		return null;
+	}
+
+	public boolean fileOk() {
+		if (file.exists() == false || file.isDirectory()) {
+			return false;
+		}
+		return true;
+	}
 
 	public FileWithSuffix(File file, String suffix) {
 		this.file = file;
 		this.suffix = suffix;
+		this.entry = null;
+	}
+
+	public FileWithSuffix(String fileName, String suffix) throws IOException {
+		final int idx = fileName.indexOf('~');
+		this.suffix = suffix;
+		if (idx == -1) {
+			this.file = FileSystem.getInstance().getFile(fileName);
+			this.entry = null;
+		} else {
+			this.file = FileSystem.getInstance().getFile(fileName.substring(0, idx));
+			this.entry = fileName.substring(idx + 1);
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		return file.hashCode() + (suffix == null ? 0 : suffix.hashCode() * 43);
+		return file.hashCode() + (suffix == null ? 0 : suffix.hashCode() * 43) + (entry == null ? 0 : entry.hashCode());
 	}
 
 	@Override
 	public boolean equals(Object arg) {
 		final FileWithSuffix other = (FileWithSuffix) arg;
-		return this.file.equals(other.file) && equals(suffix, other.suffix);
+		return this.file.equals(other.file) && equals(suffix, other.suffix) && same(entry, other.entry);
+	}
+
+	private static boolean same(String s1, String s2) {
+		if (s1 == null && s2 == null) {
+			return true;
+		}
+		if (s1 != null && s2 != null) {
+			return s1.equals(s2);
+		}
+		return false;
 	}
 
 	private static boolean equals(String s1, String s2) {
@@ -78,6 +158,25 @@ public class FileWithSuffix {
 			result.add(f.file);
 		}
 		return result;
+	}
+
+	public final File getFile() {
+		return file;
+	}
+
+	public File getParentFile() {
+		return file.getParentFile();
+	}
+
+	public String getDescription() {
+		if (entry == null) {
+			return file.getAbsolutePath();
+		}
+		return file.getAbsolutePath() + "~" + entry;
+	}
+
+	public final String getSuffix() {
+		return suffix;
 	}
 
 }

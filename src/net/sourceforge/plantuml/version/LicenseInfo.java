@@ -48,6 +48,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.dedication.Dedication;
 import net.sourceforge.plantuml.dedication.QBlock;
@@ -110,6 +111,9 @@ public class LicenseInfo {
 
 	public static synchronized LicenseInfo retrieveSlow() {
 		cache = LicenseInfo.NONE;
+		if (OptionFlags.ALLOW_INCLUDE == false) {
+			return cache;
+		}
 		final String key = prefs.get("license", "");
 		if (key.length() > 0) {
 			cache = setIfValid(retrieve(key), cache);
@@ -153,7 +157,7 @@ public class LicenseInfo {
 	}
 
 	public static LicenseInfo retrieve(final String key) {
-		if (key.matches("^[0-9a-z]+$")) {
+		if (key.length() > 99 && key.matches("^[0-9a-z]+$")) {
 			try {
 				final BigInteger lu = new BigInteger(key, 36);
 				final QBlock qb2 = new QBlock(lu);

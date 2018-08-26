@@ -151,6 +151,7 @@ public class LanguageDescriptor {
 		keyword.add("again");
 		keyword.add("kill");
 		keyword.add("order");
+		keyword.add("allow_mixing");
 
 		preproc.add("!exit");
 		preproc.add("!include");

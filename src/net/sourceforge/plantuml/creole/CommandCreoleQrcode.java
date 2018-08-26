@@ -30,33 +30,45 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.code;
+package net.sourceforge.plantuml.creole;
 
-import java.io.IOException;
+import net.sourceforge.plantuml.command.regex.Matcher2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.graphic.Splitter;
 
-import net.sourceforge.plantuml.StringUtils;
+public class CommandCreoleQrcode implements Command {
 
-public class ArobaseStringCompressor2 implements StringCompressor {
+	private final Pattern2 pattern;
 
-	public String compress(String data) throws IOException {
-		return clean2(data);
+	private CommandCreoleQrcode(String p) {
+		this.pattern = MyPattern.cmpile(p);
 	}
 
-	public String decompress(String s) throws IOException {
-		return clean2(s);
+	public static Command create() {
+		return new CommandCreoleQrcode("^(?i)(" + Splitter.qrcodePattern + ")");
 	}
 
-	private String clean2(String s) {
-		// s = s.replace("\0", "");
-		s = StringUtils.trin(s);
-		// s = s.replace("\r", "").replaceAll("\n+$", "");
-		if (s.startsWith("@start")) {
-			return s;
+	public int matchingSize(String line) {
+		final Matcher2 m = pattern.matcher(line);
+		if (m.find() == false) {
+			return 0;
 		}
-		return "@startuml\n" + s + "\n@enduml";
+		return m.group(1).length();
+	}
+
+	public String executeAndGetRemaining(String line, StripeSimple stripe) {
+		final Matcher2 m = pattern.matcher(line);
+		if (m.find() == false) {
+			throw new IllegalStateException();
+		}
+		final String src = m.group(2);
+		final double scale = CommandCreoleImg.getScale(m.group(3), 3);
+		stripe.addQrcode(src, scale);
+		return line.substring(m.group(1).length());
 	}
 
 }

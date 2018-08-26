@@ -99,7 +99,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.svek.DotDataImageBuilder;
+import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
@@ -594,7 +594,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				// skinParam = new SkinParamSameClassWidth(dotData.getSkinParam(), width);
 			}
 
-			return DotDataImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
+			return GeneralImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
 					diagram, getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
 		}
 		return ent.getSvekImage();

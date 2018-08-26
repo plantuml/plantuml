@@ -113,6 +113,7 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleExposantChange.create(FontPosition.EXPOSANT));
 		this.commands.add(CommandCreoleExposantChange.create(FontPosition.INDICE));
 		this.commands.add(CommandCreoleImg.create());
+		this.commands.add(CommandCreoleQrcode.create());
 		this.commands.add(CommandCreoleOpenIcon.create());
 		final double scale = skinParam.getDpi() / 96.0;
 		this.commands.add(CommandCreoleMath.create(scale));
@@ -166,6 +167,10 @@ public class StripeSimple implements Stripe {
 
 	public void addImage(String src, double scale) {
 		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale));
+	}
+
+	public void addQrcode(String src, double scale) {
+		atoms.add(AtomImg.createQrcode(src, scale));
 	}
 
 	public void addSpace(int size) {

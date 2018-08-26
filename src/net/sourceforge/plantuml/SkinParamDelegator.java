@@ -299,4 +299,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.swimlaneWrapTitleWidth();
 	}
 
+	public boolean fixCircleLabelOverlapping() {
+		return skinParam.fixCircleLabelOverlapping();
+	}
+
 }

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.USymbol;
 
 public class CommandGroup3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -59,7 +60,7 @@ public class CommandGroup3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		diagram.startGroup(Display.getWithNewlines(arg.get("NAME", 0)), null, null, null);
+		diagram.startGroup(Display.getWithNewlines(arg.get("NAME", 0)), null, null, null, USymbol.FRAME);
 		return CommandExecutionResult.ok();
 	}
 

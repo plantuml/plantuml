@@ -257,7 +257,9 @@ public class QuoteUtils {
 					"Zl ernyvgl vf whfg qvssrerag guna lbhef",
 					"Uvfgbel vf n avtugzner sebz juvpu V nz gelvat gb njnxr",
 					"L'ra n dh'bag rffnlr, vyf bag rh qrf ceboyrzrf",
-					"Gb ree vf uhzna, ohg gb ernyyl sbhy guvatf hc erdhverf n pbzchgre.");
+					"Gb ree vf uhzna, ohg gb ernyyl sbhy guvatf hc erdhverf n pbzchgre.",
+					"Vs lbh oryvrir rirelguvat lbh ernq, lbh orggre abg ernq",
+					"Gurer vf ab ceboyrz fb onq lbh pna'g znxr vg jbefr");
 
 	private QuoteUtils() {
 	}

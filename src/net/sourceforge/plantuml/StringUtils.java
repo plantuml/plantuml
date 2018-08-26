@@ -317,10 +317,6 @@ public class StringUtils {
 		return stringsToDisplay.size();
 	}
 
-	private static boolean isSpaceOrTab(char c) {
-		return c == ' ' || c == '\t';
-	}
-
 	public static boolean isDiagramCacheable(String uml) {
 		uml = uml.toLowerCase();
 		if (uml.startsWith("@startuml\nversion\n")) {
@@ -490,17 +486,21 @@ public class StringUtils {
 			return arg.toString();
 		}
 		int i = 0;
-		while (i < arg.length() && isSpaceOrTab(arg.charAt(i))) {
+		while (i < arg.length() && isSpaceOrTabOrNull(arg.charAt(i))) {
 			i++;
 		}
 		int j = arg.length() - 1;
-		while (j >= i && isSpaceOrTab(arg.charAt(j))) {
+		while (j >= i && isSpaceOrTabOrNull(arg.charAt(j))) {
 			j--;
 		}
 		if (i == 0 && j == arg.length() - 1) {
 			return arg.toString();
 		}
 		return arg.subSequence(i, j + 1).toString();
+	}
+
+	private static boolean isSpaceOrTabOrNull(char c) {
+		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html

@@ -101,8 +101,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (symbol == USymbol.FOLDER) {
 			this.shapeType = ShapeType.FOLDER;
 		} else if (symbol == USymbol.INTERFACE) {
-			this.shapeType = ShapeType.RECTANGLE;
-			// this.shapeType = ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE;
+			this.shapeType = skinParam.fixCircleLabelOverlapping() ? ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
+					: ShapeType.RECTANGLE;
 		} else {
 			this.shapeType = ShapeType.RECTANGLE;
 		}

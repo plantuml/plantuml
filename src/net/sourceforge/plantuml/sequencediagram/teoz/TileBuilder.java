@@ -139,10 +139,11 @@ public class TileBuilder {
 			tiles.add(new DividerTile(divider, tileArguments));
 		} else if (ev instanceof GroupingStart) {
 			final GroupingStart start = (GroupingStart) ev;
-			tiles.add(new EmptyTile(4, tileArguments));
-			tiles.add(new GroupingTile(it, start, tileArguments.withBackColorGeneral(start.getBackColorElement(),
-					start.getBackColorGeneral()), tileArguments));
-			tiles.add(new EmptyTile(4, tileArguments));
+			final GroupingTile groupingTile = new GroupingTile(it, start, tileArguments.withBackColorGeneral(
+					start.getBackColorElement(), start.getBackColorGeneral()), tileArguments);
+			tiles.add(new EmptyTile(4, groupingTile));
+			tiles.add(groupingTile);
+			tiles.add(new EmptyTile(4, groupingTile));
 			// tiles.add(TileUtils.withMargin(tile, 0, 0, 4, 4);
 		} else if (ev instanceof GroupingLeaf && ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {
 			final GroupingLeaf anElse = (GroupingLeaf) ev;

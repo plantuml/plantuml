@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateOut
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -149,7 +150,7 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor) {
+			HtmlColor borderColor, USymbol type) {
 		return list;
 	}
 

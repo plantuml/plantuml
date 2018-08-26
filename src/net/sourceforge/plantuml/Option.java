@@ -281,6 +281,11 @@ public class Option {
 				OptionPrint.printLicense();
 			} else if (s.equalsIgnoreCase("-checkversion")) {
 				OptionPrint.checkVersion();
+			} else if (s.startsWith("-DPLANTUML_LIMIT_SIZE=")) {
+				final String v = s.substring("-DPLANTUML_LIMIT_SIZE=".length());
+				if (v.matches("\\d+")) {
+					System.setProperty("PLANTUML_LIMIT_SIZE", v);
+				}
 			} else if (s.startsWith("-D")) {
 				manageDefine(s.substring(2));
 			} else if (s.startsWith("-S")) {

@@ -51,6 +51,8 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
+import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
+import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -68,6 +70,15 @@ public class AtomImg implements Atom {
 	private AtomImg(BufferedImage image, double scale) {
 		this.image = image;
 		this.scale = scale;
+	}
+
+	public static Atom createQrcode(String flash, double scale) {
+		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
+		BufferedImage im = utils.exportFlashcode(flash);
+		if (im == null) {
+			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+		}
+		return new AtomImg(new UImage(im).scaleNearestNeighbor(scale).getImage(), 1);
 	}
 
 	public static Atom create(String src, final ImgValign valign, final int vspace, final double scale) {

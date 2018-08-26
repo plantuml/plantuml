@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNotes;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -56,13 +57,15 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	private final HtmlColor borderColor;
 	private final HtmlColor titleColor;
 	private final LinkRendering linkRendering;
+	private final USymbol type;
 
 	private final Display test;
 	private PositionedNote note = null;
 
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
-			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering) {
+			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering, USymbol type) {
 		this.list = new InstructionList(swimlane);
+		this.type = type;
 		this.linkRendering = linkRendering;
 		this.parent = parent;
 		this.test = test;
@@ -80,7 +83,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 		if (note != null) {
 			tmp = new FtileWithNotes(tmp, Collections.singleton(note), factory.skinParam());
 		}
-		return factory.createGroup(tmp, test, backColor, titleColor, null, borderColor);
+		return factory.createGroup(tmp, test, backColor, titleColor, null, borderColor, type);
 	}
 
 	public Instruction getParent() {

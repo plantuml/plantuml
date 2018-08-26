@@ -40,6 +40,7 @@ import java.awt.geom.Point2D;
 import java.util.Iterator;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -101,10 +102,10 @@ public class CommunicationTileSelf implements TileWithUpdateStairs {
 
 		if (message.isActivate()) {
 			livingSpace1.addStepForLivebox(getEvent(), y + p2.getY());
-			System.err.println("CommunicationTileSelf::updateStairs activate y=" + (y + p2.getY()) + " " + message);
+			Log.info("CommunicationTileSelf::updateStairs activate y=" + (y + p2.getY()) + " " + message);
 		} else if (message.isDeactivate()) {
 			livingSpace1.addStepForLivebox(getEvent(), y + p1.getY());
-			System.err.println("CommunicationTileSelf::updateStairs deactivate y=" + (y + p1.getY()) + " " + message);
+			Log.info("CommunicationTileSelf::updateStairs deactivate y=" + (y + p1.getY()) + " " + message);
 		}
 
 		// livingSpace1.addStep(y + arrowY, level1);
@@ -121,8 +122,7 @@ public class CommunicationTileSelf implements TileWithUpdateStairs {
 		double x1 = getPoint1(stringBounder).getCurrentValue();
 		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);
 		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
-		System.err.println("CommunicationTileSelf::drawU levelIgnore=" + levelIgnore + " levelConsidere="
-				+ levelConsidere);
+		Log.info("CommunicationTileSelf::drawU levelIgnore=" + levelIgnore + " levelConsidere=" + levelConsidere);
 		x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;
 		if (levelIgnore < levelConsidere) {
 			x1 += CommunicationTile.LIVE_DELTA_SIZE;

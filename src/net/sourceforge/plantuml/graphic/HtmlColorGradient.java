@@ -48,6 +48,12 @@ public class HtmlColorGradient implements HtmlColor {
 		if (color1 == null || color2 == null) {
 			throw new IllegalArgumentException();
 		}
+		if (color1 instanceof HtmlColorGradient) {
+			color1 = ((HtmlColorGradient) color1).color1;
+		}
+		if (color2 instanceof HtmlColorGradient) {
+			color2 = ((HtmlColorGradient) color2).color2;
+		}
 		this.color1 = color1;
 		this.color2 = color2;
 		this.policy = policy;

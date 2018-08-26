@@ -82,7 +82,7 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
 		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabel());
+				message.getLabelNumbered());
 		return comp;
 	}
 

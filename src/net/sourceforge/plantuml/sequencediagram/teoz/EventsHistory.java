@@ -135,6 +135,12 @@ public class EventsHistory {
 	}
 
 	private SymbolContext getActivateColor(Event event) {
+		if (event instanceof LifeEvent) {
+			final LifeEvent le = (LifeEvent) event;
+			if (le.isActivate()) {
+				return le.getSpecificColors();
+			}
+		}
 		for (Iterator<Event> it = events.iterator(); it.hasNext();) {
 			final Event current = it.next();
 			if (event != current) {
