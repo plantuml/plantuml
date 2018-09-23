@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
@@ -55,9 +56,12 @@ public class AtomMath implements Atom {
 	private final ScientificEquationSafe math;
 	private final HtmlColor foreground;
 	private final HtmlColor background;
+	private final ColorMapper colorMapper;
 
-	public AtomMath(ScientificEquationSafe math, HtmlColor foreground, HtmlColor background, double scale) {
+	public AtomMath(ScientificEquationSafe math, HtmlColor foreground, HtmlColor background, double scale,
+			ColorMapper colorMapper) {
 		this.math = math;
+		this.colorMapper = colorMapper;
 		this.foreground = foreground;
 		this.background = background;
 		this.scale = scale;
@@ -84,10 +88,10 @@ public class AtomMath implements Atom {
 	public void drawU(UGraphic ug) {
 		final boolean isSvg = ug.matchesProperty("SVG");
 		final Color back;
-		if (isSvg && background == null) {
+		if (background == null) {
 			back = null;
 		} else {
-			back = getColor(background == null ? ug.getParam().getBackcolor() : background, Color.WHITE);
+			back = getColor(background, Color.WHITE);
 		}
 		final Color fore = getColor(foreground, Color.BLACK);
 		final double dpiFactor = ug.dpiFactor();
@@ -95,13 +99,15 @@ public class AtomMath implements Atom {
 			final SvgString svg = math.getSvg(scale, fore, back);
 			ug.draw(new UImageSvg(svg));
 		} else {
-			ug.draw(new UImage(math.getImage(scale * dpiFactor, fore, back)));
+			final UImage image = new UImage(math.getImage(scale * dpiFactor, fore, back), math.getFormula());
+			ug.draw(image);
 		}
 	}
 
 	private Color getColor(HtmlColor color, Color defaultValue) {
 		if (color instanceof HtmlColorSimple) {
-			return ((HtmlColorSimple) color).getColor999();
+			return colorMapper.getMappedColor(color);
+			// return ((HtmlColorSimple) color).getColor999();
 		}
 		return defaultValue;
 

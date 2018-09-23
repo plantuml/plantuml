@@ -84,7 +84,7 @@ public class TimingNote {
 		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(note);
 		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
-		final Opale opale = new Opale(borderColor, noteBackgroundColor, sheet1, skinParam.shadowing(), false);
+		final Opale opale = new Opale(borderColor, noteBackgroundColor, sheet1, skinParam.shadowing(null), false);
 		return opale;
 	}
 

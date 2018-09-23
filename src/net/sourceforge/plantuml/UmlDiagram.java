@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
@@ -209,7 +210,9 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			throws IOException {
 
 		final HtmlColor hover = getSkinParam().getHoverPathColor();
-		fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
+		if (fileFormatOption.getSvgLinkTarget() == null) {
+			fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
+		}
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 		if (hover != null) {
 			fileFormatOption = fileFormatOption.withHoverColor(StringUtils.getAsHtml(getSkinParam().getColorMapper()
@@ -254,7 +257,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 				metadata, null, 0, 0, null, false);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final BufferedImage im = utils.exportFlashcode(flash);
+		final BufferedImage im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		if (im != null) {
 			GraphvizCrash.addDecodeHint(strings);
 		}

@@ -95,7 +95,7 @@ public class FtileCircleEnd extends AbstractFtile {
 		yTheoricalPosition = Math.round(yTheoricalPosition);
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (skinParam().shadowing()) {
+		if (skinParam().shadowing(null)) {
 			circle.setDeltaShadow(3);
 		}
 		ug = ug.apply(new UChangeColor(backColor));

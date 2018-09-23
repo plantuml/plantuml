@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
+import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -74,7 +75,7 @@ public class AtomImg implements Atom {
 
 	public static Atom createQrcode(String flash, double scale) {
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		BufferedImage im = utils.exportFlashcode(flash);
+		BufferedImage im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		if (im == null) {
 			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		}

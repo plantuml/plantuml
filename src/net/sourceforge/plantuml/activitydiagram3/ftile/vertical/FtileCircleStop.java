@@ -92,7 +92,7 @@ public class FtileCircleStop extends AbstractFtile {
 		yTheoricalPosition = Math.round(yTheoricalPosition);
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (skinParam().shadowing()) {
+		if (skinParam().shadowing(null)) {
 			circle.setDeltaShadow(3);
 		}
 		ug.apply(new UChangeColor(backColor)).apply(new UChangeBackColor(null))
@@ -100,7 +100,7 @@ public class FtileCircleStop extends AbstractFtile {
 
 		final double delta = 4;
 		final UEllipse circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
-		if (skinParam().shadowing()) {
+		if (skinParam().shadowing(null)) {
 			circleSmall.setDeltaShadow(3);
 		}
 		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backColor))

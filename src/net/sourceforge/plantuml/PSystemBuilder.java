@@ -94,14 +94,14 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(final List<CharSequence2> strings2, int startLine) {
+	final public Diagram createPSystem(final List<CharSequence2> strings2) {
 
 		final long now = System.currentTimeMillis();
 
 		Diagram result = null;
 		try {
 			final DiagramType type = DiagramType.getTypeFromArobaseStart(strings2.get(0).toString2());
-			final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML, startLine);
+			final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML);
 
 			// int cpt = 0;
 			for (CharSequence2 s : strings2) {

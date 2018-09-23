@@ -43,38 +43,38 @@ public final class MatrixToImageWriter {
    * Renders a {@link BitMatrix} as an image, where "false" bits are rendered
    * as white, and "true" bits are rendered as black.
    */
-  public static BufferedImage toBufferedImage(BitMatrix matrix) {
+  public static BufferedImage toBufferedImage(BitMatrix matrix, int fore, int back) {
     int width = matrix.getWidth();
     int height = matrix.getHeight();
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
-        image.setRGB(x, y, matrix.get(x, y) ? BLACK : WHITE);
+        image.setRGB(x, y, matrix.get(x, y) ? fore : back);
       }
     }
     return image;
   }
 
-  /**
-   * Writes a {@link BitMatrix} to a file.
-   *
-   * @see #toBufferedImage(BitMatrix)
-   */
-  public static void writeToFile(BitMatrix matrix, String format, File file)
-          throws IOException {
-    BufferedImage image = toBufferedImage(matrix);
-    ImageIO.write(image, format, file);
-  }
-
-  /**
-   * Writes a {@link BitMatrix} to a stream.
-   *
-   * @see #toBufferedImage(BitMatrix)
-   */
-  public static void writeToStream(BitMatrix matrix, String format, OutputStream stream)
-          throws IOException {
-    BufferedImage image = toBufferedImage(matrix);
-    ImageIO.write(image, format, stream);
-  }
+//  /**
+//   * Writes a {@link BitMatrix} to a file.
+//   *
+//   * @see #toBufferedImage(BitMatrix)
+//   */
+//  public static void writeToFile(BitMatrix matrix, String format, File file)
+//          throws IOException {
+//    BufferedImage image = toBufferedImage(matrix);
+//    ImageIO.write(image, format, file);
+//  }
+//
+//  /**
+//   * Writes a {@link BitMatrix} to a stream.
+//   *
+//   * @see #toBufferedImage(BitMatrix)
+//   */
+//  public static void writeToStream(BitMatrix matrix, String format, OutputStream stream)
+//          throws IOException {
+//    BufferedImage image = toBufferedImage(matrix);
+//    ImageIO.write(image, format, stream);
+//  }
 
 }

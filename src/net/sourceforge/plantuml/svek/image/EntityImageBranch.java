@@ -65,7 +65,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		final UPolygon diams = new UPolygon();
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			diams.setDeltaShadow(5);
 		}
 		diams.addPoint(SIZE, 0);

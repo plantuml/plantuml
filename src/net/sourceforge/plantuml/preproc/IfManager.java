@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.version.Version;
 
-class IfManager extends ReadLineInstrumented implements ReadLine {
+public class IfManager extends ReadLineInstrumented implements ReadLine {
 
 	protected static final Pattern2 ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+(.+)$");
 	protected static final Pattern2 ifcomparePattern = MyPattern

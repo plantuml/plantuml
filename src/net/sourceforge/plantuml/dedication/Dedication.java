@@ -70,13 +70,12 @@ public class Dedication {
 		return new ByteArrayInputStream(baos.toByteArray());
 	}
 
-	public BufferedImage getBufferedImage(String keepLetter) {
+	public static BufferedImage getBufferedImage(InputStream is) {
 		try {
 			final Class<?> clVP8Decoder = Class.forName("net.sourceforge.plantuml.webp.VP8Decoder");
 			final Object vp8Decoder = clVP8Decoder.newInstance();
 			// final VP8Decoder vp8Decoder = new VP8Decoder();
 			final Method decodeFrame = clVP8Decoder.getMethod("decodeFrame", ImageInputStream.class);
-			final InputStream is = getInputStream(keepLetter);
 			final ImageInputStream iis = ImageIO.createImageInputStream(is);
 			decodeFrame.invoke(vp8Decoder, iis);
 			// vp8Decoder.decodeFrame(iis);
@@ -85,6 +84,16 @@ public class Dedication {
 			return (BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame);
 			// final VP8Frame frame = vp8Decoder.getFrame();
 			// return frame.getBufferedImage();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public BufferedImage getBufferedImage(String keepLetter) {
+		try {
+			final InputStream is = getInputStream(keepLetter);
+			return getBufferedImage(is);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

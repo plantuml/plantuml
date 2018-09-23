@@ -127,7 +127,7 @@ class AtomEmbededSystem implements Atom {
 	// }
 	//
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final BlockUml blockUml = new BlockUml(lines2, 0, Defines.createEmpty());
+		final BlockUml blockUml = new BlockUml(lines2, Defines.createEmpty());
 		return blockUml.getDiagram();
 	}
 

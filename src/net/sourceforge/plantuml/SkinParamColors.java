@@ -55,9 +55,9 @@ public class SkinParamColors extends SkinParamDelegator {
 	}
 
 	@Override
-	public boolean shadowing() {
+	public boolean shadowing(Stereotype stereotype) {
 		if (colors.getShadowing() == null) {
-			return super.shadowing();
+			return super.shadowing(stereotype);
 		}
 		return colors.getShadowing();
 	}

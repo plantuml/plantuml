@@ -116,7 +116,7 @@ public class FtileWithNotes extends AbstractFtile {
 				}
 			}, new UStroke());
 
-			final Opale opale = new Opale(borderColor, noteBackgroundColor, sheet2, skinParam.shadowing(), false);
+			final Opale opale = new Opale(borderColor, noteBackgroundColor, sheet2, skinParam.shadowing(null), false);
 			final TextBlock opaleMarged = TextBlockUtils.withMargin(opale, 10, 10);
 			if (note.getNotePosition() == NotePosition.LEFT) {
 				if (left == null) {

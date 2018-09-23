@@ -46,9 +46,10 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
-import net.sourceforge.plantuml.preproc.Preprocessor;
+import net.sourceforge.plantuml.preproc.ReadLineNumbered;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
+import net.sourceforge.plantuml.preproc2.Preprocessor2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
@@ -60,11 +61,12 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir,
 			String desc) throws IOException {
-		Preprocessor includer = null;
+		ReadLineNumbered includer = null;
 		this.defines = defines;
 		try {
 			reader2 = new UncommentReadLine(ReadLineReader.create(reader, desc));
-			includer = new Preprocessor(config, reader2, charset, defines, newCurrentDir, this);
+			// includer = new Preprocessor(config, reader2, charset, defines, newCurrentDir, this);
+			includer = new Preprocessor2(config, reader2, charset, defines, new AParentFolderRegular(newCurrentDir), this);
 			init(includer);
 		} finally {
 			if (includer != null) {
@@ -78,16 +80,15 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		this(config, charset, defines, reader, null, null);
 	}
 
-	private void init(Preprocessor includer) throws IOException {
+	private void init(ReadLineNumbered includer) throws IOException {
 		CharSequence2 s = null;
 		List<CharSequence2> current2 = null;
 		boolean paused = false;
-		int startLine = 0;
+
 		while ((s = includer.readLine()) != null) {
 			if (StartUtils.isArobaseStartDiagram(s)) {
 				current2 = new ArrayList<CharSequence2>();
 				paused = false;
-				startLine = includer.getLineNumber();
 			}
 			if (StartUtils.isArobasePauseDiagram(s)) {
 				paused = true;
@@ -114,7 +115,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				if (paused) {
 					current2.add(s);
 				}
-				blocks.add(new BlockUml(current2, startLine/* - config.size() */, defines.cloneMe()));
+				blocks.add(new BlockUml(current2, defines.cloneMe()));
 				current2 = null;
 				reader2.setPaused(false);
 			}

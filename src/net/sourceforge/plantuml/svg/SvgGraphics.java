@@ -58,6 +58,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
@@ -314,6 +315,9 @@ public class SvgGraphics {
 	public void openLink(String url, String title, String target) {
 		if (url == null) {
 			throw new IllegalArgumentException();
+		}
+		if (OptionFlags.ALLOW_INCLUDE == false && url.toLowerCase().startsWith("javascript")) {
+			return;
 		}
 
 		if (pendingAction.size() > 0) {

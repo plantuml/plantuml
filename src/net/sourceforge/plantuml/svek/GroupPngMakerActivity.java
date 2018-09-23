@@ -125,7 +125,7 @@ public final class GroupPngMakerActivity {
 			final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
 					ColorParam.background, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
 			return new InnerActivity(svek2.buildImage(null, new String[0]), borderColor, backColor,
-					skinParam.shadowing());
+					skinParam.shadowing(group.getStereotype()));
 		}
 
 		throw new UnsupportedOperationException(group.getGroupType().toString());

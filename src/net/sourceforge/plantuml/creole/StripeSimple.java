@@ -196,7 +196,8 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void addMath(ScientificEquationSafe math, double scale) {
-		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor(), scale));
+		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor(), scale,
+				skinParam.getColorMapper()));
 	}
 
 	private void modifyStripe(String line) {

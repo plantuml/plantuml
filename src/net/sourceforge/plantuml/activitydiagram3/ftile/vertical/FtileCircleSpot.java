@@ -100,7 +100,7 @@ public class FtileCircleSpot extends AbstractFtile {
 		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), ColorParam.activityBackground, null);
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (skinParam().shadowing()) {
+		if (skinParam().shadowing(null)) {
 			circle.setDeltaShadow(3);
 		}
 		ug.apply(new UChangeColor(borderColor)).apply(new UChangeBackColor(backColor)).apply(getThickness())

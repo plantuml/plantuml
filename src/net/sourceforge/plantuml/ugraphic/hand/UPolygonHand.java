@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.ugraphic.hand;
 
 import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Random;
 
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -44,13 +45,13 @@ public class UPolygonHand {
 
 	private final UPolygon poly;
 
-	public UPolygonHand(UPolygon source) {
+	public UPolygonHand(UPolygon source, Random rnd) {
 		final List<Point2D.Double> pt = source.getPoints();
 		if (pt.size() == 0) {
 			poly = new UPolygon();
 			return;
 		}
-		final HandJiggle jiggle = new HandJiggle(pt.get(0), 1.5);
+		final HandJiggle jiggle = new HandJiggle(pt.get(0), 1.5, rnd);
 		for (int i = 1; i < pt.size(); i++) {
 			jiggle.lineTo(pt.get(i));
 		}

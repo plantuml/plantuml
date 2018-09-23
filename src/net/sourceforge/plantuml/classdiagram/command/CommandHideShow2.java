@@ -50,7 +50,7 @@ public class CommandHideShow2 extends SingleLineCommand2<CucaDiagram> {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("COMMAND", "(hide|show)"), //
+				new RegexLeaf("COMMAND", "(hide|hide-class|show|show-class)"), //
 				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("WHAT", "(.+)"), //
 				new RegexLeaf("$"));
@@ -59,7 +59,8 @@ public class CommandHideShow2 extends SingleLineCommand2<CucaDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, RegexResult arg) {
 
-		final boolean show = arg.get("COMMAND", 0).equalsIgnoreCase("show");
+		final char tmp = arg.get("COMMAND", 0).charAt(0);
+		final boolean show = tmp == 's' || tmp == 'S';
 		final String what = arg.get("WHAT", 0).trim();
 		diagram.hideOrShow2(what, show);
 		return CommandExecutionResult.ok();

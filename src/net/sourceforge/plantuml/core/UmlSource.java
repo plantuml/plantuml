@@ -68,9 +68,6 @@ final public class UmlSource {
 	final private List<String> source;
 	final private List<CharSequence2> source2;
 
-	// final private int startLine;
-	// final private LineLocation startLocation;
-
 	/**
 	 * Build the source from a text.
 	 * 
@@ -78,11 +75,8 @@ final public class UmlSource {
 	 *            the source of the diagram
 	 * @param checkEndingBackslash
 	 *            <code>true</code> if an ending backslash means that a line has to be collapsed with the following one.
-	 * @param startLine
 	 */
-	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash, int startLine) {
-		// this.startLocation = source.get(0).getLocation();
-		// this.startLine = startLine;
+	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash) {
 		final List<String> tmp = new ArrayList<String>();
 		final List<CharSequence2> tmp2 = new ArrayList<CharSequence2>();
 

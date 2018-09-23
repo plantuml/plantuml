@@ -130,7 +130,7 @@ public class FtileDiamond extends AbstractFtile {
 		final double suppY1 = north.calculateDimension(ug.getStringBounder()).getHeight();
 		ug = ug.apply(new UTranslate(0, suppY1));
 		ug.apply(new UChangeColor(borderColor)).apply(getThickness()).apply(new UChangeBackColor(backColor))
-				.draw(Diamond.asPolygon(skinParam().shadowing()));
+				.draw(Diamond.asPolygon(skinParam().shadowing(null)));
 		// final Dimension2D dimNorth = north.calculateDimension(ug.getStringBounder());
 		north.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 1.5, -suppY1)));
 

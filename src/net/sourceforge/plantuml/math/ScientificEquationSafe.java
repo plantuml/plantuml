@@ -153,4 +153,8 @@ public class ScientificEquationSafe {
 		return null;
 	}
 
+	public final String getFormula() {
+		return formula;
+	}
+
 }

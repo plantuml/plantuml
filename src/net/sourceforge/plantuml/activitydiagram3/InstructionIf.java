@@ -128,7 +128,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		if (elseBranch != null) {
 			return false;
 		}
-		this.current.setInlinkRendering(nextLinkRenderer);
+		// this.current.setInlinkRendering(nextLinkRenderer);
+		this.current.setSpecial(nextLinkRenderer);
 		this.current = new Branch(swimlane, whenThen, test, color, inlabel);
 		this.thens.add(current);
 		return true;
@@ -140,6 +141,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		if (elseBranch == null) {
 			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null, Display.NULL);
 		}
+		this.elseBranch.setSpecial(nextLinkRenderer);
 		this.current.setInlinkRendering(nextLinkRenderer);
 	}
 
@@ -149,7 +151,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 				if (branch.getLast().kill() == false) {
 					return false;
 				}
-				if (elseBranch != null && elseBranch.getLast()!=null && elseBranch.getLast().kill() == false) {
+				if (elseBranch != null && elseBranch.getLast() != null && elseBranch.getLast().kill() == false) {
 					return false;
 				}
 				return true;

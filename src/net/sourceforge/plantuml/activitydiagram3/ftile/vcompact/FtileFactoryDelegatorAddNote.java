@@ -65,7 +65,7 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 			if (note.getColors() != null) {
 				skinParam = note.getColors().mute(skinParam);
 			}
-			return new FtileNoteAlone(skinParam.shadowing(), note.getDisplay(), skinParam,
+			return new FtileNoteAlone(skinParam.shadowing(null), note.getDisplay(), skinParam,
 					note.getType() == NoteType.NOTE, swimlane);
 		}
 		return FtileWithNoteOpale.create(ftile, notes, skinParam, true);

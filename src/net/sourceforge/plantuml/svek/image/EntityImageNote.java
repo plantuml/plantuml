@@ -94,7 +94,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		super(entity, getSkin(getISkinParam(skinParam, entity), entity));
 		this.skinParam = getISkinParam(skinParam, entity);
 
-		this.withShadow = getSkinParam().shadowing();
+		this.withShadow = getSkinParam().shadowing(getEntity().getStereotype());
 		final Display strings = entity.getDisplay();
 
 		final Rose rose = new Rose();
@@ -209,7 +209,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			final Point2D newRefpp2 = move(pp2, shape.getMinX(), shape.getMinY());
 			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -shape.getMinX(),
 					-shape.getMinY());
-			final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(), true);
+			final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(getEntity().getStereotype()), true);
 			opale.setRoundCorner(getRoundCorner());
 			opale.setOpale(strategy, pp1, projection);
 			final UGraphic stroked = applyStroke(ug2);

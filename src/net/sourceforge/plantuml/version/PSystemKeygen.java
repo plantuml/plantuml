@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.version;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +45,7 @@ import java.util.prefs.BackingStoreException;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -133,7 +135,9 @@ public class PSystemKeygen extends AbstractPSystem {
 		final ArrayList<String> strings = new ArrayList<String>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
-		strings.add("Loaded from " + Version.getJarPath());
+		if (OptionFlags.ALLOW_INCLUDE) {
+			strings.add("Loaded from " + Version.getJarPath());
+		}
 		strings.add(" ");
 		return strings;
 	}
@@ -148,8 +152,8 @@ public class PSystemKeygen extends AbstractPSystem {
 
 		ug = ug.apply(new UTranslate(0, disp.calculateDimension(ug.getStringBounder()).getHeight()));
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final BufferedImage im = utils.exportFlashcode(Version.versionString() + "\n"
-				+ SignatureUtils.toHexString(Magic.signature()));
+		final BufferedImage im = utils.exportFlashcode(
+				Version.versionString() + "\n" + SignatureUtils.toHexString(Magic.signature()), Color.BLACK, Color.WHITE);
 		if (im != null) {
 			final UImage flash = new UImage(im).scaleNearestNeighbor(4);
 			ug.draw(flash);

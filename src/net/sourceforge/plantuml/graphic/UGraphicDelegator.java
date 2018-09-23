@@ -45,6 +45,12 @@ public abstract class UGraphicDelegator implements UGraphic {
 
 	final private UGraphic ug;
 	
+	@Override
+	public String toString() {
+		return super.toString() + " " + getUg().toString();
+	}
+
+
 	public final boolean matchesProperty(String propertyName) {
 		return ug.matchesProperty(propertyName);
 	}

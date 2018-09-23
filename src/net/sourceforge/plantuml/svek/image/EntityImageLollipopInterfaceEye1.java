@@ -93,7 +93,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		final double sizeSmall = 14;
 		final double diff = (SIZE - sizeSmall) / 2;
 		final UEllipse circle1 = new UEllipse(sizeSmall, sizeSmall);
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			// circle.setDeltaShadow(4);
 		}
 		ug.apply(new UStroke(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);

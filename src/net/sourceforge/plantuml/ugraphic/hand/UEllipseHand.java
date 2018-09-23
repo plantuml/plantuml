@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.ugraphic.hand;
 
 import java.awt.geom.Point2D;
+import java.util.Random;
 
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -43,9 +44,14 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 public class UEllipseHand {
 
 	private Shadowable poly;
+	private final Random rnd;
 
-	public UEllipseHand(UEllipse source) {
+	private double randomMe() {
+		return rnd.nextDouble();
+	}
 
+	public UEllipseHand(UEllipse source, Random rnd) {
+		this.rnd = rnd;
 		if (source.getStart() != 0 || source.getExtend() != 0) {
 			this.poly = source;
 			return;
@@ -56,8 +62,8 @@ public class UEllipseHand {
 		double angle = 0;
 		if (width == height) {
 			while (angle < Math.PI * 2) {
-				angle += (10 + Math.random() * 10) * Math.PI / 180;
-				final double variation = 1 + (Math.random() - 0.5) / 8;
+				angle += (10 + randomMe() * 10) * Math.PI / 180;
+				final double variation = 1 + (randomMe() - 0.5) / 8;
 				final double x = width / 2 + Math.cos(angle) * width * variation / 2;
 				final double y = height / 2 + Math.sin(angle) * height * variation / 2;
 				// final Point2D.Double p = new Point2D.Double(x, y);
@@ -78,7 +84,7 @@ public class UEllipseHand {
 	private Point2D getPoint(double width, double height, double angle) {
 		final double x = width / 2 + Math.cos(angle) * width / 2;
 		final double y = height / 2 + Math.sin(angle) * height / 2;
-		final double variation = (Math.random() - 0.5) / 50;
+		final double variation = (randomMe() - 0.5) / 50;
 		return new Point2D.Double(x + variation * width, y + variation * height);
 
 	}

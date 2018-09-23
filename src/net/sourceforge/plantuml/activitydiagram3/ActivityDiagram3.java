@@ -195,7 +195,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		// COMPRESSION
 		TextBlock result = swinlanes;
 		// result = new TextBlockCompressedOnY(CompressionMode.ON_Y, result);
-		// result = new TextBlockCompressedOnXorY(CompressionMode.ON_X, result);
+		result = new TextBlockCompressedOnXorY(CompressionMode.ON_X, result);
 		result = new TextBlockCompressedOnXorY(CompressionMode.ON_Y, result);
 		result = new TextBlockRecentred(result);
 		final ISkinParam skinParam = getSkinParam();

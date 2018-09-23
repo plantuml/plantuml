@@ -318,6 +318,17 @@ public class TikzGraphics {
 		addCommand(sb);
 	}
 
+	public void appendRaw(double x, double y, String formula) {
+		final StringBuilder sb = new StringBuilder("\\node at " + couple(x, y));
+		sb.append("[below right");
+		sb.append("]{");
+		sb.append("{");
+		sb.append(formula);
+		sb.append("}");
+		sb.append("};");
+		addCommand(sb);
+	}
+
 	private void appendPendingUrl(final StringBuilder sb) {
 		if (Url.isLatex(pendingUrl)) {
 			sb.append("\\hyperref[");

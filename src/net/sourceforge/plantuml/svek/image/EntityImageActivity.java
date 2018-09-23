@@ -105,7 +105,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 	private UGraphic drawOctagon(UGraphic ug) {
 		final Shape shape = bibliotekon.getShape(getEntity());
 		final Shadowable octagon = shape.getOctagon();
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			octagon.setDeltaShadow(4);
 		}
 		ug = applyColors(ug);
@@ -122,7 +122,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			rect.setDeltaShadow(4);
 		}
 
