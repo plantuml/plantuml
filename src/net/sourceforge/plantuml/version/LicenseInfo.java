@@ -169,7 +169,7 @@ public class LicenseInfo {
 				return new LicenseInfo(magic);
 			} catch (Exception e) {
 				// e.printStackTrace();
-				Log.info("Error " + e);
+				Log.info("Error retrieving license info" + e);
 			}
 		}
 		return LicenseInfo.NONE;

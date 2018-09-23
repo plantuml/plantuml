@@ -114,7 +114,7 @@ public class FtileDiamondFoo1 extends AbstractFtile {
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		ug = ug.apply(new UChangeColor(borderColor)).apply(getThickness()).apply(new UChangeBackColor(backColor));
-		ug.draw(Diamond.asPolygonFoo1(skinParam().shadowing(), dimTotal.getWidth(), dimTotal.getHeight()));
+		ug.draw(Diamond.asPolygonFoo1(skinParam().shadowing(null), dimTotal.getWidth(), dimTotal.getHeight()));
 
 		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
 

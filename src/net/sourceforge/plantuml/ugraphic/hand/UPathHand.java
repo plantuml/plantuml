@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.ugraphic.hand;
 
 import java.awt.geom.Point2D;
+import java.util.Random;
 
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
@@ -45,7 +46,7 @@ public class UPathHand {
 	private final UPath path;
 	private final double defaultVariation = 4.0;
 
-	public UPathHand(UPath source) {
+	public UPathHand(UPath source, Random rnd) {
 
 		final UPath jigglePath = new UPath();
 
@@ -62,7 +63,7 @@ public class UPathHand {
 			} else if (type == USegmentType.SEG_LINETO) {
 				final double x = segment.getCoord()[0];
 				final double y = segment.getCoord()[1];
-				final HandJiggle jiggle = new HandJiggle(last.getX(), last.getY(), defaultVariation);
+				final HandJiggle jiggle = new HandJiggle(last.getX(), last.getY(), defaultVariation, rnd);
 				jiggle.lineTo(x, y);
 				for (USegment seg2 : jiggle.toUPath()) {
 					if (seg2.getSegmentType() == USegmentType.SEG_LINETO) {

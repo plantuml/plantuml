@@ -92,7 +92,7 @@ public class FtileBlackBlock extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final URectangle rect = new URectangle(width, height, 5, 5);
-		if (skinParam().shadowing()) {
+		if (skinParam().shadowing(null)) {
 			rect.setDeltaShadow(3);
 		}
 		ug.apply(new UChangeColor(colorBar)).apply(new UChangeBackColor(colorBar)).draw(rect);

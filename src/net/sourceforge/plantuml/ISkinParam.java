@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
@@ -79,17 +78,15 @@ public interface ISkinParam extends ISkinSimple {
 
 	public int classAttributeIconSize();
 
-	public ColorMapper getColorMapper();
-
 	public DotSplines getDotSplines();
 
 	public String getDotExecutable();
 
-	public boolean shadowing();
+	public boolean shadowing(Stereotype stereotype);
 
 	public boolean shadowingForNote(Stereotype stereotype);
 
-	public boolean shadowing2(SkinParameter skinParameter);
+	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter);
 
 	public PackageStyle getPackageStyle();
 

@@ -51,7 +51,7 @@ public class CommandAllowMixing extends SingleLineCommand2<ClassDiagram> {
 	private static RegexConcat getRegexConcat() {
 
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("allow_mixing"), //
+				new RegexLeaf("allow_?mixing"), //
 				new RegexLeaf("$"));
 	}
 

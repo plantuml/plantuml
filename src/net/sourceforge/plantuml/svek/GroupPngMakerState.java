@@ -155,8 +155,8 @@ public final class GroupPngMakerState {
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}
-		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, skinParam.shadowing(),
-				group.getUrl99(), withSymbol, stroke);
+		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, skinParam.shadowing(group
+				.getStereotype()), group.getUrl99(), withSymbol, stroke);
 
 	}
 
@@ -167,7 +167,15 @@ public final class GroupPngMakerState {
 			return new TextBlockEmpty();
 		}
 		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE, null);
-		final Display display = details.size() == 1 ? Display.getWithNewlines(details.get(0)) : Display.create(details);
+		Display display = null;
+		for (String s : details) {
+			if (display == null) {
+				display = Display.getWithNewlines(s);
+			} else {
+				display = display.addAll(Display.getWithNewlines(s));
+			}
+		}
+
 		final TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 		return new TextBlockWidthAdapter(result, 0);
 

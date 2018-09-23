@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.flashcode;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
 import net.sourceforge.plantuml.Log;
-
 import ext.plantuml.com.google.zxing.BarcodeFormat;
 import ext.plantuml.com.google.zxing.EncodeHintType;
 import ext.plantuml.com.google.zxing.WriterException;
@@ -52,7 +52,7 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 
 	private static final boolean USE_FLASH = true;
 
-	public BufferedImage exportFlashcode(String s) {
+	public BufferedImage exportFlashcode(String s, Color fore, Color back) {
 		if (USE_FLASH == false) {
 			return null;
 		}
@@ -63,7 +63,7 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 			hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
 			final int multiple = 1;
 			final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
-			return MatrixToImageWriter.toBufferedImage(bit);
+			return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);
 		} catch (WriterException e) {
 			Log.debug("Cannot create flashcode " + e);
 			// e.printStackTrace();

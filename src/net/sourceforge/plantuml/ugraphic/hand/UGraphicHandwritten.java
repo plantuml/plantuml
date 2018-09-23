@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.hand;
 
+import java.util.Random;
+
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
@@ -51,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 public class UGraphicHandwritten implements UGraphic {
 
 	private final UGraphic ug;
+	private final Random rnd = new Random(424242L);
 
 	public double dpiFactor() {
 		return ug.dpiFactor();
@@ -89,32 +92,32 @@ public class UGraphicHandwritten implements UGraphic {
 	}
 
 	private void drawHand(UPath shape) {
-		final UPathHand uline = new UPathHand(shape);
+		final UPathHand uline = new UPathHand(shape, rnd);
 		ug.draw(uline.getHanddrawn());
 	}
 
 	private void drawHand(DotPath shape) {
-		final UDotPathHand uline = new UDotPathHand(shape);
+		final UDotPathHand uline = new UDotPathHand(shape, rnd);
 		ug.draw(uline.getHanddrawn());
 	}
 
 	private void drawHand(UPolygon shape) {
-		final UPolygonHand hand = new UPolygonHand(shape);
+		final UPolygonHand hand = new UPolygonHand(shape, rnd);
 		ug.draw(hand.getHanddrawn());
 	}
 
 	private void drawHand(URectangle shape) {
-		final URectangleHand hand = new URectangleHand(shape);
+		final URectangleHand hand = new URectangleHand(shape, rnd);
 		ug.draw(hand.getHanddrawn());
 	}
 
 	private void drawHand(ULine shape) {
-		final ULineHand uline = new ULineHand(shape);
+		final ULineHand uline = new ULineHand(shape, rnd);
 		ug.draw(uline.getHanddrawn());
 	}
 
 	private void drawHand(UEllipse shape) {
-		final UEllipseHand uline = new UEllipseHand(shape);
+		final UEllipseHand uline = new UEllipseHand(shape, rnd);
 		ug.draw(uline.getHanddrawn());
 	}
 

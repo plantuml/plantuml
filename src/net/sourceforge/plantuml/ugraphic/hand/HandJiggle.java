@@ -38,6 +38,7 @@ import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -48,16 +49,22 @@ public class HandJiggle {
 	private double startX;
 	private double startY;
 	private final double defaultVariation;
+	private final Random rnd;
 
-	public HandJiggle(double startX, double startY, double defaultVariation) {
+	private double randomMe() {
+		return rnd.nextDouble();
+	}
+
+	public HandJiggle(double startX, double startY, double defaultVariation, Random rnd) {
 		this.startX = startX;
 		this.startY = startY;
 		this.defaultVariation = defaultVariation;
+		this.rnd = rnd;
 		points.add(new Point2D.Double(startX, startY));
 	}
 
-	public HandJiggle(Point2D start, double defaultVariation) {
-		this(start.getX(), start.getY(), defaultVariation);
+	public HandJiggle(Point2D start, double defaultVariation, Random rnd) {
+		this(start.getX(), start.getY(), defaultVariation, rnd);
 	}
 
 	public void lineTo(Point2D end) {
@@ -102,7 +109,7 @@ public class HandJiggle {
 			double x = stepX * s + startX;
 			double y = stepY * s + startY;
 
-			final double offset = (Math.random() - 0.5) * variation;
+			final double offset = (randomMe() - 0.5) * variation;
 			points.add(new Point2D.Double(x - offset * fy, y - offset * fx));
 		}
 		points.add(new Point2D.Double(endX, endY));

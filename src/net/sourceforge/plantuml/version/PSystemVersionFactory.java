@@ -56,6 +56,9 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 			if (line.matches("(?i)^stdlib\\s*$")) {
 				return PSystemVersion.createStdLib();
 			}
+			if (line.matches("(?i)^path\\s*$")) {
+				return PSystemVersion.createPath();
+			}
 			if (line.matches("(?i)^testdot\\s*$")) {
 				return PSystemVersion.createTestDot();
 			}

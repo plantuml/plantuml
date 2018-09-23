@@ -79,7 +79,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			circle.setDeltaShadow(4);
 		}
 		ug = ug.apply(

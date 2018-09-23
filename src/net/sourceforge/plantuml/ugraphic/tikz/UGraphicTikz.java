@@ -97,7 +97,7 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		registerDriver(ULine.class, new DriverLineTikz());
 		registerDriver(UPolygon.class, new DriverPolygonTikz());
 		registerDriver(UEllipse.class, new DriverEllipseTikz());
-		registerDriver(UImage.class, new DriverNoneTikz());
+		registerDriver(UImage.class, new DriverImageTikz());
 		registerDriver(UImageSvg.class, new DriverNoneTikz());
 		registerDriver(UPath.class, new DriverUPathTikz());
 		registerDriver(DotPath.class, new DriverDotPathTikz());

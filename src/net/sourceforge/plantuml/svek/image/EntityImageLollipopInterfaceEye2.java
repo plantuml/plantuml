@@ -93,7 +93,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		// backcolor = HtmlColorUtils.BLUE;
 		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBorder(), getStereo());
 		this.ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
-				getSkinParam().shadowing());
+				getSkinParam().shadowing(getEntity().getStereotype()));
 
 		if (stereotype != null && stereotype.getLabel(false) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
@@ -115,7 +115,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 			ug.startUrl(url);
 		}
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			circle.setDeltaShadow(4);
 		}
 		ctx.apply(ug).draw(circle);

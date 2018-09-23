@@ -522,7 +522,12 @@ class FtileWhile extends AbstractFtile {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		final double half = (dimDiamond1.getOutY() - dimDiamond1.getInY()) / 2;
 		final double y1 = Math.max(3 * half, 4 * Diamond.diamondHalfSize);
-		final double x1 = getTranslateForWhile(stringBounder).getDx() - xDeltaBecauseSpecial(stringBounder);
+		final double xWhile = getTranslateForWhile(stringBounder).getDx() - Diamond.diamondHalfSize;
+		final double xDiamond = getTranslateDiamond1(stringBounder).getDx();
+		// final double x1 = xWhile - xDeltaBecauseSpecial(stringBounder);
+		final double x1 = Math.min(xWhile, xDiamond) - xDeltaBecauseSpecial(stringBounder);
+		// final double x1 = getTranslateForWhile(stringBounder).getDx() - dimDiamond1.getWidth()
+		// - xDeltaBecauseSpecial(stringBounder);
 		return new UTranslate(x1, y1);
 	}
 

@@ -415,6 +415,8 @@ public class SkinParam implements ISkinParam {
 		result.add("SameClassWidth");
 		result.add("HyperlinkUnderline");
 		result.add("Padding");
+		result.add("BoxPadding");
+		result.add("ParticipantPadding");		
 		result.add("Guillemet");
 		result.add("SvglinkTarget");
 		result.add("DefaultMonospacedFontName");
@@ -559,7 +561,14 @@ public class SkinParam implements ISkinParam {
 		return new ColorMapperReverse(order);
 	}
 
-	public boolean shadowing() {
+	public boolean shadowing(Stereotype stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue("shadowing" + stereotype.getLabel(false));
+			if (value2 != null) {
+				return value2.equalsIgnoreCase("true");
+			}
+		}
 		final String value = getValue("shadowing");
 		if ("false".equalsIgnoreCase(value)) {
 			return false;
@@ -585,17 +594,25 @@ public class SkinParam implements ISkinParam {
 		if (value2 != null) {
 			return value2.equalsIgnoreCase("true");
 		}
-		return shadowing();
+		return shadowing(stereotype);
 	}
 
-	public boolean shadowing2(SkinParameter skinParameter) {
+	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter) {
 		if (skinParameter == null) {
 			throw new IllegalArgumentException();
 		}
 		final String name = skinParameter.getUpperCaseName();
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue(name + "shadowing" + stereotype.getLabel(false));
+			if (value2 != null) {
+				return value2.equalsIgnoreCase("true");
+			}
+		}
+
 		final String value = getValue(name + "shadowing");
 		if (value == null) {
-			return shadowing();
+			return shadowing(stereotype);
 		}
 		if ("false".equalsIgnoreCase(value)) {
 			return false;

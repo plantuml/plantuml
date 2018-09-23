@@ -254,12 +254,13 @@ public class QuoteUtils {
 					"Lbh xabj jung fhecevfrq zr gur zbfg? Vg jnfa'g zrrgvat gurz. Vg jnf zrrgvat lbh.",
 					"Va jne gurer ner ab jvaaref, bayl jvqbjf",
 					"Vs lbh guvax guvf Havirefr vf onq, lbh fubhyq frr fbzr bs gur bguref", "Cnp-Zna'f n onq thl?",
-					"Zl ernyvgl vf whfg qvssrerag guna lbhef",
-					"Uvfgbel vf n avtugzner sebz juvpu V nz gelvat gb njnxr",
-					"L'ra n dh'bag rffnlr, vyf bag rh qrf ceboyrzrf",
+					"Zl ernyvgl vf whfg qvssrerag guna lbhef", "L'ra n dh'bag rffnlr, vyf bag rh qrf ceboyrzrf",
 					"Gb ree vf uhzna, ohg gb ernyyl sbhy guvatf hc erdhverf n pbzchgre.",
 					"Vs lbh oryvrir rirelguvat lbh ernq, lbh orggre abg ernq",
-					"Gurer vf ab ceboyrz fb onq lbh pna'g znxr vg jbefr");
+					"Gurer vf ab ceboyrz fb onq lbh pna'g znxr vg jbefr", "Pn p'rfg qh ybheq... Ha gehp qr znynqr.",
+					"V qb abg guvax, gung V guvax.. V guvax.", "Gurer ner cynprf ybjre guna gur onfrzrag",
+					"Gurer ner 10 glcrf bs crbcyr: gubfr jub haqrefgnaq ovanel, naq gubfr jub qba'g.",
+					"Cyrnfr zvaq gur tnc orgjrra gur genva naq gur cyngsbez");
 
 	private QuoteUtils() {
 	}

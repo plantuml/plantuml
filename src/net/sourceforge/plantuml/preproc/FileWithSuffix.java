@@ -37,8 +37,6 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,25 +46,28 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.AFile;
+import net.sourceforge.plantuml.AFileRegular;
+import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.Log;
 
 public class FileWithSuffix {
 
-	private final File file;
+	private final AFile file;
 	private final String suffix;
 	private final String entry;
+	private final String description;
 
 	public Reader getReader(String charset) throws IOException {
 		if (entry == null) {
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new FileReader(file);
+				return new InputStreamReader(file.open());
 			}
 			Log.info("Using charset " + charset);
-			return new InputStreamReader(new FileInputStream(file), charset);
+			return new InputStreamReader(file.open(), charset);
 		}
-		final InputStream is = getDataFromZip(file, entry);
+		final InputStream is = getDataFromZip(file.open(), entry);
 		if (is == null) {
 			return null;
 		}
@@ -78,8 +79,8 @@ public class FileWithSuffix {
 		return new InputStreamReader(is, charset);
 	}
 
-	private InputStream getDataFromZip(File f, String name) throws IOException {
-		final ZipInputStream zis = new ZipInputStream(new FileInputStream(f));
+	private InputStream getDataFromZip(InputStream is, String name) throws IOException {
+		final ZipInputStream zis = new ZipInputStream(is);
 		ZipEntry ze = zis.getNextEntry();
 
 		while (ze != null) {
@@ -96,28 +97,37 @@ public class FileWithSuffix {
 	}
 
 	public boolean fileOk() {
-		if (file.exists() == false || file.isDirectory()) {
-			return false;
-		}
-		return true;
+		return file != null && file.isOk();
 	}
 
 	public FileWithSuffix(File file, String suffix) {
-		this.file = file;
+		this.file = new AFileRegular(file);
 		this.suffix = suffix;
 		this.entry = null;
+		this.description = file.getAbsolutePath();
 	}
 
-	public FileWithSuffix(String fileName, String suffix) throws IOException {
+	public FileWithSuffix(ImportedFiles importedFiles, String fileName, String suffix) throws IOException {
 		final int idx = fileName.indexOf('~');
 		this.suffix = suffix;
 		if (idx == -1) {
-			this.file = FileSystem.getInstance().getFile(fileName);
+			this.file = importedFiles.getAFile(fileName);
 			this.entry = null;
 		} else {
-			this.file = FileSystem.getInstance().getFile(fileName.substring(0, idx));
+			this.file = importedFiles.getAFile(fileName.substring(0, idx));
 			this.entry = fileName.substring(idx + 1);
 		}
+
+		if (file == null) {
+			this.description = fileName;
+		} else if (entry == null) {
+			// this.description = file.getAbsolutePath();
+			this.description = fileName;
+		} else {
+			// this.description = file.getAbsolutePath() + "~" + entry;
+			this.description = fileName;
+		}
+
 	}
 
 	@Override
@@ -155,24 +165,17 @@ public class FileWithSuffix {
 	public static Set<File> convert(Set<FileWithSuffix> all) {
 		final Set<File> result = new HashSet<File>();
 		for (FileWithSuffix f : all) {
-			result.add(f.file);
+			result.add(f.file.getUnderlyingFile());
 		}
 		return result;
 	}
 
-	public final File getFile() {
-		return file;
-	}
-
-	public File getParentFile() {
+	public AParentFolder getParentFile() {
 		return file.getParentFile();
 	}
 
 	public String getDescription() {
-		if (entry == null) {
-			return file.getAbsolutePath();
-		}
-		return file.getAbsolutePath() + "~" + entry;
+		return description;
 	}
 
 	public final String getSuffix() {

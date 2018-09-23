@@ -76,11 +76,10 @@ public class Branch {
 		this.labelPositive = labelPositive;
 		this.color = color;
 	}
-	
+
 	public Collection<WeldingPoint> getWeldingPoints() {
 		return ftile.getWeldingPoints();
 	}
-
 
 	public void add(Instruction ins) {
 		list.add(ins);
@@ -151,6 +150,16 @@ public class Branch {
 
 	public boolean isOnlySingleStopOrSpot() {
 		return list.isOnlySingleStopOrSpot();
+	}
+
+	private LinkRendering special;
+
+	public void setSpecial(LinkRendering link) {
+		this.special = link;
+	}
+
+	public final LinkRendering getSpecial() {
+		return special;
 	}
 
 }

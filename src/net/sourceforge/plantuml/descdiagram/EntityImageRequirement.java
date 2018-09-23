@@ -109,7 +109,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
-		if (getSkinParam().shadowing2(SkinParameter.USECASE)) {
+		if (getSkinParam().shadowing2(getStereo(), SkinParameter.USECASE)) {
 			ellipse.setDeltaShadow(3);
 		}
 

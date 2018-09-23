@@ -42,9 +42,15 @@ import java.awt.image.BufferedImage;
 public class UImage implements UShape {
 
 	private final BufferedImage image;
+	private final String formula;
 
 	public UImage(BufferedImage image) {
+		this(image, null);
+	}
+
+	public UImage(BufferedImage image, String formula) {
 		this.image = image;
+		this.formula = formula;
 	}
 
 	public UImage scale(double scale) {
@@ -65,7 +71,7 @@ public class UImage implements UShape {
 		final AffineTransform at = new AffineTransform();
 		at.scale(scale, scale);
 		final AffineTransformOp scaleOp = new AffineTransformOp(at, type);
-		return new UImage(scaleOp.filter(image, after));
+		return new UImage(scaleOp.filter(image, after), formula);
 	}
 
 	public final BufferedImage getImage() {
@@ -80,4 +86,7 @@ public class UImage implements UShape {
 		return image.getHeight() - 1;
 	}
 
+	public final String getFormula() {
+		return formula;
+	}
 }

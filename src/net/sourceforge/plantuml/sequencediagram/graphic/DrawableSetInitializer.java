@@ -626,7 +626,7 @@ class DrawableSetInitializer {
 				drawableSet.getSkinParam(), null);
 
 		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder), drawableSet.getSkinParam()
-				.shadowing());
+				.shadowing(p.getStereotype()));
 		drawableSet.setLivingParticipantBox(p, new LivingParticipantBox(box, lifeLine));
 
 		this.freeX = box.getMaxX(stringBounder);

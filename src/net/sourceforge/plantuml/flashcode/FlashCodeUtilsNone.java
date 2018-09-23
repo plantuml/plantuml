@@ -35,11 +35,12 @@
  */
 package net.sourceforge.plantuml.flashcode;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class FlashCodeUtilsNone implements FlashCodeUtils {
 
-	public BufferedImage exportFlashcode(String s) {
+	public BufferedImage exportFlashcode(String s, Color fore, Color back) {
 		return null;
 	}
 

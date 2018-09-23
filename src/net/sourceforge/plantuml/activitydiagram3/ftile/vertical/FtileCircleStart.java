@@ -86,7 +86,7 @@ public class FtileCircleStart extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (skinParam().shadowing()) {
+		if (skinParam().shadowing(null)) {
 			circle.setDeltaShadow(3);
 		}
 		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backColor)).draw(circle);

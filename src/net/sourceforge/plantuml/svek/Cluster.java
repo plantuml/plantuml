@@ -354,8 +354,8 @@ public class Cluster implements Moveable {
 				}
 			}
 
-			final boolean shadowing = group.getUSymbol() == null ? skinParam2.shadowing() : skinParam2.shadowing2(group
-					.getUSymbol().getSkinParameter());
+			final boolean shadowing = group.getUSymbol() == null ? skinParam2.shadowing2(group.getStereotype(), USymbol.PACKAGE.getSkinParameter())
+					: skinParam2.shadowing2(group.getStereotype(), group.getUSymbol().getSkinParameter());
 			if (ztitle != null || zstereo != null) {
 				final HtmlColor back = getBackColor(getBackColor(umlDiagramType), skinParam2, group.getStereotype());
 				final double roundCorner = group.getUSymbol() == null ? 0 : group.getUSymbol().getSkinParameter()
@@ -462,7 +462,7 @@ public class Cluster implements Moveable {
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
 		final RoundedContainer r = new RoundedContainer(total, suppY, attributeHeight
 				+ (attributeHeight > 0 ? IEntityImage.MARGIN : 0), borderColor, stateBack, background, stroke);
-		r.drawU(ug.apply(new UTranslate(minX, minY)), skinParam2.shadowing());
+		r.drawU(ug.apply(new UTranslate(minX, minY)), skinParam2.shadowing(group.getStereotype()));
 
 		if (ztitle != null) {
 			ztitle.drawU(ug.apply(new UTranslate(xTitle, yTitle)));
@@ -741,8 +741,8 @@ public class Cluster implements Moveable {
 			Line.appendTable(sblabel, getTitleAndAttributeWidth(), getTitleAndAttributeHeight() - 5, colorTitle);
 			sblabel.append(">");
 			label = sblabel.toString();
-			final HorizontalAlignment align = skinParam
-					.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null);
+			final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment,
+					null);
 			sb.append("labeljust=\"" + align.getGraphVizValue() + "\";");
 		} else {
 			label = "\"\"";

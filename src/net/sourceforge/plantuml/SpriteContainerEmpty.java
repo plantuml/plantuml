@@ -38,6 +38,8 @@ package net.sourceforge.plantuml;
 import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 
@@ -73,6 +75,14 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 
 	public int getDpi() {
 		return 96;
+	}
+
+	public LineBreakStrategy wrapWidth() {
+		return LineBreakStrategy.NONE;
+	}
+
+	public ColorMapper getColorMapper() {
+		return new ColorMapperIdentity();
 	}
 
 }

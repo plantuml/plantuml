@@ -111,12 +111,12 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getColorMapper();
 	}
 
-	public boolean shadowing() {
-		return skinParam.shadowing();
+	public boolean shadowing(Stereotype stereotype) {
+		return skinParam.shadowing(stereotype);
 	}
 
-	public boolean shadowing2(SkinParameter skinParameter) {
-		return skinParam.shadowing2(skinParameter);
+	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter) {
+		return skinParam.shadowing2(stereotype, skinParameter);
 	}
 
 	public PackageStyle getPackageStyle() {

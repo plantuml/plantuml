@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 public interface ISkinSimple extends SpriteContainer {
 
@@ -50,5 +51,9 @@ public interface ISkinSimple extends SpriteContainer {
 	public IHtmlColorSet getIHtmlColorSet();
 	
 	public int getDpi();
+	
+	public LineBreakStrategy wrapWidth();
+	
+	public ColorMapper getColorMapper();
 
 }

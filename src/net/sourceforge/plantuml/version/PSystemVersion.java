@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.version;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,7 +53,6 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.OptionPrint;
@@ -60,8 +60,10 @@ import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.dedication.Dedication;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.PreprocessorInclude;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -81,32 +83,28 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static BufferedImage getPlantumlImage() {
-		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream("logo.png");
-			final BufferedImage image = ImageIO.read(is);
-			is.close();
-			return image;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+		return getImage("logo.png");
 	}
 
 	public static BufferedImage getCharlieImage() {
-		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream("charlie.png");
-			final BufferedImage image = ImageIO.read(is);
-			is.close();
-			return image;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+		return getImage("charlie.png");
 	}
 
 	public static BufferedImage getTime() {
+		return getImage("time00.png");
+	}
+
+	public static BufferedImage getPlantumlSmallIcon() {
+		return getImage("favicon.png");
+	}
+
+	public static BufferedImage getApple2Image() {
+		return getImageWebp("apple2.png");
+	}
+
+	private static BufferedImage getImage(final String name) {
 		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream("time00.png");
+			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
 			final BufferedImage image = ImageIO.read(is);
 			is.close();
 			return image;
@@ -116,10 +114,10 @@ public class PSystemVersion extends AbstractPSystem {
 		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
-	public static BufferedImage getPlantumlSmallIcon() {
+	private static BufferedImage getImageWebp(final String name) {
 		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream("favicon.png");
-			final BufferedImage image = ImageIO.read(is);
+			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
+			final BufferedImage image = Dedication.getBufferedImage(is);
 			is.close();
 			return image;
 		} catch (IOException e) {
@@ -165,17 +163,19 @@ public class PSystemVersion extends AbstractPSystem {
 		final List<String> strings = new ArrayList<String>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
-		strings.add("Loaded from " + Version.getJarPath());
-		if (OptionFlags.getInstance().isWord()) {
-			strings.add("Word Mode");
-			strings.add("Command Line: " + Run.getCommandLine());
-			strings.add("Current Dir: " + FileSystem.getInstance().getCurrentDir().getAbsolutePath());
-			strings.add("plantuml.include.path: " + PreprocessorInclude.getenv("plantuml.include.path"));
+		if (OptionFlags.ALLOW_INCLUDE) {
+			strings.add("Loaded from " + Version.getJarPath());
+			if (OptionFlags.getInstance().isWord()) {
+				strings.add("Word Mode");
+				strings.add("Command Line: " + Run.getCommandLine());
+				strings.add("Current Dir: " + new File(".").getAbsolutePath());
+				strings.add("plantuml.include.path: " + PreprocessorInclude.getenv("plantuml.include.path"));
+			}
 		}
 		strings.add(" ");
-		strings.add("<b>Stdlib:");
-		Stdlib.addInfoVersion(strings, false);
-		strings.add(" ");
+		// strings.add("<b>Stdlib:");
+		// Stdlib.addInfoVersion(strings, false);
+		// strings.add(" ");
 
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		strings.add(" ");
@@ -314,6 +314,17 @@ public class PSystemVersion extends AbstractPSystem {
 		final List<String> strings = new ArrayList<String>();
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		return new PSystemVersion(false, strings);
+	}
+
+	public static PSystemVersion createPath() throws IOException {
+		final List<String> strings = new ArrayList<String>();
+		strings.add("<u>Current Dir</u>: " + new File(".").getAbsolutePath());
+		strings.add(" ");
+		strings.add("<u>Default path</u>:");
+		for (File f : new ImportedFiles().getPath()) {
+			strings.add(f.getAbsolutePath());
+		}
+		return new PSystemVersion(true, strings);
 	}
 
 	public DiagramDescription getDescription() {

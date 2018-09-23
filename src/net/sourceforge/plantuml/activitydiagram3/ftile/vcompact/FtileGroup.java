@@ -197,7 +197,7 @@ public class FtileGroup extends AbstractFtile {
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
 		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(
-				skinParam().shadowing()).withStroke(stroke);
+				skinParam().shadowing(null)).withStroke(stroke);
 		type.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null),
 				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext).drawU(ug);
 

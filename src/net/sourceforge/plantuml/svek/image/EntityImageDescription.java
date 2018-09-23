@@ -129,7 +129,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final UStroke stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
 
 		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke)
-				.withShadow(getSkinParam().shadowing2(symbol.getSkinParameter()))
+				.withShadow(getSkinParam().shadowing2(getEntity().getStereotype(), symbol.getSkinParameter()))
 				.withCorner(roundCorner, diagonalCorner);
 
 		stereo = TextBlockUtils.empty(0, 0);

@@ -279,7 +279,7 @@ public class Rose implements Skin {
 	}
 
 	private double deltaShadow(ISkinParam param) {
-		return param.shadowing() ? 4.0 : 0;
+		return param.shadowing(null) ? 4.0 : 0;
 	}
 
 	private SymbolContext getSymbolContext(ISkinParam param, ColorParam color) {

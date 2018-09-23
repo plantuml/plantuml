@@ -87,10 +87,6 @@ public class LifeEvent extends AbstractEvent implements Event {
 		return this.p == p && type == LifeEventType.DESTROY;
 	}
 
-	// public double getStrangePos() {
-	// return message.getPosYendLevel();
-	// }
-	//
 	private AbstractMessage message;
 
 	public void setMessage(AbstractMessage message) {
@@ -99,16 +95,6 @@ public class LifeEvent extends AbstractEvent implements Event {
 
 	public AbstractMessage getMessage() {
 		return message;
-	}
-
-	// private boolean linkedToGroupingEnd;
-	//
-	// // public boolean isLinkedToGroupingEnd() {
-	// // return linkedToGroupingEnd;
-	// // }
-
-	public void setLinkedToGroupingEnd(boolean linkedToGroupingEnd) {
-		// this.linkedToGroupingEnd = linkedToGroupingEnd;
 	}
 
 }

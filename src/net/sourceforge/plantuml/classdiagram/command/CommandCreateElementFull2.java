@@ -113,7 +113,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, RegexResult arg) {
 		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false) {
 			return CommandExecutionResult
-					.error("Use 'allow_mixing' if you want to mix classes and other UML elements.");
+					.error("Use 'allowmixing' if you want to mix classes and other UML elements.");
 		}
 		String codeRaw = arg.getLazzy("CODE", 0);
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);

@@ -54,10 +54,12 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class TextBlockUtils {
@@ -165,7 +167,7 @@ public class TextBlockUtils {
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return bloc.calculateDimension(stringBounder);
 			}
-			
+
 			public MinMax getMinMax(StringBounder stringBounder) {
 				return bloc.getMinMax(stringBounder);
 			}
@@ -175,6 +177,52 @@ public class TextBlockUtils {
 					final Dimension2D dim = calculateDimension(stringBounder);
 					return new Rectangle2D.Double(0, 0, dim.getWidth(), dim.getHeight());
 				}
+				return null;
+			}
+
+		};
+	}
+
+	public static TextBlockBackcolored addBackcolor(final TextBlock text, final HtmlColor backColor) {
+		return new TextBlockBackcolored() {
+			public void drawU(UGraphic ug) {
+				text.drawU(ug);
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return text.getMinMax(stringBounder);
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+				return text.getInnerPosition(member, stringBounder, strategy);
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return text.calculateDimension(stringBounder);
+			}
+
+			public HtmlColor getBackcolor() {
+				return backColor;
+			}
+		};
+	}
+
+	public static TextBlock fromUImage(final UImage image) {
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				ug.draw(image);
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(image.getWidth(), image.getHeight());
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return MinMax.fromMax(image.getWidth(), image.getHeight());
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 

@@ -113,7 +113,6 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	}
 
 	public boolean addLifeEvent(LifeEvent lifeEvent) {
-		lifeEvent.setLinkedToGroupingEnd(true);
 		return true;
 	}
 

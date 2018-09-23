@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.Log;
 
-public class Preprocessor extends ReadLineInstrumented implements ReadLine {
+public class Preprocessor extends ReadLineInstrumented implements ReadLineNumbered {
 
 	private final PreprocessorInclude include;
 	private final SubPreprocessor subPreprocessor;
@@ -78,10 +78,6 @@ public class Preprocessor extends ReadLineInstrumented implements ReadLine {
 	@Override
 	CharSequence2 readLineInst() throws IOException {
 		return subPreprocessor.readLine();
-	}
-
-	public int getLineNumber() {
-		return include.getLineNumber();
 	}
 
 	@Override

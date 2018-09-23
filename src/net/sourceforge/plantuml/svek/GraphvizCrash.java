@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	public GraphvizCrash(String text) {
 		this.text = text;
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		this.flashCode = utils.exportFlashcode(text);
+		this.flashCode = utils.exportFlashcode(text, Color.BLACK, Color.WHITE);
 		this.graphicStrings = GraphicStrings.createBlackOnWhite(init(), IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 	}
