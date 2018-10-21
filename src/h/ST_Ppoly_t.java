@@ -46,23 +46,17 @@
 package h;
 
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedArrayOfPtr;
 import smetana.core.UnsupportedArrayOfStruct;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
-import smetana.core.__array_of_struct__;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.Area;
-import smetana.core.amiga.StarArrayOfPtr;
-import smetana.core.amiga.StarArrayOfStruct;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
-	// public List ps1;
-	public StarArrayOfPtr ps2;
+	// public StarArrayOfPtr ps;
+	public ST_pointf.Array ps;
 	public int pn;
 
 	public ST_Ppoly_t() {
@@ -75,47 +69,11 @@ public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStru
 	@Override
 	public __struct__ copy() {
 		ST_Ppoly_t result = new ST_Ppoly_t();
-		result.ps2 = this.ps2;
+		result.ps = this.ps;
 		result.pn = this.pn;
 		return result;
 	}
 
-	class Adaptor extends UnsupportedArrayOfPtr {
-
-		final private StarArrayOfStruct newData2;
-		final private int pos;
-
-		public Adaptor(StarArrayOfStruct newData2, int pos) {
-			this.newData2 = newData2;
-			this.pos = pos;
-		}
-
-		@Override
-		public __array_of_ptr__ move(int delta) {
-			return new Adaptor(newData2, pos + delta);
-		}
-
-		@Override
-		public Area getInternal(int idx) {
-			return newData2.getInternalArray().getInternal(pos + idx);
-		}
-
-		@Override
-		public __ptr__ getPtr() {
-			return newData2.plus(pos).getPtr();
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return newData2.plus(pos).getStruct();
-		}
-
-		@Override
-		public int comparePointerInternal(__array_of_ptr__ other) {
-			return super.comparePointerInternal(other);
-		}
-
-	}
 
 	class Adaptor2 extends UnsupportedArrayOfStruct {
 
@@ -125,62 +83,21 @@ public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStru
 			this.pos = pos;
 		}
 
-		@Override
-		public __array_of_struct__ plus(int delta) {
+		public Adaptor2 plus(int delta) {
 			return new Adaptor2(pos + delta);
 		}
-		
+
 		@Override
 		public __struct__ getStruct() {
-			return ps2.plus(pos).getStruct();
+			return ps.plus(pos).getStruct();
 		}
 
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("ps")) {
-			if (newData instanceof StarArrayOfStruct) {
-				StarArrayOfStruct newData2 = (StarArrayOfStruct) newData;
-				System.err.println("newData2B=" + newData2);
-				this.ps2 = new StarArrayOfPtr(new Adaptor(newData2, 0));
-				return ps2;
-			}
-			this.ps2 = (StarArrayOfPtr) newData;
-			return ps2;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("ps")) {
-			return ps2;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		if (fieldName.equals("ps")) {
-			return new Adaptor2(0);
-			// return ps2.getArrayOfStruct("ps");
-		}
-		return super.getArrayOfStruct(fieldName);
-	}
-
-	@Override
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		if (fieldName.equals("ps")) {
-			return ps2.getInternalArray();
-		}
-		return super.getArrayOfPtr(fieldName);
 	}
 
 	@Override
 	public void memcopyFrom(Area source) {
 		ST_Ppoly_t source2 = (ST_Ppoly_t) source;
-		this.ps2 = source2.ps2;
+		this.ps = source2.ps;
 		this.pn = source2.pn;
 	}
 
@@ -199,48 +116,6 @@ public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStru
 			return pn;
 		}
 		return super.getInt(fieldName);
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public int getInt(String fieldName) {
-			if (fieldName.equals("pn")) {
-				return pn;
-			}
-			return super.getInt(fieldName);
-		}
-
-		@Override
-		public void setInt(String fieldName, int data) {
-			if (fieldName.equals("pn")) {
-				pn = data;
-				return;
-			}
-			super.setInt(fieldName, data);
-		}
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			if (fieldName.equals("ps")) {
-				return ps2;
-			}
-			return super.getPtr(fieldName);
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			if (fieldName.equals("ps")) {
-				ps2 = (StarArrayOfPtr) newData;
-				return newData;
-			}
-			return super.setPtr(fieldName, newData);
-		}
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
 	}
 
 	// public static List<String> DEFINITION = Arrays.asList(

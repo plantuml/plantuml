@@ -262,7 +262,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			} else if (align == HorizontalAlignment.CENTER) {
 				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);
 			} else {
-				throw new IllegalStateException();
+				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);
 			}
 			group = new ULayoutGroup(placementStrategy);
 			for (Member att : members) {

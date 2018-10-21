@@ -45,6 +45,8 @@
  */
 package gen.lib.cdt;
 import static smetana.core.Macro.UNSUPPORTED;
+import h.ST_dt_s;
+import h.ST_dtlink_s;
 
 public class dtflatten__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -115,7 +117,7 @@ public class dtflatten__c {
 
 //3 5zkzkycgp4e90pajuq4tczdbu
 // Dtlink_t* dtflatten(Dt_t* dt)     
-public static Object dtflatten(Object... arg) {
+public static ST_dtlink_s dtflatten(ST_dt_s dt) {
 UNSUPPORTED("1u9gaaespn5nsfpluy23yon7s"); // Dtlink_t* dtflatten(Dt_t* dt)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("82qvflv3akadrlktyouix927i"); // 	register Dtlink_t	*t, *r, *list, *last, **s, **ends;

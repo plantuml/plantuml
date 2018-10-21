@@ -56,8 +56,8 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 	
 
 	public ComponentRoseNoteHexagonal(SymbolContext symbolContext, FontConfiguration font, Display strings,
-			ISkinSimple spriteContainer) {
-		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.LEFT, 12, 12, 4, spriteContainer, false, null, null);
+			ISkinSimple spriteContainer, HorizontalAlignment alignment) {
+		super(LineBreakStrategy.NONE, strings, font, alignment, 12, 12, 4, spriteContainer, false, null, null);
 		this.symbolContext = symbolContext;
 	}
 

@@ -56,30 +56,14 @@ public class Preprocessor2 implements ReadLineNumbered {
 	private final ReadLine source;
 	private final PreprocessorInclude3 include;
 
-	// public Preprocessor2(ReadLine reader, String charset, Defines defines, AParentFolder newCurrentDir,
-	// DefinitionsContainer definitionsContainer) throws IOException {
-	// this(Collections.<String> emptyList(), reader, charset, defines, newCurrentDir, definitionsContainer);
-	// }
-	//
-	// public Preprocessor2(List<String> config, ReadLine reader, String charset, Defines defines, File newCurrentDir,
-	// DefinitionsContainer definitionsContainer) throws IOException {
-	// this(config, reader, charset, defines, new AParentFolderRegular(newCurrentDir), definitionsContainer);
-	// }
-
 	public Preprocessor2(List<String> config, ReadLine reader, String charset, Defines defines,
-			AParentFolder newCurrentDir, DefinitionsContainer definitionsContainer) throws IOException {
-		this(config, reader, charset, defines, newCurrentDir, definitionsContainer, new HashSet<FileWithSuffix>());
+			DefinitionsContainer definitionsContainer, ImportedFiles importedFiles) throws IOException {
+		this(config, reader, charset, defines, definitionsContainer, new HashSet<FileWithSuffix>(), importedFiles);
 	}
 
-	public Preprocessor2(List<String> config, ReadLine reader, String charset, Defines defines,
-			AParentFolder newCurrentDir, DefinitionsContainer definitionsContainer, Set<FileWithSuffix> filesUsedGlobal)
+	Preprocessor2(List<String> config, ReadLine reader, String charset, Defines defines,
+			DefinitionsContainer definitionsContainer, Set<FileWithSuffix> filesUsedGlobal, ImportedFiles importedFiles)
 			throws IOException {
-
-		final ImportedFiles importedFiles = new ImportedFiles();
-		if (newCurrentDir != null) {
-			importedFiles.setCurrentDir(newCurrentDir);
-		}
-
 		final ReadFilterAnd2 filters = new ReadFilterAnd2();
 
 		filters.add(new ReadLineQuoteComment2());

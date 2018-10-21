@@ -49,11 +49,10 @@ import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agraph_s;
-import h.IMapEntry_t;
-import h._dt_s;
+import h.ST_Agraph_s;
+import h.ST_IMapEntry_t;
+import h.ST_dt_s;
 import smetana.core.CString;
-import smetana.core.Memory;
 
 public class imap__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -239,7 +238,7 @@ throw new UnsupportedOperationException();
 
 //3 mx2krtbgfhcihopw9rw8kcv3
 // int aginternalmaplookup(Agraph_t * g, int objtype, char *str, 			unsigned long *result) 
-public static int aginternalmaplookup(Agraph_s g, int objtype, CString str, int result[]) {
+public static int aginternalmaplookup(ST_Agraph_s g, int objtype, CString str, int result[]) {
 ENTERING("mx2krtbgfhcihopw9rw8kcv3","aginternalmaplookup");
 try {
  UNSUPPORTED("9xuzgjxqveawe6v2n4x48r93l"); // int aginternalmaplookup(Agraph_t * g, int objtype, char *str,
@@ -303,16 +302,16 @@ throw new UnsupportedOperationException();
 
 //3 3r16pkjiksv8i7o961ltxyge6
 // static IMapEntry_t *find_isym(Agraph_t * g, int objtype, unsigned long id) 
-public static IMapEntry_t find_isym(Agraph_s g, int objtype, int id) {
+public static ST_IMapEntry_t find_isym(ST_Agraph_s g, int objtype, int id) {
 ENTERING("3r16pkjiksv8i7o961ltxyge6","find_isym");
 try {
-    _dt_s d;
-    IMapEntry_t isym, itemplate = (IMapEntry_t) Memory.malloc(IMapEntry_t.class);
+    ST_dt_s d;
+    ST_IMapEntry_t isym, itemplate = new ST_IMapEntry_t();
     if (objtype == AGINEDGE)
 	objtype = AGEDGE;
-    if ((d = (_dt_s) g.getPtr("clos").getArrayOfPtr("lookup_by_id").plus(objtype).getPtr())!=null) {
+    if ((d = g.clos.lookup_by_id[objtype])!=null) {
 	itemplate.setInt("id", id);
-	isym = (IMapEntry_t) UNSUPPORTED("(IMapEntry_t *) (*(((Dt_t*)(d))->searchf))((d),(void*)(&itemplate),0000004)");
+	isym = (ST_IMapEntry_t) UNSUPPORTED("(IMapEntry_t *) (*(((Dt_t*)(d))->searchf))((d),(void*)(&itemplate),0000004)");
     } else
 	isym = null;
     return isym;
@@ -326,12 +325,12 @@ LEAVING("3r16pkjiksv8i7o961ltxyge6","find_isym");
 
 //3 foe6bvtujfevsc0f3m8aqln8
 // char *aginternalmapprint(Agraph_t * g, int objtype, unsigned long id) 
-public static CString aginternalmapprint(Agraph_s g, int objtype, int id) {
+public static CString aginternalmapprint(ST_Agraph_s g, int objtype, int id) {
 ENTERING("foe6bvtujfevsc0f3m8aqln8","aginternalmapprint");
 try {
-    IMapEntry_t isym;
+	ST_IMapEntry_t isym;
     if ((isym = find_isym(g, objtype, id))!=null)
-	return isym.getCString("str");
+	return isym.str;
     return null;
 } finally {
 LEAVING("foe6bvtujfevsc0f3m8aqln8","aginternalmapprint");

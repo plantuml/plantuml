@@ -71,15 +71,12 @@ import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_node_type;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.boxf;
-import h.pointf;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_pointf;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Z;
-import smetana.core.__struct__;
 
 public class class1__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -339,14 +336,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -375,25 +372,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -417,14 +395,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -723,7 +701,7 @@ throw new UnsupportedOperationException();
 
 //3 2luyof8ca7ewf9r08z3os3lk7
 // int nonconstraint_edge(edge_t * e) 
-public static boolean nonconstraint_edge(Agedge_s e) {
+public static boolean nonconstraint_edge(ST_Agedge_s e) {
 ENTERING("2luyof8ca7ewf9r08z3os3lk7","nonconstraint_edge");
 try {
     CString constr;
@@ -742,12 +720,12 @@ LEAVING("2luyof8ca7ewf9r08z3os3lk7","nonconstraint_edge");
 
 //3 dpimuv55sylui7jx8fh3ic1qc
 // static void  interclust1(graph_t * g, node_t * t, node_t * h, edge_t * e) 
-public static void interclust1(Agraph_s g, Agnode_s t, Agnode_s h, Agedge_s e) {
+public static void interclust1(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, ST_Agedge_s e) {
 ENTERING("dpimuv55sylui7jx8fh3ic1qc","interclust1");
 try {
-    Agnode_s v, t0, h0;
+    ST_Agnode_s v, t0, h0;
     int offset, t_len, h_len, t_rank, h_rank;
-    Agedge_s rt, rh;
+    ST_Agedge_s rt, rh;
     if (ND_clust(agtail(e))!=null)
 	t_rank = ND_rank(agtail(e)) - ND_rank(GD_leader(ND_clust(agtail(e))));
     else
@@ -782,11 +760,11 @@ LEAVING("dpimuv55sylui7jx8fh3ic1qc","interclust1");
 
 //3 acy5ct6402jgf0ga5oeeskx5m
 // void class1(graph_t * g) 
-public static void class1_(Agraph_s g) {
+public static void class1_(ST_Agraph_s g) {
 ENTERING("acy5ct6402jgf0ga5oeeskx5m","class1");
 try {
-    Agnode_s n, t, h;
-    Agedge_s e, rep;
+    ST_Agnode_s n, t, h;
+    ST_Agedge_s e, rep;
     mark_clusters(g);
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
 	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {

@@ -61,24 +61,15 @@ public class ST_aspect_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
 	// "typedef struct aspect_t",
 	// "{",
 	// "double targetAR",
 	// "double combiAR",
-	private int prevIterations;
-	private int curIterations;
-	private int nextIter;
-	private int nPasses;
-	private int badGraph;
+	public int prevIterations;
+	public int curIterations;
+	public int nextIter;
+	public int nPasses;
+	public int badGraph;
 
 	// "}",
 	// "aspect_t");

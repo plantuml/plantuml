@@ -55,10 +55,6 @@ public class UGraphicHandwritten implements UGraphic {
 	private final UGraphic ug;
 	private final Random rnd = new Random(424242L);
 
-	public double dpiFactor() {
-		return ug.dpiFactor();
-	}
-
 	public UGraphicHandwritten(UGraphic ug) {
 		this.ug = ug;
 	}

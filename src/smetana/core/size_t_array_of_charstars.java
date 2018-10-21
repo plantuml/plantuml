@@ -79,7 +79,8 @@ public class size_t_array_of_charstars implements size_t {
 	}
 
 	public __ptr__ realloc(Object old) {
-		throw new UnsupportedOperationException();
+		((StarArrayOfCString) old).realloc(size);
+		return (__ptr__) old;
 	}
 
 }

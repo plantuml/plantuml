@@ -41,7 +41,6 @@ import smetana.core.CString;
 import smetana.core.__array_of_cstring__;
 import smetana.core.__array_of_integer__;
 import smetana.core.__array_of_ptr__;
-import smetana.core.__array_of_struct__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -73,21 +72,11 @@ public interface StarStruct extends Area, AllH, InternalData {
 
 	public CString getCString(String fieldName);
 
-	public __array_of_struct__ getArrayOfStruct(String fieldName);
-
-	public __array_of_ptr__ getArrayOfPtr(String fieldName);
-
-	public __array_of_cstring__ getArrayOfCString(String fieldName);
-
-	public __array_of_integer__ getArrayOfInteger(String fieldName);
-
 	public __struct__ getStruct(String fieldName);
 
 	public __ptr__ getPtr(String fieldName);
 
 	public void setStruct(String fieldName, __struct__ newData);
-
-	public void setCString(String fieldName, CString newData);
 
 	public __ptr__ setPtr(String fieldName, __ptr__ newData);
 

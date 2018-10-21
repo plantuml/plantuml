@@ -111,7 +111,7 @@ public class ImageBuilder {
 	private UStroke borderStroke;
 	private HtmlColor borderColor;
 	private double borderCorner;
-	
+
 	private boolean svgDimensionStyle;
 
 	public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HtmlColor mybackcolor, String metadata,
@@ -394,8 +394,8 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale,
-			Dimension2D dim, HtmlColor mybackcolor, String svgLinkTarget, String hover, long seed) {
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
+			String svgLinkTarget, String hover, long seed) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HtmlColorSimple) {
 			backColor = colorMapper.getMappedColor(mybackcolor);
@@ -438,7 +438,8 @@ public class ImageBuilder {
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
 		if (mybackcolor instanceof HtmlColorGradient) {
-			ug.apply(new UChangeBackColor(mybackcolor)).draw(new URectangle(im.getWidth(), im.getHeight()));
+			ug.apply(new UChangeBackColor(mybackcolor)).draw(
+					new URectangle(im.getWidth() / dpiFactor, im.getHeight() / dpiFactor));
 		}
 
 		return ug;

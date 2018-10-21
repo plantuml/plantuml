@@ -101,20 +101,17 @@ import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_ranktype;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.ZALLOC;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.aspect_t;
-import h.boxf;
-import h.elist;
-import h.point;
-import h.pointf;
+import static smetana.core.Macro.*;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_aspect_t;
+import h.ST_point;
+import h.ST_pointf;
+import h.ST_elist;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
-import smetana.core.__struct__;
 
 public class rank__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -374,14 +371,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -410,25 +407,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -452,14 +430,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -758,13 +736,13 @@ throw new UnsupportedOperationException();
 
 //3 3f1re3nfkhxwjjb90kppwuupr
 // static void  renewlist(elist * L) 
-public static void renewlist(elist L) {
+public static void renewlist(ST_elist L) {
 ENTERING("3f1re3nfkhxwjjb90kppwuupr","renewlist");
 try {
     int i;
-    for (i = L.getInt("size"); i >= 0; i--)
-	L.getArrayOfPtr("list").plus(i).setPtr(null);
-    L.setInt("size", 0);
+    for (i = L.size; i >= 0; i--)
+	L.list.set(i, null);
+    L.size = 0;
 } finally {
 LEAVING("3f1re3nfkhxwjjb90kppwuupr","renewlist");
 }
@@ -775,17 +753,17 @@ LEAVING("3f1re3nfkhxwjjb90kppwuupr","renewlist");
 
 //3 1xov2qhuxj1f9nbzu3xsa6679
 // static void  cleanup1(graph_t * g) 
-public static void cleanup1(Agraph_s g) {
+public static void cleanup1(ST_Agraph_s g) {
 ENTERING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
 try {
-    Agnode_s n;
-    Agedge_s e, f;
+    ST_Agnode_s n;
+    ST_Agedge_s e, f;
     int c;
     for (c = 0; c < GD_comp(g).size; c++) {
     	GD_nlist(g, GD_comp(g).getFromList(c));
 	for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	    renewlist(ND_in(n).amp());
-	    renewlist(ND_out(n).amp());
+	    renewlist(ND_in(n));
+	    renewlist(ND_out(n));
 	    ND_mark(n, 0);
 	}
     }
@@ -797,8 +775,8 @@ try {
 	     * share a virtual edge.
 	     */
 	    if (f!=null && (EQ(e, ED_to_orig(f)))) {
-		Agedge_s e1, f1;
-		Agnode_s n1;
+		ST_Agedge_s e1, f1;
+		ST_Agnode_s n1;
 		for (n1 = agfstnode(g); n1!=null; n1 = agnxtnode(g, n1)) {
 		    for (e1 = agfstout(g, n1); e1!=null; e1 = agnxtout(g, e1)) {
 			if (NEQ(e, e1)) {
@@ -809,7 +787,7 @@ try {
 			}
 		    }
 		}
-		Memory.free(f.getStruct("base").getPtr("data"));
+		Memory.free(f.base.data);
 		Memory.free(f);
 	    }
 	    ED_to_virt(e, null);
@@ -827,11 +805,11 @@ LEAVING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
 
 //3 bxjf5g7g953ii1hfodl1j0y4u
 // static void  edgelabel_ranks(graph_t * g) 
-public static void edgelabel_ranks(Agraph_s g) {
+public static void edgelabel_ranks(ST_Agraph_s g) {
 ENTERING("bxjf5g7g953ii1hfodl1j0y4u","edgelabel_ranks");
 try {
-    Agnode_s n;
-    Agedge_s e;
+    ST_Agnode_s n;
+    ST_Agedge_s e;
     if ((GD_has_labels(g) & (1 << 0))!=0) {
 	for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
 	    for (e = agfstout(g, n); e!=null; e = agnxtout(g, e))
@@ -895,7 +873,7 @@ throw new UnsupportedOperationException();
 
 //3 65qi5f0bxp6d6vahhlcolpk88
 // static int  rank_set_class(graph_t * g) 
-public static int rank_set_class(Agraph_s g) {
+public static int rank_set_class(ST_Agraph_s g) {
 ENTERING("65qi5f0bxp6d6vahhlcolpk88","rank_set_class");
 try {
     CString name[] = new CString[] { new CString("same"), new CString("min"), new CString("source"), new CString("max"), new CString("sink"), null };
@@ -916,13 +894,13 @@ LEAVING("65qi5f0bxp6d6vahhlcolpk88","rank_set_class");
 
 //3 5189iviqj57iztftckz86y6jj
 // static int  make_new_cluster(graph_t * g, graph_t * subg) 
-public static int make_new_cluster(Agraph_s g, Agraph_s subg) {
+public static int make_new_cluster(ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("5189iviqj57iztftckz86y6jj","make_new_cluster");
 try {
     int cno;
     GD_n_cluster(g, GD_n_cluster(g)+1);
     cno = GD_n_cluster(g);
-    GD_clust(g, ZALLOC(cno + 1, GD_clust(g), Agraph_s.class, GD_n_cluster(g)));
+    GD_clust(g, ZALLOC_ST_Agraph_s((ST_Agraph_s.Array) GD_clust(g), cno + 1));
     GD_clust(g).plus(cno).setPtr(subg);
     do_graph_label(subg);
     return cno;
@@ -936,11 +914,11 @@ LEAVING("5189iviqj57iztftckz86y6jj","make_new_cluster");
 
 //3 9lvm2ufqjzl2bsbpo0zg9go58
 // static void  node_induce(graph_t * par, graph_t * g) 
-public static void node_induce(Agraph_s par, Agraph_s g) {
+public static void node_induce(ST_Agraph_s par, ST_Agraph_s g) {
 ENTERING("9lvm2ufqjzl2bsbpo0zg9go58","node_induce");
 try {
-    Agnode_s n, nn;
-    Agedge_s e;
+    ST_Agnode_s n, nn;
+    ST_Agedge_s e;
     int i;
     LOG2("node_induce");
     /* enforce that a node is in at most one cluster at this level */
@@ -951,7 +929,7 @@ try {
 	    continue;
 	}
 	for (i = 1; i < GD_n_cluster(par); i++)
-	    if (agcontains((Agraph_s) GD_clust(par).plus(i).getPtr(), n))
+	    if (agcontains((ST_Agraph_s) GD_clust(par).plus(i).getPtr().getPtr(), n))
 		break;
 	if (i < GD_n_cluster(par))
 	    agdelete(g, n);
@@ -1003,10 +981,10 @@ throw new UnsupportedOperationException();
 
 //3 2rbs5deyvlh5s7lkhv6zouqbe
 // static void cluster_leader(graph_t * clust) 
-public static void cluster_leader(Agraph_s clust) {
+public static void cluster_leader(ST_Agraph_s clust) {
 ENTERING("2rbs5deyvlh5s7lkhv6zouqbe","cluster_leader");
 try {
-    Agnode_s leader, n;
+    ST_Agnode_s leader, n;
     int maxrank = 0;
     /* find number of ranks and select a leader */
     leader = null;
@@ -1033,7 +1011,7 @@ LEAVING("2rbs5deyvlh5s7lkhv6zouqbe","cluster_leader");
 
 //3 f3sl627dqmre3kru883bpdxc3
 // static void  collapse_cluster(graph_t * g, graph_t * subg) 
-public static void collapse_cluster(Agraph_s g, Agraph_s subg) {
+public static void collapse_cluster(ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("f3sl627dqmre3kru883bpdxc3","collapse_cluster");
 try {
     if (GD_parent(subg)!=null) {
@@ -1059,11 +1037,11 @@ LEAVING("f3sl627dqmre3kru883bpdxc3","collapse_cluster");
 
 //3 din4qnipewrwnelaimzvlplft
 // static void  collapse_sets(graph_t *rg, graph_t *g) 
-public static void collapse_sets(Agraph_s rg, Agraph_s g) {
+public static void collapse_sets(ST_Agraph_s rg, ST_Agraph_s g) {
 ENTERING("din4qnipewrwnelaimzvlplft","collapse_sets");
 try {
     int c;
-    Agraph_s  subg;
+    ST_Agraph_s  subg;
     for (subg = agfstsubg(g); subg!=null; subg = agnxtsubg(subg)) {
 	c = rank_set_class(subg);
 	if (c!=0) {
@@ -1103,14 +1081,14 @@ throw new UnsupportedOperationException();
 
 //3 12fw0esv4unfin6waf9mknc1o
 // static void  set_minmax(graph_t * g) 
-public static void set_minmax(Agraph_s g) {
+public static void set_minmax(ST_Agraph_s g) {
 ENTERING("12fw0esv4unfin6waf9mknc1o","set_minmax");
 try {
     int c;
     GD_minrank(g, GD_minrank(g) + ND_rank(GD_leader(g)));
     GD_maxrank(g, GD_maxrank(g) + ND_rank(GD_leader(g)));
     for (c = 1; c <= GD_n_cluster(g); c++)
-	set_minmax((Agraph_s) GD_clust(g).plus(c).getPtr());
+	set_minmax((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
 } finally {
 LEAVING("12fw0esv4unfin6waf9mknc1o","set_minmax");
 }
@@ -1121,16 +1099,16 @@ LEAVING("12fw0esv4unfin6waf9mknc1o","set_minmax");
 
 //3 3bcr1748gqnu8ogb73jeja7ly
 // static point  minmax_edges(graph_t * g) 
-public static __struct__<point> minmax_edges(Agraph_s g) {
+public static ST_point minmax_edges(ST_Agraph_s g) {
 // WARNING!! STRUCT
-return minmax_edges_w_(g).copy();
+return (ST_point) minmax_edges_w_(g).copy();
 }
-private static __struct__<point> minmax_edges_w_(Agraph_s g) {
+private static ST_point minmax_edges_w_(ST_Agraph_s g) {
 ENTERING("3bcr1748gqnu8ogb73jeja7ly","minmax_edges");
 try {
-    Agnode_s n;
-    Agedge_s e;
-    final __struct__<point>  slen = JUtils.from(point.class);
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+    final ST_point slen = new ST_point();
     slen.setInt("x", 0);
     slen.setInt("y", 0);
     if ((GD_maxset(g) == null) && (GD_minset(g) == null))
@@ -1167,15 +1145,15 @@ LEAVING("3bcr1748gqnu8ogb73jeja7ly","minmax_edges");
 
 //3 1rmlm1wo3t94wyet9rlwrmith
 // static int  minmax_edges2(graph_t * g, point slen) 
-public static boolean minmax_edges2(Agraph_s g, final __struct__<point> slen) {
+public static boolean minmax_edges2(ST_Agraph_s g, final ST_point slen) {
 // WARNING!! STRUCT
-return minmax_edges2_w_(g, slen.copy());
+return minmax_edges2_w_(g, (ST_point) slen.copy());
 }
-private static boolean minmax_edges2_w_(Agraph_s g, final __struct__<point> slen) {
+private static boolean minmax_edges2_w_(ST_Agraph_s g, final ST_point slen) {
 ENTERING("1rmlm1wo3t94wyet9rlwrmith","minmax_edges2");
 try {
-    Agnode_s n;
-    Agedge_s e = null;
+    ST_Agnode_s n;
+    ST_Agedge_s e = null;
     if ((GD_maxset(g)!=null) || (GD_minset(g)!=null)) {
 UNSUPPORTED("attp4bsjqe99xnhi7lr7pszar"); // 	for (n = agfstnode(g); n; n = agnxtnode(g, n)) {
 UNSUPPORTED("8y47p29z0c2f1xpkrsb8w8re8"); // 	    if (n != UF_find(n))
@@ -1203,7 +1181,7 @@ LEAVING("1rmlm1wo3t94wyet9rlwrmith","minmax_edges2");
 
 //3 3vpthwso788idvycelpnqijys
 // void rank1(graph_t * g) 
-public static void rank1(Agraph_s g) {
+public static void rank1(ST_Agraph_s g) {
 ENTERING("3vpthwso788idvycelpnqijys","rank1");
 try {
     int maxiter = Integer.MAX_VALUE;
@@ -1212,7 +1190,7 @@ try {
     if ((s = agget(g, new CString("nslimit1")))!=null)
 UNSUPPORTED("9tp2zk1tsr4ce9rwsr0is9u3o"); // 	maxiter = atof(s) * agnnodes(g);
     for (c = 0; c < GD_comp(g).size; c++) {
-    	//GD_nlist(g, GD_comp(g).getArrayOfPtr("list").plus(c).getPtr());
+    	//GD_nlist(g, GD_comp(g).list.plus(c).getPtr());
     	GD_nlist(g, GD_comp(g).getFromList(c));
 	rank(g, (GD_n_cluster(g) == 0 ? 1 : 0), maxiter);	/* TB balance */
     }
@@ -1226,11 +1204,11 @@ LEAVING("3vpthwso788idvycelpnqijys","rank1");
 
 //3 cdh8wnb99v90dy6efpbzmrjix
 // static void expand_ranksets(graph_t * g, aspect_t* asp) 
-public static void expand_ranksets(Agraph_s g, aspect_t asp) {
+public static void expand_ranksets(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("cdh8wnb99v90dy6efpbzmrjix","expand_ranksets");
 try {
     int c;
-    Agnode_s n, leader;
+    ST_Agnode_s n, leader;
     if ((n = agfstnode(g))!=null) {
 	GD_minrank(g, MAXSHORT);
 	GD_maxrank(g, -1);
@@ -1252,7 +1230,7 @@ try {
 	if (EQ(g, dot_root(g))) {
 	    if (Z.z().CL_type == 100) {
 		for (c = 1; c <= GD_n_cluster(g); c++)
-		    set_minmax((Agraph_s) GD_clust(g).plus(c).getPtr());
+		    set_minmax((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
 	    } else {
 		find_clusters(g);
 	    }
@@ -1271,10 +1249,10 @@ LEAVING("cdh8wnb99v90dy6efpbzmrjix","expand_ranksets");
 
 //3 2o4rmb4o6f6zh46ak3se91rwr
 // static void dot1_rank(graph_t * g, aspect_t* asp) 
-public static void dot1_rank(Agraph_s g, aspect_t asp) {
+public static void dot1_rank(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 try {
-    final __struct__<point> p = JUtils.from(point.class);
+    final ST_point p = new ST_point();
     edgelabel_ranks(g);
     if (asp!=null) {
 UNSUPPORTED("kh7e20nqwuserrnpf3zpvuyl"); // 	init_UF_size(g);
@@ -1285,7 +1263,7 @@ UNSUPPORTED("d88j5oswhz0d3yvd4wlvxohmu"); // 	initEdgeTypes(g);
     class1_(g);
     p.___(minmax_edges(g));
     decompose(g, 0);
-    if (asp!=null && ((GD_comp(g).getInt("size") > 1)||(GD_n_cluster(g) > 0))) {
+    if (asp!=null && ((GD_comp(g).size > 1)||(GD_n_cluster(g) > 0))) {
 UNSUPPORTED("evcjt85irnaa02v8cam07i009"); // 	asp->badGraph = 1;
 UNSUPPORTED("45nxv6kczal9hnytkfcyt2jk8"); // 	asp = NULL;
     }
@@ -1308,7 +1286,7 @@ LEAVING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 
 //3 asyfujgwqa407ffvqn5psbtsc
 // void dot_rank(graph_t * g, aspect_t* asp) 
-public static void dot_rank(Agraph_s g, aspect_t asp) {
+public static void dot_rank(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("asyfujgwqa407ffvqn5psbtsc","dot_rank");
 try {
     if (agget (g, new CString("newrank"))!=null) {
@@ -1329,7 +1307,7 @@ LEAVING("asyfujgwqa407ffvqn5psbtsc","dot_rank");
 
 //3 cdncou6d2ng5i48rd1mk2cpnw
 // int is_cluster(graph_t * g) 
-public static boolean is_cluster(Agraph_s g) {
+public static boolean is_cluster(ST_Agraph_s g) {
 ENTERING("cdncou6d2ng5i48rd1mk2cpnw","is_cluster");
 try {
     return (strncmp(agnameof(g), new CString("cluster"), 7) == 0);

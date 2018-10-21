@@ -38,7 +38,7 @@ package smetana.core;
 
 import smetana.core.amiga.Area;
 
-public class UnsupportedArrayOfStruct implements __array_of_struct__ {
+public class UnsupportedArrayOfStruct {
 
 	public String getUID36() {
 		throw new UnsupportedOperationException(getClass().toString());
@@ -53,18 +53,6 @@ public class UnsupportedArrayOfStruct implements __array_of_struct__ {
 	}
 
 	public __ptr__ asPtr() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public int comparePointerInternal(__array_of_struct__ other) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_struct__ move(int delta) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_struct__ plus(int delta) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

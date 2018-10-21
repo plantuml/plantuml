@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
 
@@ -83,7 +84,7 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 		this.outputDirectory = outputDirectory;
 
 		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
-				.getParentFile(), file.getAbsolutePath());
+				.getParentFile(), FileWithSuffix.getFileName(file));
 	}
 
 	private File getDirIfDirectory(String newName) {

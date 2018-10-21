@@ -67,28 +67,24 @@ import static smetana.core.Macro.GD_label;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.ZALLOC;
+import static smetana.core.Macro.*;
 import static smetana.core.Macro.agtail;
 import static smetana.core.Macro.hackInitDimensionFromLabel;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agnodeinfo_t;
-import h.Agobj_s;
-import h.Agraph_s;
-import h.Agraphinfo_t;
-import h.GVC_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agobj_s;
+import h.ST_GVC_s;
 import h.ST_pointf;
 import h.ST_port;
-import h.boxf;
-import h.pointf;
-import h.textlabel_t;
-import h.textspan_t;
+import h.ST_textlabel_t;
+import h.ST_textspan_t;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class labels__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -348,14 +344,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -384,25 +380,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -426,14 +403,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -733,13 +710,13 @@ throw new UnsupportedOperationException();
 //3 4wkeqik2dt7ecr64ej6ltbnvb
 // static void storeline(GVC_t *gvc, textlabel_t *lp, char *line, char terminator) 
 //private static __struct__<textfont_t> tf = JUtils.from(textfont_t.class);
-public static void storeline(GVC_s gvc, textlabel_t lp, CString line, char terminator) {
+public static void storeline(ST_GVC_s gvc, ST_textlabel_t lp, CString line, char terminator) {
 ENTERING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 try {
-    final __struct__<pointf> size = JUtils.from(pointf.class);
+    final ST_pointf size = new ST_pointf();
     __ptr__ span = null;
     int oldsz = lp.getInt("u.txt.nspans") + 1;
-    lp.setPtr("u.txt.span", ZALLOC(oldsz + 1, lp.getPtr("u.txt.span"), textspan_t.class, oldsz));
+    lp.setPtr("u.txt.span", ZALLOC_ST_textspan_t((ST_textspan_t.Array) lp.getPtr("u.txt.span"), oldsz + 1));
     span = lp.getPtr("u.txt.span").plus(lp.getInt("u.txt.nspans"));
     span.setPtr("str", line);
     span.setInt("just", terminator);
@@ -760,9 +737,9 @@ try {
     }
     lp.setInt("u.txt.nspans", lp.getInt("u.txt.nspans") + 1);
     /* width = max line width */
-    ((ST_pointf) lp.getStruct("dimen")).x = MAX(lp.getStruct("dimen").getDouble("x"), size.getDouble("x"));
+    ((ST_pointf) lp.dimen).x = MAX(lp.dimen.getDouble("x"), size.getDouble("x"));
     /* accumulate height */
-    ((ST_pointf) lp.getStruct("dimen")).y = lp.getStruct("dimen").getDouble("y") + size.getDouble("y");
+    ((ST_pointf) lp.dimen).y = lp.dimen.getDouble("y") + size.getDouble("y");
 } finally {
 LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 }
@@ -773,14 +750,14 @@ LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 
 //3 22ar72ye93a8ntj8pagnt5b5k
 // void make_simple_label(GVC_t * gvc, textlabel_t * lp) 
-public static void make_simple_label(GVC_s gvc, textlabel_t lp) {
+public static void make_simple_label(ST_GVC_s gvc, ST_textlabel_t lp) {
 ENTERING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 try {
     char c;
-    CString p, line, lineptr, str = lp.getCString("text");
+    CString p, line, lineptr, str = lp.text;
     char bytee = 0x00;
-    ((ST_pointf) lp.getStruct("dimen")).x = 0.0;
-    ((ST_pointf) lp.getStruct("dimen")).y = 0.0;
+    ((ST_pointf) lp.dimen).x = 0.0;
+    ((ST_pointf) lp.dimen).y = 0.0;
     if (str.charAt(0) == '\0')
 	return;
     line = lineptr = null;
@@ -835,7 +812,7 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 	lineptr = lineptr.plus(1);
 	storeline(gvc, lp, line, 'n');
     }
-    lp.setStruct("space", lp.getStruct("dimen"));
+    lp.setStruct("space", lp.dimen);
 } finally {
 LEAVING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 }
@@ -846,41 +823,41 @@ LEAVING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 
 //3 ecq5lydlrjrlaz8o6vm6svc8i
 // textlabel_t *make_label(void *obj, char *str, int kind, double fontsize, char *fontname, char *fontcolor) 
-public static textlabel_t make_label(__ptr__ obj, CString str, int kind, double fontsize, CString fontname, CString fontcolor) {
+public static ST_textlabel_t make_label(__ptr__ obj, CString str, int kind, double fontsize, CString fontname, CString fontcolor) {
 ENTERING("ecq5lydlrjrlaz8o6vm6svc8i","make_label");
 try {
-    textlabel_t rv = (textlabel_t) Memory.malloc(textlabel_t.class);
-    Agraph_s g = null, sg = null;
-    Agnode_s n = null;
-    Agedge_s e = null;
+	ST_textlabel_t rv = new ST_textlabel_t();
+    ST_Agraph_s g = null, sg = null;
+    ST_Agnode_s n = null;
+    ST_Agedge_s e = null;
         CString s = null;
     switch (agobjkind(obj)) {
     case AGRAPH:
-        sg = (Agraph_s)obj;
-	g = (Agraph_s) sg.getPtr("root");
+        sg = (ST_Agraph_s)obj;
+	g = (ST_Agraph_s) sg.getPtr("root");
 	break;
     case AGNODE:
-        n = (Agnode_s)obj.castTo(Agnode_s.class);
+        n = (ST_Agnode_s)obj.castTo(ST_Agnode_s.class);
 	g = agroot(agraphof(n));
 	break;
     case AGEDGE:
-        e = (Agedge_s)obj.castTo(Agedge_s.class);
+        e = (ST_Agedge_s)obj.castTo(ST_Agedge_s.class);
 	g = agroot(agraphof(aghead(e)));
 	break;
     }
     rv.setPtr("fontname", fontname);
     rv.setPtr("fontcolor", fontcolor);
     rv.setDouble("fontsize", fontsize);
-    rv.setInt("charset", g.castTo(Agobj_s.class).getPtr("data").castTo(Agraphinfo_t.class).getInt("charset"));
+    rv.setInt("charset", g.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agraphinfo_t.class).getInt("charset"));
     if ((kind & (2 << 1))!=0) {
 	rv.setPtr("text", str.strdup());
         if ((kind & (1 << 1))!=0) {
-	    rv.setBoolean("html", (N(0)));
+	    rv.html = (N(0));
 	}
     }
     else if (kind == (1 << 1)) {
 	rv.setPtr("text", str.strdup());
-	rv.setBoolean("html", N(0));
+	rv.html = N(0);
 	if (make_html_label(obj, rv)!=0) {
 	    switch (agobjkind(obj)) {
     case AGRAPH:
@@ -907,12 +884,12 @@ try {
 	    UNSUPPORTED("s = latin1ToUTF8(rv->text);");
 	    break;
 	default: /* UTF8 */
-	    s = htmlEntityUTF8(rv.getCString("text"), g);
+	    s = htmlEntityUTF8(rv.text, g);
 	    break;
 	}
         Memory.free(rv.getPtr("text"));
         rv.setPtr("text", s);
-	make_simple_label((GVC_s) g.castTo(Agobj_s.class).getPtr("data").castTo(Agraphinfo_t.class).getPtr("gvc"), rv);
+	make_simple_label((ST_GVC_s) g.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agraphinfo_t.class).getPtr("gvc"), rv);
     }
     return rv;
 } finally {
@@ -1044,51 +1021,51 @@ try {
 	tp_len = 0, hp_len = 0;
     int newlen = 0;
     int isEdge = 0;
-    textlabel_t tl;
+    ST_textlabel_t tl;
     final ST_port pt = new ST_port();
     /* prepare substitution strings */
     switch (agobjkind(obj)) {
 	case AGRAPH:
-	    g_str = agnameof((Agraph_s)obj);
+	    g_str = agnameof((ST_Agraph_s)obj);
 	    g_len = strlen(g_str);
-	    tl = GD_label((Agraph_s)obj);
+	    tl = GD_label((ST_Agraph_s)obj);
 	    if (tl!=null) {
-		l_str = tl.getCString("text");
+		l_str = tl.text;
 	    	if (str!=null) l_len = strlen(l_str);
 	    }
 	    break;
 	case AGNODE:
-	    g_str = agnameof(agraphof(obj.castTo(Agnode_s.class)));
+	    g_str = agnameof(agraphof(obj.castTo(ST_Agnode_s.class)));
 	    g_len = strlen(g_str);
-	    n_str = agnameof(obj.castTo(Agnode_s.class));
+	    n_str = agnameof(obj.castTo(ST_Agnode_s.class));
 	    n_len = strlen(n_str);
-	    tl =  (textlabel_t) obj.castTo(Agnode_s.class).castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).getPtr("label");
+	    tl =  (ST_textlabel_t) obj.castTo(ST_Agnode_s.class).castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label");
 	    if (tl!=null) {
-		l_str = tl.getCString("text");
+		l_str = tl.text;
 	    	if (str!=null) l_len = strlen(l_str);
 	    }
 	    break;
 	case AGEDGE:
 	    isEdge = 1;
-	    g_str = agnameof(agroot(agraphof(agtail((obj.castTo(Agedge_s.class))))));
+	    g_str = agnameof(agroot(agraphof(agtail((obj.castTo(ST_Agedge_s.class))))));
 	    g_len = strlen(g_str);
-	    t_str = agnameof(agtail((obj.castTo(Agedge_s.class))));
+	    t_str = agnameof(agtail((obj.castTo(ST_Agedge_s.class))));
 	    t_len = strlen(t_str);
-	    pt.___(ED_tail_port(obj.castTo(Agedge_s.class)));
+	    pt.___(ED_tail_port(obj.castTo(ST_Agedge_s.class)));
 	    if ((tp_str = pt.name)!=null)
 	        tp_len = strlen(tp_str);
-	    h_str = agnameof(aghead((obj.castTo(Agedge_s.class))));
+	    h_str = agnameof(aghead((obj.castTo(ST_Agedge_s.class))));
 	    h_len = strlen(h_str);
-	    pt.___(ED_head_port(obj.castTo(Agedge_s.class)));
+	    pt.___(ED_head_port(obj.castTo(ST_Agedge_s.class)));
 	    if ((hp_str = pt.name)!=null)
 		hp_len = strlen(hp_str);
 	    h_len = strlen(h_str);
-	    tl = ED_label(obj.castTo(Agedge_s.class));
+	    tl = ED_label(obj.castTo(ST_Agedge_s.class));
 	    if (tl!=null) {
-	    	l_str = tl.getCString("text");
+	    	l_str = tl.text;
 	    	if (str!=null) l_len = strlen(l_str);
 	    }
-	    if (agisdirected(agroot(agraphof(agtail((obj.castTo(Agedge_s.class)))))))
+	    if (agisdirected(agroot(agraphof(agtail((obj.castTo(ST_Agedge_s.class)))))))
 		e_str = new CString("->");
 	    else
 		e_str = new CString("--");

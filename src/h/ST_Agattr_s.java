@@ -45,17 +45,18 @@
  */
 package h;
 
+import java.util.List;
+
+import smetana.core.CString;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_cstring__;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarArrayOfCString;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agattr_s extends UnsupportedStructAndPtr {
 
 	private final ST_Agrec_s h = new ST_Agrec_s(this); /* common data header */
 	public ST_dt_s dict; /* shared dict to interpret attr field */
-	public StarArrayOfCString str; /* the attribute string values */
+	public List<CString> str; /* the attribute string values */
 
 	private final StarStruct parent;
 
@@ -72,37 +73,8 @@ public class ST_Agattr_s extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("dict")) {
-			return dict;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("dict")) {
-			this.dict = (ST_dt_s) newData;
-			return dict;
-		}
-		if (fieldName.equals("str")) {
-			this.str = (StarArrayOfCString) newData;
-			return str;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __array_of_cstring__ getArrayOfCString(String fieldName) {
-		if (fieldName.equals("str")) {
-			return str.getInternalArray();
-		}
-		return super.getArrayOfCString(fieldName);
-	}
-
-	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Agrec_s.class) {
+		if (dest == ST_Agrec_s.class) {
 			return h;
 			// return h.amp();
 		}

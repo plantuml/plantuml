@@ -49,10 +49,10 @@ import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
-import h._dt_s;
-import h._dtdata_s;
-import h._dtdisc_s;
-import h._dtmethod_s;
+import h.ST_dt_s;
+import h.ST_dtdata_s;
+import h.ST_dtdisc_s;
+import h.ST_dtmethod_s;
 import smetana.core.Memory;
 
 public class dtopen__c {
@@ -128,16 +128,16 @@ public class dtopen__c {
 
 //3 34nbfbdgwe34hb4vmfr5p6kbh
 // Dt_t* dtopen(Dtdisc_t* disc, Dtmethod_t* meth)      
-public static _dt_s dtopen(_dtdisc_s disc, _dtmethod_s meth) {
+public static ST_dt_s dtopen(ST_dtdisc_s disc, ST_dtmethod_s meth) {
 ENTERING("34nbfbdgwe34hb4vmfr5p6kbh","dtopen");
 try {
-	_dt_s		dt = null;
+	ST_dt_s		dt = null;
 	int		e;
-	_dtdata_s	data;
+	ST_dtdata_s	data;
 	if(N(disc) || N(meth))
 		return null;
 	/* allocate space for dictionary */
-	if(N(dt = (_dt_s) Memory.malloc(_dt_s.class)))
+	if(N(dt = new ST_dt_s()))
 		return null;
 //	/* initialize all absolutely private data */
 	dt.setPtr("searchf", null);
@@ -176,23 +176,23 @@ try {
 //		}
 	}
 	/* allocate sharable data */
-	if(N(data = (_dtdata_s) (dt.call("memoryf", dt,null,sizeof(_dtdata_s.class),disc)) ))
+	if(N(data = (ST_dtdata_s) (dt.call("memoryf", dt,null,sizeof(ST_dtdata_s.class),disc)) ))
 	{ err_open:
 		Memory.free(dt);
 		return (null);
 	}
-	data.setInt("type", meth.getInt("type"));
-	data.setPtr("here", null);
-	data.setPtr("hh._htab", null);
-	data.setInt("ntab", 0);
-	data.setInt("size", 0);
-	data.setInt("loop", 0);
-	data.setInt("minp", 0);
+	data.type = meth.type;
+	data.here = null;
+	data._htab = null;
+	data.ntab = 0;
+	data.size = 0;
+	data.loop = 0;
+	data.minp = 0;
 //done:
-	dt.setPtr("data", data);
-	dt.setPtr("searchf", meth.getPtr("searchf"));
-	dt.setPtr("meth", meth);
-	if(disc.getPtr("eventf")!=null)
+	dt.data = data;
+	dt.searchf = meth.searchf;
+	dt.meth = meth;
+	if(disc.eventf!=null)
 		throw new UnsupportedOperationException();
 //		(*disc->eventf)(dt, 5, (void*)dt, disc);
 	return dt;

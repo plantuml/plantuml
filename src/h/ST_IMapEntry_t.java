@@ -45,19 +45,15 @@
  */
 package h;
 
-import h.ST_IMapEntry_t.Amp;
-
-import java.util.Arrays;
-import java.util.List;
-
-import smetana.core.UnsupportedStarStruct;
+import smetana.core.CString;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_IMapEntry_t extends UnsupportedStructAndPtr {
 
 	private final StarStruct parent;
+	
+	public final CString str = null;
 
 	public ST_IMapEntry_t() {
 		this(null);
@@ -67,14 +63,6 @@ public class ST_IMapEntry_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
 	// "typedef struct IMapEntry_s",
 	// "{",
 	// "Dtlink_t namedict_link",

@@ -43,7 +43,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.DefinitionsContainer;
-import net.sourceforge.plantuml.Log;
 
 public class Preprocessor extends ReadLineInstrumented implements ReadLineNumbered {
 

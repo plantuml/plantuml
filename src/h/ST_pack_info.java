@@ -45,11 +45,6 @@
  */
 package h;
 
-import h.ST_pack_info.Amp;
-
-import java.util.Arrays;
-import java.util.List;
-
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
@@ -65,15 +60,6 @@ public class ST_pack_info extends UnsupportedStructAndPtr {
 
 	public ST_pack_info(StarStruct parent) {
 		this.parent = parent;
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
 	}
 
 	// "typedef struct",

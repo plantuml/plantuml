@@ -35,18 +35,6 @@
  */
 package smetana.core;
 
-import h.Agdesc_s;
-import h.Agiddisc_s;
-import h.Agmemdisc_s;
-import h.Agtag_s;
-import h.STStarArrayOfPointer;
-import h.ST_Agtag_s;
-import h._dtdisc_s;
-import h._dtmethod_s;
-import h.nlist_t;
-import smetana.core.amiga.StarArrayOfPtr;
-import smetana.core.amiga.StarStar;
-
 public class Memory {
 
 	public static __ptr__ malloc(Class theClass) {
@@ -59,20 +47,6 @@ public class Memory {
 	}
 
 	public static __ptr__ realloc(__ptr__ old, size_t size) {
-		if (old instanceof StarArrayOfPtr) {
-			// System.err.println("size="+size);
-			// ((StarArrayOfPtr) old).realloc(((size_t_array_of_something) size).getNb());
-			((StarArrayOfPtr) old).realloc(size);
-			return old;
-		}
-		if (old instanceof StarStar) {
-			((StarStar) old).realloc(((size_t_array_of_array_of_something_empty) size).getNb());
-			return old;
-		}
-		if (old instanceof STStarArrayOfPointer) {
-			((STStarArrayOfPointer) old).realloc(size.getInternalNb());
-			return old;
-		}
 		throw new UnsupportedOperationException("" + old.getClass());
 	}
 

@@ -45,18 +45,9 @@
  */
 package h;
 
-import h.ST_Agclos_s.ArrayOfThreePtrDict_t;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import smetana.core.UnsupportedArrayOfPtr;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
-import smetana.core.amiga.Area;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_tedge_t extends UnsupportedStructAndPtr {
@@ -71,24 +62,16 @@ public class ST_tedge_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
 	// "typedef struct tedge_t",
 	// "{",
-	private __ptr__ pnl0p;
-	private __ptr__ pnl1p;
-	// private ST_pointnlink_t.Amp pnl0p;
-	// private ST_pointnlink_t.Amp pnl1p;
+	public ST_pointnlink_t pnl0p;
+	public ST_pointnlink_t pnl1p;
 
-	private StarArrayOfPtr ltp;
-	private StarArrayOfPtr rtp;
+	public ST_triangle_t.Array lrp;
+	public ST_triangle_t.Array rtp;
+
+	// public StarArrayOfPtr ltp;
+	// public StarArrayOfPtr rtp;
 
 	// "struct triangle_t *ltp",
 	// "struct triangle_t *rtp",
@@ -103,13 +86,20 @@ public class ST_tedge_t extends UnsupportedStructAndPtr {
 		if (fieldName.equals("pnl1p")) {
 			return this.pnl1p;
 		}
-		if (fieldName.equals("ltp")) {
-			return this.ltp;
-		}
-		if (fieldName.equals("rtp")) {
-			return this.rtp;
-		}
 		return super.getPtr(fieldName);
+	}
+
+	@Override
+	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
+		if (fieldName.equals("pnl0p")) {
+			this.pnl0p = ((ST_pointnlink_t) newData);
+			return this.pnl0p;
+		}
+		if (fieldName.equals("pnl1p")) {
+			this.pnl1p = ((ST_pointnlink_t) newData);
+			return this.pnl1p;
+		}
+		return super.setPtr(fieldName, newData);
 	}
 
 	// class Singleton extends UnsupportedArrayOfPtr implements __array_of_ptr__ {
@@ -153,49 +143,6 @@ public class ST_tedge_t extends UnsupportedStructAndPtr {
 	//
 	// }
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		// if (fieldName.equals("pnl0p")) {
-		// this.pnl0p = (ST_pointnlink_t.Amp) newData;
-		// return this.pnl0p;
-		// }
-		if (fieldName.equals("pnl0p")) {
-			if (newData instanceof ST_pointnlink_t.Amp) {
-				this.pnl0p = (ST_pointnlink_t.Amp) newData;
-				// newData = new StarArrayOfPtr(new Singleton((h.ST_pointnlink_t.Amp) newData));
-			} else {
-				this.pnl0p = (StarArrayOfPtr) newData;
-			}
-			return this.pnl0p;
-		}
-		if (fieldName.equals("pnl1p")) {
-			if (newData instanceof ST_pointnlink_t.Amp) {
-				// newData = new StarArrayOfPtr(new Singleton((h.ST_pointnlink_t.Amp) newData));
-				this.pnl1p = (ST_pointnlink_t.Amp) newData;
-			} else {
-				this.pnl1p = (StarArrayOfPtr) newData;
-			}
-			return this.pnl1p;
-		}
-		// if (fieldName.equals("pnl1p")) {
-		// this.pnl1p = (ST_pointnlink_t.Amp) newData;
-		// return this.pnl1p;
-		// }
-		if (fieldName.equals("ltp")) {
-			this.ltp = (StarArrayOfPtr) newData;
-			return this.ltp;
-		}
-		if (fieldName.equals("rtp")) {
-			this.rtp = (StarArrayOfPtr) newData;
-			return this.rtp;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	public String foo(StarArrayOfPtr data) {
-		__array_of_ptr__ array = data.getInternalArray();
-		return array.toString();
-	}
 }
 
 // typedef struct tedge_t {

@@ -80,6 +80,8 @@ import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableUtils;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
@@ -264,10 +266,7 @@ public class Line implements Moveable, Hideable {
 				labelOnly = new DirectionalTextBlock(right, left, up, down);
 			}
 		} else {
-			final double marginLabel = startUid.equalsId(endUid) ? 6 : 1;
-			final TextBlock label = TextBlockUtils.withMargin(
-					link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
-							skinParam, skinParam.maxMessageSize()), marginLabel, marginLabel);
+			final TextBlock label = getLineLabel(link, skinParam, labelFont);
 			if (getLinkArrow() == LinkArrow.NONE) {
 				labelOnly = label;
 			} else {
@@ -326,6 +325,24 @@ public class Line implements Moveable, Hideable {
 					skinParam);
 		}
 
+	}
+
+	private TextBlock getLineLabel(Link link, ISkinParam skinParam, FontConfiguration labelFont) {
+		final double marginLabel = startUid.equalsId(endUid) ? 6 : 1;
+		TextBlock label = link.getLabel().create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam, skinParam.maxMessageSize());
+		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();
+		if (visibilityModifier != null) {
+			final Rose rose = new Rose();
+			// final HtmlColor back = visibilityModifier.getBackground() == null ? null : rose.getHtmlColor(skinParam,
+			// visibilityModifier.getBackground());
+			final HtmlColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());
+			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);
+			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);
+			label = TextBlockUtils.mergeLR(visibility, label, VerticalAlignment.CENTER);
+		}
+		label = TextBlockUtils.withMargin(label, marginLabel, marginLabel);
+		return label;
 	}
 
 	public boolean hasNoteLabelText() {

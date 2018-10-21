@@ -127,7 +127,7 @@ public class SubPreprocessor extends ReadLineInstrumented implements ReadLine {
 			final String blocname = name.substring(idx + 1);
 			final File f = FileSystem.getInstance().getFile(PreprocessorInclude.withEnvironmentVariable(filename));
 			if (f.exists() == false || f.isDirectory()) {
-				return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
+				return s.withErrorPreprocessor("Cannot include " + FileWithSuffix.getFileName(f));
 			}
 			final Preprocessor data = new Preprocessor(config, getReaderInclude(s, f), charset, defines, null,
 					definitionsContainer);
@@ -146,10 +146,10 @@ public class SubPreprocessor extends ReadLineInstrumented implements ReadLine {
 		try {
 			if (charset == null) {
 				Log.info("Using default charset");
-				return ReadLineReader.create(new FileReader(f), f.getAbsolutePath(), s.getLocation());
+				return ReadLineReader.create(new FileReader(f), FileWithSuffix.getFileName(f), s.getLocation());
 			}
 			Log.info("Using charset " + charset);
-			return ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
+			return ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset), FileWithSuffix.getFileName(f),
 					s.getLocation());
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());

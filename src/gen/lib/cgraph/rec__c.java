@@ -63,11 +63,10 @@ import static smetana.core.Macro.ASINT;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agobj_s;
-import h.Agraph_s;
-import h.Agrec_s;
-import h.ST_Agdesc_s;
+import h.ST_Agedge_s;
+import h.ST_Agraph_s;
+import h.ST_Agobj_s;
+import h.ST_Agrec_s;
 import h.ST_Agtag_s;
 import smetana.core.CString;
 import smetana.core.__ptr__;
@@ -210,16 +209,16 @@ public class rec__c {
 
 //3 62z9z5vraa2as0c9t108j9xaf
 // static void set_data(Agobj_t * obj, Agrec_t * data, int mtflock) 
-public static void set_data(Agobj_s obj, Agrec_s data, int mtflock) {
+public static void set_data(ST_Agobj_s obj, ST_Agrec_s data, int mtflock) {
 ENTERING("62z9z5vraa2as0c9t108j9xaf","set_data");
 try {
-    Agedge_s e;
+    ST_Agedge_s e;
     obj.setPtr("data", data);
-    ((ST_Agtag_s)obj.getStruct("tag")).mtflock = mtflock;
+    ((ST_Agtag_s)obj.tag).mtflock = mtflock;
     if ((AGTYPE(obj) == AGINEDGE) || (AGTYPE(obj) == AGOUTEDGE)) {
-	e = (Agedge_s) agopp(obj.castTo(Agedge_s.class));
+	e = (ST_Agedge_s) agopp(obj.castTo(ST_Agedge_s.class));
 	AGDATA(e, data);
-	((ST_Agtag_s)e.getStruct("base").getStruct("tag")).mtflock = mtflock;
+	((ST_Agtag_s)e.base.tag).mtflock = mtflock;
     }
 } finally {
 LEAVING("62z9z5vraa2as0c9t108j9xaf","set_data");
@@ -231,28 +230,28 @@ LEAVING("62z9z5vraa2as0c9t108j9xaf","set_data");
 
 //3 7p2ne3oknmyclvsw4lh3axtd8
 // Agrec_t *aggetrec(void *obj, char *name, int mtf) 
-public static Agrec_s aggetrec(__ptr__ obj, CString name, boolean mtf) {
+public static ST_Agrec_s aggetrec(__ptr__ obj, CString name, boolean mtf) {
 ENTERING("7p2ne3oknmyclvsw4lh3axtd8","aggetrec");
 try {
-    Agobj_s hdr;
-    Agrec_s d, first;
-    hdr = (Agobj_s) obj.castTo(Agobj_s.class);
-    first = d = (Agrec_s) hdr.getPtr("data");
+    ST_Agobj_s hdr;
+    ST_Agrec_s d, first;
+    hdr = (ST_Agobj_s) obj.castTo(ST_Agobj_s.class);
+    first = d = (ST_Agrec_s) hdr.data;
     while (d!=null) {
-	if (N(strcmp(name,d.getCString("name"))))
+	if (N(strcmp(name,d.name)))
 	    break;
-	d = (Agrec_s) d.getPtr("next");
+	d = (ST_Agrec_s) d.next;
 	if (EQ(d, first)) {
 	    d = null;
 	    break;
 	}
     }
     if (d!=null) {
-	if (((ST_Agtag_s)hdr.getStruct("tag")).mtflock!=0) {
-	    if (mtf && NEQ(hdr.getPtr("data"), d))
+	if (((ST_Agtag_s)hdr.tag).mtflock!=0) {
+	    if (mtf && NEQ(hdr.data, d))
 		System.err.println("move to front lock inconsistency");
 	} else {
-	    if (NEQ(d, first) || (mtf != ((((ST_Agtag_s)hdr.getStruct("tag")).mtflock)!=0)))
+	    if (NEQ(d, first) || (mtf != ((((ST_Agtag_s)hdr.tag).mtflock)!=0)))
 		set_data(hdr, d, ASINT(mtf));	/* Always optimize */
 	}
     }
@@ -267,24 +266,24 @@ LEAVING("7p2ne3oknmyclvsw4lh3axtd8","aggetrec");
 
 //3 7sk4k5ipm2jnd244556g1kr6
 // static void objputrec(Agraph_t * g, Agobj_t * obj, void *arg) 
-public static void objputrec(Agraph_s g, Agobj_s obj, Object arg) {
+public static void objputrec(ST_Agraph_s g, ST_Agobj_s obj, Object arg) {
 ENTERING("7sk4k5ipm2jnd244556g1kr6","objputrec");
 try {
-    Agrec_s firstrec, newrec;
-    newrec = (Agrec_s) arg;
-    firstrec = (Agrec_s) obj.getPtr("data");
+	ST_Agrec_s firstrec, newrec;
+    newrec = (ST_Agrec_s) arg;
+    firstrec = (ST_Agrec_s) obj.data;
     if (firstrec == null)
 	newrec.setPtr("next", newrec);	/* 0 elts */
     else {
-	if (EQ(firstrec.getPtr("next"), firstrec)) {
+	if (EQ(firstrec.next, firstrec)) {
 	    firstrec.setPtr("next", newrec);	/* 1 elt */
 	    newrec.setPtr("next", firstrec);
 	} else {
-	    newrec.setPtr("next", firstrec.getPtr("next"));
+	    newrec.setPtr("next", firstrec.next);
 	    firstrec.setPtr("next", newrec);
 	}
     }
-    if (NOT(((ST_Agtag_s)obj.getStruct("tag")).mtflock))
+    if (NOT(((ST_Agtag_s)obj.tag).mtflock))
 	set_data(obj, newrec, (0));
 } finally {
 LEAVING("7sk4k5ipm2jnd244556g1kr6","objputrec");
@@ -299,17 +298,17 @@ LEAVING("7sk4k5ipm2jnd244556g1kr6","objputrec");
 public static __ptr__ agbindrec(__ptr__ arg_obj, CString recname, size_t recsize, boolean mtf) {
 ENTERING("dmh5i83l15mnn1pnu6f5dfv8l","agbindrec");
 try {
-    Agraph_s g;
-    Agobj_s obj;
-    Agrec_s rec;
-    obj = (Agobj_s) arg_obj.castTo(Agobj_s.class);
+    ST_Agraph_s g;
+    ST_Agobj_s obj;
+    ST_Agrec_s rec;
+    obj = (ST_Agobj_s) arg_obj.castTo(ST_Agobj_s.class);
     g = agraphof(obj);
     rec = aggetrec(obj, recname, false);
     if ((rec == null && recsize.isStrictPositive())) {
-	rec = (Agrec_s) ((__ptr__)agalloc(g, recsize)).castTo(Agrec_s.class);
+	rec = (ST_Agrec_s) ((__ptr__)agalloc(g, recsize)).castTo(ST_Agrec_s.class);
     // rec = (Agrec_s) Memory.malloc(Agrec_s.class);
 	rec.setPtr("name", agstrdup(g, recname));
-	switch (((ST_Agtag_s)obj.getStruct("tag")).objtype) {
+	switch (((ST_Agtag_s)obj.tag).objtype) {
 	case AGRAPH:
 	    objputrec(g, obj, rec);
 	    break;

@@ -101,23 +101,19 @@ import static smetana.core.Macro.ND_other;
 import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.alloc_elist;
-import h.Agedge_s;
-import h.Agedgeinfo_t;
-import h.Agnode_s;
-import h.Agnodeinfo_t;
-import h.Agraph_s;
-import h.Agraphinfo_t;
-import h.aspect_t;
-import h.boxf;
-import h.pack_info;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agnodeinfo_t;
+import h.ST_aspect_t;
+import h.ST_pack_info;
+import h.ST_pointf;
 import h.pack_mode;
-import h.pointf;
 import smetana.core.CString;
-import smetana.core.JUtils;
-import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class dotinit__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -377,14 +373,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -413,25 +409,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -455,14 +432,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -765,12 +742,12 @@ throw new UnsupportedOperationException();
 
 //3 cmr94z4p2bdeiply1d4wrqwes
 // static void dot_init_subg(graph_t * g, graph_t* droot) 
-public static void dot_init_subg(Agraph_s g, Agraph_s droot) {
+public static void dot_init_subg(ST_Agraph_s g, ST_Agraph_s droot) {
 ENTERING("cmr94z4p2bdeiply1d4wrqwes","dot_init_subg");
 try {
-    Agraph_s subg;
+    ST_Agraph_s subg;
     if (NEQ(g, agroot(g)))
-	agbindrec(g, new CString("Agraphinfo_t"), sizeof(Agraphinfo_t.class), (N(0)));
+	agbindrec(g, new CString("Agraphinfo_t"), sizeof(ST_Agraphinfo_t.class), (N(0)));
     if (EQ(g, droot))
 	GD_dotroot(agroot(g), droot);
     for (subg = agfstsubg(g); subg!=null; subg = agnxtsubg(subg)) {
@@ -786,17 +763,17 @@ LEAVING("cmr94z4p2bdeiply1d4wrqwes","dot_init_subg");
 
 //3 3hk92jbrfjmn6no3svn9jvje9
 // static void  dot_init_node(node_t * n) 
-public static void dot_init_node(Agnode_s n) {
+public static void dot_init_node(ST_Agnode_s n) {
 ENTERING("3hk92jbrfjmn6no3svn9jvje9","dot_init_node");
 try {
-    agbindrec(n, new CString("Agnodeinfo_t"), sizeof(Agnodeinfo_t.class), (N(0)));	//graph custom data
+    agbindrec(n, new CString("Agnodeinfo_t"), sizeof(ST_Agnodeinfo_t.class), (N(0)));	//graph custom data
     common_init_node(n);
     gv_nodesize(n, GD_flip(agraphof(n)));
-    alloc_elist(4, ND_in(n), Agnode_s.class);
-    alloc_elist(4, ND_out(n), Agnode_s.class);
-    alloc_elist(2, ND_flat_in(n), Agnode_s.class);
-    alloc_elist(2, ND_flat_out(n), Agnode_s.class);
-    alloc_elist(2, ND_other(n), Agnode_s.class);
+    alloc_elist(4, ND_in(n));
+    alloc_elist(4, ND_out(n));
+    alloc_elist(2, ND_flat_in(n));
+    alloc_elist(2, ND_flat_out(n));
+    alloc_elist(2, ND_other(n));
     ND_UF_size(n, 1);
 } finally {
 LEAVING("3hk92jbrfjmn6no3svn9jvje9","dot_init_node");
@@ -808,11 +785,11 @@ LEAVING("3hk92jbrfjmn6no3svn9jvje9","dot_init_node");
 
 //3 zbvhnhd78bppq8wb872847bj
 // static void  dot_init_edge(edge_t * e) 
-public static void dot_init_edge(Agedge_s e) {
+public static void dot_init_edge(ST_Agedge_s e) {
 ENTERING("zbvhnhd78bppq8wb872847bj","dot_init_edge");
 try {
     CString tailgroup, headgroup;
-    agbindrec(e, new CString("Agedgeinfo_t"), sizeof(Agedgeinfo_t.class), (N(0)));	//graph custom data
+    agbindrec(e, new CString("Agedgeinfo_t"), sizeof(ST_Agedgeinfo_t.class), (N(0)));	//graph custom data
     common_init_edge(e);
     ED_weight(e, late_int(e, Z.z().E_weight, 1, 0));
     tailgroup = late_string(agtail(e), Z.z().N_group, new CString(""));
@@ -839,11 +816,11 @@ LEAVING("zbvhnhd78bppq8wb872847bj","dot_init_edge");
 
 //3 2ylyhz7macit0ts1hap2tg3wy
 // void  dot_init_node_edge(graph_t * g) 
-public static void dot_init_node_edge(Agraph_s g) {
+public static void dot_init_node_edge(ST_Agraph_s g) {
 ENTERING("2ylyhz7macit0ts1hap2tg3wy","dot_init_node_edge");
 try {
-	Agnode_s n;
-	Agedge_s e;
+	ST_Agnode_s n;
+	ST_Agedge_s e;
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
 	dot_init_node(n);
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
@@ -1072,11 +1049,11 @@ throw new UnsupportedOperationException();
 
 //3 7t18nggek2s9vvb5opwqa8rwr
 // static void dotLayout(Agraph_t * g) 
-public static void dotLayout(Agraph_s g) {
+public static void dotLayout(ST_Agraph_s g) {
 ENTERING("7t18nggek2s9vvb5opwqa8rwr","dotLayout");
 try {
-    aspect_t aspect = (aspect_t) Memory.malloc(aspect_t.class);
-    aspect_t asp;
+	ST_aspect_t aspect = new ST_aspect_t();
+	ST_aspect_t asp;
     int maxphase = late_int(g, (agattr(g,AGRAPH,new CString("phase"),null)), -1, 1);
     setEdgeType (g, (5 << 1));
     asp = setAspect (g, aspect);
@@ -1088,7 +1065,7 @@ try {
 	    attach_phase_attrs (g, 1);
 	    return;
 	}
-	if (aspect.getBoolean("badGraph")) {
+	if (aspect.badGraph!=0) {
 UNSUPPORTED("1yu5j8tk43i6jlmu8wk9jks15"); // 	    agerr(AGWARN, "dot does not support the aspect attribute for disconnected graphs or graphs with clusters\n");
 UNSUPPORTED("5uwp9z6jkv5uc30iyfszyg6dw"); // 	    asp = NULL;
 UNSUPPORTED("28kbszyxsjoj03gb134ov4hag"); // 	    aspect.nextIter = 0;
@@ -1191,14 +1168,14 @@ throw new UnsupportedOperationException();
 
 //3 nedairhdof6qkmjjoh4h68zy
 // static void doDot (Agraph_t* g) 
-public static void doDot(Agraph_s g) {
+public static void doDot(ST_Agraph_s g) {
 ENTERING("nedairhdof6qkmjjoh4h68zy","doDot");
 try {
-    Agraph_s ccs[];
-    Agraph_s sg;
+    ST_Agraph_s ccs[];
+    ST_Agraph_s sg;
     int ncc;
     int i;
-    pack_info pinfo = (pack_info) Memory.malloc(pack_info.class);
+    final ST_pack_info pinfo = new ST_pack_info();
     int Pack = getPack(g, -1, 8);
     int mode = getPackModeInfo (g, enumAsInt(pack_mode.class, "l_undef"), pinfo);
     getPackInfo(g, enumAsInt(pack_mode.class, "l_node"), 8, pinfo);
@@ -1253,7 +1230,7 @@ LEAVING("nedairhdof6qkmjjoh4h68zy","doDot");
 
 //3 euvc3uoksq3e24augkwebfkcv
 // void dot_layout(Agraph_t * g) 
-public static void dot_layout(Agraph_s g) {
+public static void dot_layout(ST_Agraph_s g) {
 ENTERING("euvc3uoksq3e24augkwebfkcv","dot_layout");
 try {
     if (agnnodes(g)!=0) doDot (g);
@@ -1268,7 +1245,7 @@ LEAVING("euvc3uoksq3e24augkwebfkcv","dot_layout");
 
 //3 ca52dadcp7m8x0bqhaw4tvtaw
 // Agraph_t * dot_root (void* p) 
-public static Agraph_s dot_root(__ptr__ p) {
+public static ST_Agraph_s dot_root(__ptr__ p) {
 ENTERING("ca52dadcp7m8x0bqhaw4tvtaw","dot_root");
 try {
     return GD_dotroot(agroot(p));

@@ -49,7 +49,6 @@ import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_nodequeue extends UnsupportedStructAndPtr {
@@ -64,22 +63,13 @@ public class ST_nodequeue extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
 	// "typedef struct nodequeue",
 	// "{",
 	// "node_t **store, **limit, **head, **tail",
-	private StarArrayOfPtr store;
-	private StarArrayOfPtr tail;
-	private StarArrayOfPtr head;
-	private StarArrayOfPtr limit;
+	public ST_Agnode_s.ArrayOfStar store;
+	public ST_Agnode_s.ArrayOfStar tail;
+	public ST_Agnode_s.ArrayOfStar head;
+	public ST_Agnode_s.ArrayOfStar limit;
 
 	// "}",
 	// "nodequeue");
@@ -87,39 +77,22 @@ public class ST_nodequeue extends UnsupportedStructAndPtr {
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("store")) {
-			this.store = (StarArrayOfPtr) newData;
+			this.store = (ST_Agnode_s.ArrayOfStar) newData;
 			return this.store;
 		}
 		if (fieldName.equals("tail")) {
-			this.tail = (StarArrayOfPtr) newData;
+			this.tail = (ST_Agnode_s.ArrayOfStar) newData;
 			return this.tail;
 		}
 		if (fieldName.equals("head")) {
-			this.head = (StarArrayOfPtr) newData;
+			this.head = (ST_Agnode_s.ArrayOfStar) newData;
 			return this.head;
 		}
 		if (fieldName.equals("limit")) {
-			this.limit = (StarArrayOfPtr) newData;
+			this.limit = (ST_Agnode_s.ArrayOfStar) newData;
 			return this.limit;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		if (fieldName.equals("store")) {
-			return this.store.getInternalArray();
-		}
-		if (fieldName.equals("tail")) {
-			return this.tail.getInternalArray();
-		}
-		if (fieldName.equals("head")) {
-			return this.head.getInternalArray();
-		}
-		if (fieldName.equals("limit")) {
-			return this.limit.getInternalArray();
-		}
-		return super.getArrayOfPtr(fieldName);
 	}
 
 	@Override

@@ -72,20 +72,11 @@ public class ST_dthold_s extends UnsupportedStructAndPtr {
 	// "}");
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
-	@Override
 	public __ptr__ castTo(Class dest) {
 		if (dest == _dthold_s.class) {
 			return this;
 		}
-		if (dest == _dtlink_s.class) {
+		if (dest == ST_dtlink_s.class) {
 			return hdr;
 		}
 		return super.castTo(dest);

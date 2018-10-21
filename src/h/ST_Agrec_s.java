@@ -55,7 +55,7 @@ import smetana.core.amiga.StarStruct;
 public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 
 	public CString name;
-	public ST_Agrec_s.Amp next;
+	public ST_Agrec_s next;
 
 	private final StarStruct parent;
 
@@ -83,48 +83,9 @@ public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp(this);
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		private final ST_Agrec_s me;
-
-		public Amp(ST_Agrec_s me) {
-			this.me = me;
-		}
-
-		@Override
-		public boolean isSameThan(StarStruct other) {
-			Amp other2 = (Amp) other;
-			return this.me == other2.me;
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return ST_Agrec_s.this.setPtr(fieldName, newData);
-		}
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_Agrec_s.this.getPtr(fieldName);
-		}
-
-		@Override
-		public __ptr__ castTo(Class dest) {
-			return ST_Agrec_s.this.castTo(dest);
-		}
-
-		@Override
-		public CString getCString(String fieldName) {
-			return ST_Agrec_s.this.getCString(fieldName);
-		}
-
-		@Override
-		public void copyDataFrom(__struct__ other) {
-			ST_Agrec_s.this.copyDataFrom(other);
-		}
+	public boolean isSameThan(StarStruct other) {
+		ST_Agrec_s other2 = (ST_Agrec_s) other;
+		return this == other2;
 	}
 
 	@Override
@@ -137,19 +98,19 @@ public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 
 	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Agdatadict_s.class && getParent() instanceof ST_Agdatadict_s) {
+		if (dest == ST_Agdatadict_s.class && getParent() instanceof ST_Agdatadict_s) {
 			return (ST_Agdatadict_s) getParent();
 		}
-		if (dest == Agattr_s.class && getParent() instanceof ST_Agattr_s) {
+		if (dest == ST_Agattr_s.class && getParent() instanceof ST_Agattr_s) {
 			return (ST_Agattr_s) getParent();
 		}
-		if (dest == Agraphinfo_t.class && getParent() instanceof ST_Agraphinfo_t) {
+		if (dest == ST_Agraphinfo_t.class && getParent() instanceof ST_Agraphinfo_t) {
 			return (ST_Agraphinfo_t) getParent();
 		}
-		if (dest == Agnodeinfo_t.class && getParent() instanceof ST_Agnodeinfo_t) {
+		if (dest == ST_Agnodeinfo_t.class && getParent() instanceof ST_Agnodeinfo_t) {
 			return (ST_Agnodeinfo_t) getParent();
 		}
-		if (dest == Agedgeinfo_t.class && getParent() instanceof ST_Agedgeinfo_t) {
+		if (dest == ST_Agedgeinfo_t.class && getParent() instanceof ST_Agedgeinfo_t) {
 			return (ST_Agedgeinfo_t) getParent();
 		}
 		System.err.println("dest=" + dest);
@@ -165,9 +126,7 @@ public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 		}
 		if (fieldName.equals("next")) {
 			if (newData instanceof ST_Agrec_s) {
-				this.next = (ST_Agrec_s.Amp) ((ST_Agrec_s) newData).amp();
-			} else {
-				this.next = (ST_Agrec_s.Amp) newData;
+				this.next = (ST_Agrec_s) newData;
 			}
 			return next;
 		}

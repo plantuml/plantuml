@@ -71,34 +71,27 @@ public class ST_dtmethod_s extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
+	public int getInt(String fieldName) {
+		if (fieldName.equals("type")) {
+			return type;
+		}
+		return super.getInt(fieldName);
 	}
 
-	public class Amp extends UnsupportedStarStruct {
-		@Override
-		public int getInt(String fieldName) {
-			if (fieldName.equals("type")) {
-				return type;
-			}
-			return super.getInt(fieldName);
+	@Override
+	public __ptr__ getPtr(String fieldName) {
+		if (fieldName.equals("searchf")) {
+			return searchf;
 		}
+		return super.getPtr(fieldName);
+	}
 
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			if (fieldName.equals("searchf")) {
-				return searchf;
-			}
-			return super.getPtr(fieldName);
+	@Override
+	public Object call(String fieldName, Object... args) {
+		if (fieldName.equals("searchf")) {
+			return searchf.exe(args);
 		}
-
-		@Override
-		public Object call(String fieldName, Object... args) {
-			if (fieldName.equals("searchf")) {
-				return searchf.exe(args);
-			}
-			return super.call(fieldName, args);
-		}
+		return super.call(fieldName, args);
 	}
 
 }

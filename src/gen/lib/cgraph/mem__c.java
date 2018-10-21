@@ -47,8 +47,8 @@ package gen.lib.cgraph;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agdisc_s;
-import h.Agraph_s;
+import h.ST_Agdisc_s;
+import h.ST_Agraph_s;
 import smetana.core.__ptr__;
 import smetana.core.size_t;
 
@@ -189,7 +189,7 @@ public class mem__c {
 
 //3 akq0jgwdspf75ypeatgcnfn8w
 // static void *memopen(Agdisc_t* disc) 
-public static Object memopen(Agdisc_s disc) {
+public static Object memopen(ST_Agdisc_s disc) {
 ENTERING("akq0jgwdspf75ypeatgcnfn8w","memopen");
 try {
 	return null;
@@ -219,19 +219,26 @@ LEAVING("9mtjrx0vjzwuecjwpxylr9tag","memalloc");
 
 //3 18v2hhjculhnb3b7fc4tx3yjw
 // static void *memresize(void *heap, void *ptr, size_t oldsize, 		       size_t request) 
-public static Object memresize(Object... arg) {
-UNSUPPORTED("1s6udii0nias7f8g4vimpkefh"); // static void *memresize(void *heap, void *ptr, size_t oldsize,
-UNSUPPORTED("8zs6530gai5ogf503wd0333qh"); // 		       size_t request)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("5ccnu5m92hidffpixzo964tna"); //     void *rv;
-UNSUPPORTED("74rq74mh7lnfr9i3qmwsbx2hd"); //     (void) heap;
-UNSUPPORTED("ebomd3babnm180zhyrfeg59wi"); //     rv = realloc(ptr, request);
-UNSUPPORTED("bzgpl0js1bzsovafg9g24v4ya"); //     if (request > oldsize)
-UNSUPPORTED("9cjvc6kya9bwic7bue6mcj8yf"); // 	memset((char *) rv + oldsize, 0, request - oldsize);
-UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static __ptr__ memresize(__ptr__ heap, __ptr__ ptr, size_t oldsize, size_t request) {
+ENTERING("18v2hhjculhnb3b7fc4tx3yjw","memresize");
+try {
+	request.realloc(ptr);
+	return ptr;
+} finally {
+LEAVING("18v2hhjculhnb3b7fc4tx3yjw","memresize");
+}
+//UNSUPPORTED("1s6udii0nias7f8g4vimpkefh"); // static void *memresize(void *heap, void *ptr, size_t oldsize,
+//UNSUPPORTED("8zs6530gai5ogf503wd0333qh"); // 		       size_t request)
+//UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
+//UNSUPPORTED("5ccnu5m92hidffpixzo964tna"); //     void *rv;
+//UNSUPPORTED("74rq74mh7lnfr9i3qmwsbx2hd"); //     (void) heap;
+//UNSUPPORTED("ebomd3babnm180zhyrfeg59wi"); //     rv = realloc(ptr, request);
+//UNSUPPORTED("bzgpl0js1bzsovafg9g24v4ya"); //     if (request > oldsize)
+//UNSUPPORTED("9cjvc6kya9bwic7bue6mcj8yf"); // 	memset((char *) rv + oldsize, 0, request - oldsize);
+//UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
+//UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
+//
+//throw new UnsupportedOperationException();
 }
 
 
@@ -265,11 +272,11 @@ static {
 
 //3 7newv1hmzvt4vtttc9cxdxfpn
 // void *agalloc(Agraph_t * g, size_t size) 
-public static __ptr__ agalloc(Agraph_s g, size_t size) {
+public static __ptr__ agalloc(ST_Agraph_s g, size_t size) {
 ENTERING("7newv1hmzvt4vtttc9cxdxfpn","agalloc");
 try {
 	__ptr__ mem;
-    mem =  (__ptr__) g.getPtr("clos").getStruct("disc").getPtr("mem").call("alloc", g.getPtr("clos").getStruct("state").getPtr("mem"), size);
+    mem =  (__ptr__) g.clos.disc.mem.call("alloc", g.clos.state.mem, size);
     if (mem == null)
 	 System.err.println("memory allocation failure");
     return mem;

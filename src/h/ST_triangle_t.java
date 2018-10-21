@@ -45,15 +45,12 @@
  */
 package h;
 
-import h.ST_pathend_t.ArrayOfTwenty;
-import smetana.core.UnsupportedArrayOfStruct;
-import smetana.core.UnsupportedSize_t;
+import java.util.ArrayList;
+import java.util.List;
+
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_struct__;
-import smetana.core.__struct__;
-import smetana.core.size_t;
-import smetana.core.amiga.StarArrayOfPtr;
+import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_triangle_t extends UnsupportedStructAndPtr {
@@ -68,50 +65,53 @@ public class ST_triangle_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
+	public static class Array {
 
-	public class Amp extends UnsupportedStarStruct {
+		private final List<ST_triangle_t> data;
+		private final int pos;
+
+		public Array(int size) {
+			this.data = new ArrayList<ST_triangle_t>();
+			this.pos = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(new ST_triangle_t());
+			}
+		}
+
+		public Array reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(new ST_triangle_t());
+			}
+			return this;
+		}
+
+		private Array(List<ST_triangle_t> data, int pos) {
+			this.data = data;
+			this.pos = pos;
+		}
+
+		public ST_triangle_t get(int i) {
+			return this.data.get(pos + i);
+		}
+
+		public Array plusJ(int i) {
+			return new Array(data, pos + i);
+		}
+
+		public int minus(Array other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos - other.pos;
+		}
 
 	}
 
 	// "typedef struct triangle_t",
 	// "{",
-	private int mark;
+	public int mark;
 
-	private final ST_tedge_t e[] = new ST_tedge_t[] { new ST_tedge_t(), new ST_tedge_t(), new ST_tedge_t() };
-
-	class ArrayOfThree extends UnsupportedArrayOfStruct {
-
-		final private int pos;
-
-		public ArrayOfThree(int pos) {
-			this.pos = pos;
-		}
-
-		@Override
-		public __array_of_struct__ plus(int delta) {
-			return new ArrayOfThree(pos + delta);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return e[pos];
-		}
-
-		@Override
-		public void setStruct(__struct__ value) {
-			e[pos].copyDataFrom(value);
-		}
-
-		@Override
-		public double getDouble(String fieldName) {
-			return getStruct().getDouble(fieldName);
-		}
-
-	}
+	public final ST_tedge_t e[] = new ST_tedge_t[] { new ST_tedge_t(), new ST_tedge_t(), new ST_tedge_t() };
 
 	// "struct tedge_t e[3]",
 	// "}",
@@ -140,35 +140,6 @@ public class ST_triangle_t extends UnsupportedStructAndPtr {
 			return this.mark != 0;
 		}
 		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		if (fieldName.equals("e")) {
-			return new ArrayOfThree(0);
-		}
-		return super.getArrayOfStruct(fieldName);
-	}
-
-	public static size_t sizeof(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return new StarArrayOfPtr(new STArray<ST_triangle_t>(nb, 0, ST_triangle_t.class));
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-
-			@Override
-			public Object realloc(Object old) {
-				StarArrayOfPtr old2 = (StarArrayOfPtr) old;
-				old2.realloc(nb);
-				return old2;
-			}
-		};
 	}
 
 }

@@ -58,10 +58,10 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.Agcbstack_s;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.Agsym_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agsym_s;
 import h.agobjfn_t;
 import h.agobjupdfn_t;
 import smetana.core.__ptr__;
@@ -275,11 +275,11 @@ throw new UnsupportedOperationException();
 
 //3 c4ft3rxx9au29a2ns2nhod4dn
 // void agmethod_init(Agraph_t * g, void *obj) 
-public static void agmethod_init(Agraph_s g, __ptr__ obj) {
+public static void agmethod_init(ST_Agraph_s g, __ptr__ obj) {
 ENTERING("c4ft3rxx9au29a2ns2nhod4dn","agmethod_init");
 try {
-    if (g.getPtr("clos").getBoolean("callbacks_enabled"))
-	aginitcb(g, obj, (Agcbstack_s) g.getPtr("clos").getPtr("cb"));
+    if (g.clos.callbacks_enabled)
+	aginitcb(g, obj, (Agcbstack_s) g.clos.getPtr("cb"));
     else
 	agrecord_callback(g, obj, 100, null);
 } finally {
@@ -292,7 +292,7 @@ LEAVING("c4ft3rxx9au29a2ns2nhod4dn","agmethod_init");
 
 //3 eobcsheti70b9gzoi3z968zev
 // void aginitcb(Agraph_t * g, void *obj, Agcbstack_t * cbstack) 
-public static void aginitcb(Agraph_s g, __ptr__ obj, Agcbstack_s cbstack) {
+public static void aginitcb(ST_Agraph_s g, __ptr__ obj, Agcbstack_s cbstack) {
 ENTERING("eobcsheti70b9gzoi3z968zev","aginitcb");
 try {
     agobjfn_t fn;
@@ -326,11 +326,11 @@ LEAVING("eobcsheti70b9gzoi3z968zev","aginitcb");
 
 //3 29p743rx2pw81slkoaayfeael
 // void agmethod_upd(Agraph_t * g, void *obj, Agsym_t * sym) 
-public static void agmethod_upd(Agraph_s g, __ptr__ obj, Agsym_s sym) {
+public static void agmethod_upd(ST_Agraph_s g, __ptr__ obj, ST_Agsym_s sym) {
 ENTERING("29p743rx2pw81slkoaayfeael","agmethod_upd");
 try {
-    if (g.getPtr("clos").getBoolean("callbacks_enabled"))
-	agupdcb(g, obj, sym, (Agcbstack_s) g.getPtr("clos").getPtr("cb"));
+    if (g.clos.callbacks_enabled)
+	agupdcb(g, obj, sym, (Agcbstack_s) g.clos.getPtr("cb"));
     else
 	agrecord_callback(g, obj, 101, sym);
 } finally {
@@ -343,7 +343,7 @@ LEAVING("29p743rx2pw81slkoaayfeael","agmethod_upd");
 
 //3 8t9rkcpdvmxph6krjvfmz3s51
 // void agupdcb(Agraph_t * g, void *obj, Agsym_t * sym, Agcbstack_t * cbstack) 
-public static void agupdcb(Agraph_s g, __ptr__ obj, Agsym_s sym, Agcbstack_s cbstack) {
+public static void agupdcb(ST_Agraph_s g, __ptr__ obj, ST_Agsym_s sym, Agcbstack_s cbstack) {
 ENTERING("8t9rkcpdvmxph6krjvfmz3s51","agupdcb");
 try {
     agobjupdfn_t fn;
@@ -425,17 +425,17 @@ throw new UnsupportedOperationException();
 
 //3 53858x47ifwq7ldf9ukvpdc5r
 // Agraph_t *agroot(void* obj) 
-public static Agraph_s agroot(__ptr__ obj) {
+public static ST_Agraph_s agroot(__ptr__ obj) {
 ENTERING("53858x47ifwq7ldf9ukvpdc5r","agroot");
 try {
     switch (AGTYPE(obj)) {
     case AGINEDGE:
     case AGOUTEDGE:
-	return (Agraph_s) obj.castTo(Agedge_s.class).getPtr("node").getPtr("root");
+	return (ST_Agraph_s) obj.castTo(ST_Agedge_s.class).getPtr("node").getPtr("root");
     case AGNODE:
-	return (Agraph_s) obj.castTo(Agnode_s.class).getPtr("root");
+	return (ST_Agraph_s) obj.castTo(ST_Agnode_s.class).getPtr("root");
     case AGRAPH:
-	return (Agraph_s) obj.castTo(Agraph_s.class).getPtr("root");
+	return (ST_Agraph_s) obj.castTo(ST_Agraph_s.class).getPtr("root");
     default:			/* actually can't occur if only 2 bit tags */
 	System.err.println("agroot of a bad object");
 	return null;
@@ -450,17 +450,17 @@ LEAVING("53858x47ifwq7ldf9ukvpdc5r","agroot");
 
 //3 brxx6qho8cw09dg7o27lc7c6z
 // Agraph_t *agraphof(void *obj) 
-public static Agraph_s agraphof(__ptr__ obj) {
+public static ST_Agraph_s agraphof(__ptr__ obj) {
 ENTERING("brxx6qho8cw09dg7o27lc7c6z","agraphof");
 try {
     switch (AGTYPE(obj)) {
     case AGINEDGE:
     case AGOUTEDGE:
-    return (Agraph_s) obj.castTo(Agedge_s.class).getPtr("node").getPtr("root").castTo(Agraph_s.class);
+    return (ST_Agraph_s) obj.castTo(ST_Agedge_s.class).getPtr("node").getPtr("root").castTo(ST_Agraph_s.class);
     case AGNODE:
-    return (Agraph_s) obj.castTo(Agnode_s.class).getPtr("root").castTo(Agraph_s.class);
+    return (ST_Agraph_s) obj.castTo(ST_Agnode_s.class).getPtr("root").castTo(ST_Agraph_s.class);
     case AGRAPH:
-	return (Agraph_s) obj.castTo(Agraph_s.class);
+	return (ST_Agraph_s) obj.castTo(ST_Agraph_s.class);
     default:			/* actually can't occur if only 2 bit tags */
 	System.err.println("agraphof a bad object");
 	return null;
@@ -542,10 +542,10 @@ throw new UnsupportedOperationException();
 
 //3 91ej8cxcc0kzgkg2yk3pdiifs
 // int agcontains(Agraph_t* g, void* obj) 
-public static boolean agcontains(Agraph_s g, __ptr__ obj) {
+public static boolean agcontains(ST_Agraph_s g, __ptr__ obj) {
 ENTERING("91ej8cxcc0kzgkg2yk3pdiifs","agcontains");
 try {
-    Agraph_s subg;
+    ST_Agraph_s subg;
     if (NEQ(agroot(g), agroot(obj))) return false;
     switch (AGTYPE(obj)) {
     case AGRAPH:
@@ -557,7 +557,7 @@ UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
     case AGNODE: 
         return (agidnode(g, AGID(obj), 0) != null);
     default:
-        return (agsubedge(g, (Agedge_s) obj, false) != null);
+        return (agsubedge(g, (ST_Agedge_s) obj, false) != null);
     }
 } finally {
 LEAVING("91ej8cxcc0kzgkg2yk3pdiifs","agcontains");

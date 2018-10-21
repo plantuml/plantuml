@@ -45,15 +45,13 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
 
 public class ST_gvlayout_features_t extends UnsupportedStructAndPtr {
 
 	// "typedef struct",
 	// "{",
-	private int flags;
+	public int flags;
 
 	// "}",
 	// "gvlayout_features_t");
@@ -68,19 +66,11 @@ public class ST_gvlayout_features_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public int getInt(String fieldName) {
-			if (fieldName.equals("flags")) {
-				return flags;
-			}
-			return super.getInt(fieldName);
+	public int getInt(String fieldName) {
+		if (fieldName.equals("flags")) {
+			return flags;
 		}
+		return super.getInt(fieldName);
 	}
 
 }

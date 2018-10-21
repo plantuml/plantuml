@@ -47,8 +47,8 @@ package gen.lib.cdt;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h._dt_s;
-import h._dtlink_s;
+import h.ST_dt_s;
+import h.ST_dtlink_s;
 
 public class dtextract__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -119,25 +119,25 @@ public class dtextract__c {
 
 //3 ar89jjwhuitmbhut1o3ft3zpb
 // Dtlink_t* dtextract(register Dt_t* dt)     
-public static _dtlink_s dtextract(_dt_s dt) {
+public static ST_dtlink_s dtextract(ST_dt_s dt) {
 ENTERING("ar89jjwhuitmbhut1o3ft3zpb","dtextract");
 try {
-	_dtlink_s	list = null;
-	_dtlink_s	s[], ends[];
-	if((dt.getPtr("data").getInt("type")&(0000004|0000010) )!=0)
-		list = (_dtlink_s) dt.getPtr("data").getPtr("here");
-	else if((dt.getPtr("data").getInt("type")&(0000001|0000002))!=0)
+	ST_dtlink_s	list = null;
+	ST_dtlink_s	s[], ends[];
+	if((dt.data.type&(0000004|0000010) )!=0)
+		list = (ST_dtlink_s) dt.data.here;
+	else if((dt.data.type&(0000001|0000002))!=0)
 	{	UNSUPPORTED("list = dtflatten(dt)");
 UNSUPPORTED("8i2mufw9f604gvj48u8nbdazp"); // 		for(ends = (s = dt->data->hh._htab) + dt->data->ntab; s < ends; ++s)
 UNSUPPORTED("4sml4zdr938yth6x815jt1dlm"); // 			*s = ((Dtlink_t*)0);
 	}
 	else /*if(dt->data->type&(DT_LIST|DT_STACK|DT_QUEUE))*/
-	{	list = (_dtlink_s) dt.getPtr("data").getPtr("hh").getPtr("_head");
-		dt.getPtr("data").getPtr("hh").setPtr("_head", null);
+	{	list = (ST_dtlink_s) dt.data._head;
+		dt.data._head = null;
 	}
-	dt.getPtr("data").setInt("type", dt.getPtr("data").getInt("type") & ~010000);
-	dt.getPtr("data").setInt("size", 0);
-	dt.getPtr("data").setPtr("here", null);
+	dt.data.setInt("type", dt.data.type & ~010000);
+	dt.data.setInt("size", 0);
+	dt.data.here = null;
 	return list;
 } finally {
 LEAVING("ar89jjwhuitmbhut1o3ft3zpb","dtextract");

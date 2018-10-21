@@ -47,7 +47,6 @@ package gen.lib.common;
 import static gen.lib.cgraph.attr__c.agget;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.common.geom__c.ccwrotatepf;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.utils__c.late_double;
 import static gen.lib.common.utils__c.late_int;
 import static gen.lib.common.utils__c.late_string;
@@ -59,7 +58,6 @@ import static smetana.core.JUtils.atan2;
 import static smetana.core.JUtils.cos;
 import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtils.sin;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtils.sqrt;
 import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtilsDebug.ENTERING;
@@ -87,30 +85,22 @@ import static smetana.core.Macro.SQRT2;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.fabs;
 import static smetana.core.Macro.hypot;
-import h.Agnode_s;
-import h.Agnodeinfo_t;
-import h.Agobj_s;
-import h.Agraphinfo_t;
+import h.ST_Agnode_s;
+import h.ST_Agraphinfo_t;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agobj_s;
 import h.ST_boxf;
+import h.ST_inside_t;
+import h.ST_point;
 import h.ST_pointf;
+import h.ST_polygon_t;
 import h.ST_port;
-import h.boxf;
-import h.inside_t;
-import h.point;
-import h.pointf;
-import h.polygon_t;
-import h.port;
-import h.shape_desc;
+import h.ST_shape_desc;
 import h.shape_kind;
 import smetana.core.CFunctionImpl;
 import smetana.core.CString;
-import smetana.core.JUtils;
-import smetana.core.Memory;
 import smetana.core.Z;
-import smetana.core.__c__fields;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarArrayOfPtr;
 
 public class shapes__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -370,14 +360,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -406,26 +396,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
-
 
 
 
@@ -448,14 +418,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -1077,11 +1047,11 @@ throw new UnsupportedOperationException();
 
 //3 eb4jyrh981apg1fy13fczexdl
 // static int same_side(pointf p0, pointf p1, pointf L0, pointf L1) 
-public static boolean same_side(final __struct__<pointf> p0, final __struct__<pointf> p1, final __struct__<pointf> L0, final __struct__<pointf> L1) {
+public static boolean same_side(final ST_pointf p0, final ST_pointf p1, final ST_pointf L0, final ST_pointf L1) {
 // WARNING!! STRUCT
 return same_side_w_(p0.copy(), p1.copy(), L0.copy(), L1.copy());
 }
-private static boolean same_side_w_(final __struct__<pointf> p0, final __struct__<pointf> p1, final __struct__<pointf> L0, final __struct__<pointf> L1) {
+private static boolean same_side_w_(final ST_pointf p0, final ST_pointf p1, final ST_pointf L0, final ST_pointf L1) {
 ENTERING("eb4jyrh981apg1fy13fczexdl","same_side");
 try {
     boolean s0, s1;
@@ -2527,10 +2497,10 @@ throw new UnsupportedOperationException();
 
 //3 5gahokttzv65lspm84ao1le37
 // shape_kind shapeOf(node_t * n) 
-public static int shapeOf(Agnode_s n) {
+public static int shapeOf(ST_Agnode_s n) {
 ENTERING("5gahokttzv65lspm84ao1le37","shapeOf");
 try {
-    shape_desc sh = (shape_desc) ND_shape(n);
+	ST_shape_desc sh = (ST_shape_desc) ND_shape(n);
     CFunctionImpl ifn; //void (*ifn) (node_t *);
     if (N(sh))
 	return enumAsInt(shape_kind.class, "SH_UNSET");
@@ -2572,13 +2542,13 @@ throw new UnsupportedOperationException();
 
 //3 a11xv6duihbr3d6gkgo2ye2j5
 // static void poly_init(node_t * n) 
-public static void poly_init(Agnode_s n) {
+public static void poly_init(ST_Agnode_s n) {
 ENTERING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 try {
-    final __struct__<pointf> dimen = JUtils.from(pointf.class), min_bb = JUtils.from(pointf.class), bb = JUtils.from(pointf.class);
-    final __struct__<point> imagesize = JUtils.from(point.class);
-    final __struct__<pointf> P = JUtils.from(pointf.class), Q = JUtils.from(pointf.class), R = JUtils.from(pointf.class);
-    __ptr__ vertices = null;
+    final ST_pointf dimen = new ST_pointf(), min_bb = new ST_pointf(), bb = new ST_pointf();
+    final ST_point imagesize = new ST_point();
+    final ST_pointf P = new ST_pointf(), Q = new ST_pointf(), R = new ST_pointf();
+    ST_pointf.Array vertices = null;
     CString p, sfile, fxd;
     double temp, alpha, beta, gamma;
     double orientation, distortion, skew;
@@ -2587,8 +2557,8 @@ try {
     double width=0, height=0, marginx, marginy, spacex;
     boolean regular; int peripheries, sides;
     boolean isBox; int i, j, outp;
-    polygon_t poly = (polygon_t) Memory.malloc(polygon_t.class);
-    regular = ND_shape(n).getPtr("polygon").getBoolean("regular");
+    ST_polygon_t poly = new ST_polygon_t();
+    regular = ND_shape(n).polygon.regular!=0;
     peripheries = ND_shape(n).getPtr("polygon").getInt("peripheries");
     sides = ND_shape(n).getPtr("polygon").getInt("sides");
     orientation = ND_shape(n).getPtr("polygon").getDouble("orientation");
@@ -2622,7 +2592,7 @@ UNSUPPORTED("cp83hdn3dp0a7rp9bauc3bgki"); // 	sides = late_int(n, N_sides, 4, 0)
 UNSUPPORTED("abmuc3vqirf3i48480fj0k14g"); // 	distortion = late_double(n, N_distortion, 0.0, -100.0);
     }
     /* get label dimensions */
-    dimen.___(ND_label(n).getStruct("dimen"));
+    dimen.___(ND_label(n).dimen);
     /* minimal whitespace around label */
     if (ROUND(abs(dimen.getDouble("x")))!=0 || ROUND(abs(dimen.getDouble("y")))!=0) {
     	/* padding */
@@ -2647,16 +2617,16 @@ UNSUPPORTED("87bdwkkwbzyswxnepdd9bj8mb"); // 		{((dimen).x += 4*4); ((dimen).y +
 		((ST_pointf) dimen).y = dimen.getDouble("y") + 2*4;
 	    };
     }
-    spacex = dimen.getDouble("x") - ND_label(n).getStruct("dimen").getDouble("x");
+    spacex = dimen.getDouble("x") - ND_label(n).dimen.getDouble("x");
     /* quantization */
-    if ((temp = agraphof(n).castTo(Agobj_s.class).getPtr("data").castTo(Agraphinfo_t.class).getPtr("drawing").getDouble("quantum")) > 0.0) {
+    if ((temp = agraphof(n).castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agraphinfo_t.class).getPtr("drawing").getDouble("quantum")) > 0.0) {
 UNSUPPORTED("3nqb0s5rkwj3igt71vooj8asd"); // 	temp = ((((temp)*72>=0)?(int)((temp)*72 + .5):(int)((temp)*72 - .5)));
 UNSUPPORTED("5fxtqwy8liyvnx1yvsou5hb4o"); // 	dimen.x = quant(dimen.x, temp);
 UNSUPPORTED("et885f1jcqpske6ip856arouv"); // 	dimen.y = quant(dimen.y, temp);
     }
     imagesize.setInt("x", 0);
     imagesize.setInt("y", 0);
-    if (ND_shape(n).getBoolean("usershape")) {
+    if (ND_shape(n).usershape) {
 	/* custom requires a shapefile
 	 * not custom is an adaptable user shape such as a postscript
 	 * function.
@@ -2699,14 +2669,14 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     /* extra sizing depends on if label is centered vertically */
     p = agget(n, new CString("labelloc"));
     if (p!=null && (p.charAt(0) == 't' || p.charAt(0) == 'b'))
-    n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).getPtr("label").setInt("valign", p.charAt(0));
+    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").setInt("valign", p.charAt(0));
     else
-    n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).getPtr("label").setInt("valign", 'c');
+    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").setInt("valign", 'c');
     isBox = (sides == 4 && (((orientation>=0)?(int)(orientation + .5):(int)(orientation - .5)) % 90) == 0
 	     && distortion == 0. && skew == 0.);
     if (isBox) {
 	/* for regular boxes the fit should be exact */
-    } else if (n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).getPtr("shape").getPtr("polygon").getPtr("vertices")!=null) {
+    } else if (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("shape").getPtr("polygon").getPtr("vertices")!=null) {
 UNSUPPORTED("4adqsyjwqwzs50ggjp57ok6u7"); // 	poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->shape)->polygon->vertices;
 UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     } else {
@@ -2715,7 +2685,7 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	 * We assume the ellipse is defined by a scaling up of bb.
 	 */
 	temp = bb.getDouble("y") * 1.41421356237309504880;
-	if (height > temp && (n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).getPtr("label").getInt("valign") == 'c')) {
+	if (height > temp && (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").getInt("valign") == 'c')) {
 	    /* if there is height to spare
 	     * and the label is centered vertically
 	     * then just pad x in proportion to the spare height */
@@ -2742,8 +2712,8 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	poly.setInt("option", poly.getInt("option") | (1 << 11));
     } else if (mapbool(fxd)) {
 	/* check only label, as images we can scale to fit */
-	if ((width < (n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).getPtr("label").getDouble("dimen.x")) 
-		|| (height < (n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).getPtr("label").getDouble("dimen.y")))))
+	if ((width < (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").getDouble("dimen.x")) 
+		|| (height < (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").getDouble("dimen.y")))))
 	    System.err.println(
 		  "node '%s', graph '%s' size too small for label\n");
 		  //agnameof(n), agnameof(agraphof(n)));
@@ -2767,29 +2737,29 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     /* Compute space available for label.  Provides the justification borders */
     if (N(mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))))) {
 	if (isBox) {
-		((ST_pointf) ND_label(n).getStruct("space")).x = MAX(dimen.getDouble("x"),bb.getDouble("x")) - spacex;
+		((ST_pointf) ND_label(n).space).x = MAX(dimen.getDouble("x"),bb.getDouble("x")) - spacex;
 	}
 	else if (dimen.getDouble("y") < bb.getDouble("y")) {
 	    temp = bb.getDouble("x") * sqrt(1.0 - SQR(dimen.getDouble("y")) / SQR(bb.getDouble("y")));
-	    ND_label(n).getStruct("space").setDouble("x", MAX(dimen.getDouble("x"),temp) - spacex);
+	    ND_label(n).space.setDouble("x", MAX(dimen.getDouble("x"),temp) - spacex);
         }
 	else
-	    ND_label(n).getStruct("space").setDouble("x", dimen.getDouble("x") - spacex);
+	    ND_label(n).space.setDouble("x", dimen.getDouble("x") - spacex);
     } else {
-	    ND_label(n).getStruct("space").setDouble("x", dimen.getDouble("x") - spacex);
+	    ND_label(n).space.setDouble("x", dimen.getDouble("x") - spacex);
     }
     if ((poly.getInt("option") & (1 << 11)) == 0) {
 	temp = bb.getDouble("y") - min_bb.getDouble("y");
 	if (dimen.getDouble("y") < imagesize.getInt("y"))
 	    temp += imagesize.getInt("y") - dimen.getDouble("y");
-	((ST_pointf) ND_label(n).getStruct("space")).y = dimen.getDouble("y") + temp;
+	((ST_pointf) ND_label(n).space).y = dimen.getDouble("y") + temp;
     }
     outp = peripheries;
     if (peripheries < 1)
 	outp = 1;
     if (sides < 3) {		/* ellipses */
 	sides = 2;
-	vertices = zmalloc(sizeof(pointf.class, outp * sides));
+	vertices = new ST_pointf.Array(outp * sides);
 	P.setDouble("x", bb.getDouble("x") / 2.);
 	P.setDouble("y", bb.getDouble("y") / 2.);
 	vertices.setDouble("x", -P.getDouble("x"));
@@ -2823,8 +2793,8 @@ UNSUPPORTED("b5z0hw4dacenv33xsaex70g8d"); // 	    bb.y = 2. * P.y;
  *   It needs to find the point where the two lines, parallel to
  *   the current segments, and outside by GAP distance, intersect.   
  */
-	vertices = zmalloc(sizeof(pointf.class, outp * sides));
-	if (ND_shape(n).getPtr("polygon").getPtr("vertices")!=null) {
+	vertices = new ST_pointf.Array(outp * sides);
+	if (((ST_polygon_t)ND_shape(n).getPtr("polygon")).vertices!=null) {
 UNSUPPORTED("3ghle84ieryaenfnlbzrfv7bw"); // 	    poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->shape)->polygon->vertices;
 UNSUPPORTED("227lpcg9dt83m2bm8yshb4djf"); // 	    pd->vertex_gen (vertices, &bb);
 UNSUPPORTED("cc3jvnwvbhjhro4adeet363yd"); // 	    xmax = bb.x/2;
@@ -2866,12 +2836,12 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	    /* store result in array of points */
 		vertices.plus(i).setStruct(P);
 		if (isBox) { /* enforce exact symmetry of box */
-			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(1)).getInternalArray().getInternal(0)))).x = -P.getDouble("x");
-			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(1)).getInternalArray().getInternal(0)))).y = P.getDouble("y");
-			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(2)).getInternalArray().getInternal(0)))).x = -P.getDouble("x");
-			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(2)).getInternalArray().getInternal(0)))).y = -P.getDouble("y");
-			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(3)).getInternalArray().getInternal(0)))).x = P.getDouble("x");
-			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(3)).getInternalArray().getInternal(0)))).y = -P.getDouble("y");
+			vertices.get(1).x = -P.getDouble("x");
+			vertices.get(1).y = P.getDouble("y");
+			vertices.get(2).x = -P.getDouble("x");
+			vertices.get(2).y = -P.getDouble("y");
+			vertices.get(3).x = P.getDouble("x");
+			vertices.get(3).y = -P.getDouble("y");
 		    break;
 		}
 	    }
@@ -2929,16 +2899,16 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
     poly.setDouble("orientation", orientation);
     poly.setDouble("skew", skew);
     poly.setDouble("distortion", distortion);
-    poly.setPtr("vertices", vertices);
+    poly.vertices = vertices;
     if ((poly.getInt("option") & (1 << 11))!=0) {
 	/* set width and height to reflect label and shape */
 UNSUPPORTED("7kk8oru3b3copylmq3gssx6qx"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->width) = ((((dimen.x)>(bb.x)?(dimen.x):(bb.x)))/(double)72);
 UNSUPPORTED("8oouzms2x039fhfcfxm7yc4su"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->height) = ((((dimen.y)>(bb.y)?(dimen.y):(bb.y)))/(double)72);
     } else {
-    n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).setDouble("width", ((bb.getDouble("x"))/(double)72));
-    n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).setDouble("height", ((bb.getDouble("y"))/(double)72));
+    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).setDouble("width", ((bb.getDouble("x"))/(double)72));
+    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).setDouble("height", ((bb.getDouble("y"))/(double)72));
     }
-    n.castTo(Agobj_s.class).getPtr("data").castTo(Agnodeinfo_t.class).setPtr("shape_info", poly);
+    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).setPtr("shape_info", poly);
 } finally {
 LEAVING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 }
@@ -2965,19 +2935,19 @@ throw new UnsupportedOperationException();
 
 
 
-//3 570t4xovyyfqipaikkf63crmk
-// static boolean poly_inside(inside_t * inside_context, pointf p) 
 //static Agnode_s lastn;	/* last node argument */
 //static polygon_t poly;
 //static int last, outp, sides;
-//static final __struct__<pointf> O = JUtils.from(pointf.class); /* point (0,0) */
+//static final ST_pointf O = new ST_pointf(); /* point (0,0) */
 //static pointf vertex;
 //static double xsize, ysize, scalex, scaley, box_URx, box_URy;
-public static boolean poly_inside(inside_t inside_context, final __struct__<pointf> p) {
+//3 570t4xovyyfqipaikkf63crmk
+//static boolean poly_inside(inside_t * inside_context, pointf p) 
+public static boolean poly_inside(ST_inside_t inside_context, ST_pointf p) {
 // WARNING!! STRUCT
 return poly_inside_w_(inside_context, p.copy());
 }
-private static boolean poly_inside_w_(inside_t inside_context, final __struct__<pointf> p) {
+private static boolean poly_inside_w_(ST_inside_t inside_context, final ST_pointf p) {
 ENTERING("570t4xovyyfqipaikkf63crmk","poly_inside");
 try {
     int i, i1, j;
@@ -2994,8 +2964,8 @@ try {
     }
     if (NEQ(n, Z.z().lastn)) {
 	double n_width = 0, n_height = 0;
-	Z.z().poly = (polygon_t) ND_shape_info(n);
-	Z.z().vertex = (pointf) Z.z().poly.getPtr("vertices");
+	Z.z().poly = (ST_polygon_t) ND_shape_info(n);
+	Z.z().vertex = Z.z().poly.vertices;
 	Z.z().sides = Z.z().poly.getInt("sides");
 	if ((Z.z().poly.getInt("option") & (1 << 11))!=0) {
 UNSUPPORTED("18yw1scg4sol8bhyf1vedj9kn"); // 	   boxf bb = polyBB(poly); 
@@ -3034,7 +3004,7 @@ UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	Z.z().outp = (Z.z().poly.getInt("peripheries") - 1) * Z.z().sides;
 	if (Z.z().outp < 0)
 	    Z.z().outp = 0;
-	Z.z().lastn = (Agnode_s) n;
+	Z.z().lastn = (ST_Agnode_s) n;
     }
     /* scale */
     P.setDouble("x", P.getDouble("x") * Z.z().scalex);
@@ -3050,10 +3020,10 @@ UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
     i1 = (i + 1) % Z.z().sides;
     Q.___(Z.z().vertex.plus(i + Z.z().outp).getStruct());
     R.___(Z.z().vertex.plus(i1 + Z.z().outp).getStruct());
-    if (N(same_side(P, Z.z().O, Q, R)))   /* false if outside the segment's face */
+    if (N(same_side(P, (ST_pointf)Z.z().O, Q, R)))   /* false if outside the segment's face */
 	return false;
     /* else inside the segment face... */
-    if ((s = same_side(P, Q, R, Z.z().O)) && (same_side(P, R, Z.z().O, Q))) /* true if between the segment's sides */
+    if ((s = same_side(P, Q, R, (ST_pointf)Z.z().O)) && (same_side(P, R, (ST_pointf)Z.z().O, Q))) /* true if between the segment's sides */
 	return NOT(0);
     /* else maybe in another segment */
     for (j = 1; j < Z.z().sides; j++) { /* iterate over remaining segments */
@@ -3064,7 +3034,7 @@ UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	    i1 = i;
 	    i = (i + Z.z().sides - 1) % Z.z().sides;
 	}
-	if (N(same_side(P, Z.z().O, Z.z().vertex.plus(i + Z.z().outp).getStruct(), Z.z().vertex.plus(i1 + Z.z().outp).getStruct()))) { /* false if outside any other segment's face */
+	if (N(same_side(P, (ST_pointf)Z.z().O, (ST_pointf)Z.z().vertex.plus(i + Z.z().outp).getStruct(), (ST_pointf)Z.z().vertex.plus(i1 + Z.z().outp).getStruct()))) { /* false if outside any other segment's face */
 	    Z.z().last = i;
 	    return false;
 	}
@@ -3082,11 +3052,11 @@ LEAVING("570t4xovyyfqipaikkf63crmk","poly_inside");
 
 //3 5mmuhvq40xadw0g9mzlauyztq
 // static int poly_path(node_t * n, port * p, int side, boxf rv[], int *kptr) 
-public static int poly_path(Agnode_s n, port p, int side, Object rv, Object kptr) {
+public static int poly_path(ST_Agnode_s n, ST_port p, int side, Object rv, Object kptr) {
 ENTERING("5mmuhvq40xadw0g9mzlauyztq","poly_path");
 try {
     side = 0;
-    if (ND_label(n).getBoolean("html") && ND_has_port(n)) {
+    if (ND_label(n).html && ND_has_port(n)) {
 UNSUPPORTED("67g7bthntnw8syb6zd03ueg84"); // 	side = html_path(n, p, side, rv, kptr);
     }
     return side;
@@ -3429,15 +3399,15 @@ throw new UnsupportedOperationException();
 
 //3 5k2b9gfpwm2tj3zmzniuz9azt
 // static port poly_port(node_t * n, char *portname, char *compass) 
-public static __struct__<port> poly_port(Agnode_s n, CString portname, CString compass) {
+public static ST_port poly_port(ST_Agnode_s n, CString portname, CString compass) {
 // WARNING!! STRUCT
 return poly_port_w_(n, portname, compass).copy();
 }
-private static __struct__<port> poly_port_w_(Agnode_s n, CString portname, CString compass) {
+private static ST_port poly_port_w_(ST_Agnode_s n, CString portname, CString compass) {
 ENTERING("5k2b9gfpwm2tj3zmzniuz9azt","poly_port");
 try {
-    final __struct__<port> rv= JUtils.from(port.class);
-    boxf bp;
+    final ST_port rv= new ST_port();
+    ST_boxf bp;
     int sides;			/* bitmap of which sides the port lies along */
     if (portname.charAt(0) == '\0')
 	return Z.z().Center.copy();
@@ -4592,18 +4562,18 @@ throw new UnsupportedOperationException();
 
 //3 bmt148wdf0a7gslm7hmp043jy
 // shape_desc *bind_shape(char *name, node_t * np) 
-public static shape_desc bind_shape(CString name, Agnode_s np) {
+public static ST_shape_desc bind_shape(CString name, ST_Agnode_s np) {
 ENTERING("bmt148wdf0a7gslm7hmp043jy","bind_shape");
 try {
-    shape_desc rv = null;
+	ST_shape_desc rv = null;
     CString str;
     str = safefile(agget(np, new CString("shapefile")));
     /* If shapefile is defined and not epsf, set shape = custom */
     if (str!=null && UNSUPPORTED("!(*(name)==*(\"epsf\")&&!strcmp(name,\"epsf\"))")!=null)
 	name = new CString("custom");
     if (N(name.charAt(0)=='c' && N(strcmp(name,new CString("custom"))))) {
-	for (shape_desc ptr : Z.z().Shapes) {
-	    if ((N(strcmp(ptr.getCString("name"),name)))) {
+	for (ST_shape_desc ptr : Z.z().Shapes) {
+	    if ((N(strcmp(ptr.name,name)))) {
 		rv = ptr;
 		break;
 	    }
@@ -4896,11 +4866,11 @@ throw new UnsupportedOperationException();
 
 //3 ckbg1dyu9jzx7g0c9dbriez7r
 // port resolvePort(node_t * n, node_t * other, port * oldport) 
-public static ST_port resolvePort(Agnode_s n, Agnode_s other, port oldport) {
+public static ST_port resolvePort(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
 // WARNING!! STRUCT
 return resolvePort_w_(n, other, oldport).copy();
 }
-private static ST_port resolvePort_w_(Agnode_s n, Agnode_s other, port oldport) {
+private static ST_port resolvePort_w_(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
 ENTERING("ckbg1dyu9jzx7g0c9dbriez7r","resolvePort");
 try {
  UNSUPPORTED("1aa44pvk8su341rug2x5h5h9o"); // port resolvePort(node_t * n, node_t * other, port * oldport)

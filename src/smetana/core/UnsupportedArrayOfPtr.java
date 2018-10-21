@@ -129,22 +129,6 @@ public class UnsupportedArrayOfPtr implements __array_of_ptr__ {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_cstring__ getArrayOfCString(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_integer__ getArrayOfInteger(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public __struct__ getStruct(String fieldName) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
@@ -154,10 +138,6 @@ public class UnsupportedArrayOfPtr implements __array_of_ptr__ {
 	}
 
 	public void setStruct(String fieldName, __struct__ newData) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setCString(String fieldName, CString newData) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

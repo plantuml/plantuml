@@ -42,14 +42,14 @@ import static gen.lib.cgraph.node__c.agnode;
 import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agnodeinfo_t;
-import h.Agraph_s;
-import h.Agraphinfo_t;
-import h.GVC_s;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agraphinfo_t;
+import h.ST_GVC_s;
 import h.ST_boxf;
-import h.boxf;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
@@ -99,8 +99,8 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.DotStringFactory;
+import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Shape;
@@ -111,19 +111,18 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import smetana.core.CString;
 import smetana.core.JUtils;
+import smetana.core.JUtilsDebug;
 import smetana.core.Macro;
 import smetana.core.Z;
-import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 
 	private final StringBounder stringBounder;
-	private final Map<ILeaf, Agnode_s> nodes = new LinkedHashMap<ILeaf, Agnode_s>();
-	private final Map<Link, Agedge_s> edges = new LinkedHashMap<Link, Agedge_s>();
-	private final Map<IGroup, Agraph_s> clusters = new LinkedHashMap<IGroup, Agraph_s>();
+	private final Map<ILeaf, ST_Agnode_s> nodes = new LinkedHashMap<ILeaf, ST_Agnode_s>();
+	private final Map<Link, ST_Agedge_s> edges = new LinkedHashMap<Link, ST_Agedge_s>();
+	private final Map<IGroup, ST_Agraph_s> clusters = new LinkedHashMap<IGroup, ST_Agraph_s>();
 	private Map<IGroup, ILeaf> emptyGroups = new HashMap<IGroup, ILeaf>();
 
 	private final DotStringFactory dotStringFactory;
@@ -138,13 +137,13 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 		public void drawU(UGraphic ug) {
 
-			for (Map.Entry<IGroup, Agraph_s> ent : clusters.entrySet()) {
+			for (Map.Entry<IGroup, ST_Agraph_s> ent : clusters.entrySet()) {
 				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
 			}
 
-			for (Map.Entry<ILeaf, Agnode_s> ent : nodes.entrySet()) {
+			for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet()) {
 				final ILeaf leaf = ent.getKey();
-				final Agnode_s node = ent.getValue();
+				final ST_Agnode_s node = ent.getValue();
 				final Point2D corner = getCorner(node);
 
 				final Shape shape = dotStringFactory.getBibliotekon().getShape(leaf);
@@ -152,15 +151,15 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				image.drawU(ug.apply(new UTranslate(corner)));
 			}
 
-			for (Map.Entry<Link, Agedge_s> ent : edges.entrySet()) {
+			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
-				final Agedge_s edge = ent.getValue();
-				new JDotPath(link, edge, ymirror, diagram, getLabel(link)).drawU(ug);
+				final ST_Agedge_s edge = ent.getValue();
+				new JDotPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2)).drawU(ug);
 			}
 		}
 
-		private Point2D getCorner(Agnode_s n) {
-			final Agnodeinfo_t data = (Agnodeinfo_t) Macro.AGDATA(n).castTo(Agnodeinfo_t.class);
+		private Point2D getCorner(ST_Agnode_s n) {
+			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n).castTo(ST_Agnodeinfo_t.class);
 			final double width = data.getDouble("width") * 72;
 			final double height = data.getDouble("height") * 72;
 			final double x = data.getStruct("coord").getDouble("x");
@@ -184,10 +183,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	}
 
-	public void drawGroup(UGraphic ug, YMirror ymirror, IGroup group, Agraph_s gr) {
+	public void drawGroup(UGraphic ug, YMirror ymirror, IGroup group, ST_Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
-		final __ptr__ data = Macro.AGDATA(gr).castTo(Agraphinfo_t.class);
-		final ST_boxf bb = (ST_boxf) data.getStruct("bb");
+		final ST_Agraphinfo_t data = (ST_Agraphinfo_t) Macro.AGDATA(gr).castTo(ST_Agraphinfo_t.class);
+		final ST_boxf bb = (ST_boxf) data.bb;
 		final double llx = bb.LL.x;
 		double lly = bb.LL.y;
 		final double urx = bb.UR.x;
@@ -283,7 +282,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void exportEntities(Agraph_s g, Collection<ILeaf> entities2) {
+	private void exportEntities(ST_Agraph_s g, Collection<ILeaf> entities2) {
 		for (ILeaf ent : entities2) {
 			if (ent.isRemoved()) {
 				continue;
@@ -292,10 +291,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void exportEntity(Agraph_s g, ILeaf leaf) {
+	private void exportEntity(ST_Agraph_s g, ILeaf leaf) {
 		final Shape shape = dotStringFactory.getBibliotekon().getShape(leaf);
 		// System.err.println("exportEntity " + leaf);
-		final Agnode_s node = agnode(g, new CString(shape.getUid()), true);
+		final ST_Agnode_s node = agnode(g, new CString(shape.getUid()), true);
 		agsafeset(node, new CString("shape"), new CString("box"), new CString(""));
 		final String width = "" + (shape.getWidth() / 72);
 		final String height = "" + (shape.getHeight() / 72);
@@ -364,9 +363,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		return result;
 	}
 
-	private void printCluster(Agraph_s g, Cluster cluster) {
+	private void printCluster(ST_Agraph_s g, Cluster cluster) {
 		for (Shape shape : cluster.getShapes()) {
-			final Agnode_s node = agnode(g, new CString(shape.getUid()), true);
+			final ST_Agnode_s node = agnode(g, new CString(shape.getUid()), true);
 			agsafeset(node, new CString("shape"), new CString("box"), new CString(""));
 			final String width = "" + (shape.getWidth() / 72);
 			final String height = "" + (shape.getHeight() / 72);
@@ -399,7 +398,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 		Z.open();
 		try {
-			final Agraph_s g = agopen(new CString("g"), Z.z().Agdirected, null);
+			final ST_Agraph_s g = agopen(new CString("g"), Z.z().Agdirected, null);
 
 			// printCluster(g, root);
 			exportEntities(g, getUnpackagedEntities());
@@ -420,15 +419,17 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			//
 			for (Link link : diagram.getLinks()) {
 				// System.err.println("link=" + link);
-				final Agedge_s e = createEdge(g, link);
+				final ST_Agedge_s e = createEdge(g, link);
 				// System.err.println("Agedge_s=" + e);
 				if (e != null) {
 					edges.put(link, e);
 				}
 			}
 
-			final GVC_s gvc = gvContext();
+			final ST_GVC_s gvc = gvContext();
+			JUtilsDebug.reset();
 			gvLayoutJobs(gvc, g);
+			JUtilsDebug.printMe();
 
 			// for (Agedge_s e : edges.values()) {
 			// DebugUtils.printDebugEdge(e);
@@ -447,6 +448,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 		} catch (Throwable e) {
+			JUtilsDebug.printMe();
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
 					diagram.getFlashData(), getFailureText3(e));
 			return ImageDataSimple.error();
@@ -455,7 +457,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void exportGroups(Agraph_s graph, IGroup parent) {
+	private void exportGroups(ST_Agraph_s graph, IGroup parent) {
 		for (IGroup g : diagram.getChildrenGroups(parent)) {
 			if (g.isRemoved()) {
 				continue;
@@ -470,10 +472,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	}
 
-	private void exportGroup(Agraph_s graph, IGroup group) {
+	private void exportGroup(ST_Agraph_s graph, IGroup group) {
 		final Cluster cluster = getBibliotekon().getCluster(group);
 		JUtils.LOG2("cluster = " + cluster.getClusterId());
-		final Agraph_s cluster1 = agsubg(graph, new CString(cluster.getClusterId()), true);
+		final ST_Agraph_s cluster1 = agsubg(graph, new CString(cluster.getClusterId()), true);
 		if (cluster.isLabel()) {
 			final double width = cluster.getTitleAndAttributeWidth();
 			final double height = cluster.getTitleAndAttributeHeight() - 5;
@@ -495,16 +497,31 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			return label;
 		}
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
-
 	}
 
-	private Agnode_s getAgnodeFromLeaf(IEntity entity) {
-		final Agnode_s n = nodes.get(entity);
+	private TextBlock getQualifier(Link link, int n) {
+		final String tmp = n == 1 ? link.getQualifier1() : link.getQualifier2();
+		if (tmp == null) {
+			return null;
+		}
+		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
+		ISkinParam skinParam = diagram.getSkinParam();
+		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+		final TextBlock label = Display.getWithNewlines(tmp).create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		if (TextBlockUtils.isEmpty(label, stringBounder)) {
+			return label;
+		}
+		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
+	}
+
+	private ST_Agnode_s getAgnodeFromLeaf(IEntity entity) {
+		final ST_Agnode_s n = nodes.get(entity);
 		if (n != null) {
 			return n;
 		}
 		final String id = getBibliotekon().getShapeUid((ILeaf) entity);
-		for (Map.Entry<ILeaf, Agnode_s> ent : nodes.entrySet()) {
+		for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet()) {
 			if (id.equals(getBibliotekon().getShapeUid(ent.getKey()))) {
 				return ent.getValue();
 			}
@@ -513,16 +530,16 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	}
 
-	private Agedge_s createEdge(final Agraph_s g, Link link) {
-		final Agnode_s n = getAgnodeFromLeaf(link.getEntity1());
-		final Agnode_s m = getAgnodeFromLeaf(link.getEntity2());
+	private ST_Agedge_s createEdge(final ST_Agraph_s g, Link link) {
+		final ST_Agnode_s n = getAgnodeFromLeaf(link.getEntity1());
+		final ST_Agnode_s m = getAgnodeFromLeaf(link.getEntity2());
 		if (n == null) {
 			return null;
 		}
 		if (m == null) {
 			return null;
 		}
-		final Agedge_s e = agedge(g, n, m, null, true);
+		final ST_Agedge_s e = agedge(g, n, m, null, true);
 		// System.err.println("createEdge " + link);
 		agsafeset(e, new CString("arrowtail"), new CString("none"), new CString(""));
 		agsafeset(e, new CString("arrowhead"), new CString("none"), new CString(""));
@@ -543,6 +560,22 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 					(int) dimLabel.getHeight());
 			agsafeset(e, new CString("label"), hackDim, new CString(""));
 			// System.err.print("label=" + hackDim.getContent());
+		}
+		final TextBlock q1 = getQualifier(link, 1);
+		if (q1 != null) {
+			final Dimension2D dimLabel = q1.calculateDimension(stringBounder);
+			// System.err.println("dimLabel = " + dimLabel);
+			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
+					(int) dimLabel.getHeight());
+			agsafeset(e, new CString("taillabel"), hackDim, new CString(""));
+		}
+		final TextBlock q2 = getQualifier(link, 2);
+		if (q2 != null) {
+			final Dimension2D dimLabel = q2.calculateDimension(stringBounder);
+			// System.err.println("dimLabel = " + dimLabel);
+			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
+					(int) dimLabel.getHeight());
+			agsafeset(e, new CString("headlabel"), hackDim, new CString(""));
 		}
 		// System.err.println();
 		return e;

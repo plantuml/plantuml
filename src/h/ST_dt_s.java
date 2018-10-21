@@ -55,10 +55,10 @@ public class ST_dt_s extends UnsupportedStructAndPtr implements HardcodedStruct 
 
 	public CFunction searchf;/* search function */
 
-	public ST_dtdisc_s.Amp disc; /* method to manipulate objs */
+	public ST_dtdisc_s disc; /* method to manipulate objs */
 	public ST_dtdata_s data; /* sharable data */
 	public CFunction memoryf;/* function to alloc/free memory */
-	public ST_dtmethod_s.Amp meth; /* dictionary method */
+	public ST_dtmethod_s meth; /* dictionary method */
 
 	public int type; /* type information */
 	public int nview; /* number of parent view dictionaries */
@@ -80,11 +80,11 @@ public class ST_dt_s extends UnsupportedStructAndPtr implements HardcodedStruct 
 			return searchf;
 		}
 		if (fieldName.equals("meth")) {
-			this.meth = (ST_dtmethod_s.Amp) newData;
+			this.meth = (ST_dtmethod_s) newData;
 			return meth;
 		}
 		if (fieldName.equals("disc")) {
-			this.disc = (ST_dtdisc_s.Amp) newData;
+			this.disc = (ST_dtdisc_s) newData;
 			return disc;
 		}
 		if (fieldName.equals("memoryf")) {
@@ -140,7 +140,7 @@ public class ST_dt_s extends UnsupportedStructAndPtr implements HardcodedStruct 
 
 	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == _dt_s.class) {
+		if (dest == ST_dt_s.class) {
 			return this;
 		}
 		return super.castTo(dest);

@@ -50,11 +50,11 @@ import static smetana.core.JUtils.strncpy;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.GVC_s;
+import h.ST_GVC_s;
+import h.ST_gvplugin_available_s;
+import h.ST_gvplugin_installed_t;
 import h.api_t;
 import h.gvplugin_api_t;
-import h.gvplugin_available_s;
-import h.gvplugin_installed_t;
 import h.gvplugin_library_t;
 import smetana.core.CString;
 
@@ -294,14 +294,14 @@ throw new UnsupportedOperationException();
 
 //3 dh7wri9ra8xvm9ur14gd95xjj
 // gvplugin_available_t *gvplugin_load(GVC_t * gvc, api_t api, const char *str) 
-public static gvplugin_available_s gvplugin_load(GVC_s gvc, int api, CString str) {
+public static ST_gvplugin_available_s gvplugin_load(ST_GVC_s gvc, int api, CString str) {
 ENTERING("dh7wri9ra8xvm9ur14gd95xjj","gvplugin_load");
 try {
     //gvplugin_available_s **pnext;
     //gvplugin_available_s rv;
     gvplugin_library_t library;
     gvplugin_api_t apis;
-    gvplugin_installed_t types;
+    ST_gvplugin_installed_t types;
     CString reqtyp = new CString(64), typ = new CString(64);
     CString reqdep, dep , reqpkg;
     int i;

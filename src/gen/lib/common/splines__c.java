@@ -51,15 +51,14 @@ import static gen.lib.common.arrows__c.arrowEndClip;
 import static gen.lib.common.arrows__c.arrowStartClip;
 import static gen.lib.common.arrows__c.arrow_flags;
 import static gen.lib.common.emit__c.update_bb_bz;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.shapes__c.resolvePort;
 import static gen.lib.common.utils__c.Bezier;
+import static gen.lib.common.utils__c.dotneato_closest;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ABS;
-import static smetana.core.Macro.ALLOC;
+import static smetana.core.Macro.ALLOC_ST_bezier;
 import static smetana.core.Macro.APPROXEQPT;
 import static smetana.core.Macro.ED_edge_type;
 import static smetana.core.Macro.ED_head_port;
@@ -68,6 +67,7 @@ import static smetana.core.Macro.ED_spl;
 import static smetana.core.Macro.ED_tail_port;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.MILLIPOINT;
@@ -79,29 +79,23 @@ import static smetana.core.Macro.ND_order;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.ND_shape;
-import static smetana.core.Macro.NOT;
+import static smetana.core.Macro.*;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_bezier;
 import h.ST_boxf;
+import h.ST_inside_t;
+import h.ST_path;
+import h.ST_pathend_t;
 import h.ST_pointf;
-import h.bezier;
-import h.boxf;
-import h.inside_t;
-import h.path;
-import h.pathend_t;
-import h.pointf;
-import h.splineInfo;
-import h.splines;
-import h.textlabel_t;
+import h.ST_splineInfo;
+import h.ST_splines;
+import h.ST_textlabel_t;
 import smetana.core.CFunction;
-import smetana.core.JUtils;
 import smetana.core.MutableDouble;
-import smetana.core.__array_of_struct__;
-import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class splines__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -361,14 +355,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -397,25 +391,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -439,14 +414,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -745,16 +720,16 @@ throw new UnsupportedOperationException();
 
 //3 6izm0fbkejw7odmiw4zaw1ycp
 // static void arrow_clip(edge_t * fe, node_t * hn, 	   pointf * ps, int *startp, int *endp, 	   bezier * spl, splineInfo * info) 
-public static void arrow_clip(Agedge_s fe, Agnode_s hn, __ptr__ ps, int startp[], int endp[], bezier spl, __ptr__ info) {
+public static void arrow_clip(ST_Agedge_s fe, ST_Agnode_s hn, __ptr__ ps, int startp[], int endp[], ST_bezier spl, ST_splineInfo info) {
 ENTERING("6izm0fbkejw7odmiw4zaw1ycp","arrow_clip");
 try {
-    Agedge_s e;
+    ST_Agedge_s e;
     int i;
     boolean j;
     int sflag[] = new int[]{0};
     int eflag[] = new int[]{0};
     for (e = fe; ED_to_orig(e)!=null; e = ED_to_orig(e));
-    if (info.getBoolean("ignoreSwap"))
+    if (info.ignoreSwap)
 	j = false;
     else
 	j = (Boolean) info.call("swapEnds", e);
@@ -769,7 +744,7 @@ try {
 	sflag[0] = eflag[0];
 	eflag[0] = i;
     }
-    if (info.getBoolean("isOrtho")) {
+    if (info.isOrtho) {
 UNSUPPORTED("7a3lmojyfh13d6shkviuogx2c"); // 	if (eflag || sflag)
 UNSUPPORTED("dzbrwr2ulubtjkbd8j2o4yyov"); // 	    arrowOrthoClip(e, ps, *startp, *endp, spl, sflag, eflag);
     }
@@ -791,12 +766,12 @@ LEAVING("6izm0fbkejw7odmiw4zaw1ycp","arrow_clip");
 
 //3 q4t1ywnk3wm1vyh5seoj7xye
 // void bezier_clip(inside_t * inside_context, 		 boolean(*inside) (inside_t * inside_context, pointf p), 		 pointf * sp, boolean left_inside) 
-public static void bezier_clip(__ptr__ inside_context, __ptr__ inside, __array_of_struct__ sp, boolean left_inside) {
+public static void bezier_clip(__ptr__ inside_context, __ptr__ inside, ST_pointf.Array sp, boolean left_inside) {
 ENTERING("q4t1ywnk3wm1vyh5seoj7xye","bezier_clip");
 try {
-    final __array_of_struct__ seg = __array_of_struct_impl__.malloc(pointf.class, 4);
-    final __array_of_struct__ best = __array_of_struct_impl__.malloc(pointf.class, 4);
-    final __struct__<pointf> pt = JUtils.from(pointf.class), opt = JUtils.from(pointf.class);
+    final ST_pointf.Array seg = new ST_pointf.Array( 4);
+    final ST_pointf.Array best = new ST_pointf.Array( 4);
+    final ST_pointf pt = new ST_pointf(), opt = new ST_pointf();
     __ptr__ left, right;
     final MutableDouble low = new MutableDouble(0), high = new MutableDouble(0);
     double t;
@@ -805,12 +780,12 @@ try {
     int i;
     if (left_inside) {
 	left = null;
-	right = (pointf) seg.asPtr();
+	right = seg.asPtr();
 	pt.___(sp.plus(0).getStruct());
 	idir = low;
 	odir = high;
     } else {
-	left = (pointf) seg.asPtr();
+	left = seg.asPtr();
 	right = null;
 	pt.___(sp.plus(3).getStruct());
 	idir = high;
@@ -848,12 +823,12 @@ LEAVING("q4t1ywnk3wm1vyh5seoj7xye","bezier_clip");
 
 //3 1fjkj1ydhtlf13pqj5r041orq
 // static void shape_clip0(inside_t * inside_context, node_t * n, pointf curve[4], 	    boolean left_inside) 
-public static void shape_clip0(__ptr__ inside_context, Agnode_s n, __ptr__ curve, boolean left_inside) {
+public static void shape_clip0(__ptr__ inside_context, ST_Agnode_s n, __ptr__ curve, boolean left_inside) {
 ENTERING("1fjkj1ydhtlf13pqj5r041orq","shape_clip0");
 try {
     int i;
     double save_real_size;
-    final __array_of_struct__ c = __array_of_struct_impl__.malloc(pointf.class, 4);
+    final ST_pointf.Array c = new ST_pointf.Array( 4);
     save_real_size = ND_rw(n);
     for (i = 0; i < 4; i++) {
 	c.plus(i).setDouble("x", curve.plus(i).getDouble("x") - ND_coord(n).getDouble("x"));
@@ -903,18 +878,18 @@ throw new UnsupportedOperationException();
 
 //3 bdirexg1qdtophlh0ofjvsmj7
 // bezier *new_spline(edge_t * e, int sz) 
-public static bezier new_spline(Agedge_s e, int sz) {
+public static ST_bezier new_spline(ST_Agedge_s e, int sz) {
 ENTERING("bdirexg1qdtophlh0ofjvsmj7","new_spline");
 try {
-    bezier rv;
+    ST_bezier rv;
     while (ED_edge_type(e) != 0)
 	e = ED_to_orig(e);
     if (ED_spl(e) == null)
-	ED_spl(e, zmalloc(sizeof(splines.class)));
-    ED_spl(e).setPtr("list", ALLOC(ED_spl(e).getInt("size") + 1, ED_spl(e).getPtr("list"), bezier.class));
-    rv = (bezier) ED_spl(e).getPtr("list").plus(ED_spl(e).getInt("size"));
-    ED_spl(e).setInt("size", ED_spl(e).getInt("size")+1);
-    rv.setPtr("list", zmalloc(sizeof(pointf.class, sz)));
+	ED_spl(e, new ST_splines());
+    ED_spl(e).list = ALLOC_ST_bezier(ED_spl(e).size + 1, ED_spl(e).list);
+    rv = (ST_bezier) ED_spl(e).list.plus(ED_spl(e).size).getPtr();
+    ED_spl(e).setInt("size", ED_spl(e).size+1);
+    rv.list = new ST_pointf.Array(sz);
     rv.setInt("size", sz);
     rv.setInt("sflag", 0);
     rv.setInt("eflag", 0);
@@ -933,26 +908,26 @@ LEAVING("bdirexg1qdtophlh0ofjvsmj7","new_spline");
 
 //3 duednxyuvf6xrff752uuv620f
 // void clip_and_install(edge_t * fe, node_t * hn, pointf * ps, int pn, 		 splineInfo * info) 
-public static void clip_and_install(Agedge_s fe, Agnode_s hn, __ptr__ ps, int pn, __ptr__ info) {
+public static void clip_and_install(ST_Agedge_s fe, ST_Agnode_s hn, __ptr__ ps, int pn, ST_splineInfo info) {
 ENTERING("duednxyuvf6xrff752uuv620f","clip_and_install");
 try {
-    final __struct__<pointf> p2 = JUtils.from(pointf.class);
-    bezier newspl;
-    Agnode_s tn;
+    final ST_pointf p2 = new ST_pointf();
+    ST_bezier newspl;
+    ST_Agnode_s tn;
     int start[] = new int[] {0};
     int end[] = new int[] {0};
     int i, clipTail=0, clipHead=0;
-    Agraph_s g;
-    Agedge_s orig;
-    boxf tbox=null, hbox=null;
-    final __struct__<inside_t> inside_context = JUtils.from(inside_t.class);
+    ST_Agraph_s g;
+    ST_Agedge_s orig;
+    ST_boxf tbox=null, hbox=null;
+    final ST_inside_t inside_context = new ST_inside_t();
     tn = agtail(fe);
     g = agraphof(tn);
     newspl = new_spline(fe, pn);
     for (orig = fe; ED_edge_type(orig) != 0; orig = ED_to_orig(orig));
     /* may be a reversed flat edge */
-    if (N(info.getBoolean("ignoreSwap")) && (ND_rank(tn) == ND_rank(hn)) && (ND_order(tn) > ND_order(hn))) {
-	Agnode_s tmp;
+    if (N(info.ignoreSwap) && (ND_rank(tn) == ND_rank(hn)) && (ND_order(tn) > ND_order(hn))) {
+	ST_Agnode_s tmp;
 	tmp = hn;
 	hn = tn;
 	tn = tmp;
@@ -960,14 +935,14 @@ try {
     if (EQ(tn, agtail(orig))) {
 	clipTail = ED_tail_port(orig).getInt("clip");
 	clipHead = ED_head_port(orig).getInt("clip");
-	tbox = (boxf) ED_tail_port(orig).getPtr("bp");
-	hbox = (boxf) ED_head_port(orig).getPtr("bp");
+	tbox = (ST_boxf) ED_tail_port(orig).getPtr("bp");
+	hbox = (ST_boxf) ED_head_port(orig).getPtr("bp");
     }
     else { /* fe and orig are reversed */
  	clipTail = ED_head_port(orig).getInt("clip");
  	clipHead = ED_tail_port(orig).getInt("clip");
- 	hbox = (boxf) ED_tail_port(orig).getPtr("bp");
- 	tbox = (boxf) ED_head_port(orig).getPtr("bp");
+ 	hbox = (ST_boxf) ED_tail_port(orig).getPtr("bp");
+ 	tbox = (ST_boxf) ED_head_port(orig).getPtr("bp");
     }
     /* spline may be interior to node */
     if(clipHead!=0 && ND_shape(tn)!=null && ND_shape(tn).getPtr("fns").getPtr("insidefn")!=null) {
@@ -976,10 +951,10 @@ try {
 	for (start[0] = 0; start[0] < pn - 4; start[0] += 3) {
 	    p2.setDouble("x", ps.plus(start[0] + 3).getDouble("x") - ND_coord(tn).getDouble("x"));
 	    p2.setDouble("y", ps.plus(start[0] + 3).getDouble("y") - ND_coord(tn).getDouble("y"));
-	    if (((Boolean)ND_shape(tn).getPtr("fns").call("insidefn", inside_context.amp(), p2)) == false)
+	    if (((Boolean)ND_shape(tn).getPtr("fns").call("insidefn", inside_context, p2)) == false)
 		break;
 	}
-	shape_clip0(inside_context.amp(), tn, ps.plus(start[0]), NOT(false));
+	shape_clip0(inside_context, tn, ps.plus(start[0]), NOT(false));
     } else
 	start[0] = 0;
     if(clipHead!=0 && ND_shape(hn)!=null && ND_shape(hn).getPtr("fns").getPtr("insidefn")!=null) {
@@ -988,10 +963,10 @@ try {
 	for (end[0] = pn - 4; end[0] > 0; end[0] -= 3) {
 	    p2.setDouble("x", ps.plus(end[0]).getDouble("x") - ND_coord(hn).getDouble("x"));
 	    p2.setDouble("y", ps.plus(end[0]).getDouble("y") - ND_coord(hn).getDouble("y"));
-	    if (((Boolean)ND_shape(hn).getPtr("fns").call("insidefn", inside_context.amp(), p2)) == false)
+	    if (((Boolean)ND_shape(hn).getPtr("fns").call("insidefn", inside_context, p2)) == false)
 		break;
 	}
-	shape_clip0(inside_context.amp(), hn, ps.plus(end[0]), false);
+	shape_clip0(inside_context, hn, ps.plus(end[0]), false);
     } else
 	end[0] = pn - 4;
     for (; start[0] < pn - 4; start[0] += 3) 
@@ -1002,20 +977,20 @@ try {
 	    break;
    arrow_clip(fe, hn, ps, start, end, newspl, info);
     for (i = start[0]; i < end[0] + 4; ) {
-	final __array_of_struct__ cp = __array_of_struct_impl__.malloc(pointf.class, 4);
-	newspl.getArrayOfPtr("list").plus(i - start[0]).setStruct(ps.plus(i).getStruct());
+	final ST_pointf.Array cp = new ST_pointf.Array( 4);
+	newspl.list.get(i - start[0]).setStruct(ps.plus(i).getStruct());
 	cp.plus(0).setStruct(ps.plus(i).getStruct());
 	i++;
 	if ( i >= end[0] + 4)
 	    break;
-	newspl.getArrayOfPtr("list").plus(i - start[0]).setStruct(ps.plus(i).getStruct());
+	newspl.list.get(i - start[0]).setStruct(ps.plus(i).getStruct());
 	cp.plus(1).setStruct(ps.plus(i).getStruct());
 	i++;
-	newspl.getArrayOfPtr("list").plus(i - start[0]).setStruct(ps.plus(i).getStruct());
+	newspl.list.get(i - start[0]).setStruct(ps.plus(i).getStruct());
 	cp.plus(2).setStruct(ps.plus(i).getStruct());
 	i++;
 	cp.plus(3).setStruct(ps.plus(i).getStruct());
-	update_bb_bz(GD_bb(g).amp(), cp);
+	update_bb_bz(GD_bb(g), cp);
     }
     newspl.setInt("size", end[0] - start[0] + 4);
 } finally {
@@ -1028,7 +1003,7 @@ LEAVING("duednxyuvf6xrff752uuv620f","clip_and_install");
 
 //3 25ndy15kghfrogsv0b0o0xkgv
 // static double  conc_slope(node_t* n) 
-public static double conc_slope(Agnode_s n) {
+public static double conc_slope(ST_Agnode_s n) {
 ENTERING("25ndy15kghfrogsv0b0o0xkgv","conc_slope");
 try {
  UNSUPPORTED("e388y3vtrp8f6spgh9q4wx37w"); // static double 
@@ -1063,16 +1038,16 @@ LEAVING("25ndy15kghfrogsv0b0o0xkgv","conc_slope");
 
 //3 egq4f4tmy1dhyj6jpj92r7xhu
 // void add_box(path * P, boxf b) 
-public static void add_box(path P, final ST_boxf b) {
+public static void add_box(ST_path P, final ST_boxf b) {
 // WARNING!! STRUCT
 add_box_w_(P, b.copy());
 }
-private static void add_box_w_(path P, final ST_boxf b) {
+private static void add_box_w_(ST_path P, final ST_boxf b) {
 ENTERING("egq4f4tmy1dhyj6jpj92r7xhu","add_box");
 try {
     if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
     {
-	P.getArrayOfPtr("boxes").plus(P.getInt("nbox")).setStruct(b);
+	P.boxes[P.getInt("nbox")].setStruct(b);
 	P.setInt("nbox", P.getInt("nbox")+1);
 	}
 } finally {
@@ -1085,34 +1060,34 @@ LEAVING("egq4f4tmy1dhyj6jpj92r7xhu","add_box");
 
 //3 7pc43ifcw5g56449d101qf590
 // void beginpath(path * P, edge_t * e, int et, pathend_t * endp, boolean merge) 
-public static void beginpath(path P, Agedge_s e, int et, pathend_t endp, boolean merge) {
+public static void beginpath(ST_path P, ST_Agedge_s e, int et, ST_pathend_t endp, boolean merge) {
 ENTERING("7pc43ifcw5g56449d101qf590","beginpath");
 try {
     int side, mask;
-    Agnode_s n;
+    ST_Agnode_s n;
     CFunction pboxfn;
     n = agtail(e);
     if (ED_tail_port(e).dyna!=0)
-	ED_tail_port(e, resolvePort(agtail(e), aghead(e), ED_tail_port(e).amp()));
+	ED_tail_port(e, resolvePort(agtail(e), aghead(e), ED_tail_port(e)));
     if (ND_shape(n)!=null)
 	pboxfn = (CFunction) ND_shape(n).getPtr("fns").getPtr("pboxfn");
     else
 	pboxfn = null;
-    P.getStruct("start").setStruct("p", add_pointf(ND_coord(n), ED_tail_port(e).getStruct("p")));
+    P.start.setStruct("p", add_pointf(ND_coord(n), (ST_pointf) ED_tail_port(e).getStruct("p")));
     if (merge) {
 	/*P->start.theta = - M_PI / 2; */
-	P.getStruct("start").setDouble("theta", conc_slope(agtail(e)));
-	P.getStruct("start").setBoolean("constrained", NOT(false));
+	P.start.setDouble("theta", conc_slope(agtail(e)));
+	P.start.constrained= NOTI(false);
     } else {
-	if (ED_tail_port(e).getBoolean("constrained")) {
-	    P.getStruct("start").setDouble("theta", ED_tail_port(e).getDouble("theta"));
-	    P.getStruct("start").setBoolean("constrained", NOT(false));
+	if (ED_tail_port(e).constrained!=0) {
+	    P.start.setDouble("theta", ED_tail_port(e).getDouble("theta"));
+	    P.start.constrained= NOTI(false);
 	} else
-	    P.getStruct("start").setBoolean("constrained", false);
+	    P.start.constrained= 0;
     }
     P.setInt("nbox", 0);
     P.setPtr("data", e);
-    endp.setStruct("np", P.getStruct("start").getStruct("p"));
+    endp.setStruct("np", P.start.getStruct("p"));
     if ((et == 1) && (ND_node_type(n) == 0) && ((side = ED_tail_port(e).side)!=0)) {
 UNSUPPORTED("a7lrhlfwr0y475aqjk6abhb3b"); // 	edge_t* orig;
 UNSUPPORTED("ew7nyfe712nsiphifeztwxfop"); // 	boxf b0, b = endp->nb;
@@ -1248,10 +1223,10 @@ UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     if (et == 1) side = (1<<0);
     else side = endp.getInt("sidemask");  /* for flat edges */
     if (pboxfn!=null
-	&& (mask = (Integer) pboxfn.exe(n, ED_tail_port(e).amp(), side, endp.getArrayOfStruct("boxes").plus(0).getStruct().amp(), endp.getInt("boxn")))!=0)
+	&& (mask = (Integer) pboxfn.exe(n, ED_tail_port(e), side, endp.boxes[0], endp.getInt("boxn")))!=0)
 UNSUPPORTED("ex9kjvshm19zbu9vqonk1avd8"); // 	endp->sidemask = mask;
     else {
-	endp.getArrayOfStruct("boxes").plus(0).setStruct(endp.getStruct("nb"));
+    endp.boxes[0].setStruct(endp.getStruct("nb"));
 	endp.setInt("boxn", 1);
 	switch (et) {
 	case 8:
@@ -1264,14 +1239,14 @@ UNSUPPORTED("auefgwb39x5hzqqc9b1zgl239"); // 	    endp->sidemask = (1<<0);
 	    break;
 	case 2:
 	    if (endp.getInt("sidemask") == (1<<2))
-		((ST_boxf)endp.getArrayOfStruct("boxes").plus(0).getStruct()).LL.y = P.getStruct("start").getStruct("p").getDouble("y");
+		((ST_boxf)endp.boxes[0]).LL.y = P.start.getStruct("p").getDouble("y");
 	    else
-	    	((ST_boxf)endp.getArrayOfStruct("boxes").plus(0).getStruct()).UR.y = P.getStruct("start").getStruct("p").getDouble("y");
+	    	((ST_boxf)endp.boxes[0]).UR.y = P.start.getStruct("p").getDouble("y");
 	    break;
 	case 1:
-	    ((ST_boxf)endp.getArrayOfStruct("boxes").plus(0).getStruct()).UR.y = P.getStruct("start").getStruct("p").getDouble("y");
+	    ((ST_boxf)(endp).boxes[0]).UR.y = P.start.getStruct("p").getDouble("y");
 	    endp.setInt("sidemask", (1<<0));
-	    P.getStruct("start").getStruct("p").setDouble("y", P.getStruct("start").getStruct("p").getDouble("y") - 1);
+	    P.start.getStruct("p").setDouble("y", P.start.getStruct("p").getDouble("y") - 1);
 	    break;
 	}    
     }    
@@ -1285,27 +1260,27 @@ LEAVING("7pc43ifcw5g56449d101qf590","beginpath");
 
 //3 79dr5om55xs3n5lgai1sf58vu
 // void endpath(path * P, edge_t * e, int et, pathend_t * endp, boolean merge) 
-public static void endpath(path P, Agedge_s e, int et, pathend_t endp, boolean merge) {
+public static void endpath(ST_path P, ST_Agedge_s e, int et, ST_pathend_t endp, boolean merge) {
 ENTERING("79dr5om55xs3n5lgai1sf58vu","endpath");
 try {
     int side, mask;
-    Agnode_s n;
+    ST_Agnode_s n;
     CFunction pboxfn;
     n = aghead(e);
-    if (ED_head_port(e).getBoolean("dyna")) 
+    if (ED_head_port(e).dyna!=0) 
 UNSUPPORTED("9brhx94sjudx3jtzrnwa60x8"); // 	ED_head_port(e) = resolvePort(aghead(e), agtail(e), &ED_head_port(e));
     if (ND_shape(n)!=null)
 	pboxfn = (CFunction) ND_shape(n).getPtr("fns").getPtr("pboxfn");
     else
 	pboxfn = null;
-    P.getStruct("end").setStruct("p", add_pointf(ND_coord(n), ED_head_port(e).getStruct("p")));
+    P.getStruct("end").setStruct("p", add_pointf(ND_coord(n), (ST_pointf) ED_head_port(e).getStruct("p")));
     if (merge) {
 UNSUPPORTED("cproejwusj67kuugolh6tbkwz"); // 	/*P->end.theta = M_PI / 2; */
 UNSUPPORTED("65vhfvz1d1tub3f85tdsgg2g5"); // 	P->end.theta = conc_slope(aghead(e)) + M_PI;
 UNSUPPORTED("du4hwt6pjf3bmkvowssm7b0uo"); // 	assert(P->end.theta < 2 * M_PI);
 UNSUPPORTED("2w0c22i5xgcch77xd9jg104nw"); // 	P->end.constrained = NOT(0);
     } else {
-	if (ED_head_port(e).getBoolean("constrained")) {
+	if (ED_head_port(e).constrained!=0) {
 	    P.getStruct("end").setDouble("theta", ED_head_port(e).getDouble("theta"));
 	    P.getStruct("end").setInt("constrained", 1);
 	} else
@@ -1448,10 +1423,10 @@ UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     if (et == 1) side = (1<<2);
     else side = endp.getInt("sidemask");  /* for flat edges */
     if (pboxfn!=null
-	&& (mask = (Integer) pboxfn.exe(n, ED_head_port(e).amp(), side, endp.getArrayOfStruct("boxes").plus(0).getStruct().amp(), endp.getInt("boxn")))!=0)
+	&& (mask = (Integer) pboxfn.exe(n, ED_head_port(e), side, endp.boxes[0], endp.getInt("boxn")))!=0)
 	endp.setInt("sidemask", mask);
     else {
-	endp.getArrayOfStruct("boxes").plus(0).setStruct(endp.getStruct("nb"));
+    	endp.boxes[0].setStruct(endp.getStruct("nb"));
 	endp.setInt("boxn", 1);
 	switch (et) {
 	case 8:
@@ -1464,12 +1439,12 @@ UNSUPPORTED("1r4lctdj9z1ivlz3uqpcj1yzf"); // 	    endp->sidemask = (1<<2);
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 	case 2:
 	    if (endp.getInt("sidemask") == (1<<2))
-		((ST_boxf)endp.getArrayOfStruct("boxes").plus(0).getStruct()).LL.y = P.getStruct("end").getStruct("p").getDouble("y");
+	    	endp.boxes[0].LL.y = P.getStruct("end").getStruct("p").getDouble("y");
 	    else
-    	((ST_boxf)endp.getArrayOfStruct("boxes").plus(0).getStruct()).UR.y = P.getStruct("end").getStruct("p").getDouble("y");
+	    	endp.boxes[0].UR.y = P.getStruct("end").getStruct("p").getDouble("y");
 	    break;
 	case 1:
-	    ((ST_boxf)endp.getArrayOfStruct("boxes").plus(0).getStruct()).LL.y = P.getStruct("end").getStruct("p").getDouble("y");
+		endp.boxes[0].LL.y = P.getStruct("end").getStruct("p").getDouble("y");
 	    endp.setInt("sidemask", (1<<2));
 	    P.getStruct("end").getStruct("p").setDouble("y", P.getStruct("end").getStruct("p").getDouble("y") +1);
 	    break;
@@ -1486,6 +1461,7 @@ LEAVING("79dr5om55xs3n5lgai1sf58vu","endpath");
 //3 3g7alj6eirl5b2hlhluiqvaax
 // static int convert_sides_to_points(int tail_side, int head_side) 
 public static int convert_sides_to_points(int tail_side, int head_side) {
+ENTERING("3g7alj6eirl5b2hlhluiqvaax","convert_sides_to_points");
 int vertices[] = new int[] {12,4,6,2,3,1,9,8};  //the cumulative side value of each node point
 int i, tail_i, head_i;
 int pair_a[][] = new int[][] {	    //array of possible node point pairs
@@ -1498,7 +1474,6 @@ int pair_a[][] = new int[][] {	    //array of possible node point pairs
 {71,72,73,74,75,76,77,78},
 {81,82,83,84,85,86,87,88}
 };
-ENTERING("3g7alj6eirl5b2hlhluiqvaax","convert_sides_to_points");
 try {
  tail_i = head_i = -1;
 	for(i=0;i< 8; i++){
@@ -1709,17 +1684,17 @@ throw new UnsupportedOperationException();
 
 //3 3sr8gvj4141qql0v12lb89cyt
 // static void selfRight (edge_t* edges[], int ind, int cnt, double stepx, double sizey,            splineInfo* sinfo)  
-public static void selfRight(__ptr__ edges, int ind, int cnt, double stepx, double sizey, splineInfo sinfo) {
+public static void selfRight(__ptr__ edges, int ind, int cnt, double stepx, double sizey, ST_splineInfo sinfo) {
 ENTERING("3sr8gvj4141qql0v12lb89cyt","selfRight");
 try {
     int i, sgn, point_pair;
     double hx, tx, stepy, dx, dy, width, height; 
     final ST_pointf tp = new ST_pointf(), hp = new ST_pointf(), np = new ST_pointf();
-    Agnode_s n;
-    Agedge_s e;
-    final __array_of_struct__ points = __array_of_struct_impl__.malloc(pointf.class, 1000);
+    ST_Agnode_s n;
+    ST_Agedge_s e;
+    final ST_pointf.Array points = new ST_pointf.Array( 1000);
     int pointn;
-    e = (Agedge_s) edges.plus(ind).getPtr();
+    e = (ST_Agedge_s) edges.plus(ind).getPtr();
     n = agtail(e);
     stepy = (sizey / 2.) / cnt;
     stepy = MAX(stepy, 2.);
@@ -1749,7 +1724,7 @@ try {
     tx = MIN(dx, 3*(np.getDouble("x") + dx - tp.getDouble("x")));
     hx = MIN(dx, 3*(np.getDouble("x") + dx - hp.getDouble("x")));
     for (i = 0; i < cnt; i++) {
-        e = (Agedge_s) edges.plus(ind++).getPtr();
+        e = (ST_Agedge_s) edges.plus(ind++).getPtr();
         dx += stepx; tx += stepx; hx += stepx; dy += sgn*stepy;
         pointn = 0;
         points.plus(pointn++).setStruct(tp);
@@ -1761,15 +1736,15 @@ try {
         points.plus(pointn++).setStruct(hp);
         if (ED_label(e)!=null) {
 	    if (GD_flip(agraphof(agtail(e)))!=0) {
-		width = ED_label(e).getStruct("dimen").getDouble("y");
-		height = ED_label(e).getStruct("dimen").getDouble("x");
+		width = ED_label(e).dimen.getDouble("y");
+		height = ED_label(e).dimen.getDouble("x");
 	    } else {
-		width = ED_label(e).getStruct("dimen").getDouble("x");
-		height = ED_label(e).getStruct("dimen").getDouble("y");
+		width = ED_label(e).dimen.getDouble("x");
+		height = ED_label(e).dimen.getDouble("y");
 	    }
 	    ED_label(e).getStruct("pos").setDouble("x", ND_coord(n).getDouble("x") + dx + width / 2.0);
 	    ED_label(e).getStruct("pos").setDouble("y", ND_coord(n).getDouble("y"));
-	    ED_label(e).setBoolean("set", NOT(false));
+	    ED_label(e).set= NOTI(false);
 	    if (width > stepx)
 		dx += width - stepx;
         }
@@ -1864,12 +1839,12 @@ throw new UnsupportedOperationException();
 
 //3 678whq05s481ertx02jloteu3
 // int selfRightSpace (edge_t* e) 
-public static int selfRightSpace(Agedge_s e) {
+public static int selfRightSpace(ST_Agedge_s e) {
 ENTERING("678whq05s481ertx02jloteu3","selfRightSpace");
 try {
     int sw=0;
     double label_width;
-    textlabel_t l = ED_label(e);
+    ST_textlabel_t l = ED_label(e);
     if ((N(ED_tail_port(e).defined) && N(ED_head_port(e).defined)) ||
         (
 		N(ED_tail_port(e).side & (1<<3)) && 
@@ -1879,7 +1854,7 @@ try {
 		  )) {
 	sw = 18;
 	if (l!=null) {
-	    label_width = GD_flip(agraphof(aghead(e)))!=0 ? l.getStruct("dimen").getDouble("y") : l.getStruct("dimen").getDouble("x");
+	    label_width = GD_flip(agraphof(aghead(e)))!=0 ? l.dimen.getDouble("y") : l.dimen.getDouble("x");
 	    sw += label_width;
     }
     }
@@ -1895,11 +1870,11 @@ LEAVING("678whq05s481ertx02jloteu3","selfRightSpace");
 
 //3 bt3fwgprixbc5rceeewozdqr9
 // void makeSelfEdge(path * P, edge_t * edges[], int ind, int cnt, double sizex, 	     double sizey, splineInfo * sinfo) 
-public static void makeSelfEdge(path P, __ptr__ edges, int ind, int cnt, double sizex, double sizey, splineInfo sinfo) {
+public static void makeSelfEdge(ST_path P, __ptr__ edges, int ind, int cnt, double sizex, double sizey, ST_splineInfo sinfo) {
 ENTERING("bt3fwgprixbc5rceeewozdqr9","makeSelfEdge");
 try {
-    Agedge_s e;
-    e = (Agedge_s) edges.plus(ind).getPtr();
+    ST_Agedge_s e;
+    e = (ST_Agedge_s) edges.plus(ind).getPtr();
     /* self edge without ports or
      * self edge with all ports inside, on the right, or at most 1 on top 
      * and at most 1 on bottom 
@@ -1965,27 +1940,27 @@ throw new UnsupportedOperationException();
 
 //3 7wyn51o9k6u7joaq9k18boffh
 // static void endPoints(splines * spl, pointf * p, pointf * q) 
-public static Object endPoints(Object... arg) {
-UNSUPPORTED("5r4ewx4i6zia04hwqvonnvcg9"); // static void endPoints(splines * spl, pointf * p, pointf * q)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("37thdceezsvepe7tlyfatrbcw"); //     bezier bz;
-UNSUPPORTED("2hacb9fdt2n4mkiveluxkiu2e"); //     bz = spl->list[0];
-UNSUPPORTED("dtt0q54ov71fji9i2ae24aeyc"); //     if (bz.sflag) {
+public static void endPoints(ST_splines spl, ST_pointf p, ST_pointf q) {
+ENTERING("7wyn51o9k6u7joaq9k18boffh","endPoints");
+try {
+     final ST_bezier bz = new ST_bezier();
+     bz.____(spl.list.plus(0).getPtr());
+     if (bz.sflag!=0) {
 UNSUPPORTED("4wazlko0bxmzxoobqacij1btk"); // 	*p = bz.sp;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("1nyzbeonram6636b1w955bypn"); //     else {
-UNSUPPORTED("3gwxodchk1jdid7jbltvxhnaf"); // 	*p = bz.list[0];
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("6pj4gaguml8ocln5h92kpqk94"); //     bz = spl->list[spl->size - 1];
-UNSUPPORTED("4o7tep38o3pxavxbzw15khp2r"); //     if (bz.eflag) {
+     }
+     else {
+    	p.____(bz.list.get(0));
+     }
+     bz.____(spl.list.plus(spl.size-1).getPtr());
+     if (bz.eflag!=0) {
 UNSUPPORTED("78u9nvs8u7rxturidz5nf8hn4"); // 	*q = bz.ep;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("1nyzbeonram6636b1w955bypn"); //     else {
-UNSUPPORTED("3kkyg7t050mn59a1ekp0f0lzj"); // 	*q = bz.list[bz.size - 1];
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+     }
+     else {
+		q.____(bz.list.get(bz.size-1));
+     }
+} finally {
+LEAVING("7wyn51o9k6u7joaq9k18boffh","endPoints");
+}
 }
 
 
@@ -2039,28 +2014,35 @@ throw new UnsupportedOperationException();
 
 //3 8hpmwzlqbj1nii32zubbe9hru
 // pointf edgeMidpoint (graph_t* g, edge_t * e) 
-public static Object edgeMidpoint(Object... arg) {
-UNSUPPORTED("ddgobb6cu0307nl6cc2hm7jak"); // pointf
-UNSUPPORTED("8ww957bkesrmzkmuchx2pvhb2"); // edgeMidpoint (graph_t* g, edge_t * e)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("cx1drb9eui5nioe70lvmlgm79"); //     int et = (GD_flags(g) & (7 << 1));
-UNSUPPORTED("2auwjymmiryq94uc6spzynrvi"); //     pointf d, spf, p, q;
-UNSUPPORTED("bpo1twbinspgdzr5k3fmntxtg"); //     endPoints(ED_spl(e), &p, &q);
-UNSUPPORTED("4yaabujbmowa3lyxk4205gkpv"); //     if (APPROXEQPT(p, q, MILLIPOINT)) { /* degenerate spline */
+public static ST_pointf edgeMidpoint(ST_Agraph_s g, ST_Agedge_s e) {
+ENTERING("8hpmwzlqbj1nii32zubbe9hru","edgeMidpoint");
+try {
+	return edgeMidpoint_(g, e).copy();
+} finally {
+LEAVING("8hpmwzlqbj1nii32zubbe9hru","edgeMidpoint");
+}
+}
+	
+	
+private static ST_pointf edgeMidpoint_(ST_Agraph_s g, ST_Agedge_s e) {
+     int et = (GD_flags(g) & (7 << 1));
+     final ST_pointf d = new ST_pointf();
+     final ST_pointf spf = new ST_pointf();
+     final ST_pointf p = new ST_pointf();
+     final ST_pointf q = new ST_pointf();
+     endPoints((ST_splines) ED_spl(e), p, q);
+     if (APPROXEQPT(p, q, MILLIPOINT)) { /* degenerate spline */
 UNSUPPORTED("7i8m5mpfnv7m9uqxh015zfdaj"); // 	spf = p;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("bpe21xennpxofkh2a8ce70n8r"); //     else if ((et == (5 << 1)) || (et == (2 << 1))) {
-UNSUPPORTED("6frrlsqvrym5x5bivjwo3rkg4"); // 	d.x = (q.x + p.x) / 2.;
-UNSUPPORTED("5qa6kgh9e0trsgfkiwhzxtc5n"); // 	d.y = (p.y + q.y) / 2.;
-UNSUPPORTED("dn0aho2lzwtnxuk3v45gd81fo"); // 	spf = dotneato_closest(ED_spl(e), d);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("2flg4ooa026ob187pje77te28"); //     else {   /* ET_PLINE, ET_ORTHO or ET_LINE */
+     }
+     else if ((et == (5 << 1)) || (et == (2 << 1))) {
+ 	d.x = (q.x + p.x) / 2.;
+ 	d.y = (p.y + q.y) / 2.;
+ 	spf.___(dotneato_closest((ST_splines)ED_spl(e), d));
+     }
+     else {   /* ET_PLINE, ET_ORTHO or ET_LINE */
 UNSUPPORTED("6he3hi05vusuthrchn4enk7o6"); // 	spf = polylineMidpoint (ED_spl(e), &p, &q);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("56kh0ww24ygwjntzmm9q6wec3"); //     return spf;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+     }
+     return spf;
 }
 
 
@@ -2142,11 +2124,11 @@ throw new UnsupportedOperationException();
 
 //3 2tbz9tbkzx8os72qiyhgnby67
 // splines *getsplinepoints(edge_t * e) 
-public static splines getsplinepoints(Agedge_s e) {
+public static ST_splines getsplinepoints(ST_Agedge_s e) {
 ENTERING("2tbz9tbkzx8os72qiyhgnby67","getsplinepoints");
 try {
-    Agedge_s le;
-    splines sp;
+    ST_Agedge_s le;
+    ST_splines sp;
     for (le = e; N(sp = ED_spl(le)) && ED_edge_type(le) != 0;
 	 le = ED_to_orig(le));
     if (sp == null) 

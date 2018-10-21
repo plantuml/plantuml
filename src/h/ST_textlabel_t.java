@@ -64,44 +64,36 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	private CString text, fontname, fontcolor;
-	private int charset;
-	private double fontsize;
+	public CString text, fontname, fontcolor;
+	public int charset;
+	public double fontsize;
 
-	private final ST_pointf dimen = new ST_pointf(this);
-	private final ST_pointf space = new ST_pointf(this);
-	private final ST_pointf pos = new ST_pointf(this);
+	public final ST_pointf dimen = new ST_pointf(this);
+	public final ST_pointf space = new ST_pointf(this);
+	public final ST_pointf pos = new ST_pointf(this);
 
 	// "union",
 	// "{",
 	// "struct",
 	// "{",
 	// private ST_textspan_t span;
-	private __ptr__ span;
-	private int nspans;
+	public __ptr__ span;
+	public int nspans;
 
 	// "}",
 	// "txt",
 	// "htmllabel_t *html",
-	private final __ptr__ html = null;
+	public final __ptr__ html__ = null;
 	// "}",
 	// "u",
-	private int valign;
+	public int valign;
 
-	private int set;
+	public int set;
 
+	public boolean html;
 	// "boolean html",
 	// "}",
 	// "textlabel_t");
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
 
 	@Override
 	public __struct__ getStruct(String fieldName) {
@@ -174,17 +166,6 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("html")) {
-			return html != null;
-		}
-		if (fieldName.equals("set")) {
-			return set != 0;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
 	public void setDouble(String fieldName, double data) {
 		if (fieldName.equals("fontsize")) {
 			this.fontsize = data;
@@ -213,6 +194,10 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 		}
 		if (fieldName.equals("u.txt.nspans")) {
 			this.nspans = data;
+			return;
+		}
+		if (fieldName.equals("set")) {
+			this.set = data;
 			return;
 		}
 		super.setInt(fieldName, data);

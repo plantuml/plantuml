@@ -49,10 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedArrayOfPtr;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -60,7 +57,7 @@ import smetana.core.amiga.StarStruct;
 public class ST_elist extends UnsupportedStructAndPtr implements HardcodedStruct {
 
 	public int size;
-	private List list;
+	public List<ST_Agedge_s> list;
 
 	public ST_elist() {
 		this(null);
@@ -74,6 +71,11 @@ public class ST_elist extends UnsupportedStructAndPtr implements HardcodedStruct
 		ST_elist other2 = (ST_elist) other;
 		this.size = other2.size;
 		this.list = other2.list;
+	}
+
+	@Override
+	public void setStruct(__struct__ value) {
+		copyDataFrom(value);
 	}
 
 	@Override
@@ -95,129 +97,36 @@ public class ST_elist extends UnsupportedStructAndPtr implements HardcodedStruct
 		return list != null;
 	}
 
-	public void mallocEmpty(Class cl, int nb) {
-		list = new ArrayList();
+	public void mallocEmpty(int nb) {
+		list = new ArrayList<ST_Agedge_s>();
 		while (list.size() < nb) {
 			list.add(null);
 		}
 	}
 
-	class ArrayOfPtr extends UnsupportedArrayOfPtr {
-
-		private int pos;
-
-		private ArrayOfPtr(int pos) {
-			this.pos = pos;
-		}
-
-		@Override
-		public __array_of_ptr__ plus(int delta) {
-			return new ArrayOfPtr(pos + delta);
-		}
-
-		@Override
-		public void setPtr(__ptr__ value) {
-			list.set(pos, value);
-		}
-
-		@Override
-		public __ptr__ getPtr() {
-			return (__ptr__) list.get(pos);
-		}
-
-	}
-
-	class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public int getInt(String fieldName) {
-			if (fieldName.equals("size")) {
-				return size;
-			}
-			return ST_elist.this.getInt(fieldName);
-		}
-
-		@Override
-		public void setInt(String fieldName, int data) {
-			if (fieldName.equals("size")) {
-				size = data;
-				return;
-			}
-			ST_elist.this.setInt(fieldName, data);
-		}
-
-		@Override
-		public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-			if (fieldName.equals("list")) {
-				if (list == null) {
-					return null;
-				}
-				return new ArrayOfPtr(0);
-			}
-			return ST_elist.this.getArrayOfPtr(fieldName);
-		}
-
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
 
 	public void realloc(int nb) {
 		if (list == null) {
-			list = new ArrayList();
+			list = new ArrayList<ST_Agedge_s>();
 		}
 		while (list.size() < nb) {
 			list.add(null);
 		}
 	}
 
-	class Ptr extends UnsupportedStructAndPtr {
-
-		private final int pos;
-
-		public Ptr(int pos) {
-			this.pos = pos;
-		}
-
-		@Override
-		public __ptr__ plus(int pointerMove) {
-			return new Ptr(pos + pointerMove);
-		}
-
-		@Override
-		public __ptr__ getPtr() {
-			return (__ptr__) list.get(pos);
-		}
-
-	}
 
 	public void free() {
 		list = null;
 	}
 
 	public void setInList(int idx, Object value) {
-		list.set(idx, value);
+		list.set(idx, (ST_Agedge_s) value);
 	}
 
 	public __ptr__ getFromList(int i) {
 		return (__ptr__) list.get(i);
 	}
 
-	public __ptr__ getTheList() {
-		if (list == null) {
-			throw new IllegalStateException();
-		}
-		return new Ptr(0);
-	}
-
-	public __array_of_ptr__ getTheArray() {
-		if (list == null) {
-			throw new IllegalStateException();
-		}
-		return new ArrayOfPtr(0);
-	}
 
 	// public static List<String> DEFINITION = Arrays.asList(
 	// "typedef struct elist",

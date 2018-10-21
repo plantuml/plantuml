@@ -100,11 +100,20 @@ public class FileWithSuffix {
 		return file != null && file.isOk();
 	}
 
-	public FileWithSuffix(File file, String suffix) {
+	FileWithSuffix(File file, String suffix) {
 		this.file = new AFileRegular(file);
 		this.suffix = suffix;
 		this.entry = null;
-		this.description = file.getAbsolutePath();
+		// this.description = file.getAbsolutePath();
+		this.description = getFileName(file);
+	}
+
+	public static String getFileName(File file) {
+		return file.getName();
+	}
+
+	public static String getAbsolutePath(File file) {
+		return file.getAbsolutePath();
 	}
 
 	public FileWithSuffix(ImportedFiles importedFiles, String fileName, String suffix) throws IOException {
@@ -132,7 +141,8 @@ public class FileWithSuffix {
 
 	@Override
 	public int hashCode() {
-		return file.hashCode() + (suffix == null ? 0 : suffix.hashCode() * 43) + (entry == null ? 0 : entry.hashCode());
+		return (file == null ? 0 : file.hashCode()) + (suffix == null ? 0 : suffix.hashCode() * 43)
+				+ (entry == null ? 0 : entry.hashCode());
 	}
 
 	@Override
@@ -171,6 +181,8 @@ public class FileWithSuffix {
 	}
 
 	public AParentFolder getParentFile() {
+		Log.info("Getting parent of " + file);
+		Log.info("-->The parent is " + file.getParentFile());
 		return file.getParentFile();
 	}
 

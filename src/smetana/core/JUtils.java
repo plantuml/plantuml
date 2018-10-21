@@ -36,17 +36,92 @@
 
 package smetana.core;
 
-import h.*;
+import h.Agcbstack_s;
+import h.ST_Agdisc_s;
+import h.Agdstate_s;
+import h.Agiodisc_s;
+import h.GVCOMMON_t;
+import h.LeafList_t;
+import h.ST_Agattr_s;
+import h.ST_Agcbstack_s;
+import h.ST_Agclos_s;
+import h.ST_Agdatadict_s;
+import h.ST_Agdesc_s;
+import h.ST_Agdisc_s;
+import h.ST_Agdstate_s;
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agedgepair_s;
+import h.ST_Agiddisc_s;
+import h.ST_Agiodisc_s;
+import h.ST_Agmemdisc_s;
+import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_Agrec_s;
+import h.ST_Agsubnode_s;
+import h.ST_Agsym_s;
+import h.ST_GVCOMMON_t;
+import h.ST_GVC_s;
+import h.ST_HDict_t;
+import h.ST_IMapEntry_t;
+import h.ST_LeafList_t;
+import h.ST_Node_t___;
+import h.ST_Pedge_t;
+import h.ST_Ppoly_t;
+import h.ST_RTree;
+import h.ST_XLabels_t;
+import h.ST_arrowtype_t;
+import h.ST_aspect_t;
+import h.ST_bezier;
+import h.ST_boxf;
+import h.ST_cinfo_t;
+import h.ST_dt_s;
+import h.ST_dtdata_s;
+import h.ST_dtdisc_s;
+import h.ST_dthold_s;
+import h.ST_dtlink_s;
+import h.ST_dtmethod_s;
+import h.ST_elist;
+import h.ST_fontinfo;
+import h.ST_label_params_t;
+import h.ST_layout_t;
+import h.ST_nlist_t;
+import h.ST_nodequeue;
+import h.ST_object_t;
+import h.ST_pack_info;
+import h.ST_path;
+import h.ST_pathend_t;
+import h.ST_pointf;
+import h.ST_pointnlink_t;
+import h.ST_polygon_t;
+import h.ST_port;
+import h.ST_rank_t;
+import h.ST_refstr_t;
+import h.ST_shape_desc;
+import h.ST_shape_functions;
+import h.ST_splineInfo;
+import h.ST_spline_info_t;
+import h.ST_splines;
+import h.ST_tedge_t;
+import h.ST_textfont_t;
+import h.ST_textlabel_t;
+import h.ST_textspan_t;
+import h.ST_tna_t;
+import h.ST_triangle_t;
+import h.ST_xlabel_t;
+import h._dthold_s;
+import h.layout_t;
+import h.rank_t;
+import h.tedge_t;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import smetana.core.amiga.StarArrayOfInteger;
-import smetana.core.amiga.StarArrayOfPtr;
-import smetana.core.amiga.StarArrayOfStruct;
-import smetana.core.amiga.StarStar;
 import smetana.core.amiga.StarStruct;
-import smetana.core.amiga.StarStructImpl;
 
 // http://docs.oracle.com/javase/specs/jls/se5.0/html/expressions.html#15.7.4
 // http://www.jbox.dk/sanos/source/lib/string.c.html
@@ -59,10 +134,6 @@ public class JUtils {
 		return new size_t_struct(cl);
 	}
 
-	public static size_t sizeof(__ptr__ element) {
-		return new size_t_of_element(element);
-	}
-
 	public static size_t sizeof(String name, int sz) {
 		if (name.equals("char*")) {
 			return new size_t_array_of_charstars(sz);
@@ -70,72 +141,8 @@ public class JUtils {
 		throw new UnsupportedOperationException();
 	}
 
-	public static size_t sizeof(Class cl, int nb) {
-		if (cl == pointf.class) {
-			return ST_pointf.sizeof(nb);
-		}
-		if (cl == boxf.class) {
-			return ST_boxf.sizeof(nb);
-		}
-		if (cl == pointnlink_t.class) {
-			return ST_pointnlink_t.sizeof(nb);
-		}
-		if (cl == textspan_t.class) {
-			return ST_textspan_t.sizeof(nb);
-		}
-		// if (UmlDiagram.SMETANA_BETA) {
-		if (cl == Agraph_s.class) {
-			return ST_Agraph_s.sizeof(nb);
-		}
-		if (cl == rank_t.class) {
-			return ST_rank_t.sizeof(nb);
-		}
-		if (cl == Agnode_s.class) {
-			return ST_Agnode_s.sizeof(nb);
-		}
-		if (cl == bezier.class) {
-			return ST_bezier.sizeof(nb);
-		}
-		if (cl == triangle_t.class) {
-			return ST_triangle_t.sizeof(nb);
-		}
-		if (cl == Pedge_t.class) {
-			return ST_Pedge_t.sizeof(nb);
-		}
-		if (cl == tna_t.class) {
-			return ST_tna_t.sizeof(nb);
-		}
-		if (cl == object_t.class) {
-			return ST_object_t.sizeof(nb);
-		}
-		if (cl == xlabel_t.class) {
-			return ST_xlabel_t.sizeof(nb);
-		}
-		// }
-		if (from(cl) instanceof __struct_impl__ == false) {
-			throw new IllegalArgumentException(cl.getName());
-		}
-		return new size_t_array_of_something(cl, nb);
-	}
-
 	public static size_t size_t_array_of_integer(int nb) {
 		return new size_t_array_of_integer(nb);
-	}
-
-	public static size_t sizeof_starstar_empty(Class cl, int nb) {
-		if (cl == Agedge_s.class) {
-			return ST_Agedge_s.sizeof_starstar_empty(nb);
-		}
-		if (cl == Agnode_s.class) {
-			return ST_Agnode_s.sizeof_starstar_empty(nb);
-		}
-		if (cl == pointnlink_t.class) {
-			return ST_pointnlink_t.sizeof_starstar_empty(nb);
-		}
-		if (from(cl) instanceof __struct_impl__ == false) {
-			throw new IllegalArgumentException(cl.getName());
-		}
-		return new size_t_array_of_array_of_something_empty(cl, nb);
 	}
 
 	public static int strcmp(CString s1, CString s2) {
@@ -251,6 +258,18 @@ public class JUtils {
 	}
 
 	public static boolean EQ(Object o1, Object o2) {
+		final boolean result = EQ_(o1, o2);
+		if (o1 instanceof UnsupportedStarStruct && o2 instanceof UnsupportedStarStruct) {
+			UnsupportedStarStruct ooo1 = (UnsupportedStarStruct) o1;
+			UnsupportedStarStruct ooo2 = (UnsupportedStarStruct) o2;
+			if ((ooo1.UID == ooo2.UID) != result) {
+				// throw new UnsupportedOperationException();
+			}
+		}
+		return result;
+	}
+
+	private static boolean EQ_(Object o1, Object o2) {
 		if (o1 == o2) {
 			return true;
 		}
@@ -263,57 +282,31 @@ public class JUtils {
 		// if (o1 instanceof AreaArray && o2 instanceof AreaArray) {
 		// return ((AreaArray) o1).isSameThan((AreaArray) o2);
 		// }
+		if (o1 instanceof ST_pointnlink_t && o2 instanceof ST_pointnlink_t) {
+			return ((ST_pointnlink_t) o1).isSameThan((ST_pointnlink_t) o2);
+		}
+		if (o1 instanceof ST_object_t && o2 instanceof ST_object_t) {
+			return ((ST_object_t) o1).isSameThan((ST_object_t) o2);
+		}
 		if (o1 instanceof StarStruct && o2 instanceof StarStruct) {
+			// System.err.println("o1="+o1.getClass());
+			// System.err.println("o2="+o2.getClass());
 			return ((StarStruct) o1).isSameThan((StarStruct) o2);
 		}
 		if (o1 instanceof CString && o2 instanceof CString) {
 			return ((CString) o1).isSameThan((CString) o2);
 		}
-		if (o1 instanceof StarArrayOfPtr && o2 instanceof StarArrayOfPtr) {
-			return ((StarArrayOfPtr) o1).isSameThan((StarArrayOfPtr) o2);
+		if (o1 instanceof ST_Agnode_s.ArrayOfStar && o2 instanceof ST_Agnode_s.ArrayOfStar) {
+			return ((ST_Agnode_s.ArrayOfStar) o1).isSameThan2((ST_Agnode_s.ArrayOfStar) o2);
 		}
-		if (o1 instanceof StarStar && o2 instanceof StarStruct) {
-			__ptr__ o1b = ((StarStar) o1).getPtr();
-			if (((StarStruct) o1b).getRealClass() != ((StarStruct) o2).getRealClass()) {
-				throw new UnsupportedOperationException();
-			}
-			return EQ(o1b, o2);
-		}
-		if (o1 instanceof StarStruct && o2 instanceof StarArrayOfPtr) {
-			__ptr__ o2b = ((StarArrayOfPtr) o2).getPtrForEquality();
-			if (((StarStruct) o1).getRealClass() != ((StarStruct) o2b).getRealClass()) {
-				throw new UnsupportedOperationException();
-			}
-			return EQ(o1, o2b);
-		}
-		if (o1 instanceof StarStruct && o2 instanceof StarArrayOfStruct) {
-			__ptr__ o2b = ((StarArrayOfStruct) o2).getPtrForEquality();
-			if (((StarStruct) o1).getRealClass() != ((StarStruct) o2b).getRealClass()) {
-				throw new UnsupportedOperationException();
-			}
-			return EQ(o1, o2b);
-		}
-		if (o1 instanceof StarStar && o2 instanceof StarArrayOfPtr) {
-			__ptr__ o1b = ((StarStar) o1).getPtr();
-			__ptr__ o2b = ((StarArrayOfPtr) o2).getPtr();
-			if (((StarStruct) o1b).getRealClass() != ((StarStruct) o2b).getRealClass()) {
-				throw new UnsupportedOperationException();
-			}
-			return EQ(o1b, o2b);
-		}
-		if (o1 instanceof StarArrayOfStruct && o2 instanceof StarArrayOfStruct) {
-			StarArrayOfStruct oo1 = (StarArrayOfStruct) o1;
-			StarArrayOfStruct oo2 = (StarArrayOfStruct) o2;
-			return oo1.isSameThan(oo2);
-		}
-		if (o1 instanceof StarArrayOfPtr && o2 instanceof StarArrayOfStruct) {
-			StarArrayOfPtr oo1 = (StarArrayOfPtr) o1;
-			StarArrayOfStruct oo2 = (StarArrayOfStruct) o2;
-			__struct__ s1 = oo1.getStruct();
-			__struct__ s2 = oo2.getStruct();
-			boolean result = s1.getInternalData().isSameThan(s2.getInternalData());
-			return result;
-		}
+		// if (o1 instanceof StarStar && o2 instanceof StarArrayOfPtr) {
+		// __ptr__ o1b = ((StarStar) o1).getPtr();
+		// __ptr__ o2b = ((StarArrayOfPtr) o2).getPtr();
+		// if (((StarStruct) o1b).getRealClass() != ((StarStruct) o2b).getRealClass()) {
+		// throw new UnsupportedOperationException();
+		// }
+		// return EQ(o1b, o2b);
+		// }
 		System.err.println("o1=" + o1.getClass() + " " + o1);
 		System.err.println("o2=" + o2.getClass() + " " + o2);
 		throw new UnsupportedOperationException();
@@ -323,13 +316,12 @@ public class JUtils {
 		return EQ(o1, o2) == false;
 	}
 
-	public static void qsort(__ptr__ array, int nb, size_t size, CFunction compare) {
+	public static void qsort(__ptr__ array, int nb, CFunction compare) {
 		if (nb <= 1) {
 			return;
 		}
 		JUtils.LOG("array=" + array);
 		JUtils.LOG("nb=" + nb);
-		JUtils.LOG("size=" + size);
 		JUtils.LOG("compare=" + compare);
 		boolean change;
 		do {
@@ -343,10 +335,15 @@ public class JUtils {
 					change = true;
 					if (array instanceof StarArrayOfInteger) {
 						((StarArrayOfInteger) array).swap(i, i + 1);
-					} else if (array instanceof STStarArrayOfPointer) {
-						((STStarArrayOfPointer) array).swap(i, i + 1);
+						// } else if (array instanceof STStarArrayOfPointer) {
+						// ((STStarArrayOfPointer) array).swap(i, i + 1);
+					} else if (array instanceof ST_Agnode_s.ArrayOfStar) {
+						((ST_Agnode_s.ArrayOfStar) array).swap(i, i + 1);
+					} else if (array instanceof ST_Agedge_s.ArrayOfStar) {
+						((ST_Agedge_s.ArrayOfStar) array).swap(i, i + 1);
 					} else {
-						((StarStar) array).swap(i, i + 1);
+						throw new UnsupportedOperationException();
+						// ((StarStar) array).swap(i, i + 1);
 					}
 				}
 			}
@@ -374,20 +371,20 @@ public class JUtils {
 
 	// DEBUG
 
-	public static void printDebugEdge(Agedge_s e) {
+	public static void printDebugEdge(ST_Agedge_s e) {
 		System.err.println("*********** PRINT EDGE ********** ");
-		final Agedgeinfo_t data = (Agedgeinfo_t) Macro.AGDATA(e).castTo(Agedgeinfo_t.class);
-		final splines splines = (splines) data.getPtr("spl");
-		__struct__<boxf> bb = splines.getStruct("bb");
-		final bezier list = (bezier) splines.getPtr("list");
-		System.err.println("splines.size=" + splines.getInt("size"));
-		System.err.println("bb.LL=" + pointftoString(bb.getStruct("LL")));
-		System.err.println("bb.UR=" + pointftoString(bb.getStruct("UR")));
-		printDebugBezier((bezier) splines.getPtr("list").getPtr());
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
+		final ST_splines splines = (ST_splines) data.spl;
+		ST_boxf bb = (ST_boxf) splines.getStruct("bb");
+		final ST_bezier list = (ST_bezier) splines.getPtr("list");
+		System.err.println("splines.size=" + splines.size);
+		System.err.println("bb.LL=" + pointftoString(bb.LL));
+		System.err.println("bb.UR=" + pointftoString(bb.UR));
+		printDebugBezier((ST_bezier) splines.getPtr("list").getPtr());
 
 	}
 
-	private static String pointftoString(__struct__<pointf> point) {
+	private static String pointftoString(ST_pointf point) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("(");
 		sb.append(point.getDouble("x"));
@@ -397,13 +394,13 @@ public class JUtils {
 		return sb.toString();
 	}
 
-	private static void printDebugBezier(bezier bezier) {
-		System.err.println("bezier.size=" + bezier.getInt("size"));
+	private static void printDebugBezier(ST_bezier bezier) {
+		System.err.println("bezier.size=" + bezier.size);
 		System.err.println("bezier.sflag=" + bezier.getInt("sflag"));
 		System.err.println("splines.eflag=" + bezier.getInt("eflag"));
-		System.err.println("bezier.sp=" + pointftoString(bezier.getStruct("sp")));
-		System.err.println("bezier.ep=" + pointftoString(bezier.getStruct("ep")));
-		for (int i = 0; i < bezier.getInt("size"); i++) {
+		System.err.println("bezier.sp=" + pointftoString(bezier.sp));
+		System.err.println("bezier.ep=" + pointftoString(bezier.ep));
+		for (int i = 0; i < bezier.size; i++) {
 			final __ptr__ pt = bezier.getPtr("list").plus(i).getPtr();
 			System.err.println("pt=" + pointftoString(pt));
 		}
@@ -420,99 +417,99 @@ public class JUtils {
 	}
 
 	public static <C extends __ptr__> __struct__<C> from(Class<C> theClass) {
-		if (theClass == _dtmethod_s.class) {
+		if (theClass == ST_dtmethod_s.class) {
 			return new ST_dtmethod_s();
 		}
-		if (theClass == _dtdisc_s.class) {
+		if (theClass == ST_dtdisc_s.class) {
 			return new ST_dtdisc_s();
 		}
-		if (theClass == Agdesc_s.class) {
+		if (theClass == ST_Agdesc_s.class) {
 			return new ST_Agdesc_s();
 		}
-		if (theClass == Agtag_s.class) {
-			return new ST_Agtag_s();
-		}
-		if (theClass == Agiddisc_s.class) {
+		// if (theClass == Agtag_s.class) {
+		// return new ST_Agtag_s();
+		// }
+		if (theClass == ST_Agiddisc_s.class) {
 			return new ST_Agiddisc_s();
 		}
-		if (theClass == Agmemdisc_s.class) {
+		if (theClass == ST_Agmemdisc_s.class) {
 			return new ST_Agmemdisc_s();
 		}
-		if (theClass == nlist_t.class) {
+		if (theClass == ST_nlist_t.class) {
 			return new ST_nlist_t();
 		}
-		if (theClass == arrowname_t.class) {
-			return new ST_arrowname_t();
-		}
-		if (theClass == arrowtype_t.class) {
+		if (theClass == ST_arrowtype_t.class) {
 			return new ST_arrowtype_t();
 		}
-		if (theClass == elist.class) {
+		if (theClass == ST_elist.class) {
 			return new ST_elist();
 		}
-		if (theClass == pointf.class) {
+		if (theClass == ST_pointf.class) {
 			return new ST_pointf();
 		}
-		if (theClass == boxf.class) {
+		if (theClass == ST_boxf.class) {
 			return new ST_boxf();
 		}
-		if (theClass == port.class) {
+		if (theClass == ST_port.class) {
 			return new ST_port();
 		}
-		if (theClass == polygon_t.class) {
+		if (theClass == ST_polygon_t.class) {
 			return new ST_polygon_t();
 		}
-		if (theClass == shape_functions.class) {
+		if (theClass == ST_shape_functions.class) {
 			return new ST_shape_functions();
 		}
-		if (theClass == shape_desc.class) {
+		if (theClass == ST_shape_desc.class) {
 			return new ST_shape_desc();
 		}
-		if (theClass == deque_t.class) {
-			return new ST_deque_t();
-		}
-		if (theClass == pointnlink_t.class) {
-			return new ST_pointnlink_t();
-		}
-		if (theClass == Ppoly_t.class) {
+		// if (theClass == deque_t.class) {
+		// return new ST_deque_t();
+		// }
+		// if (theClass == pointnlink_t.class) {
+		// return new ST_pointnlink_t();
+		// }
+		if (theClass == ST_Ppoly_t.class) {
 			return new ST_Ppoly_t();
 		}
-		if (theClass == splineInfo.class) {
+		if (theClass == ST_splineInfo.class) {
 			return new ST_splineInfo();
 		}
-		if (theClass == textfont_t.class) {
+		if (theClass == ST_textfont_t.class) {
 			return new ST_textfont_t();
 		}
 		//
 		// if (UmlDiagram.SMETANA_BETA) {
-		if (theClass == Agsubnode_s.class) {
+		if (theClass == ST_Agsubnode_s.class) {
 			return new ST_Agsubnode_s();
 		}
-		if (theClass == _dtlink_s.class) {
+		if (theClass == ST_dtlink_s.class) {
 			return new ST_dtlink_s();
 		}
-		if (theClass == refstr_t.class) {
+		if (theClass == ST_refstr_t.class) {
 			return new ST_refstr_t();
 		}
-		if (theClass == Agsym_s.class) {
+		if (theClass == ST_refstr_t.class) {
+			return new ST_refstr_t();
+		}
+		if (theClass == ST_Agsym_s.class) {
 			return new ST_Agsym_s();
 		}
-		if (theClass == Agedge_s.class) {
+		if (theClass == ST_Agedge_s.class) {
 			return new ST_Agedge_s();
 		}
-		if (theClass == Agobj_s.class) {
+		if (theClass == ST_Agobj_s.class) {
 			return new ST_Agobj_s();
 		}
-		if (theClass == Agrec_s.class) {
+		if (theClass == ST_Agrec_s.class) {
 			return new ST_Agrec_s();
 		}
-		if (theClass == Agraph_s.class) {
+		if (theClass == ST_Agraph_s.class) {
 			return new ST_Agraph_s();
 		}
-		if (theClass == Agclos_s.class) {
+		if (theClass == ST_Agclos_s.class) {
 			return new ST_Agclos_s();
 		}
-		if (theClass == Agdisc_s.class) {
+		if (theClass == ST_Agdisc_s.class) {
 			return new ST_Agdisc_s();
 		}
 		if (theClass == Agdstate_s.class) {
@@ -521,388 +518,385 @@ public class JUtils {
 		if (theClass == Agiodisc_s.class) {
 			return new ST_Agiodisc_s();
 		}
-		if (theClass == _dt_s.class) {
+		if (theClass == ST_dt_s.class) {
 			return new ST_dt_s();
 		}
-		if (theClass == _dtdata_s.class) {
+		if (theClass == ST_dtdata_s.class) {
 			return new ST_dtdata_s();
 		}
-		if (theClass == Agdatadict_s.class) {
+		if (theClass == ST_Agdatadict_s.class) {
 			return new ST_Agdatadict_s();
 		}
-		if (theClass == Agattr_s.class) {
+		if (theClass == ST_Agattr_s.class) {
 			return new ST_Agattr_s();
 		}
 		if (theClass == Agcbstack_s.class) {
 			return new ST_Agcbstack_s();
 		}
-		if (theClass == Agnode_s.class) {
+		if (theClass == ST_Agnode_s.class) {
 			return new ST_Agnode_s();
 		}
-		if (theClass == Agedgepair_s.class) {
+		if (theClass == ST_Agedgepair_s.class) {
 			return new ST_Agedgepair_s();
 		}
-		if (theClass == Agraphinfo_t.class) {
+		if (theClass == ST_Agraphinfo_t.class) {
 			return new ST_Agraphinfo_t();
 		}
-		if (theClass == GVC_s.class) {
+		if (theClass == ST_GVC_s.class) {
 			return new ST_GVC_s();
 		}
 		if (theClass == GVCOMMON_t.class) {
 			return new ST_GVCOMMON_t();
 		}
-		if (theClass == gvlayout_engine_s.class) {
-			return new ST_gvlayout_engine_s();
-		}
-		if (theClass == gvlayout_features_t.class) {
-			return new ST_gvlayout_features_t();
-		}
-		if (theClass == gvplugin_active_layout_t.class) {
-			return new ST_gvplugin_active_layout_t();
-		}
-		if (theClass == gvplugin_installed_t.class) {
-			return new ST_gvplugin_installed_t();
-		}
+		// if (theClass == ST_gvlayout_engine_s.class) {
+		// return new ST_gvlayout_engine_s();
+		// }
+		// if (theClass == gvlayout_features_t.class) {
+		// return new ST_gvlayout_features_t();
+		// }
+		// if (theClass == gvplugin_active_layout_t.class) {
+		// return new ST_gvplugin_active_layout_t();
+		// }
+		// if (theClass == gvplugin_installed_t.class) {
+		// return new ST_gvplugin_installed_t();
+		// }
 		if (theClass == layout_t.class) {
 			return new ST_layout_t();
 		}
-		if (theClass == Agnodeinfo_t.class) {
+		if (theClass == ST_Agnodeinfo_t.class) {
 			return new ST_Agnodeinfo_t();
 		}
-		if (theClass == textlabel_t.class) {
+		if (theClass == ST_textlabel_t.class) {
 			return new ST_textlabel_t();
 		}
-		if (theClass == textspan_t.class) {
+		if (theClass == ST_textspan_t.class) {
 			return new ST_textspan_t();
 		}
 		if (theClass == rank_t.class) {
 			return new ST_rank_t();
 		}
-		if (theClass == adjmatrix_t.class) {
-			return new ST_adjmatrix_t();
-		}
-		if (theClass == Agedgeinfo_t.class) {
+		// if (theClass == adjmatrix_t.class) {
+		// return new ST_adjmatrix_t();
+		// }
+		if (theClass == ST_Agedgeinfo_t.class) {
 			return new ST_Agedgeinfo_t();
 		}
-		if (theClass == splines.class) {
+		if (theClass == ST_splines.class) {
 			return new ST_splines();
 		}
-		if (theClass == bezier.class) {
+		if (theClass == ST_bezier.class) {
 			return new ST_bezier();
 		}
 		if (theClass == _dthold_s.class) {
 			return new ST_dthold_s();
 		}
 		//
-		if (theClass == pack_info.class) {
+		if (theClass == ST_pack_info.class) {
 			return new ST_pack_info();
 		}
-		if (theClass == aspect_t.class) {
+		if (theClass == ST_aspect_t.class) {
 			return new ST_aspect_t();
 		}
-		if (theClass == fontinfo.class) {
+		if (theClass == ST_fontinfo.class) {
 			return new ST_fontinfo();
 		}
-		if (theClass == IMapEntry_t.class) {
+		if (theClass == ST_IMapEntry_t.class) {
 			return new ST_IMapEntry_t();
 		}
-		if (theClass == point.class) {
-			return new ST_point();
-		}
-		if (theClass == nodequeue.class) {
+		// if (theClass == point.class) {
+		// return new ST_point();
+		// }
+		if (theClass == ST_nodequeue.class) {
 			return new ST_nodequeue();
 		}
-		if (theClass == spline_info_t.class) {
+		if (theClass == ST_spline_info_t.class) {
 			return new ST_spline_info_t();
 		}
-		if (theClass == path.class) {
+		if (theClass == ST_path.class) {
 			return new ST_path();
 		}
-		if (theClass == pathend_t.class) {
+		if (theClass == ST_pathend_t.class) {
 			return new ST_pathend_t();
 		}
-		if (theClass == inside_t.class) {
-			return new ST_inside_t();
-		}
-		if (theClass == triangle_t.class) {
+		// if (theClass == inside_t.class) {
+		// return new ST_inside_t();
+		// }
+		if (theClass == ST_triangle_t.class) {
 			return new ST_triangle_t();
 		}
 		if (theClass == tedge_t.class) {
 			return new ST_tedge_t();
 		}
-		if (theClass == Pedge_t.class) {
+		if (theClass == ST_Pedge_t.class) {
 			return new ST_Pedge_t();
 		}
-		if (theClass == tna_t.class) {
+		if (theClass == ST_tna_t.class) {
 			return new ST_tna_t();
 		}
-		if (theClass == label_params_t.class) {
+		if (theClass == ST_label_params_t.class) {
 			return new ST_label_params_t();
 		}
-		if (theClass == object_t.class) {
+		if (theClass == ST_object_t.class) {
 			return new ST_object_t();
 		}
-		if (theClass == xlabel_t.class) {
+		if (theClass == ST_xlabel_t.class) {
 			return new ST_xlabel_t();
 		}
-		if (theClass == XLabels_t.class) {
+		if (theClass == ST_XLabels_t.class) {
 			return new ST_XLabels_t();
 		}
-		if (theClass == HDict_t.class) {
+		if (theClass == ST_HDict_t.class) {
 			return new ST_HDict_t();
 		}
-		if (theClass == RTree.class) {
+		if (theClass == ST_RTree.class) {
 			return new ST_RTree();
 		}
-		if (theClass == _Node_t___.class) {
+		if (theClass == ST_Node_t___.class) {
 			return new ST_Node_t___();
+		}
+		if (theClass == ST_cinfo_t.class) {
+			return new ST_cinfo_t();
 		}
 		// }
 		notFound(theClass);
-		return new __struct_impl__<C>(theClass);
+		throw new UnsupportedOperationException();
 	}
 
 	public static StarStruct create(Class theClass, StarStruct parent) {
-		if (theClass == _dtmethod_s.class) {
+		if (theClass == ST_dtmethod_s.class) {
 			throw new IllegalArgumentException(theClass.toString());
 		}
-		if (theClass == _dtdisc_s.class) {
+		if (theClass == ST_dtdisc_s.class) {
 			return new ST_dtdisc_s(parent);
 		}
-		if (theClass == Agdesc_s.class) {
+		if (theClass == ST_Agdesc_s.class) {
 			return new ST_Agdesc_s(parent);
 		}
-		if (theClass == Agtag_s.class) {
-			return new ST_Agtag_s(parent);
-		}
-		if (theClass == Agiddisc_s.class) {
-			throw new IllegalArgumentException(theClass.toString());
-		}
-		if (theClass == Agmemdisc_s.class) {
-			throw new IllegalArgumentException(theClass.toString());
-		}
-		if (theClass == nlist_t.class) {
+		if (theClass == ST_nlist_t.class) {
 			return new ST_nlist_t(parent);
 		}
-		if (theClass == arrowname_t.class) {
-			throw new IllegalArgumentException(theClass.toString());
-		}
-		if (theClass == arrowtype_t.class) {
-			throw new IllegalArgumentException(theClass.toString());
-		}
-		if (theClass == elist.class) {
+		if (theClass == ST_elist.class) {
 			return new ST_elist(parent);
 		}
-		if (theClass == pointf.class) {
+		if (theClass == ST_pointf.class) {
 			return new ST_pointf(parent);
 		}
-		if (theClass == boxf.class) {
+		if (theClass == ST_boxf.class) {
 			return new ST_boxf(parent);
 		}
-		if (theClass == port.class) {
+		if (theClass == ST_port.class) {
 			return new ST_port(parent);
 		}
-		if (theClass == polygon_t.class) {
+		if (theClass == ST_polygon_t.class) {
 			return new ST_polygon_t(parent);
 		}
-		if (theClass == shape_functions.class) {
+		if (theClass == ST_shape_functions.class) {
 			return new ST_shape_functions(parent);
 		}
-		if (theClass == shape_desc.class) {
+		if (theClass == ST_shape_desc.class) {
 			return new ST_shape_desc(parent);
 		}
-		if (theClass == deque_t.class) {
-			return new ST_deque_t(parent);
-		}
-		if (theClass == pointnlink_t.class) {
-			return new ST_pointnlink_t(parent);
-		}
-		if (theClass == Ppoly_t.class) {
+		// if (theClass == deque_t.class) {
+		// return new ST_deque_t(parent);
+		// }
+		// if (theClass == pointnlink_t.class) {
+		// return new ST_pointnlink_t(parent);
+		// }
+		if (theClass == ST_Ppoly_t.class) {
 			return new ST_Ppoly_t(parent);
 		}
-		if (theClass == splineInfo.class) {
+		if (theClass == ST_splineInfo.class) {
 			return new ST_splineInfo(parent);
 		}
-		if (theClass == textfont_t.class) {
+		if (theClass == ST_textfont_t.class) {
 			return new ST_textfont_t(parent);
 		}
 		//
 		// if (UmlDiagram.SMETANA_BETA) {
-		if (theClass == Agsubnode_s.class) {
+		if (theClass == ST_Agsubnode_s.class) {
 			return new ST_Agsubnode_s(parent);
 		}
-		if (theClass == _dtlink_s.class) {
+		if (theClass == ST_dtlink_s.class) {
 			return new ST_dtlink_s(parent);
 		}
-		if (theClass == refstr_t.class) {
-			return new ST_refstr_t(parent);
+		if (theClass == ST_refstr_t.class) {
+			return new ST_refstr_t();
 		}
-		if (theClass == Agsym_s.class) {
+		if (theClass == ST_refstr_t.class) {
+			return new ST_refstr_t();
+		}
+		if (theClass == ST_Agsym_s.class) {
 			return new ST_Agsym_s(parent);
 		}
-		if (theClass == Agedge_s.class) {
+		if (theClass == ST_Agedge_s.class) {
 			return new ST_Agedge_s(parent);
 		}
-		if (theClass == Agobj_s.class) {
+		if (theClass == ST_Agobj_s.class) {
 			return new ST_Agobj_s(parent);
 		}
-		if (theClass == Agrec_s.class) {
+		if (theClass == ST_Agrec_s.class) {
 			return new ST_Agrec_s(parent);
 		}
-		if (theClass == Agraph_s.class) {
+		if (theClass == ST_Agraph_s.class) {
 			return new ST_Agraph_s(parent);
 		}
-		if (theClass == Agclos_s.class) {
+		if (theClass == ST_Agclos_s.class) {
 			return new ST_Agclos_s(parent);
 		}
-		if (theClass == Agdisc_s.class) {
+		if (theClass == ST_Agdisc_s.class) {
 			return new ST_Agdisc_s(parent);
 		}
 		if (theClass == Agdstate_s.class) {
 			return new ST_Agdstate_s(parent);
 		}
-		if (theClass == _dt_s.class) {
+		if (theClass == ST_dt_s.class) {
 			return new ST_dt_s(parent);
 		}
-		if (theClass == _dtdata_s.class) {
+		if (theClass == ST_dtdata_s.class) {
 			return new ST_dtdata_s(parent);
 		}
-		if (theClass == Agdatadict_s.class) {
+		if (theClass == ST_Agdatadict_s.class) {
 			return new ST_Agdatadict_s(parent);
 		}
-		if (theClass == Agattr_s.class) {
+		if (theClass == ST_Agattr_s.class) {
 			return new ST_Agattr_s(parent);
 		}
 		if (theClass == Agcbstack_s.class) {
 			return new ST_Agcbstack_s(parent);
 		}
-		if (theClass == Agnode_s.class) {
+		if (theClass == ST_Agnode_s.class) {
 			return new ST_Agnode_s(parent);
 		}
-		if (theClass == Agedgepair_s.class) {
+		if (theClass == ST_Agedgepair_s.class) {
 			return new ST_Agedgepair_s(parent);
 		}
-		if (theClass == Agraphinfo_t.class) {
+		if (theClass == ST_Agraphinfo_t.class) {
 			return new ST_Agraphinfo_t(parent);
 		}
-		if (theClass == GVC_s.class) {
+		if (theClass == ST_GVC_s.class) {
 			return new ST_GVC_s(parent);
 		}
 		if (theClass == GVCOMMON_t.class) {
 			return new ST_GVCOMMON_t(parent);
 		}
-		if (theClass == gvlayout_engine_s.class) {
-			throw new UnsupportedOperationException();
-			// return new ST_gvlayout_engine_s(parent);
-		}
-		if (theClass == gvlayout_features_t.class) {
-			throw new UnsupportedOperationException();
-			// return new ST_gvlayout_features_t(parent);
-		}
-		if (theClass == gvplugin_active_layout_t.class) {
-			throw new UnsupportedOperationException();
-			// return new ST_gvplugin_active_layout_t(parent);
-		}
-		if (theClass == gvplugin_installed_t.class) {
-			return new ST_gvplugin_installed_t(parent);
-		}
+		// if (theClass == ST_gvlayout_engine_s.class) {
+		// throw new UnsupportedOperationException();
+		// // return new ST_gvlayout_engine_s(parent);
+		// }
+		// if (theClass == gvlayout_features_t.class) {
+		// throw new UnsupportedOperationException();
+		// // return new ST_gvlayout_features_t(parent);
+		// }
+		// if (theClass == gvplugin_active_layout_t.class) {
+		// throw new UnsupportedOperationException();
+		// // return new ST_gvplugin_active_layout_t(parent);
+		// }
+		// if (theClass == gvplugin_installed_t.class) {
+		// return new ST_gvplugin_installed_t(parent);
+		// }
 		if (theClass == layout_t.class) {
 			return new ST_layout_t(parent);
 		}
-		if (theClass == Agnodeinfo_t.class) {
+		if (theClass == ST_Agnodeinfo_t.class) {
 			return new ST_Agnodeinfo_t(parent);
 		}
-		if (theClass == textlabel_t.class) {
+		if (theClass == ST_textlabel_t.class) {
 			return new ST_textlabel_t(parent);
 		}
-		if (theClass == textspan_t.class) {
+		if (theClass == ST_textspan_t.class) {
 			return new ST_textspan_t(parent);
 		}
 		if (theClass == rank_t.class) {
 			return new ST_rank_t(parent);
 		}
-		if (theClass == adjmatrix_t.class) {
-			return new ST_adjmatrix_t(parent);
-		}
-		if (theClass == Agedgeinfo_t.class) {
+		// if (theClass == adjmatrix_t.class) {
+		// return new ST_adjmatrix_t(parent);
+		// }
+		if (theClass == ST_Agedgeinfo_t.class) {
 			return new ST_Agedgeinfo_t(parent);
 		}
-		if (theClass == splines.class) {
+		if (theClass == ST_splines.class) {
 			return new ST_splines(parent);
 		}
-		if (theClass == bezier.class) {
+		if (theClass == ST_bezier.class) {
 			return new ST_bezier(parent);
 		}
 		if (theClass == _dthold_s.class) {
 			return new ST_dthold_s(parent);
 		}
 		//
-		if (theClass == pack_info.class) {
+		if (theClass == ST_pack_info.class) {
 			return new ST_pack_info(parent);
 		}
-		if (theClass == aspect_t.class) {
+		if (theClass == ST_aspect_t.class) {
 			return new ST_aspect_t(parent);
 		}
-		if (theClass == fontinfo.class) {
+		if (theClass == ST_fontinfo.class) {
 			return new ST_fontinfo(parent);
 		}
-		if (theClass == IMapEntry_t.class) {
+		if (theClass == ST_IMapEntry_t.class) {
 			return new ST_IMapEntry_t(parent);
 		}
-		if (theClass == point.class) {
-			return new ST_point(parent);
-		}
-		if (theClass == nodequeue.class) {
+		// if (theClass == point.class) {
+		// return new ST_point(parent);
+		// }
+		if (theClass == ST_nodequeue.class) {
 			return new ST_nodequeue(parent);
 		}
-		if (theClass == spline_info_t.class) {
+		if (theClass == ST_spline_info_t.class) {
 			return new ST_spline_info_t(parent);
 		}
-		if (theClass == path.class) {
+		if (theClass == ST_path.class) {
 			return new ST_path(parent);
 		}
-		if (theClass == pathend_t.class) {
+		if (theClass == ST_pathend_t.class) {
 			return new ST_pathend_t(parent);
 		}
-		if (theClass == inside_t.class) {
-			return new ST_inside_t(parent);
-		}
-		if (theClass == triangle_t.class) {
+		// if (theClass == inside_t.class) {
+		// return new ST_inside_t(parent);
+		// }
+		if (theClass == ST_triangle_t.class) {
 			return new ST_triangle_t(parent);
 		}
 		if (theClass == tedge_t.class) {
 			return new ST_tedge_t(parent);
 		}
-		if (theClass == Pedge_t.class) {
+		if (theClass == ST_Pedge_t.class) {
 			return new ST_Pedge_t(parent);
 		}
-		if (theClass == tna_t.class) {
+		if (theClass == ST_tna_t.class) {
 			return new ST_tna_t(parent);
 		}
-		if (theClass == label_params_t.class) {
+		if (theClass == ST_label_params_t.class) {
 			return new ST_label_params_t(parent);
 		}
-		if (theClass == object_t.class) {
+		if (theClass == ST_object_t.class) {
 			return new ST_object_t(parent);
 		}
-		if (theClass == xlabel_t.class) {
+		if (theClass == ST_xlabel_t.class) {
 			return new ST_xlabel_t(parent);
 		}
-		if (theClass == XLabels_t.class) {
+		if (theClass == ST_XLabels_t.class) {
 			return new ST_XLabels_t(parent);
 		}
-		if (theClass == HDict_t.class) {
+		if (theClass == ST_HDict_t.class) {
 			return new ST_HDict_t(parent);
 		}
-		if (theClass == RTree.class) {
+		if (theClass == ST_RTree.class) {
 			return new ST_RTree(parent);
 		}
-		if (theClass == _Node_t___.class) {
+		if (theClass == ST_Node_t___.class) {
 			return new ST_Node_t___(parent);
+		}
+		if (theClass == ST_cinfo_t.class) {
+			return new ST_cinfo_t(parent);
+		}
+		if (theClass == LeafList_t.class) {
+			return new ST_LeafList_t(parent);
 		}
 		// }
 		notFound(theClass);
-		return new StarStructImpl(theClass, parent);
+		throw new UnsupportedOperationException();
 	}
 
 	private static final Set<String> todo = new LinkedHashSet<String>();

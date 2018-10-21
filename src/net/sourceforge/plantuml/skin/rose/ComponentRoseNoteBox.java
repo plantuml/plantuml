@@ -53,8 +53,8 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	private final SymbolContext symbolContext;
 
 	public ComponentRoseNoteBox(SymbolContext symbolContext, FontConfiguration font, Display strings,
-			ISkinSimple spriteContainer) {
-		super(spriteContainer.wrapWidth(), strings, font, HorizontalAlignment.LEFT, 4, 4, 4, spriteContainer, false,
+			ISkinSimple spriteContainer, HorizontalAlignment alignment) {
+		super(spriteContainer.wrapWidth(), strings, font, alignment, 4, 4, 4, spriteContainer, false,
 				null, null);
 		this.symbolContext = symbolContext;
 	}

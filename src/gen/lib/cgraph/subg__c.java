@@ -56,14 +56,13 @@ import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agraph_s;
+import h.ST_Agraph_s;
 import h.ST_Agdesc_s;
-import h._dt_s;
+import h.ST_Agraph_s;
+import h.ST_dt_s;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Z;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class subg__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -202,13 +201,13 @@ public class subg__c {
 
 //3 11ezyrsjsotjz9b3cyvb4ie8p
 // static Agraph_t *agfindsubg_by_id(Agraph_t * g, unsigned long id) 
-public static Agraph_s agfindsubg_by_id(Agraph_s g, int id) {
+public static ST_Agraph_s agfindsubg_by_id(ST_Agraph_s g, int id) {
 ENTERING("11ezyrsjsotjz9b3cyvb4ie8p","agfindsubg_by_id");
 try {
-    final __struct__<Agraph_s> template = JUtils.from(Agraph_s.class);
-    agdtdisc(g, (_dt_s) g.getPtr("g_dict"), Z.z().Ag_subgraph_id_disc.amp());
-    AGID(template.amp(), id);
-    return (Agraph_s) g.getPtr("g_dict").castTo(_dt_s.class).call("searchf", g.getPtr("g_dict"), template.amp(), 0000004);
+    final ST_Agraph_s template = new ST_Agraph_s();
+    agdtdisc(g, (ST_dt_s) g.getPtr("g_dict"), Z.z().Ag_subgraph_id_disc);
+    AGID(template, id);
+    return (ST_Agraph_s) g.getPtr("g_dict").castTo(ST_dt_s.class).call("searchf", g.getPtr("g_dict"), template, 0000004);
 } finally {
 LEAVING("11ezyrsjsotjz9b3cyvb4ie8p","agfindsubg_by_id");
 }
@@ -219,15 +218,15 @@ LEAVING("11ezyrsjsotjz9b3cyvb4ie8p","agfindsubg_by_id");
 
 //3 44saycxbfbr9lou0itlyewkb4
 // static Agraph_t *localsubg(Agraph_t * g, unsigned long id) 
-public static Agraph_s localsubg(Agraph_s g, int id) {
+public static ST_Agraph_s localsubg(ST_Agraph_s g, int id) {
 ENTERING("44saycxbfbr9lou0itlyewkb4","localsubg");
 try {
-    Agraph_s subg;
+    ST_Agraph_s subg;
     subg = agfindsubg_by_id(g, id);
     if (subg!=null)
 	return subg;
-    subg = (Agraph_s) agalloc(g, sizeof(Agraph_s.class));
-    subg.setPtr("clos", g.getPtr("clos"));
+    subg = (ST_Agraph_s) agalloc(g, sizeof(ST_Agraph_s.class));
+    subg.setPtr("clos", g.clos);
     subg.setStruct("desc", g.getStruct("desc"));
     ((ST_Agdesc_s)subg.getStruct("desc")).maingraph = 0;
     subg.setPtr("parent", g);
@@ -262,11 +261,11 @@ throw new UnsupportedOperationException();
 
 //3 a24jd4r2sdyb4lb2hyababrda
 // Agraph_t *agsubg(Agraph_t * g, char *name, int cflag) 
-public static Agraph_s agsubg(Agraph_s g, CString name, boolean cflag) {
+public static ST_Agraph_s agsubg(ST_Agraph_s g, CString name, boolean cflag) {
 ENTERING("a24jd4r2sdyb4lb2hyababrda","agsubg");
 try {
     int id[] = new int[]{0};
-    Agraph_s subg;
+    ST_Agraph_s subg;
     if (name!=null && agmapnametoid(g, AGRAPH, name, id, false)!=0) {
 	/* might already exist */
 	if ((subg = agfindsubg_by_id(g, id[0]))!=null)
@@ -288,12 +287,12 @@ LEAVING("a24jd4r2sdyb4lb2hyababrda","agsubg");
 
 //3 51eksrs0lhkgohunejlpwyc4k
 // Agraph_t *agfstsubg(Agraph_t * g) 
-public static Agraph_s agfstsubg(Agraph_s g) {
+public static ST_Agraph_s agfstsubg(ST_Agraph_s g) {
 ENTERING("51eksrs0lhkgohunejlpwyc4k","agfstsubg");
 try {
-	__ptr__ tmp = (__ptr__)g.getPtr("g_dict").castTo(_dt_s.class).call("searchf", g.getPtr("g_dict"),null,0000200);
-	if (tmp!=null) tmp = tmp.castTo(Agraph_s.class);
-	return (Agraph_s) tmp;
+	__ptr__ tmp = (__ptr__)g.getPtr("g_dict").castTo(ST_dt_s.class).call("searchf", g.getPtr("g_dict"),null,0000200);
+	if (tmp!=null) tmp = tmp.castTo(ST_Agraph_s.class);
+	return (ST_Agraph_s) tmp;
 } finally {
 LEAVING("51eksrs0lhkgohunejlpwyc4k","agfstsubg");
 }
@@ -304,12 +303,15 @@ LEAVING("51eksrs0lhkgohunejlpwyc4k","agfstsubg");
 
 //3 85c1qisrein0tzm2regoe61t
 // Agraph_t *agnxtsubg(Agraph_t * subg) 
-public static Agraph_s agnxtsubg(Agraph_s subg) {
+public static ST_Agraph_s agnxtsubg(ST_Agraph_s subg) {
 ENTERING("85c1qisrein0tzm2regoe61t","agnxtsubg");
 try {
-    Agraph_s g;
+    ST_Agraph_s g;
     g = agparent(subg);
-    return g!=null ? (Agraph_s) g.getPtr("g_dict").castTo(_dt_s.class).call("searchf", g.getPtr("g_dict"), subg, 0000010) : null;
+    if (g==null) return null;
+    __ptr__ tmp = (__ptr__) g.getPtr("g_dict").castTo(ST_dt_s.class).call("searchf", g.getPtr("g_dict"), subg, 0000010);
+    if (tmp==null) return null;
+    return (ST_Agraph_s) tmp.getPtr();
 } finally {
 LEAVING("85c1qisrein0tzm2regoe61t","agnxtsubg");
 }
@@ -320,10 +322,10 @@ LEAVING("85c1qisrein0tzm2regoe61t","agnxtsubg");
 
 //3 7kbp6j03hd7u6nnlivi0vt3ja
 // Agraph_t *agparent(Agraph_t * g) 
-public static Agraph_s agparent(Agraph_s g) {
+public static ST_Agraph_s agparent(ST_Agraph_s g) {
 ENTERING("7kbp6j03hd7u6nnlivi0vt3ja","agparent");
 try {
-	return (Agraph_s) g.getPtr("parent");
+	return (ST_Agraph_s) g.getPtr("parent");
 } finally {
 LEAVING("7kbp6j03hd7u6nnlivi0vt3ja","agparent");
 }

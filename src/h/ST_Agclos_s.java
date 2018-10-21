@@ -45,60 +45,25 @@
  */
 package h;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import smetana.core.ArrayOfInteger;
-import smetana.core.UnsupportedArrayOfPtr;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_integer__;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agclos_s extends UnsupportedStructAndPtr {
+	private final StarStruct parent;
+
 	public final ST_Agdisc_s disc = new ST_Agdisc_s(this); /* resource discipline functions */
 	public final ST_Agdstate_s state = new ST_Agdstate_s(this); /* resource closures */
 	public ST_dt_s strdict;
-	private final int[] seq = new int[3];
+	public final int[] seq = new int[3];
 	// "unsigned long seq[3]",
 	public ST_Agcbstack_s cb;
 	public boolean callbacks_enabled; /* issue user callbacks or hold them? */
 
 	// "Dict_t *lookup_by_name[3]",
 	// "Dict_t *lookup_by_id[3]",
-	private final ArrayOfThreePtrDict_t lookup_by_id = new ArrayOfThreePtrDict_t();
-
-	static class ArrayOfThreePtrDict_t extends UnsupportedArrayOfPtr implements __array_of_ptr__ {
-		private final List<Dict_t> list;
-		private final int pos;
-
-		private ArrayOfThreePtrDict_t(List<Dict_t> list, int pos) {
-			this.list = list;
-			this.pos = pos;
-		}
-
-		ArrayOfThreePtrDict_t() {
-			this(new ArrayList<Dict_t>(), 0);
-			for (int i = 0; i < 3; i++) {
-				list.add(null);
-			}
-		}
-
-		@Override
-		public __array_of_ptr__ plus(int delta) {
-			return new ArrayOfThreePtrDict_t(list, pos + delta);
-		}
-
-		@Override
-		public __ptr__ getPtr() {
-			return list.get(0);
-		}
-
-	}
-
-	private final StarStruct parent;
+	public final ST_dt_s[] lookup_by_id = new ST_dt_s[3];
 
 	public ST_Agclos_s() {
 		this(null);
@@ -127,6 +92,12 @@ public class ST_Agclos_s extends UnsupportedStructAndPtr {
 		}
 		if (fieldName.equals("cb")) {
 			return cb;
+		}
+		if (fieldName.equals("disc")) {
+			return disc;
+		}
+		if (fieldName.equals("state")) {
+			return state;
 		}
 		return super.getPtr(fieldName);
 	}
@@ -158,22 +129,6 @@ public class ST_Agclos_s extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setBoolean(fieldName, data);
-	}
-
-	@Override
-	public __array_of_integer__ getArrayOfInteger(String fieldName) {
-		if (fieldName.equals("seq")) {
-			return new ArrayOfInteger(seq, 0);
-		}
-		return super.getArrayOfInteger(fieldName);
-	}
-
-	@Override
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		if (fieldName.equals("lookup_by_id")) {
-			return lookup_by_id;
-		}
-		return super.getArrayOfPtr(fieldName);
 	}
 
 	// public interface ST_Agclos_s extends __ptr__ {

@@ -75,10 +75,10 @@ public class ST_Agsym_s extends UnsupportedStructAndPtr implements HardcodedStru
 			return this;
 		}
 		final OFFSET offset = OFFSET.fromInt(virtualBytes);
-		if (offset.toString().equals("h.Agsym_s::name")) {
+		if (offset.toString().equals("h.ST_Agsym_s::name")) {
 			return name;
 		}
-		if (offset.toString().equals("h.Agsym_s::link")) {
+		if (offset.toString().equals("h.ST_Agsym_s::link")) {
 			return link;
 		}
 		System.err.println("virtualBytes=" + virtualBytes);
@@ -89,55 +89,13 @@ public class ST_Agsym_s extends UnsupportedStructAndPtr implements HardcodedStru
 	public ST_Agsym_s() {
 		this(null);
 	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		private final ST_Agsym_s me;
-
-		public Amp(ST_Agsym_s me) {
-			this.me = me;
-		}
-
-		@Override
-		public boolean isSameThan(StarStruct other) {
-			Amp other2 = (Amp) other;
-			return this.me == other2.me;
-		}
-
-		@Override
-		public Object addVirtualBytes(int virtualBytes) {
-			if (virtualBytes == 0) {
-				return this;
-			}
-			final OFFSET offset = OFFSET.fromInt(virtualBytes);
-			if (offset.toString().equals("h.Agsym_s::name")) {
-				return name;
-			}
-			System.err.println("virtualBytes=" + virtualBytes);
-			System.err.println("offset=" + offset);
-			return super.addVirtualBytes(virtualBytes);
-		}
-
-		@Override
-		public int getInt(String fieldName) {
-			return ST_Agsym_s.this.getInt(fieldName);
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return ST_Agsym_s.this.setPtr(fieldName, newData);
-		}
-
-		@Override
-		public CString getCString(String fieldName) {
-			return ST_Agsym_s.this.getCString(fieldName);
-		}
-	}
-
+	
 	@Override
-	public StarStruct amp() {
-		return new Amp(this);
+	public boolean isSameThan(StarStruct other) {
+		ST_Agsym_s other2 = (ST_Agsym_s) other;
+		return this == other2;
 	}
+
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -189,7 +147,7 @@ public class ST_Agsym_s extends UnsupportedStructAndPtr implements HardcodedStru
 
 	public StarStruct from_link(ST_dtlink_s from) {
 		if (from == link) {
-			return amp();
+			return this;
 		}
 		throw new IllegalArgumentException();
 	}

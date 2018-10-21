@@ -63,45 +63,11 @@ public class ST_fontinfo extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public void setDouble(String fieldName, double data) {
-			ST_fontinfo.this.setDouble(fieldName, data);
-		}
-		
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return ST_fontinfo.this.setPtr(fieldName, newData);
-		}
-		
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_fontinfo.this.getPtr(fieldName);
-		}
-		
-		@Override
-		public double getDouble(String fieldName) {
-			return ST_fontinfo.this.getDouble(fieldName);
-		}
-		
-		@Override
-		public CString getCString(String fieldName) {
-			return ST_fontinfo.this.getCString(fieldName);
-		}
-
-	}
-
 	// "struct fontinfo",
 	// "{",
-	private double fontsize;
-	private CString fontname;
-	private CString fontcolor;
+	public double fontsize;
+	public CString fontname;
+	public CString fontcolor;
 
 	// "}");
 

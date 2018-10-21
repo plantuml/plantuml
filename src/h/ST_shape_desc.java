@@ -61,8 +61,8 @@ public class ST_shape_desc extends UnsupportedStructAndPtr implements HardcodedS
 	}
 
 	public CString name;
-	public ST_shape_functions.Amp fns;
-	public ST_polygon_t.Amp polygon;
+	public ST_shape_functions fns;
+	public ST_polygon_t polygon;
 	public boolean usershape;
 
 	@Override
@@ -72,11 +72,11 @@ public class ST_shape_desc extends UnsupportedStructAndPtr implements HardcodedS
 			return newData;
 		}
 		if (fieldName.equals("fns")) {
-			this.fns = (ST_shape_functions.Amp) newData;
+			this.fns = (ST_shape_functions) newData;
 			return newData;
 		}
 		if (fieldName.equals("polygon")) {
-			this.polygon = (ST_polygon_t.Amp) newData;
+			this.polygon = (ST_polygon_t) newData;
 			return newData;
 		}
 		return super.setPtr(fieldName, newData);

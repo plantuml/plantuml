@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.CString;
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -58,7 +57,7 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 
 	public final ST_pointf p = new ST_pointf(this);
 	public double theta;
-	public ST_boxf.Amp bp;
+	public ST_boxf bp;
 	public int defined;
 	public int constrained;
 	public int clip;
@@ -192,14 +191,6 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 			return side;
 		}
 		return super.getInt(fieldName);
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
 	}
 
 	@Override

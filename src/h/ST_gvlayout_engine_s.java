@@ -87,28 +87,16 @@ public class ST_gvlayout_engine_s extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
+	public Object call(String fieldName, Object... args) {
+		if (fieldName.equals("layout")) {
+			return layout.exe(args);
+		}
+		if (fieldName.equals("cleanup")) {
+			return cleanup.exe(args);
+		}
+		return super.call(fieldName, args);
 	}
 
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_gvlayout_engine_s.this.getPtr(fieldName);
-		}
-		
-		@Override
-		public Object call(String fieldName, Object... args) {
-			if (fieldName.equals("layout")) {
-				return layout.exe(args);
-			}
-			if (fieldName.equals("cleanup")) {
-				return cleanup.exe(args);
-			}
-			return super.call(fieldName, args);
-		}
-	}
 }
 
 // struct gvlayout_engine_s {

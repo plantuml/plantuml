@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.utils.UniqueSequence;
@@ -88,6 +89,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private boolean opale;
 	private boolean horizontalSolitary;
 	private String sametail;
+	private VisibilityModifier visibilityModifier;
 
 	private Url url;
 
@@ -122,6 +124,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 			// this.label = label.removeHeadingUrl(url).manageGuillemet();
 		} else {
 			this.label = label.manageGuillemet();
+			if (VisibilityModifier.isVisibilityCharacter(label.get(0))) {
+				visibilityModifier = VisibilityModifier.getVisibilityModifier(label.get(0), false);
+			}
+
 		}
 		this.length = length;
 		this.qualifier1 = qualifier1;
@@ -520,6 +526,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		if (port2 != null) {
 			((ILeaf) cl2).addPortShortName(port2);
 		}
+	}
+
+	public final VisibilityModifier getVisibilityModifier() {
+		return visibilityModifier;
 	}
 
 }

@@ -69,7 +69,6 @@ import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
-import static smetana.core.Macro.ALLOC_empty;
 import static smetana.core.Macro.ED_conc_opp_flag;
 import static smetana.core.Macro.ED_count;
 import static smetana.core.Macro.ED_edge_type;
@@ -99,14 +98,11 @@ import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.ND_weight_class;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.boxf;
-import h.pointf;
-import smetana.core.JUtils;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_pointf;
 import smetana.core.Z;
-import smetana.core.__struct__;
 
 public class class2__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -366,14 +362,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -402,27 +398,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
-
-
 
 
 //3 1n5xl70wxuabyf97mclvilsm6
@@ -444,14 +419,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -750,12 +725,12 @@ throw new UnsupportedOperationException();
 
 //3 2zn7c6ulmwwzaibdxo127jf04
 // static node_t* label_vnode(graph_t * g, edge_t * orig) 
-public static Agnode_s label_vnode(Agraph_s g, Agedge_s orig) {
+public static ST_Agnode_s label_vnode(ST_Agraph_s g, ST_Agedge_s orig) {
 ENTERING("2zn7c6ulmwwzaibdxo127jf04","label_vnode");
 try {
-    Agnode_s v;
-    final __struct__<pointf> dimen = JUtils.from(pointf.class);
-    dimen.___(ED_label(orig).getStruct("dimen"));
+    ST_Agnode_s v;
+    final ST_pointf dimen = new ST_pointf();
+    dimen.___(ED_label(orig).dimen);
     v = virtual_node(g);
     ND_label(v, ED_label(orig));
     ND_lw(v, GD_nodesep(agroot(v)));
@@ -779,7 +754,7 @@ LEAVING("2zn7c6ulmwwzaibdxo127jf04","label_vnode");
 
 //3 49tji49jdm9uges7v8lf2j2rn
 // static void  incr_width(graph_t * g, node_t * v) 
-public static void incr_width(Agraph_s g, Agnode_s v) {
+public static void incr_width(ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("49tji49jdm9uges7v8lf2j2rn","incr_width");
 try {
     int width = GD_nodesep(g) / 2;
@@ -795,10 +770,10 @@ LEAVING("49tji49jdm9uges7v8lf2j2rn","incr_width");
 
 //3 xujihq6vep3ez275shtrbilo
 // static node_t* plain_vnode(graph_t * g, edge_t * orig) 
-public static Agnode_s plain_vnode(Agraph_s g, Agedge_s orig) {
+public static ST_Agnode_s plain_vnode(ST_Agraph_s g, ST_Agedge_s orig) {
 ENTERING("xujihq6vep3ez275shtrbilo","plain_vnode");
 try {
-    Agnode_s v;
+    ST_Agnode_s v;
     orig = orig;
     v = virtual_node(g);
     incr_width(g, v);
@@ -813,17 +788,17 @@ LEAVING("xujihq6vep3ez275shtrbilo","plain_vnode");
 
 //3 9fmfj1b2jik7skv6ms0657t8r
 // static node_t* leader_of(graph_t * g, node_t * v) 
-public static Agnode_s leader_of(Agraph_s g, Agnode_s v) {
+public static ST_Agnode_s leader_of(ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("9fmfj1b2jik7skv6ms0657t8r","leader_of");
 try {
-    Agraph_s clust;
-    Agnode_s rv;
+    ST_Agraph_s clust;
+    ST_Agnode_s rv;
     if (ND_ranktype(v) != 7) {
 	/*assert(v == UF_find(v));  could be leaf, so comment out */
 	rv = UF_find(v);
     } else {
 	clust = ND_clust(v);
-	rv = (Agnode_s) GD_rankleader(clust).plus(ND_rank(v)).getPtr();
+	rv = (ST_Agnode_s) GD_rankleader(clust).plus(ND_rank(v)).getPtr();
     }
     return rv;
 } finally {
@@ -836,12 +811,12 @@ LEAVING("9fmfj1b2jik7skv6ms0657t8r","leader_of");
 
 //3 6sbvlvurvkodunw2qt1ug70c2
 // static void  make_chain(graph_t * g, node_t * from, node_t * to, edge_t * orig) 
-public static void make_chain(Agraph_s g, Agnode_s from, Agnode_s to, Agedge_s orig) {
+public static void make_chain(ST_Agraph_s g, ST_Agnode_s from, ST_Agnode_s to, ST_Agedge_s orig) {
 ENTERING("6sbvlvurvkodunw2qt1ug70c2","make_chain");
 try {
     int r, label_rank;
-    Agnode_s u, v=null;
-    Agedge_s e;
+    ST_Agnode_s u, v=null;
+    ST_Agedge_s e;
     u = from;
     if (ED_label(orig)!=null)
 	label_rank = (ND_rank(from) + ND_rank(to)) / 2;
@@ -872,15 +847,15 @@ LEAVING("6sbvlvurvkodunw2qt1ug70c2","make_chain");
 
 //3 659ld5tcseo3l0hopxb3pf0vv
 // static void  interclrep(graph_t * g, edge_t * e) 
-public static void interclrep(Agraph_s g, Agedge_s e) {
+public static void interclrep(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("659ld5tcseo3l0hopxb3pf0vv","interclrep");
 try {
-    Agnode_s t, h;
-    Agedge_s ve;
+    ST_Agnode_s t, h;
+    ST_Agedge_s ve;
     t = leader_of(g, agtail(e));
     h = leader_of(g, aghead(e));
     if (ND_rank(t) > ND_rank(h)) {
-	Agnode_s t0 = t;
+	ST_Agnode_s t0 = t;
 	t = h;
 	h = t0;
     }
@@ -894,7 +869,7 @@ try {
 	make_chain(g, t, h, e);
 	/* mark as cluster edge */
 	for (ve = ED_to_virt(e); ve!=null && (ND_rank(aghead(ve)) <= ND_rank(h));
-	     ve = (Agedge_s) ND_out(aghead(ve)).getFromList(0))
+	     ve = (ST_Agedge_s) ND_out(aghead(ve)).getFromList(0))
 	    ED_edge_type(ve, 5);
     }
     /* else ignore intra-cluster edges at this point */
@@ -908,7 +883,7 @@ LEAVING("659ld5tcseo3l0hopxb3pf0vv","interclrep");
 
 //3 c0cx00ki1i1kx0bp84e7xjg8d
 // static int  is_cluster_edge(edge_t * e) 
-public static boolean is_cluster_edge(Agedge_s e) {
+public static boolean is_cluster_edge(ST_Agedge_s e) {
 ENTERING("c0cx00ki1i1kx0bp84e7xjg8d","is_cluster_edge");
 try {
     return ((ND_ranktype(agtail(e)) == 7)
@@ -923,10 +898,10 @@ LEAVING("c0cx00ki1i1kx0bp84e7xjg8d","is_cluster_edge");
 
 //3 c45973dtaighb3u0auuekcs1y
 // void merge_chain(graph_t * g, edge_t * e, edge_t * f, int flag) 
-public static void merge_chain(Agraph_s g, Agedge_s e, Agedge_s f, boolean flag) {
+public static void merge_chain(ST_Agraph_s g, ST_Agedge_s e, ST_Agedge_s f, boolean flag) {
 ENTERING("c45973dtaighb3u0auuekcs1y","merge_chain");
 try {
-    Agedge_s rep;
+    ST_Agedge_s rep;
     int lastrank = MAX(ND_rank(agtail(e)), ND_rank(aghead(e)));
     //assert(ED_to_virt(e) == NULL);
     ED_to_virt(e, f);
@@ -940,7 +915,7 @@ try {
 	if (ND_rank(aghead(rep)) == lastrank)
 	    break;
 	incr_width(g, aghead(rep));
-	rep = (Agedge_s) ND_out(aghead(rep)).getFromList(0);
+	rep = (ST_Agedge_s) ND_out(aghead(rep)).getFromList(0);
     } while (rep!=null);
 } finally {
 LEAVING("c45973dtaighb3u0auuekcs1y","merge_chain");
@@ -952,7 +927,7 @@ LEAVING("c45973dtaighb3u0auuekcs1y","merge_chain");
 
 //3 bg5r9wlego0d8pv0hr96zt45c
 // int mergeable(edge_t * e, edge_t * f) 
-public static boolean mergeable(Agedge_s e, Agedge_s f) {
+public static boolean mergeable(ST_Agedge_s e, ST_Agedge_s f) {
 ENTERING("bg5r9wlego0d8pv0hr96zt45c","mergeable");
 try {
     if (e!=null && f!=null && EQ(agtail(e), agtail(f)) && EQ(aghead(e), aghead(f)) &&
@@ -969,17 +944,17 @@ LEAVING("bg5r9wlego0d8pv0hr96zt45c","mergeable");
 
 //3 d0bxlkysxucmww7t74u9krrgz
 // void class2(graph_t * g) 
-public static void class2(Agraph_s g) {
+public static void class2(ST_Agraph_s g) {
 ENTERING("d0bxlkysxucmww7t74u9krrgz","class2");
 try {
     int c;
-    Agnode_s n, t, h;
-    Agedge_s e, prev, opp;
+    ST_Agnode_s n, t, h;
+    ST_Agedge_s e, prev, opp;
     GD_nlist(g, null);
     GD_n_nodes(g, 0);		/* new */
     mark_clusters(g);
     for (c = 1; c <= GD_n_cluster(g); c++)
-	build_skeleton(g, (Agraph_s) GD_clust(g).plus(c).getPtr());
+	build_skeleton(g, (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
 	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
 	    if (ND_weight_class(aghead(e)) <= 2)
@@ -1088,7 +1063,7 @@ try {
     }
     /* since decompose() is not called on subgraphs */
     if (NEQ(g, dot_root(g))) {
-    	GD_comp(g).reallocEmpty(1, Agnode_s.class);
+    	GD_comp(g).reallocEmpty(1);
     	GD_comp(g).setInList(0, GD_nlist(g));
     }
 } finally {

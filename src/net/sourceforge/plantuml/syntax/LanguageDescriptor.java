@@ -80,6 +80,7 @@ public class LanguageDescriptor {
 		type.add("package");
 		type.add("queue");
 		type.add("archimate");
+		type.add("diamond");
 
 		keyword.add("@startuml");
 		keyword.add("@enduml");

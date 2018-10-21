@@ -54,7 +54,6 @@ import static gen.lib.cgraph.node__c.agfstnode;
 import static gen.lib.cgraph.node__c.agnxtnode;
 import static gen.lib.cgraph.obj__c.agcontains;
 import static gen.lib.cgraph.obj__c.agroot;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.utils__c.UF_setname;
 import static gen.lib.common.utils__c.UF_singleton;
 import static gen.lib.dotgen.class2__c.class2;
@@ -77,7 +76,6 @@ import static gen.lib.dotgen.mincross__c.install_in_rank;
 import static gen.lib.dotgen.position__c.ports_eq;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.sizeof_starstar_empty;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGMKOUT;
@@ -109,15 +107,12 @@ import static smetana.core.Macro.ND_ranktype;
 import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.boxf;
-import h.nodequeue;
-import h.pointf;
-import smetana.core.JUtils;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_nodequeue;
+import h.ST_pointf;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class cluster__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -377,14 +372,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -413,26 +408,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
-
 
 
 
@@ -455,14 +430,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -761,14 +736,14 @@ throw new UnsupportedOperationException();
 
 //3 8bd317q0mykfu6wpr3e4cxmh2
 // static node_t* map_interclust_node(node_t * n) 
-public static Agnode_s map_interclust_node(Agnode_s n) {
+public static ST_Agnode_s map_interclust_node(ST_Agnode_s n) {
 ENTERING("8bd317q0mykfu6wpr3e4cxmh2","map_interclust_node");
 try {
-    Agnode_s rv;
+    ST_Agnode_s rv;
     if ((ND_clust(n) == null) || (  GD_expanded(ND_clust(n))) )
 	rv = n;
     else
-	rv = (Agnode_s) GD_rankleader(ND_clust(n)).plus(ND_rank(n)).getPtr();
+	rv = (ST_Agnode_s) GD_rankleader(ND_clust(n)).plus(ND_rank(n)).getPtr();
     return rv;
 } finally {
 LEAVING("8bd317q0mykfu6wpr3e4cxmh2","map_interclust_node");
@@ -780,16 +755,16 @@ LEAVING("8bd317q0mykfu6wpr3e4cxmh2","map_interclust_node");
 
 //3 5ib4nnt2ah5fdd22zs0xds29r
 // static void  make_slots(graph_t * root, int r, int pos, int d) 
-public static void make_slots(Agraph_s root, int r, int pos, int d) {
+public static void make_slots(ST_Agraph_s root, int r, int pos, int d) {
 ENTERING("5ib4nnt2ah5fdd22zs0xds29r","make_slots");
 try {
     int i;
-    Agnode_s v;
+    ST_Agnode_s v;
     __ptr__ vlist;
-    vlist = GD_rank(root).plus(r).getPtr().getArrayOfPtr("v").asPtr();
+    vlist = GD_rank(root).plus(r).getPtr().v.asPtr();
     if (d <= 0) {
 	for (i = pos - d + 1; i < GD_rank(root).plus(r).getInt("n"); i++) {
-	    v = (Agnode_s) vlist.plus(i).getPtr();
+	    v = (ST_Agnode_s) vlist.plus(i).getPtr();
 	    ND_order(v, i + d - 1);
 	    vlist.plus(ND_order(v)).setPtr(v);
 	}
@@ -798,7 +773,7 @@ try {
     } else {
 /*assert(ND_rank(root)[r].n + d - 1 <= ND_rank(root)[r].an);*/
 	for (i = GD_rank(root).plus(r).getPtr().getInt("n") - 1; i > pos; i--) {
-	    v = (Agnode_s) vlist.plus(i).getPtr();
+	    v = (ST_Agnode_s) vlist.plus(i).getPtr();
 	    ND_order(v, i + d - 1);
 	    vlist.plus(ND_order(v)).setPtr(v);
 	}
@@ -816,10 +791,10 @@ LEAVING("5ib4nnt2ah5fdd22zs0xds29r","make_slots");
 
 //3 d4mwxesl56uh9dyttg9cjlq70
 // static node_t*  clone_vn(graph_t * g, node_t * vn) 
-public static Agnode_s clone_vn(Agraph_s g, Agnode_s vn) {
+public static ST_Agnode_s clone_vn(ST_Agraph_s g, ST_Agnode_s vn) {
 ENTERING("d4mwxesl56uh9dyttg9cjlq70","clone_vn");
 try {
-    Agnode_s rv;
+    ST_Agnode_s rv;
     int r;
     r = ND_rank(vn);
     make_slots(g, r, ND_order(vn), 2);
@@ -842,12 +817,12 @@ LEAVING("d4mwxesl56uh9dyttg9cjlq70","clone_vn");
 
 //3 6o86r59v2ujlxqcw7761y6o5b
 // static void  map_path(node_t * from, node_t * to, edge_t * orig, edge_t * ve, int type) 
-public static void map_path(Agnode_s from, Agnode_s to, Agedge_s orig, Agedge_s ve, int type) {
+public static void map_path(ST_Agnode_s from, ST_Agnode_s to, ST_Agedge_s orig, ST_Agedge_s ve, int type) {
 ENTERING("6o86r59v2ujlxqcw7761y6o5b","map_path");
 try {
     int r;
-    Agnode_s u, v;
-    Agedge_s e;
+    ST_Agnode_s u, v;
+    ST_Agedge_s e;
     assert(ND_rank(from) < ND_rank(to));
     if (EQ(agtail(ve), from) && EQ(aghead(ve), to))
 	return;
@@ -872,7 +847,7 @@ try {
 	    ED_edge_type(e, type);
 	    u = v;
 	    ED_count(ve, ED_count(ve) - 1);
-	    ve = (Agedge_s) ND_out(aghead(ve)).getFromList(0);
+	    ve = (ST_Agedge_s) ND_out(aghead(ve)).getFromList(0);
 	}
     } else {
 	if (ND_rank(to) - ND_rank(from) == 1) {
@@ -900,7 +875,7 @@ try {
 	    } else
 		e = ve;
 	    while (ND_rank(aghead(e)) != ND_rank(to))
-		e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
+		e = (ST_Agedge_s) ND_out(aghead(e)).getFromList(0);
 	    if (NEQ(aghead(e), to)) {
 		ve = e;
 		e = virtual_edge(agtail(e), to, orig);
@@ -919,11 +894,11 @@ LEAVING("6o86r59v2ujlxqcw7761y6o5b","map_path");
 
 //3 69xbflgja0gvrsl5xcv7o7dia
 // static void  make_interclust_chain(graph_t * g, node_t * from, node_t * to, edge_t * orig) 
-public static void make_interclust_chain(Agraph_s g, Agnode_s from, Agnode_s to, Agedge_s orig) {
+public static void make_interclust_chain(ST_Agraph_s g, ST_Agnode_s from, ST_Agnode_s to, ST_Agedge_s orig) {
 ENTERING("69xbflgja0gvrsl5xcv7o7dia","make_interclust_chain");
 try {
     int newtype;
-    Agnode_s u, v;
+    ST_Agnode_s u, v;
     u = map_interclust_node(from);
     v = map_interclust_node(to);
     if (EQ(u, from) && EQ(v, to))
@@ -941,12 +916,12 @@ LEAVING("69xbflgja0gvrsl5xcv7o7dia","make_interclust_chain");
 
 //3 6g2m2y44x66lajznvnon2gubv
 // void interclexp(graph_t * subg) 
-public static void interclexp(Agraph_s subg) {
+public static void interclexp(ST_Agraph_s subg) {
 ENTERING("6g2m2y44x66lajznvnon2gubv","interclexp");
 try {
-    Agraph_s g;
-    Agnode_s n;
-    Agedge_s e, prev, next;
+    ST_Agraph_s g;
+    ST_Agnode_s n;
+    ST_Agedge_s e, prev, next;
     g = dot_root(subg);
     for (n = agfstnode(subg); n!=null; n = agnxtnode(subg, n)) {
 	/* N.B. n may be in a sub-cluster of subg */
@@ -971,7 +946,7 @@ UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
 	    }
 	    /* flat edges */
 	    if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {
-		Agedge_s fe;
+		ST_Agedge_s fe;
 		if ((fe = find_flat_edge(agtail(e), aghead(e))) == null) {
 		    flat_edge(g, e);
 		    prev = e;
@@ -1009,12 +984,12 @@ LEAVING("6g2m2y44x66lajznvnon2gubv","interclexp");
 
 //3 85nhs7tnmwunw0fsjj1kxao7l
 // static void  merge_ranks(graph_t * subg) 
-public static void merge_ranks(Agraph_s subg) {
+public static void merge_ranks(ST_Agraph_s subg) {
 ENTERING("85nhs7tnmwunw0fsjj1kxao7l","merge_ranks");
 try {
     int i, d, r, pos, ipos;
-    Agnode_s v;
-    Agraph_s root;
+    ST_Agnode_s v;
+    ST_Agraph_s root;
     root = dot_root(subg);
     if (GD_minrank(subg) > 0)
 	GD_rank(root).plus(GD_minrank(subg) - 1).getPtr().setInt("valid", 0);
@@ -1023,8 +998,8 @@ try {
 	ipos = pos = ND_order(GD_rankleader(subg).plus(r).getPtr());
 	make_slots(root, r, pos, d);
 	for (i = 0; i < GD_rank(subg).plus(r).getPtr().getInt("n"); i++) {
-	    v = (Agnode_s) GD_rank(subg).plus(r).getArrayOfPtr("v").plus(i).getPtr();
-	    GD_rank(root).plus(r).getArrayOfPtr("v").plus(pos).setPtr(v);
+	    v = (ST_Agnode_s) GD_rank(subg).plus(r).getPtr().v.plus(i).getPtr();
+	    GD_rank(root).plus(r).getPtr().v.plus(pos).setPtr(v);
 	    ND_order(v, pos++);
 	/* real nodes automatically have v->root = root graph */
 	    if (ND_node_type(v) == 1)
@@ -1049,18 +1024,18 @@ LEAVING("85nhs7tnmwunw0fsjj1kxao7l","merge_ranks");
 
 //3 c9p7dm16i13qktnh95os0sv58
 // static void  remove_rankleaders(graph_t * g) 
-public static void remove_rankleaders(Agraph_s g) {
+public static void remove_rankleaders(ST_Agraph_s g) {
 ENTERING("c9p7dm16i13qktnh95os0sv58","remove_rankleaders");
 try {
     int r;
-    Agnode_s v;
-    Agedge_s e;
+    ST_Agnode_s v;
+    ST_Agedge_s e;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	v = (Agnode_s) GD_rankleader(g).plus(r).getPtr();
+	v = (ST_Agnode_s) GD_rankleader(g).plus(r).getPtr();
 	/* remove the entire chain */
-	while ((e = (Agedge_s) ND_out(v).getFromList(0))!=null)
+	while ((e = (ST_Agedge_s) ND_out(v).getFromList(0))!=null)
 	    delete_fast_edge(e);
-	while ((e = (Agedge_s) ND_in(v).getFromList(0))!=null)
+	while ((e = (ST_Agedge_s) ND_in(v).getFromList(0))!=null)
 	    delete_fast_edge(e);
 	delete_fast_node(dot_root(g), v);
 	GD_rankleader(g).plus(r).setPtr(null);
@@ -1075,13 +1050,13 @@ LEAVING("c9p7dm16i13qktnh95os0sv58","remove_rankleaders");
 
 //3 ecrplg8hsyl484f9kxc5xp0go
 // void expand_cluster(graph_t * subg) 
-public static void expand_cluster(Agraph_s subg) {
+public static void expand_cluster(ST_Agraph_s subg) {
 ENTERING("ecrplg8hsyl484f9kxc5xp0go","expand_cluster");
 try {
     /* build internal structure of the cluster */
     class2(subg);
     GD_comp(subg).size = 1;
-    // GD_comp(subg).getArrayOfPtr("list").plus(0).setPtr(GD_nlist(subg));
+    // GD_comp(subg).list.plus(0).setPtr(GD_nlist(subg));
     GD_comp(subg).setInList(0, GD_nlist(subg));
     allocate_ranks(subg);
     build_ranks(subg, 0);
@@ -1099,13 +1074,13 @@ LEAVING("ecrplg8hsyl484f9kxc5xp0go","expand_cluster");
 
 //3 cxuirggihlap2iv2khmb1w5l5
 // void mark_clusters(graph_t * g) 
-public static void mark_clusters(Agraph_s g) {
+public static void mark_clusters(ST_Agraph_s g) {
 ENTERING("cxuirggihlap2iv2khmb1w5l5","mark_clusters");
 try {
     int c;
-    Agnode_s n, nn=null, vn;
-    Agedge_s orig, e;
-    Agraph_s clust;
+    ST_Agnode_s n, nn=null, vn;
+    ST_Agedge_s orig, e;
+    ST_Agraph_s clust;
     /* remove sub-clusters below this level */
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
 	if (ND_ranktype(n) == 7)
@@ -1113,7 +1088,7 @@ try {
 	ND_clust(n, null);
     }
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	clust = (Agraph_s) GD_clust(g).plus(c).getPtr();
+	clust = (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr();
 	for (n = agfstnode(clust); n!=null; n = nn) {
 		nn = agnxtnode(clust,n);
 	    if (ND_ranktype(n) != 0) {
@@ -1132,7 +1107,7 @@ UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
 		if ((e = ED_to_virt(orig))!=null) {
 		    while (e!=null && ND_node_type(vn =aghead(e)) == 1) {
 			ND_clust(vn, clust);
-			e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
+			e = (ST_Agedge_s) ND_out(aghead(e)).getFromList(0);
 			/* trouble if concentrators and clusters are mixed */
 		    }
 		}
@@ -1149,14 +1124,15 @@ LEAVING("cxuirggihlap2iv2khmb1w5l5","mark_clusters");
 
 //3 bwrw5u0gi2rgah1cn9h0glpse
 // void build_skeleton(graph_t * g, graph_t * subg) 
-public static void build_skeleton(Agraph_s g, Agraph_s subg) {
+public static void build_skeleton(ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("bwrw5u0gi2rgah1cn9h0glpse","build_skeleton");
 try {
     int r;
-    Agnode_s v, prev, rl;
-    Agedge_s e;
+    ST_Agnode_s v, prev, rl;
+    ST_Agedge_s e;
     prev = null;
-    GD_rankleader(subg, zmalloc(sizeof_starstar_empty(Agnode_s.class, GD_maxrank(subg) + 2)));
+    // GD_rankleader(subg, zmalloc(sizeof_starstar_empty(Agnode_s.class, GD_maxrank(subg) + 2)));
+    GD_rankleader(subg, new ST_Agnode_s.Array(GD_maxrank(subg) + 2));
     for (r = GD_minrank(subg); r <= GD_maxrank(subg); r++) {
 	v = virtual_node(g);
 	GD_rankleader(subg).plus(r).setPtr(v);
@@ -1171,7 +1147,7 @@ try {
     }
     /* set the counts on virtual edges of the cluster skeleton */
     for (v = agfstnode(subg); v!=null; v = agnxtnode(subg, v)) {
-	rl = (Agnode_s) GD_rankleader(subg).plus(ND_rank(v)).getPtr();
+	rl = (ST_Agnode_s) GD_rankleader(subg).plus(ND_rank(v)).getPtr();
 	ND_UF_size(rl, ND_UF_size(rl)+1);
 	for (e = agfstout(subg, v); e!=null; e = agnxtout(subg, e)) {
 	    for (r = ND_rank(agtail(e)); r < ND_rank(aghead(e)); r++) {
@@ -1180,7 +1156,7 @@ try {
 	}
     }
     for (r = GD_minrank(subg); r <= GD_maxrank(subg); r++) {
-	rl = (Agnode_s) GD_rankleader(subg).plus(r).getPtr();
+	rl = (ST_Agnode_s) GD_rankleader(subg).plus(r).getPtr();
 	if (ND_UF_size(rl) > 1)
 	    ND_UF_size(rl, ND_UF_size(rl)-1);
     }
@@ -1194,17 +1170,17 @@ LEAVING("bwrw5u0gi2rgah1cn9h0glpse","build_skeleton");
 
 //3 75yt3xwcwnxipi827t1r8zcmn
 // void install_cluster(graph_t * g, node_t * n, int pass, nodequeue * q) 
-public static void install_cluster(Agraph_s g, Agnode_s n, int pass, nodequeue q) {
+public static void install_cluster(ST_Agraph_s g, ST_Agnode_s n, int pass, ST_nodequeue q) {
 ENTERING("75yt3xwcwnxipi827t1r8zcmn","install_cluster");
 try {
     int r;
-    Agraph_s clust;
+    ST_Agraph_s clust;
     clust = ND_clust(n);
     if (GD_installed(clust) != pass + 1) {
 	for (r = GD_minrank(clust); r <= GD_maxrank(clust); r++)
-	    install_in_rank(g, (Agnode_s) GD_rankleader(clust).plus(r).getPtr());
+	    install_in_rank(g, (ST_Agnode_s) GD_rankleader(clust).plus(r).getPtr());
 	for (r = GD_minrank(clust); r <= GD_maxrank(clust); r++)
-	    enqueue_neighbors(q, (Agnode_s) GD_rankleader(clust).plus(r).getPtr(), pass);
+	    enqueue_neighbors(q, (ST_Agnode_s) GD_rankleader(clust).plus(r).getPtr(), pass);
 	GD_installed(clust, pass + 1);
     }
 } finally {
@@ -1217,11 +1193,11 @@ LEAVING("75yt3xwcwnxipi827t1r8zcmn","install_cluster");
 
 //3 4muksvb3ec03mt6cvaqpb5c7a
 // void mark_lowclusters(Agraph_t * root) 
-public static void mark_lowclusters(Agraph_s root) {
+public static void mark_lowclusters(ST_Agraph_s root) {
 ENTERING("4muksvb3ec03mt6cvaqpb5c7a","mark_lowclusters");
 try {
-    Agnode_s n, vn;
-    Agedge_s orig, e;
+    ST_Agnode_s n, vn;
+    ST_Agedge_s orig, e;
     /* first, zap any previous cluster labelings */
     for (n = agfstnode(root); n!=null; n = agnxtnode(root, n)) {
 	ND_clust(n, null);
@@ -1229,7 +1205,7 @@ try {
 	    if ((e = ED_to_virt(orig))!=null) {
 		while (e!=null && (ND_node_type(vn = aghead(e))) == 1) {
 		    ND_clust(vn, null);
-		    e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
+		    e = (ST_Agedge_s) ND_out(aghead(e)).getFromList(0);
 		}
 	    }
 	}
@@ -1246,15 +1222,15 @@ LEAVING("4muksvb3ec03mt6cvaqpb5c7a","mark_lowclusters");
 
 //3 48j6fdymvkcgeh4wde060ctac
 // static void mark_lowcluster_basic(Agraph_t * g) 
-public static void mark_lowcluster_basic(Agraph_s g) {
+public static void mark_lowcluster_basic(ST_Agraph_s g) {
 ENTERING("48j6fdymvkcgeh4wde060ctac","mark_lowcluster_basic");
 try {
-    Agraph_s clust;
-    Agnode_s n, vn;
-    Agedge_s orig, e;
+    ST_Agraph_s clust;
+    ST_Agnode_s n, vn;
+    ST_Agedge_s orig, e;
     int c;
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	clust = (Agraph_s) GD_clust(g).plus(c).getPtr();
+	clust = (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr();
 	mark_lowcluster_basic(clust);
     }
     /* see what belongs to this graph that wasn't already marked */
@@ -1266,7 +1242,7 @@ try {
 		while (e!=null && (ND_node_type(vn = aghead(e))) == 1) {
 		    if (ND_clust(vn) == null)
 			ND_clust(vn, g);
-		    e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
+		    e = (ST_Agedge_s) ND_out(aghead(e)).getFromList(0);
 		}
 	    }
 	}

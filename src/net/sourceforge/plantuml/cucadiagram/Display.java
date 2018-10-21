@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.graphic.TextBlockSprited;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
@@ -218,13 +219,19 @@ public class Display implements Iterable<CharSequence> {
 
 	public Display manageGuillemet() {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
+		boolean first = true;
 		for (CharSequence line : display) {
-			final String withGuillement = StringUtils.manageGuillemet(line.toString());
-			if (withGuillement.equals(line.toString())) {
-				result.add(line);
-			} else {
-				result.add(withGuillement);
+			String lineString = line.toString();
+			if (first && VisibilityModifier.isVisibilityCharacter(line)) {
+				lineString = lineString.substring(1).trim();
 			}
+			final String withGuillement = StringUtils.manageGuillemet(lineString);
+			// if (withGuillement.equals(lineString)) {
+			// result.add(lineString);
+			// } else {
+			result.add(withGuillement);
+			// }
+			first = false;
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 	}

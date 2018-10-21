@@ -45,13 +45,17 @@
  */
 package h;
 
-import smetana.core.UnsupportedSize_t;
+import java.util.ArrayList;
+import java.util.List;
+
+import smetana.core.CString;
+import smetana.core.UnsupportedArrayOfStruct2;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.size_t;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_xlabel_t extends UnsupportedStructAndPtr {
@@ -66,27 +70,141 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
 	// "typedef struct",
 	// "{",
-	final private ST_pointf sz = new ST_pointf(this);
-	final private ST_pointf pos = new ST_pointf(this);
+	final public ST_pointf sz = new ST_pointf(this);
+	final public ST_pointf pos = new ST_pointf(this);
 
 	// "void *lbl",
-	private ST_textlabel_t lbl;
-	private int set;
+	public ST_textlabel_t lbl;
+	public int set;
 
 	// "unsigned char set",
 	// "}",
 	// "xlabel_t");
+	
+	public static class Array extends UnsupportedArrayOfStruct2 implements __ptr__, __array_of_ptr__{
+
+		private final List<ST_xlabel_t> data;
+		private final int pos_;
+		
+		@Override
+		public __struct__ getStruct(String fieldName) {
+			return get(0).getStruct(fieldName);
+		}
+		
+		@Override
+		public void setInt(String fieldName, int data) {
+			get(0).setInt(fieldName, data);
+		}
+		
+		@Override
+		public boolean getBoolean(String fieldName) {
+			return get(0).getBoolean(fieldName);
+		}
+		
+		@Override
+		public __ptr__ getPtr(String fieldName) {
+			return get(0).getPtr(fieldName);
+		}
+		
+		@Override
+		public int getInt(String fieldName) {
+			return get(0).getInt(fieldName);
+		}
+		
+		@Override
+		public void setStruct(__struct__ value) {
+			get(0).___(value);
+		}
+		
+		@Override
+		public Array asPtr() {
+			return this;
+		}
+		
+		@Override
+		public double getDouble(String fieldName) {
+			return get(0).getDouble(fieldName);
+		}
+		
+		@Override
+		public void setDouble(String fieldName, double value) {
+			get(0).setDouble(fieldName, value);
+		}
+		
+		@Override
+		public __struct__ getStruct() {
+			return get(0).getStruct();
+		}
+		
+		@Override
+		public __ptr__ getPtr() {
+			return get(0);
+		}
+
+		public Array(int size) {
+			this.data = new ArrayList<ST_xlabel_t>();
+			this.pos_ = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(new ST_xlabel_t());
+			}
+		}
+
+		public Array reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(new ST_xlabel_t());
+			}
+			return this;
+		}
+		
+		public Array plus(int delta) {
+			return plusJ(delta);
+		}
+
+		private Array(List<ST_xlabel_t> data, int pos) {
+			this.data = data;
+			this.pos_ = pos;
+		}
+
+		public ST_xlabel_t get(int i) {
+			return this.data.get(pos_ + i);
+		}
+
+		public Array plusJ(int i) {
+			return new Array(data, pos_ + i);
+		}
+
+		public int minus(Array other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos_ - other.pos_;
+		}
+
+		public Array move(int delta) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+
+		public void realloc(size_t nb) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public int comparePointerInternal(__array_of_ptr__ other) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public CString getCString() {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public void setCString(CString value) {
+			throw new UnsupportedOperationException(getClass().toString());			
+		}
+
+	}
+	
 
 	@Override
 	public void setInt(String fieldName, int data) {
@@ -96,6 +214,22 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 		}
 		super.setInt(fieldName, data);
 	}
+	
+	@Override
+	public int getInt(String fieldName) {
+		if (fieldName.equals("set")) {
+			return this.set;
+		}
+		return super.getInt(fieldName);
+	}
+
+	@Override
+	public boolean getBoolean(String fieldName) {
+		if (fieldName.equals("set")) {
+			return this.set!=0;
+		}
+		return super.getBoolean(fieldName);
+	}
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -104,6 +238,14 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 			return this.lbl;
 		}
 		return super.setPtr(fieldName, newData);
+	}
+	
+	@Override
+	public __ptr__ getPtr(String fieldName) {
+		if (fieldName.equals("lbl")) {
+			return this.lbl;
+		}
+		return super.getPtr(fieldName);
 	}
 
 	@Override
@@ -130,26 +272,26 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 		super.setStruct(fieldName, newData);
 	}
 
-	public static size_t sizeof(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return new StarArrayOfPtr(new STArray<ST_xlabel_t>(nb, 0, ST_xlabel_t.class));
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-
-			@Override
-			public Object realloc(Object old) {
-				StarArrayOfPtr old2 = (StarArrayOfPtr) old;
-				old2.realloc(nb);
-				return old2;
-			}
-		};
-	}
+//	public static size_t sizeof(final int nb) {
+//		return new UnsupportedSize_t(nb) {
+//			@Override
+//			public Object malloc() {
+//				return new StarArrayOfPtr(new STArray<ST_xlabel_t>(nb, 0, ST_xlabel_t.class));
+//			}
+//
+//			@Override
+//			public int getInternalNb() {
+//				return nb;
+//			}
+//
+//			@Override
+//			public Object realloc(Object old) {
+//				StarArrayOfPtr old2 = (StarArrayOfPtr) old;
+//				old2.realloc(nb);
+//				return old2;
+//			}
+//		};
+//	}
 
 }
 

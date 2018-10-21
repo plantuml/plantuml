@@ -46,10 +46,6 @@ public class UnsupportedC implements __ptr__ {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 	
-	public void setCString(String fieldName, CString value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 
 	public int minus(__ptr__ other) {
 		throw new UnsupportedOperationException(getClass().toString());
@@ -80,26 +76,6 @@ public class UnsupportedC implements __ptr__ {
 	}
 
 	public void setStruct(__struct__ value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	// public __array__ getArray(String fieldName) {
-	// throw new UnsupportedOperationException(getClass().toString());
-	// }
-
-	public __array_of_integer__ getArrayOfInteger(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_cstring__ getArrayOfCString(String fieldName) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

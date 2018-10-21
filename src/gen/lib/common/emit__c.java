@@ -51,16 +51,12 @@ import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agraph_s;
-import h.boxf;
-import h.pointf;
+import h.ST_Agraph_s;
+import h.ST_boxf;
+import h.ST_pointf;
 import h.xdot;
 import smetana.core.CString;
-import smetana.core.JUtils;
-import smetana.core.__array_of_struct__;
-import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class emit__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -320,14 +316,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -356,25 +352,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -398,14 +375,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -704,7 +681,7 @@ throw new UnsupportedOperationException();
 
 //3 7udip7yo3ddkp9ocjftokpm9y
 // void* init_xdot (Agraph_t* g) 
-public static __ptr__ init_xdot(Agraph_s g) {
+public static __ptr__ init_xdot(ST_Agraph_s g) {
 ENTERING("7udip7yo3ddkp9ocjftokpm9y","init_xdot");
 try {
     CString p;
@@ -1401,8 +1378,8 @@ throw new UnsupportedOperationException();
 public static boolean check_control_points(__ptr__ cp) {
 ENTERING("7nqmdkcnal35ollpstkk707t8","check_control_points");
 try {
-    double dis1 = ptToLine2 (cp.plus(0).getStruct(), cp.plus(3).getStruct(), cp.plus(1).getStruct());
-    double dis2 = ptToLine2 (cp.plus(0).getStruct(), cp.plus(3).getStruct(), cp.plus(2).getStruct());
+    double dis1 = ptToLine2 ((ST_pointf)cp.plus(0).getStruct(), (ST_pointf)cp.plus(3).getStruct(), (ST_pointf)cp.plus(1).getStruct());
+    double dis2 = ptToLine2 ((ST_pointf)cp.plus(0).getStruct(), (ST_pointf)cp.plus(3).getStruct(), (ST_pointf)cp.plus(2).getStruct());
     if (dis1 < 2.0*2.0 && dis2 < 2.0*2.0)
         return true;
     else
@@ -1417,36 +1394,36 @@ LEAVING("7nqmdkcnal35ollpstkk707t8","check_control_points");
 
 //3 5wldemr88fdxl6101ugewclw9
 // void update_bb_bz(boxf *bb, pointf *cp) 
-public static void update_bb_bz(__ptr__ bb, __array_of_struct__ cp) {
+public static void update_bb_bz(ST_boxf bb, ST_pointf.Array cp) {
 ENTERING("5wldemr88fdxl6101ugewclw9","update_bb_bz");
 try {
     /* if any control point of the segment is outside the bounding box */
-    if (cp.plus(0).getDouble("x") > bb.getStruct("UR").getDouble("x") || cp.plus(0).getDouble("x") < bb.getStruct("LL").getDouble("x") ||
-        cp.plus(0).getDouble("y") > bb.getStruct("UR").getDouble("y") || cp.plus(0).getDouble("y") < bb.getStruct("LL").getDouble("y") ||
-        cp.plus(1).getDouble("x") > bb.getStruct("UR").getDouble("x") || cp.plus(1).getDouble("x") < bb.getStruct("LL").getDouble("x") ||
-        cp.plus(1).getDouble("y") > bb.getStruct("UR").getDouble("y") || cp.plus(1).getDouble("y") < bb.getStruct("LL").getDouble("y") ||
-        cp.plus(2).getDouble("x") > bb.getStruct("UR").getDouble("x") || cp.plus(2).getDouble("x") < bb.getStruct("LL").getDouble("x") ||
-        cp.plus(2).getDouble("y") > bb.getStruct("UR").getDouble("y") || cp.plus(2).getDouble("y") < bb.getStruct("LL").getDouble("y") ||
-        cp.plus(3).getDouble("x") > bb.getStruct("UR").getDouble("x") || cp.plus(3).getDouble("x") < bb.getStruct("LL").getDouble("x") ||
-        cp.plus(3).getDouble("y") > bb.getStruct("UR").getDouble("y") || cp.plus(3).getDouble("y") < bb.getStruct("LL").getDouble("y")) {
+    if (cp.plus(0).getDouble("x") > bb.UR.x || cp.plus(0).getDouble("x") < bb.LL.x ||
+        cp.plus(0).getDouble("y") > bb.UR.y || cp.plus(0).getDouble("y") < bb.LL.y ||
+        cp.plus(1).getDouble("x") > bb.UR.x || cp.plus(1).getDouble("x") < bb.LL.x ||
+        cp.plus(1).getDouble("y") > bb.UR.y || cp.plus(1).getDouble("y") < bb.LL.y ||
+        cp.plus(2).getDouble("x") > bb.UR.x || cp.plus(2).getDouble("x") < bb.LL.x ||
+        cp.plus(2).getDouble("y") > bb.UR.y || cp.plus(2).getDouble("y") < bb.LL.y ||
+        cp.plus(3).getDouble("x") > bb.UR.x || cp.plus(3).getDouble("x") < bb.LL.x ||
+        cp.plus(3).getDouble("y") > bb.UR.y || cp.plus(3).getDouble("y") < bb.LL.y) {
         /* if the segment is sufficiently refined */
         if (check_control_points(cp.asPtr())) {        
             int i;
             /* expand the bounding box */
             for (i = 0; i < 4; i++) {
-                if (cp.plus(i).getDouble("x") > bb.getStruct("UR").getDouble("x"))
-                    bb.getStruct("UR").setDouble("x", cp.plus(i).getDouble("x"));
-                else if (cp.plus(i).getDouble("x") < bb.getStruct("LL").getDouble("x"))
-                    bb.getStruct("LL").setDouble("x", cp.plus(i).getDouble("x"));
-                if (cp.plus(i).getDouble("y") > bb.getStruct("UR").getDouble("y"))
-                    bb.getStruct("UR").setDouble("y", cp.plus(i).getDouble("y"));
-                else if (cp.plus(i).getDouble("y") < bb.getStruct("LL").getDouble("y"))
-                    bb.getStruct("LL").setDouble("y", cp.plus(i).getDouble("y"));
+                if (cp.plus(i).getDouble("x") > bb.UR.x)
+                    bb.UR.setDouble("x", cp.plus(i).getDouble("x"));
+                else if (cp.plus(i).getDouble("x") < bb.LL.x)
+                    bb.LL.setDouble("x", cp.plus(i).getDouble("x"));
+                if (cp.plus(i).getDouble("y") > bb.UR.y)
+                    bb.UR.setDouble("y", cp.plus(i).getDouble("y"));
+                else if (cp.plus(i).getDouble("y") < bb.LL.y)
+                    bb.LL.setDouble("y", cp.plus(i).getDouble("y"));
             }
         }
         else { /* else refine the segment */
-		    final __array_of_struct__ left = __array_of_struct_impl__.malloc(pointf.class, 4);
-		    final __array_of_struct__ right = __array_of_struct_impl__.malloc(pointf.class, 4);
+		    final ST_pointf.Array left = new ST_pointf.Array( 4);
+		    final ST_pointf.Array right = new ST_pointf.Array( 4);
             Bezier (cp, 3, 0.5, left.asPtr(), right.asPtr());
             update_bb_bz(bb, left);
             update_bb_bz(bb, right);

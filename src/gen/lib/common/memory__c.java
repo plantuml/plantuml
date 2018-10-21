@@ -95,11 +95,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 4mfikqpmxyxrke46i5xakatmc
-// void *gmalloc(size_t nbytes) 
 public static CString gmalloc(int nbytes) {
 return new CString(nbytes);
 }
+//3 4mfikqpmxyxrke46i5xakatmc
+//void *gmalloc(size_t nbytes) 
 public static __ptr__ gmalloc(size_t nbytes) {
 ENTERING("4mfikqpmxyxrke46i5xakatmc","gmalloc");
 try {

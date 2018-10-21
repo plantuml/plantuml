@@ -44,6 +44,11 @@ public class AFileRegular implements AFile {
 
 	private final File file;
 
+	@Override
+	public String toString() {
+		return "AFileRegular::" + file;
+	}
+
 	public AFileRegular(File file) {
 		this.file = file;
 	}

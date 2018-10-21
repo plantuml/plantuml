@@ -184,7 +184,7 @@ public class LicenseInfo {
 			if (dir.isFile()) {
 				dir = dir.getParentFile();
 			}
-			if (dir.isDirectory()) {
+			if (dir != null && dir.isDirectory()) {
 				result.add(new File(dir, "license.txt"));
 			}
 		}

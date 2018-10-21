@@ -75,11 +75,9 @@ import static smetana.core.JUtils.atof;
 import static smetana.core.JUtils.function;
 import static smetana.core.JUtils.qsort;
 import static smetana.core.JUtils.size_t_array_of_integer;
-import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtils.sizeof_starstar_empty;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
-import static smetana.core.Macro.ALLOC;
+import static smetana.core.Macro.ALLOC_Agnode_s;
 import static smetana.core.Macro.ALLOC_INT;
 import static smetana.core.Macro.ED_edge_type;
 import static smetana.core.Macro.ED_head_port;
@@ -125,24 +123,23 @@ import static smetana.core.Macro.ND_ranktype;
 import static smetana.core.Macro.ND_weight_class;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.agtail;
 import static smetana.core.Macro.elist_append;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.adjmatrix_t;
-import h.boxf;
-import h.elist;
-import h.nodequeue;
-import h.pointf;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_adjmatrix_t;
+import h.ST_elist;
+import h.ST_nodequeue;
+import h.ST_pointf;
+import h.ST_rank_t;
 import h.rank_t;
+
+import java.util.List;
+
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class mincross__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -402,14 +399,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -438,26 +435,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
-
 
 
 
@@ -480,14 +457,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -858,7 +835,7 @@ throw new UnsupportedOperationException();
 
 //3 e876vp4hgkzshluz6qk77cjwk
 // void dot_mincross(graph_t * g, int doBalance) 
-public static void dot_mincross(Agraph_s g, boolean doBalance) {
+public static void dot_mincross(ST_Agraph_s g, boolean doBalance) {
 ENTERING("e876vp4hgkzshluz6qk77cjwk","dot_mincross");
 try {
     int c, nc;
@@ -871,7 +848,7 @@ try {
     merge2(g);
     /* run mincross on contents of each cluster */
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	nc += mincross_clust(g, (Agraph_s) GD_clust(g).plus(c).getPtr(), doBalance);
+	nc += mincross_clust(g, (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr(), doBalance);
     }
     if ((GD_n_cluster(g) > 0)
 	&& (N(s = agget(g, new CString("remincross"))) || (mapbool(s)))) {
@@ -890,13 +867,13 @@ LEAVING("e876vp4hgkzshluz6qk77cjwk","dot_mincross");
 
 //3 756bre1tpxb1tq68p7xhkrxkc
 // static adjmatrix_t *new_matrix(int i, int j) 
-public static adjmatrix_t new_matrix(int i, int j) {
+public static ST_adjmatrix_t new_matrix(int i, int j) {
 ENTERING("756bre1tpxb1tq68p7xhkrxkc","new_matrix");
 try {
-    adjmatrix_t rv = (adjmatrix_t) Memory.malloc(adjmatrix_t.class);
-    rv.setInt("nrows", i);
-    rv.setInt("ncols", j);
-    rv.setPtr("data", zmalloc(size_t_array_of_integer(i*j)));
+	ST_adjmatrix_t rv = new ST_adjmatrix_t();
+    rv.nrows = i;
+    rv.ncols = j;
+    rv.data = new int[i][j]; // Or maybe new int[j][i] ?
     return rv;
 } finally {
 LEAVING("756bre1tpxb1tq68p7xhkrxkc","new_matrix");
@@ -908,11 +885,11 @@ LEAVING("756bre1tpxb1tq68p7xhkrxkc","new_matrix");
 
 //3 1n1e0k0wtlbugwm3cb4na6av6
 // static void free_matrix(adjmatrix_t * p) 
-public static void free_matrix(adjmatrix_t p) {
+public static void free_matrix(ST_adjmatrix_t p) {
 ENTERING("1n1e0k0wtlbugwm3cb4na6av6","free_matrix");
 try {
     if (p!=null) {
-	Memory.free(p.getPtr("data"));
+	Memory.free(p.data);
 	Memory.free(p);
     }
 } finally {
@@ -925,7 +902,7 @@ LEAVING("1n1e0k0wtlbugwm3cb4na6av6","free_matrix");
 
 //3 49vw7fkn99wbojtfksugvuruh
 // static void init_mccomp(graph_t * g, int c) 
-public static void init_mccomp(Agraph_s g, int c) {
+public static void init_mccomp(ST_Agraph_s g, int c) {
 ENTERING("49vw7fkn99wbojtfksugvuruh","init_mccomp");
 try {
     int r;
@@ -1056,7 +1033,7 @@ throw new UnsupportedOperationException();
 
 //3 hzoz2czb672i0nbjvjhbc3na
 // static void ordered_edges(graph_t * g) 
-public static void ordered_edges(Agraph_s g) {
+public static void ordered_edges(ST_Agraph_s g) {
 ENTERING("hzoz2czb672i0nbjvjhbc3na","ordered_edges");
 try {
     CString ordering;
@@ -1093,7 +1070,7 @@ LEAVING("hzoz2czb672i0nbjvjhbc3na","ordered_edges");
 
 //3 crwc5qe7fmrpgcqh1a80toyvo
 // static int mincross_clust(graph_t * par, graph_t * g, int doBalance) 
-public static int mincross_clust(Agraph_s par, Agraph_s g, boolean doBalance) {
+public static int mincross_clust(ST_Agraph_s par, ST_Agraph_s g, boolean doBalance) {
 ENTERING("crwc5qe7fmrpgcqh1a80toyvo","mincross_clust");
 try {
     int c, nc;
@@ -1103,7 +1080,7 @@ try {
     flat_reorder(g);
     nc = mincross_(g, 2, 2, doBalance);
     for (c = 1; c <= GD_n_cluster(g); c++)
-	nc += mincross_clust(g, (Agraph_s) GD_clust(g).plus(c).getPtr(), doBalance);
+	nc += mincross_clust(g, (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr(), doBalance);
     save_vlist(g);
     return nc;
 } finally {
@@ -1116,10 +1093,10 @@ LEAVING("crwc5qe7fmrpgcqh1a80toyvo","mincross_clust");
 
 //3 657v773m21j5w3g3v94o7464t
 // static int left2right(graph_t * g, node_t * v, node_t * w) 
-public static boolean left2right(Agraph_s g, Agnode_s v, Agnode_s w) {
+public static boolean left2right(ST_Agraph_s g, ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("657v773m21j5w3g3v94o7464t","left2right");
 try {
-    adjmatrix_t M;
+	ST_adjmatrix_t M;
     boolean rv=false;
     /* CLUSTER indicates orig nodes of clusters, and vnodes of skeletons */
     if (Z.z().ReMincross == false) {
@@ -1138,16 +1115,16 @@ try {
 UNSUPPORTED("8lltx4lxwrqossx8qw1khzwf9"); // 	if ((ND_clust(v)) != (ND_clust(w)))
 UNSUPPORTED("9qhn9m3123s8n6wwxjfo8awlm"); // 	    return NOT(0);
     }
-    M = (adjmatrix_t) GD_rank(g).plus(ND_rank(v)).getPtr().getPtr("flat");
+    M = (ST_adjmatrix_t) GD_rank(g).plus(ND_rank(v)).getPtr().getPtr("flat");
     if (M == null)
 	rv = false;
     else {
 	if (GD_flip(g)!=0) {
-	    Agnode_s t = v;
+	    ST_Agnode_s t = v;
 	    v = w;
 	    w = t;
 	}
-	rv = (M.getArrayOfInteger("data").plus(((ND_low(v))*M.getInt("ncols"))+(ND_low(w))).getInt())!=0;
+	rv = M.data[ND_low(v)][ND_low(w)]!=0;
     }
     return rv;
 } finally {
@@ -1160,21 +1137,21 @@ LEAVING("657v773m21j5w3g3v94o7464t","left2right");
 
 //3 daknncpjy7g5peiicolbmh55i
 // static int in_cross(node_t * v, node_t * w) 
-public static int in_cross(Agnode_s v, Agnode_s w) {
+public static int in_cross(ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("daknncpjy7g5peiicolbmh55i","in_cross");
 try {
-    __array_of_ptr__ e1;
-    __array_of_ptr__ e2;
+    List<ST_Agedge_s> e2_ = ND_in(w).list;
     int inv, cross = 0, t;
-    for (e2 = ND_in(w).getTheArray(); e2.getPtr()!=null; e2=e2.plus(1)) {
-	int cnt = ED_xpenalty(e2.getPtr());		
-	inv = ND_order((agtail(e2.getPtr())));
-	for (e1 = ND_in(v).getTheArray(); e1.getPtr()!=null; e1=e1.plus(1)) {
-	    t = ND_order(agtail(e1.getPtr())) - inv;
+    for (int ie2 = 0; e2_.get(ie2)!=null; ie2++) {
+	int cnt = ED_xpenalty(e2_.get(ie2));		
+	inv = ND_order((agtail(e2_.get(ie2))));
+    List<ST_Agedge_s> e1_ = ND_in(v).list;
+	for (int ie1 = 0; e1_.get(ie1)!=null; ie1++) {
+	    t = ND_order(agtail(e1_.get(ie1))) - inv;
 	    if ((t > 0)
 		|| ((t == 0)
-		    && (  ED_tail_port(e1.getPtr()).getStruct("p").getDouble("x") > ED_tail_port(e2.getPtr()).getStruct("p").getDouble("x"))))
-		cross += ED_xpenalty(e1.getPtr()) * cnt;
+		    && (  ED_tail_port(e1_.get(ie1)).p.x > ED_tail_port(e2_.get(ie2)).p.x)))
+		cross += ED_xpenalty(e1_.get(ie1)) * cnt;
 	}
     }
     return cross;
@@ -1188,20 +1165,21 @@ LEAVING("daknncpjy7g5peiicolbmh55i","in_cross");
 
 //3 b7mf74np8ewrgzwd5u0o8fqod
 // static int out_cross(node_t * v, node_t * w) 
-public static int out_cross(Agnode_s v, Agnode_s w) {
+public static int out_cross(ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("b7mf74np8ewrgzwd5u0o8fqod","out_cross");
 try {
-    __array_of_ptr__ e1, e2;
+ 	List<ST_Agedge_s> e2_ = ND_out(w).list;
     int inv, cross = 0, t;
-    for (e2 = ND_out(w).getTheArray(); e2.getPtr()!=null; e2=e2.plus(1)) {
-	int cnt = ED_xpenalty((Agedge_s)e2.getPtr());
-	inv = ND_order(aghead(e2.getPtr()));
-	for (e1 = ND_out(v).getTheArray(); e1.getPtr()!=null; e1=e1.plus(1)) {
-	    t = ND_order(aghead(e1.getPtr())) - inv;
+    for (int ie2 = 0; e2_.get(ie2)!=null; ie2++) {
+	int cnt = ED_xpenalty(e2_.get(ie2));
+	inv = ND_order(aghead(e2_.get(ie2)));
+    List<ST_Agedge_s> e1_ = ND_out(v).list;
+	for (int ie1 = 0; e1_.get(ie1)!=null; ie1++) {
+	    t = ND_order(aghead(e1_.get(ie1))) - inv;
 	    if ((t > 0)
 		|| ((t == 0)
-		    && ((ED_head_port(e1.getPtr())).getStruct("p").getDouble("x") > (ED_head_port(e2.getPtr())).getStruct("p").getDouble("x"))))
-		cross += ((ED_xpenalty(e1.getPtr())) * cnt);
+		    && ((ED_head_port(e1_.get(ie1))).p.x) > (ED_head_port(e2_.get(ie2))).p.x))
+		cross += ((ED_xpenalty(e1_.get(ie1))) * cnt);
 	}
     }
     return cross;
@@ -1215,7 +1193,7 @@ LEAVING("b7mf74np8ewrgzwd5u0o8fqod","out_cross");
 
 //3 ba4tbr57wips1dzpgxzx3b6ja
 // static void exchange(node_t * v, node_t * w) 
-public static void exchange(Agnode_s v, Agnode_s w) {
+public static void exchange(ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("ba4tbr57wips1dzpgxzx3b6ja","exchange");
 try {
     int vi, wi, r;
@@ -1223,9 +1201,9 @@ try {
     vi = ND_order(v);
     wi = ND_order(w);
     ND_order(v, wi);
-    GD_rank(Z.z().Root).plus(r).getArrayOfPtr("v").plus(wi).setPtr(v);
+    GD_rank(Z.z().Root).plus(r).getPtr().v.plus(wi).setPtr(v);
     ND_order(w, vi);
-    GD_rank(Z.z().Root).plus(r).getArrayOfPtr("v").plus(vi).setPtr(w);
+    GD_rank(Z.z().Root).plus(r).getPtr().v.plus(vi).setPtr(w);
 } finally {
 LEAVING("ba4tbr57wips1dzpgxzx3b6ja","exchange");
 }
@@ -1361,16 +1339,16 @@ throw new UnsupportedOperationException();
 
 //3 bxwzx4m9ejausu58u7abr6fm0
 // static int transpose_step(graph_t * g, int r, int reverse) 
-public static int transpose_step(Agraph_s g, int r, boolean reverse) {
+public static int transpose_step(ST_Agraph_s g, int r, boolean reverse) {
 ENTERING("bxwzx4m9ejausu58u7abr6fm0","transpose_step");
 try {
     int i, c0, c1, rv;
-    Agnode_s v, w;
+    ST_Agnode_s v, w;
     rv = 0;
-    GD_rank(g).plus(r).getPtr().setBoolean("candidate", false);
+    GD_rank(g).plus(r).getPtr().candidate= false;
     for (i = 0; i < GD_rank(g).plus(r).getInt("n") - 1; i++) {
-	v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
-	w = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i + 1).getPtr();
+	v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	w = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i + 1).getPtr();
 	//assert(ND_order(v) < ND_order(w));
 	if (left2right(g, v, w))
 	    continue;
@@ -1386,15 +1364,15 @@ try {
 	if ((c1 < c0) || ((c0 > 0) && reverse && (c1 == c0))) {
 	    exchange(v, w);
 	    rv += (c0 - c1);
-	    GD_rank(Z.z().Root).plus(r).getPtr().setBoolean("valid", false);
-	    GD_rank(g).plus(r).getPtr().setBoolean("candidate", NOT(false));
+	    GD_rank(Z.z().Root).plus(r).getPtr().valid= 0;
+	    GD_rank(g).plus(r).getPtr().candidate= NOT(false);
 	    if (r > GD_minrank(g)) {
-		GD_rank(Z.z().Root).plus(r - 1).getPtr().setBoolean("valid", false);
-		GD_rank(g).plus(r - 1).getPtr().setBoolean("candidate", NOT(false));
+		GD_rank(Z.z().Root).plus(r - 1).getPtr().valid= 0;
+		GD_rank(g).plus(r - 1).getPtr().candidate= NOT(false);
 	    }
 	    if (r < GD_maxrank(g)) {
-		GD_rank(Z.z().Root).plus(r + 1).getPtr().setBoolean("valid", false);
-		GD_rank(g).plus(r + 1).getPtr().setBoolean("candidate", NOT(false));
+		GD_rank(Z.z().Root).plus(r + 1).getPtr().valid= 0;
+		GD_rank(g).plus(r + 1).getPtr().candidate= NOT(false);
 	    }
 	}
     }
@@ -1409,16 +1387,16 @@ LEAVING("bxwzx4m9ejausu58u7abr6fm0","transpose_step");
 
 //3 2i22bxgg5y7v5c5d40k5zppky
 // static void transpose(graph_t * g, int reverse) 
-public static void transpose(Agraph_s g, boolean reverse) {
+public static void transpose(ST_Agraph_s g, boolean reverse) {
 ENTERING("2i22bxgg5y7v5c5d40k5zppky","transpose");
 try {
     int r, delta;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++)
-	GD_rank(g).plus(r).getPtr().setBoolean("candidate", NOT(false));
+	GD_rank(g).plus(r).getPtr().candidate= NOT(false);
     do {
 	delta = 0;
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    if (GD_rank(g).plus(r).getPtr().getBoolean("candidate")) {
+	    if (GD_rank(g).plus(r).getPtr().candidate) {
 		delta += transpose_step(g, r, reverse);
 	    }
 	}
@@ -1434,7 +1412,7 @@ LEAVING("2i22bxgg5y7v5c5d40k5zppky","transpose");
 
 //3 7lrk2rxqnwwdau8cx85oqkpmv
 // static int mincross(graph_t * g, int startpass, int endpass, int doBalance) 
-public static int mincross_(Agraph_s g, int startpass, int endpass, boolean doBalance) {
+public static int mincross_(ST_Agraph_s g, int startpass, int endpass, boolean doBalance) {
 ENTERING("7lrk2rxqnwwdau8cx85oqkpmv","mincross");
 try {
     int maxthispass=0, iter, trying, pass;
@@ -1505,18 +1483,17 @@ LEAVING("7lrk2rxqnwwdau8cx85oqkpmv","mincross");
 
 //3 520049zkz9mafaeklgvm6s8e5
 // static void restore_best(graph_t * g) 
-public static void restore_best(Agraph_s g) {
+public static void restore_best(ST_Agraph_s g) {
 ENTERING("520049zkz9mafaeklgvm6s8e5","restore_best");
 try {
-    Agnode_s n;
+    ST_Agnode_s n;
     int r;
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
 	ND_order(n, (int)ND_coord(n).getDouble("x"));
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	GD_rank(Z.z().Root).plus(r).setBoolean("valid", false);
+	GD_rank(Z.z().Root).plus(r).getPtr().valid= 0;
     qsort(GD_rank(g).plus(r).getPtr("v"),
     	    GD_rank(g).plus(r).getInt("n"),
-    	    sizeof(GD_rank(g).plus(r).getPtr("v").plus(0)),
     	    function(mincross__c.class, "nodeposcmpf"));
     }
 } finally {
@@ -1529,10 +1506,10 @@ LEAVING("520049zkz9mafaeklgvm6s8e5","restore_best");
 
 //3 8uyqc48j0oul206l3np85wj9p
 // static void save_best(graph_t * g) 
-public static void save_best(Agraph_s g) {
+public static void save_best(ST_Agraph_s g) {
 ENTERING("8uyqc48j0oul206l3np85wj9p","save_best");
 try {
-    Agnode_s n;
+    ST_Agnode_s n;
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
     (ND_coord(n)).x = ND_order(n);
 } finally {
@@ -1545,16 +1522,16 @@ LEAVING("8uyqc48j0oul206l3np85wj9p","save_best");
 
 //3 6d08fwi4dsk6ikk5d0gy6rq2h
 // static void merge_components(graph_t * g) 
-public static void merge_components(Agraph_s g) {
+public static void merge_components(ST_Agraph_s g) {
 ENTERING("6d08fwi4dsk6ikk5d0gy6rq2h","merge_components");
 try {
     int c;
-    Agnode_s u, v;
+    ST_Agnode_s u, v;
     if (GD_comp(g).size <= 1)
 	return;
     u = null;
     for (c = 0; c < GD_comp(g).size; c++) {
-    	v = (Agnode_s) GD_comp(g).getFromList(c);
+    	v = (ST_Agnode_s) GD_comp(g).getFromList(c);
 	if (u!=null)
 	    ND_next(u, v);
 	ND_prev(v, u);
@@ -1577,11 +1554,11 @@ LEAVING("6d08fwi4dsk6ikk5d0gy6rq2h","merge_components");
 
 //3 91vebcdl3q3y0uyxef0iw71n9
 // static void merge2(graph_t * g) 
-public static void merge2(Agraph_s g) {
+public static void merge2(ST_Agraph_s g) {
 ENTERING("91vebcdl3q3y0uyxef0iw71n9","merge2");
 try {
     int i, r;
-    Agnode_s v;
+    ST_Agnode_s v;
     /* merge the components and rank limits */
     merge_components(g);
     /* install complete ranks */
@@ -1589,7 +1566,7 @@ try {
 	GD_rank(g).plus(r).setInt("n", GD_rank(g).plus(r).getInt("an"));
 	GD_rank(g).plus(r).setPtr("v", GD_rank(g).plus(r).getPtr("av"));
 	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
+	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
 	    if (v == null) {
 		/*if (Verbose)
 		    fprintf(stderr,
@@ -1611,12 +1588,12 @@ LEAVING("91vebcdl3q3y0uyxef0iw71n9","merge2");
 
 //3 3cwiyyk1d1jkoo9iqwb5bge4x
 // static void cleanup2(graph_t * g, int nc) 
-public static void cleanup2(Agraph_s g, int nc) {
+public static void cleanup2(ST_Agraph_s g, int nc) {
 ENTERING("3cwiyyk1d1jkoo9iqwb5bge4x","cleanup2");
 try {
     int i, j, r, c;
-    Agnode_s v;
-    Agedge_s e;
+    ST_Agnode_s v;
+    ST_Agedge_s e;
     if (Z.z().TI_list!=null) {
 	Memory.free(Z.z().TI_list);
 	Z.z().TI_list = null;
@@ -1627,14 +1604,14 @@ try {
     }
     /* fix vlists of clusters */
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_reset_vlists((Agraph_s) GD_clust(g).plus(c).getPtr());
+	rec_reset_vlists((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
     /* remove node temporary edges for ordering nodes */
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
+	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
 	    ND_order(v, i);
 	    if (ND_flat_out(v).listNotNull()) {
-		for (j = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++)
+		for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++)
 		    if (ED_edge_type(e) == 4) {
 			delete_flat_edge(e);
 			Memory.free(e.getPtr("base.data"));
@@ -1643,7 +1620,7 @@ try {
 		    }
 	    }
 	}
-	free_matrix((adjmatrix_t) GD_rank(g).plus(r).getPtr("flat"));
+	free_matrix((ST_adjmatrix_t) GD_rank(g).plus(r).getPtr("flat"));
     }
     /*if (Verbose)
 	fprintf(stderr, "mincross %s: %d crossings, %.2f secs.\n",
@@ -1658,17 +1635,17 @@ LEAVING("3cwiyyk1d1jkoo9iqwb5bge4x","cleanup2");
 
 //3 arax68kzcf86dr2xu0gp962gq
 // static node_t *neighbor(node_t * v, int dir) 
-public static Agnode_s neighbor(Agnode_s v, int dir) {
+public static ST_Agnode_s neighbor(ST_Agnode_s v, int dir) {
 ENTERING("arax68kzcf86dr2xu0gp962gq","neighbor");
 try {
-    Agnode_s rv;
+    ST_Agnode_s rv;
     rv = null;
 assert(v!=null);
     if (dir < 0) {
 	if (ND_order(v) > 0)
-	    rv = (Agnode_s) GD_rank(Z.z().Root).plus(ND_rank(v)).getArrayOfPtr("v").plus(ND_order(v) - 1).getPtr();
+	    rv = (ST_Agnode_s) GD_rank(Z.z().Root).plus(ND_rank(v)).getPtr().v.plus(ND_order(v) - 1).getPtr();
     } else
-	rv = (Agnode_s) GD_rank(Z.z().Root).plus(ND_rank(v)).getArrayOfPtr("v").plus(ND_order(v) + 1).getPtr();
+	rv = (ST_Agnode_s) GD_rank(Z.z().Root).plus(ND_rank(v)).getPtr().v.plus(ND_order(v) + 1).getPtr();
 assert((rv == null) || (ND_order(rv)-ND_order(v))*dir > 0);
     return rv;
 } finally {
@@ -1681,7 +1658,7 @@ LEAVING("arax68kzcf86dr2xu0gp962gq","neighbor");
 
 //3 1waqm8z71hi389dt1wqh0bmhr
 // static int is_a_normal_node_of(graph_t * g, node_t * v) 
-public static boolean is_a_normal_node_of(Agraph_s g, Agnode_s v) {
+public static boolean is_a_normal_node_of(ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("1waqm8z71hi389dt1wqh0bmhr","is_a_normal_node_of");
 try {
     return ((ND_node_type(v) == 0) && agcontains(g, v));
@@ -1695,12 +1672,12 @@ LEAVING("1waqm8z71hi389dt1wqh0bmhr","is_a_normal_node_of");
 
 //3 9f8atyi1unmleplge3rijdt4s
 // static int is_a_vnode_of_an_edge_of(graph_t * g, node_t * v) 
-public static boolean is_a_vnode_of_an_edge_of(Agraph_s g, Agnode_s v) {
+public static boolean is_a_vnode_of_an_edge_of(ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("9f8atyi1unmleplge3rijdt4s","is_a_vnode_of_an_edge_of");
 try {
     if ((ND_node_type(v) == 1)
 	&& (ND_in(v).size == 1) && (ND_out(v).size == 1)) {
-	Agedge_s e = (Agedge_s) ND_out(v).getFromList(0);
+	ST_Agedge_s e = (ST_Agedge_s) ND_out(v).getFromList(0);
 	while (ED_edge_type(e) != 0)
 	    e = ED_to_orig(e);
 	if (agcontains(g, e))
@@ -1717,7 +1694,7 @@ LEAVING("9f8atyi1unmleplge3rijdt4s","is_a_vnode_of_an_edge_of");
 
 //3 eo7ulc8vwmoaig0j479yapve2
 // static int inside_cluster(graph_t * g, node_t * v) 
-public static boolean inside_cluster(Agraph_s g, Agnode_s v) {
+public static boolean inside_cluster(ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("eo7ulc8vwmoaig0j479yapve2","inside_cluster");
 try {
     return (is_a_normal_node_of(g, v) | is_a_vnode_of_an_edge_of(g, v));
@@ -1731,10 +1708,10 @@ LEAVING("eo7ulc8vwmoaig0j479yapve2","inside_cluster");
 
 //3 8xkmkt4r6gfqj8gk0mokszoz0
 // static node_t *furthestnode(graph_t * g, node_t * v, int dir) 
-public static Agnode_s furthestnode(Agraph_s g, Agnode_s v, int dir) {
+public static ST_Agnode_s furthestnode(ST_Agraph_s g, ST_Agnode_s v, int dir) {
 ENTERING("8xkmkt4r6gfqj8gk0mokszoz0","furthestnode");
 try {
-    Agnode_s u, rv;
+    ST_Agnode_s u, rv;
     rv = u = v;
     while ((u = neighbor(u, dir))!=null) {
 	if (is_a_normal_node_of(g, u))
@@ -1753,13 +1730,13 @@ LEAVING("8xkmkt4r6gfqj8gk0mokszoz0","furthestnode");
 
 //3 bwmu2hkwud40601oq5vgo2f1h
 // void save_vlist(graph_t * g) 
-public static void save_vlist(Agraph_s g) {
+public static void save_vlist(ST_Agraph_s g) {
 ENTERING("bwmu2hkwud40601oq5vgo2f1h","save_vlist");
 try {
     int r;
     if (GD_rankleader(g)!=null)
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    GD_rankleader(g).plus(r).setPtr(GD_rank(g).plus(r).getArrayOfPtr("v").plus(0).getPtr());
+	    GD_rankleader(g).plus(r).setPtr(GD_rank(g).plus(r).getPtr().v.plus(0).getPtr());
 	}
 } finally {
 LEAVING("bwmu2hkwud40601oq5vgo2f1h","save_vlist");
@@ -1771,13 +1748,13 @@ LEAVING("bwmu2hkwud40601oq5vgo2f1h","save_vlist");
 
 //3 hwdxg97sefkuyd25x2q4pgzg
 // void rec_save_vlists(graph_t * g) 
-public static void rec_save_vlists(Agraph_s g) {
+public static void rec_save_vlists(ST_Agraph_s g) {
 ENTERING("hwdxg97sefkuyd25x2q4pgzg","rec_save_vlists");
 try {
     int c;
     save_vlist(g);
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_save_vlists((Agraph_s) GD_clust(g).plus(c).getPtr());
+	rec_save_vlists((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
 } finally {
 LEAVING("hwdxg97sefkuyd25x2q4pgzg","rec_save_vlists");
 }
@@ -1788,17 +1765,17 @@ LEAVING("hwdxg97sefkuyd25x2q4pgzg","rec_save_vlists");
 
 //3 f3b4wat4uxn5oil720i5mwq4v
 // void rec_reset_vlists(graph_t * g) 
-public static void rec_reset_vlists(Agraph_s g) {
+public static void rec_reset_vlists(ST_Agraph_s g) {
 ENTERING("f3b4wat4uxn5oil720i5mwq4v","rec_reset_vlists");
 try {
     int r, c;
-    Agnode_s u, v, w;
+    ST_Agnode_s u, v, w;
     /* fix vlists of sub-clusters */
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_reset_vlists((Agraph_s) GD_clust(g).plus(c).getPtr());
+	rec_reset_vlists((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
     if (GD_rankleader(g)!=null)
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    v = (Agnode_s) GD_rankleader(g).plus(r).getPtr();
+	    v = (ST_Agnode_s) GD_rankleader(g).plus(r).getPtr();
 	    u = furthestnode(g, v, -1);
 	    w = furthestnode(g, v, 1);
 	    GD_rankleader(g).plus(r).setPtr(u);
@@ -1815,7 +1792,7 @@ LEAVING("f3b4wat4uxn5oil720i5mwq4v","rec_reset_vlists");
 
 //3 pv0rbbdopo4hmkbl5916qys1
 // static Agraph_t* realFillRanks (Agraph_t* g, int rnks[], int rnks_sz, Agraph_t* sg) 
-public static Agraph_s realFillRanks(Agraph_s g, __ptr__ rnks, int rnks_sz, Agraph_s sg) {
+public static ST_Agraph_s realFillRanks(ST_Agraph_s g, __ptr__ rnks, int rnks_sz, ST_Agraph_s sg) {
 ENTERING("pv0rbbdopo4hmkbl5916qys1","realFillRanks");
 try {
  UNSUPPORTED("2o2sf6xi2aumo5k0vglp4ik2y"); // static Agraph_t*
@@ -1866,10 +1843,10 @@ LEAVING("pv0rbbdopo4hmkbl5916qys1","realFillRanks");
 
 //3 1qy9bupreg1pax62owznr98k
 // static void fillRanks (Agraph_t* g) 
-public static void fillRanks(Agraph_s g) {
+public static void fillRanks(ST_Agraph_s g) {
 ENTERING("1qy9bupreg1pax62owznr98k","fillRanks");
 try {
-    Agraph_s sg;
+    ST_Agraph_s sg;
     int rnks_sz = GD_maxrank(g) + 2;
     __ptr__ rnks = zmalloc(size_t_array_of_integer(rnks_sz));
     sg = realFillRanks (g, rnks, rnks_sz, null);
@@ -1884,7 +1861,7 @@ LEAVING("1qy9bupreg1pax62owznr98k","fillRanks");
 
 //3 7fy4chyk12o7bgp1rv3h27yl3
 // static void init_mincross(graph_t * g) 
-public static void init_mincross(Agraph_s g) {
+public static void init_mincross(ST_Agraph_s g) {
 ENTERING("7fy4chyk12o7bgp1rv3h27yl3","init_mincross");
 try {
     int size;
@@ -1896,7 +1873,7 @@ try {
     /* also, the +1 avoids attempts to alloc 0 sizes, something
        that efence complains about */
     size = agnedges(dot_root(g)) + 1;
-    Z.z().TE_list = zmalloc(sizeof_starstar_empty(Agedge_s.class, size));
+    Z.z().TE_list = new ST_Agedge_s.ArrayOfStar(size);
     Z.z().TI_list = zmalloc(size_t_array_of_integer(size));
     mincross_options(g);
     if ((GD_flags(g) & (1 << 4))!=0)
@@ -1917,16 +1894,16 @@ LEAVING("7fy4chyk12o7bgp1rv3h27yl3","init_mincross");
 
 //3 6fprrp93vmz0jn3l4ro0iropp
 // void flat_rev(Agraph_t * g, Agedge_t * e) 
-public static void flat_rev(Agraph_s g, Agedge_s e) {
+public static void flat_rev(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("6fprrp93vmz0jn3l4ro0iropp","flat_rev");
 try {
     int j;
-    Agedge_s rev;
+    ST_Agedge_s rev;
     if (ND_flat_out(aghead(e)).listNotNull()==false)
-    // if (N(ND_flat_out(aghead(e)).getArrayOfPtr("list")))
+    // if (N(ND_flat_out(aghead(e)).list))
 	rev = null;
     else
-	for (j = 0; (rev = (Agedge_s) ND_flat_out(aghead(e)).getFromList(j))!=null; j++)
+	for (j = 0; (rev = (ST_Agedge_s) ND_flat_out(aghead(e)).getFromList(j))!=null; j++)
 	    if (EQ(aghead(rev), agtail(e)))
 		break;
     if (rev!=null) {
@@ -1956,18 +1933,18 @@ LEAVING("6fprrp93vmz0jn3l4ro0iropp","flat_rev");
 
 //3 63ol0ch6cgln1nvl5oiz6n1v0
 // static void flat_search(graph_t * g, node_t * v) 
-public static void flat_search(Agraph_s g, Agnode_s v) {
+public static void flat_search(ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("63ol0ch6cgln1nvl5oiz6n1v0","flat_search");
 try {
     int i;
     boolean hascl;
-    Agedge_s e;
-    adjmatrix_t M = (adjmatrix_t) GD_rank(g).plus(ND_rank(v)).getPtr("flat");
+    ST_Agedge_s e;
+    ST_adjmatrix_t M = (ST_adjmatrix_t) GD_rank(g).plus(ND_rank(v)).getPtr("flat");
     ND_mark(v, NOT(false));
     ND_onstack(v, NOT(false));
     hascl = (GD_n_cluster(dot_root(g)) > 0);
     if (ND_flat_out(v).listNotNull())
-	for (i = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(i))!=null; i++) {
+	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).getFromList(i))!=null; i++) {
 	    if (hascl
 		&& NOT(agcontains(g, agtail(e)) && agcontains(g, aghead(e))))
 		continue;
@@ -1976,7 +1953,7 @@ try {
 	    if (ND_onstack(aghead(e)) == NOT(false)) {
 		assert(ND_low(aghead(e)) < M.getInt("nrows"));
 		assert(ND_low(agtail(e)) < M.getInt("ncols"));
-		M.getArrayOfInteger("data").plus(ND_low(aghead(e))*M.getInt("ncols")+ND_low(agtail(e))).setInt(1);
+		M.data[ND_low(aghead(e))][ND_low(agtail(e))]=1;
 		delete_flat_edge(e);
 		i--;
 		if (ED_edge_type(e) == 4)
@@ -1985,7 +1962,7 @@ try {
 	    } else {
 		assert(ND_low(aghead(e)) < M.getInt("nrows"));
 		assert(ND_low(agtail(e)) < M.getInt("ncols"));
-		M.getArrayOfInteger("data").plus(ND_low(agtail(e))*M.getInt("ncols")+ND_low(aghead(e))).setInt(1);
+		M.data[ND_low(agtail(e))][ND_low(aghead(e))]=1;
 		if (ND_mark(aghead(e)) == 0)
 		    flat_search(g, aghead(e));
 	    }
@@ -2001,15 +1978,15 @@ LEAVING("63ol0ch6cgln1nvl5oiz6n1v0","flat_search");
 
 //3 3v5h7z4vqivibvpt913lg8at0
 // static void flat_breakcycles(graph_t * g) 
-public static void flat_breakcycles(Agraph_s g) {
+public static void flat_breakcycles(ST_Agraph_s g) {
 ENTERING("3v5h7z4vqivibvpt913lg8at0","flat_breakcycles");
 try {
     int i, r, flat;
-    Agnode_s v;
+    ST_Agnode_s v;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	flat = 0;
 	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
+	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
 	    ND_mark(v, 0);
 	    ND_onstack(v, 0);
 	    ND_low(v, i);
@@ -2021,7 +1998,7 @@ try {
 	}
 	if (flat!=0) {
 	    for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-		v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
+		v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
 		if (ND_mark(v) == 0)
 		    flat_search(g, v);
 	    }
@@ -2037,14 +2014,14 @@ LEAVING("3v5h7z4vqivibvpt913lg8at0","flat_breakcycles");
 
 //3 d5vb6jiw8mhkaa8gjwn4eqfyn
 // void allocate_ranks(graph_t * g) 
-public static void allocate_ranks(Agraph_s g) {
+public static void allocate_ranks(ST_Agraph_s g) {
 ENTERING("d5vb6jiw8mhkaa8gjwn4eqfyn","allocate_ranks");
 try {
 	// REVIEW 17/01/2016
     int r, low, high;
     __ptr__ cn;
-    Agnode_s n;
-    Agedge_s e;
+    ST_Agnode_s n;
+    ST_Agedge_s e;
 	cn = zmalloc(size_t_array_of_integer(GD_maxrank(g) + 2));
 	/* must be 0 based, not GD_minrank */
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
@@ -2061,11 +2038,11 @@ try {
 		cn.plus(r).setInt(1+cn.plus(r).getInt());
 	}
     }
-    GD_rank(g, zmalloc(sizeof(rank_t.class, GD_maxrank(g) + 2)));
+    GD_rank(g, new ST_rank_t.Array2(GD_maxrank(g) + 2));
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	GD_rank(g).plus(r).setInt("n", cn.plus(r).getInt());
 	GD_rank(g).plus(r).setInt("an", cn.plus(r).getInt());
-	__ptr__ tmp = zmalloc(sizeof_starstar_empty(Agnode_s.class, cn.plus(r).getInt() + 1));
+	ST_Agnode_s.ArrayOfStar tmp = new ST_Agnode_s.ArrayOfStar(cn.plus(r).getInt() + 1);
 	GD_rank(g).plus(r).setPtr("v", tmp);
 	GD_rank(g).plus(r).setPtr("av", tmp);
     }
@@ -2080,7 +2057,7 @@ LEAVING("d5vb6jiw8mhkaa8gjwn4eqfyn","allocate_ranks");
 
 //3 3lxoqxhiri9fgt20zc5jz3aa5
 // void install_in_rank(graph_t * g, node_t * n) 
-public static void install_in_rank(Agraph_s g, Agnode_s n) {
+public static void install_in_rank(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("3lxoqxhiri9fgt20zc5jz3aa5","install_in_rank");
 try {
     int i, r;
@@ -2091,7 +2068,7 @@ UNSUPPORTED("8qk1xhvvb994zhv9aq10k4v12"); // 	agerr(AGERR, "install_in_rank, lin
 UNSUPPORTED("53h8d82ax23hys2k21hjswp72"); // 	      1034, agnameof(g), agnameof(n), r, i);
 	return;
     }
-    GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).setPtr(n);
+    GD_rank(g).plus(r).getPtr().v.plus(i).setPtr(n);
     ND_order(n, i);
     GD_rank(g).plus(r).setInt("n", 1+GD_rank(g).plus(r).getInt("n"));
     // assert(GD_rank(g)[r].n <= GD_rank(g)[r].an);
@@ -2121,21 +2098,21 @@ LEAVING("3lxoqxhiri9fgt20zc5jz3aa5","install_in_rank");
 
 //3 7t49bz6lfcbd9v63ds2x3518z
 // void build_ranks(graph_t * g, int pass) 
-public static void build_ranks(Agraph_s g, int pass) {
+public static void build_ranks(ST_Agraph_s g, int pass) {
 ENTERING("7t49bz6lfcbd9v63ds2x3518z","build_ranks");
 try {
     int i, j;
-    Agnode_s n, n0 = null;
-    __ptr__ otheredges;
-    nodequeue q;
+    ST_Agnode_s n, n0 = null;
+    List<ST_Agedge_s> otheredges;
+    ST_nodequeue q;
     q = new_queue(GD_n_nodes(g));
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
 	ND_mark(n, 0);
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++)
 	GD_rank(g).plus(i).setInt("n", 0);
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	otheredges = ((pass == 0) ? ND_in(n).getTheList() : ND_out(n).getTheList());
-	if (otheredges.plus(0).getPtr() != null)
+	otheredges = ((pass == 0) ? ND_in(n).list : ND_out(n).list);
+	if (otheredges.get(0)!= null)
 	    continue;
 	if ((ND_mark(n)) == 0) {
 	    ND_mark(n,  1);
@@ -2160,7 +2137,7 @@ UNSUPPORTED("1b3hbd5artrq77i58q2o9kgz3"); // 	agerr(AGERR, "surprise\n");
 	    nn = GD_rank(g).plus(i).getInt("n") - 1;
 	    ndiv2 = nn / 2;
 	    for (j = 0; j <= ndiv2; j++)
-		exchange((Agnode_s)vlist.plus(j).getPtr(), (Agnode_s)vlist.plus(nn - j).getPtr());
+		exchange((ST_Agnode_s)vlist.plus(j).getPtr(), (ST_Agnode_s)vlist.plus(nn - j).getPtr());
 	}
     }
     if (EQ(g, dot_root(g)) && ncross(g) > 0)
@@ -2176,14 +2153,14 @@ LEAVING("7t49bz6lfcbd9v63ds2x3518z","build_ranks");
 
 //3 bmjlneqxex6a9silzkkidkx6s
 // void enqueue_neighbors(nodequeue * q, node_t * n0, int pass) 
-public static void enqueue_neighbors(nodequeue q, Agnode_s n0, int pass) {
+public static void enqueue_neighbors(ST_nodequeue q, ST_Agnode_s n0, int pass) {
 ENTERING("bmjlneqxex6a9silzkkidkx6s","enqueue_neighbors");
 try {
     int i;
-    Agedge_s e;
+    ST_Agedge_s e;
     if (pass == 0) {
 	for (i = 0; i < ND_out(n0).size; i++) {
-	    e = (Agedge_s) ND_out(n0).getFromList(i);
+	    e = (ST_Agedge_s) ND_out(n0).getFromList(i);
 	    if (((ND_mark(aghead(e)))) == 0) {
 		ND_mark(aghead(e), 1);
 		enqueue(q, aghead(e));
@@ -2191,7 +2168,7 @@ try {
 	}
     } else {
 	for (i = 0; i < ND_in(n0).size; i++) {
-	    e = (Agedge_s) ND_in(n0).getFromList(i);
+	    e = (ST_Agedge_s) ND_in(n0).getFromList(i);
 	    if (((ND_mark(agtail(e)))) == 0) {
 		ND_mark(agtail(e), 1);
 		enqueue(q, agtail(e));
@@ -2208,7 +2185,7 @@ LEAVING("bmjlneqxex6a9silzkkidkx6s","enqueue_neighbors");
 
 //3 c8nqj0v20api63pikohsbx92u
 // static int constraining_flat_edge(Agraph_t *g, Agnode_t *v, Agedge_t *e) 
-public static boolean constraining_flat_edge(Agraph_s g, Agnode_s v, Agedge_s e) {
+public static boolean constraining_flat_edge(ST_Agraph_s g, ST_Agnode_s v, ST_Agedge_s e) {
 ENTERING("c8nqj0v20api63pikohsbx92u","constraining_flat_edge");
 try {
 	if (ED_weight(e) == 0) return false;
@@ -2225,14 +2202,14 @@ LEAVING("c8nqj0v20api63pikohsbx92u","constraining_flat_edge");
 
 //3 46to0pkk188af2dlkik2ab7e3
 // static int postorder(graph_t * g, node_t * v, node_t ** list, int r) 
-public static int postorder(Agraph_s g, Agnode_s v, __ptr__ list, int r) {
+public static int postorder(ST_Agraph_s g, ST_Agnode_s v, __ptr__ list, int r) {
 ENTERING("46to0pkk188af2dlkik2ab7e3","postorder");
 try {
-    Agedge_s e;
+    ST_Agedge_s e;
     int i, cnt = 0;
     ND_mark(v, NOT(false));
     if (ND_flat_out(v).size > 0) {
-	for (i = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(i))!=null; i++) {
+	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).getFromList(i))!=null; i++) {
 	    if (N(constraining_flat_edge(g,v,e))) continue;
 	    if ((ND_mark(aghead(e))) == 0)
 		cnt += postorder(g, aghead(e), list.plus(cnt), r);
@@ -2251,34 +2228,34 @@ LEAVING("46to0pkk188af2dlkik2ab7e3","postorder");
 
 //3 zuxoswju917kyl08a5f0gtp6
 // static void flat_reorder(graph_t * g) 
-public static void flat_reorder(Agraph_s g) {
+public static void flat_reorder(ST_Agraph_s g) {
 ENTERING("zuxoswju917kyl08a5f0gtp6","flat_reorder");
 try {
     int i, j, r, pos, n_search, local_in_cnt, local_out_cnt, base_order;
-    Agnode_s v, t;
+    ST_Agnode_s v, t;
     __ptr__ left, right;
-    __ptr__ temprank = null;
-    Agedge_s flat_e, e;
+    ST_Agnode_s.ArrayOfStar temprank = null;
+    ST_Agedge_s flat_e, e;
     if (GD_has_flat_edges(g) == 0)
 	return;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	if (GD_rank(g).plus(r).getInt("n") == 0) continue;
-	base_order = ND_order(GD_rank(g).plus(r).getArrayOfPtr("v").plus(0).getPtr());
+	base_order = ND_order(GD_rank(g).plus(r).getPtr().v.plus(0).getPtr());
 	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++)
-	    ND_mark(GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr(), 0);
-	temprank = ALLOC(i + 1, temprank, Agnode_s.class);
+	    ND_mark(GD_rank(g).plus(r).getPtr().v.plus(i).getPtr(), 0);
+	temprank = ALLOC_Agnode_s(i + 1, temprank);
 	pos = 0;
 	/* construct reverse topological sort order in temprank */
 	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    if (GD_flip(g)!=0) v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
-	    else v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(GD_rank(g).plus(r).getInt("n") - i - 1).getPtr();
+	    if (GD_flip(g)!=0) v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	    else v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(GD_rank(g).plus(r).getInt("n") - i - 1).getPtr();
 	    local_in_cnt = local_out_cnt = 0;
 	    for (j = 0; j < ND_flat_in(v).size; j++) {
-		flat_e = (Agedge_s) ND_flat_in(v).getFromList(j);
+		flat_e = (ST_Agedge_s) ND_flat_in(v).getFromList(j);
 		if (constraining_flat_edge(g,v,flat_e)) local_in_cnt++;
 	    }
 	    for (j = 0; j < ND_flat_out(v).size; j++) {
-		flat_e = (Agedge_s) ND_flat_out(v).getFromList(j);
+		flat_e = (ST_Agedge_s) ND_flat_out(v).getFromList(j);
 		if (constraining_flat_edge(g,v,flat_e)) local_out_cnt++;
 	    }
 	    if ((local_in_cnt == 0) && (local_out_cnt == 0))
@@ -2296,7 +2273,7 @@ try {
 		left = temprank;
 		right = temprank.plus(pos - 1);
 		while (left.comparePointer(right) < 0) {
-		    t = (Agnode_s) left.getPtr();
+		    t = (ST_Agnode_s) left.getPtr();
 		    left.setPtr(right.getPtr());
 		    right.setPtr(t);
 		    left = left.plus(1);
@@ -2304,15 +2281,15 @@ try {
 		}
 	    }
 	    for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-		v = (Agnode_s) temprank.plus(i).getPtr();
-		GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).setPtr(v);
+		v = (ST_Agnode_s) temprank.plus(i).getPtr();
+		GD_rank(g).plus(r).getPtr().v.plus(i).setPtr(v);
 		ND_order(v, i + base_order);
 	    }
 	    /* nonconstraint flat edges must be made LR */
 	    for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-		v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
+		v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
 		if (ND_flat_out(v).listNotNull()) {
-		    for (j = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++) {
+		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++) {
 			if ( ((GD_flip(g) == 0) && (ND_order(aghead(e)) < ND_order(agtail(e)))) ||
 				 ( (GD_flip(g)!=0) && (ND_order(aghead(e)) > ND_order(agtail(e)) ))) {
 			    assert(constraining_flat_edge(g,v,e) == false);
@@ -2340,7 +2317,7 @@ LEAVING("zuxoswju917kyl08a5f0gtp6","flat_reorder");
 
 //3 inv6wazjcnh4xkzzphsdcmg4
 // static void reorder(graph_t * g, int r, int reverse, int hasfixed) 
-public static void reorder(Agraph_s g, int r, boolean reverse, boolean hasfixed) {
+public static void reorder(ST_Agraph_s g, int r, boolean reverse, boolean hasfixed) {
 ENTERING("inv6wazjcnh4xkzzphsdcmg4","reorder");
 try {
     boolean changed = false;
@@ -2361,7 +2338,7 @@ try {
 	    for (rp = lp.plus(1); rp.comparePointer(ep) < 0; rp=rp.plus(1)) {
 		if (sawclust && ND_clust(rp.getPtr())!=null)
 		    continue;	/* ### */
-		if (left2right(g, (Agnode_s) lp.getPtr(), (Agnode_s) rp.getPtr())) {
+		if (left2right(g, (ST_Agnode_s) lp.getPtr(), (ST_Agnode_s) rp.getPtr())) {
 		    muststay = NOT(false);
 		    break;
 		}
@@ -2376,7 +2353,7 @@ try {
 		int p1 = (int) (ND_mval(lp.getPtr()));
 		int p2 = (int) (ND_mval(rp.getPtr()));
 		if ((p1 > p2) || ((p1 == p2) && (reverse))) {
-		    exchange((Agnode_s)lp.getPtr(), (Agnode_s)rp.getPtr());
+		    exchange((ST_Agnode_s)lp.getPtr(), (ST_Agnode_s)rp.getPtr());
 		    changed=true;
 		}
 	    }
@@ -2386,9 +2363,9 @@ try {
 	    ep = ep.plus(-1);
     }
     if (changed) {
-	GD_rank(Z.z().Root).plus(r).setBoolean("valid", false);
+	GD_rank(Z.z().Root).plus(r).getPtr().valid= 0;
 	if (r > 0)
-	    GD_rank(Z.z().Root).plus(r - 1).setBoolean("valid", false);
+	    GD_rank(Z.z().Root).plus(r - 1).getPtr().valid= 0;
     }
 } finally {
 LEAVING("inv6wazjcnh4xkzzphsdcmg4","reorder");
@@ -2400,7 +2377,7 @@ LEAVING("inv6wazjcnh4xkzzphsdcmg4","reorder");
 
 //3 14t80owwvm7io4ou6czb9ba9
 // static void mincross_step(graph_t * g, int pass) 
-public static void mincross_step(Agraph_s g, int pass) {
+public static void mincross_step(ST_Agraph_s g, int pass) {
 ENTERING("14t80owwvm7io4ou6czb9ba9","mincross_step");
 try {
     int r, other, first, last, dir;
@@ -2446,11 +2423,11 @@ LEAVING("14t80owwvm7io4ou6czb9ba9","mincross_step");
 
 //3 aq18oa4k4grixvfjx7r2qnl6r
 // static int local_cross(elist l, int dir) 
-public static int local_cross(final __struct__<elist> l, int dir) {
+public static int local_cross(final ST_elist l, int dir) {
 // WARNING!! STRUCT
 return local_cross_w_(l.copy(), dir);
 }
-private static int local_cross_w_(final __struct__<elist> l, int dir) {
+private static int local_cross_w_(final ST_elist l, int dir) {
 ENTERING("aq18oa4k4grixvfjx7r2qnl6r","local_cross");
 try {
  UNSUPPORTED("3jmndo6p8u1x5wp297qpt0jto"); // static int local_cross(elist l, int dir)
@@ -2487,15 +2464,15 @@ LEAVING("aq18oa4k4grixvfjx7r2qnl6r","local_cross");
 
 
 
-//3 bk5nklhfqgg0uwkv7tv6dn8r2
-// static int rcross(graph_t * g, int r) 
 //static __ptr__ Count;
 //static int C;
-public static int rcross(Agraph_s g, int r) {
+//3 bk5nklhfqgg0uwkv7tv6dn8r2
+// static int rcross(graph_t * g, int r) 
+public static int rcross(ST_Agraph_s g, int r) {
 ENTERING("bk5nklhfqgg0uwkv7tv6dn8r2","rcross");
 try {
     int top, bot, cross, max, i, k;
-    Agnode_s v;
+    ST_Agnode_s v;
     __ptr__ rtop;
     cross = 0;
     max = 0;
@@ -2507,14 +2484,14 @@ try {
     for (i = 0; i < GD_rank(g).plus(r + 1).getInt("n"); i++)
 	Z.z().Count.plus(i).setInt(0);
     for (top = 0; top < GD_rank(g).plus(r).getInt("n"); top++) {
-	Agedge_s e;
+	ST_Agedge_s e;
 	if (max > 0) {
-	    for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
+	    for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
 		for (k = ND_order(aghead(e)) + 1; k <= max; k++)
 		    cross += Z.z().Count.plus(k).getInt() * ED_xpenalty(e);
 	    }
 	}
-	for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
+	for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
 	    int inv = ND_order(aghead(e));
 	    if (inv > max)
 		max = inv;
@@ -2522,12 +2499,12 @@ try {
 	}
     }
     for (top = 0; top < GD_rank(g).plus(r).getInt("n"); top++) {
-	v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(top).getPtr();
+	v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(top).getPtr();
 	if (ND_has_port(v))
 	    cross += local_cross(ND_out(v), 1);
     }
     for (bot = 0; bot < GD_rank(g).plus(r + 1).getInt("n"); bot++) {
-	v = (Agnode_s) GD_rank(g).plus(r + 1).getArrayOfPtr("v").plus(bot).getPtr();
+	v = (ST_Agnode_s) GD_rank(g).plus(r + 1).getPtr().v.plus(bot).getPtr();
 	if (ND_has_port(v))
 	    cross += local_cross(ND_in(v), -1);
     }
@@ -2542,14 +2519,14 @@ LEAVING("bk5nklhfqgg0uwkv7tv6dn8r2","rcross");
 
 //3 dbjmz2tnii2pn9sxg26ap6w5r
 // int ncross(graph_t * g) 
-public static int ncross(Agraph_s g) {
+public static int ncross(ST_Agraph_s g) {
 ENTERING("dbjmz2tnii2pn9sxg26ap6w5r","ncross");
 try {
     int r, count, nc;
     g = Z.z().Root;
     count = 0;
     for (r = GD_minrank(g); r < GD_maxrank(g); r++) {
-	if (GD_rank(g).plus(r).getBoolean("valid"))
+	if (GD_rank(g).plus(r).getPtr().valid!=0)
 	    count += GD_rank(g).plus(r).getInt("cache_nc");
 	else {
 	    nc = rcross(g, r);
@@ -2583,17 +2560,17 @@ LEAVING("8wrsq8a2vooekcm3cdtv5x3ke","ordercmpf");
 
 //3 7397kynkpqf2m1jkpmi8pgf0n
 // static int flat_mval(node_t * n) 
-public static boolean flat_mval(Agnode_s n) {
+public static boolean flat_mval(ST_Agnode_s n) {
 ENTERING("7397kynkpqf2m1jkpmi8pgf0n","flat_mval");
 try {
     int i;
-    Agedge_s e;
-    __ptr__ fl;
-    Agnode_s nn;
+    ST_Agedge_s e;
+    List<ST_Agedge_s> fl;
+    ST_Agnode_s nn;
     if (ND_flat_in(n).size > 0) {
-	fl = ND_flat_in(n).getTheList();
-	nn = agtail(fl.plus(0).getPtr());
-	for (i = 1; (e = (Agedge_s) fl.plus(i).getPtr())!=null; i++)
+	fl = ND_flat_in(n).list;
+	nn = agtail(fl.get(0));
+	for (i = 1; (e = (ST_Agedge_s) fl.get(i))!=null; i++)
 	    if (ND_order(agtail(e)) > ND_order(nn))
 		nn = agtail(e);
 	if (ND_mval(nn) >= 0) {
@@ -2601,9 +2578,9 @@ try {
 	    return false;
 	}
     } else if (ND_flat_out(n).size > 0) {
-	fl = ND_flat_out(n).getTheList();
-	nn = aghead(fl.plus(0).getPtr());
-	for (i = 1; (e = (Agedge_s) fl.plus(i).getPtr())!=null; i++)
+	fl = ND_flat_out(n).list;
+	nn = aghead(fl.get(0));
+	for (i = 1; (e = (ST_Agedge_s) fl.get(i))!=null; i++)
 	    if (ND_order(aghead(e)) < ND_order(nn))
 		nn = aghead(e);
 	if (ND_mval(nn) > 0) {
@@ -2622,26 +2599,26 @@ LEAVING("7397kynkpqf2m1jkpmi8pgf0n","flat_mval");
 
 //3 azvdpixwwxspl31wp7f4k4fmh
 // static boolean medians(graph_t * g, int r0, int r1) 
-public static boolean medians(Agraph_s g, int r0, int r1) {
+public static boolean medians(ST_Agraph_s g, int r0, int r1) {
 ENTERING("azvdpixwwxspl31wp7f4k4fmh","medians");
 try {
     int i, j, j0, lm, rm, lspan, rspan;
     __ptr__ list;
-    Agnode_s n;
+    ST_Agnode_s n;
     __ptr__ v;
-    Agedge_s e;
+    ST_Agedge_s e;
     boolean hasfixed = false;
     list = Z.z().TI_list;
     v = GD_rank(g).plus(r0).getPtr("v");
     for (i = 0; i < GD_rank(g).plus(r0).getInt("n"); i++) {
-	n = (Agnode_s) v.plus(i).getPtr();
+	n = (ST_Agnode_s) v.plus(i).getPtr();
 	j = 0;
 	if (r1 > r0)
-	    for (j0 = 0; (e = (Agedge_s) ND_out(n).getFromList(j0))!=null; j0++) {
+	    for (j0 = 0; (e = (ST_Agedge_s) ND_out(n).getFromList(j0))!=null; j0++) {
 		if (ED_xpenalty(e) > 0)
 		    list.plus(j++).setInt((256 * ND_order(aghead(e)) + (ED_head_port(e)).getInt("order")));
 	} else
-	    for (j0 = 0; (e = (Agedge_s) ND_in(n).getFromList(j0))!=null; j0++) {
+	    for (j0 = 0; (e = (ST_Agedge_s) ND_in(n).getFromList(j0))!=null; j0++) {
 		if (ED_xpenalty(e) > 0)
 		    list.plus(j++).setInt((256 * ND_order(agtail(e)) + (ED_tail_port(e)).getInt("order")));
 	    }
@@ -2658,7 +2635,6 @@ try {
 	default:
 	    qsort(list,
 	    	    j,
-	    	    sizeof(list.plus(0)),
 	    	    function(mincross__c.class, "ordercmpf"));
 	    if (j % 2!=0)
 		ND_mval(n, list.plus(j / 2).getInt());
@@ -2678,7 +2654,7 @@ try {
 	}
     }
     for (i = 0; i < GD_rank(g).plus(r0).getInt("n"); i++) {
-	n = (Agnode_s) v.plus(i).getPtr();
+	n = (ST_Agnode_s) v.plus(i).getPtr();
 	if ((ND_out(n).size == 0) && (ND_in(n).size == 0))
 	    hasfixed |= flat_mval(n);
     }
@@ -2729,7 +2705,7 @@ private static int table[][] = new int[][]{
 
 //3 7j638prioxd97f74v1v4adbsf
 // static int endpoint_class(node_t * n) 
-public static int endpoint_class(Agnode_s n) {
+public static int endpoint_class(ST_Agnode_s n) {
 ENTERING("7j638prioxd97f74v1v4adbsf","endpoint_class");
 try {
     if (ND_node_type(n) == 1)
@@ -2747,7 +2723,7 @@ LEAVING("7j638prioxd97f74v1v4adbsf","endpoint_class");
 
 //3 es57bn7ga4wc9tqtcixpn0451
 // void virtual_weight(edge_t * e) 
-public static void virtual_weight(Agedge_s e) {
+public static void virtual_weight(ST_Agedge_s e) {
 ENTERING("es57bn7ga4wc9tqtcixpn0451","virtual_weight");
 try {
     int t;
@@ -2763,7 +2739,7 @@ LEAVING("es57bn7ga4wc9tqtcixpn0451","virtual_weight");
 
 //3 7ru09oqbudpeofsthzveig2m2
 // static void mincross_options(graph_t * g) 
-public static void mincross_options(Agraph_s g) {
+public static void mincross_options(ST_Agraph_s g) {
 ENTERING("7ru09oqbudpeofsthzveig2m2","mincross_options");
 try {
     CString p;

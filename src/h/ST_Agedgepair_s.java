@@ -67,14 +67,6 @@ public class ST_Agedgepair_s extends UnsupportedStructAndPtr implements Hardcode
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-	}
-
-	@Override
 	public __struct__ getStruct(String fieldName) {
 		if (fieldName.equals("out")) {
 			return out;

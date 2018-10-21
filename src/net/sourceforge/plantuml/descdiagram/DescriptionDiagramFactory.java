@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.descdiagram.command.CommandArchimate;
+import net.sourceforge.plantuml.descdiagram.command.CommandArchimateMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
@@ -116,6 +117,7 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		// cmds.add(new CommandHideShowSpecificClass());
 
 		cmds.add(new CommandArchimate());
+		cmds.add(new CommandArchimateMultilines());
 		cmds.add(new CommandCreateDomain());
 
 		return cmds;

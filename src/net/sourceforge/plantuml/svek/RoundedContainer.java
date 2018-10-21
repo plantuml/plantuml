@@ -58,6 +58,9 @@ public final class RoundedContainer {
 
 	public RoundedContainer(Dimension2D dim, double titleHeight, double attributeHeight, HtmlColor borderColor,
 			HtmlColor backColor, HtmlColor imgBackcolor, UStroke stroke) {
+		if (dim.getWidth() == 0) {
+			throw new IllegalArgumentException();
+		}
 		this.dim = dim;
 		this.imgBackcolor = imgBackcolor;
 		this.titleHeight = titleHeight;

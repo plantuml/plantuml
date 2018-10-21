@@ -75,21 +75,21 @@ public class SourceStringReader {
 	}
 
 	public SourceStringReader(Defines defines, String source, String charset, List<String> config) {
-		this(defines, source, charset, config, null);
+		this(defines, source, charset, config, FileSystem.getInstance().getCurrentDir());
 	}
 
 	public SourceStringReader(Defines defines, String source, String charset, List<String> config, File newCurrentDir) {
-		// WARNING GLOBAL LOCK HERE
-		synchronized (SourceStringReader.class) {
-			try {
-				final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
-						newCurrentDir, "string");
-				this.blocks = builder.getBlockUmls();
-			} catch (IOException e) {
-				Log.error("error " + e);
-				throw new IllegalStateException(e);
-			}
+		// // WARNING GLOBAL LOCK HERE
+		// synchronized (SourceStringReader.class) {
+		try {
+			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
+					newCurrentDir, "string");
+			this.blocks = builder.getBlockUmls();
+		} catch (IOException e) {
+			Log.error("error " + e);
+			throw new IllegalStateException(e);
 		}
+		// }
 	}
 
 	@Deprecated

@@ -51,7 +51,6 @@ import static gen.lib.cgraph.refstr__c.aghtmlstr;
 import static gen.lib.common.emit__c.init_xdot;
 import static gen.lib.common.labels__c.make_label;
 import static gen.lib.common.labels__c.strdup_and_subst_obj;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.utils__c.late_double;
 import static gen.lib.common.utils__c.late_int;
 import static gen.lib.common.utils__c.late_nnstring;
@@ -64,7 +63,6 @@ import static smetana.core.JUtils.atof;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtils.getenv;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtils.strstr;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
@@ -87,15 +85,12 @@ import static smetana.core.Macro.GD_showboxes;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.ROUND;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agraph_s;
-import h.boxf;
+import h.ST_Agraph_s;
+import h.ST_layout_t;
+import h.ST_pointf;
 import h.fontname_kind;
-import h.layout_t;
-import h.pointf;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Z;
-import smetana.core.__struct__;
 
 public class input__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -355,14 +350,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -391,25 +386,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -433,14 +409,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -1165,7 +1141,7 @@ throw new UnsupportedOperationException();
 
 //3 72no6ayfvjinlnupyn5jlmayg
 // static boolean getdoubles2ptf(graph_t * g, char *name, pointf * result) 
-public static boolean getdoubles2ptf(Agraph_s g, CString name, pointf result) {
+public static boolean getdoubles2ptf(ST_Agraph_s g, CString name, ST_pointf result) {
 ENTERING("72no6ayfvjinlnupyn5jlmayg","getdoubles2ptf");
 try {
     CString p;
@@ -1268,7 +1244,7 @@ throw new UnsupportedOperationException();
 
 //3 9t08dr2ks9qz1pyfz99awla6x
 // static int findCharset (graph_t * g) 
-public static int findCharset(Agraph_s g) {
+public static int findCharset(ST_Agraph_s g) {
 ENTERING("9t08dr2ks9qz1pyfz99awla6x","findCharset");
 try {
 	return 0;
@@ -1282,7 +1258,7 @@ LEAVING("9t08dr2ks9qz1pyfz99awla6x","findCharset");
 
 //3 3bnmjpvynh1j9oh2p2vi0vh2m
 // static void setRatio(graph_t * g) 
-public static void setRatio(Agraph_s g) {
+public static void setRatio(ST_Agraph_s g) {
 ENTERING("3bnmjpvynh1j9oh2p2vi0vh2m","setRatio");
 try {
     CString p;
@@ -1324,20 +1300,20 @@ LEAVING("3bnmjpvynh1j9oh2p2vi0vh2m","setRatio");
 
 
 
-//3 8gzdr3oil2d0e2o7m84wsszfg
-// void graph_init(graph_t * g, boolean use_rankdir) 
 static CString rankname[] = new CString[] { new CString("local"), new CString("global"), new CString("none"), null };
 static int rankcode[] = { 100, 101, 102, 100 };
 static CString fontnamenames[] = new CString[] {new CString("gd"),new CString("ps"),new CString("svg"), null};
 static int fontnamecodes[] = {enumAsInt(fontname_kind.class, "NATIVEFONTS"),enumAsInt(fontname_kind.class, "PSFONTS"),
 enumAsInt(fontname_kind.class, "SVGFONTS"),-1};
-public static void graph_init(Agraph_s g, boolean use_rankdir) {
+//3 8gzdr3oil2d0e2o7m84wsszfg
+//void graph_init(graph_t * g, boolean use_rankdir) 
+public static void graph_init(ST_Agraph_s g, boolean use_rankdir) {
 ENTERING("8gzdr3oil2d0e2o7m84wsszfg","graph_init");
 try {
     CString p;
     double xf;
     int rankdir;
-    GD_drawing(g, zmalloc(sizeof(layout_t.class)));
+    GD_drawing(g, new ST_layout_t());
     /* set this up fairly early in case any string sizes are needed */
     if ((p = agget(g, new CString("fontpath")))!=null || (p = getenv(new CString("DOTFONTPATH")))!=null) {
 UNSUPPORTED("81bz3jcukzyotxiqgrlhn9cbq"); // 	/* overide GDFONTPATH in local environment if dot
@@ -1395,16 +1371,16 @@ UNSUPPORTED("dhhbmqv6n01j1eeyy7fpus1xw"); // 		xf = 0.02;
     p = late_string(g, (agattr(g,AGRAPH,new CString("fontnames"),null)), null);
     GD_fontnames(g, maptoken(p, fontnamenames, fontnamecodes));
     setRatio(g);
-    GD_drawing(g).setBoolean("filled", 
-	getdoubles2ptf(g, new CString("size"), (pointf) GD_drawing(g).getStruct("size").amp()));
-    getdoubles2ptf(g, new CString("page"), GD_drawing(g).getStruct("page").amp());
-    GD_drawing(g).setBoolean("centered", mapbool(agget(g, new CString("center"))));
+    GD_drawing(g).filled = 
+	getdoubles2ptf(g, new CString("size"), (ST_pointf) GD_drawing(g).getStruct("size"));
+    getdoubles2ptf(g, new CString("page"), (ST_pointf) GD_drawing(g).getStruct("page"));
+    GD_drawing(g).centered = mapbool(agget(g, new CString("center")));
     if ((p = agget(g, new CString("rotate")))!=null)
-	GD_drawing(g).setBoolean("landscape", (atoi(p) == 90));
+	GD_drawing(g).landscape= (atoi(p) == 90);
     else if ((p = agget(g, new CString("orientation")))!=null)
-	GD_drawing(g).setBoolean("landscape", ((p.charAt(0) == 'l') || (p.charAt(0) == 'L')));
+	GD_drawing(g).landscape= ((p.charAt(0) == 'l') || (p.charAt(0) == 'L'));
     else if ((p = agget(g, new CString("landscape")))!=null)
-	GD_drawing(g).setBoolean("landscape", mapbool(p));
+	GD_drawing(g).landscape= mapbool(p);
     p = agget(g, new CString("clusterrank"));
     Z.z().CL_type = maptoken(p, rankname, rankcode);
     p = agget(g, new CString("concentrate"));
@@ -1555,7 +1531,7 @@ throw new UnsupportedOperationException();
 
 //3 5vks1zdadu5vjinaivs0j2bkb
 // void do_graph_label(graph_t * sg) 
-public static void do_graph_label(Agraph_s  sg) {
+public static void do_graph_label(ST_Agraph_s  sg) {
 ENTERING("5vks1zdadu5vjinaivs0j2bkb","do_graph_label");
 try {
     CString str, pos, just;
@@ -1563,7 +1539,7 @@ try {
     /* it would be nice to allow multiple graph labels in the future */
     if ((str = agget(sg, new CString("label")))!=null && (str.charAt(0) != '\0')) {
 	char pos_flag=0;
-	final __struct__<pointf> dimen = JUtils.from(pointf.class);
+	final ST_pointf dimen = new ST_pointf();
 	GD_has_labels(sg.getPtr("root"), GD_has_labels(sg.getPtr("root")) | (1 << 3));
 	GD_label(sg, make_label(sg, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
 	    late_double(sg, (agattr(sg,AGRAPH,new CString("fontsize"),null)),
@@ -1597,7 +1573,7 @@ UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 	    return;
 	/* Set border information for cluster labels to allow space
 	 */
-	dimen.___(GD_label(sg).getStruct("dimen"));
+	dimen.___(GD_label(sg).dimen);
 	dimen.setDouble("x", dimen.getDouble("x") + 4*4);
 	dimen.setDouble("y", dimen.getDouble("y") + 2*4);
 	if (N(GD_flip(agroot(sg)))) {
@@ -1605,7 +1581,7 @@ UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 		pos_ix = 2;
 	    else
 		pos_ix = 0;
-	    GD_border(sg).plus(pos_ix).setStruct(dimen);
+	    GD_border(sg)[pos_ix].___(dimen);
 	} else {
 	    /* when rotated, the labels will be restored to TOP or BOTTOM  */
 UNSUPPORTED("cabz6xbjdvz5vmjulzrhlxh48"); // 	    if ((((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->label_pos) & 1)

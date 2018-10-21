@@ -63,29 +63,21 @@ public class ST_layout_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
+	public double quantum;
+	public double scale;
+	public double ratio;
+	public double dpi;
 
-	public class Amp extends UnsupportedStarStruct {
-	}
+	public ST_pointf margin = new ST_pointf(this);
+	public ST_pointf page = new ST_pointf(this);
+	public ST_pointf size = new ST_pointf(this);
 
-	private double quantum;
-	private double scale;
-	private double ratio;
-	private double dpi;
-
-	private ST_pointf margin = new ST_pointf(this);
-	private ST_pointf page = new ST_pointf(this);
-	private ST_pointf size = new ST_pointf(this);
-
-	private boolean filled;
-	private boolean landscape;
-	private boolean centered;
+	public boolean filled;
+	public boolean landscape;
+	public boolean centered;
 
 	// "ratio_t ratio_kind",
-	private int ratio_kind;
+	public int ratio_kind;
 	// "void* xdots",
 	// "char* id",
 

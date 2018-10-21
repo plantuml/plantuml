@@ -91,7 +91,8 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 	public PreprocessorInclude(List<String> config, ReadLine reader, Defines defines, String charset,
 			File newCurrentDir, DefinitionsContainer definitionsContainer) {
 		this(config, reader, defines, charset, new AParentFolderRegular(newCurrentDir), new HashSet<FileWithSuffix>(),
-				new HashSet<FileWithSuffix>(), definitionsContainer, new ImportedFiles());
+				new HashSet<FileWithSuffix>(), definitionsContainer, ImportedFiles.createImportedFiles(null));
+		throw new UnsupportedOperationException();
 	}
 
 	public Set<FileWithSuffix> getFilesUsedGlobal() {
@@ -113,14 +114,16 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 			oldCurrentDir = null;
 		} else {
 			oldCurrentDir = importedFiles.getCurrentDir();
-			importedFiles.setCurrentDir(newCurrentDir);
+			// importedFiles.setCurrentDir(newCurrentDir);
 		}
+		throw new UnsupportedOperationException();
 	}
 
 	private void restoreCurrentDir() {
-		if (oldCurrentDir != null) {
-			importedFiles.setCurrentDir(oldCurrentDir);
-		}
+		throw new UnsupportedOperationException();
+//		if (oldCurrentDir != null) {
+//			importedFiles.setCurrentDir(oldCurrentDir);
+//		}
 	}
 
 	@Override
@@ -191,7 +194,7 @@ public class PreprocessorInclude extends ReadLineInstrumented implements ReadLin
 			importedFiles.add(file);
 			return this.readLine();
 		}
-		return s.withErrorPreprocessor("Cannot import " + file.getAbsolutePath());
+		return s.withErrorPreprocessor("Cannot import " + FileWithSuffix.getFileName(file));
 
 	}
 

@@ -68,14 +68,14 @@ import static smetana.core.Macro.AGSEQ;
 import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agattr_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.Agsubnode_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agattr_s;
 import h.ST_Agdesc_s;
+import h.ST_Agsubnode_s;
 import h.ST_Agtag_s;
-import h._dt_s;
-import h._dtdisc_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
 import smetana.core.CString;
 import smetana.core.Z;
 import smetana.core.__ptr__;
@@ -215,18 +215,18 @@ public class node__c {
 
 
 
-//3 4w89du6uel405pm3vxsr3ayxt
-// Agnode_t *agfindnode_by_id(Agraph_t * g, unsigned long id) 
 //private static __struct__<Agsubnode_s> template = JUtils.from(Agsubnode_s.class);
 //private static __struct__<Agnode_s> dummy = JUtils.from(Agnode_s.class);
-public static Agnode_s agfindnode_by_id(Agraph_s g, int id) {
+//3 4w89du6uel405pm3vxsr3ayxt
+// Agnode_t *agfindnode_by_id(Agraph_t * g, unsigned long id) 
+public static ST_Agnode_s agfindnode_by_id(ST_Agraph_s g, int id) {
 ENTERING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 try {
-    Agsubnode_s sn;
-    ((ST_Agtag_s)Z.z().dummy.getStruct("base").getStruct("tag")).id = id;
-    Z.z().template.setPtr("node", Z.z().dummy.amp());
-    sn = (Agsubnode_s) (g.getPtr("n_id").call("searchf", g.getPtr("n_id"), Z.z().template.amp(),0000004));
-    return (Agnode_s) (sn!=null ? sn.getPtr("node") : null);
+    ST_Agsubnode_s sn;
+    ((ST_Agtag_s)Z.z().dummy.base.tag).id = id;
+    Z.z().template.node = Z.z().dummy;
+    sn = (ST_Agsubnode_s) (g.getPtr("n_id").call("searchf", g.getPtr("n_id"), Z.z().template,0000004));
+    return (ST_Agnode_s) (sn!=null ? sn.getPtr("node") : null);
 } finally {
 LEAVING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 }
@@ -255,12 +255,12 @@ throw new UnsupportedOperationException();
 
 //3 55wopi2gd93zpmycxoywlxm0y
 // Agnode_t *agfstnode(Agraph_t * g) 
-public static Agnode_s agfstnode(Agraph_s g) {
+public static ST_Agnode_s agfstnode(ST_Agraph_s g) {
 ENTERING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 try {
-    Agsubnode_s sn;
-    sn = (Agsubnode_s) g.getPtr("n_seq").castTo(_dt_s.class).call("searchf", g.getPtr("n_seq"),null,0000200);
-    return sn!=null ? (Agnode_s) sn.getPtr("node") : null;
+	ST_Agsubnode_s sn;
+    sn = (ST_Agsubnode_s) g.getPtr("n_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("n_seq"),null,0000200);
+    return sn!=null ? (ST_Agnode_s) sn.getPtr("node") : null;
 } finally {
 LEAVING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 }
@@ -272,7 +272,7 @@ LEAVING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 //3 bek79ccvjys1j9q404i3y6oh8
 // Agnode_t *agnxtnode(Agraph_t * g, Agnode_t * n) 
 public static int NB = 0;
-public static Agnode_s agnxtnode(Agraph_s g, Agnode_s n) {
+public static ST_Agnode_s agnxtnode(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
 try {
 	//ZOOTO
@@ -281,14 +281,14 @@ try {
 	}
 	NB++;
     LOG2("NB="+NB);
-    Agsubnode_s sn;
+    ST_Agsubnode_s sn;
     sn = agsubrep(g, n);
     LOG2("sn1="+sn);
-    if (sn!=null) sn = (Agsubnode_s) g.getPtr("n_seq").castTo(_dt_s.class).call("searchf", g.getPtr("n_seq"),sn,0000010);
+    if (sn!=null) sn = (ST_Agsubnode_s) g.getPtr("n_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("n_seq"),sn,0000010);
     LOG2("sn2="+sn);
     final __ptr__ result = sn!=null ? sn.getPtr("node") : null;
     LOG2("result="+result);
-	return (Agnode_s) result;
+	return (ST_Agnode_s) result;
 } finally {
 LEAVING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
 }
@@ -332,17 +332,17 @@ throw new UnsupportedOperationException();
 
 //3 dzb7m0p5xsngvtyr8zs912og4
 // static Agnode_t *newnode(Agraph_t * g, unsigned long id, unsigned long seq) 
-public static Agnode_s newnode(Agraph_s g, int id, int seq) {
+public static ST_Agnode_s newnode(ST_Agraph_s g, int id, int seq) {
 ENTERING("dzb7m0p5xsngvtyr8zs912og4","newnode");
 try {
-    Agnode_s n;
-    n = (Agnode_s) ((__ptr__)agalloc(g, sizeof(Agnode_s.class))).castTo(Agnode_s.class);
+    ST_Agnode_s n;
+    n = (ST_Agnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agnode_s.class))).castTo(ST_Agnode_s.class);
     AGTYPE(n, AGNODE);
     AGID(n, id);
     AGSEQ(n, seq);
     n.setPtr("root", agroot(g));
     if (((ST_Agdesc_s)agroot(g).getStruct("desc")).has_attrs!=0)
-	  agbindrec(n, AgDataRecName, sizeof(Agattr_s.class), false);
+	  agbindrec(n, AgDataRecName, sizeof(ST_Agattr_s.class), false);
     /* nodeattr_init and method_init will be called later, from the
      * subgraph where the node was actually created, but first it has
      * to be installed in all the (sub)graphs up to root. */
@@ -357,14 +357,14 @@ LEAVING("dzb7m0p5xsngvtyr8zs912og4","newnode");
 
 //3 4m26dpgaiw44hcleugjy71eus
 // static void installnode(Agraph_t * g, Agnode_t * n) 
-public static void installnode(Agraph_s g, Agnode_s n) {
+public static void installnode(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("4m26dpgaiw44hcleugjy71eus","installnode");
 try {
-    Agsubnode_s sn;
+	ST_Agsubnode_s sn;
     int osize;
-    osize = dtsize_((_dt_s)g.getPtr("n_id"));
-    if (EQ(g, agroot(g))) sn = (Agsubnode_s) n.getStruct("mainsub").amp().castTo(Agsubnode_s.class);
-    else sn = (Agsubnode_s) ((__ptr__)agalloc(g, sizeof(Agsubnode_s.class))).castTo(Agsubnode_s.class);
+    osize = dtsize_((ST_dt_s)g.getPtr("n_id"));
+    if (EQ(g, agroot(g))) sn = (ST_Agsubnode_s) n.mainsub;
+    else sn = (ST_Agsubnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agsubnode_s.class))).castTo(ST_Agsubnode_s.class);
     sn.setPtr("node", n);
     g.getPtr("n_id").call("searchf", g.getPtr("n_id"),sn,0000001);
     g.getPtr("n_seq").call("searchf", g.getPtr("n_seq"),sn,0000001);
@@ -378,10 +378,10 @@ LEAVING("4m26dpgaiw44hcleugjy71eus","installnode");
 
 //3 3mfxjcaeepn8nitirs3yoqaed
 // static void installnodetoroot(Agraph_t * g, Agnode_t * n) 
-public static void installnodetoroot(Agraph_s g, Agnode_s n) {
+public static void installnodetoroot(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("3mfxjcaeepn8nitirs3yoqaed","installnodetoroot");
 try {
-    Agraph_s par;
+    ST_Agraph_s par;
     installnode(g, n);
     if ((par = agparent(g))!=null)
 	installnodetoroot(par, n);
@@ -395,7 +395,7 @@ LEAVING("3mfxjcaeepn8nitirs3yoqaed","installnodetoroot");
 
 //3 85bb9mezhsgtzar3kqz95mq1
 // static void initnode(Agraph_t * g, Agnode_t * n) 
-public static void initnode(Agraph_s g, Agnode_s n) {
+public static void initnode(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("85bb9mezhsgtzar3kqz95mq1","initnode");
 try {
     if (((ST_Agdesc_s)agroot(g).getStruct("desc")).has_attrs!=0)
@@ -411,11 +411,11 @@ LEAVING("85bb9mezhsgtzar3kqz95mq1","initnode");
 
 //3 1m6sl9df2yaolmufyq5i577a3
 // Agnode_t *agidnode(Agraph_t * g, unsigned long id, int cflag) 
-public static Agnode_s agidnode(Agraph_s g, int id, int cflag) {
+public static ST_Agnode_s agidnode(ST_Agraph_s g, int id, int cflag) {
 ENTERING("1m6sl9df2yaolmufyq5i577a3","agidnode");
 try {
-    Agraph_s root;
-    Agnode_s n;
+    ST_Agraph_s root;
+    ST_Agnode_s n;
     n = agfindnode_by_id(g, id);
     if ((n == null) && cflag!=0) {
 UNSUPPORTED("7zol2448bccu90sqoxkvnbuif"); // 	root = agroot(g);
@@ -442,11 +442,11 @@ LEAVING("1m6sl9df2yaolmufyq5i577a3","agidnode");
 
 //3 4yh1h1cwoitzb1t8869b79e3g
 // Agnode_t *agnode(Agraph_t * g, char *name, int cflag) 
-public static Agnode_s agnode(Agraph_s g, CString name, boolean cflag) {
+public static ST_Agnode_s agnode(ST_Agraph_s g, CString name, boolean cflag) {
 ENTERING("4yh1h1cwoitzb1t8869b79e3g","agnode");
 try {
-    Agraph_s root;
-    Agnode_s n;
+    ST_Agraph_s root;
+    ST_Agnode_s n;
     int id[] = new int[1];
     root = agroot(g);
     /* probe for existing node */
@@ -588,11 +588,11 @@ throw new UnsupportedOperationException();
 
 //3 d5farp22buvesyi4pydjam4g2
 // Agnode_t *agsubnode(Agraph_t * g, Agnode_t * n0, int cflag) 
-public static Agnode_s agsubnode(Agraph_s g, Agnode_s n0, boolean cflag) {
+public static ST_Agnode_s agsubnode(ST_Agraph_s g, ST_Agnode_s n0, boolean cflag) {
 ENTERING("d5farp22buvesyi4pydjam4g2","agsubnode");
 try {
-    Agraph_s par;
-    Agnode_s n;
+    ST_Agraph_s par;
+    ST_Agnode_s n;
     if (NEQ(agroot(g), n0.getPtr("root")))
 	return null;
     n = agfindnode_by_id(g, AGID(n0));
@@ -616,13 +616,13 @@ LEAVING("d5farp22buvesyi4pydjam4g2","agsubnode");
 
 //3 awwiazixy9c76hvyxlkvvb3vo
 // int agsubnodeidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc) 
-public static int agsubnodeidcmpf(_dt_s d, __ptr__ arg0, __ptr__ arg1, _dtdisc_s disc) {
+public static int agsubnodeidcmpf(ST_dt_s d, __ptr__ arg0, __ptr__ arg1, ST_dtdisc_s disc) {
 ENTERING("awwiazixy9c76hvyxlkvvb3vo","agsubnodeidcmpf");
 try {
     int	v;
-    Agsubnode_s sn0, sn1;
-    sn0 = (Agsubnode_s) arg0.castTo(Agsubnode_s.class);
-    sn1 = (Agsubnode_s) arg1.castTo(Agsubnode_s.class);
+    ST_Agsubnode_s sn0, sn1;
+    sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);
+    sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);
     v = (AGID(sn0.getPtr("node")) - AGID(sn1.getPtr("node")));
     return ((v==0)?0:(v<0?-1:1));
 } finally {
@@ -635,13 +635,13 @@ LEAVING("awwiazixy9c76hvyxlkvvb3vo","agsubnodeidcmpf");
 
 //3 41fjseux0nxzpr0aq7igym9ux
 // int agsubnodeseqcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc) 
-public static int agsubnodeseqcmpf(_dt_s d, __ptr__ arg0, __ptr__ arg1, _dtdisc_s disc) {
+public static int agsubnodeseqcmpf(ST_dt_s d, __ptr__ arg0, __ptr__ arg1, ST_dtdisc_s disc) {
 ENTERING("41fjseux0nxzpr0aq7igym9ux","agsubnodeseqcmpf");
 try {
-    Agsubnode_s sn0, sn1;
+	ST_Agsubnode_s sn0, sn1;
     int	v;
-    sn0 = (Agsubnode_s) arg0.castTo(Agsubnode_s.class);
-    sn1 = (Agsubnode_s) arg1.castTo(Agsubnode_s.class);
+    sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);
+    sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);
     v = (AGSEQ(sn0.getPtr("node")) - AGSEQ(sn1.getPtr("node")));
     return ((v==0)?0:(v<0?-1:1));
 } finally {

@@ -72,15 +72,6 @@ public class ST_Agdatadict_s extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
-	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("dict.n")) {
 			this.n = (ST_dt_s) newData;
@@ -113,8 +104,8 @@ public class ST_Agdatadict_s extends UnsupportedStructAndPtr {
 
 	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Agrec_s.class) {
-			return h.amp();
+		if (dest == ST_Agrec_s.class) {
+			return h;
 		}
 		return super.castTo(dest);
 	}

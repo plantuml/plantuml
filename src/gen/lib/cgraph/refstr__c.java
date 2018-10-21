@@ -52,16 +52,13 @@ import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agraph_s;
-import h._dt_s;
-import h.refstr_t;
+import h.ST_Agraph_s;
+import h.ST_dt_s;
+import h.ST_refstr_t;
 import smetana.core.ACCESS;
 import smetana.core.CString;
-import smetana.core.JUtils;
-import smetana.core.OFFSET;
 import smetana.core.STARSTAR;
 import smetana.core.Z;
-import smetana.core.__struct__;
 import smetana.core.size_t;
 
 public class refstr__c {
@@ -228,30 +225,30 @@ static {
 
 //3 f1nwss2xoaub1hyord232ugoj
 // static Dict_t *refdict(Agraph_t * g) 
-public static _dt_s refdict(final Agraph_s g) {
+public static ST_dt_s refdict(final ST_Agraph_s g) {
 ENTERING("f1nwss2xoaub1hyord232ugoj","refdict");
 try {
-		STARSTAR<_dt_s> dictref;
+		STARSTAR<ST_dt_s> dictref;
 		if (g != null)
-			dictref = STARSTAR.amp(new ACCESS<_dt_s>() {
-				public _dt_s get() {
-					return (_dt_s) g.getPtr("clos").getPtr("strdict");
+			dictref = STARSTAR.amp(new ACCESS<ST_dt_s>() {
+				public ST_dt_s get() {
+					return (ST_dt_s) g.clos.getPtr("strdict");
 				}
-				public void set(_dt_s obj) {
-					g.getPtr("clos").setPtr("strdict", obj);
+				public void set(ST_dt_s obj) {
+					g.clos.setPtr("strdict", obj);
 				}
 			});
 		else
-			dictref = STARSTAR.amp(new ACCESS<_dt_s>() {
-				public _dt_s get() {
+			dictref = STARSTAR.amp(new ACCESS<ST_dt_s>() {
+				public ST_dt_s get() {
 					return Z.z().Refdict_default;
 				}
-				public void set(_dt_s obj) {
+				public void set(ST_dt_s obj) {
 					Z.z().Refdict_default = obj;
 				}
 			});
     if (dictref.getMe() == null) {
-	dictref.setMe(agdtopen(g, Z.z().Refstrdisc.amp(), Z.z().Dttree));
+	dictref.setMe(agdtopen(g, Z.z().Refstrdisc, Z.z().Dttree));
 		}
 	Z.z().HTML_BIT = 1 << 31;
 	Z.z().CNT_BITS = ~Z.z().HTML_BIT;
@@ -280,14 +277,14 @@ throw new UnsupportedOperationException();
 
 //3 9ts4wqhw2xafdv3tlcilneewq
 // static refstr_t *refsymbind(Dict_t * strdict, char *s) 
-public static refstr_t refsymbind(_dt_s strdict, CString s) {
+public static ST_refstr_t refsymbind(ST_dt_s strdict, CString s) {
 ENTERING("9ts4wqhw2xafdv3tlcilneewq","refsymbind");
 try {
-    final __struct__<refstr_t> key = JUtils.from(refstr_t.class);
-    refstr_t r;
+    final ST_refstr_t key = new ST_refstr_t();
+    ST_refstr_t r;
     // key.setPtr("s", s.duplicate());
-    key.setPtr("s", s);
-    r = (refstr_t) strdict.call("searchf", strdict, key.amp(), 0000004);
+    key.setString(s);
+    r = (ST_refstr_t) strdict.call("searchf", strdict, key, 0000004);
     return r;
 } finally {
 LEAVING("9ts4wqhw2xafdv3tlcilneewq","refsymbind");
@@ -299,13 +296,13 @@ LEAVING("9ts4wqhw2xafdv3tlcilneewq","refsymbind");
 
 //3 1scntgo71z7c2v15zapiyw59w
 // static char *refstrbind(Dict_t * strdict, char *s) 
-public static CString refstrbind(_dt_s strdict, CString s) {
+public static CString refstrbind(ST_dt_s strdict, CString s) {
 ENTERING("1scntgo71z7c2v15zapiyw59w","refstrbind");
 try {
-    refstr_t r;
+    ST_refstr_t r;
     r = refsymbind(strdict, s);
     if (r!=null)
-	return r.getCString("s");
+	return r.s;
     else
 	return null;
 } finally {
@@ -318,7 +315,7 @@ LEAVING("1scntgo71z7c2v15zapiyw59w","refstrbind");
 
 //3 bb8aqjshw3ecae2lsmhigd0mc
 // char *agstrbind(Agraph_t * g, char *s) 
-public static CString agstrbind(Agraph_s g, CString s) {
+public static CString agstrbind(ST_Agraph_s g, CString s) {
 ENTERING("bb8aqjshw3ecae2lsmhigd0mc","agstrbind");
 try {
     return refstrbind(refdict(g), s);
@@ -332,32 +329,31 @@ LEAVING("bb8aqjshw3ecae2lsmhigd0mc","agstrbind");
 
 //3 86oznromwhn9qeym0k7pih73q
 // char *agstrdup(Agraph_t * g, char *s) 
-public static CString agstrdup(Agraph_s g, CString s) {
+public static CString agstrdup(ST_Agraph_s g, CString s) {
 ENTERING("86oznromwhn9qeym0k7pih73q","agstrdup");
 try {
-    refstr_t r;
-    _dt_s strdict;
+	ST_refstr_t r;
+    ST_dt_s strdict;
     size_t sz;
     if (s == null)
 	 return null;
     strdict = refdict(g);
-    r = (refstr_t) refsymbind(strdict, s);
-    if (r!=null) r = (refstr_t) r.castTo(refstr_t.class);
+    r = (ST_refstr_t) refsymbind(strdict, s);
     if (r!=null)
-	r.setInt("refcnt", r.getInt("refcnt")+1);
+	r.refcnt++;
     else {
-	sz = sizeof(refstr_t.class).plus(s.length());
+	sz = sizeof(ST_refstr_t.class).plus(s.length());
 	if (g!=null)
-	    r = (refstr_t) agalloc(g, sz);
+	    r = (ST_refstr_t) agalloc(g, sz);
 	else
-	    r = (refstr_t) sz.malloc();
-	r.setInt("refcnt", 1);
-	r.setPtr("s", s.duplicate());
+	    r = new ST_refstr_t();
+	r.refcnt = 1;
+	r.setString(s.duplicate());
 //	strcpy(r->store, s);
 //	r->s = r->store;
 	strdict.call("searchf", strdict,r,0000001);
     }
-	return r.getCString("s");
+	return r.s;
 } finally {
 LEAVING("86oznromwhn9qeym0k7pih73q","agstrdup");
 }
@@ -402,19 +398,18 @@ throw new UnsupportedOperationException();
 
 //3 enhn1ajfo86a19dgm4b8lduz7
 // int agstrfree(Agraph_t * g, char *s) 
-public static int agstrfree(Agraph_s g, CString s) {
+public static int agstrfree(ST_Agraph_s g, CString s) {
 ENTERING("enhn1ajfo86a19dgm4b8lduz7","agstrfree");
 try {
-    refstr_t r;
-    _dt_s strdict;
+    ST_refstr_t r;
+    ST_dt_s strdict;
     if (s == null)
 	 return -1;
     strdict = refdict(g);
-    r = refsymbind(strdict, s);
-    if (r!=null) r = (refstr_t) r.castTo(refstr_t.class);
-    if (r!=null && (EQ(r.getPtr("s"), s))) {
-	r.setInt("refcnt", r.getInt("refcnt")-1);
-	if ((r.getInt("refcnt")!=0 && Z.z().CNT_BITS!=0) == false) {
+    r = (ST_refstr_t) refsymbind(strdict, s);
+    if (r!=null && (EQ(r.s, s))) {
+	r.refcnt--;
+	if ((r.refcnt!=0 && Z.z().CNT_BITS!=0) == false) {
 	    agdtdelete(g, strdict, r);
 	    /*
 	       if (g) agfree(g,r);
@@ -438,11 +433,11 @@ LEAVING("enhn1ajfo86a19dgm4b8lduz7","agstrfree");
 public static int aghtmlstr(CString s) {
 ENTERING("3em4wzjnpajd5d3igb90l3rml","aghtmlstr");
 try {
-    refstr_t key;
+    ST_refstr_t key;
     if (s == null)
 	return 0;
-	key = (refstr_t) s.addVirtualBytes(-OFFSET.create(refstr_t.class, "s").toInt());
-    return (key.getInt("refcnt") & Z.z().HTML_BIT);
+	key = (ST_refstr_t) s.getParent();
+    return (key.refcnt & Z.z().HTML_BIT);
 } finally {
 LEAVING("3em4wzjnpajd5d3igb90l3rml","aghtmlstr");
 }

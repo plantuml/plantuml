@@ -58,5 +58,4 @@ public interface UGraphic {
 
 	public boolean matchesProperty(String propertyName);
 	
-	public double dpiFactor();
 }

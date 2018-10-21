@@ -51,9 +51,9 @@ import smetana.core.amiga.StarStruct;
 
 public class ST_Agdisc_s extends UnsupportedStructAndPtr {
 
-	public ST_Agmemdisc_s.Amp mem;
-	public ST_Agiddisc_s.Amp id;
-	public ST_Agiodisc_s.Amp io;
+	public ST_Agmemdisc_s mem;
+	public ST_Agiddisc_s id;
+	public ST_Agiodisc_s io;
 
 	private final StarStruct parent;
 
@@ -72,11 +72,11 @@ public class ST_Agdisc_s extends UnsupportedStructAndPtr {
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("mem")) {
-			this.mem = (ST_Agmemdisc_s.Amp) newData;
+			this.mem = (ST_Agmemdisc_s) newData;
 			return mem;
 		}
 		if (fieldName.equals("id")) {
-			this.id = (ST_Agiddisc_s.Amp) newData;
+			this.id = (ST_Agiddisc_s) newData;
 			return id;
 		}
 		// if (fieldName.equals("io")) {

@@ -44,19 +44,33 @@
  *
  */
 package h;
-import h.ST_Node_t___.Amp;
 
-import java.util.Arrays;
-import java.util.List;
-
+import smetana.core.UnsupportedArrayOfStruct;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
+import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Node_t___ extends UnsupportedStructAndPtr {
 
 	private final StarStruct parent;
+	public int count;
+	public int level;
+	// Sorry guys :-)
+	public final ST_Branch_t branch[] = new ST_Branch_t[] { new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
+			new ST_Branch_t() };
 
 	public ST_Node_t___() {
 		this(null);
@@ -66,25 +80,70 @@ public class ST_Node_t___ extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
+	class ArrayOfSixtyFor extends UnsupportedArrayOfStruct {
+
+		final private int pos;
+
+		public ArrayOfSixtyFor(int pos) {
+			this.pos = pos;
+		}
+
+		public ArrayOfSixtyFor plus(int delta) {
+			return new ArrayOfSixtyFor(pos + delta);
+		}
+
+		@Override
+		public __struct__ getStruct() {
+			return branch[pos];
+		}
+
+		@Override
+		public void setStruct(__struct__ value) {
+			branch[pos].copyDataFrom(value);
+		}
+
+		@Override
+		public double getDouble(String fieldName) {
+			return getStruct().getDouble(fieldName);
+		}
+
+	}
+
 	@Override
-	public StarStruct amp() {
-		return new Amp();
+	public void setInt(String fieldName, int data) {
+		if (fieldName.equals("count")) {
+			this.count = data;
+			return;
+		}
+		if (fieldName.equals("level")) {
+			this.level = data;
+			return;
+		}
+		super.setInt(fieldName, data);
 	}
 
-	public class Amp extends UnsupportedStarStruct {
-
+	@Override
+	public int getInt(String fieldName) {
+		if (fieldName.equals("count")) {
+			return this.count;
+		}
+		if (fieldName.equals("level")) {
+			return this.level;
+		}
+		return super.getInt(fieldName);
 	}
-//"typedef struct Node",
-//"{",
-//"int count",
-//"int level",
-//"struct Branch branch[64]",
-//"}",
-//"Node_t");
+
+	// "typedef struct Node",
+	// "{",
+	// "int count",
+	// "int level",
+	// "struct Branch branch[64]",
+	// "}",
+	// "Node_t");
 }
 
 // typedef struct Node {
-//     int count;
-//     int level;			/* 0 is leaf, others positive */
-//     struct Branch branch[64];
+// int count;
+// int level; /* 0 is leaf, others positive */
+// struct Branch branch[64];
 // } Node_t;

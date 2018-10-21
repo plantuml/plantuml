@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -63,72 +62,63 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	private final ST_Agrec_s hdr = new ST_Agrec_s(this);
+	public final ST_Agrec_s hdr = new ST_Agrec_s(this);
 
-	private ST_shape_desc shape;
-	private ST_polygon_t shape_info;
-	private final ST_pointf coord = new ST_pointf(this);
-	private double width, height;
+	public ST_shape_desc shape;
+	public ST_polygon_t shape_info;
+	public final ST_pointf coord = new ST_pointf(this);
+	public double width, height;
 
 	// "boxf bb",
-	private double ht, lw, rw;
-	private ST_textlabel_t label;
-	private ST_textlabel_t xlabel;
+	public double ht, lw, rw;
+	public ST_textlabel_t label;
+	public ST_textlabel_t xlabel;
 	// "void *alg",
-	private ST_Agedge_s alg = null;
+	public ST_Agedge_s alg = null;
 	// "char state",
 	// "unsigned char gui_state",
 	// "boolean clustnode",
 	// "unsigned char pinned",
-	private int id, heapindex, hops;
+	public int id, heapindex, hops;
 	// "double *pos, dist",
-	private int showboxes;
+	public int showboxes;
 
-	private boolean has_port;
+	public boolean has_port;
 	// "node_t* rep",
 	// "node_t *set",
-	private int node_type, mark, onstack;
-	private int ranktype, weight_class;
-	private ST_Agnode_s next;
-	private ST_Agnode_s prev;
+	public int node_type, mark, onstack;
+	public int ranktype, weight_class;
+	public ST_Agnode_s next;
+	public ST_Agnode_s prev;
 	// "elist in, out, flat_out, flat_in, other",
-	private final ST_elist in = new ST_elist(this);
-	private final ST_elist out = new ST_elist(this);
-	private final ST_elist flat_out = new ST_elist(this);
-	private final ST_elist flat_in = new ST_elist(this);
-	private final ST_elist other = new ST_elist(this);
-	private ST_Agraph_s.Amp clust;
-	private int UF_size;
+	public final ST_elist in = new ST_elist(this);
+	public final ST_elist out = new ST_elist(this);
+	public final ST_elist flat_out = new ST_elist(this);
+	public final ST_elist flat_in = new ST_elist(this);
+	public final ST_elist other = new ST_elist(this);
+	public ST_Agraph_s clust;
+	public int UF_size;
 
-	private ST_Agnode_s UF_parent;
+	public ST_Agnode_s UF_parent;
 
-	private ST_Agnode_s inleaf, outleaf;
-	private int rank, order;
-	private double mval;
-	private final ST_elist save_in = new ST_elist(this);
-	private final ST_elist save_out = new ST_elist(this);
-	private final ST_elist tree_in = new ST_elist(this);
-	private final ST_elist tree_out = new ST_elist(this);
-	private ST_Agedge_s par;
-	private int low, lim;
-	private int priority;
+	public ST_Agnode_s inleaf, outleaf;
+	public int rank, order;
+	public double mval;
+	public final ST_elist save_in = new ST_elist(this);
+	public final ST_elist save_out = new ST_elist(this);
+	public final ST_elist tree_in = new ST_elist(this);
+	public final ST_elist tree_out = new ST_elist(this);
+	public ST_Agedge_s par;
+	public int low, lim;
+	public int priority;
 
 	// "double pad[1]",
 	// "}",
 	// "Agnodeinfo_t");
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
-	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Agrec_s.class) {
+		if (dest == ST_Agrec_s.class) {
 			return hdr;
 		}
 		return super.castTo(dest);
@@ -328,11 +318,7 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 			return label;
 		}
 		if (fieldName.equals("clust")) {
-			if (newData instanceof ST_Agraph_s) {
-				this.clust = (h.ST_Agraph_s.Amp) ((ST_Agraph_s) newData).amp();
-			} else {
-				this.clust = (ST_Agraph_s.Amp) newData;
-			}
+				this.clust = (ST_Agraph_s) newData;
 			return clust;
 		}
 		if (fieldName.equals("next")) {
@@ -340,11 +326,7 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 			return next;
 		}
 		if (fieldName.equals("prev")) {
-			if (newData instanceof ST_Agnode_s.Amp) {
-				this.prev = ((ST_Agnode_s.Amp) newData).getObject();
-			} else {
 				this.prev = (ST_Agnode_s) newData;
-			}
 			return prev;
 		}
 		if (fieldName.equals("UF_parent")) {
@@ -352,11 +334,7 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 			return UF_parent;
 		}
 		if (fieldName.equals("par")) {
-			if (newData instanceof ST_Agedge_s.Amp) {
-				this.par = ((ST_Agedge_s.Amp) newData).getObject();
-			} else {
-				this.par = (ST_Agedge_s) newData;
-			}
+			this.par = (ST_Agedge_s) newData;
 			return par;
 		}
 		if (fieldName.equals("alg")) {

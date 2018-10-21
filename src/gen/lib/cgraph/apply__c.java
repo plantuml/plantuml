@@ -56,8 +56,8 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agobj_s;
-import h.Agraph_s;
+import h.ST_Agraph_s;
+import h.ST_Agobj_s;
 import smetana.core.CFunction;
 import smetana.core.__ptr__;
 
@@ -230,10 +230,10 @@ throw new UnsupportedOperationException();
 
 //3 95y4aknoddh42lieikrb72vxw
 // static Agobj_t *subgraph_search(Agraph_t * sub, Agobj_t * g) 
-public static Agobj_s subgraph_search(Agraph_s sub, Agobj_s g) {
+public static ST_Agobj_s subgraph_search(ST_Agraph_s sub, ST_Agobj_s g) {
 ENTERING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 try {
-    return (Agobj_s) sub.castTo(Agobj_s.class);
+    return (ST_Agobj_s) sub.castTo(ST_Agobj_s.class);
 } finally {
 LEAVING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 }
@@ -244,15 +244,15 @@ LEAVING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 
 //3 8s9l15wqucf1glmbeb6fmya8e
 // static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder) 
-public static void rec_apply(Agraph_s g, Agobj_s obj, CFunction fn, __ptr__ arg, CFunction objsearch, boolean preorder) {
+public static void rec_apply(ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, CFunction objsearch, boolean preorder) {
 ENTERING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
 try {
-    Agraph_s sub;
-    Agobj_s subobj;
+    ST_Agraph_s sub;
+    ST_Agobj_s subobj;
     if (preorder)
 	fn.exe(g, obj, arg);
     for (sub = agfstsubg(g); sub!=null; sub = agnxtsubg(sub)) {
-    if ((subobj = (Agobj_s) objsearch.exe(sub, obj))!=null)
+    if ((subobj = (ST_Agobj_s) objsearch.exe(sub, obj))!=null)
 	    rec_apply(sub, subobj, fn, arg, objsearch, preorder);
     }
     if (N(preorder))
@@ -267,10 +267,10 @@ LEAVING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
 
 //3 9hqql178zpl8iudlf6sgnv7aj
 // int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder) 
-public static int agapply(Agraph_s g, Agobj_s obj, CFunction fn, __ptr__ arg, boolean preorder) {
+public static int agapply(ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, boolean preorder) {
 ENTERING("9hqql178zpl8iudlf6sgnv7aj","agapply");
 try {
-    Agobj_s subobj;
+	ST_Agobj_s subobj;
     CFunction objsearch=null;
     switch (AGTYPE(obj)) {
     case AGRAPH:
@@ -288,7 +288,7 @@ UNSUPPORTED("2pc67byzirrkhe1cmdoguh6i1"); // 	agerr(AGERR, "agapply: unknown obj
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
 	break;
     }
-    if ((subobj = (Agobj_s) objsearch.exe(g, obj))!=null) {
+    if ((subobj = (ST_Agobj_s) objsearch.exe(g, obj))!=null) {
 	rec_apply(g, subobj, fn, arg, objsearch, preorder);
 	return 0;
     } else

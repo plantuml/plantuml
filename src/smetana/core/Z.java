@@ -49,38 +49,37 @@ import gen.lib.common.arrows__c;
 import gen.lib.common.shapes__c;
 import gen.lib.dotgen.dotsplines__c;
 import gen.lib.label.xlabels__c;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.Agsubnode_s;
-import h.Agsym_s;
-import h.Agtag_s;
-import h.HDict_t;
 import h.ST_Agdesc_s;
+import h.ST_Agedge_s;
 import h.ST_Agiddisc_s;
 import h.ST_Agmemdisc_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agsubnode_s;
+import h.ST_Agsym_s;
+import h.ST_Agtag_s;
+import h.ST_HDict_t;
+import h.ST_Pedge_t;
 import h.ST_arrowname_t;
 import h.ST_arrowtype_t;
+import h.ST_boxf;
+import h.ST_deque_t;
+import h.ST_dt_s;
 import h.ST_dtdisc_s;
 import h.ST_dtmethod_s;
 import h.ST_elist;
 import h.ST_nlist_t;
 import h.ST_pointf;
+import h.ST_pointnlink_t;
+import h.ST_polygon_t;
 import h.ST_port;
-import h._dt_s;
-import h._dtmethod_s;
-import h.arrowname_t;
-import h.arrowtype_t;
-import h.boxf;
-import h.deque_t;
-import h.pointf;
-import h.pointnlink_t;
-import h.polygon_t;
-import h.refstr_t;
-import h.shape_desc;
-import h.shape_functions;
-import h.splineInfo;
-import h.textfont_t;
+import h.ST_refstr_t;
+import h.ST_shape_desc;
+import h.ST_shape_functions;
+import h.ST_splineInfo;
+import h.ST_textfont_t;
+import h.ST_tna_t;
+import h.ST_triangle_t;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -93,18 +92,18 @@ public class Z {
 	public final Map<Integer, CString> all = new HashMap<Integer, CString>();
 
 	public final ST_dtmethod_s _Dttree = new ST_dtmethod_s();
-	public final _dtmethod_s Dttree = _Dttree.amp();
+	public final ST_dtmethod_s Dttree = _Dttree;
 
 	public final ST_dtmethod_s _Dtobag = new ST_dtmethod_s();
-	public final _dtmethod_s Dtobag = _Dtobag.amp();
+	public final ST_dtmethod_s Dtobag = _Dtobag;
 
 	public final ST_dtdisc_s AgDataDictDisc = new ST_dtdisc_s();
 
 	public final ST_Agdesc_s ProtoDesc = new ST_Agdesc_s();
 
-	public Agraph_s ProtoGraph;
+	public ST_Agraph_s ProtoGraph;
 
-	public final __struct__<Agtag_s> Tag = JUtils.from(Agtag_s.class);
+	public final ST_Agtag_s Tag = new ST_Agtag_s();
 
 	public final ST_dtdisc_s Ag_mainedge_seq_disc = new ST_dtdisc_s();
 
@@ -130,17 +129,17 @@ public class Z {
 	
 	public final ST_dtdisc_s Hdisc = new ST_dtdisc_s();
 
-	public _dt_s Refdict_default;
+	public ST_dt_s Refdict_default;
 
-	public Agraph_s Ag_dictop_G;
+	public ST_Agraph_s Ag_dictop_G;
 
-	public final __array_of_struct__ Arrowsynonyms = __array_of_struct_impl__.malloc(arrowname_t.class, 1);
+	public final ST_arrowname_t Arrowsynonyms[] = new ST_arrowname_t[] { new ST_arrowname_t() };
 
-	public final __array_of_struct__ Arrownames = __array_of_struct_impl__.malloc(arrowname_t.class, 3);
+	public final ST_arrowname_t Arrownames[] = new ST_arrowname_t[] { new ST_arrowname_t(), new ST_arrowname_t(), new ST_arrowname_t() };
 
-	public final __array_of_struct__ Arrowmods = __array_of_struct_impl__.malloc(arrowname_t.class, 1);
+	public final ST_arrowname_t Arrowmods[] = new ST_arrowname_t[] { new ST_arrowname_t() };
 
-	public final __array_of_struct__ Arrowtypes = __array_of_struct_impl__.malloc(arrowtype_t.class, 9);
+	public final ST_arrowtype_t Arrowtypes[] = new ST_arrowtype_t[] { new ST_arrowtype_t(), new ST_arrowtype_t(), new ST_arrowtype_t(), new ST_arrowtype_t(), new ST_arrowtype_t(), new ST_arrowtype_t(), new ST_arrowtype_t(), new ST_arrowtype_t(), new ST_arrowtype_t() };
 
 	public __ptr__ Show_boxes;
 
@@ -156,17 +155,17 @@ public class Z {
 
 	public double Initial_dist;
 
-	public Agsym_s G_activepencolor, G_activefillcolor, G_selectedpencolor, G_selectedfillcolor, G_visitedpencolor,
+	public ST_Agsym_s G_activepencolor, G_activefillcolor, G_selectedpencolor, G_selectedfillcolor, G_visitedpencolor,
 			G_visitedfillcolor, G_deletedpencolor, G_deletedfillcolor, G_ordering, G_peripheries, G_penwidth,
 			G_gradientangle, G_margin;
 
-	public Agsym_s N_height, N_width, N_shape, N_color, N_fillcolor, N_activepencolor, N_activefillcolor,
+	public ST_Agsym_s N_height, N_width, N_shape, N_color, N_fillcolor, N_activepencolor, N_activefillcolor,
 			N_selectedpencolor, N_selectedfillcolor, N_visitedpencolor, N_visitedfillcolor, N_deletedpencolor,
 			N_deletedfillcolor, N_fontsize, N_fontname, N_fontcolor, N_margin, N_label, N_xlabel, N_nojustify, N_style,
 			N_showboxes, N_sides, N_peripheries, N_ordering, N_orientation, N_skew, N_distortion, N_fixed,
 			N_imagescale, N_layer, N_group, N_comment, N_vertices, N_z, N_penwidth, N_gradientangle;
 
-	public Agsym_s E_weight, E_minlen, E_color, E_fillcolor, E_activepencolor, E_activefillcolor, E_selectedpencolor,
+	public ST_Agsym_s E_weight, E_minlen, E_color, E_fillcolor, E_activepencolor, E_activefillcolor, E_selectedpencolor,
 			E_selectedfillcolor, E_visitedpencolor, E_visitedfillcolor, E_deletedpencolor, E_deletedfillcolor,
 			E_fontsize, E_fontname, E_fontcolor, E_label, E_xlabel, E_dir, E_style, E_decorate, E_showboxes, E_arrowsz,
 			E_constr, E_layer, E_comment, E_label_float, E_samehead, E_sametail, E_arrowhead, E_arrowtail, E_headlabel,
@@ -185,7 +184,7 @@ public class Z {
 
 	public final ST_elist Tree_edge = new ST_elist();
 
-	public Agedge_s Enter;
+	public ST_Agedge_s Enter;
 
 	public int Low, Lim, Slack;
 
@@ -199,81 +198,81 @@ public class Z {
 
 	public int routeinit;
 
-	public __ptr__ ps;
+	public ST_pointf.Array ps;
 
 	public int maxpn;
 
-	public __ptr__ polypoints;
+	public ST_pointf.Array polypoints;
 
 	public int polypointn;
 
-	public __ptr__ edges;
+	public ST_Pedge_t.Array edges;
 
 	public int edgen;
 
-	public __array_of_struct__ boxes = __array_of_struct_impl__.malloc(boxf.class, 1000);
+	public final ST_boxf[] boxes = ST_boxf.malloc(1000);
 
 	public int MinQuit;
 
 	public double Convergence;
 
-	public Agraph_s Root;
+	public ST_Agraph_s Root;
 
 	public int GlobalMinRank, GlobalMaxRank;
 
 	public boolean ReMincross;
 
-	public __ptr__ TE_list;
+	public ST_Agedge_s.ArrayOfStar TE_list;
 
 	public __ptr__ TI_list;
 
-	public Agnode_s Last_node_decomp;
-	public Agnode_s Last_node_rank;
+	public ST_Agnode_s Last_node_decomp;
+	public ST_Agnode_s Last_node_rank;
 
 	public char Cmark;
 
 	public int trin, tril;
 
-	public __ptr__ tris;
+	public ST_triangle_t.Array tris;
 
 	public int pnln, pnll;
 
-	public pointnlink_t pnls;
-	public __ptr__ pnlps;
+	public ST_pointnlink_t pnls[];
+	public ST_pointnlink_t pnlps[];
 
 	public final ST_port Center = new ST_port();
 
-	public final __struct__<polygon_t> p_ellipse = JUtils.from(polygon_t.class);
+	public final ST_polygon_t p_ellipse = new ST_polygon_t();
 
-	public final __struct__<polygon_t> p_box = JUtils.from(polygon_t.class);
+	public final ST_polygon_t p_box = new ST_polygon_t();
 
-	public final __struct__<shape_functions> poly_fns = JUtils.from(shape_functions.class);
+	public final ST_shape_functions poly_fns = new ST_shape_functions();
 
-	public __ptr__ tnas;
+	public ST_tna_t.Array tnas;
 	public int tnan;
 
-	public final shape_desc Shapes[] = { __Shapes__("box", poly_fns.amp(), p_box.amp()),
-			__Shapes__("ellipse", poly_fns.amp(), p_ellipse.amp()), __Shapes__(null, null, null) };
+	public final ST_shape_desc Shapes[] = { __Shapes__("box", poly_fns, p_box),
+			__Shapes__("ellipse", poly_fns, p_ellipse), __Shapes__(null, null, null) };
 
 	public final ST_dtdisc_s Ag_mainedge_id_disc = new ST_dtdisc_s();
 
-	public final __struct__<deque_t> dq = JUtils.from(deque_t.class);
+	public final ST_deque_t dq = new ST_deque_t();
 
 	public final ST_Agdesc_s Agdirected = new ST_Agdesc_s();
 
-	public final __struct__<splineInfo> sinfo = JUtils.from(splineInfo.class);
+	public final ST_splineInfo sinfo = new ST_splineInfo();
 
-	public Agnode_s lastn; /* last node argument */
-	public polygon_t poly;
+	public ST_Agnode_s lastn; /* last node argument */
+	public ST_polygon_t poly;
 	public int last, outp, sides;
-	public final __struct__<pointf> O = JUtils.from(pointf.class); /* point (0,0) */
-	public pointf vertex;
+	public final ST_pointf O = new ST_pointf(); /* point (0,0) */
+	public ST_pointf.Array vertex;
 	public double xsize, ysize, scalex, scaley, box_URx, box_URy;
 
-	public final __struct__<textfont_t> tf = JUtils.from(textfont_t.class);
+	public final ST_textfont_t tf = new ST_textfont_t();
 
-	public __ptr__ pointfs;
-	public __ptr__ pointfs2;
+	public ST_pointf.Array pointfs;
+	public ST_pointf.Array pointfs2;
 	public int numpts;
 	public int numpts2;
 
@@ -282,19 +281,19 @@ public class Z {
 
 	public int ctr = 1;
 
-	public __struct__<Agsubnode_s> template = JUtils.from(Agsubnode_s.class);
-	public __struct__<Agnode_s> dummy = JUtils.from(Agnode_s.class);
+	public final ST_Agsubnode_s template = new ST_Agsubnode_s();
+	public final ST_Agnode_s dummy = new ST_Agnode_s();
 
-	public Agraph_s G_ns;
-	public Agraph_s G_decomp;
+	public ST_Agraph_s G_ns;
+	public ST_Agraph_s G_decomp;
 
 	public int opl;
 
 	public int opn_route;
 	public int opn_shortest;
 
-	public __ptr__ ops_route;
-	public __ptr__ ops_shortest;
+	public ST_pointf.Array ops_route;
+	public ST_pointf.Array ops_shortest;
 
 	public static Z z() {
 		return instances2.get().peekFirst();
@@ -313,8 +312,8 @@ public class Z {
 		instances2.get().removeFirst();
 	}
 
-	private shape_desc __Shapes__(String s, shape_functions shape_functions, polygon_t polygon) {
-		shape_desc result = (shape_desc) Memory.malloc(shape_desc.class);
+	private ST_shape_desc __Shapes__(String s, ST_shape_functions shape_functions, ST_polygon_t polygon) {
+		ST_shape_desc result = new ST_shape_desc();
 		result.setPtr("name", s == null ? null : new CString(s));
 		result.setPtr("fns", shape_functions);
 		result.setPtr("polygon", polygon);
@@ -344,9 +343,9 @@ public class Z {
 		_Dtobag.searchf = function(dttree__c.class, "dttree");
 		_Dtobag.type = 0000010;
 
-		AgDataDictDisc.key = OFFSET.create(Agsym_s.class, "name").toInt();
+		AgDataDictDisc.key = OFFSET.create(ST_Agsym_s.class, "name").toInt();
 		AgDataDictDisc.size = -1;
-		AgDataDictDisc.link = OFFSET.create(Agsym_s.class, "link").toInt();
+		AgDataDictDisc.link = OFFSET.create(ST_Agsym_s.class, "link").toInt();
 		AgDataDictDisc.makef = null;
 		AgDataDictDisc.freef = function(attr__c.class, "freesym");
 		AgDataDictDisc.comparf = null;
@@ -361,7 +360,7 @@ public class Z {
 
 		Ag_mainedge_seq_disc.key = 0;
 		Ag_mainedge_seq_disc.size = 0;
-		Ag_mainedge_seq_disc.link = OFFSET.create(Agedge_s.class, "seq_link").toInt(); // seq_link is the third
+		Ag_mainedge_seq_disc.link = OFFSET.create(ST_Agedge_s.class, "seq_link").toInt(); // seq_link is the third
 																						// field in Agedge_t
 		Ag_mainedge_seq_disc.makef = null;
 		Ag_mainedge_seq_disc.freef = null;
@@ -392,7 +391,7 @@ public class Z {
 
 		Ag_subgraph_id_disc.key = 0;
 		Ag_subgraph_id_disc.size = 0;
-		Ag_subgraph_id_disc.link = OFFSET.create(Agraph_s.class, "link").toInt(); // link is the third field in
+		Ag_subgraph_id_disc.link = OFFSET.create(ST_Agraph_s.class, "link").toInt(); // link is the third field in
 																					// Agraph_t
 		Ag_subgraph_id_disc.makef = null;
 		Ag_subgraph_id_disc.freef = null;
@@ -417,7 +416,7 @@ public class Z {
 
 		Ag_subnode_id_disc.key = 0;
 		Ag_subnode_id_disc.size = 0;
-		Ag_subnode_id_disc.link = OFFSET.create(Agsubnode_s.class, "id_link").toInt(); // id_link is the second
+		Ag_subnode_id_disc.link = OFFSET.create(ST_Agsubnode_s.class, "id_link").toInt(); // id_link is the second
 																						// field in Agsubnode_t
 		Ag_subnode_id_disc.makef = null;
 		Ag_subnode_id_disc.freef = null;
@@ -428,7 +427,7 @@ public class Z {
 
 		Ag_subnode_seq_disc.key = 0;
 		Ag_subnode_seq_disc.size = 0;
-		Ag_subnode_seq_disc.link = OFFSET.create(Agsubnode_s.class, "seq_link").toInt(); // link is the first
+		Ag_subnode_seq_disc.link = OFFSET.create(ST_Agsubnode_s.class, "seq_link").toInt(); // link is the first
 																							// field in
 																							// Agsubnode_t
 		Ag_subnode_seq_disc.makef = null;
@@ -438,7 +437,7 @@ public class Z {
 		Ag_subnode_seq_disc.memoryf = function(utils__c.class, "agdictobjmem");
 		Ag_subnode_seq_disc.eventf = null;
 
-		Refstrdisc.key = OFFSET.create(refstr_t.class, "s").toInt(); // *s is the third field in refstr_t
+		Refstrdisc.key = OFFSET.create(ST_refstr_t.class, "s").toInt(); // *s is the third field in refstr_t
 		Refstrdisc.size = -1;
 		Refstrdisc.link = 0;
 		Refstrdisc.makef = null;
@@ -448,7 +447,7 @@ public class Z {
 		Refstrdisc.memoryf = function(utils__c.class, "agdictobjmem");
 		Refstrdisc.eventf = null;
 
-		Hdisc.key = OFFSET.create(HDict_t.class, "key").toInt();
+		Hdisc.key = OFFSET.create(ST_HDict_t.class, "key").toInt();
 		Hdisc.size = 4;
 		Hdisc.link = -1;
 		Hdisc.makef = null;
@@ -458,23 +457,23 @@ public class Z {
 		Hdisc.memoryf = null;
 		Hdisc.eventf = null;
 
-		Arrowsynonyms.plus(0).setStruct(create_arrowname_t(null, 0));
+		Arrowsynonyms[0].___(create_arrowname_t(null, 0));
 
-		Arrownames.plus(0).setStruct(create_arrowname_t("normal", 1));
-		Arrownames.plus(1).setStruct(create_arrowname_t("none", 8));
-		Arrownames.plus(2).setStruct(create_arrowname_t(null, 0));
+		Arrownames[0].___(create_arrowname_t("normal", 1));
+		Arrownames[1].___(create_arrowname_t("none", 8));
+		Arrownames[2].___(create_arrowname_t(null, 0));
 
-		Arrowmods.plus(0).setStruct(create_arrowname_t(null, 0));
+		Arrowmods[0].___(create_arrowname_t(null, 0));
 
-		Arrowtypes.plus(0).setStruct(createArrowtypes(1, 1.0, function(arrows__c.class, "arrow_type_normal")));
-		Arrowtypes.plus(1).setStruct(createArrowtypes(2, 1.0, function(arrows__c.class, "arrow_type_crow")));
-		Arrowtypes.plus(2).setStruct(createArrowtypes(3, 0.5, function(arrows__c.class, "arrow_type_tee")));
-		Arrowtypes.plus(3).setStruct(createArrowtypes(4, 1.0, function(arrows__c.class, "arrow_type_box")));
-		Arrowtypes.plus(4).setStruct(createArrowtypes(5, 1.2, function(arrows__c.class, "arrow_type_diamond")));
-		Arrowtypes.plus(5).setStruct(createArrowtypes(6, 0.8, function(arrows__c.class, "arrow_type_dot")));
-		Arrowtypes.plus(6).setStruct(createArrowtypes(7, 1.0, function(arrows__c.class, "arrow_type_curve")));
-		Arrowtypes.plus(7).setStruct(createArrowtypes(8, 0.5, function(arrows__c.class, "arrow_type_gap")));
-		Arrowtypes.plus(8).setStruct(createArrowtypes(0, 0.0, null));
+		Arrowtypes[0].___(createArrowtypes(1, 1.0, function(arrows__c.class, "arrow_type_normal")));
+		Arrowtypes[1].___(createArrowtypes(2, 1.0, function(arrows__c.class, "arrow_type_crow")));
+		Arrowtypes[2].___(createArrowtypes(3, 0.5, function(arrows__c.class, "arrow_type_tee")));
+		Arrowtypes[3].___(createArrowtypes(4, 1.0, function(arrows__c.class, "arrow_type_box")));
+		Arrowtypes[4].___(createArrowtypes(5, 1.2, function(arrows__c.class, "arrow_type_diamond")));
+		Arrowtypes[5].___(createArrowtypes(6, 0.8, function(arrows__c.class, "arrow_type_dot")));
+		Arrowtypes[6].___(createArrowtypes(7, 1.0, function(arrows__c.class, "arrow_type_curve")));
+		Arrowtypes[7].___(createArrowtypes(8, 0.5, function(arrows__c.class, "arrow_type_gap")));
+		Arrowtypes[8].___(createArrowtypes(0, 0.0, null));
 
 		Center.p.x = 0;
 		Center.p.y = 0;
@@ -510,7 +509,7 @@ public class Z {
 
 		Ag_mainedge_id_disc.key = 0;
 		Ag_mainedge_id_disc.size = 0;
-		Ag_mainedge_id_disc.link = OFFSET.create(Agedge_s.class, "id_link").toInt(); // id_link is the second
+		Ag_mainedge_id_disc.link = OFFSET.create(ST_Agedge_s.class, "id_link").toInt(); // id_link is the second
 																						// field in Agedge_t
 		Ag_mainedge_id_disc.makef = null;
 		Ag_mainedge_id_disc.freef = null;
