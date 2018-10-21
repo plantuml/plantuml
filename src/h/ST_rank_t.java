@@ -45,15 +45,15 @@
  */
 package h;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import smetana.core.UnsupportedArrayOfPtr;
-import smetana.core.UnsupportedSize_t;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.size_t;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_rank_t extends UnsupportedStructAndPtr {
@@ -68,24 +68,138 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	private int n;
+	public int n;
 
 	// "node_t **v",
-	private STStarArrayOfPointer v;
-	private int an;
+	public ST_Agnode_s.ArrayOfStar v;
+	public int an;
 	// "node_t **av",
-	private STStarArrayOfPointer av;
+	public ST_Agnode_s.ArrayOfStar av;
 
-	private double ht1, ht2;
-	private double pht1, pht2;
-	private boolean candidate;
-	private int valid;
+	public double ht1, ht2;
+	public double pht1, pht2;
+	public boolean candidate;
+	public int valid;
 
-	private int cache_nc;
-	private ST_adjmatrix_t flat;
+	public int cache_nc;
+	public ST_adjmatrix_t flat;
 
 	// "}",
 	// "rank_t");
+	
+	
+	public static class Array2 extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
+
+		private final List<ST_rank_t> data;
+		private final int pos;
+
+		public Array2(int size) {
+			this.data = new ArrayList<ST_rank_t>();
+			this.pos = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(new ST_rank_t());
+			}
+		}
+		
+		@Override
+		public void setInt(String fieldName, int data) {
+			getPtr().setInt(fieldName, data);
+		}
+		
+		@Override
+		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
+			return getPtr().setPtr(fieldName, newData);
+		}
+		
+		@Override
+		public __ptr__ getPtr(String fieldName) {
+			return getPtr().getPtr(fieldName);
+		}
+		
+		@Override
+		public boolean getBoolean(String fieldName) {
+			return getPtr().getBoolean(fieldName);
+		}
+		
+		@Override
+		public void setBoolean(String fieldName, boolean data) {
+			getPtr().setBoolean(fieldName, data);
+		}
+		
+		@Override
+		public int getInt(String fieldName) {
+			return getPtr().getInt(fieldName);
+		}
+		
+		@Override
+		public double getDouble(String fieldName) {
+			return getPtr().getDouble(fieldName);
+		}
+		
+		@Override
+		public void setDouble(String fieldName, double data) {
+			getPtr().setDouble(fieldName, data);
+		}
+		
+		public void swap(int i, int j) {
+			ST_rank_t e1 = data.get(i);
+			ST_rank_t e2 = data.get(j);
+			data.set(i, e2);
+			data.set(j, e1);
+		}
+
+		public Array2(List<ST_rank_t> data, int pos) {
+			this.data = data;
+			this.pos = pos;
+		}
+		
+		public Array2 reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(new ST_rank_t());
+			}
+			return this;
+		}
+
+		@Override
+		public Array2 plus(int delta) {
+			return new Array2(data, pos + delta);
+		}
+		
+		@Override
+		public Array2 asPtr() {
+			return this;
+		}
+
+		@Override
+		public void setPtr(__ptr__ value) {
+//			if (value instanceof Amp) {
+//				value = value.getPtr();
+//			}
+			this.data.set(pos, (ST_rank_t) value);
+		}
+		
+		@Override
+		public ST_rank_t getPtr() {
+			return this.data.get(pos);
+		}
+
+		@Override
+		public int comparePointer(__ptr__ other) {
+			final Array2 this2 = (Array2) other;
+			if (this.data != this2.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos - this2.pos;
+		}
+
+		public boolean isSameThan2(Array2 other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos == other.pos;
+		}
+	}
+
 
 	@Override
 	public void setStruct(__struct__ value) {
@@ -104,106 +218,6 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 		this.flat = this2.flat;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-		@Override
-		public int getInt(String fieldName) {
-			return ST_rank_t.this.getInt(fieldName);
-		}
-
-		@Override
-		public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-			return ST_rank_t.this.getArrayOfPtr(fieldName);
-		}
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_rank_t.this.getPtr(fieldName);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return ST_rank_t.this.getStruct();
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return ST_rank_t.this.setPtr(fieldName, newData);
-		}
-
-		@Override
-		public void setBoolean(String fieldName, boolean data) {
-			ST_rank_t.this.setBoolean(fieldName, data);
-		}
-
-		@Override
-		public boolean getBoolean(String fieldName) {
-			return ST_rank_t.this.getBoolean(fieldName);
-		}
-
-		@Override
-		public void setInt(String fieldName, int data) {
-			ST_rank_t.this.setInt(fieldName, data);
-		}
-
-		@Override
-		public double getDouble(String fieldName) {
-			return ST_rank_t.this.getDouble(fieldName);
-		}
-
-		@Override
-		public void setStruct(__struct__ value) {
-			ST_rank_t.this.setStruct(value);
-		}
-
-	}
-
-	@Override
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		if (fieldName.equals("v")) {
-			return new ArrayOfPtr(v, 0);
-		}
-		return super.getArrayOfPtr(fieldName);
-	}
-
-	static class ArrayOfPtr extends UnsupportedArrayOfPtr {
-
-		private final int pos;
-		private final STStarArrayOfPointer tab;
-
-		private ArrayOfPtr(STStarArrayOfPointer tab, int pos) {
-			this.pos = pos;
-			this.tab = tab;
-		}
-
-		@Override
-		public __array_of_ptr__ plus(int delta) {
-			return new ArrayOfPtr(tab, pos + delta);
-		}
-
-		@Override
-		public void setPtr(__ptr__ value) {
-			tab.plus(pos).setPtr(value);
-		}
-
-		@Override
-		public __ptr__ getPtr() {
-			return tab.plus(pos).getPtr();
-		}
-
-		@Override
-		public __ptr__ asPtr() {
-			if (pos == 0) {
-				return tab;
-			}
-			return super.asPtr();
-		}
-
-	}
 
 	@Override
 	public int getInt(String fieldName) {
@@ -324,11 +338,11 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("v")) {
-			this.v = (STStarArrayOfPointer) newData;
+			this.v = (ST_Agnode_s.ArrayOfStar) newData;
 			return v;
 		}
 		if (fieldName.equals("av")) {
-			this.av = (STStarArrayOfPointer) newData;
+			this.av = (ST_Agnode_s.ArrayOfStar) newData;
 			return av;
 		}
 		if (fieldName.equals("flat")) {
@@ -338,26 +352,26 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 		return super.setPtr(fieldName, newData);
 	}
 
-	public static size_t sizeof(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return new StarArrayOfPtr(new STArray<ST_rank_t>(nb, 0, ST_rank_t.class));
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-
-			@Override
-			public Object realloc(Object old) {
-				StarArrayOfPtr old2 = (StarArrayOfPtr) old;
-				old2.realloc(nb);
-				return old2;
-			}
-		};
-	}
+//	public static size_t sizeof(final int nb) {
+//		return new UnsupportedSize_t(nb) {
+//			@Override
+//			public Array2 malloc() {
+//				return new Array2(nb);
+//			}
+//
+//			@Override
+//			public int getInternalNb() {
+//				return nb;
+//			}
+//
+//			@Override
+//			public Array2 realloc(Object old) {
+//				Array2 old2 = (Array2) old;
+//				old2.reallocJ(nb);
+//				return old2;
+//			}
+//		};
+//	}
 
 }
 

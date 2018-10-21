@@ -48,7 +48,6 @@ package h;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_spline_info_t extends UnsupportedStructAndPtr {
@@ -63,49 +62,13 @@ public class ST_spline_info_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	// public static List<String> DEFINITION = Arrays.asList(
 	// "typedef struct",
 	// "{",
-	private int LeftBound, RightBound, Splinesep, Multisep;
-	private StarArrayOfPtr Rank_box;
+	public int LeftBound, RightBound, Splinesep, Multisep;
+	public ST_boxf Rank_box[];
 
 	// "}",
 	// "spline_info_t");
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-		@Override
-		public int getInt(String fieldName) {
-			return ST_spline_info_t.this.getInt(fieldName);
-		}
-		
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_spline_info_t.this.getPtr(fieldName);
-		}
-
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("Rank_box")) {
-			this.Rank_box = (StarArrayOfPtr) newData;
-			return this.Rank_box;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("Rank_box")) {
-			return this.Rank_box;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	@Override
 	public int getInt(String fieldName) {

@@ -75,18 +75,21 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agattr_s;
-import h.Agdatadict_s;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agobj_s;
-import h.Agraph_s;
-import h.Agrec_s;
-import h.Agsym_s;
+import h.ST_Agattr_s;
+import h.ST_Agdatadict_s;
 import h.ST_Agdesc_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_Agrec_s;
+import h.ST_Agsym_s;
 import h.ST_Agtag_s;
-import h._dt_s;
-import h._dtdisc_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+
+import java.util.ArrayList;
+
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
@@ -262,15 +265,15 @@ static {
 
 //3 4bm10isw1qq1eqcse8afbxee3
 // Agdatadict_t *agdatadict(Agraph_t * g, int cflag) 
-public static Agdatadict_s agdatadict(Agraph_s g, boolean cflag) {
+public static ST_Agdatadict_s agdatadict(ST_Agraph_s g, boolean cflag) {
 ENTERING("4bm10isw1qq1eqcse8afbxee3","agdatadict");
 try {
-    Agdatadict_s rv;
-    rv = (Agdatadict_s) aggetrec(g, DataDictName, false).castTo(Agdatadict_s.class);
+    ST_Agdatadict_s rv;
+    rv = (ST_Agdatadict_s) aggetrec(g, DataDictName, false).castTo(ST_Agdatadict_s.class);
     if (rv!=null || N(cflag))
 	return rv;
     init_all_attrs(g);
-    rv = (Agdatadict_s) aggetrec(g, DataDictName, false).castTo(Agdatadict_s.class);
+    rv = (ST_Agdatadict_s) aggetrec(g, DataDictName, false).castTo(ST_Agdatadict_s.class);
     return rv;
 } finally {
 LEAVING("4bm10isw1qq1eqcse8afbxee3","agdatadict");
@@ -282,23 +285,23 @@ LEAVING("4bm10isw1qq1eqcse8afbxee3","agdatadict");
 
 //3 2b2cg0am9e1lwc0nqikl2wczb
 // Dict_t *agdictof(Agraph_t * g, int kind) 
-public static _dt_s agdictof(Agraph_s g, int kind) {
+public static ST_dt_s agdictof(ST_Agraph_s g, int kind) {
 ENTERING("2b2cg0am9e1lwc0nqikl2wczb","agdictof");
 try {
-    Agdatadict_s dd;
-    _dt_s dict;
+    ST_Agdatadict_s dd;
+    ST_dt_s dict;
     dd = agdatadict(g, false);
     if (dd!=null)
 	switch (kind) {
 	case AGRAPH:
-	    dict = (_dt_s) dd.getPtr("dict.g");
+	    dict = (ST_dt_s) dd.getPtr("dict.g");
 	    break;
 	case AGNODE:
-	    dict = (_dt_s) dd.getPtr("dict.n");
+	    dict = (ST_dt_s) dd.getPtr("dict.n");
 	    break;
 	case AGINEDGE:
 	case AGOUTEDGE:
-	    dict = (_dt_s) dd.getPtr("dict.e");
+	    dict = (ST_dt_s) dd.getPtr("dict.e");
 	    break;
 	default:
 	    System.err.println("agdictof: unknown kind "+ kind);
@@ -317,11 +320,11 @@ LEAVING("2b2cg0am9e1lwc0nqikl2wczb","agdictof");
 
 //3 dbhw2q2jfsz9qwawchy0hxj4i
 // Agsym_t *agnewsym(Agraph_t * g, char *name, char *value, int id, int kind) 
-public static Agsym_s agnewsym(Agraph_s g, CString name, CString value, int id, int kind) {
+public static ST_Agsym_s agnewsym(ST_Agraph_s g, CString name, CString value, int id, int kind) {
 ENTERING("dbhw2q2jfsz9qwawchy0hxj4i","agnewsym");
 try {
-    Agsym_s sym;
-    sym = (Agsym_s) agalloc(g, sizeof(Agsym_s.class));
+    ST_Agsym_s sym;
+    sym = (ST_Agsym_s) agalloc(g, sizeof(ST_Agsym_s.class));
     sym.setInt("kind", kind);
     sym.setPtr("name", agstrdup(g, name));
     sym.setPtr("defval", agstrdup(g, value));
@@ -359,21 +362,21 @@ throw new UnsupportedOperationException();
 
 //3 alb1d5x6huba3q44ms1wt0rr5
 // static Agdatadict_t *agmakedatadict(Agraph_t * g) 
-public static Agdatadict_s agmakedatadict(Agraph_s g) {
+public static ST_Agdatadict_s agmakedatadict(ST_Agraph_s g) {
 ENTERING("alb1d5x6huba3q44ms1wt0rr5","agmakedatadict");
 try {
-    Agraph_s par;
-    Agdatadict_s parent_dd, dd;
-    dd = (Agdatadict_s) agbindrec(g, DataDictName, sizeof(Agdatadict_s.class),
-				    false).castTo(Agdatadict_s.class);
-    dd.setPtr("dict.n", agdtopen(g, Z.z().AgDataDictDisc.amp(), Z.z().Dttree));
-    dd.setPtr("dict.e", agdtopen(g, Z.z().AgDataDictDisc.amp(),Z.z(). Dttree));
-    dd.setPtr("dict.g", agdtopen(g, Z.z().AgDataDictDisc.amp(), Z.z().Dttree));
+    ST_Agraph_s par;
+    ST_Agdatadict_s parent_dd, dd;
+    dd = (ST_Agdatadict_s) agbindrec(g, DataDictName, sizeof(ST_Agdatadict_s.class),
+				    false).castTo(ST_Agdatadict_s.class);
+    dd.setPtr("dict.n", agdtopen(g, Z.z().AgDataDictDisc, Z.z().Dttree));
+    dd.setPtr("dict.e", agdtopen(g, Z.z().AgDataDictDisc,Z.z(). Dttree));
+    dd.setPtr("dict.g", agdtopen(g, Z.z().AgDataDictDisc, Z.z().Dttree));
     if ((par = agparent(g))!=null) {
 	parent_dd = agdatadict(par, false);
-	dtview((_dt_s)dd.getPtr("dict.n"), (_dt_s)parent_dd.getPtr("dict.n"));
-	dtview((_dt_s)dd.getPtr("dict.e"), (_dt_s)parent_dd.getPtr("dict.e"));
-	dtview((_dt_s)dd.getPtr("dict.g"), (_dt_s)parent_dd.getPtr("dict.g"));
+	dtview((ST_dt_s)dd.getPtr("dict.n"), (ST_dt_s)parent_dd.getPtr("dict.n"));
+	dtview((ST_dt_s)dd.getPtr("dict.e"), (ST_dt_s)parent_dd.getPtr("dict.e"));
+	dtview((ST_dt_s)dd.getPtr("dict.g"), (ST_dt_s)parent_dd.getPtr("dict.g"));
     } else {
 	if (Z.z().ProtoGraph!=null && NEQ(g, Z.z().ProtoGraph)) {
 	    /* it's not ok to dtview here for several reasons. the proto
@@ -395,12 +398,12 @@ LEAVING("alb1d5x6huba3q44ms1wt0rr5","agmakedatadict");
 
 //3 50wfzq5wy8wc7vuyvs3mrx5ct
 // Agsym_t *agdictsym(Dict_t * dict, char *name) 
-public static Agsym_s agdictsym(_dt_s dict, CString name) {
+public static ST_Agsym_s agdictsym(ST_dt_s dict, CString name) {
 ENTERING("50wfzq5wy8wc7vuyvs3mrx5ct","agdictsym");
 try {
-    Agsym_s key = (Agsym_s) Memory.malloc(Agsym_s.class);
+    ST_Agsym_s key = (ST_Agsym_s) Memory.malloc(ST_Agsym_s.class);
     key.setPtr("name", name);
-    return  (Agsym_s) dict.call("searchf", (dict),key,0000004);
+    return  (ST_Agsym_s) dict.call("searchf", (dict),key,0000004);
 } finally {
 LEAVING("50wfzq5wy8wc7vuyvs3mrx5ct","agdictsym");
 }
@@ -411,11 +414,11 @@ LEAVING("50wfzq5wy8wc7vuyvs3mrx5ct","agdictsym");
 
 //3 4wy4ggu70d7harhix8xnh5w4l
 // Agsym_t *aglocaldictsym(Dict_t * dict, char *name) 
-public static Agsym_s aglocaldictsym(_dt_s dict, CString name) {
+public static ST_Agsym_s aglocaldictsym(ST_dt_s dict, CString name) {
 ENTERING("4wy4ggu70d7harhix8xnh5w4l","aglocaldictsym");
 try {
-    Agsym_s rv;
-    _dt_s view;
+    ST_Agsym_s rv;
+    ST_dt_s view;
     view = dtview(dict, null);
     rv = agdictsym(dict, name);
     dtview(dict, view);
@@ -430,15 +433,15 @@ LEAVING("4wy4ggu70d7harhix8xnh5w4l","aglocaldictsym");
 
 //3 8hy9sl3zmwobwm960jz466ufe
 // Agsym_t *agattrsym(void *obj, char *name) 
-public static Agsym_s agattrsym(__ptr__ obj, CString name) {
+public static ST_Agsym_s agattrsym(__ptr__ obj, CString name) {
 ENTERING("8hy9sl3zmwobwm960jz466ufe","agattrsym");
 try {
-    Agattr_s data;
-    Agsym_s rv;
+	ST_Agattr_s data;
+    ST_Agsym_s rv;
     CString arg = name;
-    data = agattrrec(obj.castTo(Agobj_s.class));
+    data = agattrrec(obj.castTo(ST_Agobj_s.class));
     if (data!=null)
-	rv = agdictsym((_dt_s)data.getPtr("dict"), arg);
+	rv = agdictsym((ST_dt_s)data.dict, arg);
     else
 	rv = null;
     return rv;
@@ -456,10 +459,10 @@ public final static CString AgDataRecName = new CString("_AG_strdata");
 
 //3 6az8xu0sgu1d6abu0xfpd89hi
 // static int topdictsize(Agobj_t * obj) 
-public static int topdictsize(Agobj_s obj) {
+public static int topdictsize(ST_Agobj_s obj) {
 ENTERING("6az8xu0sgu1d6abu0xfpd89hi","topdictsize");
 try {
-    _dt_s d;
+    ST_dt_s d;
     d = agdictof(agroot(agraphof(obj)), AGTYPE(obj));
     return d!=null ? dtsize_(d) : 0;
 } finally {
@@ -472,31 +475,31 @@ LEAVING("6az8xu0sgu1d6abu0xfpd89hi","topdictsize");
 
 //3 3wjrlyjdlz8k9nfxenxsfiqmj
 // static Agrec_t *agmakeattrs(Agraph_t * context, void *obj) 
-public static Agrec_s agmakeattrs(Agraph_s context, __ptr__ obj) {
+public static ST_Agrec_s agmakeattrs(ST_Agraph_s context, __ptr__ obj) {
 ENTERING("3wjrlyjdlz8k9nfxenxsfiqmj","agmakeattrs");
 try {
     int sz;
-    Agattr_s rec;
-    Agsym_s sym;
-    _dt_s datadict;
-    rec = (Agattr_s) agbindrec(obj, AgDataRecName, sizeof(Agattr_s.class), false).castTo(Agattr_s.class);
+    ST_Agattr_s rec;
+    ST_Agsym_s sym;
+    ST_dt_s datadict;
+    rec = (ST_Agattr_s) agbindrec(obj, AgDataRecName, sizeof(ST_Agattr_s.class), false).castTo(ST_Agattr_s.class);
     datadict = agdictof(context, AGTYPE(obj));
 
 
-    if (rec.getPtr("dict") == null) {
-	rec.setPtr("dict", agdictof(agroot(context), AGTYPE(obj)));
+    if (rec.dict == null) {
+	rec.dict = agdictof(agroot(context), AGTYPE(obj));
 	/* don't malloc(0) */
-	sz = topdictsize((Agobj_s) obj);
+	sz = topdictsize((ST_Agobj_s) obj.castTo(ST_Agobj_s.class));
 	if (sz < 4)
 	    sz = 4;
-	rec.setPtr("str", agalloc(agraphof(obj), sizeof("char*", sz)));
+	rec.str = new ArrayList<CString>(); for (int i=0; i<sz; i++) rec.str.add(null);
 	/* doesn't call agxset() so no obj-modified callbacks occur */
-	for (sym = (Agsym_s) ((__ptr__)datadict.call("searchf", datadict,null,0000200)); sym!=null;
-	     sym = (Agsym_s) ((__ptr__)datadict.call("searchf", datadict,sym,0000010)))
-	    rec.getArrayOfCString("str").plus(sym.getInt("id")).setCString( agstrdup(agraphof(obj), sym.getCString("defval")));
+	for (sym = (ST_Agsym_s) ((__ptr__)datadict.call("searchf", datadict,null,0000200)); sym!=null;
+	     sym = (ST_Agsym_s) ((__ptr__)datadict.call("searchf", datadict,sym,0000010)))
+	    rec.str.set(sym.getInt("id"), agstrdup(agraphof(obj), sym.defval));
     } else {
     }
-    return (Agrec_s) rec;
+    return (ST_Agrec_s) rec.castTo(ST_Agrec_s.class);
 } finally {
 LEAVING("3wjrlyjdlz8k9nfxenxsfiqmj","agmakeattrs");
 }
@@ -527,7 +530,7 @@ throw new UnsupportedOperationException();
 
 //3 6b3c2syvj23lbf7kz0aal8vmc
 // static void freesym(Dict_t * d, void * obj, Dtdisc_t * disc) 
-public static void freesym(_dt_s d, Object obj, _dtdisc_s disc) {
+public static void freesym(ST_dt_s d, Object obj, ST_dtdisc_s disc) {
 ENTERING("6b3c2syvj23lbf7kz0aal8vmc","freesym");
 try {
 	UNSUPPORTED("bf9av4xbx61835st3og3wfqr8"); // static void freesym(Dict_t * d, void * obj, Dtdisc_t * disc)
@@ -552,10 +555,10 @@ LEAVING("6b3c2syvj23lbf7kz0aal8vmc","freesym");
 
 //3 13sfx74lme08ur04vkrqta25j
 // Agattr_t *agattrrec(void *obj) 
-public static Agattr_s agattrrec(__ptr__ obj) {
+public static ST_Agattr_s agattrrec(__ptr__ obj) {
 ENTERING("13sfx74lme08ur04vkrqta25j","agattrrec");
 try {
-    return (Agattr_s) aggetrec(obj, AgDataRecName, false).castTo(Agattr_s.class);
+    return (ST_Agattr_s) aggetrec(obj, AgDataRecName, false).castTo(ST_Agattr_s.class);
 } finally {
 LEAVING("13sfx74lme08ur04vkrqta25j","agattrrec");
 }
@@ -566,18 +569,19 @@ LEAVING("13sfx74lme08ur04vkrqta25j","agattrrec");
 
 //3 2io7b26wq70e7kwdlzsh6bw7f
 // static void addattr(Agraph_t * g, Agobj_t * obj, Agsym_t * sym) 
-public static void addattr(Agraph_s g, Agobj_s obj, Agsym_s sym) {
+public static void addattr(ST_Agraph_s g, ST_Agobj_s obj, ST_Agsym_s sym) {
 ENTERING("2io7b26wq70e7kwdlzsh6bw7f","addattr");
 try {
-    Agattr_s attr;
-    attr = (Agattr_s) agattrrec(obj);
+	ST_Agattr_s attr;
+    attr = (ST_Agattr_s) agattrrec(obj);
 
     if (sym.getInt("id") >= 4)
-	attr.setPtr("str", (__ptr__) g.getPtr("clos").getPtr("disc").getPtr("mem").call("resize", g.getPtr("clos").getPtr("state").getPtr("mem"),
-						     attr.getPtr("str"),
-						     sizeof("char*", sym.getInt("id")),
-						     sizeof("char*", sym.getInt("id") + 1)));
-	attr.getArrayOfCString("str").plus(sym.getInt("id")).setCString(agstrdup(g, sym.getCString("defval")));
+//	attr.str = (StarArrayOfCString) g.clos.disc.mem.call("resize", g.clos.state.mem,
+//						     attr.str,
+//						     sizeof("char*", sym.getInt("id")),
+//						     sizeof("char*", sym.getInt("id") + 1));
+    attr.str.add(null);
+	attr.str.set(sym.getInt("id"), agstrdup(g, sym.defval));
     /* agmethod_upd(g,obj,sym);  JCE and GN didn't like this. */
 } finally {
 LEAVING("2io7b26wq70e7kwdlzsh6bw7f","addattr");
@@ -589,48 +593,48 @@ LEAVING("2io7b26wq70e7kwdlzsh6bw7f","addattr");
 
 //3 a3qr8ug1rkxp6ocieyp41ly3o
 // static Agsym_t *setattr(Agraph_t * g, int kind, char *name, char *value) 
-public static Agsym_s setattr(Agraph_s g, int kind, CString name, CString value) {
+public static ST_Agsym_s setattr(ST_Agraph_s g, int kind, CString name, CString value) {
 ENTERING("a3qr8ug1rkxp6ocieyp41ly3o","setattr");
 try {
-    Agdatadict_s dd;
-    _dt_s ldict, rdict;
-    Agsym_s lsym, psym, rsym, rv;
-    Agraph_s root;
-    Agnode_s n;
-    Agedge_s e;
+    ST_Agdatadict_s dd;
+    ST_dt_s ldict, rdict;
+    ST_Agsym_s lsym, psym, rsym, rv;
+    ST_Agraph_s root;
+    ST_Agnode_s n;
+    ST_Agedge_s e;
    
     root = agroot(g);
     dd = agdatadict(g, (N(0)));	/* force initialization of string attributes */
     ldict = agdictof(g, kind);
     lsym = aglocaldictsym(ldict, name);
     if (lsym!=null) {			/* update old local definiton */
-	agstrfree(g, lsym.getCString("defval"));
+	agstrfree(g, lsym.defval);
 	lsym.setPtr("defval", agstrdup(g, value));
 	rv = lsym;
     } else {
 	psym = agdictsym(ldict, name);	/* search with viewpath up to root */
 	if (psym!=null) {		/* new local definition */
 	    lsym = agnewsym(g, name, value, psym.getInt("id"), kind);
-	    ldict.castTo(_dt_s.class).call("searchf",ldict,lsym,0000001);
+	    ldict.castTo(ST_dt_s.class).call("searchf",ldict,lsym,0000001);
 	    rv = lsym;
 	} else {		/* new global definition */
 	    rdict = agdictof(root, kind);
 	    rsym = agnewsym(g, name, value, dtsize_(rdict), kind);
-	    rdict.castTo(_dt_s.class).call("searchf",rdict,rsym,0000001);
+	    rdict.castTo(ST_dt_s.class).call("searchf",rdict,rsym,0000001);
 	    switch (kind) {
 	    case AGRAPH:
-		agapply(root, (Agobj_s) root.castTo(Agobj_s.class), function(attr__c.class, "addattr"),
+		agapply(root, (ST_Agobj_s) root.castTo(ST_Agobj_s.class), function(attr__c.class, "addattr"),
 			rsym, (N(0)));
 		break;
 	    case AGNODE:
 		for (n = agfstnode(root); n!=null; n = agnxtnode(root, n))
-		    addattr(g, (Agobj_s) n.castTo(Agobj_s.class), rsym);
+		    addattr(g, (ST_Agobj_s) n.castTo(ST_Agobj_s.class), rsym);
 		break;
 	    case AGINEDGE:
 	    case AGOUTEDGE:
 		for (n = agfstnode(root); n!=null; n = agnxtnode(root, n))
 		    for (e = agfstout(root, n); e!=null; e = agnxtout(root, e))
-			addattr(g, (Agobj_s) e.castTo(Agobj_s.class), rsym);
+			addattr(g, (ST_Agobj_s) e.castTo(ST_Agobj_s.class), rsym);
 		break;
 	    }
 	    rv = rsym;
@@ -650,11 +654,11 @@ LEAVING("a3qr8ug1rkxp6ocieyp41ly3o","setattr");
 
 //3 8f80aahwb8cqc2t9592v47ttd
 // static Agsym_t *getattr(Agraph_t * g, int kind, char *name) 
-public static Agsym_s getattr(Agraph_s g, int kind, CString name) {
+public static ST_Agsym_s getattr(ST_Agraph_s g, int kind, CString name) {
 ENTERING("8f80aahwb8cqc2t9592v47ttd","getattr");
 try {
-    Agsym_s rv = null;
-    _dt_s dict;
+    ST_Agsym_s rv = null;
+    ST_dt_s dict;
     dict = agdictof(g, kind);
     if (dict!=null)
 	rv = agdictsym(dict, name);	/* viewpath up to root */
@@ -669,13 +673,13 @@ LEAVING("8f80aahwb8cqc2t9592v47ttd","getattr");
 
 //3 blr3drm2hxuzwd6gpeeb84yyg
 // Agsym_t *agattr(Agraph_t * g, int kind, char *name, char *value) 
-public static Agsym_s agattr(Agraph_s g, int kind, CString name, CString value) {
+public static ST_Agsym_s agattr(ST_Agraph_s g, int kind, CString name, CString value) {
 ENTERING("blr3drm2hxuzwd6gpeeb84yyg","agattr");
 try {
-    Agsym_s rv;
+    ST_Agsym_s rv;
     if (g == null) {
 	if (Z.z().ProtoGraph == null)
-	    Z.z().ProtoGraph = agopen(null, Z.z().ProtoDesc.copy(), null);
+	    Z.z().ProtoGraph = agopen(null, (ST_Agdesc_s) Z.z().ProtoDesc.copy(), null);
 	g = Z.z().ProtoGraph;
     }
     if (value!=null)
@@ -716,12 +720,12 @@ throw new UnsupportedOperationException();
 
 //3 ex2qtmuwz0o2e5svkujdbux78
 // void agraphattr_init(Agraph_t * g) 
-public static void agraphattr_init(Agraph_s g) {
+public static void agraphattr_init(ST_Agraph_s g) {
 ENTERING("ex2qtmuwz0o2e5svkujdbux78","agraphattr_init");
 try {
     /* Agdatadict_t *dd; */
     /* Agrec_t                      *attr; */
-    Agraph_s context;
+    ST_Agraph_s context;
     ((ST_Agdesc_s)g.getStruct("desc")).has_attrs = 1;
     /* dd = */ agmakedatadict(g);
     if (N(context = agparent(g)))
@@ -764,12 +768,12 @@ throw new UnsupportedOperationException();
 
 //3 2pp4ot3pqy71jpfvu3g398y4y
 // void agnodeattr_init(Agraph_t * g, Agnode_t * n) 
-public static void agnodeattr_init(Agraph_s g, Agnode_s n) {
+public static void agnodeattr_init(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("2pp4ot3pqy71jpfvu3g398y4y","agnodeattr_init");
 try {
-    Agattr_s data;
-    data = (Agattr_s) agattrrec(n);
-    if ((N(data)) || (N(data.getPtr("dict"))))
+	ST_Agattr_s data;
+    data = (ST_Agattr_s) agattrrec(n);
+    if ((N(data)) || (N(data.dict)))
 	agmakeattrs(g, n);
 } finally {
 LEAVING("2pp4ot3pqy71jpfvu3g398y4y","agnodeattr_init");
@@ -799,12 +803,12 @@ throw new UnsupportedOperationException();
 
 //3 ckfzmnxfi0jiiayxmq38giw0r
 // void agedgeattr_init(Agraph_t * g, Agedge_t * e) 
-public static void agedgeattr_init(Agraph_s g, Agedge_s e) {
+public static void agedgeattr_init(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("ckfzmnxfi0jiiayxmq38giw0r","agedgeattr_init");
 try {
-    Agattr_s data;
+	ST_Agattr_s data;
     data = agattrrec(e);
-    if ((N(data)) || (N(data.getPtr("dict"))))
+    if ((N(data)) || (N(data.dict)))
 	agmakeattrs(g, e);
 } finally {
 LEAVING("ckfzmnxfi0jiiayxmq38giw0r","agedgeattr_init");
@@ -837,15 +841,15 @@ throw new UnsupportedOperationException();
 public static CString agget(__ptr__ obj, CString name) {
 ENTERING("eydjyhexv5jr6vi7uhk0cgphv","agget");
 try {
-    Agsym_s sym;
-    Agattr_s data;
+    ST_Agsym_s sym;
+    ST_Agattr_s data;
     CString rv = null;
     sym = agattrsym(obj, name);
     if (sym == null)
 	rv = null;			/* note was "", but this provides more info */
     else {
-	data = agattrrec(obj.castTo(Agobj_s.class));
-	rv = data.getArrayOfCString("str").plus(sym.getInt("id")).getCString();
+	data = agattrrec(obj.castTo(ST_Agobj_s.class));
+	rv = data.str.get(sym.getInt("id"));
     }
     return rv;
 } finally {
@@ -858,14 +862,14 @@ LEAVING("eydjyhexv5jr6vi7uhk0cgphv","agget");
 
 //3 9h5oymhfkp6k34zl0fonn10k9
 // char *agxget(void *obj, Agsym_t * sym) 
-public static CString agxget(__ptr__ obj,  Agsym_s sym) {
+public static CString agxget(__ptr__ obj,  ST_Agsym_s sym) {
 ENTERING("9h5oymhfkp6k34zl0fonn10k9","agxget");
 try {
-    Agattr_s data;
+	ST_Agattr_s data;
     CString rv;
-    data = agattrrec(obj.castTo(Agobj_s.class));
+    data = agattrrec(obj.castTo(ST_Agobj_s.class));
 
-    rv = data.getArrayOfCString("str").plus(sym.getInt("id")).getCString();
+    rv = data.str.get(sym.getInt("id"));
     return rv;
 } finally {
 LEAVING("9h5oymhfkp6k34zl0fonn10k9","agxget");
@@ -898,28 +902,28 @@ throw new UnsupportedOperationException();
 
 //3 4q8xvstvl6fbijhucfd1endxc
 // int agxset(void *obj, Agsym_t * sym, char *value) 
-public static int agxset(__ptr__ obj, Agsym_s sym, CString value) {
+public static int agxset(__ptr__ obj, ST_Agsym_s sym, CString value) {
 ENTERING("4q8xvstvl6fbijhucfd1endxc","agxset");
 try {
-    Agraph_s g;
-    Agobj_s hdr;
-    Agattr_s data;
-    Agsym_s lsym;
+    ST_Agraph_s g;
+    ST_Agobj_s hdr;
+    ST_Agattr_s data;
+    ST_Agsym_s lsym;
     g = agraphof(obj);
-    hdr = (Agobj_s) obj.castTo(Agobj_s.class);
+    hdr = (ST_Agobj_s) obj.castTo(ST_Agobj_s.class);
     data = agattrrec(hdr);
 
-    agstrfree(g, data.getArrayOfCString("str").plus(sym.getInt("id")).getCString());
-    data.getArrayOfCString("str").plus(sym.getInt("id")).setCString(agstrdup(g, value));
-    if (((ST_Agtag_s)hdr.getStruct("tag")).objtype == AGRAPH) {
+    agstrfree(g, data.str.get(sym.getInt("id")));
+    data.str.set(sym.getInt("id"), agstrdup(g, value));
+    if (((ST_Agtag_s)hdr.tag).objtype == AGRAPH) {
 	/* also update dict default */
-	_dt_s dict;
-	dict = (_dt_s) agdatadict(g, false).getPtr("dict.g");
-	if ((lsym = aglocaldictsym(dict, sym.getCString("name")))!=null) {
-	    agstrfree(g, lsym.getCString("defval"));
+	ST_dt_s dict;
+	dict = (ST_dt_s) agdatadict(g, false).getPtr("dict.g");
+	if ((lsym = aglocaldictsym(dict, sym.name))!=null) {
+	    agstrfree(g, lsym.defval);
 	    lsym.setPtr("defval", agstrdup(g, value));
 	} else {
-	    lsym = agnewsym(g, sym.getCString("name"), value, sym.getInt("id"), AGTYPE(hdr));
+	    lsym = agnewsym(g, sym.name, value, sym.getInt("id"), AGTYPE(hdr));
 	    dict.call("searchf", dict, lsym, 0000001);
 	}
     }
@@ -938,7 +942,7 @@ LEAVING("4q8xvstvl6fbijhucfd1endxc","agxset");
 public static int agsafeset(__ptr__ obj, CString name, CString value, CString def) {
 ENTERING("9b7vn95cin8o7mb2f21exh1qr","agsafeset");
 try {
-    Agsym_s a;
+    ST_Agsym_s a;
     a = agattr(agraphof(obj), AGTYPE(obj), name, null);
     if (N(a))
 	a = agattr(agraphof(obj), AGTYPE(obj), name, def);

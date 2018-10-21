@@ -47,8 +47,8 @@ package gen.lib.cdt;
 import static gen.lib.cdt.dtrestore__c.dtrestore;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
-import h._dt_s;
-import h._dtlink_s;
+import h.ST_dt_s;
+import h.ST_dtlink_s;
 
 public class dtsize__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -119,10 +119,10 @@ public class dtsize__c {
 
 //3 6j49zum5hqto1t7fyrz8qjv1u
 // static int treecount(register Dtlink_t* e)     
-public static int treecount(_dtlink_s e) {
+public static int treecount(ST_dtlink_s e) {
 ENTERING("6j49zum5hqto1t7fyrz8qjv1u","treecount");
 try {
-	return e!=null ? treecount((_dtlink_s) e.getPtr("hl._left")) + treecount((_dtlink_s) e.getPtr("right")) + 1 : 0;
+	return e!=null ? treecount((ST_dtlink_s) e._left) + treecount((ST_dtlink_s) e.right) + 1 : 0;
 } finally {
 LEAVING("6j49zum5hqto1t7fyrz8qjv1u","treecount");
 }
@@ -133,23 +133,23 @@ LEAVING("6j49zum5hqto1t7fyrz8qjv1u","treecount");
 
 //3 bci0ea1fa7egf4aads6gdgvsq
 // int dtsize(Dt_t* dt)     
-public static int dtsize_(_dt_s dt) {
+public static int dtsize_(ST_dt_s dt) {
 ENTERING("bci0ea1fa7egf4aads6gdgvsq","dtsize");
 try {
-	_dtlink_s	t;
+	ST_dtlink_s	t;
 	int		size;
-	if (((dt.getPtr("data").getInt("type")&010000)!=0)) dtrestore(dt,null);
-	if(dt.getPtr("data").getInt("size") < 0) /* !(dt->data->type&(DT_SET|DT_BAG)) */
-	{	if((dt.getPtr("data").getInt("type")&(0000004|0000010))!=0)
-			dt.getPtr("data").setInt("size", treecount((_dtlink_s) dt.getPtr("data").getPtr("here")));
-		else if((dt.getPtr("data").getInt("type")&(0000020|0000040|0000100))!=0)
+	if (((dt.data.type&010000)!=0)) dtrestore(dt,null);
+	if(dt.data.size < 0) /* !(dt->data->type&(DT_SET|DT_BAG)) */
+	{	if((dt.data.type&(0000004|0000010))!=0)
+			dt.data.setInt("size", treecount((ST_dtlink_s) dt.data.here));
+		else if((dt.data.type&(0000020|0000040|0000100))!=0)
 		{	size=0;
-		    for(t = (_dtlink_s) dt.getPtr("data").getPtr("hh").getPtr("_head"); t!=null; t = (_dtlink_s) t.getPtr("right"))
+		    for(t = (ST_dtlink_s) dt.data._head; t!=null; t = (ST_dtlink_s) t.right)
 				size += 1;
-			dt.getPtr("data").setInt("size", size);
+			dt.data.setInt("size", size);
 		}
 	}
-	return dt.getPtr("data").getInt("size");
+	return dt.data.size;
 
 } finally {
 LEAVING("bci0ea1fa7egf4aads6gdgvsq","dtsize");

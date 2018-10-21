@@ -89,11 +89,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final boolean hideText;
 	private final Collection<Link> links;
 	private final boolean useRankSame;
+	private final boolean fixCircleLabelOverlapping;
 
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
 			Collection<Link> links) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.useRankSame = skinParam.useRankSame();
+		this.fixCircleLabelOverlapping = skinParam.fixCircleLabelOverlapping();
 
 		this.links = links;
 		final Stereotype stereotype = entity.getStereotype();
@@ -187,7 +189,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (isThereADoubleLink((ILeaf) getEntity(), links)) {
 			return Margins.NONE;
 		}
-		if (hasSomeHorizontalLinkVisible((ILeaf) getEntity(), links)) {
+		if (fixCircleLabelOverlapping == false && hasSomeHorizontalLinkVisible((ILeaf) getEntity(), links)) {
 			return Margins.NONE;
 		}
 		if (hasSomeHorizontalLinkDoubleDecorated((ILeaf) getEntity(), links)) {

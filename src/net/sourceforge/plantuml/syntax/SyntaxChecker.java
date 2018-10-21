@@ -68,7 +68,7 @@ public class SyntaxChecker {
 
 		if (source.startsWith("@startuml\n") == false) {
 			result.setError(true);
-			result.setLineLocation(new LineLocationImpl(null, null).oneLineRead());
+			result.setLineLocation(new LineLocationImpl("", null).oneLineRead());
 			// result.setErrorLinePosition(0);
 			result.addErrorText("No @startuml found");
 			// result.setSuggest(Arrays.asList("Did you mean:", "@startuml"));
@@ -161,7 +161,7 @@ public class SyntaxChecker {
 	}
 
 	private static LineLocation lastLineNumber2(String source) {
-		LineLocationImpl result = new LineLocationImpl(null, null).oneLineRead();
+		LineLocationImpl result = new LineLocationImpl("", null).oneLineRead();
 		for (int i = 0; i < source.length(); i++) {
 			if (source.charAt(i) == '\n') {
 				result = result.oneLineRead();

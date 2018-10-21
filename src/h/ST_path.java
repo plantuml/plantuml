@@ -45,12 +45,9 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_path extends UnsupportedStructAndPtr {
@@ -65,23 +62,14 @@ public class ST_path extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
 	// "typedef struct path",
 	// "{",
-	final ST_port start = new ST_port(this), end = new ST_port(this);
-	private int nbox;
+	final public ST_port start = new ST_port(this), end = new ST_port(this);
+	public int nbox;
 	// "boxf *boxes",
-	private StarArrayOfPtr boxes;
+	public ST_boxf boxes[];
 
-	private ST_Agedge_s.Amp data;
+	public ST_Agedge_s data;
 
 	// "void *data",
 	// "}",
@@ -89,15 +77,8 @@ public class ST_path extends UnsupportedStructAndPtr {
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("boxes")) {
-			this.boxes = (StarArrayOfPtr) newData;
-			return this.boxes;
-		}
 		if (fieldName.equals("data")) {
-			if (newData instanceof ST_Agedge_s) {
-				newData = ((ST_Agedge_s) newData).amp();
-			}
-			this.data = (ST_Agedge_s.Amp) newData;
+			this.data = (ST_Agedge_s) newData;
 			return this.data;
 		}
 		return super.setPtr(fieldName, newData);
@@ -108,29 +89,18 @@ public class ST_path extends UnsupportedStructAndPtr {
 		if (fieldName.equals("data")) {
 			return this.data;
 		}
-		if (fieldName.equals("boxes")) {
-			return this.boxes;
-		}
 		return super.getPtr(fieldName);
 	}
 
 	@Override
-	public __struct__ getStruct(String fieldName) {
+	public ST_port getStruct(String fieldName) {
 		if (fieldName.equals("start")) {
 			return start;
 		}
 		if (fieldName.equals("end")) {
 			return end;
 		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		if (fieldName.equals("boxes")) {
-			return boxes.getInternalArray();
-		}
-		return super.getArrayOfPtr(fieldName);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

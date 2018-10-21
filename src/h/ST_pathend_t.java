@@ -45,10 +45,9 @@
  */
 package h;
 
-import smetana.core.UnsupportedArrayOfStruct;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_struct__;
+import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
@@ -66,12 +65,12 @@ public class ST_pathend_t extends UnsupportedStructAndPtr {
 
 	// "typedef struct pathend_t",
 	// "{",
-	private final ST_boxf nb = new ST_boxf(this);
-	private final ST_pointf np = new ST_pointf(this);
-	private int sidemask;
-	private int boxn;
+	public final ST_boxf nb = new ST_boxf(this);
+	public final ST_pointf np = new ST_pointf(this);
+	public int sidemask;
+	public int boxn;
 
-	private final ST_boxf boxes[] = new ST_boxf[] { new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(),
+	public final ST_boxf boxes[] = new ST_boxf[] { new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(),
 			new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(),
 			new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(),
 			new ST_boxf(), new ST_boxf() };
@@ -80,67 +79,9 @@ public class ST_pathend_t extends UnsupportedStructAndPtr {
 	// "}",
 	// "pathend_t");
 
-	class ArrayOfTwenty extends UnsupportedArrayOfStruct {
-
-		final private int pos;
-
-		public ArrayOfTwenty(int pos) {
-			this.pos = pos;
-		}
-
-		@Override
-		public __array_of_struct__ plus(int delta) {
-			return new ArrayOfTwenty(pos + delta);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return boxes[pos];
-		}
-
-		@Override
-		public void setStruct(__struct__ value) {
-			boxes[pos].copyDataFrom(value);
-		}
-
-		@Override
-		public double getDouble(String fieldName) {
-			return getStruct().getDouble(fieldName);
-		}
-
-	}
-
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-		@Override
-		public void setStruct(String fieldName, __struct__ newData) {
-			ST_pathend_t.this.setStruct(fieldName, newData);
-		}
-
-		@Override
-		public __array_of_struct__ getArrayOfStruct(String fieldName) {
-			return ST_pathend_t.this.getArrayOfStruct(fieldName);
-		}
-
-		@Override
-		public int getInt(String fieldName) {
-			return ST_pathend_t.this.getInt(fieldName);
-		}
-
-		@Override
-		public void setInt(String fieldName, int data) {
-			ST_pathend_t.this.setInt(fieldName, data);
-		}
-
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return ST_pathend_t.this.getStruct(fieldName);
-		}
-
+	public __ptr__ getPtr() {
+		return this;
 	}
 
 	@Override
@@ -189,14 +130,6 @@ public class ST_pathend_t extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		if (fieldName.equals("boxes")) {
-			return new ArrayOfTwenty(0);
-		}
-		return super.getArrayOfStruct(fieldName);
 	}
 
 }

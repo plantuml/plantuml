@@ -56,17 +56,17 @@ public class FileSystem {
 	}
 
 	public void setCurrentDir(File dir) {
-		if (dir == null) {
-			throw new IllegalArgumentException();
-		}
+		// if (dir == null) {
+		// throw new IllegalArgumentException();
+		// }
 		Log.info("Setting current dir: " + dir);
 		this.currentDir.set(dir);
 	}
 
-	// public File getCurrentDir() {
-	// return this.currentDir.get();
-	// }
-	//
+	public File getCurrentDir() {
+		return this.currentDir.get();
+	}
+
 	public File getFile(String nameOrPath) throws IOException {
 		final File dir = currentDir.get();
 		if (dir == null || isAbsolute(nameOrPath)) {

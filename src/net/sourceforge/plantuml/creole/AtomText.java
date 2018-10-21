@@ -46,6 +46,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
@@ -62,6 +63,7 @@ import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class AtomText implements Atom {
@@ -86,35 +88,45 @@ public class AtomText implements Atom {
 		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}
 
-	public static Atom createUrl(Url url, FontConfiguration fontConfiguration) {
+	public static Atom createUrl(Url url, FontConfiguration fontConfiguration, ISkinSimple skinSimple) {
 		fontConfiguration = fontConfiguration.hyperlink();
 		final Display display = Display.getWithNewlines(url.getLabel());
 		if (display.size() > 1) {
 			final List<Atom> all = new ArrayList<Atom>();
 			for (CharSequence s : display.as()) {
-				all.add(createAtomText(s.toString(), url, fontConfiguration));
+				all.add(createAtomText(s.toString(), url, fontConfiguration, skinSimple));
 			}
 			return new AtomVerticalTexts(all);
 
 		}
-		return createAtomText(url.getLabel(), url, fontConfiguration);
+		return createAtomText(url.getLabel(), url, fontConfiguration, skinSimple);
 	}
 
-	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration) {
-		final Pattern p = Pattern.compile(Splitter.openiconPattern);
+	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
+			ISkinSimple skinSimple) {
+		final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern2);
 		final Matcher m = p.matcher(text);
 		final List<Atom> result = new ArrayList<Atom>();
-
 		while (m.find()) {
-			final String val = m.group(1);
 			final StringBuffer sb = new StringBuffer();
 			m.appendReplacement(sb, "");
 			if (sb.length() > 0) {
 				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO));
 			}
-			final OpenIcon openIcon = OpenIcon.retrieve(val);
-			if (openIcon != null) {
-				result.add(new AtomOpenIcon(openIcon, fontConfiguration, url));
+			final String valOpenicon = m.group(1);
+			final String valSprite = m.group(2);
+			if (valOpenicon != null) {
+				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);
+				if (openIcon != null) {
+					result.add(new AtomOpenIcon(openIcon, fontConfiguration, url));
+				}
+			} else if (valSprite != null) {
+				final Sprite sprite = skinSimple.getSprite(valSprite);
+				if (sprite != null) {
+					final double scale = CommandCreoleImg.getScale(m.group(3), 1);
+					result.add(new AtomSprite(scale, fontConfiguration, sprite, url));
+				}
+
 			}
 		}
 		final StringBuffer sb = new StringBuffer();

@@ -48,8 +48,6 @@ package h;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_splines extends UnsupportedStructAndPtr {
@@ -64,20 +62,11 @@ public class ST_splines extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
 	// "typedef struct splines",
 	// "{",
 // 	bezier *list;
-	private StarArrayOfPtr list;
-	private int size;
+	public ST_bezier.Array2 list;
+	public int size;
 
 	// "boxf bb",
 	// "}",
@@ -100,30 +89,6 @@ public class ST_splines extends UnsupportedStructAndPtr {
 		return super.getInt(fieldName);
 	}
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("list")) {
-			this.list = (StarArrayOfPtr) newData;
-			return list;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("list")) {
-			return this.list;
-		}
-		return super.getPtr(fieldName);
-	}
-	
-	@Override
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		if (fieldName.equals("list")) {
-			return this.list.getInternalArray();
-		}
-		return super.getArrayOfPtr(fieldName);
-	}
 }
 
 // typedef struct splines {

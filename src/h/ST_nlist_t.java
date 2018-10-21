@@ -50,14 +50,13 @@ import java.util.List;
 
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_nlist_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
 	// public __ptr__ list;
 	public int size;
-	private final List data = new ArrayList();
+	private final List<ST_Agnode_s> data = new ArrayList<ST_Agnode_s>();
 
 	public ST_nlist_t(StarStruct parent) {
 	}
@@ -66,23 +65,23 @@ public class ST_nlist_t extends UnsupportedStructAndPtr implements HardcodedStru
 		this(null);
 	}
 
-	public void reallocEmpty(int n_nodes, Class<Agnode_s> class1) {
+	public void reallocEmpty(int n_nodes) {
 		while (data.size() < n_nodes) {
 			data.add(null);
 		}
 	}
 
-	public void allocEmpty(int n_nodes, Class<Agnode_s> class1) {
+	public void allocEmpty(int n_nodes) {
 		data.clear();
-		reallocEmpty(n_nodes, class1);
+		reallocEmpty(n_nodes);
 	}
 
-	public void setInList(int idx, Agnode_s value) {
+	public void setInList(int idx, ST_Agnode_s value) {
 		data.set(idx, value);
 	}
 
-	public __ptr__ getFromList(int i) {
-		return (__ptr__) data.get(i);
+	public ST_Agnode_s getFromList(int i) {
+		return data.get(i);
 	}
 
 	public void resetList() {

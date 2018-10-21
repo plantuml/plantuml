@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.jdot;
 
-import h.Agedge_s;
-import h.Agedgeinfo_t;
-import h.bezier;
-import h.pointf;
-import h.splines;
-import h.textlabel_t;
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_bezier;
+import h.ST_pointf;
+import h.ST_textlabel_t;
+import h.ST_splines;
 
 import java.awt.geom.Point2D;
 
@@ -63,23 +63,26 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import smetana.core.Macro;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class JDotPath implements UDrawable {
 
 	private final Link link;
-	private final Agedge_s edge;
+	private final ST_Agedge_s edge;
 	private final YMirror ymirror;
 	private final CucaDiagram diagram;
 	private final TextBlock label;
+	private final TextBlock headLabel;
+	private final TextBlock tailLabel;
 	private final Rose rose = new Rose();
 
-	public JDotPath(Link link, Agedge_s edge, YMirror ymirror, CucaDiagram diagram, TextBlock label) {
+	public JDotPath(Link link, ST_Agedge_s edge, YMirror ymirror, CucaDiagram diagram, TextBlock label, TextBlock tailLabel, TextBlock headLabel) {
 		this.link = link;
 		this.edge = edge;
 		this.ymirror = ymirror;
 		this.diagram = diagram;
 		this.label = label;
+		this.tailLabel = tailLabel;
+		this.headLabel = headLabel;
 	}
 
 	private ColorParam getArrowColorParam() {
@@ -119,8 +122,14 @@ public class JDotPath implements UDrawable {
 		if (dotPath != null) {
 			ug.apply(new UChangeColor(color)).draw(dotPath);
 		}
-		if (getLabelRectangleTranslate() != null) {
-			label.drawU(ug.apply(getLabelRectangleTranslate()));
+		if (getLabelRectangleTranslate("label") != null) {
+			label.drawU(ug.apply(getLabelRectangleTranslate("label")));
+		}
+		if (getLabelRectangleTranslate("head_label") != null) {
+			headLabel.drawU(ug.apply(getLabelRectangleTranslate("head_label")));
+		}
+		if (getLabelRectangleTranslate("tail_label") != null) {
+			tailLabel.drawU(ug.apply(getLabelRectangleTranslate("tail_label")));
 		}
 		// printDebug(ug);
 
@@ -128,31 +137,31 @@ public class JDotPath implements UDrawable {
 
 	private void printDebug(UGraphic ug) {
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(HtmlColorUtils.BLUE));
-		final splines splines = getSplines(edge);
-		final bezier beziers = (bezier) splines.getPtr("list");
-		for (int i = 0; i < beziers.getInt("size"); i++) {
+		final ST_splines splines = getSplines(edge);
+		final ST_bezier beziers = (ST_bezier) splines.getPtr("list");
+		for (int i = 0; i < beziers.size; i++) {
 			Point2D pt = getPoint(splines, i);
 			if (ymirror != null) {
 				pt = ymirror.getMirrored(pt);
 			}
 			ug.apply(new UTranslate(pt).compose(new UTranslate(-1, -1))).draw(new UEllipse(3, 3));
 		}
-		if (getLabelRectangleTranslate() != null && getLabelURectangle() != null) {
+		if (getLabelRectangleTranslate("label") != null && getLabelURectangle() != null) {
 			ug = ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(null));
-			ug.apply(getLabelRectangleTranslate()).draw(getLabelURectangle());
+			ug.apply(getLabelRectangleTranslate("label")).draw(getLabelURectangle());
 		}
 
 	}
 
 	private URectangle getLabelURectangle() {
-		final Agedgeinfo_t data = (Agedgeinfo_t) Macro.AGDATA(edge).castTo(Agedgeinfo_t.class);
-		textlabel_t label = (textlabel_t) data.getPtr("label");
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge).castTo(ST_Agedgeinfo_t.class);
+		ST_textlabel_t label = (ST_textlabel_t) data.label;
 		if (label == null) {
 			return null;
 		}
-		final __struct__<pointf> dimen = label.getStruct("dimen");
-		final __struct__<pointf> space = label.getStruct("space");
-		final __struct__<pointf> pos = label.getStruct("pos");
+		final ST_pointf dimen = (ST_pointf) label.dimen;
+		final ST_pointf space = (ST_pointf)label.space;
+		final ST_pointf pos = (ST_pointf)label.getStruct("pos");
 		final double x = pos.getDouble("x");
 		final double y = pos.getDouble("y");
 		final double width = dimen.getDouble("x");
@@ -160,15 +169,16 @@ public class JDotPath implements UDrawable {
 		return new URectangle(width, height);
 	}
 
-	private UTranslate getLabelRectangleTranslate() {
-		final Agedgeinfo_t data = (Agedgeinfo_t) Macro.AGDATA(edge).castTo(Agedgeinfo_t.class);
-		textlabel_t label = (textlabel_t) data.getPtr("label");
+	private UTranslate getLabelRectangleTranslate(String fieldName) {
+		//final String fieldName = "label";
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge).castTo(ST_Agedgeinfo_t.class);
+		ST_textlabel_t label = (ST_textlabel_t) data.getPtr(fieldName);
 		if (label == null) {
 			return null;
 		}
-		final __struct__<pointf> dimen = label.getStruct("dimen");
-		final __struct__<pointf> space = label.getStruct("space");
-		final __struct__<pointf> pos = label.getStruct("pos");
+		final ST_pointf dimen = (ST_pointf)label.dimen;
+		final ST_pointf space = (ST_pointf)label.space;
+		final ST_pointf pos = (ST_pointf)label.getStruct("pos");
 		final double x = pos.getDouble("x");
 		final double y = pos.getDouble("y");
 		final double width = dimen.getDouble("x");
@@ -180,30 +190,30 @@ public class JDotPath implements UDrawable {
 		return ymirror.getMirrored(new UTranslate(x - width / 2, y + height / 2));
 	}
 
-	public DotPath getDotPath(Agedge_s e) {
-		final splines splines = getSplines(e);
+	public DotPath getDotPath(ST_Agedge_s e) {
+		final ST_splines splines = getSplines(e);
 		return getDotPath(splines);
 	}
 
-	private splines getSplines(Agedge_s e) {
-		final Agedgeinfo_t data = (Agedgeinfo_t) Macro.AGDATA(e).castTo(Agedgeinfo_t.class);
-		final splines splines = (splines) data.getPtr("spl");
+	private ST_splines getSplines(ST_Agedge_s e) {
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
+		final ST_splines splines = (ST_splines) data.spl;
 		return splines;
 	}
 
-	private DotPath getDotPath(splines splines) {
+	private DotPath getDotPath(ST_splines splines) {
 		if (splines == null) {
 			System.err.println("ERROR, no splines for getDotPath");
 			return null;
 		}
 		DotPath result = new DotPath();
-		final bezier beziers = (bezier) splines.getPtr("list");
+		final ST_bezier beziers = (ST_bezier) splines.list.getPtr();
 		final Point2D pt1 = getPoint(splines, 0);
 		final Point2D pt2 = getPoint(splines, 1);
 		final Point2D pt3 = getPoint(splines, 2);
 		final Point2D pt4 = getPoint(splines, 3);
 		result = result.addCurve(pt1, pt2, pt3, pt4);
-		final int n = beziers.getInt("size");
+		final int n = beziers.size;
 		for (int i = 4; i < n; i += 3) {
 			final Point2D ppt2 = getPoint(splines, i);
 			final Point2D ppt3 = getPoint(splines, i + 1);
@@ -213,9 +223,9 @@ public class JDotPath implements UDrawable {
 		return result;
 	}
 
-	private Point2D getPoint(splines splines, int i) {
-		final bezier beziers = (bezier) splines.getPtr("list");
-		final __ptr__ pt = beziers.getPtr("list").plus(i).getPtr();
+	private Point2D getPoint(ST_splines splines, int i) {
+		final ST_bezier beziers = (ST_bezier) splines.list.getPtr();
+		final __ptr__ pt = beziers.list.get(i);
 		return new Point2D.Double(pt.getDouble("x"), pt.getDouble("y"));
 	}
 

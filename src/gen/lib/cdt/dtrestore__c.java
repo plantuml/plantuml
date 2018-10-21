@@ -49,8 +49,8 @@ import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.Dtsearch_f;
-import h._dt_s;
-import h._dtlink_s;
+import h.ST_dt_s;
+import h.ST_dtlink_s;
 
 public class dtrestore__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -121,26 +121,26 @@ public class dtrestore__c {
 
 //3 8dfut8799tvg4tjvn2yz48d7h
 // int dtrestore(register Dt_t* dt, register Dtlink_t* list)      
-public static int dtrestore(_dt_s dt, _dtlink_s list) {
+public static int dtrestore(ST_dt_s dt, ST_dtlink_s list) {
 ENTERING("8dfut8799tvg4tjvn2yz48d7h","dtrestore");
 try {
-	_dtlink_s	t;
+	ST_dtlink_s	t;
 	//Dtlink_t	**s, **ends;
 	int		type;
-	Dtsearch_f	searchf = (Dtsearch_f) dt.getPtr("meth").getPtr("searchf");
-	type = dt.getPtr("data").getInt("type")&010000;
+	Dtsearch_f	searchf = (Dtsearch_f) dt.meth.getPtr("searchf");
+	type = dt.data.type&010000;
 	if(N(list)) /* restoring a flattened dictionary */
 	{	if(N(type))
 			return -1;
-		list = (_dtlink_s) dt.getPtr("data").getPtr("here");
+		list = (ST_dtlink_s) dt.data.here;
 	}
 	else	/* restoring an extracted list of elements */
-	{	if(dt.getPtr("data").getInt("size") != 0)
+	{	if(dt.data.size != 0)
 			return -1;
 		type = 0;
 	}
-	dt.getPtr("data").setInt("type", dt.getPtr("data").getInt("type") & ~010000);
-	if((dt.getPtr("data").getInt("type")&(0000001|0000002))!=0)
+	dt.data.setInt("type", dt.data.type & ~010000);
+	if((dt.data.type&(0000001|0000002))!=0)
 	{	//dt->data->here = ((Dtlink_t*)0);
 UNSUPPORTED("4xawc48hce5sov89n8h4j7xw0"); // 		if(type) /* restoring a flattened dictionary */
 UNSUPPORTED("3yrjmgus9a9415ocrrtj1e733"); // 		{	for(ends = (s = dt->data->hh._htab) + dt->data->ntab; s < ends; ++s)
@@ -161,14 +161,14 @@ UNSUPPORTED("3to5h0rvqxdeqs38mhv47mm3o"); // 			}
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 	}
 	else
-	{	if((dt.getPtr("data").getInt("type")&(0000004|0000010))!=0)
-			dt.getPtr("data").setPtr("here", list);
+	{	if((dt.data.type&(0000004|0000010))!=0)
+			dt.data.here = list;
 		else /*if(dt->data->type&(DT_LIST|DT_STACK|DT_QUEUE))*/
 {UNSUPPORTED("79wu0m7edfdq02msgoqkzb32"); // 		{	dt->data->here = ((Dtlink_t*)0);
 UNSUPPORTED("c8q10nh3f6o4rjxtacmbgjxqj"); // 			dt->data->hh._head = list;
 		}
 		if(N(type))
-			dt.getPtr("data").setInt("size", -1);
+			dt.data.setInt("size", -1);
 	}
 	return 0;
 } finally {

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.PreprocessorInclude;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
@@ -114,7 +115,8 @@ public class SubPreprocessor2 implements ReadFilter {
 				final String blocname = name.substring(idx + 1);
 				final File f = FileSystem.getInstance().getFile(PreprocessorInclude.withEnvironmentVariable(filename));
 				if (f.exists() == false || f.isDirectory()) {
-					return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
+					Log.error("Cannot include " + FileWithSuffix.getAbsolutePath(f));
+					return s.withErrorPreprocessor("Cannot include " + FileWithSuffix.getFileName(f));
 				}
 				final SubPreprocessor2 data = new SubPreprocessor2(charset, defines, definitionsContainer);
 				InnerReadLine tmp = (InnerReadLine) data.applyFilter(getReaderInclude(s, f));
@@ -183,10 +185,10 @@ public class SubPreprocessor2 implements ReadFilter {
 		try {
 			if (charset == null) {
 				Log.info("Using default charset");
-				return ReadLineReader.create(new FileReader(f), f.getAbsolutePath(), s.getLocation());
+				return ReadLineReader.create(new FileReader(f), FileWithSuffix.getFileName(f), s.getLocation());
 			}
 			Log.info("Using charset " + charset);
-			return ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
+			return ReadLineReader.create(new InputStreamReader(new FileInputStream(f), charset), FileWithSuffix.getFileName(f),
 					s.getLocation());
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());

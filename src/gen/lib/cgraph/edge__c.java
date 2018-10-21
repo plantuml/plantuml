@@ -79,26 +79,24 @@ import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agattr_s;
-import h.Agedge_s;
-import h.Agedgepair_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.Agsubnode_s;
-import h.Agtag_s;
+import h.ST_Agedge_s;
+import h.ST_Agraph_s;
+import h.ST_Agattr_s;
 import h.ST_Agdesc_s;
+import h.ST_Agedge_s;
+import h.ST_Agedgepair_s;
+import h.ST_Agnode_s;
+import h.ST_Agsubnode_s;
 import h.ST_Agtag_s;
-import h._dt_s;
-import h._dtdisc_s;
-import h._dtlink_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dtlink_s;
 import smetana.core.ACCESS;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.STARSTAR;
 import smetana.core.Z;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class edge__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -241,18 +239,18 @@ public class edge__c {
 
 //3 9vamtktowqtk4955i546z9obw
 // Agedge_t *agfstout(Agraph_t * g, Agnode_t * n) 
-public static Agedge_s agfstout(Agraph_s g, Agnode_s n) {
+public static ST_Agedge_s agfstout(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("9vamtktowqtk4955i546z9obw","agfstout");
 try {
-    Agsubnode_s sn;
-    Agedge_s e = null;
+	ST_Agsubnode_s sn;
+    __ptr__ e = null;
     sn = agsubrep(g, n);
     if (sn!=null) {
-		dtrestore((_dt_s)g.getPtr("e_seq"), (_dtlink_s)sn.getPtr("out_seq"));
-		e = (Agedge_s)  g.getPtr("e_seq").castTo(_dt_s.class).call("searchf", g.getPtr("e_seq"),null,0000200);
-		sn.setPtr("out_seq", dtextract((_dt_s)g.getPtr("e_seq")));
+		dtrestore((ST_dt_s)g.getPtr("e_seq"), (ST_dtlink_s)sn.getPtr("out_seq"));
+		e = (__ptr__) g.getPtr("e_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("e_seq"),null,0000200);
+		sn.setPtr("out_seq", dtextract((ST_dt_s)g.getPtr("e_seq")));
 	}
-    return e;
+    return e==null? null : (ST_Agedge_s) e.getPtr();
 } finally {
 LEAVING("9vamtktowqtk4955i546z9obw","agfstout");
 }
@@ -263,20 +261,20 @@ LEAVING("9vamtktowqtk4955i546z9obw","agfstout");
 
 //3 1qh7mgqwomkdqvczauv4ex1lu
 // Agedge_t *agnxtout(Agraph_t * g, Agedge_t * e) 
-public static Agedge_s agnxtout(Agraph_s g, Agedge_s e) {
+public static ST_Agedge_s agnxtout(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("1qh7mgqwomkdqvczauv4ex1lu","agnxtout");
 try {
-    Agnode_s n;
-    Agsubnode_s sn;
-    Agedge_s f = null;
+    ST_Agnode_s n;
+    ST_Agsubnode_s sn;
+    __ptr__ f = null;
     n = AGTAIL(e);
     sn = agsubrep(g, n);
     if (sn!=null) {
-		dtrestore((_dt_s)g.getPtr("e_seq"), (_dtlink_s)sn.getPtr("out_seq"));
-		f = (Agedge_s) g.getPtr("e_seq").castTo(_dt_s.class).call("searchf", g.getPtr("e_seq"),e,0000010);
-		sn.setPtr("out_seq", dtextract((_dt_s)g.getPtr("e_seq")));
+		dtrestore((ST_dt_s)g.getPtr("e_seq"), (ST_dtlink_s)sn.getPtr("out_seq"));
+		f = (__ptr__) g.getPtr("e_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("e_seq"),e,0000010);
+		sn.setPtr("out_seq", dtextract((ST_dt_s)g.getPtr("e_seq")));
 	}
-    return f;
+    return f==null?null:(ST_Agedge_s)f.getPtr();
 } finally {
 LEAVING("1qh7mgqwomkdqvczauv4ex1lu","agnxtout");
 }
@@ -287,18 +285,18 @@ LEAVING("1qh7mgqwomkdqvczauv4ex1lu","agnxtout");
 
 //3 c60qt3ycq0xweabgtqt16xe93
 // Agedge_t *agfstin(Agraph_t * g, Agnode_t * n) 
-public static Agedge_s agfstin(Agraph_s g, Agnode_s n) {
+public static ST_Agedge_s agfstin(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("c60qt3ycq0xweabgtqt16xe93","agfstin");
 try {
-    Agsubnode_s sn;
-    Agedge_s e = null;
+	ST_Agsubnode_s sn;
+    __ptr__ e = null;
     sn = agsubrep(g, n);
 	if (sn!=null) {
-		dtrestore((_dt_s)g.getPtr("e_seq"), (_dtlink_s)sn.getPtr("in_seq"));
-		e = (Agedge_s) g.getPtr("e_seq").castTo(_dt_s.class).call("searchf", g.getPtr("e_seq"),null,0000200);
-		sn.setPtr("in_seq", dtextract((_dt_s)g.getPtr("e_seq")));
+		dtrestore((ST_dt_s)g.getPtr("e_seq"), (ST_dtlink_s)sn.getPtr("in_seq"));
+		e = (__ptr__) g.getPtr("e_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("e_seq"),null,0000200);
+		sn.setPtr("in_seq", dtextract((ST_dt_s)g.getPtr("e_seq")));
 	}
-    return e;
+    return e==null?null:(ST_Agedge_s)e.getPtr();
 } finally {
 LEAVING("c60qt3ycq0xweabgtqt16xe93","agfstin");
 }
@@ -309,20 +307,20 @@ LEAVING("c60qt3ycq0xweabgtqt16xe93","agfstin");
 
 //3 f2af4x97mqn16npd6alsw7avs
 // Agedge_t *agnxtin(Agraph_t * g, Agedge_t * e) 
-public static Agedge_s agnxtin(Agraph_s g, Agedge_s e) {
+public static ST_Agedge_s agnxtin(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("f2af4x97mqn16npd6alsw7avs","agnxtin");
 try {
-    Agnode_s n;
-    Agsubnode_s sn;
-    Agedge_s f = null;
+    ST_Agnode_s n;
+    ST_Agsubnode_s sn;
+    __ptr__ f = null;
     n = AGHEAD(e);
     sn = agsubrep(g, n);
 	if (sn!=null) {
-		dtrestore((_dt_s)g.getPtr("e_seq"), (_dtlink_s)sn.getPtr("in_seq"));
-		f = (Agedge_s) g.getPtr("e_seq").castTo(_dt_s.class).call("searchf", g.getPtr("e_seq"),e,0000010);
-		sn.setPtr("in_seq", dtextract((_dt_s)g.getPtr("e_seq")));
+		dtrestore((ST_dt_s)g.getPtr("e_seq"), (ST_dtlink_s)sn.getPtr("in_seq"));
+		f = (__ptr__) g.getPtr("e_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("e_seq"),e,0000010);
+		sn.setPtr("in_seq", dtextract((ST_dt_s)g.getPtr("e_seq")));
 	}
-	return f;
+	return f==null?null:(ST_Agedge_s)f.getPtr();
 } finally {
 LEAVING("f2af4x97mqn16npd6alsw7avs","agnxtin");
 }
@@ -333,10 +331,10 @@ LEAVING("f2af4x97mqn16npd6alsw7avs","agnxtin");
 
 //3 6nwyo5bklramr0d093aa1h25o
 // Agedge_t *agfstedge(Agraph_t * g, Agnode_t * n) 
-public static Agedge_s agfstedge(Agraph_s g, Agnode_s n) {
+public static ST_Agedge_s agfstedge(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("6nwyo5bklramr0d093aa1h25o","agfstedge");
 try {
-    Agedge_s rv;
+    ST_Agedge_s rv;
     rv = agfstout(g, n);
     if (rv == null)
 	rv = agfstin(g, n);
@@ -351,10 +349,10 @@ LEAVING("6nwyo5bklramr0d093aa1h25o","agfstedge");
 
 //3 8zy2u6gsi2xzv2ffv8o4v4uvf
 // Agedge_t *agnxtedge(Agraph_t * g, Agedge_t * e, Agnode_t * n) 
-public static Agedge_s agnxtedge(Agraph_s g, Agedge_s e, Agnode_s n) {
+public static ST_Agedge_s agnxtedge(ST_Agraph_s g, ST_Agedge_s e, ST_Agnode_s n) {
 ENTERING("8zy2u6gsi2xzv2ffv8o4v4uvf","agnxtedge");
 try {
-    Agedge_s rv;
+    ST_Agedge_s rv;
     if (AGTYPE(e) == AGOUTEDGE) {
 	rv = agnxtout(g, e);
 	if (rv == null) {
@@ -379,28 +377,28 @@ LEAVING("8zy2u6gsi2xzv2ffv8o4v4uvf","agnxtedge");
 
 //3 c175o6j61jqmfnl4o1g1h1mie
 // static Agedge_t *agfindedge_by_key(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			    Agtag_t key) 
-public static Agedge_s agfindedge_by_key(Agraph_s g, Agnode_s t, Agnode_s h,  final __struct__<Agtag_s> key) {
+public static ST_Agedge_s agfindedge_by_key(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
 // WARNING!! STRUCT
-return agfindedge_by_key_w_(g, t, h, key.copy());
+return agfindedge_by_key_w_(g, t, h, (ST_Agtag_s) key.copy());
 }
-private static Agedge_s agfindedge_by_key_w_(Agraph_s g, Agnode_s t, Agnode_s h,  final __struct__<Agtag_s> key) {
+private static ST_Agedge_s agfindedge_by_key_w_(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
 ENTERING("c175o6j61jqmfnl4o1g1h1mie","agfindedge_by_key");
 try {
-    Agedge_s e, template = (Agedge_s) Memory.malloc(Agedge_s.class);
-    Agsubnode_s sn;
+	__ptr__ e;
+    final ST_Agedge_s template = new ST_Agedge_s();
+    ST_Agsubnode_s sn;
     if ((t == null) || (h == null))
 	return null;
-    template.getStruct("base").setStruct("tag", key);
+    template.base.setStruct("tag", key);
     template.setPtr("node", t);		/* guess that fan-in < fan-out */
     sn = agsubrep(g, h);
     if (N(sn)) e = null;
     else {
-	    dtrestore((_dt_s)g.getPtr("e_id"), (_dtlink_s)sn.getPtr("in_id"));
-	    e = (Agedge_s) ((__ptr__)g.getPtr("e_id").castTo(_dt_s.class).call("searchf", g.getPtr("e_id"),template,0000004));
-	    if (e!=null) e = (Agedge_s) e.castTo(Agedge_s.class);
-	    sn.setPtr("in_id", dtextract((_dt_s)g.getPtr("e_id")));
+	    dtrestore((ST_dt_s)g.getPtr("e_id"), (ST_dtlink_s)sn.getPtr("in_id"));
+	    e = ((__ptr__)g.getPtr("e_id").castTo(ST_dt_s.class).call("searchf", g.getPtr("e_id"),template,0000004));
+	    sn.setPtr("in_id", dtextract((ST_dt_s)g.getPtr("e_id")));
     }
-    return e;
+    return e==null?null:(ST_Agedge_s)e.getPtr();
 } finally {
 LEAVING("c175o6j61jqmfnl4o1g1h1mie","agfindedge_by_key");
 }
@@ -430,15 +428,15 @@ throw new UnsupportedOperationException();
 
 //3 b32ssm6ex1pdz1b3nt4fwlhul
 // Agsubnode_t *agsubrep(Agraph_t * g, Agnode_t * n) 
-public static Agsubnode_s agsubrep(Agraph_s g, Agnode_s n) {
+public static ST_Agsubnode_s agsubrep(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("b32ssm6ex1pdz1b3nt4fwlhul","agsubrep");
 try {
-    Agsubnode_s sn;
-    final __struct__<Agsubnode_s> template = JUtils.from(Agsubnode_s.class);
-	if (EQ(g, n.getPtr("root"))) sn = (Agsubnode_s) n.getStruct("mainsub").amp();
+	ST_Agsubnode_s sn;
+    final ST_Agsubnode_s template = new ST_Agsubnode_s();
+	if (EQ(g, n.getPtr("root"))) sn = (ST_Agsubnode_s) n.mainsub;
 	else {
 			template.setPtr("node", n);
-			sn = (Agsubnode_s) g.getPtr("n_id").castTo(_dt_s.class).call("searchf", g.getPtr("n_id"), template.amp(), 0000004);
+			sn = (ST_Agsubnode_s) g.getPtr("n_id").castTo(ST_dt_s.class).call("searchf", g.getPtr("n_id"), template, 0000004);
 	}
     return sn;
 } finally {
@@ -451,7 +449,7 @@ LEAVING("b32ssm6ex1pdz1b3nt4fwlhul","agsubrep");
 
 //3 6u0niow33w9gva780waluva4n
 // static void ins(Dict_t * d, Dtlink_t ** set, Agedge_t * e) 
-public static void ins(_dt_s d, STARSTAR<_dtlink_s> set, Agedge_s e) {
+public static void ins(ST_dt_s d, STARSTAR<ST_dtlink_s> set, ST_Agedge_s e) {
 ENTERING("6u0niow33w9gva780waluva4n","ins");
 try {
     dtrestore(d, set.getMe());
@@ -485,56 +483,56 @@ throw new UnsupportedOperationException();
 
 //3 8kizmg7gziussfgx8zs3qvkfw
 // static void installedge(Agraph_t * g, Agedge_t * e) 
-public static void installedge(Agraph_s g, Agedge_s e) {
+public static void installedge(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("8kizmg7gziussfgx8zs3qvkfw","installedge");
 try {
-    Agnode_s t, h;
-    Agedge_s out, in;
-    Agsubnode_s sn;
+    ST_Agnode_s t, h;
+    ST_Agedge_s out, in;
+    ST_Agsubnode_s sn;
     out = AGMKOUT(e);
     in = AGMKIN(e);
     t = agtail(e);
     h = aghead(e);
     while (g!=null) {
 	if (agfindedge_by_key(g, t, h, AGTAG(e))!=null) break;
-	sn = agsubrep(g, t); final Agsubnode_s sn1 = sn;
-	ins((_dt_s)g.getPtr("e_seq"), 
-			STARSTAR.amp(new ACCESS<_dtlink_s>() {
-				public _dtlink_s get() {
-					return (_dtlink_s) sn1.getPtr("out_seq");
+	sn = agsubrep(g, t); final ST_Agsubnode_s sn1 = sn;
+	ins((ST_dt_s)g.getPtr("e_seq"), 
+			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+				public ST_dtlink_s get() {
+					return (ST_dtlink_s) sn1.getPtr("out_seq");
 				}
-				public void set(_dtlink_s obj) {
+				public void set(ST_dtlink_s obj) {
 					sn1.setPtr("out_seq", obj);
 				}})
-	, (Agedge_s)out);
-	ins((_dt_s)g.getPtr("e_id"), 
-			STARSTAR.amp(new ACCESS<_dtlink_s>() {
-				public _dtlink_s get() {
-					return (_dtlink_s) sn1.getPtr("out_id");
+	, (ST_Agedge_s)out);
+	ins((ST_dt_s)g.getPtr("e_id"), 
+			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+				public ST_dtlink_s get() {
+					return (ST_dtlink_s) sn1.getPtr("out_id");
 				}
-				public void set(_dtlink_s obj) {
+				public void set(ST_dtlink_s obj) {
 					sn1.setPtr("out_id", obj);
 				}})
-	, (Agedge_s)out);
-	sn = agsubrep(g, h);  final Agsubnode_s sn2 = sn;
-	ins((_dt_s)g.getPtr("e_seq"), 
-			STARSTAR.amp(new ACCESS<_dtlink_s>() {
-				public _dtlink_s get() {
-					return (_dtlink_s) sn2.getPtr("in_seq");
+	, (ST_Agedge_s)out);
+	sn = agsubrep(g, h);  final ST_Agsubnode_s sn2 = sn;
+	ins((ST_dt_s)g.getPtr("e_seq"), 
+			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+				public ST_dtlink_s get() {
+					return (ST_dtlink_s) sn2.getPtr("in_seq");
 				}
-				public void set(_dtlink_s obj) {
+				public void set(ST_dtlink_s obj) {
 					sn2.setPtr("in_seq", obj);
 				}})
-	, (Agedge_s)in);
-	ins((_dt_s)g.getPtr("e_id"), 
-			STARSTAR.amp(new ACCESS<_dtlink_s>() {
-				public _dtlink_s get() {
-					return (_dtlink_s) sn2.getPtr("in_id");
+	, (ST_Agedge_s)in);
+	ins((ST_dt_s)g.getPtr("e_id"), 
+			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+				public ST_dtlink_s get() {
+					return (ST_dtlink_s) sn2.getPtr("in_id");
 				}
-				public void set(_dtlink_s obj) {
+				public void set(ST_dtlink_s obj) {
 					sn2.setPtr("in_id", obj);
 				}})
-	, (Agedge_s)in);
+	, (ST_Agedge_s)in);
 	g = agparent(g);
     }
 } finally {
@@ -562,17 +560,17 @@ throw new UnsupportedOperationException();
 
 //3 4rzjui6oo0k009o64bxwgjmvq
 // static Agedge_t *newedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			 unsigned long id) 
-public static Agedge_s newedge(Agraph_s g, Agnode_s t, Agnode_s h, int id) {
+public static ST_Agedge_s newedge(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, int id) {
 ENTERING("4rzjui6oo0k009o64bxwgjmvq","newedge");
 try {
-    Agedgepair_s e2;
-    Agedge_s in, out;
+	ST_Agedgepair_s e2;
+    ST_Agedge_s in, out;
     int seq;
     agsubnode(g,t,(N(0)));
     agsubnode(g,h,(N(0)));
-    e2 = (Agedgepair_s) agalloc(g, sizeof(Agedgepair_s.class));
-    in = (Agedge_s) e2.getStruct("in").amp();
-    out = (Agedge_s) e2.getStruct("out").amp();
+    e2 = (ST_Agedgepair_s) agalloc(g, sizeof(ST_Agedgepair_s.class));
+    in = (ST_Agedge_s) e2.in;
+    out = (ST_Agedge_s) e2.out;
     seq = agnextseq(g, AGEDGE);
     AGTYPE(in, AGINEDGE);
     AGTYPE(out, AGOUTEDGE);
@@ -584,7 +582,7 @@ try {
     out.setPtr("node", h);
     installedge(g, out);
     if (((ST_Agdesc_s)g.getStruct("desc")).has_attrs!=0) {
-	  agbindrec(out, AgDataRecName, sizeof(Agattr_s.class), false);
+	  agbindrec(out, AgDataRecName, sizeof(ST_Agattr_s.class), false);
 	  agedgeattr_init(g, out);
     }
     agmethod_init(g, out);
@@ -599,13 +597,13 @@ LEAVING("4rzjui6oo0k009o64bxwgjmvq","newedge");
 
 //3 1ufxhg5xnmll1pe5339477823
 // static int ok_to_make_edge(Agraph_t * g, Agnode_t * t, Agnode_t * h) 
-public static boolean ok_to_make_edge(Agraph_s g, Agnode_s t, Agnode_s h) {
+public static boolean ok_to_make_edge(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
 ENTERING("1ufxhg5xnmll1pe5339477823","ok_to_make_edge");
 try {
-    final __struct__<Agtag_s> key = JUtils.from(Agtag_s.class);
+    final ST_Agtag_s key = new ST_Agtag_s();
     /* protect against self, multi-edges in strict graphs */
     if (agisstrict(g)) {
-	if (g.getPtr("desc").getBoolean("no_loop") && (EQ(t, h))) /* simple graphs */
+	if (g.desc.no_loop!=0 && (EQ(t, h))) /* simple graphs */
 	    return false;
 	key.___(Z.z().Tag);
 	key.setInt("objtype", 0);	/* wild card */
@@ -653,10 +651,10 @@ throw new UnsupportedOperationException();
 
 //3 4361pvzr3ozft2ov0fgx6t8bo
 // Agedge_t *agedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, char *name, 		 int cflag) 
-public static Agedge_s agedge(Agraph_s g, Agnode_s t, Agnode_s h, CString name, boolean cflag) {
+public static ST_Agedge_s agedge(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, CString name, boolean cflag) {
 ENTERING("4361pvzr3ozft2ov0fgx6t8bo","agedge");
 try {
-    Agedge_s e;
+    ST_Agedge_s e;
     int id[] = new int[1];
     int have_id;
     have_id = agmapnametoid(g, AGEDGE, name, id, false);
@@ -766,11 +764,11 @@ throw new UnsupportedOperationException();
 
 //3 30v8z3tlda81fbqbkzx6m9fkn
 // Agedge_t *agsubedge(Agraph_t * g, Agedge_t * e, int cflag) 
-public static Agedge_s agsubedge(Agraph_s g, Agedge_s e, boolean cflag) {
+public static ST_Agedge_s agsubedge(ST_Agraph_s g, ST_Agedge_s e, boolean cflag) {
 ENTERING("30v8z3tlda81fbqbkzx6m9fkn","agsubedge");
 try {
-    Agnode_s t, h;
-    Agedge_s rv;
+    ST_Agnode_s t, h;
+    ST_Agedge_s rv;
     rv = null;
     t = agsubnode(g, AGTAIL(e), cflag);
     h = agsubnode(g, AGHEAD(e), cflag);
@@ -794,13 +792,13 @@ LEAVING("30v8z3tlda81fbqbkzx6m9fkn","agsubedge");
 
 //3 avk47eh26r45qk2dtoipwiqvz
 // int agedgeidcmpf(Dict_t * d, void *arg_e0, void *arg_e1, Dtdisc_t * disc) 
-public static int agedgeidcmpf(_dt_s d, __ptr__ arg_e0, __ptr__ arg_e1, _dtdisc_s disc) {
+public static int agedgeidcmpf(ST_dt_s d, __ptr__ arg_e0, __ptr__ arg_e1, ST_dtdisc_s disc) {
 ENTERING("avk47eh26r45qk2dtoipwiqvz","agedgeidcmpf");
 try {
     int v;
-    Agedge_s e0, e1;
-    e0 = (Agedge_s) arg_e0;
-    e1 = (Agedge_s) arg_e1;
+    ST_Agedge_s e0, e1;
+    e0 = (ST_Agedge_s) arg_e0.getPtr();
+    e1 = (ST_Agedge_s) arg_e1.getPtr();
     v = AGID(e0.getPtr("node")) - AGID(e1.getPtr("node"));
     if (v == 0) {		/* same node */
 	if ((AGTYPE(e0) == 0) || (AGTYPE(e1) == 0))
@@ -819,13 +817,13 @@ LEAVING("avk47eh26r45qk2dtoipwiqvz","agedgeidcmpf");
 
 //3 b6jhzc16xvrknu4e7jp6zx0ue
 // int agedgeseqcmpf(Dict_t * d, void *arg_e0, void *arg_e1, Dtdisc_t * disc) 
-public static int agedgeseqcmpf(_dt_s d, __ptr__ arg_e0, __ptr__ arg_e1, _dtdisc_s disc) {
+public static int agedgeseqcmpf(ST_dt_s d, __ptr__ arg_e0, __ptr__ arg_e1, ST_dtdisc_s disc) {
 ENTERING("b6jhzc16xvrknu4e7jp6zx0ue","agedgeseqcmpf");
 try {
     int v;
-    Agedge_s e0, e1;
-    e0 = (Agedge_s) arg_e0;
-    e1 = (Agedge_s) arg_e1;
+    ST_Agedge_s e0, e1;
+    e0 = (ST_Agedge_s) arg_e0.getPtr();
+    e1 = (ST_Agedge_s) arg_e1.getPtr();
 	if (NEQ(e0.getPtr("node"), e1.getPtr("node"))) v = AGSEQ(e0.getPtr("node")) - AGSEQ(e1.getPtr("node"));
 	else v = (AGSEQ(e0) - AGSEQ(e1));
     return ((v==0)?0:(v<0?-1:1));
@@ -900,7 +898,7 @@ static {
 
 //3 ceexs6t1q4jxwz6h0g8fszxp4
 // Agnode_t *agtail(Agedge_t * e) 
-public static Agnode_s agtail(Agedge_s e) {
+public static ST_Agnode_s agtail(ST_Agedge_s e) {
 ENTERING("ceexs6t1q4jxwz6h0g8fszxp4","agtail");
 try {
     return AGTAIL(e);
@@ -914,10 +912,10 @@ LEAVING("ceexs6t1q4jxwz6h0g8fszxp4","agtail");
 
 //3 3tj9gj3dvrpox6grrdd3rftd8
 // Agnode_t *aghead(Agedge_t * e) 
-public static Agnode_s aghead(__ptr__ e) {
+public static ST_Agnode_s aghead(__ptr__ e) {
 ENTERING("3tj9gj3dvrpox6grrdd3rftd8","aghead");
 try {
-    return AGHEAD((Agedge_s) e);
+    return AGHEAD((ST_Agedge_s) e);
 } finally {
 LEAVING("3tj9gj3dvrpox6grrdd3rftd8","aghead");
 }
@@ -928,10 +926,10 @@ LEAVING("3tj9gj3dvrpox6grrdd3rftd8","aghead");
 
 //3 15e6s5bh5hey2u79yoebir59w
 // Agedge_t *agopp(Agedge_t * e) 
-public static Agedge_s agopp(__ptr__ e) {
+public static ST_Agedge_s agopp(__ptr__ e) {
 ENTERING("15e6s5bh5hey2u79yoebir59w","agopp");
 try {
-    return AGOPP((Agedge_s) e);
+    return AGOPP((ST_Agedge_s) e);
 } finally {
 LEAVING("15e6s5bh5hey2u79yoebir59w","agopp");
 }

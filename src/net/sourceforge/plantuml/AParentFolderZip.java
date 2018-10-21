@@ -43,6 +43,11 @@ public class AParentFolderZip implements AParentFolder {
 	private final File zipFile;
 	private final String parent;
 
+	@Override
+	public String toString() {
+		return "AParentFolderZip::" + zipFile + " " + parent;
+	}
+
 	public AParentFolderZip(File zipFile, String entry) {
 		this.zipFile = zipFile;
 		final int idx = entry.lastIndexOf('/');

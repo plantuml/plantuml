@@ -45,14 +45,10 @@
  */
 package h;
 
-import h.ST_RTree.Amp;
-
-import java.util.Arrays;
-import java.util.List;
-
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
+import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_RTree extends UnsupportedStructAndPtr {
@@ -69,13 +65,14 @@ public class ST_RTree extends UnsupportedStructAndPtr {
 
 	// "struct RTree",
 	// "{",
+	public ST_Node_t___ root;
 	// "Node_t *root",
-	// "SplitQ_t split",
-	// "int MinFill",
+	public final ST_SplitQ_t split = new ST_SplitQ_t(this);
+	public int MinFill;
 	// "long ElapsedTime",
 	// "float UserTime, SystemTime",
-	// "int Deleting",
-	// "int StatFlag",
+	public int Deleting;
+	public int StatFlag;
 	// "int InsertCount",
 	// "int DeleteCount",
 	// "int ReInsertCount",
@@ -85,38 +82,104 @@ public class ST_RTree extends UnsupportedStructAndPtr {
 	// "int EvalCount",
 	// "int InTouchCount",
 	// "int DeTouchCount",
-	// "int SeTouchCount",
+	public int SeTouchCount;
 	// "int CallCount",
 	// "float SplitMeritSum",
-	// "int RectCount",
-	private int NodeCount;
-	// "int LeafCount, NonLeafCount",
-	// "int EntryCount",
+	public int RectCount;
+	public int NodeCount;
+	public int LeafCount, NonLeafCount;
+
+	public int EntryCount;
 	// "int SearchCount",
 	// "int HitCount",
 	// "}");
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
+	public __ptr__ getPtr(String fieldName) {
+		if (fieldName.equals("root")) {
+			return root;
+		}
+		return super.getPtr(fieldName);
 	}
 	
+	@Override
+	public ST_SplitQ_t getStruct(String fieldName) {
+		if (fieldName.equals("split")) {
+			return split;
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
+		if (fieldName.equals("root")) {
+			this.root = (ST_Node_t___) newData;
+			return root;
+		}
+		return super.setPtr(fieldName, newData);
+	}
+
 	@Override
 	public int getInt(String fieldName) {
 		if (fieldName.equals("NodeCount")) {
 			return NodeCount;
 		}
+		if (fieldName.equals("LeafCount")) {
+			return LeafCount;
+		}
+		if (fieldName.equals("Deleting")) {
+			return Deleting;
+		}
+		if (fieldName.equals("RectCount")) {
+			return RectCount;
+		}
+		if (fieldName.equals("EntryCount")) {
+			return EntryCount;
+		}
+		if (fieldName.equals("SeTouchCount")) {
+			return SeTouchCount;
+		}
+		if (fieldName.equals("MinFill")) {
+			return MinFill;
+		}
+		if (fieldName.equals("NonLeafCount")) {
+			return NonLeafCount;
+		}
 		return super.getInt(fieldName);
 	}
-	
+
+	@Override
+	public boolean getBoolean(String fieldName) {
+		if (fieldName.equals("StatFlag")) {
+			return StatFlag != 0;
+		}
+		return super.getBoolean(fieldName);
+	}
+
 	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("NodeCount")) {
 			this.NodeCount = data;
+			return;
+		}
+		if (fieldName.equals("LeafCount")) {
+			this.LeafCount = data;
+			return;
+		}
+		if (fieldName.equals("RectCount")) {
+			this.RectCount = data;
+			return;
+		}
+		if (fieldName.equals("EntryCount")) {
+			this.EntryCount = data;
+			return;
+		}
+		if (fieldName.equals("SeTouchCount")) {
+			this.SeTouchCount = data;
+			return;
+		}
+		if (fieldName.equals("NonLeafCount")) {
+			this.NonLeafCount = data;
 			return;
 		}
 		super.setInt(fieldName, data);

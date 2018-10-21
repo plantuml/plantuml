@@ -49,10 +49,10 @@ import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.GVC_s;
+import h.ST_GVC_s;
+import h.ST_gvplugin_available_s;
+import h.ST_gvplugin_installed_t;
 import h.api_t;
-import h.gvplugin_available_s;
-import h.gvplugin_installed_t;
 import smetana.core.CString;
 
 public class gvtextlayout__c {
@@ -160,11 +160,11 @@ public class gvtextlayout__c {
 
 //3 f1oiyeonoigwygyq8c88wl8tz
 // int gvtextlayout_select(GVC_t * gvc) 
-public static int gvtextlayout_select(GVC_s gvc) {
+public static int gvtextlayout_select(ST_GVC_s gvc) {
 ENTERING("f1oiyeonoigwygyq8c88wl8tz","gvtextlayout_select");
 try {
-    gvplugin_available_s plugin;
-    gvplugin_installed_t typeptr;
+	ST_gvplugin_available_s plugin;
+    ST_gvplugin_installed_t typeptr;
     plugin = gvplugin_load(gvc, enumAsInt(api_t.class, "API_textlayout"), new CString("textlayout"));
     if (plugin!=null) {
 UNSUPPORTED("8cnmkxanogd09zc24faarugvo"); // 	typeptr = plugin->typeptr;

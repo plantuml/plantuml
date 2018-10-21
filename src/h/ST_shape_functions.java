@@ -66,23 +66,11 @@ public class ST_shape_functions extends UnsupportedStructAndPtr {
 
 	public ST_shape_functions(StarStruct parent) {
 	}
-	
+
+
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_shape_functions.this.getPtr(fieldName);
-		}
-
-		@Override
-		public Object call(String fieldName, Object... args) {
-			return ((CFunction) getPtr(fieldName)).exe(args);
-		}
+	public Object call(String fieldName, Object... args) {
+		return ((CFunction) getPtr(fieldName)).exe(args);
 	}
 
 	@Override

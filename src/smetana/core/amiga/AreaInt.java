@@ -40,7 +40,7 @@ public class AreaInt implements Area {
 
 	private int data = 0;
 
-	private final int UID = StarStructImpl.CPT++;
+	private final int UID = Counter.CPT++;
 
 	private String getUID36() {
 		return Integer.toString(UID, 36);

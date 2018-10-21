@@ -52,6 +52,11 @@ public class AFileZipEntry implements AFile {
 		this.entry = entry;
 	}
 
+	@Override
+	public String toString() {
+		return "AFileZipEntry::" + zipFile + " " + entry;
+	}
+
 	public InputStream open() throws IOException {
 		final ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
 		ZipEntry ze = zis.getNextEntry();

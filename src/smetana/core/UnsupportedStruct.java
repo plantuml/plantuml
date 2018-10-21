@@ -69,9 +69,6 @@ public class UnsupportedStruct implements __struct__ {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public void setCString(String fieldName, CString value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
 
 	public void setStruct(String fieldName, __struct__ value) {
 		throw new UnsupportedOperationException(getClass().toString());
@@ -86,22 +83,6 @@ public class UnsupportedStruct implements __struct__ {
 	}
 
 	public void setDouble(String fieldName, double value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_integer__ getArrayOfInteger(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __array_of_cstring__ getArrayOfCString(String fieldName) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

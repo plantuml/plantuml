@@ -44,13 +44,24 @@ public class AParentFolderRegular implements AParentFolder {
 
 	public AParentFolderRegular(File dir) {
 		this.dir = dir;
+		Log.info("Creating AParentFolderRegular " + dir);
+	}
+
+	@Override
+	public String toString() {
+		return "AParentFolderRegular::" + (dir == null ? "NULL" : dir.getAbsolutePath());
 	}
 
 	public AFile getAFile(String nameOrPath) throws IOException {
+		final File filecurrent;
+		Log.info("AParentFolderRegular::looking for " + nameOrPath);
+		Log.info("AParentFolderRegular::dir = " + dir);
 		if (dir == null) {
-			return null;
+			filecurrent = new File(nameOrPath);
+		} else {
+			filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
 		}
-		final File filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
+		Log.info("AParentFolderRegular::Filecurrent " + filecurrent);
 		if (filecurrent.exists()) {
 			return new AFileRegular(filecurrent.getCanonicalFile());
 		}

@@ -203,12 +203,14 @@ public class Rose implements Skin {
 					FontParam.NOTE), stringsToDisplay, paddingX, paddingY, param, roundCorner, alignment);
 		}
 		if (type == ComponentType.NOTE_HEXAGONAL) {
+			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null);
 			return new ComponentRoseNoteHexagonal(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
-					FontParam.NOTE), stringsToDisplay, param);
+					FontParam.NOTE), stringsToDisplay, param, alignment);
 		}
 		if (type == ComponentType.NOTE_BOX) {
+			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null);
 			return new ComponentRoseNoteBox(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
-					FontParam.NOTE), stringsToDisplay, param);
+					FontParam.NOTE), stringsToDisplay, param, alignment);
 		}
 		final FontConfiguration bigFont = getUFont2(param, FontParam.SEQUENCE_GROUP_HEADER);
 		if (type == ComponentType.GROUPING_HEADER) {

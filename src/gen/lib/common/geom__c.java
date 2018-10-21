@@ -47,10 +47,7 @@ package gen.lib.common;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.boxf;
-import h.pointf;
-import smetana.core.JUtils;
-import smetana.core.__struct__;
+import h.ST_pointf;
 
 public class geom__c {
 
@@ -74,14 +71,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -110,25 +107,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -152,14 +130,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -637,11 +615,11 @@ throw new UnsupportedOperationException();
 
 //3 3aiyj7urv33rvps5ds204tciu
 // static pointf rotatepf(pointf p, int cwrot) 
-public static __struct__<pointf> rotatepf(final __struct__<pointf> p, int cwrot) {
+public static ST_pointf rotatepf(final ST_pointf p, int cwrot) {
 // WARNING!! STRUCT
 return rotatepf_w_(p.copy(), cwrot).copy();
 }
-private static __struct__<pointf> rotatepf_w_(final __struct__<pointf> p, int cwrot) {
+private static ST_pointf rotatepf_w_(final ST_pointf p, int cwrot) {
 ENTERING("3aiyj7urv33rvps5ds204tciu","rotatepf");
 try {
  UNSUPPORTED("adzi0wztceimu4ni3aonznmq7"); // static pointf rotatepf(pointf p, int cwrot)
@@ -726,11 +704,11 @@ throw new UnsupportedOperationException();
 
 //3 5q8h2tm3jifiasn423wrm0y60
 // pointf cwrotatepf(pointf p, int cwrot) 
-public static __struct__<pointf> cwrotatepf(final __struct__<pointf> p, int cwrot) {
+public static ST_pointf cwrotatepf(final ST_pointf p, int cwrot) {
 // WARNING!! STRUCT
 return cwrotatepf_w_(p.copy(), cwrot).copy();
 }
-private static __struct__<pointf> cwrotatepf_w_(final __struct__<pointf> p, int cwrot) {
+private static ST_pointf cwrotatepf_w_(final ST_pointf p, int cwrot) {
 ENTERING("5q8h2tm3jifiasn423wrm0y60","cwrotatepf");
 try {
     double x = p.getDouble("x"), y = p.getDouble("y");
@@ -804,11 +782,11 @@ throw new UnsupportedOperationException();
 
 //3 6np74e9pfmv8uek8irqru2tma
 // pointf ccwrotatepf(pointf p, int ccwrot) 
-public static __struct__<pointf> ccwrotatepf(final __struct__<pointf> p, int ccwrot) {
+public static ST_pointf ccwrotatepf(final ST_pointf p, int ccwrot) {
 // WARNING!! STRUCT
 return ccwrotatepf_w_(p.copy(), ccwrot).copy();
 }
-private static __struct__<pointf> ccwrotatepf_w_(final __struct__<pointf> p, int ccwrot) {
+private static ST_pointf ccwrotatepf_w_(final ST_pointf p, int ccwrot) {
 ENTERING("6np74e9pfmv8uek8irqru2tma","ccwrotatepf");
 try {
     double x = p.getDouble("x"), y = p.getDouble("y");
@@ -895,11 +873,11 @@ throw new UnsupportedOperationException();
 
 //3 90k9l4o3khu3dw0fzkrcd97nk
 // double ptToLine2 (pointf a, pointf b, pointf p) 
-public static double ptToLine2(final __struct__<pointf> a, final __struct__<pointf> b, final __struct__<pointf> p) {
+public static double ptToLine2(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
 // WARNING!! STRUCT
 return ptToLine2_w_(a.copy(), b.copy(), p.copy());
 }
-private static double ptToLine2_w_(final __struct__<pointf> a, final __struct__<pointf> b, final __struct__<pointf> p) {
+private static double ptToLine2_w_(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
 ENTERING("90k9l4o3khu3dw0fzkrcd97nk","ptToLine2");
 try {
   double dx = b.getDouble("x")-a.getDouble("x");

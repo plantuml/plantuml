@@ -112,7 +112,7 @@ public class LiveBoxFinder implements UGraphic {
 		} else if (shape instanceof NotesTile) {
 			// Nothing ?
 		} else if (shape instanceof Tile) {
-			Log.error("OtherTile " + shape);
+			Log.info("OtherTile " + shape);
 		} else {
 			throw new UnsupportedOperationException(shape.getClass().getName());
 		}

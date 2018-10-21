@@ -46,10 +46,8 @@
 package h;
 
 import smetana.core.MutableDoublePtr;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarArrayOfStruct;
 import smetana.core.amiga.StarStruct;
 
 public class ST_inside_t extends UnsupportedStructAndPtr {
@@ -69,7 +67,7 @@ public class ST_inside_t extends UnsupportedStructAndPtr {
 	// "struct",
 	// "{",
 	// "pointf* p",
-	private StarArrayOfStruct p;
+	private ST_pointf.Array p;
 	private MutableDoublePtr r;
 	// "double* r",
 	// "}",
@@ -86,17 +84,6 @@ public class ST_inside_t extends UnsupportedStructAndPtr {
 	// "}",
 	// "inside_t");
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_inside_t.this.getPtr(fieldName);
-		}
-	}
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -109,7 +96,7 @@ public class ST_inside_t extends UnsupportedStructAndPtr {
 			return this.bp;
 		}
 		if (fieldName.equals("a.p")) {
-			this.p = (StarArrayOfStruct) newData;
+			this.p = (ST_pointf.Array) newData;
 			return this.p;
 		}
 		if (fieldName.equals("a.r")) {

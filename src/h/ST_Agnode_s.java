@@ -45,22 +45,181 @@
  */
 package h;
 
-import smetana.core.UnsupportedSize_t;
-import smetana.core.UnsupportedStarStruct;
+import java.util.ArrayList;
+import java.util.List;
+
+import smetana.core.CString;
+import smetana.core.UnsupportedArrayOfPtr;
+import smetana.core.UnsupportedArrayOfStruct2;
 import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.size_t;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agnode_s extends UnsupportedStructAndPtr {
 
-	private final ST_Agobj_s base = new ST_Agobj_s(this);
-	private ST_Agraph_s root;
-	private ST_Agsubnode_s mainsub = new ST_Agsubnode_s(this);
+	public final ST_Agobj_s base = new ST_Agobj_s(this);
+	public ST_Agraph_s root;
+	public final ST_Agsubnode_s mainsub = new ST_Agsubnode_s(this);
 
 	private final StarStruct parent;
+
+	public static class ArrayOfStar extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
+
+		private final List<ST_Agnode_s> data;
+		private final int pos;
+
+		public ArrayOfStar(int size) {
+			this.data = new ArrayList<ST_Agnode_s>();
+			this.pos = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(null);
+			}
+		}
+
+		public void swap(int i, int j) {
+			ST_Agnode_s e1 = data.get(i);
+			ST_Agnode_s e2 = data.get(j);
+			data.set(i, e2);
+			data.set(j, e1);
+		}
+
+		public ArrayOfStar(List<ST_Agnode_s> data, int pos) {
+			this.data = data;
+			this.pos = pos;
+		}
+
+		public ArrayOfStar reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(null);
+			}
+			return this;
+		}
+
+		@Override
+		public ArrayOfStar plus(int delta) {
+			return new ArrayOfStar(data, pos + delta);
+		}
+
+		@Override
+		public ArrayOfStar asPtr() {
+			return this;
+		}
+
+		@Override
+		public void setPtr(__ptr__ value) {
+			this.data.set(pos, (ST_Agnode_s) value);
+		}
+
+		@Override
+		public ST_Agnode_s getPtr() {
+			return this.data.get(pos);
+		}
+
+		@Override
+		public int comparePointer(__ptr__ other) {
+			final ArrayOfStar this2 = (ArrayOfStar) other;
+			if (this.data != this2.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos - this2.pos;
+		}
+
+		public boolean isSameThan2(ArrayOfStar other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos == other.pos;
+		}
+	}
+
+	public static class Array extends UnsupportedArrayOfStruct2 implements __ptr__, __array_of_ptr__ {
+
+		private final List<ST_Agnode_s> data;
+		private final int pos;
+
+		@Override
+		public void setStruct(__struct__ value) {
+			get(0).___(value);
+		}
+
+		@Override
+		public Array asPtr() {
+			return this;
+		}
+
+		public Array(int size) {
+			this.data = new ArrayList<ST_Agnode_s>();
+			this.pos = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(new ST_Agnode_s());
+			}
+		}
+
+		public Array reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(new ST_Agnode_s());
+			}
+			return this;
+		}
+
+		public Array plus(int delta) {
+			return plusJ(delta);
+		}
+
+		@Override
+		public void setPtr(__ptr__ value) {
+			this.data.set(pos, (ST_Agnode_s) value);
+		}
+
+		@Override
+		public ST_Agnode_s getPtr() {
+			return this.data.get(pos);
+		}
+
+		private Array(List<ST_Agnode_s> data, int pos) {
+			this.data = data;
+			this.pos = pos;
+		}
+
+		public ST_Agnode_s get(int i) {
+			return this.data.get(pos + i);
+		}
+
+		public Array plusJ(int i) {
+			return new Array(data, pos + i);
+		}
+
+		public int minus(Array other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos - other.pos;
+		}
+
+		public Array move(int delta) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public void realloc(size_t nb) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public int comparePointerInternal(__array_of_ptr__ other) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public CString getCString() {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public void setCString(CString value) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+	}
 
 	public ST_Agnode_s() {
 		this(null);
@@ -75,56 +234,11 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp(this);
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		private final ST_Agnode_s me;
-
-		public Amp(ST_Agnode_s me) {
-			this.me = me;
-		}
-
-		@Override
-		public __ptr__ castTo(Class dest) {
-			if (dest == Agobj_s.class) {
-				return base.amp();
-			}
-			if (dest == Agnode_s.class) {
-				return me;
-			}
-			return super.castTo(dest);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return ST_Agnode_s.this.getStruct();
-		}
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_Agnode_s.this.getPtr(fieldName);
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return ST_Agnode_s.this.setPtr(fieldName, newData);
-		}
-
-		public ST_Agnode_s getObject() {
-			return me;
-		}
-
-	}
-
-	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Agnode_s.class) {
+		if (dest == ST_Agnode_s.class) {
 			return this;
 		}
-		if (dest == Agobj_s.class) {
+		if (dest == ST_Agobj_s.class) {
 			return base;
 		}
 		return super.castTo(dest);
@@ -132,10 +246,6 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 
 	@Override
 	public boolean isSameThan(StarStruct other) {
-		if (other instanceof Amp) {
-			Amp other2 = (Amp) other;
-			return this == other2.me;
-		}
 		ST_Agnode_s other2 = (ST_Agnode_s) other;
 		return this == other2;
 	}
@@ -173,48 +283,6 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 		return this;
 	}
 
-	public static size_t sizeof_starstar_empty(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return STStarArrayOfPointer.malloc(nb);
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-		};
-	}
-
-	public static size_t sizeof(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return new StarArrayOfPtr(new STArray<ST_Agnode_s>(nb, 0, ST_Agnode_s.class));
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-
-			@Override
-			public Object realloc(Object old) {
-				if (old instanceof STStarArrayOfPointer) {
-					STStarArrayOfPointer old2 = (STStarArrayOfPointer) old;
-					old2.realloc(nb);
-					return old2;
-				}
-				if (old instanceof StarArrayOfPtr) {
-					StarArrayOfPtr old2 = (StarArrayOfPtr) old;
-					old2.realloc(nb);
-					return old2;
-				}
-				return super.realloc(old);
-			}
-		};
-	}
 	// public static List<String> DEFINITION = Arrays.asList(
 	// "struct Agnode_s",
 	// "{",

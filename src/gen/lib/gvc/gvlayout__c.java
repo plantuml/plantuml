@@ -60,17 +60,14 @@ import static smetana.core.Macro.GD_drawing;
 import static smetana.core.Macro.GD_gvc;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agraph_s;
-import h.Agraphinfo_t;
-import h.GVC_s;
-import h.gvlayout_engine_s;
-import h.gvlayout_features_t;
-import h.gvplugin_installed_t;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_GVC_s;
+import h.ST_gvlayout_engine_s;
+import h.ST_gvlayout_features_t;
+import h.ST_gvplugin_installed_t;
 import h.layout_type;
 import smetana.core.CString;
-import smetana.core.JUtils;
-import smetana.core.Memory;
-import smetana.core.__struct__;
 
 public class gvlayout__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -175,27 +172,27 @@ public class gvlayout__c {
 
 
 
-//3 2g20jitdi8afuoei8p1mcfg9l
-// int gvlayout_select(GVC_t * gvc, const char *layout) 
-private final static __struct__<gvlayout_features_t> dotgen_features = JUtils.from(gvlayout_features_t.class);
-private final static __struct__<gvlayout_engine_s> dotgen_engine = JUtils.from(gvlayout_engine_s.class);
+private final static ST_gvlayout_features_t dotgen_features = new ST_gvlayout_features_t();
+private final static ST_gvlayout_engine_s dotgen_engine = new ST_gvlayout_engine_s();
 static {
 dotgen_features.setInt("flags", 1<<0);
 dotgen_engine.setPtr("layout", function(gen.lib.dotgen.dotinit__c.class, "dot_layout"));
 dotgen_engine.setPtr("cleanup", function(gen.lib.dotgen.dotinit__c.class, "dot_cleanup"));
 }
-public static int gvlayout_select(GVC_s gvc, CString layout) {
+//3 2g20jitdi8afuoei8p1mcfg9l
+//int gvlayout_select(GVC_t * gvc, const char *layout) 
+public static int gvlayout_select(ST_GVC_s gvc, CString layout) {
 ENTERING("2g20jitdi8afuoei8p1mcfg9l","gvlayout_select");
 try {
-	gvplugin_installed_t gvlayout_dot_layout = (gvplugin_installed_t) Memory.malloc(gvplugin_installed_t.class);
+	ST_gvplugin_installed_t gvlayout_dot_layout = new ST_gvplugin_installed_t();
 	gvlayout_dot_layout.setInt("id", enumAsInt(layout_type.class, "LAYOUT_DOT"));
 	gvlayout_dot_layout.setPtr("type", new CString("dot"));
 	gvlayout_dot_layout.setInt("quality", 0);
-	gvlayout_dot_layout.setPtr("engine", dotgen_engine.amp());
-	gvlayout_dot_layout.setPtr("features", dotgen_features.amp());
+	gvlayout_dot_layout.setPtr("engine", dotgen_engine);
+	gvlayout_dot_layout.setPtr("features", dotgen_features);
 
 //    gvplugin_available_t *plugin;
-    gvplugin_installed_t typeptr = gvlayout_dot_layout;
+	ST_gvplugin_installed_t typeptr = gvlayout_dot_layout;
 //    plugin = gvplugin_load(gvc, API_layout, layout);
 //    if (plugin) {
 //	typeptr = plugin->typeptr;
@@ -216,13 +213,13 @@ LEAVING("2g20jitdi8afuoei8p1mcfg9l","gvlayout_select");
 
 //3 991b7t7n0x8ifkp49zotjs78x
 // int gvLayoutJobs(GVC_t * gvc, Agraph_t * g) 
-public static int gvLayoutJobs(GVC_s gvc, Agraph_s g) {
+public static int gvLayoutJobs(ST_GVC_s gvc, ST_Agraph_s g) {
 ENTERING("991b7t7n0x8ifkp49zotjs78x","gvLayoutJobs");
 try {
-    gvlayout_engine_s gvle;
+	ST_gvlayout_engine_s gvle;
     CString p = null;
     int rc;
-    agbindrec(g, new CString("Agraphinfo_t"), sizeof(Agraphinfo_t.class), (N(0)));
+    agbindrec(g, new CString("Agraphinfo_t"), sizeof(ST_Agraphinfo_t.class), (N(0)));
     GD_gvc(g, gvc);
     if (NEQ(g, agroot(g)))
 UNSUPPORTED("ah9ygbaap1fyxr97z734juk0j"); // 	(((Agraphinfo_t*)(((Agobj_t*)(agroot(g)))->data))->gvc) = gvc;
@@ -238,7 +235,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     
     rc = gvlayout_select(gvc, p); //Let's force things
     
-    gvle = (gvlayout_engine_s) gvc.getStruct("layout").getPtr("engine");
+    gvle = (ST_gvlayout_engine_s) gvc.getStruct("layout").getPtr("engine");
     if (N(gvle))
 	UNSUPPORTED("return -1;");
     gv_fixLocale (1);

@@ -55,10 +55,6 @@ public abstract class UGraphicDelegator implements UGraphic {
 		return ug.matchesProperty(propertyName);
 	}
 
-	public double dpiFactor() {
-		return ug.dpiFactor();
-	}
-
 	public UGraphicDelegator(UGraphic ug) {
 		this.ug = ug;
 	}

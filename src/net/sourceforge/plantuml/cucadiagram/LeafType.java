@@ -64,6 +64,9 @@ public enum LeafType {
 		if (type.startsWith("ABSTRACT")) {
 			return LeafType.ABSTRACT_CLASS;
 		}
+		if (type.startsWith("DIAMOND")) {
+			return LeafType.STATE_CHOICE;
+		}
 		return LeafType.valueOf(type);
 	}
 

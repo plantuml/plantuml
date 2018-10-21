@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -47,11 +48,13 @@ public class AtomSprite implements Atom {
 	private final FontConfiguration fontConfiguration;
 	private final Sprite sprite;
 	private final double scale;
+	private final Url url;
 
-	public AtomSprite(double scale, FontConfiguration fontConfiguration, Sprite sprite) {
+	public AtomSprite(double scale, FontConfiguration fontConfiguration, Sprite sprite, Url url) {
 		this.scale = scale;
 		this.fontConfiguration = fontConfiguration;
 		this.sprite = sprite;
+		this.url = url;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -63,7 +66,13 @@ public class AtomSprite implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		sprite.asTextBlock(fontConfiguration.getColor(), scale * ug.dpiFactor()).drawU(ug);
+		if (url != null) {
+			ug.startUrl(url);
+		}
+		sprite.asTextBlock(fontConfiguration.getColor(), scale).drawU(ug);
+		if (url != null) {
+			ug.closeAction();
+		}
 	}
 
 }

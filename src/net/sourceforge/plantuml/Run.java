@@ -460,7 +460,13 @@ public class Run {
 			System.out.println(f);
 			// new Metadata().readAndDisplayMetadata(f);
 			System.out.println();
-			System.out.println(new MetadataTag(f, "plantuml").getData());
+			final String data = new MetadataTag(f, "plantuml").getData();
+			// File file = new File("tmp.txt");
+			// PrintWriter pw = new PrintWriter(file, "UTF-8");
+			// pw.println(NastyEncoder.fromISO_8859_1(data));
+			// pw.close();
+
+			System.out.println(data);
 			System.out.println("------------------------");
 			return false;
 		}

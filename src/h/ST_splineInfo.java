@@ -66,24 +66,6 @@ public class ST_splineInfo extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public boolean getBoolean(String fieldName) {
-			return ST_splineInfo.this.getBoolean(fieldName);
-		}
-
-		@Override
-		public Object call(String fieldName, Object... args) {
-			return ST_splineInfo.this.call(fieldName, args);
-		}
-	}
-
-	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("swapEnds")) {
 			this.swapEnds = (CFunction) newData;

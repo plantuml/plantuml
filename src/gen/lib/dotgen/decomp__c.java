@@ -66,18 +66,12 @@ import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.ND_prev;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
 import h.ST_elist;
-import h.boxf;
-import h.elist;
-import h.pointf;
-import smetana.core.JUtils;
+import h.ST_pointf;
 import smetana.core.Z;
-import smetana.core.__array_of_struct__;
-import smetana.core.__array_of_struct_impl__;
-import smetana.core.__struct__;
 
 public class decomp__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -337,14 +331,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -373,25 +367,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -415,14 +390,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -745,7 +720,7 @@ LEAVING("7ggrwt0f912kp1marrxdjq155","begin_component");
 
 //3 7icc6b2pvnj6te1yndbel47gg
 // static void  add_to_component(node_t * n) 
-public static void add_to_component(Agnode_s n) {
+public static void add_to_component(ST_Agnode_s n) {
 ENTERING("7icc6b2pvnj6te1yndbel47gg","add_to_component");
 try {
     GD_n_nodes(Z.z().G_decomp, 1+GD_n_nodes(Z.z().G_decomp));
@@ -775,7 +750,7 @@ try {
     int i;
     i = GD_comp(Z.z().G_decomp).size;
     GD_comp(Z.z().G_decomp).size = 1+GD_comp(Z.z().G_decomp).size;
-    GD_comp(Z.z().G_decomp).reallocEmpty(GD_comp(Z.z().G_decomp).size, Agnode_s.class);
+    GD_comp(Z.z().G_decomp).reallocEmpty(GD_comp(Z.z().G_decomp).size);
     GD_comp(Z.z().G_decomp).setInList(i ,GD_nlist(Z.z().G_decomp));
 } finally {
 LEAVING("5o8hxpr6ppi15pinuy79m7u04","end_component");
@@ -787,21 +762,21 @@ LEAVING("5o8hxpr6ppi15pinuy79m7u04","end_component");
 
 //3 c5u5lnfbu0pmlk6vsvyrdj8ep
 // static void search_component(graph_t * g, node_t * n) 
-public static void search_component(Agraph_s g, Agnode_s n) {
+public static void search_component(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("c5u5lnfbu0pmlk6vsvyrdj8ep","search_component");
 try {
     int c, i;
-    __array_of_struct__ vec = __array_of_struct_impl__.malloc(elist.class, 4);
-    Agnode_s other;
-    Agedge_s e;
+    final ST_elist vec[] = new ST_elist[] {new ST_elist(),new ST_elist(),new ST_elist(),new ST_elist()};
+    ST_Agnode_s other;
+    ST_Agedge_s e;
     add_to_component(n);
-    vec.plus(0).setStruct(ND_out(n));
-    vec.plus(1).setStruct(ND_in(n));
-    vec.plus(2).setStruct(ND_flat_out(n));
-    vec.plus(3).setStruct(ND_flat_in(n));
+    vec[0].setStruct(ND_out(n));
+    vec[1].setStruct(ND_in(n));
+    vec[2].setStruct(ND_flat_out(n));
+    vec[3].setStruct(ND_flat_in(n));
     for (c = 0; c <= 3; c++) {
-    	if (((ST_elist) vec.plus(c).getStruct()).listNotNull())
-    	    for (i = 0; (e = (Agedge_s) ((ST_elist) vec.plus(c).getStruct()).getFromList(i))!=null; i++) {
+    	if (vec[c].listNotNull())
+    	    for (i = 0; (e = (ST_Agedge_s) vec[c].getFromList(i))!=null; i++) {
 		if (EQ(other = aghead(e), n))
 		    other = agtail(e);
 		if ((ND_mark(other) != Z.z().Cmark) && (EQ(other, UF_find(other))))
@@ -818,11 +793,11 @@ LEAVING("c5u5lnfbu0pmlk6vsvyrdj8ep","search_component");
 
 //3 2t7r964kqtl5qrl7i57i22tqy
 // void decompose(graph_t * g, int pass) 
-public static void decompose(Agraph_s g, int pass) {
+public static void decompose(ST_Agraph_s g, int pass) {
 ENTERING("2t7r964kqtl5qrl7i57i22tqy","decompose");
 try {
-    Agraph_s subg;
-    Agnode_s n, v;
+    ST_Agraph_s subg;
+    ST_Agnode_s n, v;
     Z.z().G_decomp = g;
     if (++Z.z().Cmark == 0)
 	Z.z().Cmark = 1;
@@ -831,7 +806,7 @@ try {
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
 	v = n;
 	if ((pass > 0) && (subg = ND_clust(v))!=null)
-	    v = (Agnode_s) GD_rankleader(subg).plus(ND_rank(v)).getPtr();
+	    v = (ST_Agnode_s) GD_rankleader(subg).plus(ND_rank(v)).getPtr();
 	else if (v != UF_find(v))
 	    continue;
 	if (ND_mark(v) != Z.z().Cmark) {

@@ -51,7 +51,6 @@ import static gen.lib.cgraph.edge__c.agtail;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.cgraph.refstr__c.aghtmlstr;
 import static gen.lib.common.labels__c.make_label;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.shapes__c.bind_shape;
 import static gen.lib.common.shapes__c.shapeOf;
 import static smetana.core.JUtils.EQ;
@@ -60,7 +59,6 @@ import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtils.isdigit;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtils.strchr;
 import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtils.strtod;
@@ -68,10 +66,12 @@ import static smetana.core.JUtils.strtol;
 import static smetana.core.JUtils.tolower;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.DIST2;
 import static smetana.core.Macro.ED_head_label;
 import static smetana.core.Macro.ED_head_port;
 import static smetana.core.Macro.ED_label;
 import static smetana.core.Macro.ED_label_ontop;
+import static smetana.core.Macro.ED_tail_label;
 import static smetana.core.Macro.ED_tail_port;
 import static smetana.core.Macro.GD_bb;
 import static smetana.core.Macro.GD_flags;
@@ -91,29 +91,25 @@ import static smetana.core.Macro.ND_shape;
 import static smetana.core.Macro.ND_showboxes;
 import static smetana.core.Macro.ND_width;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.Agsym_s;
+import static smetana.core.Macro.fabs;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
 import h.ST_Agsym_s;
+import h.ST_bezier;
 import h.ST_boxf;
+import h.ST_fontinfo;
+import h.ST_nodequeue;
+import h.ST_pointf;
 import h.ST_port;
-import h.boxf;
-import h.fontinfo;
-import h.nodequeue;
-import h.pointf;
-import h.port;
+import h.ST_splines;
+import h.ST_textlabel_t;
 import h.shape_kind;
-import h.textlabel_t;
 import smetana.core.CFunction;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
-import smetana.core.__array_of_struct__;
-import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class utils__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -373,14 +369,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -409,25 +405,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -451,14 +428,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -757,13 +734,13 @@ throw new UnsupportedOperationException();
 
 //3 c7cptalfn8k75wyfirbnptnav
 // nodequeue *new_queue(int sz) 
-public static nodequeue new_queue(int sz) {
+public static ST_nodequeue new_queue(int sz) {
 ENTERING("c7cptalfn8k75wyfirbnptnav","new_queue");
 try {
-    nodequeue q = (nodequeue)zmalloc(sizeof(nodequeue.class));
+    ST_nodequeue q = new ST_nodequeue();
     if (sz <= 1)
 	sz = 2;
-	final __ptr__ tmp__ = zmalloc(sizeof(Agnode_s.class, sz));
+	final ST_Agnode_s.ArrayOfStar tmp__ = new ST_Agnode_s.ArrayOfStar(sz);
 	q.setPtr("store", tmp__);
 	q.setPtr("tail", tmp__);
 	q.setPtr("head", tmp__);
@@ -779,7 +756,7 @@ LEAVING("c7cptalfn8k75wyfirbnptnav","new_queue");
 
 //3 1uj5nmdvwmuklnpd3v5py547f
 // void free_queue(nodequeue * q) 
-public static void free_queue(nodequeue q) {
+public static void free_queue(ST_nodequeue q) {
 ENTERING("1uj5nmdvwmuklnpd3v5py547f","free_queue");
 try {
     Memory.free(q.getPtr("store"));
@@ -794,10 +771,10 @@ LEAVING("1uj5nmdvwmuklnpd3v5py547f","free_queue");
 
 //3 20pwd6i141q3o25lfvrdqytot
 // void enqueue(nodequeue * q, node_t * n) 
-public static void enqueue(nodequeue q, Agnode_s n) {
+public static void enqueue(ST_nodequeue q, ST_Agnode_s n) {
 ENTERING("20pwd6i141q3o25lfvrdqytot","enqueue");
 try {
-    q.getArrayOfPtr("tail").plus(0).setPtr(n);
+    q.tail.plus(0).setPtr(n);
     q.setPtr("tail", q.getPtr("tail").plus(1));
     if (q.getPtr("tail").comparePointer(q.getPtr("limit")) >= 0)
 	q.setPtr("tail", q.getPtr("store"));
@@ -811,14 +788,14 @@ LEAVING("20pwd6i141q3o25lfvrdqytot","enqueue");
 
 //3 b612nmtf16au96ztbs8pike9r
 // node_t *dequeue(nodequeue * q) 
-public static Agnode_s dequeue(nodequeue q) {
+public static ST_Agnode_s dequeue(ST_nodequeue q) {
 ENTERING("b612nmtf16au96ztbs8pike9r","dequeue");
 try {
-    Agnode_s n;
+    ST_Agnode_s n;
     if (EQ(q.getPtr("head"), q.getPtr("tail")))
 	n = null;
     else {
-	n = (Agnode_s) q.getArrayOfPtr("head").plus(0).getPtr();
+	n = (ST_Agnode_s) q.head.plus(0).getPtr();
 	q.setPtr("head", q.getPtr("head").plus(1));
 	if (q.getPtr("head").comparePointer(q.getPtr("limit")) >= 0)
 	    q.setPtr("head", q.getPtr("store"));
@@ -834,7 +811,7 @@ LEAVING("b612nmtf16au96ztbs8pike9r","dequeue");
 
 //3 6nydxv4f2m7jcfh8ljs0neu0x
 // int late_int(void *obj, attrsym_t * attr, int def, int low) 
-public static int late_int(__ptr__ obj, Agsym_s attr, int def, int low) {
+public static int late_int(__ptr__ obj, ST_Agsym_s attr, int def, int low) {
 ENTERING("6nydxv4f2m7jcfh8ljs0neu0x","late_int");
 try {
     CString p;
@@ -859,7 +836,7 @@ LEAVING("6nydxv4f2m7jcfh8ljs0neu0x","late_int");
 
 //3 d68314e4f20r79tt0cnmxugme
 // double late_double(void *obj, attrsym_t * attr, double def, double low) 
-public static double late_double(__ptr__ obj, Agsym_s attr, double def, double low) {
+public static double late_double(__ptr__ obj, ST_Agsym_s attr, double def, double low) {
 ENTERING("d68314e4f20r79tt0cnmxugme","late_double");
 try {
     CString p;
@@ -902,7 +879,7 @@ throw new UnsupportedOperationException();
 
 //3 83xm6yc9q5h1bzufhsnv0v2up
 // char *late_string(void *obj, attrsym_t * attr, char *def) 
-public static CString late_string(__ptr__ obj, Agsym_s attr, CString def) {
+public static CString late_string(__ptr__ obj, ST_Agsym_s attr, CString def) {
 ENTERING("83xm6yc9q5h1bzufhsnv0v2up","late_string");
 try {
     if (N(attr) || N(obj))
@@ -918,7 +895,7 @@ LEAVING("83xm6yc9q5h1bzufhsnv0v2up","late_string");
 
 //3 8oon4q1mrublaru177xfntqgd
 // char *late_nnstring(void *obj, attrsym_t * attr, char *def) 
-public static CString late_nnstring(__ptr__ obj, Agsym_s attr, CString def) {
+public static CString late_nnstring(__ptr__ obj, ST_Agsym_s attr, CString def) {
 ENTERING("8oon4q1mrublaru177xfntqgd","late_nnstring");
 try {
     CString rv = late_string(obj, attr, def);
@@ -935,13 +912,18 @@ LEAVING("8oon4q1mrublaru177xfntqgd","late_nnstring");
 
 //3 87ifze04q7qzigjj1fb9y9by2
 // boolean late_bool(void *obj, attrsym_t * attr, int def) 
-public static boolean late_bool(__ptr__ obj, Agsym_s attr, int def) {
+public static boolean late_bool(__ptr__ obj, ST_Agsym_s attr, int def) {
+ENTERING("87ifze04q7qzigjj1fb9y9by2","late_bool");
+try {
 if (attr == null)
 	return def!=0;
 UNSUPPORTED("a0kh1y5n8u59z0xo7mag3zmt6"); //     return mapbool(agxget(obj, attr));
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
 
 throw new UnsupportedOperationException();
+} finally {
+LEAVING("87ifze04q7qzigjj1fb9y9by2","late_bool");
+}
 }
 
 
@@ -949,7 +931,7 @@ throw new UnsupportedOperationException();
 
 //3 aeq0acpkhfv3gd5jx8op4jf18
 // node_t *UF_find(node_t * n) 
-public static Agnode_s UF_find(Agnode_s n) {
+public static ST_Agnode_s UF_find(ST_Agnode_s n) {
 ENTERING("aeq0acpkhfv3gd5jx8op4jf18","UF_find");
 try {
     while (ND_UF_parent(n)!=null && NEQ(ND_UF_parent(n), n)) {
@@ -968,7 +950,7 @@ LEAVING("aeq0acpkhfv3gd5jx8op4jf18","UF_find");
 
 //3 9ldxwfr4vvijrvfcvs1hvdzrt
 // node_t *UF_union(node_t * u, node_t * v) 
-public static Agnode_s UF_union(Agnode_s u, Agnode_s v) {
+public static ST_Agnode_s UF_union(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("9ldxwfr4vvijrvfcvs1hvdzrt","UF_union");
 try {
     if (EQ(u, v))
@@ -1018,7 +1000,7 @@ throw new UnsupportedOperationException();
 
 //3 22k0u1imxyw06k9rizqlfz153
 // void UF_singleton(node_t * u) 
-public static void UF_singleton(Agnode_s u) {
+public static void UF_singleton(ST_Agnode_s u) {
 ENTERING("22k0u1imxyw06k9rizqlfz153","UF_singleton");
 try {
     ND_UF_size(u, 1);
@@ -1034,7 +1016,7 @@ LEAVING("22k0u1imxyw06k9rizqlfz153","UF_singleton");
 
 //3 e0fn8xuzkdt0q8xoofl6j1txb
 // void UF_setname(node_t * u, node_t * v) 
-public static void UF_setname(Agnode_s u, Agnode_s v) {
+public static void UF_setname(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("e0fn8xuzkdt0q8xoofl6j1txb","UF_setname");
 try {
     assert(EQ(u, UF_find(u)));
@@ -1067,20 +1049,20 @@ throw new UnsupportedOperationException();
 
 //3 6p0ey2c2ujk2o7h221p0b4xon
 // pointf Bezier(pointf * V, int degree, double t, pointf * Left, pointf * Right) 
-public static __struct__<pointf> Bezier(__array_of_struct__ V, int degree, double t, __ptr__ Left, __ptr__ Right) {
+public static ST_pointf Bezier(final ST_pointf.Array V, int degree, double t, __ptr__ Left, __ptr__ Right) {
 // WARNING!! STRUCT
 return Bezier_w_(V, degree, t, Left, Right).copy();
 }
-private static __struct__<pointf> Bezier_w_(__array_of_struct__ V, int degree, double t, __ptr__ Left, __ptr__ Right) {
+private static ST_pointf Bezier_w_(final ST_pointf.Array V, int degree, double t, __ptr__ Left, __ptr__ Right) {
 ENTERING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 try {
     int i, j;			/* Index variables      */
-    final __array_of_struct__ Vtemp[] = new __array_of_struct__[] { __array_of_struct_impl__.malloc(pointf.class, 5+1),
-    __array_of_struct_impl__.malloc(pointf.class, 5+1),
-    __array_of_struct_impl__.malloc(pointf.class, 5+1),
-    __array_of_struct_impl__.malloc(pointf.class, 5+1),
-    __array_of_struct_impl__.malloc(pointf.class, 5+1),
-    __array_of_struct_impl__.malloc(pointf.class, 5+1) };
+    final ST_pointf.Array Vtemp[] = new ST_pointf.Array[] { new ST_pointf.Array( 5+1),
+    new ST_pointf.Array( 5+1),
+    new ST_pointf.Array( 5+1),
+    new ST_pointf.Array( 5+1),
+    new ST_pointf.Array( 5+1),
+    new ST_pointf.Array( 5+1) };
     /* Copy control points  */
     for (j = 0; j <= degree; j++) {
 	Vtemp[0].plus(j).setStruct(V.plus(j).getStruct());
@@ -1100,7 +1082,7 @@ try {
     if (Right != null)
 	for (j = 0; j <= degree; j++)
 	    Right.plus(j).setStruct(Vtemp[degree - j].plus(j).getStruct());
-    return (Vtemp[degree].plus(0).getStruct());
+    return (ST_pointf) (Vtemp[degree].plus(0).getStruct());
 } finally {
 LEAVING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 }
@@ -1193,12 +1175,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 3xll2b0v9nthwvx9dafq49t8s
-// const char *safefile(const char *filename) 
 //static boolean onetime = (!(0));
 //static char *pathlist = (void *)0;
 //static int maxdirlen;
 //static char** dirs;
+//3 3xll2b0v9nthwvx9dafq49t8s
+// const char *safefile(const char *filename) 
 public static CString safefile(CString filename) {
 ENTERING("3xll2b0v9nthwvx9dafq49t8s","safefile");
 try {
@@ -1273,53 +1255,61 @@ LEAVING("ehkvqh6bwf4jw3mj1w5p7a8m8","mapbool");
 
 //3 37hgj44s94wf9bmz16he85pgq
 // pointf dotneato_closest(splines * spl, pointf pt) 
-public static Object dotneato_closest(Object... arg) {
-UNSUPPORTED("6xi9wmswic1fv76qsqa100zrg"); // pointf dotneato_closest(splines * spl, pointf pt)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7vg6345lno41yawbke5qjffjx"); //     int i, j, k, besti, bestj;
-UNSUPPORTED("7tvhpuiv2bp57tuo5a1qrptwi"); //     double bestdist2, d2, dlow2, dhigh2; /* squares of distances */
-UNSUPPORTED("52bzzd12n2awux2b59j2jqh8x"); //     double low, high, t;
-UNSUPPORTED("1ciwu1ibmcvutr9d4mbq8jjp"); //     pointf c[4], pt2;
-UNSUPPORTED("37thdceezsvepe7tlyfatrbcw"); //     bezier bz;
-UNSUPPORTED("cv0cmfkdyov0ifz46uknfgwaa"); //     besti = bestj = -1;
-UNSUPPORTED("988ajfgcb4de6sx2d5un10g4x"); //     bestdist2 = 1e+38;
-UNSUPPORTED("4z4l1zu33m72iirxmuhdg36iw"); //     for (i = 0; i < spl->size; i++) {
-UNSUPPORTED("ewoeh3d6otc2rgpaxuzwm38x7"); // 	bz = spl->list[i];
-UNSUPPORTED("bdak7kaqfdpo7zuzg9fm7b6sw"); // 	for (j = 0; j < bz.size; j++) {
-UNSUPPORTED("wdh4m8cw4why11o5q87r88zj"); // 	    pointf b;
-UNSUPPORTED("3tf1mdorgslv29e6azr3rzonw"); // 	    b.x = bz.list[j].x;
-UNSUPPORTED("dxmmss8xn49bbq09iskmvgo1a"); // 	    b.y = bz.list[j].y;
-UNSUPPORTED("d0o8y6vs1vm9qcfq5oyn2zmb5"); // 	    d2 = DIST2(b, pt);
-UNSUPPORTED("5x61wak384zfu9waxz4iib38j"); // 	    if ((bestj == -1) || (d2 < bestdist2)) {
-UNSUPPORTED("cmhf0aasa4t5z81xkhjsih2h3"); // 		besti = i;
-UNSUPPORTED("en6tmpmufawtaviu8s9gbiir5"); // 		bestj = j;
-UNSUPPORTED("aqecj956cthm5r94jj461cz7"); // 		bestdist2 = d2;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("4o4fen9osijkuva0tyij06dff"); //     bz = spl->list[besti];
-UNSUPPORTED("cylnfbfm0pqu1um785gk5ox0m"); //     /* Pick best Bezier. If bestj is the last point in the B-spline, decrement.
-UNSUPPORTED("84b6e5g3wx9iisglwjcp5lno1"); //      * Then set j to be the first point in the corresponding Bezier by dividing
-UNSUPPORTED("57jzmu3ed1g4aa00hivvreb3c"); //      * then multiplying be 3. Thus, 0,1,2 => 0; 3,4,5 => 3, etc.
-UNSUPPORTED("795vpnc8yojryr8b46aidsu69"); //      */
-UNSUPPORTED("2oqk9suiq102615kp2p6u9pbc"); //     if (bestj == bz.size-1)
-UNSUPPORTED("b8unnlnu1bnnhbs85vgllqltd"); // 	bestj--;
-UNSUPPORTED("34l7vean6sci8jd61jcga5t9j"); //     j = 3*(bestj / 3);
-UNSUPPORTED("634ul430au56jfgnuq945ecev"); //     for (k = 0; k < 4; k++) {
-UNSUPPORTED("emeum5x5u6s5wlj9pg5e18mge"); // 	c[k].x = bz.list[j + k].x;
-UNSUPPORTED("6fqdkdgvc0jr8pgud3rpf5blk"); // 	c[k].y = bz.list[j + k].y;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("13ldc3scyuiddbvqn7xeazovv"); //     low = 0.0;
-UNSUPPORTED("5diyw4rai5ul7vmjhf654bvc0"); //     high = 1.0;
-UNSUPPORTED("v90htrjkydw3zaf6t3apnl32"); //     dlow2 = DIST2(c[0], pt);
-UNSUPPORTED("5fvcsu2wp47fo7crx2ob0h44u"); //     dhigh2 = DIST2(c[3], pt);
-UNSUPPORTED("53kc41p479auwcycfsbhw8xix"); //     do {
-UNSUPPORTED("14iyya2zn31kcyo2gqfx6u181"); // 	t = (low + high) / 2.0;
-UNSUPPORTED("5rti9akx01gql0rz4afihqg0q"); // 	pt2 = Bezier(c, 3, t, (void *)0, (void *)0);
-UNSUPPORTED("1mco76xn6x54y3tzfvzeptejl"); // 	if (fabs(dlow2 - dhigh2) < 1.0)
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("aaurmb2ppl2kefmdaw9njymyt"); // 	if (fabs(high - low) < .00001)
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
+public static ST_pointf dotneato_closest(ST_splines spl, final ST_pointf pt) {
+ENTERING("37hgj44s94wf9bmz16he85pgq","dotneato_closest");
+try {
+    return (ST_pointf) dotneato_closest_ (spl, (ST_pointf) pt.copy()).copy();
+} finally {
+LEAVING("37hgj44s94wf9bmz16he85pgq","dotneato_closest");
+}	
+}
+private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
+     int i, j, k, besti, bestj;
+     double bestdist2, d2, dlow2, dhigh2; /* squares of distances */
+     double low, high, t;
+     // final ST_pointf c[] = new ST_pointf[] {new ST_pointf(),new ST_pointf(),new ST_pointf(),new ST_pointf()};
+	 final ST_pointf.Array c = new ST_pointf.Array( 4);
+     final ST_pointf pt2 = new ST_pointf();
+     final ST_bezier bz = new ST_bezier();
+     besti = bestj = -1;
+     bestdist2 = 1e+38;
+     for (i = 0; i < spl.size; i++) {
+ 	bz.____(spl.list.plus(i).getPtr());
+ 	for (j = 0; j < bz.size; j++) {
+ 	    final ST_pointf b = new ST_pointf();
+ 	    b.x = bz.list.get(j).getDouble("x");
+ 	    b.y = bz.list.get(j).getDouble("y");
+ 	    d2 = DIST2(b, pt);
+ 	    if ((bestj == -1) || (d2 < bestdist2)) {
+ 		besti = i;
+ 		bestj = j;
+ 		bestdist2 = d2;
+ 	    }
+ 	}
+     }
+  	bz.____(spl.list.plus(besti).getPtr());
+     /* Pick best Bezier. If bestj is the last point in the B-spline, decrement.
+      * Then set j to be the first point in the corresponding Bezier by dividing
+      * then multiplying be 3. Thus, 0,1,2 => 0; 3,4,5 => 3, etc.
+      */
+     if (bestj == bz.size-1)
+ 	bestj--;
+     j = 3*(bestj / 3);
+     for (k = 0; k < 4; k++) {
+ 	  	c.plus(k).setDouble("x", bz.list.get(j + k).getDouble("x"));
+ 	  	c.plus(k).setDouble("y", bz.list.get(j + k).getDouble("y"));
+     }
+     low = 0.0;
+     high = 1.0;
+     dlow2 = DIST2(c.get(0), pt);
+     dhigh2 = DIST2(c.get(3), pt);
+     do {
+ 	t = (low + high) / 2.0;
+ 	pt2.___(Bezier(c, 3, t, null, null));
+ 	if (fabs(dlow2 - dhigh2) < 1.0)
+ 	    break;
+ 	if (fabs(high - low) < .00001)
+ 	    break;
 UNSUPPORTED("6apa9aoby9j8a0eanbfhy5mn2"); // 	if (dlow2 < dhigh2) {
 UNSUPPORTED("6jttyuryfaxa193mme86dqf58"); // 	    high = t;
 UNSUPPORTED("6avwplrum9i9qi3g9wl6yvz04"); // 	    dhigh2 = DIST2(pt2, pt);
@@ -1327,11 +1317,8 @@ UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
 UNSUPPORTED("556vs5i22602clhs1p3htz7vk"); // 	    low = t;
 UNSUPPORTED("507tgq81szei2ge3miiak4b1v"); // 	    dlow2 = DIST2(pt2, pt);
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("bisaeb1i484iutawysrspjmfw"); //     } while (1);
-UNSUPPORTED("9v7upfp8kp93skdlnpaz055xv"); //     return pt2;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+     } while (true);
+      return pt2;
 }
 
 
@@ -1450,10 +1437,10 @@ throw new UnsupportedOperationException();
 
 //3 cr81drt18h5feqzxyh3jb0u49
 // void common_init_node(node_t * n) 
-public static void common_init_node(Agnode_s n) {
+public static void common_init_node(ST_Agnode_s n) {
 ENTERING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 try {
-    fontinfo fi = (fontinfo) Memory.malloc(fontinfo.class);
+	ST_fontinfo fi = new ST_fontinfo();
     CString str;
     ND_width(n,
 	late_double(n, Z.z().N_width, 0.75, 0.01));
@@ -1467,7 +1454,7 @@ try {
     fi.setPtr("fontcolor", late_nnstring(n, Z.z().N_fontcolor, new CString("black")));
     ND_label(n, make_label(n, str,
 	        ((aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)) | ( (shapeOf(n) == enumAsInt(shape_kind.class, "SH_RECORD")) ? (2 << 1) : (0 << 1))),
-		fi.getDouble("fontsize"), fi.getCString("fontname"), fi.getCString("fontcolor")));
+		fi.getDouble("fontsize"), fi.fontname, fi.fontcolor));
     if (Z.z().N_xlabel!=null && (str = agxget(n, Z.z().N_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("4ua9vld76wpovsm1celv2ff6e"); // 	ND_xlabel(n) = make_label((void*)n, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
 UNSUPPORTED("b0zm6fkpjlt9jacykbgugjodg"); // 				fi.fontsize, fi.fontname, fi.fontcolor);
@@ -1485,7 +1472,7 @@ LEAVING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 
 //3 d2v8l80y27ue2fag5c0qplah8
 // static void initFontEdgeAttr(edge_t * e, struct fontinfo *fi) 
-public static void initFontEdgeAttr(Agedge_s e, fontinfo fi) {
+public static void initFontEdgeAttr(ST_Agedge_s e, ST_fontinfo fi) {
 ENTERING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 try {
     fi.setDouble("fontsize", late_double(e, Z.z().E_fontsize, 14.0, 1.0));
@@ -1501,13 +1488,13 @@ LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 
 //3 ak3pxrdrq900wymudwnjmbito
 // static void initFontLabelEdgeAttr(edge_t * e, struct fontinfo *fi, 		      struct fontinfo *lfi) 
-public static void initFontLabelEdgeAttr(Agedge_s e, fontinfo fi, fontinfo lfi) {
+public static void initFontLabelEdgeAttr(ST_Agedge_s e, ST_fontinfo fi, ST_fontinfo lfi) {
 ENTERING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 try {
 	if (N(fi.getPtr("fontname"))) initFontEdgeAttr(e, fi);
     lfi.setDouble("fontsize", late_double(e, Z.z().E_labelfontsize, fi.getDouble("fontsize"), 1.0));
-    lfi.setPtr("fontname", late_nnstring(e, Z.z().E_labelfontname, fi.getCString("fontname")));
-    lfi.setPtr("fontcolor", late_nnstring(e, Z.z().E_labelfontcolor, fi.getCString("fontcolor")));
+    lfi.setPtr("fontname", late_nnstring(e, Z.z().E_labelfontname, fi.fontname));
+    lfi.setPtr("fontcolor", late_nnstring(e, Z.z().E_labelfontcolor, fi.fontcolor));
 } finally {
 LEAVING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 }
@@ -1518,7 +1505,7 @@ LEAVING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 
 //3 bgnk1zwht9rwx6thmly98iofb
 // static boolean  noClip(edge_t *e, attrsym_t* sym) 
-public static boolean noClip(Agedge_s e, Agsym_s sym) {
+public static boolean noClip(ST_Agedge_s e, ST_Agsym_s sym) {
 ENTERING("bgnk1zwht9rwx6thmly98iofb","noClip");
 try {
     CString str;
@@ -1539,11 +1526,11 @@ LEAVING("bgnk1zwht9rwx6thmly98iofb","noClip");
 
 //3 9vnr1bc7p533acazoxbhbfmx3
 // static port chkPort (port (*pf)(node_t*, char*, char*), node_t* n, char* s) 
-public static ST_port chkPort(CFunction pf, Agnode_s n, CString s) {
+public static ST_port chkPort(CFunction pf, ST_Agnode_s n, CString s) {
 // WARNING!! STRUCT
 return chkPort_w_(pf, n, s).copy();
 }
-private static ST_port chkPort_w_(CFunction pf, Agnode_s n, CString s) {
+private static ST_port chkPort_w_(CFunction pf, ST_Agnode_s n, CString s) {
 ENTERING("9vnr1bc7p533acazoxbhbfmx3","chkPort");
 try {
     final ST_port pt = new ST_port();
@@ -1557,7 +1544,7 @@ UNSUPPORTED("971i954brvgqb35cftazlqhon"); // 	*cp = ':';
 UNSUPPORTED("2o9oidtrr5gspl1dh6vnz7mlz"); // 	pt.name = cp+1;
     }
     else
-	pt.___((__struct__<port>) pf.exe(n, s, null));
+	pt.___((ST_port) pf.exe(n, s, null));
 	pt.name = s;
     return pt;
 } finally {
@@ -1570,21 +1557,21 @@ LEAVING("9vnr1bc7p533acazoxbhbfmx3","chkPort");
 
 //3 3aqh64lxwv4da2snfe7fvr45b
 // int common_init_edge(edge_t * e) 
-public static int common_init_edge(Agedge_s e) {
+public static int common_init_edge(ST_Agedge_s e) {
 ENTERING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
 try {
     CString str;
     int r = 0;
-    final __struct__<fontinfo> fi = JUtils.from(fontinfo.class);
-    final __struct__<fontinfo> lfi = JUtils.from(fontinfo.class);
-    Agraph_s sg = agraphof(agtail(e));
+    final ST_fontinfo fi = new ST_fontinfo();
+    final ST_fontinfo lfi = new ST_fontinfo();
+    ST_Agraph_s sg = agraphof(agtail(e));
     fi.setPtr("fontname", null);
     lfi.setPtr("fontname", null);
     if (Z.z().E_label!=null && (str = agxget(e, Z.z().E_label))!=null && (str.charAt(0)!='\0')) {
 	r = 1;
-	initFontEdgeAttr(e, fi.amp());
+	initFontEdgeAttr(e, fi);
 	ED_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
-				fi.getDouble("fontsize"), fi.getCString("fontname"), fi.getCString("fontcolor")));
+				fi.getDouble("fontsize"), fi.fontname, fi.fontcolor));
 	GD_has_labels(sg, GD_has_labels(sg) | (1 << 0));
 	ED_label_ontop(e,
 	    mapbool(late_string(e, Z.z().E_label_float, new CString("false"))));
@@ -1598,17 +1585,16 @@ UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))
     }
     /* vladimir */
     if (Z.z().E_headlabel!=null && (str = agxget(e, Z.z().E_headlabel))!=null && (str.charAt(0)!='\0')) {
-    	initFontLabelEdgeAttr(e, fi.amp(), lfi.amp());
+    	initFontLabelEdgeAttr(e, fi, lfi);
     	ED_head_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
-				lfi.getDouble("fontsize"), lfi.getCString("fontname"), lfi.getCString("fontcolor")));
+				lfi.getDouble("fontsize"), lfi.fontname, lfi.fontcolor));
     	GD_has_labels(sg, GD_has_labels(sg) | (1 << 1));
     }
     if (Z.z().E_taillabel!=null && (str = agxget(e, Z.z().E_taillabel))!=null && (str.charAt(0)!='\0')) {
-UNSUPPORTED("6y6e1y496y6j6a6065nfesr8o"); // 	if (!lfi.fontname)
-UNSUPPORTED("4w2bicw8rsgyy40x0vhyzzlnm"); // 	    initFontLabelEdgeAttr(e, &fi, &lfi);
-UNSUPPORTED("ans0pi92t6ou5mworb3ohiqj3"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->tail_label) = make_label((void*)e, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
-UNSUPPORTED("eu3ztkfva2x87y72tnu7vv4re"); // 				lfi.fontsize, lfi.fontname, lfi.fontcolor);
-UNSUPPORTED("50hobbhvpqr6dj302waqr59mu"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->has_labels) |= (1 << 2);
+    	initFontLabelEdgeAttr(e, fi, lfi);
+    	ED_tail_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
+				lfi.getDouble("fontsize"), lfi.fontname, lfi.fontcolor));
+    	GD_has_labels(sg, GD_has_labels(sg) | (1 << 2));
     }
     /* end vladimir */
     /* We still accept ports beginning with colons but this is deprecated 
@@ -1645,24 +1631,24 @@ LEAVING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
 
 //3 3mkqvtbyq9j8ktzil6t7vakg5
 // static boxf addLabelBB(boxf bb, textlabel_t * lp, boolean flipxy) 
-public static __struct__<boxf> addLabelBB(final ST_boxf bb, textlabel_t lp, boolean flipxy) {
+public static ST_boxf addLabelBB(final ST_boxf bb, ST_textlabel_t lp, boolean flipxy) {
 // WARNING!! STRUCT
 return addLabelBB_w_(bb.copy(), lp, flipxy).copy();
 }
-private static __struct__<boxf> addLabelBB_w_(final ST_boxf bb, textlabel_t lp, boolean flipxy) {
+private static ST_boxf addLabelBB_w_(final ST_boxf bb, ST_textlabel_t lp, boolean flipxy) {
 ENTERING("3mkqvtbyq9j8ktzil6t7vakg5","addLabelBB");
 try {
     double width, height;
-    final __struct__<pointf> p = JUtils.from(pointf.class);
+    final ST_pointf p = new ST_pointf();
     p.___(lp.getStruct("pos"));
     double min, max;
     if (flipxy) {
-	height = lp.getStruct("dimen").getDouble("x");
-	width = lp.getStruct("dimen").getDouble("y");
+	height = lp.dimen.getDouble("x");
+	width = lp.dimen.getDouble("y");
     }
     else {
-	width = lp.getStruct("dimen").getDouble("x");
-	height = lp.getStruct("dimen").getDouble("y");
+	width = lp.dimen.getDouble("x");
+	height = lp.dimen.getDouble("y");
     }
     min = p.getDouble("x") - width / 2.;
     max = p.getDouble("x") + width / 2.;
@@ -1713,7 +1699,7 @@ throw new UnsupportedOperationException();
 
 //3 bz7kjecium6a7xa39qfobwwnc
 // void updateBB(graph_t * g, textlabel_t * lp) 
-public static void updateBB(Agraph_s g, textlabel_t lp) {
+public static void updateBB(ST_Agraph_s g, ST_textlabel_t lp) {
 ENTERING("bz7kjecium6a7xa39qfobwwnc","updateBB");
 try {
     GD_bb(g).___(addLabelBB(GD_bb(g), lp, GD_flip(g)!=0));
@@ -2355,7 +2341,7 @@ throw new UnsupportedOperationException();
 
 //3 9yungx7uxqkmzfh2ub6gs9l48
 // char* htmlEntityUTF8 (char* s, graph_t* g) 
-public static CString htmlEntityUTF8(CString s, Agraph_s g) {
+public static CString htmlEntityUTF8(CString s, ST_Agraph_s g) {
 ENTERING("9yungx7uxqkmzfh2ub6gs9l48","htmlEntityUTF8");
 try {
 	LOG2("htmlEntityUTF8 "+s);
@@ -2736,7 +2722,7 @@ LEAVING("ckavkcnz5rcrqs17lleds1uxu","edgeType");
 
 //3 13cpqbf2ztcjdfz4a6v7nv00u
 // void setEdgeType (graph_t* g, int dflt) 
-public static void setEdgeType(Agraph_s g, int dflt) {
+public static void setEdgeType(ST_Agraph_s g, int dflt) {
 ENTERING("13cpqbf2ztcjdfz4a6v7nv00u","setEdgeType");
 try {
     CString s = agget(g, new CString("splines"));
@@ -2934,7 +2920,7 @@ throw new UnsupportedOperationException();
 
 //3 80q488y0eqojtsm7osnfydmo5
 // void gv_nodesize(node_t * n, boolean flip) 
-public static void gv_nodesize(Agnode_s n, int flip) {
+public static void gv_nodesize(ST_Agnode_s n, int flip) {
 ENTERING("80q488y0eqojtsm7osnfydmo5","gv_nodesize");
 try {
     double w;

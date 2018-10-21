@@ -45,11 +45,7 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_integer__;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarArrayOfInteger;
 import smetana.core.amiga.StarStruct;
 
 public class ST_adjmatrix_t extends UnsupportedStructAndPtr {
@@ -64,21 +60,12 @@ public class ST_adjmatrix_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
-
 	// "typedef struct adjmatrix_t",
 	// "{",
-	private int nrows, ncols;
+	public int nrows, ncols;
 
 	// "char *data",
-	private StarArrayOfInteger data;
+	public int[][] data;
 
 	// "}",
 	// "adjmatrix_t");
@@ -107,30 +94,6 @@ public class ST_adjmatrix_t extends UnsupportedStructAndPtr {
 		return super.getInt(fieldName);
 	}
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("data")) {
-			this.data = (StarArrayOfInteger) newData;
-			return data;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __array_of_integer__ getArrayOfInteger(String fieldName) {
-		if (fieldName.equals("data")) {
-			return data.getInternalArray();
-		}
-		return super.getArrayOfInteger(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("data")) {
-			return data;
-		}
-		return super.getPtr(fieldName);
-	}
 }
 
 // typedef struct adjmatrix_t {

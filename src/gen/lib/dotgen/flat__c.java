@@ -46,17 +46,16 @@
 package gen.lib.dotgen;
 import static gen.lib.cgraph.edge__c.aghead;
 import static gen.lib.cgraph.edge__c.agtail;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.dotgen.dotinit__c.dot_root;
 import static gen.lib.dotgen.fastgr__c.virtual_edge;
 import static gen.lib.dotgen.fastgr__c.virtual_node;
 import static gen.lib.dotgen.mincross__c.rec_reset_vlists;
 import static gen.lib.dotgen.mincross__c.rec_save_vlists;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.sizeof_starstar_empty;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
-import static smetana.core.Macro.ALLOC;
+import static smetana.core.Macro.ALLOC_Agnode_s;
+import static smetana.core.Macro.ALLOC_ST_rank_t;
 import static smetana.core.Macro.ED_adjacent;
 import static smetana.core.Macro.ED_dist;
 import static smetana.core.Macro.ED_edge_type;
@@ -90,15 +89,12 @@ import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.boxf;
-import h.pointf;
-import h.rank_t;
-import smetana.core.JUtils;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_pointf;
+import h.ST_rank_t;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class flat__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -358,14 +354,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -394,27 +390,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
-
-
 
 
 //3 1n5xl70wxuabyf97mclvilsm6
@@ -436,14 +411,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -742,13 +717,13 @@ throw new UnsupportedOperationException();
 
 //3 e0gtvsxlvztmwu8yy44wfvf97
 // static node_t *make_vn_slot(graph_t * g, int r, int pos) 
-public static Agnode_s make_vn_slot(Agraph_s g, int r, int pos) {
+public static ST_Agnode_s make_vn_slot(ST_Agraph_s g, int r, int pos) {
 ENTERING("e0gtvsxlvztmwu8yy44wfvf97","make_vn_slot");
 try {
     int i;
-    __ptr__ v;
-    Agnode_s n;
-	v = ALLOC(GD_rank(g).plus(r).getInt("n") + 2, GD_rank(g).plus(r).getPtr("v"), Agnode_s.class);
+    ST_Agnode_s.ArrayOfStar v;
+    ST_Agnode_s n;
+	v = ALLOC_Agnode_s(GD_rank(g).plus(r).getInt("n") + 2, (ST_Agnode_s.ArrayOfStar) GD_rank(g).plus(r).getPtr("v"));
     GD_rank(g).plus(r).setPtr("v", v);
     for (i = GD_rank(g).plus(r).getInt("n"); i > pos; i--) {
 	v.plus(i).setPtr(v.plus(i - 1).getPtr());
@@ -760,7 +735,7 @@ try {
     ND_rank(n, r);
     GD_rank(g).plus(r).setInt("n", GD_rank(g).plus(r).getInt("n")+1);
     v.plus(GD_rank(g).plus(r).getInt("n")).setPtr(null);
-    return (Agnode_s) v.plus(pos).getPtr();
+    return (ST_Agnode_s) v.plus(pos).getPtr();
 } finally {
 LEAVING("e0gtvsxlvztmwu8yy44wfvf97","make_vn_slot");
 }
@@ -771,7 +746,7 @@ LEAVING("e0gtvsxlvztmwu8yy44wfvf97","make_vn_slot");
 
 //3 d64wt9oqphauv3hp4axbg2ep3
 // static void findlr(node_t * u, node_t * v, int *lp, int *rp) 
-public static void findlr(Agnode_s u, Agnode_s v, int lp[], int rp[]) {
+public static void findlr(ST_Agnode_s u, ST_Agnode_s v, int lp[], int rp[]) {
 ENTERING("d64wt9oqphauv3hp4axbg2ep3","findlr");
 try {
     int l, r;
@@ -794,17 +769,17 @@ LEAVING("d64wt9oqphauv3hp4axbg2ep3","findlr");
 
 //3 bwjjmaydx5a2fnpeoligkha0r
 // static void setbounds(node_t * v, int *bounds, int lpos, int rpos) 
-public static void setbounds(Agnode_s v, int bounds[], int lpos[], int rpos[]) {
+public static void setbounds(ST_Agnode_s v, int bounds[], int lpos[], int rpos[]) {
 ENTERING("bwjjmaydx5a2fnpeoligkha0r","setbounds");
 try {
     int i, ord;
     int[] l = new int[1], r = new int[1];
-    Agedge_s f;
+    ST_Agedge_s f;
     if (ND_node_type(v) == 1) {
 	ord = ND_order(v);
 	if (ND_in(v).size == 0) {	/* flat */
 	    assert(ND_out(v).size == 2);
-	    findlr((Agnode_s) aghead(ND_out(v).getFromList(0)), (Agnode_s) aghead(ND_out(v).getFromList(1)), l,
+	    findlr((ST_Agnode_s) aghead(ND_out(v).getFromList(0)), (ST_Agnode_s) aghead(ND_out(v).getFromList(1)), l,
 		   r);
 	    /* the other flat edge could be to the left or right */
 	    if (r[0] <= lpos[0])
@@ -823,7 +798,7 @@ try {
 	} else {		/* forward */
 	    boolean onleft, onright;
 	    onleft = onright = false;
-	    for (i = 0; (f = (Agedge_s) ND_out(v).getFromList(i))!=null; i++) {
+	    for (i = 0; (f = (ST_Agedge_s) ND_out(v).getFromList(i))!=null; i++) {
 		if (ND_order(aghead(f)) <= lpos[0]) {
 		    onleft = NOT(false);
 		    continue;
@@ -849,7 +824,7 @@ LEAVING("bwjjmaydx5a2fnpeoligkha0r","setbounds");
 
 //3 3bc4otcsxj1dujj49ydbb19oa
 // static int flat_limits(graph_t * g, edge_t * e) 
-public static int flat_limits(Agraph_s g, Agedge_s e) {
+public static int flat_limits(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("3bc4otcsxj1dujj49ydbb19oa","flat_limits");
 try {
     int lnode, rnode, r, pos;
@@ -864,9 +839,9 @@ try {
     bounds[1] = bounds[3] = rnode + 1;
     findlr(agtail(e), aghead(e), lpos, rpos);
     while (lnode <= rnode) {
-	setbounds((Agnode_s)rank.plus(lnode).getPtr(), bounds, lpos, rpos);
+	setbounds((ST_Agnode_s)rank.plus(lnode).getPtr(), bounds, lpos, rpos);
 	if (lnode != rnode)
-	    setbounds((Agnode_s)rank.plus(rnode).getPtr(), bounds, lpos, rpos);
+	    setbounds((ST_Agnode_s)rank.plus(rnode).getPtr(), bounds, lpos, rpos);
 	lnode++;
 	rnode--;
 	if (bounds[1] - bounds[0] <= 1)
@@ -887,28 +862,28 @@ LEAVING("3bc4otcsxj1dujj49ydbb19oa","flat_limits");
 
 //3 4cw9yo9ap8ze1r873v6jat4yc
 // static void  flat_node(edge_t * e) 
-public static void flat_node(Agedge_s e) {
+public static void flat_node(ST_Agedge_s e) {
 ENTERING("4cw9yo9ap8ze1r873v6jat4yc","flat_node");
 try {
     int r, place, ypos, h2;
-    Agraph_s g;
-    Agnode_s n, vn;
-    Agedge_s ve;
-    final __struct__<pointf> dimen = JUtils.from(pointf.class);
+    ST_Agraph_s g;
+    ST_Agnode_s n, vn;
+    ST_Agedge_s ve;
+    final ST_pointf dimen = new ST_pointf();
     if (ED_label(e) == null)
 	return;
     g = dot_root(agtail(e));
     r = ND_rank(agtail(e));
     place = flat_limits(g, e);
     /* grab ypos = LL.y of label box before make_vn_slot() */
-    if ((n = (Agnode_s) GD_rank(g).plus(r - 1).getArrayOfPtr("v").plus(0).getPtr())!=null)
+    if ((n = (ST_Agnode_s) GD_rank(g).plus(r - 1).getPtr().v.plus(0).getPtr())!=null)
 	ypos = (int)(ND_coord(n).getDouble("y") - GD_rank(g).plus(r - 1).getDouble("ht1"));
     else {
-	n = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(0).getPtr();
+	n = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(0).getPtr();
 	ypos = (int)(ND_coord(n).getDouble("y") + GD_rank(g).plus(r).getDouble("ht2") + GD_ranksep(g));
     }
     vn = make_vn_slot(g, r - 1, place);
-    dimen.___(ED_label(e).getStruct("dimen"));
+    dimen.___(ED_label(e).dimen);
     if (GD_flip(g)!=0) {
 	double f = dimen.getDouble("x");
 	dimen.setDouble("x", dimen.getDouble("y"));
@@ -944,21 +919,21 @@ LEAVING("4cw9yo9ap8ze1r873v6jat4yc","flat_node");
 
 //3 1lopavodoru6ee52snd5l6swd
 // static void abomination(graph_t * g) 
-public static void abomination(Agraph_s g) {
+public static void abomination(ST_Agraph_s g) {
 ENTERING("1lopavodoru6ee52snd5l6swd","abomination");
 try {
     int r;
-    __ptr__ rptr;
+    ST_rank_t.Array2 rptr;
     assert(GD_minrank(g) == 0);
     /* 3 = one for new rank, one for sentinel, one for off-by-one */
     r = GD_maxrank(g) + 3;
-    rptr = ALLOC(r, GD_rank(g), rank_t.class);
+    rptr = ALLOC_ST_rank_t(r, (ST_rank_t.Array2) GD_rank(g));
     GD_rank(g, rptr.plus(1));
     for (r = GD_maxrank(g); r >= 0; r--)
 	GD_rank(g).plus(r).getPtr().setStruct(GD_rank(g).plus(r - 1).getPtr().getStruct());
     GD_rank(g).plus(r).setInt("n", 0);
     GD_rank(g).plus(r).setInt("an", 0);
-    GD_rank(g).plus(r).setPtr("v", zmalloc(sizeof_starstar_empty(Agnode_s.class, 2)));
+    GD_rank(g).plus(r).setPtr("v", new ST_Agnode_s.ArrayOfStar(2));
     GD_rank(g).plus(r).setPtr("av", GD_rank(g).plus(r).getPtr("v"));
     GD_rank(g).plus(r).setPtr("flat", null);
     GD_rank(g).plus(r).setDouble("ht1", 1);
@@ -976,14 +951,14 @@ LEAVING("1lopavodoru6ee52snd5l6swd","abomination");
 
 //3 ctujx6e8k3rzv08h6gswdcaqs
 // static void checkFlatAdjacent (edge_t* e) 
-public static void checkFlatAdjacent(Agedge_s e) {
+public static void checkFlatAdjacent(ST_Agedge_s e) {
 ENTERING("ctujx6e8k3rzv08h6gswdcaqs","checkFlatAdjacent");
 try {
-    Agnode_s tn = agtail(e);
-    Agnode_s hn = aghead(e);
+    ST_Agnode_s tn = agtail(e);
+    ST_Agnode_s hn = aghead(e);
     int i, lo, hi;
-    Agnode_s n;
-    __ptr__ rank;
+    ST_Agnode_s n;
+    ST_rank_t.Array2 rank;
     if (ND_order(tn) < ND_order(hn)) {
 	lo = ND_order(tn);
 	hi = ND_order(hn);
@@ -994,7 +969,7 @@ try {
     }
     rank = GD_rank(dot_root(tn)).plus(ND_rank(tn));
     for (i = lo + 1; i < hi; i++) {
-	n = (Agnode_s) rank.getArrayOfPtr("v").plus(i).getPtr();
+	n = (ST_Agnode_s) rank.getPtr().v.plus(i).getPtr();
 	if ((ND_node_type(n) == 1 && ND_label(n)!=null) || 
              ND_node_type(n) == 0)
 	    break;
@@ -1015,28 +990,28 @@ LEAVING("ctujx6e8k3rzv08h6gswdcaqs","checkFlatAdjacent");
 
 //3 bjwwj6ftkm0gv04cf1edqeaw6
 // int  flat_edges(graph_t * g) 
-public static int flat_edges(Agraph_s g) {
+public static int flat_edges(ST_Agraph_s g) {
 ENTERING("bjwwj6ftkm0gv04cf1edqeaw6","flat_edges");
 try {
     int i, j, reset = 0;
-    Agnode_s n;
-    Agedge_s e;
+    ST_Agnode_s n;
+    ST_Agedge_s e;
     int found = 0;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	if (ND_flat_out(n).listNotNull()) {
-	    for (j = 0; (e = (Agedge_s) ND_flat_out(n).getFromList(j))!=null; j++) {
+	    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(n).getFromList(j))!=null; j++) {
 		checkFlatAdjacent (e);
 	    }
 	}
 	for (j = 0; j < ND_other(n).size; j++) {
-	    e = (Agedge_s) ND_other(n).getFromList(j);
+	    e = (ST_Agedge_s) ND_other(n).getFromList(j);
 	    if (ND_rank(aghead(e)) == ND_rank(agtail(e)))
 		checkFlatAdjacent (e);
 	}
     }
     if ((GD_rank(g).plus(0).getPtr("flat")!=null) || (GD_n_cluster(g) > 0)) {
-	for (i = 0; (n = (Agnode_s) GD_rank(g).plus(0).getArrayOfPtr("v").plus(i).getPtr())!=null; i++) {
-	    for (j = 0; (e = (Agedge_s) ND_flat_in(n).getFromList(j))!=null; j++) {
+	for (i = 0; (n = (ST_Agnode_s) GD_rank(g).plus(0).getPtr().v.plus(i).getPtr())!=null; i++) {
+	    for (j = 0; (e = (ST_Agedge_s) ND_flat_in(n).getFromList(j))!=null; j++) {
 		if ((ED_label(e)!=null) && N(ED_adjacent(e))) {
 		    abomination(g);
 		    found = 1;
@@ -1051,11 +1026,11 @@ try {
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
           /* if n is the tail of any flat edge, one will be in flat_out */
 	if (ND_flat_out(n).listNotNull()) {
-	    for (i = 0; (e = (Agedge_s) ND_flat_out(n).getFromList(i))!=null; i++) {
+	    for (i = 0; (e = (ST_Agedge_s) ND_flat_out(n).getFromList(i))!=null; i++) {
 		if (ED_label(e)!=null) {
 		    if (ED_adjacent(e)!=0) {
-			if (GD_flip(g)!=0) ED_dist(e, ED_label(e).getStruct("dimen").getDouble("y"));
-			else ED_dist(e, ED_label(e).getStruct("dimen").getDouble("x")); 
+			if (GD_flip(g)!=0) ED_dist(e, ED_label(e).dimen.getDouble("y"));
+			else ED_dist(e, ED_label(e).dimen.getDouble("x")); 
 		    }
 		    else {
 			reset = 1;
@@ -1065,8 +1040,8 @@ try {
 	    }
 		/* look for other flat edges with labels */
 	    for (j = 0; j < ND_other(n).size; j++) {
-		Agedge_s le;
-		e = (Agedge_s) ND_other(n).getFromList(j);
+		ST_Agedge_s le;
+		e = (ST_Agedge_s) ND_other(n).getFromList(j);
 		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;
 		if (EQ(agtail(e), aghead(e))) continue; /* skip loops */
 		le = e;
@@ -1075,8 +1050,8 @@ try {
 		if (ED_label(e)!=null) {
 		    if (ED_adjacent(e)!=0) {
 			double lw;
-			if (GD_flip(g)!=0) lw = ED_label(e).getStruct("dimen").getDouble("y");
-			else lw = ED_label(e).getStruct("dimen").getDouble("x"); 
+			if (GD_flip(g)!=0) lw = ED_label(e).dimen.getDouble("y");
+			else lw = ED_label(e).dimen.getDouble("x"); 
 			ED_dist(le, MAX(lw,ED_dist(le)));
 		    }
 		    else {

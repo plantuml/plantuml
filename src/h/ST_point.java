@@ -62,18 +62,10 @@ public class ST_point extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
 
 	// "typedef struct",
 	// "{",
-	private int x, y;
+	public int x, y;
 
 	// "}",
 	// "point");

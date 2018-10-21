@@ -45,14 +45,17 @@
  */
 package h;
 
-import smetana.core.UnsupportedSize_t;
+import h.ST_pointf.Array;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import smetana.core.UnsupportedArrayOfPtr;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.size_t;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_bezier extends UnsupportedStructAndPtr {
@@ -69,12 +72,111 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 
 	// "{",
 	// "pointf *list",
-	private StarArrayOfPtr list;
+	public ST_pointf.Array list;
 
-	private int size;
-	private int sflag, eflag;
+	public int size;
+	public int sflag, eflag;
 
-	private final ST_pointf sp = new ST_pointf(this), ep = new ST_pointf(this);
+	public final ST_pointf sp = new ST_pointf(this), ep = new ST_pointf(this);
+
+	public static class Array2 extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
+
+		private final List<ST_bezier> data;
+		private final int pos;
+
+		public Array2(int size) {
+			this.data = new ArrayList<ST_bezier>();
+			this.pos = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(new ST_bezier());
+			}
+		}
+
+		@Override
+		public ST_bezier getStruct() {
+			return data.get(pos);
+		}
+
+		@Override
+		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
+			return getStruct().setPtr(fieldName, newData);
+		}
+
+		@Override
+		public void setStruct(String fieldName, __struct__ newData) {
+			getStruct().setStruct(fieldName, newData);
+		}
+
+		@Override
+		public void setInt(String fieldName, int data) {
+			getStruct().setInt(fieldName, data);
+		}
+
+		@Override
+		public __struct__ getStruct(String fieldName) {
+			return getStruct().getStruct(fieldName);
+		}
+
+		@Override
+		public int getInt(String fieldName) {
+			return getStruct().getInt(fieldName);
+		}
+
+		// public void swap(int i, int j) {
+		// ST_bezier e1 = data.get(i);
+		// ST_bezier e2 = data.get(j);
+		// data.set(i, e2);
+		// data.set(j, e1);
+		// }
+
+		public Array2(List<ST_bezier> data, int pos) {
+			this.data = data;
+			this.pos = pos;
+		}
+
+		public Array2 reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(new ST_bezier());
+			}
+			return this;
+		}
+
+		@Override
+		public Array2 plus(int delta) {
+			return new Array2(data, pos + delta);
+		}
+		
+		@Override
+		public Array2 asPtr() {
+			return this;
+		}
+
+		@Override
+		public void setPtr(__ptr__ value) {
+			this.data.set(pos, (ST_bezier) value);
+		}
+
+		@Override
+		public ST_bezier getPtr() {
+			return this.data.get(pos);
+		}
+
+		@Override
+		public int comparePointer(__ptr__ other) {
+			final Array2 this2 = (Array2) other;
+			if (this.data != this2.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos - this2.pos;
+		}
+
+		public boolean isSameThan2(Array2 other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos == other.pos;
+		}
+	}
 
 	// "}",
 	// "bezier");
@@ -91,37 +193,8 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_bezier.this.getPtr(fieldName);
-		}
-
-		@Override
-		public int getInt(String fieldName) {
-			return ST_bezier.this.getInt(fieldName);
-		}
-		
-		@Override
-		public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-			return ST_bezier.this.getArrayOfPtr(fieldName);
-		}
-		
-		@Override
-		public boolean getBoolean(String fieldName) {
-			return ST_bezier.this.getBoolean(fieldName);
-		}
-		
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return ST_bezier.this.getStruct(fieldName);
-		}
-
+	public void ____(__ptr__ other) {
+		___(((ST_bezier) other).getStruct());
 	}
 
 	@Override
@@ -133,23 +206,6 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 			return this.eflag != 0;
 		}
 		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("list")) {
-			return list;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("list")) {
-			this.list = (StarArrayOfPtr) newData;
-			return list;
-		}
-		return super.setPtr(fieldName, newData);
 	}
 
 	@Override
@@ -197,6 +253,15 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 	}
 
 	@Override
+	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
+		if (fieldName.equals("list")) {
+			this.list = (Array) newData;
+			return this.list;
+		}
+		return super.setPtr(fieldName, newData);
+	}
+
+	@Override
 	public __struct__ getStruct(String fieldName) {
 		if (fieldName.equals("sp")) {
 			return this.sp;
@@ -208,37 +273,13 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		if (fieldName.equals("list")) {
-			return this.list.getInternalArray();
-		}
-		return super.getArrayOfPtr(fieldName);
-	}
-
-	@Override
-	public __struct__ getStruct() {
+	public ST_bezier getStruct() {
 		return this;
 	}
 
-	public static size_t sizeof(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return new StarArrayOfPtr(new STArray<ST_bezier>(nb, 0, ST_bezier.class));
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-
-			@Override
-			public Object realloc(Object old) {
-				StarArrayOfPtr old2 = (StarArrayOfPtr) old;
-				old2.realloc(nb);
-				return old2;
-			}
-		};
+	@Override
+	public ST_bezier getPtr() {
+		return this;
 	}
 
 }

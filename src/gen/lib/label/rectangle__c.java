@@ -44,7 +44,12 @@
  *
  */
 package gen.lib.label;
+import static smetana.core.JUtilsDebug.ENTERING;
+import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import h.ST_Rect_t;
+import smetana.core.__ptr__;
 
 public class rectangle__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -147,15 +152,15 @@ public class rectangle__c {
 
 //3 1wtvfzwbzj03e6w5rw4k7qdax
 // void InitRect(Rect_t * r) 
-public static Object InitRect(Object... arg) {
-UNSUPPORTED("bfynnbut17s29886tfi4hmp71"); // void InitRect(Rect_t * r)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("pp6gyv6pecd6kik4hoguluwp"); //     register int i;
-UNSUPPORTED("6v26zqmzay64h92bxd4qt6qgs"); //     for (i = 0; i < 2*2; i++)
-UNSUPPORTED("d3uknh6sy0xxecd62dbcemd5p"); // 	r->boundary[i] = 0;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static void InitRect(ST_Rect_t r) {
+ENTERING("1wtvfzwbzj03e6w5rw4k7qdax","InitRect");
+try {
+     int i;
+     for (i = 0; i < 2*2; i++)
+    	 r.boundary[i]=0;
+} finally {
+LEAVING("1wtvfzwbzj03e6w5rw4k7qdax","InitRect");
+}
 }
 
 
@@ -163,19 +168,21 @@ throw new UnsupportedOperationException();
 
 //3 bvazxgli5q4yxvzl5kn1vjqpm
 // Rect_t NullRect() 
-public static Object NullRect(Object... arg) {
-UNSUPPORTED("7bfeg4qbgfa72qeao4zmwznat"); // Rect_t NullRect()
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9jotn4njsd13qx406m9otorg4"); //     Rect_t r;
-UNSUPPORTED("pp6gyv6pecd6kik4hoguluwp"); //     register int i;
-UNSUPPORTED("4cmj0swptez35tqafqf86bskl"); //     r.boundary[0] = 1;
-UNSUPPORTED("6lzrqh8r1olplqcbtz1n5dow7"); //     r.boundary[2] = -1;
-UNSUPPORTED("ol4wmdbmn9kjw3hpmp2gwavz"); //     for (i = 1; i < 2; i++)
-UNSUPPORTED("9xr8ijrn07laqlacrzelzczxa"); // 	r.boundary[i] = r.boundary[i + 2] = 0;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static ST_Rect_t NullRect() {
+ENTERING("bvazxgli5q4yxvzl5kn1vjqpm","NullRect");
+try {
+     ST_Rect_t r = new ST_Rect_t();
+     int i;
+     r.boundary[0]=1;
+     r.boundary[2]=-1;
+     for (i = 1; i < 2; i++) {
+         r.boundary[i]=0;
+         r.boundary[i+2]=0;
+     }
+     return r;
+} finally {
+LEAVING("bvazxgli5q4yxvzl5kn1vjqpm","NullRect");
+}
 }
 
 
@@ -183,30 +190,30 @@ throw new UnsupportedOperationException();
 
 //3 1ijarur71gcahchxz8vqf69na
 // unsigned int RectArea(Rect_t * r) 
-public static Object RectArea(Object... arg) {
-UNSUPPORTED("dt9366zeifsgcei4onz0fdt4i"); // unsigned int RectArea(Rect_t * r)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9cyat6ft4tmgpumn70l9fwydy"); //   register int i;
-UNSUPPORTED("eep6ne1fnwvxrzmao6aq2e80t"); //   unsigned int area=1, a=1;
-UNSUPPORTED("bxtlpefe142w9pb81aa0gkkcj"); //   assert(r);
-UNSUPPORTED("7xe9zz3f2fwhfptig6esqvb1t"); //     if (((r)->boundary[0] > (r)->boundary[2])) return 0;
-UNSUPPORTED("9gsgfs2guis9c3c3oi57mxpq2"); //     /*
-UNSUPPORTED("asaz8qrby7qugc5m3ylnjg6o7"); //      * XXX add overflow checks
-UNSUPPORTED("795vpnc8yojryr8b46aidsu69"); //      */
-UNSUPPORTED("17o3f4aat9tkp17wsngm29nst"); //     area = 1;
-UNSUPPORTED("6xp61z8h2baoxnlm757q289e3"); //     for (i = 0; i < 2; i++) {
-UNSUPPORTED("6g0ik6vssf9px33quo2z9ferr"); //       unsigned int b = r->boundary[i + 2] - r->boundary[i];
-UNSUPPORTED("7tqqzmxu3tsfxccs53evs54me"); //       a *= b;
-UNSUPPORTED("3u7h4981b69nu4w80bhv3s4q"); //       if( (a / b ) != area) {
+public static int RectArea(ST_Rect_t r) {
+ENTERING("1ijarur71gcahchxz8vqf69na","RectArea");
+try {
+   int i;
+   int area=1, a=1;
+//   assert(r);
+     if (r.boundary[0] > r.boundary[2]) return 0;
+     /*
+      * XXX add overflow checks
+      */
+     area = 1;
+     for (i = 0; i < 2; i++) {
+       int b = r.boundary[i+2] - r.boundary[i];
+       a *= b;
+       if( (a / b ) != area) {
 UNSUPPORTED("6qc59bm54jy4hv9gw8a50rk0u"); // 	agerr (AGERR, "label: area too large for rtree\n");
 UNSUPPORTED("awx87c59fwl0w8r64jfd86jrd"); // 	return UINT_MAX;
-UNSUPPORTED("dquo3qofk56ds5xl95lhvcthf"); //       }
-UNSUPPORTED("b34qh5cr4ie1y00nbl91sn2km"); //       area = a;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("9ww3ox2wqjgbtsin4e26qgoyx"); //     return area;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+       }
+       area = a;
+     }
+     return area;
+} finally {
+LEAVING("1ijarur71gcahchxz8vqf69na","RectArea");
+}
 }
 
 
@@ -214,25 +221,25 @@ throw new UnsupportedOperationException();
 
 //3 tgmhi1wshyhqky2pappb6w6w
 // Rect_t CombineRect(Rect_t * r, Rect_t * rr) 
-public static Object CombineRect(Object... arg) {
-UNSUPPORTED("18ebi8xfcz225jqpfk5vtp9hf"); // Rect_t CombineRect(Rect_t * r, Rect_t * rr)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7gcww32g3xx6yjb9m2tgq8f7c"); //     register int i, j;
-UNSUPPORTED("ep1c21oj5vdbkci5nklq26u6d"); //     Rect_t new;
-UNSUPPORTED("8woqwn01hzllzlrb8an6apviw"); //     assert(r && rr);
-UNSUPPORTED("61el74qdlszr9b7htgajgnncw"); //     if (((r)->boundary[0] > (r)->boundary[2]))
-UNSUPPORTED("26gbreijuodtzexgobqd73u1p"); // 	return *rr;
-UNSUPPORTED("9c5jzil5a7hm4bfzytn0e7aww"); //     if (((rr)->boundary[0] > (rr)->boundary[2]))
-UNSUPPORTED("h0psmi4ydywx720mvhp33x5g"); // 	return *r;
-UNSUPPORTED("6xp61z8h2baoxnlm757q289e3"); //     for (i = 0; i < 2; i++) {
-UNSUPPORTED("1p51ro3v4iw4nogctzk3y0bts"); // 	new.boundary[i] = MIN(r->boundary[i], rr->boundary[i]);
-UNSUPPORTED("2h0ee6s8hk7srb6xqmnfluf52"); // 	j = i + 2;
-UNSUPPORTED("3cljcok8kw06fphxnu0183g4"); // 	new.boundary[j] = MAX(r->boundary[j], rr->boundary[j]);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("4b8pgvy3c1dhlanxwmafau4pt"); //     return new;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static ST_Rect_t CombineRect(ST_Rect_t r, ST_Rect_t rr) {
+ENTERING("tgmhi1wshyhqky2pappb6w6w","CombineRect");
+try {
+     int i, j;
+     ST_Rect_t new_ = new ST_Rect_t();
+     //     assert(r && rr);
+     if (r.boundary[0] > r.boundary[2])
+ 	return (ST_Rect_t) rr.copy();
+     if (rr.boundary[0] > rr.boundary[2])
+ 	return (ST_Rect_t) r.copy();
+     for (i = 0; i < 2; i++) {
+ 	new_.boundary[i] = Math.min(r.boundary[i], rr.boundary[i]);
+ 	j = i + 2;
+ 	new_.boundary[j] = Math.max(r.boundary[j], rr.boundary[j]);
+     }
+     return new_;
+} finally {
+LEAVING("tgmhi1wshyhqky2pappb6w6w","CombineRect");
+}
 }
 
 
@@ -240,21 +247,21 @@ throw new UnsupportedOperationException();
 
 //3 9glce34jzknoqj98agg96k03o
 // int Overlap(Rect_t * r, Rect_t * s) 
-public static Object Overlap(Object... arg) {
-UNSUPPORTED("75f545jos6v3su84hbt728wxr"); // int Overlap(Rect_t * r, Rect_t * s)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7gcww32g3xx6yjb9m2tgq8f7c"); //     register int i, j;
-UNSUPPORTED("3ilt6jfw7dcaebocva6xawiui"); //     assert(r && s);
-UNSUPPORTED("6xp61z8h2baoxnlm757q289e3"); //     for (i = 0; i < 2; i++) {
-UNSUPPORTED("71gqfx1xze9ccjzy9ids9x8cj"); // 	j = i + 2;	/* index for high sides */
-UNSUPPORTED("b41yx5qm8jqsnyojyaztg6wy1"); // 	if (r->boundary[i] > s->boundary[j]
-UNSUPPORTED("cjb3lqf10yggej4b0uh9acc72"); // 	    || s->boundary[i] > r->boundary[j])
-UNSUPPORTED("8tnlb2txucdutal7665h0v68g"); // 	    return (0);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("4si0cf97a5sfd9ozuunds9goz"); //     return (!(0));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static boolean Overlap(ST_Rect_t r, ST_Rect_t s) {
+ENTERING("9glce34jzknoqj98agg96k03o","Overlap");
+try {
+     int i, j;
+//     assert(r && s);
+     for (i = 0; i < 2; i++) {
+ 	j = i + 2;	/* index for high sides */
+ 	if (r.boundary[i] > s.boundary[j]
+ 	    || s.boundary[i] > r.boundary[j])
+ 	    return false;
+     }
+     return (N(0));
+} finally {
+LEAVING("9glce34jzknoqj98agg96k03o","Overlap");
+}
 }
 
 

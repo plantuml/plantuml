@@ -47,13 +47,10 @@ package gen.lib.common;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.GVC_s;
-import h._dt_s;
-import h.boxf;
-import h.pointf;
-import smetana.core.JUtils;
+import h.ST_GVC_s;
+import h.ST_dt_s;
+import h.ST_pointf;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class textspan__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -313,14 +310,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -349,26 +346,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
-
 
 
 
@@ -391,14 +368,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -796,17 +773,17 @@ throw new UnsupportedOperationException();
 
 //3 n8tcl06mifdn779rzenam44z
 // pointf textspan_size(GVC_t *gvc, textspan_t * span) 
-public static __struct__<pointf> textspan_size(GVC_s gvc, __ptr__ span) {
+public static ST_pointf textspan_size(ST_GVC_s gvc, __ptr__ span) {
 // WARNING!! STRUCT
 return textspan_size_w_(gvc, span).copy();
 }
-private static __struct__<pointf> textspan_size_w_(GVC_s gvc, __ptr__ span) {
+private static ST_pointf textspan_size_w_(ST_GVC_s gvc, __ptr__ span) {
 ENTERING("n8tcl06mifdn779rzenam44z","textspan_size");
 try {
 	System.err.println("Warning:textspan_size "+span);
 	span.getStruct("size").setDouble("x", 30);
 	span.getStruct("size").setDouble("y", 20);
-    return span.getStruct("size").copy();
+    return (ST_pointf) span.getStruct("size").copy();
 } finally {
 LEAVING("n8tcl06mifdn779rzenam44z","textspan_size");
 }
@@ -889,7 +866,7 @@ throw new UnsupportedOperationException();
 
 //3 9mfrgcpzz2d9f7nxfgx4nxj2q
 // Dt_t * textfont_dict_open(GVC_t *gvc) 
-public static _dt_s textfont_dict_open(GVC_s gvc) {
+public static ST_dt_s textfont_dict_open(ST_GVC_s gvc) {
 ENTERING("9mfrgcpzz2d9f7nxfgx4nxj2q","textfont_dict_open");
 try {
 	return null;

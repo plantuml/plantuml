@@ -79,9 +79,17 @@ public class PngIOMetadata {
 		}
 
 		if (metadata != null) {
-			pngMetadata.zTXt_keyword.add("plantuml");
-			pngMetadata.zTXt_compressionMethod.add(new Integer(0));
-			pngMetadata.zTXt_text.add(metadata);
+			// pngMetadata.zTXt_keyword.add("plantuml");
+			// pngMetadata.zTXt_compressionMethod.add(new Integer(0));
+			// pngMetadata.zTXt_text.add(metadata);
+
+			pngMetadata.iTXt_compressionFlag.add(new Boolean(true));
+			pngMetadata.iTXt_compressionMethod.add(new Integer(0));
+			pngMetadata.iTXt_keyword.add("plantuml");
+			pngMetadata.iTXt_languageTag.add("");
+			pngMetadata.iTXt_text.add(metadata);
+			pngMetadata.iTXt_translatedKeyword.add("");
+
 		}
 
 		if (debugData != null) {

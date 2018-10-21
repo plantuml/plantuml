@@ -45,38 +45,105 @@
  */
 package h;
 
-import h.ST_Agrec_s.Amp;
+import java.util.ArrayList;
+import java.util.List;
+
 import smetana.core.HardcodedStruct;
 import smetana.core.OFFSET;
-import smetana.core.UnsupportedSize_t;
+import smetana.core.UnsupportedArrayOfPtr;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.size_t;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStruct {
 
-	private final ST_Agobj_s base = new ST_Agobj_s(this);
-	private final ST_dtlink_s id_link = new ST_dtlink_s(this);
-	private final ST_dtlink_s seq_link = new ST_dtlink_s(this);
-	private ST_Agnode_s node;
+	private final StarStruct parent;
+
+	public final ST_Agobj_s base = new ST_Agobj_s(this);
+	public final ST_dtlink_s id_link = new ST_dtlink_s(this);
+	public final ST_dtlink_s seq_link = new ST_dtlink_s(this);
+	public ST_Agnode_s node;
+
+	public static class ArrayOfStar extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
+
+		private final List<ST_Agedge_s> data;
+		private final int pos;
+
+		public ArrayOfStar(int size) {
+			this.data = new ArrayList<ST_Agedge_s>();
+			this.pos = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(null);
+			}
+		}
+
+		public void swap(int i, int j) {
+			ST_Agedge_s e1 = data.get(i);
+			ST_Agedge_s e2 = data.get(j);
+			data.set(i, e2);
+			data.set(j, e1);
+		}
+
+		public ArrayOfStar(List<ST_Agedge_s> data, int pos) {
+			this.data = data;
+			this.pos = pos;
+		}
+
+		public ArrayOfStar reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(null);
+			}
+			return this;
+		}
+
+		@Override
+		public ArrayOfStar plus(int delta) {
+			return new ArrayOfStar(data, pos + delta);
+		}
+
+		@Override
+		public ArrayOfStar asPtr() {
+			return this;
+		}
+
+		@Override
+		public void setPtr(__ptr__ value) {
+			this.data.set(pos, (ST_Agedge_s) value);
+		}
+
+		@Override
+		public ST_Agedge_s getPtr() {
+			return this.data.get(pos);
+		}
+
+		@Override
+		public int comparePointer(__ptr__ other) {
+			final ArrayOfStar this2 = (ArrayOfStar) other;
+			if (this.data != this2.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos - this2.pos;
+		}
+
+		public boolean isSameThan2(ArrayOfStar other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos == other.pos;
+		}
+	}
 
 	@Override
 	public void copyDataFrom(__ptr__ arg) {
-		if (arg instanceof Amp) {
-			arg = ((Amp) arg).getObject();
-		}
 		ST_Agedge_s this2 = (ST_Agedge_s) arg;
 		this.base.copyDataFrom((__struct__) this2.base);
 		this.id_link.copyDataFrom((__struct__) this2.id_link);
 		this.seq_link.copyDataFrom((__struct__) this2.seq_link);
 		this.node = this2.node;
 	}
-
-	private final StarStruct parent;
 
 	public ST_Agedge_s() {
 		this(null);
@@ -88,100 +155,8 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 
 	@Override
 	public boolean isSameThan(StarStruct other) {
-		if (other instanceof Amp) {
-			Amp other2 = (Amp) other;
-			return this == other2.me;
-		}
 		ST_Agedge_s other2 = (ST_Agedge_s) other;
 		return this == other2;
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp(this);
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		private final ST_Agedge_s me;
-
-		public Amp(ST_Agedge_s me) {
-			this.me = me;
-		}
-
-		public ST_Agedge_s getObject() {
-			return me;
-		}
-
-		@Override
-		public boolean isSameThan(StarStruct other) {
-			if (other instanceof ST_Agedge_s) {
-				ST_Agedge_s other2 = (ST_Agedge_s) other;
-				return this.me == other2;
-			}
-			Amp other2 = (Amp) other;
-			return this.me == other2.me;
-		}
-
-		@Override
-		public __ptr__ castTo(Class dest) {
-			return ST_Agedge_s.this.castTo(dest);
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return ST_Agedge_s.this.setPtr(fieldName, newData);
-		}
-
-		@Override
-		public void copyDataFrom(__struct__ other) {
-			ST_Agedge_s.this.copyDataFrom(other);
-		}
-
-		@Override
-		public void copyDataFrom(__ptr__ other) {
-			ST_Agedge_s.this.copyDataFrom(other);
-		}
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_Agedge_s.this.getPtr(fieldName);
-		}
-
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return ST_Agedge_s.this.getStruct(fieldName);
-		}
-
-		@Override
-		public __ptr__ plus(int pointerMove) {
-			ST_Agedgepair_s pair = (ST_Agedgepair_s) me.parent;
-			// Order=out, in
-			if (pair.out == me && pointerMove == 1) {
-				return pair.in;
-			}
-			if (pair.in == me && pointerMove == -1) {
-				return pair.out;
-			}
-			return super.plus(pointerMove);
-		}
-
-		@Override
-		public Object addVirtualBytes(int virtualBytes) {
-			if (virtualBytes == 0) {
-				return this;
-			}
-			OFFSET offset = OFFSET.fromInt(virtualBytes);
-			if (offset.toString().equals("h.Agedge_s::seq_link")) {
-				return seq_link;
-			}
-			if (offset.toString().equals("h.Agedge_s::id_link")) {
-				return id_link;
-			}
-			System.err.println("offset1=" + offset);
-			return super.addVirtualBytes(virtualBytes);
-		}
-
 	}
 
 	@Override
@@ -190,10 +165,10 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 			return this;
 		}
 		OFFSET offset = OFFSET.fromInt(virtualBytes);
-		if (offset.toString().equals("h.Agedge_s::seq_link")) {
+		if (offset.toString().equals("h.ST_Agedge_s::seq_link")) {
 			return seq_link;
 		}
-		if (offset.toString().equals("h.Agedge_s::id_link")) {
+		if (offset.toString().equals("h.ST_Agedge_s::id_link")) {
 			return id_link;
 		}
 		System.err.println("offset2=" + offset);
@@ -201,7 +176,7 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 	}
 
 	@Override
-	public __ptr__ plus(int pointerMove) {
+	public ST_Agedge_s plus(int pointerMove) {
 		ST_Agedgepair_s pair = (ST_Agedgepair_s) parent;
 		// Order=out, in
 		if (pair.out == this && pointerMove == 1) {
@@ -210,15 +185,15 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 		if (pair.in == this && pointerMove == -1) {
 			return pair.out;
 		}
-		return super.plus(pointerMove);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Agobj_s.class) {
+		if (dest == ST_Agobj_s.class) {
 			return base;
 		}
-		if (dest == Agedge_s.class) {
+		if (dest == ST_Agedge_s.class) {
 			return this;
 		}
 		return super.castTo(dest);
@@ -227,11 +202,7 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("node")) {
-			if (newData instanceof ST_Agnode_s.Amp) {
-				this.node = ((ST_Agnode_s.Amp) newData).getObject();
-			} else {
-				this.node = (ST_Agnode_s) newData;
-			}
+			this.node = (ST_Agnode_s) newData;
 			return node;
 		}
 		return super.setPtr(fieldName, newData);
@@ -246,6 +217,11 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 	}
 
 	@Override
+	public ST_Agedge_s getPtr() {
+		return this;
+	}
+
+	@Override
 	public __struct__ getStruct(String fieldName) {
 		if (fieldName.equals("base")) {
 			return base;
@@ -255,45 +231,16 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 
 	public StarStruct from_seq_link(ST_dtlink_s from) {
 		if (from == seq_link) {
-			return amp();
+			return this;
 		}
 		throw new IllegalArgumentException();
 	}
 
 	public StarStruct from_id_link(ST_dtlink_s from) {
 		if (from == id_link) {
-			return amp();
+			return this;
 		}
 		throw new IllegalArgumentException();
-	}
-
-	public static size_t sizeof_starstar_empty(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return STStarArrayOfPointer.malloc(nb);
-			}
-
-			@Override
-			public Object realloc(Object old) {
-				if (old instanceof STStarArrayOfPointer) {
-					STStarArrayOfPointer old2 = (STStarArrayOfPointer) old;
-					old2.realloc(nb);
-					return old2;
-				}
-				// if (old instanceof StarArrayOfPtr) {
-				// StarArrayOfPtr old2 = (StarArrayOfPtr) old;
-				// old2.realloc(nb);
-				// return old2;
-				// }
-				return super.realloc(old);
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-		};
 	}
 
 	// public interface ST_Agedge_s extends __ptr__ {

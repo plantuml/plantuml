@@ -53,15 +53,14 @@ import static smetana.core.JUtils.function;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agraph_s;
+import h.ST_Agraph_s;
 import h.Dtmemory_f;
-import h._dt_s;
-import h._dtdisc_s;
-import h._dtmethod_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dtmethod_s;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.size_t;
-import smetana.core.amiga.StarStruct;
 
 public class utils__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -204,10 +203,10 @@ public class utils__c {
 
 //3 7dkudp41c9byhicatk2sxtxqk
 // void *agdictobjmem(Dict_t * dict, void * p, size_t size, Dtdisc_t * disc) 
-public static Object agdictobjmem(_dt_s dict, Object p, size_t size, _dtdisc_s disc) {
+public static Object agdictobjmem(ST_dt_s dict, Object p, size_t size, ST_dtdisc_s disc) {
 ENTERING("7dkudp41c9byhicatk2sxtxqk","agdictobjmem");
 try {
-	Agraph_s g;
+	ST_Agraph_s g;
     g = Z.z().Ag_dictop_G;
     if (g!=null) {
 	if (p!=null)
@@ -252,11 +251,11 @@ throw new UnsupportedOperationException();
 
 //3 48ox0bg1qmasrer8np51uwsyk
 // Dict_t *agdtopen(Agraph_t * g, Dtdisc_t * disc, Dtmethod_t * method) 
-public static _dt_s agdtopen(Agraph_s g, StarStruct disc, _dtmethod_s method) {
+public static ST_dt_s agdtopen(ST_Agraph_s g, ST_dtdisc_s disc, ST_dtmethod_s method) {
 ENTERING("48ox0bg1qmasrer8np51uwsyk","agdtopen");
 try {
     Dtmemory_f memf;
-    _dt_s d;
+    ST_dt_s d;
     memf = (Dtmemory_f) disc.getPtr("memoryf");
     disc.setPtr("memoryf", function(utils__c.class, "agdictobjmem"));
     Z.z().Ag_dictop_G = g;
@@ -328,7 +327,7 @@ throw new UnsupportedOperationException();
 
 //3 cym72wvu6zffc0vzoa93zha8
 // void agdtdisc(Agraph_t * g, Dict_t * dict, Dtdisc_t * disc) 
-public static void agdtdisc(Agraph_s g, _dt_s dict, _dtdisc_s disc) {
+public static void agdtdisc(ST_Agraph_s g, ST_dt_s dict, ST_dtdisc_s disc) {
 ENTERING("cym72wvu6zffc0vzoa93zha8","agdtdisc");
 try {
     if (disc!=null && NEQ(dtdisc(dict, null, 0), disc)) {

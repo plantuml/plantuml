@@ -56,18 +56,18 @@ public class ST_GVCOMMON_t extends UnsupportedStructAndPtr implements HardcodedS
 
 	// "typedef struct GVCOMMON_s",
 	// "{",
-	private __ptr__ info;
+	public __ptr__ info;
 	// "char *cmdname",
 	// "int verbose",
 	// "boolean config, auto_outfile_names",
 	// "void (*errorfn) (const char *fmt, ...)",
-	private CFunction errorfn;
+	public CFunction errorfn;
 	// "const char **show_boxes",
 	// "const char **lib",
 	// "int viewNum",
 	// "const lt_symlist_t *builtins",
-	private __ptr__ builtins;
-	private boolean demand_loading;
+	public __ptr__ builtins;
+	public boolean demand_loading;
 	// "}",
 	// "GVCOMMON_t");
 
@@ -79,14 +79,6 @@ public class ST_GVCOMMON_t extends UnsupportedStructAndPtr implements HardcodedS
 
 	public ST_GVCOMMON_t(StarStruct parent) {
 		this.parent = parent;
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
 	}
 
 	@Override

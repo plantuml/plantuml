@@ -55,7 +55,7 @@ import smetana.core.amiga.StarStruct;
 public class ST_Agobj_s extends UnsupportedStructAndPtr implements WithParent, HardcodedStruct {
 
 	public final ST_Agtag_s tag = new ST_Agtag_s(this);
-	public ST_Agrec_s.Amp data;
+	public ST_Agrec_s data;
 
 	@Override
 	public void copyDataFrom(__struct__ other) {
@@ -76,45 +76,17 @@ public class ST_Agobj_s extends UnsupportedStructAndPtr implements WithParent, H
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return ST_Agobj_s.this.getStruct(fieldName);
-		}
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_Agobj_s.this.getPtr(fieldName);
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return ST_Agobj_s.this.setPtr(fieldName, newData);
-		}
-
-		@Override
-		public __ptr__ castTo(Class dest) {
-			return ST_Agobj_s.this.castTo(dest);
-		}
-	}
-
-	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Agobj_s.class) {
+		if (dest == ST_Agobj_s.class) {
 			return this;
 		}
-		if (dest == Agraph_s.class && parent instanceof ST_Agraph_s) {
+		if (dest == ST_Agraph_s.class && parent instanceof ST_Agraph_s) {
 			return (ST_Agraph_s) parent;
 		}
-		if (dest == Agnode_s.class && parent instanceof ST_Agnode_s) {
+		if (dest == ST_Agnode_s.class && parent instanceof ST_Agnode_s) {
 			return (ST_Agnode_s) parent;
 		}
-		if (dest == Agedge_s.class && parent instanceof ST_Agedge_s) {
+		if (dest == ST_Agedge_s.class && parent instanceof ST_Agedge_s) {
 			return (ST_Agedge_s) parent;
 		}
 		return super.castTo(dest);
@@ -125,18 +97,16 @@ public class ST_Agobj_s extends UnsupportedStructAndPtr implements WithParent, H
 		if (fieldName.equals("data")) {
 			if (newData instanceof ST_Agnodeinfo_t) {
 				ST_Agnodeinfo_t info = (ST_Agnodeinfo_t) newData;
-				newData = (ST_Agrec_s) info.castTo(Agrec_s.class);
+				newData = (ST_Agrec_s) info.castTo(ST_Agrec_s.class);
 			} else if (newData instanceof ST_Agedgeinfo_t) {
 				ST_Agedgeinfo_t info = (ST_Agedgeinfo_t) newData;
-				newData = (ST_Agrec_s) info.castTo(Agrec_s.class);
-			} else if (newData instanceof ST_Agedgeinfo_t.Amp) {
-				ST_Agedgeinfo_t.Amp info = (ST_Agedgeinfo_t.Amp) newData;
-				newData = (ST_Agrec_s) info.castTo(Agrec_s.class);
+				newData = (ST_Agrec_s) info.castTo(ST_Agrec_s.class);
+			} else if (newData instanceof ST_Agedgeinfo_t) {
+				ST_Agedgeinfo_t info = (ST_Agedgeinfo_t) newData;
+				newData = (ST_Agrec_s) info.castTo(ST_Agrec_s.class);
 			}
 			if (newData instanceof ST_Agrec_s) {
-				this.data = (ST_Agrec_s.Amp) ((ST_Agrec_s) newData).amp();
-			} else {
-				this.data = (ST_Agrec_s.Amp) newData;
+				this.data = (ST_Agrec_s) newData;
 			}
 			return data;
 		}

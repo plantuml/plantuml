@@ -70,7 +70,7 @@ public class ST_Agtag_s extends UnsupportedStructAndPtr implements HardcodedStru
 
 	@Override
 	public Class getRealClass() {
-		return Agtag_s.class;
+		return ST_Agtag_s.class;
 	}
 
 	@Override

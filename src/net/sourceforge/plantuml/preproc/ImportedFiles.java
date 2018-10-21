@@ -46,19 +46,44 @@ import net.sourceforge.plantuml.AFileRegular;
 import net.sourceforge.plantuml.AFileZipEntry;
 import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.Log;
 
 public class ImportedFiles {
 
-	private final List<File> imported = new ArrayList<File>();
-	private AParentFolder currentDir;
+	private final List<File> imported;
+	private final AParentFolder currentDir;
+
+	private ImportedFiles(List<File> imported, AParentFolder currentDir) {
+		this.imported = imported;
+		this.currentDir = currentDir;
+	}
+
+	public ImportedFiles withCurrentDir(AParentFolder newCurrentDir) {
+		if (newCurrentDir == null) {
+			return this;
+		}
+		return new ImportedFiles(imported, newCurrentDir);
+	}
+
+	public static ImportedFiles createImportedFiles(AParentFolder newCurrentDir) {
+		return new ImportedFiles(new ArrayList<File>(), newCurrentDir);
+	}
+
+	@Override
+	public String toString() {
+		return "ImportedFiles=" + imported + " currentDir=" + currentDir;
+	}
 
 	public AFile getAFile(String nameOrPath) throws IOException {
+		Log.info("ImportedFiles::getAFile nameOrPath = " + nameOrPath);
+		Log.info("ImportedFiles::getAFile currentDir = " + currentDir);
 		final AParentFolder dir = currentDir;
 		if (dir == null || isAbsolute(nameOrPath)) {
 			return new AFileRegular(new File(nameOrPath).getCanonicalFile());
 		}
 		// final File filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
 		final AFile filecurrent = dir.getAFile(nameOrPath);
+		Log.info("ImportedFiles::getAFile filecurrent = " + filecurrent);
 		if (filecurrent != null && filecurrent.isOk()) {
 			return filecurrent;
 		}
@@ -92,10 +117,6 @@ public class ImportedFiles {
 
 	public void add(File file) {
 		this.imported.add(file);
-	}
-
-	public void setCurrentDir(AParentFolder newCurrentDir) {
-		this.currentDir = newCurrentDir;
 	}
 
 	public AParentFolder getCurrentDir() {

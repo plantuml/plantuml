@@ -59,13 +59,10 @@ import static smetana.core.Macro.ND_next;
 import static smetana.core.Macro.ND_onstack;
 import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agedge_s;
-import h.Agnode_s;
-import h.Agraph_s;
-import h.boxf;
-import h.pointf;
-import smetana.core.JUtils;
-import smetana.core.__struct__;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_pointf;
 
 public class acyclic__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -325,14 +322,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -361,25 +358,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -403,14 +381,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -709,10 +687,10 @@ throw new UnsupportedOperationException();
 
 //3 9hm902ya6q6bq246ewuh67h38
 // void reverse_edge(edge_t * e) 
-public static void reverse_edge(Agedge_s e) {
+public static void reverse_edge(ST_Agedge_s e) {
 ENTERING("9hm902ya6q6bq246ewuh67h38","reverse_edge");
 try {
-    Agedge_s f;
+    ST_Agedge_s f;
     delete_fast_edge(e);
     if ((f = find_fast_edge(aghead(e), agtail(e)))!=null)
 	merge_oneway(e, f);
@@ -728,17 +706,17 @@ LEAVING("9hm902ya6q6bq246ewuh67h38","reverse_edge");
 
 //3 e9h7n52fs8rucrug9tr0zebe2
 // static void  dfs(node_t * n) 
-public static void dfs(Agnode_s n) {
+public static void dfs(ST_Agnode_s n) {
 ENTERING("e9h7n52fs8rucrug9tr0zebe2","dfs");
 try {
     int i;
-    Agedge_s e;
-    Agnode_s w;
+    ST_Agedge_s e;
+    ST_Agnode_s w;
     if (ND_mark(n)!=0)
 	return;
     ND_mark(n, 1);
     ND_onstack(n, 1);
-    for (i = 0; (e = (Agedge_s) ND_out(n).getFromList(i))!=null; i++) {
+    for (i = 0; (e = (ST_Agedge_s) ND_out(n).getFromList(i))!=null; i++) {
 	w = aghead(e);
 	if (ND_onstack(w)) {
 	    reverse_edge(e);
@@ -759,11 +737,11 @@ LEAVING("e9h7n52fs8rucrug9tr0zebe2","dfs");
 
 //3 1ejgnwd7ek344caegjwg46n6h
 // void acyclic(graph_t * g) 
-public static void acyclic_(Agraph_s g) {
+public static void acyclic_(ST_Agraph_s g) {
 ENTERING("1ejgnwd7ek344caegjwg46n6h","acyclic");
 try {
     int c;
-    Agnode_s n;
+    ST_Agnode_s n;
     for (c = 0; c < GD_comp(g).size; c++) {
     	GD_nlist(g, GD_comp(g).getFromList(c));
 	for (n = GD_nlist(g); n!=null; n = ND_next(n))

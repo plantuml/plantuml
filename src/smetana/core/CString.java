@@ -36,6 +36,8 @@
 
 package smetana.core;
 
+import h.ST_refstr_t;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +47,11 @@ import smetana.core.amiga.StarStruct;
 public class CString extends UnsupportedC implements __ptr__, Area {
 
 	private static int UID = 100;
-	
+
 	private final Throwable creation = new Throwable();
 	private final List<Character> data2;
 	private final int currentStart;
-	private final List<__ptr__> fathers = new ArrayList<__ptr__>();
+
 	private final int uid;
 
 	public boolean isSameThan(CString other) {
@@ -101,32 +103,51 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 		this.data2 = data2;
 		this.currentStart = currentStart;
 		this.uid = UID;
-		UID+=2;
+		UID += 2;
 		creation.fillInStackTrace();
 	}
 
 	public __ptr__ addVirtualBytes(int bytes) {
 		JUtils.LOG("CString::addVirtualBytes " + bytes);
 		JUtils.LOG("AM " + this);
-		if (bytes < 0) {
-			OFFSET offset = OFFSET.fromInt(-bytes);
-			JUtils.LOG("offset=" + offset);
-			for (__ptr__ f : fathers) {
-				JUtils.LOG("f=" + f);
-				if (f instanceof StarStruct && ((StarStruct) f).getRealClass() == offset.getTheClass()) {
-					JUtils.LOG("FOUND1!!");
-					if (f.getPtr(offset.getField()).equals(this)) {
-						JUtils.LOG("FOUND2!!");
-						return f;
-					}
-				}
-			}
-		} else {
-			JUtils.LOG("father=" + fathers);
-			JUtils.LOG("CString created on the following place:");
-			creation.printStackTrace();
+		// if (bytes < 0) {
+		// OFFSET offset = OFFSET.fromInt(-bytes);
+		// JUtils.LOG("offset=" + offset);
+		// for (__ptr__ f : fathers) {
+		// JUtils.LOG("f=" + f);
+		// if (f instanceof StarStruct && ((StarStruct) f).getRealClass() == offset.getTheClass()) {
+		// JUtils.LOG("FOUND1!!");
+		// if (f.getPtr(offset.getField()).equals(this)) {
+		// JUtils.LOG("FOUND2!!");
+		// return f;
+		// }
+		// }
+		// }
+		// } else {
+		// JUtils.LOG("father=" + fathers);
+		// JUtils.LOG("CString created on the following place:");
+		// creation.printStackTrace();
+		// }
+		throw new UnsupportedOperationException();
+	}
+
+	private ST_refstr_t parent;
+
+	public ST_refstr_t getParent() {
+		if (parent != null) {
+			return parent;
 		}
 		throw new UnsupportedOperationException();
+	}
+
+	public void setParent(ST_refstr_t struct) {
+//		if (parent != null && parent != struct) {
+//			throw new IllegalStateException();
+//		}
+		if (struct == null) {
+			throw new IllegalStateException();
+		}
+		this.parent = struct;
 	}
 
 	@Override
@@ -197,7 +218,7 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 	}
 
 	public int compareTo(CString other, int num) {
-		for (int i = 0; i < data2.size() - currentStart && i<num; i++) {
+		for (int i = 0; i < data2.size() - currentStart && i < num; i++) {
 			final int diff = this.charAt(i) - other.charAt(i);
 			if (this.charAt(i) == '\0' || diff != 0) {
 				return diff;
@@ -223,13 +244,6 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 
 	public boolean isSame(CString other) {
 		return getContent().equals(other.getContent());
-	}
-
-	public void setMyFather(__ptr__ struct) {
-		if (this.toString().equals("black(0)")) {
-			JUtils.LOG("CString::setMyFather " + this + "  " + fathers.size());
-		}
-		this.fathers.add(struct);
 	}
 
 	public int getUid() {

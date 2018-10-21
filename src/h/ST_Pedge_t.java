@@ -45,12 +45,17 @@
  */
 package h;
 
-import smetana.core.UnsupportedSize_t;
+import java.util.ArrayList;
+import java.util.List;
+
+import smetana.core.CString;
+import smetana.core.UnsupportedArrayOfStruct2;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.__array_of_ptr__;
+import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.size_t;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Pedge_t extends UnsupportedStructAndPtr {
@@ -74,15 +79,94 @@ public class ST_Pedge_t extends UnsupportedStructAndPtr {
 	// "}",
 	// "Pedge_t");
 
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-
-	}
 	
+	public static class Array extends UnsupportedArrayOfStruct2 implements __ptr__, __array_of_ptr__{
+
+		private final List<ST_Pedge_t> data;
+		private final int pos;
+		
+		@Override
+		public void setStruct(String fieldName, __struct__ data) {
+			getStruct().setStruct(fieldName, data);
+		}
+		
+		@Override
+		public __struct__ getStruct(String fieldName) {
+			return getStruct().getStruct(fieldName);
+		}
+		
+		@Override
+		public Array asPtr() {
+			return this;
+		}
+		
+		@Override
+		public ST_Pedge_t getStruct() {
+			return data.get(pos);
+		}
+		
+		public Array(int size) {
+			this.data = new ArrayList<ST_Pedge_t>();
+			this.pos = 0;
+			for (int i = 0; i < size; i++) {
+				data.add(new ST_Pedge_t());
+			}
+		}
+
+		public Array reallocJ(int newsize) {
+			while (data.size() < newsize) {
+				data.add(new ST_Pedge_t());
+			}
+			return this;
+		}
+		
+		public Array plus(int delta) {
+			return plusJ(delta);
+		}
+
+		private Array(List<ST_Pedge_t> data, int pos) {
+			this.data = data;
+			this.pos = pos;
+		}
+
+		public ST_Pedge_t get(int i) {
+			return this.data.get(pos + i);
+		}
+
+		public Array plusJ(int i) {
+			return new Array(data, pos + i);
+		}
+
+		public int minus(Array other) {
+			if (this.data != other.data) {
+				throw new IllegalArgumentException();
+			}
+			return this.pos - other.pos;
+		}
+
+		public Array move(int delta) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public void realloc(size_t nb) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public int comparePointerInternal(__array_of_ptr__ other) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public CString getCString() {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+
+		public void setCString(CString value) {
+			throw new UnsupportedOperationException(getClass().toString());			
+		}
+
+	}
+
+
 	@Override
 	public __struct__ getStruct(String fieldName) {
 		if (fieldName.equals("a")) {
@@ -107,26 +191,6 @@ public class ST_Pedge_t extends UnsupportedStructAndPtr {
 		super.setStruct(fieldName, newData);
 	}
 
-	public static size_t sizeof(final int nb) {
-		return new UnsupportedSize_t(nb) {
-			@Override
-			public Object malloc() {
-				return new StarArrayOfPtr(new STArray<ST_Pedge_t>(nb, 0, ST_Pedge_t.class));
-			}
-
-			@Override
-			public int getInternalNb() {
-				return nb;
-			}
-
-			@Override
-			public Object realloc(Object old) {
-				StarArrayOfPtr old2 = (StarArrayOfPtr) old;
-				old2.realloc(nb);
-				return old2;
-			}
-		};
-	}
 
 }
 

@@ -40,14 +40,26 @@ import smetana.core.debug.Debug;
 
 public class JUtilsDebug {
 
-	private final static Debug debug = new Debug();
+	private final static Debug debug = null; //new Debug();
 
 	static public void ENTERING(String signature, String methodName) {
-		debug.entering(signature, methodName);
+		if (debug != null)
+			debug.entering(signature, methodName);
 	}
 
 	static public void LEAVING(String signature, String methodName) {
-		debug.leaving(signature, methodName);
+		if (debug != null)
+			debug.leaving(signature, methodName);
+	}
+
+	public static void reset() {
+		if (debug != null)
+			debug.reset();
+	}
+
+	public static void printMe() {
+		if (debug != null)
+			debug.printMe();
 	}
 
 }

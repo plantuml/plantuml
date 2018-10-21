@@ -49,7 +49,6 @@ import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedStruct {
@@ -61,7 +60,7 @@ public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedSt
 	public double distortion;
 	public double skew;
 	public int option;
-	private StarArrayOfPtr vertices;
+	public ST_pointf.Array vertices;
 
 	// "pointf *vertices",
 
@@ -72,50 +71,42 @@ public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedSt
 	public ST_polygon_t(StarStruct parent) {
 	}
 
-	public class Amp extends UnsupportedStarStruct {
-
-		@Override
-		public boolean getBoolean(String fieldName) {
-			if (fieldName.equals("regular")) {
-				return regular != 0;
-			}
-			return super.getBoolean(fieldName);
+	@Override
+	public boolean getBoolean(String fieldName) {
+		if (fieldName.equals("regular")) {
+			return regular != 0;
 		}
-
-		@Override
-		public int getInt(String fieldName) {
-			if (fieldName.equals("peripheries")) {
-				return peripheries;
-			}
-			if (fieldName.equals("sides")) {
-				return sides;
-			}
-			return super.getInt(fieldName);
-		}
-
-		@Override
-		public double getDouble(String fieldName) {
-			if (fieldName.equals("orientation")) {
-				return orientation;
-			}
-			if (fieldName.equals("skew")) {
-				return skew;
-			}
-			if (fieldName.equals("distortion")) {
-				return distortion;
-			}
-			return super.getDouble(fieldName);
-		}
-
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return ST_polygon_t.this.getPtr(fieldName);
-		}
+		return super.getBoolean(fieldName);
 	}
 
 	@Override
-	public StarStruct amp() {
-		return new Amp();
+	public int getInt(String fieldName) {
+		if (fieldName.equals("option")) {
+			return option;
+		}
+		if (fieldName.equals("sides")) {
+			return sides;
+		}
+		if (fieldName.equals("peripheries")) {
+			return peripheries;
+		}
+		return super.getInt(fieldName);
+	}
+
+
+
+	@Override
+	public double getDouble(String fieldName) {
+		if (fieldName.equals("orientation")) {
+			return orientation;
+		}
+		if (fieldName.equals("skew")) {
+			return skew;
+		}
+		if (fieldName.equals("distortion")) {
+			return distortion;
+		}
+		return super.getDouble(fieldName);
 	}
 
 	@Override
@@ -136,20 +127,6 @@ public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedSt
 	}
 
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("option")) {
-			return option;
-		}
-		if (fieldName.equals("sides")) {
-			return sides;
-		}
-		if (fieldName.equals("peripheries")) {
-			return peripheries;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
 	public void setDouble(String fieldName, double data) {
 		if (fieldName.equals("orientation")) {
 			this.orientation = data;
@@ -166,33 +143,6 @@ public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedSt
 		super.setDouble(fieldName, data);
 	}
 
-	private __ptr__ getVertices() {
-		if (vertices == null) {
-			return null;
-		}
-		throw new IllegalStateException();
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("vertices")) {
-			return vertices;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("vertices") && newData == null) {
-			this.vertices = null;
-			return null;
-		}
-		if (fieldName.equals("vertices") && newData instanceof StarArrayOfPtr) {
-			this.vertices = (StarArrayOfPtr) newData;
-			return null;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 	// public static List<String> DEFINITION = Arrays.asList(
 	// "typedef struct polygon_t",

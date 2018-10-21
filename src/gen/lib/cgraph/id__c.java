@@ -58,9 +58,9 @@ import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.ASINT;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Agdisc_s;
-import h.Agobj_s;
-import h.Agraph_s;
+import h.ST_Agdisc_s;
+import h.ST_Agraph_s;
+import h.ST_Agobj_s;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
@@ -203,7 +203,7 @@ public class id__c {
 
 //3 a0a2zxsu8n019hzm1rwf1jc7f
 // static void *idopen(Agraph_t * g, Agdisc_t* disc) 
-public static Object idopen(Agraph_s g, Agdisc_s disc) {
+public static Object idopen(ST_Agraph_s g, ST_Agdisc_s disc) {
 ENTERING("a0a2zxsu8n019hzm1rwf1jc7f","idopen");
 try {
 	return g;
@@ -223,8 +223,8 @@ ENTERING("lsl0c1gejls1wv04ga6xy2cf","idmap");
 try {
     CString s;
     if (str!=null) {
-	Agraph_s g;
-	g = (Agraph_s) state;
+	ST_Agraph_s g;
+	g = (ST_Agraph_s) state;
 	if (createflag)
 	    s = agstrdup(g, str);
 	else
@@ -336,12 +336,12 @@ static {
 
 //3 aq30wwcj4ugatsgx0zdtdmeed
 // int agmapnametoid(Agraph_t * g, int objtype, char *str, 		  unsigned long *result, int createflag) 
-public static int agmapnametoid(Agraph_s g, int objtype, CString str, int result[], boolean createflag) {
+public static int agmapnametoid(ST_Agraph_s g, int objtype, CString str, int result[], boolean createflag) {
 ENTERING("aq30wwcj4ugatsgx0zdtdmeed","agmapnametoid");
 try {
     int rv;
     if (str!=null && (str.charAt(0) != '%')) {
-    	rv = (Integer) g.getPtr("clos").getStruct("disc").getPtr("id").call("map", g.getPtr("clos").getStruct("state").getPtr("id"), objtype, str, result, createflag);
+    	rv = (Integer) g.clos.getStruct("disc").getPtr("id").call("map", g.clos.getStruct("state").getPtr("id"), objtype, str, result, createflag);
 	if (rv!=0)
 	    return rv;
     }
@@ -354,7 +354,7 @@ try {
 	rv = 0;
     if (createflag) {
 	/* get a new anonymous ID, and store in the internal map */
-	rv = (Integer) g.getPtr("clos").getStruct("disc").getPtr("id").call("map", g.getPtr("clos").getStruct("state").getPtr("id"), objtype, null, result,
+	rv = (Integer) g.clos.getStruct("disc").getPtr("id").call("map", g.clos.getStruct("state").getPtr("id"), objtype, null, result,
 				createflag);
 	if (rv!=0 && str!=null)
 	    aginternalmapinsert(g, objtype, str, result[0]);
@@ -403,21 +403,21 @@ throw new UnsupportedOperationException();
 public static CString agnameof(__ptr__ obj) {
 ENTERING("cctsybrl54fy799aynfej4iiy","agnameof");
 try {
-    Agraph_s g;
+    ST_Agraph_s g;
     CString rv;
     /* perform internal lookup first */
     g = agraphof(obj);
     if ((rv = aginternalmapprint(g, AGTYPE(obj), AGID(obj)))!=null)
 	return rv;
-    if (g.getPtr("clos").getStruct("disc").getPtr("id").getPtr("print")!=null) {
+    if (g.clos.getStruct("disc").getPtr("id").getPtr("print")!=null) {
 	if ((rv =
-	     (CString) g.getPtr("clos").getStruct("disc").getPtr("id").call("print", g.getPtr("clos").getStruct("state").getPtr("id"),
+	     (CString) g.clos.getStruct("disc").getPtr("id").call("print", g.clos.getStruct("state").getPtr("id"),
 	     AGTYPE(obj), 
 	     AGID(obj)))!=null)
 	    return rv;
     }
     if (AGTYPE(obj) != AGEDGE) {
-      rv = new CString("%"+obj.castTo(Agobj_s.class).getStruct("tag").getInt("id"));
+      rv = new CString("%"+((ST_Agobj_s)obj.castTo(ST_Agobj_s.class)).tag.getInt("id"));
     }
     else
 	rv = null;
@@ -432,10 +432,10 @@ LEAVING("cctsybrl54fy799aynfej4iiy","agnameof");
 
 //3 emt63ldde99jnwe2vvjal9kt9
 // void agregister(Agraph_t * g, int objtype, void *obj) 
-public static void agregister(Agraph_s g, int objtype, Object obj) {
+public static void agregister(ST_Agraph_s g, int objtype, Object obj) {
 ENTERING("emt63ldde99jnwe2vvjal9kt9","agregister");
 try {
-	g.getPtr("clos").getStruct("disc").getPtr("id").call("idregister", g.getPtr("clos").getStruct("state").getPtr("id"), objtype, obj);
+	g.clos.getStruct("disc").getPtr("id").call("idregister", g.clos.getStruct("state").getPtr("id"), objtype, obj);
 } finally {
 LEAVING("emt63ldde99jnwe2vvjal9kt9","agregister");
 }

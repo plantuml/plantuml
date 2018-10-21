@@ -321,7 +321,7 @@ public class PSystemVersion extends AbstractPSystem {
 		strings.add("<u>Current Dir</u>: " + new File(".").getAbsolutePath());
 		strings.add(" ");
 		strings.add("<u>Default path</u>:");
-		for (File f : new ImportedFiles().getPath()) {
+		for (File f : ImportedFiles.createImportedFiles(null).getPath()) {
 			strings.add(f.getAbsolutePath());
 		}
 		return new PSystemVersion(true, strings);

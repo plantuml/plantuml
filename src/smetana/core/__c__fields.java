@@ -48,17 +48,11 @@ public interface __c__fields {
 	public int getInt(String fieldName);
 	
 	public __ptr__ setPtr(String fieldName, __ptr__ value);
-	public void setCString(String fieldName, CString value);
+
 	public void setStruct(String fieldName, __struct__ value);
 	public void setInt(String fieldName, int value);
 	public void setBoolean(String fieldName, boolean value);
 	public void setDouble(String fieldName, double value);
-	
-	// public __array__ getArray(String fieldName);
-	public __array_of_integer__ getArrayOfInteger(String fieldName);
-	public __array_of_struct__ getArrayOfStruct(String fieldName);
-	public __array_of_ptr__ getArrayOfPtr(String fieldName);
-	public __array_of_cstring__ getArrayOfCString(String fieldName);
 	
 
 }

@@ -36,9 +36,9 @@
 
 package smetana.core;
 
-import h.Ppoly_t;
+import h.ST_Ppoly_t;
+import h.ST_pointf;
 import h.htmllabel_t;
-import h.pointf;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -113,8 +113,11 @@ public class CType {
 		if (isPrimitive()) {
 			return null;
 		}
+		if (type.equals("ST_Ppolyline_t")) {
+			return ST_Ppoly_t.class;
+		}
 		if (type.equals("Ppolyline_t")) {
-			return Ppoly_t.class;
+			return ST_Ppoly_t.class;
 		}
 		return getClassFrom(type);
 	}
@@ -124,10 +127,10 @@ public class CType {
 			throw new IllegalArgumentException();
 		}
 		if (type.equals("h.pointf_s")) {
-			return pointf.class;
+			return ST_pointf.class;
 		}
 		if (type.equals("pointf_s")) {
-			return pointf.class;
+			return ST_pointf.class;
 		}
 		if (type.endsWith("htmllabel_t")) {
 			return htmllabel_t.class;

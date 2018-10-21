@@ -88,19 +88,17 @@ import static smetana.core.Macro.aghead;
 import static smetana.core.Macro.agtail;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.Macro.elist_append;
-import h.Agedge_s;
-import h.Agedgeinfo_t;
-import h.Agedgepair_s;
-import h.Agnode_s;
-import h.Agnodeinfo_t;
-import h.Agraph_s;
-import h.Agrec_s;
+import h.ST_Agedge_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agedgepair_s;
+import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agrec_s;
 import h.ST_elist;
-import h.boxf;
-import h.elist;
-import h.pointf;
-import smetana.core.JUtils;
-import smetana.core.__struct__;
+import h.ST_pointf;
+import h.ST_elist;
 
 public class fastgr__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -360,14 +358,14 @@ throw new UnsupportedOperationException();
 
 //3 c1s4k85p1cdfn176o3uryeros
 // static inline pointf pointfof(double x, double y) 
-public static __struct__<pointf> pointfof(double x, double y) {
+public static ST_pointf pointfof(double x, double y) {
 // WARNING!! STRUCT
 return pointfof_w_(x, y).copy();
 }
-private static __struct__<pointf> pointfof_w_(double x, double y) {
+private static ST_pointf pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -396,25 +394,6 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1vvsta5i8of59frav6uymguav
-// static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
-// WARNING!! STRUCT
-return boxfof_w_(llx, lly, urx, ury).copy();
-}
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
-ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
-try {
-    final __struct__<boxf> b = JUtils.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
-    return b;
-} finally {
-LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
-}
-}
 
 
 
@@ -438,14 +417,14 @@ throw new UnsupportedOperationException();
 
 //3 arrsbik9b5tnfcbzsm8gr2chx
 // static inline pointf add_pointf(pointf p, pointf q) 
-public static __struct__<pointf> add_pointf(final __struct__<pointf> p, final __struct__<pointf> q) {
+public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
 // WARNING!! STRUCT
 return add_pointf_w_(p.copy(), q.copy()).copy();
 }
-private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
+private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = JUtils.from(pointf.class);
+    final ST_pointf r = new ST_pointf();
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -744,22 +723,22 @@ throw new UnsupportedOperationException();
 
 //3 econbrl314rr46qnvvw5e32j7
 // static edge_t *ffe(node_t * u, elist uL, node_t * v, elist vL) 
-public static Agedge_s ffe(Agnode_s u, final ST_elist uL, Agnode_s v, final ST_elist vL) {
+public static ST_Agedge_s ffe(ST_Agnode_s u, final ST_elist uL, ST_Agnode_s v, final ST_elist vL) {
 // WARNING!! STRUCT
 return ffe_w_(u, uL.copy(), v, vL.copy());
 }
-private static Agedge_s ffe_w_(Agnode_s u, final ST_elist uL, Agnode_s v, final ST_elist vL) {
+private static ST_Agedge_s ffe_w_(ST_Agnode_s u, final ST_elist uL, ST_Agnode_s v, final ST_elist vL) {
 ENTERING("econbrl314rr46qnvvw5e32j7","ffe");
 try {
     int i;
-    Agedge_s e = null;
+    ST_Agedge_s e = null;
     if ((uL.size > 0) && (vL.size > 0)) {
 	if (uL.size < vL.size) {
-	    for (i = 0; (e = (Agedge_s) uL.getFromList(i))!=null; i++)
+	    for (i = 0; (e = (ST_Agedge_s) uL.getFromList(i))!=null; i++)
 		if (EQ(aghead(e), v))
 		    break;
 	} else {
-	    for (i = 0; (e = (Agedge_s) vL.getFromList(i))!=null; i++)
+	    for (i = 0; (e = (ST_Agedge_s) vL.getFromList(i))!=null; i++)
 		if (EQ(agtail(e), u))
 		    break;
 	}
@@ -776,7 +755,7 @@ LEAVING("econbrl314rr46qnvvw5e32j7","ffe");
 
 //3 1uygfrgur73lfy9vsjozwwupm
 // edge_t *find_fast_edge(node_t * u, node_t * v) 
-public static Agedge_s find_fast_edge(Agnode_s u, Agnode_s v) {
+public static ST_Agedge_s find_fast_edge(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("1uygfrgur73lfy9vsjozwwupm","find_fast_edge");
 try {
     return ffe(u, ND_out(u), v, ND_in(v));
@@ -790,10 +769,10 @@ LEAVING("1uygfrgur73lfy9vsjozwwupm","find_fast_edge");
 
 //3 1yw7ahdnxnexnicj552zqyyej
 // static node_t* find_fast_node(graph_t * g, node_t * n) 
-public static Agnode_s find_fast_node(Agraph_s g, Agnode_s n) {
+public static ST_Agnode_s find_fast_node(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("1yw7ahdnxnexnicj552zqyyej","find_fast_node");
 try {
-    Agnode_s v;
+    ST_Agnode_s v;
     for (v = GD_nlist(g); v!=null; v = ND_next(v))
 	if (EQ(v, n))
 	    break;
@@ -808,7 +787,7 @@ LEAVING("1yw7ahdnxnexnicj552zqyyej","find_fast_node");
 
 //3 bf1j97keudu416avridkj9fpb
 // edge_t *find_flat_edge(node_t * u, node_t * v) 
-public static Agedge_s find_flat_edge(Agnode_s u, Agnode_s v) {
+public static ST_Agedge_s find_flat_edge(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("bf1j97keudu416avridkj9fpb","find_flat_edge");
 try {
     return ffe(u, ND_flat_out(u), v, ND_flat_in(v));
@@ -841,7 +820,7 @@ throw new UnsupportedOperationException();
 
 //3 8t6gpubo908pz1pqnt1s88lnt
 // edge_t *fast_edge(edge_t * e) 
-public static Agedge_s fast_edge(Agedge_s e) {
+public static ST_Agedge_s fast_edge(ST_Agedge_s e) {
 ENTERING("8t6gpubo908pz1pqnt1s88lnt","fast_edge");
 try {
     elist_append(e, ND_out(agtail(e)));
@@ -857,15 +836,15 @@ LEAVING("8t6gpubo908pz1pqnt1s88lnt","fast_edge");
 
 //3 dxb0q8ajb7iv25aj6zdqnbwh5
 // void zapinlist(elist * L, edge_t * e) 
-public static void zapinlist(elist L, Agedge_s e) {
+public static void zapinlist(ST_elist L, ST_Agedge_s e) {
 ENTERING("dxb0q8ajb7iv25aj6zdqnbwh5","zapinlist");
 try {
     int i;
-    for (i = 0; i < L.getInt("size"); i++) {
-	if (EQ(L.getArrayOfPtr("list").plus(i).getPtr(), e)) {
-	    L.setInt("size", L.getInt("size")-1);
-	    L.getArrayOfPtr("list").plus(i).setPtr(L.getArrayOfPtr("list").plus(L.getInt("size")).getPtr());
-	    L.getArrayOfPtr("list").plus(L.getInt("size")).setPtr(null);
+    for (i = 0; i < L.size; i++) {
+	if (EQ(L.list.get(i), e)) {
+	    L.size = L.size-1;
+	    L.list.set(i, L.list.get(L.size));
+	    L.list.set(L.size, null);
 	    break;
 	}
     }
@@ -879,12 +858,12 @@ LEAVING("dxb0q8ajb7iv25aj6zdqnbwh5","zapinlist");
 
 //3 dkv97rr4ytpehp291etaxe9gc
 // void delete_fast_edge(edge_t * e) 
-public static void delete_fast_edge(Agedge_s e) {
+public static void delete_fast_edge(ST_Agedge_s e) {
 ENTERING("dkv97rr4ytpehp291etaxe9gc","delete_fast_edge");
 try {
     //assert(e != NULL);
-    zapinlist((ND_out(agtail(e))).amp(), e);
-    zapinlist((ND_in(aghead(e))).amp(), e);
+    zapinlist((ND_out(agtail(e))), e);
+    zapinlist((ND_in(aghead(e))), e);
 } finally {
 LEAVING("dkv97rr4ytpehp291etaxe9gc","delete_fast_edge");
 }
@@ -918,7 +897,7 @@ throw new UnsupportedOperationException();
 
 //3 73oebfcfiescklohgt8mddswc
 // void other_edge(edge_t * e) 
-public static void other_edge(Agedge_s e) {
+public static void other_edge(ST_Agedge_s e) {
 ENTERING("73oebfcfiescklohgt8mddswc","other_edge");
 try {
     elist_append(e, ND_other(agtail(e)));
@@ -946,21 +925,21 @@ throw new UnsupportedOperationException();
 
 //3 4gd9tmpq70q0rij5otj0k6sn2
 // edge_t *new_virtual_edge(node_t * u, node_t * v, edge_t * orig) 
-public static Agedge_s new_virtual_edge(Agnode_s u, Agnode_s v, Agedge_s orig) {
+public static ST_Agedge_s new_virtual_edge(ST_Agnode_s u, ST_Agnode_s v, ST_Agedge_s orig) {
 ENTERING("4gd9tmpq70q0rij5otj0k6sn2","new_virtual_edge");
 try {
-    Agedge_s e;
-    Agedgepair_s e2 = (Agedgepair_s)zmalloc(sizeof(Agedgepair_s.class));
-    AGTYPE(e2.getStruct("in").amp(), AGINEDGE);
-    AGTYPE(e2.getStruct("out").amp(), AGOUTEDGE);
-    e2.getStruct("out").getStruct("base").setPtr("data", zmalloc(sizeof(Agedgeinfo_t.class)).castTo(Agedgeinfo_t.class).castTo(Agrec_s.class));
-    e = (Agedge_s) e2.getStruct("out").amp();
+    ST_Agedge_s e;
+    ST_Agedgepair_s e2 = new ST_Agedgepair_s();
+    AGTYPE(e2.in, AGINEDGE);
+    AGTYPE(e2.out, AGOUTEDGE);
+    e2.out.base.setPtr("data", new ST_Agedgeinfo_t().castTo(ST_Agrec_s.class));
+    e = (ST_Agedge_s) e2.out;
     agtail(e, u);
     aghead(e, v);
     ED_edge_type(e, 1);
     if (orig!=null) {
 	AGSEQ(e, AGSEQ(orig));
-	AGSEQ(e2.getStruct("in").amp(), AGSEQ(orig));
+	AGSEQ(e2.in, AGSEQ(orig));
 	ED_count(e, ED_count(orig));
 	ED_xpenalty(e, ED_xpenalty(orig));
 	ED_weight(e, ED_weight(orig));
@@ -993,7 +972,7 @@ LEAVING("4gd9tmpq70q0rij5otj0k6sn2","new_virtual_edge");
 
 //3 9obdfflzw4cs2z9r0dng26mvw
 // edge_t *virtual_edge(node_t * u, node_t * v, edge_t * orig) 
-public static Agedge_s virtual_edge(Agnode_s u, Agnode_s v, Agedge_s orig) {
+public static ST_Agedge_s virtual_edge(ST_Agnode_s u, ST_Agnode_s v, ST_Agedge_s orig) {
 ENTERING("9obdfflzw4cs2z9r0dng26mvw","virtual_edge");
 try {
     return fast_edge(new_virtual_edge(u, v, orig));
@@ -1007,7 +986,7 @@ LEAVING("9obdfflzw4cs2z9r0dng26mvw","virtual_edge");
 
 //3 98hkec8t6fjk10bjpstumw0ey
 // void fast_node(graph_t * g, Agnode_t * n) 
-public static void fast_node(Agraph_s g, Agnode_s n) {
+public static void fast_node(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("98hkec8t6fjk10bjpstumw0ey","fast_node");
 try {
     ND_next(n, GD_nlist(g));
@@ -1046,7 +1025,7 @@ throw new UnsupportedOperationException();
 
 //3 emsq7b6s5100lscckzy3ileqd
 // void delete_fast_node(graph_t * g, node_t * n) 
-public static void delete_fast_node(Agraph_s g, Agnode_s n) {
+public static void delete_fast_node(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("emsq7b6s5100lscckzy3ileqd","delete_fast_node");
 try {
     assert(find_fast_node(g, n)!=null);
@@ -1066,22 +1045,22 @@ LEAVING("emsq7b6s5100lscckzy3ileqd","delete_fast_node");
 
 //3 eg08ajzojsm0224btmfi7kdxt
 // node_t *virtual_node(graph_t * g) 
-public static Agnode_s virtual_node(Agraph_s g) {
+public static ST_Agnode_s virtual_node(ST_Agraph_s g) {
 ENTERING("eg08ajzojsm0224btmfi7kdxt","virtual_node");
 try {
-    Agnode_s n;
-    n = (Agnode_s)zmalloc(sizeof(Agnode_s.class));
+	ST_Agnode_s n;
+    n = new ST_Agnode_s();
 //  agnameof(n) = "virtual";
     AGTYPE(n, AGNODE);
-    n.getStruct("base").setPtr("data", (Agnodeinfo_t)zmalloc(sizeof(Agnodeinfo_t.class)));
+    n.base.setPtr("data", new ST_Agnodeinfo_t());
     n.setPtr("root", agroot(g));
     ND_node_type(n, 1);
     ND_rw(n, 1);
     ND_lw(n, 1);
     ND_ht(n, 1);
     ND_UF_size(n, 1);
-    alloc_elist(4, ND_in(n), Agnode_s.class);
-    alloc_elist(4, ND_out(n), Agnode_s.class);
+    alloc_elist(4, ND_in(n));
+    alloc_elist(4, ND_out(n));
     fast_node(g, n);
     GD_n_nodes(g, GD_n_nodes(g)+1);
     return n;
@@ -1095,7 +1074,7 @@ LEAVING("eg08ajzojsm0224btmfi7kdxt","virtual_node");
 
 //3 8dvukicq96g5t3xgdl0ue35mj
 // void flat_edge(graph_t * g, edge_t * e) 
-public static void flat_edge(Agraph_s g, Agedge_s e) {
+public static void flat_edge(ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("8dvukicq96g5t3xgdl0ue35mj","flat_edge");
 try {
     elist_append(e, ND_flat_out(agtail(e)));
@@ -1112,14 +1091,14 @@ LEAVING("8dvukicq96g5t3xgdl0ue35mj","flat_edge");
 
 //3 clspalhiuedfnk9g9rlvfqpg7
 // void delete_flat_edge(edge_t * e) 
-public static void delete_flat_edge(Agedge_s e) {
+public static void delete_flat_edge(ST_Agedge_s e) {
 ENTERING("clspalhiuedfnk9g9rlvfqpg7","delete_flat_edge");
 try {
     assert(e != null);
     if (ED_to_orig(e)!=null && EQ(ED_to_virt(ED_to_orig(e)), e))
 	ED_to_virt(ED_to_orig(e), null);
-    zapinlist((ND_flat_out(agtail(e))).amp(), e);
-    zapinlist((ND_flat_in(aghead(e))).amp(), e);
+    zapinlist((ND_flat_out(agtail(e))), e);
+    zapinlist((ND_flat_in(aghead(e))), e);
 } finally {
 LEAVING("clspalhiuedfnk9g9rlvfqpg7","delete_flat_edge");
 }
@@ -1130,7 +1109,7 @@ LEAVING("clspalhiuedfnk9g9rlvfqpg7","delete_flat_edge");
 
 //3 dcfpol11cvlt6aaa6phqbp6fo
 // static void  basic_merge(edge_t * e, edge_t * rep) 
-public static void basic_merge(Agedge_s e, Agedge_s rep) {
+public static void basic_merge(ST_Agedge_s e, ST_Agedge_s rep) {
 ENTERING("dcfpol11cvlt6aaa6phqbp6fo","basic_merge");
 try {
     if (ED_minlen(rep) < ED_minlen(e))
@@ -1151,7 +1130,7 @@ LEAVING("dcfpol11cvlt6aaa6phqbp6fo","basic_merge");
 
 //3 6dxgtoii76tmonlnvz4rmiytd
 // void  merge_oneway(edge_t * e, edge_t * rep) 
-public static void merge_oneway(Agedge_s e, Agedge_s rep) {
+public static void merge_oneway(ST_Agedge_s e, ST_Agedge_s rep) {
 ENTERING("6dxgtoii76tmonlnvz4rmiytd","merge_oneway");
 try {
     if (EQ(rep, ED_to_virt(e))) {

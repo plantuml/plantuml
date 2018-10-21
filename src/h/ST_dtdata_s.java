@@ -45,7 +45,6 @@
  */
 package h;
 
-import h.ST_dtdisc_s.Amp;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
@@ -53,9 +52,12 @@ import smetana.core.amiga.StarStruct;
 
 public class ST_dtdata_s extends UnsupportedStructAndPtr {
 
+	private final StarStruct parent;
+	
 	public int type; /* type of dictionary */
-	public ST_dtlink_s.Amp here; /* finger to last search element */
-	private __ptr__ _htab; /* hash table */
+	public ST_dtlink_s here; /* finger to last search element */
+	public __ptr__ _htab; /* hash table */
+	public ST_dtlink_s _head = null;
 	// Dtlink_t* _head; /* linked list */
 	// } hh;
 	public int ntab; /* number of hash slots */
@@ -63,7 +65,6 @@ public class ST_dtdata_s extends UnsupportedStructAndPtr {
 	public int loop; /* number of nested loops */
 	public int minp; /* min path before splay, always even */
 
-	private final StarStruct parent;
 
 	public ST_dtdata_s() {
 		this(null);
@@ -75,39 +76,6 @@ public class ST_dtdata_s extends UnsupportedStructAndPtr {
 
 	public StarStruct getParent() {
 		return parent;
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("here")) {
-			if (newData instanceof ST_dtlink_s) {
-				this.here = (ST_dtlink_s.Amp) ((ST_dtlink_s) newData).amp();
-			} else {
-				this.here = (ST_dtlink_s.Amp) newData;
-			}
-			return here;
-		}
-		if (fieldName.equals("hh._htab")) {
-			this._htab = newData;
-			return _htab;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("here")) {
-			return here;
-		}
-		return super.getPtr(fieldName);
 	}
 
 	@Override
@@ -145,6 +113,9 @@ public class ST_dtdata_s extends UnsupportedStructAndPtr {
 		}
 		if (fieldName.equals("minp")) {
 			return minp;
+		}
+		if (fieldName.equals("ntab")) {
+			return ntab;
 		}
 		return super.getInt(fieldName);
 	}

@@ -55,9 +55,9 @@ public class ST_GVC_s extends UnsupportedStructAndPtr implements HardcodedStruct
 
 	// "struct GVC_s",
 	// "{",
-	private final ST_GVCOMMON_t common = new ST_GVCOMMON_t(this);
+	public final ST_GVCOMMON_t common = new ST_GVCOMMON_t(this);
 	// "char *config_path",
-	private int config_found;
+	public int config_found;
 	// "char **input_filenames",
 	// "GVG_t *gvgs",
 	// "GVG_t *gvg",
@@ -71,7 +71,7 @@ public class ST_GVC_s extends UnsupportedStructAndPtr implements HardcodedStruct
 	// "GVJ_t *jobs",
 	// "GVJ_t *job",
 	// "graph_t *g",
-	private final ST_gvplugin_active_layout_t layout = new ST_gvplugin_active_layout_t();
+	public final ST_gvplugin_active_layout_t layout = new ST_gvplugin_active_layout_t();
 	// "char *graphname",
 	// "GVJ_t *active_jobs",
 	// "char *pagedir",
@@ -103,14 +103,6 @@ public class ST_GVC_s extends UnsupportedStructAndPtr implements HardcodedStruct
 
 	public ST_GVC_s(StarStruct parent) {
 		this.parent = parent;
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp();
-	}
-
-	public class Amp extends UnsupportedStarStruct {
 	}
 
 	@Override

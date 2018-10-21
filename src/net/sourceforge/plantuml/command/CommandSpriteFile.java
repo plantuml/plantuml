@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteSvg;
@@ -91,7 +92,7 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 				final String name = src.substring(idx + 1);
 				sprite = getImageFromZip(f, name);
 				if (sprite == null) {
-					return CommandExecutionResult.error("No image " + name + " in " + f.getAbsolutePath());
+					return CommandExecutionResult.error("No image " + name + " in " + FileWithSuffix.getFileName(f));
 				}
 			} else {
 				final File f = FileSystem.getInstance().getFile(src);

@@ -54,15 +54,14 @@ import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.UNSUPPORTED_INT;
 import h.Dtcompar_f;
-import h._dt_s;
-import h._dtdisc_s;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dthold_s;
+import h.ST_dtlink_s;
 import h._dthold_s;
-import h._dtlink_s;
 import smetana.core.CFunction;
 import smetana.core.CString;
-import smetana.core.JUtils;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class dttree__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -131,77 +130,80 @@ public class dttree__c {
 
 
 
-//3 abqfzg1d1vkzk51225tcdlik5
-// static void* dttree(Dt_t* dt, void* obj, int type)       
 static class no_root extends RuntimeException {}
 static class has_root extends RuntimeException {}
 static class do_search extends RuntimeException {}
 static class dt_delete extends RuntimeException {}
 static class dt_insert extends RuntimeException {}
 static class dt_next extends RuntimeException {}
-public static Object dttree(_dt_s dt, __ptr__ obj, int type) {
+//3 abqfzg1d1vkzk51225tcdlik5
+//static void* dttree(Dt_t* dt, void* obj, int type)       
+public static Object dttree(ST_dt_s dt, __ptr__ obj, int type) {
 ENTERING("abqfzg1d1vkzk51225tcdlik5","dttree");
 try {
-	_dtlink_s	root, t;
+	ST_dtlink_s	root, t;
 	int		cmp, lk, sz, ky;
-	_dtlink_s	l, r, me=null;
-	final __struct__<_dtlink_s> link = JUtils.from(_dtlink_s.class);
+	ST_dtlink_s	l, r, me=null;
+	final ST_dtlink_s link = new ST_dtlink_s();
 	Object		o, k, key = null;
 	int		n, minp; //, turn[(sizeof(size_t)*8 - 2)];
 	Dtcompar_f	cmpf;
-	_dtdisc_s	disc;
-	if (((dt.getPtr("data").getInt("type")) & 010000) !=0) { dtrestore(dt,null); }
-	disc = (_dtdisc_s) dt.getPtr("disc"); ky = disc.getInt("key");
-	sz = disc.getInt("size");
-	lk = disc.getInt("link");
+	ST_dtdisc_s	disc;
+	if (((dt.data.type) & 010000) !=0) { dtrestore(dt,null); }
+	disc = (ST_dtdisc_s) dt.disc; ky = disc.getInt("key");
+	sz = disc.size;
+	lk = disc.link;
 	cmpf = (Dtcompar_f) disc.getPtr("comparf");
-	dt.setInt("type", dt.getInt("type")&~0100000);
-	root = (_dtlink_s) dt.getPtr("data").getPtr("here");
+	dt.setInt("type", dt.type&~0100000);
+	root = (ST_dtlink_s) dt.data.here;
 	if(N(obj))
 	{	if(N(root) || N(type&(0000100|0000200|0000400)) )
 			return null;
 		if((type&0000100)!=0) /* delete all objects */
 		{
-		throw new UnsupportedOperationException();
-//			if(disc->freef || disc->link < 0)
-//			{	do
-//				{	while((t = root->hl._left) )
-//						(((root)->hl._left = (t)->right, (t)->right = (root)), (root) = (t));
-//					t = root->right;
-//					if(disc->freef)
+			if(disc.getPtr("freef")!=null || disc.link < 0) {
+				do {
+					while((t = (ST_dtlink_s) root._left)!=null ) {
+						root._left = t.right;
+						t.right = root;
+						root = t;
+					}
+					t = (ST_dtlink_s) root.right;
+					if(disc.getPtr("freef")!=null)
+						throw new UnsupportedOperationException();
 //						(*disc->freef)(dt,(lk < 0 ? ((Dthold_t*)(root))->obj : (void*)((char*)(root) - lk) ),disc);
-//					if(disc->link < 0)
-//						(*dt->memoryf)(dt,(void*)root,0,disc);
-//				} while((root = t) );
-//			}
-//			dt->data->size = 0;
-//			dt->data->here = ((Dtlink_t*)0);
-//			return ((void*)0);
+					if(disc.link < 0)
+						dt.call("memoryf", dt, root, null, disc);
+				} while((root = t)!=null );
+			}
+			dt.data.setInt("size", 0);
+			dt.data.here = null;
+			return null;
 		}
 		else /* computing largest/smallest element */
 		{	if((type&0000400)!=0)
-			{	while((t = (_dtlink_s) root.getPtr("right"))!=null ) {
-				root.setPtr("right", t.getPtr("hl._left"));
-				t.setPtr("hl._left", root);
+			{	while((t = (ST_dtlink_s) root.right)!=null ) {
+				root.right = t._left;
+				t._left = root;
 				root = t;
 				}
 			}
 			else /* type&DT_FIRST */
-			{	while((t = (_dtlink_s) root.getPtr("hl._left"))!=null ) {
-					root.setPtr("hl._left", t.getPtr("right"));
-					t.setPtr("right", root);
+			{	while((t = (ST_dtlink_s) root._left)!=null ) {
+					root._left = t.right;
+					t.right = root;
 					root = t;
 				}
 			}
-			dt.getPtr("data").setPtr("here", root);
+			dt.data.here = root;
 			return (lk < 0 ? root.castTo(_dthold_s.class).getPtr("obj") : root.addVirtualBytes(-lk) );
 		}
 	}
 	/* note that link.right is LEFT tree and link.left is RIGHT tree */
-	l = r = link.amp();
+	l = r = link;
 	/* allow apps to delete an object "actually" in the dictionary */
 	try {
-	if(dt.getPtr("meth").getInt("type") == 0000010 && ((type&(0000002|0010000))!=0) ) {
+	if(dt.meth.type == 0000010 && ((type&(0000002|0010000))!=0) ) {
 		throw new UnsupportedOperationException();
 //	{	key = (void*)(sz < 0 ? *((char**)((char*)(obj)+ky)) : ((char*)(obj)+ky));
 //		for(o = (*(((Dt_t*)(dt))->searchf))((dt),(void*)(obj),0000004); o; o = (*(((Dt_t*)(dt))->searchf))((dt),(void*)(o),0000010) )
@@ -236,8 +238,8 @@ try {
 	}
 	} catch (do_search do_search) {
 //		do_search:
-		if(dt.getPtr("meth").getInt("type") == 0000004 &&
-		   (minp = dt.getPtr("data").getInt("minp")) != 0 && (type&(0001000|0000004))!=0)
+		if(dt.meth.type == 0000004 &&
+		   (minp = dt.data.getInt("minp")) != 0 && (type&(0001000|0000004))!=0)
 		{	/* simple search, note that minp should be even */
 //			for(t = root, n = 0; n < minp; ++n)
 //			{	k = (lk < 0 ? ((Dthold_t*)(t))->obj : (void*)((char*)(t) - lk) ); k = (void*)(sz < 0 ? *((char**)((char*)(k)+ky)) : ((char*)(k)+ky));
@@ -287,74 +289,74 @@ try {
 				(sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) == 0)
 				break;
 			else if(cmp < 0)
-			{	if((t = (_dtlink_s) root.getPtr("hl._left"))!=null )
+			{	if((t = (ST_dtlink_s) root._left)!=null )
 				{
 				k = lk < 0 ? t.castTo(_dthold_s.class).getPtr("obj") : t.addVirtualBytes(-lk);
 				k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
 				if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc)
 	 					 : (sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) < 0)
-					{	root.setPtr("hl._left", t.getPtr("right"));
-						t.setPtr("right", root);
-						r.setPtr("hl._left", t);
+					{	root._left = t.right;
+						t.right = root;
+						r._left = t;
 						r = t;
-						if(N(root = (_dtlink_s) t.getPtr("hl._left")) )
+						if(N(root = (ST_dtlink_s) t._left) )
 							break;
 					}
 					else if(cmp == 0)
-					{	r.setPtr("hl._left", root);
+					{	r._left = root;
 						r = root;
 						root = t;
 						break;
 					}
 					else /* if(cmp > 0) */
-					{	l.setPtr("right", t);
+					{	l.right = t;
 						l = t;
-						r.setPtr("hl._left", root);
+						r._left = root;
 						r  = root;
-						if(N(root = (_dtlink_s) t.getPtr("right")) )
+						if(N(root = (ST_dtlink_s) t.right) )
 							break;
 					}
 				}
 				else
 				{
-					r.setPtr("hl._left", root);
+					r._left = root;
 					r = root;
 					root = null;
 					break;
 				}
 			}
 			else /* if(cmp > 0) */
-			{	if ((t = (_dtlink_s) root.getPtr("right"))!=null )
+			{	if ((t = (ST_dtlink_s) root.right)!=null )
 				{
 					k = (lk < 0 ? t.castTo(_dthold_s.class).getPtr("obj") : t.addVirtualBytes(-lk) ); 
  					k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
 					if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc) 
  					 : (sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) > 0)
 					{
-						root.setPtr("right", t.getPtr("hl._left"));
-						t.setPtr("hl._left", root);
-						l.setPtr("right", t);
+						root.right = t._left;
+						t._left = root;
+						l.right = t;
 						l = t;
-						if(N(root = (_dtlink_s) t.getPtr("right") ))
+						if(N(root = (ST_dtlink_s) t.right ))
 							break;
 					}
 					else if(cmp == 0)
-					{	l.setPtr("right", root);
+					{	l.right = root;
 						l = root;
 						root = t;
 						break;
 					}
 					else /* if(cmp < 0) */
-					{	r.setPtr("hl._left", t);
+					{	r._left = t;
 						r = t;
-						l.setPtr("right", root);
+						l.right = root;
 						l = root;
-						if(N(root = (_dtlink_s) t.getPtr("hl._left") ))
+						if(N(root = (ST_dtlink_s) t._left ))
 							break;
 					}
 				}
 				else
-				{	l.setPtr("right", root);
+				{	l.right = root;
 					l = root;
 					root = null;
 					break;
@@ -364,25 +366,25 @@ try {
 	}
 	if(root!=null)
 	{	/* found it, now isolate it */
-		dt.setInt("type", dt.getInt("type") | 0100000);
-		l.setPtr("right", root.getPtr("hl._left"));
-		r.setPtr("hl._left", root.getPtr("right"));
+		dt.setInt("type", dt.type | 0100000);
+		l.right = root._left;
+		r._left = root.right;
 		if((type&(0000004|0001000))!=0)
 		{ /*has_root:*/
 		throw new has_root();
 		}
 		else if((type&0000010)!=0)
-		{	root.setPtr("hl._left", link.getPtr("right"));
-			root.setPtr("right", null);
-			link.setPtr("right", root);
+		{	root._left = link.right;
+			root.right = null;
+			link.right = root;
 		//dt_next:
-			if((root = (_dtlink_s) link.getPtr("hl._left"))!=null )	
-			{	while((t = (_dtlink_s) root.getPtr("hl._left"))!=null ) {
-					root.setPtr("hl._left", t.getPtr("right"));
-					t.setPtr("right", root);
+			if((root = (ST_dtlink_s) link._left)!=null )	
+			{	while((t = (ST_dtlink_s) root._left)!=null ) {
+					root._left = t.right;
+					t.right = root;
 					root = t;
 				}
-				link.setPtr("hl._left", root.getPtr("right"));
+				link._left = root.right;
 				throw new has_root();
 			}
 			else	throw new no_root();
@@ -415,14 +417,38 @@ try {
 //			goto no_root;
 		}
 		else if((type&(0000001|0004000))!=0)
-		{	if((dt.getPtr("meth").getInt("type")&0000004)!=0)
+		{	if((dt.meth.type&0000004)!=0)
 				throw new has_root();
-			else throw new UnsupportedOperationException();
-//			{	root->hl._left = ((Dtlink_t*)0);
-//				root->right = link.hl._left;
-//				link.hl._left = root;
-//				goto dt_insert;
-//			}
+			else
+		{
+				root._left = null;
+				root.right = link._left;
+				link._left = root;
+				 /*dt_insert: DUPLICATION*/
+				if(disc.getPtr("makef")!=null && (type&0000001)!=0)
+					obj = (__ptr__) disc.call("makef", dt,obj,disc);
+				if(obj!=null)
+				{
+					if(lk >= 0)
+						root = (ST_dtlink_s) ((__ptr__)obj.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
+					else
+					{
+						root = (ST_dtlink_s)(((ST_dthold_s)dt.call("memoryf",
+								dt,null,sizeof(_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
+						if(root!=null)
+							root.castTo(_dthold_s.class).setPtr("obj", obj);
+						else if(disc.getPtr("makef")!=null && disc.getPtr("freef")!=null &&
+							((type&0000001))!=0)
+							UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
+					}
+				}
+				if(root!=null)
+				{	if(dt.data.size >= 0)
+						dt.data.setInt("size", dt.data.size+1 );
+				throw new has_root();
+				}
+				else	throw new UnsupportedOperationException("goto no_root");
+			}
 		}
 		else if((type&0000040)!=0) /* a duplicate */ {
 		throw new UnsupportedOperationException();
@@ -443,18 +469,18 @@ try {
 	}
 	else
 	{	/* not found, finish up LEFT and RIGHT trees */
-		r.setPtr("hl._left", null);
-		l.setPtr("right", null);
+		r._left = null;
+		l.right = null;
 		if((type&0000010)!=0)
 		{
 		    //goto dt_next:
-			if((root = (_dtlink_s) link.getPtr("hl._left"))!=null )	
-			{	while((t = (_dtlink_s) root.getPtr("hl._left"))!=null ) {
-					root.setPtr("hl._left", t.getPtr("right"));
-					t.setPtr("right", root);
+			if((root = (ST_dtlink_s) link._left)!=null )	
+			{	while((t = (ST_dtlink_s) root._left)!=null ) {
+					root._left = t.right;
+					t.right = root;
 					root = t;
 				}
-				link.setPtr("hl._left", root.getPtr("right"));
+				link._left = root.right;
 				throw new has_root();
 			}
 			else	throw new no_root();
@@ -467,17 +493,17 @@ try {
 			throw new no_root();
 		}
 		else if((type&(0000001|0004000))!=0)
-		{ /*dt_insert:*/
+		{ /*dt_insert: DUPLICATION*/
 			if(disc.getPtr("makef")!=null && (type&0000001)!=0)
 				obj = (__ptr__) disc.call("makef", dt,obj,disc);
 			if(obj!=null)
 			{
 				if(lk >= 0)
-					root = (_dtlink_s) ((__ptr__)obj.addVirtualBytes(lk)).castTo(_dtlink_s.class);
+					root = (ST_dtlink_s) ((__ptr__)obj.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
 				else
 				{
-					root = (_dtlink_s)(dt.call("memoryf",
-						dt,null,sizeof(_dthold_s.class),disc));
+					root = (ST_dtlink_s)(((ST_dthold_s)dt.call("memoryf",
+						dt,null,sizeof(_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
 					if(root!=null)
 						root.castTo(_dthold_s.class).setPtr("obj", obj);
 					else if(disc.getPtr("makef")!=null && disc.getPtr("freef")!=null &&
@@ -486,15 +512,15 @@ try {
 				}
 			}
 			if(root!=null)
-			{	if(dt.getPtr("data").getInt("size") >= 0)
-					dt.getPtr("data").setInt("size", dt.getPtr("data").getInt("size")+1 );
+			{	if(dt.data.size >= 0)
+					dt.data.setInt("size", dt.data.size+1 );
 			throw new has_root();
 			}
 			else	throw new UnsupportedOperationException("goto no_root");
 		}
 		else if((type&0000040)!=0)
 		{	root = me;
-			dt.getPtr("data").setInt("size", dt.getPtr("data").getInt("size")+1 );
+			dt.data.setInt("size", dt.data.size+1 );
 			throw new UnsupportedOperationException("goto has_root");
 		}
 		else /*if(type&DT_DELETE)*/
@@ -505,10 +531,10 @@ try {
 	}
 //	return ((void*)0);
 	} catch (has_root has_root) {
-	    root = (_dtlink_s) root.castTo(_dtlink_s.class);
-		root.setPtr("hl._left", link.getPtr("right"));
-		root.setPtr("right", link.getPtr("hl._left"));
-		if((dt.getPtr("meth").getInt("type")&0000010)!=0 && (type&(0000004|0001000))!=0 )
+	    root = (ST_dtlink_s) root.castTo(ST_dtlink_s.class);
+		root._left = link.right;
+		root.right = link._left;
+		if((dt.meth.type&0000010)!=0 && (type&(0000004|0001000))!=0 )
 		{	//key = (lk < 0 ? ((Dthold_t*)(root))->obj : (void*)((char*)(root) - lk) ); key = (void*)(sz < 0 ? *((char**)((char*)(key)+ky)) : ((char*)(key)+ky));
 			throw new UnsupportedOperationException();
 //			while((t = root->hl._left) )
@@ -523,13 +549,13 @@ try {
 //				(((root)->hl._left = (t)->right, (t)->right = (root)), (root) = (t));
 //			}
 		}
-		dt.getPtr("data").setPtr("here", root);
+		dt.data.here = root;
 		return (lk < 0 ? root.castTo(_dthold_s.class).getPtr("obj") : root.addVirtualBytes(-lk));
 	} catch (no_root no_root) {
-			while((t = (_dtlink_s) r.getPtr("hl._left"))!=null)
+			while((t = (ST_dtlink_s) r._left)!=null)
 				r = t;
-			r.setPtr("hl._left", link.getPtr("right"));
-			dt.getPtr("data").setPtr("here", link.getPtr("hl._left"));
+			r._left = link.right;
+			dt.data.here = link._left;
 			return (type&0000002)!=0 ? obj : null;
 	}
 throw new UnsupportedOperationException();

@@ -44,13 +44,11 @@
  *
  */
 package gen.lib.gvc;
-import static gen.lib.common.memory__c.zmalloc;
 import static smetana.core.JUtils.function;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.GVC_s;
+import h.ST_GVC_s;
 import h.lt_symlist_t;
 import smetana.core.__ptr__;
 
@@ -168,15 +166,15 @@ public static __ptr__ LibInfo = null;
 
 //3 8jwauh4lo3kcvxhomy40s94b
 // GVC_t *gvNEWcontext(const lt_symlist_t *builtins, int demand_loading) 
-public static GVC_s gvNEWcontext(lt_symlist_t builtins, boolean demand_loading) {
+public static ST_GVC_s gvNEWcontext(lt_symlist_t builtins, boolean demand_loading) {
 ENTERING("8jwauh4lo3kcvxhomy40s94b","gvNEWcontext");
 try {
-    GVC_s gvc = (GVC_s) zmalloc(sizeof(GVC_s.class));
+	ST_GVC_s gvc = new ST_GVC_s();
     if (gvc!=null) {
-	gvc.getStruct("common").setPtr("info", LibInfo);
-	gvc.getStruct("common").setPtr("errorfn", function(gen.lib.cgraph.agerror__c.class, "agerrorf"));
-	gvc.getStruct("common").setPtr("builtins", builtins);
-	gvc.getStruct("common").setBoolean("demand_loading", demand_loading);
+	gvc.common.setPtr("info", LibInfo);
+	gvc.common.setPtr("errorfn", function(gen.lib.cgraph.agerror__c.class, "agerrorf"));
+	gvc.common.setPtr("builtins", builtins);
+	gvc.common.demand_loading = demand_loading;
     }
     return gvc;
 } finally {

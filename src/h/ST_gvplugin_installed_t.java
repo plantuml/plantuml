@@ -66,8 +66,8 @@ public class ST_gvplugin_installed_t extends UnsupportedStructAndPtr {
 	private CString type;
 	private int quality;
 
-	private ST_gvlayout_engine_s.Amp engine;
-	private ST_gvlayout_features_t.Amp features;
+	private ST_gvlayout_engine_s engine;
+	private ST_gvlayout_features_t features;
 
 	@Override
 	public void setInt(String fieldName, int data) {
@@ -97,11 +97,11 @@ public class ST_gvplugin_installed_t extends UnsupportedStructAndPtr {
 			return newData;
 		}
 		if (fieldName.equals("engine")) {
-			this.engine = (ST_gvlayout_engine_s.Amp) newData;
+			this.engine = (ST_gvlayout_engine_s) newData;
 			return newData;
 		}
 		if (fieldName.equals("features")) {
-			this.features = (ST_gvlayout_features_t.Amp) newData;
+			this.features = (ST_gvlayout_features_t) newData;
 			return newData;
 		}
 		return super.setPtr(fieldName, newData);

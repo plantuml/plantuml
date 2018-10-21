@@ -52,10 +52,6 @@ public class AtomOpenIcon implements Atom {
 	private final double factor;
 	private final Url url;
 
-	public AtomOpenIcon(OpenIcon openIcon, FontConfiguration fontConfiguration) {
-		this(openIcon, fontConfiguration, null);
-	}
-
 	public AtomOpenIcon(OpenIcon openIcon, FontConfiguration fontConfiguration, Url url) {
 		this.url = url;
 		this.openIcon = openIcon;

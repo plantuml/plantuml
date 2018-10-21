@@ -53,7 +53,7 @@ import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.GVC_s;
+import h.ST_GVC_s;
 import smetana.core.CString;
 
 public class gvc__c {
@@ -161,13 +161,13 @@ public class gvc__c {
 
 //3 f3vdhir2c7dz3pvmx9d3m4lx1
 // GVC_t *gvContext(void) 
-public static GVC_s gvContext(Object... arg) {
+public static ST_GVC_s gvContext(Object... arg) {
 ENTERING("f3vdhir2c7dz3pvmx9d3m4lx1","gvContext");
 try {
-    GVC_s gvc;
+	ST_GVC_s gvc;
     agattr(null, AGNODE, new CString("label"), new CString("\\N"));
     /* default to no builtins, demand loading enabled */
-    gvc = (GVC_s) gvNEWcontext(null, (NOT(0)));
+    gvc = (ST_GVC_s) gvNEWcontext(null, (NOT(0)));
     /* builtins don't require LTDL */
     gvc.setInt("config_found", 0);
     gvtextlayout_select(gvc);   /* choose best available textlayout plugin immediately */

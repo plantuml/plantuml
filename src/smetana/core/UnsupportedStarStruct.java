@@ -41,6 +41,13 @@ import smetana.core.amiga.StarStruct;
 
 public class UnsupportedStarStruct implements StarStruct {
 
+	private static int CPT = 0;
+	public final int UID;
+	
+	public UnsupportedStarStruct() {
+		this.UID = CPT++;
+	}
+
 	public __ptr__ unsupported() {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
@@ -133,22 +140,6 @@ public class UnsupportedStarStruct implements StarStruct {
 		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
-	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public __array_of_cstring__ getArrayOfCString(String fieldName) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public __array_of_integer__ getArrayOfInteger(String fieldName) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
 	public __struct__ getStruct(String fieldName) {
 		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
@@ -158,10 +149,6 @@ public class UnsupportedStarStruct implements StarStruct {
 	}
 
 	public void setStruct(String fieldName, __struct__ newData) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public void setCString(String fieldName, CString newData) {
 		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
@@ -190,6 +177,7 @@ public class UnsupportedStarStruct implements StarStruct {
 	}
 
 	public __ptr__ castTo(Class dest) {
+		System.err.println("I am " + toString() + " " + UID);
 		throw new UnsupportedOperationException(dest + " " + getClass().toString());
 	}
 

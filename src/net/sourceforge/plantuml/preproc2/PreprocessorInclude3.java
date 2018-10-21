@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
-import net.sourceforge.plantuml.preproc.PreprocessorInclude;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
@@ -80,21 +79,14 @@ public class PreprocessorInclude3 implements ReadFilter {
 	private static final Pattern2 includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
 
-	// private final ReadLine reader2;
 	private final String charset;
 	private final Defines defines;
 	private final List<String> config;
 	private final DefinitionsContainer definitionsContainer;
-	private final ImportedFiles importedFiles;// = new ImportedFiles();
+	private final ImportedFiles importedFiles;
 
-	//
-	// private int numLine = 0;
-	//
-	// private PreprocessorInclude included = null;
-	//
-	// private final AParentFolder oldCurrentDir;
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<FileWithSuffix>();
-	private final Set<FileWithSuffix> filesUsedGlobal;// = new HashSet<FileWithSuffix>();
+	private final Set<FileWithSuffix> filesUsedGlobal;
 
 	public PreprocessorInclude3(List<String> config, String charset, Defines defines,
 			DefinitionsContainer definitionsContainer, ImportedFiles importedFiles, Set<FileWithSuffix> filesUsedGlobal) {
@@ -106,65 +98,9 @@ public class PreprocessorInclude3 implements ReadFilter {
 		this.filesUsedGlobal = filesUsedGlobal;
 	}
 
-	//
-	// public PreprocessorInclude(List<String> config, ReadLine reader, Defines defines, String charset,
-	// File newCurrentDir, DefinitionsContainer definitionsContainer) {
-	// this(config, reader, defines, charset, new AParentFolderRegular(newCurrentDir), new HashSet<FileWithSuffix>(),
-	// new HashSet<FileWithSuffix>(), definitionsContainer, new ImportedFiles());
-	// }
-	//
-	// public Set<FileWithSuffix> getFilesUsedGlobal() {
-	// return Collections.unmodifiableSet(filesUsedGlobal);
-	// }
-	//
-	// private PreprocessorInclude(List<String> config, ReadLine reader, Defines defines, String charset,
-	// AParentFolder newCurrentDir, Set<FileWithSuffix> filesUsedCurrent, Set<FileWithSuffix> filesUsedGlobal,
-	// DefinitionsContainer definitionsContainer, ImportedFiles importedFiles) {
-	// this.importedFiles = importedFiles;
-	// this.config = config;
-	// this.defines = defines;
-	// this.charset = charset;
-	// this.reader2 = new ReadLineQuoteComment(reader);
-	// this.definitionsContainer = definitionsContainer;
-	// this.filesUsedCurrent = filesUsedCurrent;
-	// this.filesUsedGlobal = filesUsedGlobal;
-	// if (newCurrentDir == null) {
-	// oldCurrentDir = null;
-	// } else {
-	// oldCurrentDir = importedFiles.getCurrentDir();
-	// importedFiles.setCurrentDir(newCurrentDir);
-	// }
-	// }
-	//
-	// private void restoreCurrentDir() {
-	// if (oldCurrentDir != null) {
-	// importedFiles.setCurrentDir(oldCurrentDir);
-	// }
-	// }
-	//
-	// @Override
-	// CharSequence2 readLineInst() throws IOException {
-	// final CharSequence2 result = readLineInternal();
-	// if (result != null && StartUtils.isArobaseStartDiagram(result) && config.size() > 0) {
-	// final List<String> empty = new ArrayList<String>();
-	// included = new PreprocessorInclude(empty, new ReadLineList(config, result.getLocation()), defines, charset,
-	// null, filesUsedCurrent, filesUsedGlobal, definitionsContainer, importedFiles);
-	// }
-	// if (result != null && (StartUtils.isArobaseEndDiagram(result) || StartUtils.isArobaseStartDiagram(result))) {
-	// // http://plantuml.sourceforge.net/qa/?qa=3389/error-generating-when-same-file-included-different-diagram
-	// filesUsedCurrent.clear();
-	// }
-	// return result;
-	// }
-	//
-
 	public ReadLine applyFilter(ReadLine source) {
 		return new Inner(source);
 	}
-
-	// private ReadLine foo(ReadLine source) throws IOException {
-	// return new Preprocessor2(source, charset, defines, definitionsContainer);
-	// }
 
 	class Inner extends ReadLineInsertable {
 
@@ -239,7 +175,7 @@ public class PreprocessorInclude3 implements ReadFilter {
 			importedFiles.add(file);
 			return null;
 		}
-		return s.withErrorPreprocessor("Cannot import " + file.getAbsolutePath());
+		return s.withErrorPreprocessor("Cannot import " + FileWithSuffix.getFileName(file));
 
 	}
 
@@ -259,8 +195,8 @@ public class PreprocessorInclude3 implements ReadFilter {
 				return new ReadLineSingle(s.withErrorPreprocessor("Cannot include url " + urlString));
 			}
 			final URL url = new URL(urlString);
-			return new Preprocessor2(config, getReaderInclude(url, s, suf), charset, defines, null,
-					definitionsContainer, filesUsedGlobal);
+			return new Preprocessor2(config, getReaderInclude(url, s, suf), charset, defines, definitionsContainer,
+					filesUsedGlobal, importedFiles);
 
 		} catch (MalformedURLException e) {
 			return new ReadLineSingle(s.withErrorPreprocessor("Cannot include url " + urlString));
@@ -270,8 +206,8 @@ public class PreprocessorInclude3 implements ReadFilter {
 	private ReadLine manageDefinitionInclude(CharSequence2 s, Matcher2 matcher) throws IOException {
 		final String definitionName = matcher.group(1);
 		final List<? extends CharSequence> definition = definitionsContainer.getDefinition(definitionName);
-		return new Preprocessor2(config, new ReadLineList(definition, s.getLocation()), charset, defines, null,
-				definitionsContainer, filesUsedGlobal);
+		return new Preprocessor2(config, new ReadLineList(definition, s.getLocation()), charset, defines,
+				definitionsContainer, filesUsedGlobal, importedFiles);
 	}
 
 	private ReadLine manageFileInclude(CharSequence2 s, Matcher2 matcher, boolean allowMany) throws IOException {
@@ -282,8 +218,8 @@ public class PreprocessorInclude3 implements ReadFilter {
 			if (strlibReader == null) {
 				return new ReadLineSingle(s.withErrorPreprocessor("Cannot include " + fileName));
 			}
-			return new Preprocessor2(config, strlibReader, charset, defines, null, definitionsContainer,
-					filesUsedGlobal);
+			return new Preprocessor2(config, strlibReader, charset, defines, definitionsContainer, filesUsedGlobal,
+					importedFiles);
 		}
 		final int idx = fileName.lastIndexOf('!');
 		String suf = null;
@@ -293,6 +229,8 @@ public class PreprocessorInclude3 implements ReadFilter {
 		}
 		final FileWithSuffix f2 = new FileWithSuffix(importedFiles, withEnvironmentVariable(fileName), suf);
 		if (f2.fileOk() == false) {
+			Log.error("Current path is " + FileWithSuffix.getAbsolutePath(new File(".")));
+			Log.error("Cannot include " + f2.getDescription());
 			return new ReadLineSingle(s.withErrorPreprocessor("Cannot include " + f2.getDescription()));
 		} else if (allowMany == false && filesUsedCurrent.contains(f2)) {
 			return new ReadLineSimple(s, "File already included " + f2.getDescription());
@@ -300,8 +238,8 @@ public class PreprocessorInclude3 implements ReadFilter {
 		filesUsedCurrent.add(f2);
 		filesUsedGlobal.add(f2);
 
-		return new Preprocessor2(config, getReaderInclude(f2, s), charset, defines, f2.getParentFile(),
-				definitionsContainer, filesUsedGlobal);
+		return new Preprocessor2(config, getReaderInclude(f2, s), charset, defines, definitionsContainer,
+				filesUsedGlobal, importedFiles.withCurrentDir(f2.getParentFile()));
 	}
 
 	static String withEnvironmentVariable(String s) {
@@ -400,15 +338,5 @@ public class PreprocessorInclude3 implements ReadFilter {
 	public Set<FileWithSuffix> getFilesUsedGlobal() {
 		return filesUsedGlobal;
 	}
-
-	// public int getLineNumber() {
-	// return numLine;
-	// }
-	//
-	// @Override
-	// void closeInst() throws IOException {
-	// restoreCurrentDir();
-	// reader2.close();
-	// }
 
 }

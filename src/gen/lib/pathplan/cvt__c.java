@@ -47,8 +47,7 @@ package gen.lib.pathplan;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.pointf;
-import smetana.core.__struct__;
+import h.ST_pointf;
 
 public class cvt__c {
 //1 baedz5i9est5csw3epz3cv7z
@@ -248,11 +247,11 @@ throw new UnsupportedOperationException();
 
 //3 3xaxtxslceffm0wx9zcpiqjgb
 // static ilcoord_t Bezier(ilcoord_t * V, int degree, double t, 			ilcoord_t * Left, ilcoord_t * Right) 
-public static __struct__<pointf> Bezier(pointf V, int degree, double t, pointf Left, pointf Right) {
+public static ST_pointf Bezier(ST_pointf V, int degree, double t, ST_pointf Left, ST_pointf Right) {
 // WARNING!! STRUCT
 return Bezier_w_(V, degree, t, Left, Right).copy();
 }
-private static __struct__<pointf> Bezier_w_(pointf V, int degree, double t, pointf Left, pointf Right) {
+private static ST_pointf Bezier_w_(ST_pointf V, int degree, double t, ST_pointf Left, ST_pointf Right) {
 ENTERING("3xaxtxslceffm0wx9zcpiqjgb","Bezier");
 try {
     int i, j;			/* Index variables  */

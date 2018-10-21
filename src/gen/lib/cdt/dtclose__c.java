@@ -44,7 +44,14 @@
  *
  */
 package gen.lib.cdt;
+import static gen.lib.cdt.dtsize__c.dtsize_;
+import static smetana.core.JUtilsDebug.ENTERING;
+import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import smetana.core.Memory;
 
 public class dtclose__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -115,38 +122,38 @@ public class dtclose__c {
 
 //3 7ggbhlblmrfr1wq1k20npwyxb
 // int dtclose(register Dt_t* dt)     
-public static Object dtclose(Object... arg) {
-UNSUPPORTED("5o7j3hhxxjdvmz0k3eg98i8in"); // int dtclose(register Dt_t* dt)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("2fi55lg37rcjprso1i0385cj5"); // 	Dtdisc_t	*disc;
-UNSUPPORTED("pz52m7579heh6vdbqc3dt84v"); // 	int		ev = 0;
-UNSUPPORTED("3iyrv07qx7n0s211y8m7mopsz"); // 	if(!dt || dt->nview > 0 ) /* can't close if being viewed */
-UNSUPPORTED("b0epxudfxjm8kichhaautm2qi"); // 		return -1;
-UNSUPPORTED("9y2zao3al22pjv2p480p4klcc"); // 	/* announce the close event to see if we should continue */
-UNSUPPORTED("70rampeezpyz05ynxa49umbrz"); // 	disc = dt->disc;
-UNSUPPORTED("8gsk9kzxnlwgo3aceze9c6gl7"); // 	if(disc->eventf &&
-UNSUPPORTED("ho436wfj1mjidd6obd19mhll"); // 	   (ev = (*disc->eventf)(dt,2,((void*)0),disc)) < 0)
-UNSUPPORTED("b0epxudfxjm8kichhaautm2qi"); // 		return -1;
-UNSUPPORTED("66fqrcqd57dw3fzb30i176w0r"); // 	if(dt->view)	/* turn off viewing */
+public static int dtclose(ST_dt_s dt) {
+ENTERING("7ggbhlblmrfr1wq1k20npwyxb","dtclose");
+	try {
+ 	ST_dtdisc_s	disc;
+ 	int		ev = 0;
+ 	if(N(dt) || dt.getInt("nview") > 0 ) /* can't close if being viewed */
+ 		return -1;
+ 	/* announce the close event to see if we should continue */
+ 	disc = (ST_dtdisc_s) dt.disc;
+ 	if(disc.getPtr("eventf")!=null &&
+ 	   (ev = (Integer)disc.call("eventf", dt, 2, null, disc)) < 0)
+ 		return -1;
+ 	if(dt.getPtr("view")!=null)	/* turn off viewing */
 UNSUPPORTED("1xbo7gf92fmqmu2tzpfeuc0wk"); // 		dtview(dt,((Dt_t*)0));
-UNSUPPORTED("9vl9psbe52rphrxhc41erj2qd"); // 	if(ev == 0) /* release all allocated data */
-UNSUPPORTED("8fubw8ssxlx99qjv7n52cf3ru"); // 	{	(void)(*(dt->meth->searchf))(dt,((void*)0),0000100);
-UNSUPPORTED("5rbpcw29jwi3l66b11are2xd5"); // 		if(dtsize(dt) > 0)
-UNSUPPORTED("896vcxnvc07fbkh09vojp66fv"); // 			return -1;
-UNSUPPORTED("8po7fioot1issl5obmk5hqndd"); // 		if(dt->data->ntab > 0)
+ 	if(ev == 0) /* release all allocated data */ {
+ 		dt.meth.call("searchf", dt, null, 0000100);
+ 		if(dtsize_(dt) > 0)
+ 			return -1;
+if(dt.data.getInt("ntab") > 0)
 UNSUPPORTED("4ugmcpi8vkb013vuo4wykn0a3"); // 			(*dt->memoryf)(dt,(void*)dt->data->hh._htab,0,disc);
-UNSUPPORTED("1bguaull3m0kl140obilq4ucp"); // 		(*dt->memoryf)(dt,(void*)dt->data,0,disc);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("4wjw4hx0hptydzyvkohwgzoo"); // 	if(dt->type == 0)
-UNSUPPORTED("9jx9g23tuicm5x7f5cvznr3rt"); // 		free((void*)dt);
-UNSUPPORTED("4r6n1aai6737i36g78f9z4apm"); // 	else if(ev == 0 && dt->type == 1)
+dt.call("memoryf", dt, dt.data, null, disc);
+ 	}
+ 	if(dt.type == 0)
+ 		Memory.free(dt);
+ 	else if(ev == 0 && dt.type == 1)
 UNSUPPORTED("6wqxv1f7tzvjk0lwmqdrcq8la"); // 		(*dt->memoryf)(dt, (void*)dt, 0, disc);
-UNSUPPORTED("oxrmf64nqi0a580iiczqkmky"); // 	if(disc->eventf)
+ 	if(disc.getPtr("eventf")!=null)
 UNSUPPORTED("8bce06bdd64ypwb17ddloqzu8"); // 		(void)(*disc->eventf)(dt, 6, ((void*)0), disc);
-UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+ 	return 0;
+} finally {
+LEAVING("7ggbhlblmrfr1wq1k20npwyxb","dtclose");
+}
 }
 
 

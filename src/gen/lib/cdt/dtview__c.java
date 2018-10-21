@@ -55,7 +55,7 @@ import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.UNSUPPORTED_INT;
 import h.Dtcompar_f;
-import h._dt_s;
+import h.ST_dt_s;
 import smetana.core.CFunction;
 import smetana.core.CString;
 import smetana.core.__ptr__;
@@ -129,38 +129,38 @@ public class dtview__c {
 
 //3 6spidg45w8teb64726drdswaa
 // static void* dtvsearch(Dt_t* dt, register void* obj, register int type)       
-public static __ptr__ dtvsearch(_dt_s dt, __ptr__ obj, int type) {
+public static __ptr__ dtvsearch(ST_dt_s dt, __ptr__ obj, int type) {
 ENTERING("6spidg45w8teb64726drdswaa","dtvsearch");
 try {
-	_dt_s		d, p;
+	ST_dt_s		d, p;
 	__ptr__		o=null, n, ok, nk;
 	int		cmp, lk, sz, ky;
 	Dtcompar_f	cmpf;
 	/* these operations only happen at the top level */
 	if ((type&(0000001|0000002|0000100|0000040))!=0)
-		return (__ptr__) dt.getPtr("meth").call("searchf", dt, obj, type);
+		return (__ptr__) dt.meth.call("searchf", dt, obj, type);
 	if(((type&(0001000|0000004))!=0) || /* order sets first/last done below */
-	   (((type&(0000200|0000400))!=0) && N(dt.getPtr("meth").getInt("type")&(0000010|0000004)) ) )
-	{	for(d = dt; d!=null; d = (_dt_s) d.getPtr("view"))
-			if((o = (__ptr__) d.getPtr("meth").call("searchf", d,obj,type))!=null )
+	   (((type&(0000200|0000400))!=0) && N(dt.meth.type&(0000010|0000004)) ) )
+	{	for(d = dt; d!=null; d = (ST_dt_s) d.getPtr("view"))
+			if((o = (__ptr__) d.meth.call("searchf", d,obj,type))!=null )
 				break;
 		dt.setPtr("walk", d);
 		return o;
 	}
-	if((dt.getPtr("meth").getInt("type") & (0000010|0000004) )!=0)
+	if((dt.meth.type & (0000010|0000004) )!=0)
 	{	if(N(type & (0000200|0000400|0000010|0000020)) )
 			return null;
 		n = nk = null; p = null;
-		for(d = dt; d!=null; d = (_dt_s) d.getPtr("view"))
-		{	if(N(o = (__ptr__) d.getPtr("meth").call("searchf", d, obj, type) ))
+		for(d = dt; d!=null; d = (ST_dt_s) d.getPtr("view"))
+		{	if(N(o = (__ptr__) d.meth.call("searchf", d, obj, type) ))
 				continue;
-			ky = d.getPtr("disc").getInt("key");
-			sz = d.getPtr("disc").getInt("size");
-			lk = d.getPtr("disc").getInt("link");
-			cmpf = (Dtcompar_f) d.getPtr("disc").getPtr("comparf");
+			ky = d.disc.getInt("key");
+			sz = d.disc.size;
+			lk = d.disc.link;
+			cmpf = (Dtcompar_f) d.disc.getPtr("comparf");
 			ok = (__ptr__) (sz < 0 ? ((__ptr__)o).addVirtualBytes(ky) : ((__ptr__)o).addVirtualBytes(ky));
 			if(n!=null) /* get the right one among all dictionaries */
-			{	cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(d,ok,nk,d.getPtr("disc")) : (sz <= 0 ? strcmp((CString)ok,(CString)nk) : UNSUPPORTED_INT("memcmp(ok,nk,sz)")) );
+			{	cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(d,ok,nk,d.disc) : (sz <= 0 ? strcmp((CString)ok,(CString)nk) : UNSUPPORTED_INT("memcmp(ok,nk,sz)")) );
 				if(((type & (0000010|0000200))!=0 && cmp < 0) ||
 				   ((type & (0000020|0000400))!=0 && cmp > 0) )
 UNSUPPORTED("5o3u9aaanyd9yh74sjfkkofmo"); // 					goto a_dj;
@@ -214,27 +214,27 @@ LEAVING("6spidg45w8teb64726drdswaa","dtvsearch");
 
 //3 dfryioch2xz35w8nq6lxbk5kh
 // Dt_t* dtview(register Dt_t* dt, register Dt_t* view)      
-public static _dt_s dtview(_dt_s dt, _dt_s view) {
+public static ST_dt_s dtview(ST_dt_s dt, ST_dt_s view) {
 ENTERING("dfryioch2xz35w8nq6lxbk5kh","dtview");
 try {
-	_dt_s	d;
-	if ((dt.getPtr("data").getInt("type")&010000)!=0) dtrestore(dt,null);
+	ST_dt_s	d;
+	if ((dt.data.type&010000)!=0) dtrestore(dt,null);
 	if(view!=null)
-	{	if ((view.getPtr("data").getInt("type")&010000)!=0) dtrestore(view,null);
-		if(NEQ(view.getPtr("meth"), dt.getPtr("meth"))) /* must use the same method */
+	{	if ((view.data.type&010000)!=0) dtrestore(view,null);
+		if(NEQ(view.meth, dt.meth)) /* must use the same method */
 			UNSUPPORTED("return null;");
 	}
 	/* make sure there won't be a cycle */
-	for(d = view; d!=null; d = (_dt_s)d.getPtr("view"))
+	for(d = view; d!=null; d = (ST_dt_s)d.getPtr("view"))
 		if(EQ(d, dt))
 			return null;
 	/* no more viewing lower dictionary */
-	if((d = (_dt_s)dt.getPtr("view"))!=null )
+	if((d = (ST_dt_s)dt.getPtr("view"))!=null )
 		d.setInt("nview", d.getInt("nview")-1);
 	dt.setPtr("walk", null);
 	dt.setPtr("view", null);
 	if(N(view))
-	{	dt.setPtr("searchf", dt.getPtr("meth").getPtr("searchf"));
+	{	dt.setPtr("searchf", dt.meth.getPtr("searchf"));
 		return d;
 	}
 	/* ok */

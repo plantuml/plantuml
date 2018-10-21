@@ -34,82 +34,77 @@
  */
 package net.sourceforge.plantuml.jdot;
 
-import h.Agedge_s;
-import h.Agedgeinfo_t;
-import h.Agnode_s;
-import h.Agnodeinfo_t;
-import h.bezier;
-import h.boxf;
-import h.pointf;
-import h.splines;
-import h.textlabel_t;
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
+import h.ST_bezier;
+import h.ST_boxf;
+import h.ST_pointf;
+import h.ST_splines;
+import h.ST_textlabel_t;
 import smetana.core.Macro;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class DebugUtils {
 
-	public static void printDebugEdge(Agedge_s e) {
+	public static void printDebugEdge(ST_Agedge_s e) {
 		System.err.println("*********** PRINT EDGE ********** " + getUID(e));
-		final Agedgeinfo_t data = (Agedgeinfo_t) Macro.AGDATA(e).castTo(Agedgeinfo_t.class);
-		final splines splines = (splines) data.getPtr("spl");
-		__struct__<boxf> bb = splines.getStruct("bb");
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
+		final ST_splines splines = (ST_splines) data.spl;
+		ST_boxf bb = (ST_boxf) splines.getStruct("bb");
 		// final bezier list = (bezier) splines.getPtr("list");
 		System.err.println("splines.UID=" + ((StarStruct) splines).getUID36());
-		System.err.println("splines.size=" + splines.getInt("size"));
-		System.err.println("bb.LL=" + pointftoString(bb.getStruct("LL")));
-		System.err.println("bb.UR=" + pointftoString(bb.getStruct("UR")));
-		printDebugBezier((bezier) splines.getPtr("list").getPtr());
+		System.err.println("splines.size=" + splines.size);
+		System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.getStruct("LL")));
+		System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.getStruct("UR")));
+		printDebugBezier((ST_bezier) splines.getPtr("list").getPtr());
 
-		textlabel_t label = (textlabel_t) data.getPtr("label");
+		ST_textlabel_t label = (ST_textlabel_t) data.label;
 		if (label != null) {
-			System.err.println("LABEL dimen=" + pointftoString(label.getStruct("dimen")));
-			System.err.println("LABEL space=" + pointftoString(label.getStruct("space")));
-			System.err.println("LABEL pos=" + pointftoString(label.getStruct("pos")));
+			System.err.println("LABEL dimen=" + pointftoString((ST_pointf) label.dimen));
+			System.err.println("LABEL space=" + pointftoString((ST_pointf) label.space));
+			System.err.println("LABEL pos=" + pointftoString((ST_pointf) label.getStruct("pos")));
 		}
 
 	}
 
 	public static String getUID(Object o) {
-		if (o instanceof StarArrayOfPtr) {
-			return ((StarArrayOfPtr) o).getUID36();
-		}
 		return ((StarStruct) o).getUID36();
 	}
 
-	public static void printDebugBezier(bezier bezier) {
-		System.err.println("bezier.size=" + bezier.getInt("size"));
+	public static void printDebugBezier(ST_bezier bezier) {
+		System.err.println("bezier.size=" + bezier.size);
 		System.err.println("bezier.sflag=" + bezier.getInt("sflag"));
 		System.err.println("splines.eflag=" + bezier.getInt("eflag"));
-		System.err.println("bezier.sp=" + pointftoString(bezier.getStruct("sp")));
-		System.err.println("bezier.ep=" + pointftoString(bezier.getStruct("ep")));
+		System.err.println("bezier.sp=" + pointftoString((ST_pointf) bezier.getStruct("sp")));
+		System.err.println("bezier.ep=" + pointftoString((ST_pointf) bezier.getStruct("ep")));
 		System.err.println("bezier.list=" + getUID(bezier.getPtr("list")));
-		for (int i = 0; i < bezier.getInt("size"); i++) {
+		for (int i = 0; i < bezier.size; i++) {
 			final __ptr__ pt = bezier.getPtr("list").plus(i).getPtr();
 			System.err.println("pt=" + pointftoString(pt));
 		}
 
 	}
 
-	public static void printDebugNode(Agnode_s n) {
+	public static void printDebugNode(ST_Agnode_s n) {
 		System.err.println("*********** PRINT NODE ********** ");
-		final Agnodeinfo_t data = (Agnodeinfo_t) Macro.AGDATA(n).castTo(Agnodeinfo_t.class);
+		final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n).castTo(ST_Agnodeinfo_t.class);
 		System.err.println("width=" + data.getDouble("width"));
 		System.err.println("height=" + data.getDouble("height"));
 		System.err.println("ht=" + data.getDouble("ht"));
 		System.err.println("lw=" + data.getDouble("lw"));
 		System.err.println("rw=" + data.getDouble("rw"));
-		System.err.println("coord=" + pointftoString(data.getStruct("coord")));
+		System.err.println("coord=" + pointftoString((ST_pointf) data.getStruct("coord")));
 
-		__struct__<boxf> bb = data.getStruct("bb");
-		System.err.println("bb.LL=" + pointftoString(bb.getStruct("LL")));
-		System.err.println("bb.UR=" + pointftoString(bb.getStruct("UR")));
+		ST_boxf bb = (ST_boxf) data.getStruct("bb");
+		System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.getStruct("LL")));
+		System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.getStruct("UR")));
 		// TODO Auto-generated method stub
 	}
 
-	public static String pointftoString(__struct__<pointf> point) {
+	public static String pointftoString(ST_pointf point) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("(");
 		sb.append(point.getDouble("x"));

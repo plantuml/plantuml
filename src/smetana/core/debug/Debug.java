@@ -34,12 +34,46 @@
  */
 package smetana.core.debug;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class Debug {
 
+	private final Map<String, String> methodNames = new HashMap<String, String>();
+	private final Collection<String> called = new LinkedHashSet<String>();
+
 	public void entering(String signature, String methodName) {
+		methodNames.put(signature, methodName);
+		if (called.contains(signature) == false) {
+			called.add(signature);
+		}
 	}
 
 	public void leaving(String signature, String methodName) {
+	}
+
+	public void reset() {
+		methodNames.clear();
+		called.clear();
+	}
+
+	public void printMe() {
+		System.err.println("methodNames=" + methodNames.size());
+		System.err.println("called=" + called.size());
+		final List<String> called2 = new ArrayList<String>(called);
+		for (int i = 0; i < called.size(); i++) {
+			System.err.println("n " + i + " " + methodNames.get(called2.get(i)) + " " + called2.get(i));
+		}
+		final Set<String> called3 = new HashSet<String>(called);
+		for (String s : called3) {
+			System.err.println("p " + s);
+		}
 	}
 
 }
