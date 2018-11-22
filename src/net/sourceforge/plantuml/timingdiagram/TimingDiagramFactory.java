@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 
 public class TimingDiagramFactory extends UmlDiagramFactory {
 
@@ -52,6 +53,7 @@ public class TimingDiagramFactory extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 
 		final List<Command> cmds = new ArrayList<Command>();
+		cmds.add(new CommandFootboxIgnored());
 
 		addCommonCommands(cmds);
 
