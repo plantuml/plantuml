@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -54,9 +53,9 @@ public class ST_BestPos_t extends UnsupportedStructAndPtr {
 
 	private final StarStruct parent;
 
-	private int n;
-	private double area;
-	private final ST_pointf pos = new ST_pointf(this);
+	public int n;
+	public double area;
+	public final ST_pointf pos = new ST_pointf(this);
 
 	public ST_BestPos_t() {
 		this(null);
@@ -93,36 +92,12 @@ public class ST_BestPos_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("pos")) {
-			return pos;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("n")) {
-			return this.n;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("n")) {
 			this.n = data;
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("area")) {
-			return this.area;
-		}
-		return super.getDouble(fieldName);
 	}
 
 	@Override

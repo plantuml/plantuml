@@ -51,6 +51,4 @@ public interface __struct__<C extends __ptr__> extends __c__fields, Area {
 
 	public StarStruct getInternalData();
 
-	public Object call(String name, Object... args);
-
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,7 +51,9 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.Englober;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
@@ -62,6 +65,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -244,30 +248,55 @@ public class DrawableSet {
 		return dimension;
 	}
 
+	TextBlock asTextBlock(final double delta, final double width, final Page page, final boolean showTail) {
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				drawU22(ug, delta, width, page, showTail);
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				final double height = page.getHeight();
+				return new Dimension2DDouble(width, height);
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				throw new UnsupportedOperationException();
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+				throw new UnsupportedOperationException();
+			}
+
+		};
+
+	}
+
 	void drawU22(final UGraphic ug, final double delta, double width, Page page, boolean showTail) {
-		// final UGraphic ugOrig = ug;
 		final double height = page.getHeight();
 
 		final UGraphic ugTranslated = clipAndTranslate2(delta, width, page, ug);
 		final SimpleContext2D context = new SimpleContext2D(true);
 		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, context);
 		this.drawPlaygroundU(ugTranslated, context);
-		// ug = ugOrig;
-
 
 		this.drawLineU22(ug, showTail, page);
 		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);
 
-		// ug = clipAndTranslate2(delta, width, page, ug);
 		this.drawPlaygroundU(ugTranslated, new SimpleContext2D(false));
 	}
 
 	private UGraphic clipAndTranslate2(final double delta, double width, Page p, UGraphic ug) {
 		ug = ug.apply(new UClip(0, p.getBodyRelativePosition(), width, p.getBodyHeight() + 1));
-		if (delta > 0) {
-			ug = ug.apply(new UTranslate(0, -delta));
-		}
+		ug = ug.apply(getTranslate4(delta));
 		return ug;
+	}
+
+	private UTranslate getTranslate4(final double delta) {
+		if (delta > 0) {
+			return new UTranslate(0, -delta);
+		}
+		return new UTranslate();
 	}
 
 	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {

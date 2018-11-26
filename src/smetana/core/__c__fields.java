@@ -40,18 +40,10 @@ package smetana.core;
 
 public interface __c__fields {
 
-	public __ptr__ getPtr(String fieldName);
-	public __struct__ getStruct(String fieldName);
-	public boolean getBoolean(String fieldName);
-	public double getDouble(String fieldName);
-	public CString getCString(String fieldName);
-	public int getInt(String fieldName);
-	
 	public __ptr__ setPtr(String fieldName, __ptr__ value);
 
 	public void setStruct(String fieldName, __struct__ value);
 	public void setInt(String fieldName, int value);
-	public void setBoolean(String fieldName, boolean value);
 	public void setDouble(String fieldName, double value);
 	
 

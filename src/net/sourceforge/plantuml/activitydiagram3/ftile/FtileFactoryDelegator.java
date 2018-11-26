@@ -168,8 +168,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor, USymbol type) {
-		return factory.createGroup(list, name, backColor, titleColor, note, borderColor, type);
+			HtmlColor borderColor, USymbol type, double roundCorner) {
+		return factory.createGroup(list, name, backColor, titleColor, note, borderColor, type, roundCorner);
 	}
 
 	public StringBounder getStringBounder() {

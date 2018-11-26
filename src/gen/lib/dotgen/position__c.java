@@ -144,7 +144,6 @@ import h.ratio_t;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
-import smetana.core.__ptr__;
 
 public class position__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -471,8 +470,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -803,8 +802,8 @@ try {
 	rp = GD_rank(g).plus(r);
 	found =0;
         tp = null;
-	for (i = 0; i < rp.getPtr().getInt("n"); i++) {
-	    tp = (ST_Agnode_s) rp.getPtr().v.plus(i).getPtr();
+	for (i = 0; i < rp.getPtr().n; i++) {
+	    tp = (ST_Agnode_s) rp.getPtr().v.get(i);
 	    if (ND_save_out(tp).listNotNull()) {
         	for (j = 0; (e = (ST_Agedge_s) ND_save_out(tp).getFromList(j))!=null; j++) {
 		    if ((ND_rank(aghead(e)) > r) || (ND_rank(agtail(e)) > r)) {
@@ -825,9 +824,9 @@ try {
 	    }
 	}
 	if (found!=0 || N(tp)) continue;
-	tp = (ST_Agnode_s) rp.getPtr().v.plus(0).getPtr();
-	if (r < GD_maxrank(g)) hp = (ST_Agnode_s) rp.plus(1).getPtr().v.plus(0).getPtr();
-	else hp = (ST_Agnode_s) rp.plus(-1).getPtr().v.plus(0).getPtr();
+	tp = (ST_Agnode_s) rp.getPtr().v.get(0);
+	if (r < GD_maxrank(g)) hp = (ST_Agnode_s) rp.get(1).v.get(0);
+	else hp = (ST_Agnode_s) rp.plus(-1).getPtr().v.get(0);
 	//assert (hp);
 	sn = virtual_node(g);
 	ND_node_type(sn, 2);
@@ -1006,11 +1005,11 @@ try {
     /* make edges to constrain left-to-right ordering */
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
 	double last;
-	ND_rank(rank.plus(i).getPtr().v.plus(0).getPtr(), 0);
+	ND_rank(rank.get(i).v.get(0), 0);
 	last = 0;
 	nodesep = sep[i & 1];
-	for (j = 0; j < rank.plus(i).getInt("n"); j++) {
-	    u = (ST_Agnode_s) rank.plus(i).getPtr().v.plus(j).getPtr();
+	for (j = 0; j < rank.get(i).n; j++) {
+	    u = (ST_Agnode_s) rank.get(i).v.get(j);
 	    ND_mval(u, ND_rw(u));	/* keep it somewhere safe */
 	    if (ND_other(u).size > 0) {	/* compute self size */
 		/* FIX: dot assumes all self-edges go to the right. This
@@ -1029,7 +1028,7 @@ try {
 		}
 		ND_rw(u, ND_rw(u) + sw);	/* increment to include self edges */
 	    }
-	    v = (ST_Agnode_s) rank.plus(i).getPtr().v.plus(j + 1).getPtr();
+	    v = (ST_Agnode_s) rank.get(i).v.plus(j + 1).getPtr();
 	    if (v!=null) {
 		width = ND_rw(u) + ND_lw(v) + nodesep;
 		e0 = make_aux_edge(u, v, width, 0);
@@ -1150,7 +1149,7 @@ try {
 	    make_aux_edge(GD_ln(g), GD_rn(g), 1, 128);	/* clust compaction edge */
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
-	contain_clustnodes((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+	contain_clustnodes((ST_Agraph_s) GD_clust(g).get(c).getPtr());
 } finally {
 LEAVING("79v3omwzni0nm3h05l3onjsbz","contain_clustnodes");
 }
@@ -1190,22 +1189,22 @@ try {
     ST_Agnode_s u, v;
     margin = late_int (g, Z.z().G_margin, 8, 0);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	if (GD_rank(g).plus(r).getInt("n") == 0)
+	if (GD_rank(g).get(r).n == 0)
 	    continue;
-	v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(0).getPtr();
+	v = (ST_Agnode_s) GD_rank(g).get(r).v.get(0);
 	if (v == null)
 	    continue;
 	for (i = ND_order(v) - 1; i >= 0; i--) {
-	    u = (ST_Agnode_s) GD_rank(dot_root(g)).plus(r).getPtr().v.plus(i).getPtr();
+	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get(r).v.get(i);
 	    /* can't use "is_a_vnode_of" because elists are swapped */
 	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
 		make_aux_edge(u, GD_ln(g), margin + ND_rw(u), 0);
 		break;
 	    }
 	}
-	for (i = ND_order(v) + GD_rank(g).plus(r).getInt("n"); i < GD_rank(dot_root(g)).plus(r).getInt("n");
+	for (i = ND_order(v) + GD_rank(g).get(r).n; i < GD_rank(dot_root(g)).get(r).n;
 	     i++) {
-	    u = (ST_Agnode_s) GD_rank(dot_root(g)).plus(r).getPtr().v.plus(i).getPtr();
+	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get(r).v.get(i);
 	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
 		make_aux_edge(GD_rn(g), u, margin + ND_lw(u), 0);
 		break;
@@ -1213,7 +1212,7 @@ try {
 	}
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
-	keepout_othernodes((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+	keepout_othernodes((ST_Agraph_s) GD_clust(g).get(c).getPtr());
 } finally {
 LEAVING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 }
@@ -1232,12 +1231,12 @@ try {
     margin = late_int (g, Z.z().G_margin, 8, 0);
     make_lrvn(g);
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	subg = (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr();
+	subg = (ST_Agraph_s) GD_clust(g).get(c).getPtr();
 	make_lrvn(subg);
 	make_aux_edge(GD_ln(g), GD_ln(subg),
-		      margin + GD_border(g)[3].getDouble("x"), 0);
+		      margin + GD_border(g)[3].x, 0);
 	make_aux_edge(GD_rn(subg), GD_rn(g),
-		      margin + GD_border(g)[1].getDouble("x"), 0);
+		      margin + GD_border(g)[1].x, 0);
 	contain_subclust(subg);
     }
 } finally {
@@ -1258,11 +1257,11 @@ try {
     ST_Agraph_s left, right;
     margin = late_int (g, Z.z().G_margin, 8, 0);
     for (i = 1; i <= GD_n_cluster(g); i++)
-	make_lrvn((ST_Agraph_s) GD_clust(g).plus(i).getPtr().getPtr());
+	make_lrvn((ST_Agraph_s) GD_clust(g).get(i).getPtr());
     for (i = 1; i <= GD_n_cluster(g); i++) {
 	for (j = i + 1; j <= GD_n_cluster(g); j++) {
-	    low = (ST_Agraph_s) GD_clust(g).plus(i).getPtr().getPtr();
-	    high = (ST_Agraph_s) GD_clust(g).plus(j).getPtr().getPtr();
+	    low = (ST_Agraph_s) GD_clust(g).get(i).getPtr();
+	    high = (ST_Agraph_s) GD_clust(g).get(j).getPtr();
 	    if (GD_minrank(low) > GD_minrank(high)) {
 		ST_Agraph_s temp = low;
 		low = high;
@@ -1270,8 +1269,8 @@ try {
 	    }
 	    if (GD_maxrank(low) < GD_minrank(high))
 		continue;
-	    if (ND_order(GD_rank(low).plus(GD_minrank(high)).getPtr("v").plus(0).getPtr())
-		< ND_order(GD_rank(high).plus(GD_minrank(high)).getPtr("v").plus(0).getPtr())) {
+	    if (ND_order(GD_rank(low).get(GD_minrank(high)).v.get(0))
+		< ND_order(GD_rank(high).get(GD_minrank(high)).v.get(0))) {
 		left = low;
 		right = high;
 	    } else {
@@ -1280,7 +1279,7 @@ try {
 	    }
 	    make_aux_edge(GD_rn(left), GD_ln(right), margin, 0);
 	}
-	separate_subclust((ST_Agraph_s) GD_clust(g).plus(i).getPtr().getPtr());
+	separate_subclust((ST_Agraph_s) GD_clust(g).get(i).getPtr());
     }
 } finally {
 LEAVING("6oruu1p1b7kxr5moh3kmcmvr3","separate_subclust");
@@ -1316,7 +1315,7 @@ ENTERING("fywsxto7yvl5wa2dfu7u7jj1","compress_graph");
 try {
     double x;
     ST_pointf p = new ST_pointf();
-    if (GD_drawing(g).getInt("ratio_kind") != enumAsInt(ratio_t.class, "R_COMPRESS"))
+    if (GD_drawing(g).ratio_kind != enumAsInt(ratio_t.class, "R_COMPRESS"))
 	return;
 UNSUPPORTED("79oeaf0u32si2chjcpas5whjl"); //     p = GD_drawing(g)->size;
 UNSUPPORTED("6a2ue1i6kvwvpgapb4z8l27jn"); //     if (p.x * p.y <= 1)
@@ -1411,8 +1410,8 @@ try {
     ST_Agnode_s v;
     ST_rank_t.Array2 rank = GD_rank(g);
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
-	for (j = 0; j < rank.plus(i).getInt("n"); j++) {
-	    v = (ST_Agnode_s) rank.plus(i).getPtr().v.plus(j).getPtr();
+	for (j = 0; j < rank.get(i).n; j++) {
+	    v = (ST_Agnode_s) rank.get(i).v.get(j);
 	    ND_coord(v).x = ND_rank(v);
 	    ND_rank(v, i);
 	}
@@ -1520,7 +1519,7 @@ try {
     int c;
     double ht1, ht2;
     ST_Agraph_s subg;
-    __ptr__ rank = GD_rank(dot_root(g));
+    ST_rank_t.Array2 rank = GD_rank(dot_root(g));
     int margin, haveClustLabel = 0;
     if (EQ(g, dot_root(g))) 
 	margin = 8;
@@ -1530,7 +1529,7 @@ try {
     ht2 = GD_ht2(g);
     /* account for sub-clusters */
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	subg = (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr();
+	subg = (ST_Agraph_s) GD_clust(g).get(c).getPtr();
 	haveClustLabel |= clust_ht(subg);
 	if (GD_maxrank(subg) == GD_maxrank(g))
 	    ht1 = MAX(ht1, GD_ht1(subg) + margin);
@@ -1542,16 +1541,16 @@ try {
     if (NEQ(g, dot_root(g)) && GD_label(g)!=null) {
 	haveClustLabel = 1;
 	if (N(GD_flip(agroot(g)))) {
-	    ht1 += GD_border(g)[0].getDouble("y");
-	    ht2 += GD_border(g)[2].getDouble("y");
+	    ht1 += GD_border(g)[0].y;
+	    ht2 += GD_border(g)[2].y;
 	}
     }
     GD_ht1(g, ht1);
     GD_ht2(g, ht2);
     /* update the global ranks */
     if (NEQ(g, dot_root(g))) {
-	rank.plus(GD_minrank(g)).setDouble("ht2", MAX(rank.plus(GD_minrank(g)).getDouble("ht2"), ht2));
-	rank.plus(GD_maxrank(g)).setDouble("ht1", MAX(rank.plus(GD_maxrank(g)).getDouble("ht1"), ht1));
+	rank.plus(GD_minrank(g)).setDouble("ht2", MAX(rank.get(GD_minrank(g)).ht2, ht2));
+	rank.plus(GD_maxrank(g)).setDouble("ht1", MAX(rank.get(GD_maxrank(g)).ht1, ht1));
     }
     return haveClustLabel;
 } finally {
@@ -1577,8 +1576,8 @@ try {
     ht2 = maxht = 0;
     /* scan ranks for tallest nodes.  */
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	for (i = 0; i < rank.plus(r).getInt("n"); i++) {
-	    n = (ST_Agnode_s) rank.plus(r).getPtr().v.plus(i).getPtr();
+	for (i = 0; i < rank.get(r).n; i++) {
+	    n = (ST_Agnode_s) rank.get(r).v.get(i);
 	    /* assumes symmetry, ht1 = ht2 */
 	    ht2 = ND_ht(n) / 2;
 	    /* have to look for high self-edge labels, too */
@@ -1586,15 +1585,15 @@ try {
 		for (j = 0; (e = (ST_Agedge_s) ND_other(n).getFromList(j))!=null; j++) {
 		    if (EQ(agtail(e), aghead(e))) {
 			if (ED_label(e)!=null)
-			    ht2 = MAX(ht2, ED_label(e).dimen.getDouble("y") / 2);
+			    ht2 = MAX(ht2, ED_label(e).dimen.y / 2);
 		    }
 		}
 	    /* update global rank ht */
-	    if (rank.plus(r).getDouble("pht2") < ht2) {
+	    if (rank.get(r).pht2 < ht2) {
 		rank.plus(r).setDouble("ht2", ht2);
 		rank.plus(r).setDouble("pht2", ht2);
 		}
-	    if (rank.plus(r).getDouble("pht1") < ht2) {
+	    if (rank.get(r).pht1 < ht2) {
 		rank.plus(r).setDouble("ht1", ht2);
 		rank.plus(r).setDouble("pht1", ht2);
 		}
@@ -1613,13 +1612,13 @@ try {
     /* make the initial assignment of ycoords to leftmost nodes by ranks */
     maxht = 0;
     r = GD_maxrank(g);
-    (ND_coord(rank.plus(r).getPtr().v.plus(0).getPtr())).setDouble("y", rank.plus(r).getDouble("ht1"));
+    (ND_coord(rank.get(r).v.get(0))).setDouble("y", rank.get(r).ht1);
     while (--r >= GD_minrank(g)) {
-	d0 = rank.plus(r + 1).getDouble("pht2") + rank.plus(r).getDouble("pht1") + GD_ranksep(g);	/* prim node sep */
-	d1 = rank.plus(r + 1).getDouble("ht2") + rank.plus(r).getDouble("ht1") + 8;	/* cluster sep */
+	d0 = rank.get(r + 1).pht2 + rank.get(r).pht1 + GD_ranksep(g);	/* prim node sep */
+	d1 = rank.get(r + 1).ht2 + rank.get(r).ht1 + 8;	/* cluster sep */
 	delta = MAX(d0, d1);
-	if (rank.plus(r).getInt("n") > 0)	/* this may reflect some problem */
-		(ND_coord(rank.plus(r).getPtr().v.plus(0).getPtr())).setDouble("y", (ND_coord(rank.plus(r + 1).getPtr().v.plus(0).getPtr())).getDouble("y") + delta);
+	if (rank.get(r).n > 0)	/* this may reflect some problem */
+		(ND_coord(rank.get(r).v.get(0))).setDouble("y", (ND_coord(rank.plus(r + 1).getPtr().v.get(0))).y + delta);
 	maxht = MAX(maxht, delta);
     }
     /* If there are cluster labels and the drawing is rotated, we need special processing to
@@ -1650,7 +1649,7 @@ UNSUPPORTED("e6dfx5uesysjaefb0djyfp7f"); // 		    (ND_coord(rank[r + 1].v[0])).y
     }
     /* copy ycoord assignment from leftmost nodes to others */
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
-    ND_coord(n).y = ND_coord(rank.plus(ND_rank(n)).getPtr().v.plus(0).getPtr()).getDouble("y");
+    ND_coord(n).y = ND_coord(rank.plus(ND_rank(n)).getPtr().v.get(0)).y;
 } finally {
 LEAVING("bp8vmol4ncadervcfossysdtd","set_ycoords");
 }
@@ -1673,23 +1672,23 @@ try {
 	LL.x = INT_MAX;
 	UR.x = -((double)INT_MAX);
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    int rnkn = GD_rank(g).plus(r).getInt("n");
+	    int rnkn = GD_rank(g).get(r).n;
 	    if (rnkn == 0)
 		continue;
-	    if ((v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(0).getPtr()) == null)
+	    if ((v = (ST_Agnode_s) GD_rank(g).get(r).v.get(0)) == null)
 		continue;
 	    for (c = 1; (ND_node_type(v) != 0) && c < rnkn; c++)
-		v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(c).getPtr();
+		v = (ST_Agnode_s) GD_rank(g).get(r).v.get(c);
 	    if (ND_node_type(v) == 0) {
-		x = ND_coord(v).getDouble("x") - ND_lw(v);
+		x = ND_coord(v).x - ND_lw(v);
 		LL.setDouble("x", MIN(LL.x, x));
 	    }
 	    else continue;
 		/* At this point, we know the rank contains a NORMAL node */
-	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(rnkn - 1).getPtr();
+	    v = (ST_Agnode_s) GD_rank(g).get(r).v.plus(rnkn - 1).getPtr();
 	    for (c = rnkn-2; ND_node_type(v) != 0; c--)
-		v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(c).getPtr();
-	    x = ND_coord(v).getDouble("x") + ND_rw(v);
+		v = (ST_Agnode_s) GD_rank(g).get(r).v.get(c);
+	    x = ND_coord(v).x + ND_rw(v);
 	    UR.x = MAX(UR.x, x);
 	}
 	offset = 8;
@@ -1703,8 +1702,8 @@ try {
 	LL.x = (double)(ND_rank(GD_ln(g)));
 	UR.x = (double)(ND_rank(GD_rn(g)));
  }
- LL.y = ND_coord(GD_rank(root).plus(GD_maxrank(g)).getPtr().v.plus(0).getPtr()).getDouble("y") - GD_ht1(g);
- UR.y = ND_coord(GD_rank(root).plus(GD_minrank(g)).getPtr().v.plus(0).getPtr()).getDouble("y") + GD_ht2(g);
+ LL.y = ND_coord(GD_rank(root).plus(GD_maxrank(g)).getPtr().v.get(0)).y - GD_ht1(g);
+ UR.y = ND_coord(GD_rank(root).plus(GD_minrank(g)).getPtr().v.get(0)).y + GD_ht2(g);
  GD_bb(g).setStruct("LL", LL);
  GD_bb(g).setStruct("UR", UR);
 } finally {
@@ -1723,7 +1722,7 @@ ENTERING("dlbpiimh9g9ff9w7wjoabf817","rec_bb");
 try {
     int c;
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_bb((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr(), root);
+	rec_bb((ST_Agraph_s) GD_clust(g).get(c).getPtr(), root);
     dot_compute_bb(g, root);
 } finally {
 LEAVING("dlbpiimh9g9ff9w7wjoabf817","rec_bb");
@@ -1794,7 +1793,7 @@ try {
     boolean scale_it, filled;
     ST_point sz = new ST_point();
     rec_bb(g, g);
-    if ((GD_maxrank(g) > 0) && (GD_drawing(g).getInt("ratio_kind")!=0)) {
+    if ((GD_maxrank(g) > 0) && (GD_drawing(g).ratio_kind!=0)) {
 UNSUPPORTED("5wbmy4x78flo2ztfabki9lyjf"); // 	sz.x = GD_bb(g).UR.x - GD_bb(g).LL.x;
 UNSUPPORTED("catd6eu5oc282ln95k9zz52f3"); // 	sz.y = GD_bb(g).UR.y - GD_bb(g).LL.y;	/* normalize */
 UNSUPPORTED("21zvq2qx1j34j1i1879zyhzpj"); // 	if (GD_flip(g)) {
@@ -1921,23 +1920,23 @@ try {
     ST_Agnode_s v;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	j = 0;
-	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	for (i = 0; i < GD_rank(g).get(r).n; i++) {
+	    v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
 	    ND_order(v, j);
 	    if (ND_ranktype(v) == 6)
 		j = j + ND_UF_size(v);
 	    else
 		j++;
 	}
-	if (j <= GD_rank(g).plus(r).getInt("n"))
+	if (j <= GD_rank(g).get(r).n)
 	    continue;
-	GD_rank(g).plus(r).setPtr("v", ALLOC_allocated_ST_Agnode_s((ST_Agnode_s.ArrayOfStar) GD_rank(g).plus(r).getPtr("v"), j + 1));
-	for (i = GD_rank(g).plus(r).getInt("n") - 1; i >= 0; i--) {
-	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
-	    GD_rank(g).plus(r).getPtr().v.plus(ND_order(v)).setPtr(v);
+	GD_rank(g).plus(r).setPtr("v", ALLOC_allocated_ST_Agnode_s((ST_Agnode_s.ArrayOfStar) GD_rank(g).get(r).v, j + 1));
+	for (i = GD_rank(g).get(r).n - 1; i >= 0; i--) {
+	    v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
+	    GD_rank(g).get(r).v.plus(ND_order(v)).setPtr(v);
 	}
 	GD_rank(g).plus(r).setInt("n", j);
-	GD_rank(g).plus(r).getPtr().v.plus(j).setPtr(null);
+	GD_rank(g).get(r).v.plus(j).setPtr(null);
     }
 } finally {
 LEAVING("1lejhh3evsa10auyj7cgqj8ub","make_leafslots");
@@ -2061,7 +2060,7 @@ try {
     rn = virtual_node(dot_root(g));
     ND_node_type(rn, 2);
     if (GD_label(g)!=null && NEQ(g, dot_root(g)) && N(GD_flip(agroot(g)))) {
-	int w = MAX((int)GD_border(g)[0].getDouble("x"), (int)GD_border(g)[2].getDouble("x"));
+	int w = MAX((int)GD_border(g)[0].x, (int)GD_border(g)[2].x);
 	make_aux_edge(ln, rn, w, 0);
     }
     GD_ln(g, ln);
@@ -2086,19 +2085,19 @@ try {
     ln = GD_ln(g);
     rn = GD_rn(g);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	if (GD_rank(g).plus(r).getInt("n") == 0)
+	if (GD_rank(g).get(r).n == 0)
 	    continue;
-	v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(0).getPtr();
+	v = (ST_Agnode_s) GD_rank(g).get(r).v.get(0);
 	if (v == null) {
 UNSUPPORTED("1f2esoodtcrdhljk1cq1klyao"); // 	    agerr(AGERR, "contain_nodes clust %s rank %d missing node\n",
 UNSUPPORTED("7w6lv4ywtczwz2y1mg0p3jdav"); // 		  agnameof(g), r);
 UNSUPPORTED("6hqli9m8yickz1ox1qfgtdbnd"); // 	    continue;
 	}
 	make_aux_edge(ln, v,
-		      ND_lw(v) + margin + GD_border(g)[3].getDouble("x"), 0);
-	v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(GD_rank(g).plus(r).getInt("n") - 1).getPtr();
+		      ND_lw(v) + margin + GD_border(g)[3].x, 0);
+	v = (ST_Agnode_s) GD_rank(g).get(r).v.plus(GD_rank(g).get(r).n - 1).getPtr();
 	make_aux_edge(v, rn,
-		      ND_rw(v) + margin + GD_border(g)[1].getDouble("x"), 0);
+		      ND_rw(v) + margin + GD_border(g)[1].x, 0);
     }
 } finally {
 LEAVING("daz786541idcxnywckcbncazb","contain_nodes");

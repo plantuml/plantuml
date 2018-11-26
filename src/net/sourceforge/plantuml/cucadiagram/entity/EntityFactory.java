@@ -180,7 +180,19 @@ public class EntityFactory {
 	}
 
 	public void addLink(Link link) {
+		if (link.isSingle() && containsSimilarLink(link)) {
+			return;
+		}
 		links.add(link);
+	}
+
+	private boolean containsSimilarLink(Link other) {
+		for (Link link : links) {
+			if (other.sameConnections(link)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void removeLink(Link link) {

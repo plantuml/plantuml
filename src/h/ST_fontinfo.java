@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -72,14 +71,6 @@ public class ST_fontinfo extends UnsupportedStructAndPtr {
 	// "}");
 
 	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("fontsize")) {
-			return this.fontsize;
-		}
-		return super.getDouble(fieldName);
-	}
-
-	@Override
 	public void setDouble(String fieldName, double data) {
 		if (fieldName.equals("fontsize")) {
 			this.fontsize = data;
@@ -88,27 +79,6 @@ public class ST_fontinfo extends UnsupportedStructAndPtr {
 		super.setDouble(fieldName, data);
 	}
 
-	@Override
-	public CString getCString(String fieldName) {
-		if (fieldName.equals("fontname")) {
-			return this.fontname;
-		}
-		if (fieldName.equals("fontcolor")) {
-			return this.fontcolor;
-		}
-		return super.getCString(fieldName);
-	}
-	
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("fontname")) {
-			return this.fontname;
-		}
-		if (fieldName.equals("fontcolor")) {
-			return this.fontcolor;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {

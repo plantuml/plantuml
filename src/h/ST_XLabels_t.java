@@ -74,17 +74,6 @@ public class ST_XLabels_t extends UnsupportedStructAndPtr {
 	// "XLabels_t");
 
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("n_objs")) {
-			return n_objs;
-		}
-		if (fieldName.equals("n_lbls")) {
-			return n_lbls;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("n_objs")) {
 			this.n_objs = data;
@@ -98,25 +87,6 @@ public class ST_XLabels_t extends UnsupportedStructAndPtr {
 	}
 
 
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("hdx")) {
-			return this.hdx;
-		}
-		if (fieldName.equals("spdx")) {
-			return this.spdx;
-		}
-		if (fieldName.equals("objs")) {
-			return this.objs;
-		}
-		if (fieldName.equals("lbls")) {
-			return this.lbls;
-		}
-		if (fieldName.equals("params")) {
-			return this.params;
-		}
-		return super.getPtr(fieldName);
-	}
 	
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {

@@ -40,15 +40,15 @@ import java.util.List;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
-import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 
 public class PreprocessorDefine4Apply implements ReadFilter {
 
-	private final Defines defines;
+	private final DefinesGet defines;
 
-	public PreprocessorDefine4Apply(Defines defines) throws IOException {
+	public PreprocessorDefine4Apply(DefinesGet defines) throws IOException {
 		this.defines = defines;
 	}
 
@@ -78,7 +78,7 @@ public class PreprocessorDefine4Apply implements ReadFilter {
 			if (PreprocessorDefine3Learner.isLearningLine(s)) {
 				return s;
 			}
-			final List<String> result = defines.applyDefines(s.toString2());
+			final List<String> result = defines.get().applyDefines(s.toString2());
 			if (result.size() > 1) {
 				insert(new ReadLineList(result, s.getLocation()));
 				return readLine();
@@ -89,58 +89,4 @@ public class PreprocessorDefine4Apply implements ReadFilter {
 
 	}
 
-	// private final ReadLine2 source;
-	// // private final List<CharSequence2> result = new ArrayList<CharSequence2>();
-	// // private final PreprocessorDefine2 preprocDefines;
-	// private final Defines defines;
-	//
-	// private final PreprocessorInclude2 include;
-	//
-	// // private final SubPreprocessor2 subPreprocessor2;
-	//
-	// public PreprocessorDefine4Apply(List<String> config, ReadLine reader, String charset, Defines defines, File
-	// newCurrentDir,
-	// DefinitionsContainer definitionsContainer) throws IOException {
-	// // final IfManager tmp1 = new IfManager(new ReadLineQuoteComment(reader), defines);
-	// final ReadFilter addConfig = new ReadLineAddConfig2(config);
-	// final ReadFilter filterComment = new ReadLineQuoteComment2();
-	// final ReadFilter filterIf = new IfManagerFilter(defines);
-	// final ReadFilter filterSub = new SubPreprocessor2(charset, defines, definitionsContainer);
-	// final ReadFilter filterLearnDefine = new PreprocessorDefine3Learner(defines);
-	// this.source = new ReadLine2Adapter(new ReadFilterAnd(addConfig, filterIf).applyFilter(reader),
-	// new ReadFilterAnd(filterSub, filterComment, filterLearnDefine));
-	// this.defines = defines;
-	// // this.preprocDefines = new PreprocessorDefine2(defines);
-	// this.include = new PreprocessorInclude2(charset);
-	// // this.subPreprocessor2 = new SubPreprocessor2(charset, defines, definitionsContainer);
-	// }
-	//
-	// public CharSequence2 readLine() throws IOException {
-	// while (true) {
-	// // this.preprocDefines.learnDefinition(this.source);
-	// if (this.include.learnInclude(this.source)) {
-	// continue;
-	// }
-	// // if (this.subPreprocessor2.learn(this.source)) {
-	// // continue;
-	// // }
-	//
-	// final CharSequence2 s = this.source.readLine();
-	// if (s == null) {
-	// return null;
-	// }
-	// String tmp = manageDefines(s, source);
-	// if (tmp != null) {
-	// return new CharSequence2Impl(tmp, s.getLocation(), s.getPreprocessorError());
-	// }
-	// }
-	// }
-	// public void close() throws IOException {
-	// this.source.close();
-	// }
-	//
-	// public Set<FileWithSuffix> getFilesUsed() {
-	// System.err.println("************************** WARNING **************************");
-	// return Collections.emptySet();
-	// }
 }

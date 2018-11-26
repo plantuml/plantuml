@@ -89,8 +89,8 @@ import static smetana.core.Macro.free_list;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
 import h.ST_Agraph_s;
-import h.ST_pointf;
 import h.ST_nodequeue;
+import h.ST_pointf;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
@@ -421,8 +421,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");

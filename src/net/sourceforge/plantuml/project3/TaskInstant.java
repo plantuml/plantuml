@@ -37,15 +37,15 @@ package net.sourceforge.plantuml.project3;
 
 public class TaskInstant implements Complement {
 
-	private final Task task;
+	private final Moment task;
 	private final TaskAttribute attribute;
 	private final int delta;
 
-	public TaskInstant(Task task, TaskAttribute attribute) {
+	public TaskInstant(Moment task, TaskAttribute attribute) {
 		this(task, attribute, 0);
 	}
 
-	private TaskInstant(Task task, TaskAttribute attribute, int delta) {
+	private TaskInstant(Moment task, TaskAttribute attribute, int delta) {
 		this.task = task;
 		this.attribute = attribute;
 		this.delta = delta;
@@ -97,8 +97,12 @@ public class TaskInstant implements Complement {
 		return attribute.toString() + " of " + task;
 	}
 
-	public final Task getTask() {
+	public final Moment getMoment() {
 		return task;
+	}
+
+	public final boolean isTask() {
+		return task instanceof Task;
 	}
 
 	public final TaskAttribute getAttribute() {

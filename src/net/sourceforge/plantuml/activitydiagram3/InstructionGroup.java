@@ -60,10 +60,11 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	private final USymbol type;
 
 	private final Display test;
+	private final double roundCorner;
 	private PositionedNote note = null;
 
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
-			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering, USymbol type) {
+			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering, USymbol type, double roundCorner) {
 		this.list = new InstructionList(swimlane);
 		this.type = type;
 		this.linkRendering = linkRendering;
@@ -72,6 +73,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 		this.titleColor = titleColor;
+		this.roundCorner = roundCorner;
 	}
 
 	public void add(Instruction ins) {
@@ -83,7 +85,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 		if (note != null) {
 			tmp = new FtileWithNotes(tmp, Collections.singleton(note), factory.skinParam());
 		}
-		return factory.createGroup(tmp, test, backColor, titleColor, null, borderColor, type);
+		return factory.createGroup(tmp, test, backColor, titleColor, null, borderColor, type, roundCorner);
 	}
 
 	public Instruction getParent() {

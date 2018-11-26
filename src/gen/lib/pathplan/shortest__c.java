@@ -130,31 +130,31 @@ try {
     Z.z().dq.lpnlpi = Z.z().dq.fpnlpi - 1;
     /* make sure polygon is CCW and load pnls array */
     for (pi = 0, minx = HUGE_VAL, minpi = -1; pi < polyp.pn; pi++) {
-	if (minx > polyp.ps.get(pi).getDouble("x"))
-	    { minx = polyp.ps.get(pi).getDouble("x");
+	if (minx > polyp.ps.get(pi).x)
+	    { minx = polyp.ps.get(pi).x;
 		minpi = pi; }
     }
     p2.____(polyp.ps.plus(minpi));
     p1.____(polyp.ps.plus(((minpi == 0) ? polyp.pn - 1 : minpi - 1)));
     p3.____(polyp.ps.plus(((minpi == polyp.pn - 1) ? 0 : minpi + 1)));
-    if (((p1.getDouble("x") == p2.getDouble("x") && p2.getDouble("x") == p3.getDouble("x")) && (p3.getDouble("y") > p2.getDouble("y"))) ||
+    if (((p1.x == p2.x && p2.x == p3.x) && (p3.y > p2.y)) ||
 	ccw(p1, p2, p3) != 1) {
 	for (pi = polyp.pn - 1; pi >= 0; pi--) {
 	    if (pi < polyp.pn - 1
-		&& polyp.ps.plus(pi).getDouble("x") == polyp.ps.plus(pi+1).getDouble("x")
-		&& polyp.ps.plus(pi).getDouble("y") == polyp.ps.plus(pi+1).getDouble("y"))
+		&& polyp.ps.get(pi).x == polyp.ps.get(pi+1).x
+		&& polyp.ps.get(pi).y == polyp.ps.get(pi+1).y)
 		continue;
-	    Z.z().pnls[Z.z().pnll].pp = (ST_pointf) ((ST_pointf)polyp.ps.plus(pi).getPtr());
+	    Z.z().pnls[Z.z().pnll].pp = (ST_pointf) ((ST_pointf)polyp.ps.get(pi));
 	    Z.z().pnls[Z.z().pnll].link = Z.z().pnls[Z.z().pnll % polyp.pn];
 	    Z.z().pnlps[Z.z().pnll] = Z.z().pnls[Z.z().pnll];
 	    Z.z().pnll++;
 	}
     } else {
 	for (pi = 0; pi < polyp.pn; pi++) {
-	    if (pi > 0 && polyp.ps.plus(pi).getDouble("x") == polyp.ps.plus(pi - 1).getDouble("x") &&
-		polyp.ps.plus(pi).getDouble("y") == polyp.ps.plus(pi - 1).getDouble("y"))
+	    if (pi > 0 && polyp.ps.get(pi).x == polyp.ps.get(pi - 1).x &&
+		polyp.ps.get(pi).y == polyp.ps.get(pi - 1).y)
 		continue;
-	    Z.z().pnls[Z.z().pnll].pp = (ST_pointf) ((ST_pointf)polyp.ps.plus(pi).getPtr());
+	    Z.z().pnls[Z.z().pnll].pp = (ST_pointf) ((ST_pointf)polyp.ps.get(pi));
 	    Z.z().pnls[Z.z().pnll].link = Z.z().pnls[Z.z().pnll % polyp.pn];
 	    Z.z().pnlps[Z.z().pnll] = Z.z().pnls[Z.z().pnll];
 	    Z.z().pnll++;
@@ -168,7 +168,7 @@ try {
 	    connecttris(trii, trij);
     /* find first and last triangles */
     for (trii = 0; trii < Z.z().tril; trii++)
-	if (pointintri(trii, (__ptr__) eps.plus(0).getStruct()))
+	if (pointintri(trii, eps.plus(0).getStruct()))
 	    break;
     if (trii == Z.z().tril) {
 UNSUPPORTED("4ma3y8l4lmjcsw49kmsgknig6"); // 	fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("source point not in any triangle"));
@@ -176,7 +176,7 @@ UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     }
     ftrii = trii;
     for (trii = 0; trii < Z.z().tril; trii++)
-	if (pointintri(trii, (__ptr__) eps.plus(1).getStruct()))
+	if (pointintri(trii, eps.plus(1).getStruct()))
 	    break;
     if (trii == Z.z().tril) {
         System.err.println("libpath/%s:%d: %s\n" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("destination point not in any triangle"));
@@ -203,9 +203,9 @@ UNSUPPORTED("3rcg6c9s9nmostq9c3r5n6x4h"); // 	output->ps = ops;
 UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
     }
     /* build funnel and shortest path linked list (in add2dq) */
-    epnls[0].pp = (ST_pointf) ((ST_pointf)eps.plus(0).asPtr().getPtr());
+    epnls[0].pp = eps.get(0);
     epnls[0].link = null;
-    epnls[1].pp = (ST_pointf) ((ST_pointf)eps.plus(1).asPtr().getPtr());
+    epnls[1].pp = eps.get(1);
     epnls[1].link = null;
     add2dq(1, epnls[0]);
     Z.z().dq.apex = Z.z().dq.fpnlpi;
@@ -216,10 +216,10 @@ UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
 	/* find the left and right points of the exiting edge */
 	for (ei = 0; ei < 3; ei++)
 	    if (trip.get(0).e[ei].rtp!=null &&
-	    		trip.get(0).e[ei].rtp.get(0).getInt("mark") == 1)
+	    		trip.get(0).e[ei].rtp.get(0).mark == 1)
 		break;
 	if (ei == 3) {		/* in last triangle */
-	    if (ccw(eps.plus(1).asPtr(), Z.z().dq.pnlps[Z.z().dq.fpnlpi].pp,
+	    if (ccw(eps.get(1), Z.z().dq.pnlps[Z.z().dq.fpnlpi].pp,
 		    Z.z().dq.pnlps[Z.z().dq.lpnlpi].pp) == 1)
 		{
 		lpnlp = Z.z().dq.pnlps[Z.z().dq.lpnlpi];
@@ -266,7 +266,7 @@ UNSUPPORTED("2cii65lhw4wb8nyvjv702v7md"); // 		lpnlp = trip->e[ei].pnl1p, rpnlp 
 	trii = -1;
 	for (ei = 0; ei < 3; ei++)
 	    if (trip.get(0).e[ei].rtp!=null && 
-	    		trip.get(0).e[ei].rtp.get(0).getInt("mark") == 1) {
+	    		trip.get(0).e[ei].rtp.get(0).mark == 1) {
 		trii = trip.get(0).e[ei].rtp.minus(Z.z().tris);
 		break;
 	    }
@@ -521,12 +521,12 @@ LEAVING("9dnrc8vqpffp5t3bmsackgqtl","finddqsplit");
 
 //3 72h03s8inxtto2ekvmuqjtj3d
 // static int ccw(Ppoint_t * p1p, Ppoint_t * p2p, Ppoint_t * p3p) 
-public static int ccw(__ptr__ p1p, __ptr__ p2p, __ptr__ p3p) {
+public static int ccw(ST_pointf p1p, ST_pointf p2p, ST_pointf p3p) {
 ENTERING("72h03s8inxtto2ekvmuqjtj3d","ccw");
 try {
     double d;
-    d = ((p1p.getDouble("y") - p2p.getDouble("y")) * (p3p.getDouble("x") - p2p.getDouble("x"))) -
-	((p3p.getDouble("y") - p2p.getDouble("y")) * (p1p.getDouble("x") - p2p.getDouble("x")));
+    d = ((p1p.y - p2p.y) * (p3p.x - p2p.x)) -
+	((p3p.y - p2p.y) * (p1p.x - p2p.x));
     return (d > 0) ? 1 : ((d < 0) ? 2 : 3);
 } finally {
 LEAVING("72h03s8inxtto2ekvmuqjtj3d","ccw");
@@ -538,7 +538,7 @@ LEAVING("72h03s8inxtto2ekvmuqjtj3d","ccw");
 
 //3 22a9ajg9t8ovqsigk3tyu3rkd
 // static int intersects(Ppoint_t * pap, Ppoint_t * pbp, 		      Ppoint_t * pcp, Ppoint_t * pdp) 
-public static boolean intersects(__ptr__ pap, __ptr__ pbp, __ptr__ pcp, __ptr__ pdp) {
+public static boolean intersects(ST_pointf pap, ST_pointf pbp, ST_pointf pcp, ST_pointf pdp) {
 ENTERING("22a9ajg9t8ovqsigk3tyu3rkd","intersects");
 try {
     int ccw1, ccw2, ccw3, ccw4;
@@ -565,18 +565,18 @@ LEAVING("22a9ajg9t8ovqsigk3tyu3rkd","intersects");
 
 //3 uh5n18rzyevtb4cwpni70qpc
 // static int between(Ppoint_t * pap, Ppoint_t * pbp, Ppoint_t * pcp) 
-public static boolean between(__ptr__ pap, __ptr__ pbp, __ptr__ pcp) {
+public static boolean between(ST_pointf pap, ST_pointf pbp, ST_pointf pcp) {
 ENTERING("uh5n18rzyevtb4cwpni70qpc","between");
 try {
     final ST_pointf p1 = new ST_pointf(), p2 = new ST_pointf();
-    p1.setDouble("x", pbp.getDouble("x") - pap.getDouble("x"));
-    p1.setDouble("y", pbp.getDouble("y") - pap.getDouble("y"));
-    p2.setDouble("x", pcp.getDouble("x") - pap.getDouble("x"));
-    p2.setDouble("y", pcp.getDouble("y") - pap.getDouble("y"));
+    p1.setDouble("x", pbp.x - pap.x);
+    p1.setDouble("y", pbp.y - pap.y);
+    p2.setDouble("x", pcp.x - pap.x);
+    p2.setDouble("y", pcp.y - pap.y);
     if (ccw(pap, pbp, pcp) != 3)
 	return false;
-    return (p2.getDouble("x") * p1.getDouble("x") + p2.getDouble("y") * p1.getDouble("y") >= 0) &&
-	(p2.getDouble("x") * p2.getDouble("x") + p2.getDouble("y") * p2.getDouble("y") <= p1.getDouble("x") * p1.getDouble("x") + p1.getDouble("y") * p1.getDouble("y"));
+    return (p2.x * p1.x + p2.y * p1.y >= 0) &&
+	(p2.x * p2.x + p2.y * p2.y <= p1.x * p1.x + p1.y * p1.y);
 } finally {
 LEAVING("uh5n18rzyevtb4cwpni70qpc","between");
 }
@@ -587,7 +587,7 @@ LEAVING("uh5n18rzyevtb4cwpni70qpc","between");
 
 //3 zti1mzm2m7tr2xwnbf7e8u3d
 // static int pointintri(int trii, Ppoint_t * pp) 
-public static boolean pointintri(int trii, __ptr__ pp) {
+public static boolean pointintri(int trii, ST_pointf pp) {
 ENTERING("zti1mzm2m7tr2xwnbf7e8u3d","pointintri");
 try {
     int ei, sum;

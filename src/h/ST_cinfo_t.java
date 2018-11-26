@@ -47,14 +47,13 @@ package h;
 
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_cinfo_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
 	public final ST_boxf bb = new ST_boxf(this);
-	public __ptr__ objp; // ST_object_t
+	public ST_object_t.Array objp;
 
 	public ST_cinfo_t(StarStruct parent) {
 	}
@@ -78,32 +77,6 @@ public class ST_cinfo_t extends UnsupportedStructAndPtr implements HardcodedStru
 		super.setStruct(fieldName, newData);
 	}
 	
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("bb")) {
-			return bb;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("objp")) {
-			return this.objp;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("objp")) {
-			this.objp = newData;
-			return this.objp;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 	
 	@Override
 	public ST_cinfo_t copy() {

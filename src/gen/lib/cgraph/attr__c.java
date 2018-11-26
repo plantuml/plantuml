@@ -294,14 +294,14 @@ try {
     if (dd!=null)
 	switch (kind) {
 	case AGRAPH:
-	    dict = (ST_dt_s) dd.getPtr("dict.g");
+	    dict = (ST_dt_s) dd.dict_g;
 	    break;
 	case AGNODE:
-	    dict = (ST_dt_s) dd.getPtr("dict.n");
+	    dict = (ST_dt_s) dd.dict_n;
 	    break;
 	case AGINEDGE:
 	case AGOUTEDGE:
-	    dict = (ST_dt_s) dd.getPtr("dict.e");
+	    dict = (ST_dt_s) dd.dict_e;
 	    break;
 	default:
 	    System.err.println("agdictof: unknown kind "+ kind);
@@ -374,17 +374,17 @@ try {
     dd.setPtr("dict.g", agdtopen(g, Z.z().AgDataDictDisc, Z.z().Dttree));
     if ((par = agparent(g))!=null) {
 	parent_dd = agdatadict(par, false);
-	dtview((ST_dt_s)dd.getPtr("dict.n"), (ST_dt_s)parent_dd.getPtr("dict.n"));
-	dtview((ST_dt_s)dd.getPtr("dict.e"), (ST_dt_s)parent_dd.getPtr("dict.e"));
-	dtview((ST_dt_s)dd.getPtr("dict.g"), (ST_dt_s)parent_dd.getPtr("dict.g"));
+	dtview((ST_dt_s)dd.dict_n, (ST_dt_s)parent_dd.dict_n);
+	dtview((ST_dt_s)dd.dict_e, (ST_dt_s)parent_dd.dict_e);
+	dtview((ST_dt_s)dd.dict_g, (ST_dt_s)parent_dd.dict_g);
     } else {
 	if (Z.z().ProtoGraph!=null && NEQ(g, Z.z().ProtoGraph)) {
 	    /* it's not ok to dtview here for several reasons. the proto
 	       graph could change, and the sym indices don't match */
 	    parent_dd = agdatadict(Z.z().ProtoGraph, false);
-	    agcopydict(parent_dd.getPtr("dict.n"), dd.getPtr("dict.n"), g, AGNODE);
-	    agcopydict(parent_dd.getPtr("dict.e"), dd.getPtr("dict.e"), g, AGEDGE);
-	    agcopydict(parent_dd.getPtr("dict.g"), dd.getPtr("dict.g"), g, AGRAPH);
+	    agcopydict(parent_dd.dict_n, dd.dict_n, g, AGNODE);
+	    agcopydict(parent_dd.dict_e, dd.dict_e, g, AGEDGE);
+	    agcopydict(parent_dd.dict_g, dd.dict_g, g, AGRAPH);
 	}
     }
     return dd;
@@ -403,7 +403,7 @@ ENTERING("50wfzq5wy8wc7vuyvs3mrx5ct","agdictsym");
 try {
     ST_Agsym_s key = (ST_Agsym_s) Memory.malloc(ST_Agsym_s.class);
     key.setPtr("name", name);
-    return  (ST_Agsym_s) dict.call("searchf", (dict),key,0000004);
+    return  (ST_Agsym_s) dict.searchf.exe((dict),key,0000004);
 } finally {
 LEAVING("50wfzq5wy8wc7vuyvs3mrx5ct","agdictsym");
 }
@@ -494,9 +494,9 @@ try {
 	    sz = 4;
 	rec.str = new ArrayList<CString>(); for (int i=0; i<sz; i++) rec.str.add(null);
 	/* doesn't call agxset() so no obj-modified callbacks occur */
-	for (sym = (ST_Agsym_s) ((__ptr__)datadict.call("searchf", datadict,null,0000200)); sym!=null;
-	     sym = (ST_Agsym_s) ((__ptr__)datadict.call("searchf", datadict,sym,0000010)))
-	    rec.str.set(sym.getInt("id"), agstrdup(agraphof(obj), sym.defval));
+	for (sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(datadict,null,0000200)); sym!=null;
+	     sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(datadict,sym,0000010)))
+	    rec.str.set(sym.id, agstrdup(agraphof(obj), sym.defval));
     } else {
     }
     return (ST_Agrec_s) rec.castTo(ST_Agrec_s.class);
@@ -575,13 +575,13 @@ try {
 	ST_Agattr_s attr;
     attr = (ST_Agattr_s) agattrrec(obj);
 
-    if (sym.getInt("id") >= 4)
+    if (sym.id >= 4)
 //	attr.str = (StarArrayOfCString) g.clos.disc.mem.call("resize", g.clos.state.mem,
 //						     attr.str,
-//						     sizeof("char*", sym.getInt("id")),
-//						     sizeof("char*", sym.getInt("id") + 1));
+//						     sizeof("char*", sym.id),
+//						     sizeof("char*", sym.id + 1));
     attr.str.add(null);
-	attr.str.set(sym.getInt("id"), agstrdup(g, sym.defval));
+	attr.str.set(sym.id, agstrdup(g, sym.defval));
     /* agmethod_upd(g,obj,sym);  JCE and GN didn't like this. */
 } finally {
 LEAVING("2io7b26wq70e7kwdlzsh6bw7f","addattr");
@@ -614,13 +614,13 @@ try {
     } else {
 	psym = agdictsym(ldict, name);	/* search with viewpath up to root */
 	if (psym!=null) {		/* new local definition */
-	    lsym = agnewsym(g, name, value, psym.getInt("id"), kind);
-	    ldict.castTo(ST_dt_s.class).call("searchf",ldict,lsym,0000001);
+	    lsym = agnewsym(g, name, value, psym.id, kind);
+	    ldict.searchf.exe(ldict,lsym,0000001);
 	    rv = lsym;
 	} else {		/* new global definition */
 	    rdict = agdictof(root, kind);
 	    rsym = agnewsym(g, name, value, dtsize_(rdict), kind);
-	    rdict.castTo(ST_dt_s.class).call("searchf",rdict,rsym,0000001);
+	    rdict.searchf.exe(rdict,rsym,0000001);
 	    switch (kind) {
 	    case AGRAPH:
 		agapply(root, (ST_Agobj_s) root.castTo(ST_Agobj_s.class), function(attr__c.class, "addattr"),
@@ -726,7 +726,7 @@ try {
     /* Agdatadict_t *dd; */
     /* Agrec_t                      *attr; */
     ST_Agraph_s context;
-    ((ST_Agdesc_s)g.getStruct("desc")).has_attrs = 1;
+    ((ST_Agdesc_s)g.desc).has_attrs = 1;
     /* dd = */ agmakedatadict(g);
     if (N(context = agparent(g)))
 	context = g;
@@ -849,7 +849,7 @@ try {
 	rv = null;			/* note was "", but this provides more info */
     else {
 	data = agattrrec(obj.castTo(ST_Agobj_s.class));
-	rv = data.str.get(sym.getInt("id"));
+	rv = data.str.get(sym.id);
     }
     return rv;
 } finally {
@@ -869,7 +869,7 @@ try {
     CString rv;
     data = agattrrec(obj.castTo(ST_Agobj_s.class));
 
-    rv = data.str.get(sym.getInt("id"));
+    rv = data.str.get(sym.id);
     return rv;
 } finally {
 LEAVING("9h5oymhfkp6k34zl0fonn10k9","agxget");
@@ -913,18 +913,18 @@ try {
     hdr = (ST_Agobj_s) obj.castTo(ST_Agobj_s.class);
     data = agattrrec(hdr);
 
-    agstrfree(g, data.str.get(sym.getInt("id")));
-    data.str.set(sym.getInt("id"), agstrdup(g, value));
+    agstrfree(g, data.str.get(sym.id));
+    data.str.set(sym.id, agstrdup(g, value));
     if (((ST_Agtag_s)hdr.tag).objtype == AGRAPH) {
 	/* also update dict default */
 	ST_dt_s dict;
-	dict = (ST_dt_s) agdatadict(g, false).getPtr("dict.g");
+	dict = (ST_dt_s) agdatadict(g, false).dict_g;
 	if ((lsym = aglocaldictsym(dict, sym.name))!=null) {
 	    agstrfree(g, lsym.defval);
 	    lsym.setPtr("defval", agstrdup(g, value));
 	} else {
-	    lsym = agnewsym(g, sym.name, value, sym.getInt("id"), AGTYPE(hdr));
-	    dict.call("searchf", dict, lsym, 0000001);
+	    lsym = agnewsym(g, sym.name, value, sym.id, AGTYPE(hdr));
+	    dict.searchf.exe(dict, lsym, 0000001);
 	}
     }
     agmethod_upd(g, obj, sym);

@@ -436,8 +436,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -759,7 +759,7 @@ LEAVING("c7cptalfn8k75wyfirbnptnav","new_queue");
 public static void free_queue(ST_nodequeue q) {
 ENTERING("1uj5nmdvwmuklnpd3v5py547f","free_queue");
 try {
-    Memory.free(q.getPtr("store"));
+    Memory.free(q.store);
     Memory.free(q);
 } finally {
 LEAVING("1uj5nmdvwmuklnpd3v5py547f","free_queue");
@@ -775,9 +775,9 @@ public static void enqueue(ST_nodequeue q, ST_Agnode_s n) {
 ENTERING("20pwd6i141q3o25lfvrdqytot","enqueue");
 try {
     q.tail.plus(0).setPtr(n);
-    q.setPtr("tail", q.getPtr("tail").plus(1));
-    if (q.getPtr("tail").comparePointer(q.getPtr("limit")) >= 0)
-	q.setPtr("tail", q.getPtr("store"));
+    q.setPtr("tail", q.tail.plus(1));
+    if (q.tail.comparePointer(q.limit) >= 0)
+	q.setPtr("tail", q.store);
 } finally {
 LEAVING("20pwd6i141q3o25lfvrdqytot","enqueue");
 }
@@ -792,13 +792,13 @@ public static ST_Agnode_s dequeue(ST_nodequeue q) {
 ENTERING("b612nmtf16au96ztbs8pike9r","dequeue");
 try {
     ST_Agnode_s n;
-    if (EQ(q.getPtr("head"), q.getPtr("tail")))
+    if (EQ(q.head, q.tail))
 	n = null;
     else {
-	n = (ST_Agnode_s) q.head.plus(0).getPtr();
-	q.setPtr("head", q.getPtr("head").plus(1));
-	if (q.getPtr("head").comparePointer(q.getPtr("limit")) >= 0)
-	    q.setPtr("head", q.getPtr("store"));
+	n = (ST_Agnode_s) q.head.get(0);
+	q.setPtr("head", q.head.plus(1));
+	if (q.head.comparePointer(q.limit) >= 0)
+	    q.setPtr("head", q.store);
     }
     return n;
 } finally {
@@ -1071,9 +1071,9 @@ try {
     for (i = 1; i <= degree; i++) {
 	for (j = 0; j <= degree - i; j++) {
 	    Vtemp[i].plus(j).setDouble("x",
-		(1.0 - t) * Vtemp[i - 1].plus(j).getDouble("x") + t * Vtemp[i - 1].plus(j + 1).getDouble("x"));
+		(1.0 - t) * Vtemp[i - 1].get(j).x + t * Vtemp[i - 1].get(j + 1).x);
 	    Vtemp[i].plus(j).setDouble("y",
-		(1.0 - t) * Vtemp[i - 1].plus(j).getDouble("y") + t * Vtemp[i - 1].plus(j + 1).getDouble("y"));
+		(1.0 - t) * Vtemp[i - 1].get(j).y + t * Vtemp[i - 1].get(j + 1).y);
 	}
     }
     if (Left != null)
@@ -1274,11 +1274,11 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
      besti = bestj = -1;
      bestdist2 = 1e+38;
      for (i = 0; i < spl.size; i++) {
- 	bz.____(spl.list.plus(i).getPtr());
+ 	bz.____(spl.list.get(i));
  	for (j = 0; j < bz.size; j++) {
  	    final ST_pointf b = new ST_pointf();
- 	    b.x = bz.list.get(j).getDouble("x");
- 	    b.y = bz.list.get(j).getDouble("y");
+ 	    b.x = bz.list.get(j).x;
+ 	    b.y = bz.list.get(j).y;
  	    d2 = DIST2(b, pt);
  	    if ((bestj == -1) || (d2 < bestdist2)) {
  		besti = i;
@@ -1287,7 +1287,7 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
  	    }
  	}
      }
-  	bz.____(spl.list.plus(besti).getPtr());
+  	bz.____(spl.list.get(besti));
      /* Pick best Bezier. If bestj is the last point in the B-spline, decrement.
       * Then set j to be the first point in the corresponding Bezier by dividing
       * then multiplying be 3. Thus, 0,1,2 => 0; 3,4,5 => 3, etc.
@@ -1296,8 +1296,8 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
  	bestj--;
      j = 3*(bestj / 3);
      for (k = 0; k < 4; k++) {
- 	  	c.plus(k).setDouble("x", bz.list.get(j + k).getDouble("x"));
- 	  	c.plus(k).setDouble("y", bz.list.get(j + k).getDouble("y"));
+ 	  	c.plus(k).setDouble("x", bz.list.get(j + k).x);
+ 	  	c.plus(k).setDouble("y", bz.list.get(j + k).y);
      }
      low = 0.0;
      high = 1.0;
@@ -1454,14 +1454,14 @@ try {
     fi.setPtr("fontcolor", late_nnstring(n, Z.z().N_fontcolor, new CString("black")));
     ND_label(n, make_label(n, str,
 	        ((aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)) | ( (shapeOf(n) == enumAsInt(shape_kind.class, "SH_RECORD")) ? (2 << 1) : (0 << 1))),
-		fi.getDouble("fontsize"), fi.fontname, fi.fontcolor));
+		fi.fontsize, fi.fontname, fi.fontcolor));
     if (Z.z().N_xlabel!=null && (str = agxget(n, Z.z().N_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("4ua9vld76wpovsm1celv2ff6e"); // 	ND_xlabel(n) = make_label((void*)n, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
 UNSUPPORTED("b0zm6fkpjlt9jacykbgugjodg"); // 				fi.fontsize, fi.fontname, fi.fontcolor);
 UNSUPPORTED("ail0d4qmxj2aqh2q721inwgqu"); // 	GD_has_labels(agraphof(n)) |= (1 << 4);
     }
     ND_showboxes(n, late_int(n, Z.z().N_showboxes, 0, 0));
-    ND_shape(n).getPtr("fns").call("initfn", n);
+    ND_shape(n).fns.initfn.exe(n);
 } finally {
 LEAVING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 }
@@ -1491,8 +1491,8 @@ LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 public static void initFontLabelEdgeAttr(ST_Agedge_s e, ST_fontinfo fi, ST_fontinfo lfi) {
 ENTERING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 try {
-	if (N(fi.getPtr("fontname"))) initFontEdgeAttr(e, fi);
-    lfi.setDouble("fontsize", late_double(e, Z.z().E_labelfontsize, fi.getDouble("fontsize"), 1.0));
+	if (N(fi.fontname)) initFontEdgeAttr(e, fi);
+    lfi.setDouble("fontsize", late_double(e, Z.z().E_labelfontsize, fi.fontsize, 1.0));
     lfi.setPtr("fontname", late_nnstring(e, Z.z().E_labelfontname, fi.fontname));
     lfi.setPtr("fontcolor", late_nnstring(e, Z.z().E_labelfontcolor, fi.fontcolor));
 } finally {
@@ -1571,7 +1571,7 @@ try {
 	r = 1;
 	initFontEdgeAttr(e, fi);
 	ED_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
-				fi.getDouble("fontsize"), fi.fontname, fi.fontcolor));
+				fi.fontsize, fi.fontname, fi.fontcolor));
 	GD_has_labels(sg, GD_has_labels(sg) | (1 << 0));
 	ED_label_ontop(e,
 	    mapbool(late_string(e, Z.z().E_label_float, new CString("false"))));
@@ -1587,13 +1587,13 @@ UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))
     if (Z.z().E_headlabel!=null && (str = agxget(e, Z.z().E_headlabel))!=null && (str.charAt(0)!='\0')) {
     	initFontLabelEdgeAttr(e, fi, lfi);
     	ED_head_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
-				lfi.getDouble("fontsize"), lfi.fontname, lfi.fontcolor));
+				lfi.fontsize, lfi.fontname, lfi.fontcolor));
     	GD_has_labels(sg, GD_has_labels(sg) | (1 << 1));
     }
     if (Z.z().E_taillabel!=null && (str = agxget(e, Z.z().E_taillabel))!=null && (str.charAt(0)!='\0')) {
     	initFontLabelEdgeAttr(e, fi, lfi);
     	ED_tail_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
-				lfi.getDouble("fontsize"), lfi.fontname, lfi.fontcolor));
+				lfi.fontsize, lfi.fontname, lfi.fontcolor));
     	GD_has_labels(sg, GD_has_labels(sg) | (1 << 2));
     }
     /* end vladimir */
@@ -1607,7 +1607,7 @@ UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))
     if (str!=null && str.charAt(0)!='\0')
 UNSUPPORTED("j71lo2acx1ydov0uj7xjjce"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(((((((Agobj_t*)(e))->tag).objtype) == 3?(e):((e)+1))->node)))->data))->has_port) = (!(0));
 
-    ED_tail_port(e, chkPort ((CFunction) ND_shape(agtail(e)).getPtr("fns").getPtr("portfn"), agtail(e), str));
+    ED_tail_port(e, chkPort ((CFunction) ND_shape(agtail(e)).fns.portfn, agtail(e), str));
     if (noClip(e, Z.z().E_tailclip))
 UNSUPPORTED("cg4z67u0dm6h9nrcx8kkalnlt"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->tail_port).clip = 0;
     str = agget(e, new CString("headport"));
@@ -1616,7 +1616,7 @@ UNSUPPORTED("cg4z67u0dm6h9nrcx8kkalnlt"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-
     if (str!=null && str.charAt(0)!='\0')
 UNSUPPORTED("542y57dbsosmjvsmdnzon2qb5"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(((((((Agobj_t*)(e))->tag).objtype) == 2?(e):((e)-1))->node)))->data))->has_port) = (!(0));
 
-    ED_head_port(e, chkPort((CFunction) ND_shape(aghead(e)).getPtr("fns").getPtr("portfn"), aghead(e), str));
+    ED_head_port(e, chkPort((CFunction) ND_shape(aghead(e)).fns.portfn, aghead(e), str));
 
     if (noClip(e, Z.z().E_headclip))
 UNSUPPORTED("ayqscz30ekhcje94wh4ib1hcu"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->head_port).clip = 0;
@@ -1640,24 +1640,24 @@ ENTERING("3mkqvtbyq9j8ktzil6t7vakg5","addLabelBB");
 try {
     double width, height;
     final ST_pointf p = new ST_pointf();
-    p.___(lp.getStruct("pos"));
+    p.___(lp.pos);
     double min, max;
     if (flipxy) {
-	height = lp.dimen.getDouble("x");
-	width = lp.dimen.getDouble("y");
+	height = lp.dimen.x;
+	width = lp.dimen.y;
     }
     else {
-	width = lp.dimen.getDouble("x");
-	height = lp.dimen.getDouble("y");
+	width = lp.dimen.x;
+	height = lp.dimen.y;
     }
-    min = p.getDouble("x") - width / 2.;
-    max = p.getDouble("x") + width / 2.;
+    min = p.x - width / 2.;
+    max = p.x + width / 2.;
     if (min < bb.LL.x)
 	bb.LL.x = min;
     if (max > bb.UR.x)
 	bb.UR.x = max;
-    min = p.getDouble("y") - height / 2.;
-    max = p.getDouble("y") + height / 2.;
+    min = p.y - height / 2.;
+    max = p.y + height / 2.;
     if (min < bb.LL.y)
 	bb.LL.y = min;
     if (max > bb.UR.y)

@@ -56,7 +56,6 @@ import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.ST_Agraph_s;
 import h.ST_Agdesc_s;
 import h.ST_Agraph_s;
 import h.ST_dt_s;
@@ -205,9 +204,9 @@ public static ST_Agraph_s agfindsubg_by_id(ST_Agraph_s g, int id) {
 ENTERING("11ezyrsjsotjz9b3cyvb4ie8p","agfindsubg_by_id");
 try {
     final ST_Agraph_s template = new ST_Agraph_s();
-    agdtdisc(g, (ST_dt_s) g.getPtr("g_dict"), Z.z().Ag_subgraph_id_disc);
+    agdtdisc(g, (ST_dt_s) g.g_dict, Z.z().Ag_subgraph_id_disc);
     AGID(template, id);
-    return (ST_Agraph_s) g.getPtr("g_dict").castTo(ST_dt_s.class).call("searchf", g.getPtr("g_dict"), template, 0000004);
+    return (ST_Agraph_s) g.g_dict.searchf.exe(g.g_dict, template, 0000004);
 } finally {
 LEAVING("11ezyrsjsotjz9b3cyvb4ie8p","agfindsubg_by_id");
 }
@@ -227,10 +226,10 @@ try {
 	return subg;
     subg = (ST_Agraph_s) agalloc(g, sizeof(ST_Agraph_s.class));
     subg.setPtr("clos", g.clos);
-    subg.setStruct("desc", g.getStruct("desc"));
-    ((ST_Agdesc_s)subg.getStruct("desc")).maingraph = 0;
+    subg.setStruct("desc", g.desc);
+    ((ST_Agdesc_s)subg.desc).maingraph = 0;
     subg.setPtr("parent", g);
-    subg.setPtr("root", g.getPtr("root"));
+    subg.setPtr("root", g.root);
     AGID(subg, id);
     return agopen1(subg);
 } finally {
@@ -290,7 +289,7 @@ LEAVING("a24jd4r2sdyb4lb2hyababrda","agsubg");
 public static ST_Agraph_s agfstsubg(ST_Agraph_s g) {
 ENTERING("51eksrs0lhkgohunejlpwyc4k","agfstsubg");
 try {
-	__ptr__ tmp = (__ptr__)g.getPtr("g_dict").castTo(ST_dt_s.class).call("searchf", g.getPtr("g_dict"),null,0000200);
+	__ptr__ tmp = (__ptr__)g.g_dict.searchf.exe(g.g_dict,null,0000200);
 	if (tmp!=null) tmp = tmp.castTo(ST_Agraph_s.class);
 	return (ST_Agraph_s) tmp;
 } finally {
@@ -309,7 +308,7 @@ try {
     ST_Agraph_s g;
     g = agparent(subg);
     if (g==null) return null;
-    __ptr__ tmp = (__ptr__) g.getPtr("g_dict").castTo(ST_dt_s.class).call("searchf", g.getPtr("g_dict"), subg, 0000010);
+    __ptr__ tmp = (__ptr__) g.g_dict.searchf.exe(g.g_dict, subg, 0000010);
     if (tmp==null) return null;
     return (ST_Agraph_s) tmp.getPtr();
 } finally {
@@ -325,7 +324,7 @@ LEAVING("85c1qisrein0tzm2regoe61t","agnxtsubg");
 public static ST_Agraph_s agparent(ST_Agraph_s g) {
 ENTERING("7kbp6j03hd7u6nnlivi0vt3ja","agparent");
 try {
-	return (ST_Agraph_s) g.getPtr("parent");
+	return (ST_Agraph_s) g.parent;
 } finally {
 LEAVING("7kbp6j03hd7u6nnlivi0vt3ja","agparent");
 }

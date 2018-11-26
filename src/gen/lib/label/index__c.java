@@ -58,6 +58,7 @@ import static smetana.core.Macro.UNSUPPORTED;
 import h.ST_Branch_t;
 import h.ST_LeafList_t;
 import h.ST_Node_t___;
+import h.ST_Node_t___or_object_t;
 import h.ST_RTree;
 import h.ST_Rect_t;
 import smetana.core.Memory;
@@ -68,7 +69,7 @@ public class index__c {
 
 //3 1rfaqe5urty5uyp5xb2r0idce
 // LeafList_t *RTreeNewLeafList(Leaf_t * lp) 
-public static ST_LeafList_t RTreeNewLeafList(__ptr__ lp) {
+public static ST_LeafList_t RTreeNewLeafList(ST_Branch_t lp) {
 ENTERING("1rfaqe5urty5uyp5xb2r0idce","RTreeNewLeafList");
 try {
      ST_LeafList_t llp;
@@ -94,14 +95,14 @@ LEAVING("1rfaqe5urty5uyp5xb2r0idce","RTreeNewLeafList");
 
 //3 6pvstz7axi8a7saeqe3nrrmg5
 // LeafList_t *RTreeLeafListAdd(LeafList_t * llp, Leaf_t * lp) 
-public static ST_LeafList_t RTreeLeafListAdd(ST_LeafList_t llp, __ptr__ lp) {
+public static ST_LeafList_t RTreeLeafListAdd(ST_LeafList_t llp, ST_Branch_t lp) {
 ENTERING("6pvstz7axi8a7saeqe3nrrmg5","RTreeLeafListAdd");
 try {
      ST_LeafList_t nlp;
      if (N(lp))
  	return llp;
      nlp = RTreeNewLeafList(lp);
-     nlp.setPtr("next", llp);
+     nlp.next = llp;
      return nlp;
 } finally {
 LEAVING("6pvstz7axi8a7saeqe3nrrmg5","RTreeLeafListAdd");
@@ -191,27 +192,27 @@ ENTERING("aa49m7d7qc06m8id896e60lkg","RTreeClose2");
 try {
     int i;
 
-    if (n.getInt("level") > 0) {
+    if (n.level > 0) {
 	for (i = 0; i < 64; i++) {
-	    if (N(n.branch[i].getPtr("child")))
+	    if (N(n.branch[i].child))
 		continue;
-	    if (N(RTreeClose2(rtp, (ST_Node_t___) n.branch[i].getPtr("child")))) {
-		Memory.free(n.branch[i].getPtr("child"));
+	    if (N(RTreeClose2(rtp, (ST_Node_t___) n.branch[i].child))) {
+		Memory.free(n.branch[i].child);
 		DisconBranch(n, i);
 	    rtp.setInt("EntryCount", rtp.EntryCount-1);
 		if (rtp.StatFlag!=0)
-		    rtp.setInt("ElimCount", rtp.getInt("ElimCount")+1);
+		    rtp.setInt("ElimCount", rtp.ElimCount+1);
 	    }
 	}
     } else {
 	for (i = 0; i < 64; i++) {
-		if (N(n.branch[i].getPtr("child")))
+		if (N(n.branch[i].child))
 		continue;
 	    // free(n->branch[i].child);
 	    DisconBranch(n, i);
 	    rtp.setInt("EntryCount", rtp.EntryCount-1);
 	    if (rtp.StatFlag!=0)
-		    rtp.setInt("ElimCount", rtp.getInt("ElimCount")+1);
+		    rtp.setInt("ElimCount", rtp.ElimCount+1);
 	}
 	//free(n);
     }
@@ -226,8 +227,8 @@ LEAVING("aa49m7d7qc06m8id896e60lkg","RTreeClose2");
 public static int RTreeClose(ST_RTree rtp) {
 ENTERING("aa59m7d7qc06m8id896e60lkg","RTreeClose");
 try {
-    RTreeClose2(rtp, (ST_Node_t___) rtp.getPtr("root"));
-    Memory.free(rtp.getPtr("root"));
+    RTreeClose2(rtp, (ST_Node_t___) rtp.root);
+    Memory.free(rtp.root);
     Memory.free(rtp);
     return 0;
 } finally {
@@ -255,22 +256,22 @@ try {
 
     rtp.setInt("SeTouchCount", rtp.SeTouchCount+1);
 
-    if (n.getInt("level") > 0) {		/* this is an internal node in the tree */
+    if (n.level > 0) {		/* this is an internal node in the tree */
 	for (i = 0; i < 64; i++)
-	    if (n.branch[i].getPtr("child")!=null &&
+	    if (n.branch[i].child!=null &&
 	    	Overlap(r, n.branch[i].rect)) {
-		ST_LeafList_t tlp = RTreeSearch(rtp, (ST_Node_t___) n.branch[i].getPtr("child"), r);
+		ST_LeafList_t tlp = RTreeSearch(rtp, (ST_Node_t___) n.branch[i].child, r);
 		if (llp!=null) {
 		    ST_LeafList_t xlp = llp;
 		    while (xlp.next!=null)
 			xlp = (ST_LeafList_t) xlp.next;
-		    xlp.setPtr("next", tlp);
+		    xlp.next = tlp;
 		} else
 		    llp = tlp;
    }
     } else {			/* this is a leaf node */
 	for (i = 0; i < 64; i++) {
-	    if (n.branch[i].getPtr("child")!=null && Overlap(r, n.branch[i].rect)) {
+	    if (n.branch[i].child!=null && Overlap(r, n.branch[i].rect)) {
 		   llp = RTreeLeafListAdd(llp, /*(Leaf_t *)*/ n.branch[i]);
 	    }
 	}
@@ -316,7 +317,7 @@ UNSUPPORTED("bzb1oqc35evr96528iv16glb0"); // 	    rtp->ReInsertCount++;
 UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
 UNSUPPORTED("3kxquse3qg2crme5dzybg9jxe"); // 	    rtp->InsertCount++;
 }
-     if (N(rtp.getInt("Deleting")))
+     if (N(rtp.Deleting))
  	rtp.setInt("RectCount", rtp.RectCount+1);
      if (RTreeInsert2(rtp, r, data, n[0], newnode, level)!=0) {	/* root was split */
  	if (rtp.StatFlag!=0) {
@@ -326,13 +327,13 @@ UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
 UNSUPPORTED("2u8wpa4w1q7rg14t07bny6p8i"); // 		rtp->InTouchCount++;
  	}
  	newroot = RTreeNewNode(rtp);	/* grow a new root, make tree taller */
- 	rtp.setInt("NonLeafCount", rtp.getInt("NonLeafCount")+1);
- 	newroot.setInt("level", n[0].getInt("level") + 1);
+ 	rtp.setInt("NonLeafCount", rtp.NonLeafCount+1);
+ 	newroot.setInt("level", n[0].level + 1);
  	b.setStruct("rect", NodeCover(n[0]));
- 	b.setPtr("child", n[0]);
+ 	b.child = n[0];
  	AddBranch(rtp, b, newroot, null);
  	b.setStruct("rect", NodeCover(newnode[0]));
- 	b.setPtr("child", newnode[0]);
+ 	b.child = newnode[0];
  	AddBranch(rtp, b, newroot, null);
  	n[0] = newroot;
  	// rtp->root = newroot;
@@ -370,9 +371,9 @@ UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
 UNSUPPORTED("1um729vqiy3529kbsrzyl9u3y"); // 	    rtp->InTouchCount++;
      }
 /* Still above level for insertion, go down tree recursively */
-     if (n.getInt("level") > level) {
+     if (n.level > level) {
  	i = PickBranch(r, n);
- 	if (N(RTreeInsert2(rtp, r, data, (ST_Node_t___) n.branch[i].getPtr("child"), n2, level))) {
+ 	if (N(RTreeInsert2(rtp, r, data, (ST_Node_t___) n.branch[i].child, n2, level))) {
 /* recurse: child was not split */
  	    n.branch[i].setStruct("rect",
  	    		CombineRect((ST_Rect_t)r, (ST_Rect_t) n.branch[i].rect));
@@ -384,10 +385,10 @@ UNSUPPORTED("50z4r9qcomgi4o7vvwq0v0xs"); // 	    b.rect = NodeCover(n2);
 UNSUPPORTED("451qw2ioqybj69k9abzvqw4mk"); // 	    rtp->EntryCount++;
 UNSUPPORTED("9uz11nbvh6yp6yq2axvo7e0fb"); // 	    return AddBranch(rtp, &b, n, new);
  	}
-     } else if (n.getInt("level") == level) {	/* at level for insertion. */
+     } else if (n.level == level) {	/* at level for insertion. */
  	/*Add rect, split if necessary */
  	b.rect.___(r);
- 	b.setPtr("child", /*(Node_t *)*/data); // THIS CAST IS A BIG ISSUE
+ 	b.child = /*(Node_t *)*/(ST_Node_t___or_object_t) data; // THIS CAST IS A BIG ISSUE
 // UNSUPPORTED("7w1b5nw2bj3zmo70m9bczwwov"); // 	b.child = (Node_t *) data;
  	rtp.setInt("EntryCount", rtp.EntryCount+1);
  	return AddBranch(rtp, b, n, new_);

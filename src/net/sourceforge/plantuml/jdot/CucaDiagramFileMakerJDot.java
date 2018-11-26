@@ -160,10 +160,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 		private Point2D getCorner(ST_Agnode_s n) {
 			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n).castTo(ST_Agnodeinfo_t.class);
-			final double width = data.getDouble("width") * 72;
-			final double height = data.getDouble("height") * 72;
-			final double x = data.getStruct("coord").getDouble("x");
-			final double y = data.getStruct("coord").getDouble("y");
+			final double width = data.width * 72;
+			final double height = data.height * 72;
+			final double x = data.coord.x;
+			final double y = data.coord.y;
 
 			if (ymirror == null) {
 				return new Point2D.Double(x - width / 2, y - height / 2);

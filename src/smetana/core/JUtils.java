@@ -37,7 +37,6 @@
 package smetana.core;
 
 import h.Agcbstack_s;
-import h.ST_Agdisc_s;
 import h.Agdstate_s;
 import h.Agiodisc_s;
 import h.GVCOMMON_t;
@@ -112,7 +111,7 @@ import h.ST_textspan_t;
 import h.ST_tna_t;
 import h.ST_triangle_t;
 import h.ST_xlabel_t;
-import h._dthold_s;
+import h.ST_dthold_s;
 import h.layout_t;
 import h.rank_t;
 import h.tedge_t;
@@ -375,45 +374,35 @@ public class JUtils {
 		System.err.println("*********** PRINT EDGE ********** ");
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
 		final ST_splines splines = (ST_splines) data.spl;
-		ST_boxf bb = (ST_boxf) splines.getStruct("bb");
-		final ST_bezier list = (ST_bezier) splines.getPtr("list");
+		// ST_boxf bb = (ST_boxf) splines.bb;
+		final ST_bezier list = splines.list.getPtr();
 		System.err.println("splines.size=" + splines.size);
-		System.err.println("bb.LL=" + pointftoString(bb.LL));
-		System.err.println("bb.UR=" + pointftoString(bb.UR));
-		printDebugBezier((ST_bezier) splines.getPtr("list").getPtr());
+		//System.err.println("bb.LL=" + pointftoString(bb.LL));
+		//System.err.println("bb.UR=" + pointftoString(bb.UR));
+		printDebugBezier((ST_bezier) splines.list.getPtr());
 
 	}
 
 	private static String pointftoString(ST_pointf point) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("(");
-		sb.append(point.getDouble("x"));
+		sb.append(point.x);
 		sb.append(" ; ");
-		sb.append(point.getDouble("y"));
+		sb.append(point.y);
 		sb.append(")");
 		return sb.toString();
 	}
 
 	private static void printDebugBezier(ST_bezier bezier) {
 		System.err.println("bezier.size=" + bezier.size);
-		System.err.println("bezier.sflag=" + bezier.getInt("sflag"));
-		System.err.println("splines.eflag=" + bezier.getInt("eflag"));
+		System.err.println("bezier.sflag=" + bezier.sflag);
+		System.err.println("splines.eflag=" + bezier.eflag);
 		System.err.println("bezier.sp=" + pointftoString(bezier.sp));
 		System.err.println("bezier.ep=" + pointftoString(bezier.ep));
 		for (int i = 0; i < bezier.size; i++) {
-			final __ptr__ pt = bezier.getPtr("list").plus(i).getPtr();
+			final ST_pointf pt = bezier.list.get(i);
 			System.err.println("pt=" + pointftoString(pt));
 		}
-	}
-
-	private static String pointftoString(__ptr__ point) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("(");
-		sb.append(point.getDouble("x"));
-		sb.append(" ; ");
-		sb.append(point.getDouble("y"));
-		sb.append(")");
-		return sb.toString();
 	}
 
 	public static <C extends __ptr__> __struct__<C> from(Class<C> theClass) {
@@ -587,7 +576,7 @@ public class JUtils {
 		if (theClass == ST_bezier.class) {
 			return new ST_bezier();
 		}
-		if (theClass == _dthold_s.class) {
+		if (theClass == ST_dthold_s.class) {
 			return new ST_dthold_s();
 		}
 		//
@@ -821,7 +810,7 @@ public class JUtils {
 		if (theClass == ST_bezier.class) {
 			return new ST_bezier(parent);
 		}
-		if (theClass == _dthold_s.class) {
+		if (theClass == ST_dthold_s.class) {
 			return new ST_dthold_s(parent);
 		}
 		//
@@ -890,9 +879,6 @@ public class JUtils {
 		}
 		if (theClass == ST_cinfo_t.class) {
 			return new ST_cinfo_t(parent);
-		}
-		if (theClass == LeafList_t.class) {
-			return new ST_LeafList_t(parent);
 		}
 		// }
 		notFound(theClass);

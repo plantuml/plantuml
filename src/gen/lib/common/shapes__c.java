@@ -86,9 +86,9 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.fabs;
 import static smetana.core.Macro.hypot;
 import h.ST_Agnode_s;
-import h.ST_Agraphinfo_t;
 import h.ST_Agnodeinfo_t;
 import h.ST_Agobj_s;
+import h.ST_Agraphinfo_t;
 import h.ST_boxf;
 import h.ST_inside_t;
 import h.ST_point;
@@ -426,8 +426,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -724,8 +724,8 @@ throw new UnsupportedOperationException();
 // static port Center = 
 /*private final static __struct__<port> Center = JUtils.from(port.class);
 static {
-Center.getStruct("p").setDouble("x", 0);
-Center.getStruct("p").setDouble("y", 0);
+Center.p.setDouble("x", 0);
+Center.p.setDouble("y", 0);
 Center.setDouble("theta", -1);
 Center.setPtr("bp", null);
 Center.setInt("defined", 0);
@@ -1057,11 +1057,11 @@ try {
     boolean s0, s1;
     double a, b, c;
     /* a x + b y = c */
-    a = -(L1.getDouble("y") - L0.getDouble("y"));
-    b = (L1.getDouble("x") - L0.getDouble("x"));
-    c = a * L0.getDouble("x") + b * L0.getDouble("y");
-    s0 = (a * p0.getDouble("x") + b * p0.getDouble("y") - c >= 0);
-    s1 = (a * p1.getDouble("x") + b * p1.getDouble("y") - c >= 0);
+    a = -(L1.y - L0.y);
+    b = (L1.x - L0.x);
+    c = a * L0.x + b * L0.y;
+    s0 = (a * p0.x + b * p0.y - c >= 0);
+    s1 = (a * p1.x + b * p1.y - c >= 0);
     return (s0 == s1);
 } finally {
 LEAVING("eb4jyrh981apg1fy13fczexdl","same_side");
@@ -2504,7 +2504,7 @@ try {
     CFunctionImpl ifn; //void (*ifn) (node_t *);
     if (N(sh))
 	return enumAsInt(shape_kind.class, "SH_UNSET");
-    ifn = (CFunctionImpl) ND_shape(n).getPtr("fns").getPtr("initfn");
+    ifn = (CFunctionImpl) ND_shape(n).fns.initfn;
     if (ifn.getName().equals("poly_init"))
 	return enumAsInt(shape_kind.class, "SH_POLY");
 UNSUPPORTED("251a710sgr57bnrs3uh7ppfpi"); //     else if (ifn == record_init)
@@ -2559,11 +2559,11 @@ try {
     boolean isBox; int i, j, outp;
     ST_polygon_t poly = new ST_polygon_t();
     regular = ND_shape(n).polygon.regular!=0;
-    peripheries = ND_shape(n).getPtr("polygon").getInt("peripheries");
-    sides = ND_shape(n).getPtr("polygon").getInt("sides");
-    orientation = ND_shape(n).getPtr("polygon").getDouble("orientation");
-    skew = ND_shape(n).getPtr("polygon").getDouble("skew");
-    distortion = ND_shape(n).getPtr("polygon").getDouble("distortion");
+    peripheries = ND_shape(n).polygon.peripheries;
+    sides = ND_shape(n).polygon.sides;
+    orientation = ND_shape(n).polygon.orientation;
+    skew = ND_shape(n).polygon.skew;
+    distortion = ND_shape(n).polygon.distortion;
     regular |= mapbool(agget(n, new CString("regular")));
     /* all calculations in floating point POINTS */
     /* make x and y dimensions equal if node is regular
@@ -2594,7 +2594,7 @@ UNSUPPORTED("abmuc3vqirf3i48480fj0k14g"); // 	distortion = late_double(n, N_dist
     /* get label dimensions */
     dimen.___(ND_label(n).dimen);
     /* minimal whitespace around label */
-    if (ROUND(abs(dimen.getDouble("x")))!=0 || ROUND(abs(dimen.getDouble("y")))!=0) {
+    if (ROUND(abs(dimen.x))!=0 || ROUND(abs(dimen.y))!=0) {
     	/* padding */
 	if ((p = agget(n, new CString("margin")))!=null) {
 UNSUPPORTED("4dlqwm3pklzgz2e777dm56n03"); // 	    marginx = marginy = 0;
@@ -2613,13 +2613,13 @@ UNSUPPORTED("afk9bpom7x393euamnvwwkx6b"); // 	    } else
 UNSUPPORTED("87bdwkkwbzyswxnepdd9bj8mb"); // 		{((dimen).x += 4*4); ((dimen).y += 2*4);};
 	} else
 	    {
-		((ST_pointf) dimen).x = dimen.getDouble("x") + 4*4;
-		((ST_pointf) dimen).y = dimen.getDouble("y") + 2*4;
+		((ST_pointf) dimen).x = dimen.x + 4*4;
+		((ST_pointf) dimen).y = dimen.y + 2*4;
 	    };
     }
-    spacex = dimen.getDouble("x") - ND_label(n).dimen.getDouble("x");
+    spacex = dimen.x - ND_label(n).dimen.x;
     /* quantization */
-    if ((temp = agraphof(n).castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agraphinfo_t.class).getPtr("drawing").getDouble("quantum")) > 0.0) {
+    if ((temp = ((ST_Agraphinfo_t)agraphof(n).castTo_ST_Agobj_s().data.castTo(ST_Agraphinfo_t.class)).drawing.quantum) > 0.0) {
 UNSUPPORTED("3nqb0s5rkwj3igt71vooj8asd"); // 	temp = ((((temp)*72>=0)?(int)((temp)*72 + .5):(int)((temp)*72 - .5)));
 UNSUPPORTED("5fxtqwy8liyvnx1yvsou5hb4o"); // 	dimen.x = quant(dimen.x, temp);
 UNSUPPORTED("et885f1jcqpske6ip856arouv"); // 	dimen.y = quant(dimen.y, temp);
@@ -2659,8 +2659,8 @@ UNSUPPORTED("1x57knvrmlciu7odfroo3paso"); // 	    imagesize.y += 2;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
     /* initialize node bb to labelsize */
-    ((ST_pointf) bb).x = ((dimen.getDouble("x"))>(imagesize.getInt("x"))?(dimen.getDouble("x")):(imagesize.getInt("x")));
-    ((ST_pointf) bb).y = ((dimen.getDouble("y"))>(imagesize.getInt("y"))?(dimen.getDouble("y")):(imagesize.getInt("y")));
+    ((ST_pointf) bb).x = ((dimen.x)>(imagesize.x)?(dimen.x):(imagesize.x));
+    ((ST_pointf) bb).y = ((dimen.y)>(imagesize.y)?(dimen.y):(imagesize.y));
     /* I don't know how to distort or skew ellipses in postscript */
     /* Convert request to a polygon with a large number of sides */
     if ((sides <= 2) && ((distortion != 0.) || (skew != 0.))) {
@@ -2669,14 +2669,14 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     /* extra sizing depends on if label is centered vertically */
     p = agget(n, new CString("labelloc"));
     if (p!=null && (p.charAt(0) == 't' || p.charAt(0) == 'b'))
-    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").setInt("valign", p.charAt(0));
+    n.castTo_ST_Agobj_s().data.castTo_ST_Agnodeinfo_t().label.setInt("valign", p.charAt(0));
     else
-    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").setInt("valign", 'c');
+    n.castTo_ST_Agobj_s().data.castTo_ST_Agnodeinfo_t().label.setInt("valign", 'c');
     isBox = (sides == 4 && (((orientation>=0)?(int)(orientation + .5):(int)(orientation - .5)) % 90) == 0
 	     && distortion == 0. && skew == 0.);
     if (isBox) {
 	/* for regular boxes the fit should be exact */
-    } else if (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("shape").getPtr("polygon").getPtr("vertices")!=null) {
+    } else if (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).shape.polygon.vertices!=null) {
 UNSUPPORTED("4adqsyjwqwzs50ggjp57ok6u7"); // 	poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->shape)->polygon->vertices;
 UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     } else {
@@ -2684,20 +2684,20 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	 * containing bb centered on the origin, and then pad for that.
 	 * We assume the ellipse is defined by a scaling up of bb.
 	 */
-	temp = bb.getDouble("y") * 1.41421356237309504880;
-	if (height > temp && (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").getInt("valign") == 'c')) {
+	temp = bb.y * 1.41421356237309504880;
+	if (height > temp && (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).label.valign == 'c')) {
 	    /* if there is height to spare
 	     * and the label is centered vertically
 	     * then just pad x in proportion to the spare height */
-	    bb.setDouble("x", bb.getDouble("x") * sqrt(1. / (1. - ((bb.getDouble("y") / height) * (bb.getDouble("y") / height)))));
+	    bb.setDouble("x", bb.x * sqrt(1. / (1. - ((bb.y / height) * (bb.y / height)))));
 	} else {
-	    bb.setDouble("x", bb.getDouble("x") * 1.41421356237309504880);
+	    bb.setDouble("x", bb.x * 1.41421356237309504880);
 	    bb.setDouble("y", temp);
 	}
 	if (sides > 2) {
 	    temp = cos(3.14159265358979323846 / sides);
-	    bb.setDouble("x", bb.getDouble("x") / temp);
-	    bb.setDouble("y", bb.getDouble("y") / temp);
+	    bb.setDouble("x", bb.x / temp);
+	    bb.setDouble("y", bb.y / temp);
 	    /* FIXME - for odd-sided polygons, e.g. triangles, there
 	       would be a better fit with some vertical adjustment of the shape */
 	}
@@ -2709,27 +2709,27 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     if ((fxd.charAt(0) == 's') && (N(strcmp(fxd,new CString("shape"))))) {
 	bb.setDouble("x", width);
 	bb.setDouble("y", height);
-	poly.setInt("option", poly.getInt("option") | (1 << 11));
+	poly.setInt("option", poly.option | (1 << 11));
     } else if (mapbool(fxd)) {
 	/* check only label, as images we can scale to fit */
-	if ((width < (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").getDouble("dimen.x")) 
-		|| (height < (n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label").getDouble("dimen.y")))))
+	if ((width < (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).label.dimen.x) 
+		|| (height < (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).label.dimen.y))))
 	    System.err.println(
 		  "node '%s', graph '%s' size too small for label\n");
 		  //agnameof(n), agnameof(agraphof(n)));
 	bb.setDouble("x",  width);
 	bb.setDouble("y", height);
     } else {
-	width = MAX(width, bb.getDouble("x"));
+	width = MAX(width, bb.x);
 	((ST_pointf) bb).x = width;
-	height = MAX(height, bb.getDouble("y"));
+	height = MAX(height, bb.y);
 	((ST_pointf) bb).y = height;
     }
     /* If regular, make dimensions the same.
      * Need this to guarantee final node size is regular.
      */
     if (regular) {
-    width = MAX(bb.getDouble("x"), bb.getDouble("y"));
+    width = MAX(bb.x, bb.y);
     height = width;
     ((ST_pointf) bb).x = width;
     ((ST_pointf) bb).y = width;
@@ -2737,22 +2737,22 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     /* Compute space available for label.  Provides the justification borders */
     if (N(mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))))) {
 	if (isBox) {
-		((ST_pointf) ND_label(n).space).x = MAX(dimen.getDouble("x"),bb.getDouble("x")) - spacex;
+		((ST_pointf) ND_label(n).space).x = MAX(dimen.x,bb.x) - spacex;
 	}
-	else if (dimen.getDouble("y") < bb.getDouble("y")) {
-	    temp = bb.getDouble("x") * sqrt(1.0 - SQR(dimen.getDouble("y")) / SQR(bb.getDouble("y")));
-	    ND_label(n).space.setDouble("x", MAX(dimen.getDouble("x"),temp) - spacex);
+	else if (dimen.y < bb.y) {
+	    temp = bb.x * sqrt(1.0 - SQR(dimen.y) / SQR(bb.y));
+	    ND_label(n).space.setDouble("x", MAX(dimen.x,temp) - spacex);
         }
 	else
-	    ND_label(n).space.setDouble("x", dimen.getDouble("x") - spacex);
+	    ND_label(n).space.setDouble("x", dimen.x - spacex);
     } else {
-	    ND_label(n).space.setDouble("x", dimen.getDouble("x") - spacex);
+	    ND_label(n).space.setDouble("x", dimen.x - spacex);
     }
-    if ((poly.getInt("option") & (1 << 11)) == 0) {
-	temp = bb.getDouble("y") - min_bb.getDouble("y");
-	if (dimen.getDouble("y") < imagesize.getInt("y"))
-	    temp += imagesize.getInt("y") - dimen.getDouble("y");
-	((ST_pointf) ND_label(n).space).y = dimen.getDouble("y") + temp;
+    if ((poly.option & (1 << 11)) == 0) {
+	temp = bb.y - min_bb.y;
+	if (dimen.y < imagesize.y)
+	    temp += imagesize.y - dimen.y;
+	((ST_pointf) ND_label(n).space).y = dimen.y + temp;
     }
     outp = peripheries;
     if (peripheries < 1)
@@ -2760,12 +2760,12 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     if (sides < 3) {		/* ellipses */
 	sides = 2;
 	vertices = new ST_pointf.Array(outp * sides);
-	P.setDouble("x", bb.getDouble("x") / 2.);
-	P.setDouble("y", bb.getDouble("y") / 2.);
-	vertices.setDouble("x", -P.getDouble("x"));
-	vertices.setDouble("y", -P.getDouble("y"));
-	vertices.plus(1).setDouble("x", P.getDouble("x"));
-	vertices.plus(1).setDouble("y", P.getDouble("y"));
+	P.setDouble("x", bb.x / 2.);
+	P.setDouble("y", bb.y / 2.);
+	vertices.setDouble("x", -P.x);
+	vertices.setDouble("y", -P.y);
+	vertices.plus(1).setDouble("x", P.x);
+	vertices.plus(1).setDouble("y", P.y);
 	if (peripheries > 1) {
 UNSUPPORTED("4ofenmfgj7cgyf624qmugcx77"); // 	    for (j = 1, i = 2; j < peripheries; j++) {
 UNSUPPORTED("458w3r6n3nidn2j2b154phpzt"); // 		P.x += 4;
@@ -2794,7 +2794,7 @@ UNSUPPORTED("b5z0hw4dacenv33xsaex70g8d"); // 	    bb.y = 2. * P.y;
  *   the current segments, and outside by GAP distance, intersect.   
  */
 	vertices = new ST_pointf.Array(outp * sides);
-	if (((ST_polygon_t)ND_shape(n).getPtr("polygon")).vertices!=null) {
+	if (((ST_polygon_t)ND_shape(n).polygon).vertices!=null) {
 UNSUPPORTED("3ghle84ieryaenfnlbzrfv7bw"); // 	    poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->shape)->polygon->vertices;
 UNSUPPORTED("227lpcg9dt83m2bm8yshb4djf"); // 	    pd->vertex_gen (vertices, &bb);
 UNSUPPORTED("cc3jvnwvbhjhro4adeet363yd"); // 	    xmax = bb.x/2;
@@ -2815,33 +2815,33 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	    /*next regular vertex */
 		angle += sectorangle;
 	    sinx = sin(angle); cosx = cos(angle);
-	    ((ST_pointf) R).x = R.getDouble("x") + sidelength * cosx;
-	    ((ST_pointf) R).y = R.getDouble("y") + sidelength * sinx;
+	    ((ST_pointf) R).x = R.x + sidelength * cosx;
+	    ((ST_pointf) R).y = R.y + sidelength * sinx;
 	    /*distort and skew */
-	    ((ST_pointf) P).x = R.getDouble("x") * (skewdist + R.getDouble("y") * gdistortion) + R.getDouble("y") * gskew;
-	    ((ST_pointf) P).y = R.getDouble("y");
+	    ((ST_pointf) P).x = R.x * (skewdist + R.y * gdistortion) + R.y * gskew;
+	    ((ST_pointf) P).y = R.y;
 	    /*orient P.x,P.y */
-		alpha = RADIANS(orientation) + atan2(P.getDouble("y"), P.getDouble("x"));
+		alpha = RADIANS(orientation) + atan2(P.y, P.x);
 	    sinx = sin(alpha); cosx = cos(alpha);
-	    ((ST_pointf) P).y = hypot(P.getDouble("x"), P.getDouble("y"));
-	    ((ST_pointf) P).x = P.getDouble("y");
-	    ((ST_pointf) P).x = P.getDouble("x") * cosx;
-	    ((ST_pointf) P).y = P.getDouble("y") * sinx;
+	    ((ST_pointf) P).y = hypot(P.x, P.y);
+	    ((ST_pointf) P).x = P.y;
+	    ((ST_pointf) P).x = P.x * cosx;
+	    ((ST_pointf) P).y = P.y * sinx;
 	    /*scale for label */
-	    ((ST_pointf) P).x = P.getDouble("x") * bb.getDouble("x");
-	    ((ST_pointf) P).y = P.getDouble("y") * bb.getDouble("y");
+	    ((ST_pointf) P).x = P.x * bb.x;
+	    ((ST_pointf) P).y = P.y * bb.y;
 	    /*find max for bounding box */
-		xmax = MAX(fabs(P.getDouble("x")), xmax);
-		ymax = MAX(fabs(P.getDouble("y")), ymax);
+		xmax = MAX(fabs(P.x), xmax);
+		ymax = MAX(fabs(P.y), ymax);
 	    /* store result in array of points */
 		vertices.plus(i).setStruct(P);
 		if (isBox) { /* enforce exact symmetry of box */
-			vertices.get(1).x = -P.getDouble("x");
-			vertices.get(1).y = P.getDouble("y");
-			vertices.get(2).x = -P.getDouble("x");
-			vertices.get(2).y = -P.getDouble("y");
-			vertices.get(3).x = P.getDouble("x");
-			vertices.get(3).y = -P.getDouble("y");
+			vertices.get(1).x = -P.x;
+			vertices.get(1).y = P.y;
+			vertices.get(2).x = -P.x;
+			vertices.get(2).y = -P.y;
+			vertices.get(3).x = P.x;
+			vertices.get(3).y = -P.y;
 		    break;
 		}
 	    }
@@ -2851,12 +2851,12 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	ymax *= 2.;
 	((ST_pointf) bb).x = MAX(width, xmax);
 	((ST_pointf) bb).y = MAX(height, ymax);
-	scalex = bb.getDouble("x") / xmax;
-	scaley = bb.getDouble("y") / ymax;
+	scalex = bb.x / xmax;
+	scaley = bb.y / ymax;
 	for (i = 0; i < sides; i++) {
 	    P.____(vertices.plus(i));
-	    ((ST_pointf) P).x = P.getDouble("x") * scalex;
-	    ((ST_pointf) P).y = P.getDouble("y") * scaley;
+	    ((ST_pointf) P).x = P.x * scalex;
+	    ((ST_pointf) P).y = P.y * scaley;
 	    vertices.plus(i).setStruct(P);
 	}
 	if (peripheries > 1) {
@@ -2900,15 +2900,15 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
     poly.setDouble("skew", skew);
     poly.setDouble("distortion", distortion);
     poly.vertices = vertices;
-    if ((poly.getInt("option") & (1 << 11))!=0) {
+    if ((poly.option & (1 << 11))!=0) {
 	/* set width and height to reflect label and shape */
 UNSUPPORTED("7kk8oru3b3copylmq3gssx6qx"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->width) = ((((dimen.x)>(bb.x)?(dimen.x):(bb.x)))/(double)72);
 UNSUPPORTED("8oouzms2x039fhfcfxm7yc4su"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->height) = ((((dimen.y)>(bb.y)?(dimen.y):(bb.y)))/(double)72);
     } else {
-    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).setDouble("width", ((bb.getDouble("x"))/(double)72));
-    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).setDouble("height", ((bb.getDouble("y"))/(double)72));
+    n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class).setDouble("width", ((bb.x)/(double)72));
+    n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class).setDouble("height", ((bb.y)/(double)72));
     }
-    n.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).setPtr("shape_info", poly);
+    n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class).setPtr("shape_info", poly);
 } finally {
 LEAVING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 }
@@ -2953,8 +2953,8 @@ try {
     int i, i1, j;
     boolean s;
     final ST_pointf P = new ST_pointf(), Q = new ST_pointf(), R = new ST_pointf();
-    __ptr__ bp = inside_context.getPtr("s.bp");
-    __ptr__ n = inside_context.getPtr("s.n");
+    ST_boxf bp = inside_context.s_bp;
+    ST_Agnode_s n = inside_context.s_n;
     P.___(ccwrotatepf(p, 90 * GD_rankdir(agraphof(n))));
     /* Quick test if port rectangle is target */
     if (bp!=null) {
@@ -2966,8 +2966,8 @@ try {
 	double n_width = 0, n_height = 0;
 	Z.z().poly = (ST_polygon_t) ND_shape_info(n);
 	Z.z().vertex = Z.z().poly.vertices;
-	Z.z().sides = Z.z().poly.getInt("sides");
-	if ((Z.z().poly.getInt("option") & (1 << 11))!=0) {
+	Z.z().sides = Z.z().poly.sides;
+	if ((Z.z().poly.option & (1 << 11))!=0) {
 UNSUPPORTED("18yw1scg4sol8bhyf1vedj9kn"); // 	   boxf bb = polyBB(poly); 
 UNSUPPORTED("7rz7vxyxao0efec2nvd6g19m1"); // 	    n_width = bb.UR.x - bb.LL.x;
 UNSUPPORTED("4h0k2wroz3xqx1ljokdbaqaad"); // 	    n_height = bb.UR.y - bb.LL.y;
@@ -3001,20 +3001,20 @@ UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	Z.z().box_URx = n_width / 2.0;
 	Z.z().box_URy = n_height / 2.0;
 	/* index to outer-periphery */
-	Z.z().outp = (Z.z().poly.getInt("peripheries") - 1) * Z.z().sides;
+	Z.z().outp = (Z.z().poly.peripheries - 1) * Z.z().sides;
 	if (Z.z().outp < 0)
 	    Z.z().outp = 0;
 	Z.z().lastn = (ST_Agnode_s) n;
     }
     /* scale */
-    P.setDouble("x", P.getDouble("x") * Z.z().scalex);
-    P.setDouble("y", P.getDouble("y") * Z.z().scaley);
+    P.setDouble("x", P.x * Z.z().scalex);
+    P.setDouble("y", P.y * Z.z().scaley);
     /* inside bounding box? */
-    if ((fabs(P.getDouble("x")) > Z.z().box_URx) || (fabs(P.getDouble("y")) > Z.z().box_URy))
+    if ((fabs(P.x) > Z.z().box_URx) || (fabs(P.y) > Z.z().box_URy))
 	return false;
     /* ellipses */
     if (Z.z().sides <= 2)
-	return (hypot(P.getDouble("x") / Z.z().box_URx, P.getDouble("y") / Z.z().box_URy) < 1.);
+	return (hypot(P.x / Z.z().box_URx, P.y / Z.z().box_URy) < 1.);
     /* use fast test in case we are converging on a segment */
     i = Z.z().last % Z.z().sides;		/* in case last left over from larger polygon */
     i1 = (i + 1) % Z.z().sides;

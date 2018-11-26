@@ -67,15 +67,16 @@ import static smetana.core.Macro.GD_label;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.*;
+import static smetana.core.Macro.ZALLOC_ST_textspan_t;
 import static smetana.core.Macro.agtail;
 import static smetana.core.Macro.hackInitDimensionFromLabel;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
-import h.ST_Agraph_s;
-import h.ST_Agraphinfo_t;
 import h.ST_Agnodeinfo_t;
 import h.ST_Agobj_s;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_Agrec_s;
 import h.ST_GVC_s;
 import h.ST_pointf;
 import h.ST_port;
@@ -411,8 +412,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -714,32 +715,32 @@ public static void storeline(ST_GVC_s gvc, ST_textlabel_t lp, CString line, char
 ENTERING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 try {
     final ST_pointf size = new ST_pointf();
-    __ptr__ span = null;
-    int oldsz = lp.getInt("u.txt.nspans") + 1;
-    lp.setPtr("u.txt.span", ZALLOC_ST_textspan_t((ST_textspan_t.Array) lp.getPtr("u.txt.span"), oldsz + 1));
-    span = lp.getPtr("u.txt.span").plus(lp.getInt("u.txt.nspans"));
-    span.setPtr("str", line);
-    span.setInt("just", terminator);
+    ST_textspan_t span = null;
+    int oldsz = lp.nspans + 1;
+    lp.span = ZALLOC_ST_textspan_t((ST_textspan_t.Array) lp.span, oldsz + 1);
+    span = lp.span.get(lp.nspans);
+    span.str = line;
+    span.just = terminator;
     if (line!=null && line.charAt(0)!='\0') {
-	Z.z().tf.setPtr("name", lp.getPtr("fontname"));
-	Z.z().tf.setDouble("size", lp.getDouble("fontsize"));
+	Z.z().tf.name = lp.fontname;
+	Z.z().tf.size = lp.fontsize;
 	// WE CHEAT
-	((ST_pointf) size).x = 0.0;
-	((ST_pointf) size).y = (int)(lp.getDouble("fontsize") * 1.20);
+	size.x = 0.0;
+	size.y = (int)(lp.fontsize * 1.20);
 	hackInitDimensionFromLabel(size, line.getContent());
-	((ST_pointf) span.getStruct("size")).y = (int)size.getDouble("y");
+	span.size.y = (int)size.y;
     }
     else {
 	System.err.println("YOU SHOULD NOT SEE THAT");
-	((ST_pointf) size).x = 0.0;
-	((ST_pointf) size).y = (int)(lp.getDouble("fontsize") * 1.20);
-	span.getStruct("size").setDouble("y", (int)(lp.getDouble("fontsize") * 1.20));
+	size.x = 0.0;
+	size.y = (int)(lp.fontsize * 1.20);
+	span.size.y = (int)(lp.fontsize * 1.20);
     }
-    lp.setInt("u.txt.nspans", lp.getInt("u.txt.nspans") + 1);
+    lp.nspans = lp.nspans + 1;
     /* width = max line width */
-    ((ST_pointf) lp.dimen).x = MAX(lp.dimen.getDouble("x"), size.getDouble("x"));
+    lp.dimen.x = MAX(lp.dimen.x, size.x);
     /* accumulate height */
-    ((ST_pointf) lp.dimen).y = lp.dimen.getDouble("y") + size.getDouble("y");
+    lp.dimen.y = lp.dimen.y + size.y;
 } finally {
 LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 }
@@ -772,7 +773,7 @@ try {
          * the second in 0x40-0x7e or 0xa1-0xfe. We assume that the input
          * is well-formed, but check that we don't go past the ending '\0'.
          */
-	if ((lp.getInt("charset") == 2) && 0xA1 <= bytee && bytee <= 0xFE) {
+	if ((lp.charset == 2) && 0xA1 <= bytee && bytee <= 0xFE) {
 UNSUPPORTED("6la63t1mnqv30shyyp3yfroxb"); // 	    *lineptr++ = c;
 UNSUPPORTED("ebmmarxykvf76hmfmjuk0ssjz"); // 	    c = *p++;
 UNSUPPORTED("6la63t1mnqv30shyyp3yfroxb"); // 	    *lineptr++ = c;
@@ -834,7 +835,7 @@ try {
     switch (agobjkind(obj)) {
     case AGRAPH:
         sg = (ST_Agraph_s)obj;
-	g = (ST_Agraph_s) sg.getPtr("root");
+	g = (ST_Agraph_s) sg.root;
 	break;
     case AGNODE:
         n = (ST_Agnode_s)obj.castTo(ST_Agnode_s.class);
@@ -848,7 +849,7 @@ try {
     rv.setPtr("fontname", fontname);
     rv.setPtr("fontcolor", fontcolor);
     rv.setDouble("fontsize", fontsize);
-    rv.setInt("charset", g.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agraphinfo_t.class).getInt("charset"));
+    rv.charset = ((ST_Agraphinfo_t)g.castTo_ST_Agobj_s().data.castTo(ST_Agraphinfo_t.class)).charset;
     if ((kind & (2 << 1))!=0) {
 	rv.setPtr("text", str.strdup());
         if ((kind & (1 << 1))!=0) {
@@ -879,7 +880,7 @@ try {
          * sequences (\n, \l, \r) are processed in make_simple_label. That call also replaces \\ with \.
          */
 	rv.setPtr("text", strdup_and_subst_obj0(str, obj, 0));
-        switch (rv.getInt("charset")) {
+        switch (rv.charset) {
     case 1:
 	    UNSUPPORTED("s = latin1ToUTF8(rv->text);");
 	    break;
@@ -887,9 +888,9 @@ try {
 	    s = htmlEntityUTF8(rv.text, g);
 	    break;
 	}
-        Memory.free(rv.getPtr("text"));
+        Memory.free(rv.text);
         rv.setPtr("text", s);
-	make_simple_label((ST_GVC_s) g.castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agraphinfo_t.class).getPtr("gvc"), rv);
+	make_simple_label(g.castTo_ST_Agobj_s().data.castTo_ST_Agraphinfo_t().gvc, rv);
     }
     return rv;
 } finally {
@@ -1039,7 +1040,7 @@ try {
 	    g_len = strlen(g_str);
 	    n_str = agnameof(obj.castTo(ST_Agnode_s.class));
 	    n_len = strlen(n_str);
-	    tl =  (ST_textlabel_t) obj.castTo(ST_Agnode_s.class).castTo(ST_Agobj_s.class).getPtr("data").castTo(ST_Agnodeinfo_t.class).getPtr("label");
+	    tl =  (ST_textlabel_t) ((ST_Agnode_s)obj.castTo(ST_Agnode_s.class)).castTo_ST_Agobj_s().data.castTo_ST_Agnodeinfo_t().label;
 	    if (tl!=null) {
 		l_str = tl.text;
 	    	if (str!=null) l_len = strlen(l_str);

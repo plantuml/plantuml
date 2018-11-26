@@ -46,9 +46,7 @@
 package h;
 
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedStruct {
@@ -71,43 +69,7 @@ public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedSt
 	public ST_polygon_t(StarStruct parent) {
 	}
 
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("regular")) {
-			return regular != 0;
-		}
-		return super.getBoolean(fieldName);
-	}
 
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("option")) {
-			return option;
-		}
-		if (fieldName.equals("sides")) {
-			return sides;
-		}
-		if (fieldName.equals("peripheries")) {
-			return peripheries;
-		}
-		return super.getInt(fieldName);
-	}
-
-
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("orientation")) {
-			return orientation;
-		}
-		if (fieldName.equals("skew")) {
-			return skew;
-		}
-		if (fieldName.equals("distortion")) {
-			return distortion;
-		}
-		return super.getDouble(fieldName);
-	}
 
 	@Override
 	public void setInt(String fieldName, int data) {

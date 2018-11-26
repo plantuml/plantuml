@@ -62,8 +62,8 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
-	static private final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|thickness=\\d+";
-	static private final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,thickness=\\d+";
+	static private final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+";
+	static private final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+";
 	static public final String LINE_STYLE = "(?:#\\w+|" + CommandLinkElement.KEY1 + ")(?:,#\\w+|"
 			+ CommandLinkElement.KEY2 + ")*";
 

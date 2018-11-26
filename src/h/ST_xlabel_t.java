@@ -48,9 +48,7 @@ package h;
 import java.util.ArrayList;
 import java.util.List;
 
-import smetana.core.CString;
 import smetana.core.UnsupportedArrayOfStruct2;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -89,28 +87,8 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 		private final int pos_;
 		
 		@Override
-		public __struct__ getStruct(String fieldName) {
-			return get(0).getStruct(fieldName);
-		}
-		
-		@Override
 		public void setInt(String fieldName, int data) {
 			get(0).setInt(fieldName, data);
-		}
-		
-		@Override
-		public boolean getBoolean(String fieldName) {
-			return get(0).getBoolean(fieldName);
-		}
-		
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return get(0).getPtr(fieldName);
-		}
-		
-		@Override
-		public int getInt(String fieldName) {
-			return get(0).getInt(fieldName);
 		}
 		
 		@Override
@@ -124,17 +102,12 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 		}
 		
 		@Override
-		public double getDouble(String fieldName) {
-			return get(0).getDouble(fieldName);
-		}
-		
-		@Override
 		public void setDouble(String fieldName, double value) {
 			get(0).setDouble(fieldName, value);
 		}
 		
 		@Override
-		public __struct__ getStruct() {
+		public ST_xlabel_t getStruct() {
 			return get(0).getStruct();
 		}
 		
@@ -195,13 +168,6 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
-		public CString getCString() {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void setCString(CString value) {
-			throw new UnsupportedOperationException(getClass().toString());			
-		}
 
 	}
 	
@@ -216,22 +182,6 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 	}
 	
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("set")) {
-			return this.set;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("set")) {
-			return this.set!=0;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("lbl")) {
 			this.lbl = (ST_textlabel_t) newData;
@@ -241,22 +191,8 @@ public class ST_xlabel_t extends UnsupportedStructAndPtr {
 	}
 	
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("lbl")) {
-			return this.lbl;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("sz")) {
-			return this.sz;
-		}
-		if (fieldName.equals("pos")) {
-			return this.pos;
-		}
-		return super.getStruct(fieldName);
+	public ST_xlabel_t getStruct() {
+		return this;
 	}
 
 	@Override

@@ -50,7 +50,6 @@ import java.util.List;
 
 import smetana.core.CString;
 import smetana.core.UnsupportedArrayOfStruct2;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -98,11 +97,6 @@ public class ST_textspan_t extends UnsupportedStructAndPtr {
 		@Override
 		public void setStruct(String fieldName, __struct__ data) {
 			getStruct().setStruct(fieldName, data);
-		}
-		
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return getStruct().getStruct(fieldName);
 		}
 		
 		@Override
@@ -166,24 +160,9 @@ public class ST_textspan_t extends UnsupportedStructAndPtr {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
-		public CString getCString() {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void setCString(CString value) {
-			throw new UnsupportedOperationException(getClass().toString());			
-		}
 
 	}
 
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("size")) {
-			return size;
-		}
-		return super.getStruct(fieldName);
-	}
 
 	@Override
 	public void setInt(String fieldName, int data) {
@@ -192,14 +171,6 @@ public class ST_textspan_t extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("just")) {
-			return this.just;
-		}
-		return super.getInt(fieldName);
 	}
 
 	@Override

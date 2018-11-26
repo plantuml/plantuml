@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -76,28 +75,6 @@ public class ST_splineInfo extends UnsupportedStructAndPtr {
 			return splineMerge;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public Object call(String fieldName, Object... args) {
-		if (fieldName.equals("swapEnds")) {
-			return swapEnds.exe(args);
-		}
-		if (fieldName.equals("splineMerge")) {
-			return splineMerge.exe(args);
-		}
-		return super.call(fieldName, args);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("ignoreSwap")) {
-			return ignoreSwap;
-		}
-		if (fieldName.equals("isOrtho")) {
-			return isOrtho;
-		}
-		return super.getBoolean(fieldName);
 	}
 
 	// public interface ST_splineInfo extends __ptr__ {

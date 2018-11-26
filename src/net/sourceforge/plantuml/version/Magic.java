@@ -83,12 +83,20 @@ public class Magic {
 		return buffer;
 	}
 
+	public void setByte(int pos, int data) {
+		buffer[pos] = (byte) (0xFF & data);
+	}
+
 	public void setByte(byte[] shrink, int pos, int data) {
 		buffer[pos] = (byte) (0xFF & (data ^ shrink(shrink)));
 	}
 
 	public int getByte(byte[] shrink, int pos) {
 		return buffer[pos] ^ shrink(shrink);
+	}
+
+	public int getByte(int pos) {
+		return buffer[pos];
 	}
 
 	public void set(int pos, byte[] data) {

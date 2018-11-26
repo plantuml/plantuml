@@ -150,7 +150,7 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor, USymbol type) {
+			HtmlColor borderColor, USymbol type, double roundCorner) {
 		return list;
 	}
 

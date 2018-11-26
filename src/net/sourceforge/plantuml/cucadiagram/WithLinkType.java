@@ -46,6 +46,7 @@ public abstract class WithLinkType {
 
 	protected LinkType type;
 	protected boolean hidden = false;
+	private boolean single = false;
 
 	private Colors colors = Colors.empty();
 
@@ -87,6 +88,14 @@ public abstract class WithLinkType {
 		type = type.goBold();
 	}
 
+	public final void goSingle() {
+		this.single = true;
+	}
+
+	public boolean isSingle() {
+		return single;
+	}
+
 	public void applyStyle(String arrowStyle) {
 		if (arrowStyle == null) {
 			return;
@@ -102,6 +111,8 @@ public abstract class WithLinkType {
 				this.goDotted();
 			} else if (s.equalsIgnoreCase("hidden")) {
 				this.goHidden();
+			} else if (s.equalsIgnoreCase("single")) {
+				this.goSingle();
 			} else if (s.equalsIgnoreCase("plain")) {
 				// Do nothing
 			} else if (s.equalsIgnoreCase("norank")) {

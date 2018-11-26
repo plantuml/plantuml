@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -111,22 +110,6 @@ public class ST_Agobj_s extends UnsupportedStructAndPtr implements WithParent, H
 			return data;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("data")) {
-			return data;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("tag")) {
-			return tag;
-		}
-		return super.getStruct(fieldName);
 	}
 
 	@Override

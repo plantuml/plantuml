@@ -80,15 +80,7 @@ public abstract class UnsupportedArrayOfStruct2 {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public double getDouble(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public void setDouble(String fieldName, double value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __struct__ getStruct(String fieldName) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
@@ -117,22 +109,6 @@ public abstract class UnsupportedArrayOfStruct2 {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public __ptr__ getPtr(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public boolean getBoolean(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public CString getCString(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public int getInt(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public __ptr__ setPtr(String fieldName, __ptr__ data) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
@@ -145,15 +121,7 @@ public abstract class UnsupportedArrayOfStruct2 {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public void setBoolean(String fieldName, boolean data) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public __ptr__ castTo(Class dest) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public Object call(String name, Object... args) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

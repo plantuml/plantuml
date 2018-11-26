@@ -45,9 +45,7 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_splines extends UnsupportedStructAndPtr {
@@ -79,14 +77,6 @@ public class ST_splines extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("size")) {
-			return this.size;
-		}
-		return super.getInt(fieldName);
 	}
 
 }

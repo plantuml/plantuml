@@ -45,10 +45,8 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_RTree extends UnsupportedStructAndPtr {
@@ -78,7 +76,7 @@ public class ST_RTree extends UnsupportedStructAndPtr {
 	// "int ReInsertCount",
 	// "int InSplitCount",
 	// "int DeSplitCount",
-	// "int ElimCount",
+	public int ElimCount;
 	// "int EvalCount",
 	// "int InTouchCount",
 	// "int DeTouchCount",
@@ -95,65 +93,12 @@ public class ST_RTree extends UnsupportedStructAndPtr {
 	// "}");
 
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("root")) {
-			return root;
-		}
-		return super.getPtr(fieldName);
-	}
-	
-	@Override
-	public ST_SplitQ_t getStruct(String fieldName) {
-		if (fieldName.equals("split")) {
-			return split;
-		}
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("root")) {
 			this.root = (ST_Node_t___) newData;
 			return root;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("NodeCount")) {
-			return NodeCount;
-		}
-		if (fieldName.equals("LeafCount")) {
-			return LeafCount;
-		}
-		if (fieldName.equals("Deleting")) {
-			return Deleting;
-		}
-		if (fieldName.equals("RectCount")) {
-			return RectCount;
-		}
-		if (fieldName.equals("EntryCount")) {
-			return EntryCount;
-		}
-		if (fieldName.equals("SeTouchCount")) {
-			return SeTouchCount;
-		}
-		if (fieldName.equals("MinFill")) {
-			return MinFill;
-		}
-		if (fieldName.equals("NonLeafCount")) {
-			return NonLeafCount;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("StatFlag")) {
-			return StatFlag != 0;
-		}
-		return super.getBoolean(fieldName);
 	}
 
 	@Override

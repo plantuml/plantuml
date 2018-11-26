@@ -42,7 +42,6 @@ import java.util.List;
 import smetana.core.amiga.Area;
 import smetana.core.amiga.AreaInt;
 import smetana.core.amiga.BuilderArea;
-import smetana.core.amiga.StarStruct;
 import smetana.core.amiga.Counter;
 
 public class __array_of_double__ implements Area {

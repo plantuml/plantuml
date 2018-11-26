@@ -46,15 +46,13 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
 public class ST_gvlayout_engine_s extends UnsupportedStructAndPtr {
 
-	private CFunction layout;
-	private CFunction cleanup;
+	public CFunction layout;
+	public CFunction cleanup;
 
 	// "struct gvlayout_engine_s",
 	// "{",
@@ -75,27 +73,6 @@ public class ST_gvlayout_engine_s extends UnsupportedStructAndPtr {
 		return super.setPtr(fieldName, newData);
 	}
 
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("layout")) {
-			return layout;
-		}
-		if (fieldName.equals("cleanup")) {
-			return cleanup;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public Object call(String fieldName, Object... args) {
-		if (fieldName.equals("layout")) {
-			return layout.exe(args);
-		}
-		if (fieldName.equals("cleanup")) {
-			return cleanup.exe(args);
-		}
-		return super.call(fieldName, args);
-	}
 
 }
 

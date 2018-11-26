@@ -78,7 +78,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		for (Ftile tmp : getList()) {
 			final FtileGeometry dim = tmp.calculateDimension(getStringBounder());
 			if (first == 0) {
-				first = dim.getLeft();
+				first = x + dim.getLeft();
 			}
 			last = x + dim.getLeft();
 			conns.add(new ConnectionIn(thin, tmp, x, tmp.getInLinkRendering().getRainbow(
@@ -123,7 +123,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 			final FtileGeometry dim = tmp.calculateDimension(getStringBounder());
 			if (dim.hasPointOut()) {
 				if (first == 0) {
-					first = dim.getLeft();
+					first = x + dim.getLeft();
 				}
 				last = x + dim.getLeft();
 			}
@@ -133,6 +133,9 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		}
 		if (last < geom.getLeft()) {
 			last = geom.getLeft();
+		}
+		if (first > geom.getLeft()) {
+			first = geom.getLeft();
 		}
 		((FtileThinSplit) out).setGeom(first, last, geom.getWidth());
 		result = FtileUtils.addConnection(result, conns);

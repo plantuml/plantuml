@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -68,40 +67,6 @@ public class ST_dtdisc_s extends UnsupportedStructAndPtr {
 
 	public ST_dtdisc_s() {
 		this(null);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("memoryf")) {
-			return memoryf;
-		}
-		if (fieldName.equals("eventf")) {
-			return eventf;
-		}
-		if (fieldName.equals("comparf")) {
-			return comparf;
-		}
-		if (fieldName.equals("makef")) {
-			return makef;
-		}
-		if (fieldName.equals("freef")) {
-			return freef;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("key")) {
-			return key;
-		}
-		if (fieldName.equals("size")) {
-			return size;
-		}
-		if (fieldName.equals("link")) {
-			return link;
-		}
-		return super.getInt(fieldName);
 	}
 
 	@Override

@@ -79,8 +79,8 @@ public class GanttArrow implements UDrawable {
 		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.RED_DARK)).apply(new UChangeColor(HtmlColorUtils.RED_DARK))
 				.apply(new UStroke(1.5));
 
-		final TaskDraw draw1 = source.getTask().getTaskDraw();
-		final TaskDraw draw2 = dest.getTask().getTaskDraw();
+		final TaskDraw draw1 = ((Task) source.getMoment()).getTaskDraw();
+		final TaskDraw draw2 = ((Task) dest.getMoment()).getTaskDraw();
 
 		double x1 = getX(source.withDelta(0), atStart);
 		double y1 = draw1.getY(atStart);

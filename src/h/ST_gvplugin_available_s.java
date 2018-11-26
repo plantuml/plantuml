@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.amiga.StarStruct;
 

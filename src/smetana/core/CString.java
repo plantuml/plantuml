@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import smetana.core.amiga.Area;
-import smetana.core.amiga.StarStruct;
 
 public class CString extends UnsupportedC implements __ptr__, Area {
 

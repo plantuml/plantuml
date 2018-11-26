@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 
 class IfManagerPositif extends IfManager {
 
-	public IfManagerPositif(ReadLine source, Defines defines) {
+	public IfManagerPositif(ReadLine source, DefinesGet defines) {
 		super(source, defines);
 	}
 

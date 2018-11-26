@@ -149,7 +149,7 @@ try {
 	dt.setPtr("view", null);
 	dt.setPtr("walk", null);
 	dt.setPtr("user", null);
-	if(disc.getPtr("eventf")!=null)
+	if(disc.eventf!=null)
 	{	/* if shared/persistent dictionary, get existing data */
 		throw new UnsupportedOperationException();
 //		data = ((Dtdata_t*)0);
@@ -176,7 +176,7 @@ try {
 //		}
 	}
 	/* allocate sharable data */
-	if(N(data = (ST_dtdata_s) (dt.call("memoryf", dt,null,sizeof(ST_dtdata_s.class),disc)) ))
+	if(N(data = (ST_dtdata_s) (dt.memoryf.exe(dt,null,sizeof(ST_dtdata_s.class),disc)) ))
 	{ err_open:
 		Memory.free(dt);
 		return (null);

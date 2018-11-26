@@ -173,13 +173,13 @@ ST_XLabels_t xlp;
 xlp = new ST_XLabels_t();
 /* used to load the rtree in hilbert space filling curve order */
 xlp.setPtr("hdx", dtopen(Z.z().Hdisc, Z.z().Dtobag));
-if (N(xlp.getPtr("hdx"))) {
+if (N(xlp.hdx)) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
 }
 /* for querying intersection candidates */
 xlp.setPtr("spdx", RTreeOpen());
-if (N(xlp.getPtr("spdx"))) {
+if (N(xlp.spdx)) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
      }
@@ -211,7 +211,7 @@ LEAVING("88mbfm305igsr7cew5qx6yldp","xlnew");
 public static void xlfree(ST_XLabels_t xlp) {
 ENTERING("apvhod2s1yjb8717rb7gie2kb","xlfree");
 try {
-     RTreeClose((ST_RTree) xlp.getPtr("spdx"));
+     RTreeClose((ST_RTree) xlp.spdx);
      Memory.free(xlp);
 } finally {
 LEAVING("apvhod2s1yjb8717rb7gie2kb","xlfree");
@@ -284,7 +284,7 @@ LEAVING("9lkyvq87bawe3yon7bdwvcjzq","hd_hil_s_from_xy");
 }
 }
 private static int hd_hil_s_from_xy_(ST_point p, int n) {
-     int i, x = p.getInt("x"), y = p.getInt("y"), xi, yi;
+     int i, x = p.x, y = p.y, xi, yi;
      int s;
      s = 0;			/* Initialize. */
      for (i = n - 1; i >= 0; i--) {
@@ -344,10 +344,10 @@ try {
 	ST_xlabel_t.Array xlp = (ST_xlabel_t.Array) objp.lbl;
 //   assert(objp1->sz.x == 0 && objp1->sz.y == 0);
    if(N(xlp)) return false;
-      return objp1.getStruct("pos").getDouble("x") > xlp.getStruct("pos").getDouble("x") &&
-    		  objp1.getStruct("pos").getDouble("x") < (xlp.getStruct("pos").getDouble("x") + xlp.getStruct("sz").getDouble("y")) &&
-    		  objp1.getStruct("pos").getDouble("y") > xlp.getStruct("pos").getDouble("y") &&
-    		  objp1.getStruct("pos").getDouble("y") < (xlp.getStruct("pos").getDouble("y") + xlp.getStruct("sz").getDouble("y"));
+      return objp1.pos.x > xlp.getStruct().pos.x &&
+    		  objp1.pos.x < (xlp.getStruct().pos.x + xlp.getStruct().sz.y) &&
+    		  objp1.pos.y > xlp.getStruct().pos.y &&
+    		  objp1.pos.y < (xlp.getStruct().pos.y + xlp.getStruct().sz.y);
 //   UNSUPPORTED("exdts7f2bpam5122kabq2b86c"); //   return objp1->pos.x > xlp->pos.x &&
 //   UNSUPPORTED("99uxf5dqw5nzdymlzfj764uol"); // 	 objp1->pos.x < (xlp->pos.x + xlp->sz.x) &&
 //   UNSUPPORTED("epx7s3oiw75fuioasz208w1k1"); // 	 objp1->pos.y > xlp->pos.y &&
@@ -367,10 +367,10 @@ LEAVING("2g71cq6f8w5jbmbnn2x9y5qfq","lblenclosing");
 public static void objp2rect(ST_object_t op, ST_Rect_t r) {
 ENTERING("dq1wkb4oxshdggv6cwtgas6m","objp2rect");
 try {
-	r.boundary[0]=((int)op.getStruct("pos").getDouble("x"));
-	r.boundary[1]=((int)op.getStruct("pos").getDouble("y"));
-	r.boundary[2]=((int)(op.getStruct("pos").getDouble("x")+op.getStruct("sz").getDouble("x")));
-	r.boundary[3]=((int)(op.getStruct("pos").getDouble("y")+op.getStruct("sz").getDouble("y")));
+	r.boundary[0]=((int)op.pos.x);
+	r.boundary[1]=((int)op.pos.y);
+	r.boundary[2]=((int)(op.pos.x+op.sz.x));
+	r.boundary[3]=((int)(op.pos.y+op.sz.y));
 } finally {
 LEAVING("dq1wkb4oxshdggv6cwtgas6m","objp2rect");
 }
@@ -385,10 +385,10 @@ public static void objplp2rect(ST_object_t objp, ST_Rect_t r) {
 ENTERING("71b5ttp3xs7lo9fqgb7ypyqgx","objplp2rect");
 try {
 	ST_xlabel_t.Array lp = (ST_xlabel_t.Array) objp.lbl;
-    r.boundary[0]=((int)lp.getStruct("pos").getDouble("x"));
-    r.boundary[1]=((int)lp.getStruct("pos").getDouble("y"));
-    r.boundary[2]=((int)(lp.getStruct("pos").getDouble("x")+lp.getStruct("sz").getDouble("x")));
-    r.boundary[3]=((int)(lp.getStruct("pos").getDouble("y")+lp.getStruct("sz").getDouble("y")));
+    r.boundary[0]=((int)lp.getStruct().pos.x);
+    r.boundary[1]=((int)lp.getStruct().pos.y);
+    r.boundary[2]=((int)(lp.getStruct().pos.x+lp.getStruct().sz.x));
+    r.boundary[3]=((int)(lp.getStruct().pos.y+lp.getStruct().sz.y));
 } finally {
 LEAVING("71b5ttp3xs7lo9fqgb7ypyqgx","objplp2rect");
 }
@@ -407,12 +407,12 @@ try {
      p.setDouble("x", 0);
      p.setDouble("y", 0);
      if (objp.lbl!=null)
-    	 p.___(objp.lbl.getStruct("sz"));
-     rect.boundary[0]=((int) Math.floor(objp.getPtr("pos").getDouble("x") - p.getDouble("x")));
-     rect.boundary[1]=((int) Math.floor(objp.getPtr("pos").getDouble("y") - p.getDouble("y")));
-     rect.boundary[2]=((int) Math.ceil(objp.getPtr("pos").getDouble("x") + objp.getPtr("sz").getDouble("x") + p.getDouble("x")));
+    	 p.___(objp.lbl.getStruct().sz);
+     rect.boundary[0]=((int) Math.floor(objp.pos.x - p.x));
+     rect.boundary[1]=((int) Math.floor(objp.pos.y - p.y));
+     rect.boundary[2]=((int) Math.ceil(objp.pos.x + objp.sz.x + p.x));
      //     assert(rect.boundary[2] < INT_MAX);
-     rect.boundary[3]=((int) Math.ceil(objp.getPtr("pos").getDouble("y") + objp.getPtr("sz").getDouble("y") + p.getDouble("y")));
+     rect.boundary[3]=((int) Math.ceil(objp.pos.y + objp.sz.y + p.y));
      //     assert(rect.boundary[3] < INT_MAX);
      return rect;
 } finally {
@@ -431,7 +431,7 @@ try {
      int i = -1;
      ST_xlabel_t.Array lp = (ST_xlabel_t.Array) op.lbl, clp = (ST_xlabel_t.Array) cp.lbl;
      assert(lp != clp);
-     if (lp.getInt("set") == 0 || clp.getInt("set") == 0)
+     if (lp.getStruct().set == 0 || clp.getStruct().set == 0)
  	return i;
 UNSUPPORTED("bofpvwtmumoe1ckgnlgbwg8bt"); //     if ((op->pos.x == 0.0 && op->pos.y == 0.0) ||
 UNSUPPORTED("f039op8rn0jopi9r8kora4cwz"); // 	(cp->pos.x == 0.0 && cp->pos.y == 0.0))
@@ -492,10 +492,10 @@ try {
  	if (maxa > 0.0)
  	    return maxa;
  	/*replace overlapping label/object pair */
- 	intrsx[i] = (ST_object_t) cp.getStruct();
+ 	intrsx[i] = cp;
  	return a;
      }
-     intrsx[i] = (ST_object_t) cp.getPtr();
+     intrsx[i] = cp;
      return a;
 } finally {
 LEAVING("52awwxu810dg9a2pjq45aomam","recordointrsx");
@@ -531,10 +531,10 @@ try {
  	if (maxa > 0.0)
  	    return maxa;
  	/*replace overlapping label/object pair */
- 	intrsx[i] = (ST_object_t) cp.getStruct();
+ 	intrsx[i] = cp;
  	return a;
      }
-  	intrsx[i] = (ST_object_t) cp.getStruct();
+  	intrsx[i] = cp;
   	return a;
 } finally {
 LEAVING("2umrncgkunxoyeuc8i9hd5pwa","recordlintrsx");
@@ -564,21 +564,24 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
 //     assert(objp->lbl);
 	     bp.setInt("n", 0);
 	     bp.setDouble("area", 0.0);
-	     bp.setStruct("pos", objp.lbl.getStruct("pos"));
-     for(i=0; i<xlp.getInt("n_objs"); i++) {
-    	       if (EQ(objp, xlp.getPtr("objs").plus(i).getStruct())) continue;
-       if(xlp.getPtr("objs").plus(i).getStruct("sz").getDouble("x") > 0 && xlp.getPtr("objs").plus(i).getStruct("sz").getDouble("y") > 0) continue;
-       if(lblenclosing(objp, (ST_object_t) xlp.getPtr("objs").plus(i).getStruct())) {
-    	 	  bp.setInt("n", bp.getInt("n")+1);
+	     bp.setStruct("pos", objp.lbl.getStruct().pos);
+     for(i=0; i<xlp.n_objs; i++) {
+    	       if (EQ(objp, xlp.objs.plus(i).getStruct())) continue;
+       if(xlp.objs.get(i).sz.x > 0 && xlp.objs.get(i).sz.y > 0) continue;
+       if(lblenclosing(objp, (ST_object_t) xlp.objs.plus(i).getStruct())) {
+    	 	  bp.setInt("n", bp.n+1);
        }
      }
      objplp2rect((ST_object_t) objp.getStruct(), rect);
-     llp = RTreeSearch((ST_RTree)xlp.getPtr("spdx"), (ST_Node_t___)xlp.getPtr("spdx").getPtr("root"), rect);
+     llp = RTreeSearch((ST_RTree)xlp.spdx, (ST_Node_t___)xlp.spdx.root, rect);
      if (N(llp))
  	return bp;
      for (ilp = llp; ilp!=null; ilp = (ST_LeafList_t) ilp.next) {
  	double a, ra;
- 	ST_object_t cp = (ST_object_t) ilp.getPtr("leaf").getPtr("data").getPtr();
+ 	// WARNING FOR TRANSLATION
+ 	// In the C code, "data" was used. However ST_Branch_t is very close to ST_Leaf_t
+ 	// So in Java version, ST_Leaf_t has been removed and ST_Branch_t is used instead
+ 	ST_object_t cp = (ST_object_t) ilp.leaf.child;
  	if (EQ(cp, objp))
  	    continue;
    /*label-object intersect */
@@ -586,18 +589,18 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
  	a = aabbaabb(rect, srect);
  	if (a > 0.0) {
  	  ra = recordointrsx(xlp, objp, cp, rect, a, intrsx);
- 	  bp.setInt("n", bp.getInt("n")+1);
- 	  bp.setDouble("area", bp.getDouble("area")+ra);
+ 	  bp.setInt("n", bp.n+1);
+ 	  bp.setDouble("area", bp.area+ra);
  	}
  	/*label-label intersect */
- 	if (N(cp.lbl) || N(cp.lbl.getInt("set")))
+ 	if (N(cp.lbl) || N(cp.lbl.getStruct().set))
  	    continue;
  	objplp2rect((ST_object_t) cp.getStruct(), srect);
  	a = aabbaabb(rect, srect);
  	if (a > 0.0) {
  	  ra = recordlintrsx(xlp, objp, cp, rect, a, intrsx);
- 	  bp.setInt("n", bp.getInt("n")+1);
- 	  bp.setDouble("area", bp.getDouble("area")+ra);
+ 	  bp.setInt("n", bp.n+1);
+ 	  bp.setDouble("area", bp.area+ra);
  	}
      }
      RTreeLeafListFree(llp);
@@ -619,72 +622,72 @@ LEAVING("8rxvucqsqnqej6h8p1osfnk4b","xladjust");
 }
 private static ST_BestPos_t xladjust_(ST_XLabels_t xlp, ST_object_t objp) {
 	ST_xlabel_t.Array lp = (ST_xlabel_t.Array) objp.lbl; // ST_xlabel_t
-    double xincr = ((2 * lp.getStruct("sz").getDouble("x") + objp.getStruct("sz").getDouble("x"))) / 8;
-    double yincr = ((2 * lp.getStruct("sz").getDouble("y") + objp.getStruct("sz").getDouble("y"))) / 2;
+    double xincr = ((2 * lp.getStruct().sz.x + objp.sz.x)) / 8;
+    double yincr = ((2 * lp.getStruct().sz.y + objp.sz.y)) / 2;
     ST_object_t intrsx[] = new ST_object_t[9];
     final ST_BestPos_t bp = new ST_BestPos_t();
     final ST_BestPos_t nbp = new ST_BestPos_t();
     //     assert(objp->lbl);
     //     memset(intrsx, 0, sizeof(intrsx));
      /*x left */
-    lp.getStruct("pos").setDouble("x", objp.getStruct("pos").getDouble("x") - lp.getStruct("sz").getDouble("x"));
+    lp.getStruct().pos.setDouble("x", objp.pos.x - lp.getStruct().sz.x);
      /*top */
-    lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") + objp.getStruct("sz").getDouble("y"));
+    lp.getStruct().pos.setDouble("y", objp.pos.y + objp.sz.y);
     bp.___(xlintersections(xlp, objp, intrsx));
-     if (bp.getInt("n") == 0)
+     if (bp.n == 0)
  	return bp;
      /*mid */
-     lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y"));
+     lp.getStruct().pos.setDouble("y", objp.pos.y);
      nbp.___(xlintersections(xlp, objp, intrsx));
-     if (nbp.getInt("n") == 0)
+     if (nbp.n == 0)
  	return nbp;
-     if (nbp.getDouble("area") < bp.getDouble("area"))
+     if (nbp.area < bp.area)
  	bp.___(nbp);
      /*bottom */
-     lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") - lp.getStruct("sz").getDouble("y"));
+     lp.getStruct().pos.setDouble("y", objp.pos.y - lp.getStruct().sz.y);
      nbp.___(xlintersections(xlp, objp, intrsx));
-     if (nbp.getInt("n") == 0)
+     if (nbp.n == 0)
  	return nbp;
-     if (nbp.getDouble("area") < bp.getDouble("area"))
+     if (nbp.area < bp.area)
  	bp.___(nbp);
      /*x mid */
-     lp.getStruct("pos").setDouble("x", objp.getStruct("pos").getDouble("x"));
+     lp.getStruct().pos.setDouble("x", objp.pos.x);
      /*top */
-     lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") + objp.getStruct("sz").getDouble("y"));
+     lp.getStruct().pos.setDouble("y", objp.pos.y + objp.sz.y);
      nbp.___(xlintersections(xlp, objp, intrsx));
-     if (nbp.getInt("n") == 0)
+     if (nbp.n == 0)
        return nbp;
-     if (nbp.getDouble("area") < bp.getDouble("area"))
+     if (nbp.area < bp.area)
        bp.___(nbp);
      /*bottom */
-	lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") - lp.getStruct("sz").getDouble("y"));
+	lp.getStruct().pos.setDouble("y", objp.pos.y - lp.getStruct().sz.y);
      nbp.___(xlintersections(xlp, objp, intrsx));
-     if (nbp.getInt("n") == 0)
+     if (nbp.n == 0)
        return nbp;
-     if (nbp.getDouble("area") < bp.getDouble("area"))
+     if (nbp.area < bp.area)
        bp.___(nbp);
      /*x right */
- 	lp.getStruct("pos").setDouble("x", objp.getStruct("pos").getDouble("x") + objp.getStruct("sz").getDouble("x"));
+ 	lp.getStruct().pos.setDouble("x", objp.pos.x + objp.sz.x);
      /*top */
- 	lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") + objp.getStruct("sz").getDouble("y"));
+ 	lp.getStruct().pos.setDouble("y", objp.pos.y + objp.sz.y);
      nbp.___(xlintersections(xlp, objp, intrsx));
-if (nbp.getInt("n") == 0)
+if (nbp.n == 0)
 return nbp;
-if (nbp.getDouble("area") < bp.getDouble("area"))
+if (nbp.area < bp.area)
     bp.___(nbp);
      /*mid */
-	lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y"));
+	lp.getStruct().pos.setDouble("y", objp.pos.y);
      nbp.___(xlintersections(xlp, objp, intrsx));
-if (nbp.getInt("n") == 0)
+if (nbp.n == 0)
 return nbp;
-if (nbp.getDouble("area") < bp.getDouble("area"))
+if (nbp.area < bp.area)
     bp.___(nbp);
      /*bottom */
-	lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") - lp.getStruct("sz").getDouble("y"));
+	lp.getStruct().pos.setDouble("y", objp.pos.y - lp.getStruct().sz.y);
      nbp.___(xlintersections(xlp, objp, intrsx));
-if (nbp.getInt("n") == 0)
+if (nbp.n == 0)
 return nbp;
-if (nbp.getDouble("area") < bp.getDouble("area"))
+if (nbp.area < bp.area)
     bp.___(nbp);
      /*sliding from top left */
      if (intrsx[6]!=null || intrsx[7]!=null || intrsx[8]!=null || intrsx[3]!=null || intrsx[0]!=null) {	/* have to move */
@@ -716,19 +719,19 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
      }
      /*sliding from bottom right */
- 	lp.getStruct("pos").setDouble("x", objp.getStruct("pos").getDouble("x") + objp.getStruct("sz").getDouble("x"));
-	lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") - lp.getStruct("sz").getDouble("y"));
+ 	lp.getStruct().pos.setDouble("x", objp.pos.x + objp.sz.x);
+	lp.getStruct().pos.setDouble("y", objp.pos.y - lp.getStruct().sz.y);
      if (intrsx[2]!=null || intrsx[1]!=null || intrsx[0]!=null || intrsx[5]!=null || intrsx[8]!=null) {	/* have to move */
  	if (N(intrsx[1]) && N(intrsx[0])) {	/* some room left? */
  	    /* slide along lower edge */
- 	    for (lp.getStruct("pos").setDouble("x", objp.getStruct("pos").getDouble("x") + objp.getStruct("sz").getDouble("x")),
- 		 lp.getStruct("pos").setDouble("y", objp.getStruct("pos").getDouble("y") - lp.getStruct("sz").getDouble("y"));
- 		 lp.getStruct("pos").getDouble("x") >= (objp.getStruct("pos").getDouble("x") - lp.getStruct("sz").getDouble("x"));
- 		 lp.getStruct("pos").setDouble("x", lp.getStruct("pos").getDouble("x") - xincr)) {
+ 	    for (lp.getStruct().pos.setDouble("x", objp.pos.x + objp.sz.x),
+ 		 lp.getStruct().pos.setDouble("y", objp.pos.y - lp.getStruct().sz.y);
+ 		 lp.getStruct().pos.x >= (objp.pos.x - lp.getStruct().sz.x);
+ 		 lp.getStruct().pos.setDouble("x", lp.getStruct().pos.x - xincr)) {
  		nbp.___(xlintersections(xlp, objp, intrsx));
- 		if (nbp.getInt("n") == 0)
+ 		if (nbp.n == 0)
  			return nbp;
- 			if (nbp.getDouble("area") < bp.getDouble("area"))
+ 			if (nbp.area < bp.area)
  			    bp.___(nbp);
  	    }
  	}
@@ -759,19 +762,19 @@ ENTERING("e29g2hwlogx0zchsnvi464c7t","xlhdxload");
 try {
      int i;
      int order = xlhorder(xlp);
-      for (i = 0; i < xlp.getInt("n_objs"); i++) {
+      for (i = 0; i < xlp.n_objs; i++) {
     	  ST_HDict_t hp;
     	  final ST_point pi = new ST_point();
     	  hp = new ST_HDict_t();
-    	  hp.getStruct("d").setPtr("data", (__ptr__) xlp.getPtr("objs").plus(i).getStruct());
-    	  hp.getStruct("d").setStruct("rect", objplpmks(xlp, (ST_object_t) xlp.getPtr("objs").plus(i).getStruct()));
+    	  hp.d.child = xlp.objs.get(i);
+    	  hp.d.setStruct("rect", objplpmks(xlp, (ST_object_t) xlp.objs.plus(i).getStruct()));
           /* center of the labeling area */
     	  pi.setInt("x", hp.d.rect.boundary[0] +
     	   (hp.d.rect.boundary[2] - hp.d.rect.boundary[0]) / 2);
 		  pi.setInt("y", hp.d.rect.boundary[1] +
 		   (hp.d.rect.boundary[3] - hp.d.rect.boundary[1]) / 2);
 		  hp.setInt("key", hd_hil_s_from_xy(pi, order));
-		  if (N(xlp.getPtr("hdx").call("searchf", xlp.getPtr("hdx"), hp, 0000001)))
+		  if (N(xlp.hdx.searchf.exe(xlp.hdx, hp, 0000001)))
  	    return -1;
      }
      return 0;
@@ -816,16 +819,16 @@ public static int xlspdxload(ST_XLabels_t xlp) {
 ENTERING("3wrxwwd3y5ts0ekr32o8vhuvv","xlspdxload");
 try {
      ST_HDict_t op=null;
-     for (op = (ST_HDict_t) xlp.getPtr("hdx").call("searchf", xlp.getPtr("hdx"), null, 0000200); op!=null;
-    		 op = (ST_HDict_t) xlp.getPtr("hdx").call("searchf", xlp.getPtr("hdx"), op, 0000010)) {
+     for (op = (ST_HDict_t) xlp.hdx.searchf.exe(xlp.hdx, null, 0000200); op!=null;
+    		 op = (ST_HDict_t) xlp.hdx.searchf.exe(xlp.hdx, op, 0000010)) {
    	/*          tree       rectangle    data        node             lvl */
 //    	 	RTreeInsert(xlp->spdx, &op->d.rect, op->d.data, &xlp->spdx->root, 0);
     	 // WARNING ARRAY
-     	final ST_Node_t___[] tmp = new ST_Node_t___[] {(ST_Node_t___) xlp.getPtr("spdx").getPtr("root")};
-		RTreeInsert((ST_RTree) xlp.getPtr("spdx"), (ST_Rect_t)op.d.rect,
-     			op.d.data,
+     	final ST_Node_t___[] tmp = new ST_Node_t___[] {(ST_Node_t___) xlp.spdx.root};
+		RTreeInsert((ST_RTree) xlp.spdx, (ST_Rect_t)op.d.rect,
+     			op.d.child,
      			tmp, 0);
-		xlp.getPtr("spdx").setPtr("root", tmp[0]);
+		xlp.spdx.setPtr("root", tmp[0]);
      }
      return 0;
 } finally {
@@ -847,7 +850,7 @@ try {
      if ((r = xlspdxload(xlp)) < 0)
  	return r;
      xlhdxunload(xlp);
-     return dtclose((ST_dt_s) xlp.getPtr("hdx"));
+     return dtclose((ST_dt_s) xlp.hdx);
 } finally {
 LEAVING("6d3fqrllm55toeo3wscwvv4ty","xlinitialize");
 }
@@ -887,15 +890,15 @@ ST_XLabels_t xlp = xlnew(objs, n_objs, lbls, n_lbls, params);
  	    continue;
  	xladjust(xlp, (ST_object_t) objs.get(i).getStruct());
  	bp.___(xladjust(xlp, (ST_object_t) objs.get(i).getStruct()));
- 	if (bp.getInt("n") == 0) {
+ 	if (bp.n == 0) {
  	    objs.get(i).lbl.setInt("set", 1);
- 	} else if(bp.getDouble("area") == 0) {
-UNSUPPORTED("djsgfzak14js9ukvgmoqnkm8v"); // 	    objs[i].lbl->pos.x = bp.pos.x;
-UNSUPPORTED("5s2aq4djc0l3xyilkowd7ri1r"); // 	    objs[i].lbl->pos.y = bp.pos.y;
-UNSUPPORTED("1wsz4ptoxskyulgu7czf059sf"); // 	    objs[i].lbl->set = 1;
+ 	} else if(bp.area == 0) {
+ 	    objs.get(i).lbl.getStruct().pos.setDouble("x", bp.pos.x);
+ 	    objs.get(i).lbl.getStruct().pos.setDouble("y", bp.pos.y);
+ 	    objs.get(i).lbl.setInt("set", 1);
  	} else if (params.force) {
- 	    objs.get(i).lbl.getStruct("pos").setDouble("x", bp.getStruct("pos").getDouble("x"));
- 	    objs.get(i).lbl.getStruct("pos").setDouble("y", bp.getStruct("pos").getDouble("y"));
+ 	    objs.get(i).lbl.getStruct().pos.setDouble("x", bp.pos.x);
+ 	    objs.get(i).lbl.getStruct().pos.setDouble("y", bp.pos.y);
  	    objs.get(i).lbl.setInt("set", 1);
  	} else {
  	    r = 1;

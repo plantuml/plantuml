@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -95,28 +94,6 @@ public class ST_pathend_t extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("nb")) {
-			return this.nb;
-		}
-		if (fieldName.equals("np")) {
-			return this.np;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("boxn")) {
-			return this.boxn;
-		}
-		if (fieldName.equals("sidemask")) {
-			return this.sidemask;
-		}
-		return super.getInt(fieldName);
 	}
 
 	@Override

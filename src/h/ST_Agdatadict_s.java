@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -53,9 +52,9 @@ import smetana.core.amiga.StarStruct;
 public class ST_Agdatadict_s extends UnsupportedStructAndPtr {
 
 	private final ST_Agrec_s h = new ST_Agrec_s(this); /* installed in list of graph recs */
-	public ST_dt_s n;
-	public ST_dt_s e;
-	public ST_dt_s g;
+	public ST_dt_s dict_n;
+	public ST_dt_s dict_e;
+	public ST_dt_s dict_g;
 
 	private final StarStruct parent;
 
@@ -74,32 +73,18 @@ public class ST_Agdatadict_s extends UnsupportedStructAndPtr {
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("dict.n")) {
-			this.n = (ST_dt_s) newData;
-			return n;
+			this.dict_n = (ST_dt_s) newData;
+			return dict_n;
 		}
 		if (fieldName.equals("dict.e")) {
-			this.e = (ST_dt_s) newData;
-			return e;
+			this.dict_e = (ST_dt_s) newData;
+			return dict_e;
 		}
 		if (fieldName.equals("dict.g")) {
-			this.g = (ST_dt_s) newData;
-			return g;
+			this.dict_g = (ST_dt_s) newData;
+			return dict_g;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("dict.n")) {
-			return n;
-		}
-		if (fieldName.equals("dict.e")) {
-			return e;
-		}
-		if (fieldName.equals("dict.g")) {
-			return g;
-		}
-		return super.getPtr(fieldName);
 	}
 
 	@Override

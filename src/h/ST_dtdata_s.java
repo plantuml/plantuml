@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -101,23 +100,6 @@ public class ST_dtdata_s extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("type")) {
-			return type;
-		}
-		if (fieldName.equals("size")) {
-			return size;
-		}
-		if (fieldName.equals("minp")) {
-			return minp;
-		}
-		if (fieldName.equals("ntab")) {
-			return ntab;
-		}
-		return super.getInt(fieldName);
 	}
 
 	// public interface ST_dtdata_s extends __ptr__ {

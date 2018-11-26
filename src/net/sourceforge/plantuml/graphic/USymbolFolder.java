@@ -58,9 +58,11 @@ public class USymbolFolder extends USymbol {
 	private final static int marginTitleY2 = 3;
 
 	private final SkinParameter skinParameter;
+	private final boolean showTitle;
 
-	public USymbolFolder(SkinParameter skinParameter) {
+	public USymbolFolder(SkinParameter skinParameter, boolean showTitle) {
 		this.skinParameter = skinParameter;
+		this.showTitle = showTitle;
 	}
 
 	@Override
@@ -142,12 +144,15 @@ public class USymbolFolder extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
-				final Dimension2D dimName = name.calculateDimension(ug.getStringBounder());
+				final Dimension2D dimName = showTitle ? name.calculateDimension(ug.getStringBounder())
+						: new Dimension2DDouble(40, 15);
 				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimName, symbolContext.isShadowing(),
 						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
-				name.drawU(ug.apply(new UTranslate(4, 3)));
+				if (showTitle) {
+					name.drawU(ug.apply(new UTranslate(4, 3)));
+				}
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + dimName.getHeight())));
 			}
 

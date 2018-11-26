@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -78,16 +77,6 @@ public class ST_tedge_t extends UnsupportedStructAndPtr {
 	// "}",
 	// "tedge_t");
 
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("pnl0p")) {
-			return this.pnl0p;
-		}
-		if (fieldName.equals("pnl1p")) {
-			return this.pnl1p;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {

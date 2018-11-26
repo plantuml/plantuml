@@ -58,7 +58,7 @@ import h.ST_dt_s;
 import h.ST_dtdisc_s;
 import h.ST_dthold_s;
 import h.ST_dtlink_s;
-import h._dthold_s;
+import h.ST_dthold_s;
 import smetana.core.CFunction;
 import smetana.core.CString;
 import smetana.core.__ptr__;
@@ -150,10 +150,10 @@ try {
 	Dtcompar_f	cmpf;
 	ST_dtdisc_s	disc;
 	if (((dt.data.type) & 010000) !=0) { dtrestore(dt,null); }
-	disc = (ST_dtdisc_s) dt.disc; ky = disc.getInt("key");
+	disc = (ST_dtdisc_s) dt.disc; ky = disc.key;
 	sz = disc.size;
 	lk = disc.link;
-	cmpf = (Dtcompar_f) disc.getPtr("comparf");
+	cmpf = (Dtcompar_f) disc.comparf;
 	dt.setInt("type", dt.type&~0100000);
 	root = (ST_dtlink_s) dt.data.here;
 	if(N(obj))
@@ -161,7 +161,7 @@ try {
 			return null;
 		if((type&0000100)!=0) /* delete all objects */
 		{
-			if(disc.getPtr("freef")!=null || disc.link < 0) {
+			if(disc.freef!=null || disc.link < 0) {
 				do {
 					while((t = (ST_dtlink_s) root._left)!=null ) {
 						root._left = t.right;
@@ -169,11 +169,11 @@ try {
 						root = t;
 					}
 					t = (ST_dtlink_s) root.right;
-					if(disc.getPtr("freef")!=null)
+					if(disc.freef!=null)
 						throw new UnsupportedOperationException();
 //						(*disc->freef)(dt,(lk < 0 ? ((Dthold_t*)(root))->obj : (void*)((char*)(root) - lk) ),disc);
 					if(disc.link < 0)
-						dt.call("memoryf", dt, root, null, disc);
+						dt.memoryf.exe(dt, root, null, disc);
 				} while((root = t)!=null );
 			}
 			dt.data.setInt("size", 0);
@@ -196,7 +196,7 @@ try {
 				}
 			}
 			dt.data.here = root;
-			return (lk < 0 ? root.castTo(_dthold_s.class).getPtr("obj") : root.addVirtualBytes(-lk) );
+			return (lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk) );
 		}
 	}
 	/* note that link.right is LEFT tree and link.left is RIGHT tree */
@@ -232,14 +232,14 @@ try {
 //		if(root)
 //			goto do_search;
 	}
-	else if(root!=null && (lk < 0 ? (root.castTo(_dthold_s.class).getPtr("obj")!=null): NEQ(root.addVirtualBytes(-lk), obj)))
+	else if(root!=null && (lk < 0 ? (root.castTo_ST_dthold_s().obj!=null): NEQ(root.addVirtualBytes(-lk), obj)))
 	{	key = (sz < 0 ? ((__ptr__)obj).addVirtualBytes(ky) : ((__ptr__)obj).addVirtualBytes(ky));
 		throw new do_search();
 	}
 	} catch (do_search do_search) {
 //		do_search:
 		if(dt.meth.type == 0000004 &&
-		   (minp = dt.data.getInt("minp")) != 0 && (type&(0001000|0000004))!=0)
+		   (minp = dt.data.minp) != 0 && (type&(0001000|0000004))!=0)
 		{	/* simple search, note that minp should be even */
 //			for(t = root, n = 0; n < minp; ++n)
 //			{	k = (lk < 0 ? ((Dthold_t*)(t))->obj : (void*)((char*)(t) - lk) ); k = (void*)(sz < 0 ? *((char**)((char*)(k)+ky)) : ((char*)(k)+ky));
@@ -283,7 +283,7 @@ try {
 			throw new UnsupportedOperationException("do_search1");
 		}
 		while(true) {
-			k = lk < 0 ? root.castTo(_dthold_s.class).getPtr("obj") : root.addVirtualBytes(-lk); 
+			k = lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk); 
 			k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
 			if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc) : 
 				(sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) == 0)
@@ -291,7 +291,7 @@ try {
 			else if(cmp < 0)
 			{	if((t = (ST_dtlink_s) root._left)!=null )
 				{
-				k = lk < 0 ? t.castTo(_dthold_s.class).getPtr("obj") : t.addVirtualBytes(-lk);
+				k = lk < 0 ? t.castTo_ST_dthold_s().obj : t.addVirtualBytes(-lk);
 				k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
 				if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc)
 	 					 : (sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) < 0)
@@ -328,7 +328,7 @@ try {
 			else /* if(cmp > 0) */
 			{	if ((t = (ST_dtlink_s) root.right)!=null )
 				{
-					k = (lk < 0 ? t.castTo(_dthold_s.class).getPtr("obj") : t.addVirtualBytes(-lk) ); 
+					k = (lk < 0 ? t.castTo_ST_dthold_s().obj : t.addVirtualBytes(-lk) ); 
  					k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
 					if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc) 
  					 : (sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) > 0)
@@ -425,19 +425,19 @@ try {
 				root.right = link._left;
 				link._left = root;
 				 /*dt_insert: DUPLICATION*/
-				if(disc.getPtr("makef")!=null && (type&0000001)!=0)
-					obj = (__ptr__) disc.call("makef", dt,obj,disc);
+				if(disc.makef!=null && (type&0000001)!=0)
+					obj = (__ptr__) disc.makef.exe(dt,obj,disc);
 				if(obj!=null)
 				{
 					if(lk >= 0)
 						root = (ST_dtlink_s) ((__ptr__)obj.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
 					else
 					{
-						root = (ST_dtlink_s)(((ST_dthold_s)dt.call("memoryf",
-								dt,null,sizeof(_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
+						root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(
+								dt,null,sizeof(ST_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
 						if(root!=null)
-							root.castTo(_dthold_s.class).setPtr("obj", obj);
-						else if(disc.getPtr("makef")!=null && disc.getPtr("freef")!=null &&
+							root.castTo(ST_dthold_s.class).setPtr("obj", obj);
+						else if(disc.makef!=null && disc.freef!=null &&
 							((type&0000001))!=0)
 							UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
 					}
@@ -494,19 +494,19 @@ try {
 		}
 		else if((type&(0000001|0004000))!=0)
 		{ /*dt_insert: DUPLICATION*/
-			if(disc.getPtr("makef")!=null && (type&0000001)!=0)
-				obj = (__ptr__) disc.call("makef", dt,obj,disc);
+			if(disc.makef!=null && (type&0000001)!=0)
+				obj = (__ptr__) disc.makef.exe(dt,obj,disc);
 			if(obj!=null)
 			{
 				if(lk >= 0)
 					root = (ST_dtlink_s) ((__ptr__)obj.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
 				else
 				{
-					root = (ST_dtlink_s)(((ST_dthold_s)dt.call("memoryf",
-						dt,null,sizeof(_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
+					root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(
+						dt,null,sizeof(ST_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
 					if(root!=null)
-						root.castTo(_dthold_s.class).setPtr("obj", obj);
-					else if(disc.getPtr("makef")!=null && disc.getPtr("freef")!=null &&
+						root.castTo(ST_dthold_s.class).setPtr("obj", obj);
+					else if(disc.makef!=null && disc.freef!=null &&
 						((type&0000001))!=0)
 						UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
 				}
@@ -550,7 +550,7 @@ try {
 //			}
 		}
 		dt.data.here = root;
-		return (lk < 0 ? root.castTo(_dthold_s.class).getPtr("obj") : root.addVirtualBytes(-lk));
+		return (lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk));
 	} catch (no_root no_root) {
 			while((t = (ST_dtlink_s) r._left)!=null)
 				r = t;

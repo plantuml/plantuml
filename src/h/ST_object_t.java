@@ -48,9 +48,7 @@ package h;
 import java.util.ArrayList;
 import java.util.List;
 
-import smetana.core.CString;
 import smetana.core.UnsupportedArrayOfStruct2;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -58,7 +56,7 @@ import smetana.core.__struct__;
 import smetana.core.size_t;
 import smetana.core.amiga.StarStruct;
 
-public class ST_object_t extends UnsupportedStructAndPtr {
+public class ST_object_t extends UnsupportedStructAndPtr implements ST_Node_t___or_object_t {
 
 	private final StarStruct parent;
 
@@ -111,10 +109,6 @@ public class ST_object_t extends UnsupportedStructAndPtr {
 			return get(0);
 		}
 
-		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return get(0).getPtr(fieldName);
-		}
 
 		@Override
 		public __ptr__ setPtr(String fieldName, __ptr__ data) {
@@ -124,11 +118,6 @@ public class ST_object_t extends UnsupportedStructAndPtr {
 		@Override
 		public void setStruct(String fieldName, __struct__ data) {
 			get(0).setStruct(fieldName, data);
-		}
-
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return get(0).getStruct(fieldName);
 		}
 
 		public Array(int size) {
@@ -182,13 +171,6 @@ public class ST_object_t extends UnsupportedStructAndPtr {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
-		public CString getCString() {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void setCString(CString value) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
 
 	}
 
@@ -206,17 +188,6 @@ public class ST_object_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("pos")) {
-			return this.pos;
-		}
-		if (fieldName.equals("sz")) {
-			return this.sz;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
 	public void setStruct(String fieldName, __struct__ newData) {
 		if (fieldName.equals("pos")) {
 			this.pos.copyDataFrom(newData);
@@ -227,20 +198,6 @@ public class ST_object_t extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("pos")) {
-			return this.pos;
-		}
-		if (fieldName.equals("sz")) {
-			return this.sz;
-		}
-		if (fieldName.equals("lbl")) {
-			return this.lbl;
-		}
-		return super.getPtr(fieldName);
 	}
 
 }

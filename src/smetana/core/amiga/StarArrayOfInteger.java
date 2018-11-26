@@ -39,7 +39,6 @@ package smetana.core.amiga;
 import smetana.core.AllH;
 import smetana.core.UnsupportedC;
 import smetana.core.__array_of_integer__;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 
 public class StarArrayOfInteger extends UnsupportedC implements Area, AllH {

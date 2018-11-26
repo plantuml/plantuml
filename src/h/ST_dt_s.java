@@ -111,42 +111,6 @@ public class ST_dt_s extends UnsupportedStructAndPtr implements HardcodedStruct 
 	}
 
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("disc")) {
-			return disc;
-		}
-		if (fieldName.equals("data")) {
-			return data;
-		}
-		if (fieldName.equals("meth")) {
-			return meth;
-		}
-		if (fieldName.equals("view")) {
-			return view;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public Object call(String fieldName, Object... args) {
-		if (fieldName.equals("memoryf")) {
-			return this.memoryf.exe(args);
-		}
-		if (fieldName.equals("searchf")) {
-			return this.searchf.exe(args);
-		}
-		return super.call(fieldName, args);
-	}
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_dt_s.class) {
-			return this;
-		}
-		return super.castTo(dest);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("type")) {
 			this.type = data;
@@ -159,17 +123,6 @@ public class ST_dt_s extends UnsupportedStructAndPtr implements HardcodedStruct 
 		super.setInt(fieldName, data);
 	}
 
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("type")) {
-			return type;
-		}
-		if (fieldName.equals("nview")) {
-			return nview;
-		}
-		return super.getInt(fieldName);
-	}
-	
 	@Override
 	public boolean isSameThan(StarStruct other) {
 		ST_dt_s other2 = (ST_dt_s) other;

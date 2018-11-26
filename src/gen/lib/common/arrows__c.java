@@ -66,7 +66,6 @@ import h.ST_pointf;
 import smetana.core.CString;
 import smetana.core.MutableDouble;
 import smetana.core.Z;
-import smetana.core.__ptr__;
 
 public class arrows__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -393,8 +392,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -896,7 +895,7 @@ return inside_w_(inside_context, p.copy());
 private static boolean inside_w_(ST_inside_t inside_context, final ST_pointf p) {
 ENTERING("7ymcsnwqkr1crisrga0kezh1f","inside");
 try {
-    return DIST2(p, inside_context.getPtr("a.p").plus(0).getPtr()) <= inside_context.getPtr("a.r").getDouble();
+    return DIST2(p, inside_context.a_p.get(0)) <= inside_context.a_r.getDouble();
 } finally {
 LEAVING("7ymcsnwqkr1crisrga0kezh1f","inside");
 }
@@ -907,7 +906,7 @@ LEAVING("7ymcsnwqkr1crisrga0kezh1f","inside");
 
 //3 9eellwhg4gsa2pdszpeqihs2d
 // int arrowEndClip(edge_t* e, pointf * ps, int startp, 		 int endp, bezier * spl, int eflag) 
-public static int arrowEndClip(ST_Agedge_s e, __ptr__ ps, int startp, int endp, ST_bezier spl, int eflag) {
+public static int arrowEndClip(ST_Agedge_s e, ST_pointf.Array ps, int startp, int endp, ST_bezier spl, int eflag) {
 ENTERING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 try {
     final ST_inside_t inside_context = new ST_inside_t();
@@ -918,13 +917,13 @@ try {
     elen2.setValue(elen * elen);
     spl.setInt("eflag", eflag);
     spl.setStruct("ep", ps.plus(endp + 3).getStruct());
-    if (endp > startp && DIST2(ps.plus(endp).getPtr(), ps.plus(endp + 3).getPtr()) < elen2.getValue()) {
+    if (endp > startp && DIST2(ps.get(endp), ps.get(endp + 3)) < elen2.getValue()) {
 	endp -= 3;
     }
     sp.plus(3).setStruct(ps.plus(endp).getStruct());
     sp.plus(2).setStruct(ps.plus(endp+1).getStruct());
     sp.plus(1).setStruct(ps.plus(endp+2).getStruct());
-    sp.plus(0).setStruct(spl.getStruct("ep"));
+    sp.plus(0).setStruct(spl.ep);
     /* ensure endpoint starts inside */
     inside_context.setPtr("a.p", sp.plus(0).asPtr());
     inside_context.setPtr("a.r", elen2.amp());
@@ -944,7 +943,7 @@ LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 
 //3 q7y4oxn0paexbgynmtg2zmiv
 // int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag) 
-public static int arrowStartClip(ST_Agedge_s e, __ptr__ ps, int startp, int endp, ST_bezier spl, int sflag) {
+public static int arrowStartClip(ST_Agedge_s e, ST_pointf.Array ps, int startp, int endp, ST_bezier spl, int sflag) {
 ENTERING("q7y4oxn0paexbgynmtg2zmiv","arrowStartClip");
 try {
     final ST_inside_t inside_context = new ST_inside_t();
@@ -955,13 +954,13 @@ try {
     slen2.setValue(slen * slen);
     spl.setInt("sflag", sflag);
     spl.setStruct("sp", ps.plus(startp).getStruct());
-    if (endp > startp && DIST2(ps.plus(startp).getPtr(), ps.plus(startp + 3).getPtr()) < slen2.getValue()) {
+    if (endp > startp && DIST2(ps.get(startp), ps.get(startp + 3)) < slen2.getValue()) {
     	startp += 3;
     }
     sp.plus(0).setStruct(ps.plus(startp+3).getStruct());
     sp.plus(1).setStruct(ps.plus(startp+2).getStruct());
     sp.plus(2).setStruct(ps.plus(startp+1).getStruct());
-    sp.plus(3).setStruct(spl.getStruct("sp"));
+    sp.plus(3).setStruct(spl.sp);
     /* ensure endpoint starts inside */
     inside_context.setPtr("a.p", sp.plus(3).asPtr());
     inside_context.setPtr("a.r", slen2.amp());

@@ -417,8 +417,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -1372,8 +1372,8 @@ UNSUPPORTED("dhhbmqv6n01j1eeyy7fpus1xw"); // 		xf = 0.02;
     GD_fontnames(g, maptoken(p, fontnamenames, fontnamecodes));
     setRatio(g);
     GD_drawing(g).filled = 
-	getdoubles2ptf(g, new CString("size"), (ST_pointf) GD_drawing(g).getStruct("size"));
-    getdoubles2ptf(g, new CString("page"), (ST_pointf) GD_drawing(g).getStruct("page"));
+	getdoubles2ptf(g, new CString("size"), (ST_pointf) GD_drawing(g).size);
+    getdoubles2ptf(g, new CString("page"), (ST_pointf) GD_drawing(g).page);
     GD_drawing(g).centered = mapbool(agget(g, new CString("center")));
     if ((p = agget(g, new CString("rotate")))!=null)
 	GD_drawing(g).landscape= (atoi(p) == 90);
@@ -1540,7 +1540,7 @@ try {
     if ((str = agget(sg, new CString("label")))!=null && (str.charAt(0) != '\0')) {
 	char pos_flag=0;
 	final ST_pointf dimen = new ST_pointf();
-	GD_has_labels(sg.getPtr("root"), GD_has_labels(sg.getPtr("root")) | (1 << 3));
+	GD_has_labels(sg.root, GD_has_labels(sg.root) | (1 << 3));
 	GD_label(sg, make_label(sg, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
 	    late_double(sg, (agattr(sg,AGRAPH,new CString("fontsize"),null)),
 			14.0, 1.0),
@@ -1574,8 +1574,8 @@ UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 	/* Set border information for cluster labels to allow space
 	 */
 	dimen.___(GD_label(sg).dimen);
-	dimen.setDouble("x", dimen.getDouble("x") + 4*4);
-	dimen.setDouble("y", dimen.getDouble("y") + 2*4);
+	dimen.setDouble("x", dimen.x + 4*4);
+	dimen.setDouble("y", dimen.y + 2*4);
 	if (N(GD_flip(agroot(sg)))) {
 	    if ((GD_label_pos(sg) & 1)!=0)
 		pos_ix = 2;

@@ -75,7 +75,8 @@ public class JDotPath implements UDrawable {
 	private final TextBlock tailLabel;
 	private final Rose rose = new Rose();
 
-	public JDotPath(Link link, ST_Agedge_s edge, YMirror ymirror, CucaDiagram diagram, TextBlock label, TextBlock tailLabel, TextBlock headLabel) {
+	public JDotPath(Link link, ST_Agedge_s edge, YMirror ymirror, CucaDiagram diagram, TextBlock label,
+			TextBlock tailLabel, TextBlock headLabel) {
 		this.link = link;
 		this.edge = edge;
 		this.ymirror = ymirror;
@@ -138,7 +139,7 @@ public class JDotPath implements UDrawable {
 	private void printDebug(UGraphic ug) {
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(HtmlColorUtils.BLUE));
 		final ST_splines splines = getSplines(edge);
-		final ST_bezier beziers = (ST_bezier) splines.getPtr("list");
+		final ST_bezier beziers = splines.list.getPtr();
 		for (int i = 0; i < beziers.size; i++) {
 			Point2D pt = getPoint(splines, i);
 			if (ymirror != null) {
@@ -160,29 +161,36 @@ public class JDotPath implements UDrawable {
 			return null;
 		}
 		final ST_pointf dimen = (ST_pointf) label.dimen;
-		final ST_pointf space = (ST_pointf)label.space;
-		final ST_pointf pos = (ST_pointf)label.getStruct("pos");
-		final double x = pos.getDouble("x");
-		final double y = pos.getDouble("y");
-		final double width = dimen.getDouble("x");
-		final double height = dimen.getDouble("y");
+		final ST_pointf space = (ST_pointf) label.space;
+		final ST_pointf pos = (ST_pointf) label.pos;
+		final double x = pos.x;
+		final double y = pos.y;
+		final double width = dimen.x;
+		final double height = dimen.y;
 		return new URectangle(width, height);
 	}
 
 	private UTranslate getLabelRectangleTranslate(String fieldName) {
-		//final String fieldName = "label";
+		// final String fieldName = "label";
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge).castTo(ST_Agedgeinfo_t.class);
-		ST_textlabel_t label = (ST_textlabel_t) data.getPtr(fieldName);
+		ST_textlabel_t label = null;
+		if (fieldName.equals("label")) {
+			label = data.label;
+		} else if (fieldName.equals("head_label")) {
+			label = data.head_label;
+		} else if (fieldName.equals("tail_label")) {
+			label = data.tail_label;
+		}
 		if (label == null) {
 			return null;
 		}
-		final ST_pointf dimen = (ST_pointf)label.dimen;
-		final ST_pointf space = (ST_pointf)label.space;
-		final ST_pointf pos = (ST_pointf)label.getStruct("pos");
-		final double x = pos.getDouble("x");
-		final double y = pos.getDouble("y");
-		final double width = dimen.getDouble("x");
-		final double height = dimen.getDouble("y");
+		final ST_pointf dimen = (ST_pointf) label.dimen;
+		final ST_pointf space = (ST_pointf) label.space;
+		final ST_pointf pos = (ST_pointf) label.pos;
+		final double x = pos.x;
+		final double y = pos.y;
+		final double width = dimen.x;
+		final double height = dimen.y;
 
 		if (ymirror == null) {
 			return new UTranslate(x - width / 2, y - height / 2);
@@ -225,8 +233,8 @@ public class JDotPath implements UDrawable {
 
 	private Point2D getPoint(ST_splines splines, int i) {
 		final ST_bezier beziers = (ST_bezier) splines.list.getPtr();
-		final __ptr__ pt = beziers.list.get(i);
-		return new Point2D.Double(pt.getDouble("x"), pt.getDouble("y"));
+		final ST_pointf pt = beziers.list.get(i);
+		return new Point2D.Double(pt.x, pt.y);
 	}
 
 }

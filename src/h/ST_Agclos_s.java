@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agclos_s extends UnsupportedStructAndPtr {
@@ -77,30 +76,6 @@ public class ST_Agclos_s extends UnsupportedStructAndPtr {
 		return parent;
 	}
 
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("callbacks_enabled")) {
-			return callbacks_enabled;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("strdict")) {
-			return strdict;
-		}
-		if (fieldName.equals("cb")) {
-			return cb;
-		}
-		if (fieldName.equals("disc")) {
-			return disc;
-		}
-		if (fieldName.equals("state")) {
-			return state;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -109,26 +84,6 @@ public class ST_Agclos_s extends UnsupportedStructAndPtr {
 			return strdict;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("disc")) {
-			return disc;
-		}
-		if (fieldName.equals("state")) {
-			return state;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("callbacks_enabled")) {
-			this.callbacks_enabled = data;
-			return;
-		}
-		super.setBoolean(fieldName, data);
 	}
 
 	// public interface ST_Agclos_s extends __ptr__ {

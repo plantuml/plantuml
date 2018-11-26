@@ -152,16 +152,19 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 		final boolean hasDressing2 = contains(dressing2, ">", "\\", "/", "x");
 		final boolean hasDressing1 = contains(dressing1, "x", "<", "\\", "/");
+		final boolean reverseDefine;
 		if (hasDressing2) {
 			p1 = getOrCreateParticipant(diagram, arg, "PART1");
 			p2 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing1.contains("o");
 			circleAtEnd = dressing2.contains("o");
+			reverseDefine = false;
 		} else if (hasDressing1) {
 			p2 = getOrCreateParticipant(diagram, arg, "PART1");
 			p1 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing2.contains("o");
 			circleAtEnd = dressing1.contains("o");
+			reverseDefine = true;
 		} else {
 			return CommandExecutionResult.error("Illegal sequence arrow");
 
@@ -202,10 +205,12 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		}
 		if (dressing1.contains("x")) {
 			config = config.withHead2(ArrowHead.CROSSX);
-
 		}
 		if (dressing2.contains("x")) {
 			config = config.withHead2(ArrowHead.CROSSX);
+		}
+		if (reverseDefine) {
+			config = config.reverseDefine();
 		}
 
 		config = applyStyle(arg.getLazzy("ARROW_STYLE", 0), config);

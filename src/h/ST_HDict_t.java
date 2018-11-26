@@ -46,9 +46,7 @@
 package h;
 
 import smetana.core.OFFSET;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_HDict_t extends UnsupportedStructAndPtr {
@@ -57,7 +55,7 @@ public class ST_HDict_t extends UnsupportedStructAndPtr {
 
 	public final ST_dtlink_s link = new ST_dtlink_s(this);
 	public int key;
-	public final ST_Leaf_t d = new ST_Leaf_t(this);
+	public final ST_Branch_t d = new ST_Branch_t(); /* Should be ST_Leaf_t */
 	
 	public ST_HDict_t() {
 		this(null);
@@ -82,14 +80,6 @@ public class ST_HDict_t extends UnsupportedStructAndPtr {
 		return super.addVirtualBytes(virtualBytes);
 	}
 
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("d")) {
-			return this.d;
-		}
-		return super.getStruct(fieldName);
-	}
-	
 //	@Override
 //	public __ptr__ getPtr(String fieldName) {
 //		if (fieldName.equals("d")) {

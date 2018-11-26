@@ -47,10 +47,8 @@ package gen.lib.dotgen;
 import static gen.lib.cgraph.edge__c.aghead;
 import static gen.lib.cgraph.edge__c.agtail;
 import static gen.lib.cgraph.obj__c.agroot;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.dotgen.dotinit__c.dot_root;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGINEDGE;
@@ -89,16 +87,14 @@ import static smetana.core.Macro.agtail;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.Macro.elist_append;
 import h.ST_Agedge_s;
-import h.ST_Agnode_s;
-import h.ST_Agraph_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_Agedgepair_s;
 import h.ST_Agnode_s;
 import h.ST_Agnodeinfo_t;
+import h.ST_Agraph_s;
 import h.ST_Agrec_s;
 import h.ST_elist;
 import h.ST_pointf;
-import h.ST_elist;
 
 public class fastgr__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -425,8 +421,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");

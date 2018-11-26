@@ -45,10 +45,8 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_layout_t extends UnsupportedStructAndPtr {
@@ -90,54 +88,6 @@ public class ST_layout_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("margin")) {
-			return margin;
-		}
-		if (fieldName.equals("page")) {
-			return page;
-		}
-		if (fieldName.equals("size")) {
-			return size;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("filled")) {
-			this.filled = data;
-			return;
-		}
-		if (fieldName.equals("landscape")) {
-			this.landscape = data;
-			return;
-		}
-		if (fieldName.equals("centered")) {
-			this.centered = data;
-			return;
-		}
-		super.setBoolean(fieldName, data);
-	}
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("quantum")) {
-			return this.quantum;
-		}
-		if (fieldName.equals("scale")) {
-			return this.scale;
-		}
-		if (fieldName.equals("ratio")) {
-			return this.ratio;
-		}
-		if (fieldName.equals("dpi")) {
-			return this.dpi;
-		}
-		return super.getDouble(fieldName);
-	}
-
-	@Override
 	public void setDouble(String fieldName, double data) {
 		if (fieldName.equals("quantum")) {
 			this.quantum = data;
@@ -158,13 +108,6 @@ public class ST_layout_t extends UnsupportedStructAndPtr {
 		super.setDouble(fieldName, data);
 	}
 	
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("ratio_kind")) {
-			return this.ratio_kind;
-		}
-		return super.getInt(fieldName);
-	}
 }
 
 // typedef struct layout_t {

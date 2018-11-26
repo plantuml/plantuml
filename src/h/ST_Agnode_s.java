@@ -48,7 +48,6 @@ package h;
 import java.util.ArrayList;
 import java.util.List;
 
-import smetana.core.CString;
 import smetana.core.UnsupportedArrayOfPtr;
 import smetana.core.UnsupportedArrayOfStruct2;
 import smetana.core.UnsupportedStructAndPtr;
@@ -111,6 +110,10 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 		@Override
 		public void setPtr(__ptr__ value) {
 			this.data.set(pos, (ST_Agnode_s) value);
+		}
+		
+		public ST_Agnode_s get(int i) {
+			return plus(i).getPtr();
 		}
 
 		@Override
@@ -211,13 +214,6 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
-		public CString getCString() {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void setCString(CString value) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
 
 	}
 
@@ -243,22 +239,15 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 		}
 		return super.castTo(dest);
 	}
+	
+	public ST_Agobj_s castTo_ST_Agobj_s() {
+		return base;
+	}
 
 	@Override
 	public boolean isSameThan(StarStruct other) {
 		ST_Agnode_s other2 = (ST_Agnode_s) other;
 		return this == other2;
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("base")) {
-			return base;
-		}
-		if (fieldName.equals("mainsub")) {
-			return mainsub;
-		}
-		return super.getStruct(fieldName);
 	}
 
 	@Override
@@ -271,15 +260,7 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("root")) {
-			return root;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __struct__ getStruct() {
+	public ST_Agnode_s getStruct() {
 		return this;
 	}
 

@@ -48,9 +48,7 @@ package h;
 import java.util.ArrayList;
 import java.util.List;
 
-import smetana.core.CString;
 import smetana.core.UnsupportedArrayOfStruct2;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -73,8 +71,8 @@ public class ST_Pedge_t extends UnsupportedStructAndPtr {
 	// "typedef struct Pedge_t",
 	// "{",
 	// "Ppoint_t a, b",
-	private final ST_pointf a = new ST_pointf(this);
-	private final ST_pointf b = new ST_pointf(this);
+	public final ST_pointf a = new ST_pointf(this);
+	public final ST_pointf b = new ST_pointf(this);
 
 	// "}",
 	// "Pedge_t");
@@ -88,11 +86,6 @@ public class ST_Pedge_t extends UnsupportedStructAndPtr {
 		@Override
 		public void setStruct(String fieldName, __struct__ data) {
 			getStruct().setStruct(fieldName, data);
-		}
-		
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return getStruct().getStruct(fieldName);
 		}
 		
 		@Override
@@ -156,28 +149,10 @@ public class ST_Pedge_t extends UnsupportedStructAndPtr {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
-		public CString getCString() {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void setCString(CString value) {
-			throw new UnsupportedOperationException(getClass().toString());			
-		}
 
 	}
 
 
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("a")) {
-			return a;
-		}
-		if (fieldName.equals("b")) {
-			return b;
-		}
-		return super.getStruct(fieldName);
-	}
-	
 	@Override
 	public void setStruct(String fieldName, __struct__ newData) {
 		if (fieldName.equals("a")) {

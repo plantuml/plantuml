@@ -45,50 +45,16 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
 public class ST_LeafList_t extends UnsupportedStructAndPtr {
 
-	private final StarStruct parent;
-
 	public ST_LeafList_t next;
-	public __ptr__ /*ST_Leaf_t*/ leaf;
+	public ST_Branch_t /* ST_Leaf_t */leaf;
 
 	public ST_LeafList_t() {
-		this(null);
 	}
 
-	public ST_LeafList_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("next")) {
-			this.next = (ST_LeafList_t) newData;
-			return this.next;
-		}
-		if (fieldName.equals("leaf")) {
-			this.leaf = newData;
-			return this.leaf;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("next")) {
-			return this.next;
-		}
-		if (fieldName.equals("leaf")) {
-			return this.leaf;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	// typedef struct LeafList {
 	// struct LeafList *next;

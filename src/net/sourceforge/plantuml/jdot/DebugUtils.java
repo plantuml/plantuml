@@ -53,19 +53,19 @@ public class DebugUtils {
 		System.err.println("*********** PRINT EDGE ********** " + getUID(e));
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
 		final ST_splines splines = (ST_splines) data.spl;
-		ST_boxf bb = (ST_boxf) splines.getStruct("bb");
+		//ST_boxf bb = (ST_boxf) splines.bb;
 		// final bezier list = (bezier) splines.getPtr("list");
 		System.err.println("splines.UID=" + ((StarStruct) splines).getUID36());
 		System.err.println("splines.size=" + splines.size);
-		System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.getStruct("LL")));
-		System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.getStruct("UR")));
-		printDebugBezier((ST_bezier) splines.getPtr("list").getPtr());
+		//System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.LL));
+		//System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.UR));
+		printDebugBezier(splines.list.getPtr());
 
-		ST_textlabel_t label = (ST_textlabel_t) data.label;
+		ST_textlabel_t label = data.label;
 		if (label != null) {
-			System.err.println("LABEL dimen=" + pointftoString((ST_pointf) label.dimen));
-			System.err.println("LABEL space=" + pointftoString((ST_pointf) label.space));
-			System.err.println("LABEL pos=" + pointftoString((ST_pointf) label.getStruct("pos")));
+			System.err.println("LABEL dimen=" + pointftoString(label.dimen));
+			System.err.println("LABEL space=" + pointftoString(label.space));
+			System.err.println("LABEL pos=" + pointftoString(label.pos));
 		}
 
 	}
@@ -76,13 +76,13 @@ public class DebugUtils {
 
 	public static void printDebugBezier(ST_bezier bezier) {
 		System.err.println("bezier.size=" + bezier.size);
-		System.err.println("bezier.sflag=" + bezier.getInt("sflag"));
-		System.err.println("splines.eflag=" + bezier.getInt("eflag"));
-		System.err.println("bezier.sp=" + pointftoString((ST_pointf) bezier.getStruct("sp")));
-		System.err.println("bezier.ep=" + pointftoString((ST_pointf) bezier.getStruct("ep")));
-		System.err.println("bezier.list=" + getUID(bezier.getPtr("list")));
+		System.err.println("bezier.sflag=" + bezier.sflag);
+		System.err.println("splines.eflag=" + bezier.eflag);
+		System.err.println("bezier.sp=" + pointftoString((ST_pointf) bezier.sp));
+		System.err.println("bezier.ep=" + pointftoString((ST_pointf) bezier.ep));
+		System.err.println("bezier.list=" + getUID(bezier.list.getPtr()));
 		for (int i = 0; i < bezier.size; i++) {
-			final __ptr__ pt = bezier.getPtr("list").plus(i).getPtr();
+			final ST_pointf pt = bezier.list.get(i);
 			System.err.println("pt=" + pointftoString(pt));
 		}
 
@@ -91,37 +91,27 @@ public class DebugUtils {
 	public static void printDebugNode(ST_Agnode_s n) {
 		System.err.println("*********** PRINT NODE ********** ");
 		final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n).castTo(ST_Agnodeinfo_t.class);
-		System.err.println("width=" + data.getDouble("width"));
-		System.err.println("height=" + data.getDouble("height"));
-		System.err.println("ht=" + data.getDouble("ht"));
-		System.err.println("lw=" + data.getDouble("lw"));
-		System.err.println("rw=" + data.getDouble("rw"));
-		System.err.println("coord=" + pointftoString((ST_pointf) data.getStruct("coord")));
+		System.err.println("width=" + data.width);
+		System.err.println("height=" + data.height);
+		System.err.println("ht=" + data.ht);
+		System.err.println("lw=" + data.lw);
+		System.err.println("rw=" + data.rw);
+		System.err.println("coord=" + pointftoString((ST_pointf) data.coord));
 
-		ST_boxf bb = (ST_boxf) data.getStruct("bb");
-		System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.getStruct("LL")));
-		System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.getStruct("UR")));
+		//ST_boxf bb = (ST_boxf) data.bb;
+		//System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.LL));
+		//System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.UR));
 		// TODO Auto-generated method stub
 	}
 
 	public static String pointftoString(ST_pointf point) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("(");
-		sb.append(point.getDouble("x"));
+		sb.append(point.x);
 		sb.append(" ; ");
-		sb.append(point.getDouble("y"));
+		sb.append(point.y);
 		sb.append(")");
 		return sb.toString();
 
-	}
-
-	public static String pointftoString(__ptr__ point) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("(");
-		sb.append(point.getDouble("x"));
-		sb.append(" ; ");
-		sb.append(point.getDouble("y"));
-		sb.append(")");
-		return sb.toString();
 	}
 }

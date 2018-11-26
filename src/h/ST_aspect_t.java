@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.amiga.StarStruct;
 
@@ -75,17 +74,6 @@ public class ST_aspect_t extends UnsupportedStructAndPtr {
 	// "aspect_t");
 
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("nextIter")) {
-			return this.nextIter;
-		}
-		if (fieldName.equals("nPasses")) {
-			return this.nPasses;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("nextIter")) {
 			this.nextIter = data;
@@ -100,14 +88,6 @@ public class ST_aspect_t extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("badGraph")) {
-			return this.badGraph != 0;
-		}
-		return super.getBoolean(fieldName);
 	}
 
 }

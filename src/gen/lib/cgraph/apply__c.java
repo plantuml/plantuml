@@ -56,8 +56,8 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.ST_Agraph_s;
 import h.ST_Agobj_s;
+import h.ST_Agraph_s;
 import smetana.core.CFunction;
 import smetana.core.__ptr__;
 
@@ -233,7 +233,7 @@ throw new UnsupportedOperationException();
 public static ST_Agobj_s subgraph_search(ST_Agraph_s sub, ST_Agobj_s g) {
 ENTERING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 try {
-    return (ST_Agobj_s) sub.castTo(ST_Agobj_s.class);
+    return (ST_Agobj_s) sub.castTo_ST_Agobj_s();
 } finally {
 LEAVING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 }

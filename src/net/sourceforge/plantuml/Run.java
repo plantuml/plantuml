@@ -497,6 +497,9 @@ public class Run {
 			return false;
 		}
 		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+		if (result.size() == 0) {
+			Log.error("Warning: no image in " + f.getCanonicalPath());
+		}
 
 		return hasErrors(f, result);
 	}

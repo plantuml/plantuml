@@ -50,7 +50,7 @@ import static smetana.core.Macro.UNSUPPORTED;
 import h.ST_GVC_s;
 import h.ST_dt_s;
 import h.ST_pointf;
-import smetana.core.__ptr__;
+import h.ST_textspan_t;
 
 public class textspan__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -376,8 +376,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -773,17 +773,17 @@ throw new UnsupportedOperationException();
 
 //3 n8tcl06mifdn779rzenam44z
 // pointf textspan_size(GVC_t *gvc, textspan_t * span) 
-public static ST_pointf textspan_size(ST_GVC_s gvc, __ptr__ span) {
+public static ST_pointf textspan_size(ST_GVC_s gvc, ST_textspan_t span) {
 // WARNING!! STRUCT
 return textspan_size_w_(gvc, span).copy();
 }
-private static ST_pointf textspan_size_w_(ST_GVC_s gvc, __ptr__ span) {
+private static ST_pointf textspan_size_w_(ST_GVC_s gvc, ST_textspan_t span) {
 ENTERING("n8tcl06mifdn779rzenam44z","textspan_size");
 try {
 	System.err.println("Warning:textspan_size "+span);
-	span.getStruct("size").setDouble("x", 30);
-	span.getStruct("size").setDouble("y", 20);
-    return (ST_pointf) span.getStruct("size").copy();
+	span.size.setDouble("x", 30);
+	span.size.setDouble("y", 20);
+    return span.size.copy();
 } finally {
 LEAVING("n8tcl06mifdn779rzenam44z","textspan_size");
 }

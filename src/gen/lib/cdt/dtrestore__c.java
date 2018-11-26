@@ -127,7 +127,7 @@ try {
 	ST_dtlink_s	t;
 	//Dtlink_t	**s, **ends;
 	int		type;
-	Dtsearch_f	searchf = (Dtsearch_f) dt.meth.getPtr("searchf");
+	Dtsearch_f	searchf = (Dtsearch_f) dt.meth.searchf;
 	type = dt.data.type&010000;
 	if(N(list)) /* restoring a flattened dictionary */
 	{	if(N(type))

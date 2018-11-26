@@ -130,7 +130,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()),
 				getSkinParam().shadowing(getEntity().getStereotype()), roundCorner,
-				getSkinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null));
+				getSkinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false));
 
 		if (url != null) {
 			ug.closeAction();

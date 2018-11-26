@@ -48,9 +48,7 @@ package h;
 import java.util.ArrayList;
 import java.util.List;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_triangle_t extends UnsupportedStructAndPtr {
@@ -118,28 +116,12 @@ public class ST_triangle_t extends UnsupportedStructAndPtr {
 	// "triangle_t");
 
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("mark")) {
-			return this.mark;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("mark")) {
 			this.mark = data;
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("mark")) {
-			return this.mark != 0;
-		}
-		return super.getBoolean(fieldName);
 	}
 
 }

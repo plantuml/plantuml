@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -79,31 +78,6 @@ public class ST_label_params_t extends UnsupportedStructAndPtr {
 		super.setStruct(fieldName, newData);
 	}
 	
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("bb")) {
-			return bb;
-		}
-		return super.getStruct(fieldName);
-	}
-
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("force")) {
-			return this.force;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("force")) {
-			this.force = data;
-			return;
-		}
-		super.setBoolean(fieldName, data);
-	}
 }
 
 // typedef struct {

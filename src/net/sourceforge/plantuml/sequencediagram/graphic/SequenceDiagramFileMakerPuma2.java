@@ -147,7 +147,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), page.getHeight());
 
 		final TextBlock compTitle;
-		final TextBlock caption = new AnnotatedWorker(diagram, diagram.getSkinParam()).getCaption();
+		final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder);
+		final TextBlock caption = annotatedWorker.getCaption();
 		area.setCaptionArea(caption.calculateDimension(stringBounder));
 
 		if (Display.isNull(page.getTitle())) {
@@ -211,8 +212,12 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				if (legendTop) {
 					sequenceAreaY += legendBlock.calculateDimension(ug.getStringBounder()).getHeight();
 				}
-				drawableSet.drawU22(ug.apply(new UTranslate(area.getSequenceAreaX() + delta1 / 2, sequenceAreaY)),
-						delta, fullDimension.getWidth(), page, diagram.isShowFootbox());
+				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2, sequenceAreaY);
+				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page, diagram.isShowFootbox());
+				core = annotatedWorker.addFrame(core);
+				core.drawU(ug.apply(forCore));
+				// drawableSet.drawU22(ug.apply(forCore), delta, fullDimension.getWidth(), page,
+				// diagram.isShowFootbox());
 
 				drawHeader(area, ug, index);
 				drawFooter(area, ug, index);

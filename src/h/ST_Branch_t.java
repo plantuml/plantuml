@@ -49,17 +49,12 @@ import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
 public class ST_Branch_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
-	// Warning : could be a "ST_Leaf_t"
+	// Warning : could be a "ST_Leaf_t" from C Version
 	public final ST_Rect_t rect = new ST_Rect_t(this);
-	private ST_Node_t___ child; // "data" : ST_object_t
-	private Object child2;
-
-	public ST_Branch_t(StarStruct parent) {
-	}
+	public ST_Node_t___or_object_t child; // "data" : ST_object_t
 
 	public ST_Branch_t() {
 	}
@@ -69,9 +64,7 @@ public class ST_Branch_t extends UnsupportedStructAndPtr implements HardcodedStr
 		ST_Branch_t this2 = (ST_Branch_t) other;
 		this.rect.copyDataFrom((__struct__) this2.rect);
 		this.child = this2.child;
-		this.child2 = this2.child2;
 	}
-	
 
 	@Override
 	public __ptr__ castTo(Class dest) {
@@ -84,19 +77,10 @@ public class ST_Branch_t extends UnsupportedStructAndPtr implements HardcodedStr
 		return super.castTo(dest);
 	}
 
-	
-	@Override
-	public ST_Rect_t getStruct(String fieldName) {
-		if (fieldName.equals("rect")) {
-			return rect;
-		}
-		throw new UnsupportedOperationException();
-	}
-
 	public __struct__ getStruct() {
 		return this;
 	}
-	
+
 	@Override
 	public void ___(__struct__ other) {
 		this.copyDataFrom(other);
@@ -112,42 +96,12 @@ public class ST_Branch_t extends UnsupportedStructAndPtr implements HardcodedStr
 	}
 
 	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
+	public ST_Node_t___or_object_t setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("child")) {
-			if (newData instanceof ST_Node_t___) {
-				this.child = (ST_Node_t___) newData;
-				return this.child;
-			} else if (newData != null) {
-				// System.err.println("****************************************WARNING1 " + newData);
-				this.child2 = newData;
-				return (__ptr__) this.child2;
-			} else if (newData == null) {
-				this.child = null;
-				this.child2 = null;
-				return null;
-			}
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("child")) {
-			if (this.child2 != null) {
-				// System.err.println("****************************************WARNING2 " + child2);
-				return (__ptr__) child2;
-			}
+			this.child = (ST_Node_t___or_object_t) newData;
 			return this.child;
 		}
-		if (fieldName.equals("data")) {
-			// From ST_leaf_t
-			if (this.child2 != null) {
-				// System.err.println("****************************************WARNING3 " + child2);
-				return (__ptr__) child2;
-			}
-			return this.child;
-		}
-		return super.getPtr(fieldName);
+		throw new UnsupportedOperationException();
 	}
 
 	// typedef struct Branch {

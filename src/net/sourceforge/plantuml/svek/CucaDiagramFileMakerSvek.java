@@ -109,7 +109,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		}
 		final boolean isGraphvizCrash = result instanceof GraphvizCrash;
-		result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
+		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), fileFormatOption.getDefaultStringBounder())
+				.addAdd(result);
 
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
 		String warningOrError = null;

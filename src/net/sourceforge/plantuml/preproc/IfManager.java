@@ -51,12 +51,12 @@ public class IfManager extends ReadLineInstrumented implements ReadLine {
 	protected static final Pattern2 elsePattern = MyPattern.cmpile("^[%s]*!else[%s]*$");
 	protected static final Pattern2 endifPattern = MyPattern.cmpile("^[%s]*!endif[%s]*$");
 
-	private final Defines defines;
+	private final DefinesGet defines;
 	private final ReadLine source;
 
 	private IfManager child;
 
-	public IfManager(ReadLine source, Defines defines) {
+	public IfManager(ReadLine source, DefinesGet defines) {
 		this.defines = defines;
 		this.source = source;
 	}
@@ -96,7 +96,7 @@ public class IfManager extends ReadLineInstrumented implements ReadLine {
 
 		m = ifdefPattern.matcher(s);
 		if (m.find()) {
-			boolean ok = defines.isDefine(m.group(2));
+			boolean ok = defines.get().isDefine(m.group(2));
 			if (m.group(1) != null) {
 				ok = !ok;
 			}

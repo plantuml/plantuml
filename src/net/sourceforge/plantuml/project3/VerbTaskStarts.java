@@ -59,7 +59,9 @@ public class VerbTaskStarts implements VerbPattern {
 				final Task task = (Task) subject;
 				final TaskInstant when = (TaskInstant) complement;
 				task.setStart(when.getInstantPrecise());
-				project.addContraint(new GanttConstraint(when, new TaskInstant(task, TaskAttribute.START)));
+				if (when.isTask()) {
+					project.addContraint(new GanttConstraint(when, new TaskInstant(task, TaskAttribute.START)));
+				}
 				return CommandExecutionResult.ok();
 			}
 

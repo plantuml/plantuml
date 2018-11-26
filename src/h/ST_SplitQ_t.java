@@ -145,22 +145,6 @@ public class ST_SplitQ_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("CoverSplit")) {
-			return this.CoverSplit;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("CoverSplitArea")) {
-			return this.CoverSplitArea;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("CoverSplitArea")) {
 			this.CoverSplitArea = data;

@@ -37,10 +37,6 @@
 package smetana.core.amiga;
 
 import smetana.core.AllH;
-import smetana.core.CString;
-import smetana.core.__array_of_cstring__;
-import smetana.core.__array_of_integer__;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -58,23 +54,9 @@ public interface StarStruct extends Area, AllH, InternalData {
 
 	public void setInt(String fieldName, int data);
 
-	public void setBoolean(String fieldName, boolean data);
-
 	public void setDouble(String fieldName, double data);
 
-	public int getInt(String fieldName);
-
-	public double getDouble(String fieldName);
-
-	public boolean getBoolean(String fieldName);
-
 	public __ptr__ plus(int pointerMove);
-
-	public CString getCString(String fieldName);
-
-	public __struct__ getStruct(String fieldName);
-
-	public __ptr__ getPtr(String fieldName);
 
 	public void setStruct(String fieldName, __struct__ newData);
 
@@ -87,8 +69,6 @@ public interface StarStruct extends Area, AllH, InternalData {
 	public void setStruct(__struct__ value);
 
 	public void copyDataFrom(__ptr__ arg);
-
-	public Object call(String fieldName, Object... args);
 
 	public __ptr__ castTo(Class dest);
 

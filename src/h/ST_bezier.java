@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import smetana.core.UnsupportedArrayOfPtr;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -112,16 +111,6 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 			getStruct().setInt(fieldName, data);
 		}
 
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return getStruct().getStruct(fieldName);
-		}
-
-		@Override
-		public int getInt(String fieldName) {
-			return getStruct().getInt(fieldName);
-		}
-
 		// public void swap(int i, int j) {
 		// ST_bezier e1 = data.get(i);
 		// ST_bezier e2 = data.get(j);
@@ -159,6 +148,10 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 		@Override
 		public ST_bezier getPtr() {
 			return this.data.get(pos);
+		}
+		
+		public ST_bezier get(int i) {
+			return this.plus(i).getPtr();
 		}
 
 		@Override
@@ -198,17 +191,6 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("sflag")) {
-			return this.sflag != 0;
-		}
-		if (fieldName.equals("eflag")) {
-			return this.eflag != 0;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
 	public void setStruct(String fieldName, __struct__ newData) {
 		if (fieldName.equals("sp")) {
 			this.sp.copyDataFrom(newData);
@@ -239,37 +221,12 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("size")) {
-			return this.size;
-		}
-		if (fieldName.equals("sflag")) {
-			return this.sflag;
-		}
-		if (fieldName.equals("eflag")) {
-			return this.eflag;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("list")) {
 			this.list = (Array) newData;
 			return this.list;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("sp")) {
-			return this.sp;
-		}
-		if (fieldName.equals("ep")) {
-			return this.ep;
-		}
-		return super.getStruct(fieldName);
 	}
 
 	@Override

@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -65,35 +64,6 @@ public class ST_shape_functions extends UnsupportedStructAndPtr {
 	}
 
 	public ST_shape_functions(StarStruct parent) {
-	}
-
-
-	@Override
-	public Object call(String fieldName, Object... args) {
-		return ((CFunction) getPtr(fieldName)).exe(args);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("initfn")) {
-			return initfn;
-		}
-		if (fieldName.equals("freefn")) {
-			return freefn;
-		}
-		if (fieldName.equals("portfn")) {
-			return portfn;
-		}
-		if (fieldName.equals("insidefn")) {
-			return insidefn;
-		}
-		if (fieldName.equals("pboxfn")) {
-			return pboxfn;
-		}
-		if (fieldName.equals("codefn")) {
-			return codefn;
-		}
-		return super.getPtr(fieldName);
 	}
 
 	@Override

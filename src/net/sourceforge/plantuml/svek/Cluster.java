@@ -365,7 +365,7 @@ public class Cluster implements Moveable {
 				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
 						minX, minY, maxX, maxY, stroke2);
 				decoration.drawU(ug, back, borderColor, shadowing, roundCorner,
-						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null));
+						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false));
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
@@ -742,7 +742,7 @@ public class Cluster implements Moveable {
 			sblabel.append(">");
 			label = sblabel.toString();
 			final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment,
-					null);
+					null, false);
 			sb.append("labeljust=\"" + align.getGraphVizValue() + "\";");
 		} else {
 			label = "\"\"";

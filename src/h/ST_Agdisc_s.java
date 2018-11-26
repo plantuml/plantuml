@@ -86,16 +86,6 @@ public class ST_Agdisc_s extends UnsupportedStructAndPtr {
 		return super.setPtr(fieldName, newData);
 	}
 
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("mem")) {
-			return mem;
-		}
-		if (fieldName.equals("id")) {
-			return id;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	// public static List<String> DEFINITION = Arrays.asList(
 	// "struct Agdisc_s",

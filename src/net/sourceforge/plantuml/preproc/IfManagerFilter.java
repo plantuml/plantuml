@@ -42,9 +42,9 @@ import net.sourceforge.plantuml.preproc2.ReadFilter;
 
 public class IfManagerFilter implements ReadFilter {
 
-	private final Defines defines;
+	private final DefinesGet defines;
 
-	public IfManagerFilter(Defines defines) {
+	public IfManagerFilter(DefinesGet defines) {
 		this.defines = defines;
 	}
 

@@ -45,9 +45,11 @@ public class DefineSignature {
 	private final String key;
 	private final String fonctionName;
 	private final List<Variables> variables = new ArrayList<Variables>();
+	private final boolean isMethod;
 
 	public DefineSignature(String key, String definitionQuoted) {
 		this.key = key;
+		this.isMethod = key.contains("(");
 
 		final StringTokenizer st = new StringTokenizer(key, "(),");
 		this.fonctionName = st.nextToken().trim();
@@ -70,7 +72,7 @@ public class DefineSignature {
 	}
 
 	public boolean isMethod() {
-		return key.contains("(");
+		return isMethod;
 	}
 
 	public String getKey() {
@@ -79,6 +81,10 @@ public class DefineSignature {
 
 	public List<Variables> getVariationVariables() {
 		return Collections.unmodifiableList(variables);
+	}
+
+	public final String getFonctionName() {
+		return fonctionName;
 	}
 
 }

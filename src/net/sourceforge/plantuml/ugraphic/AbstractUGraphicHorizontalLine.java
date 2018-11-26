@@ -46,6 +46,10 @@ public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 		if (change instanceof UTranslate) {
 			result = copy(getUg());
 			result.translate = this.translate.compose((UTranslate) change);
+		} else if (change instanceof UClip) {
+			final UClip clip = ((UClip) change).translate(translate);
+			result = copy(getUg().apply(clip));
+			result.translate = this.translate;
 		} else {
 			result = copy(getUg().apply(change));
 			result.translate = this.translate;

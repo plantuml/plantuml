@@ -49,7 +49,7 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPatt
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		final String code = arg.get("COMPLEMENT" + suffix, 2);
 		final String position = arg.get("COMPLEMENT" + suffix, 3);
-		final Task task = system.getExistingTask(code);
+		final Moment task = system.getExistingMoment(code);
 		if (task == null) {
 			return Failable.<Complement> error("No such task " + code);
 		}

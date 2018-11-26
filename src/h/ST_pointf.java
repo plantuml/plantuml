@@ -86,11 +86,6 @@ public class ST_pointf extends UnsupportedStructAndPtr implements HardcodedStruc
 		}
 
 		@Override
-		public double getDouble(String fieldName) {
-			return getStruct().getDouble(fieldName);
-		}
-
-		@Override
 		public void setDouble(String fieldName, double value) {
 			getStruct().setDouble(fieldName, value);
 		}
@@ -153,10 +148,6 @@ public class ST_pointf extends UnsupportedStructAndPtr implements HardcodedStruc
 		}
 
 		public int comparePointerInternal(__array_of_ptr__ other) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public CString getCString() {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
@@ -280,17 +271,6 @@ public class ST_pointf extends UnsupportedStructAndPtr implements HardcodedStruc
 		final ST_pointf other2 = (ST_pointf) other;
 		this.x = other2.x;
 		this.y = other2.y;
-	}
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("x")) {
-			return x;
-		}
-		if (fieldName.equals("y")) {
-			return y;
-		}
-		return super.getDouble(fieldName);
 	}
 
 	@Override

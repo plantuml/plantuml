@@ -45,9 +45,7 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_spline_info_t extends UnsupportedStructAndPtr {
@@ -69,23 +67,6 @@ public class ST_spline_info_t extends UnsupportedStructAndPtr {
 
 	// "}",
 	// "spline_info_t");
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("LeftBound")) {
-			return this.LeftBound;
-		}
-		if (fieldName.equals("RightBound")) {
-			return this.RightBound;
-		}
-		if (fieldName.equals("Splinesep")) {
-			return this.Splinesep;
-		}
-		if (fieldName.equals("Multisep")) {
-			return this.Multisep;
-		}
-		return super.getInt(fieldName);
-	}
 
 	@Override
 	public void setInt(String fieldName, int data) {

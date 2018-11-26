@@ -49,7 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import smetana.core.UnsupportedArrayOfPtr;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -112,33 +111,12 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 		}
 		
 		@Override
-		public __ptr__ getPtr(String fieldName) {
-			return getPtr().getPtr(fieldName);
-		}
-		
-		@Override
-		public boolean getBoolean(String fieldName) {
-			return getPtr().getBoolean(fieldName);
-		}
-		
-		@Override
-		public void setBoolean(String fieldName, boolean data) {
-			getPtr().setBoolean(fieldName, data);
-		}
-		
-		@Override
-		public int getInt(String fieldName) {
-			return getPtr().getInt(fieldName);
-		}
-		
-		@Override
-		public double getDouble(String fieldName) {
-			return getPtr().getDouble(fieldName);
-		}
-		
-		@Override
 		public void setDouble(String fieldName, double data) {
 			getPtr().setDouble(fieldName, data);
+		}
+		
+		public ST_rank_t get(int i) {
+			return plus(i).getPtr();
 		}
 		
 		public void swap(int i, int j) {
@@ -220,47 +198,6 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 
 
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("n")) {
-			return n;
-		}
-		if (fieldName.equals("an")) {
-			return an;
-		}
-		if (fieldName.equals("cache_nc")) {
-			return cache_nc;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("v")) {
-			return v;
-		}
-		if (fieldName.equals("av")) {
-			return av;
-		}
-		if (fieldName.equals("flat")) {
-			return flat;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("candidate")) {
-			this.candidate = data;
-			return;
-		}
-		if (fieldName.equals("valid")) {
-			this.valid = data ? 1 : 0;
-			return;
-		}
-		super.setBoolean(fieldName, data);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("n")) {
 			this.n = data;
@@ -279,34 +216,6 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("valid")) {
-			return valid != 0;
-		}
-		if (fieldName.equals("candidate")) {
-			return candidate;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("pht1")) {
-			return pht1;
-		}
-		if (fieldName.equals("pht2")) {
-			return pht2;
-		}
-		if (fieldName.equals("ht1")) {
-			return ht1;
-		}
-		if (fieldName.equals("ht2")) {
-			return ht2;
-		}
-		return super.getDouble(fieldName);
 	}
 
 	@Override

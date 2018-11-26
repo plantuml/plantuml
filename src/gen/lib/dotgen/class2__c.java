@@ -427,8 +427,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -736,11 +736,11 @@ try {
     ND_lw(v, GD_nodesep(agroot(v)));
     if (N(ED_label_ontop(orig))) {
 	if (GD_flip(agroot(g))!=0) {
-	    ND_ht(v, dimen.getDouble("x"));
-	    ND_rw(v, dimen.getDouble("y"));
+	    ND_ht(v, dimen.x);
+	    ND_rw(v, dimen.y);
 	} else {
-	    ND_ht(v, dimen.getDouble("y"));
-	    ND_rw(v, dimen.getDouble("x"));
+	    ND_ht(v, dimen.y);
+	    ND_rw(v, dimen.x);
 	}
     }
     return v;
@@ -954,7 +954,7 @@ try {
     GD_n_nodes(g, 0);		/* new */
     mark_clusters(g);
     for (c = 1; c <= GD_n_cluster(g); c++)
-	build_skeleton(g, (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+	build_skeleton(g, (ST_Agraph_s) GD_clust(g).get(c).getPtr());
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
 	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
 	    if (ND_weight_class(aghead(e)) <= 2)

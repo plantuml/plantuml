@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -136,7 +137,8 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 		if (strings.size() > 0) {
 			final boolean tryMerge = arg.get("VMERGE", 0) != null;
-			final Note note = new Note(p, position, strings.toDisplay());
+			final Display display = diagram.manageVariable(strings.toDisplay());
+			final Note note = new Note(p, position, display);
 			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = arg.get("STEREO", 0);
 			if (stereotypeString != null) {

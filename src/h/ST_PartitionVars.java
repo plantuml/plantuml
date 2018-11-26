@@ -45,12 +45,8 @@
  */
 package h;
 
-import smetana.core.ArrayOfInteger;
 import smetana.core.UnsupportedArrayOfStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_integer__;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
