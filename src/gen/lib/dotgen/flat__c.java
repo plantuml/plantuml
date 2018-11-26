@@ -419,8 +419,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -723,19 +723,19 @@ try {
     int i;
     ST_Agnode_s.ArrayOfStar v;
     ST_Agnode_s n;
-	v = ALLOC_Agnode_s(GD_rank(g).plus(r).getInt("n") + 2, (ST_Agnode_s.ArrayOfStar) GD_rank(g).plus(r).getPtr("v"));
+	v = ALLOC_Agnode_s(GD_rank(g).get(r).n + 2, (ST_Agnode_s.ArrayOfStar) GD_rank(g).get(r).v);
     GD_rank(g).plus(r).setPtr("v", v);
-    for (i = GD_rank(g).plus(r).getInt("n"); i > pos; i--) {
+    for (i = GD_rank(g).get(r).n; i > pos; i--) {
 	v.plus(i).setPtr(v.plus(i - 1).getPtr());
-	ND_order(v.plus(i).getPtr(), ND_order(v.plus(i).getPtr())+1);
+	ND_order(v.get(i), ND_order(v.get(i))+1);
     }
     n = virtual_node(g);
     v.plus(pos).setPtr(n);
     ND_order(n, pos);
     ND_rank(n, r);
-    GD_rank(g).plus(r).setInt("n", GD_rank(g).plus(r).getInt("n")+1);
-    v.plus(GD_rank(g).plus(r).getInt("n")).setPtr(null);
-    return (ST_Agnode_s) v.plus(pos).getPtr();
+    GD_rank(g).plus(r).setInt("n", GD_rank(g).get(r).n+1);
+    v.plus(GD_rank(g).get(r).n).setPtr(null);
+    return (ST_Agnode_s) v.get(pos);
 } finally {
 LEAVING("e0gtvsxlvztmwu8yy44wfvf97","make_vn_slot");
 }
@@ -830,18 +830,18 @@ try {
     int lnode, rnode, r, pos;
     int[] lpos = new int[1], rpos = new int[1];
     int bounds[] = new int[4];
-    __ptr__ rank;
+    ST_Agnode_s.ArrayOfStar rank;
     r = ND_rank(agtail(e)) - 1;
-    rank = GD_rank(g).plus(r).getPtr("v");
+    rank = GD_rank(g).get(r).v;
     lnode = 0;
-    rnode = GD_rank(g).plus(r).getInt("n") - 1;
+    rnode = GD_rank(g).get(r).n - 1;
     bounds[0] = bounds[2] = lnode - 1;
     bounds[1] = bounds[3] = rnode + 1;
     findlr(agtail(e), aghead(e), lpos, rpos);
     while (lnode <= rnode) {
-	setbounds((ST_Agnode_s)rank.plus(lnode).getPtr(), bounds, lpos, rpos);
+	setbounds((ST_Agnode_s)rank.get(lnode), bounds, lpos, rpos);
 	if (lnode != rnode)
-	    setbounds((ST_Agnode_s)rank.plus(rnode).getPtr(), bounds, lpos, rpos);
+	    setbounds((ST_Agnode_s)rank.get(rnode), bounds, lpos, rpos);
 	lnode++;
 	rnode--;
 	if (bounds[1] - bounds[0] <= 1)
@@ -876,37 +876,37 @@ try {
     r = ND_rank(agtail(e));
     place = flat_limits(g, e);
     /* grab ypos = LL.y of label box before make_vn_slot() */
-    if ((n = (ST_Agnode_s) GD_rank(g).plus(r - 1).getPtr().v.plus(0).getPtr())!=null)
-	ypos = (int)(ND_coord(n).getDouble("y") - GD_rank(g).plus(r - 1).getDouble("ht1"));
+    if ((n = (ST_Agnode_s) GD_rank(g).get(r - 1).v.get(0))!=null)
+	ypos = (int)(ND_coord(n).y - GD_rank(g).get(r - 1).ht1);
     else {
-	n = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(0).getPtr();
-	ypos = (int)(ND_coord(n).getDouble("y") + GD_rank(g).plus(r).getDouble("ht2") + GD_ranksep(g));
+	n = (ST_Agnode_s) GD_rank(g).get(r).v.get(0);
+	ypos = (int)(ND_coord(n).y + GD_rank(g).get(r).ht2 + GD_ranksep(g));
     }
     vn = make_vn_slot(g, r - 1, place);
     dimen.___(ED_label(e).dimen);
     if (GD_flip(g)!=0) {
-	double f = dimen.getDouble("x");
-	dimen.setDouble("x", dimen.getDouble("y"));
+	double f = dimen.x;
+	dimen.setDouble("x", dimen.y);
 	dimen.setDouble("y", f);
     }
-    ND_ht(vn, dimen.getDouble("y"));
+    ND_ht(vn, dimen.y);
     h2 = (int)(ND_ht(vn) / 2);
-    ND_rw(vn, dimen.getDouble("x") / 2);
+    ND_rw(vn, dimen.x / 2);
     ND_lw(vn, ND_rw(vn));
     ND_label(vn, ED_label(e));
     ND_coord(vn).setDouble("y", ypos + h2);
     ve = virtual_edge(vn, agtail(e), e);	/* was NULL? */
-    ED_tail_port(ve).getStruct("p").setDouble("x", -ND_lw(vn));
-    ED_head_port(ve).getStruct("p").setDouble("x", ND_rw(agtail(e)));
+    ED_tail_port(ve).p.setDouble("x", -ND_lw(vn));
+    ED_head_port(ve).p.setDouble("x", ND_rw(agtail(e)));
     ED_edge_type(ve, 4);
     ve = virtual_edge(vn, aghead(e), e);
-    ED_tail_port(ve).getStruct("p").setDouble("x", ND_rw(vn));
-    ED_head_port(ve).getStruct("p").setDouble("x", ND_lw(aghead(e)));
+    ED_tail_port(ve).p.setDouble("x", ND_rw(vn));
+    ED_head_port(ve).p.setDouble("x", ND_lw(aghead(e)));
     ED_edge_type(ve, 4);
     /* another assumed symmetry of ht1/ht2 of a label node */
-    if (GD_rank(g).plus(r - 1).getDouble("ht1") < h2)
+    if (GD_rank(g).get(r - 1).ht1 < h2)
 	GD_rank(g).plus(r - 1).setDouble("ht1", h2);
-    if (GD_rank(g).plus(r - 1).getDouble("ht2") < h2)
+    if (GD_rank(g).get(r - 1).ht2 < h2)
 	GD_rank(g).plus(r - 1).setDouble("ht2", h2);
     ND_alg(vn, e);
 } finally {
@@ -930,11 +930,11 @@ try {
     rptr = ALLOC_ST_rank_t(r, (ST_rank_t.Array2) GD_rank(g));
     GD_rank(g, rptr.plus(1));
     for (r = GD_maxrank(g); r >= 0; r--)
-	GD_rank(g).plus(r).getPtr().setStruct(GD_rank(g).plus(r - 1).getPtr().getStruct());
+	GD_rank(g).get(r).setStruct(GD_rank(g).get(r - 1).getStruct());
     GD_rank(g).plus(r).setInt("n", 0);
     GD_rank(g).plus(r).setInt("an", 0);
     GD_rank(g).plus(r).setPtr("v", new ST_Agnode_s.ArrayOfStar(2));
-    GD_rank(g).plus(r).setPtr("av", GD_rank(g).plus(r).getPtr("v"));
+    GD_rank(g).plus(r).setPtr("av", GD_rank(g).get(r).v);
     GD_rank(g).plus(r).setPtr("flat", null);
     GD_rank(g).plus(r).setDouble("ht1", 1);
     GD_rank(g).plus(r).setDouble("ht2", 1);
@@ -969,7 +969,7 @@ try {
     }
     rank = GD_rank(dot_root(tn)).plus(ND_rank(tn));
     for (i = lo + 1; i < hi; i++) {
-	n = (ST_Agnode_s) rank.getPtr().v.plus(i).getPtr();
+	n = (ST_Agnode_s) rank.getPtr().v.get(i);
 	if ((ND_node_type(n) == 1 && ND_label(n)!=null) || 
              ND_node_type(n) == 0)
 	    break;
@@ -1009,8 +1009,8 @@ try {
 		checkFlatAdjacent (e);
 	}
     }
-    if ((GD_rank(g).plus(0).getPtr("flat")!=null) || (GD_n_cluster(g) > 0)) {
-	for (i = 0; (n = (ST_Agnode_s) GD_rank(g).plus(0).getPtr().v.plus(i).getPtr())!=null; i++) {
+    if ((GD_rank(g).get(0).flat!=null) || (GD_n_cluster(g) > 0)) {
+	for (i = 0; (n = (ST_Agnode_s) GD_rank(g).get(0).v.get(i))!=null; i++) {
 	    for (j = 0; (e = (ST_Agedge_s) ND_flat_in(n).getFromList(j))!=null; j++) {
 		if ((ED_label(e)!=null) && N(ED_adjacent(e))) {
 		    abomination(g);
@@ -1029,8 +1029,8 @@ try {
 	    for (i = 0; (e = (ST_Agedge_s) ND_flat_out(n).getFromList(i))!=null; i++) {
 		if (ED_label(e)!=null) {
 		    if (ED_adjacent(e)!=0) {
-			if (GD_flip(g)!=0) ED_dist(e, ED_label(e).dimen.getDouble("y"));
-			else ED_dist(e, ED_label(e).dimen.getDouble("x")); 
+			if (GD_flip(g)!=0) ED_dist(e, ED_label(e).dimen.y);
+			else ED_dist(e, ED_label(e).dimen.x); 
 		    }
 		    else {
 			reset = 1;
@@ -1050,8 +1050,8 @@ try {
 		if (ED_label(e)!=null) {
 		    if (ED_adjacent(e)!=0) {
 			double lw;
-			if (GD_flip(g)!=0) lw = ED_label(e).dimen.getDouble("y");
-			else lw = ED_label(e).dimen.getDouble("x"); 
+			if (GD_flip(g)!=0) lw = ED_label(e).dimen.y;
+			else lw = ED_label(e).dimen.x; 
 			ED_dist(le, MAX(lw,ED_dist(le)));
 		    }
 		    else {

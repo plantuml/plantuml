@@ -41,10 +41,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.IfManagerFilter;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -58,13 +58,15 @@ public class Preprocessor2 implements ReadLineNumbered {
 
 	public Preprocessor2(List<String> config, ReadLine reader, String charset, Defines defines,
 			DefinitionsContainer definitionsContainer, ImportedFiles importedFiles) throws IOException {
-		this(config, reader, charset, defines, definitionsContainer, new HashSet<FileWithSuffix>(), importedFiles);
+		this(config, reader, charset, new DefinesGet(defines), definitionsContainer, new HashSet<FileWithSuffix>(),
+				importedFiles);
 	}
 
-	Preprocessor2(List<String> config, ReadLine reader, String charset, Defines defines,
+	Preprocessor2(List<String> config, ReadLine reader, String charset, DefinesGet defines,
 			DefinitionsContainer definitionsContainer, Set<FileWithSuffix> filesUsedGlobal, ImportedFiles importedFiles)
 			throws IOException {
 		final ReadFilterAnd2 filters = new ReadFilterAnd2();
+		defines.saveState();
 
 		filters.add(new ReadLineQuoteComment2());
 		include = new PreprocessorInclude3(config, charset, defines, definitionsContainer, importedFiles,
@@ -72,7 +74,7 @@ public class Preprocessor2 implements ReadLineNumbered {
 		filters.add(new ReadLineAddConfig2(config));
 		filters.add(new IfManagerFilter(defines));
 		filters.add(new PreprocessorDefine4Apply(defines));
-		filters.add(new SubPreprocessor2(charset, defines, definitionsContainer));
+		filters.add(new SubPreprocessor2(charset, definitionsContainer));
 		filters.add(new PreprocessorDefine3Learner(defines));
 		filters.add(include);
 

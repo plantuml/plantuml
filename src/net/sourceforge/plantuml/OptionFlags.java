@@ -87,7 +87,6 @@ public class OptionFlags {
 	}
 
 	private void reset(boolean exit) {
-		// keepTmpFiles = false;
 		verbose = false;
 		extractFromMetadata = false;
 		word = false;
@@ -96,7 +95,6 @@ public class OptionFlags {
 		quiet = false;
 		checkDotError = false;
 		printFonts = false;
-		// useSuggestEngine = true;
 		// failOnError = false;
 		encodesprite = false;
 		// PIC_LINE = false;
@@ -106,7 +104,6 @@ public class OptionFlags {
 		return false;
 	}
 
-	// private boolean keepTmpFiles;
 	private boolean verbose;
 	private boolean extractFromMetadata;
 	private boolean word;
@@ -115,7 +112,6 @@ public class OptionFlags {
 	private boolean quiet;
 	private boolean checkDotError;
 	private boolean printFonts;
-	// private boolean useSuggestEngine;
 	private boolean encodesprite;
 	private boolean dumpHtmlStats;
 	private boolean dumpStats;
@@ -123,6 +119,7 @@ public class OptionFlags {
 	private boolean overwrite;
 	private boolean enableStats = defaultForStats();
 	private boolean stdLib;
+	private boolean silentlyCompletelyIgnoreErrors;
 	private boolean extractStdLib;
 	private boolean clipboardLoop;
 	private boolean clipboard;
@@ -257,14 +254,6 @@ public class OptionFlags {
 		return false;
 	}
 
-	// public final boolean isUseSuggestEngine() {
-	// return useSuggestEngine;
-	// }
-	//
-	// public final void setUseSuggestEngine(boolean useSuggestEngine) {
-	// this.useSuggestEngine = useSuggestEngine;
-	// }
-
 	public final boolean isEncodesprite() {
 		return encodesprite;
 	}
@@ -367,5 +356,13 @@ public class OptionFlags {
 
 	public final void setStdLib(boolean stdLib) {
 		this.stdLib = stdLib;
+	}
+
+	public final boolean isSilentlyCompletelyIgnoreErrors() {
+		return silentlyCompletelyIgnoreErrors;
+	}
+
+	public final void setSilentlyCompletelyIgnoreErrors(boolean silentlyCompletelyIgnoreErrors) {
+		this.silentlyCompletelyIgnoreErrors = silentlyCompletelyIgnoreErrors;
 	}
 }

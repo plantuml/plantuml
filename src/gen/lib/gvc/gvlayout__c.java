@@ -196,10 +196,10 @@ try {
 //    plugin = gvplugin_load(gvc, API_layout, layout);
 //    if (plugin) {
 //	typeptr = plugin->typeptr;
-	gvc.getStruct("layout").setPtr("type", typeptr.getPtr("type"));
-	gvc.getStruct("layout").setPtr("engine", typeptr.getPtr("engine"));
-	gvc.getStruct("layout").setInt("id", typeptr.getInt("id"));
-	gvc.getStruct("layout").setPtr("features", typeptr.getPtr("features"));
+	gvc.layout.setPtr("type", typeptr.type);
+	gvc.layout.setPtr("engine", typeptr.engine);
+	gvc.layout.setInt("id", typeptr.id);
+	gvc.layout.setPtr("features", typeptr.features);
 	return 300;  /* FIXME - need better return code */
 //    }
 //    return 999;
@@ -235,18 +235,18 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     
     rc = gvlayout_select(gvc, p); //Let's force things
     
-    gvle = (ST_gvlayout_engine_s) gvc.getStruct("layout").getPtr("engine");
+    gvle = (ST_gvlayout_engine_s) gvc.layout.engine;
     if (N(gvle))
 	UNSUPPORTED("return -1;");
     gv_fixLocale (1);
-    graph_init(g, (gvc.getStruct("layout").getPtr("features").getInt("flags") & (1<<0))!=0);
+    graph_init(g, (gvc.layout.features.flags & (1<<0))!=0);
     GD_drawing(agroot(g), GD_drawing(g));
-    if (gvle!=null && gvle.getPtr("layout")!=null) {
-	gvle.call("layout", g);
-	if (gvle.getPtr("cleanup")!=null)
+    if (gvle!=null && gvle.layout!=null) {
+	gvle.layout.exe(g);
+	if (gvle.cleanup!=null)
 	if (GD_cleanup(g)==null) 
 	LOG2("WARNING WE CHEAT GD_cleanup(g) is NULL"); else
-	    GD_cleanup(g).setPtr(gvle.getPtr("cleanup"));
+	    GD_cleanup(g).setPtr(gvle.cleanup);
     }
     gv_fixLocale (0);
     return 0;

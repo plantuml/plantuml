@@ -46,12 +46,11 @@
 package h;
 
 import smetana.core.UnsupportedArrayOfStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
-public class ST_Node_t___ extends UnsupportedStructAndPtr {
+public class ST_Node_t___ extends UnsupportedStructAndPtr implements ST_Node_t___or_object_t {
 
 	private final StarStruct parent;
 	public int count;
@@ -102,11 +101,6 @@ public class ST_Node_t___ extends UnsupportedStructAndPtr {
 			branch[pos].copyDataFrom(value);
 		}
 
-		@Override
-		public double getDouble(String fieldName) {
-			return getStruct().getDouble(fieldName);
-		}
-
 	}
 
 	@Override
@@ -122,16 +116,6 @@ public class ST_Node_t___ extends UnsupportedStructAndPtr {
 		super.setInt(fieldName, data);
 	}
 
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("count")) {
-			return this.count;
-		}
-		if (fieldName.equals("level")) {
-			return this.level;
-		}
-		return super.getInt(fieldName);
-	}
 
 	// "typedef struct Node",
 	// "{",

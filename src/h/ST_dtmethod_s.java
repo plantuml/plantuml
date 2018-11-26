@@ -46,10 +46,8 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
 public class ST_dtmethod_s extends UnsupportedStructAndPtr {
 
@@ -68,30 +66,6 @@ public class ST_dtmethod_s extends UnsupportedStructAndPtr {
 		result.searchf = this.searchf;
 		result.type = this.type;
 		return result;
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("type")) {
-			return type;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("searchf")) {
-			return searchf;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public Object call(String fieldName, Object... args) {
-		if (fieldName.equals("searchf")) {
-			return searchf.exe(args);
-		}
-		return super.call(fieldName, args);
 	}
 
 }

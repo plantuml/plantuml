@@ -59,9 +59,11 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.preproc.ReadLineEmpty;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineSimple;
@@ -73,22 +75,28 @@ import net.sourceforge.plantuml.utils.StartUtils;
 public class PreprocessorInclude3 implements ReadFilter {
 
 	private static final Pattern2 includeDefPattern = MyPattern.cmpile("^[%s]*!includedef[%s]+[%g]?([^%g]+)[%g]?$");
+
+	private static final Pattern2 includeDefaultStrategy = MyPattern.cmpile("^[%s]*!default_include[%s]+(once|many)$");
+
 	private static final Pattern2 includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern2 includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern2 includeOncePattern = MyPattern.cmpile("^[%s]*!include_once[%s]+[%g]?([^%g]+)[%g]?$");
+
 	private static final Pattern2 importPattern = MyPattern.cmpile("^[%s]*!import[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includePatternStdlib = MyPattern.cmpile("^[%s]*!include[%s]+(\\<[^%g]+\\>)$");
-	private static final Pattern2 includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
 
 	private final String charset;
-	private final Defines defines;
+	private final DefinesGet defines;
 	private final List<String> config;
 	private final DefinitionsContainer definitionsContainer;
 	private final ImportedFiles importedFiles;
 
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<FileWithSuffix>();
 	private final Set<FileWithSuffix> filesUsedGlobal;
+	private PreprocessorIncludeStrategy strategy = PreprocessorIncludeStrategy.ONCE;
 
-	public PreprocessorInclude3(List<String> config, String charset, Defines defines,
+	public PreprocessorInclude3(List<String> config, String charset, DefinesGet defines,
 			DefinitionsContainer definitionsContainer, ImportedFiles importedFiles, Set<FileWithSuffix> filesUsedGlobal) {
 		this.charset = charset;
 		this.config = config;
@@ -121,9 +129,10 @@ public class PreprocessorInclude3 implements ReadFilter {
 			if (s == null || s.getPreprocessorError() != null) {
 				return s;
 			}
-			if (s != null && (StartUtils.isArobaseEndDiagram(s) || StartUtils.isArobaseStartDiagram(s))) {
+			if (s != null && StartUtils.startOrEnd(s)) {
 				// http://plantuml.sourceforge.net/qa/?qa=3389/error-generating-when-same-file-included-different-diagram
 				filesUsedCurrent.clear();
+				strategy = PreprocessorIncludeStrategy.ONCE;
 				return s;
 			}
 			if (s.getPreprocessorError() == null && OptionFlags.ALLOW_INCLUDE) {
@@ -137,29 +146,39 @@ public class PreprocessorInclude3 implements ReadFilter {
 				}
 				final Matcher2 m1 = includePattern.matcher(s);
 				if (m1.find()) {
-					insert(manageFileInclude(s, m1, false));
+					insert(manageFileInclude(s, m1, strategy));
 					return readLine();
 				}
 				final Matcher2 m2 = includeManyPattern.matcher(s);
 				if (m2.find()) {
-					insert(manageFileInclude(s, m2, true));
+					insert(manageFileInclude(s, m2, PreprocessorIncludeStrategy.MANY));
 					return readLine();
 				}
-				final Matcher2 m3 = includeDefPattern.matcher(s);
+				final Matcher2 m3 = includeOncePattern.matcher(s);
 				if (m3.find()) {
-					insert(manageDefinitionInclude(s, m3));
+					insert(manageFileInclude(s, m3, PreprocessorIncludeStrategy.ONCE));
+					return readLine();
+				}
+				final Matcher2 m4 = includeDefPattern.matcher(s);
+				if (m4.find()) {
+					insert(manageDefinitionInclude(s, m4));
 					return readLine();
 				}
 			} else {
 				final Matcher2 m1 = includePatternStdlib.matcher(s);
 				if (m1.find()) {
-					insert(manageFileInclude(s, m1, false));
+					insert(manageFileInclude(s, m1, PreprocessorIncludeStrategy.ONCE));
 					return readLine();
 				}
 			}
 			final Matcher2 mUrl = includeURLPattern.matcher(s);
 			if (s.getPreprocessorError() == null && mUrl.find()) {
 				insert(manageUrlInclude(s, mUrl));
+				return readLine();
+			}
+			final Matcher2 m2 = includeDefaultStrategy.matcher(s);
+			if (m2.find()) {
+				strategy = PreprocessorIncludeStrategy.fromString(m2.group(1));
 				return readLine();
 			}
 
@@ -181,7 +200,7 @@ public class PreprocessorInclude3 implements ReadFilter {
 
 	private ReadLine manageUrlInclude(CharSequence2 s, Matcher2 m) throws IOException {
 		String urlString = m.group(1);
-		urlString = defines.applyDefines(urlString).get(0);
+		urlString = defines.get().applyDefines(urlString).get(0);
 
 		final int idx = urlString.lastIndexOf('!');
 		String suf = null;
@@ -210,9 +229,10 @@ public class PreprocessorInclude3 implements ReadFilter {
 				definitionsContainer, filesUsedGlobal, importedFiles);
 	}
 
-	private ReadLine manageFileInclude(CharSequence2 s, Matcher2 matcher, boolean allowMany) throws IOException {
+	private ReadLine manageFileInclude(CharSequence2 s, Matcher2 matcher, PreprocessorIncludeStrategy allowMany)
+			throws IOException {
 		String fileName = matcher.group(1);
-		fileName = defines.applyDefines(fileName).get(0);
+		fileName = defines.get().applyDefines(fileName).get(0);
 		if (fileName.startsWith("<") && fileName.endsWith(">")) {
 			final ReadLine strlibReader = getReaderStdlibInclude(s, fileName.substring(1, fileName.length() - 1));
 			if (strlibReader == null) {
@@ -232,8 +252,9 @@ public class PreprocessorInclude3 implements ReadFilter {
 			Log.error("Current path is " + FileWithSuffix.getAbsolutePath(new File(".")));
 			Log.error("Cannot include " + f2.getDescription());
 			return new ReadLineSingle(s.withErrorPreprocessor("Cannot include " + f2.getDescription()));
-		} else if (allowMany == false && filesUsedCurrent.contains(f2)) {
-			return new ReadLineSimple(s, "File already included " + f2.getDescription());
+		} else if (allowMany == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2)) {
+			// return new ReadLineSimple(s, "File already included " + f2.getDescription());
+			return new ReadLineEmpty();
 		}
 		filesUsedCurrent.add(f2);
 		filesUsedGlobal.add(f2);
@@ -242,7 +263,7 @@ public class PreprocessorInclude3 implements ReadFilter {
 				filesUsedGlobal, importedFiles.withCurrentDir(f2.getParentFile()));
 	}
 
-	static String withEnvironmentVariable(String s) {
+	public static String withEnvironmentVariable(String s) {
 		final Pattern p = Pattern.compile("%(\\w+)%");
 
 		final Matcher m = p.matcher(s);

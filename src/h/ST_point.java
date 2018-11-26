@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -83,17 +82,6 @@ public class ST_point extends UnsupportedStructAndPtr {
 		ST_point this2 = (ST_point) other;
 		this.x = this2.x;
 		this.y = this2.y;
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("x")) {
-			return this.x;
-		}
-		if (fieldName.equals("y")) {
-			return this.y;
-		}
-		return super.getInt(fieldName);
 	}
 
 	@Override

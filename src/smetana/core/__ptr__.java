@@ -61,7 +61,5 @@ public interface __ptr__ extends __c__fields {
 	public __struct__ getStruct();
 	public void setStruct(__struct__ value);
 	
-	public Object call(String name, Object... args);
-	
 
 }

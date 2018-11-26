@@ -49,7 +49,6 @@ import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.ST_Rect_t;
-import smetana.core.__ptr__;
 
 public class rectangle__c {
 //1 9k44uhd5foylaeoekf3llonjq

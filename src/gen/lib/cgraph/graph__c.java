@@ -69,12 +69,12 @@ import static smetana.core.Macro.ASINT;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.ST_Agdisc_s;
-import h.ST_Agnode_s;
-import h.ST_Agraph_s;
 import h.ST_Agclos_s;
 import h.ST_Agdesc_s;
+import h.ST_Agdisc_s;
 import h.ST_Agmemdisc_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
 import h.ST_Agsubnode_s;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
@@ -233,14 +233,14 @@ try {
 		__ptr__  memclosure;
 		ST_Agclos_s rv;
 		/* establish an allocation arena */
-		memdisc = (ST_Agmemdisc_s) ((proto != null && proto.getPtr("mem") != null) ? proto.getPtr("mem") : Z.z().AgMemDisc);
-		memclosure = (__ptr__) memdisc.call("open", proto);
-		rv = (ST_Agclos_s) memdisc.call("alloc", memclosure, sizeof(ST_Agclos_s.class));
-		rv.getStruct("disc").setPtr("mem", memdisc);
-		rv.getStruct("state").setPtr("mem", memclosure);
-		rv.getStruct("disc").setPtr("id", ((proto != null && proto.getPtr("id") != null) ? proto.getPtr("id") : Z.z().AgIdDisc));
+		memdisc = (ST_Agmemdisc_s) ((proto != null && proto.mem != null) ? proto.mem : Z.z().AgMemDisc);
+		memclosure = (__ptr__) memdisc.open.exe(proto);
+		rv = (ST_Agclos_s) memdisc.alloc.exe(memclosure, sizeof(ST_Agclos_s.class));
+		rv.disc.setPtr("mem", memdisc);
+		rv.state.setPtr("mem", memclosure);
+		rv.disc.setPtr("id", ((proto != null && proto.id != null) ? proto.id : Z.z().AgIdDisc));
 		// Translation bug in next line: should be AgIoDisc and not AgIdDisc
-		// rv.getStruct("disc").setPtr("io", ((proto != null && proto.getPtr("io") != null) ? proto.getPtr("io") : Z.z().AgIoDisc));
+		// rv.disc.setPtr("io", ((proto != null && proto.getPtr("io") != null) ? proto.getPtr("io") : Z.z().AgIoDisc));
 		rv.callbacks_enabled = (N(0));
 		return rv;
 } finally {
@@ -264,13 +264,13 @@ try {
 		ST_Agclos_s clos;
 		int gid[] = new int[1];
 		clos = agclos(arg_disc);
-		g = (ST_Agraph_s) clos.getStruct("disc").getPtr("mem").call("alloc", clos.getStruct("state").getPtr("mem"), sizeof(ST_Agraph_s.class));
+		g = (ST_Agraph_s) clos.disc.mem.alloc.exe(clos.state.mem, sizeof(ST_Agraph_s.class));
     	AGTYPE(g, AGRAPH);
 		g.setPtr("clos", clos);
 		g.setStruct("desc", desc);
-		((ST_Agdesc_s)g.getStruct("desc")).maingraph = ASINT((N(0)));
+		((ST_Agdesc_s)g.desc).maingraph = ASINT((N(0)));
 		g.setPtr("root", g);
-		g.clos.getStruct("state").setPtr("id", (__ptr__) g.clos.getStruct("disc").getPtr("id").call("open", g, arg_disc));
+		g.clos.state.setPtr("id", (__ptr__) g.clos.disc.id.open.exe(g, arg_disc));
 		 if (agmapnametoid(g, AGRAPH, name, gid, (N(0)))!=0)
 		   AGID(g, gid[0]);
 		// /* else AGID(g) = 0 because we have no alternatives */
@@ -299,9 +299,9 @@ try {
     par = agparent(g);
     if (par!=null) {
 	AGSEQ(g, agnextseq(par, AGRAPH));
-  	par.getPtr("g_dict").call("searchf", par.getPtr("g_dict"),g,0000001);
+  	par.g_dict.searchf.exe(par.g_dict,g,0000001);
     }				/* else AGSEQ=0 */
-    if (N(par) || ((ST_Agdesc_s)par.getStruct("desc")).has_attrs!=0)
+    if (N(par) || ((ST_Agdesc_s)par.desc).has_attrs!=0)
 	agraphattr_init(g);
     agmethod_init(g, g);
     return g;
@@ -399,7 +399,7 @@ LEAVING("axmdmml95l55vlp1vqmh0v5sn","agnextseq");
 public static int agnnodes(ST_Agraph_s g) {
 ENTERING("688euygrkbl10cveflgwalo2n","agnnodes");
 try {
-    return dtsize_((ST_dt_s)g.getPtr("n_id"));
+    return dtsize_((ST_dt_s)g.n_id);
 } finally {
 LEAVING("688euygrkbl10cveflgwalo2n","agnnodes");
 }
@@ -445,7 +445,7 @@ throw new UnsupportedOperationException();
 public static boolean agisdirected(ST_Agraph_s g) {
 ENTERING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 try {
-    return ((ST_Agdesc_s)g.getStruct("desc")).directed!=0;
+    return ((ST_Agdesc_s)g.desc).directed!=0;
 } finally {
 LEAVING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 }
@@ -473,7 +473,7 @@ LEAVING("8thgds4eioot64flko26m8ns0","agisundirected");
 public static boolean agisstrict(ST_Agraph_s g) {
 ENTERING("9qgdebmdfrcfjm394bg59a7y5","agisstrict");
 try {
-    return ((ST_Agdesc_s)g.getStruct("desc")).strict!=0;
+    return ((ST_Agdesc_s)g.desc).strict!=0;
 } finally {
 LEAVING("9qgdebmdfrcfjm394bg59a7y5","agisstrict");
 }
@@ -550,19 +550,19 @@ try {
     sn = agsubrep(g, n);
     final ST_Agsubnode_s sn1 = sn;
     if (sn!=null) {
-    	if (want_out) rv += cnt((ST_dt_s)g.getPtr("e_seq"),
+    	if (want_out) rv += cnt((ST_dt_s)g.e_seq,
     			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
     				public ST_dtlink_s get() {
-    					return (ST_dtlink_s) sn1.getPtr("out_seq");
+    					return (ST_dtlink_s) sn1.out_seq;
     				}
     				public void set(ST_dtlink_s obj) {
     					sn1.setPtr("out_seq", obj);
     				}})
     			);
-    	if (want_in) rv += cnt((ST_dt_s)g.getPtr("e_seq"),
+    	if (want_in) rv += cnt((ST_dt_s)g.e_seq,
     			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
     				public ST_dtlink_s get() {
-    					return (ST_dtlink_s) sn1.getPtr("in_seq");
+    					return (ST_dtlink_s) sn1.in_seq;
     				}
     				public void set(ST_dtlink_s obj) {
     					sn1.setPtr("in_seq", obj);
@@ -580,13 +580,13 @@ LEAVING("2bz40qf0qo7pd6er1ut25gthp","agdegree");
 
 //3 dhbtfzzp8n5yygqmhmluo9bxl
 // int agraphidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc) 
-public static int agraphidcmpf(ST_dt_s d, __ptr__ arg0, __ptr__ arg1, ST_dtdisc_s disc) {
+public static int agraphidcmpf(ST_dt_s d, ST_Agraph_s arg0, ST_Agraph_s arg1, ST_dtdisc_s disc) {
 ENTERING("dhbtfzzp8n5yygqmhmluo9bxl","agraphidcmpf");
 try {
     int v;
     ST_Agraph_s sg0, sg1;
-    sg0 = (ST_Agraph_s) arg0.getPtr();
-    sg1 = (ST_Agraph_s) arg1.getPtr();
+    sg0 = (ST_Agraph_s) arg0;
+    sg1 = (ST_Agraph_s) arg1;
     v = (AGID(sg0) - AGID(sg1));
     return ((v==0)?0:(v<0?-1:1));
 } finally {

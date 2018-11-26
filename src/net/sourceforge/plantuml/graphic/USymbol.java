@@ -57,8 +57,8 @@ public abstract class USymbol {
 	public final static USymbol NODE = record("NODE", SkinParameter.NODE, new USymbolNode());
 	public final static USymbol ARTIFACT = record("ARTIFACT", SkinParameter.ARTIFACT, new USymbolArtifact());
 	public final static USymbol PACKAGE = record("PACKAGE", SkinParameter.PACKAGE, new USymbolFolder(
-			SkinParameter.PACKAGE));
-	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER, new USymbolFolder(SkinParameter.FOLDER));
+			SkinParameter.PACKAGE, true));
+	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER, new USymbolFolder(SkinParameter.FOLDER, false));
 	public final static USymbol FILE = record("FILE", SkinParameter.FILE, new USymbolFile());
 	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE, new USymbolRect(
 			SkinParameter.RECTANGLE, HorizontalAlignment.CENTER));

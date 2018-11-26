@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project3;
 
-public interface Task extends Subject {
+public interface Task extends Subject, Moment {
 
 	public TaskCode getCode();
 

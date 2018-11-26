@@ -45,9 +45,7 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
@@ -95,22 +93,6 @@ public class ST_nodequeue extends UnsupportedStructAndPtr {
 		return super.setPtr(fieldName, newData);
 	}
 
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("store")) {
-			return this.store;
-		}
-		if (fieldName.equals("tail")) {
-			return this.tail;
-		}
-		if (fieldName.equals("head")) {
-			return this.head;
-		}
-		if (fieldName.equals("limit")) {
-			return this.limit;
-		}
-		return super.getPtr(fieldName);
-	}
 }
 
 // typedef struct nodequeue {

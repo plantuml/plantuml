@@ -80,6 +80,9 @@ public class StartUtils {
 
 	public static boolean isArobaseStartDiagram(CharSequence s) {
 		final String s2 = StringUtils.trinNoTrace(s);
+		if (s2.startsWith("@") == false && s2.startsWith("\\") == false) {
+			return false;
+		}
 		return DiagramType.getTypeFromArobaseStart(s2) != DiagramType.UNKNOWN;
 	}
 
@@ -89,6 +92,14 @@ public class StartUtils {
 
 	public static boolean startsWithSymbolAnd(String value, final String tmp) {
 		return tmp.startsWith("@" + value) || tmp.startsWith("\\" + value);
+	}
+
+	public static boolean startOrEnd(final CharSequence2 s) {
+		final String s2 = StringUtils.trinNoTrace(s);
+		if (s2.startsWith("@") == false && s2.startsWith("\\") == false) {
+			return false;
+		}
+		return startsWithSymbolAnd("end", s2) || DiagramType.getTypeFromArobaseStart(s2) != DiagramType.UNKNOWN;
 	}
 
 	public static boolean isArobaseEndDiagram(CharSequence s) {

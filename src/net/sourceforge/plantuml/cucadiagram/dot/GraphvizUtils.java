@@ -66,7 +66,7 @@ public class GraphvizUtils {
 	}
 
 	public static final void setDotExecutable(String value) {
-		dotExecutable = value;
+		dotExecutable = value == null ? null : value.trim();
 	}
 
 	public static Graphviz create(ISkinParam skinParam, String dotString, String... type) {

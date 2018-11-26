@@ -357,20 +357,53 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	private void initMinMax() {
 		// min = tasks.values().iterator().next().getStart();
-		max = tasks.values().iterator().next().getEnd();
-		for (Task task : tasks.values()) {
-			if (task instanceof TaskSeparator) {
-				continue;
-			}
-			final Instant start = task.getStart();
-			final Instant end = task.getEnd();
-			// if (min.compareTo(start) > 0) {
-			// min = start;
-			// }
-			if (max.compareTo(end) < 0) {
-				max = end;
+		if (tasks.size() == 0) {
+			max = min.increment();
+		} else {
+			max = tasks.values().iterator().next().getEnd();
+			for (Task task : tasks.values()) {
+				if (task instanceof TaskSeparator) {
+					continue;
+				}
+				final Instant start = task.getStart();
+				final Instant end = task.getEnd();
+				// if (min.compareTo(start) > 0) {
+				// min = start;
+				// }
+				if (max.compareTo(end) < 0) {
+					max = end;
+				}
 			}
 		}
+		if (calendar != null) {
+			for (DayAsDate d : colorDays.keySet()) {
+				final Instant instant = calendar.fromDayAsDate(d);
+				if (instant.compareTo(max) > 0) {
+					max = instant;
+				}
+			}
+			for (DayAsDate d : nameDays.keySet()) {
+				final Instant instant = calendar.fromDayAsDate(d);
+				if (instant.compareTo(max) > 0) {
+					max = instant;
+				}
+			}
+		}
+	}
+
+	public DayAsDate getThenDate() {
+		DayAsDate result = getStartingDate();
+		for (DayAsDate d : colorDays.keySet()) {
+			if (d.compareTo(result) > 0) {
+				result = d;
+			}
+		}
+		for (DayAsDate d : nameDays.keySet()) {
+			if (d.compareTo(result) > 0) {
+				result = d;
+			}
+		}
+		return result;
 	}
 
 	private void drawTasks(final UGraphic ug, TimeScale timeScale) {
@@ -494,6 +527,10 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		return this.calendar.getStartingDate();
 	}
 
+	public int daysInWeek() {
+		return 7 - closedDayOfWeek.size();
+	}
+
 	public void closeDayOfWeek(DayOfWeek day) {
 		closedDayOfWeek.add(day);
 	}
@@ -540,6 +577,45 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	private final Map<DayAsDate, HtmlColor> colorDays = new HashMap<DayAsDate, HtmlColor>();
 	private final Map<DayAsDate, String> nameDays = new HashMap<DayAsDate, String>();
+
+	public Moment getExistingMoment(String id) {
+		Moment result = getExistingTask(id);
+		if (result == null) {
+			DayAsDate start = null;
+			DayAsDate end = null;
+			for (Map.Entry<DayAsDate, String> ent : nameDays.entrySet()) {
+				if (ent.getValue().equalsIgnoreCase(id) == false) {
+					continue;
+				}
+				start = min(start, ent.getKey());
+				end = max(end, ent.getKey());
+			}
+			if (start != null) {
+				result = new MomentImpl(convert(start), convert(end));
+			}
+		}
+		return result;
+	}
+
+	private DayAsDate min(DayAsDate d1, DayAsDate d2) {
+		if (d1 == null) {
+			return d2;
+		}
+		if (d1.compareTo(d2) > 0) {
+			return d2;
+		}
+		return d1;
+	}
+
+	private DayAsDate max(DayAsDate d1, DayAsDate d2) {
+		if (d1 == null) {
+			return d2;
+		}
+		if (d1.compareTo(d2) < 0) {
+			return d2;
+		}
+		return d1;
+	}
 
 	public void colorDay(DayAsDate day, HtmlColor color) {
 		colorDays.put(day, color);

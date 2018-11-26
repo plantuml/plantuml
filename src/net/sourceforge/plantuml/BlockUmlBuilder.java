@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLineNumbered;
@@ -66,7 +67,6 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		this.defines = defines;
 		try {
 			reader2 = new UncommentReadLine(ReadLineReader.create(reader, desc));
-			// includer = new Preprocessor(config, reader2, charset, defines, newCurrentDir, this);
 			includer = new Preprocessor2(config, reader2, charset, defines, this,
 					ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir)));
 			init(includer);

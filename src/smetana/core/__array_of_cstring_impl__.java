@@ -145,12 +145,4 @@ public class __array_of_cstring_impl__ implements __array_of_cstring__ {
 
 	//
 
-	public CString getCString() {
-		return (CString) getInternal(0);
-	}
-
-	public void setCString(CString value) {
-		setInternalByIndex(0, value);
-	}
-
 }

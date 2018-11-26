@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedArrayOfStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.Area;
@@ -108,14 +107,6 @@ public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStru
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("pn")) {
-			return pn;
-		}
-		return super.getInt(fieldName);
 	}
 
 	// public static List<String> DEFINITION = Arrays.asList(

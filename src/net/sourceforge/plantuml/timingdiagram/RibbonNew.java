@@ -92,7 +92,7 @@ public class RibbonNew implements TimeDrawing {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		return new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
+		return new FontConfiguration(skinParam, FontParam.TIMING, null);
 	}
 
 	private TextBlock createTextBlock(String value) {

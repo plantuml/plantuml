@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Member;
@@ -91,7 +92,7 @@ public class EntityImageState extends AbstractEntityImage {
 		this.withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 
 		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
-				HorizontalAlignment.CENTER, skinParam);
+				HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
 
 		Display list = Display.empty();
 		for (Member att : entity.getBodier().getFieldsToDisplay()) {

@@ -134,40 +134,12 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 	}
 
 	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("p")) {
-			return p;
-		}
-		return super.getStruct(fieldName);
-	}
-
-	@Override
 	public void setStruct(String fieldName, __struct__ newData) {
 		if (fieldName.equals("p")) {
 			p.copyDataFrom(newData);
 			return;
 		}
 		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("constrained")) {
-			return constrained != 0;
-		}
-		if (fieldName.equals("dyna")) {
-			return dyna != 0;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("constrained")) {
-			constrained = data ? 1 : 0;
-			return;
-		}
-		super.setBoolean(fieldName, data);
 	}
 
 	@Override
@@ -179,27 +151,6 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 		super.setInt(fieldName, data);
 	}
 
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("clip")) {
-			return clip;
-		}
-		if (fieldName.equals("order")) {
-			return order;
-		}
-		if (fieldName.equals("side")) {
-			return side;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("bp")) {
-			return bp;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	@Override
 	public void setDouble(String fieldName, double data) {
@@ -208,14 +159,6 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 			return;
 		}
 		super.setDouble(fieldName, data);
-	}
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("theta")) {
-			return theta;
-		}
-		return super.getDouble(fieldName);
 	}
 
 	// "typedef struct port",

@@ -154,42 +154,6 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("width")) {
-			return this.width;
-		}
-		if (fieldName.equals("height")) {
-			return this.height;
-		}
-		if (fieldName.equals("ht")) {
-			return this.ht;
-		}
-		if (fieldName.equals("lw")) {
-			return this.lw;
-		}
-		if (fieldName.equals("rw")) {
-			return this.rw;
-		}
-		if (fieldName.equals("mval")) {
-			return this.mval;
-		}
-		return super.getDouble(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("mark")) {
-			this.mark = data ? 1 : 0;
-			return;
-		}
-		if (fieldName.equals("onstack")) {
-			this.onstack = data ? 1 : 0;
-			return;
-		}
-		super.setBoolean(fieldName, data);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("showboxes")) {
 			this.showboxes = data;
@@ -243,67 +207,6 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("UF_size")) {
-			return this.UF_size;
-		}
-		if (fieldName.equals("ranktype")) {
-			return this.ranktype;
-		}
-		if (fieldName.equals("mark")) {
-			return this.mark;
-		}
-		if (fieldName.equals("onstack")) {
-			return this.onstack;
-		}
-		if (fieldName.equals("priority")) {
-			return this.priority;
-		}
-		if (fieldName.equals("node_type")) {
-			return this.node_type;
-		}
-		if (fieldName.equals("rank")) {
-			return this.rank;
-		}
-		if (fieldName.equals("order")) {
-			return this.order;
-		}
-		if (fieldName.equals("ranktype")) {
-			return this.ranktype;
-		}
-		if (fieldName.equals("low")) {
-			return this.low;
-		}
-		if (fieldName.equals("lim")) {
-			return this.lim;
-		}
-		if (fieldName.equals("weight_class")) {
-			return this.weight_class;
-		}
-		if (fieldName.equals("id")) {
-			return this.id;
-		}
-		if (fieldName.equals("heapindex")) {
-			return this.heapindex;
-		}
-		if (fieldName.equals("hops")) {
-			return this.hops;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("onstack")) {
-			return this.onstack != 0;
-		}
-		if (fieldName.equals("has_port")) {
-			return this.has_port;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("shape")) {
 			this.shape = (ST_shape_desc) newData;
@@ -344,81 +247,7 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 		return super.setPtr(fieldName, newData);
 	}
 
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("shape")) {
-			return shape;
-		}
-		if (fieldName.equals("label")) {
-			return label;
-		}
-		if (fieldName.equals("UF_parent")) {
-			return UF_parent;
-		}
-		if (fieldName.equals("next")) {
-			return next;
-		}
-		if (fieldName.equals("prev")) {
-			return prev;
-		}
-		if (fieldName.equals("clust")) {
-			return clust;
-		}
-		if (fieldName.equals("inleaf")) {
-			return inleaf;
-		}
-		if (fieldName.equals("outleaf")) {
-			return outleaf;
-		}
-		if (fieldName.equals("alg")) {
-			return alg;
-		}
-		if (fieldName.equals("par")) {
-			return par;
-		}
-		if (fieldName.equals("xlabel")) {
-			return xlabel;
-		}
-		if (fieldName.equals("shape_info")) {
-			return shape_info;
-		}
-		return super.getPtr(fieldName);
-	}
 
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("in")) {
-			return in;
-		}
-		if (fieldName.equals("out")) {
-			return out;
-		}
-		if (fieldName.equals("flat_out")) {
-			return flat_out;
-		}
-		if (fieldName.equals("flat_in")) {
-			return flat_in;
-		}
-		if (fieldName.equals("other")) {
-			return other;
-		}
-		if (fieldName.equals("save_in")) {
-			return save_in;
-		}
-		if (fieldName.equals("save_out")) {
-			return save_out;
-		}
-		if (fieldName.equals("tree_in")) {
-			return tree_in;
-		}
-		if (fieldName.equals("tree_out")) {
-			return tree_out;
-		}
-		if (fieldName.equals("coord")) {
-			return coord;
-		}
-		return super.getStruct(fieldName);
-	}
 
 	@Override
 	public void setStruct(String fieldName, __struct__ newData) {

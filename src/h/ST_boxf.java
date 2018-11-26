@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -85,17 +84,6 @@ public class ST_boxf extends UnsupportedStructAndPtr implements HardcodedStruct 
 	@Override
 	public void setStruct(__struct__ value) {
 		copyDataFrom(value);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("LL")) {
-			return LL;
-		}
-		if (fieldName.equals("UR")) {
-			return UR;
-		}
-		return super.getStruct(fieldName);
 	}
 
 	public __struct__ getStructInternal(String fieldName) {

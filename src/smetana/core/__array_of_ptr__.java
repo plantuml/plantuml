@@ -64,24 +64,16 @@ public interface __array_of_ptr__ extends Area {
 
 	public int getInt();
 
-	public CString getCString();
-
 	public __ptr__ getPtr();
 
 	public __struct__ getStruct();
 
 	public void setInt(int value);
 
-	public void setCString(CString value);
-
 	public void setPtr(__ptr__ value);
 
 	public void setStruct(__struct__ value);
 
-	public double getDouble(String fieldName);
-
 	public void setDouble(String fieldName, double value);
-
-	public __struct__ getStruct(String fieldName);
 
 }

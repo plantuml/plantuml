@@ -58,8 +58,5 @@ public interface __array_of_cstring__ extends Area {
 
 	public void memcopyFrom(Area source);
 
-	public CString getCString();
-
-	public void setCString(CString value);
 
 }

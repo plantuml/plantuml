@@ -159,18 +159,18 @@ try {
 	ST_dtdisc_s	old;
 	if(N(old = (ST_dtdisc_s) dt.disc) )	/* initialization call from dtopen() */
 	{	dt.setPtr("disc", disc);
-		if(N(dt.setPtr("memoryf", disc.getPtr("memoryf") )))
+		if(N(dt.setPtr("memoryf", disc.memoryf )))
 			dt.setPtr("memoryf", function(dtdisc__c.class, "dtmemory"));
 		return disc;
 	}
 	if(N(disc))	/* only want to know current discipline */
 		return old;
- 	searchf = (Dtsearch_f) dt.meth.getPtr("searchf");
+ 	searchf = (Dtsearch_f) dt.meth.searchf;
  	if((dt.data.type&010000)!=0) dtrestore(dt,null);
- 	if(old.getPtr("eventf")!=null && ((Integer)old.call("eventf", dt,3, disc,old)) < 0)
+ 	if(old.eventf!=null && ((Integer)old.eventf.exe(dt,3, disc,old)) < 0)
  		return null;
  	dt.setPtr("disc", disc);
- 	if(N(dt.setPtr("memoryf", disc.getPtr("memoryf"))))
+ 	if(N(dt.setPtr("memoryf", disc.memoryf)))
  		dt.setPtr("memoryf", function(dtdisc__c.class, "dtmemory"));
  	if((dt.data.type&(0000040|0000100|0000020))!=0)
 UNSUPPORTED("e2tzh95k1lvjl6wbtpwizam8q"); // 		goto done;

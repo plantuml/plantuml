@@ -279,7 +279,7 @@ public static void agmethod_init(ST_Agraph_s g, __ptr__ obj) {
 ENTERING("c4ft3rxx9au29a2ns2nhod4dn","agmethod_init");
 try {
     if (g.clos.callbacks_enabled)
-	aginitcb(g, obj, (Agcbstack_s) g.clos.getPtr("cb"));
+	aginitcb(g, obj, (Agcbstack_s) g.clos.cb);
     else
 	agrecord_callback(g, obj, 100, null);
 } finally {
@@ -330,7 +330,7 @@ public static void agmethod_upd(ST_Agraph_s g, __ptr__ obj, ST_Agsym_s sym) {
 ENTERING("29p743rx2pw81slkoaayfeael","agmethod_upd");
 try {
     if (g.clos.callbacks_enabled)
-	agupdcb(g, obj, sym, (Agcbstack_s) g.clos.getPtr("cb"));
+	agupdcb(g, obj, sym, (Agcbstack_s) g.clos.cb);
     else
 	agrecord_callback(g, obj, 101, sym);
 } finally {
@@ -431,11 +431,11 @@ try {
     switch (AGTYPE(obj)) {
     case AGINEDGE:
     case AGOUTEDGE:
-	return (ST_Agraph_s) obj.castTo(ST_Agedge_s.class).getPtr("node").getPtr("root");
+	return (ST_Agraph_s) ((ST_Agedge_s)obj.castTo(ST_Agedge_s.class)).node.root;
     case AGNODE:
-	return (ST_Agraph_s) obj.castTo(ST_Agnode_s.class).getPtr("root");
+	return (ST_Agraph_s) ((ST_Agnode_s)obj.castTo(ST_Agnode_s.class)).root;
     case AGRAPH:
-	return (ST_Agraph_s) obj.castTo(ST_Agraph_s.class).getPtr("root");
+	return (ST_Agraph_s) ((ST_Agraph_s)obj.castTo(ST_Agraph_s.class)).root;
     default:			/* actually can't occur if only 2 bit tags */
 	System.err.println("agroot of a bad object");
 	return null;
@@ -456,9 +456,9 @@ try {
     switch (AGTYPE(obj)) {
     case AGINEDGE:
     case AGOUTEDGE:
-    return (ST_Agraph_s) obj.castTo(ST_Agedge_s.class).getPtr("node").getPtr("root").castTo(ST_Agraph_s.class);
+    return (ST_Agraph_s) ((ST_Agedge_s)obj.castTo(ST_Agedge_s.class)).node.root.castTo(ST_Agraph_s.class);
     case AGNODE:
-    return (ST_Agraph_s) obj.castTo(ST_Agnode_s.class).getPtr("root").castTo(ST_Agraph_s.class);
+    return (ST_Agraph_s) ((ST_Agnode_s)obj.castTo(ST_Agnode_s.class)).root.castTo(ST_Agraph_s.class);
     case AGRAPH:
 	return (ST_Agraph_s) obj.castTo(ST_Agraph_s.class);
     default:			/* actually can't occur if only 2 bit tags */

@@ -48,9 +48,7 @@ package h;
 import java.util.ArrayList;
 import java.util.List;
 
-import smetana.core.CString;
 import smetana.core.UnsupportedArrayOfStruct2;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -92,11 +90,6 @@ public class ST_tna_t extends UnsupportedStructAndPtr {
 		@Override
 		public ST_tna_t getStruct() {
 			return data.get(pos);
-		}
-		
-		@Override
-		public double getDouble(String fieldName) {
-			return getStruct().getDouble(fieldName);
 		}
 		
 		public Array(int size) {
@@ -150,25 +143,9 @@ public class ST_tna_t extends UnsupportedStructAndPtr {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
-		public CString getCString() {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void setCString(CString value) {
-			throw new UnsupportedOperationException(getClass().toString());			
-		}
 
 	}
 
-
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("t")) {
-			return this.t;
-		}
-		return super.getDouble(fieldName);
-	}
 
 	@Override
 	public void setDouble(String fieldName, double data) {

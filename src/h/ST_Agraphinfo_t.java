@@ -119,7 +119,7 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 	public ST_Agnode_s.Array rankleader;
 	public boolean expanded;
 	public int installed;
-	// char set_type;
+	public int set_type;
 	public int label_pos;
 	public int exact_ranksep;
 
@@ -155,22 +155,6 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 			border[pos].copyDataFrom(value);
 		}
 
-		@Override
-		public double getDouble(String fieldName) {
-			return getStruct().getDouble(fieldName);
-		}
-
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("comp")) {
-			return this.comp;
-		}
-		if (fieldName.equals("bb")) {
-			return this.bb;
-		}
-		return super.getStruct(fieldName);
 	}
 
 	@Override
@@ -243,69 +227,6 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 	}
 
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("drawing")) {
-			return drawing;
-		}
-		if (fieldName.equals("gvc")) {
-			return gvc;
-		}
-		if (fieldName.equals("parent")) {
-			return parent;
-		}
-		if (fieldName.equals("dotroot")) {
-			return dotroot;
-		}
-		if (fieldName.equals("clust")) {
-			return clust;
-		}
-		if (fieldName.equals("label")) {
-			return label;
-		}
-		if (fieldName.equals("maxset")) {
-			return maxset;
-		}
-		if (fieldName.equals("minset")) {
-			return minset;
-		}
-		if (fieldName.equals("nlist")) {
-			return nlist;
-		}
-		if (fieldName.equals("leader")) {
-			return leader;
-		}
-		if (fieldName.equals("rankleader")) {
-			return rankleader;
-		}
-		if (fieldName.equals("rank")) {
-			return rank;
-		}
-		if (fieldName.equals("ln")) {
-			return ln;
-		}
-		if (fieldName.equals("rn")) {
-			return rn;
-		}
-		if (fieldName.equals("cleanup")) {
-			return cleanup;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("expanded")) {
-			this.expanded = data;
-			return;
-		}
-		if (fieldName.equals("has_flat_edges")) {
-			this.has_flat_edges = data ? 1 : 0;
-			return;
-		}
-		super.setBoolean(fieldName, data);
-	}
-
-	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("charset")) {
 			this.charset = data;
@@ -366,71 +287,6 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 		super.setInt(fieldName, data);
 	}
 
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("expanded")) {
-			return expanded;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("flags")) {
-			return flags;
-		}
-		if (fieldName.equals("charset")) {
-			return charset;
-		}
-		if (fieldName.equals("rankdir")) {
-			return rankdir;
-		}
-		if (fieldName.equals("has_labels")) {
-			return has_labels;
-		}
-		if (fieldName.equals("n_cluster")) {
-			return n_cluster;
-		}
-		if (fieldName.equals("label_pos")) {
-			return label_pos;
-		}
-		if (fieldName.equals("n_nodes")) {
-			return n_nodes;
-		}
-		if (fieldName.equals("maxrank")) {
-			return maxrank;
-		}
-		if (fieldName.equals("minrank")) {
-			return minrank;
-		}
-		if (fieldName.equals("has_flat_edges")) {
-			return has_flat_edges;
-		}
-		if (fieldName.equals("installed")) {
-			return installed;
-		}
-		if (fieldName.equals("exact_ranksep")) {
-			return exact_ranksep;
-		}
-		if (fieldName.equals("nodesep")) {
-			return nodesep;
-		}
-		if (fieldName.equals("ranksep")) {
-			return ranksep;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("ht1")) {
-			return ht1;
-		}
-		if (fieldName.equals("ht2")) {
-			return ht2;
-		}
-		return super.getDouble(fieldName);
-	}
 
 	@Override
 	public void setDouble(String fieldName, double data) {

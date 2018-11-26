@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.CFunction;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
 public class ST_arrowtype_t extends UnsupportedStructAndPtr {

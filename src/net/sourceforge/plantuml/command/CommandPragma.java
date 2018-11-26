@@ -53,9 +53,13 @@ public class CommandPragma extends SingleLineCommand<UmlDiagram> {
 		system.getPragma().define(name, value);
 		if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot")) {
 			system.setUseJDot(true);
-		} else if (name.equalsIgnoreCase("graphviz_dot")) {
-			system.setDotExecutable(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value));
 		}
+		// else if (name.equalsIgnoreCase("graphviz_dot") && OptionFlags.ALLOW_INCLUDE) {
+		// final String cmd = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value);
+		// if (cmd.toLowerCase().endsWith("dot") || cmd.toLowerCase().endsWith("dot.exe")) {
+		// system.setDotExecutable(cmd);
+		// }
+		// }
 		return CommandExecutionResult.ok();
 	}
 

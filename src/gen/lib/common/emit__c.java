@@ -383,8 +383,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -1398,27 +1398,27 @@ public static void update_bb_bz(ST_boxf bb, ST_pointf.Array cp) {
 ENTERING("5wldemr88fdxl6101ugewclw9","update_bb_bz");
 try {
     /* if any control point of the segment is outside the bounding box */
-    if (cp.plus(0).getDouble("x") > bb.UR.x || cp.plus(0).getDouble("x") < bb.LL.x ||
-        cp.plus(0).getDouble("y") > bb.UR.y || cp.plus(0).getDouble("y") < bb.LL.y ||
-        cp.plus(1).getDouble("x") > bb.UR.x || cp.plus(1).getDouble("x") < bb.LL.x ||
-        cp.plus(1).getDouble("y") > bb.UR.y || cp.plus(1).getDouble("y") < bb.LL.y ||
-        cp.plus(2).getDouble("x") > bb.UR.x || cp.plus(2).getDouble("x") < bb.LL.x ||
-        cp.plus(2).getDouble("y") > bb.UR.y || cp.plus(2).getDouble("y") < bb.LL.y ||
-        cp.plus(3).getDouble("x") > bb.UR.x || cp.plus(3).getDouble("x") < bb.LL.x ||
-        cp.plus(3).getDouble("y") > bb.UR.y || cp.plus(3).getDouble("y") < bb.LL.y) {
+    if (cp.get(0).x > bb.UR.x || cp.get(0).x < bb.LL.x ||
+        cp.get(0).y > bb.UR.y || cp.get(0).y < bb.LL.y ||
+        cp.get(1).x > bb.UR.x || cp.get(1).x < bb.LL.x ||
+        cp.get(1).y > bb.UR.y || cp.get(1).y < bb.LL.y ||
+        cp.get(2).x > bb.UR.x || cp.get(2).x < bb.LL.x ||
+        cp.get(2).y > bb.UR.y || cp.get(2).y < bb.LL.y ||
+        cp.get(3).x > bb.UR.x || cp.get(3).x < bb.LL.x ||
+        cp.get(3).y > bb.UR.y || cp.get(3).y < bb.LL.y) {
         /* if the segment is sufficiently refined */
         if (check_control_points(cp.asPtr())) {        
             int i;
             /* expand the bounding box */
             for (i = 0; i < 4; i++) {
-                if (cp.plus(i).getDouble("x") > bb.UR.x)
-                    bb.UR.setDouble("x", cp.plus(i).getDouble("x"));
-                else if (cp.plus(i).getDouble("x") < bb.LL.x)
-                    bb.LL.setDouble("x", cp.plus(i).getDouble("x"));
-                if (cp.plus(i).getDouble("y") > bb.UR.y)
-                    bb.UR.setDouble("y", cp.plus(i).getDouble("y"));
-                else if (cp.plus(i).getDouble("y") < bb.LL.y)
-                    bb.LL.setDouble("y", cp.plus(i).getDouble("y"));
+                if (cp.get(i).x > bb.UR.x)
+                    bb.UR.setDouble("x", cp.get(i).x);
+                else if (cp.get(i).x < bb.LL.x)
+                    bb.LL.setDouble("x", cp.get(i).x);
+                if (cp.get(i).y > bb.UR.y)
+                    bb.UR.setDouble("y", cp.get(i).y);
+                else if (cp.get(i).y < bb.LL.y)
+                    bb.LL.setDouble("y", cp.get(i).y);
             }
         }
         else { /* else refine the segment */

@@ -85,7 +85,7 @@ public class Player implements TextBlock, TimeProjected {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		return new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
+		return new FontConfiguration(skinParam, FontParam.TIMING, null);
 	}
 
 	public void drawU(UGraphic ug) {

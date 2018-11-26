@@ -165,8 +165,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 			headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
 		}
 		UGraphic ugHeader = ug;
-		if (headerBackcolor != null) {
-			final Shadowable rect2 = new URectangle(widthTotal, dimHeader.getHeight());
+		if (headerBackcolor != null && roundCorner == 0) {
+			final Shadowable rect2 = new URectangle(widthTotal, dimHeader.getHeight(), roundCorner, roundCorner);
 			ugHeader = ugHeader.apply(new UChangeBackColor(headerBackcolor));
 			ugHeader.apply(stroke).draw(rect2);
 		}

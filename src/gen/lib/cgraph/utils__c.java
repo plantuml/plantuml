@@ -53,8 +53,8 @@ import static smetana.core.JUtils.function;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.ST_Agraph_s;
 import h.Dtmemory_f;
+import h.ST_Agraph_s;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
 import h.ST_dtmethod_s;
@@ -256,7 +256,7 @@ ENTERING("48ox0bg1qmasrer8np51uwsyk","agdtopen");
 try {
     Dtmemory_f memf;
     ST_dt_s d;
-    memf = (Dtmemory_f) disc.getPtr("memoryf");
+    memf = (Dtmemory_f) disc.memoryf;
     disc.setPtr("memoryf", function(utils__c.class, "agdictobjmem"));
     Z.z().Ag_dictop_G = g;
     d = dtopen(disc, method);

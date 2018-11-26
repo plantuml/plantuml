@@ -35,10 +35,11 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
@@ -47,34 +48,48 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
-public class CommandReturn extends SingleLineCommand<SequenceDiagram> {
+public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandReturn() {
-		super("(?i)^return[%s]*(.*)$");
+		super(getRegexConcat());
+	}
+
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("PARALLEL", "(&%s*)?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("return[%s]*"), //
+				new RegexLeaf("MESSAGE", "(.*)"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, RegexResult arg) {
 
-		Message message = sequenceDiagram.getActivatingMessage();
+		Message message1 = sequenceDiagram.getActivatingMessage();
 		boolean doDeactivation = true;
-		if (message == null) {
+		if (message1 == null) {
 			final EventWithDeactivate last = sequenceDiagram.getLastEventWithDeactivate();
 			if (last instanceof Message == false) {
 				return CommandExecutionResult.error("Nowhere to return to.");
 			}
-			message = (Message) last;
+			message1 = (Message) last;
 			doDeactivation = false;
 		}
 
-		final ArrowConfiguration arrow = message.getArrowConfiguration().withBody(ArrowBody.DOTTED);
+		final ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
 
-		sequenceDiagram.addMessage(
-				new Message(message.getParticipant2(), message.getParticipant1(), Display.getWithNewlines(arg
-				.get(0)), arrow, sequenceDiagram.getNextMessageNumber()));
+		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));
+		final Message message2 = new Message(message1.getParticipant2(), message1.getParticipant1(), display, arrow,
+				sequenceDiagram.getNextMessageNumber());
+		final boolean parallel = arg.get("PARALLEL", 0) != null;
+		if (parallel) {
+			message2.goParallel();
+		}
+		sequenceDiagram.addMessage(message2);
 
 		if (doDeactivation) {
-			final String error = sequenceDiagram.activate(message.getParticipant2(), LifeEventType.DEACTIVATE, null);
+			final String error = sequenceDiagram.activate(message1.getParticipant2(), LifeEventType.DEACTIVATE, null);
 			if (error != null) {
 				return CommandExecutionResult.error(error);
 			}

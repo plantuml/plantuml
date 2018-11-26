@@ -416,7 +416,7 @@ public class SkinParam implements ISkinParam {
 		result.add("HyperlinkUnderline");
 		result.add("Padding");
 		result.add("BoxPadding");
-		result.add("ParticipantPadding");		
+		result.add("ParticipantPadding");
 		result.add("Guillemet");
 		result.add("SvglinkTarget");
 		result.add("DefaultMonospacedFontName");
@@ -433,6 +433,7 @@ public class SkinParam implements ISkinParam {
 		result.add("WrapWidth");
 		result.add("SwimlaneWidth");
 		result.add("SwimlaneWrapTitleWidth");
+		result.add("FixCircleLabelOverlapping");
 
 		for (FontParam p : EnumSet.allOf(FontParam.class)) {
 			final String h = humanName(p.name());
@@ -479,7 +480,8 @@ public class SkinParam implements ISkinParam {
 		return DotSplines.SPLINES;
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection) {
+	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection,
+			boolean isReverseDefine) {
 		final String value;
 		switch (param) {
 		case sequenceMessageAlignment:
@@ -490,6 +492,19 @@ public class SkinParam implements ISkinParam {
 			break;
 		default:
 			value = getValue(param.name());
+		}
+		if ("first".equalsIgnoreCase(value)) {
+			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+				if (isReverseDefine) {
+					return HorizontalAlignment.LEFT;
+				}
+				return HorizontalAlignment.RIGHT;
+			} else {
+				if (isReverseDefine) {
+					return HorizontalAlignment.RIGHT;
+				}
+				return HorizontalAlignment.LEFT;
+			}
 		}
 		if ("direction".equalsIgnoreCase(value)) {
 			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {

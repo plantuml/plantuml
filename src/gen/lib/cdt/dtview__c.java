@@ -138,11 +138,11 @@ try {
 	Dtcompar_f	cmpf;
 	/* these operations only happen at the top level */
 	if ((type&(0000001|0000002|0000100|0000040))!=0)
-		return (__ptr__) dt.meth.call("searchf", dt, obj, type);
+		return (__ptr__) dt.meth.searchf.exe(dt, obj, type);
 	if(((type&(0001000|0000004))!=0) || /* order sets first/last done below */
 	   (((type&(0000200|0000400))!=0) && N(dt.meth.type&(0000010|0000004)) ) )
-	{	for(d = dt; d!=null; d = (ST_dt_s) d.getPtr("view"))
-			if((o = (__ptr__) d.meth.call("searchf", d,obj,type))!=null )
+	{	for(d = dt; d!=null; d = (ST_dt_s) d.view)
+			if((o = (__ptr__) d.meth.searchf.exe(d,obj,type))!=null )
 				break;
 		dt.setPtr("walk", d);
 		return o;
@@ -151,13 +151,13 @@ try {
 	{	if(N(type & (0000200|0000400|0000010|0000020)) )
 			return null;
 		n = nk = null; p = null;
-		for(d = dt; d!=null; d = (ST_dt_s) d.getPtr("view"))
-		{	if(N(o = (__ptr__) d.meth.call("searchf", d, obj, type) ))
+		for(d = dt; d!=null; d = (ST_dt_s) d.view)
+		{	if(N(o = (__ptr__) d.meth.searchf.exe(d, obj, type) ))
 				continue;
-			ky = d.disc.getInt("key");
+			ky = d.disc.key;
 			sz = d.disc.size;
 			lk = d.disc.link;
-			cmpf = (Dtcompar_f) d.disc.getPtr("comparf");
+			cmpf = (Dtcompar_f) d.disc.comparf;
 			ok = (__ptr__) (sz < 0 ? ((__ptr__)o).addVirtualBytes(ky) : ((__ptr__)o).addVirtualBytes(ky));
 			if(n!=null) /* get the right one among all dictionaries */
 			{	cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(d,ok,nk,d.disc) : (sz <= 0 ? strcmp((CString)ok,(CString)nk) : UNSUPPORTED_INT("memcmp(ok,nk,sz)")) );
@@ -225,22 +225,22 @@ try {
 			UNSUPPORTED("return null;");
 	}
 	/* make sure there won't be a cycle */
-	for(d = view; d!=null; d = (ST_dt_s)d.getPtr("view"))
+	for(d = view; d!=null; d = (ST_dt_s)d.view)
 		if(EQ(d, dt))
 			return null;
 	/* no more viewing lower dictionary */
-	if((d = (ST_dt_s)dt.getPtr("view"))!=null )
-		d.setInt("nview", d.getInt("nview")-1);
+	if((d = (ST_dt_s)dt.view)!=null )
+		d.setInt("nview", d.nview-1);
 	dt.setPtr("walk", null);
 	dt.setPtr("view", null);
 	if(N(view))
-	{	dt.setPtr("searchf", dt.meth.getPtr("searchf"));
+	{	dt.setPtr("searchf", dt.meth.searchf);
 		return d;
 	}
 	/* ok */
 	dt.setPtr("view", view);
 	dt.setPtr("searchf", function(dtview__c.class, "dtvsearch"));
-	view.setInt("nview", view.getInt("nview")+1 );
+	view.setInt("nview", view.nview+1 );
 	return view;
 } finally {
 LEAVING("dfryioch2xz35w8nq6lxbk5kh","dtview");

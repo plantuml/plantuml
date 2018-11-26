@@ -146,6 +146,7 @@ public class OptionPrint {
 		System.out.println("    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder");
 		System.out.println("    -filename \"example.puml\"\tTo override %filename% variable");
 		System.out.println("    -preproc\t\tTo output preprocessor text of diagrams");
+		System.out.println("    -cypher\t\tTo cypher texts of diagrams so that you can share them");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit();

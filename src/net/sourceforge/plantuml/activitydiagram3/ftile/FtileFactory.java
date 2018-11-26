@@ -90,6 +90,6 @@ public interface FtileFactory {
 	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label);
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor, USymbol type);
+			HtmlColor borderColor, USymbol type, double roundCorner);
 
 }

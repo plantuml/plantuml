@@ -48,10 +48,8 @@ package h;
 import java.util.ArrayList;
 import java.util.List;
 
-import smetana.core.CString;
 import smetana.core.OFFSET;
 import smetana.core.UnsupportedArrayOfStruct2;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -88,7 +86,7 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 	public StarStruct getParent() {
 		return _parent;
 	}
-	
+
 	@Override
 	public ST_Agraph_s getStruct() {
 		return this;
@@ -107,47 +105,42 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 	public ST_Agraph_s getPtr() {
 		return this;
 	}
-	
-	public static class Array extends UnsupportedArrayOfStruct2 implements __ptr__, __array_of_ptr__{
+
+	public static class Array extends UnsupportedArrayOfStruct2 implements __ptr__, __array_of_ptr__ {
 
 		private final List<ST_Agraph_s> data;
 		private final int pos;
-		
+
 		@Override
 		public void setStruct(String fieldName, __struct__ data) {
 			getStruct().setStruct(fieldName, data);
 		}
-		
+
 		@Override
 		public __ptr__ castTo(Class dest) {
 			return getStruct().castTo(dest);
 		}
-		
+
 		@Override
 		public void setPtr(__ptr__ value) {
 			this.data.set(pos, (ST_Agraph_s) value);
 		}
-		
+
 		@Override
 		public ST_Agraph_s getPtr() {
 			return this.data.get(pos);
 		}
-		
-		@Override
-		public __struct__ getStruct(String fieldName) {
-			return getStruct().getStruct(fieldName);
-		}
-		
+
 		@Override
 		public Array asPtr() {
 			return this;
 		}
-		
+
 		@Override
 		public ST_Agraph_s getStruct() {
 			return data.get(pos);
 		}
-		
+
 		public Array(int size) {
 			this.data = new ArrayList<ST_Agraph_s>();
 			this.pos = 0;
@@ -162,7 +155,7 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 			}
 			return this;
 		}
-		
+
 		public Array plus(int delta) {
 			return plusJ(delta);
 		}
@@ -199,17 +192,7 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 			throw new UnsupportedOperationException(getClass().toString());
 		}
 
-		public CString getCString() {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void setCString(CString value) {
-			throw new UnsupportedOperationException(getClass().toString());			
-		}
-
 	}
-
-
 
 	@Override
 	public Object addVirtualBytes(int virtualBytes) {
@@ -225,14 +208,6 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 		}
 		System.err.println("offset156=" + offset);
 		return super.addVirtualBytes(virtualBytes);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("desc")) {
-			return desc;
-		}
-		return super.getStruct(fieldName);
 	}
 
 	@Override
@@ -273,35 +248,6 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("clos")) {
-			return clos;
-		}
-		if (fieldName.equals("root")) {
-			return root;
-		}
-		if (fieldName.equals("parent")) {
-			return parent;
-		}
-		if (fieldName.equals("n_id")) {
-			return n_id;
-		}
-		if (fieldName.equals("n_seq")) {
-			return n_seq;
-		}
-		if (fieldName.equals("e_id")) {
-			return e_id;
-		}
-		if (fieldName.equals("e_seq")) {
-			return e_seq;
-		}
-		if (fieldName.equals("g_dict")) {
-			return g_dict;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
 	public __ptr__ castTo(Class dest) {
 		if (dest == ST_Agobj_s.class) {
 			return base;
@@ -310,6 +256,10 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 			return this;
 		}
 		return super.castTo(dest);
+	}
+
+	public ST_Agobj_s castTo_ST_Agobj_s() {
+		return base;
 	}
 
 	@Override
@@ -324,9 +274,6 @@ public class ST_Agraph_s extends UnsupportedStructAndPtr {
 		}
 		throw new IllegalArgumentException();
 	}
-	
-	
-
 
 	//
 	// public interface ST_Agraph_s extends __ptr__ {

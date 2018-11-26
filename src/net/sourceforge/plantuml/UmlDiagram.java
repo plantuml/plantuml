@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException;
@@ -98,6 +99,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private DisplayPositionned legend = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 	private final DisplaySection header = DisplaySection.none();
 	private final DisplaySection footer = DisplaySection.none();
+	private Display mainFrame;
 
 	private final Pragma pragma = new Pragma();
 	private Animation animation;
@@ -109,6 +111,10 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			return;
 		}
 		this.title = title;
+	}
+
+	final public void setMainFrame(Display mainFrame) {
+		this.mainFrame = mainFrame;
 	}
 
 	final public void setCaption(DisplayPositionned caption) {
@@ -210,7 +216,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			throws IOException {
 
 		final HtmlColor hover = getSkinParam().getHoverPathColor();
-		if (fileFormatOption.getSvgLinkTarget() == null) {
+		if (fileFormatOption.getSvgLinkTarget() == null || fileFormatOption.getSvgLinkTarget().equals("_top")) {
 			fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
 		}
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
@@ -439,7 +445,11 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return useJDot;
 	}
 
-	public void setDotExecutable(String dotExecutable) {
+	private void setDotExecutable(String dotExecutable) {
 		skinParam.setDotExecutable(dotExecutable);
+	}
+
+	public final Display getMainFrame() {
+		return mainFrame;
 	}
 }

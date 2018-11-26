@@ -101,14 +101,14 @@ import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_ranktype;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.*;
+import static smetana.core.Macro.ZALLOC_ST_Agraph_s;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
 import h.ST_Agraph_s;
 import h.ST_aspect_t;
+import h.ST_elist;
 import h.ST_point;
 import h.ST_pointf;
-import h.ST_elist;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
@@ -438,8 +438,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -929,7 +929,7 @@ try {
 	    continue;
 	}
 	for (i = 1; i < GD_n_cluster(par); i++)
-	    if (agcontains((ST_Agraph_s) GD_clust(par).plus(i).getPtr().getPtr(), n))
+	    if (agcontains((ST_Agraph_s) GD_clust(par).get(i).getPtr(), n))
 		break;
 	if (i < GD_n_cluster(par))
 	    agdelete(g, n);
@@ -1088,7 +1088,7 @@ try {
     GD_minrank(g, GD_minrank(g) + ND_rank(GD_leader(g)));
     GD_maxrank(g, GD_maxrank(g) + ND_rank(GD_leader(g)));
     for (c = 1; c <= GD_n_cluster(g); c++)
-	set_minmax((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+	set_minmax((ST_Agraph_s) GD_clust(g).get(c).getPtr());
 } finally {
 LEAVING("12fw0esv4unfin6waf9mknc1o","set_minmax");
 }
@@ -1190,7 +1190,7 @@ try {
     if ((s = agget(g, new CString("nslimit1")))!=null)
 UNSUPPORTED("9tp2zk1tsr4ce9rwsr0is9u3o"); // 	maxiter = atof(s) * agnnodes(g);
     for (c = 0; c < GD_comp(g).size; c++) {
-    	//GD_nlist(g, GD_comp(g).list.plus(c).getPtr());
+    	//GD_nlist(g, GD_comp(g).list.get(c));
     	GD_nlist(g, GD_comp(g).getFromList(c));
 	rank(g, (GD_n_cluster(g) == 0 ? 1 : 0), maxiter);	/* TB balance */
     }
@@ -1230,7 +1230,7 @@ try {
 	if (EQ(g, dot_root(g))) {
 	    if (Z.z().CL_type == 100) {
 		for (c = 1; c <= GD_n_cluster(g); c++)
-		    set_minmax((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+		    set_minmax((ST_Agraph_s) GD_clust(g).get(c).getPtr());
 	    } else {
 		find_clusters(g);
 	    }

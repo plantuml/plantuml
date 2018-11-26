@@ -51,7 +51,7 @@ public class SubjectDaysAsDates implements SubjectPattern {
 	}
 
 	public IRegex toRegex() {
-		return new RegexOr(regexTo(), regexAnd());
+		return new RegexOr(regexTo(), regexAnd(), regexThen());
 
 	}
 
@@ -79,22 +79,37 @@ public class SubjectDaysAsDates implements SubjectPattern {
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("DAY3", "([\\d]{1,2})"), //
 				new RegexLeaf("[%s]+and[%s]+"), //
-				new RegexLeaf("COUNT", "([\\d]+)"), //
+				new RegexLeaf("COUNT_AND", "([\\d]+)"), //
+				new RegexLeaf("[%s]+days?") //
+
+		);
+	}
+
+	private IRegex regexThen() {
+		return new RegexConcat( //
+				new RegexLeaf("then[%s]+"), //
+				new RegexLeaf("COUNT_THEN", "([\\d]+)"), //
 				new RegexLeaf("[%s]+days?") //
 
 		);
 	}
 
 	public Subject getSubject(GanttDiagram project, RegexResult arg) {
-		final String count = arg.get("COUNT", 0);
-		if (count == null) {
-			final DayAsDate date1 = getDate(arg, "1");
-			final DayAsDate date2 = getDate(arg, "2");
-			return new DaysAsDates(date1, date2);
+		final String countAnd = arg.get("COUNT_AND", 0);
+		if (countAnd != null) {
+			final DayAsDate date3 = getDate(arg, "3");
+			final int nb = Integer.parseInt(countAnd);
+			return new DaysAsDates(project, date3, nb);
 		}
-		final DayAsDate date3 = getDate(arg, "3");
-		final int nb = Integer.parseInt(count);
-		return new DaysAsDates(project, date3, nb);
+		final String countThen = arg.get("COUNT_THEN", 0);
+		if (countThen != null) {
+			final DayAsDate date3 = project.getThenDate();
+			final int nb = Integer.parseInt(countThen);
+			return new DaysAsDates(project, date3, nb);			
+		}
+		final DayAsDate date1 = getDate(arg, "1");
+		final DayAsDate date2 = getDate(arg, "2");
+		return new DaysAsDates(date1, date2);
 	}
 
 	private DayAsDate getDate(RegexResult arg, String suffix) {

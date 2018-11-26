@@ -199,7 +199,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = new TextBlockCompressedOnXorY(CompressionMode.ON_Y, result);
 		result = new TextBlockRecentred(result);
 		final ISkinParam skinParam = getSkinParam();
-		result = new AnnotatedWorker(this, skinParam).addAdd(result);
+		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
 		// final Dimension2D dim = TextBlockUtils.getMinMax(result, fileFormatOption.getDefaultStringBounder())
 		// .getDimension();
 		final Dimension2D dim = result.getMinMax(fileFormatOption.getDefaultStringBounder()).getDimension();
@@ -390,10 +390,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor, HtmlColor borderColor, USymbol type) {
+	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor, HtmlColor borderColor,
+			USymbol type, double roundCorner) {
 		manageSwimlaneStrategy();
 		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor,
-				swinlanes.getCurrentSwimlane(), borderColor, nextLinkRenderer(), type);
+				swinlanes.getCurrentSwimlane(), borderColor, nextLinkRenderer(), type, roundCorner);
 		current().add(instructionGroup);
 		setCurrent(instructionGroup);
 	}

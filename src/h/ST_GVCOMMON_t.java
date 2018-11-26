@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.CFunction;
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -96,23 +95,6 @@ public class ST_GVCOMMON_t extends UnsupportedStructAndPtr implements HardcodedS
 			return newData;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("builtins") && builtins == null) {
-			return builtins;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("demand_loading")) {
-			this.demand_loading = data;
-			return;
-		}
-		super.setBoolean(fieldName, data);
 	}
 
 }

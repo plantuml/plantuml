@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.core;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,42 +64,62 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
  */
 final public class UmlSource {
 
-	final private List<String> source;
-	final private List<CharSequence2> source2;
+	final private List<CharSequence2> source;
+
+	public UmlSource removeInitialSkinparam() {
+		if (hasInitialSkinparam(source) == false) {
+			return this;
+		}
+		final List<CharSequence2> copy = new ArrayList<CharSequence2>(source);
+		while (hasInitialSkinparam(copy)) {
+			copy.remove(1);
+		}
+		return new UmlSource(copy);
+	}
+
+	public boolean containsIgnoreCase(String searched) {
+		for (CharSequence2 s : source) {
+			if (StringUtils.goLowerCase(s.toString()).contains(searched)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean hasInitialSkinparam(final List<CharSequence2> copy) {
+		return copy.size() > 1 && (copy.get(1).startsWith("skinparam ") || copy.get(1).startsWith("skinparamlocked "));
+	}
+
+	private UmlSource(List<CharSequence2> source) {
+		this.source = source;
+	}
 
 	/**
 	 * Build the source from a text.
 	 * 
-	 * @param source
+	 * @param data
 	 *            the source of the diagram
 	 * @param checkEndingBackslash
 	 *            <code>true</code> if an ending backslash means that a line has to be collapsed with the following one.
 	 */
-	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash) {
-		final List<String> tmp = new ArrayList<String>();
-		final List<CharSequence2> tmp2 = new ArrayList<CharSequence2>();
+	public UmlSource(List<CharSequence2> data, boolean checkEndingBackslash) {
+		this(new ArrayList<CharSequence2>());
 
 		if (checkEndingBackslash) {
 			final StringBuilder pending = new StringBuilder();
-			for (CharSequence2 cs : source) {
+			for (CharSequence2 cs : data) {
 				final String s = cs.toString2();
 				if (StringUtils.endsWithBackslash(s)) {
 					pending.append(s.substring(0, s.length() - 1));
 				} else {
 					pending.append(s);
-					tmp.add(pending.toString());
-					tmp2.add(new CharSequence2Impl(pending.toString(), cs.getLocation()));
+					this.source.add(new CharSequence2Impl(pending.toString(), cs.getLocation()));
 					pending.setLength(0);
 				}
 			}
 		} else {
-			for (CharSequence2 s : source) {
-				tmp.add(s.toString2());
-				tmp2.add(s);
-			}
+			this.source.addAll(data);
 		}
-		this.source = Collections.unmodifiableList(tmp);
-		this.source2 = Collections.unmodifiableList(tmp2);
 	}
 
 	/**
@@ -109,7 +128,7 @@ final public class UmlSource {
 	 * @return the type of the diagram.
 	 */
 	public DiagramType getDiagramType() {
-		return DiagramType.getTypeFromArobaseStart(source.get(0));
+		return DiagramType.getTypeFromArobaseStart(source.get(0).toString2());
 	}
 
 	/**
@@ -118,7 +137,7 @@ final public class UmlSource {
 	 * @return a iterator that allow counting line number.
 	 */
 	public IteratorCounter2 iterator2() {
-		return new IteratorCounter2Impl(source2);
+		return new IteratorCounter2Impl(source);
 	}
 
 	/**
@@ -128,7 +147,7 @@ final public class UmlSource {
 	 */
 	public String getPlainString() {
 		final StringBuilder sb = new StringBuilder();
-		for (String s : source) {
+		for (CharSequence2 s : source) {
 			sb.append(s);
 			sb.append('\r');
 			sb.append(BackSlash.CHAR_NEWLINE);
@@ -147,22 +166,8 @@ final public class UmlSource {
 		return h;
 	}
 
-	/**
-	 * Return a specific line of the diagram description.
-	 * 
-	 * @param n
-	 *            line number, starting at 0
-	 * @return
-	 */
-	private String getLine(int n) {
-		if (n < 0 || n >= source.size()) {
-			return "";
-		}
-		return source.get(n);
-	}
-
 	public String getLine(LineLocation n) {
-		for (CharSequence2 s : source2) {
+		for (CharSequence2 s : source) {
 			if (s.getLocation().compareTo(n) == 0) {
 				return s.toString();
 			}
@@ -185,14 +190,14 @@ final public class UmlSource {
 	 * @return <code>true<code> if the diagram does not contain information.
 	 */
 	public boolean isEmpty() {
-		for (String s : source) {
+		for (CharSequence2 s : source) {
 			if (StartUtils.isArobaseStartDiagram(s)) {
 				continue;
 			}
 			if (StartUtils.isArobaseEndDiagram(s)) {
 				continue;
 			}
-			if (s.matches("\\s*'.*")) {
+			if (s.toString().matches("\\s*'.*")) {
 				continue;
 			}
 			if (StringUtils.trin(s).length() != 0) {
@@ -209,7 +214,7 @@ final public class UmlSource {
 	 */
 	public Display getTitle() {
 		final Pattern2 p = MyPattern.cmpile("(?i)^[%s]*title[%s]+(.+)$");
-		for (String s : source) {
+		for (CharSequence2 s : source) {
 			final Matcher2 m = p.matcher(s);
 			final boolean ok = m.matches();
 			if (ok) {
@@ -232,7 +237,4 @@ final public class UmlSource {
 		return null;
 	}
 
-	// public final int getStartLine() {
-	// return startLine;
-	// }
 }

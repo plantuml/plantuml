@@ -149,6 +149,10 @@ public abstract class SourceFileReaderAbstract {
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
 			}
 
+			if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() && system instanceof PSystemError) {
+				continue;
+			}
+
 			OptionFlags.getInstance().logData(file, system);
 			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption,
 					checkMetadata);

@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.dedication.Dedication;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
-import net.sourceforge.plantuml.preproc.PreprocessorInclude;
 import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.preproc2.PreprocessorInclude3;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -90,12 +90,20 @@ public class PSystemVersion extends AbstractPSystem {
 		return getImage("charlie.png");
 	}
 
-	public static BufferedImage getTime() {
-		return getImage("time00.png");
+	public static BufferedImage getTime01() {
+		return getImage("time01.png");
+	}
+
+	public static BufferedImage getTime15() {
+		return getImage("time15.png");
 	}
 
 	public static BufferedImage getPlantumlSmallIcon() {
 		return getImage("favicon.png");
+	}
+
+	public static BufferedImage getArecibo() {
+		return getImage("arecibo.png");
 	}
 
 	public static BufferedImage getApple2Image() {
@@ -169,7 +177,7 @@ public class PSystemVersion extends AbstractPSystem {
 				strings.add("Word Mode");
 				strings.add("Command Line: " + Run.getCommandLine());
 				strings.add("Current Dir: " + new File(".").getAbsolutePath());
-				strings.add("plantuml.include.path: " + PreprocessorInclude.getenv("plantuml.include.path"));
+				strings.add("plantuml.include.path: " + PreprocessorInclude3.getenv("plantuml.include.path"));
 			}
 		}
 		strings.add(" ");
@@ -313,6 +321,31 @@ public class PSystemVersion extends AbstractPSystem {
 	public static PSystemVersion createTestDot() throws IOException {
 		final List<String> strings = new ArrayList<String>();
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
+		return new PSystemVersion(false, strings);
+	}
+
+	public static PSystemVersion createDumpStackTrace() throws IOException {
+		final List<String> strings = new ArrayList<String>();
+		final Throwable creationPoint = new Throwable();
+		creationPoint.fillInStackTrace();
+		for (StackTraceElement ste : creationPoint.getStackTrace()) {
+			strings.add(ste.toString());
+		}
+		return new PSystemVersion(false, strings);
+	}
+
+	public static PSystemVersion createKeyDistributor() throws IOException {
+		final LicenseInfo license = LicenseInfo.retrieveDistributor();
+
+		final List<String> strings = new ArrayList<String>();
+		if (license == null) {
+			strings.add("No license found");
+		} else {
+			strings.add(license.getOwner());
+			strings.add(license.getContext());
+			strings.add(license.getGenerationDate().toString());
+			strings.add(license.getExpirationDate().toString());
+		}
 		return new PSystemVersion(false, strings);
 	}
 

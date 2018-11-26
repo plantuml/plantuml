@@ -82,33 +82,6 @@ public class ST_shape_desc extends UnsupportedStructAndPtr implements HardcodedS
 		return super.setPtr(fieldName, newData);
 	}
 
-	@Override
-	public CString getCString(String fieldName) {
-		if (fieldName.equals("name")) {
-			return name;
-		}
-		return super.getCString(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("fns")) {
-			return fns;
-		}
-		if (fieldName.equals("polygon")) {
-			return polygon;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("usershape")) {
-			return usershape;
-		}
-		return super.getBoolean(fieldName);
-	}
-
 	// public static List<String> DEFINITION = Arrays.asList(
 	// "typedef struct shape_desc",
 	// "{",

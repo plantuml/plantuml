@@ -377,8 +377,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -1934,7 +1934,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	//fprintf (stderr, "  size   %d\n", pinfo->sz);
 	//fprintf (stderr, "  flags  %d\n", pinfo->flags);
     //}
-    return pinfo.getInt("mode");
+    return pinfo.mode;
 } finally {
 LEAVING("dyb1n3lhbi0wnr9kvmu6onux9","parsePackModeInfo");
 }
@@ -2009,7 +2009,7 @@ try {
     pinfo.setInt("doSplines", 0);
     pinfo.setInt("fixed", 0);
     getPackModeInfo(g, dflt, pinfo);
-    return pinfo.getInt("mode");
+    return pinfo.mode;
 } finally {
 LEAVING("ce4a70w8ddkj4l9efi74h61s6","getPackInfo");
 }

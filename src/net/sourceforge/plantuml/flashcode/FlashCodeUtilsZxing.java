@@ -65,7 +65,7 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 			final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
 			return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);
 		} catch (WriterException e) {
-			Log.debug("Cannot create flashcode " + e);
+			Log.debug("Cannot create qrcode " + e);
 			// e.printStackTrace();
 			return null;
 		}

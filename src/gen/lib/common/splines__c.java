@@ -79,7 +79,8 @@ import static smetana.core.Macro.ND_order;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.ND_shape;
-import static smetana.core.Macro.*;
+import static smetana.core.Macro.NOT;
+import static smetana.core.Macro.NOTI;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
@@ -422,8 +423,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -720,7 +721,7 @@ throw new UnsupportedOperationException();
 
 //3 6izm0fbkejw7odmiw4zaw1ycp
 // static void arrow_clip(edge_t * fe, node_t * hn, 	   pointf * ps, int *startp, int *endp, 	   bezier * spl, splineInfo * info) 
-public static void arrow_clip(ST_Agedge_s fe, ST_Agnode_s hn, __ptr__ ps, int startp[], int endp[], ST_bezier spl, ST_splineInfo info) {
+public static void arrow_clip(ST_Agedge_s fe, ST_Agnode_s hn, ST_pointf.Array ps, int startp[], int endp[], ST_bezier spl, ST_splineInfo info) {
 ENTERING("6izm0fbkejw7odmiw4zaw1ycp","arrow_clip");
 try {
     ST_Agedge_s e;
@@ -732,11 +733,11 @@ try {
     if (info.ignoreSwap)
 	j = false;
     else
-	j = (Boolean) info.call("swapEnds", e);
+	j = (Boolean) info.swapEnds.exe(e);
     arrow_flags(e, sflag, eflag);
-    if ((Boolean) info.call("splineMerge", hn))
+    if ((Boolean) info.splineMerge.exe(hn))
 	eflag[0] = 0;
-    if ((Boolean) info.call("splineMerge", agtail(fe)))
+    if ((Boolean) info.splineMerge.exe(agtail(fe)))
 	sflag[0] = 0;
     /* swap the two ends */
     if (j) {
@@ -806,7 +807,7 @@ try {
 	    found = NOT(false);
 	    odir.setValue(t);
 	}
-    } while (ABS(opt.getDouble("x") - pt.getDouble("x")) > .5 || ABS(opt.getDouble("y") - pt.getDouble("y")) > .5);
+    } while (ABS(opt.x - pt.x) > .5 || ABS(opt.y - pt.y) > .5);
     if (found)
 	for (i = 0; i < 4; i++)
 	    sp.plus(i).setStruct(best.plus(i).getStruct());
@@ -823,7 +824,7 @@ LEAVING("q4t1ywnk3wm1vyh5seoj7xye","bezier_clip");
 
 //3 1fjkj1ydhtlf13pqj5r041orq
 // static void shape_clip0(inside_t * inside_context, node_t * n, pointf curve[4], 	    boolean left_inside) 
-public static void shape_clip0(__ptr__ inside_context, ST_Agnode_s n, __ptr__ curve, boolean left_inside) {
+public static void shape_clip0(__ptr__ inside_context, ST_Agnode_s n, ST_pointf.Array curve, boolean left_inside) {
 ENTERING("1fjkj1ydhtlf13pqj5r041orq","shape_clip0");
 try {
     int i;
@@ -831,14 +832,14 @@ try {
     final ST_pointf.Array c = new ST_pointf.Array( 4);
     save_real_size = ND_rw(n);
     for (i = 0; i < 4; i++) {
-	c.plus(i).setDouble("x", curve.plus(i).getDouble("x") - ND_coord(n).getDouble("x"));
-	c.plus(i).setDouble("y", curve.plus(i).getDouble("y") - ND_coord(n).getDouble("y"));
+	c.plus(i).setDouble("x", curve.get(i).x - ND_coord(n).x);
+	c.plus(i).setDouble("y", curve.get(i).y - ND_coord(n).y);
     }
-    bezier_clip(inside_context, ND_shape(n).getPtr("fns").getPtr("insidefn"), c,
+    bezier_clip(inside_context, ND_shape(n).fns.insidefn, c,
 		left_inside);
     for (i = 0; i < 4; i++) {
-	curve.plus(i).setDouble("x", c.plus(i).getDouble("x") + ND_coord(n).getDouble("x"));
-	curve.plus(i).setDouble("y", c.plus(i).getDouble("y") + ND_coord(n).getDouble("y"));
+	curve.plus(i).setDouble("x", c.get(i).x + ND_coord(n).x);
+	curve.plus(i).setDouble("y", c.get(i).y + ND_coord(n).y);
     }
     ND_rw(n, save_real_size);
 } finally {
@@ -893,10 +894,10 @@ try {
     rv.setInt("size", sz);
     rv.setInt("sflag", 0);
     rv.setInt("eflag", 0);
-    rv.getStruct("sp").setDouble("x", 0);
-    rv.getStruct("sp").setDouble("y", 0);
-    rv.getStruct("ep").setDouble("x", 0);
-    rv.getStruct("ep").setDouble("y", 0);
+    rv.sp.setDouble("x", 0);
+    rv.sp.setDouble("y", 0);
+    rv.ep.setDouble("x", 0);
+    rv.ep.setDouble("y", 0);
     return rv;
 } finally {
 LEAVING("bdirexg1qdtophlh0ofjvsmj7","new_spline");
@@ -908,7 +909,7 @@ LEAVING("bdirexg1qdtophlh0ofjvsmj7","new_spline");
 
 //3 duednxyuvf6xrff752uuv620f
 // void clip_and_install(edge_t * fe, node_t * hn, pointf * ps, int pn, 		 splineInfo * info) 
-public static void clip_and_install(ST_Agedge_s fe, ST_Agnode_s hn, __ptr__ ps, int pn, ST_splineInfo info) {
+public static void clip_and_install(ST_Agedge_s fe, ST_Agnode_s hn, ST_pointf.Array ps, int pn, ST_splineInfo info) {
 ENTERING("duednxyuvf6xrff752uuv620f","clip_and_install");
 try {
     final ST_pointf p2 = new ST_pointf();
@@ -933,37 +934,37 @@ try {
 	tn = tmp;
     }
     if (EQ(tn, agtail(orig))) {
-	clipTail = ED_tail_port(orig).getInt("clip");
-	clipHead = ED_head_port(orig).getInt("clip");
-	tbox = (ST_boxf) ED_tail_port(orig).getPtr("bp");
-	hbox = (ST_boxf) ED_head_port(orig).getPtr("bp");
+	clipTail = ED_tail_port(orig).clip;
+	clipHead = ED_head_port(orig).clip;
+	tbox = (ST_boxf) ED_tail_port(orig).bp;
+	hbox = (ST_boxf) ED_head_port(orig).bp;
     }
     else { /* fe and orig are reversed */
- 	clipTail = ED_head_port(orig).getInt("clip");
- 	clipHead = ED_tail_port(orig).getInt("clip");
- 	hbox = (ST_boxf) ED_tail_port(orig).getPtr("bp");
- 	tbox = (ST_boxf) ED_head_port(orig).getPtr("bp");
+ 	clipTail = ED_head_port(orig).clip;
+ 	clipHead = ED_tail_port(orig).clip;
+ 	hbox = (ST_boxf) ED_tail_port(orig).bp;
+ 	tbox = (ST_boxf) ED_head_port(orig).bp;
     }
     /* spline may be interior to node */
-    if(clipHead!=0 && ND_shape(tn)!=null && ND_shape(tn).getPtr("fns").getPtr("insidefn")!=null) {
+    if(clipHead!=0 && ND_shape(tn)!=null && ND_shape(tn).fns.insidefn!=null) {
 	inside_context.setPtr("s.n", tn);
 	inside_context.setPtr("s.bp", tbox);
 	for (start[0] = 0; start[0] < pn - 4; start[0] += 3) {
-	    p2.setDouble("x", ps.plus(start[0] + 3).getDouble("x") - ND_coord(tn).getDouble("x"));
-	    p2.setDouble("y", ps.plus(start[0] + 3).getDouble("y") - ND_coord(tn).getDouble("y"));
-	    if (((Boolean)ND_shape(tn).getPtr("fns").call("insidefn", inside_context, p2)) == false)
+	    p2.setDouble("x", ps.get(start[0] + 3).x - ND_coord(tn).x);
+	    p2.setDouble("y", ps.get(start[0] + 3).y - ND_coord(tn).y);
+	    if (((Boolean)ND_shape(tn).fns.insidefn.exe(inside_context, p2)) == false)
 		break;
 	}
 	shape_clip0(inside_context, tn, ps.plus(start[0]), NOT(false));
     } else
 	start[0] = 0;
-    if(clipHead!=0 && ND_shape(hn)!=null && ND_shape(hn).getPtr("fns").getPtr("insidefn")!=null) {
+    if(clipHead!=0 && ND_shape(hn)!=null && ND_shape(hn).fns.insidefn!=null) {
 	inside_context.setPtr("s.n", hn);
 	inside_context.setPtr("s.bp", hbox);
 	for (end[0] = pn - 4; end[0] > 0; end[0] -= 3) {
-	    p2.setDouble("x", ps.plus(end[0]).getDouble("x") - ND_coord(hn).getDouble("x"));
-	    p2.setDouble("y", ps.plus(end[0]).getDouble("y") - ND_coord(hn).getDouble("y"));
-	    if (((Boolean)ND_shape(hn).getPtr("fns").call("insidefn", inside_context, p2)) == false)
+	    p2.setDouble("x", ps.get(end[0]).x - ND_coord(hn).x);
+	    p2.setDouble("y", ps.get(end[0]).y - ND_coord(hn).y);
+	    if (((Boolean)ND_shape(hn).fns.insidefn.exe(inside_context, p2)) == false)
 		break;
 	}
 	shape_clip0(inside_context, hn, ps.plus(end[0]), false);
@@ -1047,8 +1048,8 @@ ENTERING("egq4f4tmy1dhyj6jpj92r7xhu","add_box");
 try {
     if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
     {
-	P.boxes[P.getInt("nbox")].setStruct(b);
-	P.setInt("nbox", P.getInt("nbox")+1);
+	P.boxes[P.nbox].setStruct(b);
+	P.nbox = P.nbox+1;
 	}
 } finally {
 LEAVING("egq4f4tmy1dhyj6jpj92r7xhu","add_box");
@@ -1070,24 +1071,24 @@ try {
     if (ED_tail_port(e).dyna!=0)
 	ED_tail_port(e, resolvePort(agtail(e), aghead(e), ED_tail_port(e)));
     if (ND_shape(n)!=null)
-	pboxfn = (CFunction) ND_shape(n).getPtr("fns").getPtr("pboxfn");
+	pboxfn = (CFunction) ND_shape(n).fns.pboxfn;
     else
 	pboxfn = null;
-    P.start.setStruct("p", add_pointf(ND_coord(n), (ST_pointf) ED_tail_port(e).getStruct("p")));
+    P.start.setStruct("p", add_pointf(ND_coord(n), (ST_pointf) ED_tail_port(e).p));
     if (merge) {
 	/*P->start.theta = - M_PI / 2; */
 	P.start.setDouble("theta", conc_slope(agtail(e)));
 	P.start.constrained= NOTI(false);
     } else {
 	if (ED_tail_port(e).constrained!=0) {
-	    P.start.setDouble("theta", ED_tail_port(e).getDouble("theta"));
+	    P.start.setDouble("theta", ED_tail_port(e).theta);
 	    P.start.constrained= NOTI(false);
 	} else
 	    P.start.constrained= 0;
     }
-    P.setInt("nbox", 0);
+    P.nbox = 0;
     P.setPtr("data", e);
-    endp.setStruct("np", P.start.getStruct("p"));
+    endp.setStruct("np", P.start.p);
     if ((et == 1) && (ND_node_type(n) == 0) && ((side = ED_tail_port(e).side)!=0)) {
 UNSUPPORTED("a7lrhlfwr0y475aqjk6abhb3b"); // 	edge_t* orig;
 UNSUPPORTED("ew7nyfe712nsiphifeztwxfop"); // 	boxf b0, b = endp->nb;
@@ -1221,12 +1222,12 @@ UNSUPPORTED("8jqn3kj2hrrlcifbw3x9sf6qu"); // 	endp->sidemask = side;
 UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     }
     if (et == 1) side = (1<<0);
-    else side = endp.getInt("sidemask");  /* for flat edges */
+    else side = endp.sidemask;  /* for flat edges */
     if (pboxfn!=null
-	&& (mask = (Integer) pboxfn.exe(n, ED_tail_port(e), side, endp.boxes[0], endp.getInt("boxn")))!=0)
+	&& (mask = (Integer) pboxfn.exe(n, ED_tail_port(e), side, endp.boxes[0], endp.boxn))!=0)
 UNSUPPORTED("ex9kjvshm19zbu9vqonk1avd8"); // 	endp->sidemask = mask;
     else {
-    endp.boxes[0].setStruct(endp.getStruct("nb"));
+    endp.boxes[0].setStruct(endp.nb);
 	endp.setInt("boxn", 1);
 	switch (et) {
 	case 8:
@@ -1238,15 +1239,15 @@ UNSUPPORTED("46vb5zg9vm9n0q21g53nj66v3"); // 	    endp->boxes[0].UR.y = P->start
 UNSUPPORTED("auefgwb39x5hzqqc9b1zgl239"); // 	    endp->sidemask = (1<<0);
 	    break;
 	case 2:
-	    if (endp.getInt("sidemask") == (1<<2))
-		((ST_boxf)endp.boxes[0]).LL.y = P.start.getStruct("p").getDouble("y");
+	    if (endp.sidemask == (1<<2))
+		((ST_boxf)endp.boxes[0]).LL.y = P.start.p.y;
 	    else
-	    	((ST_boxf)endp.boxes[0]).UR.y = P.start.getStruct("p").getDouble("y");
+	    	((ST_boxf)endp.boxes[0]).UR.y = P.start.p.y;
 	    break;
 	case 1:
-	    ((ST_boxf)(endp).boxes[0]).UR.y = P.start.getStruct("p").getDouble("y");
+	    ((ST_boxf)(endp).boxes[0]).UR.y = P.start.p.y;
 	    endp.setInt("sidemask", (1<<0));
-	    P.start.getStruct("p").setDouble("y", P.start.getStruct("p").getDouble("y") - 1);
+	    P.start.p.setDouble("y", P.start.p.y - 1);
 	    break;
 	}    
     }    
@@ -1270,10 +1271,10 @@ try {
     if (ED_head_port(e).dyna!=0) 
 UNSUPPORTED("9brhx94sjudx3jtzrnwa60x8"); // 	ED_head_port(e) = resolvePort(aghead(e), agtail(e), &ED_head_port(e));
     if (ND_shape(n)!=null)
-	pboxfn = (CFunction) ND_shape(n).getPtr("fns").getPtr("pboxfn");
+	pboxfn = (CFunction) ND_shape(n).fns.pboxfn;
     else
 	pboxfn = null;
-    P.getStruct("end").setStruct("p", add_pointf(ND_coord(n), (ST_pointf) ED_head_port(e).getStruct("p")));
+    P.end.setStruct("p", add_pointf(ND_coord(n), (ST_pointf) ED_head_port(e).p));
     if (merge) {
 UNSUPPORTED("cproejwusj67kuugolh6tbkwz"); // 	/*P->end.theta = M_PI / 2; */
 UNSUPPORTED("65vhfvz1d1tub3f85tdsgg2g5"); // 	P->end.theta = conc_slope(aghead(e)) + M_PI;
@@ -1281,12 +1282,12 @@ UNSUPPORTED("du4hwt6pjf3bmkvowssm7b0uo"); // 	assert(P->end.theta < 2 * M_PI);
 UNSUPPORTED("2w0c22i5xgcch77xd9jg104nw"); // 	P->end.constrained = NOT(0);
     } else {
 	if (ED_head_port(e).constrained!=0) {
-	    P.getStruct("end").setDouble("theta", ED_head_port(e).getDouble("theta"));
-	    P.getStruct("end").setInt("constrained", 1);
+	    P.end.setDouble("theta", ED_head_port(e).theta);
+	    P.end.setInt("constrained", 1);
 	} else
-	    P.getStruct("end").setInt("constrained", 0);
+	    P.end.setInt("constrained", 0);
     }
-    endp.setStruct("np", P.getStruct("end").getStruct("p"));
+    endp.setStruct("np", P.end.p);
     if ((et == 1) && (ND_node_type(n) == 0) && ((side = ED_head_port(e).side)!=0)) {
 UNSUPPORTED("a7lrhlfwr0y475aqjk6abhb3b"); // 	edge_t* orig;
 UNSUPPORTED("ew7nyfe712nsiphifeztwxfop"); // 	boxf b0, b = endp->nb;
@@ -1421,12 +1422,12 @@ UNSUPPORTED("8jqn3kj2hrrlcifbw3x9sf6qu"); // 	endp->sidemask = side;
 UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     }
     if (et == 1) side = (1<<2);
-    else side = endp.getInt("sidemask");  /* for flat edges */
+    else side = endp.sidemask;  /* for flat edges */
     if (pboxfn!=null
-	&& (mask = (Integer) pboxfn.exe(n, ED_head_port(e), side, endp.boxes[0], endp.getInt("boxn")))!=0)
+	&& (mask = (Integer) pboxfn.exe(n, ED_head_port(e), side, endp.boxes[0], endp.boxn))!=0)
 	endp.setInt("sidemask", mask);
     else {
-    	endp.boxes[0].setStruct(endp.getStruct("nb"));
+    	endp.boxes[0].setStruct(endp.nb);
 	endp.setInt("boxn", 1);
 	switch (et) {
 	case 8:
@@ -1438,15 +1439,15 @@ UNSUPPORTED("db6vmvnse8bawy8qwct7l24u8"); // 	    endp->boxes[0].LL.y = P->end.p
 UNSUPPORTED("1r4lctdj9z1ivlz3uqpcj1yzf"); // 	    endp->sidemask = (1<<2);
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 	case 2:
-	    if (endp.getInt("sidemask") == (1<<2))
-	    	endp.boxes[0].LL.y = P.getStruct("end").getStruct("p").getDouble("y");
+	    if (endp.sidemask == (1<<2))
+	    	endp.boxes[0].LL.y = P.end.p.y;
 	    else
-	    	endp.boxes[0].UR.y = P.getStruct("end").getStruct("p").getDouble("y");
+	    	endp.boxes[0].UR.y = P.end.p.y;
 	    break;
 	case 1:
-		endp.boxes[0].LL.y = P.getStruct("end").getStruct("p").getDouble("y");
+		endp.boxes[0].LL.y = P.end.p.y;
 	    endp.setInt("sidemask", (1<<2));
-	    P.getStruct("end").getStruct("p").setDouble("y", P.getStruct("end").getStruct("p").getDouble("y") +1);
+	    P.end.p.setDouble("y", P.end.p.y +1);
 	    break;
 	}
     }
@@ -1684,7 +1685,7 @@ throw new UnsupportedOperationException();
 
 //3 3sr8gvj4141qql0v12lb89cyt
 // static void selfRight (edge_t* edges[], int ind, int cnt, double stepx, double sizey,            splineInfo* sinfo)  
-public static void selfRight(__ptr__ edges, int ind, int cnt, double stepx, double sizey, ST_splineInfo sinfo) {
+public static void selfRight(ST_Agedge_s.ArrayOfStar edges, int ind, int cnt, double stepx, double sizey, ST_splineInfo sinfo) {
 ENTERING("3sr8gvj4141qql0v12lb89cyt","selfRight");
 try {
     int i, sgn, point_pair;
@@ -1694,19 +1695,19 @@ try {
     ST_Agedge_s e;
     final ST_pointf.Array points = new ST_pointf.Array( 1000);
     int pointn;
-    e = (ST_Agedge_s) edges.plus(ind).getPtr();
+    e = (ST_Agedge_s) edges.get(ind);
     n = agtail(e);
     stepy = (sizey / 2.) / cnt;
     stepy = MAX(stepy, 2.);
     pointn = 0;
     np.___(ND_coord(n));
-    tp.___(ED_tail_port(e).getStruct("p"));
-    tp.setDouble("x", tp.getDouble("x") + np.getDouble("x"));
-    tp.setDouble("y", tp.getDouble("y") + np.getDouble("y"));
-    hp.___(ED_head_port(e).getStruct("p"));
-    hp.setDouble("x", hp.getDouble("x") + np.getDouble("x"));
-    hp.setDouble("y", hp.getDouble("y") + np.getDouble("y"));
-    if (tp.getDouble("y") >= hp.getDouble("y")) sgn = 1;
+    tp.___(ED_tail_port(e).p);
+    tp.setDouble("x", tp.x + np.x);
+    tp.setDouble("y", tp.y + np.y);
+    hp.___(ED_head_port(e).p);
+    hp.setDouble("x", hp.x + np.x);
+    hp.setDouble("y", hp.y + np.y);
+    if (tp.y >= hp.y) sgn = 1;
     else sgn = -1;
     dx = ND_rw(n);
     dy = 0;
@@ -1715,35 +1716,35 @@ try {
     point_pair = convert_sides_to_points(ED_tail_port(e).side,ED_head_port(e).side);
     switch(point_pair){
       case 32: 
-      case 65:	if(tp.getDouble("y") == hp.getDouble("y"))
+      case 65:	if(tp.y == hp.y)
 		  sgn = -sgn;
 		break;
       default:
 		break;
     }
-    tx = MIN(dx, 3*(np.getDouble("x") + dx - tp.getDouble("x")));
-    hx = MIN(dx, 3*(np.getDouble("x") + dx - hp.getDouble("x")));
+    tx = MIN(dx, 3*(np.x + dx - tp.x));
+    hx = MIN(dx, 3*(np.x + dx - hp.x));
     for (i = 0; i < cnt; i++) {
         e = (ST_Agedge_s) edges.plus(ind++).getPtr();
         dx += stepx; tx += stepx; hx += stepx; dy += sgn*stepy;
         pointn = 0;
         points.plus(pointn++).setStruct(tp);
-        points.plus(pointn++).setStruct(pointfof(tp.getDouble("x") + tx / 3, tp.getDouble("y") + dy));
-        points.plus(pointn++).setStruct(pointfof(np.getDouble("x") + dx, tp.getDouble("y") + dy));
-        points.plus(pointn++).setStruct(pointfof(np.getDouble("x") + dx, (tp.getDouble("y")+hp.getDouble("y"))/2));
-        points.plus(pointn++).setStruct(pointfof(np.getDouble("x") + dx, hp.getDouble("y") - dy));
-        points.plus(pointn++).setStruct(pointfof(hp.getDouble("x") + hx / 3, hp.getDouble("y") - dy));
+        points.plus(pointn++).setStruct(pointfof(tp.x + tx / 3, tp.y + dy));
+        points.plus(pointn++).setStruct(pointfof(np.x + dx, tp.y + dy));
+        points.plus(pointn++).setStruct(pointfof(np.x + dx, (tp.y+hp.y)/2));
+        points.plus(pointn++).setStruct(pointfof(np.x + dx, hp.y - dy));
+        points.plus(pointn++).setStruct(pointfof(hp.x + hx / 3, hp.y - dy));
         points.plus(pointn++).setStruct(hp);
         if (ED_label(e)!=null) {
 	    if (GD_flip(agraphof(agtail(e)))!=0) {
-		width = ED_label(e).dimen.getDouble("y");
-		height = ED_label(e).dimen.getDouble("x");
+		width = ED_label(e).dimen.y;
+		height = ED_label(e).dimen.x;
 	    } else {
-		width = ED_label(e).dimen.getDouble("x");
-		height = ED_label(e).dimen.getDouble("y");
+		width = ED_label(e).dimen.x;
+		height = ED_label(e).dimen.y;
 	    }
-	    ED_label(e).getStruct("pos").setDouble("x", ND_coord(n).getDouble("x") + dx + width / 2.0);
-	    ED_label(e).getStruct("pos").setDouble("y", ND_coord(n).getDouble("y"));
+	    ED_label(e).pos.setDouble("x", ND_coord(n).x + dx + width / 2.0);
+	    ED_label(e).pos.setDouble("y", ND_coord(n).y);
 	    ED_label(e).set= NOTI(false);
 	    if (width > stepx)
 		dx += width - stepx;
@@ -1854,7 +1855,7 @@ try {
 		  )) {
 	sw = 18;
 	if (l!=null) {
-	    label_width = GD_flip(agraphof(aghead(e)))!=0 ? l.dimen.getDouble("y") : l.dimen.getDouble("x");
+	    label_width = GD_flip(agraphof(aghead(e)))!=0 ? l.dimen.y : l.dimen.x;
 	    sw += label_width;
     }
     }
@@ -1870,11 +1871,11 @@ LEAVING("678whq05s481ertx02jloteu3","selfRightSpace");
 
 //3 bt3fwgprixbc5rceeewozdqr9
 // void makeSelfEdge(path * P, edge_t * edges[], int ind, int cnt, double sizex, 	     double sizey, splineInfo * sinfo) 
-public static void makeSelfEdge(ST_path P, __ptr__ edges, int ind, int cnt, double sizex, double sizey, ST_splineInfo sinfo) {
+public static void makeSelfEdge(ST_path P, ST_Agedge_s.ArrayOfStar edges, int ind, int cnt, double sizex, double sizey, ST_splineInfo sinfo) {
 ENTERING("bt3fwgprixbc5rceeewozdqr9","makeSelfEdge");
 try {
     ST_Agedge_s e;
-    e = (ST_Agedge_s) edges.plus(ind).getPtr();
+    e = (ST_Agedge_s) edges.get(ind);
     /* self edge without ports or
      * self edge with all ports inside, on the right, or at most 1 on top 
      * and at most 1 on bottom 
@@ -1944,7 +1945,7 @@ public static void endPoints(ST_splines spl, ST_pointf p, ST_pointf q) {
 ENTERING("7wyn51o9k6u7joaq9k18boffh","endPoints");
 try {
      final ST_bezier bz = new ST_bezier();
-     bz.____(spl.list.plus(0).getPtr());
+     bz.____(spl.list.get(0));
      if (bz.sflag!=0) {
 UNSUPPORTED("4wazlko0bxmzxoobqacij1btk"); // 	*p = bz.sp;
      }

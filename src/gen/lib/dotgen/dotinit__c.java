@@ -102,11 +102,11 @@ import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.alloc_elist;
 import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
 import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
 import h.ST_Agraph_s;
 import h.ST_Agraphinfo_t;
-import h.ST_Agedgeinfo_t;
-import h.ST_Agnodeinfo_t;
 import h.ST_aspect_t;
 import h.ST_pack_info;
 import h.ST_pointf;
@@ -440,8 +440,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -1080,8 +1080,8 @@ UNSUPPORTED("28kbszyxsjoj03gb134ov4hag"); // 	    aspect.nextIter = 0;
 	    attach_phase_attrs (g, 2);  /* positions will be attached on output */
 	    return;
 	}
-	aspect.setInt("nPasses", aspect.getInt("nPasses") -1);
-    } while (aspect.getInt("nextIter")!=0 && aspect.getInt("nPasses")!=0);
+	aspect.setInt("nPasses", aspect.nPasses -1);
+    } while (aspect.nextIter!=0 && aspect.nPasses!=0);
     if ((GD_flags(g) & (1 << 4))!=0)
 	removeFill (g);
     dot_sameports(g);

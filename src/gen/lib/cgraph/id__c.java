@@ -59,8 +59,8 @@ import static smetana.core.Macro.ASINT;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.ST_Agdisc_s;
-import h.ST_Agraph_s;
 import h.ST_Agobj_s;
+import h.ST_Agraph_s;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
@@ -341,7 +341,7 @@ ENTERING("aq30wwcj4ugatsgx0zdtdmeed","agmapnametoid");
 try {
     int rv;
     if (str!=null && (str.charAt(0) != '%')) {
-    	rv = (Integer) g.clos.getStruct("disc").getPtr("id").call("map", g.clos.getStruct("state").getPtr("id"), objtype, str, result, createflag);
+    	rv = (Integer) g.clos.disc.id.map.exe(g.clos.state.id, objtype, str, result, createflag);
 	if (rv!=0)
 	    return rv;
     }
@@ -354,7 +354,7 @@ try {
 	rv = 0;
     if (createflag) {
 	/* get a new anonymous ID, and store in the internal map */
-	rv = (Integer) g.clos.getStruct("disc").getPtr("id").call("map", g.clos.getStruct("state").getPtr("id"), objtype, null, result,
+	rv = (Integer) g.clos.disc.id.map.exe(g.clos.state.id, objtype, null, result,
 				createflag);
 	if (rv!=0 && str!=null)
 	    aginternalmapinsert(g, objtype, str, result[0]);
@@ -409,15 +409,15 @@ try {
     g = agraphof(obj);
     if ((rv = aginternalmapprint(g, AGTYPE(obj), AGID(obj)))!=null)
 	return rv;
-    if (g.clos.getStruct("disc").getPtr("id").getPtr("print")!=null) {
+    if (g.clos.disc.id.print!=null) {
 	if ((rv =
-	     (CString) g.clos.getStruct("disc").getPtr("id").call("print", g.clos.getStruct("state").getPtr("id"),
+	     (CString) g.clos.disc.id.print.exe(g.clos.state.id,
 	     AGTYPE(obj), 
 	     AGID(obj)))!=null)
 	    return rv;
     }
     if (AGTYPE(obj) != AGEDGE) {
-      rv = new CString("%"+((ST_Agobj_s)obj.castTo(ST_Agobj_s.class)).tag.getInt("id"));
+      rv = new CString("%"+((ST_Agobj_s)obj.castTo(ST_Agobj_s.class)).tag.id);
     }
     else
 	rv = null;
@@ -435,7 +435,7 @@ LEAVING("cctsybrl54fy799aynfej4iiy","agnameof");
 public static void agregister(ST_Agraph_s g, int objtype, Object obj) {
 ENTERING("emt63ldde99jnwe2vvjal9kt9","agregister");
 try {
-	g.clos.getStruct("disc").getPtr("id").call("idregister", g.clos.getStruct("state").getPtr("id"), objtype, obj);
+	g.clos.disc.id.idregister.exe(g.clos.state.id, objtype, obj);
 } finally {
 LEAVING("emt63ldde99jnwe2vvjal9kt9","agregister");
 }

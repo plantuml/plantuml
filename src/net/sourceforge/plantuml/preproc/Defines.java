@@ -37,11 +37,15 @@ package net.sourceforge.plantuml.preproc;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,7 +67,7 @@ public class Defines implements Truth {
 
 	@Override
 	public String toString() {
-		return values.keySet().toString();
+		return values.keySet().toString() + " " + environment.keySet();
 	}
 
 	public static Defines createEmpty() {
@@ -80,6 +84,7 @@ public class Defines implements Truth {
 	public void importFrom(Defines other) {
 		this.environment.putAll(other.environment);
 		this.values.putAll(other.values);
+		magic = null;
 	}
 
 	public Defines cloneMe() {
@@ -111,6 +116,7 @@ public class Defines implements Truth {
 
 	public void define(String name, List<String> value, boolean emptyParentheses) {
 		values.put(name, new Define(name, value, emptyParentheses));
+		magic = null;
 	}
 
 	public boolean isDefine(String expression) {
@@ -134,16 +140,67 @@ public class Defines implements Truth {
 
 	public void undefine(String name) {
 		values.remove(name);
+		magic = null;
 	}
 
 	public List<String> applyDefines(String line) {
+		// System.err.println("line=" + line + " " + values.size());
 		line = manageDate(line);
 		line = manageEnvironment(line);
-		for (Map.Entry<String, Define> ent : values.entrySet()) {
-			final Define def = ent.getValue();
+		line = method1(line);
+		// line = values.size() < 10 ? method1(line) : method2(line);
+		return Arrays.asList(line.split("\n"));
+	}
+
+	private String method1(String line) {
+		for (Define def : values.values()) {
 			line = def.apply(line);
 		}
-		return Arrays.asList(line.split("\n"));
+		return line;
+	}
+
+	private Map<String, Collection<Define>> getAll() {
+		final Map<String, Collection<Define>> result = new LinkedHashMap<String, Collection<Define>>();
+		for (Define def : values.values()) {
+			Collection<Define> tmp = result.get(def.getFunctionName());
+			if (tmp == null) {
+				tmp = new ArrayList<Define>();
+				result.put(def.getFunctionName(), tmp);
+			}
+			tmp.add(def);
+		}
+		return result;
+	}
+
+	private Map<String, Collection<Define>> magic;
+
+	private String method2(String line) {
+		final Set<String> words = words(line);
+		if (magic == null) {
+			magic = getAll();
+
+		}
+		for (String w : words) {
+			Collection<Define> tmp = magic.get(w);
+			if (tmp == null) {
+				continue;
+			}
+			for (Define def : tmp) {
+				line = def.apply(line);
+			}
+		}
+		return line;
+	}
+
+	private Set<String> words(String line) {
+		final String ID = "[A-Za-z_][A-Za-z_0-9]*";
+		Pattern p = Pattern.compile(ID);
+		Matcher m = p.matcher(line);
+		final Set<String> words = new HashSet<String>();
+		while (m.find()) {
+			words.add(m.group(0));
+		}
+		return words;
 	}
 
 	private String manageEnvironment(String line) {
@@ -176,18 +233,15 @@ public class Defines implements Truth {
 		return line;
 	}
 
-	public void saveState() {
-//		if (savedState.size() > 0) {
-//			throw new IllegalStateException();
-//		}
+	public void saveState1() {
 		this.savedState.putAll(values);
 
 	}
 
-	public void restoreState() {
+	public void restoreState1() {
 		this.values.clear();
 		this.values.putAll(savedState);
-
+		magic = null;
 	}
 
 }

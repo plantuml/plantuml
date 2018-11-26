@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
-import net.sourceforge.plantuml.preproc.PreprocessorInclude;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineSimple;
@@ -67,13 +67,11 @@ public class SubPreprocessor2 implements ReadFilter {
 	private static final Pattern2 startsub = MyPattern.cmpile("^[%s]*!startsub[%s]+(" + ID + ")");
 	private static final Pattern2 endsub = MyPattern.cmpile("^[%s]*!endsub[%s]*");
 
-	private final Defines defines;
 	private final DefinitionsContainer definitionsContainer;
 	private final String charset;
 
-	public SubPreprocessor2(String charset, Defines defines, DefinitionsContainer definitionsContainer) {
+	public SubPreprocessor2(String charset, DefinitionsContainer definitionsContainer) {
 		this.charset = charset;
-		this.defines = defines;
 		this.definitionsContainer = definitionsContainer;
 	}
 
@@ -113,12 +111,12 @@ public class SubPreprocessor2 implements ReadFilter {
 			if (idx != -1) {
 				final String filename = name.substring(0, idx);
 				final String blocname = name.substring(idx + 1);
-				final File f = FileSystem.getInstance().getFile(PreprocessorInclude.withEnvironmentVariable(filename));
+				final File f = FileSystem.getInstance().getFile(PreprocessorInclude3.withEnvironmentVariable(filename));
 				if (f.exists() == false || f.isDirectory()) {
 					Log.error("Cannot include " + FileWithSuffix.getAbsolutePath(f));
 					return s.withErrorPreprocessor("Cannot include " + FileWithSuffix.getFileName(f));
 				}
-				final SubPreprocessor2 data = new SubPreprocessor2(charset, defines, definitionsContainer);
+				final SubPreprocessor2 data = new SubPreprocessor2(charset, definitionsContainer);
 				InnerReadLine tmp = (InnerReadLine) data.applyFilter(getReaderInclude(s, f));
 				while (tmp.readLine() != null) {
 					// Read file

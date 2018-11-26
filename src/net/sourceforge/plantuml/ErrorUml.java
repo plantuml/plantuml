@@ -44,13 +44,11 @@ public class ErrorUml {
 	private final ErrorUmlType type;
 	private SuggestEngineResult suggest;
 	private final LineLocation lineLocation;
-//	private final int startLine;
 
 	public ErrorUml(ErrorUmlType type, String error, LineLocation lineLocation) {
-		if (error == null || type == null || StringUtils.isEmpty(error)) {
+		if (error == null || type == null) {
 			throw new IllegalArgumentException();
 		}
-//		this.startLine = startLine;
 		this.error = error;
 		this.type = type;
 		this.lineLocation = lineLocation;

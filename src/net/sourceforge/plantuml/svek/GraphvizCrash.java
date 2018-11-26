@@ -151,7 +151,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	public static void addDecodeHint(final List<String> strings) {
 		strings.add(" ");
-		strings.add(" Diagram source: (Use http://zxing.org/w/decode.jspx to decode the flashcode)");
+		strings.add(" Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)");
 	}
 
 	public static void addProperties(final List<String> strings) {

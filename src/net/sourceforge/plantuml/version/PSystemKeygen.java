@@ -88,16 +88,16 @@ public class PSystemKeygen extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Genkey)");
+		return new DiagramDescription("(Key)");
 	}
 
 	private void drawInternal(UGraphic ug) throws IOException {
-		final LicenseInfo installed = LicenseInfo.retrieveSlow();
+		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();
 		if (key.length() == 0) {
 			drawFlash(ug, installed);
 			return;
 		}
-		final LicenseInfo info = LicenseInfo.retrieve(key);
+		final LicenseInfo info = LicenseInfo.retrieveNamed(key);
 		if (info.isNone()) {
 			drawFlash(ug, installed);
 			return;
@@ -145,7 +145,7 @@ public class PSystemKeygen extends AbstractPSystem {
 	private void drawFlash(UGraphic ug, LicenseInfo info) throws IOException {
 		final List<String> strings = header();
 		strings.add("To get your <i>Professional Edition License</i>,");
-		strings.add("please send this flashcode to <b>plantuml@gmail.com</b> :");
+		strings.add("please send this qrcode to <b>plantuml@gmail.com</b> :");
 
 		TextBlock disp = GraphicStrings.createBlackOnWhite(strings);
 		disp.drawU(ug);

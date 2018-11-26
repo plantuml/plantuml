@@ -51,10 +51,10 @@ import smetana.core.__ptr__;
 
 public class ST_gvplugin_active_layout_t extends UnsupportedStructAndPtr {
 
-	private ST_gvlayout_engine_s engine;
+	public ST_gvlayout_engine_s engine;
 	private int id;
-	private ST_gvlayout_features_t features;
-	private CString type;
+	public ST_gvlayout_features_t features;
+	public CString type;
 
 	// "}",
 
@@ -75,17 +75,6 @@ public class ST_gvplugin_active_layout_t extends UnsupportedStructAndPtr {
 		return super.setPtr(fieldName, newData);
 	}
 	
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("engine")) {
-			return engine;
-		}
-		if (fieldName.equals("features")) {
-			return features;
-		}
-		return super.getPtr(fieldName);
-	}
-
 	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("id")) {

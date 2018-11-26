@@ -399,8 +399,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -740,10 +740,10 @@ try {
     final ST_pointf.Array eps = new ST_pointf.Array( 2);
     final ST_pointf.Array evs = new ST_pointf.Array( 2);
     int i;
-    eps.plus(0).setDouble("x", tp.getDouble("x"));
-    eps.plus(0).setDouble("y", tp.getDouble("y"));
-    eps.plus(1).setDouble("x", hp.getDouble("x"));
-    eps.plus(1).setDouble("y", hp.getDouble("y"));
+    eps.plus(0).setDouble("x", tp.x);
+    eps.plus(0).setDouble("y", tp.y);
+    eps.plus(1).setDouble("x", hp.x);
+    eps.plus(1).setDouble("y", hp.y);
     if (Pshortestpath(poly, eps, pl) < 0)
         return null;
     if (polyline)
@@ -838,26 +838,26 @@ try {
 	    sp.plus(1).getStruct().___(pps.plus(splinepi+1).getStruct());
 	    sp.plus(2).getStruct().___(pps.plus(splinepi+2).getStruct());
 	    sp.plus(3).getStruct().___(pps.plus(splinepi+3).getStruct());
-	    sp.plus(0).setDouble("x", sp.plus(0).getDouble("x") + t * (sp.plus(1).getDouble("x") - sp.plus(0).getDouble("x")));
-	    sp.plus(0).setDouble("y", sp.plus(0).getDouble("y") + t * (sp.plus(1).getDouble("y") - sp.plus(0).getDouble("y")));
-	    sp.plus(1).setDouble("x", sp.plus(1).getDouble("x") + t * (sp.plus(2).getDouble("x") - sp.plus(1).getDouble("x")));
-	    sp.plus(1).setDouble("y", sp.plus(1).getDouble("y") + t * (sp.plus(2).getDouble("y") - sp.plus(1).getDouble("y")));
-	    sp.plus(2).setDouble("x", sp.plus(2).getDouble("x") + t * (sp.plus(3).getDouble("x") - sp.plus(2).getDouble("x")));
-	    sp.plus(2).setDouble("y", sp.plus(2).getDouble("y") + t * (sp.plus(3).getDouble("y") - sp.plus(2).getDouble("y")));
- 	    sp.plus(0).setDouble("x", sp.plus(0).getDouble("x") + t * (sp.plus(1).getDouble("x") - sp.plus(0).getDouble("x")));
-	    sp.plus(0).setDouble("y", sp.plus(0).getDouble("y") + t * (sp.plus(1).getDouble("y") - sp.plus(0).getDouble("y")));
-	    sp.plus(1).setDouble("x", sp.plus(1).getDouble("x") + t * (sp.plus(2).getDouble("x") - sp.plus(1).getDouble("x")));
-	    sp.plus(1).setDouble("y", sp.plus(1).getDouble("y") + t * (sp.plus(2).getDouble("y") - sp.plus(1).getDouble("y")));
-	    sp.plus(0).setDouble("x", sp.plus(0).getDouble("x") + t * (sp.plus(1).getDouble("x") - sp.plus(0).getDouble("x")));
-	    sp.plus(0).setDouble("y", sp.plus(0).getDouble("y") + t * (sp.plus(1).getDouble("y") - sp.plus(0).getDouble("y")));
+	    sp.plus(0).setDouble("x", sp.get(0).x + t * (sp.get(1).x - sp.get(0).x));
+	    sp.plus(0).setDouble("y", sp.get(0).y + t * (sp.get(1).y - sp.get(0).y));
+	    sp.plus(1).setDouble("x", sp.get(1).x + t * (sp.get(2).x - sp.get(1).x));
+	    sp.plus(1).setDouble("y", sp.get(1).y + t * (sp.get(2).y - sp.get(1).y));
+	    sp.plus(2).setDouble("x", sp.get(2).x + t * (sp.get(3).x - sp.get(2).x));
+	    sp.plus(2).setDouble("y", sp.get(2).y + t * (sp.get(3).y - sp.get(2).y));
+ 	    sp.plus(0).setDouble("x", sp.get(0).x + t * (sp.get(1).x - sp.get(0).x));
+	    sp.plus(0).setDouble("y", sp.get(0).y + t * (sp.get(1).y - sp.get(0).y));
+	    sp.plus(1).setDouble("x", sp.get(1).x + t * (sp.get(2).x - sp.get(1).x));
+	    sp.plus(1).setDouble("y", sp.get(1).y + t * (sp.get(2).y - sp.get(1).y));
+	    sp.plus(0).setDouble("x", sp.get(0).x + t * (sp.get(1).x - sp.get(0).x));
+	    sp.plus(0).setDouble("y", sp.get(0).y + t * (sp.get(1).y - sp.get(0).y));
 	    for (bi = 0; bi < boxn; bi++) {
 /* this tested ok on 64bit machines, but on 32bit we need this FUDGE
  *     or graphs/directed/records.gv fails */
-		if (sp.plus(0).getDouble("y") <= boxes[bi].UR.y+.0001 && sp.plus(0).getDouble("y") >= boxes[bi].LL.y-.0001) {
-		    if (boxes[bi].LL.x > sp.plus(0).getDouble("x"))
-			boxes[bi].LL.setDouble("x", sp.plus(0).getDouble("x"));
-		    if (boxes[bi].UR.x < sp.plus(0).getDouble("x"))
-			boxes[bi].UR.setDouble("x", sp.plus(0).getDouble("x"));
+		if (sp.get(0).y <= boxes[bi].UR.y+.0001 && sp.get(0).y >= boxes[bi].LL.y-.0001) {
+		    if (boxes[bi].LL.x > sp.get(0).x)
+			boxes[bi].LL.setDouble("x", sp.get(0).x);
+		    if (boxes[bi].UR.x < sp.get(0).x)
+			boxes[bi].UR.setDouble("x", sp.get(0).x);
 		}
 	    }
 	}
@@ -889,7 +889,7 @@ try {
     int loopcnt, delta = 10;
     boolean unbounded;
     Z.z().nedges++;
-    Z.z().nboxes += pp.getInt("nbox");
+    Z.z().nboxes += pp.nbox;
     for (realedge = (ST_Agedge_s) pp.data.castTo(ST_Agedge_s.class);
 	 realedge!=null && ED_edge_type(realedge) != 0;
 	 realedge = ED_to_orig(realedge));
@@ -898,7 +898,7 @@ try {
 	return null;
     }
     boxes = pp.boxes;
-    boxn = pp.getInt("nbox");
+    boxn = pp.nbox;
     if (checkpath(boxn, boxes, pp)!=0)
 	return null;
     if (boxn * 8 > Z.z().polypointn) {
@@ -1003,7 +1003,7 @@ UNSUPPORTED("11hwqop4xebvtcskop4uhpp01"); // 	return NULL;
 	    ((ST_boxf)boxes[bi]).LL.y = -v;
 	}
 	for (i = 0; i < pi; i++)
-	    Z.z().polypoints.plus(i).setDouble("y", -1 * Z.z().polypoints.plus(i).getDouble("y"));
+	    Z.z().polypoints.plus(i).setDouble("y", -1 * Z.z().polypoints.get(i).y);
     }
     for (bi = 0; bi < boxn; bi++) {
 	((ST_boxf)boxes[bi]).LL.x = INT_MAX;
@@ -1011,10 +1011,10 @@ UNSUPPORTED("11hwqop4xebvtcskop4uhpp01"); // 	return NULL;
 	}
     poly.ps = Z.z().polypoints;
     poly.pn = pi;
-    eps.plus(0).getStruct().setDouble("x", pp.start.getStruct("p").getDouble("x"));
-    eps.plus(0).getStruct().setDouble("y", pp.start.getStruct("p").getDouble("y"));
-    eps.plus(1).getStruct().setDouble("x", pp.getStruct("end").getStruct("p").getDouble("x"));
-    eps.plus(1).getStruct().setDouble("y", pp.getStruct("end").getStruct("p").getDouble("y"));
+    eps.plus(0).getStruct().setDouble("x", pp.start.p.x);
+    eps.plus(0).getStruct().setDouble("y", pp.start.p.y);
+    eps.plus(1).getStruct().setDouble("x", pp.end.p.x);
+    eps.plus(1).getStruct().setDouble("y", pp.end.p.y);
     if (Pshortestpath(poly, eps, pl) < 0) {
 		System.err.println("in routesplines, Pshortestpath failed\n");
 		return null;
@@ -1032,16 +1032,16 @@ UNSUPPORTED("48veztc3k9dfw8tqolu7jsktk"); // 	make_polyline (pl, &spl);
 	    Z.z().edges.plus(edgei).setStruct("b", Z.z().polypoints.plus((edgei + 1) % poly.pn).getStruct());
 	}
 	if (pp.start.constrained!=0) {
- 	    evs.plus(0).getStruct().setDouble("x", cos(pp.start.getDouble("theta")));
- 	    evs.plus(0).getStruct().setDouble("y", sin(pp.start.getDouble("theta")));
+ 	    evs.plus(0).getStruct().setDouble("x", cos(pp.start.theta));
+ 	    evs.plus(0).getStruct().setDouble("y", sin(pp.start.theta));
 	} else
 	{
 	    evs.plus(0).getStruct().setDouble("x", 0);
 	    evs.plus(0).getStruct().setDouble("y", 0);
     }
 	if (pp.end.constrained!=0) {
- 	    evs.plus(1).getStruct().setDouble("x", -cos(pp.getStruct("end").getDouble("theta")));
- 	    evs.plus(1).getStruct().setDouble("y", -sin(pp.getStruct("end").getDouble("theta")));
+ 	    evs.plus(1).getStruct().setDouble("x", -cos(pp.end.theta));
+ 	    evs.plus(1).getStruct().setDouble("y", -sin(pp.end.theta));
 	} else
 	{
 	    evs.plus(1).getStruct().setDouble("x", 0);
@@ -1091,8 +1091,8 @@ UNSUPPORTED("7x5kpcbvg4va887hky7ufm45y"); // 	return NULL;  /* Bailout if no mem
 	final ST_Ppoly_t polyspl = new ST_Ppoly_t();
 	System.err.println("Unable to reclaim box space in spline routing for edge \"%s\" -> \"%s\". Something is probably seriously wrong.\n");
 	make_polyline (pl, polyspl);
-	limitBoxes (boxes, boxn, polyspl.getPtr("ps"), polyspl.pn, 10);
-	Memory.free (polyspl.getPtr("ps"));
+	limitBoxes (boxes, boxn, polyspl.ps, polyspl.pn, 10);
+	Memory.free (polyspl.ps);
     }
     npoints[0] = spl.pn;
     return Z.z().ps;
@@ -1279,39 +1279,39 @@ UNSUPPORTED("5r6ck8hfb1cxywn9go61se9kx"); // 			ba.LL.x = bb.UR.x;
 	    }
 	}
     }
-    if (thepath.start.getStruct("p").getDouble("x") < ((ST_boxf)boxes[0]).LL.x
-	|| thepath.start.getStruct("p").getDouble("x") > ((ST_boxf)boxes[0]).UR.x
-	|| thepath.start.getStruct("p").getDouble("y") < ((ST_boxf)boxes[0]).LL.y
-	|| thepath.start.getStruct("p").getDouble("y") > ((ST_boxf)boxes[0]).UR.y) {
+    if (thepath.start.p.x < ((ST_boxf)boxes[0]).LL.x
+	|| thepath.start.p.x > ((ST_boxf)boxes[0]).UR.x
+	|| thepath.start.p.y < ((ST_boxf)boxes[0]).LL.y
+	|| thepath.start.p.y > ((ST_boxf)boxes[0]).UR.y) {
 	/*if (Verbose) {
 	    fprintf(stderr, "in checkpath, start port not in first box\n");
 	    printpath(thepath);
 	}*/
-	if (thepath.start.getStruct("p").getDouble("x") < ((ST_boxf)boxes[0]).LL.x)
-	    thepath.start.getStruct("p").setDouble("x", ((ST_boxf)boxes[0]).LL.x);
-	if (thepath.start.getStruct("p").getDouble("x") > ((ST_boxf)boxes[0]).UR.x)
-	    thepath.start.getStruct("p").setDouble("x", ((ST_boxf)boxes[0]).UR.x);
-	if (thepath.start.getStruct("p").getDouble("y") < ((ST_boxf)boxes[0]).LL.y)
-	    thepath.start.getStruct("p").setDouble("y", ((ST_boxf)boxes[0]).LL.y);
-	if (thepath.start.getStruct("p").getDouble("y") > ((ST_boxf)boxes[0]).UR.y)
-	    thepath.start.getStruct("p").setDouble("y", ((ST_boxf)boxes[0]).UR.y);
+	if (thepath.start.p.x < ((ST_boxf)boxes[0]).LL.x)
+	    thepath.start.p.setDouble("x", ((ST_boxf)boxes[0]).LL.x);
+	if (thepath.start.p.x > ((ST_boxf)boxes[0]).UR.x)
+	    thepath.start.p.setDouble("x", ((ST_boxf)boxes[0]).UR.x);
+	if (thepath.start.p.y < ((ST_boxf)boxes[0]).LL.y)
+	    thepath.start.p.setDouble("y", ((ST_boxf)boxes[0]).LL.y);
+	if (thepath.start.p.y > ((ST_boxf)boxes[0]).UR.y)
+	    thepath.start.p.setDouble("y", ((ST_boxf)boxes[0]).UR.y);
     }
-    if (thepath.getStruct("end").getStruct("p").getDouble("x") < ((ST_boxf)boxes[boxn - 1]).LL.x
-	|| thepath.getStruct("end").getStruct("p").getDouble("x") > ((ST_boxf)boxes[boxn - 1]).UR.x
-	|| thepath.getStruct("end").getStruct("p").getDouble("y") < ((ST_boxf)boxes[boxn - 1]).LL.y
-	|| thepath.getStruct("end").getStruct("p").getDouble("y") > ((ST_boxf)boxes[boxn - 1]).UR.y) {
+    if (thepath.end.p.x < ((ST_boxf)boxes[boxn - 1]).LL.x
+	|| thepath.end.p.x > ((ST_boxf)boxes[boxn - 1]).UR.x
+	|| thepath.end.p.y < ((ST_boxf)boxes[boxn - 1]).LL.y
+	|| thepath.end.p.y > ((ST_boxf)boxes[boxn - 1]).UR.y) {
 	/*if (Verbose) {
 	    fprintf(stderr, "in checkpath, end port not in last box\n");
 	    printpath(thepath);
 	}*/
-	if (thepath.getStruct("end").getStruct("p").getDouble("x") < ((ST_boxf)boxes[boxn - 1]).LL.x)
-	    thepath.getStruct("end").getStruct("p").setDouble("x", ((ST_boxf)boxes[boxn - 1]).LL.x);
-	if (thepath.getStruct("end").getStruct("p").getDouble("x") > ((ST_boxf)boxes[boxn - 1]).UR.x)
-	    thepath.getStruct("end").getStruct("p").setDouble("x", ((ST_boxf)boxes[boxn - 1]).UR.x);
-	if (thepath.getStruct("end").getStruct("p").getDouble("y") < ((ST_boxf)boxes[boxn - 1]).LL.y)
-	    thepath.getStruct("end").getStruct("p").setDouble("y", ((ST_boxf)boxes[boxn - 1]).LL.y);
-	if (thepath.getStruct("end").getStruct("p").getDouble("y") > ((ST_boxf)boxes[boxn - 1]).UR.y)
-	    thepath.getStruct("end").getStruct("p").setDouble("y", ((ST_boxf)boxes[boxn - 1]).UR.y);
+	if (thepath.end.p.x < ((ST_boxf)boxes[boxn - 1]).LL.x)
+	    thepath.end.p.setDouble("x", ((ST_boxf)boxes[boxn - 1]).LL.x);
+	if (thepath.end.p.x > ((ST_boxf)boxes[boxn - 1]).UR.x)
+	    thepath.end.p.setDouble("x", ((ST_boxf)boxes[boxn - 1]).UR.x);
+	if (thepath.end.p.y < ((ST_boxf)boxes[boxn - 1]).LL.y)
+	    thepath.end.p.setDouble("y", ((ST_boxf)boxes[boxn - 1]).LL.y);
+	if (thepath.end.p.y > ((ST_boxf)boxes[boxn - 1]).UR.y)
+	    thepath.end.p.setDouble("y", ((ST_boxf)boxes[boxn - 1]).UR.y);
     }
     return 0;
 } finally {

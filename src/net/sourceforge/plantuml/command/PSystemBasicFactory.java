@@ -67,6 +67,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 	}
 
 	final public Diagram createSystem(UmlSource source) {
+		source = source.removeInitialSkinparam();
 		final IteratorCounter2 it = source.iterator2();
 		final CharSequence2 startLine = it.next();
 		P system = init(startLine.toString2());
@@ -88,8 +89,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 			}
 			system = executeLine(system, s.toString2());
 			if (system == null) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?",
-				/* it.currentNum() - 1, */s.getLocation());
+				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", s.getLocation());
 				return new PSystemError(source, err, null);
 			}
 		}

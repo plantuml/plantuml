@@ -142,25 +142,6 @@ public class ST_Agsubnode_s extends UnsupportedStructAndPtr implements Hardcoded
 		return super.setPtr(fieldName, newData);
 	}
 
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("node")) {
-			return node;
-		}
-		if (fieldName.equals("in_id")) {
-			return in_id;
-		}
-		if (fieldName.equals("out_seq")) {
-			return out_seq;
-		}
-		if (fieldName.equals("out_id")) {
-			return out_id;
-		}
-		if (fieldName.equals("in_seq")) {
-			return in_seq;
-		}
-		return super.getPtr(fieldName);
-	}
 
 	// public interface ST_Agsubnode_s extends __ptr__ {
 	// public static List<String> DEFINITION = Arrays.asList(

@@ -73,6 +73,7 @@ import net.sourceforge.plantuml.jungle.PSystemTreeFactory;
 import net.sourceforge.plantuml.logo.PSystemLogoFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
+import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
@@ -167,6 +168,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
+		factories.add(new NwDiagramFactory());
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
 			factories.add(new PSystemDitaaFactory(DiagramType.UML));

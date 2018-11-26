@@ -232,7 +232,7 @@ try {
 		if (g != null)
 			dictref = STARSTAR.amp(new ACCESS<ST_dt_s>() {
 				public ST_dt_s get() {
-					return (ST_dt_s) g.clos.getPtr("strdict");
+					return (ST_dt_s) g.clos.strdict;
 				}
 				public void set(ST_dt_s obj) {
 					g.clos.setPtr("strdict", obj);
@@ -284,7 +284,7 @@ try {
     ST_refstr_t r;
     // key.setPtr("s", s.duplicate());
     key.setString(s);
-    r = (ST_refstr_t) strdict.call("searchf", strdict, key, 0000004);
+    r = (ST_refstr_t) strdict.searchf.exe(strdict, key, 0000004);
     return r;
 } finally {
 LEAVING("9ts4wqhw2xafdv3tlcilneewq","refsymbind");
@@ -351,7 +351,7 @@ try {
 	r.setString(s.duplicate());
 //	strcpy(r->store, s);
 //	r->s = r->store;
-	strdict.call("searchf", strdict,r,0000001);
+	strdict.searchf.exe(strdict,r,0000001);
     }
 	return r.s;
 } finally {

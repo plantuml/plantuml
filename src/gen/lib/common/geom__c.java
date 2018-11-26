@@ -138,8 +138,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -711,7 +711,7 @@ return cwrotatepf_w_(p.copy(), cwrot).copy();
 private static ST_pointf cwrotatepf_w_(final ST_pointf p, int cwrot) {
 ENTERING("5q8h2tm3jifiasn423wrm0y60","cwrotatepf");
 try {
-    double x = p.getDouble("x"), y = p.getDouble("y");
+    double x = p.x, y = p.y;
     switch (cwrot) {
     case 0:
 	break;
@@ -789,7 +789,7 @@ return ccwrotatepf_w_(p.copy(), ccwrot).copy();
 private static ST_pointf ccwrotatepf_w_(final ST_pointf p, int ccwrot) {
 ENTERING("6np74e9pfmv8uek8irqru2tma","ccwrotatepf");
 try {
-    double x = p.getDouble("x"), y = p.getDouble("y");
+    double x = p.x, y = p.y;
     switch (ccwrot) {
     case 0:
 	break;
@@ -880,9 +880,9 @@ return ptToLine2_w_(a.copy(), b.copy(), p.copy());
 private static double ptToLine2_w_(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
 ENTERING("90k9l4o3khu3dw0fzkrcd97nk","ptToLine2");
 try {
-  double dx = b.getDouble("x")-a.getDouble("x");
-  double dy = b.getDouble("y")-a.getDouble("y");
-  double a2 = (p.getDouble("y")-a.getDouble("y"))*dx - (p.getDouble("x")-a.getDouble("x"))*dy;
+  double dx = b.x-a.x;
+  double dy = b.y-a.y;
+  double a2 = (p.y-a.y)*dx - (p.x-a.x)*dy;
   a2 *= a2;   /* square - ensures that it is positive */
   if (a2 < 0.0000000001) return 0.;  /* avoid 0/0 problems */
   return a2 / (dx*dx + dy*dy);

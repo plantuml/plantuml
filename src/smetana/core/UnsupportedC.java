@@ -67,35 +67,11 @@ public class UnsupportedC implements __ptr__ {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public __ptr__ getPtr(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public __struct__ getStruct() {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
 	public void setStruct(__struct__ value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __struct__ getStruct(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public boolean getBoolean(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public double getDouble(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public CString getCString(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public int getInt(String fieldName) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
@@ -111,10 +87,6 @@ public class UnsupportedC implements __ptr__ {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public void setBoolean(String fieldName, boolean data) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public void setDouble(String fieldName, double data) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
@@ -123,9 +95,6 @@ public class UnsupportedC implements __ptr__ {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public Object call(String name, Object... args) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
 
 	public Object addVirtualBytes(int bytes) {
 		throw new UnsupportedOperationException(getClass().toString());

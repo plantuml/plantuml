@@ -154,6 +154,7 @@ public class LanguageDescriptor {
 		keyword.add("order");
 		keyword.add("allow_mixing");
 		keyword.add("allowmixing");
+		keyword.add("mainframe");
 
 		preproc.add("!exit");
 		preproc.add("!include");

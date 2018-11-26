@@ -127,28 +127,28 @@ ENTERING("7ggbhlblmrfr1wq1k20npwyxb","dtclose");
 	try {
  	ST_dtdisc_s	disc;
  	int		ev = 0;
- 	if(N(dt) || dt.getInt("nview") > 0 ) /* can't close if being viewed */
+ 	if(N(dt) || dt.nview > 0 ) /* can't close if being viewed */
  		return -1;
  	/* announce the close event to see if we should continue */
  	disc = (ST_dtdisc_s) dt.disc;
- 	if(disc.getPtr("eventf")!=null &&
- 	   (ev = (Integer)disc.call("eventf", dt, 2, null, disc)) < 0)
+ 	if(disc.eventf!=null &&
+ 	   (ev = (Integer)disc.eventf.exe(dt, 2, null, disc)) < 0)
  		return -1;
- 	if(dt.getPtr("view")!=null)	/* turn off viewing */
+ 	if(dt.view!=null)	/* turn off viewing */
 UNSUPPORTED("1xbo7gf92fmqmu2tzpfeuc0wk"); // 		dtview(dt,((Dt_t*)0));
  	if(ev == 0) /* release all allocated data */ {
- 		dt.meth.call("searchf", dt, null, 0000100);
+ 		dt.meth.searchf.exe(dt, null, 0000100);
  		if(dtsize_(dt) > 0)
  			return -1;
-if(dt.data.getInt("ntab") > 0)
+if(dt.data.ntab > 0)
 UNSUPPORTED("4ugmcpi8vkb013vuo4wykn0a3"); // 			(*dt->memoryf)(dt,(void*)dt->data->hh._htab,0,disc);
-dt.call("memoryf", dt, dt.data, null, disc);
+dt.memoryf.exe(dt, dt.data, null, disc);
  	}
  	if(dt.type == 0)
  		Memory.free(dt);
  	else if(ev == 0 && dt.type == 1)
 UNSUPPORTED("6wqxv1f7tzvjk0lwmqdrcq8la"); // 		(*dt->memoryf)(dt, (void*)dt, 0, disc);
- 	if(disc.getPtr("eventf")!=null)
+ 	if(disc.eventf!=null)
 UNSUPPORTED("8bce06bdd64ypwb17ddloqzu8"); // 		(void)(*disc->eventf)(dt, 6, ((void*)0), disc);
  	return 0;
 } finally {

@@ -78,7 +78,10 @@ public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBa
 	}
 
 	public HtmlColor getBackcolor() {
-		return ((TextBlockBackcolored) textBlock).getBackcolor();
+		if (textBlock instanceof TextBlockBackcolored) {
+			return ((TextBlockBackcolored) textBlock).getBackcolor();
+		}
+		return null;
 	}
 
 }

@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -89,14 +88,6 @@ public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 	}
 
 	@Override
-	public CString getCString(String fieldName) {
-		if (fieldName.equals("name")) {
-			return name;
-		}
-		return super.getCString(fieldName);
-	}
-
-	@Override
 	public __ptr__ castTo(Class dest) {
 		if (dest == ST_Agdatadict_s.class && getParent() instanceof ST_Agdatadict_s) {
 			return (ST_Agdatadict_s) getParent();
@@ -117,6 +108,22 @@ public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 		System.err.println("getParent=" + getParent().getClass());
 		return super.castTo(dest);
 	}
+	
+	public ST_Agnodeinfo_t castTo_ST_Agnodeinfo_t() {
+		if (getParent() instanceof ST_Agnodeinfo_t) {
+			return (ST_Agnodeinfo_t) getParent();
+		}
+		throw new UnsupportedOperationException();
+	}
+
+
+
+	public ST_Agraphinfo_t castTo_ST_Agraphinfo_t() {
+		if (getParent() instanceof ST_Agraphinfo_t) {
+			return (ST_Agraphinfo_t) getParent();
+		}
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -131,14 +138,6 @@ public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 			return next;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("next")) {
-			return next;
-		}
-		return super.getPtr(fieldName);
 	}
 
 	// public static List<String> DEFINITION = Arrays.asList(

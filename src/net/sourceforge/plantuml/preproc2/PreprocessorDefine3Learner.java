@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.utils.StartUtils;
 
@@ -61,11 +62,10 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 	private static final Pattern2 definelongPattern = MyPattern.cmpile("^[%s]*!definelong[%s]+(" + ID + ARG + ")");
 	private static final Pattern2 enddefinelongPattern = MyPattern.cmpile("^[%s]*" + END_DEFINE_LONG + "[%s]*$");
 
-	private final Defines defines;
+	private final DefinesGet defines;
 
-	public PreprocessorDefine3Learner(Defines defines) {
+	public PreprocessorDefine3Learner(DefinesGet defines) {
 		this.defines = defines;
-		this.defines.saveState();
 	}
 
 	public static boolean isLearningLine(CharSequence2 s) {
@@ -129,59 +129,8 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 		};
 	}
 
-
-	// private final ReadLineInsertable source;
-	//
-	// public PreprocessorDefine2(Defines defines, ReadLineInsertable source) {
-	// this.defines = defines;
-	// this.defines.saveState();
-	// this.source = source;
-	// }
-	//
-	// @Override
-	// CharSequence2 readLineInst() throws IOException {
-	//
-	// if (ignoreDefineDuringSeveralLines > 0) {
-	// ignoreDefineDuringSeveralLines--;
-	// return s;
-	// }
-	//
-	// List<String> result = defines.applyDefines(s.toString2());
-	// if (result.size() > 1) {
-	// result = cleanEndDefineLong(result);
-	// final List<String> inserted = cleanEndDefineLong(result.subList(1, result.size()));
-	// ignoreDefineDuringSeveralLines = inserted.size();
-	// source.insert(inserted, s.getLocation());
-	// }
-	// return new CharSequence2Impl(result.get(0), s.getLocation(), s.getPreprocessorError());
-	// }
-
-	private List<String> cleanEndDefineLong(List<String> data) {
-		final List<String> result = new ArrayList<String>();
-		for (String s : data) {
-			final String clean = cleanEndDefineLong(s);
-			if (clean != null) {
-				result.add(clean);
-			}
-		}
-		return result;
-
-	}
-
-	private String cleanEndDefineLong(String s) {
-		if (s.trim().startsWith(END_DEFINE_LONG)) {
-			s = s.trim().substring(END_DEFINE_LONG.length());
-			if (s.length() == 0) {
-				return null;
-			}
-		}
-		return s;
-	}
-
-	// private int ignoreDefineDuringSeveralLines = 0;
-
 	private void manageUndef(Matcher2 m) throws IOException {
-		defines.undefine(m.group(1));
+		defines.get().undefine(m.group(1));
 	}
 
 	private void manageDefineLong(ReadLine source, Matcher2 m, boolean emptyParentheses) throws IOException {
@@ -193,7 +142,7 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 				return;
 			}
 			if (enddefinelongPattern.matcher(read).find()) {
-				defines.define(group1, def, emptyParentheses);
+				defines.get().define(group1, def, emptyParentheses);
 				return;
 			}
 			def.add(read.toString2());
@@ -202,18 +151,18 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 
 	private void manageFilename(Matcher2 m) {
 		final String group1 = m.group(1);
-		this.defines.overrideFilename(group1);
+		this.defines.get().overrideFilename(group1);
 	}
 
 	private void manageDefine(ReadLine source, Matcher2 m, boolean emptyParentheses) throws IOException {
 		final String group1 = m.group(1);
 		final String group2 = m.group(2);
 		if (group2 == null) {
-			defines.define(group1, null, emptyParentheses);
+			defines.get().define(group1, null, emptyParentheses);
 		} else {
-			final List<String> strings = defines.applyDefines(group2);
+			final List<String> strings = defines.get().applyDefines(group2);
 			if (strings.size() > 1) {
-				defines.define(group1, strings, emptyParentheses);
+				defines.get().define(group1, strings, emptyParentheses);
 			} else {
 				final StringBuilder value = new StringBuilder(strings.get(0));
 				while (StringUtils.endsWithBackslash(value.toString())) {
@@ -223,19 +172,9 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 				}
 				final List<String> li = new ArrayList<String>();
 				li.add(value.toString());
-				defines.define(group1, li, emptyParentheses);
+				defines.get().define(group1, li, emptyParentheses);
 			}
 		}
 	}
-
-
-	// // public int getLineNumber() {
-	// // return source.getLineNumber();
-	// // }
-	//
-	// @Override
-	// void closeInst() throws IOException {
-	// source.close();
-	// }
 
 }

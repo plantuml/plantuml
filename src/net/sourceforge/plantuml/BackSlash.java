@@ -96,6 +96,10 @@ public class BackSlash {
 		if (s == null) {
 			return null;
 		}
+		// final String tmps = s.toString();
+		// if (tmps.indexOf('\\') == -1) {
+		// return tmps;
+		// }
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);

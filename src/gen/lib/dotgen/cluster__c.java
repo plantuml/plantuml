@@ -438,8 +438,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -760,27 +760,27 @@ ENTERING("5ib4nnt2ah5fdd22zs0xds29r","make_slots");
 try {
     int i;
     ST_Agnode_s v;
-    __ptr__ vlist;
-    vlist = GD_rank(root).plus(r).getPtr().v.asPtr();
+    ST_Agnode_s.ArrayOfStar vlist;
+    vlist = GD_rank(root).get(r).v;
     if (d <= 0) {
-	for (i = pos - d + 1; i < GD_rank(root).plus(r).getInt("n"); i++) {
-	    v = (ST_Agnode_s) vlist.plus(i).getPtr();
+	for (i = pos - d + 1; i < GD_rank(root).get(r).n; i++) {
+	    v = (ST_Agnode_s) vlist.get(i);
 	    ND_order(v, i + d - 1);
 	    vlist.plus(ND_order(v)).setPtr(v);
 	}
-	for (i = GD_rank(root).plus(r).getInt("n") + d - 1; i < GD_rank(root).plus(r).getInt("n"); i++)
+	for (i = GD_rank(root).get(r).n + d - 1; i < GD_rank(root).get(r).n; i++)
 	    vlist.plus(i).setPtr(null);
     } else {
 /*assert(ND_rank(root)[r].n + d - 1 <= ND_rank(root)[r].an);*/
-	for (i = GD_rank(root).plus(r).getPtr().getInt("n") - 1; i > pos; i--) {
-	    v = (ST_Agnode_s) vlist.plus(i).getPtr();
+	for (i = GD_rank(root).get(r).n - 1; i > pos; i--) {
+	    v = (ST_Agnode_s) vlist.get(i);
 	    ND_order(v, i + d - 1);
 	    vlist.plus(ND_order(v)).setPtr(v);
 	}
 	for (i = pos + 1; i < pos + d; i++)
 	    vlist.plus(i).setPtr(null);
     }
-    GD_rank(root).plus(r).getPtr().setInt("n", GD_rank(root).plus(r).getPtr().getInt("n") + d - 1);
+    GD_rank(root).get(r).setInt("n", GD_rank(root).get(r).n + d - 1);
 } finally {
 LEAVING("5ib4nnt2ah5fdd22zs0xds29r","make_slots");
 }
@@ -994,12 +994,12 @@ try {
     if (GD_minrank(subg) > 0)
 	GD_rank(root).plus(GD_minrank(subg) - 1).getPtr().setInt("valid", 0);
     for (r = GD_minrank(subg); r <= GD_maxrank(subg); r++) {
-	d = GD_rank(subg).plus(r).getPtr().getInt("n");
-	ipos = pos = ND_order(GD_rankleader(subg).plus(r).getPtr());
+	d = GD_rank(subg).get(r).n;
+	ipos = pos = ND_order(GD_rankleader(subg).get(r));
 	make_slots(root, r, pos, d);
-	for (i = 0; i < GD_rank(subg).plus(r).getPtr().getInt("n"); i++) {
-	    v = (ST_Agnode_s) GD_rank(subg).plus(r).getPtr().v.plus(i).getPtr();
-	    GD_rank(root).plus(r).getPtr().v.plus(pos).setPtr(v);
+	for (i = 0; i < GD_rank(subg).get(r).n; i++) {
+	    v = (ST_Agnode_s) GD_rank(subg).get(r).v.get(i);
+	    GD_rank(root).get(r).v.plus(pos).setPtr(v);
 	    ND_order(v, pos++);
 	/* real nodes automatically have v->root = root graph */
 	    if (ND_node_type(v) == 1)
@@ -1008,11 +1008,11 @@ try {
 	    fast_node(root, v);
 	    GD_n_nodes(root, GD_n_nodes(root)+1);
 	}
-	GD_rank(subg).plus(r).getPtr().setPtr("v", GD_rank(root).plus(r).getPtr().getPtr("v").plus(ipos));
-	GD_rank(root).plus(r).getPtr().setInt("valid", 0);
+	GD_rank(subg).get(r).setPtr("v", GD_rank(root).get(r).v.plus(ipos));
+	GD_rank(root).get(r).setInt("valid", 0);
     }
     if (r < GD_maxrank(root))
-	GD_rank(root).plus(r).getPtr().setInt("valid", 0);
+	GD_rank(root).get(r).setInt("valid", 0);
     GD_expanded(subg, NOT(false));
 } finally {
 LEAVING("85nhs7tnmwunw0fsjj1kxao7l","merge_ranks");
@@ -1031,7 +1031,7 @@ try {
     ST_Agnode_s v;
     ST_Agedge_s e;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	v = (ST_Agnode_s) GD_rankleader(g).plus(r).getPtr();
+	v = (ST_Agnode_s) GD_rankleader(g).get(r);
 	/* remove the entire chain */
 	while ((e = (ST_Agedge_s) ND_out(v).getFromList(0))!=null)
 	    delete_fast_edge(e);
@@ -1088,7 +1088,7 @@ try {
 	ND_clust(n, null);
     }
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	clust = (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr();
+	clust = (ST_Agraph_s) GD_clust(g).get(c).getPtr();
 	for (n = agfstnode(clust); n!=null; n = nn) {
 		nn = agnxtnode(clust,n);
 	    if (ND_ranktype(n) != 0) {
@@ -1156,7 +1156,7 @@ try {
 	}
     }
     for (r = GD_minrank(subg); r <= GD_maxrank(subg); r++) {
-	rl = (ST_Agnode_s) GD_rankleader(subg).plus(r).getPtr();
+	rl = (ST_Agnode_s) GD_rankleader(subg).get(r);
 	if (ND_UF_size(rl) > 1)
 	    ND_UF_size(rl, ND_UF_size(rl)-1);
     }
@@ -1178,9 +1178,9 @@ try {
     clust = ND_clust(n);
     if (GD_installed(clust) != pass + 1) {
 	for (r = GD_minrank(clust); r <= GD_maxrank(clust); r++)
-	    install_in_rank(g, (ST_Agnode_s) GD_rankleader(clust).plus(r).getPtr());
+	    install_in_rank(g, (ST_Agnode_s) GD_rankleader(clust).get(r));
 	for (r = GD_minrank(clust); r <= GD_maxrank(clust); r++)
-	    enqueue_neighbors(q, (ST_Agnode_s) GD_rankleader(clust).plus(r).getPtr(), pass);
+	    enqueue_neighbors(q, (ST_Agnode_s) GD_rankleader(clust).get(r), pass);
 	GD_installed(clust, pass + 1);
     }
 } finally {
@@ -1230,7 +1230,7 @@ try {
     ST_Agedge_s orig, e;
     int c;
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	clust = (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr();
+	clust = (ST_Agraph_s) GD_clust(g).get(c).getPtr();
 	mark_lowcluster_basic(clust);
     }
     /* see what belongs to this graph that wasn't already marked */

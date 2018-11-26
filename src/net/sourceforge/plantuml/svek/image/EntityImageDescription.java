@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -111,7 +112,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		this.hideText = symbol == USymbol.INTERFACE;
 
 		final Display codeDisplay = Display.getWithNewlines(entity.getCode());
-		desc = (entity.getDisplay().equals(codeDisplay) && symbol instanceof USymbolFolder)
+		desc = (entity.getDisplay().equals(codeDisplay) && symbol.getSkinParameter() == SkinParameter.PACKAGE)
 				|| entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(entity.getDisplay(),
 				symbol.getFontParam(), getSkinParam(), HorizontalAlignment.LEFT, stereotype,
 				symbol.manageHorizontalLine(), false, entity);

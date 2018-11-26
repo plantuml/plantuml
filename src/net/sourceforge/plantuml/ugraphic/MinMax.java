@@ -142,7 +142,10 @@ public class MinMax {
 	}
 
 	public void drawGrey(UGraphic ug) {
-		final HtmlColor color = HtmlColorUtils.GRAY;
+		draw(ug, HtmlColorUtils.GRAY);
+	}
+
+	public void draw(UGraphic ug, HtmlColor color) {
 		ug = ug.apply(new UChangeColor(color)).apply(new UChangeBackColor(color));
 		ug = ug.apply(new UTranslate(minX, minY));
 		ug.draw(new URectangle(getWidth(), getHeight()));

@@ -68,10 +68,10 @@ import static smetana.core.Macro.AGSEQ;
 import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.ST_Agnode_s;
-import h.ST_Agraph_s;
 import h.ST_Agattr_s;
 import h.ST_Agdesc_s;
+import h.ST_Agnode_s;
+import h.ST_Agraph_s;
 import h.ST_Agsubnode_s;
 import h.ST_Agtag_s;
 import h.ST_dt_s;
@@ -225,8 +225,8 @@ try {
     ST_Agsubnode_s sn;
     ((ST_Agtag_s)Z.z().dummy.base.tag).id = id;
     Z.z().template.node = Z.z().dummy;
-    sn = (ST_Agsubnode_s) (g.getPtr("n_id").call("searchf", g.getPtr("n_id"), Z.z().template,0000004));
-    return (ST_Agnode_s) (sn!=null ? sn.getPtr("node") : null);
+    sn = (ST_Agsubnode_s) (g.n_id.searchf.exe(g.n_id, Z.z().template,0000004));
+    return (ST_Agnode_s) (sn!=null ? sn.node : null);
 } finally {
 LEAVING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 }
@@ -259,8 +259,8 @@ public static ST_Agnode_s agfstnode(ST_Agraph_s g) {
 ENTERING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 try {
 	ST_Agsubnode_s sn;
-    sn = (ST_Agsubnode_s) g.getPtr("n_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("n_seq"),null,0000200);
-    return sn!=null ? (ST_Agnode_s) sn.getPtr("node") : null;
+    sn = (ST_Agsubnode_s) g.n_seq.searchf.exe(g.n_seq,null,0000200);
+    return sn!=null ? (ST_Agnode_s) sn.node : null;
 } finally {
 LEAVING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 }
@@ -284,9 +284,9 @@ try {
     ST_Agsubnode_s sn;
     sn = agsubrep(g, n);
     LOG2("sn1="+sn);
-    if (sn!=null) sn = (ST_Agsubnode_s) g.getPtr("n_seq").castTo(ST_dt_s.class).call("searchf", g.getPtr("n_seq"),sn,0000010);
+    if (sn!=null) sn = (ST_Agsubnode_s) g.n_seq.searchf.exe(g.n_seq,sn,0000010);
     LOG2("sn2="+sn);
-    final __ptr__ result = sn!=null ? sn.getPtr("node") : null;
+    final __ptr__ result = sn!=null ? sn.node : null;
     LOG2("result="+result);
 	return (ST_Agnode_s) result;
 } finally {
@@ -341,7 +341,7 @@ try {
     AGID(n, id);
     AGSEQ(n, seq);
     n.setPtr("root", agroot(g));
-    if (((ST_Agdesc_s)agroot(g).getStruct("desc")).has_attrs!=0)
+    if (((ST_Agdesc_s)agroot(g).desc).has_attrs!=0)
 	  agbindrec(n, AgDataRecName, sizeof(ST_Agattr_s.class), false);
     /* nodeattr_init and method_init will be called later, from the
      * subgraph where the node was actually created, but first it has
@@ -362,12 +362,12 @@ ENTERING("4m26dpgaiw44hcleugjy71eus","installnode");
 try {
 	ST_Agsubnode_s sn;
     int osize;
-    osize = dtsize_((ST_dt_s)g.getPtr("n_id"));
+    osize = dtsize_((ST_dt_s)g.n_id);
     if (EQ(g, agroot(g))) sn = (ST_Agsubnode_s) n.mainsub;
     else sn = (ST_Agsubnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agsubnode_s.class))).castTo(ST_Agsubnode_s.class);
     sn.setPtr("node", n);
-    g.getPtr("n_id").call("searchf", g.getPtr("n_id"),sn,0000001);
-    g.getPtr("n_seq").call("searchf", g.getPtr("n_seq"),sn,0000001);
+    g.n_id.searchf.exe(g.n_id,sn,0000001);
+    g.n_seq.searchf.exe(g.n_seq,sn,0000001);
 } finally {
 LEAVING("4m26dpgaiw44hcleugjy71eus","installnode");
 }
@@ -398,7 +398,7 @@ LEAVING("3mfxjcaeepn8nitirs3yoqaed","installnodetoroot");
 public static void initnode(ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("85bb9mezhsgtzar3kqz95mq1","initnode");
 try {
-    if (((ST_Agdesc_s)agroot(g).getStruct("desc")).has_attrs!=0)
+    if (((ST_Agdesc_s)agroot(g).desc).has_attrs!=0)
 	agnodeattr_init(g,n);
     agmethod_init(g, n);
 } finally {
@@ -593,7 +593,7 @@ ENTERING("d5farp22buvesyi4pydjam4g2","agsubnode");
 try {
     ST_Agraph_s par;
     ST_Agnode_s n;
-    if (NEQ(agroot(g), n0.getPtr("root")))
+    if (NEQ(agroot(g), n0.root))
 	return null;
     n = agfindnode_by_id(g, AGID(n0));
     if ((n == null) && cflag) {
@@ -623,7 +623,7 @@ try {
     ST_Agsubnode_s sn0, sn1;
     sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);
     sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);
-    v = (AGID(sn0.getPtr("node")) - AGID(sn1.getPtr("node")));
+    v = (AGID(sn0.node) - AGID(sn1.node));
     return ((v==0)?0:(v<0?-1:1));
 } finally {
 LEAVING("awwiazixy9c76hvyxlkvvb3vo","agsubnodeidcmpf");
@@ -642,7 +642,7 @@ try {
     int	v;
     sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);
     sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);
-    v = (AGSEQ(sn0.getPtr("node")) - AGSEQ(sn1.getPtr("node")));
+    v = (AGSEQ(sn0.node) - AGSEQ(sn1.node));
     return ((v==0)?0:(v<0?-1:1));
 } finally {
 LEAVING("41fjseux0nxzpr0aq7igym9ux","agsubnodeseqcmpf");

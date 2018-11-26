@@ -68,18 +68,6 @@ public class ST_pointnlink_t extends UnsupportedStructAndPtr implements Hardcode
 		return this == other2;
 	}
 
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("pp")) {
-			return pp;
-		}
-		if (fieldName.equals("link")) {
-			return link;
-		}
-		return super.getPtr(fieldName);
-	}
-
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("pp")) {

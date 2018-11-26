@@ -84,7 +84,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.skin = skin;
 		this.footer = getFooterOrHeader(FontParam.FOOTER);
 		this.header = getFooterOrHeader(FontParam.HEADER);
-		this.annotatedWorker = new AnnotatedWorker(sequenceDiagram, sequenceDiagram.getSkinParam());
+		this.annotatedWorker = new AnnotatedWorker(sequenceDiagram, sequenceDiagram.getSkinParam(), stringBounder);
 
 		this.main = new MainTileAdapter(createMainTile());
 		this.min1 = ((MainTileAdapter) main).getMinX(stringBounder);

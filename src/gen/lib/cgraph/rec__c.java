@@ -64,8 +64,8 @@ import static smetana.core.Macro.N;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.ST_Agedge_s;
-import h.ST_Agraph_s;
 import h.ST_Agobj_s;
+import h.ST_Agraph_s;
 import h.ST_Agrec_s;
 import h.ST_Agtag_s;
 import smetana.core.CString;
@@ -273,14 +273,14 @@ try {
     newrec = (ST_Agrec_s) arg;
     firstrec = (ST_Agrec_s) obj.data;
     if (firstrec == null)
-	newrec.setPtr("next", newrec);	/* 0 elts */
+	newrec.next = newrec;	/* 0 elts */
     else {
 	if (EQ(firstrec.next, firstrec)) {
-	    firstrec.setPtr("next", newrec);	/* 1 elt */
-	    newrec.setPtr("next", firstrec);
+	    firstrec.next = newrec;	/* 1 elt */
+	    newrec.next = firstrec;
 	} else {
-	    newrec.setPtr("next", firstrec.next);
-	    firstrec.setPtr("next", newrec);
+	    newrec.next = firstrec.next;
+	    firstrec.next = newrec;
 	}
     }
     if (NOT(((ST_Agtag_s)obj.tag).mtflock))

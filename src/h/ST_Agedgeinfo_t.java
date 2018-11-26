@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -139,15 +138,6 @@ public class ST_Agedgeinfo_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("label_ontop")) {
-			this.label_ontop = data;
-			return;
-		}
-		super.setBoolean(fieldName, data);
-	}
-
-	@Override
 	public void setDouble(String fieldName, double data) {
 		if (fieldName.equals("dist")) {
 			this.dist = data;
@@ -197,93 +187,6 @@ public class ST_Agedgeinfo_t extends UnsupportedStructAndPtr {
 		super.setInt(fieldName, data);
 	}
 
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("dist")) {
-			return this.dist;
-		}
-		return super.getDouble(fieldName);
-	}
-
-	@Override
-	public boolean getBoolean(String fieldName) {
-		if (fieldName.equals("conc_opp_flag")) {
-			return this.conc_opp_flag;
-		}
-		if (fieldName.equals("label_ontop")) {
-			return this.label_ontop;
-		}
-		return super.getBoolean(fieldName);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("minlen")) {
-			return this.minlen;
-		}
-		if (fieldName.equals("weight")) {
-			return this.weight;
-		}
-		if (fieldName.equals("cutvalue")) {
-			return this.cutvalue;
-		}
-		if (fieldName.equals("tree_index")) {
-			return this.tree_index;
-		}
-		if (fieldName.equals("count")) {
-			return this.count;
-		}
-		if (fieldName.equals("xpenalty")) {
-			return this.xpenalty;
-		}
-		if (fieldName.equals("showboxes")) {
-			return this.showboxes;
-		}
-		if (fieldName.equals("edge_type")) {
-			return this.edge_type;
-		}
-		if (fieldName.equals("adjacent")) {
-			return this.adjacent;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("to_virt")) {
-			return this.to_virt;
-		}
-		if (fieldName.equals("to_orig")) {
-			return this.to_orig;
-		}
-		if (fieldName.equals("label")) {
-			return this.label;
-		}
-		if (fieldName.equals("spl")) {
-			return this.spl;
-		}
-		if (fieldName.equals("xlabel")) {
-			return this.xlabel;
-		}
-		if (fieldName.equals("head_label")) {
-			return this.head_label;
-		}
-		if (fieldName.equals("tail_label")) {
-			return this.tail_label;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("tail_port")) {
-			return this.tail_port;
-		}
-		if (fieldName.equals("head_port")) {
-			return this.head_port;
-		}
-		return super.getStruct(fieldName);
-	}
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {

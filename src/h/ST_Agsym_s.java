@@ -48,7 +48,6 @@ package h;
 import smetana.core.CString;
 import smetana.core.HardcodedStruct;
 import smetana.core.OFFSET;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -121,28 +120,6 @@ public class ST_Agsym_s extends UnsupportedStructAndPtr implements HardcodedStru
 			return;
 		}
 		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("kind")) {
-			return kind;
-		}
-		if (fieldName.equals("id")) {
-			return id;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public CString getCString(String fieldName) {
-		if (fieldName.equals("defval")) {
-			return defval;
-		}
-		if (fieldName.equals("name")) {
-			return name;
-		}
-		return super.getCString(fieldName);
 	}
 
 	public StarStruct from_link(ST_dtlink_s from) {

@@ -46,7 +46,6 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -77,7 +76,7 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 	// "struct",
 	// "{",
 	// private ST_textspan_t span;
-	public __ptr__ span;
+	public ST_textspan_t.Array span;
 	public int nspans;
 
 	// "}",
@@ -94,20 +93,6 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 	// "boolean html",
 	// "}",
 	// "textlabel_t");
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("dimen")) {
-			return dimen;
-		}
-		if (fieldName.equals("space")) {
-			return space;
-		}
-		if (fieldName.equals("pos")) {
-			return pos;
-		}
-		return super.getStruct(fieldName);
-	}
 
 	@Override
 	public void setStruct(String fieldName, __struct__ newData) {
@@ -137,32 +122,10 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 			return fontcolor;
 		}
 		if (fieldName.equals("u.txt.span")) {
-			this.span = newData;
+			this.span = (ST_textspan_t.Array) newData;
 			return span;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public CString getCString(String fieldName) {
-		if (fieldName.equals("text")) {
-			return text;
-		}
-		return super.getCString(fieldName);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("text")) {
-			return text;
-		}
-		if (fieldName.equals("u.txt.span")) {
-			return span;
-		}
-		if (fieldName.equals("fontname")) {
-			return fontname;
-		}
-		return super.getPtr(fieldName);
 	}
 
 	@Override
@@ -172,14 +135,6 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 			return;
 		}
 		super.setDouble(fieldName, data);
-	}
-
-	@Override
-	public double getDouble(String fieldName) {
-		if (fieldName.equals("fontsize")) {
-			return this.fontsize;
-		}
-		return super.getDouble(fieldName);
 	}
 
 	@Override
@@ -204,38 +159,12 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 	}
 
 	@Override
-	public void setBoolean(String fieldName, boolean data) {
-		if (fieldName.equals("set")) {
-			this.set = data ? 1 : 0;
-			return;
-		}
-		super.setBoolean(fieldName, data);
-	}
-	
-	@Override
 	public boolean isSameThan(StarStruct other) {
 		ST_textlabel_t other2 = (ST_textlabel_t) other;
 		return this == other2;
 	}
 
 
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("charset")) {
-			return this.charset;
-		}
-		if (fieldName.equals("valign")) {
-			return this.valign;
-		}
-		if (fieldName.equals("u.txt.nspans")) {
-			return this.nspans;
-		}
-		if (fieldName.equals("set")) {
-			return this.set;
-		}
-		return super.getInt(fieldName);
-	}
-	
 }
 
 // typedef struct textlabel_t {

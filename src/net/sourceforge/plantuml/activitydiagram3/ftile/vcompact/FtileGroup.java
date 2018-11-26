@@ -78,10 +78,12 @@ public class FtileGroup extends AbstractFtile {
 	private final HtmlColor backColor;
 	private final UStroke stroke;
 	private final USymbol type;
+	private final double roundCorner;
 
 	public FtileGroup(Ftile inner, Display title, Display displayNote, HtmlColor arrowColor, HtmlColor backColor,
-			HtmlColor titleColor, ISkinParam skinParam, HtmlColor borderColor, USymbol type) {
+			HtmlColor titleColor, ISkinParam skinParam, HtmlColor borderColor, USymbol type, double roundCorner) {
 		super(inner.skinParam());
+		this.roundCorner = roundCorner;
 		this.type = type;
 		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
@@ -196,9 +198,11 @@ public class FtileGroup extends AbstractFtile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
-		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(
-				skinParam().shadowing(null)).withStroke(stroke);
-		type.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null),
+		// final double roundCorner = type.getSkinParameter().getRoundCorner(skinParam(), null);
+		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor)
+				.withShadow(skinParam().shadowing(null)).withStroke(stroke).withCorner(roundCorner, 0);
+
+		type.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
 				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext).drawU(ug);
 
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);

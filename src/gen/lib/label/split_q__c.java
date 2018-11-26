@@ -81,14 +81,14 @@ UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
 UNSUPPORTED("2cjo6wz1rmxfm5k7u7rw5dqpj"); // 	    rtp->InSplitCount++;
      }
      /* load all the branches into a buffer, initialize old node */
-     level = n.getInt("level");
+     level = n.level;
      GetBranches(rtp, n, b);
      /* find partition */
      p = rtp.split.Partitions[0];
      MethodZero(rtp);
      area = RectArea((ST_Rect_t)p.cover[0]) + RectArea((ST_Rect_t)p.cover[1]);
      /* record how good the split was for statistics */
-     if (rtp.StatFlag!=0 && N(rtp.getInt("Deleting")) && area!=0)
+     if (rtp.StatFlag!=0 && N(rtp.Deleting) && area!=0)
 UNSUPPORTED("z7xk6s3hzi3qcoiq2exj9hpv"); // 	rtp->SplitMeritSum += (float) rtp->split.CoverSplitArea / area;
      /* put branches from buffer into 2 nodes according to chosen partition */
      nn[0] = RTreeNewNode(rtp);
@@ -119,7 +119,7 @@ try {
      }
      rtp.split.BranchBuf[64].___(b);
      /* calculate rect containing all in the set */
-     rtp.split.getStruct("CoverSplit").___(rtp.split.BranchBuf[0].rect);
+     rtp.split.CoverSplit.___(rtp.split.BranchBuf[0].rect);
      for (i = 1; i < 64 + 1; i++) {
     	 rtp.split.setStruct("CoverSplit",
     	 CombineRect((ST_Rect_t)rtp.split.CoverSplit,
@@ -147,9 +147,9 @@ try {
      PickSeeds(rtp);
      while (rtp.split.Partitions[0].count[0] +
     		 rtp.split.Partitions[0].count[1] < 64 + 1 &&
- 	  rtp.split.Partitions[0].count[0] < 64 + 1 - rtp.getInt("MinFill")
+ 	  rtp.split.Partitions[0].count[0] < 64 + 1 - rtp.MinFill
  	   && rtp.split.Partitions[0].count[1] <
- 	   64 + 1 - rtp.getInt("MinFill")) {
+ 	   64 + 1 - rtp.MinFill) {
  	biggestDiff = -1;
  	for (i = 0; i < 64 + 1; i++) {
  	    if (N(rtp.split.Partitions[0].taken[i])) {

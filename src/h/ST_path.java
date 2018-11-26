@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_path extends UnsupportedStructAndPtr {
@@ -82,42 +81,6 @@ public class ST_path extends UnsupportedStructAndPtr {
 			return this.data;
 		}
 		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("data")) {
-			return this.data;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
-	public ST_port getStruct(String fieldName) {
-		if (fieldName.equals("start")) {
-			return start;
-		}
-		if (fieldName.equals("end")) {
-			return end;
-		}
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int getInt(String fieldName) {
-		if (fieldName.equals("nbox")) {
-			return this.nbox;
-		}
-		return super.getInt(fieldName);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("nbox")) {
-			this.nbox = data;
-			return;
-		}
-		super.setInt(fieldName, data);
 	}
 
 }

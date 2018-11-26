@@ -276,7 +276,7 @@ public static __ptr__ agalloc(ST_Agraph_s g, size_t size) {
 ENTERING("7newv1hmzvt4vtttc9cxdxfpn","agalloc");
 try {
 	__ptr__ mem;
-    mem =  (__ptr__) g.clos.disc.mem.call("alloc", g.clos.state.mem, size);
+    mem =  (__ptr__) g.clos.disc.mem.alloc.exe(g.clos.state.mem, size);
     if (mem == null)
 	 System.err.println("memory allocation failure");
     return mem;

@@ -44,7 +44,7 @@ class IfManagerNegatif extends IfManager {
 
 	private boolean skippingDone = false;
 
-	public IfManagerNegatif(ReadLine source, Defines defines) {
+	public IfManagerNegatif(ReadLine source, DefinesGet defines) {
 		super(source, defines);
 	}
 

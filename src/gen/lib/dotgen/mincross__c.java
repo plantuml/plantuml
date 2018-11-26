@@ -132,7 +132,6 @@ import h.ST_elist;
 import h.ST_nodequeue;
 import h.ST_pointf;
 import h.ST_rank_t;
-import h.rank_t;
 
 import java.util.List;
 
@@ -465,8 +464,8 @@ private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
     final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
-    r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
+    r.setDouble("x", p.x + q.x);
+    r.setDouble("y", p.y + q.y);
     return r;
 } finally {
 LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
@@ -848,7 +847,7 @@ try {
     merge2(g);
     /* run mincross on contents of each cluster */
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	nc += mincross_clust(g, (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr(), doBalance);
+	nc += mincross_clust(g, (ST_Agraph_s) GD_clust(g).get(c).getPtr(), doBalance);
     }
     if ((GD_n_cluster(g) > 0)
 	&& (N(s = agget(g, new CString("remincross"))) || (mapbool(s)))) {
@@ -910,7 +909,7 @@ try {
     GD_nlist(g, GD_comp(g).getFromList(c));
     if (c > 0) {
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    GD_rank(g).plus(r).setPtr("v", GD_rank(g).plus(r).getPtr("v").plus(GD_rank(g).plus(r).getInt("n")));
+	    GD_rank(g).plus(r).setPtr("v", GD_rank(g).get(r).v.plus(GD_rank(g).get(r).n));
 	    GD_rank(g).plus(r).setInt("n", 0);
 	}
     }
@@ -1080,7 +1079,7 @@ try {
     flat_reorder(g);
     nc = mincross_(g, 2, 2, doBalance);
     for (c = 1; c <= GD_n_cluster(g); c++)
-	nc += mincross_clust(g, (ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr(), doBalance);
+	nc += mincross_clust(g, (ST_Agraph_s) GD_clust(g).get(c).getPtr(), doBalance);
     save_vlist(g);
     return nc;
 } finally {
@@ -1112,10 +1111,10 @@ try {
 	    /*return ((ND_ranktype(v) != CLUSTER) && (ND_ranktype(w) != CLUSTER)); */
 	}
     } else {
-UNSUPPORTED("8lltx4lxwrqossx8qw1khzwf9"); // 	if ((ND_clust(v)) != (ND_clust(w)))
-UNSUPPORTED("9qhn9m3123s8n6wwxjfo8awlm"); // 	    return NOT(0);
+ 	if (NEQ(ND_clust(v), ND_clust(w)))
+ 	    return NOT(0);
     }
-    M = (ST_adjmatrix_t) GD_rank(g).plus(ND_rank(v)).getPtr().getPtr("flat");
+    M = (ST_adjmatrix_t) GD_rank(g).plus(ND_rank(v)).getPtr().flat;
     if (M == null)
 	rv = false;
     else {
@@ -1201,9 +1200,9 @@ try {
     vi = ND_order(v);
     wi = ND_order(w);
     ND_order(v, wi);
-    GD_rank(Z.z().Root).plus(r).getPtr().v.plus(wi).setPtr(v);
+    GD_rank(Z.z().Root).get(r).v.plus(wi).setPtr(v);
     ND_order(w, vi);
-    GD_rank(Z.z().Root).plus(r).getPtr().v.plus(vi).setPtr(w);
+    GD_rank(Z.z().Root).get(r).v.plus(vi).setPtr(w);
 } finally {
 LEAVING("ba4tbr57wips1dzpgxzx3b6ja","exchange");
 }
@@ -1345,10 +1344,10 @@ try {
     int i, c0, c1, rv;
     ST_Agnode_s v, w;
     rv = 0;
-    GD_rank(g).plus(r).getPtr().candidate= false;
-    for (i = 0; i < GD_rank(g).plus(r).getInt("n") - 1; i++) {
-	v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
-	w = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i + 1).getPtr();
+    GD_rank(g).get(r).candidate= false;
+    for (i = 0; i < GD_rank(g).get(r).n - 1; i++) {
+	v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
+	w = (ST_Agnode_s) GD_rank(g).get(r).v.plus(i + 1).getPtr();
 	//assert(ND_order(v) < ND_order(w));
 	if (left2right(g, v, w))
 	    continue;
@@ -1357,22 +1356,22 @@ try {
 	    c0 += in_cross(v, w);
 	    c1 += in_cross(w, v);
 	}
-	if (GD_rank(g).plus(r + 1).getInt("n") > 0) {
+	if (GD_rank(g).get(r + 1).n > 0) {
 	    c0 += out_cross(v, w);
 	    c1 += out_cross(w, v);
 	}
 	if ((c1 < c0) || ((c0 > 0) && reverse && (c1 == c0))) {
 	    exchange(v, w);
 	    rv += (c0 - c1);
-	    GD_rank(Z.z().Root).plus(r).getPtr().valid= 0;
-	    GD_rank(g).plus(r).getPtr().candidate= NOT(false);
+	    GD_rank(Z.z().Root).get(r).valid= 0;
+	    GD_rank(g).get(r).candidate= NOT(false);
 	    if (r > GD_minrank(g)) {
 		GD_rank(Z.z().Root).plus(r - 1).getPtr().valid= 0;
-		GD_rank(g).plus(r - 1).getPtr().candidate= NOT(false);
+		GD_rank(g).get(r - 1).candidate= NOT(false);
 	    }
 	    if (r < GD_maxrank(g)) {
 		GD_rank(Z.z().Root).plus(r + 1).getPtr().valid= 0;
-		GD_rank(g).plus(r + 1).getPtr().candidate= NOT(false);
+		GD_rank(g).get(r + 1).candidate= NOT(false);
 	    }
 	}
     }
@@ -1392,11 +1391,11 @@ ENTERING("2i22bxgg5y7v5c5d40k5zppky","transpose");
 try {
     int r, delta;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++)
-	GD_rank(g).plus(r).getPtr().candidate= NOT(false);
+	GD_rank(g).get(r).candidate= NOT(false);
     do {
 	delta = 0;
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    if (GD_rank(g).plus(r).getPtr().candidate) {
+	    if (GD_rank(g).get(r).candidate) {
 		delta += transpose_step(g, r, reverse);
 	    }
 	}
@@ -1489,11 +1488,11 @@ try {
     ST_Agnode_s n;
     int r;
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
-	ND_order(n, (int)ND_coord(n).getDouble("x"));
+	ND_order(n, (int)ND_coord(n).x);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	GD_rank(Z.z().Root).plus(r).getPtr().valid= 0;
-    qsort(GD_rank(g).plus(r).getPtr("v"),
-    	    GD_rank(g).plus(r).getInt("n"),
+	GD_rank(Z.z().Root).get(r).valid= 0;
+    qsort(GD_rank(g).get(r).v,
+    	    GD_rank(g).get(r).n,
     	    function(mincross__c.class, "nodeposcmpf"));
     }
 } finally {
@@ -1563,10 +1562,10 @@ try {
     merge_components(g);
     /* install complete ranks */
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	GD_rank(g).plus(r).setInt("n", GD_rank(g).plus(r).getInt("an"));
-	GD_rank(g).plus(r).setPtr("v", GD_rank(g).plus(r).getPtr("av"));
-	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	GD_rank(g).plus(r).setInt("n", GD_rank(g).get(r).an);
+	GD_rank(g).plus(r).setPtr("v", GD_rank(g).get(r).av);
+	for (i = 0; i < GD_rank(g).get(r).n; i++) {
+	    v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
 	    if (v == null) {
 		/*if (Verbose)
 		    fprintf(stderr,
@@ -1604,23 +1603,23 @@ try {
     }
     /* fix vlists of clusters */
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_reset_vlists((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+	rec_reset_vlists((ST_Agraph_s) GD_clust(g).get(c).getPtr());
     /* remove node temporary edges for ordering nodes */
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	for (i = 0; i < GD_rank(g).get(r).n; i++) {
+	    v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
 	    ND_order(v, i);
 	    if (ND_flat_out(v).listNotNull()) {
 		for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++)
 		    if (ED_edge_type(e) == 4) {
 			delete_flat_edge(e);
-			Memory.free(e.getPtr("base.data"));
+			Memory.free(e.base.data);
 			Memory.free(e);
 			j--;
 		    }
 	    }
 	}
-	free_matrix((ST_adjmatrix_t) GD_rank(g).plus(r).getPtr("flat"));
+	free_matrix((ST_adjmatrix_t) GD_rank(g).get(r).flat);
     }
     /*if (Verbose)
 	fprintf(stderr, "mincross %s: %d crossings, %.2f secs.\n",
@@ -1736,7 +1735,7 @@ try {
     int r;
     if (GD_rankleader(g)!=null)
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    GD_rankleader(g).plus(r).setPtr(GD_rank(g).plus(r).getPtr().v.plus(0).getPtr());
+	    GD_rankleader(g).plus(r).setPtr(GD_rank(g).get(r).v.get(0));
 	}
 } finally {
 LEAVING("bwmu2hkwud40601oq5vgo2f1h","save_vlist");
@@ -1754,7 +1753,7 @@ try {
     int c;
     save_vlist(g);
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_save_vlists((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+	rec_save_vlists((ST_Agraph_s) GD_clust(g).get(c).getPtr());
 } finally {
 LEAVING("hwdxg97sefkuyd25x2q4pgzg","rec_save_vlists");
 }
@@ -1772,14 +1771,14 @@ try {
     ST_Agnode_s u, v, w;
     /* fix vlists of sub-clusters */
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_reset_vlists((ST_Agraph_s) GD_clust(g).plus(c).getPtr().getPtr());
+	rec_reset_vlists((ST_Agraph_s) GD_clust(g).get(c).getPtr());
     if (GD_rankleader(g)!=null)
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    v = (ST_Agnode_s) GD_rankleader(g).plus(r).getPtr();
+	    v = (ST_Agnode_s) GD_rankleader(g).get(r);
 	    u = furthestnode(g, v, -1);
 	    w = furthestnode(g, v, 1);
 	    GD_rankleader(g).plus(r).setPtr(u);
-	    GD_rank(g).plus(r).setPtr("v", GD_rank(dot_root(g)).plus(r).getPtr("v").plus(ND_order(u)));
+	    GD_rank(g).plus(r).setPtr("v", GD_rank(dot_root(g)).get(r).v.plus(ND_order(u)));
 	    GD_rank(g).plus(r).setInt("n", ND_order(w) - ND_order(u) + 1);
 	}
 } finally {
@@ -1939,7 +1938,7 @@ try {
     int i;
     boolean hascl;
     ST_Agedge_s e;
-    ST_adjmatrix_t M = (ST_adjmatrix_t) GD_rank(g).plus(ND_rank(v)).getPtr("flat");
+    ST_adjmatrix_t M = (ST_adjmatrix_t) GD_rank(g).get(ND_rank(v)).flat;
     ND_mark(v, NOT(false));
     ND_onstack(v, NOT(false));
     hascl = (GD_n_cluster(dot_root(g)) > 0);
@@ -1951,8 +1950,8 @@ try {
 	    if (ED_weight(e) == 0)
 		continue;
 	    if (ND_onstack(aghead(e)) == NOT(false)) {
-		assert(ND_low(aghead(e)) < M.getInt("nrows"));
-		assert(ND_low(agtail(e)) < M.getInt("ncols"));
+		assert(ND_low(aghead(e)) < M.nrows);
+		assert(ND_low(agtail(e)) < M.ncols);
 		M.data[ND_low(aghead(e))][ND_low(agtail(e))]=1;
 		delete_flat_edge(e);
 		i--;
@@ -1960,8 +1959,8 @@ try {
 		    continue;
 		flat_rev(g, e);
 	    } else {
-		assert(ND_low(aghead(e)) < M.getInt("nrows"));
-		assert(ND_low(agtail(e)) < M.getInt("ncols"));
+		assert(ND_low(aghead(e)) < M.nrows);
+		assert(ND_low(agtail(e)) < M.ncols);
 		M.data[ND_low(agtail(e))][ND_low(aghead(e))]=1;
 		if (ND_mark(aghead(e)) == 0)
 		    flat_search(g, aghead(e));
@@ -1985,20 +1984,20 @@ try {
     ST_Agnode_s v;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	flat = 0;
-	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	for (i = 0; i < GD_rank(g).get(r).n; i++) {
+	    v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
 	    ND_mark(v, 0);
 	    ND_onstack(v, 0);
 	    ND_low(v, i);
 	    if ((ND_flat_out(v).size > 0) && (flat == 0)) {
 		GD_rank(g).plus(r).setPtr("flat",
-		    new_matrix(GD_rank(g).plus(r).getInt("n"), GD_rank(g).plus(r).getInt("n")));
+		    new_matrix(GD_rank(g).get(r).n, GD_rank(g).get(r).n));
 		flat = 1;
 	    }
 	}
 	if (flat!=0) {
-	    for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-		v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	    for (i = 0; i < GD_rank(g).get(r).n; i++) {
+		v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
 		if (ND_mark(v) == 0)
 		    flat_search(g, v);
 	    }
@@ -2062,17 +2061,17 @@ ENTERING("3lxoqxhiri9fgt20zc5jz3aa5","install_in_rank");
 try {
     int i, r;
     r = ND_rank(n);
-    i = GD_rank(g).plus(r).getInt("n");
-    if (GD_rank(g).plus(r).getInt("an") <= 0) {
+    i = GD_rank(g).get(r).n;
+    if (GD_rank(g).get(r).an <= 0) {
 UNSUPPORTED("8qk1xhvvb994zhv9aq10k4v12"); // 	agerr(AGERR, "install_in_rank, line %d: %s %s rank %d i = %d an = 0\n",
 UNSUPPORTED("53h8d82ax23hys2k21hjswp72"); // 	      1034, agnameof(g), agnameof(n), r, i);
 	return;
     }
-    GD_rank(g).plus(r).getPtr().v.plus(i).setPtr(n);
+    GD_rank(g).get(r).v.plus(i).setPtr(n);
     ND_order(n, i);
-    GD_rank(g).plus(r).setInt("n", 1+GD_rank(g).plus(r).getInt("n"));
+    GD_rank(g).plus(r).setInt("n", 1+GD_rank(g).get(r).n);
     // assert(GD_rank(g)[r].n <= GD_rank(g)[r].an);
-    if (ND_order(n) > GD_rank(Z.z().Root).plus(r).getInt("an")) {
+    if (ND_order(n) > GD_rank(Z.z().Root).get(r).an) {
 UNSUPPORTED("399szcw1txekt1xssyw7s2x07"); // 	agerr(AGERR, "install_in_rank, line %d: ND_order(%s) [%d] > GD_rank(Root)[%d].an [%d]\n",
 UNSUPPORTED("9puojrmsk6vb1qc0jtr8ge4g8"); // 	      1052, agnameof(n), ND_order(n), r, GD_rank(Root)[r].an);
 	return;
@@ -2082,8 +2081,8 @@ UNSUPPORTED("7o1thnqda767wqpe2lh9mj03t"); // 	agerr(AGERR, "install_in_rank, lin
 UNSUPPORTED("d2ugluzf7bmj7osicgitgy3sr"); // 	      1057, r, GD_minrank(g), GD_maxrank(g));
 	return;
     }
-    if (GD_rank(g).plus(r).getPtr("v").plus(ND_order(n)).comparePointer(
-	GD_rank(g).plus(r).getPtr("av").plus(GD_rank(Z.z().Root).plus(r).getInt("an")))>0) {
+    if (GD_rank(g).get(r).v.plus(ND_order(n)).comparePointer(
+	GD_rank(g).get(r).av.plus(GD_rank(Z.z().Root).get(r).an))>0) {
 UNSUPPORTED("3eb32nc5czs5auwzz5p5mtl04"); // 	agerr(AGERR, "install_in_rank, line %d: GD_rank(g)[%d].v + ND_order(%s) [%d] > GD_rank(g)[%d].av + GD_rank(Root)[%d].an [%d]\n",
 UNSUPPORTED("3qe3qpw5h6vse39xs1ca9sjmo"); // 	      1062, r, agnameof(n),GD_rank(g)[r].v + ND_order(n), r, r, GD_rank(g)[r].av+GD_rank(Root)[r].an);
 	return;
@@ -2131,13 +2130,13 @@ try {
 UNSUPPORTED("1b3hbd5artrq77i58q2o9kgz3"); // 	agerr(AGERR, "surprise\n");
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
 	GD_rank(Z.z().Root).plus(i).setInt("valid", 0);
-	if (GD_flip(g)!=0 && (GD_rank(g).plus(i).getInt("n") > 0)) {
+	if (GD_flip(g)!=0 && (GD_rank(g).get(i).n > 0)) {
 	    int nn, ndiv2;
-	    __ptr__ vlist = GD_rank(g).plus(i).getPtr("v");
-	    nn = GD_rank(g).plus(i).getInt("n") - 1;
+	    ST_Agnode_s.ArrayOfStar vlist = GD_rank(g).get(i).v;
+	    nn = GD_rank(g).get(i).n - 1;
 	    ndiv2 = nn / 2;
 	    for (j = 0; j <= ndiv2; j++)
-		exchange((ST_Agnode_s)vlist.plus(j).getPtr(), (ST_Agnode_s)vlist.plus(nn - j).getPtr());
+		exchange((ST_Agnode_s)vlist.get(j), (ST_Agnode_s)vlist.plus(nn - j).getPtr());
 	}
     }
     if (EQ(g, dot_root(g)) && ncross(g) > 0)
@@ -2239,16 +2238,16 @@ try {
     if (GD_has_flat_edges(g) == 0)
 	return;
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	if (GD_rank(g).plus(r).getInt("n") == 0) continue;
-	base_order = ND_order(GD_rank(g).plus(r).getPtr().v.plus(0).getPtr());
-	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++)
-	    ND_mark(GD_rank(g).plus(r).getPtr().v.plus(i).getPtr(), 0);
+	if (GD_rank(g).get(r).n == 0) continue;
+	base_order = ND_order(GD_rank(g).get(r).v.get(0));
+	for (i = 0; i < GD_rank(g).get(r).n; i++)
+	    ND_mark(GD_rank(g).get(r).v.get(i), 0);
 	temprank = ALLOC_Agnode_s(i + 1, temprank);
 	pos = 0;
 	/* construct reverse topological sort order in temprank */
-	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-	    if (GD_flip(g)!=0) v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
-	    else v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(GD_rank(g).plus(r).getInt("n") - i - 1).getPtr();
+	for (i = 0; i < GD_rank(g).get(r).n; i++) {
+	    if (GD_flip(g)!=0) v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
+	    else v = (ST_Agnode_s) GD_rank(g).get(r).v.plus(GD_rank(g).get(r).n - i - 1).getPtr();
 	    local_in_cnt = local_out_cnt = 0;
 	    for (j = 0; j < ND_flat_in(v).size; j++) {
 		flat_e = (ST_Agedge_s) ND_flat_in(v).getFromList(j);
@@ -2280,14 +2279,14 @@ try {
 		    right = right.plus(-1);
 		}
 	    }
-	    for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-		v = (ST_Agnode_s) temprank.plus(i).getPtr();
-		GD_rank(g).plus(r).getPtr().v.plus(i).setPtr(v);
+	    for (i = 0; i < GD_rank(g).get(r).n; i++) {
+		v = (ST_Agnode_s) temprank.get(i);
+		GD_rank(g).get(r).v.plus(i).setPtr(v);
 		ND_order(v, i + base_order);
 	    }
 	    /* nonconstraint flat edges must be made LR */
-	    for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
-		v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(i).getPtr();
+	    for (i = 0; i < GD_rank(g).get(r).n; i++) {
+		v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
 		if (ND_flat_out(v).listNotNull()) {
 		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++) {
 			if ( ((GD_flip(g) == 0) && (ND_order(aghead(e)) < ND_order(agtail(e)))) ||
@@ -2323,9 +2322,9 @@ try {
     boolean changed = false;
     int nelt;
     boolean muststay, sawclust;
-    __ptr__ vlist = GD_rank(g).plus(r).getPtr("v");
-    __ptr__ lp, rp=null, ep = vlist.plus(GD_rank(g).plus(r).getInt("n"));
-    for (nelt = GD_rank(g).plus(r).getInt("n") - 1; nelt >= 0; nelt--) {
+    __ptr__ vlist = GD_rank(g).get(r).v;
+    __ptr__ lp, rp=null, ep = vlist.plus(GD_rank(g).get(r).n);
+    for (nelt = GD_rank(g).get(r).n - 1; nelt >= 0; nelt--) {
 	lp = vlist;
 	while (lp.comparePointer(ep)<0) {
 	    /* find leftmost node that can be compared */
@@ -2363,7 +2362,7 @@ try {
 	    ep = ep.plus(-1);
     }
     if (changed) {
-	GD_rank(Z.z().Root).plus(r).getPtr().valid= 0;
+	GD_rank(Z.z().Root).get(r).valid= 0;
 	if (r > 0)
 	    GD_rank(Z.z().Root).plus(r - 1).getPtr().valid= 0;
     }
@@ -2473,38 +2472,38 @@ ENTERING("bk5nklhfqgg0uwkv7tv6dn8r2","rcross");
 try {
     int top, bot, cross, max, i, k;
     ST_Agnode_s v;
-    __ptr__ rtop;
+    ST_Agnode_s.ArrayOfStar rtop;
     cross = 0;
     max = 0;
-    rtop = GD_rank(g).plus(r).getPtr("v");
-    if (Z.z().C <= GD_rank(Z.z().Root).plus(r + 1).getInt("n")) {
-	Z.z().C = GD_rank(Z.z().Root).plus(r + 1).getInt("n") + 1;
+    rtop = GD_rank(g).get(r).v;
+    if (Z.z().C <= GD_rank(Z.z().Root).plus(r + 1).getPtr().n) {
+	Z.z().C = GD_rank(Z.z().Root).plus(r + 1).getPtr().n + 1;
 	Z.z().Count = ALLOC_INT(Z.z().C, Z.z().Count);
     }
-    for (i = 0; i < GD_rank(g).plus(r + 1).getInt("n"); i++)
+    for (i = 0; i < GD_rank(g).get(r + 1).n; i++)
 	Z.z().Count.plus(i).setInt(0);
-    for (top = 0; top < GD_rank(g).plus(r).getInt("n"); top++) {
+    for (top = 0; top < GD_rank(g).get(r).n; top++) {
 	ST_Agedge_s e;
 	if (max > 0) {
-	    for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
+	    for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get(top)).getFromList(i))!=null; i++) {
 		for (k = ND_order(aghead(e)) + 1; k <= max; k++)
 		    cross += Z.z().Count.plus(k).getInt() * ED_xpenalty(e);
 	    }
 	}
-	for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
+	for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get(top)).getFromList(i))!=null; i++) {
 	    int inv = ND_order(aghead(e));
 	    if (inv > max)
 		max = inv;
 	    Z.z().Count.plus(inv).setInt(Z.z().Count.plus(inv).getInt() + ED_xpenalty(e));
 	}
     }
-    for (top = 0; top < GD_rank(g).plus(r).getInt("n"); top++) {
-	v = (ST_Agnode_s) GD_rank(g).plus(r).getPtr().v.plus(top).getPtr();
+    for (top = 0; top < GD_rank(g).get(r).n; top++) {
+	v = (ST_Agnode_s) GD_rank(g).get(r).v.get(top);
 	if (ND_has_port(v))
 	    cross += local_cross(ND_out(v), 1);
     }
-    for (bot = 0; bot < GD_rank(g).plus(r + 1).getInt("n"); bot++) {
-	v = (ST_Agnode_s) GD_rank(g).plus(r + 1).getPtr().v.plus(bot).getPtr();
+    for (bot = 0; bot < GD_rank(g).get(r + 1).n; bot++) {
+	v = (ST_Agnode_s) GD_rank(g).get(r + 1).v.get(bot);
 	if (ND_has_port(v))
 	    cross += local_cross(ND_in(v), -1);
     }
@@ -2526,11 +2525,11 @@ try {
     g = Z.z().Root;
     count = 0;
     for (r = GD_minrank(g); r < GD_maxrank(g); r++) {
-	if (GD_rank(g).plus(r).getPtr().valid!=0)
-	    count += GD_rank(g).plus(r).getInt("cache_nc");
+	if (GD_rank(g).get(r).valid!=0)
+	    count += GD_rank(g).get(r).cache_nc;
 	else {
 	    nc = rcross(g, r);
-	    GD_rank(g).plus(r).getInt("cache_nc");
+	    GD_rank(g).get(r).cache_nc = nc;
 	    count += nc;
 	    GD_rank(g).plus(r).setInt("valid", 1);
 	}
@@ -2605,22 +2604,22 @@ try {
     int i, j, j0, lm, rm, lspan, rspan;
     __ptr__ list;
     ST_Agnode_s n;
-    __ptr__ v;
+    ST_Agnode_s.ArrayOfStar v;
     ST_Agedge_s e;
     boolean hasfixed = false;
     list = Z.z().TI_list;
-    v = GD_rank(g).plus(r0).getPtr("v");
-    for (i = 0; i < GD_rank(g).plus(r0).getInt("n"); i++) {
-	n = (ST_Agnode_s) v.plus(i).getPtr();
+    v = GD_rank(g).get(r0).v;
+    for (i = 0; i < GD_rank(g).get(r0).n; i++) {
+	n = (ST_Agnode_s) v.get(i);
 	j = 0;
 	if (r1 > r0)
 	    for (j0 = 0; (e = (ST_Agedge_s) ND_out(n).getFromList(j0))!=null; j0++) {
 		if (ED_xpenalty(e) > 0)
-		    list.plus(j++).setInt((256 * ND_order(aghead(e)) + (ED_head_port(e)).getInt("order")));
+		    list.plus(j++).setInt((256 * ND_order(aghead(e)) + (ED_head_port(e)).order));
 	} else
 	    for (j0 = 0; (e = (ST_Agedge_s) ND_in(n).getFromList(j0))!=null; j0++) {
 		if (ED_xpenalty(e) > 0)
-		    list.plus(j++).setInt((256 * ND_order(agtail(e)) + (ED_tail_port(e)).getInt("order")));
+		    list.plus(j++).setInt((256 * ND_order(agtail(e)) + (ED_tail_port(e)).order));
 	    }
 	switch (j) {
 	case 0:
@@ -2653,8 +2652,8 @@ try {
 	    }
 	}
     }
-    for (i = 0; i < GD_rank(g).plus(r0).getInt("n"); i++) {
-	n = (ST_Agnode_s) v.plus(i).getPtr();
+    for (i = 0; i < GD_rank(g).get(r0).n; i++) {
+	n = (ST_Agnode_s) v.get(i);
 	if ((ND_out(n).size == 0) && (ND_in(n).size == 0))
 	    hasfixed |= flat_mval(n);
     }

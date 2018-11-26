@@ -51,7 +51,6 @@ import java.util.List;
 import smetana.core.HardcodedStruct;
 import smetana.core.OFFSET;
 import smetana.core.UnsupportedArrayOfPtr;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
@@ -103,6 +102,11 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 		public ArrayOfStar plus(int delta) {
 			return new ArrayOfStar(data, pos + delta);
 		}
+		
+		public ST_Agedge_s get(int i) {
+			return plus(i).getPtr();
+		}
+
 
 		@Override
 		public ArrayOfStar asPtr() {
@@ -134,6 +138,7 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 			}
 			return this.pos == other.pos;
 		}
+
 	}
 
 	@Override
@@ -198,6 +203,11 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 		}
 		return super.castTo(dest);
 	}
+	
+	public ST_Agobj_s castTo_ST_Agobj_s() {
+		return base;
+	}
+
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -209,24 +219,8 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 	}
 
 	@Override
-	public __ptr__ getPtr(String fieldName) {
-		if (fieldName.equals("node")) {
-			return node;
-		}
-		return super.getPtr(fieldName);
-	}
-
-	@Override
 	public ST_Agedge_s getPtr() {
 		return this;
-	}
-
-	@Override
-	public __struct__ getStruct(String fieldName) {
-		if (fieldName.equals("base")) {
-			return base;
-		}
-		return super.getStruct(fieldName);
 	}
 
 	public StarStruct from_seq_link(ST_dtlink_s from) {
@@ -242,6 +236,7 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 		}
 		throw new IllegalArgumentException();
 	}
+
 
 	// public interface ST_Agedge_s extends __ptr__ {
 	// public static List<String> DEFINITION = Arrays.asList(

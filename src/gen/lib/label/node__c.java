@@ -65,7 +65,7 @@ public static ST_Node_t___ RTreeNewNode(ST_RTree rtp) {
 ENTERING("9uj7ni1m6q6drtoh56w82d6m4","RTreeNewNode");
 try {
 	ST_Node_t___ n;
-	rtp.setInt("NodeCount", rtp.getInt("NodeCount") + 1);
+	rtp.setInt("NodeCount", rtp.NodeCount + 1);
 	n = new ST_Node_t___();
      InitNode(n);
      return n;
@@ -121,7 +121,7 @@ public static void InitBranch(ST_Branch_t b) {
 ENTERING("ruhxixxei7au9z1iaj0zggwo","InitBranch");
 try {
 	InitRect(b.rect);
-	b.setPtr("child",  null);
+	b.child = null;
 } finally {
 LEAVING("ruhxixxei7au9z1iaj0zggwo","InitBranch");
 }
@@ -141,9 +141,9 @@ try {
      InitRect(r);
      flag = 1;
      for (i = 0; i < 64; i++)
- 	if (n.branch[i].getPtr("child")!=null) {
+ 	if (n.branch[i].child!=null) {
  	    if (flag!=0) {
- 		r.___(n.branch[i].getStruct("rect"));
+ 		r.___(n.branch[i].rect);
  		flag = 0;
  	    } else
  		r.___(CombineRect(r, (ST_Rect_t) n.branch[i].rect));
@@ -167,7 +167,7 @@ public static int PickBranch(ST_Rect_t r, ST_Node_t___ n) {
      int best=0;
 //     assert(r && n);
      for (i = 0; i < 64; i++) {
- 	if (n.branch[i].getPtr("child")!=null) {
+ 	if (n.branch[i].child!=null) {
  	    final ST_Rect_t rect = new ST_Rect_t();
  	    rr = (ST_Rect_t) n.branch[i].rect;
  	    area = RectArea((ST_Rect_t) rr);
@@ -205,7 +205,7 @@ try {
 //     assert(n);
      if (n.count < 64) {	/* split won't be necessary */
  	for (i = 0; i < 64; i++) {	/* find empty branch */
- 	    if (n.branch[i].getPtr("child") == null) {
+ 	    if (n.branch[i].child == null) {
  		n.branch[i].___(b.getStruct());
  		n.setInt("count", n.count+1);
  		break;
@@ -222,7 +222,7 @@ UNSUPPORTED("2u8wpa4w1q7rg14t07bny6p8i"); // 		rtp->InTouchCount++;
  	}
 // 	assert(new);
  	SplitNode(rtp, n, b, new_);
- 	if (n.getInt("level") == 0)
+ 	if (n.level == 0)
  		rtp.setInt("LeafCount", rtp.LeafCount+1);
  	else
 UNSUPPORTED("6tkfiebspy7ecivrzb3l5y7jd"); // 	    rtp->NonLeafCount++;

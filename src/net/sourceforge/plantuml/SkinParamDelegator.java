@@ -103,8 +103,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getDotExecutable();
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection) {
-		return skinParam.getHorizontalAlignment(param, arrowDirection);
+	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection, boolean isReverseDefine) {
+		return skinParam.getHorizontalAlignment(param, arrowDirection, isReverseDefine);
 	}
 
 	public ColorMapper getColorMapper() {
