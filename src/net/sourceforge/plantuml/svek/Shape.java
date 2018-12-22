@@ -340,4 +340,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		}
 		return pt;
 	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+		return image.getOverscanX(stringBounder);
+	}
 }

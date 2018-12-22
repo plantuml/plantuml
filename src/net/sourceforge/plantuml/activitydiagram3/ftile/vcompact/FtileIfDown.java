@@ -292,6 +292,9 @@ public class FtileIfDown extends AbstractFtile {
 
 			final Snake snake = new Snake(arrowHorizontalAlignment(), endInlinkColor, Arrows.asToLeft());
 			final Point2D p1 = getP1(stringBounder);
+			if (calculateDimension(stringBounder).hasPointOut() == false) {
+				return;
+			}
 			final Point2D p2 = getP2(stringBounder);
 
 			final double x1 = p1.getX();
@@ -353,7 +356,11 @@ public class FtileIfDown extends AbstractFtile {
 		if (optionalStop != null) {
 			width += optionalStop.calculateDimension(stringBounder).getWidth() + getAdditionalWidth(stringBounder);
 		}
-		return new FtileGeometry(width, height, geo.getLeft(), geoDiamond1.getInY(), height);
+		final FtileGeometry result = new FtileGeometry(width, height, geo.getLeft(), geoDiamond1.getInY(), height);
+		if (geoThen.hasPointOut() == false && optionalStop != null) {
+			return result.withoutPointOut();
+		}
+		return result;
 
 	}
 

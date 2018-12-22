@@ -135,7 +135,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		final double posArrow;
 		final double yText;
-		if (belowForResponse && getDirection2() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+		if (isBelowForResponse()) {
 			posArrow = 0;
 			yText = getMarginY();
 		} else {
@@ -162,6 +162,10 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 							|| direction2 == ArrowDirection.BOTH_DIRECTION ? getArrowDeltaX() : 0);
 		}
 		getTextBlock().drawU(ug.apply(new UTranslate(textPos, yText)));
+	}
+
+	private boolean isBelowForResponse() {
+		return belowForResponse && getDirection2() == ArrowDirection.RIGHT_TO_LEFT_REVERSE;
 	}
 
 	private void drawDressing1(UGraphic ug, double x, ArrowDressing dressing, ArrowDecoration decoration) {
@@ -272,19 +276,26 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	}
 
 	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
-		final double textHeight = getTextHeight(stringBounder);
+		final double y = getYPoint(stringBounder);
 		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
-			return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
+			return new Point2D.Double(getPaddingX(), y);
 		}
-		return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), textHeight + getPaddingY());
+		return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), y);
 	}
 
 	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
-		final double textHeight = getTextHeight(stringBounder);
+		final double y = getYPoint(stringBounder);
 		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
-			return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), textHeight + getPaddingY());
+			return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), y);
 		}
-		return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
+		return new Point2D.Double(getPaddingX(), y);
+	}
+
+	private double getYPoint(StringBounder stringBounder) {
+		if (isBelowForResponse()) {
+			return getPaddingY();
+		}
+		return getTextHeight(stringBounder) + getPaddingY();
 	}
 
 	final private ArrowDirection getDirection2() {

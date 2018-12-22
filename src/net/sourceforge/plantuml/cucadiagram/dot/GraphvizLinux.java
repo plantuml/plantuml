@@ -59,4 +59,9 @@ class GraphvizLinux extends AbstractGraphviz {
 		return optLocalBinDot;
 	}
 
+	@Override
+	protected String getExeName() {
+		return "dot";
+	}
+
 }

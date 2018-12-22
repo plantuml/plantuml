@@ -44,8 +44,10 @@ public interface IEntityImage extends Hideable, TextBlockBackcolored {
 	public static final int MARGIN = 5;
 	public static final int MARGIN_LINE = 5;
 
-	ShapeType getShapeType();
+	public ShapeType getShapeType();
 
-	Margins getShield(StringBounder stringBounder);
+	public Margins getShield(StringBounder stringBounder);
+	
+	public double getOverscanX(StringBounder stringBounder);
 
 }

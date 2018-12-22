@@ -78,7 +78,6 @@ public class FtileThinSplit extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		// final URectangle rect = new URectangle(width, height);
 		final UShape rect = new ULine(last - first, 0);
 		ug = ug.apply(new UTranslate(first, 0));
 		ug.apply(new UChangeColor(colorBar)).apply(new UStroke(1.5)).draw(rect);

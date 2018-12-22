@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryPyramid;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryRadioOff;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryRadioOn;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryRetrieveFromDictonnary;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryScroll;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTab;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryText;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
@@ -178,6 +179,7 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 
 		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
 		cpx.add(new ElementFactoryPyramid(source, dictionary));
+		cpx.add(new ElementFactoryScroll(source, dictionary));
 		cpx.add(new ElementFactoryBorder(source, dictionary));
 
 		for (AbstractElementFactoryComplex f : cpx) {

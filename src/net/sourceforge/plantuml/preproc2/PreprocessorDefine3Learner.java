@@ -39,12 +39,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.utils.StartUtils;
@@ -55,7 +55,7 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 	private static final String ID = "[A-Za-z_][A-Za-z_0-9]*";
 	private static final String ID_ARG = "\\s*[A-Za-z_][A-Za-z_0-9]*\\s*(?:=\\s*(?:\"[^\"]*\"|'[^']*')\\s*)?";
 	private static final String ARG = "(?:\\(" + ID_ARG + "(?:," + ID_ARG + ")*?\\))?";
-	private static final Pattern2 definePattern = MyPattern.cmpile("^[%s]*!define[%s]+(" + ID + ARG + ")"
+	private static final Pattern2 defineShortPattern = MyPattern.cmpile("^[%s]*!define[%s]+(" + ID + ARG + ")"
 			+ "(?:[%s]+(.*))?$");
 	private static final Pattern2 filenamePattern = MyPattern.cmpile("^[%s]*!filename[%s]+(.+)$");
 	private static final Pattern2 undefPattern = MyPattern.cmpile("^[%s]*!undef[%s]+(" + ID + ")$");
@@ -63,13 +63,15 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 	private static final Pattern2 enddefinelongPattern = MyPattern.cmpile("^[%s]*" + END_DEFINE_LONG + "[%s]*$");
 
 	private final DefinesGet defines;
+	private final AParentFolder currentDir;
 
-	public PreprocessorDefine3Learner(DefinesGet defines) {
+	public PreprocessorDefine3Learner(DefinesGet defines, AParentFolder currentDir) {
 		this.defines = defines;
+		this.currentDir = currentDir;
 	}
 
 	public static boolean isLearningLine(CharSequence2 s) {
-		Matcher2 m = definePattern.matcher(s);
+		Matcher2 m = defineShortPattern.matcher(s);
 		if (m.find()) {
 			return true;
 		}
@@ -107,9 +109,9 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 						manageFilename(m);
 						continue;
 					}
-					m = definePattern.matcher(s);
+					m = defineShortPattern.matcher(s);
 					if (m.find()) {
-						manageDefine(source, m, s.toString().trim().endsWith("()"));
+						manageDefineShort(source, m, s.toString().trim().endsWith("()"));
 						continue;
 					}
 					m = definelongPattern.matcher(s);
@@ -142,7 +144,7 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 				return;
 			}
 			if (enddefinelongPattern.matcher(read).find()) {
-				defines.get().define(group1, def, emptyParentheses);
+				defines.get().define(group1, def, emptyParentheses, currentDir);
 				return;
 			}
 			def.add(read.toString2());
@@ -154,15 +156,15 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 		this.defines.get().overrideFilename(group1);
 	}
 
-	private void manageDefine(ReadLine source, Matcher2 m, boolean emptyParentheses) throws IOException {
+	private void manageDefineShort(ReadLine source, Matcher2 m, boolean emptyParentheses) throws IOException {
 		final String group1 = m.group(1);
 		final String group2 = m.group(2);
 		if (group2 == null) {
-			defines.get().define(group1, null, emptyParentheses);
+			defines.get().define(group1, null, emptyParentheses, null);
 		} else {
 			final List<String> strings = defines.get().applyDefines(group2);
 			if (strings.size() > 1) {
-				defines.get().define(group1, strings, emptyParentheses);
+				defines.get().define(group1, strings, emptyParentheses, null);
 			} else {
 				final StringBuilder value = new StringBuilder(strings.get(0));
 				while (StringUtils.endsWithBackslash(value.toString())) {
@@ -172,7 +174,7 @@ public class PreprocessorDefine3Learner implements ReadFilter {
 				}
 				final List<String> li = new ArrayList<String>();
 				li.add(value.toString());
-				defines.get().define(group1, li, emptyParentheses);
+				defines.get().define(group1, li, emptyParentheses, null);
 			}
 		}
 	}

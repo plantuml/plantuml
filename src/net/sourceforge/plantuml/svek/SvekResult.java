@@ -134,4 +134,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 		return false;
 	}
 
+	public double getOverscanX(StringBounder stringBounder) {
+		return 0;
+	}
+
 }

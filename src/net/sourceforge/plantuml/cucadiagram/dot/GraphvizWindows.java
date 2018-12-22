@@ -92,5 +92,11 @@ class GraphvizWindows extends AbstractGraphviz {
 	GraphvizWindows(ISkinParam skinParam, String dotString, String... type) {
 		super(skinParam, dotString, type);
 	}
+	
+	@Override
+	protected String getExeName() {
+		return "dot.exe";
+	}
+
 
 }

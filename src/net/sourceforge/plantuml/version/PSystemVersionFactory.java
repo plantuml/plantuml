@@ -71,10 +71,13 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 			if (line.matches("(?i)^checkversion\\s*$")) {
 				return PSystemVersion.createCheckVersions(null, null);
 			}
-			if (line.matches("(?i)^(keygen|keyimport)(\\s+[0-9a-z]+)?\\s*$")) {
+			if (line.matches("(?i)^keygen\\s*$")) {
 				line = line.trim();
-				final String key = line.startsWith("keygen") ? line.substring("keygen".length()).trim() : line
-						.substring("keyimport".length()).trim();
+				return new PSystemKeygen("");
+			}
+			if (line.matches("(?i)^keyimport(\\s+[0-9a-z]+)?\\s*$")) {
+				line = line.trim();
+				final String key = line.substring("keyimport".length()).trim();
 				return new PSystemKeygen(key);
 			}
 			if (line.matches("(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$")) {

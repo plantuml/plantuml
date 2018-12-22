@@ -156,4 +156,9 @@ public final class ConcurrentStateImage extends AbstractTextBlock implements IEn
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
+	
+	public double getOverscanX(StringBounder stringBounder) {
+		return 0;
+	}
+
 }

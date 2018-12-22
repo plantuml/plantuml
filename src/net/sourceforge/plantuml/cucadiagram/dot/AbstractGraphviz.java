@@ -50,34 +50,44 @@ abstract class AbstractGraphviz implements Graphviz {
 	private final File dotExe;
 	private final String dotString;
 	private final String[] type;
-	private final ISkinParam skinParam;
 
 	static boolean isWindows() {
 		return File.separatorChar == '\\';
+	}
+
+	private static String findExecutableOnPath(String name) {
+		for (String dirname : System.getenv("PATH").split(File.pathSeparator)) {
+			File file = new File(dirname, name);
+			if (file.isFile() && file.canExecute()) {
+				return file.getAbsolutePath();
+			}
+		}
+		return null;
 	}
 
 	AbstractGraphviz(ISkinParam skinParam, String dotString, String... type) {
 		if (type == null) {
 			throw new IllegalArgumentException();
 		}
-		this.skinParam = skinParam;
 		this.dotExe = searchDotExe();
 		this.dotString = dotString;
 		this.type = type;
 	}
 
 	private File searchDotExe() {
-		if (skinParam == null || skinParam.getDotExecutable() == null) {
-			final String getenv = GraphvizUtils.getenvGraphvizDot();
-			if (getenv == null) {
-				return specificDotExe();
-			}
-			return new File(getenv);
+		String getenv = GraphvizUtils.getenvGraphvizDot();
+		if (getenv == null) {
+			getenv = findExecutableOnPath(getExeName());
 		}
-		return new File(skinParam.getDotExecutable());
+		if (getenv == null) {
+			return specificDotExe();
+		}
+		return new File(getenv);
 	}
 
 	abstract protected File specificDotExe();
+
+	abstract protected String getExeName();
 
 	final public ProcessState createFile3(OutputStream os) {
 		if (dotString == null) {

@@ -97,7 +97,7 @@ public class Variables {
 			for (int j = 0; j < variables.size(); j++) {
 				final DefineVariable variable = variables.get(j);
 				final String varName = variable.getName();
-				final String var2 = "(##" + varName + "\\b)|(\\b" + varName + "##)|(\\b" + varName + "\\b)";
+				final String var2 = "(##" + varName + "##)|(##" + varName + "\\b)|(\\b" + varName + "##)|(\\b" + varName + "\\b)";
 				if (variable.getDefaultValue() == null) {
 					regex.append("(?:(?:\\s*\"([^\"]*)\"\\s*)|(?:\\s*'([^']*)'\\s*)|\\s*"
 							+ "((?:\\([^()]*\\)|[^,'\"])*?)" + ")");

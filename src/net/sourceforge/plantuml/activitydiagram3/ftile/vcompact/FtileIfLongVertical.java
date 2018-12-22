@@ -151,8 +151,11 @@ class FtileIfLongVertical extends AbstractFtile {
 
 		List<Ftile> diamonds = new ArrayList<Ftile>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
-			final TextBlock tbTest = branch.getLabelTest().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT,
+					ftileFactory.skinParam());
+			final TextBlock tbTest = branch.getLabelTest().create(fc,
+					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
+					ftileFactory.skinParam());
 			FtileDiamondInside3 diamond = new FtileDiamondInside3(branch.skinParam(), backColor, borderColor, swimlane,
 					tbTest);
 			diamond = diamond.withEast(tb1);

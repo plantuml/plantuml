@@ -68,7 +68,8 @@ public interface ISkinParam extends ISkinSimple {
 
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam);
 
-	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection, boolean isReverseDefine);
+	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection,
+			boolean isReverseDefine);
 
 	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue);
 
@@ -79,8 +80,6 @@ public interface ISkinParam extends ISkinSimple {
 	public int classAttributeIconSize();
 
 	public DotSplines getDotSplines();
-
-	public String getDotExecutable();
 
 	public boolean shadowing(Stereotype stereotype);
 
@@ -157,7 +156,11 @@ public interface ISkinParam extends ISkinSimple {
 	public boolean responseMessageBelowArrow();
 
 	public boolean svgDimensionStyle();
-	
+
 	public boolean fixCircleLabelOverlapping();
+
+	public void setUseVizJs(boolean useVizJs);
+
+	public boolean isUseVizJs();
 
 }

@@ -94,5 +94,10 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	public Margins getShield(StringBounder stringBounder) {
 		return orig.getShield(stringBounder);
 	}
+	
+	public double getOverscanX(StringBounder stringBounder) {
+		return orig.getOverscanX(stringBounder);
+	}
+
 
 }

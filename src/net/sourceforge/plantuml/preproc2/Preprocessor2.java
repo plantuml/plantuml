@@ -75,7 +75,7 @@ public class Preprocessor2 implements ReadLineNumbered {
 		filters.add(new IfManagerFilter(defines));
 		filters.add(new PreprocessorDefine4Apply(defines));
 		filters.add(new SubPreprocessor2(charset, definitionsContainer));
-		filters.add(new PreprocessorDefine3Learner(defines));
+		filters.add(new PreprocessorDefine3Learner(defines, importedFiles.getCurrentDir()));
 		filters.add(include);
 
 		this.source = filters.applyFilter(reader);

@@ -155,6 +155,7 @@ public class PSystemError extends AbstractPSystem {
 			udrawable = result;
 		}
 		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
+		// udrawable = addMessageAdopt(udrawable);
 		if (min == 1 && LicenseInfo.retrieveNamedOrDistributorQuickIsValid() == false) {
 			udrawable = addMessagePatreon(udrawable);
 		} else if (min == 15 && LicenseInfo.retrieveNamedOrDistributorQuickIsValid() == false) {
@@ -199,6 +200,12 @@ public class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
+	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
+		final TextBlock message = getMessageAdopt();
+		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
+		return result;
+	}
+
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
 		final UImage message = new UImage(PSystemVersion.getArecibo());
 		TextBlock result = TextBlockUtils.mergeLR(source, TextBlockUtils.fromUImage(message), VerticalAlignment.TOP);
@@ -207,7 +214,7 @@ public class PSystemError extends AbstractPSystem {
 
 	private TextBlockBackcolored getMessageDedication() {
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final HtmlColorSimple backColor = (HtmlColorSimple) new HtmlColorSetSimple().getColorIfValid("#DFDCD3");
+		final HtmlColorSimple backColor = (HtmlColorSimple) new HtmlColorSetSimple().getColorIfValid("#eae2c9");
 
 		final BufferedImage qrcode = smaller(utils.exportFlashcode("http://plantuml.com/dedication", Color.BLACK,
 				backColor.getColor999()));
@@ -225,6 +232,22 @@ public class PSystemError extends AbstractPSystem {
 			final UImage qr = new UImage(qrcode).scaleNearestNeighbor(3);
 			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
 		}
+		return TextBlockUtils.addBackcolor(result, backColor);
+
+	}
+
+	private TextBlockBackcolored getMessageAdopt() {
+		final HtmlColorSimple backColor = (HtmlColorSimple) new HtmlColorSetSimple().getColorIfValid("#eff4d2");
+
+		final Display disp = Display.create("<b>Adopt-a-Word and put your message here!", " ",
+				"Details on <i>[[http://plantuml.com/adopt]]", " ");
+
+		final UFont font = UFont.sansSerif(14);
+		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
+		final TextBlock text = TextBlockUtils.withMargin(
+				disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
+		final TextBlock result;
+		result = text;
 		return TextBlockUtils.addBackcolor(result, backColor);
 
 	}
