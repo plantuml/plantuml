@@ -366,9 +366,10 @@ public class DotStringFactory implements Moveable {
 					|| sh.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || sh.getType() == ShapeType.FOLDER
 					|| sh.getType() == ShapeType.DIAMOND) {
 				final List<Point2D.Double> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
-				final double minX = SvekUtils.getMinX(points);
 				final double minY = SvekUtils.getMinY(points);
-				corner1.manage(minX, minY);
+				final double overscanX = sh.getOverscanX(stringBounder);
+				final double minX = SvekUtils.getMinX(points);
+				corner1.manage(minX - overscanX, minY);
 				sh.moveSvek(minX, minY);
 			} else if (sh.getType() == ShapeType.ROUND_RECTANGLE) {
 				final int idx2 = svg.indexOf("d=\"", idx + 1);

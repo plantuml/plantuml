@@ -51,7 +51,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
 import javax.swing.UIManager;
@@ -145,7 +144,7 @@ public class Run {
 		if (option.getPreprocessorOutputMode() == OptionPreprocOutputMode.CYPHER) {
 			cypher = new LanguageDescriptor().getCypher();
 		}
-		boolean error = false;
+		final ErrorStatus error = ErrorStatus.init();
 		boolean forceQuit = false;
 		if (option.isPattern()) {
 			managePattern();
@@ -164,7 +163,7 @@ public class Run {
 			}
 			new MainWindow2(option, dir);
 		} else if (option.isPipe() || option.isPipeMap() || option.isSyntax()) {
-			error = managePipe(option);
+			managePipe(option, error);
 			forceQuit = true;
 		} else if (option.isFailfast2()) {
 			if (option.isSplash()) {
@@ -172,21 +171,21 @@ public class Run {
 			}
 			final long start2 = System.currentTimeMillis();
 			option.setCheckOnly(true);
-			error = manageAllFiles(option);
+			manageAllFiles(option, error);
 			option.setCheckOnly(false);
 			if (option.isDuration()) {
 				final double duration = (System.currentTimeMillis() - start2) / 1000.0;
 				Log.error("Check Duration = " + duration + " seconds");
 			}
-			if (error == false) {
-				error = manageAllFiles(option);
+			if (error.hasError() == false) {
+				manageAllFiles(option, error);
 			}
 			forceQuit = true;
 		} else {
 			if (option.isSplash()) {
 				Splash.createSplash();
 			}
-			error = manageAllFiles(option);
+			manageAllFiles(option, error);
 			forceQuit = true;
 		}
 
@@ -195,9 +194,13 @@ public class Run {
 			Log.error("Duration = " + duration + " seconds");
 		}
 
-		if (error) {
+		if (error.hasError()) {
 			Log.error("Some diagram description contains errors");
-			System.exit(1);
+			System.exit(error.getExitCode());
+		}
+		if (error.isNoData()) {
+			Log.error("No diagram found");
+			System.exit(error.getExitCode());
 		}
 
 		if (forceQuit && OptionFlags.getInstance().isSystemExit()) {
@@ -349,12 +352,12 @@ public class Run {
 		}
 	}
 
-	private static boolean managePipe(Option option) throws IOException {
+	private static void managePipe(Option option, ErrorStatus error) throws IOException {
 		final String charset = option.getCharset();
-		return new Pipe(option, System.out, System.in, charset).managePipe();
+		new Pipe(option, System.out, System.in, charset).managePipe(error);
 	}
 
-	private static boolean manageAllFiles(Option option) throws IOException, InterruptedException {
+	private static void manageAllFiles(Option option, ErrorStatus error) throws IOException, InterruptedException {
 
 		File lockFile = null;
 		try {
@@ -364,7 +367,7 @@ public class Run {
 				javaIsRunningFile.delete();
 				lockFile = new File(dir, "javaumllock.tmp");
 			}
-			return processArgs(option);
+			processArgs(option, error);
 		} finally {
 			if (lockFile != null) {
 				lockFile.delete();
@@ -373,12 +376,12 @@ public class Run {
 
 	}
 
-	private static boolean processArgs(Option option) throws IOException, InterruptedException {
+	private static void processArgs(Option option, ErrorStatus error) throws IOException, InterruptedException {
 		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
 				&& OptionFlags.getInstance().isExtractFromMetadata() == false) {
-			return multithread(option);
+			multithread(option, error);
+			return;
 		}
-		boolean errorGlobal = false;
 		final List<File> files = new ArrayList<File>();
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
@@ -392,55 +395,54 @@ public class Run {
 				files.addAll(group.getFiles());
 			}
 		}
-		Log.info("Found " + files.size() + " files");
+		foundNbFiles(files.size());
 		for (File f : files) {
 			try {
-				final boolean error = manageFileInternal(f, option);
-				if (error) {
-					errorGlobal = true;
-				}
-				incDone(error);
-				if (error && option.isFailfastOrFailfast2()) {
-					return true;
+				manageFileInternal(f, option, error);
+				incDone(error.hasError());
+				if (error.hasError() && option.isFailfastOrFailfast2()) {
+					return;
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return errorGlobal;
 	}
 
-	private static boolean multithread(final Option option) throws InterruptedException {
+	private static void multithread(final Option option, final ErrorStatus error) throws InterruptedException {
 		Log.info("Using several threads: " + option.getNbThreads());
 		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());
-		final AtomicBoolean errors = new AtomicBoolean(false);
+
+		int nb = 0;
 		for (String s : option.getResult()) {
 			final FileGroup group = new FileGroup(s, option.getExcludes(), option);
 			for (final File f : group.getFiles()) {
 				incTotal(1);
+				nb++;
 				executor.submit(new Runnable() {
 					public void run() {
-						if (errors.get() && option.isFailfastOrFailfast2()) {
+						if (error.hasError() && option.isFailfastOrFailfast2()) {
 							return;
 						}
 						try {
-							final boolean error = manageFileInternal(f, option);
-							if (error) {
-								errors.set(true);
-							}
+							manageFileInternal(f, option, error);
 						} catch (IOException e) {
 							e.printStackTrace();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						incDone(errors.get());
+						incDone(error.hasError());
 					}
 				});
 			}
 		}
+		foundNbFiles(nb);
 		executor.shutdown();
 		executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
-		return errors.get();
+	}
+
+	private static void foundNbFiles(int nb) {
+		Log.info("Found " + nb + " files");
 	}
 
 	private static void incDone(boolean error) {
@@ -453,7 +455,8 @@ public class Run {
 		ProgressBar.incTotal(nb);
 	}
 
-	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {
+	private static void manageFileInternal(File f, Option option, ErrorStatus error) throws IOException,
+			InterruptedException {
 		Log.info("Working on " + f.getAbsolutePath());
 		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			System.out.println("------------------------");
@@ -468,7 +471,7 @@ public class Run {
 
 			System.out.println(data);
 			System.out.println("------------------------");
-			return false;
+			return;
 		}
 		final ISourceFileReader sourceFileReader;
 		if (option.getOutputFile() == null) {
@@ -484,24 +487,35 @@ public class Run {
 			for (BlockUml s : sourceFileReader.getBlocks()) {
 				System.out.println(s.getEncodedUrl());
 			}
-			return false;
+			return;
 		}
 		if (option.isCheckOnly()) {
 			final boolean hasError = sourceFileReader.hasError();
-			final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
-			hasErrors(f, result);
-			return hasError;
+			if (hasError) {
+				error.goWithError();
+			}
+			// final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+			// hasErrors(f, result, error);
+			return;
 		}
 		if (option.getPreprocessorOutputMode() != null) {
 			extractPreproc(option, sourceFileReader);
-			return false;
+			error.goOk();
+			return;
 		}
 		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+		final Stdrpt rpt = option.getStdrpt();
 		if (result.size() == 0) {
 			Log.error("Warning: no image in " + f.getCanonicalPath());
+			rpt.printInfo(System.err, null);
+			// error.goNoData();
+			return;
+		}
+		for (BlockUml s : sourceFileReader.getBlocks()) {
+			rpt.printInfo(System.err, s.getDiagram());
 		}
 
-		return hasErrors(f, result);
+		hasErrors(f, result, error);
 	}
 
 	private static void extractPreproc(Option option, final ISourceFileReader sourceFileReader) throws IOException {
@@ -522,16 +536,20 @@ public class Run {
 		}
 	}
 
-	private static boolean hasErrors(File f, final List<GeneratedImage> list) throws IOException {
-		boolean result = false;
+	private static void hasErrors(File f, final List<GeneratedImage> list, ErrorStatus error) throws IOException {
+		if (list.size() == 0) {
+			// error.goNoData();
+			return;
+		}
 		for (GeneratedImage i : list) {
 			final int lineError = i.lineErrorRaw();
 			if (lineError != -1) {
 				Log.error("Error line " + lineError + " in file: " + f.getCanonicalPath());
-				result = true;
+				error.goWithError();
+				return;
 			}
 		}
-		return result;
+		error.goOk();
 	}
 
 }

@@ -88,5 +88,10 @@ public class EntityImageNoteLink extends AbstractTextBlock implements IEntityIma
 	public boolean isHidden() {
 		return false;
 	}
+	
+	public double getOverscanX(StringBounder stringBounder) {
+		return 0;
+	}
+
 
 }

@@ -161,8 +161,8 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		for (Branch branch : thens) {
 			final TextBlock tb1 = branch.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
-			final TextBlock tbTest = branch.getLabelTest().create(fcTest, HorizontalAlignment.LEFT,
-					ftileFactory.skinParam());
+			final TextBlock tbTest = branch.getLabelTest().create(fcTest,
+					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), ftileFactory.skinParam());
 			final HtmlColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
 			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,

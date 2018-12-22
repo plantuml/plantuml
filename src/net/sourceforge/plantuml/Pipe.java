@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -52,23 +53,29 @@ public class Pipe {
 	private final PrintStream ps;
 	private boolean closed = false;
 	private final String charset;
+	private final Stdrpt stdrpt;
 
 	public Pipe(Option option, PrintStream ps, InputStream is, String charset) {
 		this.option = option;
 		this.is = is;
 		this.ps = ps;
 		this.charset = charset;
+		this.stdrpt = option.getStdrpt();
 	}
 
-	public boolean managePipe() throws IOException {
-		boolean error = false;
+	public void managePipe(ErrorStatus error) throws IOException {
 		final boolean noStdErr = option.isPipeNoStdErr();
+		int nb = 0;
 		do {
 			final String source = readOneDiagram();
 			if (source == null) {
 				ps.flush();
-				return error;
+				if (nb == 0) {
+					// error.goNoData();
+				}
+				return;
 			}
+			nb++;
 			final Defines defines = option.getDefaultDefines();
 			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, option.getConfig());
 			if (option.isComputeurl()) {
@@ -78,12 +85,14 @@ public class Pipe {
 			} else if (option.isSyntax()) {
 				final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
 				if (system instanceof UmlDiagram) {
+					error.goOk();
 					ps.println(((UmlDiagram) system).getUmlDiagramType().name());
 					ps.println(system.getDescription());
 				} else if (system instanceof PSystemError) {
-					error = true;
-					printErrorText(ps, (PSystemError) system);
+					error.goWithError();
+					stdrpt.printInfo(ps, (PSystemError) system);
 				} else {
+					error.goOk();
 					ps.println("OTHER");
 					ps.println(system.getDescription());
 				}
@@ -99,13 +108,16 @@ public class Pipe {
 				final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;
 				final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),
 						option.getFileFormatOption());
+				printInfo(noStdErr ? ps : System.err, sourceStringReader);
 				if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
-					error = true;
-					manageErrors(noStdErr ? ps : System.err, sourceStringReader);
-				} else if (noStdErr) {
-					final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
-					baos.close();
-					ps.write(baos.toByteArray());
+					error.goWithError();
+				} else {
+					error.goOk();
+					if (noStdErr) {
+						final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
+						baos.close();
+						ps.write(baos.toByteArray());
+					}
 				}
 				if (option.getPipeDelimitor() != null) {
 					ps.println(option.getPipeDelimitor());
@@ -113,23 +125,18 @@ public class Pipe {
 			}
 			ps.flush();
 		} while (closed == false);
-		return error;
-	}
-
-	private void manageErrors(final PrintStream output, final SourceStringReader sourceStringReader) {
-		// if (option.getPipeDelimitor() != null) {
-		// output.println(option.getPipeDelimitor());
-		// }
-		printErrorText(output, (PSystemError) sourceStringReader.getBlocks().get(0).getDiagram());
-	}
-
-	private void printErrorText(final PrintStream output, final PSystemError sys) {
-		output.println("ERROR");
-		output.println(sys.getHigherErrorPosition2().getPosition());
-		for (ErrorUml er : sys.getErrorsUml()) {
-			output.println(er.getError());
+		if (nb == 0) {
+			// error.goNoData();
 		}
-		output.flush();
+	}
+
+	private void printInfo(final PrintStream output, final SourceStringReader sourceStringReader) {
+		final List<BlockUml> blocks = sourceStringReader.getBlocks();
+		if (blocks.size() == 0) {
+			stdrpt.printInfo(output, null);
+		} else {
+			stdrpt.printInfo(output, blocks.get(0).getDiagram());
+		}
 	}
 
 	private boolean isFinished(String s) {

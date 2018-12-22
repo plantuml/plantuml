@@ -36,14 +36,12 @@ package net.sourceforge.plantuml.version;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.BackingStoreException;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -98,7 +96,7 @@ public class PSystemKeycheck extends AbstractPSystem {
 	private void drawInternal(UGraphic ug) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 		final List<String> strings = header();
 		try {
-			final LicenseInfo info = LicenseInfo.retrieveNamed(sig, key, false);
+			final LicenseInfo info = PLSSignature.retrieveNamed(sig, key, false);
 			strings.add("<u>Provided license information</u>:");
 			License.addLicenseInfo(strings, info);
 			strings.add(" ");
@@ -133,7 +131,7 @@ public class PSystemKeycheck extends AbstractPSystem {
 		ug = ug.apply(new UTranslate(0, disp.calculateDimension(ug.getStringBounder()).getHeight()));
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage im = utils.exportFlashcode(
-				Version.versionString() + "\n" + SignatureUtils.toHexString(Magic.signature()), Color.BLACK,
+				Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()), Color.BLACK,
 				Color.WHITE);
 		if (im != null) {
 			final UImage flash = new UImage(im).scaleNearestNeighbor(4);

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileThinSplit;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -71,7 +72,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		Ftile result = getMiddle();
 		final List<Connection> conns = new ArrayList<Connection>();
 		final Rainbow thinColor = result.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
-		final Ftile thin = new FtileThinSplit(skinParam(), thinColor.getColor(), getList().get(0).getSwimlaneIn());
+		final Ftile thin = new FtileThinSplit(skinParam(), getThin1Color(thinColor), getList().get(0).getSwimlaneIn());
 		double x = 0;
 		double first = 0;
 		double last = 0;
@@ -81,15 +82,32 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 				first = x + dim.getLeft();
 			}
 			last = x + dim.getLeft();
-			conns.add(new ConnectionIn(thin, tmp, x, tmp.getInLinkRendering().getRainbow(
-					HtmlColorAndStyle.build(skinParam()))));
+			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
+			conns.add(new ConnectionIn(thin, tmp, x, rainbow));
 			x += dim.getWidth();
 		}
 
 		result = FtileUtils.addConnection(result, conns);
+		final FtileGeometry geom = result.calculateDimension(getStringBounder());
+		if (last < geom.getLeft()) {
+			last = geom.getLeft();
+		}
+		if (first > geom.getLeft()) {
+			first = geom.getLeft();
+		}
 		((FtileThinSplit) thin).setGeom(first, last, result.calculateDimension(getStringBounder()).getWidth());
 
 		return new FtileAssemblySimple(thin, result);
+	}
+
+	private HtmlColor getThin1Color(final Rainbow thinColor) {
+		for (Ftile tmp : getList()) {
+			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
+			if (rainbow.isInvisible() == false) {
+				return thinColor.getColor();
+			}
+		}
+		return null;
 	}
 
 	private boolean hasOut() {

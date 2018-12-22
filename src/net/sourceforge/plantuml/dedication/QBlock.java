@@ -40,8 +40,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 
-import net.sourceforge.plantuml.version.Magic;
-
 public class QBlock {
 
 	private final BigInteger big;
@@ -61,18 +59,11 @@ public class QBlock {
 		return new QBlock(new BigInteger(block));
 	}
 
-	public static QBlock fromMagic(Magic magic) {
-		final byte[] buffer = magic.getBuffer();
+	public static QBlock fromBuffer(final byte[] buffer) {
 		final byte[] block = new byte[buffer.length + 1];
 		System.arraycopy(buffer, 0, block, 1, buffer.length);
 		final BigInteger big = new BigInteger(block);
 		return new QBlock(big);
-	}
-
-	public Magic toMagic() {
-		final Magic magic = new Magic();
-		magic.set(0, getData512());
-		return magic;
 	}
 
 	public QBlock(BigInteger number) {
@@ -84,7 +75,7 @@ public class QBlock {
 		return new QBlock(changed);
 	}
 
-	private byte[] getData512() {
+	public byte[] getData512() {
 		final byte[] nb = big.toByteArray();
 		if (nb.length == 512) {
 			return nb;

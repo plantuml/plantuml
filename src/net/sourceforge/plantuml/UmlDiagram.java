@@ -445,10 +445,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return useJDot;
 	}
 
-	private void setDotExecutable(String dotExecutable) {
-		skinParam.setDotExecutable(dotExecutable);
-	}
-
 	public final Display getMainFrame() {
 		return mainFrame;
 	}

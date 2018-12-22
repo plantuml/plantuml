@@ -142,6 +142,10 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	public HtmlColor getBackcolor() {
 		return skinParam.getBackgroundColor();
 	}
+	
+	public double getOverscanX(StringBounder stringBounder) {
+		return 0;
+	}
 
 	public boolean isHidden() {
 		return false;

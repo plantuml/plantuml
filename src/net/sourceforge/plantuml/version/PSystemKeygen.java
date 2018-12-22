@@ -153,7 +153,7 @@ public class PSystemKeygen extends AbstractPSystem {
 		ug = ug.apply(new UTranslate(0, disp.calculateDimension(ug.getStringBounder()).getHeight()));
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage im = utils.exportFlashcode(
-				Version.versionString() + "\n" + SignatureUtils.toHexString(Magic.signature()), Color.BLACK, Color.WHITE);
+				Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()), Color.BLACK, Color.WHITE);
 		if (im != null) {
 			final UImage flash = new UImage(im).scaleNearestNeighbor(4);
 			ug.draw(flash);

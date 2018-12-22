@@ -59,7 +59,7 @@ public class SignatureUtils {
 //	}
 
 	public static byte[] salting(String pass, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-		final int iterations = 10000;
+		final int iterations = 500;
 		final int keyLength = 512;
 		final SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 		final PBEKeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, iterations, keyLength);

@@ -81,6 +81,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	private final IHtmlColorSet colorSet = new HtmlColorSetSimple();
 	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
 	private final Collection<DayAsDate> closedDayAsDate = new HashSet<DayAsDate>();
+	private final Collection<DayAsDate> openedDayAsDate = new HashSet<DayAsDate>();
 	private GCalendar calendar;
 
 	private final Instant min = new InstantDay(0);
@@ -180,13 +181,32 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 					return 100;
 				}
 				final DayAsDate day = getCalendarSimple().toDayAsDate((InstantDay) instant);
-				final DayOfWeek dayOfWeek = day.getDayOfWeek();
-				if (closedDayOfWeek.contains(dayOfWeek) || closedDayAsDate.contains(day)) {
+				if (isClosed(day)) {
 					return 0;
 				}
 				return 100;
 			}
 		};
+	}
+
+	private boolean isClosed(final DayAsDate day) {
+		if (openedDayAsDate.contains(day)) {
+			return false;
+		}
+		final DayOfWeek dayOfWeek = day.getDayOfWeek();
+		return closedDayOfWeek.contains(dayOfWeek) || closedDayAsDate.contains(day);
+	}
+
+	public void closeDayOfWeek(DayOfWeek day) {
+		closedDayOfWeek.add(day);
+	}
+
+	public void closeDayAsDate(DayAsDate day) {
+		closedDayAsDate.add(day);
+	}
+
+	public void openDayAsDate(DayAsDate day) {
+		openedDayAsDate.add(day);
 	}
 
 	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
@@ -529,14 +549,6 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	public int daysInWeek() {
 		return 7 - closedDayOfWeek.size();
-	}
-
-	public void closeDayOfWeek(DayOfWeek day) {
-		closedDayOfWeek.add(day);
-	}
-
-	public void closeDayAsDate(DayAsDate day) {
-		closedDayAsDate.add(day);
 	}
 
 	public Instant convert(DayAsDate day) {

@@ -41,12 +41,14 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class ComplementClose implements ComplementPattern {
 
+	public static final Complement CLOSE = new Complement() {
+	};
+
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf("CLOSED" + suffix, "(closed?)");
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
-		return Failable.<Complement> ok(new Complement() {
-		});
+		return Failable.<Complement> ok(CLOSE);
 	}
 }

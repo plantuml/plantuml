@@ -146,5 +146,10 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 	public boolean isHidden() {
 		return im.isHidden();
 	}
+	
+	public double getOverscanX(StringBounder stringBounder) {
+		return 0;
+	}
+
 
 }

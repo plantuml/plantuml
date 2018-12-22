@@ -81,17 +81,8 @@ public class SkinParam implements ISkinParam {
 
 	private final Map<String, String> params = new HashMap<String, String>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
-	private String dotExecutable;
 	private final UmlDiagramType type;
-
-	public String getDotExecutable() {
-		return dotExecutable;
-	}
-
-	public void setDotExecutable(String dotExecutable) {
-		Log.info("Overwritting dot in skinparam " + dotExecutable);
-		this.dotExecutable = dotExecutable;
-	}
+	private boolean useVizJs;
 
 	public void setParam(String key, String value) {
 		for (String key2 : cleanForKey(key)) {
@@ -1044,6 +1035,14 @@ public class SkinParam implements ISkinParam {
 			return true;
 		}
 		return false;
+	}
+
+	public void setUseVizJs(boolean useVizJs) {
+		this.useVizJs = useVizJs;
+	}
+
+	public boolean isUseVizJs() {
+		return useVizJs;
 	}
 
 }

@@ -36,16 +36,10 @@
 package net.sourceforge.plantuml.salt;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.WithSprite;
-import net.sourceforge.plantuml.command.BlocLines;
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.FactorySpriteCommand;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -56,7 +50,7 @@ public class DataSourceImpl implements DataSource {
 	private final List<Terminated<String>> data = new ArrayList<Terminated<String>>();
 
 	public DataSourceImpl(List<String> data) {
-		final Pattern2 p = MyPattern.cmpile("\\{[-+^#!*/]?");
+		final Pattern2 p = MyPattern.cmpile("\\{(?:[-+^#!*/]|S-|SI|S)?");
 
 		for (String s : data) {
 			final StringTokenizer st = new StringTokenizer(s, "|}", true);

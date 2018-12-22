@@ -250,11 +250,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 			final double space = 8;
 			final Dimension2D dimSmall = asSmall.calculateDimension(ug.getStringBounder());
 			final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
-			desc.drawU(ug.apply(new UTranslate((dimSmall.getWidth() - dimDesc.getWidth()) / 2, space
-					+ dimSmall.getHeight())));
+			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;
+			desc.drawU(ug.apply(new UTranslate(posx1, space + dimSmall.getHeight())));
 			final Dimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());
-			stereo.drawU(ug.apply(new UTranslate((dimSmall.getWidth() - dimStereo.getWidth()) / 2, -space
-					- dimStereo.getHeight())));
+			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;
+			stereo.drawU(ug.apply(new UTranslate(posx2, -space - dimStereo.getHeight())));
 		}
 
 		if (url != null) {
@@ -266,4 +266,16 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return shapeType;
 	}
 
+	@Override
+	public double getOverscanX(StringBounder stringBounder) {
+		if (hideText) {
+			final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
+			final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
+			final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
+			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;
+			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;
+			return MathUtils.max(-posx1, -posx2, 0);
+		}
+		return 0;
+	}
 }

@@ -281,15 +281,13 @@ public enum License {
 		text.add("textual description in PlantUML language). Those images are not covered by");
 	}
 
-	private List<String> getHeaderStart(LicenseInfo licenseInfo, boolean withQrcode) {
-		final List<String> text = new ArrayList<String>();
+	private void header1(final List<String> text, LicenseInfo licenseInfo) {
 		if (licenseInfo.isNone()) {
 			text.add("+=======================================================================");
 			text.add("| ");
 			text.add("|      PlantUML : a free UML diagram generator");
 			text.add("| ");
 			text.add("+=======================================================================");
-			text.add(" ");
 		} else {
 			text.add("+=======================================================================");
 			text.add("| ");
@@ -298,8 +296,11 @@ public enum License {
 			text.add("+=======================================================================");
 			addLicenseInfo(text, licenseInfo);
 			text.add("+=======================================================================");
-			text.add(" ");
 		}
+	}
+
+	private void header2(final List<String> text, LicenseInfo licenseInfo, boolean withQrcode) {
+		text.add(" ");
 		text.add("(C) Copyright 2009-2017, Arnaud Roques");
 		text.add(" ");
 		text.add("Project Info:  http://plantuml.com");
@@ -317,7 +318,6 @@ public enum License {
 				text.add(" ");
 			}
 		}
-		return text;
 	}
 
 	public static void addLicenseInfo(final List<String> text, LicenseInfo licenseInfo) {
@@ -331,7 +331,7 @@ public enum License {
 			text.add("|      DISTRIBUTED BY : " + licenseInfo.getOwner());
 			text.add("|  ");
 		}
-		if (licenseInfo.hasExpired()) {
+		if (licenseInfo.getLicenseType() != LicenseType.UNKNOWN && licenseInfo.hasExpired()) {
 			text.add("|      <i>Warning: Your license has expired.");
 			text.add("|  ");
 		}
@@ -471,9 +471,29 @@ public enum License {
 		return Collections.unmodifiableList(h);
 	}
 
-	public List<String> getText(boolean withQrcode) {
+	public List<String> getTextFull() {
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
-		final List<String> text = getHeaderStart(licenseInfo, withQrcode);
+		final List<String> text = new ArrayList<String>();
+		header1(text, licenseInfo);
+		header2(text, licenseInfo, false);
+		end3(text, licenseInfo);
+		return text;
+	}
+
+	public List<String> getText1(LicenseInfo licenseInfo) {
+		final List<String> text = new ArrayList<String>();
+		header1(text, licenseInfo);
+		return text;
+	}
+
+	public List<String> getText2(LicenseInfo licenseInfo) {
+		final List<String> text = new ArrayList<String>();
+		header2(text, licenseInfo, true);
+		end3(text, licenseInfo);
+		return text;
+	}
+
+	private void end3(final List<String> text, final LicenseInfo licenseInfo) {
 		if (this == License.GPL) {
 			addGpl(licenseInfo, text);
 		} else if (this == License.GPLV2) {
@@ -506,6 +526,5 @@ public enum License {
 		text.add("CafeUndZopfli ported by Eugene Klyuchnikov https://github.com/eustas/CafeUndZopfli");
 		text.add("Brotli (c) by the Brotli Authors https://github.com/google/brotli");
 		text.add(" ");
-		return text;
 	}
 }

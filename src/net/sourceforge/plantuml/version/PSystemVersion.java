@@ -76,10 +76,15 @@ public class PSystemVersion extends AbstractPSystem {
 	private BufferedImage image;
 
 	PSystemVersion(boolean withImage, List<String> args) {
-		strings.addAll(args);
+		this.strings.addAll(args);
 		if (withImage) {
-			image = getPlantumlImage();
+			this.image = getPlantumlImage();
 		}
+	}
+
+	private PSystemVersion(List<String> args, BufferedImage image) {
+		this.strings.addAll(args);
+		this.image = image;
 	}
 
 	public static BufferedImage getPlantumlImage() {
@@ -336,7 +341,7 @@ public class PSystemVersion extends AbstractPSystem {
 
 	public static PSystemVersion createKeyDistributor() throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
-
+		BufferedImage im = null;
 		final List<String> strings = new ArrayList<String>();
 		if (license == null) {
 			strings.add("No license found");
@@ -345,8 +350,9 @@ public class PSystemVersion extends AbstractPSystem {
 			strings.add(license.getContext());
 			strings.add(license.getGenerationDate().toString());
 			strings.add(license.getExpirationDate().toString());
+			im = LicenseInfo.retrieveDistributorImage(license);
 		}
-		return new PSystemVersion(false, strings);
+		return new PSystemVersion(strings, im);
 	}
 
 	public static PSystemVersion createPath() throws IOException {

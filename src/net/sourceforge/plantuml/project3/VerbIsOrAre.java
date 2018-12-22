@@ -47,7 +47,8 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 public class VerbIsOrAre implements VerbPattern {
 
 	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementClose(), new ComplementInColors2());
+		return Arrays
+				.<ComplementPattern> asList(new ComplementClose(), new ComplementOpen(), new ComplementInColors2());
 	}
 
 	public IRegex toRegex() {
@@ -61,7 +62,13 @@ public class VerbIsOrAre implements VerbPattern {
 					final HtmlColor color = ((ComplementColors) complement).getCenter();
 					return manageColor(project, subject, color);
 				}
-				return manageClose(project, subject);
+				if (complement == ComplementClose.CLOSE) {
+					return manageClose(project, subject);
+				}
+				if (complement == ComplementOpen.OPEN) {
+					return manageOpen(project, subject);
+				}
+				return CommandExecutionResult.error("assertion fail");
 			}
 		};
 	}
@@ -93,4 +100,19 @@ public class VerbIsOrAre implements VerbPattern {
 		}
 		return CommandExecutionResult.ok();
 	}
+
+	private CommandExecutionResult manageOpen(final GanttDiagram project, Subject subject) {
+		if (subject instanceof DayAsDate) {
+			final DayAsDate day = (DayAsDate) subject;
+			project.openDayAsDate(day);
+		}
+		if (subject instanceof DaysAsDates) {
+			final DaysAsDates days = (DaysAsDates) subject;
+			for (DayAsDate d : days) {
+				project.openDayAsDate(d);
+			}
+		}
+		return CommandExecutionResult.ok();
+	}
+
 }

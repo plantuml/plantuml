@@ -49,6 +49,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.api.ApiWarning;
 import net.sourceforge.plantuml.version.Version;
@@ -114,8 +115,8 @@ public class Defines implements Truth {
 		return name.substring(0, x);
 	}
 
-	public void define(String name, List<String> value, boolean emptyParentheses) {
-		values.put(name, new Define(name, value, emptyParentheses));
+	public void define(String name, List<String> value, boolean emptyParentheses, AParentFolder currentDir) {
+		values.put(name, new Define(name, value, emptyParentheses, currentDir));
 		magic = null;
 	}
 

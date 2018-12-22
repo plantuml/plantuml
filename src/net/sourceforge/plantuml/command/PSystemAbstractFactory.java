@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 
 public abstract class PSystemAbstractFactory implements PSystemFactory {
 
+	public static final String EMPTY_DESCRIPTION = "Empty description";
 	private final DiagramType type;
 
 	protected PSystemAbstractFactory(DiagramType type) {
@@ -53,7 +54,7 @@ public abstract class PSystemAbstractFactory implements PSystemFactory {
 	}
 
 	final protected AbstractPSystem buildEmptyError(UmlSource source, LineLocation lineLocation) {
-		final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Empty description", /* 1, */lineLocation);
+		final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, EMPTY_DESCRIPTION, /* 1, */lineLocation);
 		final PSystemError result = new PSystemError(source, err, null);
 		result.setSource(source);
 		return result;

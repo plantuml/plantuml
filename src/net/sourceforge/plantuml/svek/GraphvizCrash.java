@@ -196,5 +196,10 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	public Margins getShield(StringBounder stringBounder) {
 		return Margins.NONE;
 	}
+	
+	public double getOverscanX(StringBounder stringBounder) {
+		return 0;
+	}
+
 
 }

@@ -80,4 +80,8 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 		return Margins.NONE;
 	}
 
+	public double getOverscanX(StringBounder stringBounder) {
+		return 0;
+	}
+
 }

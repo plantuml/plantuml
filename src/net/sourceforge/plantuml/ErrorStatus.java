@@ -35,54 +35,48 @@
  */
 package net.sourceforge.plantuml;
 
-public class QString {
+public class ErrorStatus {
 
-	private final String data;
-	private final long mask;
+	private boolean noData;
+	private boolean hasErrors;
+	private boolean hasOk;
 
-	public QString(String data) {
-		this.data = data;
-		this.mask = getMask(data);
-	}
-	
-	@Override
-	public String toString() {
-		return data;
+	private ErrorStatus() {
+		this.noData = true;
 	}
 
-	public boolean containsQ(QString other) {
-		if ((this.mask & other.mask) != other.mask) {
-			return false;
-		}
-		return this.data.contains(other.data);
+	public static ErrorStatus init() {
+		return new ErrorStatus();
 	}
 
-	static long getMask(String s) {
-		long result = 0;
-		for (int i = 0; i < s.length(); i++) {
-			result |= getMask(s.charAt(i));
-		}
-		return result;
+	// public synchronized void goNoData() {
+	// this.noData = true;
+	// }
+
+	public synchronized void goWithError() {
+		this.hasErrors = true;
+		this.noData = false;
 	}
 
-	static long getMask(char c) {
-		if (c >= '0' && c <= '9') {
-			final int n = c - '0';
-			return 1L << n;
+	public synchronized void goOk() {
+		this.hasOk = true;
+		this.noData = false;
+	}
+
+	public synchronized boolean hasError() {
+		return hasErrors;
+	}
+
+	public synchronized boolean isNoData() {
+		return noData;
+	}
+
+	public int getExitCode() {
+		if (isNoData()) {
+			return 100;
 		}
-		if (c >= 'a' && c <= 'z') {
-			final int n = c - 'a' + 10;
-			return 1L << n;
-		}
-		if (c >= 'A' && c <= 'Z') {
-			final int n = c - 'A' + 10 + 26;
-			return 1L << n;
-		}
-		if (c == '_') {
-			return 1L << (10 + 26 + 26);
-		}
-		if (c == '(') {
-			return 1L << 63;
+		if (hasErrors) {
+			return 200;
 		}
 		return 0;
 	}
