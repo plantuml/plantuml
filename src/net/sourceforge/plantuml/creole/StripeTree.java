@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -59,6 +59,10 @@ public class StripeTree implements Stripe {
 
 	public List<Atom> getAtoms() {
 		return Collections.<Atom> singletonList(marged);
+	}
+	
+	public Atom getHeader() {
+		return null;
 	}
 
 	public void analyzeAndAdd(String line) {

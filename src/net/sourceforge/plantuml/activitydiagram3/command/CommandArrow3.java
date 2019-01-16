@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -48,9 +48,6 @@ import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public static final String STYLE_COLORS = "-\\[(" + CommandLinkElement.LINE_STYLE + "(?:;"
-			+ CommandLinkElement.LINE_STYLE + ")*)\\]->";
-
 	public CommandArrow3() {
 		super(getRegexConcat());
 	}
@@ -59,7 +56,7 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexOr(//
 						new RegexLeaf("->"), //
-						new RegexLeaf("COLOR", STYLE_COLORS)), //
+						new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("LABEL", "(.*);"), //

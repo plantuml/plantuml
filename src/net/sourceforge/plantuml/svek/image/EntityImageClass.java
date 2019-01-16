@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -39,17 +39,18 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -79,11 +80,13 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	final private EntityImageClassHeader2 header;
 	final private Url url;
 	final private double roundCorner;
+	final private LeafType leafType;
 
 	final private LineConfigurable lineConfig;
 
 	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
+		this.leafType = entity.getLeafType();
 		this.lineConfig = entity;
 		this.roundCorner = getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
 		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? Margins.uniform(16)
@@ -148,12 +151,17 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		HtmlColor classBorder = lineConfig.getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (classBorder == null) {
-			classBorder = SkinParamUtils.getColor(getSkinParam(), ColorParam.classBorder, getStereo());
+			classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder);
 		}
 		ug = ug.apply(new UChangeColor(classBorder));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.classBackground, getStereo());
+			if (leafType == LeafType.ENUM) {
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.enumBackground,
+						ColorParam.classBackground);
+			} else {
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground);
+			}
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 

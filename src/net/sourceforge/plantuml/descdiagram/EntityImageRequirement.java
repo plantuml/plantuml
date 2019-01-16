@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -120,12 +120,12 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		ug = ug.apply(getStroke());
 		HtmlColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (linecolor == null) {
-			linecolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.requirementBorder, getStereo());
+			linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBorder);
 		}
 		ug = ug.apply(new UChangeColor(linecolor));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.requirementBackground, getStereo());
+			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBackground);
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());

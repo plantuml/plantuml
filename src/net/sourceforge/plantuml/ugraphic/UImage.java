@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -35,9 +35,12 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 
 public class UImage implements UShape {
 
@@ -78,15 +81,58 @@ public class UImage implements UShape {
 		return image;
 	}
 
-	public double getWidth() {
+	public int getWidth() {
 		return image.getWidth() - 1;
 	}
 
-	public double getHeight() {
+	public int getHeight() {
 		return image.getHeight() - 1;
 	}
 
 	public final String getFormula() {
 		return formula;
+	}
+
+	public UImage muteColor(Color newColor) {
+		if (newColor == null) {
+			return this;
+		}
+		int darker = -1;
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
+				final int color = image.getRGB(i, j);
+				if (isTransparent(color)) {
+					continue;
+				}
+				final int grey = ColorChangerMonochrome.getGrayScale(color);
+				if (darker == -1 || grey < ColorChangerMonochrome.getGrayScale(darker)) {
+					darker = color;
+				}
+			}
+		}
+		final BufferedImage copy = deepCopy(image);
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
+				if (copy.getRGB(i, j) == darker) {
+					copy.setRGB(i, j, newColor.getRGB());
+				}
+			}
+		}
+		return new UImage(copy, formula);
+	}
+
+	private boolean isTransparent(int color) {
+		if (color == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	// From https://stackoverflow.com/questions/3514158/how-do-you-clone-a-bufferedimage
+	private static BufferedImage deepCopy(BufferedImage bi) {
+		final ColorModel cm = bi.getColorModel();
+		final boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+		final WritableRaster raster = bi.copyData(bi.getRaster().createCompatibleWritableRaster());
+		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
 }

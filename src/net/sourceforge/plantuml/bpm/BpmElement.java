@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -141,8 +141,8 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 			return new FtileCircleStart(skinParam, HtmlColorUtils.BLACK, null);
 		}
 		if (type == BpmElementType.MERGE) {
-			final HtmlColor borderColor = SkinParamUtils.getColor(skinParam, ColorParam.activityBorder, null);
-			final HtmlColor backColor = SkinParamUtils.getColor(skinParam, ColorParam.activityBackground, null);
+			final HtmlColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);
+			final HtmlColor backColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBackground);
 			return new FtileDiamond(skinParam, backColor, borderColor, null);
 		}
 		if (type == BpmElementType.DOCKED_EVENT) {

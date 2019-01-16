@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -194,17 +194,19 @@ public class Run {
 			Log.error("Duration = " + duration + " seconds");
 		}
 
-		if (error.hasError()) {
-			Log.error("Some diagram description contains errors");
-			System.exit(error.getExitCode());
-		}
-		if (error.isNoData()) {
-			Log.error("No diagram found");
-			System.exit(error.getExitCode());
-		}
+		if (OptionFlags.getInstance().isGui() == false) {
+			if (error.hasError()) {
+				Log.error("Some diagram description contains errors");
+				System.exit(error.getExitCode());
+			}
+			if (error.isNoData()) {
+				Log.error("No diagram found");
+				System.exit(error.getExitCode());
+			}
 
-		if (forceQuit && OptionFlags.getInstance().isSystemExit()) {
-			System.exit(0);
+			if (forceQuit && OptionFlags.getInstance().isSystemExit()) {
+				System.exit(0);
+			}
 		}
 	}
 

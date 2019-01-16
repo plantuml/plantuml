@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -50,12 +53,26 @@ public abstract class WithLinkType {
 
 	private Colors colors = Colors.empty();
 
+	private List<Colors> supplementary = new ArrayList<Colors>();
+
 	public final HtmlColor getSpecificColor() {
 		return colors.getColor(ColorType.LINE);
 	}
 
 	public final void setSpecificColor(HtmlColor specificColor) {
-		colors = colors.add(ColorType.LINE, specificColor);
+		setSpecificColor(specificColor, 0);
+	}
+
+	public final void setSpecificColor(HtmlColor specificColor, int i) {
+		if (i == 0) {
+			colors = colors.add(ColorType.LINE, specificColor);
+		} else {
+			supplementary.add(colors.add(ColorType.LINE, specificColor));
+		}
+	}
+
+	public List<Colors> getSupplementaryColors() {
+		return Collections.unmodifiableList(supplementary);
 	}
 
 	public void setColors(Colors colors) {
@@ -100,6 +117,16 @@ public abstract class WithLinkType {
 		if (arrowStyle == null) {
 			return;
 		}
+		final StringTokenizer st = new StringTokenizer(arrowStyle, ";");
+		int i = 0;
+		while (st.hasMoreTokens()) {
+			final String s = st.nextToken();
+			applyOneStyle(s, i);
+			i++;
+		}
+	}
+
+	private void applyOneStyle(String arrowStyle, int i) {
 		final StringTokenizer st = new StringTokenizer(arrowStyle, ",");
 		while (st.hasMoreTokens()) {
 			final String s = st.nextToken();
@@ -121,7 +148,7 @@ public abstract class WithLinkType {
 				this.goThickness(Double.parseDouble(s.substring("thickness=".length())));
 			} else {
 				final HtmlColor tmp = HtmlColorSet.getInstance().getColorIfValid(s);
-				setSpecificColor(tmp);
+				setSpecificColor(tmp, i);
 			}
 		}
 	}

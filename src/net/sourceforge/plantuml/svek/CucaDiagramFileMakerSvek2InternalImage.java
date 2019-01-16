@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -102,7 +102,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	}
 
 	private HtmlColor getColor(ColorParam colorParam, Stereotype stereotype) {
-		return new Rose().getHtmlColor(skinParam, colorParam, stereotype);
+		return new Rose().getHtmlColor(skinParam, stereotype, colorParam);
 	}
 
 	public CucaDiagramFileMakerSvek2InternalImage(List<IEntityImage> inners, char concurrentSeparator,

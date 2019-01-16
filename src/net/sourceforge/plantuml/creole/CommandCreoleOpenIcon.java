@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -38,18 +38,22 @@ package net.sourceforge.plantuml.creole;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleOpenIcon implements Command {
 
 	private final Pattern2 pattern;
+	private final IHtmlColorSet colorSet;
 
-	private CommandCreoleOpenIcon(String p) {
+	private CommandCreoleOpenIcon(IHtmlColorSet colorSet, String p) {
 		this.pattern = MyPattern.cmpile(p);
+		this.colorSet = colorSet;
 	}
 
-	public static Command create() {
-		return new CommandCreoleOpenIcon("^(?i)(" + Splitter.openiconPattern + ")");
+	public static Command create(IHtmlColorSet colorSet) {
+		return new CommandCreoleOpenIcon(colorSet, "^(?i)(" + Splitter.openiconPattern + ")");
 	}
 
 	public int matchingSize(String line) {
@@ -66,7 +70,13 @@ public class CommandCreoleOpenIcon implements Command {
 			throw new IllegalStateException();
 		}
 		final String src = m.group(2);
-		stripe.addOpenIcon(src);
+		final double scale = CommandCreoleImg.getScale(m.group(3), 1);
+		final String colorName = CommandCreoleImg.getColor(m.group(3));
+		HtmlColor color = null;
+		if (colorName != null) {
+			color = colorSet.getColorIfValid(colorName);
+		}
+		stripe.addOpenIcon(src, scale, color);
 		return line.substring(m.group(1).length());
 	}
 

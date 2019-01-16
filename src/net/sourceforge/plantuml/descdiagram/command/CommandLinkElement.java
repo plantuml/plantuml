@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -62,10 +62,12 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
-	static private final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+";
-	static private final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+";
-	static public final String LINE_STYLE = "(?:#\\w+|" + CommandLinkElement.KEY1 + ")(?:,#\\w+|"
+	private static final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+";
+	private static final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+";
+	public static final String LINE_STYLE = "(?:#\\w+|" + CommandLinkElement.KEY1 + ")(?:,#\\w+|"
 			+ CommandLinkElement.KEY2 + ")*";
+	private static final String LINE_STYLE_MUTILPLES = LINE_STYLE + "(?:(?:;" + LINE_STYLE + ")*)";
+	public static final String STYLE_COLORS_MULTIPLES = "-\\[(" + LINE_STYLE_MUTILPLES + "*)\\]->";
 
 	public CommandLinkElement() {
 		super(getRegexConcat());
@@ -79,10 +81,10 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("HEAD2", "(0\\)|<<|[<^*+#0)]|<\\||[%s]+o)?"), //
 				new RegexLeaf("BODY1", "([-=.~]+)"), //
-				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + LINE_STYLE_MUTILPLES + ")\\])?"), //
 				new RegexLeaf("DIRECTION", "(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()]))?"), //
 				new RegexLeaf("INSIDE", "(?:(0|\\(0\\)|\\(0|0\\))(?=[-=.~]))?"), //
-				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("BODY2", "([-=.~]*)"), //
 				new RegexLeaf("HEAD1", "(\\(0|>>|[>^*+#0(]|\\|>|o[%s]+)?"), //
 				new RegexLeaf("[%s]*"), //

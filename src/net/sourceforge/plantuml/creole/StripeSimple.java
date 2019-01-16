@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
@@ -53,6 +54,8 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
+
+	final private Atom header;
 
 	final private List<Atom> atoms = new ArrayList<Atom>();
 	final private List<Command> commands = new ArrayList<Command>();
@@ -74,6 +77,10 @@ public class StripeSimple implements Stripe {
 	@Override
 	public String toString() {
 		return super.toString() + " " + atoms.toString();
+	}
+
+	public Atom getHeader() {
+		return header;
 	}
 
 	public StripeSimple(FontConfiguration fontConfiguration, StripeStyle style, CreoleContext context,
@@ -114,11 +121,11 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleExposantChange.create(FontPosition.INDICE));
 		this.commands.add(CommandCreoleImg.create());
 		this.commands.add(CommandCreoleQrcode.create());
-		this.commands.add(CommandCreoleOpenIcon.create());
+		this.commands.add(CommandCreoleOpenIcon.create(skinParam.getIHtmlColorSet()));
 		final double scale = skinParam.getDpi() / 96.0;
 		this.commands.add(CommandCreoleMath.create(scale));
 		this.commands.add(CommandCreoleLatex.create(scale));
-		this.commands.add(CommandCreoleSprite.create());
+		this.commands.add(CommandCreoleSprite.create(skinParam.getIHtmlColorSet()));
 		this.commands.add(CommandCreoleSpace.create());
 		this.commands.add(CommandCreoleFontFamilyChange.create());
 		this.commands.add(CommandCreoleFontFamilyChange.createEol());
@@ -126,10 +133,10 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleUrl.create(skinParam));
 		this.commands.add(CommandCreoleSvgAttributeChange.create());
 
-		final Atom header = style.getHeader(fontConfiguration, context);
+		this.header = style.getHeader(fontConfiguration, context);
 
-		if (header != null) {
-			atoms.add(header);
+		if (this.header != null) {
+			this.atoms.add(this.header);
 		}
 	}
 
@@ -181,17 +188,17 @@ public class StripeSimple implements Stripe {
 		atoms.add(AtomText.createUrl(url, fontConfiguration, skinParam));
 	}
 
-	public void addSprite(String src, double scale) {
+	public void addSprite(String src, double scale, HtmlColor color) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null) {
-			atoms.add(new AtomSprite(scale, fontConfiguration, sprite, null));
+			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null));
 		}
 	}
 
-	public void addOpenIcon(String src) {
+	public void addOpenIcon(String src, double scale, HtmlColor color) {
 		final OpenIcon openIcon = OpenIcon.retrieve(src);
 		if (openIcon != null) {
-			atoms.add(new AtomOpenIcon(openIcon, fontConfiguration, null));
+			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));
 		}
 	}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -301,7 +301,7 @@ public enum License {
 
 	private void header2(final List<String> text, LicenseInfo licenseInfo, boolean withQrcode) {
 		text.add(" ");
-		text.add("(C) Copyright 2009-2017, Arnaud Roques");
+		text.add("(C) Copyright 2009-2020, Arnaud Roques");
 		text.add(" ");
 		text.add("Project Info:  http://plantuml.com");
 		text.add(" ");
@@ -343,7 +343,7 @@ public enum License {
 		h.add(" * PlantUML : a free UML diagram generator");
 		h.add(" * ========================================================================");
 		h.add(" *");
-		h.add(" * (C) Copyright 2009-2017, Arnaud Roques");
+		h.add(" * (C) Copyright 2009-2020, Arnaud Roques");
 		h.add(" *");
 		h.add(" * Project Info:  http://plantuml.com");
 		h.add(" * ");

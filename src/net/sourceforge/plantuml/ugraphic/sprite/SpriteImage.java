@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -45,6 +45,7 @@ import javax.imageio.ImageIO;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -62,7 +63,11 @@ public class SpriteImage implements Sprite {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				ug.draw(img.scale(scale));
+				if (color == null) {
+					ug.draw(img.scale(scale));
+				} else {
+					ug.draw(img.muteColor(((HtmlColorSimple) color).getColor999()).scale(scale));
+				}
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -137,10 +137,10 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 			rect.setDeltaShadow(4);
 		}
 
-		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.objectBorder, getStereo())));
+		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBorder)));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.objectBackground, getStereo());
+			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBackground);
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 		if (url != null) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
+import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,6 +44,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class Fission {
 
@@ -63,13 +65,13 @@ public class Fission {
 			return Arrays.asList(stripe);
 		}
 		final List<Stripe> result = new ArrayList<Stripe>();
-		StripeSimple current = new StripeSimple();
-		for (Atom atom : stripe.getAtoms()) {
+		StripeSimple current = new StripeSimple(stripe.getHeader());
+		for (Atom atom : noHeader()) {
 			for (Atom atomSplitted : getSplitted(stringBounder, atom)) {
 				final double width = atomSplitted.calculateDimension(stringBounder).getWidth();
 				if (current.totalWidth + width > valueMaxWidth) {
 					result.add(current);
-					current = new StripeSimple();
+					current = new StripeSimple(blank(stripe.getHeader()));
 				}
 				current.addAtom(atomSplitted, width);
 			}
@@ -80,6 +82,34 @@ public class Fission {
 		return Collections.unmodifiableList(result);
 	}
 
+	private List<Atom> noHeader() {
+		final List<Atom> atoms = stripe.getAtoms();
+		if (stripe.getHeader() == null) {
+			return atoms;
+		}
+		return atoms.subList(1, atoms.size());
+	}
+
+	private static Atom blank(final Atom header) {
+		if (header == null) {
+			return null;
+		}
+		return new Atom() {
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return header.calculateDimension(stringBounder);
+			}
+
+			public double getStartingAltitude(StringBounder stringBounder) {
+				return header.getStartingAltitude(stringBounder);
+			}
+
+			public void drawU(UGraphic ug) {
+			}
+
+		};
+	}
+
 	private Collection<? extends Atom> getSplitted(StringBounder stringBounder, Atom atom) {
 		if (atom instanceof AtomText) {
 			return ((AtomText) atom).getSplitted(stringBounder, maxWidth);
@@ -87,19 +117,25 @@ public class Fission {
 		return Collections.singleton(atom);
 	}
 
-	private List<Stripe> getSplittedSimple() {
-		final StripeSimple result = new StripeSimple();
-		for (Atom atom : stripe.getAtoms()) {
-			result.addAtom(atom, 0);
-
-		}
-		return Arrays.asList((Stripe) result);
-	}
+	// private List<Stripe> getSplittedSimple() {
+	// final StripeSimple result = new StripeSimple();
+	// for (Atom atom : stripe.getAtoms1()) {
+	// result.addAtom(atom, 0);
+	//
+	// }
+	// return Arrays.asList((Stripe) result);
+	// }
 
 	static class StripeSimple implements Stripe {
 
 		private final List<Atom> atoms = new ArrayList<Atom>();
 		private double totalWidth;
+
+		private StripeSimple(Atom header) {
+			if (header != null) {
+				this.atoms.add(header);
+			}
+		}
 
 		public List<Atom> getAtoms() {
 			return Collections.unmodifiableList(atoms);
@@ -108,6 +144,10 @@ public class Fission {
 		private void addAtom(Atom atom, double width) {
 			this.atoms.add(atom);
 			this.totalWidth += width;
+		}
+
+		public Atom getHeader() {
+			return null;
 		}
 
 	}

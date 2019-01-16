@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -128,7 +128,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
 				stereoBlock, 0, 0, widthTotal, heightTotal, getStroke());
 
-		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()),
+		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder),
 				getSkinParam().shadowing(getEntity().getStereotype()), roundCorner,
 				getSkinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false));
 

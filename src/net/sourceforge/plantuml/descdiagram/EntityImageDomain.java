@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -129,10 +129,10 @@ public class EntityImageDomain extends AbstractEntityImage {
 		final double heightTotal = dimTotal.getHeight();
 		final URectangle rect = new URectangle(widthTotal, heightTotal, 0, 0);
 
-		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.domainBorder, getStereo())));
+		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBorder)));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.domainBackground, getStereo());
+			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBackground);
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 		if (url != null) {

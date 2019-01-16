@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -110,10 +110,10 @@ public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 		}
 
 		ug = ug.apply(new UStroke(1.5)).apply(
-				new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBorder, getStereo())));
+				new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder)));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBackground, getStereo());
+			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 		ug.draw(rect);

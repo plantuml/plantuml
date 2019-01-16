@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -84,9 +84,9 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.classBorder, getStereo())));
-		ug = ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.classBackground,
-				getStereo())));
+		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder)));
+		ug = ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(),
+				ColorParam.classBackground)));
 		if (url != null) {
 			ug.startUrl(url);
 		}
