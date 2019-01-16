@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -39,26 +39,27 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class AtomSprite implements Atom {
 
-	private final FontConfiguration fontConfiguration;
 	private final Sprite sprite;
 	private final double scale;
 	private final Url url;
+	private final HtmlColor color;
 
-	public AtomSprite(double scale, FontConfiguration fontConfiguration, Sprite sprite, Url url) {
+	public AtomSprite(HtmlColor newColor, double scale, FontConfiguration fontConfiguration, Sprite sprite, Url url) {
 		this.scale = scale;
-		this.fontConfiguration = fontConfiguration;
 		this.sprite = sprite;
 		this.url = url;
+		this.color = newColor == null ? fontConfiguration.getColor() : newColor;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return sprite.asTextBlock(fontConfiguration.getColor(), scale).calculateDimension(stringBounder);
+		return sprite.asTextBlock(color, scale).calculateDimension(stringBounder);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -69,7 +70,7 @@ public class AtomSprite implements Atom {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		sprite.asTextBlock(fontConfiguration.getColor(), scale).drawU(ug);
+		sprite.asTextBlock(color, scale).drawU(ug);
 		if (url != null) {
 			ug.closeAction();
 		}

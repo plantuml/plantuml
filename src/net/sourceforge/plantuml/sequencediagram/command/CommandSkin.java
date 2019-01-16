@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -35,24 +35,25 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.io.IOException;
 import java.util.List;
 
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandSkin extends SingleLineCommand<SequenceDiagram> {
+public class CommandSkin extends SingleLineCommand<UmlDiagram> {
 
 	public CommandSkin() {
 		super("(?i)^skin[%s]+([\\w.]+)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram system, List<String> arg) {
-		if (system.changeSkin(arg.get(0))) {
-			return CommandExecutionResult.ok();
+	protected CommandExecutionResult executeArg(UmlDiagram system, List<String> arg) {
+		try {
+			return system.loadSkin(arg.get(0));
+		} catch (IOException e) {
+			return CommandExecutionResult.error("Skin read error");
 		}
-		return CommandExecutionResult.error("Cannot change skin");
 	}
-
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -67,21 +67,21 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
-	public static final String DONORS = "6t0809m7nctnXhJewjSHZX8n3MVAYw086_hm054IjRdQYUQl7wS390DmUhAGwulEPXEoPaowUSvodb4K"
-			+ "owS1wwKEszpi1x5KjlyoSRkk0xPKSoN4WrWl7Rft3nm5ihXDWKGK1pOsph7iBYfxHPVT2xI0zl_Vw6NB"
-			+ "FkK4kXvWDHpiUNFiN4fgnQW7aIAg6rk0Y3jg-6hZwmXVK7txZrga9gtPDCIz1X3BI25htlOqTXpaxsCO"
-			+ "A74Zi7SmW8G3YODzaOEyFg40vdoxOSCpYj9OKtMN9moGa465RFX7Jgfp2mcFCdZWHk1g823o4nW1iR_a"
-			+ "KvApbPq16LjaYvW6GLrwl-0Hx2-cfGmvq70MsI4GGIk02Y0dGHVusjhC9Sfrx0eBZzwLyVui0P2Rh0f0"
-			+ "UbAZhxok39Y7nPCPRL--LBSMqZdbEiU_pWPurf2PlTsCRxoo68lvOow5uOi5b5-03hK6Y_7yujon40N1"
-			+ "CQKkA7Ds7bzB4H2fB8M5NiIIrGn_xv9_B2VYMtCMpPR-TUbGmd04Look0NnTo-YapWt5LKFz-v2hhkDR"
-			+ "v1gZX7cJzEpKdCn-Bxkbp23TGNDDw71T5c4kwIkhQB7e8d04wE-0XoIvawflaqVxs_8XzhO_2UvD2WUa"
-			+ "i1bW_zG-mx79uIx83VcqgueQm7YLQ1TkX6x43Qiwq7bGUOP6kEklctGFcnfZvqQlM2w66qFxIpfAll2u"
-			+ "c4l65eP6MJGR3hNNE0gu3ZkKruzTAePL0DSrl4iMeV5A1kGrp1c6z1cIZoDjYSUc3ZEpF1Oyguizczl9"
-			+ "n4C7_t1CPL7R6ySVF7uuP7gy_4gVMkeMOUuQ37ihN5PlQsTH_i1yc8u8x94Pjm7dCvCzbHpXXcyuqy4H"
-			+ "aoJ4MkUrew00jt9Y_TOZsrFJ4cJjiRe9L2S_93SoKB4xPX_Y_DqHUKPZKM2_SjwHMJVrVKY9OG7POaZm"
-			+ "b0fc6o55UzYSJWRqNkXfZKu-ywND5wBR-EM71mmAFo7HekK6hKy16g-mRzWv0AxziafUr9W80NoFqs_G"
-			+ "qvHruBECbbOPPvCRf9J4n0FyOVnIiktMl9wYrstRzh5i_FMVESjAJdw_ZFKA9Bk1DF5FXq0oORzBkolu"
-			+ "lk5JtGWjP0PsTRATAyT6JmGO2ch2CjYhzch6skMzM78nOmS0";
+	public static final String DONORS = "6v8802mEp3EZtv0iGcz-fvJYI4HCdvyvFoLZ70fX42Pji_Rj7u5_xF8MOOgGwCb2hYywcqt8cZ7fvZdB"
+			+ "UKOHB9z6h9SwR7EpNwh8AC6pcc_-6SNudZjfQ4BQdR1i1_B_wLu53WLaSJR5GnWEsFmBC_QWEUnUABLh"
+			+ "wMBt2ze2ZMdqOyjAyTtoFPIoRgV0R9HytwmWOV4FnnLLiXJZBf5YgXDROEAE6SdMwKxm3RVRVzHDQj7Q"
+			+ "ceQ4Zm1Y6obiROzzBIuBEJw5WH74e0umG8G3AOVw8ATuUy41HAyQCUApcCPwgtUUA4321XLQy8-SLESM"
+			+ "iZpBa0bYS3CGCFaEd03iJKabcEtS1kHfWHP53PRgrdKd8ZFU34y9MJHSHGuOHD0Ag4AGDq47-2vjorkC"
+			+ "nvWLCVpHFHWVtX3aJHQUI2yM-dhhmK3usLqrazNjJcrg8SGbxtMSjJR0iuQC7EsXzxXaCnxhrrmAmsyj"
+			+ "G7uBz5BlY1X_Szqi945mBgatd7ME7D-c28Gsbef5xcBAQy8PNNQsfgZlBLYOb_phrg4immXTgRW5y0ij"
+			+ "ZvDrlb3SDDH_BxaQEdu5rdWqt5k1ijFcOlvxsItDZD83jDc5pT1L4U6USMXLA2P31AuG-ZxW8KdEfDh7"
+			+ "v57zMBx4F_Od8Rn5uO2LDZFQdrLN98eSLa4Mb3lQn08mtIJQ0M9q9s44r0NTXYhdy0nttRi9UTfcO-hQ"
+			+ "eOPZDy8OrBVf9FaWOZUNZ9A67bas2ukr7t2Mu1mkajVFFHor2c0zqhlhPcc-mK2yXJdT8js6vML9koMY"
+			+ "g2D4bjCMh-hYh-wsykUXCtyuvx5ew8tpJvvVXun7yoLzQQb7bBbhqFtj25dUpaXHPjWEr-503MHy2hXU"
+			+ "DNccaYCGlUaCXqPi967M1w-T1OTm1nVHMATiBqrBaAtdwcEW6Vo8tCcGIZrm9n7hk0jmXl4eij-Ozyge"
+			+ "k_eyf4Gje60C4vobGjX7I54DsxOWGyRuwHcCJhxoeIqMy6dioSmw53vXebt31ZQc48iMzOEu2S3rtjUe"
+			+ "bpGcIi3NlFocUioiWvu_iwKLuW1EAGa1g63uy1rdfqgRhMcij-Zzs3HzBHj__MUkCi4f5VkyMu1K1p7v"
+			+ "BuSWCX7VbTqZy5daOudHHaRWM2lRMBcqz3Z0i22JbXbgcfyPyUbQADVN1ZHhVIZFVvHLdh6dvmK0";
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
@@ -94,7 +94,7 @@ public class PSystemDonors extends AbstractPSystem {
 	}
 
 	private UDrawable getGraphicStrings() throws IOException {
-		final List<TextBlock> cols = getCols(getDonors(), 6, 5);
+		final List<TextBlock> cols = getCols(getDonors(), 7, 5);
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
 				final TextBlockBackcolored header = GraphicStrings.createBlackOnWhite(Arrays

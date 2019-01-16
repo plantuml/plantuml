@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -61,6 +61,7 @@ public enum ColorParam {
 	
 	classHeaderBackground(null, true, ColorType.BACK),
 	classBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
+	enumBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	classBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	stereotypeCBackground(HtmlColorUtils.COL_ADD1B2),
 	stereotypeNBackground(HtmlColorUtils.COL_E3664A),

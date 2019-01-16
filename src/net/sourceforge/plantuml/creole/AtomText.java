@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -114,17 +114,18 @@ public class AtomText implements Atom {
 				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO));
 			}
 			final String valOpenicon = m.group(1);
-			final String valSprite = m.group(2);
+			final String valSprite = m.group(3);
 			if (valOpenicon != null) {
 				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);
 				if (openIcon != null) {
-					result.add(new AtomOpenIcon(openIcon, fontConfiguration, url));
+					final double scale = CommandCreoleImg.getScale(m.group(2), 1);
+					result.add(new AtomOpenIcon(null, scale, openIcon, fontConfiguration, url));
 				}
 			} else if (valSprite != null) {
 				final Sprite sprite = skinSimple.getSprite(valSprite);
 				if (sprite != null) {
-					final double scale = CommandCreoleImg.getScale(m.group(3), 1);
-					result.add(new AtomSprite(scale, fontConfiguration, sprite, url));
+					final double scale = CommandCreoleImg.getScale(m.group(4), 1);
+					result.add(new AtomSprite(null, scale, fontConfiguration, sprite, url));
 				}
 
 			}
@@ -140,9 +141,9 @@ public class AtomText implements Atom {
 		return new AtomHorizontalTexts(result);
 	}
 
-	private static Atom createAtomTextOld(final String text, Url url, FontConfiguration fontConfiguration) {
-		return new AtomText(text, fontConfiguration, url, ZERO, ZERO);
-	}
+	// private static Atom createAtomTextOld(final String text, Url url, FontConfiguration fontConfiguration) {
+	// return new AtomText(text, fontConfiguration, url, ZERO, ZERO);
+	// }
 
 	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
 		if (order == 0) {

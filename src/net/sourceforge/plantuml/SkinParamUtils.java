@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -52,8 +52,8 @@ public class SkinParamUtils {
 		return skinParam.getFontHtmlColor(stereo, fontParam);
 	}
 
-	public static HtmlColor getColor(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
-		return rose.getHtmlColor(skinParam, colorParam, stereo);
+	public static HtmlColor getColor(ISkinParam skinParam, Stereotype stereo, ColorParam... colorParam) {
+		return rose.getHtmlColor(skinParam, stereo, colorParam);
 	}
 	
 }

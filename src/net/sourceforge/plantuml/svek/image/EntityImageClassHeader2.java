@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -121,7 +121,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 					HorizontalAlignment.CENTER, skinParam);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 			final HtmlColor classBackground = SkinParamUtils
-					.getColor(getSkinParam(), ColorParam.background, stereotype);
+					.getColor(getSkinParam(), stereotype, ColorParam.background);
 
 			final HtmlColor classBorder = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE,
 					stereotype);
@@ -144,15 +144,15 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 			return skinParam.getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor(), 1);
 		}
 		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
-		final HtmlColor classBorder = SkinParamUtils.getColor(getSkinParam(), ColorParam.classBorder, stereotype);
+		final HtmlColor classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
 		final HtmlColor fontColor = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
 		if (stereotype != null && stereotype.getCharacter() != 0) {
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
 					stereotype.getHtmlColor(), classBorder, fontColor);
 		}
 		final LeafType leafType = entity.getLeafType();
-		final HtmlColor spotBackColor = SkinParamUtils.getColor(getSkinParam(), spotBackground(leafType), stereotype);
-		HtmlColor spotBorder = SkinParamUtils.getColor(getSkinParam(), spotBorder(leafType), stereotype);
+		final HtmlColor spotBackColor = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBackground(leafType));
+		HtmlColor spotBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBorder(leafType));
 		if (spotBorder == null) {
 			spotBorder = classBorder;
 		}

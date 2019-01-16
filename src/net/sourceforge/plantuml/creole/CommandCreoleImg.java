@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -89,6 +89,18 @@ public class CommandCreoleImg implements Command {
 			return Double.parseDouble(m.group(1));
 		}
 		return def;
+	}
+
+	public static String getColor(String s) {
+		if (s == null) {
+			return null;
+		}
+		final Pattern p = Pattern.compile("color[= :](#[0-9a-fA-F]{6}|\\w+)");
+		final Matcher m = p.matcher(s);
+		if (m.find()) {
+			return m.group(1);
+		}
+		return null;
 	}
 
 }

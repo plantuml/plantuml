@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -103,7 +103,7 @@ public class JDotPath implements UDrawable {
 
 	public void drawU(UGraphic ug) {
 
-		HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), getArrowColorParam(), null);
+		HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), null, getArrowColorParam());
 
 		if (this.link.getColors() != null) {
 			final HtmlColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);

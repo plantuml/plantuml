@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -56,7 +56,11 @@ import javax.script.ScriptException;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.command.BlocLines;
+import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandSkinParam;
+import net.sourceforge.plantuml.command.CommandSkinParamMultilines;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -76,6 +80,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
+import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -448,4 +453,41 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	public final Display getMainFrame() {
 		return mainFrame;
 	}
+
+	public CommandExecutionResult loadSkin(String filename) throws IOException {
+		if (OptionFlags.ALLOW_INCLUDE == false) {
+			return CommandExecutionResult.ok();
+		}
+		final File f = new File(filename + ".skin");
+		System.err.println("f=" + f.getAbsolutePath());
+		if (f.exists() == false || f.canRead() == false) {
+			return CommandExecutionResult.error("Cannot load skin from " + filename);
+		}
+		final BlocLines lines = BlocLines.load(f);
+		final CommandSkinParam cmd1 = new CommandSkinParam();
+		final CommandSkinParamMultilines cmd2 = new CommandSkinParamMultilines();
+		for (int i = 0; i < lines.size(); i++) {
+			final BlocLines ext1 = lines.subList(i, i + 1);
+			if (cmd1.isValid(ext1) == CommandControl.OK) {
+				cmd1.execute(this, ext1);
+			} else if (cmd2.isValid(ext1) == CommandControl.OK_PARTIAL) {
+				i = tryMultilines(cmd2, i, lines);
+			}
+		}
+		return CommandExecutionResult.ok();
+	}
+
+	private int tryMultilines(CommandSkinParamMultilines cmd2, int i, BlocLines lines) {
+		for (int j = i + 1; j <= lines.size(); j++) {
+			final BlocLines ext1 = lines.subList(i, j);
+			if (cmd2.isValid(ext1) == CommandControl.OK) {
+				cmd2.execute(this, ext1);
+				return j;
+			} else if (cmd2.isValid(ext1) == CommandControl.NOT_OK) {
+				return j;
+			}
+		}
+		return i;
+	}
+
 }

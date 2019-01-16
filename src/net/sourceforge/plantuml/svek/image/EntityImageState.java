@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -102,7 +102,7 @@ public class EntityImageState extends AbstractEntityImage {
 		this.url = entity.getUrl99();
 
 		this.fields = list.create(new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype),
-				HorizontalAlignment.LEFT, skinParam);
+				HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
 
 	}
 
@@ -134,12 +134,12 @@ public class EntityImageState extends AbstractEntityImage {
 
 		HtmlColor classBorder = lineConfig.getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (classBorder == null) {
-			classBorder = SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBorder, getStereo());
+			classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
 		}
 		ug = ug.apply(getStroke()).apply(new UChangeColor(classBorder));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBackground, getStereo());
+			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -220,7 +220,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				// diagram.isShowFootbox());
 
 				drawHeader(area, ug, index);
-				drawFooter(area, ug, index);
+				drawFooter(area, ug, index, dimLegend.getHeight());
 
 				if (legend.isNull() == false) {
 					final double delta2;
@@ -231,8 +231,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 					} else {
 						delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth()) / 2;
 					}
-					legendBlock.drawU(ug.apply(new UTranslate(delta2, legendTop ? legendYdelta : legendYdelta
-							+ area.getHeight())));
+					legendBlock.drawU(ug.apply(new UTranslate(delta2, legendTop ? legendYdelta : area.getHeight())));
 				}
 
 			}
@@ -240,14 +239,14 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 	}
 
-	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {
+	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page, double legendHeight) {
 		final PngTitler pngTitler = getPngTitler(FontParam.FOOTER, page);
 		final TextBlock text = pngTitler.getRibbonBlock();
 		if (text == null) {
 			return;
 		}
 		text.drawU(ug.apply(new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()), area
-				.getFooterY())));
+				.getFooterY() + legendHeight)));
 	}
 
 	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {

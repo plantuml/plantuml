@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -105,7 +105,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			noteBackgroundColor = entity.getColors(getSkinParam()).getColor(ColorType.BACK);
 		}
 		// this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-		this.borderColor = SkinParamUtils.getColor(getSkinParam(), ColorParam.noteBorder, null);
+		this.borderColor = SkinParamUtils.getColor(getSkinParam(), null, ColorParam.noteBorder);
 		// final HtmlColor fontColor = rose.getFontColor(getSkinParam(), FontParam.NOTE);
 		// final UFont fontNote = getSkinParam().getFont(FontParam.NOTE, null, false);
 
@@ -139,7 +139,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private static HtmlColor getColorStatic(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
 		final Rose rose = new Rose();
-		return rose.getHtmlColor(skinParam, colorParam, stereo);
+		return rose.getHtmlColor(skinParam, stereo, colorParam);
 	}
 
 	final public double getPreferredWidth(StringBounder stringBounder) {

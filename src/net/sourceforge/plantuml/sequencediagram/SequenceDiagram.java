@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -67,7 +67,6 @@ import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
 import net.sourceforge.plantuml.skin.ProtectedSkin;
 import net.sourceforge.plantuml.skin.Skin;
-import net.sourceforge.plantuml.skin.SkinUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class SequenceDiagram extends UmlDiagram {
@@ -79,8 +78,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
 
-	private final Skin skinInitial = new ProtectedSkin(new Rose());
-	private Skin skin2 = new ProtectedSkin(new Rose());
+	private final Skin skin2 = new ProtectedSkin(new Rose());
 
 	@Deprecated
 	public Participant getOrCreateParticipant(String code) {
@@ -231,10 +229,10 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 
 		if (modeTeoz()) {
-			return new SequenceDiagramFileMakerTeoz(this, getSkin2(), fileFormatOption);
+			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption);
 		}
 
-		return new SequenceDiagramFileMakerPuma2(this, getSkin2(), fileFormatOption);
+		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);
 	}
 
 	private boolean modeTeoz() {
@@ -332,23 +330,6 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(" + participantsList.size() + " participants)");
-	}
-
-	public boolean changeSkin(String className) {
-		final Skin s = SkinUtils.loadSkin(className);
-		final Integer expected = new Integer(1);
-		if (s != null && expected.equals(s.getProtocolVersion())) {
-			this.skin2 = new ProtectedSkin(s);
-			return true;
-		}
-		return false;
-	}
-
-	private Skin getSkin2() {
-		if (modeTeoz()) {
-			return skinInitial;
-		}
-		return skin2;
 	}
 
 	private final AutoNumber autoNumber = new AutoNumber();

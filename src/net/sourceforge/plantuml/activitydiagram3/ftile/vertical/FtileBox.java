@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -142,8 +142,8 @@ public class FtileBox extends AbstractFtile {
 		final double heightTotal = dimTotal.getHeight();
 		final UDrawable rect = style.getUDrawable(widthTotal, heightTotal, skinParam().shadowing(null));
 
-		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), ColorParam.activityBorder, null);
-		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), ColorParam.activityBackground, null);
+		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
+		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);
 
 		ug = ug.apply(new UChangeColor(borderColor)).apply(new UChangeBackColor(backColor)).apply(getThickness());
 		rect.drawU(ug);

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -62,11 +62,21 @@ public class Splitter {
 	public static final String imgPatternNoSrcColon = "\\<img[\\s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
 	public static final String fontFamilyPattern = "\\<font[\\s:]+([^>]+)/?\\>";
 	public static final String svgAttributePattern = "\\<text[\\s:]+([^>]+)/?\\>";
-	public static final String openiconPattern = "\\<&([-\\w]+)\\>";
-	public static final String spritePattern = "\\<\\$" + SpriteUtils.SPRITE_NAME + "(?:\\{scale=(?:[0-9.]+)\\})?"
-			+ "\\>";
-	public static final String spritePattern2 = "\\<\\$(" + SpriteUtils.SPRITE_NAME + ")"
-			+ "((?:\\{scale=|\\*)(?:[0-9.]+)\\}?)?" + "\\>";
+
+	private static final String scale2 = "(" + "(?:\\{scale=|\\*)[0-9.]+\\}?" + ")?";
+	private static final String scale = "(" + //
+			"[\\{,]?" + //
+			"(?:(?:scale=|\\*)[0-9.]+)?" + //
+			"(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?" + //
+			"\\}?" + //
+			")?";
+
+	public static final String openiconPattern = "\\<&([-\\w]+)" + scale + "\\>";
+	public static final String spritePattern2 = "\\<\\$(" + SpriteUtils.SPRITE_NAME + ")" + scale + "\\>";
+
+	public static final String spritePatternForMatch = spritePattern2;
+	// "\\<\\$" + SpriteUtils.SPRITE_NAME + "(?:\\{scale=(?:[0-9.]+)\\})?" + "\\>";
+
 	static final String htmlTag;
 
 	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";

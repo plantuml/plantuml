@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -48,19 +49,20 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class AtomOpenIcon implements Atom {
 
 	private final OpenIcon openIcon;
-	private final FontConfiguration fontConfiguration;
 	private final double factor;
 	private final Url url;
+	private final HtmlColor color;
 
-	public AtomOpenIcon(OpenIcon openIcon, FontConfiguration fontConfiguration, Url url) {
+	public AtomOpenIcon(HtmlColor newColor, double scale, OpenIcon openIcon, FontConfiguration fontConfiguration,
+			Url url) {
 		this.url = url;
 		this.openIcon = openIcon;
-		this.fontConfiguration = fontConfiguration;
-		this.factor = fontConfiguration.getSize2D() / 12;
+		this.factor = scale * fontConfiguration.getSize2D() / 12.0;
+		this.color = newColor == null ? fontConfiguration.getColor() : newColor;
 	}
 
 	private TextBlock asTextBlock() {
-		return TextBlockUtils.withMargin(openIcon.asTextBlock(fontConfiguration.getColor(), factor), 1, 0);
+		return TextBlockUtils.withMargin(openIcon.asTextBlock(color, factor), 1, 0);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

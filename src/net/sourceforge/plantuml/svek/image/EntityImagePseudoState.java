@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -82,8 +82,8 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		}
 		ug = ug.apply(new UStroke(1.5));
 		ug = ug.apply(
-				new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBackground, getStereo())))
-				.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBorder, getStereo())));
+				new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground)))
+				.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder)));
 		ug.draw(circle);
 		ug = ug.apply(new UStroke());
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -76,7 +77,7 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexOptional(new RegexConcat( //
 						new RegexOr(//
 								new RegexLeaf("->"), //
-								new RegexLeaf("COLOR", CommandArrow3.STYLE_COLORS)), //
+								new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
 						new RegexLeaf("[%s]*"), //
 						new RegexOr(//
 								new RegexLeaf("LABEL", "(.*)"), //

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.posimo.BezierUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.posimo.Moveable;
@@ -681,7 +682,7 @@ public class Line implements Moveable, Hideable {
 			stroke = link.getColors().getSpecificLineStroke();
 		}
 		ug = ug.apply(stroke);
-		double moveEndY = 0;
+		// double moveEndY = 0;
 
 		if (dotPath == null) {
 			Log.info("DotPath is null for " + this);
@@ -695,35 +696,15 @@ public class Line implements Moveable, Hideable {
 						.checkFolderPosition(dotPath.getEndPoint(), ug.getStringBounder());
 				todraw = new DotPath(dotPath);
 				todraw.moveEndPoint(0, deltaFolderH);
-				moveEndY = deltaFolderH;
+				// moveEndY = deltaFolderH;
 			}
 		}
 
 		todraw.setComment(link.getEntity1().getCode().getFullName() + "-" + link.getEntity2().getCode().getFullName());
-		ug.apply(new UTranslate(x, y)).draw(todraw);
+		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors());
 
 		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));
 
-		if (this.extremity2 != null) {
-			UGraphic ug2 = ug;
-			if (linkType.getDecor1().isFill()) {
-				ug2 = ug2.apply(new UChangeBackColor(color));
-			} else {
-				ug2 = ug2.apply(new UChangeBackColor(null));
-			}
-			// System.err.println("Line::draw EXTREMITY1");
-			this.extremity2.drawU(ug2.apply(new UTranslate(x, y)));
-		}
-		if (this.extremity1 != null) {
-			UGraphic ug2 = ug;
-			if (linkType.getDecor2().isFill()) {
-				ug2 = ug2.apply(new UChangeBackColor(color));
-			} else {
-				ug2 = ug2.apply(new UChangeBackColor(null));
-			}
-			// System.err.println("Line::draw EXTREMITY2");
-			this.extremity1.drawU(ug2.apply(new UTranslate(x, y)));
-		}
 		if (this.labelText != null && this.labelXY != null
 				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED) {
 			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX(), y
@@ -749,6 +730,38 @@ public class Line implements Moveable, Hideable {
 
 		if (url != null) {
 			ug.closeAction();
+		}
+	}
+
+	private void drawRainbow(UGraphic ug, HtmlColor color, DotPath todraw, List<Colors> supplementaryColors) {
+		ug.draw(todraw);
+		final LinkType linkType = link.getType();
+
+		if (this.extremity2 != null) {
+			UGraphic ug2 = ug.apply(new UStroke()).apply(new UChangeColor(color));
+			if (linkType.getDecor1().isFill()) {
+				ug2 = ug2.apply(new UChangeBackColor(color));
+			} else {
+				ug2 = ug2.apply(new UChangeBackColor(null));
+			}
+			// System.err.println("Line::draw EXTREMITY1");
+			this.extremity2.drawU(ug2);
+		}
+		if (this.extremity1 != null) {
+			UGraphic ug2 = ug.apply(new UStroke()).apply(new UChangeColor(color));
+			if (linkType.getDecor2().isFill()) {
+				ug2 = ug2.apply(new UChangeBackColor(color));
+			} else {
+				ug2 = ug2.apply(new UChangeBackColor(null));
+			}
+			// System.err.println("Line::draw EXTREMITY2");
+			this.extremity1.drawU(ug2);
+		}
+		int i = 0;
+		for (Colors colors : supplementaryColors) {
+			ug.apply(new UTranslate(2 * (i + 1), 2 * (i + 1))).apply(new UChangeColor(colors.getColor(ColorType.LINE)))
+					.draw(todraw);
+			i++;
 		}
 	}
 

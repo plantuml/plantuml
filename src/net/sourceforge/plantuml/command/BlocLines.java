@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -35,6 +35,10 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,6 +56,17 @@ public class BlocLines implements Iterable<CharSequence> {
 	@Override
 	public String toString() {
 		return lines.toString();
+	}
+
+	public static BlocLines load(File f) throws IOException {
+		final List<String> result = new ArrayList<String>();
+		final BufferedReader br = new BufferedReader(new FileReader(f));
+		String s;
+		while ((s = br.readLine()) != null) {
+			result.add(s);
+		}
+		br.close();
+		return new BlocLines(result);
 	}
 
 	private BlocLines(List<? extends CharSequence> lines) {
@@ -221,10 +236,14 @@ public class BlocLines implements Iterable<CharSequence> {
 		return arg.subSequence(i, arg.length());
 	}
 
-	public BlocLines subExtract(int start, int end) {
+	public BlocLines subExtract(int margeStart, int margeEnd) {
 		List<CharSequence> copy = new ArrayList<CharSequence>(lines);
-		copy = copy.subList(start, copy.size() - end);
+		copy = copy.subList(margeStart, copy.size() - margeEnd);
 		return new BlocLines(copy);
+	}
+
+	public BlocLines subList(int start, int end) {
+		return new BlocLines(lines.subList(start, end));
 	}
 
 	public Iterator<CharSequence> iterator() {
@@ -246,4 +265,5 @@ public class BlocLines implements Iterable<CharSequence> {
 		}
 		return this;
 	}
+
 }

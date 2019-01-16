@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -59,14 +59,16 @@ public class Preprocessor2 implements ReadLineNumbered {
 	public Preprocessor2(List<String> config, ReadLine reader, String charset, Defines defines,
 			DefinitionsContainer definitionsContainer, ImportedFiles importedFiles) throws IOException {
 		this(config, reader, charset, new DefinesGet(defines), definitionsContainer, new HashSet<FileWithSuffix>(),
-				importedFiles);
+				importedFiles, true);
 	}
 
 	Preprocessor2(List<String> config, ReadLine reader, String charset, DefinesGet defines,
-			DefinitionsContainer definitionsContainer, Set<FileWithSuffix> filesUsedGlobal, ImportedFiles importedFiles)
-			throws IOException {
+			DefinitionsContainer definitionsContainer, Set<FileWithSuffix> filesUsedGlobal,
+			ImportedFiles importedFiles, boolean doSaveState) throws IOException {
 		final ReadFilterAnd2 filters = new ReadFilterAnd2();
-		defines.saveState();
+		if (doSaveState) {
+			defines.saveState();
+		}
 
 		filters.add(new ReadLineQuoteComment2());
 		include = new PreprocessorInclude3(config, charset, defines, definitionsContainer, importedFiles,

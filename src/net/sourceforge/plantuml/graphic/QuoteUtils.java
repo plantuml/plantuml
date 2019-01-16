@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -299,7 +299,8 @@ public class QuoteUtils {
 					"Uryc vf bayl 140 zvyyvba zvyrf njnl.",
 					"P unf gur fcrrq naq rssvpvrapl bs nffrzoyl ynathntr pbzovarq jvgu ernqnovyvgl bs nffrzoyl ynathntr",
 					"Crey vf gur bayl ynathntr gung ybbxf gur fnzr orsber naq nsgre EFN rapelcgvba",
-					"Lbh pnaabg pher jung ur unf.", "Gur zber vg snvyf, gur zber yvxryl vg vf gung vg jvyy jbex");
+					"Gur zber vg snvyf, gur zber yvxryl vg vf gung vg jvyy jbex",
+					"V ubcr V qvqa'g gnxr hc gbb zhpu bs lbhe gvzr", "Lbh'er tbaan arrq n ovttre obng");
 
 	private QuoteUtils() {
 	}

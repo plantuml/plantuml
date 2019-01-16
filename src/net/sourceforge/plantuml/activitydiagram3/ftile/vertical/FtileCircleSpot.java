@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -96,8 +96,8 @@ public class FtileCircleSpot extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 
-		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), ColorParam.activityBorder, null);
-		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), ColorParam.activityBackground, null);
+		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
+		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		if (skinParam().shadowing(null)) {

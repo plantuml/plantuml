@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -132,7 +132,8 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		final LinkType linkType = new LinkType(circleEnd ? LinkDecor.ARROW_AND_CIRCLE : LinkDecor.ARROW,
 				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);
 
-		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(arg.get("LABEL", 0)), lenght);
+		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
+		Link link = new Link(cl1, cl2, linkType, label, lenght);
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}

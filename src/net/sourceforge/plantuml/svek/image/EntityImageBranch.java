@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -74,9 +74,9 @@ public class EntityImageBranch extends AbstractEntityImage {
 		diams.addPoint(0, SIZE);
 		diams.addPoint(SIZE, 0);
 
-		ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.activityBorder, getStereo())))
-				.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.activityBackground,
-						getStereo()))).apply(new UStroke(1.5)).draw(diams);
+		ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBorder)))
+				.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(),
+						ColorParam.activityBackground))).apply(new UStroke(1.5)).draw(diams);
 	}
 
 	public ShapeType getShapeType() {

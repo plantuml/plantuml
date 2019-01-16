@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -35,39 +35,12 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiagram> {
-
-	static class Context {
-		private List<String> strings = new ArrayList<String>();
-
-		public void push(String s) {
-			strings.add(s);
-		}
-
-		public void pop() {
-			strings.remove(strings.size() - 1);
-		}
-
-		public String getFullParam() {
-			final StringBuilder sb = new StringBuilder();
-			for (String s : strings) {
-				sb.append(s);
-			}
-			return sb.toString();
-		}
-	}
-
-	private final static Pattern2 p1 = MyPattern
-			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	public CommandSkinParamMultilines() {
 		super("(?i)^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?[%s]*\\{$");
@@ -79,7 +52,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		if (hasStartingQuote(line)) {
 			return true;
 		}
-		return p1.matcher(line).matches();
+		return SkinLoader.p1.matcher(line).matches();
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {
@@ -88,42 +61,16 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	}
 
 	public CommandExecutionResult execute(UmlDiagram diagram, BlocLines lines) {
-		final Context context = new Context();
+		final SkinLoader skinLoader = new SkinLoader(diagram);
+
 		final Matcher2 mStart = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		if (mStart.find() == false) {
 			throw new IllegalStateException();
 		}
-		if (mStart.group(1) != null) {
-			context.push(mStart.group(1));
-		}
+		final String group1 = mStart.group(1);
 
-		lines = lines.subExtract(1, 1);
-		lines = lines.trim(true);
+		return skinLoader.execute(lines, group1);
 
-		for (CharSequence s : lines) {
-			assert s.length() > 0;
-//			if (hasStartingQuote(s)) {
-//				continue;
-//			}
-			if (s.toString().equals("}")) {
-				context.pop();
-				continue;
-			}
-			final Matcher2 m = p1.matcher(s);
-			if (m.find() == false) {
-				throw new IllegalStateException();
-			}
-			if (m.group(2) != null) {
-				context.push(m.group(1));
-			} else if (m.group(3) != null) {
-				final String key = context.getFullParam() + m.group(1);
-				diagram.setParam(key, m.group(3));
-			} else {
-				throw new IllegalStateException("." + s.toString() + ".");
-			}
-		}
-
-		return CommandExecutionResult.ok();
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -299,7 +299,7 @@ public class Cluster implements Moveable {
 	}
 
 	private static HtmlColor getColor(ColorParam colorParam, ISkinParam skinParam, Stereotype stereotype) {
-		return SkinParamUtils.getColor(skinParam, colorParam, stereotype);
+		return SkinParamUtils.getColor(skinParam, stereotype, colorParam);
 	}
 
 	public void drawU(UGraphic ug, UStroke stroke, final UmlDiagramType umlDiagramType, final ISkinParam skinParam2) {
@@ -439,7 +439,7 @@ public class Cluster implements Moveable {
 	}
 
 	private HtmlColor getColor(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
-		return new Rose().getHtmlColor(skinParam, colorParam, stereo);
+		return new Rose().getHtmlColor(skinParam, stereo, colorParam);
 	}
 
 	private void drawUState(UGraphic ug, HtmlColor borderColor, ISkinParam skinParam2, UStroke stroke,

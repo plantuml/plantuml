@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -66,16 +66,18 @@ public class Rose implements Skin {
 		return skin.getFontHtmlColor(null, fontParam);
 	}
 
-	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color) {
-		return getHtmlColor(param, color, null);
+	public HtmlColor getHtmlColor(ISkinParam skin, ColorParam color) {
+		return getHtmlColor(skin, null, color);
 	}
 
-	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color, Stereotype stereotype) {
-		HtmlColor result = param.getHtmlColor(color, stereotype, false);
-		if (result == null) {
-			result = color.getDefaultValue();
+	public HtmlColor getHtmlColor(ISkinParam skin, Stereotype stereotype, ColorParam... colorParams) {
+		for (ColorParam param : colorParams) {
+			final HtmlColor result = skin.getHtmlColor(param, stereotype, false);
+			if (result != null) {
+				return result;
+			}
 		}
-		return result;
+		return colorParams[0].getDefaultValue();
 	}
 
 	private FontConfiguration getUFont2(ISkinParam skinParam, FontParam fontParam) {
@@ -198,17 +200,20 @@ public class Rose implements Skin {
 					FontParam.DATABASE_STEREOTYPE));
 		}
 		if (type == ComponentType.NOTE) {
-			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false);
+			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
+					false);
 			return new ComponentRoseNote(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
 					FontParam.NOTE), stringsToDisplay, paddingX, paddingY, param, roundCorner, alignment);
 		}
 		if (type == ComponentType.NOTE_HEXAGONAL) {
-			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false);
+			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
+					false);
 			return new ComponentRoseNoteHexagonal(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
 					FontParam.NOTE), stringsToDisplay, param, alignment);
 		}
 		if (type == ComponentType.NOTE_BOX) {
-			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false);
+			final HorizontalAlignment alignment = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
+					false);
 			return new ComponentRoseNoteBox(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
 					FontParam.NOTE), stringsToDisplay, param, alignment);
 		}

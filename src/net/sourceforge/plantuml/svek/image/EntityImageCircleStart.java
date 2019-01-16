@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2017, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -69,7 +69,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			circle.setDeltaShadow(3);
 		}
-		ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), colorParam, getStereo())))
+		ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), colorParam)))
 				.apply(new UChangeColor(null)).draw(circle);
 	}
 
