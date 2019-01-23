@@ -60,7 +60,7 @@ class IncompleteItem implements Item {
 		if (caract.getNumericType() != value.getNumericType()) {
 			throw new IllegalArgumentException();
 		}
-		if (data.containsKey(caract.getNumericType())) {
+		if (data.containsKey(caract)) {
 			throw new IllegalStateException();
 		}
 		data.put(caract, value);
