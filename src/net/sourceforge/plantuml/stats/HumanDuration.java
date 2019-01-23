@@ -45,9 +45,7 @@ class HumanDuration {
 
 	@Override
 	public String toString() {
-		long time = duration;
-		final long ms = time % 1000L;
-		time = time / 1000;
+		long time = duration / 1000;
 		final long sec = time % 60;
 		time = time / 60;
 		final long min = time % 60;
@@ -55,15 +53,15 @@ class HumanDuration {
 		final long hour = time % 24;
 		final long day = time / 24;
 		if (day > 0) {
-			return String.format("%dd %02dh%02dm%02ds", day, hour, min, sec, ms);
+			return String.format("%dd %02dh%02dm%02ds", day, hour, min, sec);
 		}
 		if (hour > 0) {
-			return String.format("%dh%02dm%02ds", hour, min, sec, ms);
+			return String.format("%dh%02dm%02ds", hour, min, sec);
 		}
 		if (min > 0) {
-			return String.format("%dm%02ds", min, sec, ms);
+			return String.format("%dm%02ds", min, sec);
 		}
-		return String.format("%ds", sec, ms);
+		return String.format("%ds", sec);
 	}
 
 }
