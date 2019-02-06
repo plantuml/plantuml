@@ -109,11 +109,9 @@ public class DiagElement {
 	}
 
 	public final void setShape(String shapeName) {
-		if ("database".equalsIgnoreCase(shapeName)) {
-			this.shape = USymbol.DATABASE;
-		}
-		if ("node".equalsIgnoreCase(shapeName)) {
-			this.shape = USymbol.NODE;
+		USymbol shapeFromString = USymbol.getFromString(shapeName);
+		if (shapeFromString!=null){
+			this.shape = shapeFromString;
 		}
 	}
 
