@@ -33,50 +33,29 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project3;
 
-class Duration implements Numeric {
+import java.util.Arrays;
+import java.util.Collection;
 
-	private final long minutes;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-	public Duration(long minutes) {
-		this.minutes = minutes;
+public class SubjectToday implements SubjectPattern {
+
+	public Collection<VerbPattern> getVerbs() {
+		return Arrays.<VerbPattern> asList(new VerbIsColoredForToday(), new VerbIsForToday());
 	}
 
-	public Duration(NumericNumber value) {
-		this(value.getIntValue() * 24L * 60 * 60);
+	public IRegex toRegex() {
+		return new RegexConcat( //
+				new RegexLeaf("today") //
+		);
 	}
 
-	public Numeric add(Numeric other) {
-		return new Duration(((Duration) other).minutes + minutes);
+	public Subject getSubject(GanttDiagram project, RegexResult arg) {
+		return new Today();
 	}
-
-	public static Duration of(long days) {
-		return new Duration(days * 24 * 60 * 60);
-	}
-
-	public NumericType getNumericType() {
-		return NumericType.DURATION;
-	}
-
-	public long getMinutes() {
-		return minutes;
-	}
-
-	@Override
-	public String toString() {
-		return "DURATION:" + minutes / (24 * 60 * 60);
-	}
-
-	public int compareTo(Numeric other) {
-		final Duration this2 = (Duration) other;
-		if (this2.minutes > minutes) {
-			return -1;
-		}
-		if (this2.minutes < minutes) {
-			return 1;
-		}
-		return 0;
-	}
-
 }

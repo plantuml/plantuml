@@ -51,7 +51,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 
 	private List<SubjectPattern> subjects() {
 		return Arrays.<SubjectPattern> asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek(),
-				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource());
+				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday());
 	}
 
 	public GanttDiagramFactory(DiagramType type) {

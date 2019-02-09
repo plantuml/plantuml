@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -131,7 +132,8 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 		if (lines.size() > 0) {
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;
-			final Note note = new Note(p1, p2, lines.toDisplay());
+			final Display display = diagram.manageVariable(lines.toDisplay());
+			final Note note = new Note(p1, p2, display);
 			final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 			note.setColors(colors);
 			// note.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));

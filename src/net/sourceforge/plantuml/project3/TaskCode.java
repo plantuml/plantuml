@@ -35,58 +35,32 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import java.util.Arrays;
-import java.util.List;
-
-import net.sourceforge.plantuml.cucadiagram.Display;
-
 public class TaskCode {
 
-	private final List<String> hierarchy;
+	private final String code;
 
 	public TaskCode(String code) {
-		this.hierarchy = Arrays.asList(code.split("/"));
-	}
-
-	public boolean startsWith(TaskCode other) {
-		if (other.hierarchy.size() > this.hierarchy.size()) {
-			return false;
-		}
-		assert other.hierarchy.size() <= this.hierarchy.size();
-		final List<String> sub = this.hierarchy.subList(0, other.hierarchy.size());
-		return sub.equals(other.hierarchy);
-	}
-
-	private TaskCode(List<String> hierarchy) {
-		this.hierarchy = hierarchy;
-	}
-
-	public TaskCode truncateHierarchy(int size) {
-		return new TaskCode(this.hierarchy.subList(0, size));
+		this.code = code;
 	}
 
 	@Override
 	public int hashCode() {
-		return hierarchy.hashCode();
+		return code.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object arg) {
 		final TaskCode other = (TaskCode) arg;
-		return this.hierarchy.equals(other.hierarchy);
+		return this.code.equals(other.code);
 	}
 
 	@Override
 	public String toString() {
-		return hierarchy.toString();
+		return code.toString();
 	}
 
 	public String getSimpleDisplay() {
-		return hierarchy.get(hierarchy.size() - 1);
-	}
-
-	public int getHierarchySize() {
-		return hierarchy.size();
+		return code;
 	}
 
 }

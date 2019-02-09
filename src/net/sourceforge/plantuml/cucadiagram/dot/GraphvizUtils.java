@@ -89,7 +89,7 @@ public class GraphvizUtils {
 	}
 
 	private static boolean useVizJs(ISkinParam skinParam) {
-		if (skinParam!=null && skinParam.isUseVizJs() && VizJsEngine.isOk()) {
+		if (skinParam != null && skinParam.isUseVizJs() && VizJsEngine.isOk()) {
 			return true;
 		}
 		if (VIZJS.equalsIgnoreCase(getenvGraphvizDot()) && VizJsEngine.isOk()) {
@@ -141,6 +141,14 @@ public class GraphvizUtils {
 			return Integer.parseInt(getenv);
 		}
 		return 4096;
+	}
+
+	public static String getenvDefaultConfigFilename() {
+		final String env = System.getProperty("PLANTUML_DEFAULT_CONFIG_FILENAME");
+		if (StringUtils.isNotEmpty(env)) {
+			return env;
+		}
+		return System.getenv("PLANTUML_DEFAULT_CONFIG_FILENAME");
 	}
 
 	public static String getenvLogData() {

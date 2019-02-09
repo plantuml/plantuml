@@ -33,48 +33,38 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.sequencediagram.command;
 
-class Load implements Numeric {
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-	private final long minuteMen;
+public class CommandLinkAnchor extends SingleLineCommand2<SequenceDiagram> {
 
-	public Load(long minuteMen) {
-		this.minuteMen = minuteMen;
+	public CommandLinkAnchor() {
+		super(getRegexConcat());
 	}
 
-	public Load(NumericNumber value) {
-		this(value.getIntValue() * 24L * 60 * 60);
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("ANCHOR1", "\\{([\\p{L}0-9_]+)\\}"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("LINK", "\\<-\\>"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("ANCHOR2", "\\{([\\p{L}0-9_]+)\\}"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?$"));
 	}
 
-	public Numeric add(Numeric other) {
-		return new Load(((Load) other).minuteMen + minuteMen);
-	}
-
-	public NumericType getNumericType() {
-		return NumericType.LOAD;
-	}
-
-	public int compareTo(Numeric other) {
-		final Load this2 = (Load) other;
-		if (this2.minuteMen > minuteMen) {
-			return -1;
-		}
-		if (this2.minuteMen < minuteMen) {
-			return 1;
-		}
-		return 0;
-	}
-
-	public final long getMinuteMen() {
-		return minuteMen;
-	}
-	
 	@Override
-	public String toString() {
-		return "LOAD:" + minuteMen / (24 * 60 * 60);
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
+		final String anchor1 = arg.get("ANCHOR1", 0);
+		final String anchor2 = arg.get("ANCHOR2", 0);
+		final String message = arg.get("MESSAGE", 0);
+		return diagram.linkAnchor(anchor1, anchor2, message);
 	}
-
-
 
 }

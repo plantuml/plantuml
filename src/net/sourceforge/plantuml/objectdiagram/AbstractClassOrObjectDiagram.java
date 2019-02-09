@@ -42,7 +42,10 @@ import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -308,6 +311,19 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			}
 			return false;
 		}
+	}
+
+	@Override
+	public void setLegend(DisplayPositionned legend) {
+
+		final IGroup currentGroup = this.getCurrentGroup();
+
+		if (currentGroup instanceof GroupRoot) {
+			super.setLegend(legend);
+			return;
+		}
+
+		currentGroup.setLegend(legend);
 	}
 
 }

@@ -76,6 +76,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		return new RegexConcat(
 				new RegexLeaf("^"), //
 				new RegexLeaf("PARALLEL", "(&%s*)?"), //
+				new RegexLeaf("ANCHOR", "(\\{([\\p{L}0-9_]+)\\}[%s]+)?"), //
 				new RegexOr("PART1", //
 						new RegexLeaf("PART1CODE", "([\\p{L}0-9_.@]+)"), //
 						new RegexLeaf("PART1LONG", "[%g]([^%g]+)[%g]"), //
@@ -234,6 +235,8 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (parallel) {
 			msg.goParallel();
 		}
+		final String anchor = arg.get("ANCHOR", 1);
+		msg.setAnchor(anchor);
 
 		final String error = diagram.addMessage(msg);
 		if (error != null) {

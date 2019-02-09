@@ -70,4 +70,8 @@ public interface IGroup extends IEntity {
 	public char getConcurrentSeparator();
 
 	public void setConcurrentSeparator(char separator);
+
+	public void setLegend(DisplayPositionned legend);
+
+	public DisplayPositionned getLegend();
 }

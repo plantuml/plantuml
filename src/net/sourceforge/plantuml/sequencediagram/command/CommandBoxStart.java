@@ -35,27 +35,43 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandBoxStart extends SingleLineCommand<SequenceDiagram> {
+public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandBoxStart() {
-		super("(?i)^box(?:[%s]+[%g]([^%g]+)[%g])?(?:[%s]+(#\\w+))?$");
+		super(getRegexConcat());
+	}
+
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("box"), //
+				new RegexOptional(new RegexOr( //
+						new RegexLeaf("NAME1", "[%s]+[%g]([^%g]+)[%g]"), //
+						new RegexLeaf("NAME2", "[%s]+([^#]+)"))), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(#\\w+)?"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg2) {
 		if (diagram.isBoxPending()) {
 			return CommandExecutionResult.error("Box cannot be nested");
 		}
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(1));
-		final String title = arg.get(0) == null ? "" : arg.get(0);
+		final String argTitle = arg2.getLazzy("NAME", 0);
+		final String argColor = arg2.get("COLOR", 0);
+		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(argColor);
+		final String title = argTitle == null ? "" : argTitle;
 		diagram.boxStart(Display.getWithNewlines(title), color);
 		return CommandExecutionResult.ok();
 	}

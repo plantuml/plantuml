@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
@@ -51,6 +52,8 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -164,7 +167,17 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 			}
 		}
 		comp.drawU(ug, area, (Context2D) ug);
+
+		if (message.getAnchor() != null) {
+			drawAnchor(ug);
+		}
 		// ug.draw(new ULine(x2 - x1, 0));
+
+	}
+
+	private void drawAnchor(UGraphic ug) {
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		ug.draw(new UEllipse(10, 10));
 
 	}
 

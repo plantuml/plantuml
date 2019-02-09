@@ -36,14 +36,14 @@
 package net.sourceforge.plantuml.project3;
 
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class TaskImpl implements Task, LoadPlanable {
 
 	private final TaskCode code;
 	private final Solver3 solver;
-	private final Set<Resource> resources = new LinkedHashSet<Resource>();
+	private final Map<Resource, Integer> resources2 = new LinkedHashMap<Resource, Integer>();
 	private final LoadPlanable defaultPlan;
 
 	public TaskImpl(TaskCode code, LoadPlanable defaultPlan) {
@@ -55,39 +55,46 @@ public class TaskImpl implements Task, LoadPlanable {
 	}
 
 	public int getLoadAt(Instant instant) {
-		LoadPlanable plan1 = defaultPlan;
-		if (resources.size() > 0) {
-			plan1 = PlanUtils.minOf(plan1, getRessourcePlan());
+		LoadPlanable result = defaultPlan;
+		if (resources2.size() > 0) {
+			result = PlanUtils.multiply(defaultPlan, getRessourcePlan());
 		}
-		return PlanUtils.minOf(getLoad(), plan1).getLoadAt(instant);
+		return result.getLoadAt(instant);
+		// return PlanUtils.minOf(getLoad(), plan1).getLoadAt(instant);
 	}
 
-	public int loadForResource(Resource res, Instant i) {
-		if (resources.contains(res) && i.compareTo(getStart()) >= 0 && i.compareTo(getEnd()) <= 0) {
-			if (res.getLoadAt(i) == 0) {
+	public int loadForResource(Resource res, Instant instant) {
+		if (resources2.keySet().contains(res) && instant.compareTo(getStart()) >= 0 && instant.compareTo(getEnd()) <= 0) {
+			if (res.isClosedAt(instant)) {
 				return 0;
 			}
-			int size = 0;
-			for (Resource r : resources) {
-				if (r.getLoadAt(i) > 0) {
-					size++;
-				}
-			}
-			return getLoadAt(i) / size;
+			// int size = 0;
+			return resources2.get(res);
+			// for (Resource r : resources) {
+			// if (r.getLoadAt(i) > 0) {
+			// size++;
+			// }
+			// }
+			// return getLoadAt(instant) / size;
 		}
 		return 0;
 	}
 
 	private LoadPlanable getRessourcePlan() {
-		if (resources.size() == 0) {
+		if (resources2.size() == 0) {
 			throw new IllegalStateException();
 		}
 		return new LoadPlanable() {
 
 			public int getLoadAt(Instant instant) {
 				int result = 0;
-				for (Resource res : resources) {
-					result += res.getLoadAt(instant);
+				for (Map.Entry<Resource, Integer> ent : resources2.entrySet()) {
+					final Resource res = ent.getKey();
+					if (res.isClosedAt(instant)) {
+						continue;
+					}
+					final int percentage = ent.getValue();
+					result += percentage;
 				}
 				return result;
 			}
@@ -95,12 +102,17 @@ public class TaskImpl implements Task, LoadPlanable {
 	}
 
 	public String getPrettyDisplay() {
-		if (resources.size() > 0) {
+		if (resources2.size() > 0) {
 			final StringBuilder result = new StringBuilder(code.getSimpleDisplay());
 			result.append(" ");
-			for (Iterator<Resource> it = resources.iterator(); it.hasNext();) {
+			for (Iterator<Map.Entry<Resource, Integer>> it = resources2.entrySet().iterator(); it.hasNext();) {
+				final Map.Entry<Resource, Integer> ent = it.next();
 				result.append("{");
-				result.append(it.next().getName());
+				result.append(ent.getKey().getName());
+				final int percentage = ent.getValue();
+				if (percentage != 100) {
+					result.append(":" + percentage + "%");
+				}
 				result.append("}");
 				if (it.hasNext()) {
 					result.append(" ");
@@ -168,8 +180,8 @@ public class TaskImpl implements Task, LoadPlanable {
 		this.colors = colors;
 	}
 
-	public void addResource(Resource resource) {
-		this.resources.add(resource);
+	public void addResource(Resource resource, int percentage) {
+		this.resources2.put(resource, percentage);
 	}
 
 }

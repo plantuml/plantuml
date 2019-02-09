@@ -311,11 +311,13 @@ public class EpsGraphics {
 	}
 
 	public void epsPolygon(HtmlColorGradient gr, ColorMapper mapper, double... points) {
+		assert points.length % 2 == 0;
 		setFillColor(mapper.getMappedColor(gr.getColor1()));
 		epsPolygon(points);
 	}
 
 	public void epsPolygon(double... points) {
+		assert points.length % 2 == 0;
 		checkCloseDone();
 		double lastX = 0;
 		double lastY = 0;
@@ -761,6 +763,7 @@ public class EpsGraphics {
 	}
 
 	public void epsPolygonShadow(double deltaShadow, double... points) {
+		assert points.length % 2 == 0;
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));

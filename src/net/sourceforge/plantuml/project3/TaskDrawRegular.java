@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -53,6 +55,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TaskDrawRegular implements TaskDraw {
 
+	// private static final HtmlColor defaultColor = HtmlColorUtils.COL_84BE84;
+	private static final HtmlColor defaultColor = new HtmlColorSetSimple().getColorIfValid("GreenYellow");
 	private final TaskImpl task;
 	private final TimeScale timeScale;
 	private final double y;
@@ -87,22 +91,23 @@ public class TaskDrawRegular implements TaskDraw {
 			ug2.draw(shapeFull);
 		} else {
 			final double fullHeight = ((URectangle) shapeFull).getHeight();
-			ug2.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UChangeColor(HtmlColorUtils.WHITE))
-					.draw(shapeFull);
-			drawInside(ug1, fullHeight);
-			ug2.apply(new UChangeBackColor(null)).draw(shapeFull);
+			// ug2.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UChangeColor(HtmlColorUtils.WHITE))
+			// .draw(shapeFull);
+			// drawInside(ug1, fullHeight);
+			// ug2.apply(new UChangeBackColor(null)).draw(shapeFull);
+			ug2.draw(shapeFull);
 		}
 	}
 
-	private void drawInside(UGraphic ug, double fullHeight) {
-		for (Instant i = task.getStart(); i.compareTo(task.getEnd()) <= 0; i = i.increment()) {
-			final int load = task.getLoadAt(i);
-			final URectangle shapeLoad = getShapeInside(load, i);
-			final double diffHeight = fullHeight - shapeLoad.getHeight();
-			final double start = timeScale.getStartingPosition(i);
-			ug.apply(new UChangeColor(null)).apply(new UTranslate(start, diffHeight + margin)).draw(shapeLoad);
-		}
-	}
+	// private void drawInside(UGraphic ug, double fullHeight) {
+	// for (Instant i = task.getStart(); i.compareTo(task.getEnd()) <= 0; i = i.increment()) {
+	// // final int load = task.getLoadAt(i);
+	// final URectangle shapeLoad = getShapeInside(i);
+	// final double diffHeight = fullHeight - shapeLoad.getHeight();
+	// final double start = timeScale.getStartingPosition(i);
+	// ug.apply(new UChangeColor(null)).apply(new UTranslate(start, diffHeight + margin)).draw(shapeLoad);
+	// }
+	// }
 
 	private UGraphic applyColors(UGraphic ug) {
 		if (colors != null && colors.isOk()) {
@@ -111,15 +116,25 @@ public class TaskDrawRegular implements TaskDraw {
 		if (isDiamond()) {
 			return ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UChangeBackColor(HtmlColorUtils.BLACK));
 		}
-		return ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(HtmlColorUtils.COL_84BE84));
+		return ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(defaultColor));
 	}
 
-	private URectangle getShapeInside(int load, Instant instant) {
+	private URectangle getShapeInside(Instant instant) {
 		final double start = timeScale.getStartingPosition(instant);
 		final double end = timeScale.getEndingPosition(instant);
-		final double height = (getHeight() - 2 * margin) * load / 100.0;
+		final double height = getHeight() - 2 * margin;
 		return new URectangle(end - start, height);
 	}
+
+	// private URectangle getShapeInside(int load, Instant instant) {
+	// final double start = timeScale.getStartingPosition(instant);
+	// final double end = timeScale.getEndingPosition(instant);
+	// if (load > 100) {
+	// load = 100;
+	// }
+	// final double height = (getHeight() - 2 * margin) * load / 100.0;
+	// return new URectangle(end - start, height);
+	// }
 
 	private UShape getShape(int load) {
 		if (isDiamond()) {

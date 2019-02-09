@@ -154,7 +154,7 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 			} else if (s.startsWith("skinparam ")) {
 				// System.err.println("skipping " + s);
 			} else if (s.startsWith("scale ")) {
-				final Double scale = Double.parseDouble(s.substring("scale ".length()));
+				final double scale = Double.parseDouble(s.substring("scale ".length()));
 				this.setScale(new ScaleSimple(scale));
 				// System.err.println("skipping " + s);
 			} else if (s.startsWith("sprite $")) {

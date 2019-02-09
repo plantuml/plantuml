@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 public class ComplementDate implements ComplementPattern {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexOr(toRegexA(suffix), toRegexB(suffix), toRegexC(suffix));
+		return new RegexOr(toRegexA(suffix), toRegexB(suffix), toRegexC(suffix), toRegexD(suffix));
 	}
 
 	private IRegex toRegexA(String suffix) {
@@ -74,6 +74,12 @@ public class ComplementDate implements ComplementPattern {
 				new RegexLeaf("CYEAR" + suffix, "([\\d]{4})"));
 	}
 
+	private IRegex toRegexD(String suffix) {
+		return new RegexConcat( //
+				new RegexLeaf("DCOUNT" + suffix, "([\\d]+)"), //
+				new RegexLeaf("[%s]+days?[%s]+after[%s]+start"));
+	}
+
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		if (arg.get("ADAY" + suffix, 0) != null) {
 			return Failable.<Complement> ok(resultA(arg, suffix));
@@ -84,7 +90,15 @@ public class ComplementDate implements ComplementPattern {
 		if (arg.get("CDAY" + suffix, 0) != null) {
 			return Failable.<Complement> ok(resultC(arg, suffix));
 		}
+		if (arg.get("DCOUNT" + suffix, 0) != null) {
+			return Failable.<Complement> ok(resultD(system, arg, suffix));
+		}
 		throw new IllegalStateException();
+	}
+
+	private Complement resultD(GanttDiagram system, RegexResult arg, String suffix) {
+		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
+		return system.getStartingDate(day);
 	}
 
 	private Complement resultA(RegexResult arg, String suffix) {

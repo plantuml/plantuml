@@ -84,7 +84,7 @@ public class TaskSeparator implements Task {
 		return comment;
 	}
 
-	public void addResource(Resource resource) {
+	public void addResource(Resource resource, int percentage) {
 		throw new UnsupportedOperationException();
 	}
 

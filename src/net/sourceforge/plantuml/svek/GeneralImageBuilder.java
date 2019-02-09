@@ -57,9 +57,11 @@ import net.sourceforge.plantuml.SkinParamSameClassWidth;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
@@ -417,8 +419,8 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null) {
 				// final HtmlColor black = HtmlColorUtils.BLACK;
-				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
-						leaf.getUSymbol().getColorParamBorder());
+				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(), leaf.getUSymbol()
+						.getColorParamBorder());
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
 						links);
 			}
@@ -548,8 +550,23 @@ public final class GeneralImageBuilder {
 		return label.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 	}
 
+	private TextBlock addLegend(TextBlock original, DisplayPositionned legend) {
+		if (legend == null || legend.isNull()) {
+			return original;
+		}
+		final TextBlock text = EntityImageLegend.create(legend.getDisplay(), dotData.getSkinParam());
+
+		return DecorateEntityImage.add(original, text, legend.getHorizontalAlignment(), legend.getVerticalAlignment());
+	}
+
 	private TextBlock getStereoBlock(IGroup g) {
+		final DisplayPositionned legend = g.getLegend();
+		return addLegend(getStereoBlockWithoutLegend(g), legend);
+	}
+
+	private TextBlock getStereoBlockWithoutLegend(IGroup g) {
 		final Stereotype stereotype = g.getStereotype();
+		final DisplayPositionned legend = g.getLegend();
 		if (stereotype == null) {
 			return TextBlockUtils.empty(0, 0);
 		}

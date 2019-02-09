@@ -49,10 +49,10 @@ public class LoadInDays implements Load {
 		return new LoadInDays(days, 100);
 	}
 
-	public static Complement inDayWithLoad(int days, int loadPerDay) {
-		final int tmp = (int) Math.ceil(days * 100.0 / loadPerDay);
-		return new LoadInDays(tmp, loadPerDay);
-	}
+//	public static Complement inDayWithLoad(int days, int loadPerDay) {
+//		final int tmp = (int) Math.ceil(days * 100.0 / loadPerDay);
+//		return new LoadInDays(tmp, loadPerDay);
+//	}
 
 	public int getFullLoad() {
 		return days * loadPerDay;

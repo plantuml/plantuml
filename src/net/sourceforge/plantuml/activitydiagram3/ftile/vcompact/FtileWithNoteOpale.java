@@ -42,12 +42,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -133,9 +133,9 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
-		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
-				skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
-		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, skinParam.wrapWidth() , skinParam.getPadding()),
+		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false);
+		final Sheet sheet = new CreoleParser(fc, align, skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
+		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, skinParam.wrapWidth(), skinParam.getPadding()),
 				this, new UStroke(1));
 		opale = new Opale(borderColor, noteBackgroundColor, text, skinParam.shadowing(null), withLink);
 

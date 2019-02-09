@@ -33,28 +33,35 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project3;
 
-import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Collection;
 
-public class ItemComparator implements Comparator<Item> {
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-	public int compare(Item it1, Item it2) {
-		final int cmp1 = it1.getBegin().compareTo(it2.getBegin());
-		if (cmp1 != 0) {
-			return cmp1;
-		}
-		if (it1 instanceof Jalon && it2 instanceof Jalon == false) {
-			return -1;
-		}
-		if (it2 instanceof Jalon && it1 instanceof Jalon == false) {
-			return 1;
-		}
-		final int cmp2 = it2.getCompleted().compareTo(it1.getCompleted());
-		if (cmp2 != 0) {
-			return cmp2;
-		}
-		return it1.getCode().compareTo(it2.getCode());
+public class VerbIsColoredForToday implements VerbPattern {
+
+	public Collection<ComplementPattern> getComplements() {
+		return Arrays.<ComplementPattern> asList(new ComplementInColors());
 	}
 
+	public IRegex toRegex() {
+		return new RegexLeaf("is[%s]+colou?red");
+	}
+
+	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
+		return new Verb() {
+			public CommandExecutionResult execute(Subject subject, Complement complement) {
+				final Today task = (Today) subject;
+				final ComplementColors colors = (ComplementColors) complement;
+				project.setTodayColors(colors);
+				return CommandExecutionResult.ok();
+			}
+
+		};
+	}
 }

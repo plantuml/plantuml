@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -55,6 +57,17 @@ public class YPositionedTile implements UDrawable {
 	public void drawU(UGraphic ug) {
 		// System.err.println("YPositionedTile::drawU y=" + y + " " + tile);
 		ug.apply(new UTranslate(0, y)).draw(tile);
+	}
+
+	public boolean matchAnchor(String anchor) {
+		final Event event = tile.getEvent();
+		if (event instanceof AbstractMessage) {
+			final AbstractMessage msg = (AbstractMessage) event;
+			if (anchor.equals(msg.getAnchor())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
