@@ -48,6 +48,7 @@ public class UMotif {
 	private final List<Point2D> points = new ArrayList<Point2D>();
 
 	public UMotif(int... data) {
+		assert data.length % 2 == 0;
 		for (int i = 0; i < data.length; i += 2) {
 			points.add(new Point2D.Double(data[i], data[i + 1]));
 		}

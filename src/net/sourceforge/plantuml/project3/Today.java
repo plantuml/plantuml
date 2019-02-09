@@ -33,26 +33,8 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.command;
+package net.sourceforge.plantuml.project3;
 
-import java.util.List;
+public class Today implements Subject {
 
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.project.PSystemProject;
-import net.sourceforge.plantuml.project.WeekDay;
-
-public class CommandCloseWeekDay extends SingleLineCommand<PSystemProject> {
-
-	public CommandCloseWeekDay() {
-		super("(?i)^\\s*close\\s+(\\w{3,}day)\\s*$");
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(PSystemProject diagram, List<String> arg) {
-		final WeekDay weekDay = WeekDay.valueOf(StringUtils.goUpperCase(arg.get(0).substring(0, 3)));
-		diagram.getProject().closeWeekDay(weekDay);
-		return CommandExecutionResult.ok();
-	}
 }

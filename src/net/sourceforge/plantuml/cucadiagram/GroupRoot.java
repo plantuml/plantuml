@@ -261,4 +261,12 @@ public class GroupRoot implements IGroup {
 	public Set<Stereotag> stereotags() {
 		throw new UnsupportedOperationException();
 	}
+
+	public void setLegend(DisplayPositionned legend) {
+		throw new UnsupportedOperationException();
+	}
+
+	public DisplayPositionned getLegend() {
+		throw new UnsupportedOperationException();
+	}
 }

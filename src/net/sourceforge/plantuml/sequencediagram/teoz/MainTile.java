@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.LinkAnchor;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -55,10 +56,12 @@ public class MainTile implements Tile, Bordered {
 
 	private final List<Tile> tiles = new ArrayList<Tile>();
 	private final LivingSpaces livingSpaces;
+	private final List<LinkAnchor> linkAnchors;
 
 	public MainTile(SequenceDiagram diagram, Englobers englobers, TileArguments tileArguments) {
 
 		this.livingSpaces = tileArguments.getLivingSpaces();
+		this.linkAnchors = diagram.getLinkAnchors();
 
 		final List<Real> min2 = new ArrayList<Real>();
 		final List<Real> max2 = new ArrayList<Real>();
@@ -112,8 +115,24 @@ public class MainTile implements Tile, Bordered {
 		for (YPositionedTile tile : positionedTiles) {
 			tile.drawU(ug);
 		}
+		for (LinkAnchor linkAnchor : linkAnchors) {
+			System.err.println("linkAnchor=" + linkAnchor);
+			final YPositionedTile tile1 = getFromAnchor(positionedTiles, linkAnchor.getAnchor1());
+			final YPositionedTile tile2 = getFromAnchor(positionedTiles, linkAnchor.getAnchor2());
+			System.err.println("tile1=" + tile1);
+			System.err.println("tile2=" + tile2);
+		}
 		// System.err.println("MainTile::drawUInternal finalY=" + y);
 		return y;
+	}
+
+	private YPositionedTile getFromAnchor(List<YPositionedTile> positionedTiles, String anchor) {
+		for (YPositionedTile tile : positionedTiles) {
+			if (tile.matchAnchor(anchor)) {
+				return tile;
+			}
+		}
+		return null;
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

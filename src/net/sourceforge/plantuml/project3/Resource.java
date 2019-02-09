@@ -38,16 +38,16 @@ package net.sourceforge.plantuml.project3;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Resource implements Subject, LoadPlanable {
+public class Resource implements Subject /* , LoadPlanable */{
 
 	private final String name;
 	private ResourceDraw draw;
-	private final LoadPlanable loadPlanable;
+	// private final LoadPlanable loadPlanable;
 	private Set<Instant> closed = new TreeSet<Instant>();
 
 	public Resource(String name, LoadPlanable loadPlanable) {
 		this.name = name;
-		this.loadPlanable = loadPlanable;
+		// this.loadPlanable = loadPlanable;
 	}
 
 	@Override
@@ -78,12 +78,16 @@ public class Resource implements Subject, LoadPlanable {
 		this.draw = draw;
 	}
 
-	public int getLoadAt(Instant instant) {
-		if (this.closed.contains(instant)) {
-			return 0;
-		}
-		return loadPlanable.getLoadAt(instant);
+	public boolean isClosedAt(Instant instant) {
+		 return this.closed.contains(instant);
 	}
+
+//	public int getLoadAt(Instant instant) {
+//		if (this.closed.contains(instant)) {
+//			return 0;
+//		}
+//		return loadPlanable.getLoadAt(instant);
+//	}
 
 	public void addCloseDay(Instant instant) {
 		this.closed.add(instant);

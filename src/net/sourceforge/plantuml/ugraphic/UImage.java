@@ -97,36 +97,56 @@ public class UImage implements UShape {
 		if (newColor == null) {
 			return this;
 		}
-		int darker = -1;
+		int darkerRgb = -1;
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
 				final int color = image.getRGB(i, j);
-				if (isTransparent(color)) {
+				// System.err.println("i="+i+" j="+j+" "+Integer.toHexString(color)+" "+isTransparent(color));
+				final int rgb = getRgb(color);
+				final int a = getA(color);
+				if (a != mask_a__) {
 					continue;
 				}
-				final int grey = ColorChangerMonochrome.getGrayScale(color);
-				if (darker == -1 || grey < ColorChangerMonochrome.getGrayScale(darker)) {
-					darker = color;
+				// if (isTransparent(color)) {
+				// continue;
+				// }
+				final int grey = ColorChangerMonochrome.getGrayScale(rgb);
+				if (darkerRgb == -1 || grey < ColorChangerMonochrome.getGrayScale(darkerRgb)) {
+					darkerRgb = rgb;
 				}
 			}
 		}
 		final BufferedImage copy = deepCopy(image);
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
-				if (copy.getRGB(i, j) == darker) {
-					copy.setRGB(i, j, newColor.getRGB());
+				final int color = copy.getRGB(i, j);
+				final int rgb = getRgb(color);
+				final int a = getA(color);
+				if (a!=0 && rgb == darkerRgb) {
+					copy.setRGB(i, j, newColor.getRGB() + a);
 				}
 			}
 		}
 		return new UImage(copy, formula);
 	}
 
-	private boolean isTransparent(int color) {
-		if (color == 0) {
-			return true;
-		}
-		return false;
+	private static final int mask_a__ = 0xFF000000;
+	private static final int mask_rgb = 0x00FFFFFF;
+
+	private int getRgb(int color) {
+		return color & mask_rgb;
 	}
+
+	private int getA(int color) {
+		return color & mask_a__;
+	}
+
+	// private boolean isTransparent(int argb) {
+	// if ((argb & mask) == mask) {
+	// return false;
+	// }
+	// return true;
+	// }
 
 	// From https://stackoverflow.com/questions/3514158/how-do-you-clone-a-bufferedimage
 	private static BufferedImage deepCopy(BufferedImage bi) {

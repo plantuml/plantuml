@@ -701,7 +701,7 @@ public class Line implements Moveable, Hideable {
 		}
 
 		todraw.setComment(link.getEntity1().getCode().getFullName() + "-" + link.getEntity2().getCode().getFullName());
-		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors());
+		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors(), stroke);
 
 		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));
 
@@ -733,12 +733,12 @@ public class Line implements Moveable, Hideable {
 		}
 	}
 
-	private void drawRainbow(UGraphic ug, HtmlColor color, DotPath todraw, List<Colors> supplementaryColors) {
+	private void drawRainbow(UGraphic ug, HtmlColor color, DotPath todraw, List<Colors> supplementaryColors, UStroke stroke) {
 		ug.draw(todraw);
 		final LinkType linkType = link.getType();
 
 		if (this.extremity2 != null) {
-			UGraphic ug2 = ug.apply(new UStroke()).apply(new UChangeColor(color));
+			UGraphic ug2 = ug.apply(new UChangeColor(color)).apply(stroke.onlyThickness());
 			if (linkType.getDecor1().isFill()) {
 				ug2 = ug2.apply(new UChangeBackColor(color));
 			} else {
@@ -748,7 +748,7 @@ public class Line implements Moveable, Hideable {
 			this.extremity2.drawU(ug2);
 		}
 		if (this.extremity1 != null) {
-			UGraphic ug2 = ug.apply(new UStroke()).apply(new UChangeColor(color));
+			UGraphic ug2 = ug.apply(new UChangeColor(color)).apply(stroke.onlyThickness());
 			if (linkType.getDecor2().isFill()) {
 				ug2 = ug2.apply(new UChangeBackColor(color));
 			} else {

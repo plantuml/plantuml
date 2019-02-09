@@ -53,11 +53,10 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 
 	private final int cornersize = 10;
 	private final SymbolContext symbolContext;
-	
 
 	public ComponentRoseNoteHexagonal(SymbolContext symbolContext, FontConfiguration font, Display strings,
 			ISkinSimple spriteContainer, HorizontalAlignment alignment) {
-		super(LineBreakStrategy.NONE, strings, font, alignment, 12, 12, 4, spriteContainer, false, null, null);
+		super(spriteContainer.wrapWidth(), strings, font, alignment, 12, 12, 4, spriteContainer, false, null, null);
 		this.symbolContext = symbolContext;
 	}
 

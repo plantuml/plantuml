@@ -201,4 +201,18 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	public double getPosYendLevel() {
 		return posYendLevel;
 	}
+
+	private String anchor;
+
+	public void setAnchor(String anchor) {
+		this.anchor = anchor;
+		if (anchor != null && anchor.startsWith("{")) {
+			throw new IllegalArgumentException(anchor);
+		}
+	}
+
+	public String getAnchor() {
+		return anchor;
+	}
+
 }

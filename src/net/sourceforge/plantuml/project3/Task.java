@@ -57,6 +57,6 @@ public interface Task extends Subject, Moment {
 
 	public void setColors(ComplementColors colors);
 
-	public void addResource(Resource resource);
+	public void addResource(Resource resource, int percentage);
 
 }

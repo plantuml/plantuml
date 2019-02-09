@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project3;
 
+import java.util.Date;
+
 public class DayAsDate implements Complement, Comparable<DayAsDate>, Subject {
 
 	private final int year;
@@ -47,6 +49,14 @@ public class DayAsDate implements Complement, Comparable<DayAsDate>, Subject {
 
 	public static DayAsDate create(int year, int month, int dayOfMonth) {
 		return new DayAsDate(year, Month.values()[month - 1], dayOfMonth);
+	}
+
+	public static DayAsDate today() {
+		final Date now = new Date();
+		final int year = now.getYear() + 1900;
+		final int month = now.getMonth() + 1;
+		final int dayOfMonth = now.getDate();
+		return create(year, month, dayOfMonth);
 	}
 
 	private DayAsDate(int year, Month month, int dayOfMonth) {
@@ -126,4 +136,5 @@ public class DayAsDate implements Complement, Comparable<DayAsDate>, Subject {
 	public int compareTo(DayAsDate other) {
 		return this.internalNumber() - other.internalNumber();
 	}
+
 }

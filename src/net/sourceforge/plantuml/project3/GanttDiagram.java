@@ -39,19 +39,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -124,7 +125,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 			throws IOException {
 		final double margin = 10;
 
-		sortTasks();
+		// OsortTasks();
 		final Scale scale = getScale();
 
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
@@ -136,19 +137,19 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}
 
-	private void sortTasks() {
-		final TaskCodeSimpleOrder order = getCanonicalOrder(1);
-		final List<Task> list = new ArrayList<Task>(tasks.values());
-		Collections.sort(list, new Comparator<Task>() {
-			public int compare(Task task1, Task task2) {
-				return order.compare(task1.getCode(), task2.getCode());
-			}
-		});
-		tasks.clear();
-		for (Task task : list) {
-			tasks.put(task.getCode(), task);
-		}
-	}
+	// private void sortTasks() {
+	// final TaskCodeSimpleOrder order = getCanonicalOrder(1);
+	// final List<Task> list = new ArrayList<Task>(tasks.values());
+	// Collections.sort(list, new Comparator<Task>() {
+	// public int compare(Task task1, Task task2) {
+	// return order.compare(task1.getCode(), task2.getCode());
+	// }
+	// });
+	// tasks.clear();
+	// for (Task task : list) {
+	// tasks.put(task.getCode(), task);
+	// }
+	// }
 
 	private UDrawable getUDrawable() {
 		return new UDrawable() {
@@ -510,24 +511,6 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		tasks.put(separator.getCode(), separator);
 	}
 
-	private TaskCodeSimpleOrder getCanonicalOrder(int hierarchyHeader) {
-		final List<TaskCode> codes = new ArrayList<TaskCode>();
-		for (TaskCode code : tasks.keySet()) {
-			if (code.getHierarchySize() >= hierarchyHeader) {
-				codes.add(code.truncateHierarchy(hierarchyHeader));
-			}
-		}
-		return new TaskCodeSimpleOrder(codes, hierarchyHeader);
-	}
-
-	private int getMaxHierarchySize() {
-		int max = Integer.MIN_VALUE;
-		for (TaskCode code : tasks.keySet()) {
-			max = Math.max(max, code.getHierarchySize());
-		}
-		return max;
-	}
-
 	public void addContraint(GanttConstraint constraint) {
 		constraints.add(constraint);
 	}
@@ -547,6 +530,13 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		return this.calendar.getStartingDate();
 	}
 
+	public DayAsDate getStartingDate(int nday) {
+		if (this.calendar == null) {
+			return null;
+		}
+		return ((GCalendarSimple) this.calendar).toDayAsDate(new InstantDay(nday));
+	}
+
 	public int daysInWeek() {
 		return 7 - closedDayOfWeek.size();
 	}
@@ -561,9 +551,18 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	private final Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
 
-	public void affectResource(Task result, String resourceName) {
-		Resource resource = getResource(resourceName);
-		result.addResource(resource);
+	public void affectResource(Task result, String description) {
+		final Pattern p = Pattern.compile("([^:]+)(:(\\d+))?");
+		final Matcher m = p.matcher(description);
+		if (m.find() == false) {
+			throw new IllegalArgumentException();
+		}
+		final Resource resource = getResource(m.group(1));
+		int percentage = 100;
+		if (m.group(3) != null) {
+			percentage = Integer.parseInt(m.group(3));
+		}
+		result.addResource(resource, percentage);
 	}
 
 	public Resource getResource(String resourceName) {
@@ -635,6 +634,20 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	public void nameDay(DayAsDate day, String name) {
 		nameDays.put(day, name);
+	}
+
+	public void setTodayColors(ComplementColors colors) {
+		if (today == null) {
+			this.today = DayAsDate.today();
+		}
+		colorDay(today, colors.getCenter());
+	}
+
+	private DayAsDate today;
+
+	public CommandExecutionResult setToday(DayAsDate date) {
+		this.today = date;
+		return CommandExecutionResult.ok();
 	}
 
 }

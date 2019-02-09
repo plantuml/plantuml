@@ -109,8 +109,8 @@ public class DiagElement {
 	}
 
 	public final void setShape(String shapeName) {
-		USymbol shapeFromString = USymbol.getFromString(shapeName);
-		if (shapeFromString!=null){
+		final USymbol shapeFromString = USymbol.getFromString(shapeName);
+		if (shapeFromString != null) {
 			this.shape = shapeFromString;
 		}
 	}

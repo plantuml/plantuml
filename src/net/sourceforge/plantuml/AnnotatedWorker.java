@@ -71,9 +71,9 @@ public class AnnotatedWorker {
 	}
 
 	public TextBlockBackcolored addAdd(TextBlock result) {
-		result = addTitle(result);
 		result = addFrame(result);
 		result = addLegend(result);
+		result = addTitle(result);
 		result = addCaption(result);
 		result = addHeaderAndFooter(result);
 		return (TextBlockBackcolored) result;

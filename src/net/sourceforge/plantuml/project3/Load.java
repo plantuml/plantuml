@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project3;
 
-public interface Load extends Value, Complement, LoadPlanable {
+public interface Load extends Value, Complement {
 
 	int getFullLoad();
 

@@ -38,16 +38,16 @@ package net.sourceforge.plantuml.project3;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Resources implements LoadPlanable {
+public class Resources /*implements LoadPlanable*/ {
 
 	private final Set<Resource> all = new LinkedHashSet<Resource>();
 
-	public int getLoadAt(Instant instant) {
-		int result = 0;
-		for (Resource res : all) {
-			result += res.getLoadAt(instant);
-		}
-		return result;
-	}
+//	public int getLoadAt(Instant instant) {
+//		int result = 0;
+//		for (Resource res : all) {
+//			result += res.getLoadAt(instant);
+//		}
+//		return result;
+//	}
 
 }

@@ -33,11 +33,35 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.sequencediagram;
 
-public interface Numeric extends Comparable<Numeric> {
-	Numeric add(Numeric other);
+public class LinkAnchor {
 
-	NumericType getNumericType();
+	private final String anchor1;
+	private final String anchor2;
+	private final String message;
+
+	public LinkAnchor(String anchor1, String anchor2, String message) {
+		this.anchor1 = anchor1;
+		this.anchor2 = anchor2;
+		this.message = message;
+	}
+
+	@Override
+	public String toString() {
+		return anchor1 + "<->" + anchor2 + " " + message;
+	}
+
+	public final String getAnchor1() {
+		return anchor1;
+	}
+
+	public final String getAnchor2() {
+		return anchor2;
+	}
+
+	public final String getMessage() {
+		return message;
+	}
 
 }

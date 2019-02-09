@@ -108,6 +108,7 @@ public class Option {
 		if (arg.length == 0) {
 			OptionFlags.getInstance().setGui(true);
 		}
+		initInclude(GraphvizUtils.getenvDefaultConfigFilename());
 		for (int i = 0; i < arg.length; i++) {
 			String s = arg[i];
 			if (s.equalsIgnoreCase("-headless")) {
@@ -409,13 +410,21 @@ public class Option {
 	}
 
 	private void initInclude(String filename) throws IOException {
+		if (filename == null) {
+			return;
+		}
 		if (filename.contains("*")) {
 			final FileGroup group = new FileGroup(filename, Collections.<String> emptyList(), null);
 			for (File f : group.getFiles()) {
-				addInConfig(new FileReader(f));
+				if (f.exists() && f.canRead()) {
+					addInConfig(new FileReader(f));
+				}
 			}
 		} else {
-			addInConfig(new FileReader(filename));
+			final File f = new File(filename);
+			if (f.exists() && f.canRead()) {
+				addInConfig(new FileReader(f));
+			}
 		}
 	}
 

@@ -408,6 +408,7 @@ public class SvgGraphics {
 	}
 
 	public void svgPolygon(double deltaShadow, double... points) {
+		assert points.length % 2 == 0;
 		manageShadow(deltaShadow);
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("polygon");
@@ -789,6 +790,7 @@ public class SvgGraphics {
 	}
 
 	private void addFilter(Element filter, String name, String... data) {
+		assert data.length % 2 == 0;
 		final Element elt = (Element) document.createElement(name);
 		for (int i = 0; i < data.length; i += 2) {
 			elt.setAttribute(data[i], data[i + 1]);

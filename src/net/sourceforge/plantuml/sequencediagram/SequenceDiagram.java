@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -524,5 +525,16 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public Display manageVariable(Display labels) {
 		return labels.replace("%autonumber%", autoNumber.getCurrentMessageNumber(false));
+	}
+
+	private final List<LinkAnchor> linkAnchors = new ArrayList<LinkAnchor>();
+
+	public CommandExecutionResult linkAnchor(String anchor1, String anchor2, String message) {
+		this.linkAnchors.add(new LinkAnchor(anchor1, anchor2, message));
+		return CommandExecutionResult.ok();
+	}
+
+	public List<LinkAnchor> getLinkAnchors() {
+		return Collections.unmodifiableList(linkAnchors);
 	}
 }

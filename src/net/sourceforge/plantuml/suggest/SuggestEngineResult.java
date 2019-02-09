@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.suggest;
 
 import net.sourceforge.plantuml.StringUtils;
 
-
 public class SuggestEngineResult {
 
 	private final SuggestEngineStatus status;

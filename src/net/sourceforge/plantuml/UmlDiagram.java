@@ -432,7 +432,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return legend;
 	}
 
-	public final void setLegend(DisplayPositionned legend) {
+	public void setLegend(DisplayPositionned legend) {
 		this.legend = legend;
 	}
 

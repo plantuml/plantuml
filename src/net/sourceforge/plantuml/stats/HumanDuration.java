@@ -45,7 +45,9 @@ class HumanDuration {
 
 	@Override
 	public String toString() {
-		long time = duration / 1000;
+		long time = duration;
+//		final long ms = time % 1000L;
+		time = time / 1000;
 		final long sec = time % 60;
 		time = time / 60;
 		final long min = time % 60;

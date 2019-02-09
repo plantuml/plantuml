@@ -50,6 +50,7 @@ public class ShadowManager {
 	}
 
 	public double[] getShadowDeltaPoints(double deltaShadow, double diff, double[] points) {
+		assert points.length % 2 == 0;
 		double cx = 0;
 		double cy = 0;
 		for (int i = 0; i < points.length; i += 2) {

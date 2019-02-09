@@ -33,48 +33,33 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project3;
 
-enum NumericType {
+import java.util.Arrays;
+import java.util.Collection;
 
-	NUMBER, INSTANT, LOAD, DURATION;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-	public NumericType add(NumericType other) {
-		if (this == NUMBER) {
-			return addNumber(other);
-		}
-		if (this == INSTANT) {
-			return null;
-		}
-		if (this == LOAD) {
-			return addLoad(other);
-		}
-		if (this == DURATION) {
-			return addDuration(other);
-		}
-		throw new UnsupportedOperationException();
+public class VerbIsForToday implements VerbPattern {
 
+	public Collection<ComplementPattern> getComplements() {
+		return Arrays.<ComplementPattern> asList(new ComplementInColors(), new ComplementDate());
 	}
 
-	private NumericType addDuration(NumericType other) {
-		if (other == DURATION) {
-			return DURATION;
-		}
-		return null;
+	public IRegex toRegex() {
+		return new RegexLeaf("is");
 	}
 
-	private NumericType addLoad(NumericType other) {
-		if (other == LOAD) {
-			return LOAD;
-		}
-		return null;
+	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
+		return new Verb() {
+			public CommandExecutionResult execute(Subject subject, Complement complement) {
+				final Today task = (Today) subject;
+				final DayAsDate date = (DayAsDate) complement;
+				return project.setToday(date);
+			}
+		};
 	}
-
-	private NumericType addNumber(NumericType other) {
-		if (other == NUMBER) {
-			return NUMBER;
-		}
-		return null;
-	}
-
 }

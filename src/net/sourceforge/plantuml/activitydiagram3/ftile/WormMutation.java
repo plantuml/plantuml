@@ -50,16 +50,17 @@ public class WormMutation {
 
 	public static WormMutation create(Worm worm, double delta) {
 		final String signature = worm.getDirectionsCode();
-		if (signature.length() > 2) {
+		final String definition = getDefinition(signature);
+		if (definition == null) {
 			return createFromLongSignature(signature, delta);
 		}
-		return createFromSimpleSignature(signature, delta);
+		return new WormMutation(definition, delta);
 	}
 
 	private static WormMutation createFromLongSignature(final String signature, final double delta) {
 		final WormMutation result = new WormMutation();
 		for (int i = 0; i < signature.length() - 1; i++) {
-			WormMutation tmp = createFromSimpleSignature(signature.substring(i, i + 2), delta);
+			WormMutation tmp = new WormMutation(getDefinition(signature.substring(i, i + 2)), delta);
 			if (i == 0) {
 				result.translations.add(tmp.translations.get(0));
 			} else {
@@ -96,64 +97,61 @@ public class WormMutation {
 		return translations.size();
 	}
 
-	private static WormMutation createFromSimpleSignature(final String signature, final double delta) {
-		final WormMutation result = new WormMutation();
-		// System.err.println("signature=" + signature);
+	private static String getDefinition(final String signature) {
 		if (signature.equals("D") || signature.equals("U")) {
-			final UTranslate translate = new UTranslate(delta, 0);
-			result.translations.add(translate);
-			result.translations.add(translate);
-			return result;
+			return "33";
+		} else if (signature.equals("L") || signature.equals("R")) {
+			return "55";
+		} else if (signature.equals("RD")) {
+			return "123";
+		} else if (signature.equals("RU")) {
+			return "543";
+		} else if (signature.equals("LD")) {
+			return "187";
+		} else if (signature.equals("DL")) {
+			return "345";
+		} else if (signature.equals("DR")) {
+			return "765";
+		} else if (signature.equals("UL")) {
+			return "321";
+		} else if (signature.equals("UR")) {
+			return "781";
+			// } else if (signature.equals("DLD")) {
+			// return "3443";
 		}
-		if (signature.equals("L") || signature.equals("R")) {
-			final UTranslate translate = new UTranslate(0, delta);
-			result.translations.add(translate);
-			result.translations.add(translate);
-			return result;
+		return null;
+	}
+
+	private WormMutation(String definition, double delta) {
+		if (definition == null) {
+			throw new IllegalArgumentException();
 		}
-		if (signature.equals("RD")) {
-			result.translations.add(new UTranslate(0, -delta));
-			result.translations.add(new UTranslate(delta, -delta));
-			result.translations.add(new UTranslate(delta, 0));
-			return result;
+		for (int i = 0; i < definition.length(); i++) {
+			this.translations.add(translation(Integer.parseInt(definition.substring(i, i + 1)), delta));
 		}
-		if (signature.equals("RU")) {
-			result.translations.add(new UTranslate(0, delta));
-			result.translations.add(new UTranslate(delta, delta));
-			result.translations.add(new UTranslate(delta, 0));
-			return result;
+
+	}
+
+	private static UTranslate translation(int type, double delta) {
+		switch (type) {
+		case 1:
+			return new UTranslate(0, -delta);
+		case 2:
+			return new UTranslate(delta, -delta);
+		case 3:
+			return new UTranslate(delta, 0);
+		case 4:
+			return new UTranslate(delta, delta);
+		case 5:
+			return new UTranslate(0, delta);
+		case 6:
+			return new UTranslate(-delta, delta);
+		case 7:
+			return new UTranslate(-delta, 0);
+		case 8:
+			return new UTranslate(-delta, -delta);
 		}
-		if (signature.equals("LD")) {
-			result.translations.add(new UTranslate(0, -delta));
-			result.translations.add(new UTranslate(-delta, -delta));
-			result.translations.add(new UTranslate(-delta, 0));
-			return result;
-		}
-		if (signature.equals("DL")) {
-			result.translations.add(new UTranslate(delta, 0));
-			result.translations.add(new UTranslate(delta, delta));
-			result.translations.add(new UTranslate(0, delta));
-			return result;
-		}
-		if (signature.equals("DR")) {
-			result.translations.add(new UTranslate(-delta, 0));
-			result.translations.add(new UTranslate(-delta, delta));
-			result.translations.add(new UTranslate(0, delta));
-			return result;
-		}
-		if (signature.equals("UL")) {
-			result.translations.add(new UTranslate(delta, 0));
-			result.translations.add(new UTranslate(delta, -delta));
-			result.translations.add(new UTranslate(0, -delta));
-			return result;
-		}
-		if (signature.equals("UR")) {
-			result.translations.add(new UTranslate(-delta, 0));
-			result.translations.add(new UTranslate(-delta, -delta));
-			result.translations.add(new UTranslate(0, -delta));
-			return result;
-		}
-		throw new UnsupportedOperationException(signature);
+		throw new IllegalArgumentException();
 	}
 
 	static private class MinMax {

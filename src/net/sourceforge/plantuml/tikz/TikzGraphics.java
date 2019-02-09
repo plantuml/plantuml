@@ -382,6 +382,7 @@ public class TikzGraphics {
 
 	public void polygon(double[] points) {
 
+		assert points.length % 2 == 0;
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
 		sb.append("line width=" + thickness + "pt]");
@@ -395,6 +396,7 @@ public class TikzGraphics {
 	}
 
 	private void round(double r, double[] points) {
+		assert points.length % 2 == 0;
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
 		sb.append("line width=" + thickness + "pt]");

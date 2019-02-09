@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -74,9 +75,11 @@ public class EntityImageBranch extends AbstractEntityImage {
 		diams.addPoint(0, SIZE);
 		diams.addPoint(SIZE, 0);
 
-		ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBorder)))
-				.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(),
-						ColorParam.activityBackground))).apply(new UStroke(1.5)).draw(diams);
+		final HtmlColor border = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityDiamondBorder,
+				ColorParam.activityBorder);
+		final HtmlColor back = SkinParamUtils.getColor(getSkinParam(), getStereo(),
+				ColorParam.activityDiamondBackground, ColorParam.activityBackground);
+		ug.apply(new UChangeColor(border)).apply(new UChangeBackColor(back)).apply(new UStroke(1.5)).draw(diams);
 	}
 
 	public ShapeType getShapeType() {
