@@ -74,7 +74,7 @@ public abstract class RegexComposed implements IRegex {
 	public RegexResult matcher(String s) {
 		final Matcher2 matcher = getFull().matcher(s);
 		if (matcher.find() == false) {
-			throw new IllegalArgumentException(getClass()+" "+s);
+			return null;
 		}
 
 		final Iterator<String> it = new MatcherIterator(matcher);

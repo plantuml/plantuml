@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -61,12 +61,12 @@ public class LiveBoxesDrawer {
 
 	private final Component cross;
 	private final Context2D context;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Component compForWidth;
 	private final Collection<Segment> delays;
 
-	public LiveBoxesDrawer(Context2D context, Skin skin, ISkinParam skinParam, Map<Double, Double> delays) {
+	public LiveBoxesDrawer(Context2D context, Rose skin, ISkinParam skinParam, Map<Double, Double> delays) {
 		this.cross = skin.createComponent(ComponentType.DESTROY, null, skinParam, null);
 		this.compForWidth = skin.createComponent(ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam, null);
 		this.context = context;

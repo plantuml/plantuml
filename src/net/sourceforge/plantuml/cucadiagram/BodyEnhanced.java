@@ -42,10 +42,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -67,7 +67,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 
 	private TextBlock area2;
 	private final FontConfiguration titleConfig;
-	private final List<String> rawBody;
+	private final List<CharSequence> rawBody;
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final boolean lineFirst;
@@ -81,7 +81,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 
 	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
 			Stereotype stereotype, ILeaf entity) {
-		this.rawBody = new ArrayList<String>(rawBody);
+		this.rawBody = new ArrayList<CharSequence>(rawBody);
 		this.stereotype = stereotype;
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
@@ -99,7 +99,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity) {
 		this.entity = entity;
 		this.stereotype = stereotype;
-		this.rawBody = new ArrayList<String>();
+		this.rawBody = new ArrayList<CharSequence>();
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
 
@@ -114,7 +114,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			this.rawBody.add("");
 		}
 		for (CharSequence s : display) {
-			this.rawBody.add(s.toString());
+			this.rawBody.add(s);
 		}
 
 	}
@@ -147,29 +147,34 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		TextBlock title = null;
 		List<Member> members = new ArrayList<Member>();
 		// final LineBreakStrategy lineBreakStrategy = skinParam.wrapWidth();
-		for (ListIterator<String> it = rawBody.listIterator(); it.hasNext();) {
-			final String s = it.next();
-			if (manageHorizontalLine && isBlockSeparator(s)) {
-				blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
-						stereotype, entity), separator, title));
-				separator = s.charAt(0);
-				title = getTitle(s, skinParam);
-				members = new ArrayList<Member>();
-			} else if (CreoleParser.isTreeStart(s)) {
-				if (members.size() > 0) {
+		for (ListIterator<CharSequence> it = rawBody.listIterator(); it.hasNext();) {
+			final CharSequence s2 = it.next();
+			if (s2 instanceof EmbeddedDiagram) {
+				blocks.add(((EmbeddedDiagram) s2).asDraw(skinParam));
+			} else {
+				final String s = s2.toString();
+				if (manageHorizontalLine && isBlockSeparator(s)) {
 					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
 							stereotype, entity), separator, title));
-				}
-				members = new ArrayList<Member>();
-				final List<String> allTree = buildAllTree(s, it);
-				final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam), align,
-						skinParam, CreoleMode.FULL);
-				blocks.add(bloc);
-			} else {
-				final Member m = new MemberImpl(s, MemberImpl.isMethod(s), manageModifier);
-				members.add(m);
-				if (m.getUrl() != null) {
-					urls.add(m.getUrl());
+					separator = s.charAt(0);
+					title = getTitle(s, skinParam);
+					members = new ArrayList<Member>();
+				} else if (CreoleParser.isTreeStart(s)) {
+					if (members.size() > 0) {
+						blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam,
+								align, stereotype, entity), separator, title));
+					}
+					members = new ArrayList<Member>();
+					final List<CharSequence> allTree = buildAllTree(s, it);
+					final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam),
+							align, skinParam, CreoleMode.FULL);
+					blocks.add(bloc);
+				} else {
+					final Member m = new MemberImpl(s, MemberImpl.isMethod(s), manageModifier);
+					members.add(m);
+					if (m.getUrl() != null) {
+						urls.add(m.getUrl());
+					}
 				}
 			}
 		}
@@ -188,11 +193,11 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		return area2;
 	}
 
-	private static List<String> buildAllTree(String init, ListIterator<String> it) {
-		final List<String> result = new ArrayList<String>();
+	private static List<CharSequence> buildAllTree(String init, ListIterator<CharSequence> it) {
+		final List<CharSequence> result = new ArrayList<CharSequence>();
 		result.add(init);
 		while (it.hasNext()) {
-			final String s = it.next();
+			final CharSequence s = it.next();
 			if (CreoleParser.isTreeStart(StringUtils.trinNoTrace(s))) {
 				result.add(s);
 			} else {

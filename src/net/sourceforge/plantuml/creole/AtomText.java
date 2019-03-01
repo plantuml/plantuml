@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.creole;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -305,25 +306,55 @@ public class AtomText implements Atom {
 
 	public List<AtomText> getSplitted(StringBounder stringBounder, LineBreakStrategy maxWidthAsString) {
 		final double maxWidth = maxWidthAsString.getMaxWidth();
+		if (maxWidth == 0) {
+			throw new IllegalStateException();
+		}
 		final List<AtomText> result = new ArrayList<AtomText>();
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder currentLine = new StringBuilder();
 		while (st.hasMoreTokens()) {
-			final String token = st.nextToken();
-			final double w = getWidth(stringBounder, currentLine + token);
-			if (w > maxWidth) {
-				result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
-				currentLine.setLength(0);
-				if (token.startsWith(" ") == false) {
-					currentLine.append(token);
+			final String token1 = st.nextToken();
+			for (String tmp : splitLong1(stringBounder, maxWidth, token1)) {
+				final double w = getWidth(stringBounder, currentLine + tmp);
+				if (w > maxWidth) {
+					result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
+					currentLine.setLength(0);
+					if (tmp.startsWith(" ") == false) {
+						currentLine.append(tmp);
+					}
+				} else {
+					currentLine.append(tmp);
 				}
-			} else {
-				currentLine.append(token);
 			}
 		}
 		result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
 		return Collections.unmodifiableList(result);
 
+	}
+
+	private List<String> splitLong1(StringBounder stringBounder, double maxWidth, String add) {
+		return Arrays.asList(add);
+	}
+
+	private List<String> splitLong2(StringBounder stringBounder, double maxWidth, String add) {
+		final List<String> result = new ArrayList<String>();
+		if (getWidth(stringBounder, add) <= maxWidth) {
+			result.add(add);
+			return result;
+		}
+		final StringBuilder current = new StringBuilder();
+		for (int i = 0; i < add.length(); i++) {
+			final char c = add.charAt(i);
+			if (getWidth(stringBounder, current.toString() + c) > maxWidth) {
+				result.add(current.toString());
+				current.setLength(0);
+			}
+			current.append(c);
+		}
+		if (current.length() > 0) {
+			result.add(current.toString());
+		}
+		return result;
 	}
 
 	public final String getText() {

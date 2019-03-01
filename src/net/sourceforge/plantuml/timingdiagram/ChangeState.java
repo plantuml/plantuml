@@ -45,13 +45,16 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 public class ChangeState implements Comparable<ChangeState> {
 
 	private final TimeTick when;
-	private final String state;
+	private final String[] states;
 	private final String comment;
 	private final Colors colors;
 
-	public ChangeState(TimeTick when, String state, String comment, Colors colors) {
+	public ChangeState(TimeTick when, String comment, Colors colors, String... states) {
+		if (states.length == 0) {
+			throw new IllegalArgumentException();
+		}
 		this.when = when;
-		this.state = state;
+		this.states = states;
 		this.comment = comment;
 		this.colors = colors;
 	}
@@ -64,15 +67,19 @@ public class ChangeState implements Comparable<ChangeState> {
 		return when;
 	}
 
+	public final String[] getStates() {
+		return states;
+	}
+
 	public final String getState() {
-		return state;
+		return states[0];
 	}
 
 	public String getComment() {
 		return comment;
 	}
 
-	private final HtmlColor getBackColor() {
+	public final HtmlColor getBackColor() {
 		if (colors == null || colors.getColor(ColorType.BACK) == null) {
 			return HtmlColorUtils.COL_D7E0F2;
 		}
@@ -91,11 +98,19 @@ public class ChangeState implements Comparable<ChangeState> {
 	}
 
 	public final boolean isBlank() {
-		return state.equals("{...}");
+		return states[0].equals("{...}");
 	}
 
 	public final boolean isCompletelyHidden() {
-		return state.equals("{hidden}");
+		return states[0].equals("{hidden}");
 	}
+
+	public final boolean isFlat() {
+		return states[0].equals("{-}");
+	}
+
+	// public final boolean isUnknown() {
+	// return states[0].equals("{?}");
+	// }
 
 }

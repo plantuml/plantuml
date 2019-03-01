@@ -44,18 +44,18 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class LiveBoxes {
 
 	private final EventsHistory eventsHistory;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
 
-	public LiveBoxes(EventsHistory eventsHistory, Skin skin, ISkinParam skinParam, Participant participant) {
+	public LiveBoxes(EventsHistory eventsHistory, Rose skin, ISkinParam skinParam, Participant participant) {
 		this.eventsHistory = eventsHistory;
 		this.skin = skin;
 		this.skinParam = skinParam;

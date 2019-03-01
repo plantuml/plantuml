@@ -42,22 +42,48 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.command.regex.RegexComposed;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.creole.CommandCreoleImg;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Stereotype implements CharSequence {
-	private final static Pattern2 circleChar = MyPattern
-			.cmpile("\\<\\<[%s]*\\(?(\\S)[%s]*,[%s]*(#[0-9a-fA-F]{6}|\\w+)[%s]*(?:[),](.*?))?\\>\\>");
-	private final static Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
-			+ ")[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
+	private final static RegexComposed circleChar = new RegexConcat( //
+			new RegexLeaf("\\<\\<[%s]*"), //
+			new RegexLeaf("\\(?"), //
+			new RegexLeaf("CHAR", "(\\S)"), //
+			new RegexLeaf("[%s]*,[%s]*"), //
+			new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)"), //
+			new RegexLeaf("[%s]*"), //
+			new RegexLeaf("LABEL", "(?:[),](.*?))?"), //
+			new RegexLeaf("\\>\\>") //
+	);
+
+	private final static RegexComposed circleSprite = new RegexConcat( //
+			new RegexLeaf("\\<\\<[%s]*"), //
+			new RegexLeaf("\\(?\\$"), //
+			new RegexLeaf("NAME", "(" + SpriteUtils.SPRITE_NAME + ")"), //
+			new RegexLeaf("SCALE", "((?:\\{scale=|\\*)([0-9.]+)\\}?)?"), //
+			new RegexLeaf("[%s]*"), //
+			new RegexLeaf("COLOR", "(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?"), //
+			new RegexLeaf("[%s]*"), //
+			new RegexLeaf("LABEL", "(?:[),](.*?))?"), //
+			new RegexLeaf("\\>\\>") //
+	);
 
 	private final double radius;
 	private final UFont circledFont;
@@ -66,10 +92,27 @@ public class Stereotype implements CharSequence {
 	private String label;
 	private HtmlColor htmlColor;
 	private char character;
-	private String sprite;
+	private String spriteName;
+	private double spriteScale;
 
 	public Stereotype(String label, double radius, UFont circledFont, IHtmlColorSet htmlColorSet) {
 		this(label, radius, circledFont, true, htmlColorSet);
+	}
+	
+	public Stereotype(String label, boolean automaticPackageStyle) {
+		this.automaticPackageStyle = automaticPackageStyle;
+		this.label = label;
+		this.htmlColor = null;
+		this.character = '\0';
+		this.radius = 0;
+		this.circledFont = null;
+		if (label.startsWith("<<$") && label.endsWith(">>")) {
+			final RegexResult mCircleSprite = circleSprite.matcher(label);
+			this.spriteName = mCircleSprite.get("NAME", 0);
+			this.spriteScale = CommandCreoleImg.getScale(mCircleSprite.get("SCALE", 0), 1);
+		} else {
+			this.spriteName = null;
+		}
 	}
 
 	public Stereotype(String label, double radius, UFont circledFont, boolean automaticPackageStyle,
@@ -88,29 +131,30 @@ public class Stereotype implements CharSequence {
 
 		final List<String> list = cutLabels(label, false);
 		for (String local : list) {
-			final Matcher2 mCircleChar = circleChar.matcher(local);
-			final Matcher2 mCircleSprite = circleSprite.matcher(local);
-			if (mCircleSprite.find()) {
-				if (StringUtils.isNotEmpty(mCircleSprite.group(3))) {
-					local = "<<" + mCircleSprite.group(3) + ">>";
+			final RegexResult mCircleChar = circleChar.matcher(local);
+			final RegexResult mCircleSprite = circleSprite.matcher(local);
+			if (mCircleSprite != null) {
+				if (StringUtils.isNotEmpty(mCircleSprite.get("LABEL", 0))) {
+					local = "<<" + mCircleSprite.get("LABEL", 0) + ">>";
 				} else {
 					local = null;
 				}
-				final String colName = mCircleSprite.group(2);
+				final String colName = mCircleSprite.get("COLOR", 0);
 				final HtmlColor col = htmlColorSet.getColorIfValid(colName);
 				this.htmlColor = col == null ? HtmlColorUtils.BLACK : col;
-				this.sprite = mCircleSprite.group(1);
+				this.spriteName = mCircleSprite.get("NAME", 0);
 				this.character = '\0';
-			} else if (mCircleChar.find()) {
-				if (StringUtils.isNotEmpty(mCircleChar.group(3))) {
-					local = "<<" + mCircleChar.group(3) + ">>";
+				this.spriteScale = CommandCreoleImg.getScale(mCircleSprite.get("SCALE", 0), 1);
+			} else if (mCircleChar != null) {
+				if (StringUtils.isNotEmpty(mCircleChar.get("LABEL", 0))) {
+					local = "<<" + mCircleChar.get("LABEL", 0) + ">>";
 				} else {
 					local = null;
 				}
-				final String colName = mCircleChar.group(2);
+				final String colName = mCircleChar.get("COLOR", 0);
 				this.htmlColor = htmlColorSet.getColorIfValid(colName);
-				this.character = mCircleChar.group(1).charAt(0);
-				this.sprite = null;
+				this.character = mCircleChar.get("CHAR", 0).charAt(0);
+				this.spriteName = null;
 			}
 			if (local != null) {
 				tmpLabel.append(local);
@@ -125,19 +169,6 @@ public class Stereotype implements CharSequence {
 		this(label, true);
 	}
 
-	public Stereotype(String label, boolean automaticPackageStyle) {
-		this.automaticPackageStyle = automaticPackageStyle;
-		this.label = label;
-		this.htmlColor = null;
-		this.character = '\0';
-		this.radius = 0;
-		this.circledFont = null;
-		if (label.startsWith("<<$") && label.endsWith(">>")) {
-			this.sprite = label.substring(3, label.length() - 2).trim();
-		} else {
-			this.sprite = null;
-		}
-	}
 
 	public HtmlColor getHtmlColor() {
 		return htmlColor;
@@ -147,8 +178,15 @@ public class Stereotype implements CharSequence {
 		return character;
 	}
 
-	public final String getSprite() {
-		return sprite;
+	public final TextBlock getSprite(SpriteContainer container) {
+		if (spriteName == null || container == null) {
+			return null;
+		}
+		final Sprite tmp = container.getSprite(spriteName);
+		if (tmp == null) {
+			return null;
+		}
+		return tmp.asTextBlock(getHtmlColor(), spriteScale);
 	}
 
 	public boolean isWithOOSymbol() {

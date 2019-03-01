@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -60,7 +60,7 @@ public class MessageExoArrow extends Arrow {
 	private final boolean shortArrow;
 	private final ArrowConfiguration arrowConfiguration;
 
-	public MessageExoArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p, MessageExoType type,
+	public MessageExoArrow(double startingY, Rose skin, Component arrow, LivingParticipantBox p, MessageExoType type,
 			Url url, boolean shortArrow, ArrowConfiguration arrowConfiguration) {
 		super(startingY, skin, arrow, url);
 		this.p = p;

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -55,7 +55,7 @@ class MessageArrow extends Arrow {
 	private final LivingParticipantBox p2;
 	private final Component compAliveBox;
 
-	public MessageArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1, LivingParticipantBox p2,
+	public MessageArrow(double startingY, Rose skin, Component arrow, LivingParticipantBox p1, LivingParticipantBox p2,
 			Url url, Component compAliveBox) {
 		super(startingY, skin, arrow, url);
 

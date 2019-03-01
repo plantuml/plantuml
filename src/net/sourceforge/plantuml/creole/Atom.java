@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
-interface Atom extends UShape {
+public interface Atom extends UShape {
 
 	public Dimension2D calculateDimension(StringBounder stringBounder);
 

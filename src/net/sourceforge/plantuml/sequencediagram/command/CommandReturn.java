@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
@@ -59,6 +60,7 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 				new RegexLeaf("PARALLEL", "(&%s*)?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("return[%s]*"), //
+				new RegexLeaf("COLOR", "(?:(#\\w+)[%s]+)?"), //
 				new RegexLeaf("MESSAGE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
@@ -77,7 +79,11 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 			doDeactivation = false;
 		}
 
-		final ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
+		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
+		final String color = arg.get("COLOR", 0);
+		if (color != null) {
+			arrow = arrow.withColor(HtmlColorSet.getInstance().getColorIfValid(color));
+		}
 
 		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));
 		final Message message2 = new Message(message1.getParticipant2(), message1.getParticipant1(), display, arrow,

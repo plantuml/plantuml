@@ -80,7 +80,6 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
-import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -109,7 +108,18 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private final Pragma pragma = new Pragma();
 	private Animation animation;
 
-	private final SkinParam skinParam = SkinParam.create(getUmlDiagramType());
+	private final SkinParam skinParam;
+
+	public UmlDiagram() {
+		this.skinParam = SkinParam.create(getUmlDiagramType());
+	}
+
+	public UmlDiagram(ISkinSimple orig) {
+		this();
+		if (orig != null) {
+			this.skinParam.copyAllFrom(orig);
+		}
+	}
 
 	final public void setTitle(DisplayPositionned title) {
 		if (title.isNull() || title.getDisplay().isWhite()) {

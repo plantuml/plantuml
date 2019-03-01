@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
@@ -49,27 +48,29 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTile implements TileWithUpdateStairs, TileWithCallbackY {
+public class CommunicationTile extends AbstractTile implements TileWithUpdateStairs, TileWithCallbackY {
 
 	private final LivingSpace livingSpace1;
 	private final LivingSpace livingSpace2;
 	private final Message message;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 
 	public Event getEvent() {
 		return message;
 	}
 
-	public CommunicationTile(LivingSpace livingSpace1, LivingSpace livingSpace2, Message message, Skin skin,
+	@Override
+	public String toString() {
+		return super.toString() + " " + message;
+	}
+
+	public CommunicationTile(LivingSpace livingSpace1, LivingSpace livingSpace2, Message message, Rose skin,
 			ISkinParam skinParam) {
 		if (livingSpace1 == livingSpace2) {
 			throw new IllegalArgumentException();
@@ -103,7 +104,7 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 		return message.isCreate();
 	}
 
-	private Component getComponent(StringBounder stringBounder) {
+	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		/*
 		 * if (isSelf()) { arrowConfiguration = arrowConfiguration.self(); } else
@@ -111,9 +112,15 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 		if (isReverse(stringBounder)) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
-		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabelNumbered());
+
+		final ArrowComponent comp = skin
+				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
 		return comp;
+	}
+
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return getComponent(stringBounder).getYPoint(stringBounder);
 	}
 
 	public static final double LIVE_DELTA_SIZE = 5;
@@ -167,18 +174,6 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 			}
 		}
 		comp.drawU(ug, area, (Context2D) ug);
-
-		if (message.getAnchor() != null) {
-			drawAnchor(ug);
-		}
-		// ug.draw(new ULine(x2 - x1, 0));
-
-	}
-
-	private void drawAnchor(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-		ug.draw(new UEllipse(10, 10));
-
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

@@ -336,7 +336,7 @@ public class Run {
 	}
 
 	private static void managePattern() {
-		printPattern(new SequenceDiagramFactory());
+		printPattern(new SequenceDiagramFactory(null));
 		printPattern(new ClassDiagramFactory());
 		printPattern(new ActivityDiagramFactory());
 		printPattern(new DescriptionDiagramFactory());

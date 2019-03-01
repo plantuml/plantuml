@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -81,7 +81,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private double scale;
 
-	public SequenceDiagramFileMakerPuma2(SequenceDiagram sequenceDiagram, Skin skin, FileFormatOption fileFormatOption) {
+	public SequenceDiagramFileMakerPuma2(SequenceDiagram sequenceDiagram, Rose skin, FileFormatOption fileFormatOption) {
 		this.diagram = sequenceDiagram;
 		this.stringBounder = fileFormatOption.getDefaultStringBounder();
 		this.fileFormatOption = fileFormatOption;

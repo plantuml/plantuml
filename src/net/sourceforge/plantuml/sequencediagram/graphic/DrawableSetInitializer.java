@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 
 class DrawableSetInitializer {
 
@@ -85,7 +85,7 @@ class DrawableSetInitializer {
 
 	private ConstraintSet constraintSet;
 
-	public DrawableSetInitializer(Skin skin, ISkinParam skinParam, boolean showTail, double autonewpage) {
+	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage) {
 		this.drawableSet = new DrawableSet(skin, skinParam);
 		this.showTail = showTail;
 		this.autonewpage = autonewpage;

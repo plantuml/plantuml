@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
@@ -106,6 +107,11 @@ public class FtileGroup extends AbstractFtile {
 
 		final UStroke thickness = skinParam.getThickness(LineParam.partitionBorder, null);
 		this.stroke = thickness == null ? new UStroke(2) : thickness;
+	}
+	
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return inner.getMyChildren();
 	}
 
 	@Override

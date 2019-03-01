@@ -43,16 +43,16 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.Reference;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class TileArguments implements Bordered {
 	private final StringBounder stringBounder;
 	private final Real origin;
 	private final LivingSpaces livingSpaces;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 
-	public TileArguments(StringBounder stringBounder, LivingSpaces livingSpaces, Skin skin, ISkinParam skinParam,
+	public TileArguments(StringBounder stringBounder, LivingSpaces livingSpaces, Rose skin, ISkinParam skinParam,
 			Real origin) {
 		this.stringBounder = stringBounder;
 		this.origin = origin;
@@ -88,7 +88,7 @@ public class TileArguments implements Bordered {
 		return livingSpaces;
 	}
 
-	public final Skin getSkin() {
+	public final Rose getSkin() {
 		return skin;
 	}
 

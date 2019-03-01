@@ -38,27 +38,27 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -68,9 +68,10 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TimingDiagram extends UmlDiagram implements Clock {
+public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	private final Map<String, Player> players = new LinkedHashMap<String, Player>();
+	private final Map<String, PlayerClock> clocks = new HashMap<String, PlayerClock>();
 	private final List<TimeMessage> messages = new ArrayList<TimeMessage>();
 	private final TimingRuler ruler = new TimingRuler(getSkinParam());
 	private TimeTick now;
@@ -147,11 +148,12 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 
 		ug = ug.apply(new UTranslate(marginX1, 0));
 
+		ruler.draw0(ug.apply(new UTranslate(withBeforeRuler, 0)), getUTranslateForPlayer(null, stringBounder).getDy());
 		for (Player player : players.values()) {
 			final UGraphic playerUg = ug.apply(getUTranslateForPlayer(player, stringBounder));
-			player.drawU(playerUg);
+			player.drawTitle(playerUg);
 			player.drawContent(playerUg.apply(new UTranslate(withBeforeRuler, 0)));
-			player.drawWidthHeader(playerUg);
+			player.drawLeftHeader(playerUg);
 			playerUg.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(borderStroke)
 					.apply(new UTranslate(-marginX1, 0)).draw(new ULine(totalWith, 0));
 		}
@@ -165,7 +167,7 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 	private double getWithBeforeRuler(StringBounder stringBounder) {
 		double width = 0;
 		for (Player player : players.values()) {
-			width = Math.max(width, player.getGetWidthHeader(stringBounder));
+			width = Math.max(width, player.getWidthHeader(stringBounder));
 
 		}
 		return width;
@@ -194,11 +196,10 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 	public UTranslate getUTranslateForPlayer(Player candidat, StringBounder stringBounder) {
 		double y = 0;
 		for (Player player : players.values()) {
-			final Dimension2D dim = player.calculateDimension(stringBounder);
 			if (candidat == player) {
 				return new UTranslate(0, y);
 			}
-			y += dim.getHeight();
+			y += player.getHeight(stringBounder);
 		}
 		if (candidat == null) {
 			return new UTranslate(0, y);
@@ -206,10 +207,26 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		throw new IllegalArgumentException();
 	}
 
-	public void createLifeLine(String code, String full, TimingStyle type) {
-		final Player player = new Player(code, full, type, getSkinParam(), ruler);
+	public CommandExecutionResult createRobustConcise(String code, String full, TimingStyle type) {
+		final Player player = type.createPlayer(full, getSkinParam(), ruler);
 		players.put(code, player);
 		lastPlayer = player;
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult createClock(String code, String full, int period) {
+		final PlayerClock player = new PlayerClock(getSkinParam(), ruler, period);
+		players.put(code, player);
+		clocks.put(code, player);
+		final TimeTick tick = new TimeTick(new BigDecimal(period));
+		ruler.addTime(tick);
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult createBinary(String code, String full) {
+		final Player player = new PlayerBinary(getSkinParam(), ruler);
+		players.put(code, player);
+		return CommandExecutionResult.ok();
 	}
 
 	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
@@ -233,10 +250,15 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 	}
 
 	public TimeTick getNow() {
-		// if (now == null) {
-		// throw new IllegalStateException();
-		// }
 		return now;
+	}
+
+	public TimeTick getClockValue(String clockName, int nb) {
+		final PlayerClock clock = clocks.get(clockName);
+		if (clock == null) {
+			return null;
+		}
+		return new TimeTick(new BigDecimal(nb * clock.getPeriod()));
 	}
 
 	public void setLastPlayer(Player player) {

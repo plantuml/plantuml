@@ -52,14 +52,14 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class NotesTile implements Tile {
+public class NotesTile extends AbstractTile implements Tile {
 
 	private final LivingSpaces livingSpaces;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Notes notes;
 
@@ -67,7 +67,7 @@ public class NotesTile implements Tile {
 		return notes;
 	}
 
-	public NotesTile(LivingSpaces livingSpaces, Notes notes, Skin skin, ISkinParam skinParam) {
+	public NotesTile(LivingSpaces livingSpaces, Notes notes, Rose skin, ISkinParam skinParam) {
 		this.livingSpaces = livingSpaces;
 		this.notes = notes;
 		this.skin = skin;

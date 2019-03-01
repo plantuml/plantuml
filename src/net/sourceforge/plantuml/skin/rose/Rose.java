@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.PaddingParam;
-import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -49,15 +49,15 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class Rose implements Skin {
+public class Rose {
 
 	final private double paddingX = 5;
 	final private double paddingY = 5;
@@ -91,23 +91,7 @@ public class Rose implements Skin {
 		final UFont newFontForStereotype = param.getFont(null, false, FontParam.SEQUENCE_STEREOTYPE);
 
 		if (type.isArrow()) {
-			// if (param.maxMessageSize() > 0) {
-			// final FontConfiguration fc = new FontConfiguration(fontArrow, HtmlColorUtils.BLACK);
-			// stringsToDisplay = DisplayUtils.breakLines(stringsToDisplay, fc, param, param.maxMessageSize());
-			// }
-			final HtmlColor sequenceArrow = config.getColor() == null ? getHtmlColor(param, ColorParam.arrow) : config
-					.getColor();
-			if (config.getArrowDirection() == ArrowDirection.SELF) {
-				return new ComponentRoseSelfArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay,
-						config, param, param.maxMessageSize(), param.strictUmlStyle() == false);
-			}
-			final HorizontalAlignment messageHorizontalAlignment = param.getHorizontalAlignment(
-					AlignmentParam.sequenceMessageAlignment, config.getArrowDirection(), config.isReverseDefine());
-			final HorizontalAlignment textHorizontalAlignment = param.getHorizontalAlignment(
-					AlignmentParam.sequenceMessageTextAlignment, config.getArrowDirection(), false);
-			return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay, config,
-					messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
-					param.strictUmlStyle() == false, param.responseMessageBelowArrow());
+			return createComponentArrow(config, param, stringsToDisplay);
 		}
 		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
 		final double roundCorner = param.getRoundCorner(CornerParam.DEFAULT, null);
@@ -285,6 +269,23 @@ public class Rose implements Skin {
 		return null;
 	}
 
+	public ArrowComponent createComponentArrow(ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
+		final HtmlColor sequenceArrow = config.getColor() == null ? getHtmlColor(param, ColorParam.arrow) : config
+				.getColor();
+		if (config.getArrowDirection() == ArrowDirection.SELF) {
+			return new ComponentRoseSelfArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay,
+					config, param, param.maxMessageSize(), param.strictUmlStyle() == false);
+		}
+		final HorizontalAlignment messageHorizontalAlignment = param.getHorizontalAlignment(
+				AlignmentParam.sequenceMessageAlignment, config.getArrowDirection(), config.isReverseDefine());
+		final HorizontalAlignment textHorizontalAlignment = param.getHorizontalAlignment(
+				AlignmentParam.sequenceMessageTextAlignment, config.getArrowDirection(), false);
+		return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay, config,
+				messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
+				param.strictUmlStyle() == false, param.responseMessageBelowArrow());
+	}
+
 	private double deltaShadow(ISkinParam param) {
 		return param.shadowing(null) ? 4.0 : 0;
 	}
@@ -357,10 +358,6 @@ public class Rose implements Skin {
 			return new UStroke(defaultValue);
 		}
 		return result;
-	}
-
-	public Object getProtocolVersion() {
-		return 1;
 	}
 
 }

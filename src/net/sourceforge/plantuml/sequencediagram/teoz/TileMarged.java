@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TileMarged implements Tile {
+public class TileMarged extends AbstractTile implements Tile {
 
 	private final Tile tile;
 	private final double x1;

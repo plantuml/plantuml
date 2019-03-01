@@ -119,7 +119,10 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dimTitle = getTitleDimension(stringBounder);
 		final Dimension2D dimFields = fields.calculateDimension(stringBounder);
-		final double width = Math.max(dimFields.getWidth(), dimTitle.getWidth() + 2 * xMarginCircle);
+		double width = Math.max(dimFields.getWidth(), dimTitle.getWidth() + 2 * xMarginCircle);
+		if (width < getSkinParam().minClassWidth()) {
+			width = getSkinParam().minClassWidth();
+		}
 
 		final double height = getMethodOrFieldHeight(dimFields) + dimTitle.getHeight();
 		return new Dimension2DDouble(width, height);

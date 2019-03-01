@@ -48,18 +48,17 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationExoTile implements TileWithUpdateStairs {
+public class CommunicationExoTile extends AbstractTile implements TileWithUpdateStairs {
 
 	private final LivingSpace livingSpace;
 	private final MessageExo message;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final TileArguments tileArguments;
 
@@ -67,7 +66,7 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		return message;
 	}
 
-	public CommunicationExoTile(LivingSpace livingSpace, MessageExo message, Skin skin, ISkinParam skinParam,
+	public CommunicationExoTile(LivingSpace livingSpace, MessageExo message, Rose skin, ISkinParam skinParam,
 			TileArguments tileArguments) {
 		this.tileArguments = tileArguments;
 		this.livingSpace = livingSpace;
@@ -75,14 +74,20 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		this.skin = skin;
 		this.skinParam = skinParam;
 	}
+	
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return getComponent(stringBounder).getYPoint(stringBounder);
+	}
 
-	private Component getComponent(StringBounder stringBounder) {
+
+	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		if (message.getType().getDirection() == -1) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
-		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabelNumbered());
+		final ArrowComponent comp = skin
+				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
 		return comp;
 	}
 

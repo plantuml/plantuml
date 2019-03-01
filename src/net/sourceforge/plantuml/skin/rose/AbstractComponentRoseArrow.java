@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -60,6 +61,9 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 		this.arrowConfiguration = arrowConfiguration;
 		this.foregroundColor = foregroundColor;
 	}
+	
+	abstract public double getYPoint(StringBounder stringBounder);
+
 
 	protected final HtmlColor getForegroundColor() {
 		return foregroundColor;

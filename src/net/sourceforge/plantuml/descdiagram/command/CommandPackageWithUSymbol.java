@@ -36,7 +36,9 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -133,6 +135,12 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype, false));
+		}
+		final String urlString = arg.get("URL", 0);
+		if (urlString != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url url = urlBuilder.getUrl(urlString);
+			p.addUrl(url);
 		}
 		CommandCreateClassMultilines.addTags(p, arg.get("TAGS", 0));
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());

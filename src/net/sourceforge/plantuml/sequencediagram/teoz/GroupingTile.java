@@ -54,11 +54,11 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GroupingTile implements TileWithCallbackY {
+public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 
 	private static final int EXTERNAL_MARGINX1 = 3;
 	private static final int EXTERNAL_MARGINX2 = 9;
@@ -71,7 +71,7 @@ public class GroupingTile implements TileWithCallbackY {
 
 	// private final double marginX = 20;
 
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Display display;
 
@@ -79,6 +79,11 @@ public class GroupingTile implements TileWithCallbackY {
 
 	public Event getEvent() {
 		return start;
+	}
+
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return 0;
 	}
 
 	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBachColorChanged,
@@ -239,8 +244,17 @@ public class GroupingTile implements TileWithCallbackY {
 			if (isParallel(tile)) {
 				if (pending == null) {
 					pending = new TileParallel();
-					pending.add(result.get(result.size() - 1));
-					result.set(result.size() - 1, pending);
+					final Tile tmp = result.get(result.size() - 1);
+					if (tmp instanceof LifeEventTile) {
+						pending.add(result.get(result.size() - 2));
+						pending.add(tmp);
+//						result.set(result.size() - 1, pending);
+						result.set(result.size() - 2, pending);
+						result.remove(result.size() - 1);
+					} else {
+						pending.add(tmp);
+						result.set(result.size() - 1, pending);
+					}
 				}
 				pending.add(tile);
 			} else {

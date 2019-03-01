@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class EmptyTile implements Tile {
+public class EmptyTile extends AbstractTile implements Tile {
 
 	private final double height;
 	private final Tile position;

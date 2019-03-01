@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.syntax;
 
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -206,6 +207,18 @@ public class LanguageDescriptor {
 			ps.println(k);
 		}
 		ps.println();
+	}
+
+	public final Set<String> getType() {
+		return Collections.unmodifiableSet(type);
+	}
+
+	public final Set<String> getKeyword() {
+		return Collections.unmodifiableSet(keyword);
+	}
+
+	public final Set<String> getPreproc() {
+		return Collections.unmodifiableSet(preproc);
 	}
 
 }

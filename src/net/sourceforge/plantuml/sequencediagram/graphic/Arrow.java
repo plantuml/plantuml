@@ -40,12 +40,12 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 abstract class Arrow extends GraphicalElement implements InGroupable {
 
-	private final Skin skin;
+	private final Rose skin;
 	private final Component arrowComponent;
 	private double paddingArrowHead;
 	private double maxX;
@@ -67,7 +67,7 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 
 	public abstract double getActualWidth(StringBounder stringBounder);
 
-	Arrow(double startingY, Skin skin, Component arrowComponent, Url url) {
+	Arrow(double startingY, Rose skin, Component arrowComponent, Url url) {
 		super(startingY);
 		this.skin = skin;
 		this.arrowComponent = arrowComponent;
@@ -92,7 +92,7 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 
 	public abstract int getDirection(StringBounder stringBounder);
 
-	protected Skin getSkin() {
+	protected Rose getSkin() {
 		return skin;
 	}
 

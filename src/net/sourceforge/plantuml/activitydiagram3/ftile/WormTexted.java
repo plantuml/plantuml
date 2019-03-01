@@ -69,9 +69,9 @@ public class WormTexted implements Iterable<Point2D.Double> {
 		worm.addPoint(x, y);
 	}
 
-	public void drawInternalOneColor(UGraphic ug, HtmlColorAndStyle color, double stroke, Direction emphasizeDirection,
-			UPolygon endDecoration) {
-		worm.drawInternalOneColor(ug, color, stroke, emphasizeDirection, endDecoration);
+	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle color, double stroke,
+			Direction emphasizeDirection, UPolygon endDecoration) {
+		worm.drawInternalOneColor(startDecoration, ug, color, stroke, emphasizeDirection, endDecoration);
 	}
 
 	public Worm getWorm() {

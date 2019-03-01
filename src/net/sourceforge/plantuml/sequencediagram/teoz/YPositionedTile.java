@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -68,6 +69,17 @@ public class YPositionedTile implements UDrawable {
 			}
 		}
 		return false;
+	}
+
+	public final double getY(StringBounder stringBounder) {
+		final CommunicationTile communicationTile = (CommunicationTile) tile;
+		return y + communicationTile.getYPoint(stringBounder);
+	}
+
+	public double getMiddleX(StringBounder stringBounder) {
+		final double max = tile.getMaxX(stringBounder).getCurrentValue();
+		final double min = tile.getMinX(stringBounder).getCurrentValue();
+		return (min + max) / 2;
 	}
 
 }

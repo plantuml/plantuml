@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.AbstractCollection;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,9 +47,17 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TileParallel implements Tile {
+public class TileParallel implements Tile, TileWithUpdateStairs {
 
 	private final List<Tile> tiles = new ArrayList<Tile>();
+
+	public void updateStairs(StringBounder stringBounder, double y) {
+		for (Tile tile : tiles) {
+			if (tile instanceof TileWithUpdateStairs) {
+				((TileWithUpdateStairs) tile).updateStairs(stringBounder, y);
+			}
+		}
+	}
 
 	public void add(Tile tile) {
 		this.tiles.add(tile);
@@ -58,18 +65,33 @@ public class TileParallel implements Tile {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final double totalHeight = getPreferredHeight(stringBounder);
+		// final double totalHeight = getPreferredHeight(stringBounder);
+		final double yPointAll = getYPoint(stringBounder);
 		for (Tile tile : tiles) {
-			tile.drawU(ug.apply(new UTranslate(0, totalHeight - tile.getPreferredHeight(stringBounder))));
+			final double yPoint = tile.getYPoint(stringBounder);
+			// tile.drawU(ug.apply(new UTranslate(0, totalHeight - tile.getPreferredHeight(stringBounder))));
+			tile.drawU(ug.apply(new UTranslate(0, yPointAll - yPoint)));
 		}
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		double height = 0;
+	public double getYPoint(StringBounder stringBounder) {
+		double result = 0;
 		for (Tile tile : tiles) {
-			height = Math.max(height, tile.getPreferredHeight(stringBounder));
+			result = Math.max(result, tile.getYPoint(stringBounder));
 		}
-		return height;
+		return result;
+	}
+
+	public double getZ(StringBounder stringBounder) {
+		double result = 0;
+		for (Tile tile : tiles) {
+			result = Math.max(result, tile.getZ(stringBounder));
+		}
+		return result;
+	}
+
+	public double getPreferredHeight(StringBounder stringBounder) {
+		return getYPoint(stringBounder) + getZ(stringBounder);
 	}
 
 	public void addConstraints(StringBounder stringBounder) {

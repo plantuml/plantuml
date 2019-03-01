@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -74,10 +74,10 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	private final SequenceDiagram diagram;
 	private final FileFormatOption fileFormatOption;
-	private final Skin skin;
+	private final Rose skin;
 	private final AnnotatedWorker annotatedWorker;
 
-	public SequenceDiagramFileMakerTeoz(SequenceDiagram sequenceDiagram, Skin skin, FileFormatOption fileFormatOption) {
+	public SequenceDiagramFileMakerTeoz(SequenceDiagram sequenceDiagram, Rose skin, FileFormatOption fileFormatOption) {
 		this.stringBounder = fileFormatOption.getDefaultStringBounder();
 		this.diagram = sequenceDiagram;
 		this.fileFormatOption = fileFormatOption;

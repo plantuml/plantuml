@@ -117,20 +117,12 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				if (paused) {
 					current2.add(s);
 				}
-				blocks.add(new BlockUml(current2, defines.cloneMe()));
+				blocks.add(new BlockUml(current2, defines.cloneMe(), null));
 				current2 = null;
 				reader2.setPaused(false);
 			}
 		}
 	}
-
-	// private Collection<CharSequence2> convert(List<String> config, LineLocation location) {
-	// final List<CharSequence2> result = new ArrayList<CharSequence2>();
-	// for (String s : config) {
-	// result.add(new CharSequence2Impl(s, location));
-	// }
-	// return result;
-	// }
 
 	public List<BlockUml> getBlockUmls() {
 		return Collections.unmodifiableList(blocks);

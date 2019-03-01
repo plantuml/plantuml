@@ -84,6 +84,14 @@ public class SkinParam implements ISkinParam {
 	private final UmlDiagramType type;
 	private boolean useVizJs;
 
+	public void copyAllFrom(ISkinSimple other) {
+		this.params.putAll(other.values());
+	}
+
+	public Map<String, String> values() {
+		return Collections.unmodifiableMap(params);
+	}
+
 	public void setParam(String key, String value) {
 		for (String key2 : cleanForKey(key)) {
 			params.put(key2, StringUtils.trin(value));
@@ -425,6 +433,7 @@ public class SkinParam implements ISkinParam {
 		result.add("SwimlaneWidth");
 		result.add("SwimlaneWrapTitleWidth");
 		result.add("FixCircleLabelOverlapping");
+		result.add("LifelineStrategy");
 
 		for (FontParam p : EnumSet.allOf(FontParam.class)) {
 			final String h = humanName(p.name());

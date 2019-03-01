@@ -113,4 +113,12 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 		return new ColorMapperIdentity();
 	}
 
+	public void copyAllFrom(ISkinSimple other) {
+		throw new UnsupportedOperationException();
+	}
+
+	public Map<String, String> values() {
+		throw new UnsupportedOperationException();
+	}
+
 }

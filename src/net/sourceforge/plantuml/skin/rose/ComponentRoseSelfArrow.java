@@ -65,7 +65,8 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 	private final boolean niceArrow;
 
 	public ComponentRoseSelfArrow(HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay,
-			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, boolean niceArrow) {
+			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize,
+			boolean niceArrow) {
 		super(foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer, HorizontalAlignment.LEFT,
 				maxMessageSize);
 		this.niceArrow = niceArrow;
@@ -164,14 +165,21 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 	}
 
 	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
-		final int textHeight = (int) getTextHeight(stringBounder);
+		final double textHeight = getTextHeight(stringBounder);
 		return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
 	}
 
 	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
-		final int textHeight = (int) getTextHeight(stringBounder);
-		final int textAndArrowHeight = (int) (textHeight + getArrowOnlyHeight(stringBounder));
+		final double textHeight = getTextHeight(stringBounder);
+		final double textAndArrowHeight = (textHeight + getArrowOnlyHeight(stringBounder));
 		return new Point2D.Double(getPaddingX(), textAndArrowHeight + getPaddingY());
+	}
+
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		final double textHeight = getTextHeight(stringBounder);
+		final double textAndArrowHeight = (textHeight + getArrowOnlyHeight(stringBounder));
+		return (textHeight + textAndArrowHeight) / 2 + getPaddingX();
 	}
 
 	@Override

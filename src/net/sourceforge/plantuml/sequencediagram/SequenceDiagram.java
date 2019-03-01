@@ -51,6 +51,7 @@ import java.util.Stack;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -66,20 +67,21 @@ import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
-import net.sourceforge.plantuml.skin.ProtectedSkin;
-import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class SequenceDiagram extends UmlDiagram {
 
-	// private final Map<String, Participant> participants = new LinkedHashMap<String, Participant>();
 	private final List<Participant> participantsList = new ArrayList<Participant>();
 
 	private final List<Event> events = new ArrayList<Event>();
 
 	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
 
-	private final Skin skin2 = new ProtectedSkin(new Rose());
+	private final Rose skin2 = new Rose();
+
+	public SequenceDiagram(ISkinSimple skinParam) {
+		super(skinParam);
+	}
 
 	@Deprecated
 	public Participant getOrCreateParticipant(String code) {

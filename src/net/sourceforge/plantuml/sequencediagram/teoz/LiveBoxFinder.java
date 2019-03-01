@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UParamNull;
@@ -55,11 +56,10 @@ public class LiveBoxFinder implements UGraphic {
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
-	
+
 	public double dpiFactor() {
 		return 1;
 	}
-
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
@@ -105,16 +105,17 @@ public class LiveBoxFinder implements UGraphic {
 			((GroupingTile) shape).drawU(this);
 		} else if (shape instanceof TileWithUpdateStairs) {
 			((TileWithUpdateStairs) shape).updateStairs(stringBounder, y);
-		} else if (shape instanceof EmptyTile) {
-			// Nothing ?
-		} else if (shape instanceof TileParallel) {
-			// Nothing ?
-		} else if (shape instanceof NotesTile) {
-			// Nothing ?
-		} else if (shape instanceof Tile) {
-			Log.info("OtherTile " + shape);
+			// } else if (shape instanceof EmptyTile) {
+			// // Nothing ?
+			// } else if (shape instanceof TileParallel) {
+			// // Nothing ?
+			// } else if (shape instanceof NotesTile) {
+			// // Nothing ?
+			// } else if (shape instanceof Tile) {
+			// Log.info("OtherTile " + shape);
 		} else {
-			throw new UnsupportedOperationException(shape.getClass().getName());
+			// Nothing ?
+			// throw new UnsupportedOperationException(shape.getClass().getName());
 		}
 	}
 

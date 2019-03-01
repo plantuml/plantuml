@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -55,7 +55,7 @@ class MessageSelfArrow extends Arrow {
 	private final double deltaX;
 	private final double deltaY;
 
-	public MessageSelfArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1, double deltaY,
+	public MessageSelfArrow(double startingY, Rose skin, Component arrow, LivingParticipantBox p1, double deltaY,
 			Url url, double deltaX) {
 		super(startingY, skin, arrow, url);
 		this.p1 = p1;

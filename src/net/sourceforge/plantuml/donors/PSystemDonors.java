@@ -71,22 +71,22 @@ public class PSystemDonors extends AbstractPSystem {
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;
 
-	public static final String DONORS = "6zm80AmEEBmtNeGqQ-xME_ioXj6A6CylpxzGd5Z4qzs0-0MuTthSRwI_YAvqxvjcH5klBSmPH700wedp"
-			+ "RuQMT_qrVlFrLJB6LIrTOG84tZ4kxHj_ULk8gMBxBHFQ-zkF2tL8QuNW2jnKJiZyTAy2XmAoE9jY_ZbW"
-			+ "O-FQkxLxdrgxbYvsFw0jq9X6FxQibADsTU1heSR1aN5yGqfcnPWFaQAfZIr0moTkn6gZEi4dKhF_g4Lg"
-			+ "qffTGxfB0B6C5B7cRT7SlfFjKnWuuQXaXm94E91mI2zo752VIC1HIgD6P1IZiQxYBKz44A632hlmZvmK"
-			+ "dpraUPIX0uxARY2WyHi40NWcnPJOREDcGCuUrYAdmKATcHizalt5u9GZ3nek8JjK8gW5L078cw0BUbrz"
-			+ "vX9d6PkYX2TlORpAOe2SPLq0ZYSp-jfBOQ3ytpym4-Hoezfw27FATOnV7HtmKqD6zdxJQfopc8ZvRIx8"
-			+ "y8K5E5y0lTGQAiRVD-UDXNW8ZIbr8IVEmUDz586mobAmo4rCSStnaovziPgORrrOB1_XrvcXBCC8NAdO"
-			+ "0_Y8bjC7TRw0hXhgduTSTHsVmjOuBTXRX4ydpRdY_rst93DA5z1Q4pv4LqAKBBrWbIqcHGIk0Fesu259"
-			+ "RgJgo-HHlYmV4k_xao3Ud70WKfi5x4_A6OrB3bE85rOwLCKCOBfBr0kEserqmwiJqBj0vHGPuQxVquGz"
-			+ "RDAOEZUuud4_n1ZaYtIyVD5ZCvUCImsTCcrsxDH-n560s_0bUTLz68vL04jHxvR5qdWQ0-uQvZI3T1sH"
-			+ "zprjIOzB7QLbEMvnLPTuDhU3YuTEBZYJHMFCQ7CSCZiadvEfgLkCvwb1uxT1PEts2gBE0dU3TJYGOHcV"
-			+ "0zOLamEL7C5H6ivmoCGa2QtMUSLk0t0FechhcEsfQmcndhhw5AWsViJPo81AsWd744UxA-oCXQF8Vjcy"
-			+ "LqRTrBSX6CS2yiKWmKagb6s4e39iJY53UX_qZCP9FizBkonas_XcuGM6mYT8TDziWrMc48yKwOsw1i3r"
-			+ "Owl4YnyJ8u2VyVORw5d6EkZvDtfQMHp0ff8GC1MMSlYNOALYtQn9hBVeTLjhRylEdt-l8zCunVisLWgW"
-			+ "no2B_WiXY9EeSmMte1yNV2P7RI4ZiA-3RLkvDlGumA2WHIsJNBLDC-BJMLQketPuvF6XdFykao2mdqz8"
-			+ "Ud4AAaUV4gpMtkfAPQ1zyet5IGuM_nHL6hAuYZfgOiGH";
+	public static final String DONORS = "6-i802mER3hSGmjfrjohVvkCORGYHh0yJoWE0ujukXiGVu1xfyVzHlgBw4htlcb6jFNQmfn110UWdZZ_"
+			+ "PcXvrr_ZDrzV9MDSrT8L9a3W7UFIll6NjuMOAhRVCg6zl_suK8UqLWYkm4tb_F_tAc1EA22BiodcdmEq"
+			+ "1guzkkpTJwszbbxi_OAsG6CQ_TYoKfRQXf6lQs0DFOsDunrHiYh6wY95MnjRW9PFt4ZKHky4dqYj_gCM"
+			+ "gKbhTWtfBW74CbB4chTb2_jE3f_2m8b0BJiK8CA1X4DsaOExFf400fKqQiH6CHlhAJxoH0mHUgYm2__8"
+			+ "IV7PGvP76JeGgEq60bg_GH20Pr52YSqs7mRaxc4j2Xeir9cvqIFTNmnEkT9fk9JiK8kW5b0586-2BkXr"
+			+ "zPbBd6LiYXAUl8NnQei1SfRr0JYUhEZhBeM1ydltm4oOouLgwo7CATSnVdLqm4yD6TdxJUlZcCL4p6zp"
+			+ "GOOlBC3v0kYbrb0n_huv7op4GsXCgGivSGuVxxC8X5MMWaLkOefhhfzq6Pirn7phmc9xYRxE36KPHk1A"
+			+ "nHx0HxJSFgZp1NJLKFyyvAhh-1Isnct1tZ9yEcdE5V_lkYMPKRg0Dfhm8RfIecJf1QjyCIaYS0NGbm4F"
+			+ "IN8ZLLycZ_9b-P1utvy4yUQ40v7Qh61_KCveN7AOGhomrf4gLW3JNQ9U23Hkf1j-dO3U1Yg7o0Xt_Puc"
+			+ "x66JnjIvmHMtko7685-au-MB7fkvP5ngw9PfiskdzWEE0jo1Dychxitagm2MejuTYwNnD0RSDSnf1kay"
+			+ "8kzxsf8UbpfAoxBVugekyMnk1tyUEhtWB1PDCQED7p8d51-JKLEt6CzJWyPlayWwxH56dGqC3m7XG8Pb"
+			+ "V0fOLqoUgUG8WSfmXaCk9adejCuhTfc0knUgOUspFNKj8TPJLny3rSQFE1iPKCawuGJY6Eu6EsFZAB9V"
+			+ "Dk-LKJVrRGY6Bw10318Sf4BPHWWgm-OKCgJtISzadEJplBJBGhwDRpPUOIXyWaHtpJROPGhnA97Tg1i0"
+			+ "N1-sIhpuCJ42-1bllu6URQw3dd-ZfvN50Mmg2G5JOMk7VmdsLAwRDOdr5hrkQ-rjsVdpxtLa6gTatyOg"
+			+ "0VGOPDD_4GHn4dMjy1RquuBF4cWiP0HsTR1jAxU67WSO5BIfPPghjcL6V3hBolNK3e_q3-N-xv194DZD"
+			+ "9oIzE0ILeqy9LcjlTQKoqJxznk8Y1ul_4rLQChdAkieP2IHU0000";
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)

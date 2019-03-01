@@ -56,6 +56,9 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final TimeTick timeTick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
+		if (timeTick == null) {
+			return CommandExecutionResult.error("What time?");
+		}
 		diagram.addTime(timeTick);
 		return CommandExecutionResult.ok();
 	}

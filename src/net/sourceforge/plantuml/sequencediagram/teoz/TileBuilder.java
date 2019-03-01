@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Reference;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class TileBuilder {
 
@@ -76,7 +76,7 @@ public class TileBuilder {
 	public static List<Tile> buildOne(Iterator<Event> it, TileArguments tileArguments, final Event ev, Tile parent) {
 
 		final StringBounder stringBounder = tileArguments.getStringBounder();
-		final Skin skin = tileArguments.getSkin();
+		final Rose skin = tileArguments.getSkin();
 		final ISkinParam skinParam = tileArguments.getSkinParam();
 		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();
 
