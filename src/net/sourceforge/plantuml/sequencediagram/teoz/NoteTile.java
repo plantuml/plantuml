@@ -49,23 +49,28 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class NoteTile implements Tile {
+public class NoteTile extends AbstractTile implements Tile {
 
 	private final LivingSpace livingSpace1;
 	private final LivingSpace livingSpace2;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Note note;
 
 	public Event getEvent() {
 		return note;
 	}
+	
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return 0;
+	}
 
-	public NoteTile(LivingSpace livingSpace1, LivingSpace livingSpace2, Note note, Skin skin, ISkinParam skinParam) {
+	public NoteTile(LivingSpace livingSpace1, LivingSpace livingSpace2, Note note, Rose skin, ISkinParam skinParam) {
 		this.livingSpace1 = livingSpace1;
 		this.livingSpace2 = livingSpace2;
 		this.note = note;

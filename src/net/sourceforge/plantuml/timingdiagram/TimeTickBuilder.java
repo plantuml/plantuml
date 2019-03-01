@@ -36,37 +36,46 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class TimeTickBuilder {
 
-	private static final String WITHOUT_AROBASE = "(\\+?)(-?\\d+\\.?\\d*)";
-	private static final String WITH_AROBASE = "@" + WITHOUT_AROBASE;
-
-	public static RegexLeaf expressionAtWithoutArobase(String name) {
-		return new RegexLeaf(name, WITHOUT_AROBASE);
+	public static IRegex expressionAtWithoutArobase(String name) {
+		return new RegexOr( //
+				new RegexLeaf(name + "DIGIT", "(\\+?)(-?\\d+\\.?\\d*)"), //
+				new RegexLeaf(name + "CLOCK", "([\\p{L}0-9_.@]+)\\*(\\d+)"));
 	}
 
-	public static RegexLeaf expressionAtWithArobase(String name) {
-		return new RegexLeaf(name, WITH_AROBASE);
+	public static IRegex expressionAtWithArobase(String name) {
+		return new RegexConcat( //
+				new RegexLeaf("@"), //
+				expressionAtWithoutArobase(name));
 	}
 
-	public static RegexLeaf optionalExpressionAtWithArobase(String name) {
-		return new RegexLeaf(name, "(?:" + WITH_AROBASE + ")?");
+	public static IRegex optionalExpressionAtWithArobase(String name) {
+		return new RegexOptional(expressionAtWithArobase(name));
 	}
 
-	public static TimeTick parseTimeTick(String name, RegexResult arg, Clock clock) {
-		final String number = arg.get(name, 1);
+	public static TimeTick parseTimeTick(String name, RegexResult arg, Clocks clock) {
+		final String clockName = arg.get(name + "CLOCK", 0);
+		if (clockName != null) {
+			final int number = Integer.parseInt(arg.get(name + "CLOCK", 1));
+			return clock.getClockValue(clockName, number);
+		}
+		final String number = arg.get(name + "DIGIT", 1);
 		if (number == null) {
 			return clock.getNow();
 		}
-		final boolean isRelative = "+".equals(arg.get(name, 0));
+		final boolean isRelative = "+".equals(arg.get(name + "DIGIT", 0));
 		BigDecimal value = new BigDecimal(number);
 		if (isRelative) {
 			value = clock.getNow().getTime().add(value);
 		}
 		return new TimeTick(value);
 	}
-
 }

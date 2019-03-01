@@ -570,12 +570,11 @@ public final class GeneralImageBuilder {
 		if (stereotype == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		if (stereotype.getSprite() != null) {
-			final Sprite tmp = dotData.getSkinParam().getSprite(stereotype.getSprite());
-			if (tmp != null) {
-				return tmp.asTextBlock(stereotype.getHtmlColor(), 1);
-			}
+		final TextBlock tmp = stereotype.getSprite(dotData.getSkinParam());
+		if (tmp != null) {
+			return tmp;
 		}
+
 		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().useGuillemet());
 		if (stereos == null) {
 			return TextBlockUtils.empty(0, 0);

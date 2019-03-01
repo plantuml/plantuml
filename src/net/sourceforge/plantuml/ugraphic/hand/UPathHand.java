@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.ugraphic.hand;
 
+import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
@@ -48,7 +49,7 @@ public class UPathHand {
 
 	public UPathHand(UPath source, Random rnd) {
 
-		final UPath jigglePath = new UPath();
+		final UPath result = new UPath();
 
 		Point2D last = new Point2D.Double();
 
@@ -57,9 +58,18 @@ public class UPathHand {
 			if (type == USegmentType.SEG_MOVETO) {
 				final double x = segment.getCoord()[0];
 				final double y = segment.getCoord()[1];
-				jigglePath.moveTo(x, y);
+				result.moveTo(x, y);
 				last = new Point2D.Double(x, y);
+			} else if (type == USegmentType.SEG_CUBICTO) {
+				final double x2 = segment.getCoord()[4];
+				final double y2 = segment.getCoord()[5];
+				final HandJiggle jiggle = new HandJiggle(last, 2.0, rnd);
 
+				final CubicCurve2D tmp = new CubicCurve2D.Double(last.getX(), last.getY(), segment.getCoord()[0],
+						segment.getCoord()[1], segment.getCoord()[2], segment.getCoord()[3], x2, y2);
+				jiggle.curveTo(tmp);
+				jiggle.appendTo(result);
+				last = new Point2D.Double(x2, y2);
 			} else if (type == USegmentType.SEG_LINETO) {
 				final double x = segment.getCoord()[0];
 				final double y = segment.getCoord()[1];
@@ -67,7 +77,7 @@ public class UPathHand {
 				jiggle.lineTo(x, y);
 				for (USegment seg2 : jiggle.toUPath()) {
 					if (seg2.getSegmentType() == USegmentType.SEG_LINETO) {
-						jigglePath.lineTo(seg2.getCoord()[0], seg2.getCoord()[1]);
+						result.lineTo(seg2.getCoord()[0], seg2.getCoord()[1]);
 					}
 				}
 				last = new Point2D.Double(x, y);
@@ -76,7 +86,7 @@ public class UPathHand {
 				return;
 			}
 		}
-		this.path = jigglePath;
+		this.path = result;
 		this.path.setDeltaShadow(source.getDeltaShadow());
 	}
 

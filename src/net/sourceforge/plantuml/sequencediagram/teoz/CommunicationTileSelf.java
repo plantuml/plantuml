@@ -51,15 +51,15 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTileSelf implements TileWithUpdateStairs {
+public class CommunicationTileSelf extends AbstractTile implements TileWithUpdateStairs {
 
 	private final LivingSpace livingSpace1;
 	private final Message message;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final LivingSpaces livingSpaces;
 
@@ -67,7 +67,7 @@ public class CommunicationTileSelf implements TileWithUpdateStairs {
 		return message;
 	}
 
-	public CommunicationTileSelf(LivingSpace livingSpace1, Message message, Skin skin, ISkinParam skinParam,
+	public CommunicationTileSelf(LivingSpace livingSpace1, Message message, Rose skin, ISkinParam skinParam,
 			LivingSpaces livingSpaces) {
 		this.livingSpace1 = livingSpace1;
 		this.livingSpaces = livingSpaces;

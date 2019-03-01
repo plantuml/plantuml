@@ -46,12 +46,12 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class ElseTile implements TileWithCallbackY {
+public class ElseTile extends AbstractTile implements TileWithCallbackY {
 
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final GroupingLeaf anElse;
 	private final Tile parent;
@@ -59,8 +59,13 @@ public class ElseTile implements TileWithCallbackY {
 	public Event getEvent() {
 		return anElse;
 	}
+	
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return 0;
+	}
 
-	public ElseTile(GroupingLeaf anElse, Skin skin, ISkinParam skinParam, Tile parent) {
+	public ElseTile(GroupingLeaf anElse, Rose skin, ISkinParam skinParam, Tile parent) {
 		this.anElse = anElse;
 		this.skin = skin;
 		this.skinParam = skinParam;

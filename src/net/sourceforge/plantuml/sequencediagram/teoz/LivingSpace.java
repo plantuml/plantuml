@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -61,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class LivingSpace {
 
 	private final Participant p;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final ComponentType headType;
 	private final ComponentType tailType;
@@ -104,7 +103,7 @@ public class LivingSpace {
 		return "" + pos.getCurrentValue();
 	}
 
-	public LivingSpace(Participant p, ParticipantEnglober englober, Skin skin, ISkinParam skinParam, Real position,
+	public LivingSpace(Participant p, ParticipantEnglober englober, Rose skin, ISkinParam skinParam, Real position,
 			List<Event> events) {
 		this.eventsHistory = new EventsHistory(p, events);
 		this.p = p;
@@ -195,7 +194,8 @@ public class LivingSpace {
 	}
 
 	public Dimension2D getHeadPreferredDimension(StringBounder stringBounder) {
-		final Component comp = rose.createComponent(headType, null, skinParam, p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
+		final Component comp = rose.createComponent(headType, null, skinParam,
+				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		return dim;
 	}

@@ -44,6 +44,9 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
@@ -59,9 +62,14 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 						new RegexLeaf("NAME1", "[%s]+[%g]([^%g]+)[%g]"), //
 						new RegexLeaf("NAME2", "[%s]+([^#]+)"))), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(#\\w+)?"), //
+				color().getRegex(), //
 				new RegexLeaf("$"));
 	}
+	
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg2) {
@@ -70,9 +78,10 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 		}
 		final String argTitle = arg2.getLazzy("NAME", 0);
 		final String argColor = arg2.get("COLOR", 0);
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(argColor);
+		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(argColor);
+		Colors colors = color().getColor(arg2, diagram.getSkinParam().getIHtmlColorSet());
 		final String title = argTitle == null ? "" : argTitle;
-		diagram.boxStart(Display.getWithNewlines(title), color);
+		diagram.boxStart(Display.getWithNewlines(title), colors.getColor(ColorType.BACK));
 		return CommandExecutionResult.ok();
 	}
 

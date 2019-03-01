@@ -47,15 +47,15 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWithCallbackY {
+public class CommunicationTileNoteLeft extends AbstractTile implements TileWithUpdateStairs, TileWithCallbackY {
 
 	private final TileWithUpdateStairs tile;
 	private final AbstractMessage message;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final LivingSpace livingSpace;
 	private final Note noteOnMessage;
@@ -63,8 +63,13 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWith
 	public Event getEvent() {
 		return message;
 	}
+	
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return tile.getYPoint(stringBounder);
+	}
 
-	public CommunicationTileNoteLeft(TileWithUpdateStairs tile, AbstractMessage message, Skin skin,
+	public CommunicationTileNoteLeft(TileWithUpdateStairs tile, AbstractMessage message, Rose skin,
 			ISkinParam skinParam, LivingSpace livingSpace, Note noteOnMessage) {
 		this.tile = tile;
 		this.message = message;

@@ -36,19 +36,11 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
 
-public class CommandChangeStateByPlayerCode extends SingleLineCommand2<TimingDiagram> {
-
-	private static final String STATE_CODE = "([\\p{L}0-9_][\\p{L}0-9_.]*)";
+public class CommandChangeStateByPlayerCode extends CommandChangeState {
 
 	public CommandChangeStateByPlayerCode() {
 		super(getRegexConcat());
@@ -66,19 +58,6 @@ public class CommandChangeStateByPlayerCode extends SingleLineCommand2<TimingDia
 				new RegexLeaf("[%s]*$"));
 	}
 
-	static IRegex getStateOrHidden() {
-		return new RegexOr(//
-				new RegexLeaf("STATE1", "[%g]([^%g]+)[%g]"), //
-				new RegexLeaf("STATE2", STATE_CODE), //
-				new RegexLeaf("STATE3", "(\\{hidden\\})"), //
-				new RegexLeaf("STATE4", "(\\{\\.\\.\\.\\})") //
-		);
-	}
-
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
-	}
-
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final String code = arg.get("CODE", 0);
@@ -86,11 +65,8 @@ public class CommandChangeStateByPlayerCode extends SingleLineCommand2<TimingDia
 		if (player == null) {
 			return CommandExecutionResult.error("Unkown \"" + code + "\"");
 		}
-		final String comment = arg.get("COMMENT", 0);
 		final TimeTick now = diagram.getNow();
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		player.setState(now, arg.getLazzy("STATE", 0), comment, colors);
-		return CommandExecutionResult.ok();
+		return addState(diagram, arg, player, now);
 	}
 
 }

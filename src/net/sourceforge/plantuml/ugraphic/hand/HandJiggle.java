@@ -156,4 +156,10 @@ public class HandJiggle {
 		return path;
 	}
 
+	public void appendTo(UPath result) {
+		for (Point2D p : points) {
+			result.lineTo(p);
+		}
+	}
+
 }

@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DelayTile implements Tile, TileWithCallbackY {
+public class DelayTile extends AbstractTile implements Tile, TileWithCallbackY {
 
 	private final Delay delay;
 	private final TileArguments tileArguments;

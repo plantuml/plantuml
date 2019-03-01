@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,8 +56,10 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -133,22 +134,61 @@ public class Histogram implements TimeDrawing {
 	}
 
 	public void addChange(ChangeState change) {
-		final String state = change.getState();
-		if (allStates.contains(state) == false) {
-			allStates.add(state);
-		}
 		changes.add(change);
+		final String[] states = change.getStates();
+		for (String state : states) {
+			if (allStates.contains(state) == false) {
+				allStates.add(state);
+			}
+		}
 	}
 
-	private Point2D getPoint(int i) {
-		final ChangeState change = changes.get(i);
+	private Point2D[] getPoints(int n) {
+		final ChangeState change = changes.get(n);
 		final double x = ruler.getPosInPixel(change.getWhen());
-		return new Point2D.Double(x, yOfState(change.getState()));
+		final String[] states = change.getStates();
+		if (states.length == 2) {
+			return new Point2D[] { new Point2D.Double(x, yOfState(states[0])),
+					new Point2D.Double(x, yOfState(states[1])) };
+		}
+		return new Point2D[] { new Point2D.Double(x, yOfState(states[0])) };
+	}
+
+	private double getPointx(int n) {
+		final ChangeState change = changes.get(n);
+		return ruler.getPosInPixel(change.getWhen());
+	}
+
+	private double getPointMinY(int n) {
+		final String[] states = changes.get(n).getStates();
+		if (states.length == 2) {
+			return Math.min(yOfState(states[0]), yOfState(states[1]));
+		}
+		return yOfState(states[0]);
+	}
+
+	private double getPointMaxY(int n) {
+		final String[] states = changes.get(n).getStates();
+		if (states.length == 2) {
+			return Math.max(yOfState(states[0]), yOfState(states[1]));
+		}
+		return yOfState(states[0]);
 	}
 
 	private double yOfState(String state) {
+		// if (state.equals("{?}")) {
+		// throw new IllegalArgumentException();
+		// }
 		return -stepHeight * allStates.indexOf(state);
 	}
+
+	// private SortedSet<Double> getAllYofStates() {
+	// final SortedSet<Double> result = new TreeSet<Double>();
+	// for (String state : allStates) {
+	// result.add(yOfState(state));
+	// }
+	// return result;
+	// }
 
 	private SymbolContext getContext() {
 		return new SymbolContext(HtmlColorUtils.COL_D7E0F2, HtmlColorUtils.COL_038048).withStroke(new UStroke(1.5));
@@ -161,32 +201,41 @@ public class Histogram implements TimeDrawing {
 			return;
 		}
 		if (initialState != null) {
-			final Point2D pt = getPoint(0);
-			drawHLine(ug, getInitialPoint(), getInitialWidth() + pt.getX());
+			for (Point2D pt : getPoints(0)) {
+				drawHLine(ug, getInitialPoint(), getInitialWidth() + pt.getX());
+			}
 		}
-		for (int i = 0; i < changes.size() - 1; i++) {
-			final Point2D pt = getPoint(i);
-			final Point2D pt2 = getPoint(i + 1);
-			final double len = pt2.getX() - pt.getX();
+		for (int i = 0; i < changes.size(); i++) {
+			final double x2 = i < changes.size() - 1 ? getPointx(i + 1) : ruler.getWidth();
+			final double len = x2 - getPointx(i);
+			final Point2D[] points = getPoints(i);
+			if (points.length == 2) {
+				drawHBlock(ug.apply(new UChangeBackColor(changes.get(i).getBackColor())), points[0], points[1], len);
+			}
+			if (i < changes.size() - 1) {
+				for (Point2D pt : points) {
+					drawHLine(ug, pt, len);
+				}
+			}
+		}
+		for (Point2D pt : getPoints(changes.size() - 1)) {
+			final double len = ruler.getWidth() - pt.getX();
 			drawHLine(ug, pt, len);
 		}
-		final Point2D pt = getPoint(changes.size() - 1);
-		final double len = ruler.getWidth() - pt.getX();
-		drawHLine(ug, pt, len);
 
 		if (initialState != null) {
 			final Point2D before = getInitialPoint();
-			final Point2D current = getPoint(0);
+			final Point2D current = getPoints(0)[0];
 			ug.apply(new UTranslate(current).compose(deltaY)).draw(new ULine(0, before.getY() - current.getY()));
 		}
 		for (int i = 1; i < changes.size(); i++) {
-			final Point2D before = getPoint(i - 1);
-			final Point2D current = getPoint(i);
-			ug.apply(new UTranslate(current).compose(deltaY)).draw(new ULine(0, before.getY() - current.getY()));
+			final double minY = Math.min(getPointMinY(i), getPointMinY(i - 1));
+			final double maxY = Math.max(getPointMaxY(i), getPointMaxY(i - 1));
+			ug.apply(new UTranslate(getPointx(i), minY).compose(deltaY)).draw(new ULine(0, maxY - minY));
 		}
 
 		for (int i = 0; i < changes.size(); i++) {
-			final Point2D ptLabel = getPoint(i);
+			final Point2D ptLabel = getPoints(i)[0];
 			final String comment = changes.get(i).getComment();
 			if (comment == null) {
 				continue;
@@ -210,19 +259,28 @@ public class Histogram implements TimeDrawing {
 		return list.get(list.size() - 1);
 	}
 
-	private Double getInitialPoint() {
+	private Point2D.Double getInitialPoint() {
 		return new Point2D.Double(-getInitialWidth(), yOfState(initialState));
+	}
+
+	private void drawHBlock(UGraphic ug, Point2D pt1, Point2D pt2, double len) {
+		final double minY = Math.min(pt1.getY(), pt2.getY());
+		final double maxY = Math.max(pt1.getY(), pt2.getY());
+		final Point2D pt = new Point2D.Double(pt1.getX(), minY);
+		final UTranslate deltaY = new UTranslate(0, getFullDeltaY());
+		final UTranslate pos = new UTranslate(pt).compose(deltaY);
+		ug = ug.apply(pos);
+		ug.draw(new URectangle(len, maxY - minY));
+		for (double x = 0; x < len; x += 5) {
+			ug.apply(new UTranslate(x, 0)).draw(new ULine(0, maxY - minY));
+		}
+
 	}
 
 	private void drawHLine(UGraphic ug, final Point2D pt, final double len) {
 		final UTranslate deltaY = new UTranslate(0, getFullDeltaY());
 		final UTranslate pos = new UTranslate(pt).compose(deltaY);
 		ug = ug.apply(pos);
-		// final SymbolContext context = getContext();
-		// final double height = -pt.getY();
-		// if (height > 0) {
-		// context.withForeColor(context.getBackColor()).apply(ug).draw(new URectangle(len, height));
-		// }
 		ug.draw(new ULine(len, 0));
 	}
 

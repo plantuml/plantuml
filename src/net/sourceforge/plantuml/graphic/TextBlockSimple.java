@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.EmbededDiagram;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -91,8 +91,8 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 					lines2.addAll(createLinesForStereotype(
 							fontConfiguration.forceFont(fontForStereotype, htmlColorForStereotype), (Stereotype) s,
 							horizontalAlignment, spriteContainer));
-				} else if (s instanceof EmbededDiagram) {
-					lines2.add(new EmbededSystemLine((EmbededDiagram) s));
+				} else if (s instanceof EmbeddedDiagram) {
+					lines2.add(((EmbeddedDiagram) s).asDraw(null));
 				} else {
 					addInLines(stringBounder, s.toString());
 				}

@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
@@ -64,7 +63,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 	private final StringBounder dummyStringBounder = new TextStringBounder();
 	private final UGraphicTxt ug = new UGraphicTxt();
 	private final FileFormat fileFormat;
-	private final Skin skin;
+	private final TextSkin skin;
 
 	public SequenceDiagramTxtMaker(SequenceDiagram sequenceDiagram, FileFormat fileFormat) {
 		this.fileFormat = fileFormat;

@@ -64,8 +64,8 @@ public class Worm implements Iterable<Point2D.Double> {
 		return points.size() == 2 && points.get(0).getY() == points.get(1).getY();
 	}
 
-	public void drawInternalOneColor(UGraphic ug, HtmlColorAndStyle color, double stroke, Direction emphasizeDirection,
-			UPolygon endDecoration) {
+	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle color, double stroke,
+			Direction emphasizeDirection, UPolygon endDecoration) {
 		final HtmlColor color2 = color.getColor();
 		if (color2 == null) {
 			throw new IllegalArgumentException();
@@ -92,6 +92,11 @@ public class Worm implements Iterable<Point2D.Double> {
 			} else {
 				drawLine(ug, line, null);
 			}
+		}
+		if (startDecoration != null) {
+			ug = ug.apply(new UStroke(1.5));
+			final Point2D start = points.get(0);
+			ug.apply(new UTranslate(start)).apply(new UStroke()).draw(startDecoration);
 		}
 		if (endDecoration != null) {
 			ug = ug.apply(new UStroke(1.5));

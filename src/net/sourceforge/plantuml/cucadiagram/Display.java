@@ -45,7 +45,7 @@ import java.util.List;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
-import net.sourceforge.plantuml.EmbededDiagram;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.LineLocationImpl;
@@ -190,11 +190,11 @@ public class Display implements Iterable<CharSequence> {
 			boolean isNull, CreoleMode defaultCreoleMode) {
 		this(naturalHorizontalAlignment, isNull, defaultCreoleMode);
 		if (isNull == false) {
-			this.display.addAll(manageEmbededDiagrams2(other));
+			this.display.addAll(manageEmbeddedDiagrams(other));
 		}
 	}
 
-	private static List<CharSequence> manageEmbededDiagrams2(final Collection<? extends CharSequence> strings) {
+	private static List<CharSequence> manageEmbeddedDiagrams(final Collection<? extends CharSequence> strings) {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
@@ -210,7 +210,7 @@ public class Display implements Iterable<CharSequence> {
 					other.add(s2);
 				}
 				other.add("@enduml");
-				s = new EmbededDiagram(Display.create(other));
+				s = new EmbeddedDiagram(Display.create(other));
 			}
 			result.add(s);
 		}
@@ -480,11 +480,8 @@ public class Display implements Iterable<CharSequence> {
 		if (stereotype.isSpotted()) {
 			circledCharacter = new CircledCharacter(stereotype.getCharacter(), stereotype.getRadius(),
 					stereotype.getCircledFont(), stereotype.getHtmlColor(), null, fontConfiguration.getColor());
-		} else if (stereotype.getSprite() != null) {
-			final Sprite tmp = spriteContainer.getSprite(stereotype.getSprite());
-			if (tmp != null) {
-				circledCharacter = tmp.asTextBlock(stereotype.getHtmlColor(), 1);
-			}
+		} else {
+			circledCharacter = stereotype.getSprite(spriteContainer);
 		}
 		if (circledCharacter != null) {
 			if (stereotype.getLabel(false) == null) {

@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.comp.CompressionTransform;
 public class Snake implements UShape {
 
 	private final Worm worm = new Worm();
+	private UPolygon startDecoration;
 	private UPolygon endDecoration;
 	private final Rainbow color;
 	private TextBlock textBlock;
@@ -67,7 +68,7 @@ public class Snake implements UShape {
 	private final HorizontalAlignment horizontalAlignment;
 
 	public Snake transformX(CompressionTransform compressionTransform) {
-		final Snake result = new Snake(horizontalAlignment, color, endDecoration);
+		final Snake result = new Snake(startDecoration, horizontalAlignment, color, endDecoration);
 		result.textBlock = this.textBlock;
 		result.mergeable = this.mergeable;
 		result.emphasizeDirection = this.emphasizeDirection;
@@ -84,19 +85,25 @@ public class Snake implements UShape {
 	}
 
 	public Snake(HorizontalAlignment horizontalAlignment, Rainbow color, UPolygon endDecoration) {
+		this(null, horizontalAlignment, color, endDecoration);
+	}
+
+	public Snake(UPolygon startDecoration, HorizontalAlignment horizontalAlignment, Rainbow color,
+			UPolygon endDecoration) {
 		if (color == null) {
 			throw new IllegalArgumentException();
 		}
 		if (color.size() == 0) {
 			throw new IllegalArgumentException();
 		}
+		this.startDecoration = startDecoration;
 		this.endDecoration = endDecoration;
 		this.color = color;
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
 	public Snake(HorizontalAlignment horizontalAlignment, Rainbow color) {
-		this(horizontalAlignment, color, null);
+		this(null, horizontalAlignment, color, null);
 	}
 
 	public void setLabel(TextBlock label) {
@@ -104,7 +111,7 @@ public class Snake implements UShape {
 	}
 
 	public Snake move(double dx, double dy) {
-		final Snake result = new Snake(horizontalAlignment, color, endDecoration);
+		final Snake result = new Snake(startDecoration, horizontalAlignment, color, endDecoration);
 		for (Point2D pt : worm) {
 			result.addPoint(pt.getX() + dx, pt.getY() + dy);
 		}
@@ -135,7 +142,8 @@ public class Snake implements UShape {
 		if (color.size() > 1) {
 			drawRainbow(ug);
 		} else {
-			worm.drawInternalOneColor(ug, color.getColors().get(0), 1.5, emphasizeDirection, endDecoration);
+			worm.drawInternalOneColor(startDecoration, ug, color.getColors().get(0), 1.5, emphasizeDirection,
+					endDecoration);
 			drawInternalLabel(ug);
 		}
 
@@ -160,7 +168,7 @@ public class Snake implements UShape {
 			if (colorArrowSeparationSpace == 0) {
 				stroke = i == colors.size() - 1 ? 2.0 : 3.0;
 			}
-			current.drawInternalOneColor(ug, colors.get(i), stroke, emphasizeDirection, endDecoration);
+			current.drawInternalOneColor(startDecoration, ug, colors.get(i), stroke, emphasizeDirection, endDecoration);
 			current = mutation.mute(current);
 		}
 		final UTranslate textTranslate = mutation.getTextTranslate(colors.size());
@@ -243,7 +251,10 @@ public class Snake implements UShape {
 		}
 		if (same(this.getLast(), other.getFirst())) {
 			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;
-			final Snake result = new Snake(horizontalAlignment, color, oneOf);
+			if (this.startDecoration != null || other.startDecoration != null) {
+				throw new UnsupportedOperationException("Not yet coded: to be done");
+			}
+			final Snake result = new Snake(null, horizontalAlignment, color, oneOf);
 			// result.textBlock = oneOf(this.textBlock, other.textBlock, stringBounder);
 			result.emphasizeDirection = emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection;
 			result.worm.addAll(this.worm.merge(other.worm, strategy));

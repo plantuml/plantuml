@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -198,7 +198,7 @@ public class LifeLine {
 		return Collections.emptyList();
 	}
 
-	public void drawU(UGraphic ug, Skin skin, ISkinParam skinParam) {
+	public void drawU(UGraphic ug, Rose skin, ISkinParam skinParam) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		ug = ug.apply(new UTranslate(getStartingX(stringBounder), 0));

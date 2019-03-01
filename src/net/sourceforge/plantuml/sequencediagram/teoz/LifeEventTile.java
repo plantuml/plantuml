@@ -47,16 +47,16 @@ import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class LifeEventTile implements TileWithUpdateStairs {
+public class LifeEventTile extends AbstractTile implements TileWithUpdateStairs {
 
 	private final LifeEvent lifeEvent;
 	private final TileArguments tileArguments;
 	private final LivingSpace livingSpace;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 
 	public void updateStairs(StringBounder stringBounder, double y) {
@@ -67,8 +67,13 @@ public class LifeEventTile implements TileWithUpdateStairs {
 	public Event getEvent() {
 		return lifeEvent;
 	}
+	
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return 0;
+	}
 
-	public LifeEventTile(LifeEvent lifeEvent, TileArguments tileArguments, LivingSpace livingSpace, Skin skin,
+	public LifeEventTile(LifeEvent lifeEvent, TileArguments tileArguments, LivingSpace livingSpace, Rose skin,
 			ISkinParam skinParam) {
 		this.lifeEvent = lifeEvent;
 		this.tileArguments = tileArguments;

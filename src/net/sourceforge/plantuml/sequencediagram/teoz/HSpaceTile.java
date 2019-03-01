@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.HSpace;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class HSpaceTile implements Tile {
+public class HSpaceTile extends AbstractTile implements Tile {
 
 	private final HSpace hspace;
 	private final Real origin;

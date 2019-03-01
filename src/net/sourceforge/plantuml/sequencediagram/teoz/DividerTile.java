@@ -46,13 +46,13 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DividerTile implements Tile {
+public class DividerTile extends AbstractTile implements Tile {
 
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Divider divider;
 	private final Real origin;

@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -79,12 +79,12 @@ public class DrawableSet {
 	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new LinkedHashMap<Participant, ParticipantEnglober>();
 
 	private final List<Event> eventsList = new ArrayList<Event>();
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private Dimension2D dimension;
 	private double topStartingY;
 
-	DrawableSet(Skin skin, ISkinParam skinParam) {
+	DrawableSet(Rose skin, ISkinParam skinParam) {
 		if (skin == null) {
 			throw new IllegalArgumentException();
 		}
@@ -99,7 +99,7 @@ public class DrawableSet {
 		return participants.values().iterator().next().getParticipantBox();
 	}
 
-	public final Skin getSkin() {
+	public final Rose getSkin() {
 		return skin;
 	}
 

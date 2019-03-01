@@ -42,11 +42,10 @@ import static gen.lib.cgraph.node__c.agnode;
 import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
-import h.ST_Agraph_s;
-import h.ST_Agraphinfo_t;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
 import h.ST_Agnodeinfo_t;
+import h.ST_Agraph_s;
 import h.ST_Agraphinfo_t;
 import h.ST_GVC_s;
 import h.ST_boxf;
@@ -108,7 +107,6 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import smetana.core.CString;
 import smetana.core.JUtils;
 import smetana.core.JUtilsDebug;
@@ -154,7 +152,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
 				final ST_Agedge_s edge = ent.getValue();
-				new JDotPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2)).drawU(ug);
+				new JDotPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2))
+						.drawU(ug);
 			}
 		}
 
@@ -333,11 +332,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		if (stereotype == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		if (stereotype.getSprite() != null) {
-			final Sprite tmp = diagram.getSkinParam().getSprite(stereotype.getSprite());
-			if (tmp != null) {
-				return tmp.asTextBlock(stereotype.getHtmlColor(), 1);
-			}
+		final TextBlock tmp = stereotype.getSprite(diagram.getSkinParam());
+		if (tmp != null) {
+			return tmp;
 		}
 		final List<String> stereos = stereotype.getLabels(diagram.getSkinParam().useGuillemet());
 		if (stereos == null) {

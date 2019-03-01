@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -65,7 +65,7 @@ public class Englober {
 	final private boolean isTeoz;
 	private double marginX = 0;
 
-	public static Englober createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Skin skin,
+	public static Englober createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Rose skin,
 			StringBounder stringBounder) {
 		return new Englober(englober, first, convertFunctionToBeRemoved(skinParam, skin, stringBounder), false);
 	}
@@ -75,7 +75,7 @@ public class Englober {
 		return new Englober(participantEnglober, first, tileArguments, true);
 	}
 
-	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Skin skin, StringBounder stringBounder) {
+	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin, StringBounder stringBounder) {
 		final TileArguments result = new TileArguments(stringBounder, null, skin, skinParam, null);
 		return result;
 	}

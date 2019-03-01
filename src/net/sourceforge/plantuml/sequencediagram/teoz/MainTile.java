@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
@@ -47,7 +48,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class MainTile implements Tile, Bordered {
+public class MainTile extends AbstractTile implements Tile, Bordered {
 
 	private final double startingY = 8;
 	private final Real min;
@@ -57,11 +58,13 @@ public class MainTile implements Tile, Bordered {
 	private final List<Tile> tiles = new ArrayList<Tile>();
 	private final LivingSpaces livingSpaces;
 	private final List<LinkAnchor> linkAnchors;
+	private final ISkinParam skinParam;
 
 	public MainTile(SequenceDiagram diagram, Englobers englobers, TileArguments tileArguments) {
 
 		this.livingSpaces = tileArguments.getLivingSpaces();
 		this.linkAnchors = diagram.getLinkAnchors();
+		this.skinParam = diagram.getSkinParam();
 
 		final List<Real> min2 = new ArrayList<Real>();
 		final List<Real> max2 = new ArrayList<Real>();
@@ -116,11 +119,9 @@ public class MainTile implements Tile, Bordered {
 			tile.drawU(ug);
 		}
 		for (LinkAnchor linkAnchor : linkAnchors) {
-			System.err.println("linkAnchor=" + linkAnchor);
 			final YPositionedTile tile1 = getFromAnchor(positionedTiles, linkAnchor.getAnchor1());
 			final YPositionedTile tile2 = getFromAnchor(positionedTiles, linkAnchor.getAnchor2());
-			System.err.println("tile1=" + tile1);
-			System.err.println("tile2=" + tile2);
+			linkAnchor.drawAnchor(ug, tile1, tile2, skinParam);
 		}
 		// System.err.println("MainTile::drawUInternal finalY=" + y);
 		return y;

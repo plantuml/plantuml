@@ -210,6 +210,11 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 
 				public void drawU(UGraphic ug) {
 				}
+				
+				@Override
+				public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+					return null;
+				}
 
 				public Dimension2D calculateDimension(StringBounder stringBounder) {
 					return new Dimension2DDouble(1, 1);

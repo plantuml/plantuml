@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.core;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public enum DiagramType {
-	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, DEFINITION, GANTT, NW, UNKNOWN;
+	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, DEFINITION, GANTT, NW, MINDMAP, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
@@ -92,6 +92,9 @@ public enum DiagramType {
 		}
 		if (StartUtils.startsWithSymbolAnd("startnwdiag", s)) {
 			return NW;
+		}
+		if (StartUtils.startsWithSymbolAnd("startmindmap", s)) {
+			return MINDMAP;
 		}
 		return UNKNOWN;
 	}

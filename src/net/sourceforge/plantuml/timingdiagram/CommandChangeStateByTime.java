@@ -36,15 +36,11 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
 
-public class CommandChangeStateByTime extends SingleLineCommand2<TimingDiagram> {
+public class CommandChangeStateByTime extends CommandChangeState {
 
 	public CommandChangeStateByTime() {
 		super(getRegexConcat());
@@ -55,16 +51,12 @@ public class CommandChangeStateByTime extends SingleLineCommand2<TimingDiagram> 
 				new RegexLeaf("[%s]*"), //
 				TimeTickBuilder.expressionAtWithoutArobase("TIME"), //
 				new RegexLeaf("[%s]*is[%s]*"), //
-				CommandChangeStateByPlayerCode.getStateOrHidden(), //
+				getStateOrHidden(), //
 				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("COMMENT", "(?:[%s]*:[%s]*(.*?))?"), //
 				new RegexLeaf("[%s]*$"));
-	}
-
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
@@ -74,11 +66,8 @@ public class CommandChangeStateByTime extends SingleLineCommand2<TimingDiagram> 
 			return CommandExecutionResult.error("Missing @ line before this");
 		}
 		final TimeTick tick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
-		final String comment = arg.get("COMMENT", 0);
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		player.setState(tick, arg.getLazzy("STATE", 0), comment, colors);
 		diagram.addTime(tick);
-		return CommandExecutionResult.ok();
+		return addState(diagram, arg, player, tick);
 	}
 
 }

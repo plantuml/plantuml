@@ -47,18 +47,18 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class MutingLine {
 
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final boolean useContinueLineBecauseOfDelay;
 	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
 
-	public MutingLine(Skin skin, ISkinParam skinParam, List<Event> events) {
+	public MutingLine(Rose skin, ISkinParam skinParam, List<Event> events) {
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);

@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ReferenceTile implements Tile {
+public class ReferenceTile extends AbstractTile implements Tile {
 
 	private final Reference reference;
 	private final TileArguments tileArguments;

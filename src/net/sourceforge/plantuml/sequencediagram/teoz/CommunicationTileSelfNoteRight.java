@@ -47,15 +47,15 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTileSelfNoteRight implements TileWithUpdateStairs {
+public class CommunicationTileSelfNoteRight extends AbstractTile implements TileWithUpdateStairs {
 
 	private final CommunicationTileSelf tile;
 	private final Message message;
-	private final Skin skin;
+	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Note noteOnMessage;
 
@@ -63,7 +63,7 @@ public class CommunicationTileSelfNoteRight implements TileWithUpdateStairs {
 		return message;
 	}
 
-	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Skin skin, ISkinParam skinParam,
+	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Rose skin, ISkinParam skinParam,
 			Note noteOnMessage) {
 		this.tile = tile;
 		this.message = message;

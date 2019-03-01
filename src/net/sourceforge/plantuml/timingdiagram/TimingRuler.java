@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -137,6 +138,15 @@ public class TimingRuler {
 			final TextBlock text = getTimeTextBlock(round);
 			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
 			text.drawU(ug.apply(new UTranslate(getPosInPixel(round) - dim.getWidth() / 2, tickHeight + 1)));
+		}
+	}
+
+	public void draw0(UGraphic ug, double height) {
+		ug = ug.apply(new UStroke(3, 5, 0.5)).apply(new UChangeColor(new HtmlColorSetSimple().getColorIfValid("#AAA")));
+		final ULine line = new ULine(0, height);
+		final int nb = getNbTick();
+		for (int i = 0; i <= nb; i++) {
+			ug.apply(new UTranslate(tickIntervalInPixels * i, 0)).draw(line);
 		}
 	}
 

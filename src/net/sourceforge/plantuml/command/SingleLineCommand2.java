@@ -44,8 +44,14 @@ import net.sourceforge.plantuml.core.Diagram;
 public abstract class SingleLineCommand2<S extends Diagram> implements Command<S> {
 
 	private final RegexConcat pattern;
+	private final boolean doTrim;
 
 	public SingleLineCommand2(RegexConcat pattern) {
+		this(true, pattern);
+	}
+
+	public SingleLineCommand2(boolean doTrim, RegexConcat pattern) {
+		this.doTrim = doTrim;
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
@@ -64,6 +70,13 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return new String[] { pattern.getPattern() };
 	}
 
+	private String myTrim(CharSequence s) {
+		if (doTrim) {
+			return StringUtils.trin(s);
+		}
+		return s.toString();
+	}
+
 	final public CommandControl isValid(BlocLines lines) {
 		if (lines.size() == 2 && syntaxWithFinalBracket()) {
 			return isValidBracket(lines);
@@ -74,7 +87,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String line = StringUtils.trin(lines.getFirst499());
+		final String line = myTrim(lines.getFirst499());
 		if (syntaxWithFinalBracket() && line.endsWith("{") == false) {
 			final String vline = lines.get499(0).toString() + " {";
 			if (isValid(BlocLines.single(vline)) == CommandControl.OK) {
@@ -92,7 +105,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	private CommandControl isValidBracket(BlocLines lines) {
 		assert lines.size() == 2;
 		assert syntaxWithFinalBracket();
-		if (StringUtils.trin(lines.get499(1)).equals("{") == false) {
+		if (myTrim(lines.get499(1)).equals("{") == false) {
 			return CommandControl.NOT_OK;
 		}
 		final String vline = lines.get499(0).toString() + " {";
@@ -108,13 +121,13 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {
 		if (syntaxWithFinalBracket() && lines.size() == 2) {
-			assert StringUtils.trin(lines.get499(1)).equals("{");
+			assert myTrim(lines.get499(1)).equals("{");
 			lines = BlocLines.single(lines.getFirst499() + " {");
 		}
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		final String line = StringUtils.trin(lines.getFirst499());
+		final String line = myTrim(lines.getFirst499());
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Syntax error: " + line);
 		}

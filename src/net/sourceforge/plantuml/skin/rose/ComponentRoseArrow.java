@@ -291,7 +291,8 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		return new Point2D.Double(getPaddingX(), y);
 	}
 
-	private double getYPoint(StringBounder stringBounder) {
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
 		if (isBelowForResponse()) {
 			return getPaddingY();
 		}

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.creole;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.EmbededDiagram;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -100,12 +100,13 @@ public class CreoleParser {
 			final CreoleContext context = new CreoleContext();
 			for (CharSequence cs : display) {
 				final Stripe stripe;
-				if (cs instanceof EmbededDiagram) {
-					final Atom atom = new AtomEmbededSystem((EmbededDiagram) cs);
+				if (cs instanceof EmbeddedDiagram) {
+					final Atom atom = ((EmbeddedDiagram) cs).asDraw(skinParam);
 					stripe = new Stripe() {
 						public Atom getHeader() {
 							return null;
 						}
+
 						public List<Atom> getAtoms() {
 							return Arrays.asList(atom);
 						}
