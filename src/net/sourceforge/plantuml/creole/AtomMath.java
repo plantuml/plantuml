@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
-public class AtomMath implements Atom {
+public class AtomMath extends AbstractAtom implements Atom {
 
 	private final double scale;
 	private final ScientificEquationSafe math;

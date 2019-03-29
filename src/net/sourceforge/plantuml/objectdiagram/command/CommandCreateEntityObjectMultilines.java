@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -81,18 +81,18 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 
 	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) {
 		lines = lines.trim(true);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
 		lines = lines.subExtract(1, 1);
-		for (CharSequence s : lines) {
-			assert s.length() > 0;
-			if (VisibilityModifier.isVisibilityCharacter(s)) {
+		for (StringLocated s : lines) {
+			assert s.getString().length() > 0;
+			if (VisibilityModifier.isVisibilityCharacter(s.getString())) {
 				diagram.setVisibilityModifierPresent(true);
 			}
-			entity.getBodier().addFieldOrMethod(s.toString(), entity);
+			entity.getBodier().addFieldOrMethod(s.getString(), entity);
 		}
 		return CommandExecutionResult.ok();
 	}

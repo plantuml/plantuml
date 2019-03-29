@@ -158,10 +158,10 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 				this.setScale(new ScaleSimple(scale));
 				// System.err.println("skipping " + s);
 			} else if (s.startsWith("sprite $")) {
-				BlocLines bloc = BlocLines.single(s);
+				BlocLines bloc = BlocLines.singleString(s);
 				do {
 					s = it.next();
-					bloc = bloc.add2(s);
+					bloc = bloc.addString(s);
 				} while (s.equals("}") == false);
 				final CommandExecutionResult cmdResult = cmd.execute(this, bloc);
 			} else {

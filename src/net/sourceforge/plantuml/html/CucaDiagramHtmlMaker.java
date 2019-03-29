@@ -127,7 +127,7 @@ public final class CucaDiagramHtmlMaker {
 		if (stereotype != null) {
 			pw.println("<hr>");
 			pw.println("<h3>Stereotype</h3>");
-			for (String s : stereotype.getLabels(diagram.getSkinParam().useGuillemet())) {
+			for (String s : stereotype.getLabels(diagram.getSkinParam().guillemet())) {
 				pw.println(s);
 				pw.println("<br>");
 			}

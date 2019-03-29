@@ -97,6 +97,40 @@ public class UImage implements UShape {
 		if (newColor == null) {
 			return this;
 		}
+		int darkerRgb = getDarkerRgb();
+		final BufferedImage copy = deepCopy2();
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
+				final int color = image.getRGB(i, j);
+				final int rgb = getRgb(color);
+				final int a = getA(color);
+				if (a != 0 && rgb == darkerRgb) {
+					copy.setRGB(i, j, newColor.getRGB() + a);
+				}
+			}
+		}
+		return new UImage(copy, formula);
+	}
+
+	public UImage muteTransparentColor(Color newColor) {
+		if (newColor == null) {
+			newColor = Color.WHITE;
+		}
+		final BufferedImage copy = deepCopy2();
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
+				final int color = image.getRGB(i, j);
+				// final int rgb = getRgb(color);
+				final int a = getA(color);
+				if (a == 0) {
+					copy.setRGB(i, j, newColor.getRGB());
+				}
+			}
+		}
+		return new UImage(copy, formula);
+	}
+
+	private int getDarkerRgb() {
 		int darkerRgb = -1;
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
@@ -116,18 +150,7 @@ public class UImage implements UShape {
 				}
 			}
 		}
-		final BufferedImage copy = deepCopy(image);
-		for (int i = 0; i < image.getWidth(); i++) {
-			for (int j = 0; j < image.getHeight(); j++) {
-				final int color = copy.getRGB(i, j);
-				final int rgb = getRgb(color);
-				final int a = getA(color);
-				if (a!=0 && rgb == darkerRgb) {
-					copy.setRGB(i, j, newColor.getRGB() + a);
-				}
-			}
-		}
-		return new UImage(copy, formula);
+		return darkerRgb;
 	}
 
 	private static final int mask_a__ = 0xFF000000;
@@ -149,10 +172,21 @@ public class UImage implements UShape {
 	// }
 
 	// From https://stackoverflow.com/questions/3514158/how-do-you-clone-a-bufferedimage
-	private static BufferedImage deepCopy(BufferedImage bi) {
+	private static BufferedImage deepCopyOld(BufferedImage bi) {
 		final ColorModel cm = bi.getColorModel();
 		final boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
 		final WritableRaster raster = bi.copyData(bi.getRaster().createCompatibleWritableRaster());
 		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
+
+	private BufferedImage deepCopy2() {
+		final BufferedImage result = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		for (int i = 0; i < this.image.getWidth(); i++) {
+			for (int j = 0; j < this.image.getHeight(); j++) {
+				result.setRGB(i, j, image.getRGB(i, j));
+			}
+		}
+		return result;
+	}
+
 }

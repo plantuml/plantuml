@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
@@ -74,8 +75,8 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Wit
 		return new SingleLineCommand2<WithSprite>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final WithSprite system, RegexResult arg) {
-				return executeInternal(system, arg, Arrays.asList((CharSequence) arg.get("DATA", 0)));
+			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location, RegexResult arg) {
+				return executeInternal(system, arg, Arrays.asList((String) arg.get("DATA", 0)));
 			}
 
 		};
@@ -91,21 +92,21 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Wit
 
 			protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines) {
 				lines = lines.trim(true);
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				if (lines.size() == 0) {
 					return CommandExecutionResult.error("No sprite defined.");
 				}
-				return executeInternal(system, line0, lines.getLines());
+				return executeInternal(system, line0, lines.getLinesAsStringForSprite());
 			}
 
 		};
 	}
 
 	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0,
-			final List<CharSequence> strings) {
+			final List<String> strings) {
 		try {
 			final Sprite sprite;
 			if (line0.get("DIM", 0) == null) {
@@ -135,9 +136,9 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Wit
 		}
 	}
 
-	private String concat(final List<? extends CharSequence> strings) {
+	private String concat(final List<String> strings) {
 		final StringBuilder sb = new StringBuilder();
-		for (CharSequence s : strings) {
+		for (String s : strings) {
 			sb.append(StringUtils.trin(s));
 		}
 		return sb.toString();

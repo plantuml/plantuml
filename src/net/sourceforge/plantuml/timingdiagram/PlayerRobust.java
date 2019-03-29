@@ -44,8 +44,8 @@ public class PlayerRobust extends AbstractPlayer {
 		return result;
 	}
 
-	public PlayerRobust(String full, ISkinParam skinParam, TimingRuler ruler) {
-		super(full, skinParam, ruler);
+	public PlayerRobust(TitleStrategy titleStrategy, String full, ISkinParam skinParam, TimingRuler ruler) {
+		super(titleStrategy, full, skinParam, ruler);
 	}
 
 }

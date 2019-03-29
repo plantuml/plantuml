@@ -43,13 +43,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.CharSequence2;
-import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.EmbeddedDiagram;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -73,31 +73,60 @@ import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class Display implements Iterable<CharSequence> {
 
-	private final List<CharSequence> display;
+	private final List<CharSequence> displayData;
 	private final HorizontalAlignment naturalHorizontalAlignment;
 	private final boolean isNull;
 	private final CreoleMode defaultCreoleMode;
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
+	private void check() {
+//		if (displayData != null)
+//			for (CharSequence s : displayData) {
+//				if (s == null) {
+//					continue;
+//				}
+//				if (s instanceof String) {
+//					continue;
+//				}
+//				if (s instanceof Stereotype) {
+//					continue;
+//				}
+//				// if (s instanceof CharSequence2) {
+//				// continue;
+//				// }
+//				if (s instanceof MessageNumber) {
+//					continue;
+//				}
+//				if (s instanceof EmbeddedDiagram) {
+//					continue;
+//				}
+//				System.err.println("PB=" + s);
+//				System.err.println("PB=" + s.getClass());
+//				for (int i = 0; i < 100; i++)
+//					Thread.dumpStack();
+//				System.exit(0);
+//			}
+	}
+
 	public Display replaceBackslashT() {
 		final Display result = new Display(this, defaultCreoleMode);
-		for (int i = 0; i < result.display.size(); i++) {
-			final CharSequence s = display.get(i);
+		for (int i = 0; i < result.displayData.size(); i++) {
+			final CharSequence s = displayData.get(i);
 			if (s.toString().contains("\\t")) {
-				result.display.set(i, s.toString().replace("\\t", "\t"));
+				result.displayData.set(i, s.toString().replace("\\t", "\t"));
 			}
 		}
+		result.check();
 		return result;
 	}
 
 	public Display replace(String src, String dest) {
 		final List<CharSequence> newDisplay = new ArrayList<CharSequence>();
-		for (CharSequence cs : display) {
+		for (CharSequence cs : displayData) {
 			if (cs.toString().contains(src)) {
 				cs = cs.toString().replace(src, dest);
 			}
@@ -107,8 +136,8 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public boolean isWhite() {
-		return display == null || display.size() == 0
-				|| (display.size() == 1 && display.get(0).toString().matches("\\s*"));
+		return displayData == null || displayData.size() == 0
+				|| (displayData.size() == 1 && displayData.get(0).toString().matches("\\s*"));
 	}
 
 	public static Display empty() {
@@ -117,6 +146,14 @@ public class Display implements Iterable<CharSequence> {
 
 	public static Display create(CharSequence... s) {
 		return create(Arrays.asList(s));
+	}
+
+	public static Display createFoo(List<StringLocated> data) {
+		final List<CharSequence> tmp = new ArrayList<CharSequence>();
+		for (StringLocated s : data) {
+			tmp.add(s.getString());
+		}
+		return create(tmp);
 	}
 
 	public static Display create(Collection<? extends CharSequence> other) {
@@ -176,22 +213,25 @@ public class Display implements Iterable<CharSequence> {
 
 	private Display(Display other, CreoleMode mode) {
 		this(other.naturalHorizontalAlignment, other.isNull, mode);
-		this.display.addAll(other.display);
+		this.displayData.addAll(other.displayData);
+		this.check();
 	}
 
 	private Display(HorizontalAlignment naturalHorizontalAlignment, boolean isNull, CreoleMode defaultCreoleMode) {
 		this.defaultCreoleMode = defaultCreoleMode;
 		this.isNull = isNull;
-		this.display = isNull ? null : new ArrayList<CharSequence>();
+		this.displayData = isNull ? null : new ArrayList<CharSequence>();
 		this.naturalHorizontalAlignment = isNull ? null : naturalHorizontalAlignment;
+		this.check();
 	}
 
 	private Display(Collection<? extends CharSequence> other, HorizontalAlignment naturalHorizontalAlignment,
 			boolean isNull, CreoleMode defaultCreoleMode) {
 		this(naturalHorizontalAlignment, isNull, defaultCreoleMode);
 		if (isNull == false) {
-			this.display.addAll(manageEmbeddedDiagrams(other));
+			this.displayData.addAll(manageEmbeddedDiagrams(other));
 		}
+		this.check();
 	}
 
 	private static List<CharSequence> manageEmbeddedDiagrams(final Collection<? extends CharSequence> strings) {
@@ -199,11 +239,17 @@ public class Display implements Iterable<CharSequence> {
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
 			CharSequence s = it.next();
+			if (s instanceof StringLocated) {
+				s = ((StringLocated) s).getString();
+			}
 			if (s != null && StringUtils.trin(s.toString()).equals("{{")) {
 				final List<CharSequence> other = new ArrayList<CharSequence>();
 				other.add("@startuml");
 				while (it.hasNext()) {
-					final CharSequence s2 = it.next();
+					CharSequence s2 = it.next();
+					if (s2 instanceof StringLocated) {
+						s2 = ((StringLocated) s2).getString();
+					}
 					if (s2 != null && StringUtils.trin(s2.toString()).equals("}}")) {
 						break;
 					}
@@ -220,28 +266,24 @@ public class Display implements Iterable<CharSequence> {
 	public Display manageGuillemet() {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
 		boolean first = true;
-		for (CharSequence line : display) {
+		for (CharSequence line : displayData) {
 			String lineString = line.toString();
 			if (first && VisibilityModifier.isVisibilityCharacter(line)) {
 				lineString = lineString.substring(1).trim();
 			}
-			final String withGuillement = StringUtils.manageGuillemet(lineString);
-			// if (withGuillement.equals(lineString)) {
-			// result.add(lineString);
-			// } else {
+			final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);
 			result.add(withGuillement);
-			// }
 			first = false;
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 	}
 
 	public Display withPage(int page, int lastpage) {
-		if (display == null) {
+		if (displayData == null) {
 			return this;
 		}
 		final List<CharSequence> result = new ArrayList<CharSequence>();
-		for (CharSequence line : display) {
+		for (CharSequence line : displayData) {
 			line = line.toString().replace("%page%", "" + page);
 			line = line.toString().replace("%lastpage%", "" + lastpage);
 			result.add(line);
@@ -251,7 +293,7 @@ public class Display implements Iterable<CharSequence> {
 
 	public Display underlined() {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
-		for (CharSequence line : display) {
+		for (CharSequence line : displayData) {
 			result.add("<u>" + line);
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
@@ -264,61 +306,57 @@ public class Display implements Iterable<CharSequence> {
 		return new Display(this, mode);
 	}
 
-	// private String asStringWithHiddenNewLine() {
-	// final StringBuilder sb = new StringBuilder();
-	// for (int i = 0; i < display.size(); i++) {
-	// sb.append(display.get(i));
-	// if (i < display.size() - 1) {
-	// sb.append(BackSlash.hiddenNewLine());
-	// }
-	// }
-	// return sb.toString();
-	// }
-
 	@Override
 	public String toString() {
 		if (isNull) {
 			return "NULL";
 		}
-		return display.toString();
+		return displayData.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		return display.hashCode();
+		return displayData.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object other) {
-		return this.display.equals(((Display) other).display);
+		return this.displayData.equals(((Display) other).displayData);
 	}
 
 	public Display addAll(Display other) {
 		final Display result = new Display(this, this.defaultCreoleMode);
-		result.display.addAll(other.display);
+		result.displayData.addAll(other.displayData);
+		result.check();
 		return result;
 	}
 
 	public Display addFirst(CharSequence s) {
 		final Display result = new Display(this, this.defaultCreoleMode);
-		result.display.add(0, s);
+		result.displayData.add(0, s);
+		result.check();
 		return result;
 	}
 
 	public Display add(CharSequence s) {
+		if (s instanceof StringLocated) {
+			s = ((StringLocated) s).getString();
+		}
 		final Display result = new Display(this, this.defaultCreoleMode);
-		result.display.add(s);
+		result.displayData.add(s);
+		result.check();
 		return result;
 	}
 
 	public Display addGeneric(CharSequence s) {
 		final Display result = new Display(this, this.defaultCreoleMode);
-		final int size = display.size();
+		final int size = displayData.size();
 		if (size == 0) {
-			result.display.add("<" + s + ">");
+			result.displayData.add("<" + s + ">");
 		} else {
-			result.display.set(size - 1, display.get(size - 1) + "<" + s + ">");
+			result.displayData.set(size - 1, displayData.get(size - 1) + "<" + s + ">");
 		}
+		result.check();
 		return result;
 	}
 
@@ -326,32 +364,32 @@ public class Display implements Iterable<CharSequence> {
 		if (isNull) {
 			return 0;
 		}
-		return display.size();
+		return displayData.size();
 	}
 
 	public CharSequence get(int i) {
-		return display.get(i);
+		return displayData.get(i);
 	}
 
 	public Iterator<CharSequence> iterator() {
-		return Collections.unmodifiableList(display).iterator();
+		return Collections.unmodifiableList(displayData).iterator();
 	}
 
 	public Display subList(int i, int size) {
-		return new Display(display.subList(i, size), this.naturalHorizontalAlignment, this.isNull,
+		return new Display(displayData.subList(i, size), this.naturalHorizontalAlignment, this.isNull,
 				this.defaultCreoleMode);
 	}
 
 	public List<? extends CharSequence> as() {
-		return Collections.unmodifiableList(display);
+		return Collections.unmodifiableList(displayData);
 	}
 
-	public List<CharSequence2> as2() {
-		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+	public List<StringLocated> as2() {
+		final List<StringLocated> result = new ArrayList<StringLocated>();
 		LineLocationImpl location = new LineLocationImpl("inner", null);
-		for (CharSequence cs : display) {
+		for (CharSequence cs : displayData) {
 			location = location.oneLineRead();
-			result.add(new CharSequence2Impl(cs, location));
+			result.add(new StringLocated(cs.toString(), location));
 		}
 		return Collections.unmodifiableList(result);
 	}
@@ -374,17 +412,17 @@ public class Display implements Iterable<CharSequence> {
 		final List<Display> result = new ArrayList<Display>();
 		Display pending = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 		result.add(pending);
-		for (CharSequence line : display) {
+		for (CharSequence line : displayData) {
 			final Matcher2 m = separator.matcher(line);
 			if (m.find()) {
 				final CharSequence s1 = line.subSequence(0, m.start());
-				pending.display.add(s1);
+				pending.displayData.add(s1);
 				final CharSequence s2 = line.subSequence(m.end(), line.length());
 				pending = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 				result.add(pending);
-				pending.display.add(s2);
+				pending.displayData.add(s2);
 			} else {
-				pending.display.add(line);
+				pending.displayData.add(line);
 			}
 		}
 		return Collections.unmodifiableList(result);
@@ -484,7 +522,7 @@ public class Display implements Iterable<CharSequence> {
 			circledCharacter = stereotype.getSprite(spriteContainer);
 		}
 		if (circledCharacter != null) {
-			if (stereotype.getLabel(false) == null) {
+			if (stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 				return new TextBlockSprited(circledCharacter, this.subList(1, this.size()), fontConfiguration,
 						horizontalAlignment, spriteContainer);
 			}

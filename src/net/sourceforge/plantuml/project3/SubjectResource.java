@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project3;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;

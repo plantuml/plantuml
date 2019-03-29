@@ -39,8 +39,8 @@ import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_bezier;
 import h.ST_pointf;
-import h.ST_textlabel_t;
 import h.ST_splines;
+import h.ST_textlabel_t;
 
 import java.awt.geom.Point2D;
 
@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import smetana.core.Macro;
-import smetana.core.__ptr__;
 
 public class JDotPath implements UDrawable {
 

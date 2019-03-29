@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -73,7 +74,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location, RegexResult arg) {
 		final Code code = Code.of(arg.get("NAME", 1));
 		final String display = arg.get("NAME", 0);
 		final String stereotype = arg.get("STEREO", 0);

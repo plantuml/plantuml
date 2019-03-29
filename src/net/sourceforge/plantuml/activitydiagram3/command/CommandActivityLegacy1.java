@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -59,7 +60,7 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
 		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), BoxStyle.PLAIN, null, Colors.empty());
 		return CommandExecutionResult.ok();
 	}

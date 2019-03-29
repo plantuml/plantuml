@@ -50,7 +50,7 @@ public class DriverDotPathEps implements UDriver<EpsGraphics> {
 
 		if (param.getColor() != null) {
 			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
-			eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
+			eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
 					.getDashSpace());
 			shape.draw(eps, x, y);
 		}

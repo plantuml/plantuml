@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -90,7 +91,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 			public final CommandExecutionResult executeNow(final ActivityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, true);
-				final RegexResult arg = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				final RegexResult arg = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				
@@ -121,7 +122,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<ActivityDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final ActivityDiagram system, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final ActivityDiagram system, LineLocation location, RegexResult arg) {
 				final IEntity note = system.createNote(UniqueSequence.getCode("GN"),
 						Display.getWithNewlines(arg.get("NOTE", 0)));
 				return executeInternal(system, arg, note);

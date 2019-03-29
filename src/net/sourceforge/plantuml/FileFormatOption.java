@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
  * @author Arnaud Roques
  * 
  */
-public class FileFormatOption implements Serializable {
+public final class FileFormatOption implements Serializable {
 
 	private final FileFormat fileFormat;
 	private final AffineTransform affineTransform;
@@ -56,9 +56,14 @@ public class FileFormatOption implements Serializable {
 	private final String svgLinkTarget;
 	private final String hoverColor;
 	private final TikzFontDistortion tikzFontDistortion;
+	private final double scale;
+
+	public double getScaleCoef() {
+		return scale;
+	}
 
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, null, true, false, "_top", false, null, TikzFontDistortion.getDefault());
+		this(fileFormat, null, true, false, "_top", false, null, TikzFontDistortion.getDefault(), 1.0);
 	}
 
 	public StringBounder getDefaultStringBounder() {
@@ -74,11 +79,12 @@ public class FileFormatOption implements Serializable {
 	}
 
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, null, false, false, "_top", false, null, TikzFontDistortion.getDefault());
+		this(fileFormat, null, false, false, "_top", false, null, TikzFontDistortion.getDefault(), 1.0);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError,
-			String svgLinkTarget, boolean debugsvek, String hoverColor, TikzFontDistortion tikzFontDistortion) {
+			String svgLinkTarget, boolean debugsvek, String hoverColor, TikzFontDistortion tikzFontDistortion,
+			double scale) {
 		this.hoverColor = hoverColor;
 		this.fileFormat = fileFormat;
 		this.affineTransform = at;
@@ -87,6 +93,7 @@ public class FileFormatOption implements Serializable {
 		this.svgLinkTarget = svgLinkTarget;
 		this.debugsvek = debugsvek;
 		this.tikzFontDistortion = tikzFontDistortion;
+		this.scale = scale;
 		if (tikzFontDistortion == null) {
 			throw new IllegalArgumentException();
 		}
@@ -94,22 +101,27 @@ public class FileFormatOption implements Serializable {
 
 	public FileFormatOption withUseRedForError() {
 		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget, debugsvek,
-				hoverColor, tikzFontDistortion);
+				hoverColor, tikzFontDistortion, scale);
 	}
 
 	public FileFormatOption withTikzFontDistortion(TikzFontDistortion tikzFontDistortion) {
 		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget, debugsvek,
-				hoverColor, tikzFontDistortion);
+				hoverColor, tikzFontDistortion, scale);
 	}
 
 	public FileFormatOption withSvgLinkTarget(String svgLinkTarget) {
 		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget,
-				debugsvek, hoverColor, tikzFontDistortion);
+				debugsvek, hoverColor, tikzFontDistortion, scale);
 	}
 
 	public FileFormatOption withHoverColor(String hoverColor) {
 		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget,
-				debugsvek, hoverColor, tikzFontDistortion);
+				debugsvek, hoverColor, tikzFontDistortion, scale);
+	}
+
+	public FileFormatOption withScale(double scale) {
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget,
+				debugsvek, hoverColor, tikzFontDistortion, scale);
 	}
 
 	@Override

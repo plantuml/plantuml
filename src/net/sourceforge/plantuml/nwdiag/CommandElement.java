@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -58,7 +59,7 @@ public class CommandElement extends SingleLineCommand2<NwDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(NwDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
 		return diagram.addElement(arg.get("NAME", 0), arg.get("DEFINITION", 1));
 	}
 

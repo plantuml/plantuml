@@ -44,8 +44,8 @@ public class PlayerConcise extends AbstractPlayer {
 		return result;
 	}
 
-	public PlayerConcise(String full, ISkinParam skinParam, TimingRuler ruler) {
-		super(full, skinParam, ruler);
+	public PlayerConcise(TitleStrategy titleStrategy, String full, ISkinParam skinParam, TimingRuler ruler) {
+		super(titleStrategy, full, skinParam, ruler);
 	}
 
 }

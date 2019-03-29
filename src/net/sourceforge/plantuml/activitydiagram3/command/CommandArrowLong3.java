@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -73,7 +72,7 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.removeEmptyColumns();
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
 		// diagram.setColorNextArrow(HtmlColorAndStyle.fromColor(color));
 		final String colorString = line0.get("COLOR", 0);

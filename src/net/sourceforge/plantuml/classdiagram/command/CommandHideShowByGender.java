@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import java.util.EnumSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -93,7 +94,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
 		if (diagram instanceof AbstractClassOrObjectDiagram) {
 			return executeClassDiagram((AbstractClassOrObjectDiagram) diagram, arg);
 		}

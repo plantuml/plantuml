@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.awt.geom.Dimension2D;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -44,20 +45,20 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class PlayerBinary implements Player {
+public class PlayerBinary extends ReallyAbstractPlayer implements Player {
 
 	private static final int HEIGHT = 30;
-	private final TimingRuler ruler;
 	private final SortedMap<TimeTick, Boolean> values = new TreeMap<TimeTick, Boolean>();
 
-	public PlayerBinary(ISkinParam skinParam, TimingRuler ruler) {
-		this.ruler = ruler;
+	public PlayerBinary(TitleStrategy titleStrategy, String code, ISkinParam skinParam, TimingRuler ruler) {
+		super(titleStrategy, code, skinParam, ruler);
 	}
 
 	public double getHeight(StringBounder stringBounder) {
@@ -95,7 +96,7 @@ public class PlayerBinary implements Player {
 
 	private final double ymargin = 8;
 
-	public void drawTitle(UGraphic ug) {
+	public void drawFrameTitle(UGraphic ug) {
 	}
 
 	private double getYpos(boolean state) {
@@ -119,11 +120,15 @@ public class PlayerBinary implements Player {
 	}
 
 	public void drawLeftHeader(UGraphic ug) {
-
+		final StringBounder stringBounder = ug.getStringBounder();
+		final TextBlock title = getTitle();
+		final Dimension2D dim = title.calculateDimension(stringBounder);
+		final double y = (getHeight(stringBounder) - dim.getHeight()) / 2;
+		title.drawU(ug.apply(new UTranslate(0, y)));
 	}
 
 	public double getWidthHeader(StringBounder stringBounder) {
-		return 0;
+		return getTitle().calculateDimension(stringBounder).getWidth() + 5;
 	}
 
 }

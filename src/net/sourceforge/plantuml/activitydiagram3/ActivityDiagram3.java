@@ -171,7 +171,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 		if (last instanceof InstructionWhile == false) {
 			return false;
 		}
-		((InstructionWhile) last).setSpecial(special);
+		final InstructionWhile instructionWhile = (InstructionWhile) last;
+		if (instructionWhile.containsBreak()) {
+			return false;
+		}
+		instructionWhile.setSpecial(special);
 		return true;
 	}
 
@@ -220,7 +224,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final double dpiFactor;
 		final Scale scale = getScale();
 		if (scale == null) {
-			dpiFactor = getDpiFactor(fileFormatOption);
+			dpiFactor = getScaleCoef(fileFormatOption);
 		} else {
 			dpiFactor = scale.getScale(dim.getWidth(), dim.getHeight());
 		}

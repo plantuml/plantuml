@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.ugraphic;
 import java.awt.Color;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorMiddle;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 
 public class ColorMapperReverse implements ColorMapper {
@@ -51,6 +52,9 @@ public class ColorMapperReverse implements ColorMapper {
 	public Color getMappedColor(HtmlColor color) {
 		if (color == null) {
 			return null;
+		}
+		if (color instanceof HtmlColorMiddle) {
+			return ((HtmlColorMiddle) color).getMappedColor(this);
 		}
 		return getReverse(((HtmlColorSimple) color).getColor999());
 	}

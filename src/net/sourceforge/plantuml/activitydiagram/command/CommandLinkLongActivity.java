@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -110,7 +111,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 	protected CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 
 		final IEntity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
 		if (entity1 == null) {
@@ -129,14 +130,14 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		final String desc0 = line0.get("DESC", 0);
 		Url urlActivity = null;
 		if (StringUtils.isNotEmpty(desc0)) {
-			urlActivity = extractUrl(diagram, desc0);
+			urlActivity = extractUrlString(diagram, desc0);
 			if (urlActivity == null) {
 				sb.append(desc0);
 				sb.append(BackSlash.BS_BS_N);
 			}
 		}
 		int i = 0;
-		for (CharSequence cs : lines.subExtract(1, 1)) {
+		for (StringLocated cs : lines.subExtract(1, 1)) {
 			i++;
 			if (i == 1 && urlActivity == null) {
 				urlActivity = extractUrl(diagram, cs);
@@ -144,14 +145,14 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 					continue;
 				}
 			}
-			sb.append(cs);
+			sb.append(cs.getString());
 			if (i < lines.size() - 2) {
 				sb.append(BackSlash.BS_BS_N);
 			}
 		}
 
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
-				.toString());
+				.getString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			if (sb.length() > 0 && sb.toString().endsWith(BackSlash.BS_BS_N) == false) {
 				sb.append(BackSlash.BS_BS_N);
@@ -223,9 +224,13 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		return CommandExecutionResult.ok();
 	}
 
-	public Url extractUrl(final ActivityDiagram diagram, CharSequence string) {
+	public Url extractUrl(final ActivityDiagram diagram, StringLocated string) {
+		return extractUrlString(diagram, string.getString());
+	}
+
+	public Url extractUrlString(final ActivityDiagram diagram, String string) {
 		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-		return urlBuilder.getUrl(string.toString());
+		return urlBuilder.getUrl(string);
 	}
 
 }

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -81,14 +81,14 @@ public class SkinLoader {
 		lines = lines.subExtract(1, 1);
 		lines = lines.trim(true);
 
-		for (CharSequence s : lines) {
-			assert s.length() > 0;
+		for (StringLocated s : lines) {
+			assert s.getString().length() > 0;
 
-			if (s.toString().equals("}")) {
+			if (s.getString().equals("}")) {
 				this.pop();
 				continue;
 			}
-			final Matcher2 m = p1.matcher(s);
+			final Matcher2 m = p1.matcher(s.getString());
 			if (m.find() == false) {
 				throw new IllegalStateException();
 			}
@@ -98,7 +98,7 @@ public class SkinLoader {
 				final String key = this.getFullParam() + m.group(1);
 				diagram.setParam(key, m.group(3));
 			} else {
-				throw new IllegalStateException("." + s.toString() + ".");
+				throw new IllegalStateException("." + s.getString() + ".");
 			}
 		}
 

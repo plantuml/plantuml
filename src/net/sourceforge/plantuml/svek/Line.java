@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -637,7 +638,7 @@ public class Line implements Moveable, Hideable {
 
 	}
 
-	public void drawU(UGraphic ug, HtmlColor color) {
+	public void drawU(UGraphic ug, HtmlColor color, Set<String> ids) {
 		if (opale) {
 			return;
 		}
@@ -700,7 +701,10 @@ public class Line implements Moveable, Hideable {
 			}
 		}
 
-		todraw.setComment(link.getEntity1().getCode().getFullName() + "-" + link.getEntity2().getCode().getFullName());
+		final String comment = link.getEntity1().getCode().getFullName() + "-"
+				+ link.getEntity2().getCode().getFullName();
+		todraw.setComment(uniq(ids, comment));
+
 		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors(), stroke);
 
 		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));
@@ -733,7 +737,24 @@ public class Line implements Moveable, Hideable {
 		}
 	}
 
-	private void drawRainbow(UGraphic ug, HtmlColor color, DotPath todraw, List<Colors> supplementaryColors, UStroke stroke) {
+	private String uniq(final Set<String> ids, final String comment) {
+		boolean changed = ids.add(comment);
+		if (changed) {
+			return comment;
+		}
+		int i = 1;
+		while (true) {
+			final String candidate = comment + "-" + i;
+			changed = ids.add(candidate);
+			if (changed) {
+				return candidate;
+			}
+			i++;
+		}
+	}
+
+	private void drawRainbow(UGraphic ug, HtmlColor color, DotPath todraw, List<Colors> supplementaryColors,
+			UStroke stroke) {
 		ug.draw(todraw);
 		final LinkType linkType = link.getType();
 

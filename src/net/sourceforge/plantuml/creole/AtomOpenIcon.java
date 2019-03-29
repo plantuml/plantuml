@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class AtomOpenIcon implements Atom {
+public class AtomOpenIcon extends AbstractAtom implements Atom {
 
 	private final OpenIcon openIcon;
 	private final double factor;

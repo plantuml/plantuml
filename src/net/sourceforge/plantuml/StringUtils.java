@@ -412,20 +412,6 @@ public class StringUtils {
 		return s.endsWith("\\") && s.endsWith("\\\\") == false;
 	}
 
-	public static String manageGuillemetStrict(String st) {
-		if (st.startsWith("<< ")) {
-			st = "\u00AB" + st.substring(3);
-		} else if (st.startsWith("<<")) {
-			st = "\u00AB" + st.substring(2);
-		}
-		if (st.endsWith(" >>")) {
-			st = st.substring(0, st.length() - 3) + "\u00BB";
-		} else if (st.endsWith(">>")) {
-			st = st.substring(0, st.length() - 2) + "\u00BB";
-		}
-		return st;
-	}
-
 	public static String rot(String s) {
 		final StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
@@ -440,10 +426,6 @@ public class StringUtils {
 			sb.append(c);
 		}
 		return sb.toString();
-	}
-
-	public static String manageGuillemet(String st) {
-		return st.replaceAll("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>", "\u00AB$1\u00BB");
 	}
 
 	public static String manageUnicodeNotationUplus(String s) {
@@ -478,12 +460,15 @@ public class StringUtils {
 	}
 
 	public static String trinNoTrace(CharSequence s) {
+//		if (s instanceof CharSequence2) {
+//			return ((CharSequence2) s).getString().trim();
+//		}
 		return s.toString().trim();
 	}
 
-	public static String trin(CharSequence arg) {
+	public static String trin(String arg) {
 		if (arg.length() == 0) {
-			return arg.toString();
+			return arg;
 		}
 		int i = 0;
 		while (i < arg.length() && isSpaceOrTabOrNull(arg.charAt(i))) {
@@ -494,9 +479,9 @@ public class StringUtils {
 			j--;
 		}
 		if (i == 0 && j == arg.length() - 1) {
-			return arg.toString();
+			return arg;
 		}
-		return arg.subSequence(i, j + 1).toString();
+		return arg.substring(i, j + 1);
 	}
 
 	private static boolean isSpaceOrTabOrNull(char c) {

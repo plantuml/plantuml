@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
@@ -120,7 +121,6 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateEmptyDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageSynchroBar;
 import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public final class GeneralImageBuilder {
 
@@ -356,7 +356,7 @@ public final class GeneralImageBuilder {
 			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
 				return new EntityImageStateEmptyDescription(leaf, skinParam);
 			}
-			if (leaf.getStereotype() != null && "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(false))) {
+			if (leaf.getStereotype() != null && "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR))) {
 				return new EntityImageState2(leaf, skinParam);
 			}
 			return new EntityImageState(leaf, skinParam);
@@ -554,9 +554,8 @@ public final class GeneralImageBuilder {
 		if (legend == null || legend.isNull()) {
 			return original;
 		}
-		final TextBlock text = EntityImageLegend.create(legend.getDisplay(), dotData.getSkinParam());
-
-		return DecorateEntityImage.add(original, text, legend.getHorizontalAlignment(), legend.getVerticalAlignment());
+		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), dotData.getSkinParam());
+		return DecorateEntityImage.add(legendBlock, original, legend.getHorizontalAlignment(), legend.getVerticalAlignment());
 	}
 
 	private TextBlock getStereoBlock(IGroup g) {
@@ -566,7 +565,7 @@ public final class GeneralImageBuilder {
 
 	private TextBlock getStereoBlockWithoutLegend(IGroup g) {
 		final Stereotype stereotype = g.getStereotype();
-		final DisplayPositionned legend = g.getLegend();
+		// final DisplayPositionned legend = g.getLegend();
 		if (stereotype == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
@@ -575,7 +574,7 @@ public final class GeneralImageBuilder {
 			return tmp;
 		}
 
-		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().useGuillemet());
+		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().guillemet());
 		if (stereos == null) {
 			return TextBlockUtils.empty(0, 0);
 		}

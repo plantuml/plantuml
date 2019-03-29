@@ -152,7 +152,9 @@ public class FileUtils {
 	// return ImageIO.read(f);
 	// }
 
-	public static BufferedImage ImageIO_read(File f) {
+	// http://forum.plantuml.net/9048/img-tag-for-sequence-diagram-participants-does-always-render
+	
+	public synchronized static BufferedImage ImageIO_read(File f) {
 		// https://www.experts-exchange.com/questions/26171948/Why-are-ImageIO-read-images-losing-their-transparency.html
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
 
@@ -163,7 +165,7 @@ public class FileUtils {
 		}
 	}
 
-	public static BufferedImage ImageIO_read(URL url) {
+	public synchronized static BufferedImage ImageIO_read(URL url) {
 		try {
 			return readImage(new ImageIcon(url));
 		} catch (Exception e) {
@@ -171,7 +173,7 @@ public class FileUtils {
 		}
 	}
 
-	private static BufferedImage readImage(final ImageIcon imageIcon) {
+	private synchronized static BufferedImage readImage(final ImageIcon imageIcon) {
 		final Image tmpImage = imageIcon.getImage();
 		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
 				BufferedImage.TYPE_INT_ARGB);

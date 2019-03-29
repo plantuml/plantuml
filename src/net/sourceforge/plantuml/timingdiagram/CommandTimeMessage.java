@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -67,7 +68,7 @@ public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
 		final Player player1 = diagram.getPlayer(arg.get("PART1", 0));
 		if (player1 == null) {
 			return CommandExecutionResult.error("No such element: " + arg.get("PART1", 0));

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -62,9 +62,9 @@ public class IfManager extends ReadLineInstrumented implements ReadLine {
 	}
 
 	@Override
-	final CharSequence2 readLineInst() throws IOException {
+	final StringLocated readLineInst() throws IOException {
 		if (child != null) {
-			final CharSequence2 s = child.readLine();
+			final StringLocated s = child.readLine();
 			if (s != null) {
 				return s;
 			}
@@ -74,13 +74,13 @@ public class IfManager extends ReadLineInstrumented implements ReadLine {
 		return readLineInternal();
 	}
 
-	protected CharSequence2 readLineInternal() throws IOException {
-		final CharSequence2 s = source.readLine();
+	protected StringLocated readLineInternal() throws IOException {
+		final StringLocated s = source.readLine();
 		if (s == null) {
 			return null;
 		}
 
-		Matcher2 m = ifcomparePattern.matcher(s);
+		Matcher2 m = ifcomparePattern.matcher(s.getString());
 		if (m.find()) {
 			final int value1 = getValue(m.group(1));
 			final String operator = m.group(2);
@@ -94,7 +94,7 @@ public class IfManager extends ReadLineInstrumented implements ReadLine {
 			return this.readLine();
 		}
 
-		m = ifdefPattern.matcher(s);
+		m = ifdefPattern.matcher(s.getString());
 		if (m.find()) {
 			boolean ok = defines.get().isDefine(m.group(2));
 			if (m.group(1) != null) {

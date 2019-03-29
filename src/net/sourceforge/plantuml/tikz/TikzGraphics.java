@@ -47,7 +47,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -271,8 +270,8 @@ public class TikzGraphics {
 		return "(" + format(x) + "pt," + format(y) + "pt)";
 	}
 
-	private String format(double x) {
-		return EpsGraphics.format(x);
+	public static String format(double x) {
+		return EpsGraphics.formatSimple4(x);
 	}
 
 	private void out(OutputStream os, String s) throws IOException {
@@ -495,7 +494,7 @@ public class TikzGraphics {
 			} else if (type == USegmentType.SEG_CLOSE) {
 				// Nothing
 			} else {
-				Log.println("unknown " + seg);
+				Log.println("unknown4 " + seg);
 			}
 		}
 		sb.append(";");
@@ -513,6 +512,20 @@ public class TikzGraphics {
 		}
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " ellipse (" + format(width) + "pt and "
 				+ format(height) + "pt);");
+		addCommand(sb);
+	}
+
+	public void arc(double x, double y, int angleStart, int angleEnd, double radius) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("\\draw[");
+		if (color != null) {
+			sb.append("color=" + getColorName(color) + ",");
+		}
+		if (fillcolor != null) {
+			sb.append("fill=" + getColorName(fillcolor) + ",");
+		}
+		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " arc (" + angleStart + ":" + angleEnd + ":"
+				+ format(radius) + "pt);");
 		addCommand(sb);
 	}
 

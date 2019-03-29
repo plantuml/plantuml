@@ -203,6 +203,8 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	}
 
 	private String anchor;
+	private String anchor1;
+	private String anchor2;
 
 	public void setAnchor(String anchor) {
 		this.anchor = anchor;
@@ -210,9 +212,26 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 			throw new IllegalArgumentException(anchor);
 		}
 	}
+	
+	public void setPart1Anchor(String anchor) {
+		this.anchor1 = anchor;
+	}
+
+	public void setPart2Anchor(String anchor) {
+		this.anchor2 = anchor;
+	}
 
 	public String getAnchor() {
 		return anchor;
 	}
+	
+	public String getPart1Anchor() {
+		return this.anchor1;
+	}
+
+	public String getPart2Anchor() {
+		return this.anchor2;
+	}
+
 
 }

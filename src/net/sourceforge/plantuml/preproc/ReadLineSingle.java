@@ -35,21 +35,21 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 
 public class ReadLineSingle implements ReadLine {
 
-	private final CharSequence2 data;
+	private final StringLocated data;
 	private int current = 0;
 
-	public ReadLineSingle(CharSequence2 s2) {
+	public ReadLineSingle(StringLocated s2) {
 		this.data = s2;
 	}
 
 	public void close() {
 	}
 
-	public CharSequence2 readLine() {
+	public StringLocated readLine() {
 		if (current > 0) {
 			return null;
 		}

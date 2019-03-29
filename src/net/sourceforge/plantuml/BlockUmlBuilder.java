@@ -45,30 +45,35 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.DefinesGet;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.preproc.PreprocessorChangeModeReader;
 import net.sourceforge.plantuml.preproc.ReadLineNumbered;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
-import net.sourceforge.plantuml.preproc2.Preprocessor2;
+import net.sourceforge.plantuml.preproc2.Preprocessor;
+import net.sourceforge.plantuml.preproc2.PreprocessorMode;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
+
+	private PreprocessorMode mode = PreprocessorMode.V1_LEGACY;
 
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
 	private Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
 	private final UncommentReadLine reader2;
 	private final Defines defines;
+	private final ImportedFiles importedFiles;
 
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir,
 			String desc) throws IOException {
 		ReadLineNumbered includer = null;
 		this.defines = defines;
 		try {
-			reader2 = new UncommentReadLine(ReadLineReader.create(reader, desc));
-			includer = new Preprocessor2(config, reader2, charset, defines, this,
-					ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir)));
+			this.reader2 = new UncommentReadLine(new PreprocessorChangeModeReader(ReadLineReader.create(reader, desc),
+					this));
+			this.importedFiles = ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir));
+			includer = new Preprocessor(config, reader2, charset, defines, this, importedFiles);
 			init(includer);
 		} finally {
 			if (includer != null) {
@@ -83,41 +88,41 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	}
 
 	private void init(ReadLineNumbered includer) throws IOException {
-		CharSequence2 s = null;
-		List<CharSequence2> current2 = null;
+		StringLocated s = null;
+		List<StringLocated> current2 = null;
 		boolean paused = false;
 
 		while ((s = includer.readLine()) != null) {
-			if (StartUtils.isArobaseStartDiagram(s)) {
-				current2 = new ArrayList<CharSequence2>();
+			if (StartUtils.isArobaseStartDiagram(s.getString())) {
+				current2 = new ArrayList<StringLocated>();
 				paused = false;
 			}
-			if (StartUtils.isArobasePauseDiagram(s)) {
+			if (StartUtils.isArobasePauseDiagram(s.getString())) {
 				paused = true;
 				reader2.setPaused(true);
 			}
-			if (StartUtils.isExit(s)) {
+			if (StartUtils.isExit(s.getString())) {
 				paused = true;
 				reader2.setPaused(true);
 			}
 			if (current2 != null && paused == false) {
 				current2.add(s);
 			} else if (paused) {
-				final CharSequence2 append = StartUtils.getPossibleAppend(s);
+				final StringLocated append = StartUtils.getPossibleAppend(s);
 				if (append != null) {
 					current2.add(append);
 				}
 			}
 
-			if (StartUtils.isArobaseUnpauseDiagram(s)) {
+			if (StartUtils.isArobaseUnpauseDiagram(s.getString())) {
 				paused = false;
 				reader2.setPaused(false);
 			}
-			if (StartUtils.isArobaseEndDiagram(s) && current2 != null) {
+			if (StartUtils.isArobaseEndDiagram(s.getString()) && current2 != null) {
 				if (paused) {
 					current2.add(s);
 				}
-				blocks.add(new BlockUml(current2, defines.cloneMe(), null));
+				blocks.add(new BlockUml(current2, defines.cloneMe(), null, this));
 				current2 = null;
 				reader2.setPaused(false);
 			}
@@ -132,7 +137,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		return Collections.unmodifiableSet(usedFiles);
 	}
 
-	public List<? extends CharSequence> getDefinition(String name) {
+	public List<String> getDefinition(String name) {
 		for (BlockUml block : blocks) {
 			if (block.isStartDef(name)) {
 				this.defines.importFrom(block.getLocalDefines());
@@ -140,6 +145,18 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 			}
 		}
 		return Collections.emptyList();
+	}
+
+	public PreprocessorMode getPreprocessorMode() {
+		return mode;
+	}
+
+	public void setPreprocessorMode(PreprocessorMode mode) {
+		this.mode = mode;
+	}
+
+	public final ImportedFiles getImportedFiles() {
+		return importedFiles;
 	}
 
 }

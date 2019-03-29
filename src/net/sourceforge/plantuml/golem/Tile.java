@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.golem;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.EnumMap;

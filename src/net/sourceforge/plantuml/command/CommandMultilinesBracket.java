@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -71,7 +71,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final Matcher2 m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
+		final Matcher2 m1 = starting.matcher(lines.getFirst499().getStringTrimmed());
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -80,8 +80,8 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		}
 
 		int level = 1;
-		for (CharSequence cs : lines.subExtract(1, 0)) {
-			final String s = StringUtils.trin(cs);
+		for (StringLocated cs : lines.subExtract(1, 0)) {
+			final String s = cs.getStringTrimmed();
 			if (isLineConsistent(s, level) == false) {
 				return CommandControl.NOT_OK;
 			}

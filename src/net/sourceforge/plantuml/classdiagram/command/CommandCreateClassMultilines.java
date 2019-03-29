@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -114,12 +115,11 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf("IMPLEMENTS", "([%s]+(implements)[%s]+(" + CODES + "))?"), //
 				new RegexLeaf("[%s]*\\{[%s]*$"));
 	}
-	
+
 	@Override
 	public boolean syntaxWithFinalBracket() {
 		return true;
 	}
-
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
@@ -127,7 +127,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	protected CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
@@ -144,11 +144,15 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			// if (url != null) {
 			// lines = lines.subExtract(1, 0);
 			// }
-			for (CharSequence s : lines) {
-				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s)) {
+			for (StringLocated s : lines) {
+				if (s.getString().length() > 0 && VisibilityModifier.isVisibilityCharacter(s.getString())) {
 					diagram.setVisibilityModifierPresent(true);
 				}
-				entity.getBodier().addFieldOrMethod(s.toString(), entity);
+				if (s instanceof StringLocated) {
+					entity.getBodier().addFieldOrMethod(((StringLocated) s).getString(), entity);
+				} else {
+					entity.getBodier().addFieldOrMethod(s.toString(), entity);
+				}
 			}
 			if (url != null) {
 				entity.addUrl(url);

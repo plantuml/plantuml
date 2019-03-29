@@ -40,6 +40,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -84,6 +85,10 @@ public class EmbeddedDiagram implements CharSequence {
 		private BufferedImage image;
 		private final ISkinSimple skinParam;
 
+		public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
+			throw new UnsupportedOperationException(getClass().toString());
+		}
+		
 		private Draw(ISkinSimple skinParam) {
 			this.skinParam = skinParam;
 		}
@@ -155,7 +160,7 @@ public class EmbeddedDiagram implements CharSequence {
 		}
 
 		private Diagram getSystem() throws IOException, InterruptedException {
-			final BlockUml blockUml = new BlockUml(system.as2(), Defines.createEmpty(), skinParam);
+			final BlockUml blockUml = new BlockUml(system.as2(), Defines.createEmpty(), skinParam, null);
 			return blockUml.getDiagram();
 
 		}

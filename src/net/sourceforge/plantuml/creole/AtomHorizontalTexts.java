@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class AtomHorizontalTexts implements Atom {
+public class AtomHorizontalTexts extends AbstractAtom implements Atom {
 	private final List<Atom> all;
 
 	public AtomHorizontalTexts(List<Atom> texts) {

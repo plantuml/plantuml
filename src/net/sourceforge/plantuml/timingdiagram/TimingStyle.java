@@ -40,12 +40,12 @@ public enum TimingStyle {
 
 	ROBUST, CONCISE;
 
-	public Player createPlayer(String full, ISkinParam skinParam, TimingRuler ruler) {
+	public Player createPlayer(TitleStrategy titleStrategy, String full, ISkinParam skinParam, TimingRuler ruler) {
 		if (this == ROBUST) {
-			return new PlayerRobust(full, skinParam, ruler);
+			return new PlayerRobust(titleStrategy, full, skinParam, ruler);
 		}
 		if (this == CONCISE) {
-			return new PlayerConcise(full, skinParam, ruler);
+			return new PlayerConcise(titleStrategy, full, skinParam, ruler);
 		}
 		throw new UnsupportedOperationException();
 	}

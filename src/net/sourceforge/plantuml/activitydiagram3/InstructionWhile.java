@@ -166,4 +166,8 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		this.specialOut = special;
 	}
 
+	public boolean containsBreak() {
+		return repeatList.containsBreak();
+	}
+
 }

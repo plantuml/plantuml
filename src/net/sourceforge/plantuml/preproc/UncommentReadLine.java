@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.CharSequence2;
-import net.sourceforge.plantuml.CharSequence2Impl;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -64,8 +63,8 @@ public class UncommentReadLine extends ReadLineInstrumented implements ReadLine 
 	}
 
 	@Override
-	CharSequence2 readLineInst() throws IOException {
-		final CharSequence2 result = raw.readLine();
+	StringLocated readLineInst() throws IOException {
+		final StringLocated result = raw.readLine();
 
 		if (result == null) {
 			return null;
@@ -75,21 +74,21 @@ public class UncommentReadLine extends ReadLineInstrumented implements ReadLine 
 		// if (m.find()) {
 		// headerToRemove = m.group(1);
 		// }
-		final String tmp = StartUtils.beforeStartUml(result);
+		final String tmp = StartUtils.beforeStartUml(result.getString());
 		if (tmp != null) {
 			headerToRemove = tmp;
 		}
 		if (paused) {
-			final Matcher2 m2 = unpause.matcher(result);
+			final Matcher2 m2 = unpause.matcher(result.getString());
 			if (m2.find()) {
 				headerToRemove = m2.group(1);
 			}
 		}
-		if (headerToRemove != null && headerToRemove.startsWith(result.toString2())) {
-			return new CharSequence2Impl("", result.getLocation());
+		if (headerToRemove != null && headerToRemove.startsWith(result.getString())) {
+			return new StringLocated("", result.getLocation());
 		}
-		if (headerToRemove != null && result.toString2().startsWith(headerToRemove)) {
-			return result.subSequence(headerToRemove.length(), result.length());
+		if (headerToRemove != null && result.getString().startsWith(headerToRemove)) {
+			return result.sub(headerToRemove.length(), result.getString().length());
 		}
 		return result;
 	}

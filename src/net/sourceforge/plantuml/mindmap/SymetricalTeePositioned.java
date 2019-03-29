@@ -42,6 +42,11 @@ public class SymetricalTeePositioned {
 	private final SymetricalTee tee;
 	private double y;
 
+	@Override
+	public String toString() {
+		return "y=" + y + " " + tee;
+	}
+
 	public SymetricalTeePositioned(SymetricalTee tee) {
 		this(tee, 0);
 	}

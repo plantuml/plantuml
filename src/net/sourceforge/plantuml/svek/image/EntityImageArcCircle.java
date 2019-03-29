@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -67,10 +68,10 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 		this.name = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.COMPONENT, stereotype),
 				HorizontalAlignment.CENTER, skinParam);
 
-		if (stereotype == null || stereotype.getLabel(false) == null) {
+		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.stereo = null;
 		} else {
-			this.stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(
+			this.stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
 					new FontConfiguration(getSkinParam(), FontParam.COMPONENT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 		}

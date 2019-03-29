@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
+import java.util.List;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -48,5 +49,7 @@ public interface Atom extends UShape {
 	public double getStartingAltitude(StringBounder stringBounder);
 
 	public void drawU(UGraphic ug);
-	
+
+	public List<Atom> splitInTwo(StringBounder stringBounder, double width);
+
 }

@@ -117,7 +117,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
 		final LeafType type;
 		USymbol usymbol;
@@ -135,7 +135,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 		final Code code = Code.of(line0.get("CODE", 0));
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
-				.toString());
+				.getString());
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();
 		final String descStart = line0.get("DESC", 0);
@@ -162,14 +162,13 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
 					.getIHtmlColorSet()));
 		}
-		
+
 		final String urlString = line0.get("URL", 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);
 			result.addUrl(url);
 		}
-
 
 		result.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));

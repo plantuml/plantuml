@@ -45,7 +45,7 @@ public class SpriteColorBuilder4096 {
 
 	private final static ColorPalette4096 COLOR_PALETTE = new ColorPalette4096();
 
-	public static Sprite buildSprite(List<CharSequence> strings) {
+	public static Sprite buildSprite(List<String> strings) {
 		final SpriteColor result = new SpriteColor(strings.get(0).length() / 2, strings.size());
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < result.getHeight(); line++) {

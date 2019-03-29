@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
@@ -134,7 +134,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	// }
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location, RegexResult arg) {
 
 		Code ent1 = Code.of(arg.get("ENT1", 0));
 		Code ent2 = Code.of(arg.get("ENT2", 0));

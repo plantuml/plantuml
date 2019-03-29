@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-
 import ext.plantuml.com.ctreber.acearth.plugins.markers.Marker;
 
 public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {

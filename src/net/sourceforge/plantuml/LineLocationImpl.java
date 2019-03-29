@@ -64,8 +64,8 @@ public class LineLocationImpl implements LineLocation {
 	}
 
 	public static LineLocation fromLine(CharSequence cs) {
-		if (cs instanceof CharSequence2) {
-			return ((CharSequence2) cs).getLocation();
+		if (cs instanceof StringLocated) {
+			return ((StringLocated) cs).getLocation();
 		}
 		return null;
 	}

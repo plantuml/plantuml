@@ -103,7 +103,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			if (extended != null) {
 				eps.setStrokeColor(extended);
 				eps.setFillColor(extended);
-				eps.setStrokeWidth("1", 0, 0);
+				eps.setStrokeWidth(1, 0, 0);
 				if (dim == null) {
 					dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
 				}
@@ -122,9 +122,9 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			if (dim == null) {
 				dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
 			}
-			eps.setStrokeWidth("1.1", 0, 0);
+			eps.setStrokeWidth(1.1, 0, 0);
 			eps.epsLine(x, y + 1.5, x + dim.getWidth(), y + 1.5);
-			eps.setStrokeWidth("1", 0, 0);
+			eps.setStrokeWidth(1, 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			if (dim == null) {
@@ -135,12 +135,12 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			if (extended != null) {
 				eps.setStrokeColor(mapper.getMappedColor(extended));
 			}
-			eps.setStrokeWidth("1.1", 0, 0);
+			eps.setStrokeWidth(1.1, 0, 0);
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
 				eps.epsLine(i, ypos - 0, i + 3, ypos + 1);
 				eps.epsLine(i + 3, ypos + 1, i + 6, ypos - 0);
 			}
-			eps.setStrokeWidth("1", 0, 0);
+			eps.setStrokeWidth(1, 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			final HtmlColor extended = fontConfiguration.getExtendedColor();
@@ -152,9 +152,9 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			}
 			// final FontMetrics fm = font.getFontMetrics();
 			final double ypos = (dim.getMinY() + dim.getMaxY() * 2) / 3;
-			eps.setStrokeWidth("1.3", 0, 0);
+			eps.setStrokeWidth(1.3, 0, 0);
 			eps.epsLine(x, ypos, x + dim.getWidth(), ypos);
-			eps.setStrokeWidth("1", 0, 0);
+			eps.setStrokeWidth(1, 0, 0);
 		}
 
 	}

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
@@ -95,9 +96,9 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		this.ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
 				getSkinParam().shadowing(getEntity().getStereotype()));
 
-		if (stereotype != null && stereotype.getLabel(false) != null
+		if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
-			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(
+			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
 					new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 		} else {

@@ -46,6 +46,10 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 	private final LinkRendering inlinkRendering;
 	private final String spot;
 
+	public boolean containsBreak() {
+		return false;
+	}
+
 	public InstructionSpot(String spot, LinkRendering inlinkRendering, Swimlane swimlane) {
 		super(swimlane);
 		this.spot = spot;

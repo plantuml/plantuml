@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.ugraphic;
 import java.awt.Color;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
+import net.sourceforge.plantuml.graphic.HtmlColorMiddle;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.HtmlColorUserDef;
@@ -54,6 +56,12 @@ public class ColorMapperIdentity implements ColorMapper {
 		if (color instanceof HtmlColorUserDef) {
 			// Impact on JCCKIT
 			return Color.WHITE;
+		}
+		if (color instanceof HtmlColorGradient) {
+			return getMappedColor(((HtmlColorGradient) color).getColor1());
+		}
+		if (color instanceof HtmlColorMiddle) {
+			return ((HtmlColorMiddle) color).getMappedColor(this);
 		}
 		return ((HtmlColorSimple) color).getColor999();
 	}

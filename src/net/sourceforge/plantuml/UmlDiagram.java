@@ -207,16 +207,16 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return animation;
 	}
 
-	public final double getDpiFactor(FileFormatOption fileFormatOption) {
+	public final double getScaleCoef(FileFormatOption fileFormatOption) {
 		if (getSkinParam().getDpi() == 96) {
-			return 1.0;
+			return fileFormatOption.getScaleCoef();
 		}
-		return getSkinParam().getDpi() / 96.0;
+		return getSkinParam().getDpi() * fileFormatOption.getScaleCoef() / 96.0;
 	}
 
-	public final int getDpi(FileFormatOption fileFormatOption) {
-		return getSkinParam().getDpi();
-	}
+	// public final int getDpi(FileFormatOption fileFormatOption) {
+	// return getSkinParam().getDpi();
+	// }
 
 	public final boolean isHideUnlinkedData() {
 		return hideUnlinkedData;
@@ -473,7 +473,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		if (f.exists() == false || f.canRead() == false) {
 			return CommandExecutionResult.error("Cannot load skin from " + filename);
 		}
-		final BlocLines lines = BlocLines.load(f);
+		final BlocLines lines = BlocLines.load(f, new LineLocationImpl(f.getName(), null));
 		final CommandSkinParam cmd1 = new CommandSkinParam();
 		final CommandSkinParamMultilines cmd2 = new CommandSkinParamMultilines();
 		for (int i = 0; i < lines.size(); i++) {

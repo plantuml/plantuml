@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;

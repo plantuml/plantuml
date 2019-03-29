@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -110,7 +111,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false) {
 			return CommandExecutionResult
 					.error("Use 'allowmixing' if you want to mix classes and other UML elements.");

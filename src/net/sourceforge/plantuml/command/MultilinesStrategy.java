@@ -38,27 +38,28 @@ package net.sourceforge.plantuml.command;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 
 public enum MultilinesStrategy {
 	REMOVE_STARTING_QUOTE, KEEP_STARTING_QUOTE;
 
-	public void cleanList(List<? extends CharSequence> lines) {
+	public void cleanList(List<StringLocated> lines) {
 		if (this == REMOVE_STARTING_QUOTE) {
 			filterQuote(lines);
 		}
 	}
 
-	private void filterQuote(List<? extends CharSequence> lines) {
-		for (final Iterator<? extends CharSequence> it = lines.iterator(); it.hasNext();) {
-			final CharSequence s = it.next();
+	private void filterQuote(List<StringLocated> lines) {
+		for (final Iterator<StringLocated> it = lines.iterator(); it.hasNext();) {
+			final StringLocated s = it.next();
 			if (hasStartingQuote(s)) {
 				it.remove();
 			}
 		}
 	}
 
-	private boolean hasStartingQuote(CharSequence s) {
-		return StringUtils.trinNoTrace(s).startsWith("\'");
+	private boolean hasStartingQuote(StringLocated s) {
+		return StringUtils.trinNoTrace(s.getString()).startsWith("\'");
 	}
 }

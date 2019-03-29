@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project3;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -61,7 +62,7 @@ public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram system, RegexResult arg) {
+	protected CommandExecutionResult executeArg(GanttDiagram system, LineLocation location, RegexResult arg) {
 		final Subject subject = subjectPattern.getSubject(system, arg);
 		final Verb verb = verbPattern.getVerb(system, arg);
 		final Failable<Complement> complement = complementPattern.getComplement(system, arg, "0");
@@ -72,14 +73,24 @@ public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	public static Command create(SubjectPattern subject, VerbPattern verb, ComplementPattern complement) {
-		final RegexConcat pattern = new RegexConcat(//
-				new RegexLeaf("^"), //
-				subject.toRegex(), //
-				new RegexLeaf("[%s]+"), //
-				verb.toRegex(), //
-				new RegexLeaf("[%s]+"), //
-				complement.toRegex("0"), //
-				new RegexLeaf("$"));
+		final RegexConcat pattern;
+		if (complement instanceof ComplementEmpty) {
+			pattern = new RegexConcat(//
+					new RegexLeaf("^"), //
+					subject.toRegex(), //
+					new RegexLeaf("[%s]+"), //
+					verb.toRegex(), //
+					new RegexLeaf("$"));
+		} else {
+			pattern = new RegexConcat(//
+					new RegexLeaf("^"), //
+					subject.toRegex(), //
+					new RegexLeaf("[%s]+"), //
+					verb.toRegex(), //
+					new RegexLeaf("[%s]+"), //
+					complement.toRegex("0"), //
+					new RegexLeaf("$"));
+		}
 		// System.err.println("NaturalCommand="+pattern.getPattern());
 		return new NaturalCommand(pattern, subject, verb, complement);
 	}

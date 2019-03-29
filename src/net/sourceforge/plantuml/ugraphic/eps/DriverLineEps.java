@@ -72,7 +72,7 @@ public class DriverLineEps implements UDriver<EpsGraphics> {
 		}
 
 		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
-		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
+		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
 				.getDashSpace());
 		eps.epsLine(x, y, x2, y2);
 	}

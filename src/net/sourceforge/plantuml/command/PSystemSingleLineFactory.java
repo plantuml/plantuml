@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.PSystemError;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -64,19 +64,19 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 			return buildEmptyError(source, it.peek().getLocation());
 		}
 
-		final CharSequence2 startLine = it.next();
-		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
+		final StringLocated startLine = it.next();
+		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false) {
 			throw new UnsupportedOperationException();
 		}
 
 		if (it.hasNext() == false) {
 			return buildEmptyError(source, startLine.getLocation());
 		}
-		final CharSequence2 s = it.next();
-		if (StartUtils.isArobaseEndDiagram(s)) {
+		final StringLocated s = it.next();
+		if (StartUtils.isArobaseEndDiagram(s.getString())) {
 			return buildEmptyError(source, s.getLocation());
 		}
-		final AbstractPSystem sys = executeLine(s.toString2());
+		final AbstractPSystem sys = executeLine(s.getString());
 		if (sys == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?",
 			/* it.currentNum() - 1, */s.getLocation());

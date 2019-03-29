@@ -52,6 +52,11 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	private final LinkRendering inlinkRendering;
 	private final BoxStyle style;
 	private final Url url;
+	
+	public boolean containsBreak() {
+		return false;
+	}
+
 
 	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle style, Url url,
 			Colors colors) {

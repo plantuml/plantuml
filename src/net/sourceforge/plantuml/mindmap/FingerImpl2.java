@@ -78,6 +78,7 @@ public class FingerImpl2 implements Finger, UDrawable {
 		for (Idea child : idea.getChildren()) {
 			result.addInNail(build(child, skinParam, direction));
 		}
+		// System.err.println("End of build for " + idea);
 		return result;
 	}
 
@@ -135,7 +136,7 @@ public class FingerImpl2 implements Finger, UDrawable {
 
 	private Tetris tetris(StringBounder stringBounder) {
 		if (tetris == null) {
-			tetris = new Tetris();
+			tetris = new Tetris(label.toString());
 			for (FingerImpl2 child : nail) {
 				tetris.add(child.asSymetricalTee(stringBounder));
 			}
@@ -201,7 +202,10 @@ public class FingerImpl2 implements Finger, UDrawable {
 	}
 
 	public double getFullThickness(StringBounder stringBounder) {
-		return Math.max(getPhalanxThickness(stringBounder), getNailThickness(stringBounder));
+		final double thickness1 = getPhalanxThickness(stringBounder);
+		final double thickness2 = getNailThickness(stringBounder);
+		// System.err.println("thickness1=" + thickness1 + " thickness2=" + thickness2);
+		return Math.max(thickness1, thickness2);
 	}
 
 	public double getFullElongation(StringBounder stringBounder) {

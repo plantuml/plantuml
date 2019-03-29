@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.NewpagedDiagram;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -60,7 +61,7 @@ public class CommandNewpage extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
 		final int dpi = diagram.getSkinParam().getDpi();
 		final UmlDiagram emptyDiagram = (UmlDiagram) factory.createEmptyDiagram();
 		if (dpi != 96) {

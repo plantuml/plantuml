@@ -46,11 +46,10 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -65,6 +64,11 @@ public class CommunicationTileSelf extends AbstractTile implements TileWithUpdat
 
 	public Event getEvent() {
 		return message;
+	}
+
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return getComponent(stringBounder).getYPoint(stringBounder);
 	}
 
 	public CommunicationTileSelf(LivingSpace livingSpace1, Message message, Rose skin, ISkinParam skinParam,
@@ -86,16 +90,16 @@ public class CommunicationTileSelf extends AbstractTile implements TileWithUpdat
 	//
 	// }
 
-	private Component getComponent(StringBounder stringBounder) {
+	private AbstractComponentRoseArrow getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		arrowConfiguration = arrowConfiguration.self();
-		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabelNumbered());
+		final AbstractComponentRoseArrow comp = skin
+				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
 		return comp;
 	}
 
 	public void updateStairs(StringBounder stringBounder, double y) {
-		final ArrowComponent comp = (ArrowComponent) getComponent(stringBounder);
+		final AbstractComponentRoseArrow comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Point2D p1 = comp.getStartPoint(stringBounder, dim);
 		final Point2D p2 = comp.getEndPoint(stringBounder, dim);

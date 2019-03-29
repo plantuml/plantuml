@@ -50,6 +50,11 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	public boolean containsBreak() {
+		return false;
+	}
+
 
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile result = factory.start(getSwimlaneIn());

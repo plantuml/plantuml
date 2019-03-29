@@ -35,14 +35,14 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 
 public class ReadLineEmpty implements ReadLine {
 
 	public void close() {
 	}
 
-	public CharSequence2 readLine() {
+	public StringLocated readLine() {
 		return null;
 	}
 

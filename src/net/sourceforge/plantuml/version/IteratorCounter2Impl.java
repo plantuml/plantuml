@@ -36,11 +36,11 @@ package net.sourceforge.plantuml.version;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 
 public class IteratorCounter2Impl implements IteratorCounter2 {
 
-	private List<CharSequence2> data;
+	private List<StringLocated> data;
 	private int nb;
 
 	public void copyStateFrom(IteratorCounter2 other) {
@@ -49,11 +49,11 @@ public class IteratorCounter2Impl implements IteratorCounter2 {
 		this.data = source.data;
 	}
 
-	public IteratorCounter2Impl(List<CharSequence2> data) {
+	public IteratorCounter2Impl(List<StringLocated> data) {
 		this(data, 0);
 	}
 
-	private IteratorCounter2Impl(List<CharSequence2> data, int nb) {
+	private IteratorCounter2Impl(List<StringLocated> data, int nb) {
 		this.data = data;
 		this.nb = nb;
 	}
@@ -66,15 +66,15 @@ public class IteratorCounter2Impl implements IteratorCounter2 {
 		return nb < data.size();
 	}
 
-	public CharSequence2 next() {
+	public StringLocated next() {
 		return data.get(nb++);
 	}
 
-	public CharSequence2 peek() {
+	public StringLocated peek() {
 		return data.get(nb);
 	}
 
-	public CharSequence2 peekPrevious() {
+	public StringLocated peekPrevious() {
 		if (nb == 0) {
 			return null;
 		}

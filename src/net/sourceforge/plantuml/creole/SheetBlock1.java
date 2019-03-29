@@ -55,6 +55,10 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
 
+	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
+	
 	private final Sheet sheet;
 	private List<Stripe> stripes;
 	private Map<Stripe, Double> heights;

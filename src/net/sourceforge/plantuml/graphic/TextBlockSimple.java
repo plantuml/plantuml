@@ -43,6 +43,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbeddedDiagram;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -158,9 +159,9 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 
 	private List<SingleLine> createLinesForStereotype(FontConfiguration fontConfiguration, Stereotype s,
 			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
-		assert s.getLabel(false) != null;
+		assert s.getLabel(Guillemet.DOUBLE_COMPARATOR) != null;
 		final List<SingleLine> result = new ArrayList<SingleLine>();
-		for (String st : s.getLabels(spriteContainer.useGuillemet())) {
+		for (String st : s.getLabels(spriteContainer.guillemet())) {
 			result.add(new SingleLine(st, fontConfiguration, horizontalAlignment, spriteContainer));
 		}
 		return Collections.unmodifiableList(result);

@@ -59,4 +59,9 @@ public interface Task extends Subject, Moment {
 
 	public void addResource(Resource resource, int percentage);
 
+	public void setDiamond(boolean diamond);
+	
+	public boolean isDiamond();
+
+
 }

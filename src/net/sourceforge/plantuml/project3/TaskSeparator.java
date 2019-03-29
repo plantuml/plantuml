@@ -96,4 +96,12 @@ public class TaskSeparator implements Task {
 		throw new UnsupportedOperationException();
 	}
 
+	public void setDiamond(boolean diamond) {
+		throw new UnsupportedOperationException();
+	}
+
+	public boolean isDiamond() {
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -125,7 +125,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public int groupInheritance();
 
-	public boolean useGuillemet();
+	public Guillemet guillemet();
 
 	public boolean handwritten();
 

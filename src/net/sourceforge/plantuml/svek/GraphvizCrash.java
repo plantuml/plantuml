@@ -128,7 +128,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private List<String> init() {
 		final List<String> strings = anErrorHasOccured(null, text);
-		strings.add("For some reason, dot/Graphviz has crashed.");
+		strings.add("For some reason, dot/GraphViz has crashed.");
 		strings.add("This has been generated with PlantUML (" + Version.versionString() + ").");
 		checkOldVersionWarning(strings);
 		strings.add(" ");

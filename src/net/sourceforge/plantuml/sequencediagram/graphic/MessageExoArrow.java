@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
-import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -60,7 +60,7 @@ public class MessageExoArrow extends Arrow {
 	private final boolean shortArrow;
 	private final ArrowConfiguration arrowConfiguration;
 
-	public MessageExoArrow(double startingY, Rose skin, Component arrow, LivingParticipantBox p, MessageExoType type,
+	public MessageExoArrow(double startingY, Rose skin, AbstractComponentRoseArrow arrow, LivingParticipantBox p, MessageExoType type,
 			Url url, boolean shortArrow, ArrowConfiguration arrowConfiguration) {
 		super(startingY, skin, arrow, url);
 		this.p = p;
@@ -163,7 +163,7 @@ public class MessageExoArrow extends Arrow {
 	@Override
 	public double getArrowYStartLevel(StringBounder stringBounder) {
 		if (getArrowComponent() instanceof ArrowComponent) {
-			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();
+			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();
 			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));
 			return getStartingY() + arrowComponent.getStartPoint(stringBounder, dim).getY();
@@ -174,7 +174,7 @@ public class MessageExoArrow extends Arrow {
 	@Override
 	public double getArrowYEndLevel(StringBounder stringBounder) {
 		if (getArrowComponent() instanceof ArrowComponent) {
-			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();
+			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();
 			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));
 			return getStartingY() + arrowComponent.getEndPoint(stringBounder, dim).getY();

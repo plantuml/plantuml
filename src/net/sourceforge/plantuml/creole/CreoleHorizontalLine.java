@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CreoleHorizontalLine implements Atom {
+public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 
 	private final FontConfiguration fontConfiguration;
 	private final String line;

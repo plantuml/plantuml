@@ -59,8 +59,8 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 		return 0;
 	}
 
-	public boolean useGuillemet() {
-		return false;
+	public Guillemet guillemet() {
+		return Guillemet.DOUBLE_COMPARATOR;
 	}
 
 	public String getMonospacedFamily() {

@@ -49,9 +49,9 @@ public class CommandAffineTransformMultiline extends CommandMultilines<UmlDiagra
 	}
 
 	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
-		lines = lines.subExtract(1, 1);
-		diagram.setAnimation(lines);
-		return CommandExecutionResult.ok();
+		// lines = lines.subExtract(1, 1);
+		// diagram.setAnimation(lines);
+		return CommandExecutionResult.error("Not yet implemented");
 	}
 
 }

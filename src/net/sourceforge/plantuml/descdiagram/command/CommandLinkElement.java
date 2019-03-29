@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -279,7 +280,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
 		final Code ent1 = Code.of(arg.get("ENT1", 0));
 		final Code ent2 = Code.of(arg.get("ENT2", 0));
 

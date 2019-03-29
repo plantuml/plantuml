@@ -65,9 +65,11 @@ public class VerbHappens implements VerbPattern {
 						return CommandExecutionResult.error("No starting date for the project");
 					}
 					task.setStart(start.asInstantDay(startingDate));
+					task.setDiamond(true);
 				} else {
 					final TaskInstant when = (TaskInstant) complement;
 					task.setStart(when.getInstantTheorical());
+					task.setDiamond(true);
 				}
 				return CommandExecutionResult.ok();
 			}

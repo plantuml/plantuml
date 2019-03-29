@@ -42,8 +42,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.code.AsciiEncoder;
-
 public class QBlocks {
 
 	private final List<QBlock> all = new ArrayList<QBlock>();

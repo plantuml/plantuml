@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.SymbolContext;
-import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Component;
@@ -244,8 +244,9 @@ public class Rose {
 		}
 		if (type == ComponentType.DIVIDER) {
 			return new ComponentRoseDivider(getUFont2(param, FontParam.SEQUENCE_DIVIDER), getHtmlColor(param,
-					ColorParam.sequenceDividerBackground), stringsToDisplay, param, deltaShadow(param) > 0, getStroke(
-					param, LineParam.sequenceDividerBorder, 2), getHtmlColor(param, ColorParam.sequenceDividerBorder));
+					ColorParam.sequenceDividerBackground), stringsToDisplay, param, deltaShadow(param,
+					ColorParam.sequenceDividerBackground) > 0, getStroke(param, LineParam.sequenceDividerBorder, 2),
+					getHtmlColor(param, ColorParam.sequenceDividerBorder));
 		}
 		if (type == ComponentType.REFERENCE) {
 			return new ComponentRoseReference(getUFont2(param, FontParam.SEQUENCE_REFERENCE), getSymbolContext(param,
@@ -269,8 +270,7 @@ public class Rose {
 		return null;
 	}
 
-	public ArrowComponent createComponentArrow(ArrowConfiguration config, ISkinParam param,
-			Display stringsToDisplay) {
+	public AbstractComponentRoseArrow createComponentArrow(ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
 		final HtmlColor sequenceArrow = config.getColor() == null ? getHtmlColor(param, ColorParam.arrow) : config
 				.getColor();
 		if (config.getArrowDirection() == ArrowDirection.SELF) {
@@ -286,68 +286,76 @@ public class Rose {
 				param.strictUmlStyle() == false, param.responseMessageBelowArrow());
 	}
 
-	private double deltaShadow(ISkinParam param) {
-		return param.shadowing(null) ? 4.0 : 0;
+	private double deltaShadow(ISkinParam param, ColorParam color) {
+		SkinParameter skinParameter = null;
+		if (color == ColorParam.participantBorder) {
+			skinParameter = SkinParameter.PARTICIPANT;
+		} else if (color == ColorParam.actorBorder) {
+			skinParameter = SkinParameter.ACTOR;
+		}
+		final boolean result = skinParameter == null ? param.shadowing(null) : param.shadowing2(null, skinParameter);
+		return result ? 4.0 : 0;
 	}
 
-	private SymbolContext getSymbolContext(ISkinParam param, ColorParam color) {
+	private SymbolContext getSymbolContext(ISkinParam skin, ColorParam color) {
 		if (color == ColorParam.participantBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.participantBackground), getHtmlColor(param,
-					ColorParam.participantBorder)).withStroke(
-					getStroke(param, LineParam.sequenceParticipantBorder, 1.5)).withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.participantBackground), getHtmlColor(skin,
+					ColorParam.participantBorder))
+					.withStroke(getStroke(skin, LineParam.sequenceParticipantBorder, 1.5)).withDeltaShadow(
+							deltaShadow(skin, color));
 		}
 		if (color == ColorParam.actorBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.actorBackground), getHtmlColor(param,
-					ColorParam.actorBorder)).withStroke(getStroke(param, LineParam.sequenceActorBorder, 2))
-					.withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.actorBackground), getHtmlColor(skin,
+					ColorParam.actorBorder)).withStroke(getStroke(skin, LineParam.sequenceActorBorder, 2))
+					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.boundaryBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.boundaryBackground), getHtmlColor(param,
-					ColorParam.boundaryBorder)).withStroke(getStroke(param, LineParam.sequenceActorBorder, 2))
-					.withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.boundaryBackground), getHtmlColor(skin,
+					ColorParam.boundaryBorder)).withStroke(getStroke(skin, LineParam.sequenceActorBorder, 2))
+					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.controlBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.controlBackground), getHtmlColor(param,
-					ColorParam.controlBorder)).withStroke(getStroke(param, LineParam.sequenceActorBorder, 2))
-					.withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.controlBackground), getHtmlColor(skin,
+					ColorParam.controlBorder)).withStroke(getStroke(skin, LineParam.sequenceActorBorder, 2))
+					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.collectionsBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.collectionsBackground), getHtmlColor(param,
-					ColorParam.collectionsBorder)).withStroke(getStroke(param, LineParam.sequenceActorBorder, 1.5))
-					.withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.collectionsBackground), getHtmlColor(skin,
+					ColorParam.collectionsBorder)).withStroke(getStroke(skin, LineParam.sequenceActorBorder, 1.5))
+					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.entityBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.entityBackground), getHtmlColor(param,
-					ColorParam.entityBorder)).withStroke(getStroke(param, LineParam.sequenceActorBorder, 2))
-					.withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.entityBackground), getHtmlColor(skin,
+					ColorParam.entityBorder)).withStroke(getStroke(skin, LineParam.sequenceActorBorder, 2))
+					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.databaseBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.databaseBackground), getHtmlColor(param,
-					ColorParam.databaseBorder)).withStroke(getStroke(param, LineParam.sequenceActorBorder, 2))
-					.withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.databaseBackground), getHtmlColor(skin,
+					ColorParam.databaseBorder)).withStroke(getStroke(skin, LineParam.sequenceActorBorder, 2))
+					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.sequenceLifeLineBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.sequenceLifeLineBackground), getHtmlColor(param,
-					ColorParam.sequenceLifeLineBorder)).withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.sequenceLifeLineBackground), getHtmlColor(skin,
+					ColorParam.sequenceLifeLineBorder)).withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.noteBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.noteBackground), getHtmlColor(param,
-					ColorParam.noteBorder)).withStroke(getStroke(param, LineParam.noteBorder, 1)).withDeltaShadow(
-					deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.noteBackground), getHtmlColor(skin,
+					ColorParam.noteBorder)).withStroke(getStroke(skin, LineParam.noteBorder, 1)).withDeltaShadow(
+					deltaShadow(skin, color));
 		}
 		if (color == ColorParam.sequenceGroupBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.sequenceGroupBackground), getHtmlColor(param,
-					ColorParam.sequenceGroupBorder)).withStroke(getStroke(param, LineParam.sequenceGroupBorder, 2))
-					.withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.sequenceGroupBackground), getHtmlColor(skin,
+					ColorParam.sequenceGroupBorder)).withStroke(getStroke(skin, LineParam.sequenceGroupBorder, 2))
+					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.sequenceBoxBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.sequenceBoxBackground), getHtmlColor(param,
+			return new SymbolContext(getHtmlColor(skin, ColorParam.sequenceBoxBackground), getHtmlColor(skin,
 					ColorParam.sequenceBoxBorder));
 		}
 		if (color == ColorParam.sequenceReferenceBorder) {
-			return new SymbolContext(getHtmlColor(param, ColorParam.sequenceReferenceHeaderBackground), getHtmlColor(
-					param, ColorParam.sequenceReferenceBorder)).withStroke(
-					getStroke(param, LineParam.sequenceReferenceBorder, 2)).withDeltaShadow(deltaShadow(param));
+			return new SymbolContext(getHtmlColor(skin, ColorParam.sequenceReferenceHeaderBackground), getHtmlColor(
+					skin, ColorParam.sequenceReferenceBorder)).withStroke(
+					getStroke(skin, LineParam.sequenceReferenceBorder, 2)).withDeltaShadow(deltaShadow(skin, color));
 		}
 		throw new IllegalArgumentException();
 	}

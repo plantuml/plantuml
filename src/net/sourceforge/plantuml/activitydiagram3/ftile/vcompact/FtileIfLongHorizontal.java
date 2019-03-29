@@ -162,7 +162,8 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			final TextBlock tb1 = branch.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
 			final TextBlock tbTest = branch.getLabelTest().create(fcTest,
-					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), ftileFactory.skinParam());
+					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
+					ftileFactory.skinParam());
 			final HtmlColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
 			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,
@@ -189,12 +190,18 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		final FtileIfLongHorizontal result = new FtileIfLongHorizontal(diamonds, inlabelSizes, tiles, tile2, arrowColor);
 		final List<Connection> conns = new ArrayList<Connection>();
 
+		int nbOut = 0;
+
 		for (int i = 0; i < thens.size(); i++) {
 			final Ftile ftile = tiles.get(i);
 			final Ftile diam = diamonds.get(i);
 
 			final Rainbow rainbowIn = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
 			final Branch branch = thens.get(i);
+
+			if (branch.getFtile().calculateDimension(ftileFactory.getStringBounder()).hasPointOut()) {
+				nbOut++;
+			}
 			final Rainbow rainbowOut = branch.getInlinkRenderingColorAndStyle();
 			TextBlock out2 = null;
 			if (branch.getSpecial() != null) {
@@ -218,10 +225,12 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		}
 
 		conns.add(result.new ConnectionLastElseIn(FtileIfWithLinks.getInColor(branch2, arrowColor)));
-		conns.add(result.new ConnectionLastElseOut(arrowColor, out2));
-		final Rainbow horizontalOutColor = afterEndwhile.getRainbow(arrowColor);
-		conns.add(result.new ConnectionHline(horizontalOutColor));
-		// conns.add(result.new ConnectionHline(HtmlColorUtils.BLUE));
+		conns.add(result.new ConnectionLastElseOut(arrowColor, out2, nbOut));
+		final boolean horizontalOut = nbOut > 0;
+		if (horizontalOut) {
+			final Rainbow horizontalOutColor = afterEndwhile.getRainbow(arrowColor);
+			conns.add(result.new ConnectionHline(horizontalOutColor));
+		}
 
 		return FtileUtils.addConnection(result, conns);
 	}
@@ -329,11 +338,13 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 		private final Rainbow arrowColor;
 		private final TextBlock out2;
+		private final int nbOut;
 
-		public ConnectionLastElseOut(Rainbow arrowColor, TextBlock out2) {
+		public ConnectionLastElseOut(Rainbow arrowColor, TextBlock out2, int nbOut) {
 			super(tile2, null);
 			this.arrowColor = arrowColor;
 			this.out2 = out2;
+			this.nbOut = nbOut;
 		}
 
 		public void drawU(UGraphic ug) {
@@ -344,13 +355,17 @@ class FtileIfLongHorizontal extends AbstractFtile {
 				return;
 			}
 			final Point2D p1 = tr1.getTranslated(dim.getPointOut());
-			final double totalHeight = calculateDimensionInternal(stringBounder).getHeight();
+			final FtileGeometry full = calculateDimensionInternal(stringBounder);
+			final double totalHeight = full.getHeight();
 			final Point2D p2 = new Point2D.Double(p1.getX(), totalHeight);
 
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			snake.setLabel(out2);
 			snake.addPoint(p1);
 			snake.addPoint(p2);
+			if (nbOut == 0) {
+				snake.addPoint(new Point2D.Double(full.getLeft(), totalHeight));
+			}
 			ug.draw(snake);
 		}
 

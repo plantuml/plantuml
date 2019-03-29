@@ -45,6 +45,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorMiddle;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -54,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileCircleStop extends AbstractFtile {
 
-	private static final int SIZE = 20;
+	private static final int SIZE = 22;
 
 	private final HtmlColor backColor;
 	private final Swimlane swimlane;
@@ -86,26 +88,19 @@ public class FtileCircleStop extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		double xTheoricalPosition = 0;
-		double yTheoricalPosition = 0;
-		xTheoricalPosition = Math.round(xTheoricalPosition);
-		yTheoricalPosition = Math.round(yTheoricalPosition);
-
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		if (skinParam().shadowing(null)) {
 			circle.setDeltaShadow(3);
 		}
-		ug.apply(new UChangeColor(backColor)).apply(new UChangeBackColor(null))
-				.apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);
+		ug.apply(new UChangeColor(backColor)).apply(new UChangeBackColor(HtmlColorUtils.WHITE)).draw(circle);
 
-		final double delta = 4;
+		final double delta = 5;
 		final UEllipse circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
-		if (skinParam().shadowing(null)) {
-			circleSmall.setDeltaShadow(3);
-		}
-		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backColor))
-				.apply(new UTranslate(xTheoricalPosition + delta + .5, yTheoricalPosition + delta + .5))
-				.draw(circleSmall);
+		// if (skinParam().shadowing(null)) {
+		// circleSmall.setDeltaShadow(3);
+		// }
+		ug.apply(new UChangeColor(new HtmlColorMiddle(backColor, HtmlColorUtils.WHITE)))
+				.apply(new UChangeBackColor(backColor)).apply(new UTranslate(delta, delta)).draw(circleSmall);
 	}
 
 	@Override

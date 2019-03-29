@@ -174,7 +174,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 		scale = getScale(area.getWidth(), area.getHeight());
 
-		final double dpiFactor = diagram.getDpiFactor(fileFormatOption);
+		final double dpiFactor = diagram.getScaleCoef(fileFormatOption);
 		// System.err.println("dpiFactor=" + dpiFactor);
 		// System.err.println("scale=" + scale);
 

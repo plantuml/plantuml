@@ -40,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
@@ -76,10 +77,10 @@ public class EntityImageMachine extends AbstractEntityImage {
 		this.name = TextBlockUtils.withMargin(
 				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.MACHINE, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);
-		if (stereotype == null || stereotype.getLabel(false) == null) {
+		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.stereo = null;
 		} else {
-			this.stereo = Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(
+			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
 					new FontConfiguration(getSkinParam(), FontParam.MACHINE_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 		}

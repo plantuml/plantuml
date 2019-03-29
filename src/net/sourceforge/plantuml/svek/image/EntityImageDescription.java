@@ -42,6 +42,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
@@ -62,7 +63,6 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
@@ -140,9 +140,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (stereotype != null && stereotype.getSprite(getSkinParam()) != null) {
 			symbol = symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
 			stereo = stereotype.getSprite(getSkinParam());
-		} else if (stereotype != null && stereotype.getLabel(false) != null
+		} else if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
-			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(
+			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
 					new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
 					HorizontalAlignment.CENTER, getSkinParam());
 		}

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -62,7 +61,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		Matcher2 m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
+		Matcher2 m1 = starting.matcher(lines.getFirst499().getStringTrimmed());
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -70,7 +69,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 			return CommandControl.OK_PARTIAL;
 		}
 
-		m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trin(lines.getLast499()));
+		m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.getLast499().getStringTrimmed());
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}

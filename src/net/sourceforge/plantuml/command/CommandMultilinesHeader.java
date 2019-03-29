@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -54,7 +53,7 @@ public class CommandMultilinesHeader extends CommandMultilines<UmlDiagram> {
 
 	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
-		final Matcher2 m = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final Matcher2 m = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

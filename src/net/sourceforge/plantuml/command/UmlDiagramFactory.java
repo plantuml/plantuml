@@ -41,10 +41,10 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.PSystemError;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility;
@@ -69,8 +69,8 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	final public Diagram createSystem(UmlSource source) {
 		final IteratorCounter2 it = source.iterator2();
-		final CharSequence2 startLine = it.next();
-		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
+		final StringLocated startLine = it.next();
+		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -80,7 +80,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		AbstractPSystem sys = createEmptyDiagram();
 
 		while (it.hasNext()) {
-			if (StartUtils.isArobaseEndDiagram(it.peek())) {
+			if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
 				if (sys == null) {
 					return null;
 				}
@@ -118,7 +118,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines);
 		if (result.isOk() == false) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-					((CharSequence2) step.blocLines.getFirst499()).getLocation());
+					((StringLocated) step.blocLines.getFirst499()).getLocation());
 			sys = new PSystemError(source, err, result.getDebugLines());
 		}
 		if (result.getNewDiagram() != null) {
@@ -140,7 +140,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	private Step getCandidate(final IteratorCounter2 it) {
-		final BlocLines single = BlocLines.single(it.peek());
+		final BlocLines single = BlocLines.single2(it.peek());
 		for (Command cmd : cmds) {
 			final CommandControl result = cmd.isValid(single);
 			if (result == CommandControl.OK) {
@@ -182,13 +182,13 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	private BlocLines addOneSingleLineManageEmbedded2(IteratorCounter2 it, BlocLines lines) {
-		final CharSequence linetoBeAdded = it.next();
+		final StringLocated linetoBeAdded = it.next();
 		lines = lines.add2(linetoBeAdded);
-		if (StringUtils.trinNoTrace(linetoBeAdded).equals("{{")) {
+		if (StringUtils.trinNoTrace(linetoBeAdded.getString()).equals("{{")) {
 			while (it.hasNext()) {
-				final CharSequence s = it.next();
+				final StringLocated s = it.next();
 				lines = lines.add2(s);
-				if (StringUtils.trinNoTrace(s).equals("}}")) {
+				if (StringUtils.trinNoTrace(s.getString()).equals("}}")) {
 					return lines;
 				}
 			}

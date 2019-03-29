@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -85,9 +86,9 @@ public class MemberImpl implements Member {
 
 			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {
 				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);
-				this.display = StringUtils.trin(StringUtils.manageGuillemet(displayClean.substring(1)));
+				this.display = StringUtils.trin(Guillemet.GUILLEMET.manageGuillemet(displayClean.substring(1)));
 			} else {
-				this.display = StringUtils.manageGuillemet(displayClean);
+				this.display = Guillemet.GUILLEMET.manageGuillemet(displayClean);
 				visibilityModifier = null;
 			}
 		} else {
@@ -95,7 +96,7 @@ public class MemberImpl implements Member {
 			this.visibilityModifier = null;
 			this.abstractModifier = false;
 			tmpDisplay = StringUtils.trin(tmpDisplay);
-			this.display = tmpDisplay.length() == 0 ? " " : StringUtils.manageGuillemet(StringUtils.trin(tmpDisplay));
+			this.display = tmpDisplay.length() == 0 ? " " : Guillemet.GUILLEMET.manageGuillemet(StringUtils.trin(tmpDisplay));
 		}
 	}
 

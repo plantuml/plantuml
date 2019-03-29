@@ -60,6 +60,10 @@ public class Branch {
 
 	private Ftile ftile;
 
+	public boolean containsBreak() {
+		return list.containsBreak();
+	}
+
 	public Branch(Swimlane swimlane, Display labelPositive, Display labelTest, HtmlColor color, Display inlabel) {
 		if (labelPositive == null) {
 			throw new IllegalArgumentException();
@@ -161,5 +165,6 @@ public class Branch {
 	public final LinkRendering getSpecial() {
 		return special;
 	}
+
 
 }

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
@@ -83,12 +84,12 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				HorizontalAlignment.CENTER, skinParam);
 		this.url = entity.getUrl99();
 
-		if (stereotype == null || stereotype.getLabel(false) == null
+		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			stereoBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			stereoBlock = TextBlockUtils.withMargin(
-					Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(
+					Display.create(stereotype.getLabels(skinParam.guillemet())).create(
 							new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
 							HorizontalAlignment.CENTER, skinParam), 1, 0);
 		}

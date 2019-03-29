@@ -59,9 +59,9 @@ class Step1MessageExo extends Step1Abstract {
 		setConfig(getArrowType(message));
 
 		this.messageArrow = new MessageExoArrow(freeY.getFreeY(range), drawingSet.getSkin(), drawingSet.getSkin()
-				.createComponent(ComponentType.ARROW, getConfig(), drawingSet.getSkinParam(),
-						message.getLabelNumbered()), getLivingParticipantBox(), message.getType(), message.getUrl(),
-				message.isShortArrow(), message.getArrowConfiguration());
+				.createComponentArrow(getConfig(), drawingSet.getSkinParam(), message.getLabelNumbered()),
+				getLivingParticipantBox(), message.getType(), message.getUrl(), message.isShortArrow(),
+				message.getArrowConfiguration());
 
 		final List<Note> noteOnMessages = message.getNoteOnMessages();
 		for (Note noteOnMessage : noteOnMessages) {

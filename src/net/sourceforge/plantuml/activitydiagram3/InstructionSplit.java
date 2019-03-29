@@ -61,6 +61,16 @@ public class InstructionSplit implements Instruction {
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	public boolean containsBreak() {
+		for (InstructionList split : splits) {
+			if (split.containsBreak()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	private InstructionList getLast() {
 		return splits.get(splits.size() - 1);

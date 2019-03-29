@@ -65,6 +65,11 @@ public class InstructionRepeat implements Instruction {
 	private boolean testCalled = false;
 	private LinkRendering endRepeatLinkRendering = LinkRendering.none();
 	private LinkRendering backRepeatLinkRendering = LinkRendering.none();
+	
+	public boolean containsBreak() {
+		return repeatList.containsBreak();
+	}
+
 
 	public InstructionRepeat(Swimlane swimlane, Instruction parent, LinkRendering nextLinkRenderer, HtmlColor color,
 			Display startLabel) {

@@ -91,7 +91,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		final String codeRaw = line0.getLazzy("CODE", 0);
 
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));

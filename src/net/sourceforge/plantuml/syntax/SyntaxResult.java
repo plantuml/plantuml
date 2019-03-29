@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FileFormatOption;

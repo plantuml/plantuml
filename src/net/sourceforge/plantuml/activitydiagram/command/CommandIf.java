@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -78,7 +79,7 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram system, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg) {
 		final IEntity entity1 = CommandLinkActivity.getEntity(system, arg, true);
 		if (entity1 == null) {
 			return CommandExecutionResult.error("No if possible at this point");

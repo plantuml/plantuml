@@ -49,10 +49,12 @@ import net.sourceforge.plantuml.core.DiagramType;
 
 public class GanttDiagramFactory extends UmlDiagramFactory {
 
-	private List<SubjectPattern> subjects() {
+	static private final List<SubjectPattern> subjects() {
 		return Arrays.<SubjectPattern> asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek(),
 				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday());
 	}
+
+	static private final Collection<Command> ALL = getLanguageCommands();
 
 	public GanttDiagramFactory(DiagramType type) {
 		super(type);
@@ -65,9 +67,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandNope());
 		// cmds.add(new CommandComment());
 		// cmds.add(new CommandMultilinesComment());
-		for (Command cmd : getLanguageCommands()) {
-			cmds.add(cmd);
-		}
+		cmds.addAll(ALL);
 		cmds.add(new CommandGanttArrow());
 		cmds.add(new CommandGanttArrow2());
 		cmds.add(new CommandSeparator());
@@ -83,7 +83,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 		return cmds;
 	}
 
-	private Collection<Command> getLanguageCommands() {
+	private static Collection<Command> getLanguageCommands() {
 		final Collection<Command> result = new ArrayList<Command>();
 		for (SubjectPattern subject : subjects()) {
 			for (VerbPattern verb : subject.getVerbs()) {

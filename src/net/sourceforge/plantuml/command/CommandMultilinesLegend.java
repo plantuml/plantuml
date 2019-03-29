@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -67,7 +66,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 	@Override
 	protected CommandExecutionResult executeNow(UmlDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		final String align = line0.get("ALIGN", 0);
 		final String valign = line0.get("VALIGN", 0);
 		lines = lines.subExtract(1, 1);

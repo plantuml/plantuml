@@ -65,4 +65,8 @@ public class InstructionLabel extends MonoSwimable implements Instruction {
 		return LinkRendering.none();
 	}
 
+	public boolean containsBreak() {
+		return false;
+	}
+
 }
