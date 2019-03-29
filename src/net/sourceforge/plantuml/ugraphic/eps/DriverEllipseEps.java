@@ -73,7 +73,7 @@ public class DriverEllipseEps implements UDriver<EpsGraphics> {
 
 		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
 		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
-		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
+		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
 				.getDashSpace());
 
 		if (shape.getStart() == 0 && shape.getExtend() == 0) {

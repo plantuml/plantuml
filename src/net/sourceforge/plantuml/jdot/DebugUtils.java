@@ -39,12 +39,10 @@ import h.ST_Agedgeinfo_t;
 import h.ST_Agnode_s;
 import h.ST_Agnodeinfo_t;
 import h.ST_bezier;
-import h.ST_boxf;
 import h.ST_pointf;
 import h.ST_splines;
 import h.ST_textlabel_t;
 import smetana.core.Macro;
-import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
 public class DebugUtils {

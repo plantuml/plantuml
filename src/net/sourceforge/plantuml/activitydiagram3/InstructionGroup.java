@@ -63,6 +63,10 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	private final double roundCorner;
 	private PositionedNote note = null;
 
+	public boolean containsBreak() {
+		return list.containsBreak();
+	}
+
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
 			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering, USymbol type, double roundCorner) {
 		this.list = new InstructionList(swimlane);

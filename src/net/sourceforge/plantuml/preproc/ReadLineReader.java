@@ -39,11 +39,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.sourceforge.plantuml.CharSequence2;
-import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringLocated;
 
 public class ReadLineReader extends ReadLineInstrumented implements ReadLine {
 
@@ -80,7 +79,7 @@ public class ReadLineReader extends ReadLineInstrumented implements ReadLine {
 	}
 
 	@Override
-	CharSequence2 readLineInst() throws IOException {
+	StringLocated readLineInst() throws IOException {
 		String s = br.readLine();
 		location = location.oneLineRead();
 		if (s == null) {
@@ -106,7 +105,7 @@ public class ReadLineReader extends ReadLineInstrumented implements ReadLine {
 		// char c = s.charAt(i);
 		// System.err.println("X " + Integer.toHexString((int) c) + " " + c);
 		// }
-		return new CharSequence2Impl(s, location);
+		return new StringLocated(s, location);
 	}
 
 	@Override

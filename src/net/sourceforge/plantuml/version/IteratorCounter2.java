@@ -36,17 +36,17 @@ package net.sourceforge.plantuml.version;
 
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 
-public interface IteratorCounter2 extends Iterator<CharSequence2> {
+public interface IteratorCounter2 extends Iterator<StringLocated> {
 
 	public int currentNum();
 
 	public IteratorCounter2 cloneMe();
 
-	public CharSequence2 peek();
+	public StringLocated peek();
 
-	public CharSequence2 peekPrevious();
+	public StringLocated peekPrevious();
 
 	public void copyStateFrom(IteratorCounter2 other);
 

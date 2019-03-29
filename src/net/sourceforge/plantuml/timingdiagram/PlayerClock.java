@@ -48,17 +48,18 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class PlayerClock implements Player {
+public class PlayerClock extends ReallyAbstractPlayer implements Player {
 
-	private final TimingRuler ruler;
 	private final int period;
+	private final int pulse;
 
-	public PlayerClock(ISkinParam skinParam, TimingRuler ruler, int period) {
-		this.ruler = ruler;
+	public PlayerClock(TitleStrategy titleStrategy, ISkinParam skinParam, TimingRuler ruler, int period, int pulse) {
+		super(titleStrategy, "", skinParam, ruler);
 		this.period = period;
+		this.pulse = pulse;
 	}
 
-	public double getHeight(StringBounder stringBounder) {
+	public double getHeight(StringBounder striWngBounder) {
 		return 30;
 	}
 
@@ -88,7 +89,7 @@ public class PlayerClock implements Player {
 
 	private final double ymargin = 8;
 
-	public void drawTitle(UGraphic ug) {
+	public void drawFrameTitle(UGraphic ug) {
 	}
 
 	public void drawContent(UGraphic ug) {
@@ -97,18 +98,30 @@ public class PlayerClock implements Player {
 		int i = 0;
 		double lastx = -Double.MAX_VALUE;
 		while (i < 1000) {
-			final double x = ruler.getPosInPixel(new BigDecimal(i * period)) / 2;
+			final double x = ruler.getPosInPixel(new BigDecimal(i * period));
 			if (x > ruler.getWidth()) {
 				return;
 			}
 			i++;
 			if (x > lastx) {
+				final double dx = x - lastx;
+				final ULine hline1 = new ULine(dx * getPulseCoef(), 0);
+				final ULine hline2 = new ULine(dx * (1 - getPulseCoef()), 0);
 				ug.apply(new UTranslate(lastx, ymargin)).draw(vline);
-				ug.apply(new UTranslate(lastx, i % 2 == 0 ? ymargin : ymargin + vline.getDY())).draw(
-						new ULine(x - lastx, 0));
+				ug.apply(new UTranslate(lastx, ymargin)).draw(hline1);
+				final double x2 = lastx + dx * getPulseCoef();
+				ug.apply(new UTranslate(x2, ymargin)).draw(vline);
+				ug.apply(new UTranslate(x2, ymargin + vline.getDY())).draw(hline2);
 			}
 			lastx = x;
 		}
+	}
+
+	private double getPulseCoef() {
+		if (pulse == 0) {
+			return 0.5;
+		}
+		return 1.0 * pulse / period;
 	}
 
 	public void drawLeftHeader(UGraphic ug) {

@@ -37,8 +37,10 @@ package net.sourceforge.plantuml;
 
 import java.util.List;
 
-public interface DefinitionsContainer {
+import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
 
-	public List<? extends CharSequence> getDefinition(String name);
+public interface DefinitionsContainer extends PreprocessorModeSet {
+
+	public List<String> getDefinition(String name);
 
 }

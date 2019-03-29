@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -97,7 +98,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final SequenceDiagram system, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location, RegexResult arg) {
 				return executeInternal(system, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
 			}
 
@@ -114,7 +115,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				return executeInternal(system, line0, lines);

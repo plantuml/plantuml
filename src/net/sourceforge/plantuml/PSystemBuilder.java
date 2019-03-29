@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.PSystemCreoleFactory;
-import net.sourceforge.plantuml.cute.PSystemCuteFactory;
 import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
 import net.sourceforge.plantuml.definition.PSystemDefinitionFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
@@ -62,16 +61,12 @@ import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
 import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
-import net.sourceforge.plantuml.eggs.PSystemLostFactory;
-import net.sourceforge.plantuml.eggs.PSystemPathFactory;
 import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
 import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.help.HelpFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
-import net.sourceforge.plantuml.jungle.PSystemTreeFactory;
-import net.sourceforge.plantuml.logo.PSystemLogoFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -79,7 +74,6 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
-import net.sourceforge.plantuml.postit.PostIdDiagramFactory;
 import net.sourceforge.plantuml.project3.GanttDiagramFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
@@ -91,22 +85,23 @@ import net.sourceforge.plantuml.ugraphic.sprite.PSystemListInternalSpritesFactor
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
+import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 
 public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(ISkinSimple skinParam, final List<CharSequence2> strings2) {
+	final public Diagram createPSystem(ISkinSimple skinParam, final List<StringLocated> strings2) {
 
 		final long now = System.currentTimeMillis();
 
 		Diagram result = null;
 		try {
-			final DiagramType type = DiagramType.getTypeFromArobaseStart(strings2.get(0).toString2());
+			final DiagramType type = DiagramType.getTypeFromArobaseStart(strings2.get(0).getString());
 			final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML);
 
 			// int cpt = 0;
-			for (CharSequence2 s : strings2) {
+			for (StringLocated s : strings2) {
 				if (s.getPreprocessorError() != null) {
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
 					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), /* cpt */
@@ -153,10 +148,8 @@ public class PSystemBuilder {
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
 		factories.add(new CompositeDiagramFactory());
-		// factories.add(new ObjectDiagramFactory());
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
-		factories.add(new PostIdDiagramFactory());
-		// factories.add(new PrintSkinFactory());
+		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
 		factories.add(new PSystemDonorsFactory());
@@ -171,12 +164,13 @@ public class PSystemBuilder {
 		factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new NwDiagramFactory());
 		factories.add(new MindMapDiagramFactory());
+		factories.add(new WBSDiagramFactory());
+		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
+		factories.add(new PSystemDitaaFactory(DiagramType.UML));
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
-			factories.add(new PSystemDitaaFactory(DiagramType.UML));
 			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
 			factories.add(new PSystemJcckitFactory(DiagramType.UML));
-			factories.add(new PSystemLogoFactory());
+			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}
 		factories.add(new PSystemDefinitionFactory());
@@ -187,8 +181,8 @@ public class PSystemBuilder {
 		factories.add(new PSystemEggFactory());
 		factories.add(new PSystemAppleTwoFactory());
 		factories.add(new PSystemRIPFactory());
-		factories.add(new PSystemLostFactory());
-		factories.add(new PSystemPathFactory());
+		// factories.add(new PSystemLostFactory());
+		// factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
 		factories.add(new PSystemCharlieFactory());
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
@@ -197,8 +191,8 @@ public class PSystemBuilder {
 		factories.add(new GanttDiagramFactory(DiagramType.GANTT));
 		factories.add(new GanttDiagramFactory(DiagramType.UML));
 		factories.add(new FlowDiagramFactory());
-		factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
-		factories.add(new PSystemCuteFactory(DiagramType.CUTE));
+		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
+		// factories.add(new PSystemCuteFactory(DiagramType.CUTE));
 		factories.add(new PSystemDedicationFactory());
 		factories.add(new TimingDiagramFactory());
 		factories.add(new HelpFactory());

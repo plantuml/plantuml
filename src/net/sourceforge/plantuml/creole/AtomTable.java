@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class AtomTable implements Atom {
+public class AtomTable extends AbstractAtom implements Atom {
 
 	class Line {
 		private final List<Atom> cells = new ArrayList<Atom>();

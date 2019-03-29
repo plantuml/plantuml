@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -124,7 +125,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
 		String codeRaw = arg.getLazzy("CODE", 0);
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 		final char codeChar = getCharEncoding(codeRaw);

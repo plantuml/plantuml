@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -62,7 +63,7 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
 		final String code = arg.getLazzy("CODE", 0);
 		final String field = arg.get("FIELD", 0);
 

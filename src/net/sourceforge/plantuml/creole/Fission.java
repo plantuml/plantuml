@@ -59,7 +59,49 @@ public class Fission {
 		}
 	}
 
+	static private boolean NEW_MODE = true;
+
+	public List<Stripe> getSplitted2(StringBounder stringBounder) {
+		final double valueMaxWidth = maxWidth.getMaxWidth();
+		if (valueMaxWidth == 0) {
+			return Arrays.asList(stripe);
+		}
+		final List<Stripe> result = new ArrayList<Stripe>();
+		StripeSimple current = new StripeSimple(stripe.getHeader());
+		double remainingSpace = valueMaxWidth;
+		for (Atom atom : noHeader()) {
+			while (true) {
+				final List<Atom> splitInTwo = atom.splitInTwo(stringBounder, remainingSpace);
+				final Atom part1 = splitInTwo.get(0);
+				final double widthPart1 = part1.calculateDimension(stringBounder).getWidth();
+				current.addAtom(part1, widthPart1);
+				remainingSpace -= widthPart1;
+				if (remainingSpace <= 0) {
+					result.add(current);
+					current = new StripeSimple(blank(stripe.getHeader()));
+					remainingSpace = valueMaxWidth;
+				}
+				if (splitInTwo.size() == 1) {
+					break;
+				}
+				atom = splitInTwo.get(1);
+				if (remainingSpace < valueMaxWidth
+						&& atom.calculateDimension(stringBounder).getWidth() > remainingSpace) {
+					result.add(current);
+					current = new StripeSimple(blank(stripe.getHeader()));
+					remainingSpace = valueMaxWidth;
+				}
+			}
+		}
+		if (remainingSpace < valueMaxWidth) {
+			result.add(current);
+		}
+		return Collections.unmodifiableList(result);
+	}
+
 	public List<Stripe> getSplitted(StringBounder stringBounder) {
+		if (NEW_MODE)
+			return getSplitted2(stringBounder);
 		final double valueMaxWidth = maxWidth.getMaxWidth();
 		if (valueMaxWidth == 0) {
 			return Arrays.asList(stripe);
@@ -94,7 +136,7 @@ public class Fission {
 		if (header == null) {
 			return null;
 		}
-		return new Atom() {
+		return new AbstractAtom() {
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return header.calculateDimension(stringBounder);

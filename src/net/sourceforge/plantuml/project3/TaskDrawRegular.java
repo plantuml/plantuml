@@ -90,24 +90,10 @@ public class TaskDrawRegular implements TaskDraw {
 		if (shapeFull instanceof UPolygon) {
 			ug2.draw(shapeFull);
 		} else {
-			final double fullHeight = ((URectangle) shapeFull).getHeight();
-			// ug2.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UChangeColor(HtmlColorUtils.WHITE))
-			// .draw(shapeFull);
-			// drawInside(ug1, fullHeight);
-			// ug2.apply(new UChangeBackColor(null)).draw(shapeFull);
+			// final double fullHeight = ((URectangle) shapeFull).getHeight();
 			ug2.draw(shapeFull);
 		}
 	}
-
-	// private void drawInside(UGraphic ug, double fullHeight) {
-	// for (Instant i = task.getStart(); i.compareTo(task.getEnd()) <= 0; i = i.increment()) {
-	// // final int load = task.getLoadAt(i);
-	// final URectangle shapeLoad = getShapeInside(i);
-	// final double diffHeight = fullHeight - shapeLoad.getHeight();
-	// final double start = timeScale.getStartingPosition(i);
-	// ug.apply(new UChangeColor(null)).apply(new UTranslate(start, diffHeight + margin)).draw(shapeLoad);
-	// }
-	// }
 
 	private UGraphic applyColors(UGraphic ug) {
 		if (colors != null && colors.isOk()) {
@@ -119,20 +105,10 @@ public class TaskDrawRegular implements TaskDraw {
 		return ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(defaultColor));
 	}
 
-	private URectangle getShapeInside(Instant instant) {
-		final double start = timeScale.getStartingPosition(instant);
-		final double end = timeScale.getEndingPosition(instant);
-		final double height = getHeight() - 2 * margin;
-		return new URectangle(end - start, height);
-	}
-
-	// private URectangle getShapeInside(int load, Instant instant) {
+	// private URectangle getShapeInside(Instant instant) {
 	// final double start = timeScale.getStartingPosition(instant);
 	// final double end = timeScale.getEndingPosition(instant);
-	// if (load > 100) {
-	// load = 100;
-	// }
-	// final double height = (getHeight() - 2 * margin) * load / 100.0;
+	// final double height = getHeight() - 2 * margin;
 	// return new URectangle(end - start, height);
 	// }
 
@@ -149,9 +125,12 @@ public class TaskDrawRegular implements TaskDraw {
 	}
 
 	private boolean isDiamond() {
-		final Instant instantStart = task.getStart();
-		final Instant instantEnd = task.getEnd();
-		return instantStart.compareTo(instantEnd) == 0;
+		if (task.isDiamond()) {
+			final Instant instantStart = task.getStart();
+			final Instant instantEnd = task.getEnd();
+			return instantStart.compareTo(instantEnd) == 0;
+		}
+		return false;
 	}
 
 	private UShape getDiamond() {
@@ -162,7 +141,6 @@ public class TaskDrawRegular implements TaskDraw {
 		result.addPoint(h / 2, h);
 		result.addPoint(0, h / 2);
 		return result;
-		// return result.translate(2, 2);
 	}
 
 	public double getHeight() {

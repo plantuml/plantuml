@@ -64,6 +64,15 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class MindMapDiagram extends UmlDiagram {
 
+	private Branch left = new Branch();
+	private Branch right = new Branch();
+
+	private Direction defaultDirection = Direction.RIGHT;
+
+	public final void setDefaultDirection(Direction defaultDirection) {
+		this.defaultDirection = defaultDirection;
+	}
+
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("MindMap");
 	}
@@ -159,8 +168,9 @@ public class MindMapDiagram extends UmlDiagram {
 		}
 	}
 
-	private Branch left = new Branch();
-	private Branch right = new Branch();
+	public CommandExecutionResult addIdea(int level, String label, IdeaShape shape) {
+		return addIdea(level, label, shape, defaultDirection);
+	}
 
 	public CommandExecutionResult addIdea(int level, String label, IdeaShape shape, Direction direction) {
 		if (level == 0) {
@@ -184,7 +194,7 @@ public class MindMapDiagram extends UmlDiagram {
 		private Finger finger;
 
 		private void initRoot(String label, IdeaShape shape) {
-			root = new Idea(0, null, Display.getWithNewlines(label), shape);
+			root = new Idea(Display.getWithNewlines(label), shape);
 			last = root;
 		}
 
@@ -198,13 +208,13 @@ public class MindMapDiagram extends UmlDiagram {
 
 		private CommandExecutionResult add(int level, String label, IdeaShape shape) {
 			if (level == last.getLevel() + 1) {
-				final Idea newIdea = new Idea(level, last, Display.getWithNewlines(label), shape);
+				final Idea newIdea = last.createIdea(level, Display.getWithNewlines(label), shape);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}
 			if (level <= last.getLevel()) {
 				final int diff = last.getLevel() - level + 1;
-				final Idea newIdea = new Idea(level, getParentOfLast(diff), Display.getWithNewlines(label), shape);
+				final Idea newIdea = getParentOfLast(diff).createIdea(level, Display.getWithNewlines(label), shape);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}

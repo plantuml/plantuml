@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -67,6 +68,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 	private RegexConcat getRegexConcatMultiLine() {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
+				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				new RegexLeaf("[%s]*"), //
@@ -82,6 +84,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 	private RegexConcat getRegexConcatSingleLine() {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
+				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				new RegexLeaf("[%s]*"), //
@@ -110,7 +113,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				return executeInternal(system, line0, lines);
@@ -122,7 +125,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final SequenceDiagram system, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location, RegexResult arg) {
 				return executeInternal(system, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
 			}
 
@@ -137,6 +140,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 		if (strings.size() > 0) {
 			final boolean tryMerge = arg.get("VMERGE", 0) != null;
+			final boolean parallel = arg.get("PARALLEL", 0) != null;
 			final Display display = diagram.manageVariable(strings.toDisplay());
 			final Note note = new Note(p, position, display);
 			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
@@ -152,6 +156,9 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 				final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
 				note.setUrl(urlLink);
+			}
+			if (parallel) {
+				note.goParallel();
 			}
 			diagram.addNote(note, tryMerge);
 		}

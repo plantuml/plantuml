@@ -62,6 +62,11 @@ public class CommunicationTileSelfNoteRight extends AbstractTile implements Tile
 	public Event getEvent() {
 		return message;
 	}
+	
+	@Override
+	public double getYPoint(StringBounder stringBounder) {
+		return tile.getYPoint(stringBounder);
+	}
 
 	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Rose skin, ISkinParam skinParam,
 			Note noteOnMessage) {

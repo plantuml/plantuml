@@ -77,7 +77,7 @@ public class PostItDiagram extends UmlDiagram {
 		drawU(ug);
 		if (ug instanceof UGraphicG2d) {
 			final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
-			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, this.getDpi(fileFormatOption));
+			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (ug instanceof UGraphicSvg) {
 			final UGraphicSvg svg = (UGraphicSvg) ug;
 			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
@@ -123,7 +123,7 @@ public class PostItDiagram extends UmlDiagram {
 			final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, backColor);
 
 			final Graphics2D graphics2D = builder.getGraphics2D();
-			final double dpiFactor = this.getDpiFactor(fileFormatOption);
+			final double dpiFactor = this.getScaleCoef(fileFormatOption);
 			final UGraphicG2d result = new UGraphicG2d(new ColorMapperIdentity(), graphics2D, dpiFactor);
 			result.setBufferedImage(builder.getBufferedImage());
 			return result;

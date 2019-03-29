@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.help;
 
 import java.awt.GraphicsEnvironment;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 
 public class CommandHelpFont extends SingleLineCommand2<Help> {
 
@@ -59,7 +59,7 @@ public class CommandHelpFont extends SingleLineCommand2<Help> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Help diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg) {
 		diagram.add("<b>Help on font");
 		diagram.add(" ");
 		diagram.add("The code of this command is located in <i>net.sourceforge.plantuml.help</i> package.");

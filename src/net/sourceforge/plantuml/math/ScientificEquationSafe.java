@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -150,7 +151,15 @@ public class ScientificEquationSafe {
 			os.write(getSvg(1, foregroundColor, backgroundColor).getSvg(true).getBytes());
 			return dimSvg;
 		}
-		return null;
+		if (fileFormat.getFileFormat() == FileFormat.EPS) {
+			final BufferedImage image = getImage(scale, foregroundColor, backgroundColor);
+			final EpsGraphics out = new EpsGraphics();
+			out.drawImage(image, 0, 0);
+			out.close();
+			os.write(out.getEPSCode().getBytes());
+			return new ImageDataSimple(image.getWidth(), image.getHeight());
+		}
+		throw new UnsupportedOperationException();
 	}
 
 	public final String getFormula() {

@@ -38,16 +38,15 @@ package net.sourceforge.plantuml.preproc;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.CharSequence2;
-import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.StringLocated;
 
 public class ReadLineList implements ReadLine {
 
-	private final Iterator<? extends CharSequence> iterator;
+	private final Iterator<String> iterator;
 	private final LineLocation location;
 
-	public ReadLineList(List<? extends CharSequence> definition, LineLocation location) {
+	public ReadLineList(List<String> definition, LineLocation location) {
 		this.iterator = definition.iterator();
 		this.location = location;
 	}
@@ -55,11 +54,11 @@ public class ReadLineList implements ReadLine {
 	public void close() {
 	}
 
-	public CharSequence2 readLine() {
+	public StringLocated readLine() {
 		if (iterator.hasNext() == false) {
 			return null;
 		}
-		return new CharSequence2Impl(iterator.next(), location);
+		return new StringLocated(iterator.next(), location);
 	}
 
 }

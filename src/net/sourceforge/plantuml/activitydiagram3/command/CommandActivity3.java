@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -74,7 +75,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
 
 		final Url url;
 		if (arg.get("URL", 0) == null) {

@@ -57,6 +57,15 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	private final List<Instruction> all = new ArrayList<Instruction>();
 	private final Swimlane defaultSwimlane;
 
+	public boolean containsBreak() {
+		for (Instruction ins : all) {
+			if (ins.containsBreak()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public InstructionList() {
 		this(null);
 	}

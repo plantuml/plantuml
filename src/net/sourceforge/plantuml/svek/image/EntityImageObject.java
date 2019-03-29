@@ -38,12 +38,13 @@ package net.sourceforge.plantuml.svek.image;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -92,11 +93,11 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		this.name = TextBlockUtils.withMargin(
 				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);
-		if (stereotype == null || stereotype.getLabel(false) == null
+		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			this.stereo = null;
 		} else {
-			this.stereo = Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(
+			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
 					new FontConfiguration(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 		}

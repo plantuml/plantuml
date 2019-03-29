@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.utils.CharHidder;
 
-public class AtomText implements Atom {
+public class AtomText extends AbstractAtom implements Atom {
 
 	interface DelayedDouble {
 		public double getDouble(StringBounder stringBounder);
@@ -142,10 +142,6 @@ public class AtomText implements Atom {
 		return new AtomHorizontalTexts(result);
 	}
 
-	// private static Atom createAtomTextOld(final String text, Url url, FontConfiguration fontConfiguration) {
-	// return new AtomText(text, fontConfiguration, url, ZERO, ZERO);
-	// }
-
 	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
 		if (order == 0) {
 			fontConfiguration = fontConfiguration.bigger(4).bold();
@@ -186,7 +182,6 @@ public class AtomText implements Atom {
 		}
 		this.marginLeft = marginLeft;
 		this.marginRight = marginRight;
-		// this.text = StringUtils.showComparatorCharacters(StringUtils.manageBackslash(text));
 		this.text = StringUtils.manageTildeArobaseStart(StringUtils.manageUnicodeNotationUplus(StringUtils
 				.manageAmpDiese(StringUtils.showComparatorCharacters(CharHidder.unhide(text)))));
 		this.fontConfiguration = style;
@@ -330,6 +325,27 @@ public class AtomText implements Atom {
 		result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
 		return Collections.unmodifiableList(result);
 
+	}
+
+	@Override
+	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
+		final StringTokenizer st = new StringTokenizer(text, " ", true);
+		final StringBuilder tmp = new StringBuilder();
+		while (st.hasMoreTokens()) {
+			final String token = st.nextToken();
+			if (tmp.length() > 0 && getWidth(stringBounder, tmp.toString() + token) > width) {
+				final Atom part1 = new AtomText(tmp.toString(), fontConfiguration, url, marginLeft, marginRight);
+				String remain = text.substring(tmp.length());
+				while (remain.startsWith(" ")) {
+					remain = remain.substring(1);
+				}
+
+				final Atom part2 = new AtomText(remain, fontConfiguration, url, marginLeft, marginRight);
+				return Arrays.asList(part1, part2);
+			}
+			tmp.append(token);
+		}
+		return Collections.singletonList((Atom) this);
 	}
 
 	private List<String> splitLong1(StringBounder stringBounder, double maxWidth, String add) {

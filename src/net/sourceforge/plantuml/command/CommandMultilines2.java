@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -71,20 +72,20 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 			return CommandControl.NOT_OK;
 		}
 		if (syntaxWithFinalBracket()) {
-			if (lines.size() == 1 && StringUtils.trin(lines.getFirst499()).endsWith("{") == false) {
-				final String vline = lines.get499(0).toString() + " {";
-				if (isValid(BlocLines.single(vline)) == CommandControl.OK_PARTIAL) {
+			if (lines.size() == 1 && lines.getFirst499().getStringTrimmed().endsWith("{") == false) {
+				final String vline = ((StringLocated) lines.get499(0)).getString() + " {";
+				if (isValid(BlocLines.singleString(vline)) == CommandControl.OK_PARTIAL) {
 					return CommandControl.OK_PARTIAL;
 				}
 				return CommandControl.NOT_OK;
 			}
 			lines = lines.eventuallyMoveBracket();
 		}
-		final CharSequence first = lines.getFirst499();
+		final StringLocated first = lines.getFirst499();
 		if (first == null) {
 			return CommandControl.NOT_OK;
 		}
-		final boolean result1 = starting.match(StringUtils.trin(first));
+		final boolean result1 = starting.match(first.getStringTrimmed());
 		if (result1 == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -92,7 +93,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final Matcher2 m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trinNoTrace(lines.getLast499()));
+		final Matcher2 m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trinNoTrace(lines.getLast499().getString()));
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}

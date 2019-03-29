@@ -40,12 +40,12 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;

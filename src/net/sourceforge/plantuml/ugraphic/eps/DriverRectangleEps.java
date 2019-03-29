@@ -89,7 +89,7 @@ public class DriverRectangleEps implements UDriver<EpsGraphics> {
 		} else {
 			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
 			eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
-			eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
+			eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
 					.getStroke().getDashSpace());
 			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2);
 		}

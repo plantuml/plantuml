@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
 public class CommandHideShowSpecificStereotype extends SingleLineCommand2<CucaDiagram> {
 
@@ -58,7 +58,7 @@ public class CommandHideShowSpecificStereotype extends SingleLineCommand2<CucaDi
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
 
 //		final String stereotype = arg.get("STEREOTYPE", 0);
 //		diagram.hideOrShow(new Stereotype(stereotype), arg.get("COMMAND", 0).equalsIgnoreCase("show"));

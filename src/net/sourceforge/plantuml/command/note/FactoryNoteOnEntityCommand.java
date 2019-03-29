@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -118,7 +119,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine(partialPattern)) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location, RegexResult arg) {
 				final String s = arg.get("NOTE", 0);
 				return executeInternal(arg, system, null, BlocLines.getWithNewlines(s));
 			}
@@ -139,7 +140,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 

@@ -42,7 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
 
-public class Idea {
+class Idea {
 
 	private final Display label;
 	private final int level;
@@ -50,14 +50,26 @@ public class Idea {
 	private final List<Idea> children = new ArrayList<Idea>();
 	private final IdeaShape shape;
 
-	public Idea(int level, Idea parent, Display label, IdeaShape shape) {
+	public Idea(Display label, IdeaShape shape) {
+		this(0, null, label, shape);
+	}
+
+	public Idea createIdea(int newLevel, Display newDisplay, IdeaShape newShape) {
+		final Idea result = new Idea(newLevel, this, newDisplay, newShape);
+		this.children.add(result);
+		return result;
+	}
+
+	private Idea(int level, Idea parent, Display label, IdeaShape shape) {
 		this.label = label;
 		this.level = level;
 		this.parent = parent;
 		this.shape = shape;
-		if (parent != null) {
-			this.parent.children.add(this);
-		}
+	}
+
+	@Override
+	public String toString() {
+		return label.toString();
 	}
 
 	public final int getLevel() {

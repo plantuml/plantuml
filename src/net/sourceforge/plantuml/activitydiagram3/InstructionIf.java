@@ -69,6 +69,18 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 	private final Swimlane swimlane;
 
+	public boolean containsBreak() {
+		for (Branch branch : thens) {
+			if (branch.containsBreak()) {
+				return true;
+			}
+		}
+		if (elseBranch != null) {
+			return elseBranch.containsBreak();
+		}
+		return false;
+	}
+
 	public InstructionIf(Swimlane swimlane, Instruction parent, Display labelTest, Display whenThen,
 			LinkRendering inlinkRendering, HtmlColor color, ISkinParam skinParam) {
 		this.parent = parent;

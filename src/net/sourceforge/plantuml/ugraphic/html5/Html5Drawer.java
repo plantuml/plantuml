@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.html5;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.tikz.TikzGraphics;
 
 public class Html5Drawer {
 
@@ -58,7 +58,7 @@ public class Html5Drawer {
 	}
 
 	private static String format(double x) {
-		return EpsGraphics.format(x);
+		return TikzGraphics.format(x);
 	}
 
 	public final void setStrokeColor(String stroke) {

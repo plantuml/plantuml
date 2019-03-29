@@ -46,6 +46,7 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -72,7 +73,7 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram system, RegexResult arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram system, LineLocation location, RegexResult arg) {
 		final String src = arg.get("FILE", 0);
 		final Sprite sprite;
 		try {

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class AtomWithMargin implements Atom {
+class AtomWithMargin extends AbstractAtom implements Atom {
 
 	private final double marginY1;
 	private final double marginY2;

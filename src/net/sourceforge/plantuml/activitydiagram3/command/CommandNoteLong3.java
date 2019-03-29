@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -68,7 +67,7 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines) {
 		// final List<? extends CharSequence> in = StringUtils.removeEmptyColumns2(lines.subList(1, lines.size() - 1));
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final NotePosition position = NotePosition.defaultLeft(line0.get("POSITION", 0));

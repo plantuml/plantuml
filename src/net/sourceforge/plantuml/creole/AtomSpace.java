@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class AtomSpace implements Atom {
+public class AtomSpace extends AbstractAtom implements Atom {
 
 	private final double width;
 

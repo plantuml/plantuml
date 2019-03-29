@@ -336,7 +336,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		if (tmp != null) {
 			return tmp;
 		}
-		final List<String> stereos = stereotype.getLabels(diagram.getSkinParam().useGuillemet());
+		final List<String> stereos = stereotype.getLabels(diagram.getSkinParam().guillemet());
 		if (stereos == null) {
 			return TextBlockUtils.empty(0, 0);
 		}

@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TileImageSvg;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class AtomImgSvg implements Atom {
+public class AtomImgSvg extends AbstractAtom implements Atom {
 
 	private final TileImageSvg tileImageSvg;
 

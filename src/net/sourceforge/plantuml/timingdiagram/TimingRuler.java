@@ -124,7 +124,7 @@ public class TimingRuler {
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
-	public void draw(UGraphic ug) {
+	public void drawTimeAxis(UGraphic ug) {
 		ug = ug.apply(new UStroke(2.0)).apply(new UChangeColor(HtmlColorUtils.BLACK));
 		final double tickHeight = 5;
 		final ULine line = new ULine(0, tickHeight);

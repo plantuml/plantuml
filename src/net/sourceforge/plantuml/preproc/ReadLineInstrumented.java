@@ -40,8 +40,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringLocated;
 
 public abstract class ReadLineInstrumented implements ReadLine {
 
@@ -61,7 +61,7 @@ public abstract class ReadLineInstrumented implements ReadLine {
 		return result;
 	}
 
-	public final CharSequence2 readLine() throws IOException {
+	public final StringLocated readLine() throws IOException {
 		if (TRACE == false) {
 			return readLineInst();
 		}
@@ -80,7 +80,7 @@ public abstract class ReadLineInstrumented implements ReadLine {
 		return super.toString() + " current=" + current;
 	}
 
-	abstract CharSequence2 readLineInst() throws IOException;
+	abstract StringLocated readLineInst() throws IOException;
 
 	public final void close() throws IOException {
 		if (TRACE) {

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project3;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 

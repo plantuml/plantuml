@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc.ReadLine;
 
 public abstract class ReadLineInsertable implements ReadLine {
@@ -50,12 +50,12 @@ public abstract class ReadLineInsertable implements ReadLine {
 		sources.add(0, inserted);
 	}
 
-	abstract CharSequence2 readLineInternal() throws IOException;
+	abstract StringLocated readLineInternal() throws IOException;
 
-	final public CharSequence2 readLine() throws IOException {
+	final public StringLocated readLine() throws IOException {
 		while (sources.size() > 0) {
 			final ReadLine tmp = sources.get(0);
-			final CharSequence2 result = tmp.readLine();
+			final StringLocated result = tmp.readLine();
 			if (result != null) {
 				return result;
 			}

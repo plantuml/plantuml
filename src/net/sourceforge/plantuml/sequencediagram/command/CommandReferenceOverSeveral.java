@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -69,7 +70,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
 		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("REF", 0));
 		// final HtmlColor backColorGeneral = HtmlColorSet.getInstance().getColorIfValid(arg.get("REF").get(1));
 

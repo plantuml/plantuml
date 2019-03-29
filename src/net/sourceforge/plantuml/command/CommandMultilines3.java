@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.core.Diagram;
@@ -64,11 +65,11 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final CharSequence first = lines.getFirst499();
+		final StringLocated first = lines.getFirst499();
 		if (first == null) {
 			return CommandControl.NOT_OK;
 		}
-		final boolean result1 = starting.match(StringUtils.trin(first));
+		final boolean result1 = starting.match(first.getStringTrimmed());
 		if (result1 == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -76,7 +77,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final String potentialLast = StringUtils.trinNoTrace(lines.getLast499());
+		final String potentialLast = StringUtils.trinNoTrace(lines.getLast499().getString());
 		final boolean m1 = getPatternEnd2().match(potentialLast);
 		if (m1 == false) {
 			return CommandControl.OK_PARTIAL;

@@ -45,10 +45,10 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -104,7 +104,7 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		return message.isCreate();
 	}
 
-	private ArrowComponent getComponent(StringBounder stringBounder) {
+	private AbstractComponentRoseArrow getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		/*
 		 * if (isSelf()) { arrowConfiguration = arrowConfiguration.self(); } else
@@ -113,8 +113,8 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
 
-		final ArrowComponent comp = skin
-				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
+		final AbstractComponentRoseArrow comp = skin.createComponentArrow(arrowConfiguration, skinParam,
+				message.getLabelNumbered());
 		return comp;
 	}
 
@@ -126,7 +126,7 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 	public static final double LIVE_DELTA_SIZE = 5;
 
 	public void updateStairs(StringBounder stringBounder, double y) {
-		final ArrowComponent comp = (ArrowComponent) getComponent(stringBounder);
+		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		// final Point2D p2 = comp.getEndPoint(stringBounder, dim);
 		// System.err.println("CommunicationTile::updateStairs y=" + y + " p1=" + p1 + " p2=" + p2 + " dim=" + dim);
@@ -139,8 +139,13 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 	}
 
 	public void drawU(UGraphic ug) {
+		final String anchor1 = message.getPart1Anchor();
+		final String anchor2 = message.getPart2Anchor();
+		if (anchor1 != null || anchor2 != null) {
+			return;
+		}
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Component comp = getComponent(stringBounder);
+		final AbstractComponentRoseArrow comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		double x1 = getPoint1(stringBounder).getCurrentValue();
 		double x2 = getPoint2(stringBounder).getCurrentValue();

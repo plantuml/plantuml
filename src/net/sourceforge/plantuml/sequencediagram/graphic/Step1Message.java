@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 
 class Step1Message extends Step1Abstract {
 
@@ -69,7 +70,7 @@ class Step1Message extends Step1Abstract {
 		if (isSelfMessage()) {
 			this.messageArrow = null;
 		} else {
-			final Component comp = drawingSet.getSkin().createComponent(ComponentType.ARROW, getConfig(),
+			final AbstractComponentRoseArrow comp = drawingSet.getSkin().createComponentArrow(getConfig(),
 					drawingSet.getSkinParam(), message.getLabelNumbered());
 			final Component compAliveBox = drawingSet.getSkin().createComponent(ComponentType.ALIVE_BOX_OPEN_OPEN,
 					null, drawingSet.getSkinParam(), null);
@@ -205,8 +206,8 @@ class Step1Message extends Step1Abstract {
 			deltaY += getHalfLifeWidth();
 		}
 
-		return new MessageSelfArrow(posY, getDrawingSet().getSkin(), getDrawingSet().getSkin().createComponent(
-				ComponentType.ARROW, getConfig(), getDrawingSet().getSkinParam(), getMessage().getLabelNumbered()),
+		return new MessageSelfArrow(posY, getDrawingSet().getSkin(), getDrawingSet().getSkin().createComponentArrow(
+				getConfig(), getDrawingSet().getSkinParam(), getMessage().getLabelNumbered()),
 				getLivingParticipantBox1(), deltaY, getMessage().getUrl(), deltaX);
 	}
 

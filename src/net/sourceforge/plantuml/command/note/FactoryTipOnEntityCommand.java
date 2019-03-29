@@ -100,7 +100,7 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -51,7 +50,7 @@ public interface Player extends TimeProjected {
 
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message);
 
-	public void drawTitle(UGraphic ug);
+	public void drawFrameTitle(UGraphic ug);
 
 	public void drawContent(UGraphic ug);
 
@@ -60,5 +59,8 @@ public interface Player extends TimeProjected {
 	public double getWidthHeader(StringBounder stringBounder);
 
 	public double getHeight(StringBounder stringBounder);
+	
+	public double getFirstColumnWidth(StringBounder stringBounder);
+
 
 }

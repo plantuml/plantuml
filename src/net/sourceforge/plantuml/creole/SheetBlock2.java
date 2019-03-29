@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
@@ -48,6 +49,10 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 
+	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
+	
 	private final SheetBlock1 block;
 	private final UStroke defaultStroke;
 	private final Stencil stencil;

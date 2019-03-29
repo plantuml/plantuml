@@ -26,8 +26,6 @@
  */
 package net.sourceforge.plantuml.evalex;
 
-import java.math.BigDecimal;
-
 import net.sourceforge.plantuml.evalex.Expression.LazyNumber;
 
 /**

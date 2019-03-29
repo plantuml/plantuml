@@ -60,6 +60,10 @@ public class UPath extends AbstractShadowable implements Iterable<USegment> {
 		addInternal(new USegment(coord, pathType));
 	}
 
+	public boolean isEmpty() {
+		return segments.size() == 0;
+	}
+
 	private void addInternal(USegment segment) {
 		segments.add(segment);
 		final double coord[] = segment.getCoord();
@@ -104,6 +108,10 @@ public class UPath extends AbstractShadowable implements Iterable<USegment> {
 
 	public void lineTo(double x, double y) {
 		add(new double[] { x, y }, USegmentType.SEG_LINETO);
+	}
+
+	public void cubicTo(Point2D p1, Point2D p2, Point2D p) {
+		cubicTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p.getX(), p.getY());
 	}
 
 	public void cubicTo(double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2, double y2) {

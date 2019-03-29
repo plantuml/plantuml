@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -60,7 +61,7 @@ public class CommandChangeStateByTime extends CommandChangeState {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
 		final Player player = diagram.getLastPlayer();
 		if (player == null) {
 			return CommandExecutionResult.error("Missing @ line before this");

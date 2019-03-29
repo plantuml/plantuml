@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class AtomTree implements Atom {
+public class AtomTree extends AbstractAtom implements Atom {
 
 	private final HtmlColor lineColor;
 	private final List<Atom> cells = new ArrayList<Atom>();

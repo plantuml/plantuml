@@ -69,7 +69,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String line = StringUtils.trin(lines.getFirst499());
+		final String line = lines.getFirst499().getStringTrimmed();
 		final Matcher2 m = pattern.matcher(line);
 		final boolean result = m.find();
 		if (result) {
@@ -89,7 +89,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		final String line = StringUtils.trin(lines.getFirst499());
+		final String line = lines.getFirst499().getStringTrimmed();
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Syntax error: " + line);
 		}

@@ -118,9 +118,6 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.type = type;
 		if (Display.isNull(label)) {
 			this.label = Display.NULL;
-			// } else if (doWeHaveToRemoveUrlAtStart(label)) {
-			// this.url = label.initUrl();
-			// this.label = label.removeHeadingUrl(url).manageGuillemet();
 		} else {
 			this.label = label.manageGuillemet();
 			if (VisibilityModifier.isVisibilityCharacter(label.get(0))) {

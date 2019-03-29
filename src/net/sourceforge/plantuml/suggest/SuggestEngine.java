@@ -35,18 +35,12 @@
  */
 package net.sourceforge.plantuml.suggest;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.CharSequence2;
-import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
-import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 
 final public class SuggestEngine {
 
@@ -61,12 +55,12 @@ final public class SuggestEngine {
 	}
 
 	public SuggestEngine(UmlSource source, UmlDiagramFactory systemFactory) {
-		this.systemFactory = systemFactory;
-		this.it99 = source.iterator2();
-		final CharSequence startLine = it99.next();
-		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
+//		this.systemFactory = systemFactory;
+//		this.it99 = source.iterator2();
+//		final CharSequence startLine = it99.next();
+//		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
 			throw new UnsupportedOperationException();
-		}
+//		}
 	}
 
 	public SuggestEngineResult tryToSuggest(AbstractPSystem system) {
@@ -152,15 +146,16 @@ final public class SuggestEngine {
 	}
 
 	private IteratorCounter2 replaceFirstLine(String s) {
-		final List<CharSequence2> tmp = new ArrayList<CharSequence2>();
-		tmp.add(new CharSequence2Impl(s, null));
-		final Iterator<? extends CharSequence> it3 = it99.cloneMe();
-		if (it3.hasNext()) {
-			it3.next();
-		}
-		while (it3.hasNext()) {
-			tmp.add(new CharSequence2Impl(it3.next(), null));
-		}
-		return new IteratorCounter2Impl(tmp);
+		throw new UnsupportedOperationException();
+//		final List<CharSequence2> tmp = new ArrayList<CharSequence2>();
+//		tmp.add(new CharSequence2(s, null));
+//		final Iterator<? extends CharSequence> it3 = it99.cloneMe();
+//		if (it3.hasNext()) {
+//			it3.next();
+//		}
+//		while (it3.hasNext()) {
+//			tmp.add(new CharSequence2(it3.next(), null));
+//		}
+//		return new IteratorCounter2Impl(tmp);
 	}
 }

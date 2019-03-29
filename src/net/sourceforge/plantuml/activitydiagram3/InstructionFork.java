@@ -59,6 +59,15 @@ public class InstructionFork extends WithNote implements Instruction {
 	private String label;
 	boolean finished = false;
 
+	public boolean containsBreak() {
+		for (InstructionList fork : forks) {
+			if (fork.containsBreak()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam) {
 		this.parent = parent;
 		this.inlinkRendering = inlinkRendering;

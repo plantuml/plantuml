@@ -419,11 +419,13 @@ public class PSystemError extends AbstractPSystem {
 
 	private List<String> getPartialCode() {
 		List<String> result = new ArrayList<String>();
-		for (Iterator<CharSequence2> it = getSource().iterator2(); it.hasNext();) {
-			final CharSequence2 s = it.next();
-			result.add(s.toString());
-			if (s.getLocation().getDescription().equals(higherErrorPosition.getDescription())
-					&& s.getLocation().compareTo(higherErrorPosition) >= 0) {
+		for (Iterator<StringLocated> it = getSource().iterator2(); it.hasNext();) {
+			final StringLocated s = it.next();
+			final String tmp = s.getString();
+			result.add(tmp);
+			final LineLocation location = s.getLocation();
+			if (location.getDescription().equals(higherErrorPosition.getDescription())
+					&& location.compareTo(higherErrorPosition) >= 0) {
 				break;
 			}
 		}
@@ -458,11 +460,7 @@ public class PSystemError extends AbstractPSystem {
 			final String last = htmlStrings.get(idx);
 			htmlStrings.set(idx, "<w:" + getRed(useRed) + ">" + last + "</w>");
 		}
-		// final String errorLine = getSource().getLine(higherErrorPosition);
-		// final String err = StringUtils.hideComparatorCharacters(errorLine);
-		// if (StringUtils.isNotEmpty(err)) {
-		// htmlStrings.add("<w:" + getRed(useRed) + ">" + err + "</w>");
-		// }
+
 		final Collection<String> textErrors = new LinkedHashSet<String>();
 		for (ErrorUml er : printedErrors) {
 			textErrors.add(er.getError());

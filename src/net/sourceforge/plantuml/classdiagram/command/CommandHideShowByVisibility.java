@@ -39,6 +39,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
@@ -73,7 +74,7 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 	}
 	
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, LineLocation location, RegexResult arg) {
 		if (classDiagram instanceof ClassDiagram) {
 			return executeArgClass((ClassDiagram) classDiagram, arg);
 		}

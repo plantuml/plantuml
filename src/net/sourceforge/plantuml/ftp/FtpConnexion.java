@@ -193,9 +193,15 @@ public class FtpConnexion {
 	}
 
 	public synchronized void delete(String fileName) {
-		incoming.remove(fileName);
-		outgoing.remove(fileName);
-		futureOutgoing.add(fileName);
+		if (fileName.contains("*")) {
+			incoming.clear();
+			outgoing.clear();
+			futureOutgoing.clear();
+		} else {
+			incoming.remove(fileName);
+			outgoing.remove(fileName);
+			futureOutgoing.add(fileName);
+		}
 	}
 
 	public void setFileFormat(FileFormat fileFormat) {

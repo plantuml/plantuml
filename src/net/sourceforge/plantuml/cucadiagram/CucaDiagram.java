@@ -537,9 +537,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	// public void hideOrShow(Stereotype stereotype, boolean show) {
 	// if (show) {
-	// hiddenStereotype.remove(stereotype.getLabel(false));
+	// hiddenStereotype.remove(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 	// } else {
-	// hiddenStereotype.add(stereotype.getLabel(false));
+	// hiddenStereotype.add(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 	// }
 	// }
 	//

@@ -220,7 +220,7 @@ public class SkinParam implements ISkinParam {
 		if (stereotype == null) {
 			throw new IllegalArgumentException();
 		}
-		final String value2 = getValue("spotchar" + stereotype.getLabel(false));
+		final String value2 = getValue("spotchar" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 		if (value2 != null && value2.length() > 0) {
 			return value2.charAt(0);
 		}
@@ -230,7 +230,7 @@ public class SkinParam implements ISkinParam {
 	public Colors getColors(ColorParam param, Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "color" + stereotype.getLabel(false));
+			final String value2 = getValue(param.name() + "color" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (value2 != null && getIHtmlColorSet().getColorIfValid(value2) != null) {
 				return new Colors(value2, getIHtmlColorSet(), param.getColorType());
 			}
@@ -261,7 +261,8 @@ public class SkinParam implements ISkinParam {
 	private int getFontSize(Stereotype stereotype, FontParam... param) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getFirstValueNonNullWithSuffix("fontsize" + stereotype.getLabel(false), param);
+			final String value2 = getFirstValueNonNullWithSuffix(
+					"fontsize" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);
 			if (value2 != null && value2.matches("\\d+")) {
 				return Integer.parseInt(value2);
 			}
@@ -279,7 +280,8 @@ public class SkinParam implements ISkinParam {
 	private String getFontFamily(Stereotype stereotype, FontParam... param) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getFirstValueNonNullWithSuffix("fontname" + stereotype.getLabel(false), param);
+			final String value2 = getFirstValueNonNullWithSuffix(
+					"fontname" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);
 			if (value2 != null) {
 				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value2);
 			}
@@ -302,7 +304,8 @@ public class SkinParam implements ISkinParam {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			value = getFirstValueNonNullWithSuffix("fontcolor" + stereotype.getLabel(false), param);
+			value = getFirstValueNonNullWithSuffix("fontcolor" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),
+					param);
 		}
 		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
 			value = getFirstValueNonNullWithSuffix("fontcolor", param);
@@ -330,7 +333,8 @@ public class SkinParam implements ISkinParam {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			value = getFirstValueNonNullWithSuffix("fontstyle" + stereotype.getLabel(false), param);
+			value = getFirstValueNonNullWithSuffix("fontstyle" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),
+					param);
 		}
 		if (value == null) {
 			value = getFirstValueNonNullWithSuffix("fontstyle", param);
@@ -579,7 +583,7 @@ public class SkinParam implements ISkinParam {
 	public boolean shadowing(Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue("shadowing" + stereotype.getLabel(false));
+			final String value2 = getValue("shadowing" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (value2 != null) {
 				return value2.equalsIgnoreCase("true");
 			}
@@ -600,7 +604,7 @@ public class SkinParam implements ISkinParam {
 	public boolean shadowingForNote(Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue("note" + "shadowing" + stereotype.getLabel(false));
+			final String value2 = getValue("note" + "shadowing" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (value2 != null) {
 				return value2.equalsIgnoreCase("true");
 			}
@@ -619,7 +623,7 @@ public class SkinParam implements ISkinParam {
 		final String name = skinParameter.getUpperCaseName();
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(name + "shadowing" + stereotype.getLabel(false));
+			final String value2 = getValue(name + "shadowing" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (value2 != null) {
 				return value2.equalsIgnoreCase("true");
 			}
@@ -743,7 +747,7 @@ public class SkinParam implements ISkinParam {
 
 	private Double getCornerInternal(String key, CornerParam param, Stereotype stereotype) {
 		if (stereotype != null) {
-			key += stereotype.getLabel(false);
+			key += stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR);
 		}
 		final String value = getValue(key);
 		if (value != null && value.matches("\\d+")) {
@@ -757,12 +761,14 @@ public class SkinParam implements ISkinParam {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 
-			final String styleValue = getValue(param.name() + "style" + stereotype.getLabel(false));
+			final String styleValue = getValue(param.name() + "style"
+					+ stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (styleValue != null) {
 				style = LinkStyle.fromString2(styleValue);
 			}
 
-			final String value2 = getValue(param.name() + "thickness" + stereotype.getLabel(false));
+			final String value2 = getValue(param.name() + "thickness"
+					+ stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (value2 != null && value2.matches("[\\d.]+")) {
 				if (style == null) {
 					style = LinkStyle.NORMAL();
@@ -856,7 +862,7 @@ public class SkinParam implements ISkinParam {
 		String value = getValue("activityshape");
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue("activityshape" + stereotype.getLabel(false));
+			final String value2 = getValue("activityshape" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (value2 != null) {
 				value = value2;
 			}
@@ -896,12 +902,9 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	public boolean useGuillemet() {
+	public Guillemet guillemet() {
 		final String value = getValue("guillemet");
-		if ("false".equalsIgnoreCase(value)) {
-			return false;
-		}
-		return true;
+		return Guillemet.GUILLEMET.fromDescription(value);
 	}
 
 	public boolean handwritten() {

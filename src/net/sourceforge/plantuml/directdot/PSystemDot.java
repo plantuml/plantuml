@@ -85,7 +85,7 @@ public class PSystemDot extends AbstractPSystem {
 		// throw new IllegalStateException("Timeout1 " + state);
 		// }
 		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {
-			final TextBlock result = GraphicStrings.createForError(Arrays.asList("Graphivz has crashed"), false);
+			final TextBlock result = GraphicStrings.createForError(Arrays.asList("GraphViz has crashed"), false);
 			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
 					result);
 			return ImageDataSimple.error();

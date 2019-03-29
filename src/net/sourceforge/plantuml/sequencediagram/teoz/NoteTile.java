@@ -64,10 +64,10 @@ public class NoteTile extends AbstractTile implements Tile {
 	public Event getEvent() {
 		return note;
 	}
-	
+
 	@Override
 	public double getYPoint(StringBounder stringBounder) {
-		return 0;
+		return getComponent(stringBounder).getPreferredHeight(stringBounder) / 2;
 	}
 
 	public NoteTile(LivingSpace livingSpace1, LivingSpace livingSpace2, Note note, Rose skin, ISkinParam skinParam) {

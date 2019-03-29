@@ -48,18 +48,21 @@ import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc2.PreprocessorMode;
+import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
+import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class BlockUml {
 
-	private final List<CharSequence2> data;
+	private final List<StringLocated> data;
 	private Diagram system;
 	private final Defines localDefines;
 	private final ISkinSimple skinParam;
 
 	BlockUml(String... strings) {
-		this(convert(strings), Defines.createEmpty(), null);
+		this(convert(strings), Defines.createEmpty(), null, null);
 	}
 
 	public String getEncodedUrl() throws IOException {
@@ -71,43 +74,47 @@ public class BlockUml {
 
 	public String getFlashData() {
 		final StringBuilder sb = new StringBuilder();
-		for (CharSequence2 line : data) {
-			sb.append(line);
+		for (StringLocated line : data) {
+			sb.append(line.getString());
 			sb.append('\r');
 			sb.append(BackSlash.CHAR_NEWLINE);
 		}
 		return sb.toString();
 	}
 
-	public static List<CharSequence2> convert(String... strings) {
+	public static List<StringLocated> convert(String... strings) {
 		return convert(Arrays.asList(strings));
 	}
 
-	public static List<CharSequence2> convert(List<String> strings) {
-		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+	public static List<StringLocated> convert(List<String> strings) {
+		final List<StringLocated> result = new ArrayList<StringLocated>();
 		LineLocationImpl location = new LineLocationImpl("block", null);
 		for (String s : strings) {
 			location = location.oneLineRead();
-			result.add(new CharSequence2Impl(s, location));
+			result.add(new StringLocated(s, location));
 		}
 		return result;
 	}
 
-	public BlockUml(List<CharSequence2> strings, Defines defines, ISkinSimple skinParam) {
+	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode) {
 		this.localDefines = defines;
 		this.skinParam = skinParam;
-		final CharSequence2 s0 = strings.get(0).trin();
+		final String s0 = strings.get(0).getStringTrimmed();
 		if (StartUtils.startsWithSymbolAnd("start", s0) == false) {
 			throw new IllegalArgumentException();
 		}
-		this.data = new ArrayList<CharSequence2>(strings);
+		if (mode != null && mode.getPreprocessorMode() == PreprocessorMode.V2_NEW_TIM) {
+			this.data = new TimLoader(mode.getImportedFiles()).load(strings);
+		} else {
+			this.data = new ArrayList<StringLocated>(strings);
+		}
 	}
 
 	public String getFileOrDirname() {
 		if (OptionFlags.getInstance().isWord()) {
 			return null;
 		}
-		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).toString()));
+		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));
 		final boolean ok = m.find();
 		if (ok == false) {
 			return null;
@@ -137,7 +144,7 @@ public class BlockUml {
 		return system;
 	}
 
-	public final List<CharSequence2> getData() {
+	public final List<StringLocated> getData() {
 		return data;
 	}
 
@@ -145,8 +152,8 @@ public class BlockUml {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
-			for (CharSequence s : data) {
-				msgDigest.update(s.toString().getBytes("UTF-8"));
+			for (StringLocated s : data) {
+				msgDigest.update(s.getString().getBytes("UTF-8"));
 			}
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
@@ -166,14 +173,18 @@ public class BlockUml {
 
 	public boolean isStartDef(String name) {
 		final String signature = "@startdef(id=" + name + ")";
-		return data.get(0).toString().equalsIgnoreCase(signature);
+		return data.get(0).getString().equalsIgnoreCase(signature);
 	}
 
-	public List<? extends CharSequence> getDefinition(boolean withHeader) {
-		if (withHeader) {
-			return Collections.unmodifiableList(data);
+	public List<String> getDefinition(boolean withHeader) {
+		final List<String> data2 = new ArrayList<String>();
+		for (StringLocated s : data) {
+			data2.add(s.getString());
 		}
-		return Collections.unmodifiableList(data.subList(1, data.size() - 1));
+		if (withHeader) {
+			return Collections.unmodifiableList(data2);
+		}
+		return Collections.unmodifiableList(data2.subList(1, data2.size() - 1));
 	}
 
 	public Defines getLocalDefines() {

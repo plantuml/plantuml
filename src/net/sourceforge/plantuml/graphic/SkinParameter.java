@@ -118,6 +118,9 @@ public class SkinParameter {
 	public static final SkinParameter INTERFACE = new SkinParameter("INTERFACE", ColorParam.interfaceBackground,
 			ColorParam.interfaceBorder, FontParam.INTERFACE, FontParam.INTERFACE_STEREOTYPE);
 
+	public static final SkinParameter PARTICIPANT = new SkinParameter("PARTICIPANT", ColorParam.participantBackground,
+			ColorParam.participantBorder, FontParam.PARTICIPANT, FontParam.PARTICIPANT_STEREOTYPE);
+
 	private final ColorParam colorParamBorder;
 	private final ColorParam colorParamBack;
 	private final FontParam fontParam;

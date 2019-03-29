@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.postit;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -57,7 +58,7 @@ public class CommandCreatePostIt extends SingleLineCommand2<PostItDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PostItDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(PostItDiagram diagram, LineLocation location, RegexResult arg) {
 		final String id = arg.get("ID", 0);
 		final String text = arg.get("TEXT", 0);
 		diagram.createPostIt(id, Display.getWithNewlines(text));

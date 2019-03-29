@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.code;
 import java.io.IOException;
 import java.io.StringReader;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -55,13 +55,13 @@ public class ArobaseStringCompressor implements StringCompressor {
 		final ReadLine r = new UncommentReadLine(ReadLineReader.create(new StringReader(data), "COMPRESS"));
 		final StringBuilder sb = new StringBuilder();
 		final StringBuilder full = new StringBuilder();
-		CharSequence2 s = null;
+		StringLocated s = null;
 		boolean startDone = false;
 		while ((s = r.readLine()) != null) {
 			append(full, s);
-			if (s.toString2().startsWith("@startuml")) {
+			if (s.getString().startsWith("@startuml")) {
 				startDone = true;
-			} else if (s.toString2().startsWith("@enduml")) {
+			} else if (s.getString().startsWith("@enduml")) {
 				return sb.toString();
 			} else if (startDone) {
 				append(sb, s);
@@ -73,11 +73,11 @@ public class ArobaseStringCompressor implements StringCompressor {
 		return sb.toString();
 	}
 
-	private void append(final StringBuilder sb, CharSequence2 s) {
+	private void append(final StringBuilder sb, StringLocated s) {
 		if (sb.length() > 0) {
 			sb.append('\n');
 		}
-		sb.append(s.toString2());
+		sb.append(s.getString());
 	}
 
 	private String compressOld(String s) throws IOException {

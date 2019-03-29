@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -97,27 +96,29 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 			final Genealogy genealogy = new Genealogy(result);
 
-			final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(0);
+			for (WeldingPoint w : weldingPoints) {
+				final FtileBreak ftileBreak = (FtileBreak) w;
+				result = FtileUtils.addConnection(result, new Connection() {
+					public void drawU(UGraphic ug) {
+						final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
 
-			result = FtileUtils.addConnection(result, new Connection() {
-				public void drawU(UGraphic ug) {
-					final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
+						final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor, Arrows
+								.asToLeft());
+						snake.addPoint(tr1.getDx(), tr1.getDy());
+						snake.addPoint(Diamond.diamondHalfSize, tr1.getDy());
+						ug.draw(snake);
+					}
 
-					final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor, Arrows.asToLeft());
-					snake.addPoint(tr1.getDx(), tr1.getDy());
-					snake.addPoint(Diamond.diamondHalfSize, tr1.getDy());
-					ug.draw(snake);
-				}
+					public Ftile getFtile1() {
+						return ftileBreak;
+					}
 
-				public Ftile getFtile1() {
-					return ftileBreak;
-				}
+					public Ftile getFtile2() {
+						return null;
+					}
 
-				public Ftile getFtile2() {
-					return null;
-				}
-
-			});
+				});
+			}
 		}
 
 		return result;

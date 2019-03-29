@@ -58,13 +58,17 @@ public class DriverEllipseTikz implements UDriver<TikzGraphics> {
 		if (start == 0 && extend == 0) {
 			tikz.ellipse(cx, cy, width / 2, height / 2);
 		} else {
-			throw new UnsupportedOperationException();
+			start = start + 90;
+			final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;
+			final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
+			final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
+			final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
+			// start = start + 360;
+			// tikz.arc(x2, y2, (int) start, (int) (start - 45), (width + height) / 4);
+
+			tikz.arc(x1, y1, (int) ((360-(start+270))), (int) (360-((start+270+extend))), (width + height) / 4);
+			// tikz.arc(x1, y1, (int) (start + 270 + extend), (int) (start + 270), (width + height) / 4);
 			// // http://www.itk.ilstu.edu/faculty/javila/SVG/SVG_drawing1/elliptical_curve.htm
-			// start = start + 90;
-			// final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;
-			// final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
-			// final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
-			// final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
 			// // svg.svgEllipse(x1, y1, 1, 1, 0);
 			// // svg.svgEllipse(x2, y2, 1, 1, 0);
 			// svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);

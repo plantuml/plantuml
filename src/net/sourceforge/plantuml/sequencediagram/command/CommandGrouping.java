@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -65,7 +66,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
 		String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
 		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet()
 				.getColorIfValid(arg.get("COLORS", 0));

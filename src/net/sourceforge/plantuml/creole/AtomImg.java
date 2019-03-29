@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 
-public class AtomImg implements Atom {
+public class AtomImg extends AbstractAtom implements Atom {
 
 	private static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
 	private final BufferedImage image;

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.posimo;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.Collection;
-import java.util.Map;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;

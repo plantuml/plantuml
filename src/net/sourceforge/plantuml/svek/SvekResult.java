@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -72,8 +74,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			cluster.drawU(ug, new UStroke(1.5), dotData.getUmlDiagramType(), dotData.getSkinParam());
 		}
 
-		final HtmlColor color = HtmlColorUtils.noGradient(rose.getHtmlColor(dotData.getSkinParam(),
-				null, getArrowColorParam()));
+		final HtmlColor color = HtmlColorUtils.noGradient(rose.getHtmlColor(dotData.getSkinParam(), null,
+				getArrowColorParam()));
 
 		for (Shape shape : dotStringFactory.getBibliotekon().allShapes()) {
 			final double minX = shape.getMinX();
@@ -87,9 +89,11 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			// shape.getImage().drawNeighborhood(ug2, minX, minY);
 		}
 
+		final Set<String> ids = new HashSet<String>();
+
 		for (Line line : dotStringFactory.getBibliotekon().allLines()) {
 			final UGraphic ug2 = line.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
-			line.drawU(ug2, color);
+			line.drawU(ug2, color, ids);
 		}
 
 	}

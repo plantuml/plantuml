@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -98,7 +99,7 @@ public class Stereotype implements CharSequence {
 	public Stereotype(String label, double radius, UFont circledFont, IHtmlColorSet htmlColorSet) {
 		this(label, radius, circledFont, true, htmlColorSet);
 	}
-	
+
 	public Stereotype(String label, boolean automaticPackageStyle) {
 		this.automaticPackageStyle = automaticPackageStyle;
 		this.label = label;
@@ -129,7 +130,7 @@ public class Stereotype implements CharSequence {
 
 		final StringBuilder tmpLabel = new StringBuilder();
 
-		final List<String> list = cutLabels(label, false);
+		final List<String> list = cutLabels(label, Guillemet.DOUBLE_COMPARATOR);
 		for (String local : list) {
 			final RegexResult mCircleChar = circleChar.matcher(local);
 			final RegexResult mCircleSprite = circleSprite.matcher(local);
@@ -168,7 +169,6 @@ public class Stereotype implements CharSequence {
 	public Stereotype(String label) {
 		this(label, true);
 	}
-
 
 	public HtmlColor getHtmlColor() {
 		return htmlColor;
@@ -240,35 +240,28 @@ public class Stereotype implements CharSequence {
 		return circledFont;
 	}
 
-	public String getLabel(boolean withGuillement) {
+	public String getLabel(Guillemet guillemet) {
 		assert label == null || label.length() > 0;
 		if (isWithOOSymbol()) {
 			return null;
 		}
-		if (withGuillement) {
-			return StringUtils.manageGuillemet(label);
-		}
-		return label;
+		return guillemet.manageGuillemet(label);
 	}
 
-	public List<String> getLabels(boolean useGuillemet) {
-		final String labelLocal = getLabel(false);
+	public List<String> getLabels(Guillemet guillemet) {
+		final String labelLocal = getLabel(Guillemet.DOUBLE_COMPARATOR);
 		if (labelLocal == null) {
 			return null;
 		}
-		return cutLabels(labelLocal, useGuillemet);
+		return cutLabels(labelLocal, guillemet);
 	}
 
-	private static List<String> cutLabels(final String label, boolean useGuillemet) {
+	private static List<String> cutLabels(final String label, Guillemet guillemet) {
 		final List<String> result = new ArrayList<String>();
 		final Pattern2 p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
 		final Matcher2 m = p.matcher(label);
 		while (m.find()) {
-			if (useGuillemet) {
-				result.add(StringUtils.manageGuillemetStrict(m.group()));
-			} else {
-				result.add(m.group());
-			}
+			result.add(guillemet.manageGuillemetStrict(m.group()));
 		}
 		return Collections.unmodifiableList(result);
 	}

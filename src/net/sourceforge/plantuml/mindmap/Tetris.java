@@ -46,6 +46,16 @@ public class Tetris {
 	private final List<SymetricalTeePositioned> elements = new ArrayList<SymetricalTeePositioned>();
 	private double minY = Double.MAX_VALUE;
 	private double maxY = -Double.MAX_VALUE;
+	private String name;
+
+	public Tetris(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return name + "(" + elements.size() + ")";
+	}
 
 	public void balance() {
 		if (elements.size() == 0) {
@@ -62,6 +72,7 @@ public class Tetris {
 		for (SymetricalTeePositioned stp : elements) {
 			stp.move(-mean);
 		}
+		// System.err.println("Balanced=" + this + " " + elements);
 	}
 
 	public double getHeight() {
@@ -80,6 +91,7 @@ public class Tetris {
 	}
 
 	public void add(SymetricalTee tee) {
+		// System.err.println("Adding in " + this + " " + tee);
 
 		if (frontier.isEmpty()) {
 			final SymetricalTeePositioned p1 = new SymetricalTeePositioned(tee);
@@ -87,8 +99,10 @@ public class Tetris {
 			return;
 		}
 
+		// System.err.println("frontier=" + frontier);
+
 		final double c1 = frontier.getContact(0, tee.getElongation1());
-		final double c2 = frontier.getContact(tee.getElongation1(), tee.getElongation2());
+		final double c2 = frontier.getContact(tee.getElongation1(), tee.getElongation1() + tee.getElongation2());
 
 		// System.err.println("c1=" + c1 + " c2=" + c2);
 

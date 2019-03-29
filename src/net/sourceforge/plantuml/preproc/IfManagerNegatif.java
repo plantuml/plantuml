@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 
 class IfManagerNegatif extends IfManager {
@@ -49,30 +49,30 @@ class IfManagerNegatif extends IfManager {
 	}
 
 	@Override
-	protected CharSequence2 readLineInternal() throws IOException {
+	protected StringLocated readLineInternal() throws IOException {
 		if (skippingDone == false) {
 			skippingDone = true;
 			do {
-				final CharSequence2 s = readLine();
+				final StringLocated s = readLine();
 				if (s == null) {
 					return null;
 				}
-				Matcher2 m = endifPattern.matcher(s);
+				Matcher2 m = endifPattern.matcher(s.getString());
 				if (m.find()) {
 					return null;
 				}
-				m = elsePattern.matcher(s);
+				m = elsePattern.matcher(s.getString());
 				if (m.find()) {
 					break;
 				}
 			} while (true);
 		}
 
-		final CharSequence2 s = super.readLineInternal();
+		final StringLocated s = super.readLineInternal();
 		if (s == null) {
 			return null;
 		}
-		final Matcher2 m = endifPattern.matcher(s);
+		final Matcher2 m = endifPattern.matcher(s.getString());
 		if (m.find()) {
 			return null;
 		}

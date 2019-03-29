@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,31 +42,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public abstract class AbstractPlayer implements Player {
+public abstract class AbstractPlayer extends ReallyAbstractPlayer implements Player {
 
-	// private final String code;
-	private final Display full;
-	protected final ISkinParam skinParam;
-	protected final TimingRuler ruler;
 	private String initialState;
 
 	private final Set<ChangeState> changes = new TreeSet<ChangeState>();
@@ -75,26 +64,21 @@ public abstract class AbstractPlayer implements Player {
 	protected final List<TimingNote> notes = new ArrayList<TimingNote>();
 	protected final Map<String, String> statesLabel = new LinkedHashMap<String, String>();
 
-	public AbstractPlayer(String full, ISkinParam skinParam, TimingRuler ruler) {
-		// this.code = code;
-		this.full = Display.getWithNewlines(full);
-		this.skinParam = skinParam;
-		this.ruler = ruler;
+	public AbstractPlayer(TitleStrategy titleStrategy, String full, ISkinParam skinParam, TimingRuler ruler) {
+		super(titleStrategy, full, skinParam, ruler);
 	}
 
 	protected abstract TimeDrawing buildDrawing();
 
-	private FontConfiguration getFontConfiguration() {
-		return new FontConfiguration(skinParam, FontParam.TIMING, null);
-	}
-
-	public void drawTitle(UGraphic ug) {
-		final TextBlock title = getTitle();
-		title.drawU(ug);
-		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-		drawLine(ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UStroke(1.0)), -TimingDiagram.marginX1,
-				dimTitle.getHeight() + 1, dimTitle.getWidth() + 1, dimTitle.getHeight() + 1,
-				dimTitle.getWidth() + 1 + 10, 0);
+	public void drawFrameTitle(UGraphic ug) {
+		if (titleStrategy == TitleStrategy.IN_FRAME) {
+			final TextBlock title = getTitle();
+			title.drawU(ug);
+			final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+			drawLine(ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UStroke(1.0)), -TimingDiagram.marginX1,
+					dimTitle.getHeight() + 1, dimTitle.getWidth() + 1, dimTitle.getHeight() + 1,
+					dimTitle.getWidth() + 1 + 10, 0);
+		}
 	}
 
 	public void drawContent(UGraphic ug) {
@@ -103,12 +87,25 @@ public abstract class AbstractPlayer implements Player {
 	}
 
 	public void drawLeftHeader(UGraphic ug) {
+		if (titleStrategy == TitleStrategy.IN_LEFT_HEADER) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			final TextBlock title = getTitle();
+			final Dimension2D dim = title.calculateDimension(stringBounder);
+			final double y = (getHeight(stringBounder) - dim.getHeight()) / 2;
+			title.drawU(ug.apply(new UTranslate(0, y)));
+			ug = ug.apply(new UTranslate(dim.getWidth() + 5, 0));
+		}
 		ug = ug.apply(getTranslateForTimeDrawing(ug.getStringBounder()));
 		getTimeDrawing().getWidthHeader(ug.getStringBounder()).drawU(ug);
 	}
 
 	public double getWidthHeader(StringBounder stringBounder) {
-		return getTimeDrawing().getWidthHeader(stringBounder).calculateDimension(stringBounder).getWidth();
+		final Dimension2D dimHeader1 = getTimeDrawing().getWidthHeader(stringBounder).calculateDimension(stringBounder);
+		if (titleStrategy == TitleStrategy.IN_LEFT_HEADER) {
+			final Dimension2D dimTitle = getTitle().calculateDimension(stringBounder);
+			return dimTitle.getWidth() + 5 + dimHeader1.getWidth();
+		}
+		return dimHeader1.getWidth();
 	}
 
 	private void drawLine(UGraphic ug, double... coord) {
@@ -123,12 +120,11 @@ public abstract class AbstractPlayer implements Player {
 	}
 
 	private UTranslate getTranslateForTimeDrawing(StringBounder stringBounder) {
-		final TextBlock title = getTitle();
-		return new UTranslate(0, title.calculateDimension(stringBounder).getHeight() * 2);
-	}
-
-	private TextBlock getTitle() {
-		return full.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+		if (titleStrategy == TitleStrategy.IN_FRAME) {
+			final TextBlock title = getTitle();
+			return new UTranslate(0, title.calculateDimension(stringBounder).getHeight() * 2);
+		}
+		return new UTranslate(0, 12);
 	}
 
 	private TimeDrawing cached;
@@ -154,8 +150,11 @@ public abstract class AbstractPlayer implements Player {
 	}
 
 	public double getHeight(StringBounder stringBounder) {
-		final TextBlock title = getTitle();
 		final double zoneHeight = getZoneHeight(stringBounder);
+		if (titleStrategy == TitleStrategy.IN_LEFT_HEADER) {
+			return zoneHeight;
+		}
+		final TextBlock title = getTitle();
 		return title.calculateDimension(stringBounder).getHeight() * 2 + zoneHeight;
 	}
 

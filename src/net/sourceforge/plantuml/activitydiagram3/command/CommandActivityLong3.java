@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -74,7 +73,7 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.removeEmptyColumns();
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
 		final BoxStyle style = BoxStyle.fromChar(lines.getLastChar());

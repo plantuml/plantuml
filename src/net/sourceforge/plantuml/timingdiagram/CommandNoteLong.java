@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -58,7 +57,7 @@ public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 
 	protected CommandExecutionResult executeNow(final TimingDiagram diagram, BlocLines lines) {
 
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final String code = line0.get("CODE", 0);

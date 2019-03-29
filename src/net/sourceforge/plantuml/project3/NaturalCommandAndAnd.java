@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project3;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -73,7 +74,7 @@ public class NaturalCommandAndAnd extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram system, RegexResult arg) {
+	protected CommandExecutionResult executeArg(GanttDiagram system, LineLocation location, RegexResult arg) {
 		final Subject subject = subjectPattern.getSubject(system, arg);
 		final Verb verb1 = verbPattern1.getVerb(system, arg);
 		final Complement complement1 = complementPattern1.getComplement(system, arg, "1").get();

@@ -45,6 +45,7 @@ public class TaskImpl implements Task, LoadPlanable {
 	private final Solver3 solver;
 	private final Map<Resource, Integer> resources2 = new LinkedHashMap<Resource, Integer>();
 	private final LoadPlanable defaultPlan;
+	private boolean diamond;
 
 	public TaskImpl(TaskCode code, LoadPlanable defaultPlan) {
 		this.code = code;
@@ -182,6 +183,14 @@ public class TaskImpl implements Task, LoadPlanable {
 
 	public void addResource(Resource resource, int percentage) {
 		this.resources2.put(resource, percentage);
+	}
+
+	public void setDiamond(boolean diamond) {
+		this.diamond = diamond;
+	}
+
+	public boolean isDiamond() {
+		return this.diamond;
 	}
 
 }

@@ -38,20 +38,20 @@ package net.sourceforge.plantuml.preproc;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.StringLocated;
 
 public class Sub {
 
 	private final String name;
-	private final List<CharSequence2> lines = new ArrayList<CharSequence2>();
+	private final List<String> lines = new ArrayList<String>();
 
 	public Sub(String name) {
 		this.name = name;
 	}
 
-	public void add(CharSequence2 s) {
-		this.lines.add(s);
+	public void add(StringLocated s) {
+		this.lines.add(s.getString());
 	}
 
 	public ReadLine getReadLine(LineLocation lineLocation) {

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project3;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -59,7 +60,7 @@ public class CommandGanttArrow2 extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
 
 		final String name1 = arg.get("TASK1", 0);
 		final String name2 = arg.get("TASK2", 0);

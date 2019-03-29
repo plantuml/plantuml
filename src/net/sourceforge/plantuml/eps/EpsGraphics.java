@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.ShadowManager;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.utils.MathUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class EpsGraphics {
@@ -63,7 +64,7 @@ public class EpsGraphics {
 	private Color color = Color.BLACK;
 	private Color fillcolor = Color.BLACK;
 
-	private String strokeWidth = "1";
+	private String strokeWidth = format(1);
 	// private String strokeDasharray = null;
 
 	private final PostScriptCommandMacro setcolorgradient = new PostScriptCommandMacro("setcolorgradient");
@@ -132,7 +133,7 @@ public class EpsGraphics {
 		header.append("%%EndComments\n\n");
 		header.append("gsave\n");
 		header.append("0 " + maxY + " translate\n");
-		header.append("1 -1 scale\n");
+		header.append(".01 -.01 scale\n");
 
 		if (setcolorgradientUsed) {
 			header.append(setcolorgradient.getPostStringDefinition());
@@ -182,9 +183,9 @@ public class EpsGraphics {
 		this.fillcolor = c;
 	}
 
-	public final void setStrokeWidth(String strokeWidth, double dashVisible, double dashSpace) {
+	public final void setStrokeWidth(double strokeWidth, double dashVisible, double dashSpace) {
 		checkCloseDone();
-		this.strokeWidth = strokeWidth;
+		this.strokeWidth = format(strokeWidth);
 		this.dashVisible = dashVisible;
 		this.dashSpace = dashSpace;
 	}
@@ -278,7 +279,7 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else {
-					Log.println("unknown " + seg);
+					Log.println("unknown1 " + seg);
 				}
 			}
 			append("closepath eofill", true);
@@ -302,7 +303,7 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else {
-					Log.println("unknown " + seg);
+					Log.println("unknown2 " + seg);
 				}
 			}
 			append("stroke", true);
@@ -453,7 +454,8 @@ public class EpsGraphics {
 		if (dashSpace != 0 && dashVisible != 0) {
 			append("[" + (int) dashSpace + " " + (int) dashVisible + "] 0 setdash", true);
 		}
-		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " " + format((rx + ry) / 2)
+		final double round = MathUtils.min((rx + ry) / 2, width / 2, height / 2);
+		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " " + format(round)
 				+ " roundrect", true);
 		roundrectUsed = true;
 	}
@@ -541,7 +543,7 @@ public class EpsGraphics {
 		final double r = c.getRed() / 255.0;
 		final double g = c.getGreen() / 255.0;
 		final double b = c.getBlue() / 255.0;
-		append(format(r) + " " + format(g) + " " + format(b) + " setrgbcolor", true);
+		append(formatSimple2(r) + " " + formatSimple2(g) + " " + formatSimple2(b) + " setrgbcolor", true);
 	}
 
 	protected void appendColorShort(Color c) {
@@ -551,14 +553,33 @@ public class EpsGraphics {
 		final double r = c.getRed() / 255.0;
 		final double g = c.getGreen() / 255.0;
 		final double b = c.getBlue() / 255.0;
-		append(format(r) + " " + format(g) + " " + format(b), true);
+		append(formatSimple2(r) + " " + formatSimple2(g) + " " + formatSimple2(b), true);
 	}
 
-	public static String format(double x) {
+	static String format(double x) {
+		if (x == 0) {
+			return "0";
+		}
+		return Long.toString((long) (x * 100));
+	}
+
+	public static String formatSimple4(double x) {
 		if (x == 0) {
 			return "0";
 		}
 		String s = String.format(Locale.US, "%1.4f", x);
+		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
+		if (s.endsWith(".")) {
+			s = s.substring(0, s.length() - 1);
+		}
+		return s;
+	}
+
+	private static String formatSimple2(double x) {
+		if (x == 0) {
+			return "0";
+		}
+		String s = String.format(Locale.US, "%1.2f", x);
 		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
 		if (s.endsWith(".")) {
 			s = s.substring(0, s.length() - 1);

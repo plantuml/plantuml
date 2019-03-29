@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -94,7 +95,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
 		final String codeRaw = arg.getLazzy("CODE", 0);
 
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));

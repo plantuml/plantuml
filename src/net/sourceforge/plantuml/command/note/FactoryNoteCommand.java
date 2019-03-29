@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -84,7 +84,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location, RegexResult arg) {
 				final String display = arg.get("DISPLAY", 0);
 				return executeInternal(system, arg, BlocLines.getWithNewlines(display));
 			}
@@ -103,7 +103,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				return executeInternal(system, line0, lines);

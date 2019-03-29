@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
@@ -81,10 +82,10 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.REQUIREMENT, skinParam,
 				HorizontalAlignment.CENTER, stereotype, true, false, entity);
 
-		if (stereotype == null || stereotype.getLabel(false) == null) {
+		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.desc = tmp;
 		} else {
-			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet()))
+			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet()))
 					.create(new FontConfiguration(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),
 							HorizontalAlignment.CENTER, skinParam);
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);

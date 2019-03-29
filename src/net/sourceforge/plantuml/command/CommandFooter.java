@@ -39,9 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandFooter extends SingleLineCommand<UmlDiagram> {
 

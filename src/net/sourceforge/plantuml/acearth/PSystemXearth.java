@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
-
 import ext.plantuml.com.ctreber.acearth.ACearth;
 import ext.plantuml.com.ctreber.acearth.ConfigurationACearth;
 import ext.plantuml.com.ctreber.acearth.plugins.markers.Marker;
