@@ -97,13 +97,13 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 		}
 		try {
+			// Check if valid URL
+			if (src.startsWith("http:") || src.startsWith("https:")) {
+				// final byte image[] = getFile(src);
+				return build(src, fc, new URL(src), scale);
+			}
 			final File f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
-				// Check if valid URL
-				if (src.startsWith("http:") || src.startsWith("https:")) {
-					// final byte image[] = getFile(src);
-					return build(src, fc, new URL(src), scale);
-				}
 				return AtomText.create("(File not found: " + f.getCanonicalPath() + ")", fc);
 			}
 			if (f.getName().endsWith(".svg")) {

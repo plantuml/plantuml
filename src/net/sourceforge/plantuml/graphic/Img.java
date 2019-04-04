@@ -96,18 +96,16 @@ public class Img implements HtmlCommand {
 		}
 		final String src = m.group(1);
 		try {
+			// Check if valid URL
+			if (src.startsWith("http:") || src.startsWith("https:")) {
+				final BufferedImage read = FileUtils.ImageIO_read(new URL(src));
+				if (read == null) {
+					return new Text("(Cannot decode: " + src + ")");
+				}
+				return new Img(new TileImage(read, valign, vspace));
+			}
 			final File f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
-				// Check if valid URL
-				if (src.startsWith("http:") || src.startsWith("https:")) {
-//					final byte image[] = getFile(src);
-//					final BufferedImage read = ImageIO.read(new ByteArrayInputStream(image));
-					final BufferedImage read = FileUtils.ImageIO_read(new URL(src));
-					if (read == null) {
-						return new Text("(Cannot decode: " + src + ")");
-					}
-					return new Img(new TileImage(read, valign, vspace));
-				}
 				return new Text("(File not found: " + f + ")");
 			}
 			if (f.getName().endsWith(".svg")) {
