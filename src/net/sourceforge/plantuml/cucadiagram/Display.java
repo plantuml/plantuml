@@ -84,32 +84,32 @@ public class Display implements Iterable<CharSequence> {
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
 	private void check() {
-//		if (displayData != null)
-//			for (CharSequence s : displayData) {
-//				if (s == null) {
-//					continue;
-//				}
-//				if (s instanceof String) {
-//					continue;
-//				}
-//				if (s instanceof Stereotype) {
-//					continue;
-//				}
-//				// if (s instanceof CharSequence2) {
-//				// continue;
-//				// }
-//				if (s instanceof MessageNumber) {
-//					continue;
-//				}
-//				if (s instanceof EmbeddedDiagram) {
-//					continue;
-//				}
-//				System.err.println("PB=" + s);
-//				System.err.println("PB=" + s.getClass());
-//				for (int i = 0; i < 100; i++)
-//					Thread.dumpStack();
-//				System.exit(0);
-//			}
+		// if (displayData != null)
+		// for (CharSequence s : displayData) {
+		// if (s == null) {
+		// continue;
+		// }
+		// if (s instanceof String) {
+		// continue;
+		// }
+		// if (s instanceof Stereotype) {
+		// continue;
+		// }
+		// // if (s instanceof CharSequence2) {
+		// // continue;
+		// // }
+		// if (s instanceof MessageNumber) {
+		// continue;
+		// }
+		// if (s instanceof EmbeddedDiagram) {
+		// continue;
+		// }
+		// System.err.println("PB=" + s);
+		// System.err.println("PB=" + s.getClass());
+		// for (int i = 0; i < 100; i++)
+		// Thread.dumpStack();
+		// System.exit(0);
+		// }
 	}
 
 	public Display replaceBackslashT() {
@@ -267,12 +267,16 @@ public class Display implements Iterable<CharSequence> {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
 		boolean first = true;
 		for (CharSequence line : displayData) {
-			String lineString = line.toString();
-			if (first && VisibilityModifier.isVisibilityCharacter(line)) {
-				lineString = lineString.substring(1).trim();
+			if (line instanceof EmbeddedDiagram) {
+				result.add(line);
+			} else {
+				String lineString = line.toString();
+				if (first && VisibilityModifier.isVisibilityCharacter(line)) {
+					lineString = lineString.substring(1).trim();
+				}
+				final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);
+				result.add(withGuillement);
 			}
-			final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);
-			result.add(withGuillement);
 			first = false;
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);

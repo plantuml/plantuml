@@ -356,7 +356,8 @@ public final class GeneralImageBuilder {
 			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
 				return new EntityImageStateEmptyDescription(leaf, skinParam);
 			}
-			if (leaf.getStereotype() != null && "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR))) {
+			if (leaf.getStereotype() != null
+					&& "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR))) {
 				return new EntityImageState2(leaf, skinParam);
 			}
 			return new EntityImageState(leaf, skinParam);
@@ -379,7 +380,7 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.BRANCH || leaf.getLeafType() == LeafType.STATE_CHOICE) {
 			return new EntityImageBranch(leaf, skinParam);
 		}
-		if (leaf.getLeafType() == LeafType.LOLLIPOP) {
+		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF) {
 			return new EntityImageLollipopInterface(leaf, skinParam);
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE) {
@@ -555,7 +556,8 @@ public final class GeneralImageBuilder {
 			return original;
 		}
 		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), dotData.getSkinParam());
-		return DecorateEntityImage.add(legendBlock, original, legend.getHorizontalAlignment(), legend.getVerticalAlignment());
+		return DecorateEntityImage.add(legendBlock, original, legend.getHorizontalAlignment(),
+				legend.getVerticalAlignment());
 	}
 
 	private TextBlock getStereoBlock(IGroup g) {

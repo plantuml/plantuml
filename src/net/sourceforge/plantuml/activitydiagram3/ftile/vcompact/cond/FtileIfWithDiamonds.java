@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileIfWithDiamonds extends FtileIfNude {
 
-	private final double SUPP_WITH = 20;
+	private static final double SUPP_WIDTH = 20;
 	protected final Ftile diamond1;
 	protected final Ftile diamond2;
 
@@ -82,9 +82,9 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	@Override
-	protected double withInner(StringBounder stringBounder) {
+	protected double widthInner(StringBounder stringBounder) {
 		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);
-		return Math.max(super.withInner(stringBounder), dim1.getWidth() + SUPP_WITH);
+		return Math.max(super.widthInner(stringBounder), dim1.getWidth() + SUPP_WIDTH);
 	}
 
 	@Override

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLine;
@@ -60,7 +61,14 @@ import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorInclude;
 import net.sourceforge.plantuml.tim.expression.Knowledge;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.tim.stdlib.DateFunction;
+import net.sourceforge.plantuml.tim.stdlib.Dirpath;
+import net.sourceforge.plantuml.tim.stdlib.FileExists;
+import net.sourceforge.plantuml.tim.stdlib.Filename;
+import net.sourceforge.plantuml.tim.stdlib.Getenv;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
+import net.sourceforge.plantuml.tim.stdlib.Strpos;
+import net.sourceforge.plantuml.tim.stdlib.Substr;
 
 public class TContext {
 
@@ -71,9 +79,21 @@ public class TContext {
 
 	private TFunctionImpl pendingFunction;
 
-	public TContext(ImportedFiles importedFiles) {
+	private void addStandardFunctions(Defines defines) {
+		addFunction(new Strlen());
+		addFunction(new Substr());
+		addFunction(new FileExists());
+		addFunction(new Getenv());
+		addFunction(new Dirpath(defines));
+		addFunction(new Filename(defines));
+		addFunction(new DateFunction());
+		addFunction(new Strpos());
+	}
+
+
+	public TContext(ImportedFiles importedFiles, Defines defines) {
 		this.importedFiles = importedFiles;
-		this.addStandardFunctions();
+		this.addStandardFunctions(defines);
 	}
 
 	public Knowledge asKnowledge(final TMemory memory) {
@@ -117,7 +137,9 @@ public class TContext {
 		assert type == TLineType.getFromLine(s.getString());
 		try {
 
-			if (type == TLineType.IF) {
+			if (type == TLineType.ASSERT) {
+				return this.executeAssert(memory, s.getStringTrimmed());
+			} else if (type == TLineType.IF) {
 				return this.executeIf(memory, s.getStringTrimmed());
 			} else if (type == TLineType.IFDEF) {
 				return this.executeIfdef(memory, s.getStringTrimmed());
@@ -192,6 +214,12 @@ public class TContext {
 		condition.execute(this, memory);
 		final boolean isTrue = condition.isTrue();
 		memory.addConditionalContext(ConditionalContext.fromValue(isTrue));
+		return CommandExecutionResult.ok();
+	}
+
+	private CommandExecutionResult executeAssert(TMemory memory, String s) throws EaterException {
+		final EaterAssert condition = new EaterAssert(s);
+		condition.execute(this, memory);
 		return CommandExecutionResult.ok();
 	}
 
@@ -308,7 +336,7 @@ public class TContext {
 				final TFunction function = getFunctionSmart(new TFunctionSignature(presentFunction, call.getValues2()
 						.size()));
 				if (function == null) {
-					throw new EaterException("apply4522");
+					throw new EaterException("Function not found " + presentFunction);
 				}
 				if (function.getFunctionType() == TFunctionType.VOID) {
 					function.executeVoid(this, sub, memory);
@@ -503,10 +531,6 @@ public class TContext {
 	private void addFunction(TFunction func) {
 		this.functions2.put(func.getSignature(), func);
 		this.functions3.add(func.getSignature().getFunctionName() + "(");
-	}
-
-	private void addStandardFunctions() {
-		addFunction(new Strlen());
 	}
 
 	public void executeEndfunction() {

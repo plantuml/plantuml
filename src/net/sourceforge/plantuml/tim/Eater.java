@@ -67,13 +67,19 @@ public abstract class Eater {
 
 	final protected TValue eatExpression(TContext context, TMemory memory) throws EaterException {
 		final TokenStack tokenStack = new TokenStack();
-		addIntoTokenStack(tokenStack);
+		addIntoTokenStack(tokenStack, false);
 		return tokenStack.getResult(context, memory);
 	}
 
-	final protected void addIntoTokenStack(TokenStack tokenStack) throws EaterException {
+	final protected TValue eatExpressionStopAtColon(TContext context, TMemory memory) throws EaterException {
+		final TokenStack tokenStack = new TokenStack();
+		addIntoTokenStack(tokenStack, true);
+		return tokenStack.getResult(context, memory);
+	}
+
+	final protected void addIntoTokenStack(TokenStack tokenStack, boolean stopAtColon) throws EaterException {
 		while (true) {
-			final Token token = TokenType.eatOneToken(this);
+			final Token token = TokenType.eatOneToken(this, stopAtColon);
 			// System.err.println("token=" + token);
 			if (token == null) {
 				return;

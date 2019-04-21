@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
+public class CommandMultilinesTitle extends CommandMultilines<TitledDiagram> {
 
 	public CommandMultilinesTitle() {
 		super("(?i)^title$");
@@ -52,7 +52,7 @@ public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
 		return "(?i)^end[%s]?title$";
 	}
 
-	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) {
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();

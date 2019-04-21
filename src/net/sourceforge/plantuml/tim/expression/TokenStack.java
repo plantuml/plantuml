@@ -94,7 +94,7 @@ public class TokenStack {
 			if (level == 0 && (ch == ',' || ch == ')')) {
 				return result;
 			}
-			final Token token = TokenType.eatOneToken(eater);
+			final Token token = TokenType.eatOneToken(eater, false);
 			final TokenType type = token.getTokenType();
 			if (type == TokenType.OPEN_PAREN_MATH) {
 				level++;

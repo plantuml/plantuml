@@ -37,18 +37,18 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
-public class CommandFooter extends SingleLineCommand<UmlDiagram> {
+public class CommandFooter extends SingleLineCommand<TitledDiagram> {
 
 	public CommandFooter() {
 		super("(?i)^(?:(left|right|center)?[%s]*)footer(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, List<String> arg) {
 		final String align = arg.get(0);
 		diagram.getFooter().put(Display.getWithNewlines(arg.get(1)),
 				HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER));

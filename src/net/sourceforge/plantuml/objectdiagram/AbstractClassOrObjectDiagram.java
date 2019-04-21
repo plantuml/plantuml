@@ -82,12 +82,13 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	}
 
 	public int getNbOfHozizontalLollipop(IEntity entity) {
-		if (entity.getLeafType() == LeafType.LOLLIPOP) {
+		if (entity.getLeafType() == LeafType.LOLLIPOP_FULL || entity.getLeafType() == LeafType.LOLLIPOP_HALF) {
 			throw new IllegalArgumentException();
 		}
 		int result = 0;
 		for (Link link : getLinks()) {
-			if (link.getLength() == 1 && link.contains(entity) && link.containsType(LeafType.LOLLIPOP)) {
+			if (link.getLength() == 1 && link.contains(entity)
+					&& (link.containsType(LeafType.LOLLIPOP_FULL) || link.containsType(LeafType.LOLLIPOP_HALF))) {
 				result++;
 			}
 

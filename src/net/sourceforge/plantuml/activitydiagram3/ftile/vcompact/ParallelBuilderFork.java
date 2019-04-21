@@ -154,6 +154,7 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 			snake.addPoint(mp1a.getX(), middle);
 			snake.addPoint(mp2b.getX(), middle);
 			snake.addPoint(mp2b);
+			snake.setIgnoreForCompression(true);
 			ug.draw(snake);
 		}
 	}
@@ -213,6 +214,7 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 			snake.addPoint(mp1a.getX(), middle);
 			snake.addPoint(mp2b.getX(), middle);
 			snake.addPoint(mp2b);
+			snake.setIgnoreForCompression(true);
 			ug.draw(snake);
 		}
 

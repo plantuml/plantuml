@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.asciiart;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Component;
@@ -51,6 +52,20 @@ public class TextSkin extends Rose {
 
 	public TextSkin(FileFormat fileFormat) {
 		this.fileFormat = fileFormat;
+	}
+
+	@Override
+	public ArrowComponent createComponentArrow(ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
+		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL
+				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE
+				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {
+			return new ComponentTextArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat,
+					param.maxAsciiMessageLength());
+		}
+		if (config.isSelfArrow()) {
+			return new ComponentTextSelfArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat);
+		}
+		throw new UnsupportedOperationException();
 	}
 
 	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param,

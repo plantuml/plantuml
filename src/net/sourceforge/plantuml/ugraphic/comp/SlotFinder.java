@@ -173,6 +173,9 @@ public class SlotFinder implements UGraphic {
 	}
 
 	private void drawPolygon(double x, double y, UPolygon shape) {
+		if (mode == shape.isIgnoreForCompression()) {
+			return;
+		}
 		if (mode == CompressionMode.ON_X) {
 			slot.addSlot(x + shape.getMinX(), x + shape.getMaxX());
 		} else {

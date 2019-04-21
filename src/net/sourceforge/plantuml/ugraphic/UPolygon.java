@@ -40,6 +40,8 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
+
 public class UPolygon extends AbstractShadowable {
 
 	private final List<Point2D.Double> all = new ArrayList<Point2D.Double>();
@@ -156,5 +158,16 @@ public class UPolygon extends AbstractShadowable {
 		}
 		return points;
 	}
+	
+	private CompressionMode ignoreForCompression;
+
+	public final CompressionMode isIgnoreForCompression() {
+		return ignoreForCompression;
+	}
+
+	public final void setIgnoreForCompression(CompressionMode ignoreForCompression) {
+		this.ignoreForCompression = ignoreForCompression;
+	}
+
 
 }

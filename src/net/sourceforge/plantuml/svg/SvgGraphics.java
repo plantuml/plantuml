@@ -725,7 +725,7 @@ public class SvgGraphics {
 			elt.setAttribute("x", format(x));
 			elt.setAttribute("y", format(y));
 			final String s = toBase64(image);
-			elt.setAttribute(XLINK_HREF, "data:image/png;base64," + s);
+			elt.setAttribute("xlink:href", "data:image/png;base64," + s);
 			getG().appendChild(elt);
 		}
 		ensureVisible(x, y);

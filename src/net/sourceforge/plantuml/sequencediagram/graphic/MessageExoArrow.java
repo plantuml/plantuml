@@ -60,7 +60,7 @@ public class MessageExoArrow extends Arrow {
 	private final boolean shortArrow;
 	private final ArrowConfiguration arrowConfiguration;
 
-	public MessageExoArrow(double startingY, Rose skin, AbstractComponentRoseArrow arrow, LivingParticipantBox p, MessageExoType type,
+	public MessageExoArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p, MessageExoType type,
 			Url url, boolean shortArrow, ArrowConfiguration arrowConfiguration) {
 		super(startingY, skin, arrow, url);
 		this.p = p;

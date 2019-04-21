@@ -106,6 +106,10 @@ public class Defines implements Truth {
 		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
 		return result;
 	}
+	
+	public String getEnvironmentValue(String key) {
+		return this.environment.get(key);
+	}
 
 	private static String nameNoExtension(String name) {
 		final int x = name.lastIndexOf('.');

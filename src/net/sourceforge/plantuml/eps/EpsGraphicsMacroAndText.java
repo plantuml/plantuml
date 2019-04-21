@@ -49,9 +49,9 @@ public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {
 		final UFont font = fontConfiguration.getFont();
 		final int size = font.getSize();
 		append("/" + getPSName(fontConfiguration) + " findfont " + size + " scalefont setfont", true);
-		append("1 -1 scale", true);
+		append("100 -100 scale", true);
 		append("(" + getTextAsEps(text) + ") show", false);
-		append("1 -1 scale", true);
+		append(".01 -.01 scale", true);
 	}
 
 	private String getPSName(FontConfiguration fontConfiguration) {

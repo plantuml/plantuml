@@ -73,6 +73,7 @@ public class Preprocessor implements ReadLineNumbered {
 		}
 		final ReadFilterAnd filtersV2 = new ReadFilterAnd();
 		filtersV2.add(new ReadLineQuoteComment());
+		filtersV2.add(new SubPreprocessor(charset, definitionsContainer));
 		this.sourceV2 = filtersV2.applyFilter(reader);
 
 		final ReadFilterAnd filters = new ReadFilterAnd();

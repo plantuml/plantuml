@@ -163,6 +163,11 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
 	}
 
+	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
+			LinkRendering topInlinkRendering, Display labelTest) {
+		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
+	}
+
 	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
 		return factory.createParallel(swimlane, all, style, label);
 	}

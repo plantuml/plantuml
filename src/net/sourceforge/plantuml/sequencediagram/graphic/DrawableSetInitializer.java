@@ -306,7 +306,7 @@ class DrawableSetInitializer {
 
 	private void prepareNewpage(StringBounder stringBounder, Newpage newpage, ParticipantRange range) {
 		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range), drawableSet.getSkin()
-				.createComponent(ComponentType.NEWPAGE, null, drawableSet.getSkinParam(), null));
+				.createComponentNewPage(drawableSet.getSkinParam()));
 		this.lastFreeY2 = freeY2;
 		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);
 		drawableSet.addEvent(newpage, graphicalNewpage);
@@ -315,7 +315,7 @@ class DrawableSetInitializer {
 	private void prepareNewpageSpecial(StringBounder stringBounder, Newpage newpage, Event justBefore,
 			ParticipantRange range) {
 		final GraphicalNewpage graphicalNewpage = new GraphicalNewpage(freeY2.getFreeY(range), drawableSet.getSkin()
-				.createComponent(ComponentType.NEWPAGE, null, drawableSet.getSkinParam(), null));
+				.createComponentNewPage(drawableSet.getSkinParam()));
 		this.lastFreeY2 = freeY2;
 		freeY2 = freeY2.add(graphicalNewpage.getPreferredHeight(stringBounder), range);
 		drawableSet.addEvent(newpage, graphicalNewpage, justBefore);

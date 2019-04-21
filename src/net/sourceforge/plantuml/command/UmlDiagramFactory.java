@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
@@ -202,11 +203,43 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	public abstract AbstractPSystem createEmptyDiagram();
 
-	final protected void addCommonCommands(List<Command> cmds) {
+	final protected void addCommonCommands1(List<Command> cmds) {
+		addTitleCommands(cmds);
+		addCommonCommands2(cmds);
+		addCommonHides(cmds);
+
+	}
+
+	final protected void addCommonCommands2(List<Command> cmds) {
 		cmds.add(new CommandNope());
-		// cmds.add(new CommandComment());
-		// cmds.add(new CommandMultilinesComment());
 		cmds.add(new CommandPragma());
+
+		cmds.add(new CommandSkinParam());
+		cmds.add(new CommandSkinParamMultilines());
+		cmds.add(new CommandSkin());
+		cmds.add(new CommandMinwidth());
+		cmds.add(new CommandRotate());
+		cmds.add(new CommandScale());
+		cmds.add(new CommandScaleWidthAndHeight());
+		cmds.add(new CommandScaleWidthOrHeight());
+		cmds.add(new CommandScaleMaxWidth());
+		cmds.add(new CommandScaleMaxHeight());
+		cmds.add(new CommandScaleMaxWidthAndHeight());
+		cmds.add(new CommandAffineTransform());
+		cmds.add(new CommandAffineTransformMultiline());
+		final FactorySpriteCommand factorySpriteCommand = new FactorySpriteCommand();
+		cmds.add(factorySpriteCommand.createMultiLine(false));
+		cmds.add(factorySpriteCommand.createSingleLine());
+		cmds.add(new CommandSpriteFile());
+	}
+
+	final protected void addCommonHides(List<Command> cmds) {
+		cmds.add(new CommandHideUnlinked());
+		cmds.add(new CommandHideShowByVisibility());
+		cmds.add(new CommandHideShowByGender());
+	}
+
+	final protected void addTitleCommands(List<Command> cmds) {
 		cmds.add(new CommandTitle());
 		cmds.add(new CommandMainframe());
 		cmds.add(new CommandCaption());
@@ -218,28 +251,6 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 		cmds.add(new CommandHeader());
 		cmds.add(new CommandMultilinesHeader());
-
-		cmds.add(new CommandSkinParam());
-		cmds.add(new CommandSkinParamMultilines());
-		cmds.add(new CommandMinwidth());
-		cmds.add(new CommandRotate());
-		cmds.add(new CommandScale());
-		cmds.add(new CommandScaleWidthAndHeight());
-		cmds.add(new CommandScaleWidthOrHeight());
-		cmds.add(new CommandScaleMaxWidth());
-		cmds.add(new CommandScaleMaxHeight());
-		cmds.add(new CommandScaleMaxWidthAndHeight());
-		cmds.add(new CommandAffineTransform());
-		cmds.add(new CommandAffineTransformMultiline());
-		cmds.add(new CommandHideUnlinked());
-		final FactorySpriteCommand factorySpriteCommand = new FactorySpriteCommand();
-		cmds.add(factorySpriteCommand.createMultiLine(false));
-		cmds.add(factorySpriteCommand.createSingleLine());
-		cmds.add(new CommandSpriteFile());
-
-		cmds.add(new CommandHideShowByVisibility());
-		cmds.add(new CommandHideShowByGender());
-
 	}
 
 	final public List<String> getDescription() {

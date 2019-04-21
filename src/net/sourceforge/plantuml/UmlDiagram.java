@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
@@ -64,8 +65,6 @@ import net.sourceforge.plantuml.command.CommandSkinParamMultilines;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -73,11 +72,9 @@ import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.svek.EmptySvgException;
@@ -91,19 +88,12 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.version.Version;
 
-public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Annotated, WithSprite {
+public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
 
 	private boolean rotation;
 	private boolean hideUnlinkedData;
 
 	private int minwidth = Integer.MAX_VALUE;
-
-	private DisplayPositionned title = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);
-	private DisplayPositionned caption = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
-	private DisplayPositionned legend = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
-	private final DisplaySection header = DisplaySection.none();
-	private final DisplaySection footer = DisplaySection.none();
-	private Display mainFrame;
 
 	private final Pragma pragma = new Pragma();
 	private Animation animation;
@@ -119,30 +109,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		if (orig != null) {
 			this.skinParam.copyAllFrom(orig);
 		}
-	}
-
-	final public void setTitle(DisplayPositionned title) {
-		if (title.isNull() || title.getDisplay().isWhite()) {
-			return;
-		}
-		this.title = title;
-	}
-
-	final public void setMainFrame(Display mainFrame) {
-		this.mainFrame = mainFrame;
-	}
-
-	final public void setCaption(DisplayPositionned caption) {
-		this.caption = caption;
-	}
-
-	final public DisplayPositionned getCaption() {
-		return caption;
-	}
-
-	@Override
-	final public DisplayPositionned getTitle() {
-		return title;
 	}
 
 	final public int getMinwidth() {
@@ -167,14 +133,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	public void setParam(String key, String value) {
 		skinParam.setParam(StringUtils.goLowerCase(key), value);
-	}
-
-	public final DisplaySection getHeader() {
-		return header;
-	}
-
-	public final DisplaySection getFooter() {
-		return footer;
 	}
 
 	public final DisplaySection getFooterOrHeaderTeoz(FontParam param) {
@@ -213,10 +171,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		}
 		return getSkinParam().getDpi() * fileFormatOption.getScaleCoef() / 96.0;
 	}
-
-	// public final int getDpi(FileFormatOption fileFormatOption) {
-	// return getSkinParam().getDpi();
-	// }
 
 	public final boolean isHideUnlinkedData() {
 		return hideUnlinkedData;
@@ -438,14 +392,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		skinParam.addSprite(name, sprite);
 	}
 
-	public final DisplayPositionned getLegend() {
-		return legend;
-	}
-
-	public void setLegend(DisplayPositionned legend) {
-		this.legend = legend;
-	}
-
 	private boolean useJDot;
 
 	public void setUseJDot(boolean useJDot) {
@@ -460,20 +406,26 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return useJDot;
 	}
 
-	public final Display getMainFrame() {
-		return mainFrame;
-	}
-
 	public CommandExecutionResult loadSkin(String filename) throws IOException {
+
+		final String res = "/skin/" + filename + ".skin";
+		final InputStream internalIs = UmlDiagram.class.getResourceAsStream(res);
+		if (internalIs != null) {
+			final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
+			return loadSkinInternal(lines2);
+		}
 		if (OptionFlags.ALLOW_INCLUDE == false) {
 			return CommandExecutionResult.ok();
 		}
-		final File f = new File(filename + ".skin");
-		System.err.println("f=" + f.getAbsolutePath());
-		if (f.exists() == false || f.canRead() == false) {
+		final File f = FileSystem.getInstance().getFile(filename + ".skin");
+		if (f == null || f.exists() == false || f.canRead() == false) {
 			return CommandExecutionResult.error("Cannot load skin from " + filename);
 		}
 		final BlocLines lines = BlocLines.load(f, new LineLocationImpl(f.getName(), null));
+		return loadSkinInternal(lines);
+	}
+
+	private CommandExecutionResult loadSkinInternal(final BlocLines lines) {
 		final CommandSkinParam cmd1 = new CommandSkinParam();
 		final CommandSkinParamMultilines cmd2 = new CommandSkinParamMultilines();
 		for (int i = 0; i < lines.size(); i++) {

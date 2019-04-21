@@ -37,20 +37,20 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class CommandTitle extends SingleLineCommand<UmlDiagram> {
+public class CommandTitle extends SingleLineCommand<TitledDiagram> {
 
 	public CommandTitle() {
 		super("(?i)^title(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, List<String> arg) {
 		diagram.setTitle(DisplayPositionned.single(Display.getWithNewlines(arg.get(0)), HorizontalAlignment.CENTER,
 				VerticalAlignment.TOP));
 		return CommandExecutionResult.ok();

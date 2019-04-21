@@ -514,7 +514,7 @@ public class EpsGraphics {
 		if (xRadius != yRadius) {
 			scale = yRadius / xRadius;
 			append("gsave", true);
-			append("1 " + format(scale) + " scale", true);
+			append("1 " + formatSimple4(scale) + " scale", true);
 		}
 		if (fillcolor != null) {
 			appendColor(fillcolor);

@@ -185,8 +185,9 @@ public class EventsHistory {
 			if (position != null) {
 				assert position <= totalHeight : "position=" + position + " totalHeight=" + totalHeight;
 				value = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
+				final SymbolContext activateColor = getActivateColor(event);
 				result.addStep(new StairsPosition(Math.max(createY, position), isNextEventADestroy(event)), value,
-						getActivateColor(event));
+						activateColor);
 			}
 		}
 		// System.err.println("EventsHistory::getStairs finishing totalHeight=" + totalHeight);

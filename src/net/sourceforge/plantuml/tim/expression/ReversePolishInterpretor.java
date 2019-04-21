@@ -84,9 +84,12 @@ public class ReversePolishInterpretor {
 				final TFunction function = knowledge.getFunction(new TFunctionSignature(token2.getSurface(), nb2));
 				if (trace)
 					System.err.println("function=" + function);
+				if (function == null) {
+					throw new EaterException("Unknow built-in function " + token2.getSurface());
+				}
 				final int nb = function.getSignature().getNbArg();
 				if (nb != nb2) {
-					throw new EaterException("rpn4");
+					throw new EaterException("Bad number of arguments for " + function.getSignature().getFunctionName());
 				}
 				final List<TValue> args = new ArrayList<TValue>();
 				for (int i = 0; i < nb; i++) {

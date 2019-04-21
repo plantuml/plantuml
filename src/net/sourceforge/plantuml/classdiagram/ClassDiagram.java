@@ -107,7 +107,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			return createEntityWithNamespace(code, Display.getWithNewlines(getShortName(code)), LeafType.CLASS, symbol);
 		}
 		if (getNamespaceSeparator() == null) {
-			return getOrCreateLeafDefault(code, LeafType.CLASS, symbol);
+			return getOrCreateLeafDefault(code, type, symbol);
 		}
 		code = getFullyQualifiedCode(code);
 		if (super.leafExist(code)) {
@@ -122,8 +122,8 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			code = code.withSeparator(getNamespaceSeparator());
 		}
 		if (type != LeafType.ABSTRACT_CLASS && type != LeafType.ANNOTATION && type != LeafType.CLASS
-				&& type != LeafType.INTERFACE && type != LeafType.ENUM && type != LeafType.LOLLIPOP
-				&& type != LeafType.NOTE) {
+				&& type != LeafType.INTERFACE && type != LeafType.ENUM && type != LeafType.LOLLIPOP_FULL
+				&& type != LeafType.LOLLIPOP_HALF && type != LeafType.NOTE) {
 			return super.createLeaf(code, display, type, symbol);
 		}
 		if (getNamespaceSeparator() == null) {
@@ -143,7 +143,8 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		if (namespace != null
 				&& (EntityUtils.groupRoot(group) || group.getCode().getFullName().equals(namespace) == false)) {
 			final Code namespace2 = Code.of(namespace);
-			gotoGroupInternal(namespace2, Display.getWithNewlines(namespace), namespace2, GroupType.PACKAGE, getRootGroup());
+			gotoGroupInternal(namespace2, Display.getWithNewlines(namespace), namespace2, GroupType.PACKAGE,
+					getRootGroup());
 		}
 		final ILeaf result = createLeafInternal(
 				fullyCode,

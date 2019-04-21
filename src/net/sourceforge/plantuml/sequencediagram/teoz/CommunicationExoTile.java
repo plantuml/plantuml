@@ -44,11 +44,11 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -81,12 +81,12 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 	}
 
 
-	private AbstractComponentRoseArrow getComponent(StringBounder stringBounder) {
+	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		if (message.getType().getDirection() == -1) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
-		final AbstractComponentRoseArrow comp = skin
+		final ArrowComponent comp = skin
 				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
 		return comp;
 	}
@@ -167,7 +167,7 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 	}
 
 	public void updateStairs(StringBounder stringBounder, double y) {
-		final AbstractComponentRoseArrow comp = getComponent(stringBounder);
+		final ArrowComponent comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double arrowY = comp.getStartPoint(stringBounder, dim).getY();
 

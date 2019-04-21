@@ -45,12 +45,14 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandArrow3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandArrowLong3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandBackward3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandBreak;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandCase;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandCircleSpot3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElse3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf2;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseLegacy1;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEndPartition3;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandEndSwitch;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEndif3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandFork3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandForkAgain3;
@@ -77,6 +79,7 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandStart3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandStop3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane2;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandSwitch;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandWhile3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandWhileEnd3;
 import net.sourceforge.plantuml.command.Command;
@@ -92,7 +95,7 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		final List<Command> cmds = new ArrayList<Command>();
 		cmds.add(new CommandFootboxIgnored());
 
-		addCommonCommands(cmds);
+		addCommonCommands1(cmds);
 		cmds.add(new CommandSwimlane());
 		cmds.add(new CommandSwimlane2());
 		cmds.add(new CommandPartition3());
@@ -111,15 +114,22 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		cmds.add(new CommandDecoratorMultine(new CommandElse3(), 50));
 		cmds.add(new CommandElseLegacy1());
 		cmds.add(new CommandEndif3());
+
+		cmds.add(new CommandSwitch());
+		cmds.add(new CommandCase());
+		cmds.add(new CommandEndSwitch());
+
 		cmds.add(new CommandRepeat3());
 		cmds.add(new CommandRepeatWhile3());
 		cmds.add(new CommandRepeatWhile3Multilines());
 		cmds.add(new CommandBackward3());
 		cmds.add(new CommandWhile3());
 		cmds.add(new CommandWhileEnd3());
+		
 		cmds.add(new CommandFork3());
 		cmds.add(new CommandForkAgain3());
 		cmds.add(new CommandForkEnd3());
+		
 		cmds.add(new CommandSplit3());
 		cmds.add(new CommandSplitAgain3());
 		cmds.add(new CommandSplitEnd3());

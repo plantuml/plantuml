@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 
 public class TimLoader {
@@ -46,8 +47,8 @@ public class TimLoader {
 	private final TContext context;
 	private final TMemory global = new TMemoryGlobal();
 
-	public TimLoader(ImportedFiles importedFiles) {
-		this.context = new TContext(importedFiles);
+	public TimLoader(ImportedFiles importedFiles, Defines defines) {
+		this.context = new TContext(importedFiles, defines);
 	}
 
 	public List<StringLocated> load(List<StringLocated> input) {

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-public class ScaleWidthAndHeight implements Scale {
+public class ScaleWidthAndHeight extends ScaleProtected implements Scale {
 
 	private final double maxWidth;
 	private final double maxHeight;
@@ -45,7 +45,7 @@ public class ScaleWidthAndHeight implements Scale {
 		this.maxHeight = maxHeight;
 	}
 
-	public double getScale(double width, double height) {
+	public double getScaleInternal(double width, double height) {
 		final double scale1 = maxWidth / width;
 		final double scale2 = maxHeight / height;
 //		if (scale1 > 1 && scale2 > 1) {

@@ -66,6 +66,11 @@ public class Snake implements UShape {
 	private MergeStrategy mergeable = MergeStrategy.FULL;
 	private Direction emphasizeDirection;
 	private final HorizontalAlignment horizontalAlignment;
+	
+	public final void setIgnoreForCompression(boolean ignoreForCompression) {
+		this.worm.setIgnoreForCompression(ignoreForCompression);
+	}
+
 
 	public Snake transformX(CompressionTransform compressionTransform) {
 		final Snake result = new Snake(startDecoration, horizontalAlignment, color, endDecoration);

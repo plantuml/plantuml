@@ -37,17 +37,17 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
-public class CommandMainframe extends SingleLineCommand<UmlDiagram> {
+public class CommandMainframe extends SingleLineCommand<TitledDiagram> {
 
 	public CommandMainframe() {
 		super("(?i)^mainframe(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, List<String> arg) {
 		final Display label = Display.getWithNewlines(arg.get(0));
 		diagram.setMainFrame(label);
 		return CommandExecutionResult.ok();

@@ -70,8 +70,8 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("FIRST_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexOr(new RegexLeaf("LOL_THEN_ENT", "\\(\\)([-=.]+)"), //
-						new RegexLeaf("ENT_THEN_LOL", "([-=.]+)\\(\\)")), //
+				new RegexOr(new RegexLeaf("LOL_THEN_ENT", "([()]\\))([-=.]+)"), //
+						new RegexLeaf("ENT_THEN_LOL", "([-=.]+)(\\([()])")), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
 				new RegexLeaf("[%s]*"), //
@@ -92,8 +92,16 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		throw new IllegalArgumentException();
 	}
 
+	private LeafType getType(String desc) {
+		if (desc.charAt(0) == desc.charAt(1)) {
+			return LeafType.LOLLIPOP_HALF;
+		}
+		return LeafType.LOLLIPOP_FULL;
+	}
+
 	@Override
-	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
+			RegexResult arg) {
 
 		final Code ent1 = Code.of(arg.get("ENT1", 1));
 		final Code ent2 = Code.of(arg.get("ENT2", 1));
@@ -103,16 +111,16 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final IEntity normalEntity;
 
 		final String suffix = "lol" + UniqueSequence.getValue();
-		if (arg.get("LOL_THEN_ENT", 0) == null) {
+		if (arg.get("LOL_THEN_ENT", 1) == null) {
 			assert arg.get("ENT_THEN_LOL", 0) != null;
 			cl1 = diagram.getOrCreateLeaf(ent1, null, null);
-			cl2 = diagram.createLeaf(cl1.getCode().addSuffix(suffix), Display.getWithNewlines(ent2), LeafType.LOLLIPOP,
-					null);
+			cl2 = diagram.createLeaf(cl1.getCode().addSuffix(suffix), Display.getWithNewlines(ent2),
+					getType(arg.get("ENT_THEN_LOL", 1)), null);
 			normalEntity = cl1;
 		} else {
 			cl2 = diagram.getOrCreateLeaf(ent2, null, null);
-			cl1 = diagram.createLeaf(cl2.getCode().addSuffix(suffix), Display.getWithNewlines(ent1), LeafType.LOLLIPOP,
-					null);
+			cl1 = diagram.createLeaf(cl2.getCode().addSuffix(suffix), Display.getWithNewlines(ent1),
+					getType(arg.get("LOL_THEN_ENT", 0)), null);
 			normalEntity = cl2;
 		}
 
@@ -217,8 +225,8 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	}
 
 	private String getQueue(RegexResult arg) {
-		if (arg.get("LOL_THEN_ENT", 0) != null) {
-			return StringUtils.trin(arg.get("LOL_THEN_ENT", 0));
+		if (arg.get("LOL_THEN_ENT", 1) != null) {
+			return StringUtils.trin(arg.get("LOL_THEN_ENT", 1));
 		}
 		if (arg.get("ENT_THEN_LOL", 0) != null) {
 			return StringUtils.trin(arg.get("ENT_THEN_LOL", 0));

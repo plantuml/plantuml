@@ -42,13 +42,12 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
-import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LinkAnchor;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class MainTile extends AbstractTile implements Tile, Bordered {
+public class PlayingSpace implements Bordered {
 
 	private final double startingY = 8;
 	private final Real min;
@@ -60,7 +59,7 @@ public class MainTile extends AbstractTile implements Tile, Bordered {
 	private final List<LinkAnchor> linkAnchors;
 	private final ISkinParam skinParam;
 
-	public MainTile(SequenceDiagram diagram, Englobers englobers, TileArguments tileArguments) {
+	public PlayingSpace(SequenceDiagram diagram, Englobers englobers, TileArguments tileArguments) {
 
 		this.livingSpaces = tileArguments.getLivingSpaces();
 		this.linkAnchors = diagram.getLinkAnchors();
@@ -76,8 +75,6 @@ public class MainTile extends AbstractTile implements Tile, Bordered {
 			min2.add(englobers.getMinX(tileArguments.getStringBounder()));
 			max2.add(englobers.getMaxX(tileArguments.getStringBounder()));
 		}
-
-		// tiles.add(new EmptyTile(8, tileArguments));
 
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null));
 
@@ -97,7 +94,7 @@ public class MainTile extends AbstractTile implements Tile, Bordered {
 		this.isShowFootbox = diagram.isShowFootbox();
 	}
 
-	public void drawU(UGraphic ug) {
+	public void drawBackground(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final LiveBoxFinder liveBoxFinder = new LiveBoxFinder(stringBounder);
 
@@ -116,7 +113,7 @@ public class MainTile extends AbstractTile implements Tile, Bordered {
 		final List<YPositionedTile> positionedTiles = new ArrayList<YPositionedTile>();
 		final double y = GroupingTile.fillPositionelTiles(stringBounder, startingY, tiles, positionedTiles);
 		for (YPositionedTile tile : positionedTiles) {
-			tile.drawU(ug);
+			tile.drawInArea(ug);
 		}
 		for (LinkAnchor linkAnchor : linkAnchors) {
 			final YPositionedTile tile1 = getFromAnchor(positionedTiles, linkAnchor.getAnchor1());
@@ -159,10 +156,6 @@ public class MainTile extends AbstractTile implements Tile, Bordered {
 		return max;
 	}
 
-	public Event getEvent() {
-		return null;
-	}
-
 	public boolean isShowFootbox() {
 		return isShowFootbox;
 	}
@@ -177,6 +170,26 @@ public class MainTile extends AbstractTile implements Tile, Bordered {
 
 	public double getBorder2() {
 		return max.getCurrentValue();
+	}
+
+	public List<Double> yNewPages() {
+		final List<Double> yNewPages = new ArrayList<Double>();
+		yNewPages.add((double) 0);
+		for (Tile tile : tiles) {
+			if (tile instanceof GroupingTile) {
+				((GroupingTile) tile).addYNewPages(yNewPages);
+			}
+			if (tile instanceof NewpageTile) {
+				final double y = ((NewpageTile) tile).getCallbackY();
+				yNewPages.add(y);
+			}
+		}
+		yNewPages.add(Double.MAX_VALUE);
+		return yNewPages;
+	}
+
+	public int getNbPages() {
+		return yNewPages().size() - 1;
 	}
 
 }

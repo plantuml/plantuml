@@ -73,7 +73,10 @@ public class TaskDrawRegular implements TaskDraw {
 	public void drawTitle(UGraphic ug) {
 		final TextBlock title = Display.getWithNewlines(task.getPrettyDisplay()).create(getFontConfiguration(),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		title.drawU(ug.apply(new UTranslate(timeScale.getEndingPosition(task.getStart()), 0)));
+		final double shapeHeight = getShapeHeight(100);
+		final double titleHeight = title.calculateDimension(ug.getStringBounder()).getHeight();
+		final double h = (margin + shapeHeight - titleHeight) / 2;
+		title.drawU(ug.apply(new UTranslate(timeScale.getEndingPosition(task.getStart()), h)));
 	}
 
 	private FontConfiguration getFontConfiguration() {
@@ -85,12 +88,10 @@ public class TaskDrawRegular implements TaskDraw {
 		final double start = timeScale.getStartingPosition(task.getStart());
 		ug1 = applyColors(ug1);
 		UGraphic ug2 = ug1.apply(new UTranslate(start + margin, margin));
-		// final int load = 42; // task.getLoad();
 		final UShape shapeFull = getShape(100);
 		if (shapeFull instanceof UPolygon) {
 			ug2.draw(shapeFull);
 		} else {
-			// final double fullHeight = ((URectangle) shapeFull).getHeight();
 			ug2.draw(shapeFull);
 		}
 	}
@@ -105,13 +106,6 @@ public class TaskDrawRegular implements TaskDraw {
 		return ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(defaultColor));
 	}
 
-	// private URectangle getShapeInside(Instant instant) {
-	// final double start = timeScale.getStartingPosition(instant);
-	// final double end = timeScale.getEndingPosition(instant);
-	// final double height = getHeight() - 2 * margin;
-	// return new URectangle(end - start, height);
-	// }
-
 	private UShape getShape(int load) {
 		if (isDiamond()) {
 			return getDiamond();
@@ -120,8 +114,11 @@ public class TaskDrawRegular implements TaskDraw {
 		final Instant instantEnd = task.getEnd();
 		final double start = timeScale.getStartingPosition(instantStart);
 		final double end = timeScale.getEndingPosition(instantEnd);
-		final double height = (getHeight() - 2 * margin) * load / 100.0;
-		return new URectangle(end - start - 2 * margin, height, 8, 8);
+		return new URectangle(end - start - 2 * margin, getShapeHeight(load), 8, 8);
+	}
+
+	private double getShapeHeight(int load) {
+		return (getHeight() - 2 * margin) * load / 100.0;
 	}
 
 	private boolean isDiamond() {

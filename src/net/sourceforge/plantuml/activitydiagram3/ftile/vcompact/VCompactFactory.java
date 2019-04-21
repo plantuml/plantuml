@@ -145,6 +145,15 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileForkInner(ftiles);
 	}
 
+	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
+			LinkRendering topInlinkRendering, Display labelTest) {
+		final List<Ftile> ftiles = new ArrayList<Ftile>();
+		for (Branch branch : branches) {
+			ftiles.add(branch.getFtile());
+		}
+		return new FtileForkInner(ftiles);
+	}
+
 	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
 		return new FtileForkInner(all);
 	}

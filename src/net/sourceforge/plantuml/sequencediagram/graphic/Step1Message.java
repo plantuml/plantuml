@@ -48,11 +48,11 @@ import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowBody;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 
 class Step1Message extends Step1Abstract {
 
@@ -70,7 +70,7 @@ class Step1Message extends Step1Abstract {
 		if (isSelfMessage()) {
 			this.messageArrow = null;
 		} else {
-			final AbstractComponentRoseArrow comp = drawingSet.getSkin().createComponentArrow(getConfig(),
+			final ArrowComponent comp = drawingSet.getSkin().createComponentArrow(getConfig(),
 					drawingSet.getSkinParam(), message.getLabelNumbered());
 			final Component compAliveBox = drawingSet.getSkin().createComponent(ComponentType.ALIVE_BOX_OPEN_OPEN,
 					null, drawingSet.getSkinParam(), null);

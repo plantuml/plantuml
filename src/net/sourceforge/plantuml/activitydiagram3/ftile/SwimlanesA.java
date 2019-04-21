@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDele
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorIf;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorRepeat;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorSwitch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory;
@@ -98,6 +99,7 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock {
 		factory = new FtileFactoryDelegatorAddUrl(factory);
 		factory = new FtileFactoryDelegatorAssembly(factory);
 		factory = new FtileFactoryDelegatorIf(factory, pragma);
+		factory = new FtileFactoryDelegatorSwitch(factory);
 		factory = new FtileFactoryDelegatorWhile(factory);
 		factory = new FtileFactoryDelegatorRepeat(factory);
 		factory = new FtileFactoryDelegatorCreateParallel(factory);

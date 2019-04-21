@@ -63,6 +63,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 	@Override
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<Command>();
+		addTitleCommands(cmds);
 		// addCommonCommands(cmds);
 		cmds.add(new CommandNope());
 		// cmds.add(new CommandComment());

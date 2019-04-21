@@ -387,6 +387,7 @@ public class ImageBuilder {
 			return new UGraphicTikz(colorMapper, dpiFactor, false, fileFormatOption.getTikzFontDistortion());
 		case BRAILLE_PNG:
 			return new UGraphicBraille(colorMapper, fileFormat);
+		case UTXT:
 		case ATXT:
 			return new UGraphicTxt();
 		default:

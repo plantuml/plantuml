@@ -62,7 +62,7 @@ public class Stairs2 {
 		assert ys.size() == values.size();
 		if (ys.size() > 0) {
 			final double lastY = ys.get(ys.size() - 1).getValue();
-			if (position.getValue() < lastY) {
+			if (position.getValue() <= lastY) {
 				// throw new IllegalArgumentException();
 				return;
 			}

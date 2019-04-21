@@ -52,7 +52,7 @@ public class MindMapDiagramFactory extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 
 		final List<Command> cmds = new ArrayList<Command>();
-		addCommonCommands(cmds);
+		addCommonCommands1(cmds);
 		cmds.add(new CommandMindMapTabulation());
 		cmds.add(new CommandMindMapOrgmode());
 		cmds.add(new CommandMindMapRoot());

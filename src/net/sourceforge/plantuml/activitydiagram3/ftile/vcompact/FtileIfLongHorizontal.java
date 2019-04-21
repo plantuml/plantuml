@@ -555,7 +555,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		return trCouple.compose(in);
 	}
 
-	public UTranslate getTranslate1(Ftile tile, StringBounder stringBounder) {
+	private UTranslate getTranslate1(Ftile tile, StringBounder stringBounder) {
 		final int idx = tiles.indexOf(tile);
 		if (idx == -1) {
 			throw new IllegalArgumentException();

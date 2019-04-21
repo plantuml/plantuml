@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.sequencediagram.HSpace;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Notes;
@@ -161,6 +162,9 @@ public class TileBuilder {
 			final LifeEvent lifeEvent = (LifeEvent) ev;
 			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());
 			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam));
+		} else if (ev instanceof Newpage) {
+			final Newpage newpage = (Newpage) ev;
+			tiles.add(new NewpageTile(newpage, tileArguments));
 		} else {
 			System.err.println("TileBuilder::Ignoring " + ev.getClass());
 		}

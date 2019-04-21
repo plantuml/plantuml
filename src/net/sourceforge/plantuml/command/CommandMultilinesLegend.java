@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
+public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
 	public CommandMultilinesLegend() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
@@ -64,7 +64,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(UmlDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		final String align = line0.get("ALIGN", 0);

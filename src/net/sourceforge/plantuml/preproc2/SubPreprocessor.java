@@ -115,7 +115,7 @@ public class SubPreprocessor implements ReadFilter {
 					return s.withErrorPreprocessor("Cannot include " + FileWithSuffix.getFileName(f));
 				}
 				final SubPreprocessor data = new SubPreprocessor(charset, definitionsContainer);
-				InnerReadLine tmp = (InnerReadLine) data.applyFilter(getReaderInclude(s, f));
+				InnerReadLine tmp = (InnerReadLine) data.applyFilter(getReaderIncludeWithoutComment(s, f));
 				while (tmp.readLine() != null) {
 					// Read file
 				}
@@ -177,7 +177,11 @@ public class SubPreprocessor implements ReadFilter {
 
 	}
 
-	private ReadLine getReaderInclude(StringLocated s, final File f) {
+	private ReadLine getReaderIncludeWithoutComment(StringLocated s, final File f) {
+		return new ReadLineQuoteComment().applyFilter(getReaderIncludeRaw(s, f));
+	}
+
+	private ReadLine getReaderIncludeRaw(StringLocated s, final File f) {
 		try {
 			if (charset == null) {
 				Log.info("Using default charset");

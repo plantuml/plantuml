@@ -104,7 +104,7 @@ public class BlockUml {
 			throw new IllegalArgumentException();
 		}
 		if (mode != null && mode.getPreprocessorMode() == PreprocessorMode.V2_NEW_TIM) {
-			this.data = new TimLoader(mode.getImportedFiles()).load(strings);
+			this.data = new TimLoader(mode.getImportedFiles(), defines).load(strings);
 		} else {
 			this.data = new ArrayList<StringLocated>(strings);
 		}

@@ -86,8 +86,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.header = getFooterOrHeader(FontParam.HEADER);
 		this.annotatedWorker = new AnnotatedWorker(sequenceDiagram, sequenceDiagram.getSkinParam(), stringBounder);
 
-		this.main = new MainTileAdapter(createMainTile());
-		this.min1 = ((MainTileAdapter) main).getMinX(stringBounder);
+		this.body = new PlayingSpaceWithParticipants(createMainTile());
+		this.min1 = body.getMinX(stringBounder);
 
 		this.title = getTitle();
 		this.legend = getLegend();
@@ -96,17 +96,16 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.heightEnglober1 = englobers.getOffsetForEnglobers(stringBounder);
 		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;
 
-		final double totalWidth = MathUtils.max(main.calculateDimension(stringBounder).getWidth(), title
+		final double totalWidth = MathUtils.max(body.calculateDimension(stringBounder).getWidth(), title
 				.calculateDimension(stringBounder).getWidth(), footer.calculateDimension(stringBounder).getWidth(),
 				header.calculateDimension(stringBounder).getWidth(), legend.calculateDimension(stringBounder)
 						.getWidth());
-		final double totalHeight = main.calculateDimension(stringBounder).getHeight() + heightEnglober1
+		final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1
 				+ heightEnglober2 + title.calculateDimension(stringBounder).getHeight()
 				+ header.calculateDimension(stringBounder).getHeight()
 				+ legend.calculateDimension(stringBounder).getHeight()
 				+ footer.calculateDimension(stringBounder).getHeight();
 		this.dimTotal = new Dimension2DDouble(totalWidth, totalHeight);
-
 	}
 
 	private Englobers englobers;
@@ -115,7 +114,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final TextBlock footer;
 	private final TextBlock header;
 
-	private final TextBlock main;
+	private final PlayingSpaceWithParticipants body;
 
 	private final TextBlock title;
 	private final TextBlock legend;
@@ -134,8 +133,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		return a;
 	}
 
-	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
-		final UTranslate min1translate = new UTranslate(-min1.getCurrentValue(), 0);
+	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
 		final double dpiFactor = diagram.getDpiFactor(fileFormatOption, dimTotal);
 
 		final double scale = 1;
@@ -145,38 +143,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				null, 3, 10, diagram.getAnimation());
 
 		imageBuilder.setUDrawable(new UDrawable() {
-
 			public void drawU(UGraphic ug) {
-				ug = ug.apply(min1translate);
-
-				englobers.drawEnglobers(goDownAndCenterForEnglobers(ug), main.calculateDimension(stringBounder)
-						.getHeight() + heightEnglober1 + heightEnglober2 / 2, new SimpleContext2D(true));
-
-				printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
-				ug = goDown(ug, header);
-
-				printAligned(ug, HorizontalAlignment.CENTER, title);
-				ug = goDown(ug, title);
-
-				if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
-					printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
-					ug = goDown(ug, legend);
-				}
-
-				ug = ug.apply(new UTranslate(0, heightEnglober1));
-				printAligned(ug, HorizontalAlignment.CENTER, main);
-				ug = goDown(ug, main);
-				ug = ug.apply(new UTranslate(0, heightEnglober2));
-
-				printAligned(ug, HorizontalAlignment.CENTER, caption);
-
-				if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {
-					printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
-					ug = goDown(ug, legend);
-				}
-
-				printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);
-
+				drawInternal(ug, index);
 			}
 		});
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
@@ -189,7 +157,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
 			ug = goDown(ug, legend);
 		}
-		final double dx = (dimTotal.getWidth() - main.calculateDimension(stringBounder).getWidth()) / 2;
+		final double dx = (dimTotal.getWidth() - body.calculateDimension(stringBounder).getWidth()) / 2;
 		return ug.apply(new UTranslate(dx, 0));
 	}
 
@@ -207,7 +175,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		layer.drawU(ug.apply(new UTranslate(dx, 0)));
 	}
 
-	private MainTile createMainTile() {
+	private PlayingSpace createMainTile() {
 		final RealOrigin origin = RealUtils.createOrigin();
 		Real currentPos = origin.addAtLeast(0);
 		for (Participant p : diagram.participants()) {
@@ -221,7 +189,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				diagram.getSkinParam(), origin);
 
 		this.englobers = new Englobers(tileArguments);
-		final MainTile mainTile = new MainTile(diagram, englobers, tileArguments);
+		final PlayingSpace mainTile = new PlayingSpace(diagram, englobers, tileArguments);
 		this.livingSpaces.addConstraints(stringBounder);
 		mainTile.addConstraints(stringBounder);
 		this.englobers.addConstraints(stringBounder);
@@ -266,7 +234,41 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	public int getNbPages() {
-		return 1;
+		return body.getNbPages();
+	}
+
+	private void drawInternal(UGraphic ug, int index) {
+		body.setIndex(index);
+		final UTranslate min1translate = new UTranslate(-min1.getCurrentValue(), 0);
+		ug = ug.apply(min1translate);
+
+		englobers.drawEnglobers(goDownAndCenterForEnglobers(ug), body.calculateDimension(stringBounder).getHeight()
+				+ heightEnglober1 + heightEnglober2 / 2, new SimpleContext2D(true));
+
+		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
+		ug = goDown(ug, header);
+
+		printAligned(ug, HorizontalAlignment.CENTER, title);
+		ug = goDown(ug, title);
+
+		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
+			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
+			ug = goDown(ug, legend);
+		}
+
+		ug = ug.apply(new UTranslate(0, heightEnglober1));
+		printAligned(ug, HorizontalAlignment.CENTER, body);
+		ug = goDown(ug, body);
+		ug = ug.apply(new UTranslate(0, heightEnglober2));
+
+		printAligned(ug, HorizontalAlignment.CENTER, caption);
+
+		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {
+			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
+			ug = goDown(ug, legend);
+		}
+
+		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);
 	}
 
 }

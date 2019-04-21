@@ -47,10 +47,24 @@ public class ShuntingYard {
 	final private TokenStack ouputQueue = new TokenStack();
 	final private Deque<Token> operatorStack = new ArrayDeque<Token>();
 
+	private static final boolean TRACE = false;
+
+	private void traceMe() {
+		if (TRACE == false)
+			return;
+		System.err.println("-------------------");
+		System.err.println("operatorStack=" + operatorStack);
+		System.err.println("ouputQueue=" + ouputQueue);
+		System.err.println("");
+	}
+
 	public ShuntingYard(TokenIterator it, Knowledge knowledge) throws EaterException {
 
 		while (it.hasMoreTokens()) {
 			final Token token = it.nextToken();
+			traceMe();
+			if (TRACE)
+				System.err.println("token=" + token);
 			if (token.getTokenType() == TokenType.NUMBER || token.getTokenType() == TokenType.QUOTED_STRING) {
 				ouputQueue.add(token);
 			} else if (token.getTokenType() == TokenType.FUNCTION_NAME) {
@@ -59,7 +73,7 @@ public class ShuntingYard {
 				final String name = token.getSurface();
 				final TVariable variable = knowledge.getVariable(name);
 				if (variable == null) {
-					throw new EaterException("var0089 " + name);
+					throw new EaterException("Unknown variable " + name);
 				}
 				ouputQueue.add(variable.getValue2().toToken());
 			} else if (token.getTokenType() == TokenType.OPERATOR) {
@@ -76,10 +90,7 @@ public class ShuntingYard {
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_MATH) {
 				operatorStack.addFirst(token);
 			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_FUNC) {
-				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC) {
-					ouputQueue.add(operatorStack.removeFirst());
-					// System.err.println("Warning 2012");
-				}
+				ouputQueue.add(operatorStack.removeFirst());
 			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_MATH) {
 				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_MATH) {
 					ouputQueue.add(operatorStack.removeFirst());
@@ -106,7 +117,8 @@ public class ShuntingYard {
 	}
 
 	private boolean thereIsAFunctionAtTheTopOfTheOperatorStack(Token token) {
-		return false;
+		final Token top = operatorStack.peekFirst();
+		return top != null && top.getTokenType() == TokenType.FUNCTION_NAME;
 	}
 
 	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(Token token) {

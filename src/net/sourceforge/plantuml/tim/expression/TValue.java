@@ -160,6 +160,10 @@ public class TValue {
 		return toString().length() > 0;
 	}
 
+	public int toInt() {
+		return this.intValue;
+	}
+
 	public TValue logicalAnd(TValue v2) {
 		return fromBoolean(this.toBoolean() && v2.toBoolean());
 	}

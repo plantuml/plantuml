@@ -92,8 +92,8 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	}
 
 	protected UTranslate getTranslate1(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		final Dimension2D dim1 = tile1.calculateDimension(stringBounder);
+//		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
+//		final Dimension2D dim1 = tile1.calculateDimension(stringBounder);
 
 		final double x1 = 0;
 		final double y1 = 0;
@@ -143,7 +143,7 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);
 		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);
 
-		final double innerMargin = withInner(stringBounder);
+		final double innerMargin = widthInner(stringBounder);
 		final double width = dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft());
 
 		final Dimension2D dim12 = Dimension2DDouble.mergeLR(dim1, dim2);
@@ -151,16 +151,10 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		return new FtileGeometry(width, dim12.getHeight(), dim1.getLeft() + innerMargin / 2, 0);
 	}
 
-	protected double withInner(StringBounder stringBounder) {
+	protected double widthInner(StringBounder stringBounder) {
 		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);
 		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);
 		return (dim1.getWidth() - dim1.getLeft()) + dim2.getLeft();
 	}
-
-	// protected double getLeft(StringBounder stringBounder) {
-	// final double left1 = tile1.calculateDimension(stringBounder).translate(getTranslate1(stringBounder)).getLeft();
-	// final double left2 = tile2.calculateDimension(stringBounder).translate(getTranslate2(stringBounder)).getLeft();
-	// return (left1 + left2) / 2;
-	// }
 
 }

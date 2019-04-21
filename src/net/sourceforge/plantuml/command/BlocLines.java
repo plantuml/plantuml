@@ -39,6 +39,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -46,6 +48,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
@@ -86,8 +89,17 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public static BlocLines load(File f, LineLocation location) throws IOException {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
 		final BufferedReader br = new BufferedReader(new FileReader(f));
+		return loadInternal(br, location);
+	}
+
+	public static BlocLines load(InputStream is, LineLocation location) throws IOException {
+		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		return loadInternal(br, location);
+	}
+
+	private static BlocLines loadInternal(final BufferedReader br, LineLocation location) throws IOException {
+		final List<StringLocated> result = new ArrayList<StringLocated>();
 		String s;
 		while ((s = br.readLine()) != null) {
 			result.add(new StringLocated(s, location));

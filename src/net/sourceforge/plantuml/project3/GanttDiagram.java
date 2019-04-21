@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project3;
 
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -48,10 +50,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.AnnotatedWorker;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Scale;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -62,10 +68,13 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -74,7 +83,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GanttDiagram extends AbstractPSystem implements Subject {
+public class GanttDiagram extends TitledDiagram implements Subject {
 
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
 	private final Map<String, Task> byShortName = new HashMap<String, Task>();
@@ -125,40 +134,48 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 			throws IOException {
 		final double margin = 10;
 
-		// OsortTasks();
 		final Scale scale = getScale();
 
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), dpiFactor, null, "", "", 0, 0,
 				null, false);
-		final UDrawable result = getUDrawable();
+		final SkinParam skinParam = SkinParam.create(UmlDiagramType.TIMING);
+
+		TextBlock result = getTextBlock();
+		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}
 
-	// private void sortTasks() {
-	// final TaskCodeSimpleOrder order = getCanonicalOrder(1);
-	// final List<Task> list = new ArrayList<Task>(tasks.values());
-	// Collections.sort(list, new Comparator<Task>() {
-	// public int compare(Task task1, Task task2) {
-	// return order.compare(task1.getCode(), task2.getCode());
-	// }
-	// });
-	// tasks.clear();
-	// for (Task task : list) {
-	// tasks.put(task.getCode(), task);
-	// }
-	// }
+	private TextBlockBackcolored getTextBlock() {
+		initMinMax();
+		final TimeScale timeScale = getTimeScale();
+		initTaskAndResourceDraws(timeScale);
+		return new TextBlockBackcolored() {
 
-	private UDrawable getUDrawable() {
-		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				initMinMax();
-				final TimeScale timeScale = getTimeScale();
 				drawTimeHeader(ug, timeScale);
 				drawTasks(ug, timeScale);
 				drawConstraints(ug, timeScale);
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+				return null;
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				final double xmin = timeScale.getStartingPosition(min);
+				final double xmax = timeScale.getEndingPosition(max);
+				return new Dimension2DDouble(xmax - xmin, totalHeight);
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				throw new UnsupportedOperationException();
+			}
+
+			public HtmlColor getBackcolor() {
+				return null;
 			}
 		};
 	}
@@ -217,16 +234,16 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	}
 
-	private void drawTimeHeader(final UGraphic ug, TimeScale timeScale) {
+	private double totalHeight;
 
-		final double yTotal = initTaskAndResourceDraws(timeScale);
+	private void drawTimeHeader(final UGraphic ug, TimeScale timeScale) {
 
 		final double xmin = timeScale.getStartingPosition(min);
 		final double xmax = timeScale.getEndingPosition(max);
 		if (calendar == null) {
-			drawSimpleDayCounter(ug, timeScale, yTotal);
+			drawSimpleDayCounter(ug, timeScale);
 		} else {
-			drawCalendar(ug, timeScale, yTotal);
+			drawCalendar(ug, timeScale);
 		}
 		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).draw(new ULine(xmax - xmin, 0));
 		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(0, getHeaderHeight() - 3))
@@ -257,9 +274,9 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	private static final int Y_WEEKDAY = 16;
 	private static final int Y_NUMDAY = 28;
 
-	private void drawCalendar(final UGraphic ug, TimeScale timeScale, final double yTotal) {
+	private void drawCalendar(final UGraphic ug, TimeScale timeScale) {
 		timeScale = new TimeScaleBasic();
-		final ULine vbar = new ULine(0, yTotal - Y_WEEKDAY);
+		final ULine vbar = new ULine(0, totalHeight - Y_WEEKDAY);
 		Month lastMonth = null;
 		final GCalendarSimple calendarAll = getCalendarSimple();
 		final Instant max2 = calendarAll.fromDayAsDate(calendar.toDayAsDate((InstantDay) max));
@@ -274,7 +291,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 			if (i.compareTo(max2.increment()) < 0) {
 				final TextBlock weekDay = getTextBlock(dayOfWeek.shortName(), 10, false);
 
-				final URectangle rect = new URectangle(x2 - x1 - 1, yTotal - Y_WEEKDAY);
+				final URectangle rect = new URectangle(x2 - x1 - 1, totalHeight - Y_WEEKDAY);
 				if (isWorkingDay) {
 					final HtmlColor back = colorDays.get(day);
 					if (back != null) {
@@ -338,8 +355,8 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		text.drawU(ug.apply(new UTranslate(x1 + delta / 2, 0)));
 	}
 
-	private void drawSimpleDayCounter(final UGraphic ug, TimeScale timeScale, final double yTotal) {
-		final ULine vbar = new ULine(0, yTotal);
+	private void drawSimpleDayCounter(final UGraphic ug, TimeScale timeScale) {
+		final ULine vbar = new ULine(0, totalHeight);
 		for (Instant i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
 			final TextBlock num = Display.getWithNewlines(i.toShortString()).create(getFontConfiguration(10, false),
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
@@ -354,7 +371,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		}
 	}
 
-	private double initTaskAndResourceDraws(TimeScale timeScale) {
+	private void initTaskAndResourceDraws(TimeScale timeScale) {
 		double y = getHeaderHeight();
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
@@ -373,7 +390,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 			y += draw.getHeight();
 
 		}
-		return y;
+		this.totalHeight = y;
 	}
 
 	private void initMinMax() {
@@ -429,12 +446,14 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	private void drawTasks(final UGraphic ug, TimeScale timeScale) {
 		for (Task task : tasks.values()) {
 			final TaskDraw draw = task.getTaskDraw();
-			draw.drawU(ug.apply(new UTranslate(0, draw.getY())));
-			draw.drawTitle(ug.apply(new UTranslate(0, draw.getY())));
+			final UTranslate move = new UTranslate(0, draw.getY());
+			draw.drawU(ug.apply(move));
+			draw.drawTitle(ug.apply(move));
 		}
 		for (Resource res : resources.values()) {
 			final ResourceDraw draw = res.getResourceDraw();
-			draw.drawU(ug.apply(new UTranslate(0, draw.getY())));
+			final UTranslate move = new UTranslate(0, draw.getY());
+			draw.drawU(ug.apply(move));
 		}
 	}
 

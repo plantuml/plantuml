@@ -64,7 +64,7 @@ public class ActivityDiagramFactory extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<Command>();
 		cmds.add(new CommandFootboxIgnored());
-		addCommonCommands(cmds);
+		addCommonCommands1(cmds);
 		cmds.add(new CommandRankDir());
 
 		cmds.add(new CommandPartition());

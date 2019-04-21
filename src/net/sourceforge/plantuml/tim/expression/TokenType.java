@@ -73,9 +73,12 @@ public enum TokenType {
 		return result;
 	}
 
-	final static public Token eatOneToken(Eater eater) throws EaterException {
+	final static public Token eatOneToken(Eater eater, boolean manageColon) throws EaterException {
 		final char ch = eater.peekChar();
 		if (ch == 0) {
+			return null;
+		}
+		if (manageColon && ch == ':') {
 			return null;
 		}
 		final TokenOperator tokenOperator = TokenOperator.getTokenOperator(ch, eater.peekCharN2());

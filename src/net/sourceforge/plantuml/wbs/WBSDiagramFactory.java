@@ -52,7 +52,7 @@ public class WBSDiagramFactory extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 
 		final List<Command> cmds = new ArrayList<Command>();
-		addCommonCommands(cmds);
+		addCommonCommands1(cmds);
 		cmds.add(new CommandWBSOrgmode());
 		cmds.add(new CommandWBSPlus());
 		cmds.add(new CommandWBSTabulation());

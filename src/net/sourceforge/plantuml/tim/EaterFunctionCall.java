@@ -59,6 +59,7 @@ public class EaterFunctionCall extends Eater {
 		checkAndEatChar('(');
 		skipSpaces();
 		if (peekChar() == ')') {
+			checkAndEatChar(')');
 			return;
 		}
 		while (true) {

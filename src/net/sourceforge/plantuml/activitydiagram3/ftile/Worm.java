@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 
 public class Worm implements Iterable<Point2D.Double> {
 
@@ -62,6 +63,12 @@ public class Worm implements Iterable<Point2D.Double> {
 
 	public boolean isPureHorizontal() {
 		return points.size() == 2 && points.get(0).getY() == points.get(1).getY();
+	}
+
+	private boolean ignoreForCompression;
+
+	public final void setIgnoreForCompression(boolean ignoreForCompression) {
+		this.ignoreForCompression = ignoreForCompression;
 	}
 
 	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle color, double stroke,
@@ -96,11 +103,17 @@ public class Worm implements Iterable<Point2D.Double> {
 		if (startDecoration != null) {
 			ug = ug.apply(new UStroke(1.5));
 			final Point2D start = points.get(0);
+			if (ignoreForCompression) {
+				startDecoration.setIgnoreForCompression(CompressionMode.ON_X);
+			}
 			ug.apply(new UTranslate(start)).apply(new UStroke()).draw(startDecoration);
 		}
 		if (endDecoration != null) {
 			ug = ug.apply(new UStroke(1.5));
 			final Point2D end = points.get(points.size() - 1);
+			if (ignoreForCompression) {
+				endDecoration.setIgnoreForCompression(CompressionMode.ON_X);
+			}
 			ug.apply(new UTranslate(end)).apply(new UStroke()).draw(endDecoration);
 		}
 	}

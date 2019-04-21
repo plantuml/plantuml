@@ -80,7 +80,6 @@ class FtileIfLongVertical extends AbstractFtile {
 	private final Ftile tile2;
 	private final List<Ftile> diamonds;
 	private final Ftile lastDiamond;
-	// private final List<Ftile> couples = new ArrayList<Ftile>();
 
 	private final Rainbow arrowColor;
 
@@ -91,9 +90,6 @@ class FtileIfLongVertical extends AbstractFtile {
 			throw new IllegalArgumentException();
 		}
 		this.lastDiamond = lastDiamond;
-		// for (int i = 0; i < diamonds.size(); i++) {
-		// couples.add(new FtileAssemblySimple(diamonds.get(i), tiles.get(i)));
-		// }
 		this.tile2 = tile2;
 		this.diamonds = new ArrayList<Ftile>(diamonds);
 		this.tiles = new ArrayList<Ftile>(tiles);
@@ -101,22 +97,6 @@ class FtileIfLongVertical extends AbstractFtile {
 		this.arrowColor = arrowColor;
 
 	}
-
-	// private static List<Ftile> alignDiamonds(List<Ftile> diamonds, StringBounder stringBounder) {
-	// double maxOutY = 0;
-	// for (Ftile diamond : diamonds) {
-	// maxOutY = Math.max(maxOutY, diamond.calculateDimension(stringBounder).getOutY());
-	// }
-	// final List<Ftile> result = new ArrayList<Ftile>();
-	// for (int i = 0; i < diamonds.size(); i++) {
-	// Ftile diamond = diamonds.get(i);
-	// final double missing = maxOutY - diamond.calculateDimension(stringBounder).getOutY();
-	// assert missing >= 0;
-	// diamond = FtileUtils.addVerticalMargin(diamond, missing / 2, 20);
-	// result.add(diamond);
-	// }
-	// return result;
-	// }
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<Swimlane>();
@@ -191,24 +171,11 @@ class FtileIfLongVertical extends AbstractFtile {
 		}
 
 		final Rainbow topInColor = topInlinkRendering.getRainbow(arrowColor);
-		// for (int i = 0; i < diamonds.size() - 1; i++) {
-		// final Ftile diam1 = diamonds.get(i);
-		// final Ftile diam2 = diamonds.get(i + 1);
-		// conns.add(result.new ConnectionHorizontal(diam1, diam2, topInColor));
-		// }
 		conns.add(result.new ConnectionIn(topInColor));
-		// conns.add(result.new ConnectionLastElseIn(FtileIfWithLinks.getInColor(branch2, arrowColor)));
-		// conns.add(result.new ConnectionLastElseOut(arrowColor));
-		// final HtmlColor horizontalOutColor = LinkRendering.getColor(afterEndwhile, arrowColor);
-		// conns.add(result.new ConnectionHline(horizontalOutColor));
 		conns.add(result.new ConnectionLastElse(topInColor));
 		conns.add(result.new ConnectionLastElseOut(arrowColor));
 
 		return FtileUtils.addConnection(result, conns);
-	}
-
-	static private double getYdiamontOutToLeft(FtileGeometry dimDiamond1, StringBounder stringBounder) {
-		return (dimDiamond1.getInY() + dimDiamond1.getOutY()) / 2;
 	}
 
 	class ConnectionIn extends AbstractConnection {
@@ -489,32 +456,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		final double x = (dimTotal.getWidth() - dim2.getWidth()) / 2;
 		return new UTranslate(x, y1);
-
-		// final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		// final Dimension2D dim2 = tile2.calculateDimension(stringBounder);
-		//
-		// final double x2 = dimTotal.getWidth() - dim2.getWidth();
-		//
-		// final double h = 0; // getAllDiamondsHeight(stringBounder);
-		// final double y2 = (dimTotal.getHeight() - h * 2 - dim2.getHeight()) / 2 + h;
-		//
-		// return new UTranslate(x2, y2);
-
 	}
-
-	// private UTranslate getTranslateCouple1(Ftile candidat, StringBounder stringBounder) {
-	// double x1 = 0;
-	//
-	// for (Ftile couple : couples) {
-	// final FtileGeometry dim1 = couple.calculateDimension(stringBounder);
-	// if (couple == candidat) {
-	// return new UTranslate(x1, 25);
-	// }
-	// x1 += dim1.getWidth() + xSeparation;
-	// }
-	// throw new IllegalArgumentException();
-	//
-	// }
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
@@ -530,7 +472,6 @@ class FtileIfLongVertical extends AbstractFtile {
 	}
 
 	private FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
-		// FtileGeometry result = new FtileGeometry(0, marginy1, 0, 0);
 		double col1 = 0;
 		double col1overpass = 0;
 		double col2 = 0;
@@ -562,14 +503,6 @@ class FtileIfLongVertical extends AbstractFtile {
 		double width = 0;
 		for (Ftile diam : diamonds) {
 			width = Math.max(width, diam.calculateDimension(stringBounder).getWidth());
-		}
-		return width;
-	}
-
-	private double allTile1Width(StringBounder stringBounder) {
-		double width = 0;
-		for (Ftile tile1 : tiles) {
-			width = Math.max(width, tile1.calculateDimension(stringBounder).getWidth());
 		}
 		return width;
 	}

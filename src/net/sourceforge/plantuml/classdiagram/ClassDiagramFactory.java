@@ -93,6 +93,9 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandPage());
 		cmds.add(new CommandAddMethod());
+		
+		addCommonHides(cmds);
+		cmds.add(new CommandHideShow2());
 
 		cmds.add(new CommandRemoveRestore());
 		cmds.add(new CommandCreateClassMultilines());
@@ -145,8 +148,8 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandCreateElementMultilines(0));
 		cmds.add(new CommandCreateElementMultilines(1));
-		addCommonCommands(cmds);
-		cmds.add(new CommandHideShow2());
+		addTitleCommands(cmds);
+		addCommonCommands2(cmds);
 
 		return cmds;
 	}

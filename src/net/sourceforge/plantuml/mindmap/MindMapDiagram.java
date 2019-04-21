@@ -87,7 +87,7 @@ public class MindMapDiagram extends UmlDiagram {
 			throws IOException {
 		final Scale scale = getScale();
 
-		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
+		final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
 		final ImageBuilder imageBuilder = new ImageBuilder(skinParam.getColorMapper(), dpiFactor,
 				skinParam.getBackgroundColor(), "", "", 10, 10, null, skinParam.handwritten());

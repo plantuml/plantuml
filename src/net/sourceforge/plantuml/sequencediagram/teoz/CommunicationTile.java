@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
@@ -104,7 +105,7 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		return message.isCreate();
 	}
 
-	private AbstractComponentRoseArrow getComponent(StringBounder stringBounder) {
+	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		/*
 		 * if (isSelf()) { arrowConfiguration = arrowConfiguration.self(); } else
@@ -113,7 +114,7 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
 
-		final AbstractComponentRoseArrow comp = skin.createComponentArrow(arrowConfiguration, skinParam,
+		final ArrowComponent comp = skin.createComponentArrow(arrowConfiguration, skinParam,
 				message.getLabelNumbered());
 		return comp;
 	}
@@ -145,7 +146,7 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 			return;
 		}
 		final StringBounder stringBounder = ug.getStringBounder();
-		final AbstractComponentRoseArrow comp = getComponent(stringBounder);
+		final ArrowComponent comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		double x1 = getPoint1(stringBounder).getCurrentValue();
 		double x2 = getPoint2(stringBounder).getCurrentValue();

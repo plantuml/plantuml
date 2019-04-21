@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Component;
@@ -240,7 +241,7 @@ public class Rose {
 			return new ComponentRoseDestroy(getHtmlColor(param, ColorParam.sequenceLifeLineBorder));
 		}
 		if (type == ComponentType.NEWPAGE) {
-			return new ComponentRoseNewpage(getHtmlColor(param, ColorParam.sequenceNewpageSeparator));
+			throw new UnsupportedOperationException();
 		}
 		if (type == ComponentType.DIVIDER) {
 			return new ComponentRoseDivider(getUFont2(param, FontParam.SEQUENCE_DIVIDER), getHtmlColor(param,
@@ -254,14 +255,6 @@ public class Rose {
 					AlignmentParam.sequenceReferenceAlignment, null, false), param, getHtmlColor(param,
 					ColorParam.sequenceReferenceBackground));
 		}
-		// if (type == ComponentType.TITLE) {
-		// return new ComponentRoseTitle(getUFont2(param, FontParam.SEQUENCE_TITLE), stringsToDisplay, param);
-		// }
-		// if (type == ComponentType.SIGNATURE) {
-		// return new ComponentRoseTitle(fontGrouping.toFont2(HtmlColorUtils.BLACK, param.useUnderlineForHyperlink(),
-		// param.getHyperlinkColor(), param.getTabSize()), Display.create("This skin was created ",
-		// "in April 2009."), param);
-		// }
 		if (type == ComponentType.ENGLOBER) {
 			return new ComponentRoseEnglober(getSymbolContext(param, ColorParam.sequenceBoxBorder), stringsToDisplay,
 					getUFont2(param, FontParam.SEQUENCE_BOX), param, roundCorner);
@@ -270,7 +263,11 @@ public class Rose {
 		return null;
 	}
 
-	public AbstractComponentRoseArrow createComponentArrow(ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
+	public ComponentRoseNewpage createComponentNewPage(ISkinParam param) {
+		return new ComponentRoseNewpage(getHtmlColor(param, ColorParam.sequenceNewpageSeparator));
+	}
+
+	public ArrowComponent createComponentArrow(ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
 		final HtmlColor sequenceArrow = config.getColor() == null ? getHtmlColor(param, ColorParam.arrow) : config
 				.getColor();
 		if (config.getArrowDirection() == ArrowDirection.SELF) {

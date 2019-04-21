@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -575,6 +576,14 @@ public class Line implements Moveable, Hideable {
 				dotPath.getStartAngle() + Math.PI, ltail, bibliotekon.getShape(link.getEntity1()));
 		this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
 				dotPath.getEndAngle(), lhead, bibliotekon.getShape(link.getEntity2()));
+
+		if (link.getEntity1().getLeafType() == LeafType.LOLLIPOP_HALF) {
+			bibliotekon.getShape(link.getEntity1()).addImpact(dotPath.getStartAngle() + Math.PI);
+		}
+		if (link.getEntity2().getLeafType() == LeafType.LOLLIPOP_HALF) {
+			bibliotekon.getShape(link.getEntity2()).addImpact(dotPath.getEndAngle());
+		}
+
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			final Point2D p1 = ((Extremity) extremity1).somePoint();
 			final Point2D p2 = ((Extremity) extremity2).somePoint();

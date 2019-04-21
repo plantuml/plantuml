@@ -52,7 +52,7 @@ public class NwDiagramFactory extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 
 		final List<Command> cmds = new ArrayList<Command>();
-		addCommonCommands(cmds);
+		addCommonCommands1(cmds);
 		cmds.add(new CommandNwDiagInit());
 		cmds.add(new CommandComment());
 		cmds.add(new CommandElement());

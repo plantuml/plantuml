@@ -36,16 +36,19 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class YPositionedTile implements UDrawable {
+public class YPositionedTile {
 
 	private final Tile tile;
 	private final double y;
+
+	public boolean inArea(double ymin, double ymax) {
+		return y >= ymin && y < ymax;
+	}
 
 	public YPositionedTile(Tile tile, double y) {
 		this.tile = tile;
@@ -55,7 +58,13 @@ public class YPositionedTile implements UDrawable {
 		}
 	}
 
-	public void drawU(UGraphic ug) {
+	@Override
+	public String toString() {
+		return "y=" + y + " " + tile;
+	}
+
+
+	public void drawInArea(UGraphic ug) {
 		// System.err.println("YPositionedTile::drawU y=" + y + " " + tile);
 		ug.apply(new UTranslate(0, y)).draw(tile);
 	}

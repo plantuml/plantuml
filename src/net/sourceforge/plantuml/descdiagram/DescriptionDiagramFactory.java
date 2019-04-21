@@ -76,7 +76,7 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandNamespaceSeparator());
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
-		addCommonCommands(cmds);
+		addCommonCommands1(cmds);
 
 		cmds.add(new CommandPage());
 		cmds.add(new CommandLinkElement());

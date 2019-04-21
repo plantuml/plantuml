@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
-public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
+public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 
 	public CommandMultilinesFooter() {
 		super("(?i)^(?:(left|right|center)?[%s]*)footer$");
@@ -51,7 +51,7 @@ public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 		return "(?i)^end[%s]?footer$";
 	}
 
-	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
 		final Matcher2 m = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
 		if (m.find() == false) {

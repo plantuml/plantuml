@@ -95,7 +95,7 @@ public class SequenceDiagramFactory extends UmlDiagramFactory {
 
 		final List<Command> cmds = new ArrayList<Command>();
 
-		addCommonCommands(cmds);
+		addCommonCommands1(cmds);
 
 		cmds.add(new CommandActivate());
 		cmds.add(new CommandDeactivateShort());
@@ -136,7 +136,6 @@ public class SequenceDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandHSpace());
 		cmds.add(new CommandReferenceOverSeveral());
 		cmds.add(new CommandReferenceMultilinesOverSeveral());
-		cmds.add(new CommandSkin());
 		cmds.add(new CommandAutonumber());
 		cmds.add(new CommandAutonumberStop());
 		cmds.add(new CommandAutonumberResume());

@@ -287,6 +287,38 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find split");
 	}
 
+	public void startSwitch(Display test, HtmlColor color) {
+		manageSwimlaneStrategy();
+		final InstructionSwitch instructionSwitch = new InstructionSwitch(swinlanes.getCurrentSwimlane(), current(), test,
+				nextLinkRenderer(), color, getSkinParam());
+		current().add(instructionSwitch);
+		setNextLinkRendererInternal(LinkRendering.none());
+		setCurrent(instructionSwitch);
+	}
+
+	public CommandExecutionResult switchCase(Display labelCase) {
+		if (current() instanceof InstructionSwitch) {
+			final boolean ok = ((InstructionSwitch) current()).switchCase(labelCase, nextLinkRenderer());
+			if (ok == false) {
+				return CommandExecutionResult.error("You cannot put an elseIf here");
+			}
+			setNextLinkRendererInternal(LinkRendering.none());
+			return CommandExecutionResult.ok();
+			
+		}
+		return CommandExecutionResult.error("Cannot find switch");
+	}
+
+	public CommandExecutionResult endSwitch() {
+		if (current() instanceof InstructionSwitch) {
+			((InstructionSwitch) current()).endSwitch(nextLinkRenderer());
+			setNextLinkRendererInternal(LinkRendering.none());
+			setCurrent(((InstructionSwitch) current()).getParent());
+			return CommandExecutionResult.ok();
+		}
+		return CommandExecutionResult.error("Cannot find switch");
+	}
+
 	public void startIf(Display test, Display whenThen, HtmlColor color) {
 		manageSwimlaneStrategy();
 		final InstructionIf instructionIf = new InstructionIf(swinlanes.getCurrentSwimlane(), current(), test,

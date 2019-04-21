@@ -87,6 +87,9 @@ public interface FtileFactory {
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering);
 
+	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
+			LinkRendering topInlinkRendering, Display labelTest);
+
 	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label);
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,

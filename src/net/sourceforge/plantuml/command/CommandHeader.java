@@ -37,18 +37,18 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
-public class CommandHeader extends SingleLineCommand<UmlDiagram> {
+public class CommandHeader extends SingleLineCommand<TitledDiagram> {
 
 	public CommandHeader() {
 		super("(?i)^(?:(left|right|center)?[%s]*)header(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, List<String> arg) {
 		final String align = arg.get(0);
 		diagram.getHeader().put(Display.getWithNewlines(arg.get(1)),
 				HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT));
