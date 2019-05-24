@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.tim;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class ConditionalContexts {
+public abstract class ConditionalContexts {
 
 	private final Deque<ConditionalContext> allIfs = new LinkedList<ConditionalContext>();
 
@@ -51,6 +51,15 @@ public class ConditionalContexts {
 
 	public ConditionalContext pollConditionalContext() {
 		return allIfs.pollLast();
+	}
+
+	public boolean areAllIfOk() {
+		for (ConditionalContext conditionalContext : allIfs) {
+			if (conditionalContext.conditionIsOkHere() == false) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

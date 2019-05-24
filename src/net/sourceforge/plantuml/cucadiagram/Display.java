@@ -452,8 +452,8 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple spriteContainer, CreoleMode modeSimpleLine) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, modeSimpleLine,
+			ISkinSimple spriteContainer, CreoleMode creoleMode) {
+		return create(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode,
 				null, null);
 	}
 
@@ -470,7 +470,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode modeSimpleLine,
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		if (maxMessageSize == null) {
 			throw new IllegalArgumentException();
@@ -492,12 +492,12 @@ public class Display implements Iterable<CharSequence> {
 			}
 		}
 
-		return getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine);
+		return getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, creoleMode);
 	}
 
 	private TextBlock getCreole(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode modeSimpleLine) {
-		final Sheet sheet = new CreoleParser(fontConfiguration, horizontalAlignment, spriteContainer, modeSimpleLine)
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode) {
+		final Sheet sheet = new CreoleParser(fontConfiguration, horizontalAlignment, spriteContainer, creoleMode)
 				.createSheet(this);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, spriteContainer == null ? 0
 				: spriteContainer.getPadding());

@@ -40,13 +40,12 @@ import java.util.List;
 
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
-import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class DateFunction implements TFunction {
+public class DateFunction extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
 		return new TFunctionSignature("%date", 1);
@@ -54,14 +53,6 @@ public class DateFunction implements TFunction {
 
 	public boolean canCover(int nbArg) {
 		return nbArg == 0 || nbArg == 1;
-	}
-
-	public TFunctionType getFunctionType() {
-		return TFunctionType.RETURN;
-	}
-
-	public void executeVoid(TContext context, String s, TMemory memory) throws EaterException {
-		throw new UnsupportedOperationException();
 	}
 
 	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
@@ -75,9 +66,4 @@ public class DateFunction implements TFunction {
 			throw new EaterException("Bad date pattern");
 		}
 	}
-
-	public boolean isUnquoted() {
-		return false;
-	}
-
 }

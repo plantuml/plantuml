@@ -99,7 +99,7 @@ public class AnnotatedWorker {
 		final double width = x1 + Math.max(dimOriginal.getWidth(), dimTitle.getWidth()) + x2;
 		final double height = dimTitle.getHeight() + y1 + dimOriginal.getHeight() + y2;
 		final TextBlock result = USymbol.FRAME.asBig(title, HorizontalAlignment.LEFT, TextBlockUtils.empty(0, 0),
-				width, height, symbolContext);
+				width, height, symbolContext, skinParam.getStereotypeAlignment());
 
 		return new TextBlockBackcolored() {
 

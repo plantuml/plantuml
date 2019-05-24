@@ -97,6 +97,10 @@ public class SkinParameter {
 			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE, LineParam.rectangleBorder,
 			CornerParam.rectangle);
 
+	public static final SkinParameter ARCHIMATE = new SkinParameter("ARCHIMATE", ColorParam.archimateBackground,
+			ColorParam.archimateBorder, FontParam.ARCHIMATE, FontParam.ARCHIMATE_STEREOTYPE, LineParam.archimateBorder,
+			CornerParam.archimate);
+
 	public static final SkinParameter COLLECTIONS = new SkinParameter("COLLECTIONS", ColorParam.collectionsBackground,
 			ColorParam.collectionsBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
 

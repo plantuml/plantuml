@@ -52,16 +52,20 @@ public class InstructionSplit implements Instruction {
 	private final List<InstructionList> splits = new ArrayList<InstructionList>();
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
+	private final Swimlane swimlaneIn;
+	private Swimlane swimlaneOut;
 
-	public InstructionSplit(Instruction parent, LinkRendering inlinkRendering) {
+	public InstructionSplit(Instruction parent, LinkRendering inlinkRendering, Swimlane swimlane) {
 		this.parent = parent;
-		this.splits.add(new InstructionList());
+		this.swimlaneIn = swimlane;
+
+		this.splits.add(new InstructionList(swimlane));
 		this.inlinkRendering = inlinkRendering;
 		if (inlinkRendering == null) {
 			throw new IllegalArgumentException();
 		}
 	}
-	
+
 	public boolean containsBreak() {
 		for (InstructionList split : splits) {
 			if (split.containsBreak()) {
@@ -70,7 +74,6 @@ public class InstructionSplit implements Instruction {
 		}
 		return false;
 	}
-
 
 	private InstructionList getLast() {
 		return splits.get(splits.size() - 1);
@@ -96,14 +99,15 @@ public class InstructionSplit implements Instruction {
 		if (inlinkRendering != null) {
 			getLast().setOutRendering(inlinkRendering);
 		}
-		final InstructionList list = new InstructionList();
+		final InstructionList list = new InstructionList(swimlaneIn);
 		this.splits.add(list);
 	}
 
-	public void endSplit(LinkRendering inlinkRendering) {
+	public void endSplit(LinkRendering inlinkRendering, Swimlane endSwimlane) {
 		if (inlinkRendering != null) {
 			getLast().setOutRendering(inlinkRendering);
 		}
+		this.swimlaneOut = endSwimlane;
 
 	}
 
@@ -128,7 +132,8 @@ public class InstructionSplit implements Instruction {
 	}
 
 	public Swimlane getSwimlaneOut() {
-		return getLast().getSwimlaneOut();
+		return swimlaneOut;
+		// return getLast().getSwimlaneOut();
 	}
 
 }

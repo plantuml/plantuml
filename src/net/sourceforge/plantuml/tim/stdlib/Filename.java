@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class Filename implements TFunction {
+public class Filename extends SimpleReturnFunction {
 
 	private final String value;
 
@@ -63,23 +63,10 @@ public class Filename implements TFunction {
 		return nbArg == 0;
 	}
 
-	public TFunctionType getFunctionType() {
-		return TFunctionType.RETURN;
-	}
-
-	public void executeVoid(TContext context, String s, TMemory memory) throws EaterException {
-		throw new UnsupportedOperationException();
-	}
-
 	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
 		if (value == null) {
 			return TValue.fromString("");
 		}
 		return TValue.fromString(value);
 	}
-
-	public boolean isUnquoted() {
-		return false;
-	}
-
 }

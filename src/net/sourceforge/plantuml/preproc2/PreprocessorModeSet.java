@@ -44,6 +44,8 @@ public interface PreprocessorModeSet {
 	public void setPreprocessorMode(PreprocessorMode mode);
 	
 	public ImportedFiles getImportedFiles();
+	
+	public String getCharset();
 
 
 }

@@ -36,53 +36,83 @@ package net.sourceforge.plantuml.tim;
 
 public enum TLineType {
 
-	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, IFNDEF, ELSE, ENDIF, DECLARE_FUNCTION, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, IMPORT;
+	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, DECLARE_FUNCTION, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START;
 
 	public static TLineType getFromLine(String s) {
-		if (s.matches("^!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*")) {
+		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*")) {
 			return LEGACY_DEFINE;
 		}
-		if (s.matches("^!definelong\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
+		if (s.matches("^\\s*!definelong\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
 			return LEGACY_DEFINELONG;
 		}
-		if (s.matches("^!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
+		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
 			return AFFECTATION_DEFINE;
 		}
-		if (s.matches("^!\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*=.*")) {
+		if (s.matches("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*=.*")) {
 			return AFFECTATION;
 		}
-		if (s.matches("^!ifdef\\s+.*")) {
+		if (s.matches("^\\s*'.*")) {
+			return COMMENT_SIMPLE;
+		}
+		if (s.matches("^\\s*/'.*'/\\s*$")) {
+			return COMMENT_SIMPLE;
+		}
+		if (s.matches("^\\s*/'.*") && s.contains("'/") == false) {
+			return COMMENT_LONG_START;
+		}
+		if (s.matches("^\\s*!ifdef\\s+.*")) {
 			return IFDEF;
 		}
-		if (s.matches("^!ifndef\\s+.*")) {
+		if (s.matches("^\\s*!undef\\s+.*")) {
+			return UNDEF;
+		}
+		if (s.matches("^\\s*!ifndef\\s+.*")) {
 			return IFNDEF;
 		}
-		if (s.matches("^!assert\\s+.*")) {
+		if (s.matches("^\\s*!assert\\s+.*")) {
 			return ASSERT;
 		}
-		if (s.matches("^!if\\s+.*")) {
+		if (s.matches("^\\s*!if\\s+.*")) {
 			return IF;
 		}
-		if (s.matches("^!(unquoted\\s)?function\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
+		if (s.matches("^\\s*!(unquoted\\s|final\\s)*function\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
 			return DECLARE_FUNCTION;
 		}
-		if (s.matches("^!else\\b.*")) {
+		if (s.matches("^\\s*!else\\b.*")) {
 			return ELSE;
 		}
-		if (s.matches("^!endif\\b.*")) {
+		if (s.matches("^\\s*!elseif\\b.*")) {
+			return ELSEIF;
+		}
+		if (s.matches("^\\s*!endif\\b.*")) {
 			return ENDIF;
 		}
-		if (s.matches("^!(endfunction|enddefinelong)\\b.*")) {
+		if (s.matches("^\\s*!(endfunction|enddefinelong)\\b.*")) {
 			return END_FUNCTION;
 		}
-		if (s.matches("^!return\\b.*")) {
+		if (s.matches("^\\s*!return\\b.*")) {
 			return RETURN;
 		}
-		if (s.matches("^!(include|includeurl)\\b.*")) {
+		if (s.matches("^\\s*!(include|includeurl|include_many|include_once)\\b.*")) {
 			return INCLUDE;
 		}
-		if (s.matches("^!(import)\\b.*")) {
+		if (s.matches("^\\s*!(import)\\b.*")) {
 			return IMPORT;
+		}
+		if (s.matches("^\\s*!startsub\\s+.*")) {
+			return STARTSUB;
+		}
+		if (s.matches("^\\s*!endsub\\b.*")) {
+			return ENDSUB;
+		}
+		if (s.matches("^\\s*!includesub\\b.*")) {
+			return INCLUDESUB;
+		}
+		if (s.matches("^\\s*!(log)\\b.*")) {
+			return LOG;
+		}
+		if (s.matches("^\\s*!(dump_memory)\\b.*")) {
+			return DUMP_MEMORY;
 		}
 		return PLAIN;
 	}

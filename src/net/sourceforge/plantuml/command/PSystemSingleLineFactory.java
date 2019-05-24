@@ -38,11 +38,12 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
-import net.sourceforge.plantuml.PSystemError;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
@@ -61,7 +62,8 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		}
 		final IteratorCounter2 it = source.iterator2();
 		if (source.isEmpty()) {
-			return buildEmptyError(source, it.peek().getLocation());
+			final LineLocation location = it.next().getLocation();
+			return buildEmptyError(source, location, it.getTrace());
 		}
 
 		final StringLocated startLine = it.next();
@@ -70,17 +72,17 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		}
 
 		if (it.hasNext() == false) {
-			return buildEmptyError(source, startLine.getLocation());
+			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
 		}
 		final StringLocated s = it.next();
 		if (StartUtils.isArobaseEndDiagram(s.getString())) {
-			return buildEmptyError(source, s.getLocation());
+			return buildEmptyError(source, s.getLocation(), it.getTrace());
 		}
 		final AbstractPSystem sys = executeLine(s.getString());
 		if (sys == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?",
-			/* it.currentNum() - 1, */s.getLocation());
-			return new PSystemError(source, err, null);
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", s.getLocation());
+			// return PSystemErrorUtils.buildV1(source, err, null);
+			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}
 		sys.setSource(source);
 		return sys;

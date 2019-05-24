@@ -119,18 +119,15 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		private Point2D getP1(StringBounder stringBounder) {
 			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-			final double diamondWidth = dimDiamond1.getWidth();
-			final double x;
+			final Point2D pt;
 			if (getFtile2() == tile1) {
-				x = 0;
+				pt = dimDiamond1.getPointD();
 			} else if (getFtile2() == tile2) {
-				x = diamondWidth;
+				pt = dimDiamond1.getPointB();
 			} else {
 				throw new IllegalStateException();
 			}
-			final double half = (dimDiamond1.getOutY() - dimDiamond1.getInY()) / 2;
-			return getTranslateDiamond1(stringBounder)
-					.getTranslated(new Point2D.Double(x, dimDiamond1.getInY() + half));
+			return getTranslateDiamond1(stringBounder).getTranslated(pt);
 		}
 
 		private Point2D getP2(final StringBounder stringBounder) {
@@ -214,18 +211,16 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		}
 
 		private Point2D getP2(StringBounder stringBounder) {
-			final Dimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);
-			final double diamondWidth = dimDiamond2.getWidth();
-			final double x;
+			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
+			final Point2D pt;
 			if (getFtile1() == tile1) {
-				x = 0;
+				pt = dimDiamond2.getPointD();
 			} else if (getFtile1() == tile2) {
-				x = diamondWidth;
+				pt = dimDiamond2.getPointB();
 			} else {
 				throw new IllegalStateException();
 			}
-			return getTranslateDiamond2(stringBounder)
-					.getTranslated(new Point2D.Double(x, dimDiamond2.getHeight() / 2));
+			return getTranslateDiamond2(stringBounder).getTranslated(pt);
 		}
 
 		private UTranslate translate(StringBounder stringBounder) {

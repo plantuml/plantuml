@@ -209,11 +209,20 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (circleAtStart) {
 			config = config.withDecoration1(ArrowDecoration.CIRCLE);
 		}
-		if (dressing1.contains("x")) {
-			config = config.withHead2(ArrowHead.CROSSX);
-		}
-		if (dressing2.contains("x")) {
-			config = config.withHead2(ArrowHead.CROSSX);
+		if (reverseDefine) {
+			if (dressing1.contains("x")) {
+				config = config.withHead2(ArrowHead.CROSSX);
+			}
+			if (dressing2.contains("x")) {
+				config = config.withHead1(ArrowHead.CROSSX);
+			}
+		} else {
+			if (dressing1.contains("x")) {
+				config = config.withHead1(ArrowHead.CROSSX);
+			}
+			if (dressing2.contains("x")) {
+				config = config.withHead2(ArrowHead.CROSSX);
+			}
 		}
 		if (reverseDefine) {
 			config = config.reverseDefine();

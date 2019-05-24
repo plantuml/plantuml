@@ -41,11 +41,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.prefs.Preferences;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.directdot.PSystemDot;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
+import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.math.PSystemMath;
 import net.sourceforge.plantuml.salt.PSystemSalt;
 import net.sourceforge.plantuml.stats.api.Stats;
@@ -110,7 +110,7 @@ public class StatsUtilsIncrement {
 	}
 
 	private static String name(Class<? extends Diagram> type) {
-		if (type == PSystemError.class) {
+		if (PSystemErrorUtils.isDiagramError(type)) {
 			return "Error";
 		}
 		if (type == ActivityDiagram3.class) {

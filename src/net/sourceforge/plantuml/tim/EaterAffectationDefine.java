@@ -44,12 +44,18 @@ public class EaterAffectationDefine extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!define");
 		skipSpaces();
-		final String varname = eatAntGetVarname();
+		final String varname = eatAndGetVarname();
 		skipSpaces();
-		final TValue value = TValue.fromString(eatAllToEnd());
-		memory.put(varname, new TVariable(value));
+		final String tmp = eatAllToEnd();
+		final String tmp2 = context.applyFunctionsAndVariables(memory, tmp);
+		final TValue value = TValue.fromString(tmp2);
+		// if (memory instanceof TMemoryLocal) {
+		// memory = ((TMemoryLocal) memory).getGlobalForInternalUseOnly();
+		// }
+		memory.putVariable(varname, new TVariable(value), TVariableScope.GLOBAL);
 	}
 
 }

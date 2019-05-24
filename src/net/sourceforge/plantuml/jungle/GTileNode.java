@@ -69,7 +69,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 		final SheetBlock1 sheetBlock1 = getTextBlock(display);
 
 		final SymbolContext symbolContext = new SymbolContext(HtmlColorUtils.MY_YELLOW, HtmlColorUtils.BLACK);
-		tb = USymbol.RECTANGLE.asSmall(null, sheetBlock1, TextBlockUtils.empty(0, 0), symbolContext);
+		tb = USymbol.RECTANGLE.asSmall(null, sheetBlock1, TextBlockUtils.empty(0, 0), symbolContext, HorizontalAlignment.CENTER);
 	}
 
 	public static SheetBlock1 getTextBlock(final Display display) {

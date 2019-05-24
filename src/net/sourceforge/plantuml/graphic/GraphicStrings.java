@@ -41,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
@@ -58,13 +59,9 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final HtmlColor background;
 
-	private final UFont font;
+	private final static HtmlColor hyperlinkColor = HtmlColorUtils.BLUE;
 
-	private final HtmlColor maincolor;
-
-	private final HtmlColor hyperlinkColor = HtmlColorUtils.BLUE;
-
-	private final boolean useUnderlineForHyperlink = true;
+	private final static boolean useUnderlineForHyperlink = true;
 
 	private final List<String> strings;
 
@@ -72,63 +69,87 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final GraphicPosition position;
 
+	private final FontConfiguration fontConfiguration;
+
 	public static IEntityImage createForError(List<String> strings, boolean useRed) {
+		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,
+				CreoleMode.NO_CREOLE);
+	}
+
+	private static HtmlColor getForeColor(boolean useRed) {
 		if (useRed) {
-			return new GraphicStrings(strings, UFont.sansSerif(14).bold(), HtmlColorUtils.BLACK,
-					HtmlColorUtils.RED_LIGHT, null, null);
+			return HtmlColorUtils.BLACK;
 		}
-		return new GraphicStrings(strings, UFont.sansSerif(14).bold(), HtmlColorSet.getInstance().getColorIfValid(
-				"#33FF02"), HtmlColorUtils.BLACK, null, null);
+		return HtmlColorUtils.MY_GREEN;
+	}
+
+	private static HtmlColor getBackColor(boolean useRed) {
+		if (useRed) {
+			return HtmlColorUtils.RED_LIGHT;
+		}
+		return HtmlColorUtils.BLACK;
 	}
 
 	public static TextBlockBackcolored createGreenOnBlackMonospaced(List<String> strings) {
-		return new GraphicStrings(strings, monospaced14(), HtmlColorUtils.GREEN, HtmlColorUtils.BLACK, null, null);
+		return new GraphicStrings(strings, monospaced14(HtmlColorUtils.GREEN), HtmlColorUtils.BLACK, null, null,
+				CreoleMode.SIMPLE_LINE);
 	}
 
 	public static TextBlockBackcolored createBlackOnWhite(List<String> strings) {
-		return new GraphicStrings(strings, sansSerif12(), HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, null, null);
+		return new GraphicStrings(strings, sansSerif12(HtmlColorUtils.BLACK), HtmlColorUtils.WHITE, null, null,
+				CreoleMode.FULL);
 	}
 
 	public static TextBlockBackcolored createBlackOnWhiteMonospaced(List<String> strings) {
-		return new GraphicStrings(strings, monospaced14(), HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, null, null);
+		return new GraphicStrings(strings, monospaced14(HtmlColorUtils.BLACK), HtmlColorUtils.WHITE, null, null,
+				CreoleMode.FULL);
 	}
 
 	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,
 			GraphicPosition position) {
-		return new GraphicStrings(strings, sansSerif12(), HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, image, position);
+		return new GraphicStrings(strings, sansSerif12(HtmlColorUtils.BLACK), HtmlColorUtils.WHITE, image, position,
+				CreoleMode.FULL);
 	}
 
-	private static UFont sansSerif12() {
-		return UFont.sansSerif(12);
+	private static FontConfiguration sansSerif12(HtmlColor color) {
+		return new FontConfiguration(UFont.sansSerif(12), color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
-	private static UFont monospaced14() {
-		return UFont.monospaced(14);
+	public static FontConfiguration sansSerif14(HtmlColor color) {
+		return new FontConfiguration(UFont.sansSerif(14), color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
-	private GraphicStrings(List<String> strings, UFont font, HtmlColor maincolor, HtmlColor background,
-			BufferedImage image, GraphicPosition position) {
+	private static FontConfiguration monospaced14(HtmlColor color) {
+		return new FontConfiguration(UFont.monospaced(14), color, hyperlinkColor, useUnderlineForHyperlink);
+	}
+
+	private final CreoleMode mode;
+
+	private GraphicStrings(List<String> strings, FontConfiguration fontConfiguration, HtmlColor background,
+			BufferedImage image, GraphicPosition position, CreoleMode mode) {
 		this.strings = strings;
-		this.font = font;
-		this.maincolor = maincolor;
 		this.background = background;
 		this.image = image;
 		this.position = position;
+		this.mode = mode;
+		this.fontConfiguration = fontConfiguration;
+
 	}
 
 	private TextBlock getTextBlock() {
-		TextBlock result = null;
-		result = Display.create(strings).create(
-				new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		// result = DateEventUtils.addEvent(result, green);
-		return result;
+		final Display display = Display.create(strings);
+		if (mode == CreoleMode.NO_CREOLE) {
+			return new TextBlockRaw(strings, fontConfiguration);
+
+		} else {
+			return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);
+		}
 	}
 
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(new UTranslate(margin, margin));
 		final Dimension2D size = calculateDimensionInternal(ug.getStringBounder());
-		getTextBlock().drawU(ug.apply(new UChangeColor(maincolor)));
+		getTextBlock().drawU(ug.apply(new UChangeColor(fontConfiguration.getColor())));
 
 		if (image != null) {
 			if (position == GraphicPosition.BOTTOM) {
@@ -176,10 +197,9 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	public boolean isHidden() {
 		return false;
 	}
-	
+
 	public double getOverscanX(StringBounder stringBounder) {
 		return 0;
 	}
-
 
 }

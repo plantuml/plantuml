@@ -37,60 +37,109 @@ package net.sourceforge.plantuml.tim;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class TMemoryLocal extends ConditionalContexts implements TMemory {
 
-	private final TMemoryGlobal global;
+	private final TMemoryGlobal memoryGlobal;
+	private final Map<String, TVariable> overridenVariables = new HashMap<String, TVariable>();
 	private final Map<String, TVariable> localVariables = new HashMap<String, TVariable>();
-	private Trie variables;
 
-	public TMemoryLocal(TMemoryGlobal global) {
-		this.global = global;
+	public TMemoryLocal(TMemoryGlobal global, Map<String, TVariable> input) {
+		this.memoryGlobal = global;
+		this.overridenVariables.putAll(input);
+	}
+	
+	public void dumpDebug(String message) {
+		Log.error("[MemLocal] Start of memory_dump " + message);
+		memoryGlobal.dumpMemoryInternal();
+		Log.error("[MemLocal] Number of overriden variable(s) : " + overridenVariables.size());
+		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(overridenVariables).entrySet()) {
+			final String name = ent.getKey();
+			final TValue value = ent.getValue().getValue2();
+			Log.error("[MemLocal] " + name + " = " + value);
+		}
+		Log.error("[MemLocal] Number of local variable(s) : " + localVariables.size());
+		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(localVariables).entrySet()) {
+			final String name = ent.getKey();
+			final TValue value = ent.getValue().getValue2();
+			Log.error("[MemLocal] " + name + " = " + value);
+		}
+		Log.error("[MemGlobal] End of memory_dump");
 	}
 
-	private void initTrie() {
-		for (String name : global.variablesNames()) {
-			variables.add(name);
+
+	public void putVariable(String varname, TVariable value, TVariableScope scope) throws EaterException {
+		if (scope == TVariableScope.GLOBAL) {
+			memoryGlobal.putVariable(varname, value, scope);
+			return;
+		}
+		if (scope == TVariableScope.LOCAL || overridenVariables.containsKey(varname)) {
+			this.overridenVariables.put(varname, value);
+			Log.info("[MemLocal/overrriden] Setting " + varname);
+		} else if (memoryGlobal.getVariable(varname) != null) {
+			memoryGlobal.putVariable(varname, value, scope);
+		} else {
+			this.localVariables.put(varname, value);
+			Log.info("[MemLocal/local] Setting " + varname);
+		}
+	}
+
+	public void removeVariable(String varname) {
+		if (overridenVariables.containsKey(varname)) {
+			this.overridenVariables.remove(varname);
+		} else if (memoryGlobal.getVariable(varname) != null) {
+			memoryGlobal.removeVariable(varname);
+		} else {
+			this.localVariables.remove(varname);
 		}
 	}
 
 	public TVariable getVariable(String varname) {
-		final TVariable result = localVariables.get(varname);
+		TVariable result = overridenVariables.get(varname);
 		if (result != null) {
 			return result;
 		}
-		return global.getVariable(varname);
+		result = memoryGlobal.getVariable(varname);
+		if (result != null) {
+			return result;
+		}
+		result = localVariables.get(varname);
+		return result;
 	}
 
 	public Trie variablesNames3() {
-		if (variables == null) {
-			return global.variablesNames3();
+		final Trie result = new Trie();
+		for (String name : overridenVariables.keySet()) {
+			result.add(name);
 		}
-		return variables;
-	}
-
-	public void put(String varname, TVariable value) {
-		this.localVariables.put(varname, value);
-		if (this.variables == null) {
-			this.variables = new Trie();
-			initTrie();
+		for (String name : memoryGlobal.variablesNames()) {
+			result.add(name);
 		}
-		this.variables.add(varname);
+		for (String name : localVariables.keySet()) {
+			result.add(name);
+		}
+		return result;
 	}
 
 	public boolean isEmpty() {
-		return global.isEmpty() && localVariables.isEmpty();
+		return memoryGlobal.isEmpty() && localVariables.isEmpty() && overridenVariables.isEmpty();
 	}
 
 	public Set<String> variablesNames() {
-		// final Set<String> result = new HashSet<String>(localVariables.keySet());
-		// result.addAll(global.variablesNames());
-		// return Collections.unmodifiableSet(result);
 		throw new UnsupportedOperationException();
 	}
 
-	public TMemory forkFromGlobal() {
-		return new TMemoryLocal(global);
+	public TMemory forkFromGlobal(Map<String, TVariable> input) {
+		return new TMemoryLocal(memoryGlobal, input);
 	}
+
+	// public final TMemoryGlobal getGlobalForInternalUseOnly() {
+	// return memoryGlobal;
+	// }
 
 }

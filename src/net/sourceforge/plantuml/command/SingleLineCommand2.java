@@ -36,11 +36,11 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
 
 public abstract class SingleLineCommand2<S extends Diagram> implements Command<S> {
 

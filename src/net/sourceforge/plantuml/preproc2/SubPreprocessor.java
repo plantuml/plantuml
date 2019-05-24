@@ -178,7 +178,7 @@ public class SubPreprocessor implements ReadFilter {
 	}
 
 	private ReadLine getReaderIncludeWithoutComment(StringLocated s, final File f) {
-		return new ReadLineQuoteComment().applyFilter(getReaderIncludeRaw(s, f));
+		return new ReadLineQuoteComment(false).applyFilter(getReaderIncludeRaw(s, f));
 	}
 
 	private ReadLine getReaderIncludeRaw(StringLocated s, final File f) {

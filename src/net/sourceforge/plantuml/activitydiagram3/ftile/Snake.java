@@ -66,11 +66,10 @@ public class Snake implements UShape {
 	private MergeStrategy mergeable = MergeStrategy.FULL;
 	private Direction emphasizeDirection;
 	private final HorizontalAlignment horizontalAlignment;
-	
+
 	public final void setIgnoreForCompression(boolean ignoreForCompression) {
 		this.worm.setIgnoreForCompression(ignoreForCompression);
 	}
-
 
 	public Snake transformX(CompressionTransform compressionTransform) {
 		final Snake result = new Snake(startDecoration, horizontalAlignment, color, endDecoration);
@@ -206,14 +205,19 @@ public class Snake implements UShape {
 		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
 		double x = Math.max(pt1.getX(), pt2.getX()) + 4;
 		final boolean zigzag = worm.getDirectionsCode().startsWith("DLD") || worm.getDirectionsCode().startsWith("DRD");
+		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
 		if (horizontalAlignment == HorizontalAlignment.CENTER && zigzag) {
 			final Point2D pt3 = worm.get(2);
 			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;
 		} else if (horizontalAlignment == HorizontalAlignment.RIGHT && zigzag) {
-			// final Point2D pt3 = worm.get(2);
 			x = Math.max(pt1.getX(), pt2.getX()) - dim.getWidth() - 4;
+		} else if (worm.getDirectionsCode().equals("RD")) {
+			x = Math.max(pt1.getX(), pt2.getX());
+			y = (pt1.getY() + worm.get(2).getY()) / 2 - dim.getHeight() / 2;
+		} else if (worm.getDirectionsCode().equals("LD")) {
+			x = Math.min(pt1.getX(), pt2.getX());
+			y = (pt1.getY() + worm.get(2).getY()) / 2 - dim.getHeight() / 2;
 		}
-		final double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
 		return new Point2D.Double(x, y);
 	}
 

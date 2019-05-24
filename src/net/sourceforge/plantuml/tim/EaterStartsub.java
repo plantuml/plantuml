@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,11 +31,30 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.suggest;
+package net.sourceforge.plantuml.tim;
 
-public enum SuggestEngineStatus {
-	SYNTAX_OK, CANNOT_CORRECT, ONE_SUGGESTION
+public class EaterStartsub extends Eater {
+
+	private String subname;
+
+	public EaterStartsub(String s) {
+		super(s);
+	}
+
+	@Override
+	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
+		checkAndEatChar("!startsub");
+		skipSpaces();
+		this.subname = eatAllToEnd();
+		if (this.subname.matches("\\w+") == false) {
+			throw new EaterException("Bad sub name");
+		}
+	}
+
+	public final String getSubname() {
+		return subname;
+	}
 
 }

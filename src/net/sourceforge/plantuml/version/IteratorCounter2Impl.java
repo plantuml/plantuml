@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.version;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
@@ -41,21 +43,28 @@ import net.sourceforge.plantuml.StringLocated;
 public class IteratorCounter2Impl implements IteratorCounter2 {
 
 	private List<StringLocated> data;
+	private List<StringLocated> trace;
 	private int nb;
 
 	public void copyStateFrom(IteratorCounter2 other) {
 		final IteratorCounter2Impl source = (IteratorCounter2Impl) other;
 		this.nb = source.nb;
 		this.data = source.data;
+		this.trace = source.trace;
 	}
 
 	public IteratorCounter2Impl(List<StringLocated> data) {
-		this(data, 0);
+		this(data, 0, new ArrayList<StringLocated>());
 	}
 
-	private IteratorCounter2Impl(List<StringLocated> data, int nb) {
+	private IteratorCounter2Impl(List<StringLocated> data, int nb, List<StringLocated> trace) {
 		this.data = data;
 		this.nb = nb;
+		this.trace = trace;
+	}
+
+	public IteratorCounter2 cloneMe() {
+		return new IteratorCounter2Impl(data, nb, new ArrayList<StringLocated>(trace));
 	}
 
 	public int currentNum() {
@@ -67,7 +76,10 @@ public class IteratorCounter2Impl implements IteratorCounter2 {
 	}
 
 	public StringLocated next() {
-		return data.get(nb++);
+		final StringLocated result = data.get(nb);
+		nb++;
+		trace.add(result);
+		return result;
 	}
 
 	public StringLocated peek() {
@@ -85,8 +97,8 @@ public class IteratorCounter2Impl implements IteratorCounter2 {
 		throw new UnsupportedOperationException();
 	}
 
-	public IteratorCounter2 cloneMe() {
-		return new IteratorCounter2Impl(data, nb);
+	public final List<StringLocated> getTrace() {
+		return Collections.unmodifiableList(trace);
 	}
 
 }

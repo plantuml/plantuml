@@ -48,7 +48,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.cucadiagram.Display;
 

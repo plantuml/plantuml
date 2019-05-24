@@ -101,8 +101,8 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));
 		final String icon = arg.getLazzy("STEREOTYPE", 0);
 
-		final IEntity entity = diagram.getOrCreateLeaf(code, LeafType.DESCRIPTION, USymbol.RECTANGLE);
-		
+		final IEntity entity = diagram.getOrCreateLeaf(code, LeafType.DESCRIPTION, USymbol.ARCHIMATE);
+
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 
 		String display = displayRaw;
@@ -112,7 +112,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 
 		entity.setDisplay(Display.getWithNewlines(display));
-		entity.setUSymbol(USymbol.RECTANGLE);
+		entity.setUSymbol(USymbol.ARCHIMATE);
 		if (icon != null) {
 			entity.setStereotype(new Stereotype("<<$archimate/" + icon + ">>", diagram.getSkinParam()
 					.getCircledCharacterRadius(), diagram.getSkinParam().getFont(null, false,
@@ -124,5 +124,4 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 
 		return CommandExecutionResult.ok();
 	}
-
 }

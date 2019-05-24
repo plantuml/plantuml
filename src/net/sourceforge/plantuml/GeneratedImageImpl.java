@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
 
 public class GeneratedImageImpl implements GeneratedImage {
 
@@ -68,7 +69,7 @@ public class GeneratedImageImpl implements GeneratedImage {
 	public int lineErrorRaw() {
 		final Diagram system = blockUml.getDiagram();
 		if (system instanceof PSystemError) {
-			return ((PSystemError) system).getHigherErrorPosition2().getPosition();
+			return ((PSystemError) system).getLineLocation().getPosition();
 		}
 		return -1;
 	}

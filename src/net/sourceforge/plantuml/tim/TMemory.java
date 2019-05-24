@@ -34,13 +34,16 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface TMemory {
 
 	public TVariable getVariable(String varname);
 
-	public void put(String varname, TVariable value);
+	public void putVariable(String varname, TVariable value, TVariableScope scope) throws EaterException;
+
+	public void removeVariable(String varname);
 
 	public boolean isEmpty();
 
@@ -48,11 +51,15 @@ public interface TMemory {
 
 	public Trie variablesNames3();
 
-	public TMemory forkFromGlobal();
+	public TMemory forkFromGlobal(Map<String, TVariable> input);
 
 	public ConditionalContext peekConditionalContext();
+
+	public boolean areAllIfOk();
 
 	public void addConditionalContext(ConditionalContext context);
 
 	public ConditionalContext pollConditionalContext();
+
+	public void dumpDebug(String message);
 }

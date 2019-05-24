@@ -49,9 +49,10 @@ public class EaterLegacyDefineLong extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!definelong");
 		skipSpaces();
-		function = eatDeclareFunction(context, memory, true, location);
+		function = eatDeclareFunction(context, memory, true, location, true);
 		function.setFunctionType(TFunctionType.LEGACY_DEFINELONG);
 	}
 

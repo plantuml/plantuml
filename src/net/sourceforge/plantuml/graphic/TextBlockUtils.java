@@ -124,6 +124,11 @@ public class TextBlockUtils {
 		return new TextBlockVertical2(b1, b2, horizontalAlignment);
 	}
 
+	// public static TextBlockBackcolored mergeColoredTB(TextBlockBackcolored b1, TextBlockBackcolored b2,
+	// HorizontalAlignment horizontalAlignment) {
+	// return addBackcolor(mergeTB(b1, b2, horizontalAlignment), b1.getBackcolor());
+	// }
+
 	public static MinMax getMinMax(TextBlock tb, StringBounder stringBounder) {
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
 		tb.drawU(limitFinder);

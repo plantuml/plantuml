@@ -44,12 +44,12 @@ import javax.imageio.ImageIO;
 
 public class IconLoader {
 
-	private static final int NUMBER_OF_ICONS = 27;
+	private static final int NUMBER_OF_ICONS = 29;
 	
 	private final static Map<String, BufferedImage> all = new ConcurrentHashMap<String, BufferedImage>();
 
 	public static BufferedImage getRandom() {
-		// return addTransparent(getIcon("sprite026.png"));
+		// return addTransparent(getIcon("sprite028.png"));
 		return addTransparent(getIcon(getSomeQuote()));
 	}
 

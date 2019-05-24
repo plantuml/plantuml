@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc2.PreprocessorMode;
 import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
@@ -57,6 +58,7 @@ import net.sourceforge.plantuml.version.Version;
 public class BlockUml {
 
 	private final List<StringLocated> data;
+	private List<StringLocated> debug;
 	private Diagram system;
 	private final Defines localDefines;
 	private final ISkinSimple skinParam;
@@ -96,6 +98,9 @@ public class BlockUml {
 		return result;
 	}
 
+	private PreprocessorMode pmode = PreprocessorMode.V1_LEGACY;
+	private boolean preprocessorError;
+
 	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode) {
 		this.localDefines = defines;
 		this.skinParam = skinParam;
@@ -104,7 +109,12 @@ public class BlockUml {
 			throw new IllegalArgumentException();
 		}
 		if (mode != null && mode.getPreprocessorMode() == PreprocessorMode.V2_NEW_TIM) {
-			this.data = new TimLoader(mode.getImportedFiles(), defines).load(strings);
+			this.pmode = mode.getPreprocessorMode();
+			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, mode.getCharset());
+			timLoader.load(strings);
+			this.data = timLoader.getResult();
+			this.debug = timLoader.getDebug();
+			this.preprocessorError = timLoader.isPreprocessorError();
 		} else {
 			this.data = new ArrayList<StringLocated>(strings);
 		}
@@ -139,7 +149,11 @@ public class BlockUml {
 
 	public Diagram getDiagram() {
 		if (system == null) {
-			system = new PSystemBuilder().createPSystem(skinParam, data);
+			if (preprocessorError) {
+				system = new PSystemErrorPreprocessor(data, debug);
+			} else {
+				system = new PSystemBuilder().createPSystem(skinParam, data);
+			}
 		}
 		return system;
 	}

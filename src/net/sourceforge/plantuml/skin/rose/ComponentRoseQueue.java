@@ -65,7 +65,7 @@ public class ComponentRoseQueue extends AbstractTextualComponent {
 				false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
 		this.stickman = USymbol.QUEUE.asSmall(TextBlockUtils.empty(0, 0), getTextBlock(), TextBlockUtils.empty(0, 0),
-				biColor);
+				biColor, HorizontalAlignment.CENTER);
 	}
 
 	@Override

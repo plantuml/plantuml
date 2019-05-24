@@ -48,13 +48,11 @@ public class UncommentReadLine extends ReadLineInstrumented implements ReadLine 
 	private static final Pattern2 unpause = MyPattern.cmpile(StartUtils.PAUSE_PATTERN);
 
 	private final ReadLine raw;
-	// private final Pattern2 start;
 	private String headerToRemove;
 	private boolean paused;
 
 	public UncommentReadLine(ReadLine source) {
 		this.raw = source;
-		// this.start = MyPattern.cmpile(StartUtils.START_PATTERN);
 	}
 
 	@Override
@@ -70,10 +68,6 @@ public class UncommentReadLine extends ReadLineInstrumented implements ReadLine 
 			return null;
 		}
 
-		// final Matcher m = start.matcher(result);
-		// if (m.find()) {
-		// headerToRemove = m.group(1);
-		// }
 		final String tmp = StartUtils.beforeStartUml(result.getString());
 		if (tmp != null) {
 			headerToRemove = tmp;

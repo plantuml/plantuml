@@ -31,39 +31,30 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
+ * 
  */
-package net.sourceforge.plantuml.suggest;
+package net.sourceforge.plantuml.svek.extremity;
 
-public class VariatorAddTwoChar extends VariatorIteratorAdaptor {
+import java.awt.geom.Point2D;
 
-	private final String data;
-	private final char toAdd;
-	private int i;
-	private int j = 1;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
 
-	public VariatorAddTwoChar(String data, char toAdd) {
-		this.data = data;
-		this.toAdd = toAdd;
+public class ExtremityOther extends Extremity {
+
+	final private UPolygon polygon;
+
+	public ExtremityOther(UPolygon polygon) {
+		this.polygon = polygon;
+	}
+
+	public void drawU(UGraphic ug) {
+		ug.draw(polygon);
+
 	}
 
 	@Override
-	Variator getVariator() {
-		return new Variator() {
-			public String getData() {
-				if (i >= data.length()) {
-					return null;
-				}
-				return data.substring(0, i) + toAdd + data.substring(i, j) + toAdd + data.substring(j);
-			}
-
-			public void nextStep() {
-				j++;
-				if (j > data.length()) {
-					i++;
-					j = i + 1;
-				}
-			}
-		};
+	public Point2D somePoint() {
+		return polygon.getPoints().get(0);
 	}
 }

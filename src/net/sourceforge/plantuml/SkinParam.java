@@ -550,6 +550,15 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	public HorizontalAlignment getStereotypeAlignment() {
+		final String value = getValue("stereotypealignment");
+		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
+		if (result == null) {
+			return HorizontalAlignment.CENTER;
+		}
+		return result;
+	}
+
 	private String getArg(String value, int i) {
 		if (value == null) {
 			return null;

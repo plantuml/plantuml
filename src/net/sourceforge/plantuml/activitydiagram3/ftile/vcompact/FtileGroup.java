@@ -209,7 +209,7 @@ public class FtileGroup extends AbstractFtile {
 				.withShadow(skinParam().shadowing(null)).withStroke(stroke).withCorner(roundCorner, 0);
 
 		type.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
-				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext).drawU(ug);
+				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext, skinParam().getStereotypeAlignment()).drawU(ug);
 
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
 		headerNote.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimHeaderNote.getWidth() - 10,

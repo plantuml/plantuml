@@ -44,6 +44,7 @@ public class EaterImport extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!import");
 		skipSpaces();
 		this.location = context.applyFunctionsAndVariables(memory, this.eatAllToEnd());

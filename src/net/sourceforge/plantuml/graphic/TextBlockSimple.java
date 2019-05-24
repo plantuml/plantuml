@@ -145,15 +145,15 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 		if (s.length() == 0 || MyPattern.mtches(s, "^[%s]*$ ")) {
 			return;
 		}
-		lines2.add(new SingleLine(s, fontConfiguration, horizontalAlignment, spriteContainer));
+		lines2.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));
 	}
 
 	private void addSingleLine(String s) {
-		lines2.add(new SingleLine(s, fontConfiguration, horizontalAlignment, spriteContainer));
+		lines2.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));
 	}
 
 	private double getTextWidth(StringBounder stringBounder, String s) {
-		final Line line = new SingleLine(s, fontConfiguration, horizontalAlignment, spriteContainer);
+		final Line line = SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer);
 		return line.calculateDimension(stringBounder).getWidth();
 	}
 
@@ -162,7 +162,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 		assert s.getLabel(Guillemet.DOUBLE_COMPARATOR) != null;
 		final List<SingleLine> result = new ArrayList<SingleLine>();
 		for (String st : s.getLabels(spriteContainer.guillemet())) {
-			result.add(new SingleLine(st, fontConfiguration, horizontalAlignment, spriteContainer));
+			result.add(SingleLine.withSomeHtmlTag(st, fontConfiguration, horizontalAlignment, spriteContainer));
 		}
 		return Collections.unmodifiableList(result);
 	}

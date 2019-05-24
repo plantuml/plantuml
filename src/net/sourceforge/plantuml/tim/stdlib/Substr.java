@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class Substr implements TFunction {
+public class Substr extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
 		return new TFunctionSignature("%substr", 3);
@@ -54,14 +54,6 @@ public class Substr implements TFunction {
 
 	public boolean canCover(int nbArg) {
 		return nbArg == 2 || nbArg == 3;
-	}
-
-	public TFunctionType getFunctionType() {
-		return TFunctionType.RETURN;
-	}
-
-	public void executeVoid(TContext context, String s, TMemory memory) throws EaterException {
-		throw new UnsupportedOperationException();
 	}
 
 	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
@@ -79,9 +71,4 @@ public class Substr implements TFunction {
 		}
 		return TValue.fromString(result);
 	}
-
-	public boolean isUnquoted() {
-		return false;
-	}
-
 }

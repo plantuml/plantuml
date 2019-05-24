@@ -40,10 +40,8 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
@@ -51,20 +49,17 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchNude;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithDiamonds;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithOneLink;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithManyLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
-import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.CreoleParser;
-import net.sourceforge.plantuml.creole.Sheet;
-import net.sourceforge.plantuml.creole.SheetBlock1;
-import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
@@ -93,7 +88,8 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		// fcArrow, topInlinkRendering, afterEndwhile, fcTest);
 
 		// return createNude(swimlane, branches);
-		return createWithDiamonds(swimlane, branches, labelTest);
+		// return createWithDiamonds(swimlane, branches, labelTest);
+		return createWithLinks(swimlane, branches, labelTest);
 	}
 
 	private Ftile createNude(Swimlane swimlane, List<Branch> branches) {
@@ -111,7 +107,27 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		}
 		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest);
 		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));
-		return new FtileSwitchWithDiamonds(ftiles, swimlane, diamond1, diamond2, getStringBounder());
+
+		return new FtileSwitchWithDiamonds(ftiles, branches, swimlane, diamond1, diamond2, getStringBounder());
+	}
+
+	private Ftile createWithLinks(Swimlane swimlane, List<Branch> branches, Display labelTest) {
+		final List<Ftile> ftiles = new ArrayList<Ftile>();
+		for (Branch branch : branches) {
+			ftiles.add(new FtileMinWidth(branch.getFtile(), 30));
+		}
+		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest);
+		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));
+		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
+		if (ftiles.size() == 1) {
+			final FtileSwitchWithOneLink result = new FtileSwitchWithOneLink(ftiles, branches, swimlane, diamond1,
+					diamond2, getStringBounder(), arrowColor);
+			return result.addLinks();
+		}
+		final FtileSwitchWithManyLinks result = new FtileSwitchWithManyLinks(ftiles, branches, swimlane, diamond1,
+				diamond2, getStringBounder(), arrowColor);
+		return result.addLinks();
+
 	}
 
 	private Ftile getDiamond1(Swimlane swimlane, Branch branch0, Display test) {

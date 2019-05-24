@@ -88,7 +88,7 @@ public class DiagElement {
 				ColorParam.activityBorder.getDefaultValue()).withShadow(true);
 		final TextBlock desc = toTextBlock(description);
 		final TextBlock box = shape
-				.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0), symbolContext);
+				.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0), symbolContext, HorizontalAlignment.CENTER);
 		return new LinkedElement(ad1, box, ad2, mainNetwork, this);
 	}
 

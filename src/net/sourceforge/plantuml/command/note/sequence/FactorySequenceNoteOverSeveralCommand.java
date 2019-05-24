@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
@@ -51,6 +53,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -65,7 +68,11 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		return new RegexConcat( //
 				new RegexLeaf("^"), //
 				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+over[%s]+"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("over[%s]+"), //
 				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,[%s]*"), //
 				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
 				color().getRegex(), //
@@ -78,7 +85,11 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		return new RegexConcat( //
 				new RegexLeaf("^"), //
 				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+over[%s]+"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("over[%s]+"), //
 				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,[%s]*"), //
 				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
 				color().getRegex(), //
@@ -87,17 +98,17 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
-	
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
-
 
 	public Command<SequenceDiagram> createSingleLine() {
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location,
+					RegexResult arg) {
 				final BlocLines strings = BlocLines.getWithNewlines(arg.get("NOTE", 0));
 
 				return executeInternal(system, arg, strings);
@@ -135,9 +146,16 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;
 			final Display display = diagram.manageVariable(lines.toDisplay());
 			final Note note = new Note(p1, p2, display);
-			final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+			final String stereotypeString = line0.get("STEREO", 0);
+			if (stereotypeString != null) {
+				final Stereotype stereotype = new Stereotype(stereotypeString);
+				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), FontParam.NOTE,
+						ColorParam.noteBackground, ColorParam.noteBorder);
+			}
 			note.setColors(colors);
-			// note.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+			// note.setSpecificColorTOBEREMOVED(ColorType.BACK,
+			// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
 			note.setStyle(NoteStyle.getNoteStyle(line0.get("STYLE", 0)));
 			if (line0.get("URL", 0) != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);

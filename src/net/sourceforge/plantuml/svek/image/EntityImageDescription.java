@@ -138,7 +138,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		stereo = TextBlockUtils.empty(0, 0);
 
 		if (stereotype != null && stereotype.getSprite(getSkinParam()) != null) {
-			symbol = symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
+			// symbol = symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
 			stereo = stereotype.getSprite(getSkinParam());
 		} else if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
@@ -152,9 +152,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		if (hideText) {
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
-					TextBlockUtils.empty(0, 0), ctx);
+					TextBlockUtils.empty(0, 0), ctx, skinParam.getStereotypeAlignment());
 		} else {
-			asSmall = symbol.asSmall(name, desc, stereo, ctx);
+			asSmall = symbol.asSmall(name, desc, stereo, ctx, skinParam.getStereotypeAlignment());
 		}
 	}
 

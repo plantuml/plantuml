@@ -142,12 +142,22 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), oneOf(scale, dpiFactor), metadata,
 				null, 3, 10, diagram.getAnimation());
 
-		imageBuilder.setUDrawable(new UDrawable() {
-			public void drawU(UGraphic ug) {
-				drawInternal(ug, index);
-			}
-		});
+		imageBuilder.setUDrawable(new Foo(index));
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
+
+	}
+
+	class Foo implements UDrawable {
+
+		private final int index;
+
+		Foo(int index) {
+			this.index = index;
+		}
+
+		public void drawU(UGraphic ug) {
+			drawInternal(ug, index);
+		}
 
 	}
 

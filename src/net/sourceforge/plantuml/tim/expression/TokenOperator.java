@@ -43,9 +43,19 @@ public enum TokenOperator {
 			return v1.multiply(v2);
 		}
 	},
+	DIVISION(100 - 3, "/") {
+		public TValue operate(TValue v1, TValue v2) {
+			return v1.dividedBy(v2);
+		}
+	},
 	ADDITION(100 - 4, "+") {
 		public TValue operate(TValue v1, TValue v2) {
 			return v1.add(v2);
+		}
+	},
+	SUBSTRACTION(100 - 4, "-") {
+		public TValue operate(TValue v1, TValue v2) {
+			return v1.minus(v2);
 		}
 	},
 	LESS_THAN(100 - 6, "<") {

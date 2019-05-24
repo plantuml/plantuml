@@ -44,6 +44,7 @@ public class EaterAssert extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!assert");
 		skipSpaces();
 		final TValue value = eatExpressionStopAtColon(context, memory);

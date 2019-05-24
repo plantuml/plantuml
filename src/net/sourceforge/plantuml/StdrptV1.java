@@ -40,6 +40,7 @@ import java.io.PrintStream;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
+import net.sourceforge.plantuml.error.PSystemError;
 
 public class StdrptV1 implements Stdrpt {
 
@@ -58,7 +59,7 @@ public class StdrptV1 implements Stdrpt {
 			output.println("status=NO_DATA");
 		} else {
 			output.println("status=ERROR");
-			output.println("lineNumber=" + err.getHigherErrorPosition2().getPosition());
+			output.println("lineNumber=" + err.getLineLocation().getPosition());
 			for (ErrorUml er : err.getErrorsUml()) {
 				output.println("label=" + er.getError());
 			}

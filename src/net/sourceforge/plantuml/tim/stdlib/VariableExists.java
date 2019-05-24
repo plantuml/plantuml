@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,46 +31,30 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.suggest;
+package net.sourceforge.plantuml.tim.stdlib;
 
-public class VariatorSwapLetter extends VariatorIteratorAdaptor {
+import java.util.List;
 
-	private final String data;
-	private int i;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	public VariatorSwapLetter(String data) {
-		this.data = data;
-		ensureTwoLetters();
+public class VariableExists extends SimpleReturnFunction {
+
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%variable_exists", 1);
 	}
 
-	private void ensureTwoLetters() {
-		while (i < data.length() - 1 && areTwoLetters() == false) {
-			i++;
-		}
-
+	public boolean canCover(int nbArg) {
+		return nbArg == 1;
 	}
 
-	private boolean areTwoLetters() {
-		return Character.isLetter(data.charAt(i)) && Character.isLetter(data.charAt(i + 1));
-
+	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+		final String name = args.get(0).toString();
+		return TValue.fromBoolean(memory.getVariable(name) != null);
 	}
 
-	@Override
-	Variator getVariator() {
-		return new Variator() {
-			public String getData() {
-				if (i >= data.length() - 1) {
-					return null;
-				}
-				return data.substring(0, i) + data.charAt(i + 1) + data.charAt(i) + data.substring(i + 2);
-			}
-
-			public void nextStep() {
-				i++;
-				ensureTwoLetters();
-			}
-		};
-	}
 }

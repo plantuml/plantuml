@@ -317,5 +317,10 @@ public class SkinParamDelegator implements ISkinParam {
 	public Map<String, String> values() {
 		return skinParam.values();
 	}
+	
+	public HorizontalAlignment getStereotypeAlignment() {
+		return skinParam.getStereotypeAlignment();
+	}
+
 
 }

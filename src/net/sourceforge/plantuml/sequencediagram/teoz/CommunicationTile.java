@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class CommunicationTile extends AbstractTile implements TileWithUpdateStairs, TileWithCallbackY {
@@ -104,6 +106,15 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 	private boolean isCreate() {
 		return message.isCreate();
 	}
+	
+	private double getArrowThickness() {
+		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);
+		if (result == null) {
+			return 1;
+		}
+		return result.getThickness();
+	}
+
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
@@ -113,9 +124,10 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		if (isReverse(stringBounder)) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
+		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());
 
-		final ArrowComponent comp = skin.createComponentArrow(arrowConfiguration, skinParam,
-				message.getLabelNumbered());
+		final ArrowComponent comp = skin
+				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
 		return comp;
 	}
 

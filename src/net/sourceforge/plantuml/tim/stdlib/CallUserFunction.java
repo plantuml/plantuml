@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,34 +31,37 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.suggest;
+package net.sourceforge.plantuml.tim.stdlib;
 
-public class VariatorAddOneChar extends VariatorIteratorAdaptor {
+import java.util.List;
 
-	private final String data;
-	private final char toAdd;
-	private int i;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunction;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	public VariatorAddOneChar(String data, char toAdd) {
-		this.data = data;
-		this.toAdd = toAdd;
+public class CallUserFunction extends SimpleReturnFunction {
+
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%call_user_func", 1);
 	}
 
-	@Override
-	Variator getVariator() {
-		return new Variator() {
-			public String getData() {
-				if (i > data.length()) {
-					return null;
-				}
-				return data.substring(0, i) + toAdd + data.substring(i);
-			}
-
-			public void nextStep() {
-				i++;
-			}
-		};
+	public boolean canCover(int nbArg) {
+		return nbArg > 0;
 	}
+
+	public TValue executeReturn(TContext context, TMemory memory, List<TValue> values) throws EaterException {
+		final String fname = values.get(0).toString();
+		final List<TValue> args = values.subList(1, values.size());
+		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());
+		final TFunction func = context.getFunctionSmart(signature);
+		if (func == null) {
+			throw new EaterException("Cannot find void function " + fname);
+		}
+		return func.executeReturn(context, memory, args);
+	}
+
 }

@@ -42,7 +42,17 @@ import net.sourceforge.plantuml.preproc.ReadLine;
 
 public class ReadLineQuoteComment implements ReadFilter {
 
+	private final boolean ignoreMe;
+
+	public ReadLineQuoteComment(boolean ignoreMe) {
+		this.ignoreMe = ignoreMe;
+	}
+
 	public ReadLine applyFilter(final ReadLine source) {
+		if (ignoreMe) {
+			return source;
+		}
+		
 		return new ReadLine() {
 
 			public void close() throws IOException {

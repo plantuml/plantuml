@@ -206,6 +206,12 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	public void addPoint(double x, double y) {
+		if (points.size() > 0) {
+			final Point2D last = getLast();
+			if (last.getX() == x && last.getY() == y) {
+				return;
+			}
+		}
 		this.points.add(new Point2D.Double(x, y));
 	}
 

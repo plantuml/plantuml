@@ -43,7 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
-import net.sourceforge.plantuml.PSystemError;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
@@ -51,6 +51,8 @@ import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
@@ -76,7 +78,8 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		}
 
 		if (source.isEmpty()) {
-			return buildEmptyError(source, startLine.getLocation());
+			it.next();
+			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
 		}
 		AbstractPSystem sys = createEmptyDiagram();
 
@@ -87,10 +90,12 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 				}
 				final String err = sys.checkFinalError();
 				if (err != null) {
-					return buildExecutionError(source, err, it.peek().getLocation());
+					final LineLocation location = it.next().getLocation();
+					return buildExecutionError(source, err, location, it.getTrace());
 				}
 				if (source.getTotalLineCount() == 2) {
-					return buildEmptyError(source, it.peek().getLocation());
+					final LineLocation location = it.next().getLocation();
+					return buildEmptyError(source, location, it.getTrace());
 				}
 				sys.makeDiagramReady();
 				if (sys.isOk() == false) {
@@ -113,14 +118,15 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		final Step step = getCandidate(it);
 		if (step == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", it.peek().getLocation());
-			return new PSystemError(source, err, null);
+			it.next();
+			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}
 
 		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines);
 		if (result.isOk() == false) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
 					((StringLocated) step.blocLines.getFirst499()).getLocation());
-			sys = new PSystemError(source, err, result.getDebugLines());
+			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace());
 		}
 		if (result.getNewDiagram() != null) {
 			sys = result.getNewDiagram();

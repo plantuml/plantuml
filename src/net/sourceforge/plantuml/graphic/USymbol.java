@@ -58,14 +58,16 @@ public abstract class USymbol {
 	public final static USymbol ARTIFACT = record("ARTIFACT", SkinParameter.ARTIFACT, new USymbolArtifact());
 	public final static USymbol PACKAGE = record("PACKAGE", SkinParameter.PACKAGE, new USymbolFolder(
 			SkinParameter.PACKAGE, true));
-	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER, new USymbolFolder(SkinParameter.FOLDER, false));
+	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER, new USymbolFolder(SkinParameter.FOLDER,
+			false));
 	public final static USymbol FILE = record("FILE", SkinParameter.FILE, new USymbolFile());
 	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE, new USymbolRect(
-			SkinParameter.RECTANGLE, HorizontalAlignment.CENTER));
+			SkinParameter.RECTANGLE));
+	public final static USymbol ARCHIMATE = record("ARCHIMATE", SkinParameter.ARCHIMATE, new USymbolRect(
+			SkinParameter.ARCHIMATE));
 	public final static USymbol COLLECTIONS = record("COLLECTIONS", SkinParameter.COLLECTIONS, new USymbolCollections(
-			SkinParameter.RECTANGLE, HorizontalAlignment.CENTER));
-	public final static USymbol AGENT = record("AGENT", SkinParameter.AGENT, new USymbolRect(SkinParameter.AGENT,
-			HorizontalAlignment.CENTER));
+			SkinParameter.RECTANGLE));
+	public final static USymbol AGENT = record("AGENT", SkinParameter.AGENT, new USymbolRect(SkinParameter.AGENT));
 	public final static USymbol ACTOR = record("ACTOR", SkinParameter.ACTOR, new USymbolActor());
 	public final static USymbol USECASE = null;
 	public final static USymbol COMPONENT1 = record("COMPONENT1", SkinParameter.COMPONENT1, new USymbolComponent1());
@@ -81,9 +83,9 @@ public abstract class USymbol {
 
 	abstract public SkinParameter getSkinParameter();
 
-	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
-		return this;
-	}
+	// public USymbol withStereoAlignment(HorizontalAlignment alignment) {
+	// return this;
+	// }
 
 	public FontParam getFontParam() {
 		return getSkinParameter().getFontParam();
@@ -124,10 +126,11 @@ public abstract class USymbol {
 		return symbol;
 	}
 
-	public abstract TextBlock asSmall(TextBlock name, TextBlock label, TextBlock stereotype, SymbolContext symbolContext);
+	public abstract TextBlock asSmall(TextBlock name, TextBlock label, TextBlock stereotype,
+			SymbolContext symbolContext, HorizontalAlignment stereoAlignment);
 
 	public abstract TextBlock asBig(TextBlock label, HorizontalAlignment labelAlignment, TextBlock stereotype,
-			double width, double height, SymbolContext symbolContext);
+			double width, double height, SymbolContext symbolContext, HorizontalAlignment stereoAlignment);
 
 	static class Margin {
 		private final double x1;

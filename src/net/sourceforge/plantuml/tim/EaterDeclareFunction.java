@@ -41,6 +41,7 @@ public class EaterDeclareFunction extends Eater {
 
 	private TFunctionImpl function;
 	private final LineLocation location;
+	private boolean finalFlag;
 
 	public EaterDeclareFunction(StringLocated s) {
 		super(s.getStringTrimmed());
@@ -49,21 +50,39 @@ public class EaterDeclareFunction extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!");
-		final boolean unquoted;
-		if (peekChar() == 'u') {
-			checkAndEatChar("unquoted function");
-			unquoted = true;
-		} else {
-			checkAndEatChar("function");
-			unquoted = false;
+		boolean unquoted = false;
+		while (peekUnquoted() || peekFinal()) {
+			if (peekUnquoted()) {
+				checkAndEatChar("unquoted");
+				skipSpaces();
+				unquoted = true;
+			} else if (peekFinal()) {
+				checkAndEatChar("final");
+				skipSpaces();
+				finalFlag = true;
+			}
 		}
+		checkAndEatChar("function");
 		skipSpaces();
 		function = eatDeclareFunctionWithOptionalReturn(context, memory, unquoted, location);
 	}
 
+	private boolean peekUnquoted() {
+		return peekChar() == 'u';
+	}
+
+	private boolean peekFinal() {
+		return peekChar() == 'f' && peekCharN2() == 'i';
+	}
+
 	public TFunctionImpl getFunction() {
 		return function;
+	}
+
+	public final boolean getFinalFlag() {
+		return finalFlag;
 	}
 
 }

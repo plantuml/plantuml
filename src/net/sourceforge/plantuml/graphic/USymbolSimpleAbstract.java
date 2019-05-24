@@ -45,7 +45,7 @@ abstract class USymbolSimpleAbstract extends USymbol {
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
-			final SymbolContext symbolContext) {
+			final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
 		if (stereotype == null) {
 			throw new IllegalArgumentException();
 		}
@@ -83,7 +83,7 @@ abstract class USymbolSimpleAbstract extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext) {
+			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
 		throw new UnsupportedOperationException();
 	}
 

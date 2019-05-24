@@ -593,11 +593,20 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		for (Ftile couple : couples) {
 			result = Dimension2DDouble.mergeLR(result, couple.calculateDimension(stringBounder));
 		}
-		final FtileGeometry dimTile2 = tile2.calculateDimension(stringBounder);
+		Dimension2D dimTile2 = tile2.calculateDimension(stringBounder);
+		dimTile2 = Dimension2DDouble.delta(dimTile2, 0, getDiamondsHeight(stringBounder) / 2);
 		result = Dimension2DDouble.mergeLR(result, dimTile2);
 		result = Dimension2DDouble.delta(result, xSeparation * couples.size(), 100);
 
 		return new FtileGeometry(result, result.getWidth() / 2, 0);
+	}
+
+	private double getDiamondsHeight(StringBounder stringBounder) {
+		double height = 0;
+		for (Ftile diamond : diamonds) {
+			height = Math.max(height, diamond.calculateDimension(stringBounder).getHeight());
+		}
+		return height;
 	}
 
 	@Override

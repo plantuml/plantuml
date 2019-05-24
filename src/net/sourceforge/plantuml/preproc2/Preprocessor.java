@@ -72,12 +72,12 @@ public class Preprocessor implements ReadLineNumbered {
 			defines.saveState();
 		}
 		final ReadFilterAnd filtersV2 = new ReadFilterAnd();
-		filtersV2.add(new ReadLineQuoteComment());
-		filtersV2.add(new SubPreprocessor(charset, definitionsContainer));
+		filtersV2.add(new ReadLineQuoteComment(true));
+		filtersV2.add(new ReadLineAddConfig(config));
 		this.sourceV2 = filtersV2.applyFilter(reader);
 
 		final ReadFilterAnd filters = new ReadFilterAnd();
-		filters.add(new ReadLineQuoteComment());
+		filters.add(new ReadLineQuoteComment(false));
 		include = new PreprocessorInclude(config, charset, defines, definitionsContainer, importedFiles,
 				filesUsedGlobal);
 		filters.add(new ReadLineAddConfig(config));

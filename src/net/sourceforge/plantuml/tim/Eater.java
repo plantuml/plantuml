@@ -132,7 +132,7 @@ public abstract class Eater {
 		}
 	}
 
-	final protected String eatAntGetVarname() throws EaterException {
+	final protected String eatAndGetVarname() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
 		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false) {
 			throw new EaterException("a002");
@@ -141,7 +141,7 @@ public abstract class Eater {
 		return varname.toString();
 	}
 
-	final protected String eatAntGetFunctionName() throws EaterException {
+	final protected String eatAndGetFunctionName() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
 		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false) {
 			throw new EaterException("a003");
@@ -151,7 +151,7 @@ public abstract class Eater {
 	}
 
 	final public void skipSpaces() {
-		while (i < s.length() && Character.isSpaceChar(s.charAt(i))) {
+		while (i < s.length() && Character.isWhitespace(s.charAt(i))) {
 			i++;
 		}
 	}
@@ -191,6 +191,14 @@ public abstract class Eater {
 			throw new EaterException("a001");
 		}
 		i++;
+	}
+
+	final protected boolean safeCheckAndEatChar(char ch) throws EaterException {
+		if (i >= s.length() || s.charAt(i) != ch) {
+			return false;
+		}
+		i++;
+		return true;
 	}
 
 	final protected void optionallyEatChar(char ch) throws EaterException {
@@ -241,16 +249,21 @@ public abstract class Eater {
 	}
 
 	final protected TFunctionImpl eatDeclareFunction(TContext context, TMemory memory, boolean unquoted,
-			LineLocation location) throws EaterException {
+			LineLocation location, boolean allowNoParenthesis) throws EaterException {
 		final List<TFunctionArgument> args = new ArrayList<TFunctionArgument>();
-		final String functionName = eatAntGetFunctionName();
+		final String functionName = eatAndGetFunctionName();
 		skipSpaces();
-		checkAndEatChar('(');
+		if (safeCheckAndEatChar('(') == false) {
+			if (allowNoParenthesis) {
+				return new TFunctionImpl(functionName, args, unquoted);
+			}
+			throw new EaterException("Missing opening parenthesis");
+		}
 		while (true) {
 			skipSpaces();
 			char ch = peekChar();
 			if (TLineType.isLetterOrUnderscoreOrDollar(ch)) {
-				final String varname = eatAntGetVarname();
+				final String varname = eatAndGetVarname();
 				skipSpaces();
 				final TValue defValue;
 				if (peekChar() == '=') {
@@ -278,7 +291,7 @@ public abstract class Eater {
 
 	final protected TFunctionImpl eatDeclareFunctionWithOptionalReturn(TContext context, TMemory memory,
 			boolean unquoted, LineLocation location) throws EaterException {
-		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location);
+		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false);
 		if (peekChar() == 'r') {
 			checkAndEatChar("return");
 			skipSpaces();

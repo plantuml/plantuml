@@ -84,14 +84,14 @@ public class ClusterDecoration {
 	public final static int marginTitleY2 = 3;
 
 	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, boolean shadowing, double roundCorner,
-			HorizontalAlignment titleAlignment) {
+			HorizontalAlignment titleAlignment, HorizontalAlignment stereoAlignment) {
 		final SymbolContext biColor = new SymbolContext(backColor, borderColor);
 		if (symbol == null) {
 			throw new UnsupportedOperationException();
 		}
 		final SymbolContext symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke)
 				.withCorner(roundCorner, 0);
-		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext).drawU(
+		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext, stereoAlignment).drawU(
 				ug.apply(new UTranslate(minX, minY)));
 	}
 

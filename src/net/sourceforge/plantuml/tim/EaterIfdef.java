@@ -34,9 +34,12 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.preproc.EvalBoolean;
+import net.sourceforge.plantuml.preproc.Truth;
+
 public class EaterIfdef extends Eater {
 
-	private String varname;
+	private String expression;
 
 	public EaterIfdef(String s) {
 		super(s);
@@ -44,14 +47,22 @@ public class EaterIfdef extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!ifdef");
 		skipSpaces();
-		varname = eatAntGetVarname();
+		expression = eatAllToEnd();
 	}
 
-	public boolean isTrue(TContext context, TMemory memory) {
-		final TVariable currentValue = memory.getVariable(varname);
-		return currentValue != null || context.doesFunctionExist(varname);
+	public boolean isTrue(final TContext context, final TMemory memory) {
+		final EvalBoolean eval = new EvalBoolean(expression, new Truth() {
+
+			public boolean isTrue(String varname) {
+				final TVariable currentValue = memory.getVariable(varname);
+				return currentValue != null || context.doesFunctionExist(varname);
+			}
+		});
+
+		return eval.eval();
 	}
 
 }

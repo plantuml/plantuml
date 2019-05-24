@@ -34,11 +34,9 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 
@@ -46,26 +44,45 @@ public class TimLoader {
 
 	private final TContext context;
 	private final TMemory global = new TMemoryGlobal();
+	private boolean preprocessorError;
+	private List<StringLocated> result;
 
-	public TimLoader(ImportedFiles importedFiles, Defines defines) {
-		this.context = new TContext(importedFiles, defines);
+	public TimLoader(ImportedFiles importedFiles, Defines defines, String charset) {
+		this.context = new TContext(importedFiles, defines, charset);
 	}
 
-	public List<StringLocated> load(List<StringLocated> input) {
-		for (StringLocated s : input) {
-			if (s.getPreprocessorError() != null) {
-				return new ArrayList<StringLocated>(input);
-			}
-		}
-
+	public void load(List<StringLocated> input) {
 		for (StringLocated s : input) {
 			final TLineType type = TLineType.getFromLine(s.getStringTrimmed());
-			final CommandExecutionResult exe = context.executeOneLine(global, type, s, null);
-			if (exe.isOk() == false) {
-				return context.getResultWithError(s.withErrorPreprocessor(exe.getError()));
+			try {
+				context.executeOneLine(global, type, s, null);
+			} catch (EaterException e) {
+				context.getResult().add(s.withErrorPreprocessor(e.getMessage()));
+				this.result = context.getResult();
+				changeLastLine(context.getDebug(), e.getMessage());
+				this.preprocessorError = true;
+				return;
 			}
 		}
-		return context.getResult();
+		this.result = context.getResult();
+	}
+
+	private void changeLastLine(List<StringLocated> list, String message) {
+		final int num = list.size() - 1;
+		final StringLocated last = list.get(num);
+		list.set(num, last.withErrorPreprocessor(message));
+	}
+
+	public final List<StringLocated> getResult() {
+		return result;
+	}
+
+	public final List<StringLocated> getDebug() {
+		return context.getDebug();
+	}
+
+	public final boolean isPreprocessorError() {
+		return preprocessorError;
 	}
 
 }

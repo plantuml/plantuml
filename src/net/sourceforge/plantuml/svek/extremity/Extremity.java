@@ -44,25 +44,25 @@ public abstract class Extremity implements UDrawable {
 
 	protected double manageround(double angle) {
 		final double deg = angle * 180.0 / Math.PI;
-		if (isCloseToo(0, deg)) {
+		if (isCloseTo(0, deg)) {
 			return 0;
 		}
-		if (isCloseToo(90, deg)) {
+		if (isCloseTo(90, deg)) {
 			return 90.0 * Math.PI / 180.0;
 		}
-		if (isCloseToo(180, deg)) {
+		if (isCloseTo(180, deg)) {
 			return 180.0 * Math.PI / 180.0;
 		}
-		if (isCloseToo(270, deg)) {
+		if (isCloseTo(270, deg)) {
 			return 270.0 * Math.PI / 180.0;
 		}
-		if (isCloseToo(360, deg)) {
+		if (isCloseTo(360, deg)) {
 			return 0;
 		}
 		return angle;
 	}
 
-	private boolean isCloseToo(double value, double variable) {
+	private boolean isCloseTo(double value, double variable) {
 		if (Math.abs(value - variable) < 0.05) {
 			return true;
 		}
@@ -70,5 +70,9 @@ public abstract class Extremity implements UDrawable {
 	}
 	
 	public abstract Point2D somePoint();
+	
+	public Point2D isTooSmallSoGiveThePointCloserToThisOne(Point2D pt) {
+		return null;
+	}
 
 }

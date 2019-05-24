@@ -34,9 +34,12 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
+
 public class EaterInclude extends Eater {
 
 	private String location;
+	private PreprocessorIncludeStrategy strategy = PreprocessorIncludeStrategy.DEFAULT;
 
 	public EaterInclude(String s) {
 		super(s);
@@ -44,9 +47,21 @@ public class EaterInclude extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!include");
-		if (peekChar() == 'u') {
+		final char peekChar = peekChar();
+		if (peekChar == 'u') {
 			checkAndEatChar("url");
+		} else if (peekChar == '_') {
+			checkAndEatChar("_");
+			final char peekChar2 = peekChar();
+			if (peekChar2 == 'm') {
+				checkAndEatChar("many");
+				this.strategy = PreprocessorIncludeStrategy.MANY;
+			} else {
+				checkAndEatChar("once");
+				this.strategy = PreprocessorIncludeStrategy.ONCE;
+			}
 		}
 		skipSpaces();
 		this.location = context.applyFunctionsAndVariables(memory, this.eatAllToEnd());
@@ -55,6 +70,10 @@ public class EaterInclude extends Eater {
 
 	public final String getLocation() {
 		return location;
+	}
+
+	public final PreprocessorIncludeStrategy getPreprocessorIncludeStrategy() {
+		return strategy;
 	}
 
 }

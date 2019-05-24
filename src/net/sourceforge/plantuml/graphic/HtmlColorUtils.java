@@ -48,6 +48,7 @@ public class HtmlColorUtils {
 	public static final HtmlColor LIGHT_GRAY;
 	public static final HtmlColor MY_YELLOW;
 	public static final HtmlColor MY_RED;
+	public static final HtmlColor MY_GREEN;
 
 	public static final HtmlColor COL_C82930;
 	public static final HtmlColor COL_F24D5C;
@@ -86,6 +87,7 @@ public class HtmlColorUtils {
 		LIGHT_GRAY = set.getColorIfValid("#C0C0C0");
 		MY_YELLOW = set.getColorIfValid("#FEFECE");
 		MY_RED = set.getColorIfValid("#A80036");
+		MY_GREEN = set.getColorIfValid("#33FF02");
 
 		COL_C82930 = set.getColorIfValid("#C82930");
 		COL_F24D5C = set.getColorIfValid("#F24D5C");

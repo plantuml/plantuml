@@ -38,11 +38,11 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
-import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
@@ -80,7 +80,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 			first = false;
 			if (StartUtils.isArobaseEndDiagram(s.getString())) {
 				if (source.getTotalLineCount() == 2 && source.isStartDef() == false) {
-					return buildEmptyError(source, s.getLocation());
+					return buildEmptyError(source, s.getLocation(), it.getTrace());
 				}
 				if (system != null) {
 					system.setSource(source);
@@ -90,7 +90,8 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 			system = executeLine(system, s.getString());
 			if (system == null) {
 				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", s.getLocation());
-				return new PSystemError(source, err, null);
+				// return PSystemErrorUtils.buildV1(source, err, null);
+				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 			}
 		}
 		if (system != null) {

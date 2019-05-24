@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,32 +31,35 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.suggest;
+package net.sourceforge.plantuml.tim.stdlib;
 
-public class VariatorSwapChar extends VariatorIteratorAdaptor {
+import java.util.List;
 
-	private final String data;
-	private int i;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	public VariatorSwapChar(String data) {
-		this.data = data;
+public class IntVal extends SimpleReturnFunction {
+
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%intval", 1);
 	}
 
-	@Override
-	Variator getVariator() {
-		return new Variator() {
-			public String getData() {
-				if (i >= data.length() - 1) {
-					return null;
-				}
-				return data.substring(0, i) + data.charAt(i + 1) + data.charAt(i) + data.substring(i + 2);
-			}
+	public boolean canCover(int nbArg) {
+		return nbArg == 1;
+	}
 
-			public void nextStep() {
-				i++;
-			}
-		};
+	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+		final String s = args.get(0).toString();
+		try {
+			return TValue.fromInt(Integer.parseInt(s));
+		} catch (Exception e) {
+			Log.error("Cannot convert " + s);
+		}
+		return TValue.fromInt(0);
 	}
 }

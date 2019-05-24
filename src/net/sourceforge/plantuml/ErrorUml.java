@@ -35,14 +35,11 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.suggest.SuggestEngineResult;
-import net.sourceforge.plantuml.suggest.SuggestEngineStatus;
 
 public class ErrorUml {
 
 	private final String error;
 	private final ErrorUmlType type;
-	private SuggestEngineResult suggest;
 	private final LineLocation lineLocation;
 
 	public ErrorUml(ErrorUmlType type, String error, LineLocation lineLocation) {
@@ -62,12 +59,12 @@ public class ErrorUml {
 
 	@Override
 	public int hashCode() {
-		return error.hashCode() + type.hashCode() + getPosition() + (suggest == null ? 0 : suggest.hashCode());
+		return error.hashCode() + type.hashCode() + getPosition();
 	}
 
 	@Override
 	public String toString() {
-		return type.toString() + " " + getPosition() + " " + error + " " + suggest;
+		return type.toString() + " " + getPosition() + " " + error;
 	}
 
 	public final String getError() {
@@ -84,18 +81,6 @@ public class ErrorUml {
 
 	public final LineLocation getLineLocation() {
 		return lineLocation;
-	}
-
-	public final SuggestEngineResult getSuggest() {
-		return suggest;
-	}
-
-	public final boolean hasSuggest() {
-		return suggest != null && suggest.getStatus() == SuggestEngineStatus.ONE_SUGGESTION;
-	}
-
-	public void setSuggest(SuggestEngineResult suggest) {
-		this.suggest = suggest;
 	}
 
 }

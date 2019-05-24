@@ -37,7 +37,12 @@ package net.sourceforge.plantuml.tim;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
+
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class TMemoryGlobal extends ConditionalContexts implements TMemory {
 
@@ -48,9 +53,33 @@ public class TMemoryGlobal extends ConditionalContexts implements TMemory {
 		return this.globalVariables.get(varname);
 	}
 
-	public void put(String varname, TVariable value) {
+	public void dumpDebug(String message) {
+		Log.error("[MemGlobal] Start of memory_dump " + message);
+		dumpMemoryInternal();
+		Log.error("[MemGlobal] End of memory_dump");
+	}
+
+	void dumpMemoryInternal() {
+		Log.error("[MemGlobal] Number of variable(s) : " + globalVariables.size());
+		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(globalVariables).entrySet()) {
+			final String name = ent.getKey();
+			final TValue value = ent.getValue().getValue2();
+			Log.error("[MemGlobal] " + name + " = " + value);
+		}
+	}
+
+	public void putVariable(String varname, TVariable value, TVariableScope scope) throws EaterException {
+		Log.info("[MemGlobal] Setting " + varname);
+		if (scope == TVariableScope.LOCAL) {
+			throw new EaterException("Cannot use local variable here");
+		}
 		this.globalVariables.put(varname, value);
 		this.variables.add(varname);
+	}
+
+	public void removeVariable(String varname) {
+		this.globalVariables.remove(varname);
+		this.variables.remove(varname);
 	}
 
 	public boolean isEmpty() {
@@ -65,8 +94,8 @@ public class TMemoryGlobal extends ConditionalContexts implements TMemory {
 		return variables;
 	}
 
-	public TMemory forkFromGlobal() {
-		return new TMemoryLocal(this);
+	public TMemory forkFromGlobal(Map<String, TVariable> input) {
+		return new TMemoryLocal(this, input);
 	}
 
 }

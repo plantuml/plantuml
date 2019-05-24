@@ -35,18 +35,21 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
-import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -54,10 +57,12 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 
 	protected final Ftile diamond1;
 	protected final Ftile diamond2;
+	protected final List<Branch> branches;
 
-	public FtileSwitchWithDiamonds(List<Ftile> tiles, Swimlane in, Ftile diamond1, Ftile diamond2,
-			StringBounder stringBounder) {
+	public FtileSwitchWithDiamonds(List<Ftile> tiles, List<Branch> branches, Swimlane in, Ftile diamond1,
+			Ftile diamond2, StringBounder stringBounder) {
 		super(tiles, in);
+		this.branches = branches;
 		this.diamond1 = diamond1;
 		this.diamond2 = diamond2;
 	}
@@ -96,11 +101,11 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);
-		super.drawU(ug.apply(getUTranslateMain(stringBounder)));
+		super.drawU(ug.apply(getTranslateMain(stringBounder)));
 		ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);
 	}
 
-	private UChange getUTranslateMain(StringBounder stringBounder) {
+	protected UTranslate getTranslateMain(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		return new UTranslate(0, dimDiamond1.getHeight() + getYdelta1a(stringBounder));
 	}
@@ -120,5 +125,16 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		final double x2 = dimTotal.getLeft() - dimDiamond2.getWidth() / 2;
 		return new UTranslate(x2, y2);
 	}
+
+	protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
+		return getTranslateNude(tile, stringBounder).compose(getTranslateMain(stringBounder));
+	}
+	
+	protected TextBlock getLabelPositive(Branch branch) {
+		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		return branch.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
+	}
+
+
 
 }

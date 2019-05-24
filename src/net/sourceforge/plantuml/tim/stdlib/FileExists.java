@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class FileExists implements TFunction {
+public class FileExists extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
 		return new TFunctionSignature("%file_exists", 1);
@@ -54,14 +54,6 @@ public class FileExists implements TFunction {
 
 	public boolean canCover(int nbArg) {
 		return nbArg == 1;
-	}
-
-	public TFunctionType getFunctionType() {
-		return TFunctionType.RETURN;
-	}
-
-	public void executeVoid(TContext context, String s, TMemory memory) throws EaterException {
-		throw new UnsupportedOperationException();
 	}
 
 	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
@@ -76,9 +68,4 @@ public class FileExists implements TFunction {
 		final File f = new File(path);
 		return f.exists();
 	}
-
-	public boolean isUnquoted() {
-		return false;
-	}
-
 }

@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -277,11 +278,16 @@ public class ImageBuilder {
 	}
 
 	public Dimension2D getFinalDimension(StringBounder stringBounder) {
-		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
-		udrawable.drawU(limitFinder);
-		Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2 + externalMargin(),
-				limitFinder.getMaxY() + 1 + margin1 + margin2 + externalMargin());
-		return dim;
+		final Dimension2D dim;
+//		if (udrawable instanceof TextBlock) {
+//			dim = ((TextBlock) udrawable).calculateDimension(stringBounder);
+//		} else {
+			final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
+			udrawable.drawU(limitFinder);
+			dim = new Dimension2DDouble(limitFinder.getMaxX(), limitFinder.getMaxY());
+//		}
+		return new Dimension2DDouble(dim.getWidth() + 1 + margin1 + margin2 + externalMargin(), dim.getHeight() + 1
+				+ margin1 + margin2 + externalMargin());
 	}
 
 	private UGraphic handwritten(UGraphic ug) {

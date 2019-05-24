@@ -44,6 +44,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
 
 public class Pipe {

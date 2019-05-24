@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -118,8 +119,8 @@ class FtileWhile extends AbstractFtile {
 			ConditionStyle conditionStyle, FontConfiguration fcTest, Instruction specialOut) {
 
 		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
-		final TextBlock testTb = test.create(fcTest,
-				whileBlock.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), ftileFactory.skinParam());
+		final TextBlock testTb = test.isWhite() ? TextBlockUtils.empty(0, 0) : test.create(fcTest, whileBlock
+				.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), ftileFactory.skinParam());
 		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
 		final Ftile diamond1;

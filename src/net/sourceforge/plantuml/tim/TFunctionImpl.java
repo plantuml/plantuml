@@ -35,10 +35,11 @@
 package net.sourceforge.plantuml.tim;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class TFunctionImpl implements TFunction {
@@ -80,30 +81,31 @@ public class TFunctionImpl implements TFunction {
 		}
 	}
 
-	public void executeVoid(TContext context, String s, TMemory memory) throws EaterException {
-		if (functionType != TFunctionType.VOID && functionType != TFunctionType.LEGACY_DEFINELONG) {
-			throw new IllegalStateException();
-		}
+	public void executeVoid(TContext context, TMemory memory, String s) throws EaterException {
 		final EaterFunctionCall call = new EaterFunctionCall(s, context.isLegacyDefine(signature.getFunctionName()),
 				unquoted);
 		call.execute(context, memory);
-		final TMemory copy = getNewMemory(memory, call.getValues2());
-		for (StringLocated sl : body) {
-			final CommandExecutionResult exe = context.executeOneLine(copy, TLineType.getFromLine(sl.getString()), sl,
-					TFunctionType.VOID);
-			if (exe.isOk() == false) {
-				throw new EaterException(exe.getError());
-			}
-		}
+		final List<TValue> args = call.getValues();
+		executeVoidInternal(context, memory, args);
+	}
 
+	public void executeVoidInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+		if (functionType != TFunctionType.VOID && functionType != TFunctionType.LEGACY_DEFINELONG) {
+			throw new IllegalStateException();
+		}
+		final TMemory copy = getNewMemory(memory, args);
+		for (StringLocated sl : body) {
+			context.executeOneLine(copy, TLineType.getFromLine(sl.getString()), sl, TFunctionType.VOID);
+		}
 	}
 
 	private TMemory getNewMemory(TMemory memory, List<TValue> values) {
-		final TMemory copy = memory.forkFromGlobal();
+		final Map<String, TVariable> foo = new HashMap<String, TVariable>();
 		for (int i = 0; i < args.size(); i++) {
 			final TValue tmp = i < values.size() ? values.get(i) : args.get(i).getOptionalDefaultValue();
-			copy.put(args.get(i).getName(), new TVariable(tmp));
+			foo.put(args.get(i).getName(), new TVariable(tmp));
 		}
+		final TMemory copy = memory.forkFromGlobal(foo);
 		return copy;
 	}
 
@@ -126,10 +128,7 @@ public class TFunctionImpl implements TFunction {
 				// System.err.println("s3=" + eaterReturn.getValue2());
 				return eaterReturn.getValue2();
 			}
-			final CommandExecutionResult exe = context.executeOneLine(copy, lineType, sl, TFunctionType.RETURN);
-			if (exe.isOk() == false) {
-				throw new EaterException(exe.getError());
-			}
+			context.executeOneLine(copy, lineType, sl, TFunctionType.RETURN);
 		}
 		throw new EaterException("no return");
 		// return TValue.fromString("(NONE)");
@@ -141,6 +140,9 @@ public class TFunctionImpl implements TFunction {
 		}
 		final TMemory copy = getNewMemory(memory, args);
 		final String tmp = context.applyFunctionsAndVariables(copy, legacyDefinition);
+		if (tmp == null) {
+			return TValue.fromString("");
+		}
 		return TValue.fromString(tmp);
 		// eaterReturn.execute(context, copy);
 		// // System.err.println("s3=" + eaterReturn.getValue2());
@@ -169,6 +171,16 @@ public class TFunctionImpl implements TFunction {
 
 	public boolean hasBody() {
 		return body.size() > 0;
+	}
+
+	public void finalizeEnddefinelong() {
+		if (functionType != TFunctionType.LEGACY_DEFINELONG) {
+			throw new UnsupportedOperationException();
+		}
+		if (body.size() == 1) {
+			this.functionType = TFunctionType.LEGACY_DEFINE;
+			this.legacyDefinition = body.get(0).getString();
+		}
 	}
 
 }

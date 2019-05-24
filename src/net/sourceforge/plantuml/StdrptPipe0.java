@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
 
 public class StdrptPipe0 implements Stdrpt {
 
@@ -45,7 +46,7 @@ public class StdrptPipe0 implements Stdrpt {
 		if (sys instanceof PSystemError) {
 			final PSystemError err = (PSystemError) sys;
 			output.println("ERROR");
-			output.println(err.getHigherErrorPosition2().getPosition());
+			output.println(err.getLineLocation().getPosition());
 			for (ErrorUml er : err.getErrorsUml()) {
 				output.println(er.getError());
 			}

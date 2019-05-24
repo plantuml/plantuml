@@ -48,6 +48,44 @@ public class FtileGeometry extends Dimension2D {
 	private final double inY;
 	private final double outY;
 
+	public Point2D getPointA() {
+		return new Point2D.Double(left, inY);
+	}
+
+	public Point2D getPointIn() {
+		return new Point2D.Double(left, inY);
+	}
+
+	public Point2D getPointB() {
+		if (outY == Double.MIN_NORMAL) {
+			throw new UnsupportedOperationException();
+		}
+		return new Point2D.Double(width, (inY + outY) / 2);
+	}
+
+	public Point2D getPointC() {
+		if (outY == Double.MIN_NORMAL) {
+			throw new UnsupportedOperationException();
+		}
+		return new Point2D.Double(left, outY);
+	}
+
+	public Point2D getPointD() {
+		if (outY == Double.MIN_NORMAL) {
+			throw new UnsupportedOperationException();
+		}
+		return new Point2D.Double(0, (inY + outY) / 2);
+	}
+	
+	public Point2D getPointOut() {
+		if (outY == Double.MIN_NORMAL) {
+			throw new UnsupportedOperationException();
+		}
+		return new Point2D.Double(left, outY);
+	}
+
+
+
 	public FtileGeometry(Dimension2D dim, double left, double inY) {
 		this(dim.getWidth(), dim.getHeight(), left, inY);
 	}
@@ -84,17 +122,6 @@ public class FtileGeometry extends Dimension2D {
 
 	public boolean hasPointOut() {
 		return outY != Double.MIN_NORMAL;
-	}
-
-	public Point2D getPointIn() {
-		return new Point2D.Double(left, inY);
-	}
-
-	public Point2D getPointOut() {
-		if (outY == Double.MIN_NORMAL) {
-			throw new UnsupportedOperationException();
-		}
-		return new Point2D.Double(left, outY);
 	}
 
 	public FtileGeometry withoutPointOut() {

@@ -245,6 +245,9 @@ public class Stereotype implements CharSequence {
 		if (isWithOOSymbol()) {
 			return null;
 		}
+		if (spriteName != null && spriteName.startsWith("archimate/")) {
+			return guillemet.manageGuillemet("<<" + spriteName.substring("archimate/".length()) + ">>");
+		}
 		return guillemet.manageGuillemet(label);
 	}
 

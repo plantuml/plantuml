@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class Strpos implements TFunction {
+public class Strpos extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
 		return new TFunctionSignature("%strpos", 2);
@@ -54,22 +54,9 @@ public class Strpos implements TFunction {
 		return nbArg == 2;
 	}
 
-	public TFunctionType getFunctionType() {
-		return TFunctionType.RETURN;
-	}
-
-	public void executeVoid(TContext context, String s, TMemory memory) throws EaterException {
-		throw new UnsupportedOperationException();
-	}
-
 	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
 		final String full = args.get(0).toString();
 		final String searched = args.get(1).toString();
 		return TValue.fromInt(full.indexOf(searched));
 	}
-
-	public boolean isUnquoted() {
-		return false;
-	}
-
 }

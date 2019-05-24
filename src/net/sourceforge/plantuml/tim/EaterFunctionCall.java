@@ -65,7 +65,11 @@ public class EaterFunctionCall extends Eater {
 		while (true) {
 			skipSpaces();
 			if (isLegacyDefine || unquoted) {
-				final TValue result = TValue.fromString(eatAndGetOptionalQuotedString());
+				final String tmp = eatAndGetOptionalQuotedString();
+				final String tmp2 = context.applyFunctionsAndVariables(memory, tmp);
+				// final TVariable var = memory.getVariable(tmp);
+				// final TValue result = var == null ? TValue.fromString(tmp) : var.getValue2();
+				final TValue result = TValue.fromString(tmp2);
 				values.add(result);
 			} else {
 				final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
@@ -85,24 +89,7 @@ public class EaterFunctionCall extends Eater {
 		}
 	}
 
-	private void executeLegacyDefine(TContext context, TMemory memory) throws EaterException {
-		while (true) {
-			skipSpaces();
-			final TValue result = TValue.fromString(eatAndGetOptionalQuotedString());
-			values.add(result);
-			skipSpaces();
-			final char ch = eatOneChar();
-			if (ch == ',') {
-				continue;
-			}
-			if (ch == ')') {
-				break;
-			}
-			throw new EaterException("call001");
-		}
-	}
-
-	public final List<TValue> getValues2() {
+	public final List<TValue> getValues() {
 		return Collections.unmodifiableList(values);
 	}
 

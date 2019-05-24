@@ -75,7 +75,7 @@ class USymbolComponent1 extends USymbol {
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
-			final SymbolContext symbolContext) {
+			final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -100,7 +100,7 @@ class USymbolComponent1 extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext) {
+			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -51,7 +51,24 @@ class SingleLine extends AbstractTextBlock implements Line {
 	private final List<TextBlock> blocs = new ArrayList<TextBlock>();
 	private final HorizontalAlignment horizontalAlignment;
 
-	public SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+	public static SingleLine withSomeHtmlTag(String text, FontConfiguration fontConfiguration,
+			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
+		return new SingleLine(text, fontConfiguration, horizontalAlignment, spriteContainer);
+	}
+
+	public static SingleLine rawText(String text, FontConfiguration fontConfiguration) {
+		return new SingleLine(text, fontConfiguration);
+	}
+
+	private SingleLine(String text, FontConfiguration fontConfiguration) {
+		if (text.length() == 0) {
+			text = " ";
+		}
+		this.horizontalAlignment = HorizontalAlignment.LEFT;
+		this.blocs.add(new TileText(text, fontConfiguration, null));
+	}
+
+	private SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			SpriteContainer spriteContainer) {
 		if (text.length() == 0) {
 			text = " ";
@@ -139,4 +156,5 @@ class SingleLine extends AbstractTextBlock implements Line {
 	public HorizontalAlignment getHorizontalAlignment() {
 		return horizontalAlignment;
 	}
+
 }

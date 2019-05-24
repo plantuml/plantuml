@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class Strlen implements TFunction {
+public class Strlen extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
 		return new TFunctionSignature("%strlen", 1);
@@ -54,20 +54,7 @@ public class Strlen implements TFunction {
 		return nbArg == 1;
 	}
 
-	public TFunctionType getFunctionType() {
-		return TFunctionType.RETURN;
-	}
-
-	public void executeVoid(TContext context, String s, TMemory memory) throws EaterException {
-		throw new UnsupportedOperationException();
-	}
-
 	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
 		return TValue.fromInt(args.get(0).toString().length());
 	}
-
-	public boolean isUnquoted() {
-		return false;
-	}
-
 }

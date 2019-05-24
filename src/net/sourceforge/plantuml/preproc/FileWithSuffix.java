@@ -193,5 +193,9 @@ public class FileWithSuffix {
 	public final String getSuffix() {
 		return suffix;
 	}
+	
+	public String toStringDebug() {
+		return file.getAbsolutePath();
+	}
 
 }

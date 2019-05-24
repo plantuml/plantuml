@@ -155,15 +155,6 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	public Swimlane getSwimlaneIn() {
 		return defaultSwimlane;
-		// final Set<Swimlane> swimlanes = getSwimlanes();
-		// if (swimlanes.size() == 0) {
-		// return null;
-		// }
-		// if (swimlanes.size() == 1) {
-		// return swimlanes.iterator().next();
-		// }
-		// System.err.println("foo1="+getClass());
-		// return all.get(0).getSwimlaneIn();
 	}
 
 	public Swimlane getSwimlaneOut() {

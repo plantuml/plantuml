@@ -63,6 +63,8 @@ import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
 import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
 import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.help.HelpFactory;
@@ -100,15 +102,15 @@ public class PSystemBuilder {
 			final DiagramType type = DiagramType.getTypeFromArobaseStart(strings2.get(0).getString());
 			final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML);
 
-			// int cpt = 0;
 			for (StringLocated s : strings2) {
 				if (s.getPreprocessorError() != null) {
+					// Dead code : should not append
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
 					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), /* cpt */
 					s.getLocation());
-					return new PSystemError(umlSource, err, Collections.<String> emptyList());
+					// return PSystemErrorUtils.buildV1(umlSource, err, Collections.<String> emptyList());
+					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String> emptyList(), strings2);
 				}
-				// cpt++;
 			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();
@@ -126,7 +128,7 @@ public class PSystemBuilder {
 				errors.add((PSystemError) sys);
 			}
 
-			final PSystemError err = PSystemError.merge(errors);
+			final PSystemError err = PSystemErrorUtils.merge(errors);
 			result = err;
 			return err;
 		} finally {

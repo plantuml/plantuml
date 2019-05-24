@@ -57,18 +57,20 @@ import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
 
-	private PreprocessorMode mode = PreprocessorMode.V1_LEGACY;
+	private PreprocessorMode mode = PreprocessorMode.V2_NEW_TIM;
 
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
 	private Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
 	private final UncommentReadLine reader2;
 	private final Defines defines;
 	private final ImportedFiles importedFiles;
+	private final String charset;
 
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir,
 			String desc) throws IOException {
 		ReadLineNumbered includer = null;
 		this.defines = defines;
+		this.charset = charset;
 		try {
 			this.reader2 = new UncommentReadLine(new PreprocessorChangeModeReader(ReadLineReader.create(reader, desc),
 					this));
@@ -157,6 +159,10 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 	public final ImportedFiles getImportedFiles() {
 		return importedFiles;
+	}
+
+	public final String getCharset() {
+		return charset;
 	}
 
 }

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -91,12 +90,12 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
 		if (tiles.contains(child)) {
-			return getTranslate1(child, stringBounder);
+			return getTranslateNude(child, stringBounder);
 		}
 		throw new UnsupportedOperationException();
 	}
 
-	private UTranslate getTranslate1(Ftile tile, StringBounder stringBounder) {
+	protected UTranslate getTranslateNude(Ftile tile, StringBounder stringBounder) {
 		double x1 = 0;
 		for (Ftile candidate : tiles) {
 			final FtileGeometry dim1 = candidate.calculateDimension(stringBounder);
@@ -111,7 +110,7 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		for (Ftile tile : tiles) {
-			ug.apply(getTranslate1(tile, stringBounder)).draw(tile);
+			ug.apply(getTranslateNude(tile, stringBounder)).draw(tile);
 		}
 	}
 

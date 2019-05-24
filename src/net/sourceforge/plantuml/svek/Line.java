@@ -88,6 +88,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
+import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -95,7 +96,6 @@ import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -524,12 +524,8 @@ public class Line implements Moveable, Hideable {
 				};
 			}
 		} else if (decor != LinkDecor.NONE) {
-			final UShape sh = new UPolygon(pointListIterator.next());
-			return new UDrawable() {
-				public void drawU(UGraphic ug) {
-					ug.draw(sh);
-				}
-			};
+			final UPolygon sh = new UPolygon(pointListIterator.next());
+			return new ExtremityOther(sh);
 		}
 		return null;
 
@@ -708,6 +704,21 @@ public class Line implements Moveable, Hideable {
 				todraw.moveEndPoint(0, deltaFolderH);
 				// moveEndY = deltaFolderH;
 			}
+		}
+
+		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
+			// http://forum.plantuml.net/9421/arrow-inversion-with-skinparam-linetype-ortho-missing-arrow
+			final Point2D p1 = ((Extremity) extremity1).isTooSmallSoGiveThePointCloserToThisOne(todraw
+					.getStartPoint());
+			if (p1 != null) {
+				todraw.forceStartPoint(p1.getX(), p1.getY());
+			}
+			final Point2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw
+					.getEndPoint());
+			if (p2 != null) {
+				todraw.forceEndPoint(p2.getX(), p2.getY());
+			}
+
 		}
 
 		final String comment = link.getEntity1().getCode().getFullName() + "-"

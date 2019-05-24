@@ -34,16 +34,28 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
+
 public class EaterException extends Exception {
 
 	private final String message;
+	private final StringLocated location;
+
+	public EaterException(String message, StringLocated location) {
+		this.message = message;
+		this.location = location;
+	}
 
 	public EaterException(String message) {
-		this.message = message;
+		this(message, null);
 	}
 
 	public final String getMessage() {
 		return message;
+	}
+
+	public final StringLocated getLocation() {
+		return location;
 	}
 
 }

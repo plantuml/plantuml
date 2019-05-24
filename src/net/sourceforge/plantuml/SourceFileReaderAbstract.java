@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public abstract class SourceFileReaderAbstract {

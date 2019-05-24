@@ -262,7 +262,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public void split() {
-		final InstructionSplit instructionSplit = new InstructionSplit(current(), nextLinkRenderer());
+		final InstructionSplit instructionSplit = new InstructionSplit(current(), nextLinkRenderer(), swinlanes.getCurrentSwimlane());
 		setNextLinkRendererInternal(LinkRendering.none());
 		current().add(instructionSplit);
 		setCurrent(instructionSplit);
@@ -279,7 +279,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public CommandExecutionResult endSplit() {
 		if (current() instanceof InstructionSplit) {
-			((InstructionSplit) current()).endSplit(nextLinkRenderer());
+			((InstructionSplit) current()).endSplit(nextLinkRenderer(), swinlanes.getCurrentSwimlane());
 			setNextLinkRendererInternal(LinkRendering.none());
 			setCurrent(((InstructionSplit) current()).getParent());
 			return CommandExecutionResult.ok();

@@ -116,7 +116,7 @@ public class EvalBoolean {
 	}
 
 	private boolean isIdentifier() {
-		return ch == '_' || Character.isLetterOrDigit(ch);
+		return ch == '_' || ch == '$' || Character.isLetterOrDigit(ch);
 	}
 
 	public boolean eval() {

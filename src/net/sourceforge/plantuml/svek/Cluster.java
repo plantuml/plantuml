@@ -354,8 +354,9 @@ public class Cluster implements Moveable {
 				}
 			}
 
-			final boolean shadowing = group.getUSymbol() == null ? skinParam2.shadowing2(group.getStereotype(), USymbol.PACKAGE.getSkinParameter())
-					: skinParam2.shadowing2(group.getStereotype(), group.getUSymbol().getSkinParameter());
+			final boolean shadowing = group.getUSymbol() == null ? skinParam2.shadowing2(group.getStereotype(),
+					USymbol.PACKAGE.getSkinParameter()) : skinParam2.shadowing2(group.getStereotype(), group
+					.getUSymbol().getSkinParameter());
 			if (ztitle != null || zstereo != null) {
 				final HtmlColor back = getBackColor(getBackColor(umlDiagramType), skinParam2, group.getStereotype());
 				final double roundCorner = group.getUSymbol() == null ? 0 : group.getUSymbol().getSkinParameter()
@@ -365,7 +366,8 @@ public class Cluster implements Moveable {
 				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
 						minX, minY, maxX, maxY, stroke2);
 				decoration.drawU(ug, back, borderColor, shadowing, roundCorner,
-						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false));
+						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
+						skinParam2.getStereotypeAlignment());
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);

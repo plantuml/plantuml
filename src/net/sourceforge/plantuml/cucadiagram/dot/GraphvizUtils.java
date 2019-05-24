@@ -132,32 +132,30 @@ public class GraphvizUtils {
 		if (local != null) {
 			return local;
 		}
-		final String env = System.getProperty("PLANTUML_LIMIT_SIZE");
+		final String env = getenv("PLANTUML_LIMIT_SIZE");
 		if (StringUtils.isNotEmpty(env) && env.matches("\\d+")) {
 			return Integer.parseInt(env);
-		}
-		final String getenv = System.getenv("PLANTUML_LIMIT_SIZE");
-		if (StringUtils.isNotEmpty(getenv) && getenv.matches("\\d+")) {
-			return Integer.parseInt(getenv);
 		}
 		return 4096;
 	}
 
 	public static String getenvDefaultConfigFilename() {
-		final String env = System.getProperty("PLANTUML_DEFAULT_CONFIG_FILENAME");
-		if (StringUtils.isNotEmpty(env)) {
-			return env;
-		}
-		return System.getenv("PLANTUML_DEFAULT_CONFIG_FILENAME");
+		return getenv("PLANTUML_DEFAULT_CONFIG_FILENAME");
 	}
 
 	public static String getenvLogData() {
-		final String env = System.getProperty("PLANTUML_LOGDATA");
+		return getenv("PLANTUML_LOGDATA");
+	}
+	
+	public static String getenv(String name) {
+		final String env = System.getProperty(name);
 		if (StringUtils.isNotEmpty(env)) {
 			return env;
 		}
-		return System.getenv("PLANTUML_LOGDATA");
+		return System.getenv(name);
 	}
+
+
 
 	private static String dotVersion = null;
 

@@ -222,6 +222,10 @@ public class FontConfiguration {
 		return add(FontStyle.UNDERLINE);
 	}
 
+	public FontConfiguration wave(HtmlColor color) {
+		return add(FontStyle.WAVE).changeExtendedColor(color);
+	}
+
 	public FontConfiguration hyperlink() {
 		if (useUnderlineForHyperlink) {
 			return add(FontStyle.UNDERLINE).withHyperlink();

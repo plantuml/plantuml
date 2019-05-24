@@ -44,14 +44,21 @@ public class EaterAffectation extends Eater {
 
 	@Override
 	public void execute(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
 		checkAndEatChar("!");
 		skipSpaces();
-		final String varname = eatAntGetVarname();
+		String varname = eatAndGetVarname();
+		TVariableScope scope = null;
 		skipSpaces();
+		if (peekChar() != '=') {
+			scope = TVariableScope.valueOf(varname.toUpperCase());
+			varname = eatAndGetVarname();
+			skipSpaces();
+		}
 		checkAndEatChar('=');
 		skipSpaces();
 		final TValue value = eatExpression(context, memory);
-		memory.put(varname, new TVariable(value));
+		memory.putVariable(varname, new TVariable(value), scope);
 	}
 
 }

@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.error;
 
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
@@ -42,18 +42,26 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FileImageData;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -69,6 +77,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockRaw;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -83,53 +92,109 @@ import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 import net.sourceforge.plantuml.version.LicenseInfo;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class PSystemError extends AbstractPSystem {
+public abstract class PSystemError extends AbstractPSystem {
 
-	private final LineLocation higherErrorPosition;
-	private final List<ErrorUml> printedErrors;
-	private final List<String> debugLines = new ArrayList<String>();
+	protected List<StringLocated> trace;
+	protected ErrorUml singleError;
 
-	public PSystemError(UmlSource source, ErrorUml singleError, List<String> debugLines) {
-		this(source, Collections.singletonList(singleError), debugLines);
+	final protected StringLocated getLastLine() {
+		return trace.get(trace.size() - 1);
 	}
 
-	private PSystemError(UmlSource source, List<ErrorUml> all, List<String> debugLines) {
-		this.setSource(source);
+	final public LineLocation getLineLocation() {
+		return getLastLine().getLocation();
+	}
 
-		final LineLocation execution = getHigherErrorPosition2(ErrorUmlType.EXECUTION_ERROR, all);
-		final LineLocation syntax = getHigherErrorPosition2(ErrorUmlType.SYNTAX_ERROR, all);
+	final public Collection<ErrorUml> getErrorsUml() {
+		return Collections.singleton(singleError);
+	}
 
-		if (execution == null && syntax == null) {
-			throw new IllegalStateException();
+	final public String getWarningOrError() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append(getDescription());
+		sb.append(BackSlash.CHAR_NEWLINE);
+		for (CharSequence t : getTitle().getDisplay()) {
+			sb.append(t);
+			sb.append(BackSlash.CHAR_NEWLINE);
 		}
+		sb.append(BackSlash.CHAR_NEWLINE);
+		return sb.toString();
+	}
 
-		if (execution != null && (syntax == null || execution.compareTo(syntax) >= 0)) {
-			higherErrorPosition = execution;
-			printedErrors = getErrorsAt2(execution, ErrorUmlType.EXECUTION_ERROR, all);
+	private TextBlockBackcolored getGraphicalFormatted() {
+		final FontConfiguration fc0 = GraphicStrings.sansSerif14(HtmlColorUtils.BLACK).bold();
+		final FontConfiguration fc1 = GraphicStrings.sansSerif14(HtmlColorUtils.MY_GREEN).bold();
+		final FontConfiguration fc2 = GraphicStrings.sansSerif14(HtmlColorUtils.RED).bold();
+
+		final List<String> fullBody = getTextFullBody();
+		final TextBlock result0 = TextBlockUtils.addBackcolor(
+				TextBlockUtils.withMargin(new TextBlockRaw(getTextFromStack(), fc0), 1, 1, 1, 4),
+				HtmlColorUtils.MY_GREEN);
+		final TextBlock result1 = new TextBlockRaw(allButLast(fullBody), fc1);
+		final TextBlock result2 = new TextBlockRaw(onlyLast(fullBody), fc1.wave(HtmlColorUtils.RED));
+		final TextBlock result3 = new TextBlockRaw(getTextError(), fc2);
+		TextBlock result = result0;
+		result = TextBlockUtils.mergeTB(result, result1, HorizontalAlignment.LEFT);
+		result = TextBlockUtils.mergeTB(result, result2, HorizontalAlignment.LEFT);
+		result = TextBlockUtils.mergeTB(result, result3, HorizontalAlignment.LEFT);
+		result = TextBlockUtils.withMargin(result, 5, 5);
+		return TextBlockUtils.addBackcolor(result, HtmlColorUtils.BLACK);
+	}
+
+	private List<String> getPureAsciiFormatted() {
+		final List<String> result = getTextFromStack();
+		result.addAll(getTextFullBody());
+		result.add("^^^^^");
+		result.addAll(getTextError());
+		return result;
+	}
+
+	private List<String> getTextFromStack() {
+		LineLocation lineLocation = getLineLocation();
+		final List<String> result = new ArrayList<String>();
+		if (lineLocation != null) {
+			append(result, lineLocation);
+			while (lineLocation.getParent() != null) {
+				lineLocation = lineLocation.getParent();
+				append(result, lineLocation);
+			}
+		}
+		return result;
+	}
+
+	private List<String> getTextFullBody() {
+		final List<String> result = new ArrayList<String>();
+		result.add(" ");
+		final int traceSize = trace.size();
+		if (traceSize > 40) {
+			for (StringLocated s : trace.subList(0, 5)) {
+				addToResult(result, s);
+			}
+			result.add("...");
+			final int skipped = traceSize - 5 - 20;
+			result.add("... ( skipping " + skipped + " lines )");
+			result.add("...");
+			for (StringLocated s : trace.subList(traceSize - 20, traceSize)) {
+				addToResult(result, s);
+			}
 		} else {
-			// assert syntax.compareTo(execution) > 0;
-			higherErrorPosition = syntax;
-			printedErrors = getErrorsAt2(syntax, ErrorUmlType.SYNTAX_ERROR, all);
+			for (StringLocated s : trace) {
+				addToResult(result, s);
+			}
 		}
-
-		if (debugLines != null) {
-			this.debugLines.addAll(debugLines);
-		}
-
+		return result;
 	}
 
-	private String getSuggestColor(boolean useRed) {
-		if (useRed) {
-			return "black";
+	private void addToResult(final List<String> result, StringLocated s) {
+		String tmp = s.getString();
+		if (tmp.length() > 120) {
+			tmp = tmp.substring(0, 120) + " ...";
 		}
-		return "white";
+		result.add(tmp);
 	}
 
-	private String getRed(boolean useRed) {
-		if (useRed) {
-			return "#CD0A0A";
-		}
-		return "red";
+	private List<String> getTextError() {
+		return Arrays.asList(" " + singleError.getError());
 	}
 
 	@Override
@@ -138,13 +203,13 @@ public class PSystemError extends AbstractPSystem {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();
-			area.drawStringsLR(getTextStrings(), 0, 0);
+			area.drawStringsLR(getPureAsciiFormatted(), 0, 0);
 			area.print(new PrintStream(os));
 			return new ImageDataSimple(1, 1);
 
 		}
-		final boolean useRed = fileFormat.isUseRedForError();
-		final TextBlockBackcolored result = GraphicStrings.createForError(getHtmlStrings(useRed), useRed);
+		// final boolean useRed = fileFormat.isUseRedForError();
+		final TextBlockBackcolored result = getGraphicalFormatted();
 
 		TextBlock udrawable;
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
@@ -156,11 +221,11 @@ public class PSystemError extends AbstractPSystem {
 		}
 		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
 		// udrawable = addMessageAdopt(udrawable);
-		if (min == 1 && LicenseInfo.retrieveNamedOrDistributorQuickIsValid() == false) {
+		if (min == 1 || min == 8) {
 			udrawable = addMessagePatreon(udrawable);
-		} else if (min == 15 && LicenseInfo.retrieveNamedOrDistributorQuickIsValid() == false) {
+		} else if (min == 15) {
 			udrawable = addMessageLiberapay(udrawable);
-		} else if (min == 30 && LicenseInfo.retrieveNamedOrDistributorQuickIsValid() == false) {
+		} else if (min == 30) {
 			udrawable = addMessageDedication(udrawable);
 		} else if (getSource().containsIgnoreCase("arecibo")) {
 			udrawable = addMessageArecibo(udrawable);
@@ -169,6 +234,31 @@ public class PSystemError extends AbstractPSystem {
 		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
 		((ImageDataAbstract) imageData).setStatus(FileImageData.ERROR);
 		return imageData;
+	}
+
+	private void append(List<String> result, LineLocation lineLocation) {
+		if (lineLocation.getDescription() != null) {
+			result.add("[From " + lineLocation.getDescription() + " (line " + (lineLocation.getPosition() + 1) + ") ]");
+		}
+	}
+
+	// private String getRed(boolean useRed) {
+	// if (useRed) {
+	// return "#CD0A0A";
+	// }
+	// return "red";
+	// }
+	//
+	final public DiagramDescription getDescription() {
+		return new DiagramDescription("(Error)");
+	}
+
+	private List<String> allButLast(List<String> full) {
+		return full.subList(0, full.size() - 1);
+	}
+
+	private List<String> onlyLast(List<String> full) {
+		return full.subList(full.size() - 1, full.size());
 	}
 
 	private TextBlockBackcolored getWelcome() throws IOException {
@@ -181,6 +271,9 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private TextBlock addMessageLiberapay(final TextBlock source) throws IOException {
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+			return source;
+		}
 		final TextBlock message = getMessageLiberapay();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
@@ -188,6 +281,9 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+			return source;
+		}
 		final TextBlock message = getMessagePatreon();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
@@ -195,12 +291,18 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+			return source;
+		}
 		final TextBlock message = getMessageDedication();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		return result;
 	}
 
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+			return source;
+		}
 		final TextBlock message = getMessageAdopt();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		return result;
@@ -341,249 +443,16 @@ public class PSystemError extends AbstractPSystem {
 
 	}
 
+	public int size() {
+		return trace.size();
+	}
+
 	private BufferedImage smaller(BufferedImage im) {
 		if (im == null) {
 			return null;
 		}
 		final int nb = 1;
 		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);
-	}
-
-	private List<String> getTextStrings() {
-		final List<String> result = new ArrayList<String>(getStack());
-		if (result.size() > 0) {
-			result.add(" ");
-		}
-
-		for (String s : getPartialCode()) {
-			result.add(s);
-		}
-		final String errorLine = getSource().getLine(higherErrorPosition);
-		final String err = StringUtils.hideComparatorCharacters(errorLine);
-		if (StringUtils.isNotEmpty(err)) {
-			result.add(err);
-		}
-		final StringBuilder underscore = new StringBuilder();
-		for (int i = 0; i < errorLine.length(); i++) {
-			underscore.append("^");
-		}
-		result.add(underscore.toString());
-		final Collection<String> textErrors = new LinkedHashSet<String>();
-		for (ErrorUml er : printedErrors) {
-			textErrors.add(er.getError());
-		}
-		for (String er : textErrors) {
-			result.add(" " + er);
-		}
-		boolean first = true;
-		for (String s : getSuggest()) {
-			if (first) {
-				result.add(" " + s);
-			} else {
-				result.add(s);
-			}
-			first = false;
-		}
-		result.addAll(this.debugLines);
-
-		return result;
-	}
-
-	private List<String> getStack() {
-		LineLocation lineLocation = getLineLocation();
-		final List<String> result = new ArrayList<String>();
-		if (lineLocation != null) {
-			append(result, lineLocation);
-			while (lineLocation.getParent() != null) {
-				lineLocation = lineLocation.getParent();
-				append(result, lineLocation);
-			}
-		}
-		return result;
-	}
-
-	public LineLocation getLineLocation() {
-		for (ErrorUml err : printedErrors) {
-			if (err.getLineLocation() != null) {
-				return err.getLineLocation();
-			}
-		}
-		return null;
-	}
-
-	private void append(List<String> result, LineLocation lineLocation) {
-		if (lineLocation.getDescription() != null) {
-			result.add("[From " + lineLocation.getDescription() + " (line " + (lineLocation.getPosition() + 1) + ") ]");
-		}
-	}
-
-	private List<String> getPartialCode() {
-		List<String> result = new ArrayList<String>();
-		for (Iterator<StringLocated> it = getSource().iterator2(); it.hasNext();) {
-			final StringLocated s = it.next();
-			final String tmp = s.getString();
-			result.add(tmp);
-			final LineLocation location = s.getLocation();
-			if (location.getDescription().equals(higherErrorPosition.getDescription())
-					&& location.compareTo(higherErrorPosition) >= 0) {
-				break;
-			}
-		}
-		final int limit = 5;
-		if (result.size() > limit) {
-			final int skip = result.size() - limit + 1;
-			final String skipMessage;
-			if (skip == 1) {
-				skipMessage = "... (skipping 1 line) ...";
-			} else {
-				skipMessage = "... (skipping " + skip + " lines) ...";
-			}
-			result = new ArrayList<String>(result.subList(skip, result.size()));
-			result.add(0, skipMessage);
-		}
-		return result;
-
-	}
-
-	private List<String> getHtmlStrings(boolean useRed) {
-		final List<String> htmlStrings = new ArrayList<String>(getStack());
-		if (htmlStrings.size() > 0) {
-			htmlStrings.add("----");
-		}
-
-		final List<String> partialCode = getPartialCode();
-		for (String s : partialCode) {
-			htmlStrings.add(StringUtils.hideComparatorCharacters(s));
-		}
-		if (partialCode.size() > 0) {
-			final int idx = htmlStrings.size() - 1;
-			final String last = htmlStrings.get(idx);
-			htmlStrings.set(idx, "<w:" + getRed(useRed) + ">" + last + "</w>");
-		}
-
-		final Collection<String> textErrors = new LinkedHashSet<String>();
-		for (ErrorUml er : printedErrors) {
-			textErrors.add(er.getError());
-		}
-		for (String er : textErrors) {
-			htmlStrings.add(" <color:" + getRed(useRed) + ">" + er + "</color>");
-		}
-		boolean first = true;
-		for (String s : getSuggest()) {
-			if (first) {
-				htmlStrings.add(" <color:" + getSuggestColor(useRed) + "><i>" + s + "</i></color>");
-			} else {
-				htmlStrings.add("<color:" + getSuggestColor(useRed) + ">" + StringUtils.hideComparatorCharacters(s)
-						+ "</color>");
-			}
-			first = false;
-		}
-		htmlStrings.addAll(this.debugLines);
-
-		return htmlStrings;
-	}
-
-	private List<String> getSuggest() {
-		boolean suggested = false;
-		for (ErrorUml er : printedErrors) {
-			if (er.hasSuggest()) {
-				suggested = true;
-			}
-		}
-		if (suggested == false) {
-			return Collections.emptyList();
-		}
-		final List<String> result = new ArrayList<String>();
-		result.add("Did you mean:");
-		for (ErrorUml er : printedErrors) {
-			if (er.hasSuggest()) {
-				result.add(er.getSuggest().getSuggestedLine());
-			}
-		}
-		return Collections.unmodifiableList(result);
-
-	}
-
-	private Collection<ErrorUml> getErrors(ErrorUmlType type, List<ErrorUml> all) {
-		final Collection<ErrorUml> result = new LinkedHashSet<ErrorUml>();
-		for (ErrorUml error : all) {
-			if (error.getType() == type) {
-				result.add(error);
-			}
-		}
-		return result;
-	}
-
-	private LineLocation getHigherErrorPosition2(ErrorUmlType type, List<ErrorUml> all) {
-		LineLocation max = null;
-		for (ErrorUml error : getErrors(type, all)) {
-			if (max == null || error.getLineLocation().compareTo(max) > 0) {
-				max = error.getLineLocation();
-			}
-		}
-		return max;
-	}
-
-	private List<ErrorUml> getErrorsAt2(LineLocation position, ErrorUmlType type, List<ErrorUml> all) {
-		final List<ErrorUml> result = new ArrayList<ErrorUml>();
-		for (ErrorUml error : getErrors(type, all)) {
-			if (error.getLineLocation().compareTo(position) == 0 && StringUtils.isNotEmpty(error.getError())) {
-				result.add(error);
-			}
-		}
-		return result;
-	}
-
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Error)");
-	}
-
-	public final LineLocation getHigherErrorPosition2() {
-		return higherErrorPosition;
-	}
-
-	public final Collection<ErrorUml> getErrorsUml() {
-		return Collections.unmodifiableCollection(printedErrors);
-	}
-
-	@Override
-	public String getWarningOrError() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append(getDescription());
-		sb.append(BackSlash.CHAR_NEWLINE);
-		for (CharSequence t : getTitle().getDisplay()) {
-			sb.append(t);
-			sb.append(BackSlash.CHAR_NEWLINE);
-		}
-		sb.append(BackSlash.CHAR_NEWLINE);
-		for (String s : getSuggest()) {
-			sb.append(s);
-			sb.append(BackSlash.CHAR_NEWLINE);
-		}
-		return sb.toString();
-	}
-
-	public static PSystemError merge(Collection<PSystemError> ps) {
-		UmlSource source = null;
-		final List<ErrorUml> errors = new ArrayList<ErrorUml>();
-		final List<String> debugs = new ArrayList<String>();
-		for (PSystemError system : ps) {
-			if (system == null) {
-				continue;
-			}
-			if (system.getSource() != null && source == null) {
-				source = system.getSource();
-			}
-			errors.addAll(system.getErrorsUml());
-			debugs.addAll(system.debugLines);
-			if (system.debugLines.size() > 0) {
-				debugs.add("-");
-			}
-		}
-		if (source == null) {
-			throw new IllegalStateException();
-		}
-		return new PSystemError(source, errors, debugs);
 	}
 
 }

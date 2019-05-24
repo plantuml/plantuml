@@ -41,26 +41,47 @@ public class Trie {
 
 	private final Map<Character, Trie> brothers = new HashMap<Character, Trie>();
 
-	private boolean terminalWord = false;
-
 	public void add(String s) {
-		add(this, s);
+		if (s.indexOf('\0') != -1) {
+			throw new IllegalArgumentException();
+		}
+		addInternal(this, s + "\0");
 	}
 
-	private static void add(Trie current, String s) {
+	private static void addInternal(Trie current, String s) {
 		if (s.length() == 0) {
 			throw new UnsupportedOperationException();
 		}
-
 		while (s.length() > 0) {
 			final Character added = s.charAt(0);
 			final Trie child = current.getOrCreate(added);
 			s = s.substring(1);
-			if (s.length() == 0) {
-				child.terminalWord = true;
+			current = child;
+		}
+	}
+
+	public boolean remove(String s) {
+		return removeInternal(this, s + "\0");
+	}
+
+	private static boolean removeInternal(Trie current, String s) {
+		if (s.length() <= 1) {
+			throw new UnsupportedOperationException();
+		}
+		while (s.length() > 0) {
+			final Character first = s.charAt(0);
+			final Trie child = current.brothers.get(first);
+			if (child == null) {
+				return false;
+			}
+			s = s.substring(1);
+			if (s.length() == 1) {
+				assert s.charAt(0) == '\0';
+				return child.brothers.remove('\0') != null;
 			}
 			current = child;
 		}
+		throw new IllegalStateException();
 	}
 
 	private Trie getOrCreate(Character added) {
@@ -80,15 +101,15 @@ public class Trie {
 		final StringBuilder result = new StringBuilder();
 		while (current != null) {
 			if (s.length() == 0) {
-				if (current.terminalWord) {
+				if (current.brothers.containsKey('\0')) {
 					return result.toString();
 				} else {
 					return "";
 				}
 			}
 			final Trie child = current.brothers.get(s.charAt(0));
-			if (child == null) {
-				if (current.terminalWord) {
+			if (child == null || child.brothers.size() == 0) {
+				if (current.brothers.containsKey('\0')) {
 					return result.toString();
 				} else {
 					return "";

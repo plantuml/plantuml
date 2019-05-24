@@ -49,17 +49,17 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class USymbolRect extends USymbol {
 
 	private final SkinParameter skinParameter;
-	private final HorizontalAlignment stereotypeAlignement;
+	// private final HorizontalAlignment stereotypeAlignement;
 
-	public USymbolRect(SkinParameter skinParameter, HorizontalAlignment stereotypeAlignement) {
+	public USymbolRect(SkinParameter skinParameter) {
 		this.skinParameter = skinParameter;
-		this.stereotypeAlignement = stereotypeAlignement;
+//		this.stereotypeAlignement = stereotypeAlignement;
 	}
 
-	@Override
-	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
-		return new USymbolRect(skinParameter, alignment);
-	}
+//	@Override
+//	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
+//		return new USymbolRect(skinParameter, alignment);
+//	}
 
 	@Override
 	public SkinParameter getSkinParameter() {
@@ -96,7 +96,7 @@ class USymbolRect extends USymbol {
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
-			final SymbolContext symbolContext) {
+			final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -106,7 +106,7 @@ class USymbolRect extends USymbol {
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
 						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
 				final Margin margin = getMargin();
-				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereotypeAlignement);
+				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
@@ -120,7 +120,7 @@ class USymbolRect extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, final HorizontalAlignment labelAlignment, final TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext) {
+			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
@@ -130,7 +130,7 @@ class USymbolRect extends USymbol {
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereoX;
 				final double posStereoY;
-				if (stereotypeAlignement == HorizontalAlignment.RIGHT) {
+				if (stereoAlignment == HorizontalAlignment.RIGHT) {
 					posStereoX = width - dimStereo.getWidth() - getMargin().getX1() / 2;
 					posStereoY = getMargin().getY1() / 2;
 				} else {
