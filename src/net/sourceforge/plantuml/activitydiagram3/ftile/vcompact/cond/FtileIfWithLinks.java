@@ -54,20 +54,25 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
+        private final ConditionEndStyle conditionEndStyle;
 	private final Rainbow arrowColor;
 
-	public FtileIfWithLinks(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in, Rainbow arrowColor,
+	public FtileIfWithLinks(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in, Rainbow arrowColor, ConditionEndStyle conditionEndStyle,
 			StringBounder stringBounder) {
 		super(diamond1, tile1, tile2, diamond2, in, stringBounder);
 		this.arrowColor = arrowColor;
+                this.conditionEndStyle = conditionEndStyle;
 		if (arrowColor.size() == 0) {
 			throw new IllegalArgumentException();
 		}
@@ -369,25 +374,156 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 	}
 
+        // copied from FtileIfLongHorizontal to use with ConditionEndStyle.HLINE
+	class ConnectionVerticalOut extends AbstractConnection {
+
+		private final Rainbow color;
+		private final TextBlock out2;
+
+		public ConnectionVerticalOut(Ftile tile, Rainbow color, TextBlock out2) {
+			super(tile, null);
+			this.color = color;
+			this.out2 = out2;
+		}
+
+		public void drawU(UGraphic ug) {
+			final StringBounder stringBounder = ug.getStringBounder();
+                        
+			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
+			if (geo.hasPointOut() == false) {
+				return;
+			}
+                        
+			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
+                        
+                        
+			final double totalHeight = calculateDimensionInternal(stringBounder).getHeight();
+			//final Point2D p1 = getP1(stringBounder);
+			if (p1 == null) {
+				return;
+			}
+			final Point2D p2 = new Point2D.Double(p1.getX(), totalHeight);
+
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToDown());
+			snake.setLabel(out2);
+			snake.addPoint(p1);
+			snake.addPoint(p2);
+			ug.draw(snake);
+		}
+
+		private UTranslate translate(StringBounder stringBounder) {
+			if (getFtile1() == tile1) {
+				return getTranslate1(stringBounder);
+			}
+			if (getFtile1() == tile2) {
+				return getTranslate2(stringBounder);
+			}
+			throw new IllegalStateException();
+		}
+                /*
+		private Point2D getP1(StringBounder stringBounder) {
+                        
+			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
+			if (geo.hasPointOut() == false) {
+				return null;
+			}
+			final Point2D p = geo.getPointOut();
+			return getTranslate1(stringBounder).getTranslated(p);
+		}
+                */
+	}
+
+        // copied from FtileIfLongHorizontal to use with ConditionEndStyle.HLINE
+	class ConnectionHline extends AbstractConnection {
+
+		private final Rainbow arrowColor;
+
+		public ConnectionHline(Rainbow arrowColor) {
+			super(null, null);
+			this.arrowColor = arrowColor;
+		}
+
+		public void drawU(UGraphic ug) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			final Dimension2D totalDim = calculateDimensionInternal(stringBounder);
+
+			final Swimlane intoSw;
+			if (ug instanceof UGraphicInterceptorOneSwimlane) {
+				intoSw = ((UGraphicInterceptorOneSwimlane) ug).getSwimlane();
+			} else {
+				intoSw = null;
+			}
+
+			final List<Ftile> all = new ArrayList<Ftile>();
+                        all.add(tile1);
+			all.add(tile2);
+			double minX = totalDim.getWidth() / 2;
+			double maxX = totalDim.getWidth() / 2;
+			boolean atLeastOne = false;
+			for (Ftile tmp : all) {
+				if (tmp.calculateDimension(stringBounder).hasPointOut() == false) {
+					continue;
+				}
+				if (intoSw != null && tmp.getSwimlanes().contains(intoSw) == false) {
+					continue;
+				}
+				if (intoSw != null && tmp.getSwimlaneOut() != intoSw) {
+					continue;
+				}
+				atLeastOne = true;
+				final UTranslate ut = getTranslateFor(tmp, stringBounder);
+				final double out = tmp.calculateDimension(stringBounder).translate(ut).getLeft();
+				minX = Math.min(minX, out);
+				maxX = Math.max(maxX, out);
+			}
+			if (atLeastOne == false) {
+				return;
+			}
+
+			final Snake s = new Snake(arrowHorizontalAlignment(), arrowColor);
+			s.goUnmergeable(MergeStrategy.NONE);
+			final double height = totalDim.getHeight();
+			s.addPoint(minX, height);
+			s.addPoint(maxX, height);
+			ug.draw(s);
+		}
+	}
+        
 	public Ftile addLinks(Branch branch1, Branch branch2, StringBounder stringBounder) {
 		final List<Connection> conns = new ArrayList<Connection>();
 		conns.add(new ConnectionHorizontalThenVertical(tile1, branch1));
 		conns.add(new ConnectionHorizontalThenVertical(tile2, branch2));
 		final boolean hasPointOut1 = tile1.calculateDimension(stringBounder).hasPointOut();
 		final boolean hasPointOut2 = tile2.calculateDimension(stringBounder).hasPointOut();
-		if (hasPointOut1 && hasPointOut2) {
-			conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getInlinkRenderingColorAndStyle(), branch1
-					.isEmpty()));
-			conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColorAndStyle(), branch2
-					.isEmpty()));
-		} else if (hasPointOut1 && hasPointOut2 == false) {
-			conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
-					branch1.isEmpty()));
-		} else if (hasPointOut1 == false && hasPointOut2) {
-			conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
-					branch2.isEmpty()));
-		}
-
+                if( conditionEndStyle == ConditionEndStyle.DIAMOND ) {
+                    if (hasPointOut1 && hasPointOut2) {
+                            conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getInlinkRenderingColorAndStyle(), branch1
+                                            .isEmpty()));
+                            conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColorAndStyle(), branch2
+                                            .isEmpty()));
+                    } else if (hasPointOut1 && hasPointOut2 == false) {
+                            conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
+                                            branch1.isEmpty()));
+                    } else if (hasPointOut1 == false && hasPointOut2) {
+                            conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
+                                            branch2.isEmpty()));
+                    }
+                }
+                else if( conditionEndStyle == ConditionEndStyle.HLINE ) { 
+                    if (hasPointOut1 && hasPointOut2) {
+                            conns.add(new ConnectionVerticalOut(tile1, arrowColor, null));
+                            conns.add(new ConnectionVerticalOut(tile2, arrowColor, null));
+                            conns.add(new ConnectionHline(arrowColor));
+                    } else if (hasPointOut1 && hasPointOut2 == false) {
+                        // this is called when the "else" has a break statement
+                            conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
+                                            branch1.isEmpty()));
+                    } else if (hasPointOut1 == false && hasPointOut2) {
+                        // this is called when the "if" has a break statement
+                            conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
+                                            branch2.isEmpty()));
+                    }
+                }
 		return FtileUtils.addConnection(this, conns);
 	}
 

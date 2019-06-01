@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -847,6 +848,15 @@ public class SkinParam implements ISkinParam {
 		return p;
 	}
 
+	public ConditionEndStyle getConditionEndStyle() {
+		final String value = getValue("conditionEndStyle");
+		final ConditionEndStyle p = ConditionEndStyle.fromString(value);
+		if (p == null) {
+			return ConditionEndStyle.DIAMOND;
+		}
+		return p;
+	}
+        
 	public double minClassWidth() {
 		final String value = getValue("minclasswidth");
 		if (value != null && value.matches("\\d+")) {

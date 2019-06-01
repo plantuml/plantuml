@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
@@ -67,6 +68,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 			LinkRendering topInlinkRendering) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
+		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();
 		final Branch branch0 = thens.get(0);
 
 		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
@@ -81,15 +83,18 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null)
 				.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 
-		if (thens.size() > 1) {
+                if (thens.size() > 1) {
 			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
 				return FtileIfLongVertical.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
 						conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
 			return FtileIfLongHorizontal.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
 					conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile, fcTest);
 		}
-		return ConditionalBuilder.create(swimlane, borderColor, backColor, arrowColor, getFactory(), conditionStyle,
-				thens.get(0), elseBranch, skinParam(), getStringBounder(), fcArrow, fcTest);
+		return ConditionalBuilder.create(swimlane,
+                        borderColor, backColor, arrowColor,
+                        getFactory(), conditionStyle, conditionEndStyle,
+			thens.get(0), elseBranch, 
+                        skinParam(), getStringBounder(), fcArrow, fcTest);
 	}
 
 	private HtmlColor fontColor(FontParam param) {
