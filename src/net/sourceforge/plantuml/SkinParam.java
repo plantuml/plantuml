@@ -416,6 +416,7 @@ public class SkinParam implements ISkinParam {
 		result.add("Style");
 		result.add("SequenceParticipant");
 		result.add("ConditionStyle");
+		result.add("ConditionEndStyle");
 		result.add("SameClassWidth");
 		result.add("HyperlinkUnderline");
 		result.add("Padding");
