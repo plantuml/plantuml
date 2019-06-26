@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
@@ -59,23 +60,25 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandIf.class.getName(), RegexLeaf.start(), //
 				new RegexOptional(//
 						new RegexOr("FIRST", //
 								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
 								new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
 								new RegexLeaf("BAR", "(?:==+)[%s]*([\\p{L}0-9_.]+)[%s]*(?:==+)"), //
 								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"))), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ARROW", "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[=-]*\\>)?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
 						new RegexLeaf("IF1", "if[%s]*[%g]([^%g]*)[%g][%s]*(?:as[%s]+([\\p{L}0-9_.]+)[%s]+)?"), //
-						new RegexLeaf("IF2", "if[%s]+(.+?)[%s]*")), //
-				new RegexLeaf("(?:then)?$"));
+						new RegexLeaf("IF2", "if[%s]+(.+?)")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("then")), //
+				RegexLeaf.end());
 	}
 
 	@Override

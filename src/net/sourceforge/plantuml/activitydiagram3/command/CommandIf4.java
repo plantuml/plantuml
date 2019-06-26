@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -52,16 +53,21 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandIf4.class.getName(), RegexLeaf.start(), //
 				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TEST", "\\((.*?)\\)"), //
-				new RegexLeaf("[%s]*(is|equals?)[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("(is|equals?)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("WHEN", "\\((.+?)\\)"), //
-				new RegexLeaf("[%s]*then[%s]*"), //
-				new RegexLeaf(";?$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("then"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override
@@ -72,7 +78,7 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 		if (test.length() == 0) {
 			test = null;
 		}
-		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color);
+		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color, null);
 
 		return CommandExecutionResult.ok();
 	}

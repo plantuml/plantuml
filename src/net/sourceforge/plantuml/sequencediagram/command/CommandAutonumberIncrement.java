@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
@@ -51,13 +52,16 @@ public class CommandAutonumberIncrement extends SingleLineCommand2<SequenceDiagr
 	}
 
 	private static RegexConcat getConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+		return RegexConcat.build(CommandAutonumberIncrement.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("autonumber"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("inc"), //
-				new RegexLeaf("POS", "(?:[%s]+([A-Za-z]))?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("$"));
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("POS", "([A-Za-z])") //
+						)), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

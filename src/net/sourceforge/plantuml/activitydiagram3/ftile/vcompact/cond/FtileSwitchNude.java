@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileSwitchNude extends FtileDimensionMemoize {
 
-	protected final double xSeparation = 20;
+	protected double xSeparation = 20;
 
 	protected final List<Ftile> tiles;
 	private final Swimlane in;

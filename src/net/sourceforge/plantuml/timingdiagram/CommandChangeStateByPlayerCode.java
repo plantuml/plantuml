@@ -37,8 +37,10 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandChangeStateByPlayerCode extends CommandChangeState {
@@ -47,16 +49,24 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandChangeStateByPlayerCode.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
-				new RegexLeaf("[%s]*is[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("is"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				getStateOrHidden(), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COMMENT", "(?:[%s]*:[%s]*(.*?))?"), //
-				new RegexLeaf("[%s]*$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf(":"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("COMMENT", "(.*?)") //
+						)), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

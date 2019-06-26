@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.tim;
 
 public enum TLineType {
 
-	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, DECLARE_FUNCTION, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START;
+	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, DECLARE_FUNCTION, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START;
 
 	public static TLineType getFromLine(String s) {
 		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*")) {
@@ -95,6 +95,9 @@ public enum TLineType {
 		}
 		if (s.matches("^\\s*!(include|includeurl|include_many|include_once)\\b.*")) {
 			return INCLUDE;
+		}
+		if (s.matches("^\\s*!(includedef)\\b.*")) {
+			return INCLUDE_DEF;
 		}
 		if (s.matches("^\\s*!(import)\\b.*")) {
 			return IMPORT;

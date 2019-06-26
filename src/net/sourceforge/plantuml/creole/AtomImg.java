@@ -51,6 +51,7 @@ import javax.imageio.ImageIO;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
@@ -67,10 +68,12 @@ public class AtomImg extends AbstractAtom implements Atom {
 	private static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
 	private final BufferedImage image;
 	private final double scale;
+	private final Url url;
 
-	private AtomImg(BufferedImage image, double scale) {
+	private AtomImg(BufferedImage image, double scale, Url url) {
 		this.image = image;
 		this.scale = scale;
+		this.url = url;
 	}
 
 	public static Atom createQrcode(String flash, double scale) {
@@ -79,10 +82,10 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (im == null) {
 			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		}
-		return new AtomImg(new UImage(im).scaleNearestNeighbor(scale).getImage(), 1);
+		return new AtomImg(new UImage(im).scaleNearestNeighbor(scale).getImage(), 1, null);
 	}
 
-	public static Atom create(String src, final ImgValign valign, final int vspace, final double scale) {
+	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
 		final UFont font = UFont.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
@@ -90,7 +93,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 			final String data = src.substring(DATA_IMAGE_PNG_BASE64.length(), src.length());
 			try {
 				final byte bytes[] = Base64Coder.decode(data);
-				return build(src, fc, bytes, scale);
+				return build(src, fc, bytes, scale, url);
 			} catch (Exception e) {
 				return AtomText.create("ERROR " + e.toString(), fc);
 			}
@@ -100,7 +103,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 			// Check if valid URL
 			if (src.startsWith("http:") || src.startsWith("https:")) {
 				// final byte image[] = getFile(src);
-				return build(src, fc, new URL(src), scale);
+				return build(src, fc, new URL(src), scale, url);
 			}
 			final File f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
@@ -113,27 +116,28 @@ public class AtomImg extends AbstractAtom implements Atom {
 			if (read == null) {
 				return AtomText.create("(Cannot decode: " + f.getCanonicalPath() + ")", fc);
 			}
-			return new AtomImg(FileUtils.ImageIO_read(f), scale);
+			return new AtomImg(FileUtils.ImageIO_read(f), scale, url);
 		} catch (IOException e) {
 			return AtomText.create("ERROR " + e.toString(), fc);
 		}
 	}
 
-	private static Atom build(String source, final FontConfiguration fc, final byte[] data, double scale)
+	private static Atom build(String source, final FontConfiguration fc, final byte[] data, double scale, Url url)
 			throws IOException {
 		final BufferedImage read = ImageIO.read(new ByteArrayInputStream(data));
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + source + ")", fc);
 		}
-		return new AtomImg(read, scale);
+		return new AtomImg(read, scale, url);
 	}
 
-	private static Atom build(String source, final FontConfiguration fc, URL url, double scale) throws IOException {
-		final BufferedImage read = FileUtils.ImageIO_read(url);
+	private static Atom build(String text, final FontConfiguration fc, URL source, double scale, Url url)
+			throws IOException {
+		final BufferedImage read = FileUtils.ImageIO_read(source);
 		if (read == null) {
-			return AtomText.create("(Cannot decode: " + source + ")", fc);
+			return AtomText.create("(Cannot decode: " + text + ")", fc);
 		}
-		return new AtomImg(read, scale);
+		return new AtomImg(read, scale, url);
 	}
 
 	// Added by Alain Corbiere
@@ -169,9 +173,13 @@ public class AtomImg extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		// final double h = calculateDimension(ug.getStringBounder()).getHeight();
+		if (url != null) {
+			ug.startUrl(url);
+		}
 		ug.draw(new UImage(image).scale(scale));
-		// tileImage.drawU(ug.apply(new UTranslate(0, -h)));
+		if (url != null) {
+			ug.closeAction();
+		}
 	}
 
 }

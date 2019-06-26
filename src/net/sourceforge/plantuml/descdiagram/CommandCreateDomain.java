@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.command.GenericRegexProducer;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -65,18 +66,19 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCreateDomain.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", // TODO yy
 						"(requirement|domain)[%s]+"), //
-				new RegexLeaf("DISPLAY", DISPLAY_WITH_GENERIC), new RegexLeaf("[%s]+as[%s]+"), //
-				new RegexLeaf("CODE", "([a-zA-Z0-9]+)"), new RegexLeaf("[%s]*"), new RegexLeaf("STEREO",
-						"(\\<\\<.+\\>\\>)?"), //
+				new RegexLeaf("DISPLAY", DISPLAY_WITH_GENERIC), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("as"), //
+				RegexLeaf.spaceOneOrMore(), new RegexLeaf("CODE", "([a-zA-Z0-9]+)"), RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				// domain: lexical, causal, biddable
 				// requirement: FR, NFR, quality
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("GROUP", "(\\{)?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("GROUP", "(\\{)?"), RegexLeaf.end());
 	}
 
 	@Override

@@ -37,13 +37,17 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -51,22 +55,32 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 
-public class CommandImport extends SingleLineCommand<ClassDiagram> {
+public class CommandImport extends SingleLineCommand2<ClassDiagram> {
 
 	public CommandImport() {
-		super("(?i)^import[%s]+[%g]?([^%g]+)[%g]?$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandImport.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("import"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("[%g]?"), //
+				new RegexLeaf("NAME", "([^%g]+)"), //
+				new RegexLeaf("[%g]?"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram classDiagram, List<String> arg) {
-		final String arg0 = arg.get(0);
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
+		final String arg0 = arg.get("NAME", 0);
 		try {
 			final File f = FileSystem.getInstance().getFile(arg0);
 
 			if (f.isFile()) {
-				includeSimpleFile(classDiagram, f);
+				includeSimpleFile(diagram, f);
 			} else if (f.isDirectory()) {
-				includeDirectory(classDiagram, f);
+				includeDirectory(diagram, f);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

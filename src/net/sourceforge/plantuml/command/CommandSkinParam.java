@@ -35,20 +35,32 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandSkinParam extends SingleLineCommand<UmlDiagram> {
+public class CommandSkinParam extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandSkinParam() {
-		super("(?i)^(skinparam|skinparamlocked)[%s]+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+([^{}]*)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSkinParam.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("TYPE", "(skinparam|skinparamlocked)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("NAME", "([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("VALUE", "([^{}]*)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		arg.get(0).endsWith("locked");
-		diagram.setParam(arg.get(1), arg.get(2));
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+		// arg.get(0).endsWith("locked");
+		diagram.setParam(arg.get("NAME", 0), arg.get("VALUE", 0));
 		return CommandExecutionResult.ok();
 	}
 

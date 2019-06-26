@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.activitydiagram.command.CommandElse;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndif;
@@ -55,9 +56,16 @@ import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
 
 public class ActivityDiagramFactory extends UmlDiagramFactory {
 
+	private final ISkinSimple skinParam;
+
+	public ActivityDiagramFactory(ISkinSimple skinParam) {
+		this.skinParam = skinParam;
+	}
+
+
 	@Override
 	public ActivityDiagram createEmptyDiagram() {
-		return new ActivityDiagram();
+		return new ActivityDiagram(skinParam);
 	}
 
 	@Override

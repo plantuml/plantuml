@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
@@ -60,23 +61,24 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandPartition3.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "(partition|package|rectangle|card)"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(//
 						new RegexConcat( //
 								color("BACK1").getRegex(),//
-								new RegexLeaf("[%s]+"))), //
+								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("NAME", "([%g][^%g]+[%g]|\\S+)"), //
 				new RegexOptional(//
 						new RegexConcat( //
-								new RegexLeaf("[%s]+"), //
+								RegexLeaf.spaceOneOrMore(), //
 								color("BACK2").getRegex())), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("\\{?$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{?"), //
+				RegexLeaf.end());
 	}
 
 	private USymbol getUSymbol(String type) {

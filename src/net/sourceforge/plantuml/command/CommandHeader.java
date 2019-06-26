@@ -35,22 +35,41 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
-public class CommandHeader extends SingleLineCommand<TitledDiagram> {
+public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 
 	public CommandHeader() {
-		super("(?i)^(?:(left|right|center)?[%s]*)header(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHeader.class.getName(), RegexLeaf.start(), //
+				new RegexOptional(new RegexLeaf("POSITION", "(left|right|center)")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("header"), //
+				new RegexOr( //
+						new RegexConcat( //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf(":"), //
+								RegexLeaf.spaceZeroOrMore()), //
+						RegexLeaf.spaceOneOrMore()), //
+				new RegexLeaf("LABEL", "(.*[\\p{L}0-9_.].*)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, List<String> arg) {
-		final String align = arg.get(0);
-		diagram.getHeader().put(Display.getWithNewlines(arg.get(1)),
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
+		final String align = arg.get("POSITION", 0);
+		diagram.getHeader().put(Display.getWithNewlines(arg.get("LABEL", 0)),
 				HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT));
 		return CommandExecutionResult.ok();
 	}

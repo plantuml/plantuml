@@ -41,8 +41,10 @@ import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -64,24 +66,33 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^state[%s]+"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCreatePackageState.class.getName(),
+				RegexLeaf.start(), //
+				new RegexLeaf("state"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)[%s]+"), //
-								new RegexLeaf("DISPLAY1", "as[%s]+[%g]([^%g]+)[%g]")), //
+								new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]")), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?"), //
+								new RegexOptional(new RegexConcat( //
+										new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]"), RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("as"), RegexLeaf.spaceOneOrMore() //
+										)), //
 								new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"))), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
-				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("LINECOLOR", "##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?")),
+				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

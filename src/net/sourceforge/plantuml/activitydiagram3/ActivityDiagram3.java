@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -74,6 +75,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 	private SwimlaneStrategy swimlaneStrategy;
 
 	private final SwimlanesC swinlanes = new SwimlanesC(getSkinParam(), getPragma());
+	
+	public ActivityDiagram3(ISkinSimple skinParam) {
+		super(skinParam);
+	}
+
 
 	private void manageSwimlaneStrategy() {
 		if (swimlaneStrategy == null) {
@@ -319,10 +325,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find switch");
 	}
 
-	public void startIf(Display test, Display whenThen, HtmlColor color) {
+	public void startIf(Display test, Display whenThen, HtmlColor color, Url url) {
 		manageSwimlaneStrategy();
 		final InstructionIf instructionIf = new InstructionIf(swinlanes.getCurrentSwimlane(), current(), test,
-				whenThen, nextLinkRenderer(), color, getSkinParam());
+				whenThen, nextLinkRenderer(), color, getSkinParam(), url);
 		current().add(instructionIf);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionIf);
@@ -379,7 +385,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
 			final LinkRendering back = new LinkRendering(linkColor).withDisplay(linkLabel);
-			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back);
+			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back, swinlanes.getCurrentSwimlane());
 			setCurrent(instructionRepeat.getParent());
 			this.setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
@@ -393,7 +399,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
 			// final LinkRendering back = new LinkRendering(linkColor).withDisplay(linkLabel);
-			instructionRepeat.setBackward(label);
+			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane());
 			// setCurrent(instructionRepeat.getParent());
 			// this.setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();

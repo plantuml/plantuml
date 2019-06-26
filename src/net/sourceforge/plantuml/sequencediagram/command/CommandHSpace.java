@@ -35,26 +35,36 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandHSpace extends SingleLineCommand<SequenceDiagram> {
+public class CommandHSpace extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandHSpace() {
-		super("(?i)^\\|\\|(\\d+)?\\|+$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHSpace.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("\\|\\|"), //
+				new RegexLeaf("VALUE", "(\\d+)?"), //
+				new RegexLeaf("\\|+"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		final String size = arg.get(0);
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+		final String size = arg.get("VALUE", 0);
 		if (StringUtils.isNotEmpty(size)) {
-			sequenceDiagram.hspace(Integer.parseInt(size));
+			diagram.hspace(Integer.parseInt(size));
 		} else {
-			sequenceDiagram.hspace();
+			diagram.hspace();
 		}
 		return CommandExecutionResult.ok();
 	}

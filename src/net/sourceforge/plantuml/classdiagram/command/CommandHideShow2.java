@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,12 +50,12 @@ public class CommandHideShow2 extends SingleLineCommand2<CucaDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideShow2.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("COMMAND", "(hide|hide-class|show|show-class)"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("WHAT", "(.+)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.end());
 	}
 
 	@Override

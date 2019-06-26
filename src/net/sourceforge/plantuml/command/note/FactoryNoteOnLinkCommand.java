@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -58,22 +59,34 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand<CucaDiagram> {
 
-	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
-				new RegexLeaf("[%s]*"), //
+	private IRegex getRegexConcatSingleLine() {
+		return RegexConcat.build(FactoryNoteOnLinkCommand.class.getName() + "single", RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("on"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("link"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("[%s]*:[%s]*"), //
-				new RegexLeaf("NOTE", "(.*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
 	}
 
-	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
-				new RegexLeaf("[%s]*"), //
-				color().getRegex(), //
-				new RegexLeaf("$"));
+	private IRegex getRegexConcatMultiLine() {
+		return RegexConcat.build(FactoryNoteOnLinkCommand.class.getName() + "multi", RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("on"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("link"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				color().getRegex(), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -85,11 +98,11 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^[%s]*end[%s]?note$";
+				return "(?i)^end[%s]?note$";
 			}
 
 			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines) {
-				final String line0 = lines.getFirst499().getString();
+				final String line0 = lines.getFirst499().getTrimmed().getString();
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				if (lines.size() > 0) {

@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
@@ -48,11 +50,11 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("PARALLEL", "(&%s*)?"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandExoArrowRight.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("PARTICIPANT", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ARROW_SUPPCIRCLE", "([%s]+[ox])?"), //
 				new RegexOr( //
 						new RegexConcat( //
@@ -67,10 +69,15 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 								new RegexLeaf("ARROW_STYLE2", CommandArrow.getColorOrStylePattern()), //
 								new RegexLeaf("ARROW_BODYA2", "(-+)"))), //
 				new RegexLeaf("SHORT", "([ox]?[?\\]\\[])?"), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("LABEL", "(?::[%s]*(.*))?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf(":"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("LABEL", "(.*)") //
+						)), RegexLeaf.end());
 	}
 
 	@Override

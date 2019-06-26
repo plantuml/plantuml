@@ -35,19 +35,27 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandRotate extends SingleLineCommand<UmlDiagram> {
+public class CommandRotate extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandRotate() {
-		super("(?i)^rotate$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandRotate.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("rotate"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
 		diagram.setRotation(true);
 		return CommandExecutionResult.ok();
 	}

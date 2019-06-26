@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -73,12 +74,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
-		return new RegexConcat(new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
-				new RegexOr( //
+		return RegexConcat.build(CommandLinkClass.class.getName() + umlDiagramType, RegexLeaf.start(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("HEADER", "@([\\d.]+)"), //
+								RegexLeaf.spaceOneOrMore() //
+						)), new RegexOr( //
 						new RegexLeaf("ENT1", getClassIdentifier()),//
-						new RegexLeaf("COUPLE1", COUPLE)), new RegexLeaf("[%s]*"), //
-				new RegexLeaf("FIRST_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
-				new RegexLeaf("[%s]*"), //
+						new RegexLeaf("COUPLE1", COUPLE)), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
+
+				RegexLeaf.spaceZeroOrMore(), //
 
 				new RegexConcat(
 				//
@@ -86,22 +93,26 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
-						new RegexLeaf("INSIDE", "(?:(0|\\(0\\)|\\(0|0\\))(?=[-=.~]))?"), //
+						new RegexOptional(new RegexLeaf("INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
 						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
 						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[(#\\]>*+^\\{]|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
-
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"), new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr( //
 						new RegexLeaf("ENT2", getClassIdentifier()), //
 						new RegexLeaf("COUPLE2", COUPLE)), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf(":"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("LABEL_LINK", "(.+)") //
+						)), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -134,7 +145,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	// }
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
+			RegexResult arg) {
 
 		Code ent1 = Code.of(arg.get("ENT1", 0));
 		Code ent2 = Code.of(arg.get("ENT2", 0));

@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.command.regex;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.sourceforge.plantuml.StringLocated;
+
 public interface IRegex {
 
 	public String getPattern();
@@ -45,5 +47,9 @@ public interface IRegex {
 	public int count();
 
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it);
+
+	public boolean match(StringLocated full);
+
+	public RegexResult matcher(String full);
 
 }

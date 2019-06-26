@@ -48,6 +48,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -78,6 +79,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private boolean visibilityModifierPresent;
 
 	public abstract IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol);
+
+	
+	public CucaDiagram(ISkinSimple orig) {
+		super(orig);
+	}
 
 	private String namespaceSeparator = ".";
 

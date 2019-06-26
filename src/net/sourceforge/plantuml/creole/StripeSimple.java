@@ -173,7 +173,7 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void addImage(String src, double scale) {
-		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale));
+		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale, null));
 	}
 
 	public void addQrcode(String src, double scale) {

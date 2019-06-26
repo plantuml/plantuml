@@ -43,8 +43,10 @@ import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -67,21 +69,24 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 		return "(?i)^(.*)\\]$";
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandArchimateMultilines.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("archimate"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("STEREOTYPE", "(?:[%s]+(?:\\<\\<([-\\w]+)\\>\\>))?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("STEREOTYPE", "(?:\\<\\<([-\\w]+)\\>\\>)") //
+						)), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("DESC", "\\[(.*)$"));
+				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("DESC", "\\[(.*)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -91,7 +96,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		final String codeRaw = line0.getLazzy("CODE", 0);
 
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));

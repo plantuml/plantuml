@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
@@ -53,16 +54,16 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandArrow3.class.getName(), RegexLeaf.start(), //
 				new RegexOr(//
 						new RegexLeaf("->"), //
 						new RegexLeaf("COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
 						new RegexLeaf("LABEL", "(.*);"), //
 						new RegexLeaf("")), //
-				new RegexLeaf("$"));
+				RegexLeaf.end());
 	}
 
 	@Override

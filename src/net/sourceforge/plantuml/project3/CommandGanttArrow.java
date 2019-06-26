@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project3;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,15 +49,14 @@ public class CommandGanttArrow extends SingleLineCommand2<GanttDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandGanttArrow.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ARROW", "(-+)\\>"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

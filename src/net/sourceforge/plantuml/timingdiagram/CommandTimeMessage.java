@@ -38,8 +38,10 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 
@@ -51,20 +53,25 @@ public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandTimeMessage.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("PART1", PLAYER_CODE), //
 				TimeTickBuilder.optionalExpressionAtWithArobase("TIME1"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ARROW_BODY", "(-+)"), //
 				new RegexLeaf("ARROW_STYLE", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("ARROW_HEAD", "\\>"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("PART2", PLAYER_CODE), //
 				TimeTickBuilder.optionalExpressionAtWithArobase("TIME2"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
-				new RegexLeaf("[%s]*$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf(":"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("MESSAGE", "(.*)") //
+						)), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

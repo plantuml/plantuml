@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
@@ -60,17 +61,18 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(//
-				new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandPartition.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("partition"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("NAME", "([%g][^%g]+[%g]|\\S+)"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
 						color().getRegex(), //
 						new RegexLeaf("LEGACYCOLORIGNORED", "(#[0-9a-fA-F]{6}|#?\\w+)?")), //
-				new RegexLeaf("[%s]*\\{?$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{?"),
+				RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

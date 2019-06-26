@@ -35,22 +35,38 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 
-public class CommandPragma extends SingleLineCommand<UmlDiagram> {
+public class CommandPragma extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandPragma() {
-		super("(?i)^!pragma[%s]+([A-Za-z_][A-Za-z_0-9]*)(?:[%s]+(.*))?$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandPragma.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("!pragma"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("NAME", "([A-Za-z_][A-Za-z_0-9]*)"), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("VALUE", "(.*)") //
+						)), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram system, List<String> arg) {
-		final String name = StringUtils.goLowerCase(arg.get(0));
-		final String value = arg.get(1);
+	protected CommandExecutionResult executeArg(UmlDiagram system, LineLocation location, RegexResult arg) {
+		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
+		final String value = arg.get("VALUE", 0);
 		system.getPragma().define(name, value);
 		if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot")) {
 			system.setUseJDot(true);

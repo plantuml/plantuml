@@ -40,18 +40,38 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.StringLocated;
 
 public abstract class RegexComposed implements IRegex {
 
-	private final List<IRegex> partials;
+	protected static final AtomicInteger nbCreateMatches = new AtomicInteger();
+	protected final List<IRegex> partials;
 
-	abstract protected Pattern2 getFull();
+	abstract protected String getFullSlow();
+
+	private Pattern2 fullCached;
+
+	private synchronized Pattern2 getPattern2() {
+		if (fullCached == null) {
+			final String fullSlow = getFullSlow();
+			fullCached = MyPattern.cmpile(fullSlow, Pattern.CASE_INSENSITIVE);
+		}
+		return fullCached;
+	}
+
+	protected boolean isCompiled() {
+		return fullCached != null;
+	}
 
 	public RegexComposed(IRegex... partial) {
 		this.partials = Arrays.asList(partial);
 	}
 
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
+		nbCreateMatches.incrementAndGet();
 		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
 		for (IRegex r : partials) {
 			result.putAll(r.createPartialMatch(it));
@@ -72,7 +92,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	public RegexResult matcher(String s) {
-		final Matcher2 matcher = getFull().matcher(s);
+		final Matcher2 matcher = getPattern2().matcher(s);
 		if (matcher.find() == false) {
 			return null;
 		}
@@ -81,12 +101,12 @@ public abstract class RegexComposed implements IRegex {
 		return new RegexResult(createPartialMatch(it));
 	}
 
-	final public boolean match(String s) {
-		return getFull().matcher(s).find();
+	public boolean match(StringLocated s) {
+		return getPattern2().matcher(s.getString()).find();
 	}
 
 	final public String getPattern() {
-		return getFull().pattern();
+		return getPattern2().pattern();
 	}
 
 	final protected List<IRegex> getPartials() {

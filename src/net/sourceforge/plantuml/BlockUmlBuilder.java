@@ -139,11 +139,20 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		return Collections.unmodifiableSet(usedFiles);
 	}
 
-	public List<String> getDefinition(String name) {
+	public List<String> getDefinition1(String name) {
 		for (BlockUml block : blocks) {
 			if (block.isStartDef(name)) {
 				this.defines.importFrom(block.getLocalDefines());
 				return block.getDefinition(false);
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	public List<String> getDefinition2(String name) {
+		for (BlockUml block : blocks) {
+			if (block.isStartDef(name)) {
+				return block.getDefinition2(false);
 			}
 		}
 		return Collections.emptyList();

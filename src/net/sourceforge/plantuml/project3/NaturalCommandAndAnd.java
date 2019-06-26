@@ -96,25 +96,25 @@ public class NaturalCommandAndAnd extends SingleLineCommand2<GanttDiagram> {
 	public static Command create(SubjectPattern subject, VerbPattern verb1, ComplementPattern complement1,
 			VerbPattern verb2, ComplementPattern complement2, VerbPattern verb3, ComplementPattern complement3) {
 		final RegexConcat pattern = new RegexConcat(//
-				new RegexLeaf("^"), //
+				RegexLeaf.start(), //
 				subject.toRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				verb1.toRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				complement1.toRegex("1"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("and"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				verb2.toRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				complement2.toRegex("2"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("and"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				verb3.toRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				complement3.toRegex("3"), //
-				new RegexLeaf("$"));
+				RegexLeaf.end());
 		return new NaturalCommandAndAnd(pattern, subject, verb1, complement1, verb2, complement2, verb3, complement3);
 	}
 }

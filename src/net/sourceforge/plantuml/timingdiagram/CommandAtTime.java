@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,10 +49,10 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandAtTime.class.getName(), RegexLeaf.start(), //
 				TimeTickBuilder.expressionAtWithArobase("TIME"), //
-				new RegexLeaf("[%s]*$"));
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

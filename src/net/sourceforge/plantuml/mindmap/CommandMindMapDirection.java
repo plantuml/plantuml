@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,12 +50,11 @@ public class CommandMindMapDirection extends SingleLineCommand2<MindMapDiagram> 
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandMindMapDirection.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[^*]*"), //
 				new RegexLeaf("DIRECTION", "\\b(left|right)\\b"), //
-				new RegexLeaf("[^*]*"), //
-				new RegexLeaf("$"));
+				new RegexLeaf("[^*]*"), RegexLeaf.end());
 	}
 
 	@Override

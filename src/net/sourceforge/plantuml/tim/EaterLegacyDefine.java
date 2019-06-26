@@ -43,7 +43,7 @@ public class EaterLegacyDefine extends Eater {
 	private final LineLocation location;
 
 	public EaterLegacyDefine(StringLocated s) {
-		super(s.getStringTrimmed());
+		super(s.getTrimmed().getString());
 		this.location = s.getLocation();
 	}
 

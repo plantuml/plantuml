@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -51,12 +52,13 @@ public class CommandGroup3 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandGroup3.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("group"), //
-				new RegexLeaf("\\s*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NAME", "(.*)"), //
-				new RegexLeaf(";?$"));
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override

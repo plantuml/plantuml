@@ -39,8 +39,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -52,14 +54,21 @@ public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("swimlane[%s]+"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSwimlane2.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("swimlane"), //
+				RegexLeaf.spaceOneOrMore(), //
 				ColorParser.exp7(), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("SWIMLANE", "([^|]+)"), //
-				new RegexLeaf("LABEL", "(?:[%s]+as[%s]+([^|]+))?"), //
-				new RegexLeaf("$"));
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("LABEL", "([^|]+)") //
+						)), //
+				RegexLeaf.end());
 	}
 
 	@Override

@@ -42,8 +42,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
@@ -55,14 +57,16 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(//
-				new RegexLeaf("^"), //
-				new RegexLeaf("PARALLEL", "(&%s*)?"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandGrouping.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("TYPE", "(opt|alt|loop|par|par2|break|critical|else|end|also|group)"), //
 				new RegexLeaf("COLORS", "((?<!else)(?<!also)(?<!end)#\\w+)?(?:[%s]+(#\\w+))?"), //
-				new RegexLeaf("COMMENT", "(?:[%s]+(.*?))?"), //
-				new RegexLeaf("$"));
+				new RegexOptional(//
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("COMMENT", "(.*?)") //
+						)), RegexLeaf.end());
 	}
 
 	@Override
@@ -86,9 +90,10 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 				}
 			}
 		}
-		
+
 		final boolean parallel = arg.get("PARALLEL", 0) != null;
-		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement, parallel);
+		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement,
+				parallel);
 		if (result == false) {
 			return CommandExecutionResult.error("Cannot create group");
 		}

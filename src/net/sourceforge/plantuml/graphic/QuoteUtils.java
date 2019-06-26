@@ -313,7 +313,9 @@ public class QuoteUtils {
 					"P'zba zna, yrg'f qb fbzrguvat gung ernyyl pbbxf.",
 					"Nh sbaq, znvagranag, yrf qvcybzngrf ceraqenvrag cyhgbg yr cnf fhe yrf ubzzrf q'npgvba.",
 					"Whfg zragnyyl gubhtu... ner lbh bxnl ?", "Jr xabj fur'f bxnl orpnhfr fur'f oybaq",
-					"Gh oyhssrf Znegbav");
+					"Gh oyhssrf Znegbav", "Lbh thlf ner trggvat cnvq?",
+					"Gurer'f n erq guvatl zbivat gbjneqf gur terra guvatl... V guvax jr'er gur terra guvatl",
+					"Nyy flfgrzf ner shapgvbavat Pbzznaqre");
 
 	private QuoteUtils() {
 	}

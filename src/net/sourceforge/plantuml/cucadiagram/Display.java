@@ -239,17 +239,11 @@ public class Display implements Iterable<CharSequence> {
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
 			CharSequence s = it.next();
-			if (s instanceof StringLocated) {
-				s = ((StringLocated) s).getString();
-			}
 			if (s != null && StringUtils.trin(s.toString()).equals("{{")) {
 				final List<CharSequence> other = new ArrayList<CharSequence>();
 				other.add("@startuml");
 				while (it.hasNext()) {
 					CharSequence s2 = it.next();
-					if (s2 instanceof StringLocated) {
-						s2 = ((StringLocated) s2).getString();
-					}
 					if (s2 != null && StringUtils.trin(s2.toString()).equals("}}")) {
 						break;
 					}
@@ -343,9 +337,6 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public Display add(CharSequence s) {
-		if (s instanceof StringLocated) {
-			s = ((StringLocated) s).getString();
-		}
 		final Display result = new Display(this, this.defaultCreoleMode);
 		result.displayData.add(s);
 		result.check();

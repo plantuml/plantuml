@@ -57,7 +57,7 @@ public class PreprocessorChangeModeReader implements ReadLine {
 
 	public StringLocated readLine() throws IOException {
 		final StringLocated line = raw.readLine();
-		if (line != null && line.getStringTrimmed().endsWith("!preprocessorV2")) {
+		if (line != null && line.getTrimmed().getString().endsWith("!preprocessorV2")) {
 			this.mode.setPreprocessorMode(PreprocessorMode.V2_NEW_TIM);
 			return new StringLocated("", line.getLocation());
 		}

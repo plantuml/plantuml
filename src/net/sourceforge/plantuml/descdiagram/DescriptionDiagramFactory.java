@@ -38,7 +38,9 @@ package net.sourceforge.plantuml.descdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
+import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
@@ -57,15 +59,20 @@ import net.sourceforge.plantuml.descdiagram.command.CommandArchimateMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
-import net.sourceforge.plantuml.descdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.descdiagram.command.CommandNewpage;
 import net.sourceforge.plantuml.descdiagram.command.CommandPackageWithUSymbol;
 
 public class DescriptionDiagramFactory extends UmlDiagramFactory {
 
+	private final ISkinSimple skinParam;
+
+	public DescriptionDiagramFactory(ISkinSimple skinParam) {
+		this.skinParam = skinParam;
+	}
+
 	@Override
 	public DescriptionDiagram createEmptyDiagram() {
-		return new DescriptionDiagram();
+		return new DescriptionDiagram(skinParam);
 	}
 
 	@Override
@@ -88,15 +95,15 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
 		cmds.add(factoryNoteCommand.createMultiLine(false));
 
-		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexOr(
-				"ENTITY", //
-				new RegexLeaf("[\\p{L}0-9_.]+"), //
-				new RegexLeaf("\\(\\)[%s]*[\\p{L}0-9_.]+"), //
-				new RegexLeaf("\\(\\)[%s]*[%g][^%g]+[%g]"), //
-				new RegexLeaf("\\[[^\\]*]+[^\\]]*\\]"), //
-				new RegexLeaf("\\((?!\\*\\))[^\\)]+\\)"), //
-				new RegexLeaf(":[^:]+:"), //
-				new RegexLeaf("[%g][^%g]+[%g]") //
+		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand("desc",
+				new RegexOr("ENTITY", //
+						new RegexLeaf("[\\p{L}0-9_.]+"), //
+						new RegexLeaf("\\(\\)[%s]*[\\p{L}0-9_.]+"), //
+						new RegexLeaf("\\(\\)[%s]*[%g][^%g]+[%g]"), //
+						new RegexLeaf("\\[[^\\]*]+[^\\]]*\\]"), //
+						new RegexLeaf("\\((?!\\*\\))[^\\)]+\\)"), //
+						new RegexLeaf(":[^:]+:"), //
+						new RegexLeaf("[%g][^%g]+[%g]") //
 				));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 

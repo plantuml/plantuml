@@ -40,6 +40,7 @@ import java.awt.GraphicsEnvironment;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -50,12 +51,11 @@ public class CommandHelpFont extends SingleLineCommand2<Help> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHelpFont.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("help"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("fonts?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("fonts?"), RegexLeaf.end());
 	}
 
 	@Override

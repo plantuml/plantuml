@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -62,16 +63,19 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 	public RegexConcat getPatternEnd2() {
 		return new RegexConcat(//
 				new RegexLeaf("TEST1", "(.*)"), new RegexLeaf("\\)"), //
-				new RegexLeaf(";?$"));
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(//
-				new RegexLeaf("^"), //
-				new RegexLeaf("repeat[%s]?while"), //
-				new RegexLeaf("[%s]*"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandRepeatWhile3Multilines.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("repeat"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("while"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST1", "(.*)$"));
+				new RegexLeaf("TEST1", "(.*)"), //
+				RegexLeaf.end());
 	}
 
 	@Override

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -60,12 +61,17 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiagram> {
 
-	public CommandParticipant(RegexConcat pattern) {
+	public CommandParticipant(IRegex pattern) {
 		super(pattern);
 	}
 
-	static RegexLeaf getOrderRegex() {
-		return new RegexLeaf("ORDER", "(?:order[%s]+(-?\\d{1,7}))?");
+	static IRegex getOrderRegex() {
+		return new RegexOptional( //
+				new RegexConcat( //
+						new RegexLeaf("order"), //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf("ORDER", "(-?\\d{1,7})") //
+				));
 	}
 
 	static IRegex getRegexType() {

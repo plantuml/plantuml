@@ -162,10 +162,10 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 	}
 
-	protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
-		return getTranslateNude(tile, stringBounder).compose(getTranslateMain(stringBounder));
-
-	}
+	// protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
+	// return getTranslateNude(tile, stringBounder).compose(getTranslateMain(stringBounder));
+	//
+	// }
 
 	class ConnectionVerticalTop extends AbstractConnection {
 
@@ -189,7 +189,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double y2 = p2.getY();
 
 			final Snake snake = new Snake(null, arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			snake.setLabel(getLabelPositive(branch));
+			snake.setLabel(getLabelPositive(branch), "BOTTOM");
 			if (x2 < p1d.getX() - margin || x2 > p1b.getX() + margin) {
 				snake.addPoint(x2, p1d.getY());
 				snake.addPoint(x2, y2);
@@ -261,6 +261,14 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 					getFtile1().calculateDimension(stringBounder).getPointOut());
 		}
 
+	}
+
+	public double getYdelta1a(StringBounder stringBounder) {
+		double max = 10;
+		for (Branch branch : branches) {
+			max = Math.max(max, getLabelPositive(branch).calculateDimension(stringBounder).getHeight());
+		}
+		return max + 10;
 	}
 
 	public Ftile addLinks() {

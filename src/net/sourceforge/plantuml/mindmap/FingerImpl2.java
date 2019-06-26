@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -63,8 +64,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FingerImpl2 implements Finger, UDrawable {
 
-	// private final double xmargin = 50;
 	private final Display label;
+	private final HtmlColor backColor;
 	private final ISkinParam skinParam;
 	private final IdeaShape shape;
 	private final Direction direction;
@@ -74,7 +75,8 @@ public class FingerImpl2 implements Finger, UDrawable {
 	private Tetris tetris = null;
 
 	public static FingerImpl2 build(Idea idea, ISkinParam skinParam, Direction direction) {
-		final FingerImpl2 result = new FingerImpl2(idea.getLabel(), skinParam, idea.getShape(), direction);
+		final FingerImpl2 result = new FingerImpl2(idea.getBackColor(), idea.getLabel(), skinParam, idea.getShape(),
+				direction);
 		for (Idea child : idea.getChildren()) {
 			result.addInNail(build(child, skinParam, direction));
 		}
@@ -86,7 +88,8 @@ public class FingerImpl2 implements Finger, UDrawable {
 		nail.add(child);
 	}
 
-	private FingerImpl2(Display label, ISkinParam skinParam, IdeaShape shape, Direction direction) {
+	private FingerImpl2(HtmlColor backColor, Display label, ISkinParam skinParam, IdeaShape shape, Direction direction) {
+		this.backColor = backColor;
 		this.label = label;
 		this.skinParam = skinParam;
 		this.shape = shape;
@@ -182,7 +185,8 @@ public class FingerImpl2 implements Finger, UDrawable {
 		}
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 		if (shape == IdeaShape.BOX) {
-			final FtileBox box = new FtileBox(Colors.empty().mute(skinParam), label, font, null, BoxStyle.PLAIN);
+			final ISkinParam foo = new SkinParamBackcolored(Colors.empty().mute(skinParam), backColor);
+			final FtileBox box = new FtileBox(foo, label, font, null, BoxStyle.PLAIN);
 			return TextBlockUtils.withMargin(box, 0, 0, 10, 10);
 		}
 

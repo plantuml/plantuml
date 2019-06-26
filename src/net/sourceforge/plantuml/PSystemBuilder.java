@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -135,6 +136,8 @@ public class PSystemBuilder {
 			if (result != null && OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
+			Log.info("Compilation duration " + (System.currentTimeMillis() - now));
+			RegexConcat.printCacheInfo();
 		}
 
 	}
@@ -144,12 +147,12 @@ public class PSystemBuilder {
 		factories.add(new PSystemWelcomeFactory());
 		factories.add(new PSystemColorsFactory());
 		factories.add(new SequenceDiagramFactory(skinParam));
-		factories.add(new ClassDiagramFactory());
-		factories.add(new ActivityDiagramFactory());
-		factories.add(new DescriptionDiagramFactory());
-		factories.add(new StateDiagramFactory());
-		factories.add(new ActivityDiagramFactory3());
-		factories.add(new CompositeDiagramFactory());
+		factories.add(new ClassDiagramFactory(skinParam));
+		factories.add(new ActivityDiagramFactory(skinParam));
+		factories.add(new DescriptionDiagramFactory(skinParam));
+		factories.add(new StateDiagramFactory(skinParam));
+		factories.add(new ActivityDiagramFactory3(skinParam));
+		factories.add(new CompositeDiagramFactory(skinParam));
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());

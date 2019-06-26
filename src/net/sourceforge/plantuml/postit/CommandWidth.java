@@ -35,21 +35,30 @@
  */
 package net.sourceforge.plantuml.postit;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandWidth extends SingleLineCommand<PostItDiagram> {
+public class CommandWidth extends SingleLineCommand2<PostItDiagram> {
 
 	public CommandWidth() {
-		super("(?i)^width[%s]+(\\d+)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandWidth.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("width"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("WIDTH", "(\\d+)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PostItDiagram system, List<String> arg) {
-
-		final int width = Integer.parseInt(arg.get(0));
+	protected CommandExecutionResult executeArg(PostItDiagram system, LineLocation location, RegexResult arg) {
+		final int width = Integer.parseInt(arg.get("WIDTH", 0));
 		system.setWidth(width);
 		return CommandExecutionResult.ok();
 	}

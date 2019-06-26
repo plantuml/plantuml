@@ -30,31 +30,62 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.descdiagram.command;
+package net.sourceforge.plantuml.command.regex;
 
-import java.util.List;
+public class FoxSignature {
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+	private static final long masks[] = new long[127];
 
-public class CommandNamespaceSeparator extends SingleLineCommand<DescriptionDiagram> {
-
-	public CommandNamespaceSeparator() {
-		super("(?i)^set[%s]namespaceseparator[%s](\\S+)$");
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, List<String> arg) {
-		final String s = arg.get(0);
-		if ("none".equalsIgnoreCase(s)) {
-			diagram.setNamespaceSeparator(null);
-		} else {
-			diagram.setNamespaceSeparator(s);
+	static {
+		final String full = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0!\"#$%&\'()*+,-./:;<=>?@[\\]^_{|}~";
+		long m = 1L;
+		for (int i = 0; i < full.length(); i++) {
+			char ch = full.charAt(i);
+			masks[ch] = m;
+			if (ch >= 'A' && ch <= 'Z') {
+				ch = (char) (ch + ('a' - 'A'));
+				masks[ch] = m;
+			}
+			m = m << 1;
 		}
-		return CommandExecutionResult.ok();
 	}
+
+	public static void printMe() {
+		for (int i = 0; i < masks.length; i++) {
+			if (masks[i] > 0) {
+				final char ch = (char) i;
+				System.err.println("ch=" + ch + " " + masks[i]);
+			}
+		}
+	}
+
+	private static long getMask(char ch) {
+		if (ch < masks.length) {
+			return masks[ch];
+		}
+		return 0L;
+	}
+
+	public static long getFoxSignature(String s) {
+		long result = 0;
+		for (int i = 0; i < s.length(); i++) {
+			result = result | getMask(s.charAt(i));
+		}
+		return result;
+	}
+
+	public static String backToString(long check) {
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < masks.length; i++) {
+			if (masks[i] != 0L && (check & masks[i]) != 0L) {
+				final char ch = (char) i;
+				sb.append(ch);
+			}
+		}
+		return sb.toString();
+	}
+
 }

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.nwdiag;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,12 +49,11 @@ public class CommandNwDiagInit extends SingleLineCommand2<NwDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNwDiagInit.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "nwdiag"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("\\{"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("\\{"), RegexLeaf.end());
 	}
 
 	@Override

@@ -156,6 +156,7 @@ public class LanguageDescriptor {
 		keyword.add("allow_mixing");
 		keyword.add("allowmixing");
 		keyword.add("mainframe");
+		keyword.add("accross");
 
 		preproc.add("!exit");
 		preproc.add("!include");
@@ -188,6 +189,7 @@ public class LanguageDescriptor {
 		for (String s : new HtmlColorSetSimple().names()) {
 			cypher.addException(s);
 		}
+		cypher.addException("o");
 		return cypher;
 	}
 

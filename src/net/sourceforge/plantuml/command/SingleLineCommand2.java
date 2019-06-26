@@ -37,28 +37,28 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 
 public abstract class SingleLineCommand2<S extends Diagram> implements Command<S> {
 
-	private final RegexConcat pattern;
+	private final IRegex pattern;
 	private final boolean doTrim;
 
-	public SingleLineCommand2(RegexConcat pattern) {
+	public SingleLineCommand2(IRegex pattern) {
 		this(true, pattern);
 	}
 
-	public SingleLineCommand2(boolean doTrim, RegexConcat pattern) {
+	public SingleLineCommand2(boolean doTrim, IRegex pattern) {
 		this.doTrim = doTrim;
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
-		if (pattern.getPattern().startsWith("^") == false || pattern.getPattern().endsWith("$") == false) {
-			throw new IllegalArgumentException("Bad pattern " + pattern.getPattern());
-		}
+		// if (pattern.getPattern().startsWith("^") == false || pattern.getPattern().endsWith("$") == false) {
+		// throw new IllegalArgumentException("Bad pattern " + pattern.getPattern());
+		// }
 
 		this.pattern = pattern;
 	}
@@ -68,14 +68,21 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	}
 
 	public String[] getDescription() {
-		return new String[] { pattern.getPattern() };
+		return new String[] { pattern.getClass().getName() };
 	}
 
 	private String myTrim(StringLocated s) {
 		if (doTrim) {
-			return s.getStringTrimmed();
+			return s.getTrimmed().getString();
 		}
 		return s.getString();
+	}
+
+	private StringLocated myTrim2(StringLocated s) {
+		if (doTrim) {
+			return s.getTrimmed();
+		}
+		return s;
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
@@ -88,15 +95,15 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String line = myTrim(lines.getFirst499());
-		if (syntaxWithFinalBracket() && line.endsWith("{") == false) {
+		final StringLocated line2 = myTrim2(lines.getFirst499());
+		if (syntaxWithFinalBracket() && line2.getString().endsWith("{") == false) {
 			final String vline = lines.get499(0).getString() + " {";
 			if (isValid(BlocLines.singleString(vline)) == CommandControl.OK) {
 				return CommandControl.OK_PARTIAL;
 			}
 			return CommandControl.NOT_OK;
 		}
-		final boolean result = pattern.match(line);
+		final boolean result = pattern.match(line2);
 		if (result) {
 			actionIfCommandValid();
 		}

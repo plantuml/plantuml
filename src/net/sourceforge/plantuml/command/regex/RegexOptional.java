@@ -35,23 +35,25 @@
  */
 package net.sourceforge.plantuml.command.regex;
 
-import java.util.regex.Pattern;
+import net.sourceforge.plantuml.StringLocated;
 
 public class RegexOptional extends RegexComposed implements IRegex {
 
-	private final Pattern2 full;
-
 	public RegexOptional(IRegex partial) {
 		super(partial);
-		final StringBuilder sb = new StringBuilder("(?:");
-		sb.append(partial.getPattern());
-		sb.append(")?");
-		this.full = MyPattern.cmpileNockeck(sb.toString(), Pattern.CASE_INSENSITIVE);
 	}
 
 	@Override
-	protected Pattern2 getFull() {
-		return full;
+	protected String getFullSlow() {
+		final StringBuilder sb = new StringBuilder("(?:");
+		sb.append(partials.get(0).getPattern());
+		sb.append(")?");
+		return sb.toString();
 	}
+	
+	public boolean match(StringLocated full) {
+		throw new UnsupportedOperationException();
+	}
+
 
 }

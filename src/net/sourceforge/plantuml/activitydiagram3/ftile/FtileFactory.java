@@ -85,7 +85,7 @@ public interface FtileFactory {
 			LinkRendering afterEndwhile, HtmlColor color, Instruction specialOut);
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering);
+			LinkRendering topInlinkRendering, Url url);
 
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest);

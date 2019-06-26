@@ -128,9 +128,12 @@ public class TileBuilder {
 			tiles.add(result);
 		} else if (ev instanceof Note) {
 			final Note note = (Note) ev;
-			final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());
-			final LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note
-					.getParticipant2());
+			LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());
+			LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note.getParticipant2());
+			if (livingSpace1 == null && livingSpace2 == null) {
+				livingSpace1 = tileArguments.getFirstLivingSpace();
+				livingSpace2 = tileArguments.getLastLivingSpace();
+			}
 			tiles.add(new NoteTile(livingSpace1, livingSpace2, note, skin, skinParam));
 		} else if (ev instanceof Notes) {
 			final Notes notes = (Notes) ev;

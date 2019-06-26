@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.mindmap;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,18 +49,17 @@ public class CommandMindMapRoot extends SingleLineCommand2<MindMapDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandMindMapRoot.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "(0)"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("LABEL", "([^%s].*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
 		final String label = arg.get("LABEL", 0);
-		return diagram.addIdea(0, label, IdeaShape.BOX, null);
+		return diagram.addIdea(null, 0, label, IdeaShape.BOX, null);
 	}
 
 }

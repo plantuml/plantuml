@@ -86,30 +86,28 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 	private static RegexConcat getRegexConcat(int type) {
 		if (type == 0) {
-			return new RegexConcat(new RegexLeaf("^"), //
+			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
-					new RegexLeaf("[%s]*"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-					new RegexLeaf("[%s]*"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-					new RegexLeaf("[%s]*"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
-					new RegexLeaf("[%s]*"), //
-					new RegexLeaf("DESC", "as[%s]*[%g]([^%g]*)$"));
+					RegexLeaf.spaceZeroOrMore(), new RegexLeaf("DESC", "as[%s]*[%g]([^%g]*)"), RegexLeaf.end());
 		}
 		if (type == 1) {
-			return new RegexConcat(new RegexLeaf("^"), //
+			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
-					new RegexLeaf("[%s]*"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-					new RegexLeaf("[%s]*"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-					new RegexLeaf("[%s]*"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
-					new RegexLeaf("[%s]*"), //
-					new RegexLeaf("DESC", "\\[(.*)$"));
+					RegexLeaf.spaceZeroOrMore(), new RegexLeaf("DESC", "\\[(.*)"), RegexLeaf.end());
 		}
 		throw new IllegalArgumentException();
 	}
@@ -117,7 +115,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
 		final LeafType type;
 		USymbol usymbol;

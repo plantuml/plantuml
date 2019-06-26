@@ -35,24 +35,34 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandEndPartition3 extends SingleLineCommand<ActivityDiagram3> {
+public class CommandEndPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	public CommandEndPartition3() {
-		super("(?i)^(\\})$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandEndPartition3.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("(\\})"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, List<String> arg) {
-//		final IEntity currentPackage = diagram.getCurrentGroup();
-//		if (currentPackage == null) {
-//			return CommandExecutionResult.error("No partition defined");
-//		}
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
+		// final IEntity currentPackage = diagram.getCurrentGroup();
+		// if (currentPackage == null) {
+		// return CommandExecutionResult.error("No partition defined");
+		// }
 		return diagram.endGroup();
 	}
 

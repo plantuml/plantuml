@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
@@ -55,21 +56,23 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandBoxStart.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("box"), //
 				new RegexOptional(new RegexOr( //
-						new RegexLeaf("NAME1", "[%s]+[%g]([^%g]+)[%g]"), //
-						new RegexLeaf("NAME2", "[%s]+([^#]+)"))), //
-				new RegexLeaf("[%s]*"), //
-				color().getRegex(), //
-				new RegexLeaf("$"));
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("NAME1", "[%g]([^%g]+)[%g]")), //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("NAME2", "([^#]+)")))), //
+				RegexLeaf.spaceZeroOrMore(), //
+				color().getRegex(), RegexLeaf.end());
 	}
-	
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
-
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg2) {

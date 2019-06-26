@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.command.CommandAddMethod;
 import net.sourceforge.plantuml.classdiagram.command.CommandAllowMixing;
@@ -77,10 +78,15 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObjectM
 
 public class ClassDiagramFactory extends UmlDiagramFactory {
 
+	private final ISkinSimple skinParam;
+
+	public ClassDiagramFactory(ISkinSimple skinParam) {
+		this.skinParam = skinParam;
+	}
+
 	@Override
 	public ClassDiagram createEmptyDiagram() {
-		return new ClassDiagram();
-
+		return new ClassDiagram(skinParam);
 	}
 
 	@Override
@@ -93,7 +99,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandPage());
 		cmds.add(new CommandAddMethod());
-		
+
 		addCommonHides(cmds);
 		cmds.add(new CommandHideShow2());
 
@@ -110,7 +116,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandEndPackage());
 		cmds.add(new CommandPackageEmpty());
 		cmds.add(new CommandPackageWithUSymbol());
-		
+
 		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));
 		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));
 		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
@@ -124,13 +130,13 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandImport());
 
-		final FactoryTipOnEntityCommand factoryTipOnEntityCommand = new FactoryTipOnEntityCommand(new RegexLeaf(
+		final FactoryTipOnEntityCommand factoryTipOnEntityCommand = new FactoryTipOnEntityCommand("a", new RegexLeaf(
 				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([%g][^%g]+[%g]|[^%s]+)"));
 		cmds.add(factoryTipOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryTipOnEntityCommand.createMultiLine(false));
 
-		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexLeaf(
-				"ENTITY", "(" + CommandCreateClass.CODE + "|[%g][^%g]+[%g])"));
+		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand("class",
+				new RegexLeaf("ENTITY", "(" + CommandCreateClass.CODE + "|[%g][^%g]+[%g])"));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 		cmds.add(new CommandUrl());
 

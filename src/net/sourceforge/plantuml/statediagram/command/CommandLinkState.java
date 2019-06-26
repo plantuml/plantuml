@@ -38,10 +38,12 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -62,9 +64,9 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	static RegexConcat getRegex() {
-		return new RegexConcat(new RegexLeaf("^"), //
+		return RegexConcat.build(CommandLinkState.class.getName(), RegexLeaf.start(), //
 				getStatePattern("ENT1"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexConcat(
 				//
 						new RegexLeaf("ARROW_CROSS_START", "(x)?"), //
@@ -75,11 +77,15 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 						new RegexLeaf("ARROW_BODY2", "(-*)"), //
 						new RegexLeaf("\\>"), //
 						new RegexLeaf("ARROW_CIRCLE_END", "(o[%s]+)?")), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				getStatePattern("ENT2"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("LABEL", "(?::[%s]*(.+))?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf(":"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("LABEL", "(.+)") //
+						)), RegexLeaf.end());
 	}
 
 	private static RegexLeaf getStatePattern(String name) {
@@ -139,6 +145,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 			link = link.getInv();
 		}
 		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
+		link.setUmlDiagramType(UmlDiagramType.STATE);
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

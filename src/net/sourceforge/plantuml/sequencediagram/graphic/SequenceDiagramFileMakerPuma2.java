@@ -200,6 +200,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 					legendYdelta += h;
 					compTitle.drawU(ug.apply(new UTranslate(area.getTitleX(), area.getTitleY())));
 				}
+				legendYdelta += area.getHeaderHeightMargin();
 				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));
 
 				final double delta1 = Math.max(0, dimLegend.getWidth() - area.getWidth());

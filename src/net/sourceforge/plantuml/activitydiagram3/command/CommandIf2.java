@@ -36,11 +36,16 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -52,15 +57,22 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandIf2.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TEST", "\\((.*?)\\)"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("WHEN", "(?:then[%s]*(?:\\((.+?)\\))?)?"), //
-				new RegexLeaf(";?$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("then"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexOptional(new RegexLeaf("WHEN", "\\((.+?)\\)")) //
+						)), //
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override
@@ -72,7 +84,15 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 			test = null;
 		}
 
-		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color);
+		final Url url;
+		if (arg.get("URL", 0) == null) {
+			url = null;
+		} else {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			url = urlBuilder.getUrl(arg.get("URL", 0));
+		}
+
+		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color, url);
 
 		return CommandExecutionResult.ok();
 	}

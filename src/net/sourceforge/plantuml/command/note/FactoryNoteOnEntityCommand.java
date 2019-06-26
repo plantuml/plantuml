@@ -70,56 +70,69 @@ import net.sourceforge.plantuml.utils.UniqueSequence;
 public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
 	private final IRegex partialPattern;
+	private final String key;
 
-	// private final boolean withBracket;
-
-	public FactoryNoteOnEntityCommand(IRegex partialPattern/* , boolean withBracket */) {
+	public FactoryNoteOnEntityCommand(String key, IRegex partialPattern) {
 		this.partialPattern = partialPattern;
-		// this.withBracket = withBracket;
+		this.key = key;
 	}
 
-	private RegexConcat getRegexConcatSingleLine(IRegex partialPattern) {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
+	private IRegex getRegexConcatSingleLine(IRegex partialPattern) {
+		return RegexConcat.build(FactoryNoteOnEntityCommand.class.getName() + key + "single", RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
-						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
+						new RegexConcat(RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("of"), //
+								RegexLeaf.spaceOneOrMore(), partialPattern), //
 						new RegexLeaf("")), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*:[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NOTE", "(.*)"), //
-				new RegexLeaf("$") //
-		);
+				RegexLeaf.end() //
+				);
 	}
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
-	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
+	private IRegex getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
+		return RegexConcat.build(FactoryNoteOnEntityCommand.class.getName() + key + "multi" + withBracket,
+				RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
-						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
+						new RegexConcat(RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("of"), //
+								RegexLeaf.spaceOneOrMore(), //
+								partialPattern), //
 						new RegexLeaf("")), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
-				new RegexLeaf("$") //
-		);
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), RegexLeaf.end() //
+				);
 	}
 
 	public Command<AbstractEntityDiagram> createSingleLine() {
 		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine(partialPattern)) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location,
+					RegexResult arg) {
 				final String s = arg.get("NOTE", 0);
 				return executeInternal(arg, system, null, BlocLines.getWithNewlines(s));
 			}
@@ -140,7 +153,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 

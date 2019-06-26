@@ -28,27 +28,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
+ * Contributed by Jonathan Buhacoff
+ * Based on ConditionStyle by Arnaud Roques and Arno Peterson
  *
- * Original Author:  Arnaud Roques
  * 
- *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.svek;
 
-import java.util.List;
+import java.util.EnumSet;
 
-import net.sourceforge.plantuml.core.Diagram;
+public enum ConditionEndStyle {
 
-public class CommandComment extends SingleLineCommand<Diagram> {
+	DIAMOND, HLINE;
 
-
-	private CommandComment() {
-		super(CommandMultilinesComment.COMMENT_SINGLE_LINE);
+	public static ConditionEndStyle fromString(String value) {
+		for (ConditionEndStyle p : EnumSet.allOf(ConditionEndStyle.class)) {
+			if (p.toString().equalsIgnoreCase(value)) {
+				return p;
+			}
+		}
+		return null;
 	}
-
-	@Override
-	protected CommandExecutionResult executeArg(Diagram diagram, List<String> arg) {
-		return CommandExecutionResult.ok();
-	}
-
 }

@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -57,6 +58,10 @@ import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
+
+	public ClassDiagram(ISkinSimple skinParam) {
+		super(skinParam);
+	}
 
 	private final String getNamespace(Code fullyCode) {
 		return getNamespace(fullyCode, fullyCode.getSeparator());

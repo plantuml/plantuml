@@ -35,19 +35,29 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandHideUnlinked extends SingleLineCommand<UmlDiagram> {
+public class CommandHideUnlinked extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandHideUnlinked() {
-		super("(?i)^(hide|show)[%s]+unlinked$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideUnlinked.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("HIDE", "(hide|show)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("unlinked"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		diagram.setHideUnlinkedData(arg.get(0).equalsIgnoreCase("hide"));
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+		diagram.setHideUnlinkedData(arg.get("HIDE", 0).equalsIgnoreCase("hide"));
 		return CommandExecutionResult.ok();
 	}
 

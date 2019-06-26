@@ -73,6 +73,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class FtileRepeat extends AbstractFtile {
@@ -124,6 +125,7 @@ class FtileRepeat extends AbstractFtile {
 		final TextBlock outTb = out.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
 
 		final Ftile diamond1;
+		assert swimlane == repeat.getSwimlaneIn();
 		if (backStart == null) {
 			diamond1 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, repeat.getSwimlaneIn());
 		} else {
@@ -159,7 +161,7 @@ class FtileRepeat extends AbstractFtile {
 		final Display backLink1 = backRepeatLinkRendering.getDisplay();
 		final TextBlock tbbackLink1 = backLink1 == null ? null : backLink1.create(fcArrow, HorizontalAlignment.LEFT,
 				spriteContainer, CreoleMode.SIMPLE_LINE);
-		if (repeat.getSwimlaneIn() == repeat.getSwimlaneOut()) {
+		if (repeat.getSwimlaneIn() == swimlaneOut) {
 			if (backward == null) {
 				conns.add(result.new ConnectionBackSimple(backRepeatLinkRendering.getRainbow(arrowColor), tbbackLink1));
 			} else {
@@ -295,8 +297,6 @@ class FtileRepeat extends AbstractFtile {
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToLeft());
-			snake.emphasizeDirection(Direction.UP);
 			final Dimension2D dimRepeat = repeat.calculateDimension(stringBounder);
 
 			Point2D p1 = getP1(stringBounder);
@@ -306,11 +306,20 @@ class FtileRepeat extends AbstractFtile {
 			final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
 			final Dimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);
 			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;
-			final double x2 = p2.getX() + dimDiamond1.getWidth();
+			double x2 = p2.getX() + dimDiamond1.getWidth();
 			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;
 
 			final double xmax = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2
 					+ Diamond.diamondHalfSize;
+
+			UPolygon arrow = Arrows.asToLeft();
+			if (xmax < x2) {
+				arrow = Arrows.asToRight();
+				x2 = p2.getX();
+			}
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, arrow);
+			snake.emphasizeDirection(Direction.UP);
+
 			snake.addPoint(xmax, y1);
 			snake.addPoint(xmax, y2);
 			snake.addPoint(x2, y2);
@@ -434,7 +443,7 @@ class FtileRepeat extends AbstractFtile {
 
 	}
 
-	class ConnectionBackSimple extends AbstractConnection {
+	class ConnectionBackSimple extends AbstractConnection implements ConnectionTranslatable {
 		private final Rainbow arrowColor;
 		private final TextBlock tbback;
 
@@ -470,6 +479,34 @@ class FtileRepeat extends AbstractFtile {
 
 			snake.addPoint(x1, y1);
 			final double xmax = dimTotal.getWidth() - Diamond.diamondHalfSize;
+			snake.addPoint(xmax, y1);
+			snake.addPoint(xmax, y2);
+			snake.addPoint(x2, y2);
+
+			ug.draw(snake);
+		}
+
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToLeft());
+			snake.setLabel(tbback);
+			snake.emphasizeDirection(Direction.UP);
+			final Dimension2D dimRepeat = repeat.calculateDimension(stringBounder);
+
+			Point2D p1 = getP1(stringBounder);
+			Point2D p2 = getP2(stringBounder);
+			p1 = translate1.getTranslated(p1);
+			p2 = translate2.getTranslated(p2);
+			final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+			final Dimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);
+			final double x1 = p1.getX() + dimDiamond2.getWidth();
+			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;
+			final double x2 = p2.getX() + dimDiamond1.getWidth();
+			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;
+
+			snake.addPoint(x1, y1);
+			final double xmax = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2
+					+ Diamond.diamondHalfSize;
 			snake.addPoint(xmax, y1);
 			snake.addPoint(xmax, y2);
 			snake.addPoint(x2, y2);

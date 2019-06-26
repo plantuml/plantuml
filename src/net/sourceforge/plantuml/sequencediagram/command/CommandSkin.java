@@ -36,22 +36,33 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.io.IOException;
-import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandSkin extends SingleLineCommand<UmlDiagram> {
+public class CommandSkin extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandSkin() {
-		super("(?i)^skin[%s]+([\\w.]+)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSkin.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("skin"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("SKIN", "([\\w.]+)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram system, List<String> arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
 		try {
-			return system.loadSkin(arg.get(0));
+			return diagram.loadSkin(arg.get("SKIN", 0));
 		} catch (IOException e) {
 			return CommandExecutionResult.error("Skin read error");
 		}

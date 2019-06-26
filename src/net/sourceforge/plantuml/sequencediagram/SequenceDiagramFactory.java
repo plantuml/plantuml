@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteAccrossCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteOnArrowCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteOverSeveralCommand;
@@ -114,6 +115,8 @@ public class SequenceDiagramFactory extends UmlDiagramFactory {
 
 		final FactorySequenceNoteOverSeveralCommand factorySequenceNoteOverSeveralCommand = new FactorySequenceNoteOverSeveralCommand();
 		cmds.add(factorySequenceNoteOverSeveralCommand.createSingleLine());
+		final FactorySequenceNoteAccrossCommand factorySequenceNoteAccrossCommand = new FactorySequenceNoteAccrossCommand();
+		cmds.add(factorySequenceNoteAccrossCommand.createSingleLine());
 
 		cmds.add(new CommandBoxStart());
 		cmds.add(new CommandBoxEnd());
@@ -128,6 +131,7 @@ public class SequenceDiagramFactory extends UmlDiagramFactory {
 		cmds.add(factorySequenceNoteCommand.createMultiLine(false));
 		cmds.add(factorySequenceNoteOverSeveralCommand.createMultiLine(false));
 		cmds.add(factorySequenceNoteOnArrowCommand.createMultiLine(false));
+		cmds.add(factorySequenceNoteAccrossCommand.createMultiLine(false));
 
 		cmds.add(new CommandNewpage());
 		cmds.add(new CommandIgnoreNewpage());

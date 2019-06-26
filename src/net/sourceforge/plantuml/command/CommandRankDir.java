@@ -34,22 +34,32 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 
-public class CommandRankDir extends SingleLineCommand<CucaDiagram> {
+public class CommandRankDir extends SingleLineCommand2<CucaDiagram> {
 
 	public CommandRankDir() {
-		super("(?i)^(left[%s]to[%s]right|top[%s]to[%s]bottom)[%s]+direction$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandRankDir.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("DIRECTION", "(left[%s]to[%s]right|top[%s]to[%s]bottom)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("direction"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, List<String> arg) {
-		final String s = StringUtils.goUpperCase(arg.get(0)).replace(' ', '_');
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
+		final String s = StringUtils.goUpperCase(arg.get("DIRECTION", 0)).replace(' ', '_');
 		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));
 		// diagram.setRankdir(Rankdir.valueOf(s));
 		return CommandExecutionResult.ok();

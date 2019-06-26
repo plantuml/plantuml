@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -59,14 +60,16 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	private static RegexConcat getConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("REF", "ref(#\\w+)?[%s]+over[%s]+"), //
+		return RegexConcat.build(CommandReferenceOverSeveral.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("REF", "ref(#\\w+)?[%s]+over"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("PARTS",
 						"(([\\p{L}0-9_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([\\p{L}0-9_.@]+|[%g][^%g]+[%g]))*)"), //
-				new RegexLeaf("[%s]*:[%s]*"), //
-				new RegexLeaf("URL", "(?:\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\])?"), //
-				new RegexLeaf("TEXT", "(.*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("URL", "\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]")), //
+				new RegexLeaf("TEXT", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override

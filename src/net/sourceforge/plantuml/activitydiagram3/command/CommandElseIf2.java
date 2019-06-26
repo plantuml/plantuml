@@ -39,8 +39,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -52,18 +54,26 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandElseIf2.class.getName(), RegexLeaf.start(), //
 				ColorParser.exp4(), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("INLABEL", "(?:\\((.+?)\\))?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("else[%s]*if"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("INLABEL", "\\((.+?)\\)")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("else"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("if"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TEST", "\\((.*?)\\)"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("WHEN", "(?:then[%s]*(?:\\((.+?)\\))?)?"), //
-				new RegexLeaf(";?$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("then"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexOptional(new RegexLeaf("WHEN", "\\((.+?)\\)")) //
+						)), //
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override

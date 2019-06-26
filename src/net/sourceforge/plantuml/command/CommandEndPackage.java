@@ -35,20 +35,29 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 
-public class CommandEndPackage extends SingleLineCommand<AbstractEntityDiagram> {
+public class CommandEndPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 	public CommandEndPackage() {
-		super("(?i)^\\}$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandEndPackage.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("\\}"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		if (EntityUtils.groupRoot(currentPackage)) {
 			return CommandExecutionResult.error("No package or namespace defined");

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
@@ -52,14 +53,15 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //
 				new RegexOr( //
 						new RegexLeaf("CODE3", "([\\p{L}0-9_.]+)"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
-				new RegexLeaf("[%s]*:[%s]*"), //
-				new RegexLeaf("FIELD", "(.*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("FIELD", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override

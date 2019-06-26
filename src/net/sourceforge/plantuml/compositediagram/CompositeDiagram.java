@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.compositediagram;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -43,6 +44,10 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
 
 public class CompositeDiagram extends AbstractEntityDiagram {
+
+	public CompositeDiagram(ISkinSimple skinParam) {
+		super(skinParam);
+	}
 
 	@Override
 	public IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {

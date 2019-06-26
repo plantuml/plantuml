@@ -136,7 +136,7 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering) {
+			LinkRendering topInlinkRendering, Url url) {
 		final List<Ftile> ftiles = new ArrayList<Ftile>();
 		for (Branch branch : thens) {
 			ftiles.add(branch.getFtile());

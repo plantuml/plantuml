@@ -39,8 +39,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandSplitEnd3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -49,11 +51,22 @@ public class CommandSplitEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(//
-				new RegexLeaf("^"), //
-				new RegexLeaf("(end[%s]?split|split[%s]?end)"), //
-				new RegexLeaf(";?$"));
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSplitEnd3.class.getName(), RegexLeaf.start(), //
+				new RegexOr( //
+						new RegexConcat( //
+								new RegexLeaf("end"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("split") //
+						), //
+						new RegexConcat( //
+								new RegexLeaf("split"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("end") //
+						) //
+				), //
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override

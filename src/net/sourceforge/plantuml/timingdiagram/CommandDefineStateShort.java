@@ -40,6 +40,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -50,13 +51,14 @@ public class CommandDefineStateShort extends SingleLineCommand2<TimingDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandDefineStateShort.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("PLAYER", "([\\p{L}0-9_.@]+)"), //
-				new RegexLeaf("[%s]+has[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("has"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("STATE", "([\\p{L}0-9_.@]+)"), //
-				new RegexLeaf("STATES", "((,([\\p{L}0-9_.@]+))*)"), //
-				new RegexLeaf("$"));
+				new RegexLeaf("STATES", "((,([\\p{L}0-9_.@]+))*)"), RegexLeaf.end());
 	}
 
 	@Override

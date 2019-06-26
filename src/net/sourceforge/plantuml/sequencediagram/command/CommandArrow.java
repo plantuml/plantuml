@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
@@ -75,42 +76,45 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		return "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?";
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(
-				new RegexLeaf("^"), //
-				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
-				new RegexLeaf("ANCHOR", ANCHOR), //
-				new RegexOr("PART1", //
-						new RegexLeaf("PART1CODE", "([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART1LONG", "[%g]([^%g]+)[%g]"), //
-						new RegexLeaf("PART1LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART1CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
-				new RegexLeaf("PART1ANCHOR", ANCHOR), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("ARROW_DRESSING1", "([%s][ox]|(?:[%s][ox])?<<?|(?:[%s][ox])?//?|(?:[%s][ox])?\\\\\\\\?)?"), //
-				new RegexOr(new RegexConcat( //
-						new RegexLeaf("ARROW_BODYA1", "(-+)"), //
-						new RegexLeaf("ARROW_STYLE1", getColorOrStylePattern()), //
-						new RegexLeaf("ARROW_BODYB1", "(-*)")), //
-						new RegexConcat( //
-								new RegexLeaf("ARROW_BODYA2", "(-*)"), //
-								new RegexLeaf("ARROW_STYLE2", getColorOrStylePattern()), //
-								new RegexLeaf("ARROW_BODYB2", "(-+)"))), //
-				new RegexLeaf("ARROW_DRESSING2", "(>>?(?:[ox][%s])?|//?(?:[ox][%s])?|\\\\\\\\?(?:[ox][%s])?|[ox][%s])?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexOr("PART2", //
-						new RegexLeaf("PART2CODE", "([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART2LONG", "[%g]([^%g]+)[%g]"), //
-						new RegexLeaf("PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART2CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
-				new RegexLeaf("PART2ANCHOR", ANCHOR), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?$"));
+	static IRegex getRegexConcat() {
+		return RegexConcat
+				.build(CommandArrow.class.getName(),
+						RegexLeaf.start(), //
+						new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
+						new RegexLeaf("ANCHOR", ANCHOR), //
+						new RegexOr("PART1", //
+								new RegexLeaf("PART1CODE", "([\\p{L}0-9_.@]+)"), //
+								new RegexLeaf("PART1LONG", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf("PART1LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
+								new RegexLeaf("PART1CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+						new RegexLeaf("PART1ANCHOR", ANCHOR), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("ARROW_DRESSING1",
+								"([%s][ox]|(?:[%s][ox])?<<?|(?:[%s][ox])?//?|(?:[%s][ox])?\\\\\\\\?)?"), //
+						new RegexOr(new RegexConcat( //
+								new RegexLeaf("ARROW_BODYA1", "(-+)"), //
+								new RegexLeaf("ARROW_STYLE1", getColorOrStylePattern()), //
+								new RegexLeaf("ARROW_BODYB1", "(-*)")), //
+								new RegexConcat( //
+										new RegexLeaf("ARROW_BODYA2", "(-*)"), //
+										new RegexLeaf("ARROW_STYLE2", getColorOrStylePattern()), //
+										new RegexLeaf("ARROW_BODYB2", "(-+)"))), //
+						new RegexLeaf("ARROW_DRESSING2",
+								"(>>?(?:[ox][%s])?|//?(?:[ox][%s])?|\\\\\\\\?(?:[ox][%s])?|[ox][%s])?"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexOr("PART2", //
+								new RegexLeaf("PART2CODE", "([\\p{L}0-9_.@]+)"), //
+								new RegexLeaf("PART2LONG", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf("PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
+								new RegexLeaf("PART2CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+						new RegexLeaf("PART2ANCHOR", ANCHOR), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+						RegexLeaf.spaceZeroOrMore(), new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), RegexLeaf.end());
 	}
 
 	private Participant getOrCreateParticipant(SequenceDiagram system, RegexResult arg2, String n) {

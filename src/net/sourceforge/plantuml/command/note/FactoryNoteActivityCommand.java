@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -63,21 +64,27 @@ import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class FactoryNoteActivityCommand implements SingleMultiFactoryCommand<ActivityDiagram> {
 
-	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)[%s]*"), //
+	private IRegex getRegexConcatMultiLine() {
+		return RegexConcat.build(FactoryNoteActivityCommand.class.getName() + "multi", RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
-	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)[%s]*"), //
+	private IRegex getRegexConcatSingleLine() {
+		return RegexConcat.build(FactoryNoteActivityCommand.class.getName() + "single", RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				new RegexLeaf("[%s]*:[%s]*"), //
-				new RegexLeaf("NOTE", "(.*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	public Command<ActivityDiagram> createMultiLine(boolean withBracket) {
@@ -91,10 +98,10 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 			public final CommandExecutionResult executeNow(final ActivityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, true);
-				final RegexResult arg = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+				final RegexResult arg = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
-				
+
 				Display strings = lines.toDisplay();
 
 				Url url = null;
@@ -122,7 +129,8 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<ActivityDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final ActivityDiagram system, LineLocation location, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final ActivityDiagram system, LineLocation location,
+					RegexResult arg) {
 				final IEntity note = system.createNote(UniqueSequence.getCode("GN"),
 						Display.getWithNewlines(arg.get("NOTE", 0)));
 				return executeInternal(system, arg, note);
@@ -132,7 +140,8 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 	private CommandExecutionResult executeInternal(ActivityDiagram diagram, RegexResult arg, IEntity note) {
 
-		note.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		note.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 
 		IEntity activity = diagram.getLastEntityConsulted();
 		if (activity == null) {

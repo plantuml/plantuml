@@ -169,11 +169,12 @@ public class MindMapDiagram extends UmlDiagram {
 		}
 	}
 
-	public CommandExecutionResult addIdea(int level, String label, IdeaShape shape) {
-		return addIdea(level, label, shape, defaultDirection);
+	public CommandExecutionResult addIdea(HtmlColor backColor, int level, String label, IdeaShape shape) {
+		return addIdea(backColor, level, label, shape, defaultDirection);
 	}
 
-	public CommandExecutionResult addIdea(int level, String label, IdeaShape shape, Direction direction) {
+	public CommandExecutionResult addIdea(HtmlColor backColor, int level, String label, IdeaShape shape,
+			Direction direction) {
 		if (level == 0) {
 			if (this.right.root != null) {
 				return CommandExecutionResult
@@ -184,9 +185,9 @@ public class MindMapDiagram extends UmlDiagram {
 			return CommandExecutionResult.ok();
 		}
 		if (direction == Direction.LEFT) {
-			return left.add(level, label, shape);
+			return left.add(backColor, level, label, shape);
 		}
-		return right.add(level, label, shape);
+		return right.add(backColor, level, label, shape);
 	}
 
 	static class Branch {
@@ -207,15 +208,15 @@ public class MindMapDiagram extends UmlDiagram {
 			return result;
 		}
 
-		private CommandExecutionResult add(int level, String label, IdeaShape shape) {
+		private CommandExecutionResult add(HtmlColor backColor, int level, String label, IdeaShape shape) {
 			if (level == last.getLevel() + 1) {
-				final Idea newIdea = last.createIdea(level, Display.getWithNewlines(label), shape);
+				final Idea newIdea = last.createIdea(backColor, level, Display.getWithNewlines(label), shape);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}
 			if (level <= last.getLevel()) {
 				final int diff = last.getLevel() - level + 1;
-				final Idea newIdea = getParentOfLast(diff).createIdea(level, Display.getWithNewlines(label), shape);
+				final Idea newIdea = getParentOfLast(diff).createIdea(backColor, level, Display.getWithNewlines(label), shape);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}

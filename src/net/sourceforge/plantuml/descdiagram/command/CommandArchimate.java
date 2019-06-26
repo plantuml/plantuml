@@ -40,8 +40,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -61,33 +63,54 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandArchimate.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("SYMBOL", "archimate"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
-								new RegexLeaf("STEREOTYPE2", "(?:[%s]+(?:\\<\\<([-\\w]+)\\>\\>))?"), //
-								new RegexLeaf("[%s]*as[%s]+"), //
+								new RegexOptional( //
+										new RegexConcat( //
+												RegexLeaf.spaceOneOrMore(), //
+												new RegexLeaf("STEREOTYPE2", "(?:\\<\\<([-\\w]+)\\>\\>)") //
+										)), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)), //
 						new RegexConcat(//
 								new RegexLeaf("CODE3", CommandCreateElementFull.CODE), //
-								new RegexLeaf("STEREOTYPE3", "(?:[%s]+(?:\\<\\<([-\\w]+)\\>\\>))?"), //
-								new RegexLeaf("[%s]+as[%s]*"), //
+								new RegexOptional( //
+										new RegexConcat( //
+												RegexLeaf.spaceOneOrMore(), //
+												new RegexLeaf("STEREOTYPE3", "(?:\\<\\<([-\\w]+)\\>\\>)") //
+										)), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("DISPLAY3", CommandCreateElementFull.DISPLAY)), //
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY4", CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
-								new RegexLeaf("STEREOTYPE4", "(?:[%s]+(?:\\<\\<([-\\w]+)\\>\\>))?"), //
-								new RegexLeaf("[%s]*as[%s]+"), //
+								new RegexOptional( //
+										new RegexConcat( //
+												RegexLeaf.spaceOneOrMore(), //
+												new RegexLeaf("STEREOTYPE4", "(?:\\<\\<([-\\w]+)\\>\\>)") //
+										)), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE4", CommandCreateElementFull.CODE)) //
 				), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("STEREOTYPE", "(?:[%s]*(?:\\<\\<([-\\w]+)\\>\\>))?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("STEREOTYPE", "(?:\\<\\<([-\\w]+)\\>\\>)") //
+						)), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

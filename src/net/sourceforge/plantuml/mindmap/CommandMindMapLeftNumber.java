@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,20 +50,19 @@ public class CommandMindMapLeftNumber extends SingleLineCommand2<MindMapDiagram>
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandMindMapLeftNumber.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "([1-9][0-9]?)[<]"), //
 				new RegexLeaf("SHAPE", "(_)?"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("LABEL", "([^%s].*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
 		final String label = arg.get("LABEL", 0);
-		return diagram.addIdea(Integer.parseInt(arg.get("TYPE", 0)), label, IdeaShape.fromDesc(arg.get("SHAPE", 0)),
-				Direction.LEFT);
+		return diagram.addIdea(null, Integer.parseInt(arg.get("TYPE", 0)), label,
+				IdeaShape.fromDesc(arg.get("SHAPE", 0)), Direction.LEFT);
 	}
 
 }

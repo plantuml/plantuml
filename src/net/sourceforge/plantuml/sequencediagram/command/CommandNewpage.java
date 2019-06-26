@@ -35,22 +35,38 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandNewpage extends SingleLineCommand<SequenceDiagram> {
+public class CommandNewpage extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandNewpage() {
-		super("(?i)^@?newpage(?:(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*))?$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("@?"), //
+				new RegexLeaf("newpage"), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
+								new RegexLeaf("LABEL", "(.*[\\p{L}0-9_.].*)") //
+						)), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		final Display strings = arg.get(0) == null ? Display.NULL : Display.getWithNewlines(arg.get(0));
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location, RegexResult arg) {
+		final String label = arg.get("LABEL", 0);
+		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(label);
 		sequenceDiagram.newpage(strings);
 		return CommandExecutionResult.ok();
 	}

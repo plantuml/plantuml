@@ -460,6 +460,14 @@ class DrawableSetInitializer {
 		}
 		final ISkinParam skinParam = n.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final ComponentType type = n.getStyle().getNoteComponentType();
+		if (p1 == null && p2 == null) {
+			for (LivingParticipantBox p : drawableSet.getAllLivingParticipantBox()) {
+				if (p1 == null) {
+					p1 = p;
+				}
+				p2 = p;
+			}
+		}
 		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), drawableSet.getSkin().createComponent(type, null,
 				skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 		return noteBox;

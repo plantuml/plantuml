@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -64,39 +65,47 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
-	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat( //
-				new RegexLeaf("^"), //
-				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
+	private IRegex getRegexConcatMultiLine() {
+		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "multi", RegexLeaf.start(), //
+				new RegexLeaf("VMERGE", "(/)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("over[%s]+"), //
-				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,[%s]*"), //
-				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("over"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("$") //
-		);
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), RegexLeaf.end() //
+				);
 	}
 
-	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat( //
-				new RegexLeaf("^"), //
-				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
+	private IRegex getRegexConcatSingleLine() {
+		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "single", RegexLeaf.start(), //
+				new RegexLeaf("VMERGE", "(/)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("over[%s]+"), //
-				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,[%s]*"), //
-				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("over"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*:[%s]*"), //
-				new RegexLeaf("NOTE", "(.*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("NOTE", "(.*)"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -127,7 +136,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				return executeInternal(system, line0, lines);

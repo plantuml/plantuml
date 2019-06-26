@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.help;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,12 +50,11 @@ public class CommandHelpColor extends SingleLineCommand2<Help> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHelpColor.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("help"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("colors?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("colors?"), RegexLeaf.end());
 	}
 
 	@Override

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -56,27 +57,34 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 
 public final class FactoryNoteCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
-	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*(note)[%s]+"), //
-				new RegexLeaf("CODE", "as[%s]+([\\p{L}0-9_.]+)"), //
-				new RegexLeaf("[%s]*"), //
+	private IRegex getRegexConcatMultiLine() {
+		return RegexConcat.build(FactoryNoteCommand.class.getName() + "multi", RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("as"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				new RegexLeaf("$") //
-		);
+				RegexLeaf.end() //
+				);
 	}
 
-	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
-				new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g][%s]+as[%s]+"), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)[%s]*"), //
-				new RegexLeaf("[%s]*"), //
+	private IRegex getRegexConcatSingleLine() {
+		return RegexConcat.build(FactoryNoteCommand.class.getName() + "single", RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g][%s]+as"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				new RegexLeaf("$") //
-		);
+				RegexLeaf.end() //
+				);
 
 	}
 
@@ -84,7 +92,8 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location,
+					RegexResult arg) {
 				final String display = arg.get("DISPLAY", 0);
 				return executeInternal(system, arg, BlocLines.getWithNewlines(display));
 			}
@@ -103,7 +112,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				return executeInternal(system, line0, lines);
@@ -118,7 +127,8 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		}
 		final IEntity entity = diagram.createLeaf(code, display.toDisplay(), LeafType.NOTE, null);
 		assert entity != null;
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 		return CommandExecutionResult.ok();
 	}

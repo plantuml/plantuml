@@ -35,21 +35,36 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 
-public class CommandEndPartition extends SingleLineCommand<ActivityDiagram> {
+public class CommandEndPartition extends SingleLineCommand2<ActivityDiagram> {
 
 	public CommandEndPartition() {
-		super("(?i)^(end[%s]?partition|\\})$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandEndPartition.class.getName(), RegexLeaf.start(), //
+				new RegexOr( //
+						new RegexConcat( //
+								new RegexLeaf("end"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("partition")), //
+						new RegexLeaf("\\}")), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
 		final IEntity currentPackage = diagram.getCurrentGroup();
 		if (currentPackage == null) {
 			return CommandExecutionResult.error("No partition defined");

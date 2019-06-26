@@ -104,13 +104,14 @@ public class BlockUml {
 	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode) {
 		this.localDefines = defines;
 		this.skinParam = skinParam;
-		final String s0 = strings.get(0).getStringTrimmed();
+		final String s0 = strings.get(0).getTrimmed().getString();
 		if (StartUtils.startsWithSymbolAnd("start", s0) == false) {
 			throw new IllegalArgumentException();
 		}
 		if (mode != null && mode.getPreprocessorMode() == PreprocessorMode.V2_NEW_TIM) {
 			this.pmode = mode.getPreprocessorMode();
-			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, mode.getCharset());
+			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, mode.getCharset(),
+					(DefinitionsContainer) mode);
 			timLoader.load(strings);
 			this.data = timLoader.getResult();
 			this.debug = timLoader.getDebug();
@@ -193,6 +194,17 @@ public class BlockUml {
 	public List<String> getDefinition(boolean withHeader) {
 		final List<String> data2 = new ArrayList<String>();
 		for (StringLocated s : data) {
+			data2.add(s.getString());
+		}
+		if (withHeader) {
+			return Collections.unmodifiableList(data2);
+		}
+		return Collections.unmodifiableList(data2.subList(1, data2.size() - 1));
+	}
+
+	public List<String> getDefinition2(boolean withHeader) {
+		final List<String> data2 = new ArrayList<String>();
+		for (StringLocated s : debug) {
 			data2.add(s.getString());
 		}
 		if (withHeader) {

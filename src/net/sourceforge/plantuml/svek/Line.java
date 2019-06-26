@@ -41,6 +41,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -142,6 +144,8 @@ public class Line implements Moveable, Hideable {
 	private final UStroke defaultThickness;
 	private HtmlColor arrowLollipopColor;
 
+	// private final UmlDiagramType umlType;
+
 	@Override
 	public String toString() {
 		return super.toString() + " color=" + lineColor;
@@ -222,6 +226,7 @@ public class Line implements Moveable, Hideable {
 		if (link == null) {
 			throw new IllegalArgumentException();
 		}
+		// this.umlType = link.getUmlDiagramType();
 		this.useRankSame = skinParam.useRankSame();
 		this.startUid = link.getEntityPort1(bibliotekon);
 		this.endUid = link.getEntityPort2(bibliotekon);
@@ -332,8 +337,8 @@ public class Line implements Moveable, Hideable {
 
 	private TextBlock getLineLabel(Link link, ISkinParam skinParam, FontConfiguration labelFont) {
 		final double marginLabel = startUid.equalsId(endUid) ? 6 : 1;
-		TextBlock label = link.getLabel().create(labelFont,
-				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam, skinParam.maxMessageSize());
+		final HorizontalAlignment alignment = getMessageTextAlignment(link.getUmlDiagramType(), skinParam);
+		TextBlock label = link.getLabel().create(labelFont, alignment, skinParam, skinParam.maxMessageSize());
 		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();
 		if (visibilityModifier != null) {
 			final Rose rose = new Rose();
@@ -346,6 +351,13 @@ public class Line implements Moveable, Hideable {
 		}
 		label = TextBlockUtils.withMargin(label, marginLabel, marginLabel);
 		return label;
+	}
+
+	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
+		if (umlDiagramType == UmlDiagramType.STATE) {
+			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false);
+		}
+		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);
 	}
 
 	public boolean hasNoteLabelText() {
@@ -708,13 +720,11 @@ public class Line implements Moveable, Hideable {
 
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			// http://forum.plantuml.net/9421/arrow-inversion-with-skinparam-linetype-ortho-missing-arrow
-			final Point2D p1 = ((Extremity) extremity1).isTooSmallSoGiveThePointCloserToThisOne(todraw
-					.getStartPoint());
+			final Point2D p1 = ((Extremity) extremity1).isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
 			if (p1 != null) {
 				todraw.forceStartPoint(p1.getX(), p1.getY());
 			}
-			final Point2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw
-					.getEndPoint());
+			final Point2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw.getEndPoint());
 			if (p2 != null) {
 				todraw.forceEndPoint(p2.getX(), p2.getY());
 			}

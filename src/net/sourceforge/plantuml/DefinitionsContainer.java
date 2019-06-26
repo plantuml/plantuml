@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
 
 public interface DefinitionsContainer extends PreprocessorModeSet {
 
-	public List<String> getDefinition(String name);
+	public List<String> getDefinition1(String name);
+	public List<String> getDefinition2(String name);
 
 }

@@ -52,6 +52,7 @@ public enum ColorParam {
 	activityEnd(HtmlColorUtils.BLACK),
 	activityBar(HtmlColorUtils.BLACK),
 	swimlaneBorder(HtmlColorUtils.BLACK),
+	swimlaneTitleBackground(null),
 	
 	usecaseBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	usecaseBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),

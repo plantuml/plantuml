@@ -39,8 +39,11 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
@@ -50,11 +53,24 @@ public class CommandWhileEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("(end[%s]?while|while[%s]?end)"), //
-				new RegexLeaf("OUT", "[%s]*(?:\\((.+?)\\))?"), //
-				new RegexLeaf(";?$"));
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandWhileEnd3.class.getName(), RegexLeaf.start(), //
+				new RegexOr( //
+						new RegexConcat( //
+								new RegexLeaf("end"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("while") //
+						), //
+						new RegexConcat( //
+								new RegexLeaf("while"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("end") //
+						) //
+				), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("OUT", "\\((.+?)\\)")), //
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 class Idea {
 
@@ -49,18 +50,20 @@ class Idea {
 	private final Idea parent;
 	private final List<Idea> children = new ArrayList<Idea>();
 	private final IdeaShape shape;
+	private final HtmlColor backColor;
 
 	public Idea(Display label, IdeaShape shape) {
-		this(0, null, label, shape);
+		this(null, 0, null, label, shape);
 	}
 
-	public Idea createIdea(int newLevel, Display newDisplay, IdeaShape newShape) {
-		final Idea result = new Idea(newLevel, this, newDisplay, newShape);
+	public Idea createIdea(HtmlColor backColor, int newLevel, Display newDisplay, IdeaShape newShape) {
+		final Idea result = new Idea(backColor, newLevel, this, newDisplay, newShape);
 		this.children.add(result);
 		return result;
 	}
 
-	private Idea(int level, Idea parent, Display label, IdeaShape shape) {
+	private Idea(HtmlColor backColor, int level, Idea parent, Display label, IdeaShape shape) {
+		this.backColor = backColor;
 		this.label = label;
 		this.level = level;
 		this.parent = parent;
@@ -94,6 +97,10 @@ class Idea {
 
 	public final IdeaShape getShape() {
 		return shape;
+	}
+
+	public final HtmlColor getBackColor() {
+		return backColor;
 	}
 
 }

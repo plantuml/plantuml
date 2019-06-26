@@ -38,8 +38,10 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColorSet;
@@ -56,14 +58,18 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("PARALLEL", "(&%s*)?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("return[%s]*"), //
-				new RegexLeaf("COLOR", "(?:(#\\w+)[%s]+)?"), //
-				new RegexLeaf("MESSAGE", "(.*)"), //
-				new RegexLeaf("$"));
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandReturn.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("return"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("COLOR", "(#\\w+)"), //
+								RegexLeaf.spaceOneOrMore() //
+						)), //
+				new RegexLeaf("MESSAGE", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override

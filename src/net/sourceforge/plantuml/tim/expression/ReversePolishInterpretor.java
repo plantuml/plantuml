@@ -74,21 +74,20 @@ public class ReversePolishInterpretor {
 				final TValue tmp = op.operate(v1, v2);
 				stack.addFirst(tmp);
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {
-				final int nb2 = Integer.parseInt(token.getSurface());
+				final int nb = Integer.parseInt(token.getSurface());
 				final Token token2 = it.nextToken();
 				if (token2.getTokenType() != TokenType.FUNCTION_NAME) {
 					throw new EaterException("rpn43");
 				}
 				if (trace)
 					System.err.println("token2=" + token2);
-				final TFunction function = knowledge.getFunction(new TFunctionSignature(token2.getSurface(), nb2));
+				final TFunction function = knowledge.getFunction(new TFunctionSignature(token2.getSurface(), nb));
 				if (trace)
 					System.err.println("function=" + function);
 				if (function == null) {
 					throw new EaterException("Unknow built-in function " + token2.getSurface());
 				}
-				final int nb = function.getSignature().getNbArg();
-				if (nb != nb2) {
+				if (function.canCover(nb) == false) {
 					throw new EaterException("Bad number of arguments for " + function.getSignature().getFunctionName());
 				}
 				final List<TValue> args = new ArrayList<TValue>();

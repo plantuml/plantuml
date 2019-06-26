@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.jungle;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,10 +49,9 @@ public class CommandEmpty extends SingleLineCommand2<PSystemTree> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("$"));
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandEmpty.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

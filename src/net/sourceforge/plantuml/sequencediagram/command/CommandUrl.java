@@ -35,27 +35,43 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandUrl extends SingleLineCommand<SequenceDiagram> {
+public class CommandUrl extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandUrl() {
-		super("(?i)^url[%s]*(?:of|for)?[%s]+([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]+(?:is)?[%s]*(" + UrlBuilder.getRegexp() + ")$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandUrl.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("url"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("of|for")), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexOptional(new RegexLeaf("is")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, List<String> arg) {
-		final String code = arg.get(0);
-		final String urlString = arg.get(1);
-		// final String title = arg.get(2);
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+		final String code = arg.get("CODE", 0);
+		final String urlString = arg.get("URL", 0);
 		final Participant p = diagram.getOrCreateParticipant(code);
 		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);

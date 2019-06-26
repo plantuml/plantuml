@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,14 +49,17 @@ public class CommandDefineStateLong extends SingleLineCommand2<TimingDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandDefineStateLong.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("PLAYER", "([\\p{L}0-9_.@]+)"), //
-				new RegexLeaf("[%s]+has[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("has"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("LABEL", "[%g]([^%g]+)[%g]"), //
-				new RegexLeaf("[%s]+as[%s]+"), //
-				new RegexLeaf("STATE", "([\\p{L}0-9_.@]+)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("as"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("STATE", "([\\p{L}0-9_.@]+)"), RegexLeaf.end());
 	}
 
 	@Override

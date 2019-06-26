@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class SubjectTask implements SubjectPattern {
@@ -57,7 +58,13 @@ public class SubjectTask implements SubjectPattern {
 		return new RegexConcat( //
 				new RegexLeaf("THEN", "(then[%s]+)?"), //
 				new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
-				new RegexLeaf("RESOURCE", "(?:[%s]+on[%s]+((?:\\{[^{}]+\\}[%s]*)+))?") //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("on"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
+						)) //
 		);
 	}
 

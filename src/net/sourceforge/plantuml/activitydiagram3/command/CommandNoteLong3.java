@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -55,11 +56,10 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 	public CommandNoteLong3() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 	}
-	
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
-
 
 	public String getPatternEnd() {
 		return "(?i)^end[%s]?note$";
@@ -67,7 +67,7 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines) {
 		// final List<? extends CharSequence> in = StringUtils.removeEmptyColumns2(lines.subList(1, lines.size() - 1));
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final NotePosition position = NotePosition.defaultLeft(line0.get("POSITION", 0));
@@ -77,13 +77,13 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 		return diagram.addNote(note, position, type, colors);
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "(note|floating note)"), //
-				new RegexLeaf("POSITION", "[%s]*(left|right)?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("POSITION", "(left|right)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				new RegexLeaf("$"));
+				RegexLeaf.end());
 	}
-
 }

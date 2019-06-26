@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,12 +50,11 @@ public class CommandRemoveRestore extends SingleLineCommand2<CucaDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandRemoveRestore.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("COMMAND", "(remove|restore)"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("WHAT", "(.+)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("WHAT", "(.+)"), RegexLeaf.end());
 	}
 
 	@Override

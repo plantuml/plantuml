@@ -36,17 +36,17 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.core.Diagram;
 
 public abstract class CommandMultilines3<S extends Diagram> implements Command<S> {
 
-	private final RegexConcat starting;
+	private final IRegex starting;
 
 	private final MultilinesStrategy strategy;
 
-	public CommandMultilines3(RegexConcat patternStart, MultilinesStrategy strategy) {
+	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy) {
 		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
 		}
@@ -69,7 +69,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		if (first == null) {
 			return CommandControl.NOT_OK;
 		}
-		final boolean result1 = starting.match(first.getStringTrimmed());
+		final boolean result1 = starting.match(first.getTrimmed());
 		if (result1 == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -77,7 +77,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final String potentialLast = StringUtils.trinNoTrace(lines.getLast499().getString());
+		final StringLocated potentialLast = lines.getLast499().getTrimmed();
 		final boolean m1 = getPatternEnd2().match(potentialLast);
 		if (m1 == false) {
 			return CommandControl.OK_PARTIAL;
@@ -101,7 +101,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	protected void actionIfCommandValid() {
 	}
 
-	protected final RegexConcat getStartingPattern() {
+	protected final IRegex getStartingPattern() {
 		return starting;
 	}
 

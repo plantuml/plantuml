@@ -35,22 +35,34 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.ScaleHeight;
 import net.sourceforge.plantuml.ScaleWidth;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandScaleWidthOrHeight extends SingleLineCommand<AbstractPSystem> {
+public class CommandScaleWidthOrHeight extends SingleLineCommand2<AbstractPSystem> {
 
 	public CommandScaleWidthOrHeight() {
-		super("(?i)^scale[%s]+([0-9.]+)[%s]+(width|height)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandScaleWidthOrHeight.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("scale"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("VALUE", "([0-9.]+)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("WIDTH", "(width|height)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, List<String> arg) {
-		final double size = Double.parseDouble(arg.get(0));
-		final boolean width = "width".equalsIgnoreCase(arg.get(1));
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg) {
+		final double size = Double.parseDouble(arg.get("VALUE", 0));
+		final boolean width = "width".equalsIgnoreCase(arg.get("WIDTH", 0));
 		if (width) {
 			diagram.setScale(new ScaleWidth(size));
 		} else {

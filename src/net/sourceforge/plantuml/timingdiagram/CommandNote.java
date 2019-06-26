@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -50,14 +51,21 @@ public class CommandNote extends SingleLineCommand2<TimingDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("[%s]*note[%s]+"), //
-				new RegexLeaf("POSITION", "(top|bottom)[%s]+of[%s]+"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNote.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("POSITION", "(top|bottom)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("of"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
-				new RegexLeaf("[%s]*:[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NOTE", "(.+)"), //
-				new RegexLeaf("[%s]*$"));
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

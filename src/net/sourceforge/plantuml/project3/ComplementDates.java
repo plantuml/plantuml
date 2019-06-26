@@ -49,7 +49,9 @@ public class ComplementDates implements ComplementPattern {
 				new RegexLeaf("MONTH1" + suffix, "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("DAY1" + suffix, "([\\d]{1,2})"), //
-				new RegexLeaf("[%s]+to[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("to"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("YEAR2" + suffix, "([\\d]{4})"), //
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("MONTH2" + suffix, "([\\d]{1,2})"), //

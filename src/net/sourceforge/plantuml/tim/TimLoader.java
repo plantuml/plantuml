@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -47,13 +48,13 @@ public class TimLoader {
 	private boolean preprocessorError;
 	private List<StringLocated> result;
 
-	public TimLoader(ImportedFiles importedFiles, Defines defines, String charset) {
-		this.context = new TContext(importedFiles, defines, charset);
+	public TimLoader(ImportedFiles importedFiles, Defines defines, String charset, DefinitionsContainer definitionsContainer) {
+		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);
 	}
 
 	public void load(List<StringLocated> input) {
 		for (StringLocated s : input) {
-			final TLineType type = TLineType.getFromLine(s.getStringTrimmed());
+			final TLineType type = TLineType.getFromLine(s.getTrimmed().getString());
 			try {
 				context.executeOneLine(global, type, s, null);
 			} catch (EaterException e) {

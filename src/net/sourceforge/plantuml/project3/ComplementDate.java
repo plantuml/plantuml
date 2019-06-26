@@ -77,7 +77,13 @@ public class ComplementDate implements ComplementPattern {
 	private IRegex toRegexD(String suffix) {
 		return new RegexConcat( //
 				new RegexLeaf("DCOUNT" + suffix, "([\\d]+)"), //
-				new RegexLeaf("[%s]+days?[%s]+after[%s]+start"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("days?"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("after"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("start") //
+				);
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project3;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,12 +49,11 @@ public class CommandSeparator extends SingleLineCommand2<GanttDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSeparator.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("--"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COMMENT", "((.+?)[%s]*--)?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("COMMENT", "((.+?)[%s]*--)?"), RegexLeaf.end());
 	}
 
 	@Override

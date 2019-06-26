@@ -159,8 +159,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering) {
-		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
+			LinkRendering topInlinkRendering, Url url) {
+		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url);
 	}
 
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,

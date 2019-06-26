@@ -162,7 +162,7 @@ public class MessageExoArrow extends Arrow {
 
 	@Override
 	public double getArrowYStartLevel(StringBounder stringBounder) {
-		if (getArrowComponent() instanceof ArrowComponent) {
+		if (getArrowComponent() instanceof AbstractComponentRoseArrow) {
 			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();
 			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));
@@ -173,7 +173,7 @@ public class MessageExoArrow extends Arrow {
 
 	@Override
 	public double getArrowYEndLevel(StringBounder stringBounder) {
-		if (getArrowComponent() instanceof ArrowComponent) {
+		if (getArrowComponent() instanceof AbstractComponentRoseArrow) {
 			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();
 			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));

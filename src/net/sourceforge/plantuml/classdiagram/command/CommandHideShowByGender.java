@@ -43,8 +43,10 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.EntityGender;
@@ -68,15 +70,19 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideShowByGender.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("COMMAND", "(hide|show)"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("GENDER",
 						"(?:(class|object|interface|enum|annotation|abstract|[\\p{L}0-9_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
-				new RegexLeaf("EMPTY", "(?:(empty)[%s]+)?"), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("EMPTY", "(empty)"), //
+								RegexLeaf.spaceOneOrMore()) //
+				), //
 				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?|circle\\w*|stereotypes?)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.end());
 	}
 
 	private final EntityGender emptyByGender(Set<EntityPortion> portion) {

@@ -70,23 +70,6 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest) {
-		// final ConditionStyle conditionStyle = skinParam().getConditionStyle();
-		//
-		// final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-		// final HtmlColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
-		// final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
-		//
-		// final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
-		//
-		// final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
-		// : FontParam.ARROW;
-		// final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null)
-		// .changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
-		//
-		// return FtileSwitch.create(swimlane, borderColor, backColor, arrowColor, getFactory(), conditionStyle,
-		// branches,
-		// fcArrow, topInlinkRendering, afterEndwhile, fcTest);
-
 		// return createNude(swimlane, branches);
 		// return createWithDiamonds(swimlane, branches, labelTest);
 		return createWithLinks(swimlane, branches, labelTest);
@@ -113,11 +96,11 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 	private Ftile createWithLinks(Swimlane swimlane, List<Branch> branches, Display labelTest) {
 		final List<Ftile> ftiles = new ArrayList<Ftile>();
+		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest);
+		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));
 		for (Branch branch : branches) {
 			ftiles.add(new FtileMinWidth(branch.getFtile(), 30));
 		}
-		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest);
-		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));
 		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 		if (ftiles.size() == 1) {
 			final FtileSwitchWithOneLink result = new FtileSwitchWithOneLink(ftiles, branches, swimlane, diamond1,

@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -415,6 +416,7 @@ public class SkinParam implements ISkinParam {
 		result.add("Style");
 		result.add("SequenceParticipant");
 		result.add("ConditionStyle");
+		result.add("ConditionEndStyle");
 		result.add("SameClassWidth");
 		result.add("HyperlinkUnderline");
 		result.add("Padding");
@@ -535,6 +537,8 @@ public class SkinParam implements ISkinParam {
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
 		if (result == null && param == AlignmentParam.noteTextAlignment) {
 			return getDefaultTextAlignment(HorizontalAlignment.LEFT);
+		} else if (result == null && param == AlignmentParam.stateMessageAlignment) {
+			return getDefaultTextAlignment(HorizontalAlignment.CENTER);
 		} else if (result == null) {
 			return param.getDefaultValue();
 		}
@@ -843,6 +847,15 @@ public class SkinParam implements ISkinParam {
 		final ConditionStyle p = ConditionStyle.fromString(value);
 		if (p == null) {
 			return ConditionStyle.INSIDE;
+		}
+		return p;
+	}
+
+	public ConditionEndStyle getConditionEndStyle() {
+		final String value = getValue("conditionEndStyle");
+		final ConditionEndStyle p = ConditionEndStyle.fromString(value);
+		if (p == null) {
+			return ConditionEndStyle.DIAMOND;
 		}
 		return p;
 	}

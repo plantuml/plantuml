@@ -35,21 +35,36 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandPage extends SingleLineCommand<AbstractEntityDiagram> {
+public class CommandPage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 	public CommandPage() {
-		super("(?i)^page[%s]+(\\d+)[%s]*x[%s]*(\\d+)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandPage.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("page"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("NB1", "(\\d+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("x*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("NB2", "(\\d+)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram classDiagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram classDiagram, LineLocation location,
+			RegexResult arg) {
 
-		final int horizontal = Integer.parseInt(arg.get(0));
-		final int vertical = Integer.parseInt(arg.get(1));
+		final int horizontal = Integer.parseInt(arg.get("NB1", 0));
+		final int vertical = Integer.parseInt(arg.get("NB2", 0));
 		if (horizontal <= 0 || vertical <= 0) {
 			return CommandExecutionResult.error("Argument must be positive");
 		}

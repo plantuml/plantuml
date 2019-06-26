@@ -460,9 +460,6 @@ public class StringUtils {
 	}
 
 	public static String trinNoTrace(CharSequence s) {
-//		if (s instanceof CharSequence2) {
-//			return ((CharSequence2) s).getString().trim();
-//		}
 		return s.toString().trim();
 	}
 

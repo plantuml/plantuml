@@ -35,20 +35,34 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.ScaleMaxWidth;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandScaleMaxWidth extends SingleLineCommand<AbstractPSystem> {
+public class CommandScaleMaxWidth extends SingleLineCommand2<AbstractPSystem> {
 
 	public CommandScaleMaxWidth() {
-		super("(?i)^scale[%s]+max[%s]+([0-9.]+)[%s]+width$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandScaleMaxWidth.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("scale"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("max"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("WIDTH", "([0-9.]+)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("width"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, List<String> arg) {
-		final double width = Double.parseDouble(arg.get(0));
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg) {
+		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		diagram.setScale(new ScaleMaxWidth(width));
 		return CommandExecutionResult.ok();
 	}

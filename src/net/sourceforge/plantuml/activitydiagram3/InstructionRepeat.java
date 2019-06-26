@@ -54,6 +54,7 @@ public class InstructionRepeat implements Instruction {
 	private final Instruction parent;
 	private final LinkRendering nextLinkRenderer;
 	private final Swimlane swimlane;
+	private Swimlane swimlaneOut;
 	private final HtmlColor color;
 	private boolean killed = false;
 
@@ -65,11 +66,10 @@ public class InstructionRepeat implements Instruction {
 	private boolean testCalled = false;
 	private LinkRendering endRepeatLinkRendering = LinkRendering.none();
 	private LinkRendering backRepeatLinkRendering = LinkRendering.none();
-	
+
 	public boolean containsBreak() {
 		return repeatList.containsBreak();
 	}
-
 
 	public InstructionRepeat(Swimlane swimlane, Instruction parent, LinkRendering nextLinkRenderer, HtmlColor color,
 			Display startLabel) {
@@ -90,8 +90,9 @@ public class InstructionRepeat implements Instruction {
 		return false;
 	}
 
-	public void setBackward(Display label) {
+	public void setBackward(Display label, Swimlane swimlaneOut) {
 		this.backward = label;
+		this.swimlaneOut = swimlaneOut;
 	}
 
 	public void add(Instruction ins) {
@@ -101,7 +102,7 @@ public class InstructionRepeat implements Instruction {
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = Display.isNull(backward) ? null : factory.activity(backward, swimlane, BoxStyle.PLAIN,
 				Colors.empty());
-		final Ftile result = factory.repeat(swimlane, repeatList.getSwimlaneOut(), startLabel,
+		final Ftile result = factory.repeat(swimlane, swimlaneOut, startLabel,
 				factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering), test, yes, out, color,
 				backRepeatLinkRendering, back, isLastOfTheParent());
 		if (killed) {
@@ -115,7 +116,8 @@ public class InstructionRepeat implements Instruction {
 	}
 
 	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering,
-			LinkRendering backRepeatLinkRendering) {
+			LinkRendering backRepeatLinkRendering, Swimlane swimlaneOut) {
+		this.swimlaneOut = swimlaneOut;
 		this.test = test;
 		this.yes = yes;
 		this.out = out;

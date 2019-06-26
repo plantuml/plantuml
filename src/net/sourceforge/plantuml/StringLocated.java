@@ -35,7 +35,9 @@
  */
 package net.sourceforge.plantuml;
 
-public class StringLocated {
+import net.sourceforge.plantuml.command.regex.FoxSignature;
+
+final public class StringLocated {
 
 	private final String s;
 	private final LineLocation location;
@@ -68,8 +70,15 @@ public class StringLocated {
 				this.getPreprocessorError());
 	}
 
-	public String getStringTrimmed() {
-		return StringUtils.trin(this.getString());
+	private StringLocated trimmed;
+
+	public StringLocated getTrimmed() {
+		if (trimmed == null) {
+			this.trimmed = new StringLocated(StringUtils.trin(this.getString()), location, preprocessorError);
+			trimmed.fox = this.fox;
+			trimmed.trimmed = trimmed;
+		}
+		return trimmed;
 	}
 
 	public StringLocated removeInnerComment() {
@@ -114,4 +123,12 @@ public class StringLocated {
 		return preprocessorError;
 	}
 
+	private long fox = -1;
+
+	public long getFoxSignature() {
+		if (fox == -1) {
+			fox = FoxSignature.getFoxSignature(getString());
+		}
+		return fox;
+	}
 }

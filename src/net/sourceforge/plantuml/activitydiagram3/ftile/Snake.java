@@ -63,6 +63,7 @@ public class Snake implements UShape {
 	private UPolygon endDecoration;
 	private final Rainbow color;
 	private TextBlock textBlock;
+	private String textBlockPosition;
 	private MergeStrategy mergeable = MergeStrategy.FULL;
 	private Direction emphasizeDirection;
 	private final HorizontalAlignment horizontalAlignment;
@@ -108,6 +109,11 @@ public class Snake implements UShape {
 
 	public Snake(HorizontalAlignment horizontalAlignment, Rainbow color) {
 		this(null, horizontalAlignment, color, null);
+	}
+
+	public void setLabel(TextBlock label, String position) {
+		this.textBlock = label;
+		this.textBlockPosition = position;
 	}
 
 	public void setLabel(TextBlock label) {
@@ -206,7 +212,9 @@ public class Snake implements UShape {
 		double x = Math.max(pt1.getX(), pt2.getX()) + 4;
 		final boolean zigzag = worm.getDirectionsCode().startsWith("DLD") || worm.getDirectionsCode().startsWith("DRD");
 		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
-		if (horizontalAlignment == HorizontalAlignment.CENTER && zigzag) {
+		if ("bottom".equalsIgnoreCase(textBlockPosition)) {
+			x = worm.getLast().getX();
+		} else if (horizontalAlignment == HorizontalAlignment.CENTER && zigzag) {
 			final Point2D pt3 = worm.get(2);
 			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;
 		} else if (horizontalAlignment == HorizontalAlignment.RIGHT && zigzag) {

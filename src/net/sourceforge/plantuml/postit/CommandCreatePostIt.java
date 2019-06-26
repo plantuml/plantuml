@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.postit;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,12 +50,12 @@ public class CommandCreatePostIt extends SingleLineCommand2<PostItDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("post[-[%s]]?it[%s]+"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCreatePostIt.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("post[-[%s]]?it"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("ID", "([-\\p{L}0-9_./]+)"), //
-				new RegexLeaf("[%s]+"), // 
-				new RegexLeaf("TEXT", ":?(.*)?$"));
+				RegexLeaf.spaceOneOrMore(), new RegexLeaf("TEXT", ":?(.*)?$"));
 	}
 
 	@Override

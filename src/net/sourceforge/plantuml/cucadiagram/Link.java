@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -526,6 +527,16 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public final VisibilityModifier getVisibilityModifier() {
 		return visibilityModifier;
+	}
+
+	private UmlDiagramType umlType;
+
+	public void setUmlDiagramType(UmlDiagramType type) {
+		this.umlType = type;
+	}
+
+	public UmlDiagramType getUmlDiagramType() {
+		return umlType;
 	}
 
 }

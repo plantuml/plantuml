@@ -36,13 +36,19 @@
 package net.sourceforge.plantuml.command.regex;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.StringLocated;
 
 public class RegexLeaf implements IRegex {
 
-	private final Pattern2 pattern;
+	private static final RegexLeaf END = new RegexLeaf("$");
+	private static final RegexLeaf START = new RegexLeaf("^");
+	private final String pattern;
 	private final String name;
 
 	private int count = -1;
@@ -51,8 +57,24 @@ public class RegexLeaf implements IRegex {
 		this(null, regex);
 	}
 
+	public static RegexLeaf spaceZeroOrMore() {
+		return new RegexLeaf("[%s]*");
+	}
+
+	public static RegexLeaf spaceOneOrMore() {
+		return new RegexLeaf("[%s]+");
+	}
+
+	public static RegexLeaf start() {
+		return START;
+	}
+
+	public static RegexLeaf end() {
+		return END;
+	}
+
 	public RegexLeaf(String name, String regex) {
-		this.pattern = MyPattern.cmpile(regex, Pattern.CASE_INSENSITIVE);
+		this.pattern = regex;
 		this.name = name;
 	}
 
@@ -66,12 +88,12 @@ public class RegexLeaf implements IRegex {
 	}
 
 	public String getPattern() {
-		return pattern.pattern();
+		return pattern;
 	}
 
 	public int count() {
 		if (count == -1) {
-			count = pattern.matcher("").groupCount();
+			count = MyPattern.cmpile(pattern, Pattern.CASE_INSENSITIVE).matcher("").groupCount();
 		}
 		return count;
 	}
@@ -86,6 +108,41 @@ public class RegexLeaf implements IRegex {
 			return Collections.emptyMap();
 		}
 		return Collections.singletonMap(name, m);
+	}
+
+	public boolean match(StringLocated full) {
+		throw new UnsupportedOperationException();
+	}
+
+	public RegexResult matcher(String full) {
+		throw new UnsupportedOperationException();
+	}
+
+	static private final Set<String> UNKNOWN = new HashSet<String>();
+	
+	static private final Pattern p1 = Pattern.compile("^[-0A-Za-z_!:@;/=]+$");
+	static private final Pattern p2 = Pattern.compile("^[-0A-Za-z_!:@;/=]+\\?$");
+
+	public long getFoxSignature() {
+		if (p1.matcher(pattern).matches()) {
+			return FoxSignature.getFoxSignature(pattern);
+		}
+		if (p2.matcher(pattern).matches()) {
+			return FoxSignature.getFoxSignature(pattern.substring(0, pattern.length() - 2));
+		}
+		if (pattern.length() == 2 && pattern.startsWith("\\")) {
+			return FoxSignature.getFoxSignature(pattern.substring(1));
+		}
+		if (pattern.equals("[%s]+") || pattern.equals("[%s]*")) {
+			return 0;
+		}
+//		synchronized (UNKNOWN) {
+//			final boolean changed = UNKNOWN.add(pattern);
+//			if (changed)
+//				System.err.println("unknow=" + pattern);
+//
+//		}
+		return 0;
 	}
 
 }

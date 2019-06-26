@@ -193,7 +193,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
 		for (int i = 0; i < copy.size(); i++) {
 			final StringLocated s = copy.get(i);
-			copy.set(i, new StringLocated(s.getStringTrimmed(), s.getLocation()));
+			copy.set(i, new StringLocated(s.getTrimmed().getString(), s.getLocation()));
 		}
 		if (removeEmptyLines) {
 			for (final Iterator<StringLocated> it = copy.iterator(); it.hasNext();) {
@@ -319,8 +319,8 @@ public class BlocLines implements Iterable<StringLocated> {
 		if (size() < 2) {
 			return this;
 		}
-		final String first = getFirst499().getStringTrimmed();
-		final String second = get499(1).getStringTrimmed();
+		final String first = getFirst499().getTrimmed().getString();
+		final String second = get499(1).getTrimmed().getString();
 		if (first.endsWith("{") == false && second.equals("{")) {
 			final String vline = first + " {";
 			final List<StringLocated> result = new ArrayList<StringLocated>();

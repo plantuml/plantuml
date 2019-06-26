@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 public enum AlignmentParam {
 	
 	arrowMessageAlignment(HorizontalAlignment.LEFT),
+	stateMessageAlignment(HorizontalAlignment.CENTER),
 	sequenceMessageAlignment(HorizontalAlignment.LEFT),
 	sequenceMessageTextAlignment(HorizontalAlignment.LEFT),
 	sequenceReferenceAlignment(HorizontalAlignment.CENTER),

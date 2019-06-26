@@ -39,34 +39,34 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.sourceforge.plantuml.StringLocated;
+
 public class RegexOr extends RegexComposed implements IRegex {
 
-	private final Pattern2 full;
 	private final String name;
 
 	public RegexOr(IRegex... partial) {
 		this(null, partial);
 	}
 
-	public RegexOr(String name, IRegex... partial) {
-		super(partial);
+	public RegexOr(String name, IRegex... partials) {
+		super(partials);
 		this.name = name;
+	}
+
+	@Override
+	protected String getFullSlow() {
 		final StringBuilder sb = new StringBuilder("(");
 		if (name == null) {
 			sb.append("?:");
 		}
-		for (IRegex p : partial) {
+		for (IRegex p : partials) {
 			sb.append(p.getPattern());
 			sb.append("|");
 		}
 		sb.setLength(sb.length() - 1);
 		sb.append(')');
-		this.full = MyPattern.cmpileNockeck(sb.toString());
-	}
-
-	@Override
-	protected Pattern2 getFull() {
-		return full;
+		return sb.toString();
 	}
 
 	protected int getStartCount() {
@@ -83,6 +83,10 @@ public class RegexOr extends RegexComposed implements IRegex {
 			result.put(name, m);
 		}
 		return result;
+	}
+
+	public boolean match(StringLocated full) {
+		throw new UnsupportedOperationException();
 	}
 
 }

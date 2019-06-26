@@ -35,24 +35,34 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandBoxEnd extends SingleLineCommand<SequenceDiagram> {
+public class CommandBoxEnd extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandBoxEnd() {
-		super("(?i)^end[%s]?box$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandBoxEnd.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("end"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("box"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		if (sequenceDiagram.isBoxPending() == false) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+		if (diagram.isBoxPending() == false) {
 			return CommandExecutionResult.error("Missing starting box");
 		}
-		sequenceDiagram.endBox();
+		diagram.endBox();
 		return CommandExecutionResult.ok();
 	}
 

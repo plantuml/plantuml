@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAutomatic;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
+import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -105,7 +106,8 @@ public class AtomText extends AbstractAtom implements Atom {
 
 	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
 			ISkinSimple skinSimple) {
-		final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern2);
+		final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|"
+				+ Splitter.imgPatternNoSrcColon);
 		final Matcher m = p.matcher(text);
 		final List<Atom> result = new ArrayList<Atom>();
 		while (m.find()) {
@@ -116,6 +118,7 @@ public class AtomText extends AbstractAtom implements Atom {
 			}
 			final String valOpenicon = m.group(1);
 			final String valSprite = m.group(3);
+			final String valImg = m.group(5);
 			if (valOpenicon != null) {
 				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);
 				if (openIcon != null) {
@@ -128,6 +131,9 @@ public class AtomText extends AbstractAtom implements Atom {
 					final double scale = CommandCreoleImg.getScale(m.group(4), 1);
 					result.add(new AtomSprite(null, scale, fontConfiguration, sprite, url));
 				}
+			} else if (valImg != null) {
+				final double scale = CommandCreoleImg.getScale(m.group(6), 1);
+				result.add(AtomImg.create(valImg, ImgValign.TOP, 0, scale, url));
 
 			}
 		}

@@ -35,21 +35,34 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandHideEmptyDescription extends SingleLineCommand<StateDiagram> {
+public class CommandHideEmptyDescription extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandHideEmptyDescription() {
-		super("(?i)^(hide|show)[%s]+empty[%s]+description$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideEmptyDescription.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("HIDE", "(hide|show)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("empty"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("description"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, List<String> arg) {
-		diagram.setHideEmptyDescription(arg.get(0).equalsIgnoreCase("hide"));
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+		final boolean hide = arg.get("HIDE", 0).equalsIgnoreCase("hide");
+		diagram.setHideEmptyDescription(hide);
 		return CommandExecutionResult.ok();
 	}
 

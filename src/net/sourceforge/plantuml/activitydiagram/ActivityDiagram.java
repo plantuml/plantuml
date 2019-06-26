@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -57,6 +58,10 @@ public class ActivityDiagram extends CucaDiagram {
 	private IEntity lastEntityConsulted;
 	private IEntity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
+
+	public ActivityDiagram(ISkinSimple skinParam) {
+		super(skinParam);
+	}
 
 	public ILeaf getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
 		return getOrCreateLeafDefault(code, type, symbol);

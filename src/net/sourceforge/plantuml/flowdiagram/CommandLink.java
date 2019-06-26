@@ -38,8 +38,10 @@ package net.sourceforge.plantuml.flowdiagram;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.golem.TileGeometry;
 
@@ -49,11 +51,14 @@ public class CommandLink extends SingleLineCommand2<FlowDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("ORIENTATION", "(?:([nsew])[%s]+)?"), //
-				new RegexLeaf("ID_DEST", "(\\w+)"), //
-				new RegexLeaf("$"));
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("ORIENTATION", "([nsew])"), //
+								RegexLeaf.spaceOneOrMore() //
+						)), //
+				new RegexLeaf("ID_DEST", "(\\w+)"), RegexLeaf.end());
 	}
 
 	@Override

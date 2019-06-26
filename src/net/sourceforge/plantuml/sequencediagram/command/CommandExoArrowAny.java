@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.skin.ArrowPart;
 
 abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
-	public CommandExoArrowAny(RegexConcat pattern) {
+	public CommandExoArrowAny(IRegex pattern) {
 		super(pattern);
 	}
 

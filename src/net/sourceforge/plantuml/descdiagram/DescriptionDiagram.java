@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -44,6 +45,11 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
+	
+	public DescriptionDiagram(ISkinSimple skinParam) {
+		super(skinParam);
+	}
+
 
 	@Override
 	public ILeaf getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {

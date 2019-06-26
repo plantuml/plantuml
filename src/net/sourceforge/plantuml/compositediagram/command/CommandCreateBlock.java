@@ -35,25 +35,43 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 
-public class CommandCreateBlock extends SingleLineCommand<CompositeDiagram> {
+public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 
 	public CommandCreateBlock() {
-		super("(?i)^(?:block[%s]+)(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([\\p{L}0-9_.]+)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCreateBlock.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("block"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g]"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore() //
+						)), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, List<String> arg) {
-		String display = arg.get(0);
-		final Code code = Code.of(arg.get(1));
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
+		String display = arg.get("DISPLAY", 0);
+		final Code code = Code.of(arg.get("CODE", 0));
 		if (display == null) {
 			display = code.getFullName();
 		}

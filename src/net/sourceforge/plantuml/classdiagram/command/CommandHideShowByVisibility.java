@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -62,17 +63,16 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), // 
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideShowByVisibility.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("COMMAND", "(hide|show)"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("VISIBILITY",
 						"((?:public|private|protected|package)?(?:[,%s]+(?:public|private|protected|package))*)"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?)"), RegexLeaf.end());
 	}
-	
+
 	@Override
 	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, LineLocation location, RegexResult arg) {
 		if (classDiagram instanceof ClassDiagram) {
@@ -81,7 +81,6 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 		// Just ignored
 		return CommandExecutionResult.ok();
 	}
-
 
 	private CommandExecutionResult executeArgClass(ClassDiagram classDiagram, RegexResult arg) {
 

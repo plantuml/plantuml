@@ -76,20 +76,20 @@ public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 		final RegexConcat pattern;
 		if (complement instanceof ComplementEmpty) {
 			pattern = new RegexConcat(//
-					new RegexLeaf("^"), //
+					RegexLeaf.start(), //
 					subject.toRegex(), //
-					new RegexLeaf("[%s]+"), //
+					RegexLeaf.spaceOneOrMore(), //
 					verb.toRegex(), //
-					new RegexLeaf("$"));
+					RegexLeaf.end());
 		} else {
 			pattern = new RegexConcat(//
-					new RegexLeaf("^"), //
+					RegexLeaf.start(), //
 					subject.toRegex(), //
-					new RegexLeaf("[%s]+"), //
+					RegexLeaf.spaceOneOrMore(), //
 					verb.toRegex(), //
-					new RegexLeaf("[%s]+"), //
+					RegexLeaf.spaceOneOrMore(), //
 					complement.toRegex("0"), //
-					new RegexLeaf("$"));
+					RegexLeaf.end());
 		}
 		// System.err.println("NaturalCommand="+pattern.getPattern());
 		return new NaturalCommand(pattern, subject, verb, complement);

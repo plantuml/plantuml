@@ -35,18 +35,27 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.core.Diagram;
 
-public class CommandNope extends SingleLineCommand<Diagram> {
+public class CommandNope extends SingleLineCommand2<Diagram> {
 
 	public CommandNope() {
-		super("(?i)^[%s]*$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNope.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Diagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg) {
 		return CommandExecutionResult.ok();
 	}
 

@@ -38,9 +38,12 @@ package net.sourceforge.plantuml.mindmap;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 
@@ -48,20 +51,25 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 		super(false, getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandMindMapOrgmode.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "([*]+)"), //
+				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("LABEL", "([^%s].*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
-		return diagram.addIdea(type.length() - 1, label, IdeaShape.fromDesc(arg.get("SHAPE", 0)));
+		final String stringColor = arg.get("BACKCOLOR", 0);
+		HtmlColor backColor = null;
+		if (stringColor != null) {
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
+		}
+		return diagram.addIdea(backColor, type.length() - 1, label, IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
 
 }

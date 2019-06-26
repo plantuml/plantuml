@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.StringLocated;
 public class EaterUndef extends Eater {
 
 	public EaterUndef(StringLocated s) {
-		super(s.getStringTrimmed());
+		super(s.getTrimmed().getString());
 	}
 
 	@Override

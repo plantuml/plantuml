@@ -44,8 +44,10 @@ import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -68,42 +70,63 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("SYMBOL",
-						"(package|rectangle|node|artifact|folder|file|frame|cloud|database|storage|component|card|together|queue)"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexOr(//
-						new RegexConcat( //
-								new RegexLeaf("DISPLAY1", "([%g].+?[%g])"), //
-								new RegexLeaf("STEREOTYPE1", "(?:[%s]+(\\<\\<.+\\>\\>))?"), //
-								new RegexLeaf("[%s]*as[%s]+"), //
-								new RegexLeaf("CODE1", "([^#%s{}]+)") //
+	private static IRegex getRegexConcat() {
+		return RegexConcat
+				.build(CommandPackageWithUSymbol.class.getName(),
+						RegexLeaf.start(), //
+						new RegexLeaf("SYMBOL",
+								"(package|rectangle|node|artifact|folder|file|frame|cloud|database|storage|component|card|together|queue|stack)"), //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexOr(//
+								new RegexConcat( //
+										new RegexLeaf("DISPLAY1", "([%g].+?[%g])"), //
+										new RegexOptional( //
+												new RegexConcat( //
+														RegexLeaf.spaceOneOrMore(), //
+														new RegexLeaf("STEREOTYPE1", "(\\<\\<.+\\>\\>)") //
+												)), //
+										RegexLeaf.spaceZeroOrMore(), //
+										new RegexLeaf("as"), //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("CODE1", "([^#%s{}]+)") //
+								), //
+								new RegexConcat( //
+										new RegexLeaf("CODE2", "([^#%s{}%g]+)"), //
+										new RegexOptional( //
+												new RegexConcat( //
+														RegexLeaf.spaceOneOrMore(), //
+														new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
+												)), //
+										RegexLeaf.spaceZeroOrMore(), //
+										new RegexLeaf("as"), //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("DISPLAY2", "([%g].+?[%g])") //
+								), //
+								new RegexConcat( //
+										new RegexLeaf("DISPLAY3", "([^#%s{}%g]+)"), //
+										new RegexOptional( //
+												new RegexConcat( //
+														RegexLeaf.spaceOneOrMore(), //
+														new RegexLeaf("STEREOTYPE3", "(\\<\\<.+\\>\\>)") //
+												)), //
+										RegexLeaf.spaceZeroOrMore(), //
+										new RegexLeaf("as"), //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("CODE3", "([^#%s{}%g]+)") //
+								), //
+								new RegexLeaf("CODE8", "([%g][^%g]+[%g])"), //
+								new RegexLeaf("CODE9", "([^#%s{}%g]*)") //
 						), //
-						new RegexConcat( //
-								new RegexLeaf("CODE2", "([^#%s{}%g]+)"), //
-								new RegexLeaf("STEREOTYPE2", "(?:[%s]+(\\<\\<.+\\>\\>))?"), //
-								new RegexLeaf("[%s]*as[%s]+"), //
-								new RegexLeaf("DISPLAY2", "([%g].+?[%g])") //
-						), //
-						new RegexConcat( //
-								new RegexLeaf("DISPLAY3", "([^#%s{}%g]+)"), //
-								new RegexLeaf("STEREOTYPE3", "(?:[%s]+(\\<\\<.+\\>\\>))?"), //
-								new RegexLeaf("[%s]*as[%s]+"), //
-								new RegexLeaf("CODE3", "([^#%s{}%g]+)") //
-						), //
-						new RegexLeaf("CODE8", "([%g][^%g]+[%g])"), //
-						new RegexLeaf("CODE9", "([^#%s{}%g]*)") //
-				), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*"), //
-				color().getRegex(), //
-				new RegexLeaf("[%s]*\\{$"));
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						color().getRegex(), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("\\{"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

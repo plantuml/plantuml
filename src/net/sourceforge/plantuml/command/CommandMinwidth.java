@@ -35,21 +35,30 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandMinwidth extends SingleLineCommand<UmlDiagram> {
+public class CommandMinwidth extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandMinwidth() {
-		super("(?i)^minwidth[%s]+(\\d+)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandMinwidth.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("minwidth"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("VALUE", "(\\d+)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram system, List<String> arg) {
-
-		final int minwidth = Integer.parseInt(arg.get(0));
-		system.setMinwidth(minwidth);
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+		final int minwidth = Integer.parseInt(arg.get("VALUE", 0));
+		diagram.setMinwidth(minwidth);
 		return CommandExecutionResult.ok();
 	}
 

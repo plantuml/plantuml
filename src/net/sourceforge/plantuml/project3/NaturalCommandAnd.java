@@ -90,19 +90,19 @@ public class NaturalCommandAnd extends SingleLineCommand2<GanttDiagram> {
 	public static Command create(SubjectPattern subject, VerbPattern verb1, ComplementPattern complement1,
 			VerbPattern verb2, ComplementPattern complement2) {
 		final RegexConcat pattern = new RegexConcat(//
-				new RegexLeaf("^"), //
+				RegexLeaf.start(), //
 				subject.toRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				verb1.toRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				complement1.toRegex("1"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("and"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				verb2.toRegex(), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				complement2.toRegex("2"), //
-				new RegexLeaf("$"));
+				RegexLeaf.end());
 		return new NaturalCommandAnd(pattern, subject, verb1, complement1, verb2, complement2);
 	}
 }

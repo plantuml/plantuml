@@ -35,29 +35,41 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
-public class CommandStereotype extends SingleLineCommand<ClassDiagram> {
+public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 
 	public CommandStereotype() {
-		super("(?i)^([\\p{L}0-9_.]+|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandStereotype.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_.]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, List<String> arg) {
-		final Code code = Code.of(arg.get(0));
-		final String stereotype = arg.get(1);
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
+		final Code code = Code.of(arg.get("NAME", 0));
+		final String stereotype = arg.get("STEREO", 0);
 		final IEntity entity = diagram.getOrCreateLeaf(code, null, null);
 		entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
-				.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam().getIHtmlColorSet()));
+				.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
+				.getIHtmlColorSet()));
 		return CommandExecutionResult.ok();
 	}
 

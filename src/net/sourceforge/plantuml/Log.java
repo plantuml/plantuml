@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-
 public abstract class Log {
 
 	private static final long start = System.currentTimeMillis();
@@ -60,7 +59,7 @@ public abstract class Log {
 		// final HealthCheck healthCheck = Performance.getHealthCheck();
 		// final long cpu = healthCheck.jvmCpuTime() / 1000L / 1000L;
 		// final long dot = healthCheck.dotTime().getSum();
-		
+
 		final long freeMemory = Runtime.getRuntime().freeMemory();
 		final long maxMemory = Runtime.getRuntime().maxMemory();
 		final long totalMemory = Runtime.getRuntime().totalMemory();
@@ -72,19 +71,19 @@ public abstract class Log {
 		sb.append(delta / 1000L);
 		sb.append(".");
 		sb.append(String.format("%03d", delta % 1000L));
-//		if (cpu != -1) {
-//			sb.append(" - ");
-//			sb.append(cpu / 1000L);
-//			sb.append(".");
-//			sb.append(String.format("%03d", cpu % 1000L));
-//		}
-//		sb.append(" - ");
-//		sb.append(dot / 1000L);
-//		sb.append(".");
-//		sb.append(String.format("%03d", dot % 1000L));
-//		sb.append("(");
-//		sb.append(healthCheck.dotTime().getNb());
-//		sb.append(")");
+		// if (cpu != -1) {
+		// sb.append(" - ");
+		// sb.append(cpu / 1000L);
+		// sb.append(".");
+		// sb.append(String.format("%03d", cpu % 1000L));
+		// }
+		// sb.append(" - ");
+		// sb.append(dot / 1000L);
+		// sb.append(".");
+		// sb.append(String.format("%03d", dot % 1000L));
+		// sb.append("(");
+		// sb.append(healthCheck.dotTime().getNb());
+		// sb.append(")");
 		sb.append(" - ");
 		final long total = totalMemory / 1024 / 1024;
 		final long free = freeMemory / 1024 / 1024;

@@ -35,24 +35,35 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class CommandCaption extends SingleLineCommand<TitledDiagram> {
+public class CommandCaption extends SingleLineCommand2<TitledDiagram> {
 
 	public CommandCaption() {
-		super("(?i)^caption(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCaption.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("caption"), //
+				new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
+				new RegexLeaf("DISPLAY", "(.*[\\p{L}0-9_.].*)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, List<String> arg) {
-		diagram.setCaption(DisplayPositionned.single(Display.getWithNewlines(arg.get(0)), HorizontalAlignment.CENTER,
-				VerticalAlignment.BOTTOM));
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
+		diagram.setCaption(DisplayPositionned.single(Display.getWithNewlines(arg.get("DISPLAY", 0)),
+				HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
 		return CommandExecutionResult.ok();
 	}
 

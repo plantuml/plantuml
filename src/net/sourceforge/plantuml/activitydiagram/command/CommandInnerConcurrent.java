@@ -35,25 +35,36 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 
-public class CommandInnerConcurrent extends SingleLineCommand<ActivityDiagram> {
+public class CommandInnerConcurrent extends SingleLineCommand2<ActivityDiagram> {
 
 	public CommandInnerConcurrent() {
-		super("(?i)^--\\s*(.*)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandInnerConcurrent.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("--"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("NAME", "(.*)"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
 		if (EntityUtils.groupRoot(diagram.getCurrentGroup())) {
 			return CommandExecutionResult.error("No inner activity");
 		}
-		diagram.concurrentActivity(arg.get(0));
+		diagram.concurrentActivity(arg.get("NAME", 0));
 
 		return CommandExecutionResult.ok();
 	}

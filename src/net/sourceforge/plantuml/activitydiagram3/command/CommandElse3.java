@@ -39,8 +39,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
@@ -50,12 +52,16 @@ public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(//
-				new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandElse3.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("else"), //
-				new RegexLeaf("WHEN", "(?:[%s]*(?:\\(([^()]*)\\))?)?"), //
-				new RegexLeaf(";?$"));
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("WHEN", "(?:\\(([^()]*)\\))?") //
+						)), //
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override

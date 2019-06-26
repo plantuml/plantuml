@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,34 +50,33 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideShowSpecificClass.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("COMMAND", "(hide|show)"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("CODE", "(" + CommandCreateClass.CODE + ")"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("CODE", "(" + CommandCreateClass.CODE + ")"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
 
-//		final String codeString = arg.get("CODE", 0);
-//		if (codeString.equals("class")) {
-//			diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-//		} else if (codeString.equals("interface")) {
-//			diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-//		} else {
-//			final Code code = Code.of(codeString);
-//			IEntity hidden = diagram.getEntityFactory().getLeafsget(code);
-//			if (hidden == null) {
-//				hidden = diagram.getEntityFactory().getGroupsget(code);
-//			}
-//			if (hidden == null) {
-//				return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
-//			}
-//			diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-//		}
-//		return CommandExecutionResult.ok();
+		// final String codeString = arg.get("CODE", 0);
+		// if (codeString.equals("class")) {
+		// diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		// } else if (codeString.equals("interface")) {
+		// diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		// } else {
+		// final Code code = Code.of(codeString);
+		// IEntity hidden = diagram.getEntityFactory().getLeafsget(code);
+		// if (hidden == null) {
+		// hidden = diagram.getEntityFactory().getGroupsget(code);
+		// }
+		// if (hidden == null) {
+		// return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
+		// }
+		// diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		// }
+		// return CommandExecutionResult.ok();
 		throw new UnsupportedOperationException();
 	}
 }

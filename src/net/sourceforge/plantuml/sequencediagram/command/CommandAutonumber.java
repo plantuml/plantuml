@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.DottedNumber;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -53,14 +54,21 @@ public class CommandAutonumber extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	private static RegexConcat getConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+		return RegexConcat.build(CommandAutonumber.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("autonumber"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("START", "(\\d(?:(?:[^\\p{L}0-9%s]+|\\d+)*\\d)?)?"), //
-				new RegexLeaf("STEP", "(?:[%s]+(\\d+))?"), //
-				new RegexLeaf("FORMAT", "(?:[%s]+[%g]([^%g]+)[%g])?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("$"));
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("STEP", "(\\d+)") //
+						)), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("FORMAT", "[%g]([^%g]+)[%g]") //
+						)), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override

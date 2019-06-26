@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -178,6 +179,10 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getConditionStyle();
 	}
 
+	public ConditionEndStyle getConditionEndStyle() {
+		return skinParam.getConditionEndStyle();
+	}
+        
 	public double minClassWidth() {
 		return skinParam.minClassWidth();
 	}

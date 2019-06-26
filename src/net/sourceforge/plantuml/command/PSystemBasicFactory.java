@@ -63,7 +63,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 	}
 
 	private boolean isEmptyLine(StringLocated result) {
-		return result.getStringTrimmed().length() == 0;
+		return result.getTrimmed().getString().length() == 0;
 	}
 
 	final public Diagram createSystem(UmlSource source) {

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.nwdiag;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,17 +49,17 @@ public class CommandLink extends SingleLineCommand2<NwDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("[%s]*"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NAME1", "[\\p{L}0-9_]+"), //
-				new RegexLeaf("[%s]*--[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("--"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NAME2", "[\\p{L}0-9_]+"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf(";?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(";?"), RegexLeaf.end());
 	}
-
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {

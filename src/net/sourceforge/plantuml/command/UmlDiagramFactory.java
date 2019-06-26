@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility;
 import net.sourceforge.plantuml.core.Diagram;
@@ -54,12 +53,13 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
+import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
-	private final List<Command> cmds;
+	private List<Command> cmds;
 
 	protected UmlDiagramFactory() {
 		this(DiagramType.UML);
@@ -67,7 +67,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	protected UmlDiagramFactory(DiagramType type) {
 		super(type);
-		cmds = createCommands();
+		// cmds = createCommands();
 	}
 
 	final public Diagram createSystem(UmlSource source) {
@@ -78,7 +78,9 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		}
 
 		if (source.isEmpty()) {
-			it.next();
+			if (it.hasNext()) {
+				it.next();
+			}
 			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
 		}
 		AbstractPSystem sys = createEmptyDiagram();
@@ -148,6 +150,9 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	private Step getCandidate(final IteratorCounter2 it) {
 		final BlocLines single = BlocLines.single2(it.peek());
+		if (cmds == null) {
+			cmds = createCommands();
+		}
 		for (Command cmd : cmds) {
 			final CommandControl result = cmd.isValid(single);
 			if (result == CommandControl.OK) {
@@ -191,11 +196,11 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 	private BlocLines addOneSingleLineManageEmbedded2(IteratorCounter2 it, BlocLines lines) {
 		final StringLocated linetoBeAdded = it.next();
 		lines = lines.add2(linetoBeAdded);
-		if (StringUtils.trinNoTrace(linetoBeAdded.getString()).equals("{{")) {
+		if (linetoBeAdded.getTrimmed().getString().equals("{{")) {
 			while (it.hasNext()) {
 				final StringLocated s = it.next();
 				lines = lines.add2(s);
-				if (StringUtils.trinNoTrace(s.getString()).equals("}}")) {
+				if (s.getTrimmed().getString().equals("}}")) {
 					return lines;
 				}
 			}
@@ -240,6 +245,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	final protected void addCommonHides(List<Command> cmds) {
+		cmds.add(new CommandHideEmptyDescription());
 		cmds.add(new CommandHideUnlinked());
 		cmds.add(new CommandHideShowByVisibility());
 		cmds.add(new CommandHideShowByGender());

@@ -35,21 +35,31 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandAutoactivate extends SingleLineCommand<SequenceDiagram> {
+public class CommandAutoactivate extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandAutoactivate() {
-		super("(?i)^autoactivate[%s]+(off|on)*$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandAutoactivate.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("autoactivate"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("ON", "(off|on)*"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		sequenceDiagram.setAutoactivate("on".equalsIgnoreCase(arg.get(0)));
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location, RegexResult arg) {
+		sequenceDiagram.setAutoactivate("on".equalsIgnoreCase(arg.get("ON", 0)));
 		return CommandExecutionResult.ok();
 	}
 }

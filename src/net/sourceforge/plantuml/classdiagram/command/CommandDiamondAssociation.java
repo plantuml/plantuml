@@ -35,26 +35,37 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
-public class CommandDiamondAssociation extends SingleLineCommand<ClassDiagram> {
+public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> {
 
 	public CommandDiamondAssociation() {
-		super("(?i)^\\<\\>[%s]*([\\p{L}0-9_.]+)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandDiamondAssociation.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("\\<\\>"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, List<String> arg) {
-		final Code code = Code.of(arg.get(0));
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
+		final Code code = Code.of(arg.get("CODE", 0));
 		if (diagram.leafExist(code)) {
-			return CommandExecutionResult.error("Already existing : "+code.getFullName());
+			return CommandExecutionResult.error("Already existing : " + code.getFullName());
 		}
 		diagram.createLeaf(code, Display.NULL, LeafType.ASSOCIATION, null);
 

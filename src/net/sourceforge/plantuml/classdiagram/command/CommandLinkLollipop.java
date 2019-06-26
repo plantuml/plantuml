@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -64,22 +65,31 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	}
 
 	static RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
-		return new RegexConcat(new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
+		return RegexConcat.build(CommandLinkLollipop.class.getName() + umlDiagramType, RegexLeaf.start(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("HEADER", "@([\\d.]+)"), //
+								RegexLeaf.spaceOneOrMore() //
+						)), //
 				new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
 						+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("FIRST_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(new RegexLeaf("LOL_THEN_ENT", "([()]\\))([-=.]+)"), //
 						new RegexLeaf("ENT_THEN_LOL", "([-=.]+)(\\([()])")), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
 						+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf(":"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("LABEL_LINK", "(.+)") //
+						)), RegexLeaf.end());
 	}
 
 	private static String optionalKeywords(UmlDiagramType type) {

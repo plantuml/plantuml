@@ -36,19 +36,30 @@
 package net.sourceforge.plantuml.command;
 
 import java.util.Collections;
-import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandAffineTransform extends SingleLineCommand<UmlDiagram> {
+public class CommandAffineTransform extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandAffineTransform() {
-		super("(?i)^!transformation[%s]+([^{}]*)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandAffineTransform.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("!transformation"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("ANIMATION", "([^{}]*)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		final CharSequence value = arg.get(0);
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+		final CharSequence value = arg.get("ANIMATION", 0);
 		diagram.setAnimation(Collections.singletonList(value));
 		return CommandExecutionResult.ok();
 	}

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
@@ -49,14 +50,23 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("TYPE", //
-						"(clock)[%s]+"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandClock.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("TYPE", "clock"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
-				new RegexLeaf("PERIOD", "[%s]+with[%s]+period[%s]+([0-9]+)"), //
-				new RegexOptional(new RegexLeaf("PULSE", "[%s]+pulse[%s]+([0-9]+)")), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("with"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("period"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("PERIOD", "([0-9]+)"), //
+				new RegexOptional(new RegexConcat( //
+						RegexLeaf.spaceOneOrMore(),//
+						new RegexLeaf("pulse"), //
+						RegexLeaf.spaceOneOrMore(),//
+						new RegexLeaf("PULSE", "([0-9]+)") //
+						)), RegexLeaf.end());
 	}
 
 	@Override

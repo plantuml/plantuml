@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -79,28 +80,35 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		if (mode == Mode.WITH_MIX_PREFIX) {
 			regex = "mix_" + regex;
 		}
-		return new RegexConcat(new RegexLeaf("^"), //
+		return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, RegexLeaf.start(), //
 				new RegexLeaf("SYMBOL", regex), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
-								new RegexLeaf("STEREOTYPE2", "(?:[%s]+(\\<\\<.+\\>\\>))?"), //
-								new RegexLeaf("[%s]*as[%s]+"), //
+								new RegexOptional( //
+										new RegexConcat( //
+												RegexLeaf.spaceOneOrMore(), //
+												new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
+										)), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
 				), //
-				new RegexLeaf("STEREOTYPE", "(?:[%s]*(\\<\\<.+\\>\\>))?"), //
-				new RegexLeaf("[%s]*"), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)")//
+						)), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				ColorParser.exp1(), RegexLeaf.end());
 	}
-
-
 
 	@Override
 	final protected boolean isForbidden(CharSequence line) {
@@ -113,8 +121,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false) {
-			return CommandExecutionResult
-					.error("Use 'allowmixing' if you want to mix classes and other UML elements.");
+			return CommandExecutionResult.error("Use 'allowmixing' if you want to mix classes and other UML elements.");
 		}
 		String codeRaw = arg.getLazzy("CODE", 0);
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);

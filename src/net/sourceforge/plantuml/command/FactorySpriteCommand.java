@@ -43,8 +43,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteColorBuilder4096;
@@ -52,23 +54,28 @@ import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 
 public final class FactorySpriteCommand implements SingleMultiFactoryCommand<WithSprite> {
 
-	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("sprite[%s]+\\$?"), //
-				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
-				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\])?"), //
-				new RegexLeaf("[%s]*\\{"), //
-				new RegexLeaf("$"));
+	private IRegex getRegexConcatMultiLine() {
+		return RegexConcat.build(FactorySpriteCommand.class.getName() + "multi", RegexLeaf.start(), //
+				new RegexLeaf("sprite"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("\\$?"), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)?|(color))\\]")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{"), RegexLeaf.end());
 	}
 
-	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("sprite[%s]+\\$?"), //
-				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
-				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\])?"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("DATA", "([-_A-Za-z0-9]+)"), //
-				new RegexLeaf("$"));
+	private IRegex getRegexConcatSingleLine() {
+		return RegexConcat.build(FactorySpriteCommand.class.getName() + "single", RegexLeaf.start(), //
+				new RegexLeaf("sprite"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("\\$?"), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("DIM", "\\[(\\d+)x(\\d+)/(?:(\\d+)(z)|(color))\\]")), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("DATA", "([-_A-Za-z0-9]+)"), RegexLeaf.end());
 	}
 
 	public Command<WithSprite> createSingleLine() {
@@ -92,7 +99,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Wit
 
 			protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines) {
 				lines = lines.trim(true);
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
@@ -105,8 +112,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Wit
 		};
 	}
 
-	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0,
-			final List<String> strings) {
+	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0, final List<String> strings) {
 		try {
 			final Sprite sprite;
 			if (line0.get("DIM", 0) == null) {

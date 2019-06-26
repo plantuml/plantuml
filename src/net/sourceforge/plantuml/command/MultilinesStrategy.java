@@ -60,6 +60,6 @@ public enum MultilinesStrategy {
 	}
 
 	private boolean hasStartingQuote(StringLocated s) {
-		return StringUtils.trinNoTrace(s.getString()).startsWith("\'");
+		return s.getTrimmed().getString().startsWith("\'");
 	}
 }

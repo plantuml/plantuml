@@ -297,6 +297,11 @@ public abstract class Eater {
 			skipSpaces();
 			final String line = "!return " + eatAllToEnd();
 			result.addBody(new StringLocated(line, location));
+		} else if (peekChar() == '!') {
+			checkAndEatChar("!return");
+			skipSpaces();
+			final String line = "!return " + eatAllToEnd();
+			result.addBody(new StringLocated(line, location));
 		}
 		return result;
 	}

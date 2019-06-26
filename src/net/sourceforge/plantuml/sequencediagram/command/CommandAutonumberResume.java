@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
@@ -52,14 +53,21 @@ public class CommandAutonumberResume extends SingleLineCommand2<SequenceDiagram>
 	}
 
 	private static RegexConcat getConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+		return RegexConcat.build(CommandAutonumberResume.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("autonumber"), //
-				new RegexLeaf("[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("resume"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("INC", "(?:[%s]+(\\d+))?"), //
-				new RegexLeaf("DF", "(?:[%s]+[%g]([^%g]+)[%g])?"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("INC", "(\\d+)") //
+						)), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("DF", "[%g]([^%g]+)[%g]") //
+						)), RegexLeaf.end());
 	}
 
 	@Override

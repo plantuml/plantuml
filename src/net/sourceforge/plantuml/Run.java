@@ -337,12 +337,12 @@ public class Run {
 
 	private static void managePattern() {
 		printPattern(new SequenceDiagramFactory(null));
-		printPattern(new ClassDiagramFactory());
-		printPattern(new ActivityDiagramFactory());
-		printPattern(new DescriptionDiagramFactory());
+		printPattern(new ClassDiagramFactory(null));
+		printPattern(new ActivityDiagramFactory(null));
+		printPattern(new DescriptionDiagramFactory(null));
 		// printPattern(new ComponentDiagramFactory());
-		printPattern(new StateDiagramFactory());
-		printPattern(new ObjectDiagramFactory());
+		printPattern(new StateDiagramFactory(null));
+		printPattern(new ObjectDiagramFactory(null));
 	}
 
 	private static void printPattern(UmlDiagramFactory factory) {
@@ -387,6 +387,7 @@ public class Run {
 		final List<File> files = new ArrayList<File>();
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
+				error.goOk();
 				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 				System.out.println("@startuml");
 				System.out.println(transcoder.decode(s));
@@ -465,6 +466,7 @@ public class Run {
 			System.out.println(f);
 			// new Metadata().readAndDisplayMetadata(f);
 			System.out.println();
+			error.goOk();
 			final String data = new MetadataTag(f, "plantuml").getData();
 			// File file = new File("tmp.txt");
 			// PrintWriter pw = new PrintWriter(file, "UTF-8");
@@ -486,12 +488,14 @@ public class Run {
 		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
 
 		if (option.isComputeurl()) {
+			error.goOk();
 			for (BlockUml s : sourceFileReader.getBlocks()) {
 				System.out.println(s.getEncodedUrl());
 			}
 			return;
 		}
 		if (option.isCheckOnly()) {
+			error.goOk();
 			final boolean hasError = sourceFileReader.hasError();
 			if (hasError) {
 				error.goWithError();

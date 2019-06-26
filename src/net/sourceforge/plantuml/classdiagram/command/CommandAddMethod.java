@@ -35,26 +35,39 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class CommandAddMethod extends SingleLineCommand<ClassDiagram> {
+public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 
 	public CommandAddMethod() {
-		super("(?i)^([\\p{L}0-9_.]+|[%g][^%g]+[%g])[%s]+:[%s]+(.*)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandAddMethod.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_.]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf(":"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("DATA", "(.*)"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram system, List<String> arg) {
-		final IEntity entity = system.getOrCreateLeaf(Code.of(arg.get(0)), null, null);
+	protected CommandExecutionResult executeArg(ClassDiagram system, LineLocation location, RegexResult arg) {
+		final IEntity entity = system.getOrCreateLeaf(Code.of(arg.get("NAME", 0)), null, null);
 
-		final String field = arg.get(1);
+		final String field = arg.get("DATA", 0);
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {
 			system.setVisibilityModifierPresent(true);
 		}

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -48,14 +49,15 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandBinary.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", //
 						"(binary)[%s]+"), //
 				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
-				new RegexLeaf("[%s]+as[%s]+"), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("as"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), RegexLeaf.end());
 	}
 
 	@Override

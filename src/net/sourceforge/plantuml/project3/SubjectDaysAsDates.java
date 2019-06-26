@@ -62,7 +62,9 @@ public class SubjectDaysAsDates implements SubjectPattern {
 				new RegexLeaf("MONTH1", "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("DAY1", "([\\d]{1,2})"), //
-				new RegexLeaf("[%s]+to[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("to"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("YEAR2", "([\\d]{4})"), //
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("MONTH2", "([\\d]{1,2})"), //
@@ -78,18 +80,23 @@ public class SubjectDaysAsDates implements SubjectPattern {
 				new RegexLeaf("MONTH3", "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("DAY3", "([\\d]{1,2})"), //
-				new RegexLeaf("[%s]+and[%s]+"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("and"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("COUNT_AND", "([\\d]+)"), //
-				new RegexLeaf("[%s]+days?") //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("days?") //
 
 		);
 	}
 
 	private IRegex regexThen() {
 		return new RegexConcat( //
-				new RegexLeaf("then[%s]+"), //
+				new RegexLeaf("then"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("COUNT_THEN", "([\\d]+)"), //
-				new RegexLeaf("[%s]+days?") //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("days?") //
 
 		);
 	}

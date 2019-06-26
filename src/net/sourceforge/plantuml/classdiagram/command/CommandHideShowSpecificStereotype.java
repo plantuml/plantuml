@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,21 +50,20 @@ public class CommandHideShowSpecificStereotype extends SingleLineCommand2<CucaDi
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideShowSpecificStereotype.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("COMMAND", "(hide|show)"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
 
-//		final String stereotype = arg.get("STEREOTYPE", 0);
-//		diagram.hideOrShow(new Stereotype(stereotype), arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-//
-//		return CommandExecutionResult.ok();
+		// final String stereotype = arg.get("STEREOTYPE", 0);
+		// diagram.hideOrShow(new Stereotype(stereotype), arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		//
+		// return CommandExecutionResult.ok();
 		throw new UnsupportedOperationException();
 	}
 }

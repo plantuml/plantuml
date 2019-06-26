@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.command.regex.RegexComposed;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.creole.CommandCreoleImg;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -64,25 +65,34 @@ import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Stereotype implements CharSequence {
 	private final static RegexComposed circleChar = new RegexConcat( //
-			new RegexLeaf("\\<\\<[%s]*"), //
+			new RegexLeaf("\\<\\<"), //
+			RegexLeaf.spaceZeroOrMore(), //
 			new RegexLeaf("\\(?"), //
 			new RegexLeaf("CHAR", "(\\S)"), //
-			new RegexLeaf("[%s]*,[%s]*"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexLeaf(","), //
+			RegexLeaf.spaceZeroOrMore(), //
 			new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)"), //
-			new RegexLeaf("[%s]*"), //
-			new RegexLeaf("LABEL", "(?:[),](.*?))?"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexOptional(new RegexLeaf("LABEL", "[),](.*?)")), //
 			new RegexLeaf("\\>\\>") //
 	);
 
 	private final static RegexComposed circleSprite = new RegexConcat( //
-			new RegexLeaf("\\<\\<[%s]*"), //
+			new RegexLeaf("\\<\\<"), //
+			RegexLeaf.spaceZeroOrMore(), //
 			new RegexLeaf("\\(?\\$"), //
 			new RegexLeaf("NAME", "(" + SpriteUtils.SPRITE_NAME + ")"), //
 			new RegexLeaf("SCALE", "((?:\\{scale=|\\*)([0-9.]+)\\}?)?"), //
-			new RegexLeaf("[%s]*"), //
-			new RegexLeaf("COLOR", "(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?"), //
-			new RegexLeaf("[%s]*"), //
-			new RegexLeaf("LABEL", "(?:[),](.*?))?"), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexOptional( //
+					new RegexConcat( //
+							new RegexLeaf(","), //
+							RegexLeaf.spaceZeroOrMore(), //
+							new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)") //
+					)), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexOptional(new RegexLeaf("LABEL", "[),](.*?)")), //
 			new RegexLeaf("\\>\\>") //
 	);
 

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -54,10 +55,9 @@ public class CommandNewpage extends SingleLineCommand2<UmlDiagram> {
 		this.factory = factory;
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("newpage"), //
-				new RegexLeaf("$"));
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("newpage"), RegexLeaf.end());
 	}
 
 	@Override

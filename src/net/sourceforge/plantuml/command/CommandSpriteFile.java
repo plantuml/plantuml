@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -63,13 +64,14 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("sprite[%s]+\\$?"), //
-				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("FILE", "(.*)"), //
-				new RegexLeaf("$"));
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSpriteFile.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("sprite"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("\\$?"), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_]+)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("FILE", "(.*)"), RegexLeaf.end());
 	}
 
 	@Override

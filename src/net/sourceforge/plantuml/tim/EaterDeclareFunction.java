@@ -44,7 +44,7 @@ public class EaterDeclareFunction extends Eater {
 	private boolean finalFlag;
 
 	public EaterDeclareFunction(StringLocated s) {
-		super(s.getStringTrimmed());
+		super(s.getTrimmed().getString());
 		this.location = s.getLocation();
 	}
 

@@ -224,7 +224,7 @@ public class PreprocessorInclude implements ReadFilter {
 
 	private ReadLine manageDefinitionInclude(StringLocated s, Matcher2 matcher) throws IOException {
 		final String definitionName = matcher.group(1);
-		final List<String> definition = definitionsContainer.getDefinition(definitionName);
+		final List<String> definition = definitionsContainer.getDefinition1(definitionName);
 		return new Preprocessor(config, new ReadLineList(definition, s.getLocation()), charset, defines,
 				definitionsContainer, filesUsedGlobal, importedFiles, false);
 	}

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -50,13 +51,12 @@ public class CommandWBSOrgmode extends SingleLineCommand2<WBSDiagram> {
 		super(false, getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandWBSOrgmode.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "([*]+)"), //
 				new RegexLeaf("DIRECTION", "([<>])?"), //
-				new RegexLeaf("[%s]+"), //
-				new RegexLeaf("LABEL", "([^%s].*)"), //
-				new RegexLeaf("$"));
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override

@@ -35,18 +35,28 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandFootboxIgnored extends SingleLineCommand<UmlDiagram> {
+public class CommandFootboxIgnored extends SingleLineCommand2<UmlDiagram> {
 
 	public CommandFootboxIgnored() {
-		super("(?i)^(hide|show)?[%s]*footbox$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandFootboxIgnored.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("(hide|show)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("footbox"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
 		return CommandExecutionResult.ok();
 	}
 }

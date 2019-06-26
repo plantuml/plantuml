@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Position;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -57,7 +58,7 @@ public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 
 	protected CommandExecutionResult executeNow(final TimingDiagram diagram, BlocLines lines) {
 
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final String code = line0.get("CODE", 0);
@@ -72,12 +73,17 @@ public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("[%s]*note[%s]+"), //
-				new RegexLeaf("POSITION", "(top|bottom)[%s]+of[%s]+"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNoteLong.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("POSITION", "(top|bottom)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("of"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
-				new RegexLeaf("[%s]*$"));
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 }

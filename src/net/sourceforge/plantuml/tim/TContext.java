@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringLocated;
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Sub2;
@@ -95,6 +97,7 @@ public class TContext {
 	private Sub2 pendingSub;
 	private boolean inLongComment;
 	private final Map<String, Sub2> subs = new HashMap<String, Sub2>();
+	private final DefinitionsContainer definitionsContainer;
 
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<FileWithSuffix>();
@@ -129,7 +132,9 @@ public class TContext {
 		// %str_replace
 	}
 
-	public TContext(ImportedFiles importedFiles, Defines defines, String charset) {
+	public TContext(ImportedFiles importedFiles, Defines defines, String charset,
+			DefinitionsContainer definitionsContainer) {
+		this.definitionsContainer = definitionsContainer;
 		this.importedFiles = importedFiles;
 		this.charset = charset;
 		this.addStandardFunctions(defines);
@@ -174,7 +179,7 @@ public class TContext {
 			if (pendingSub != null) {
 				throw new EaterException("Cannot nest sub");
 			}
-			final EaterStartsub eater = new EaterStartsub(s.getStringTrimmed());
+			final EaterStartsub eater = new EaterStartsub(s.getTrimmed().getString());
 			eater.execute(this, memory);
 			this.pendingSub = new Sub2(eater.getSubname());
 			this.subs.put(eater.getSubname(), this.pendingSub);
@@ -208,7 +213,7 @@ public class TContext {
 			return;
 		}
 
-		if (this.inLongComment && s.getStringTrimmed().endsWith("'/")) {
+		if (this.inLongComment && s.getTrimmed().getString().endsWith("'/")) {
 			this.inLongComment = false;
 			return;
 		}
@@ -226,22 +231,22 @@ public class TContext {
 		s = s.removeInnerComment();
 
 		if (type == TLineType.IF) {
-			this.executeIf(memory, s.getStringTrimmed());
+			this.executeIf(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.IFDEF) {
-			this.executeIfdef(memory, s.getStringTrimmed());
+			this.executeIfdef(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.IFNDEF) {
-			this.executeIfndef(memory, s.getStringTrimmed());
+			this.executeIfndef(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.ELSE) {
-			this.executeElse(memory, s.getStringTrimmed());
+			this.executeElse(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.ELSEIF) {
-			this.executeElseIf(memory, s.getStringTrimmed());
+			this.executeElseIf(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.ENDIF) {
-			this.executeEndif(memory, s.getStringTrimmed());
+			this.executeEndif(memory, s.getTrimmed().getString());
 			return;
 		}
 
@@ -251,10 +256,10 @@ public class TContext {
 		}
 
 		if (type == TLineType.DUMP_MEMORY) {
-			this.executeDumpMemory(memory, s.getStringTrimmed());
+			this.executeDumpMemory(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.ASSERT) {
-			this.executeAssert(memory, s.getStringTrimmed());
+			this.executeAssert(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.UNDEF) {
 			this.executeUndef(memory, s);
@@ -272,10 +277,10 @@ public class TContext {
 			this.executeLegacyDefineLong(memory, s);
 			return;
 		} else if (type == TLineType.AFFECTATION_DEFINE) {
-			this.executeAffectationDefine(memory, s.getStringTrimmed());
+			this.executeAffectationDefine(memory, s.getTrimmed().getString());
 			return;
 		} else if (type == TLineType.AFFECTATION) {
-			this.executeAffectation(memory, s.getStringTrimmed());
+			this.executeAffectation(memory, s.getTrimmed().getString());
 			return;
 		} else if (fromType == null && type == TLineType.DECLARE_FUNCTION) {
 			this.executeDeclareFunction(memory, s);
@@ -285,6 +290,9 @@ public class TContext {
 			return;
 		} else if (type == TLineType.INCLUDE) {
 			this.executeInclude(memory, s);
+			return;
+		} else if (type == TLineType.INCLUDE_DEF) {
+			this.executeIncludeDef(memory, s);
 			return;
 		} else if (type == TLineType.IMPORT) {
 			this.executeImport(memory, s);
@@ -472,6 +480,7 @@ public class TContext {
 					throw new EaterException("Function not found " + presentFunction);
 				}
 				if (function.getFunctionType() == TFunctionType.VOID) {
+					this.pendingAdd = result.toString();
 					executeVoid3(memory, sub, function);
 					return null;
 				}
@@ -509,7 +518,7 @@ public class TContext {
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException {
-		final EaterImport _import = new EaterImport(s.getStringTrimmed());
+		final EaterImport _import = new EaterImport(s.getTrimmed().getString());
 		_import.execute(this, memory);
 
 		try {
@@ -528,12 +537,12 @@ public class TContext {
 	}
 
 	private void executeLog(TMemory memory, StringLocated s) throws EaterException {
-		final EaterLog log = new EaterLog(s.getStringTrimmed());
+		final EaterLog log = new EaterLog(s.getTrimmed().getString());
 		log.execute(this, memory);
 	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
-		final EaterIncludesub include = new EaterIncludesub(s.getStringTrimmed());
+		final EaterIncludesub include = new EaterIncludesub(s.getTrimmed().getString());
 		include.execute(this, memory);
 		final String location = include.getLocation();
 		final int idx = location.indexOf('!');
@@ -569,8 +578,30 @@ public class TContext {
 		}
 	}
 
+	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException {
+		final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed().getString());
+		include.execute(this, memory);
+		final String definitionName = include.getLocation();
+		final List<String> definition = definitionsContainer.getDefinition2(definitionName);
+		ReadLine reader2 = new ReadLineList(definition, s.getLocation());
+
+		try {
+			reader2 = new ReadLineQuoteComment(true).applyFilter(reader2);
+			do {
+				final StringLocated sl = reader2.readLine();
+				if (sl == null) {
+					return;
+				}
+				executeOneLine(memory, TLineType.getFromLine(sl.getString()), sl, null);
+			} while (true);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new EaterException("" + e);
+		}
+	}
+
 	private void executeInclude(TMemory memory, StringLocated s) throws EaterException {
-		final EaterInclude include = new EaterInclude(s.getStringTrimmed());
+		final EaterInclude include = new EaterInclude(s.getTrimmed().getString());
 		include.execute(this, memory);
 		String location = include.getLocation();
 		final PreprocessorIncludeStrategy strategy = include.getPreprocessorIncludeStrategy();
@@ -666,15 +697,22 @@ public class TContext {
 	}
 
 	private static String getVarnameAt(TMemory memory, String s, int pos) {
+		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1)) && justAfterBackslashN(s, pos) == false) {
+			return null;
+		}
 		final String varname = memory.variablesNames3().getLonguestMatchStartingIn(s.substring(pos));
 		if (varname.length() == 0) {
 			return null;
 		}
 		if (pos + varname.length() == s.length()
-				|| Character.isLetterOrDigit(s.charAt(pos + varname.length())) == false) {
+				|| TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos + varname.length())) == false) {
 			return varname;
 		}
 		return null;
+	}
+
+	private static boolean justAfterBackslashN(String s, int pos) {
+		return pos > 1 && s.charAt(pos - 2) == '\\' && s.charAt(pos - 1) == 'n';
 	}
 
 	private String getFunctionNameAt(String s, int pos) {

@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
@@ -50,12 +52,19 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandMultilinesLegend.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("legend"), //
-				new RegexLeaf("VALIGN", "(?:[%s]+(top|bottom))?"), //
-				new RegexLeaf("ALIGN", "(?:[%s]+(left|right|center))?"), //
-				new RegexLeaf("$"));
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("VALIGN", "(top|bottom)") //
+						)), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("ALIGN", "(left|right|center)") //
+						)), RegexLeaf.end());
 	}
 
 	@Override
@@ -66,7 +75,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		final String align = line0.get("ALIGN", 0);
 		final String valign = line0.get("VALIGN", 0);
 		lines = lines.subExtract(1, 1);

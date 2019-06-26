@@ -35,21 +35,30 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 
-public class CommandEndPackageBlock extends SingleLineCommand<CompositeDiagram> {
+public class CommandEndPackageBlock extends SingleLineCommand2<CompositeDiagram> {
 
 	public CommandEndPackageBlock() {
-		super("(?i)^(end[%s]?block|\\})$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandEndPackageBlock.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("(end[%s]?block|\\})"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
 		final IEntity currentPackage = diagram.getCurrentGroup();
 		if (currentPackage == null) {
 			return CommandExecutionResult.error("No inner block defined");

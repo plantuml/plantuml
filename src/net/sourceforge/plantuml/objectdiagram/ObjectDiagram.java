@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -42,6 +43,10 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
 
 public class ObjectDiagram extends AbstractClassOrObjectDiagram {
+
+	public ObjectDiagram(ISkinSimple skinParam) {
+		super(skinParam);
+	}
 
 	@Override
 	public ILeaf getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
@@ -55,6 +60,5 @@ public class ObjectDiagram extends AbstractClassOrObjectDiagram {
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.OBJECT;
 	}
-	
 
 }

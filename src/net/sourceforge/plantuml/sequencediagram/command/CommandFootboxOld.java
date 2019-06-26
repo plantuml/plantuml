@@ -35,22 +35,33 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandFootboxOld extends SingleLineCommand<SequenceDiagram> {
+public class CommandFootboxOld extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandFootboxOld() {
-		super("(?i)^footbox[%s]*(on|off)?[%s]*$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandFootboxOld.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("footbox"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TYPE", "(on|off)?"), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		final boolean footbox = arg.get(0).equalsIgnoreCase("on");
-		sequenceDiagram.setShowFootbox(footbox);
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+		final boolean footbox = arg.get("TYPE", 0).equalsIgnoreCase("on");
+		diagram.setShowFootbox(footbox);
 		return CommandExecutionResult.ok();
 	}
 }

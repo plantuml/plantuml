@@ -62,24 +62,29 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 public final class FactoryTipOnEntityCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
 	private final IRegex partialPattern;
+	private final String key;
 
-	// private final boolean withBracket;
-
-	public FactoryTipOnEntityCommand(IRegex partialPattern/* , boolean withBracket */) {
+	public FactoryTipOnEntityCommand(String key, IRegex partialPattern) {
 		this.partialPattern = partialPattern;
-		// this.withBracket = withBracket;
+		this.key = key;
 	}
 
 	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
+		return RegexConcat.build(FactoryTipOnEntityCommand.class.getName() + key + withBracket, RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("POSITION", "(right|left)"), //
-				new RegexLeaf("[%s]+of[%s]+"), partialPattern, //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("of"), //
+				RegexLeaf.spaceOneOrMore(), //
+				partialPattern, //
+				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
-				new RegexLeaf("$") //
-		);
+				RegexLeaf.end() //
+				);
 	}
 
 	public Command<AbstractEntityDiagram> createSingleLine() {
@@ -100,7 +105,7 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getStringTrimmed());
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 

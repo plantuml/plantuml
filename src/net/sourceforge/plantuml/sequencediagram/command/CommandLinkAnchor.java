@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,15 +50,14 @@ public class CommandLinkAnchor extends SingleLineCommand2<SequenceDiagram> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandLinkAnchor.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("ANCHOR1", "\\{([\\p{L}0-9_]+)\\}"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("LINK", "\\<-\\>"), //
-				new RegexLeaf("[%s]*"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ANCHOR2", "\\{([\\p{L}0-9_]+)\\}"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?$"));
+				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), RegexLeaf.end());
 	}
 
 	@Override

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -49,11 +50,11 @@ public class CommandLayoutNewLine extends SingleLineCommand2<ClassDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
+	private static IRegex getRegexConcat() {
 
-		return new RegexConcat(new RegexLeaf("^"), //
+		return RegexConcat.build(CommandLayoutNewLine.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("layout_new_line"), //
-				new RegexLeaf("$"));
+				RegexLeaf.end());
 	}
 
 	@Override

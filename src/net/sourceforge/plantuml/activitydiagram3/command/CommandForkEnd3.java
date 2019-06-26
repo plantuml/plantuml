@@ -40,8 +40,10 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -50,13 +52,30 @@ public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 		super(getRegexConcat());
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(//
-				new RegexLeaf("^"), //
-				new RegexLeaf("STYLE", "(end[%s]?fork|fork[%s]?end|end[%s]?merge)"), //
-				new RegexLeaf("\\s*"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandForkEnd3.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexOr("STYLE", //
+						new RegexConcat( //
+								new RegexLeaf("end"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("fork") //
+						), //
+						new RegexConcat( //
+								new RegexLeaf("fork"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("end") //
+						), //
+						new RegexConcat( //
+								new RegexLeaf("end"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("merge") //
+						) //
+				), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("LABEL", "(\\{.+\\})?"), //
-				new RegexLeaf(";?$"));
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override

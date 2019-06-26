@@ -35,21 +35,34 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.List;
-
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 
-public class CommandNamespaceSeparator extends SingleLineCommand<ClassDiagram> {
+public class CommandNamespaceSeparator extends SingleLineCommand2<CucaDiagram> {
 
 	public CommandNamespaceSeparator() {
-		super("(?i)^set[%s]namespaceseparator[%s](\\S+)$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandNamespaceSeparator.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("set"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("namespaceseparator"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("SEPARATOR", "(\\S+)"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, List<String> arg) {
-		final String s = arg.get(0);
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
+		final String s = arg.get("SEPARATOR", 0);
 		if ("none".equalsIgnoreCase(s)) {
 			diagram.setNamespaceSeparator(null);
 		} else {

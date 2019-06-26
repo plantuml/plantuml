@@ -35,21 +35,32 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandAutonumberStop extends SingleLineCommand<SequenceDiagram> {
+public class CommandAutonumberStop extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandAutonumberStop() {
-		super("(?i)^autonumber[%s]+stop[%s]*$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandAutonumberStop.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("autonumber"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("stop"), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		sequenceDiagram.autonumberStop();
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+		diagram.autonumberStop();
 		return CommandExecutionResult.ok();
 	}
 }

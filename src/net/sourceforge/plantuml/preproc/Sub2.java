@@ -69,9 +69,9 @@ public class Sub2 {
 		Sub2 result = null;
 		StringLocated s = null;
 		while ((s = reader.readLine()) != null) {
-			final TLineType type = TLineType.getFromLine(s.getStringTrimmed());
+			final TLineType type = TLineType.getFromLine(s.getTrimmed().getString());
 			if (type == TLineType.STARTSUB) {
-				final EaterStartsub eater = new EaterStartsub(s.getStringTrimmed());
+				final EaterStartsub eater = new EaterStartsub(s.getTrimmed().getString());
 				eater.execute(context, memory);
 				if (eater.getSubname().equals(blocname)) {
 					result = new Sub2(blocname);

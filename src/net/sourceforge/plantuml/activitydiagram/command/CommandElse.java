@@ -35,21 +35,31 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 
-public class CommandElse extends SingleLineCommand<ActivityDiagram> {
+public class CommandElse extends SingleLineCommand2<ActivityDiagram> {
 
 	public CommandElse() {
-		super("(?i)^else$");
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandElse.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("else"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram system, List<String> arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg) {
 		if (system.getLastEntityConsulted() == null) {
 			return CommandExecutionResult.error("No if for this else");
 		}
