@@ -21,8 +21,8 @@ package jcckit.plot;
 
 /**
  * Marker interface of all types of hints. Hints are used to calculate 
- * {@link jcckit.graphic.GraphicalElement} representing a point in a {@link
- * Curve}. For example, in a chart with stacked
+ * {@link jcckit.graphic.GraphicalElement} representing a point in a
+ * {@link Curve}. For example, in a chart with stacked
  * bars the data determines the height of a bar but the foot of
  * a bar is determined by the height of the bar below. Its value will be
  * stored in a {@link PositionHint}.

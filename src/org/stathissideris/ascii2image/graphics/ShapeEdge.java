@@ -106,7 +106,7 @@ public class ShapeEdge {
 
 	/**
 	 * Returns the type of the edge
-	 * (<code>TYPE_HORIZONTAL, TYPE_VERTICAL, TYPE_SLOPED).
+	 * (<code>TYPE_HORIZONTAL, TYPE_VERTICAL, TYPE_SLOPED</code>).
 	 * 
 	 * @return
 	 */

@@ -166,7 +166,7 @@ class Cookie {
 
   /**
    * Maximum amount of blocks to split into.
-   * <p/>
+   * <p>
    * {@code 0} for unlimited.
    */
   final int blockSplittingMax = 15;

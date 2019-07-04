@@ -31,6 +31,7 @@ public class Polygon extends BasicGraphicalElement {
 
   /**
    * Creates an instance of the specified graphic attributes.
+   * @param attributes attributes of the instance to be created
    * @param closed <tt>true</tt> if this polygon is closed.
    */
   public Polygon(GraphicAttributes attributes, boolean closed) {

@@ -43,7 +43,7 @@ import jcckit.util.TicLabelFormat;
  * <p>
  * The second form maps a particular number onto a label. In order to be
  * equal with the sepcified number the tic value should not deviate more
- * than 1 ppm (part per millions) from <tt><i>&lt;number&gt;</i>.
+ * than 1 ppm (part per millions) from <tt><i>&lt;number&gt;</i></tt>.
  * <p>
  * The third form maps an interval onto a label. The condition reads
  * <p>

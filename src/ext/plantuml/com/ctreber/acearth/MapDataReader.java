@@ -44,8 +44,6 @@ public class MapDataReader {
 	 * <p>
 	 * Read map data.
 	 * 
-	 * @param pFileName
-	 *            Map data file name.
 	 * @return Array of map polygons.
 	 * @throws IOException
 	 */

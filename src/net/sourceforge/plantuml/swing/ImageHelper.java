@@ -55,7 +55,7 @@ public class ImageHelper {
 	 *            the original image to be scaled
 	 * @param targetDim
 	 *            the desired dimensions of the scaled instance, in pixels
-	 * @param hint
+	 * @param hints
 	 *            RenderingHints used when scaling the image
 	 * @param higherQuality
 	 *            if true, this method will use a multi-step scaling technique that provides higher quality than the
