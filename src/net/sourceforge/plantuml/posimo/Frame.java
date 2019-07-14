@@ -49,6 +49,8 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleDefinition;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -59,21 +61,23 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Frame implements Component {
+	
+	public Style[] getUsedStyles() {
+		throw new UnsupportedOperationException();
+	}
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		throw new UnsupportedOperationException();
+	}
+
 
 	private final List<? extends CharSequence> name;
 	private final ISkinParam skinParam;
 	private final Rose rose = new Rose();
 
-	// private final Color textColor;
-	// private final Color lineColor;
-	// private final Font font;
-
 	public Frame(List<? extends CharSequence> name, ISkinParam skinParam) {
 		this.name = name;
 		this.skinParam = skinParam;
-		// this.textColor = textColor;
-		// this.lineColor = lineColor;
-		// this.font = font;
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {

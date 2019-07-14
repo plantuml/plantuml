@@ -75,7 +75,7 @@ public class ShuntingYard {
 				if (variable == null) {
 					throw new EaterException("Unknown variable " + name);
 				}
-				ouputQueue.add(variable.getValue2().toToken());
+				ouputQueue.add(variable.getValue().toToken());
 			} else if (token.getTokenType() == TokenType.OPERATOR) {
 				while ((thereIsAFunctionAtTheTopOfTheOperatorStack(token) //
 						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //

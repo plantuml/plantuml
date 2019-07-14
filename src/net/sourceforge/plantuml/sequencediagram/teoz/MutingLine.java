@@ -48,6 +48,8 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -57,11 +59,13 @@ public class MutingLine {
 	private final ISkinParam skinParam;
 	private final boolean useContinueLineBecauseOfDelay;
 	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
+	private final StyleBuilder styleBuilder;
 
 	public MutingLine(Rose skin, ISkinParam skinParam, List<Event> events) {
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
+		this.styleBuilder = skinParam.getCurrentStyleBuilder();
 	}
 
 	private boolean useContinueLineBecauseOfDelay(List<Event> events) {
@@ -102,7 +106,8 @@ public class MutingLine {
 		if (y2 < y1) {
 			throw new IllegalArgumentException();
 		}
-		final Component comp = skin.createComponent(defaultLineType, null, skinParam, null);
+		final Style style = defaultLineType.getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam, null);
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		final Area area = new Area(dim.getWidth(), y2 - y1);
 		comp.drawU(ug.apply(new UTranslate(0, y1)), area, context);

@@ -54,8 +54,6 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday());
 	}
 
-	static private final Collection<Command> ALL = getLanguageCommands();
-
 	public GanttDiagramFactory(DiagramType type) {
 		super(type);
 	}
@@ -68,7 +66,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandNope());
 		// cmds.add(new CommandComment());
 		// cmds.add(new CommandMultilinesComment());
-		cmds.addAll(ALL);
+		cmds.addAll(getLanguageCommands());
 		cmds.add(new CommandGanttArrow());
 		cmds.add(new CommandGanttArrow2());
 		cmds.add(new CommandSeparator());
@@ -84,43 +82,48 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 		return cmds;
 	}
 
+	static private final Collection<Command> cache = new ArrayList<Command>();
+
 	private static Collection<Command> getLanguageCommands() {
-		final Collection<Command> result = new ArrayList<Command>();
-		for (SubjectPattern subject : subjects()) {
-			for (VerbPattern verb : subject.getVerbs()) {
-				for (ComplementPattern complement : verb.getComplements()) {
-					result.add(NaturalCommand.create(subject, verb, complement));
-				}
-			}
-		}
-		for (SubjectPattern subject : subjects()) {
-			final Collection<VerbPattern> verbs = subject.getVerbs();
-			for (VerbPattern verb1 : verbs) {
-				for (VerbPattern verb2 : verbs) {
-					if (verb1 == verb2) {
-						continue;
-					}
-					for (ComplementPattern complement1 : verb1.getComplements()) {
-						for (ComplementPattern complement2 : verb2.getComplements()) {
-							result.add(NaturalCommandAnd.create(subject, verb1, complement1, verb2, complement2));
+		synchronized (cache) {
+			if (cache.size() == 0) {
+				for (SubjectPattern subject : subjects()) {
+					for (VerbPattern verb : subject.getVerbs()) {
+						for (ComplementPattern complement : verb.getComplements()) {
+							cache.add(NaturalCommand.create(subject, verb, complement));
 						}
 					}
 				}
-			}
-		}
-		for (SubjectPattern subject : subjects()) {
-			final Collection<VerbPattern> verbs = subject.getVerbs();
-			for (VerbPattern verb1 : verbs) {
-				for (VerbPattern verb2 : verbs) {
-					for (VerbPattern verb3 : verbs) {
-						if (verb1 == verb2 || verb1 == verb3 || verb2 == verb3) {
-							continue;
+				for (SubjectPattern subject : subjects()) {
+					final Collection<VerbPattern> verbs = subject.getVerbs();
+					for (VerbPattern verb1 : verbs) {
+						for (VerbPattern verb2 : verbs) {
+							if (verb1 == verb2) {
+								continue;
+							}
+							for (ComplementPattern complement1 : verb1.getComplements()) {
+								for (ComplementPattern complement2 : verb2.getComplements()) {
+									cache.add(NaturalCommandAnd.create(subject, verb1, complement1, verb2, complement2));
+								}
+							}
 						}
-						for (ComplementPattern complement1 : verb1.getComplements()) {
-							for (ComplementPattern complement2 : verb2.getComplements()) {
-								for (ComplementPattern complement3 : verb3.getComplements()) {
-									result.add(NaturalCommandAndAnd.create(subject, verb1, complement1, verb2,
-											complement2, verb3, complement3));
+					}
+				}
+				for (SubjectPattern subject : subjects()) {
+					final Collection<VerbPattern> verbs = subject.getVerbs();
+					for (VerbPattern verb1 : verbs) {
+						for (VerbPattern verb2 : verbs) {
+							for (VerbPattern verb3 : verbs) {
+								if (verb1 == verb2 || verb1 == verb3 || verb2 == verb3) {
+									continue;
+								}
+								for (ComplementPattern complement1 : verb1.getComplements()) {
+									for (ComplementPattern complement2 : verb2.getComplements()) {
+										for (ComplementPattern complement3 : verb3.getComplements()) {
+											cache.add(NaturalCommandAndAnd.create(subject, verb1, complement1, verb2,
+													complement2, verb3, complement3));
+										}
+									}
 								}
 							}
 						}
@@ -128,7 +131,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 				}
 			}
 		}
-		return Collections.unmodifiableCollection(result);
+		return cache;
 	}
 
 	@Override

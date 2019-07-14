@@ -38,6 +38,8 @@ package net.sourceforge.plantuml;
 import java.awt.Font;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleDefinition;
 
 interface FontParamConstant {
 	String FAMILY = "SansSerif";
@@ -177,6 +179,20 @@ public enum FontParam {
 
 	public FontConfiguration getFontConfiguration(ISkinParam skinParam) {
 		return new FontConfiguration(skinParam, this, null);
+	}
+
+	public StyleDefinition getStyleDefinition() {
+		if (this == FOOTER) {
+			return StyleDefinition.of(SName.root, SName.footer);
+		}
+		if (this == HEADER) {
+			return StyleDefinition.of(SName.root, SName.header);
+		}
+		if (this == TITLE) {
+			return StyleDefinition.of(SName.root, SName.title);
+		}
+		System.err.println("Warning " + this);
+		return null;
 	}
 
 }

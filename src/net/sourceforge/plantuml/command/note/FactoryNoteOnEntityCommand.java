@@ -106,6 +106,29 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 	}
 
 	private IRegex getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
+		if (withBracket) {
+			return RegexConcat.build(FactoryNoteOnEntityCommand.class.getName() + key + "multi" + withBracket,
+					RegexLeaf.start(), //
+					new RegexLeaf("note"), //
+					RegexLeaf.spaceOneOrMore(), //
+					new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
+					new RegexOr(//
+							new RegexConcat(RegexLeaf.spaceOneOrMore(), //
+									new RegexLeaf("of"), //
+									RegexLeaf.spaceOneOrMore(), //
+									partialPattern), //
+							new RegexLeaf("")), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					color().getRegex(), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("\\{"), //
+					RegexLeaf.end() //
+					);
+		}
 		return RegexConcat.build(FactoryNoteOnEntityCommand.class.getName() + key + "multi" + withBracket,
 				RegexLeaf.start(), //
 				new RegexLeaf("note"), //
@@ -123,7 +146,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), RegexLeaf.end() //
+				RegexLeaf.end() //
 				);
 	}
 
@@ -203,15 +226,15 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 		if (position == Position.RIGHT) {
-			link = new Link(cl1, note, type, Display.NULL, 1);
+			link = new Link(cl1, note, type, Display.NULL, 1, diagram.getSkinParam().getCurrentStyleBuilder());
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.LEFT) {
-			link = new Link(note, cl1, type, Display.NULL, 1);
+			link = new Link(note, cl1, type, Display.NULL, 1, diagram.getSkinParam().getCurrentStyleBuilder());
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.BOTTOM) {
-			link = new Link(cl1, note, type, Display.NULL, 2);
+			link = new Link(cl1, note, type, Display.NULL, 2, diagram.getSkinParam().getCurrentStyleBuilder());
 		} else if (position == Position.TOP) {
-			link = new Link(note, cl1, type, Display.NULL, 2);
+			link = new Link(note, cl1, type, Display.NULL, 2, diagram.getSkinParam().getCurrentStyleBuilder());
 		} else {
 			throw new IllegalArgumentException();
 		}

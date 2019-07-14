@@ -35,10 +35,15 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.style.PName;
 
 public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 
@@ -61,7 +66,13 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 		lines = lines.subExtract(1, 1);
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.getFooter().put(strings, HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER));
+			HorizontalAlignment defaultAlign = HorizontalAlignment.CENTER;
+			if (SkinParam.USE_STYLES()) {
+				defaultAlign = FontParam.FOOTER.getStyleDefinition()
+						.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
+						.value(PName.HorizontalAlignment).asHorizontalAlignment();
+			}
+			diagram.getFooter().putDisplay(strings, HorizontalAlignment.fromString(align, defaultAlign));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty footer");

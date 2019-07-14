@@ -59,7 +59,7 @@ public class GetVariableValue extends SimpleReturnFunction {
 		if (variable == null) {
 			return TValue.fromString("");
 		}
-		return variable.getValue2();
+		return variable.getValue();
 	}
 
 }

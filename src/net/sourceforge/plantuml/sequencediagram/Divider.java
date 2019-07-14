@@ -36,13 +36,29 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.WithStyle;
 
-public class Divider extends AbstractEvent implements Event {
+public class Divider extends AbstractEvent implements Event, WithStyle {
 
 	private final Display text;
 
-	public Divider(Display text) {
+	final private Style style;
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		return ComponentType.DIVIDER.getDefaultStyleDefinition();
+	}
+
+	public Style[] getUsedStyles() {
+		return new Style[] { style };
+	}
+
+	public Divider(Display text, StyleBuilder styleBuilder) {
 		this.text = text;
+		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
 	}
 
 	public final Display getText() {

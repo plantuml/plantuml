@@ -63,7 +63,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntityObject.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(object)"), //
+				new RegexLeaf("TYPE", "object"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([\\p{L}0-9_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //

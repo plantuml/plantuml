@@ -435,7 +435,8 @@ public class StringUtils {
 		while (matcher.find()) {
 			final String num = matcher.group(1);
 			final int value = Integer.parseInt(num, 16);
-			matcher.appendReplacement(result, new String(Character.toChars(value)));
+			final String replace = new String(Character.toChars(value));
+			matcher.appendReplacement(result, Matcher.quoteReplacement(replace));
 		}
 		matcher.appendTail(result);
 		return result.toString();

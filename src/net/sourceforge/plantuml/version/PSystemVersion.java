@@ -190,7 +190,7 @@ public class PSystemVersion extends AbstractPSystem {
 		// Stdlib.addInfoVersion(strings, false);
 		// strings.add(" ");
 
-		strings.addAll(GraphvizUtils.getTestDotStrings(true));
+		GraphvizUtils.addDotStatus(strings, true);
 		strings.add(" ");
 		for (String name : OptionPrint.interestingProperties()) {
 			strings.add(name);
@@ -325,7 +325,8 @@ public class PSystemVersion extends AbstractPSystem {
 
 	public static PSystemVersion createTestDot() throws IOException {
 		final List<String> strings = new ArrayList<String>();
-		strings.addAll(GraphvizUtils.getTestDotStrings(true));
+		strings.add(Version.fullDescription());
+		GraphvizUtils.addDotStatus(strings, true);
 		return new PSystemVersion(false, strings);
 	}
 

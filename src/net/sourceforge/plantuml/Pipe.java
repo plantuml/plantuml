@@ -104,6 +104,7 @@ public class Pipe {
 					ps.println();
 				} else {
 					ps.println(result);
+					error.goOk();
 				}
 			} else {
 				final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;

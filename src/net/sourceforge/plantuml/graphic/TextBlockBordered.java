@@ -51,21 +51,28 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 	private final double cornersize;
 	private final HtmlColor backgroundColor;
 	private final HtmlColor borderColor;
-	private final int marginX = 6;
-	private final int marginY = 5;
+	private final double marginX;
+	private final double marginY;
 	private final UStroke stroke;
 	private final boolean withShadow;
 
 	private final TextBlock textBlock;
 
 	TextBlockBordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor, HtmlColor backgroundColor,
-			double cornersize) {
+			double cornersize, double marginX, double marginY) {
+		this.marginX = marginX;
+		this.marginY = marginY;
 		this.cornersize = cornersize;
 		this.textBlock = textBlock;
 		this.withShadow = false;
 		this.stroke = stroke;
 		this.borderColor = borderColor;
 		this.backgroundColor = backgroundColor;
+	}
+
+	TextBlockBordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor, HtmlColor backgroundColor,
+			double cornersize) {
+		this(textBlock, stroke, borderColor, backgroundColor, cornersize, 6, 5);
 	}
 
 	private double getTextHeight(StringBounder stringBounder) {

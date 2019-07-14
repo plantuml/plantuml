@@ -64,7 +64,8 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 	}
 
 	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines) {
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.getFirst499().getTrimmed().getString());
+		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.getFirst499().getTrimmed()
+				.getString());
 		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get(0));
 		// final HtmlColor backColorGeneral = HtmlColorSet.getInstance().getColorIfValid(line0.get(1));
 
@@ -88,7 +89,8 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		}
 
 		final HtmlColor backColorGeneral = null;
-		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement);
+		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement, diagram.getSkinParam()
+				.getCurrentStyleBuilder());
 		diagram.addReference(ref);
 		return CommandExecutionResult.ok();
 	}

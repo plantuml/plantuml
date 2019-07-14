@@ -60,7 +60,7 @@ public class EntityImageNote2 extends AbstractEntityImage2 {
 
 		final Rose skin = new Rose();
 
-		comp = skin.createComponent(ComponentType.NOTE, null, skinParam, entity.getDisplay());
+		comp = skin.createComponent(null, ComponentType.NOTE, null, skinParam, entity.getDisplay());
 
 	}
 

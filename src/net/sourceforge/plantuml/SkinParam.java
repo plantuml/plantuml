@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -62,6 +63,11 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.Padder;
+import net.sourceforge.plantuml.style.FromSkinparamToStyle;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -76,6 +82,21 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 
 public class SkinParam implements ISkinParam {
+
+	public static final String DEFAULT_STYLE = "plantuml.skin";
+
+	// public static final String DEFAULT_STYLE = "debug.skin";
+
+	static public boolean USE_STYLES() {
+		return USE_STYLE2.get();
+	}
+
+	private static ThreadLocal<Boolean> USE_STYLE2 = new ThreadLocal<Boolean>();
+
+	private SkinParam(UmlDiagramType type) {
+		USE_STYLE2.set(false);
+		this.type = type;
+	}
 
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
 	private static final Pattern2 stereoPattern = MyPattern.cmpile(stereoPatternString);
@@ -96,11 +117,17 @@ public class SkinParam implements ISkinParam {
 	public void setParam(String key, String value) {
 		for (String key2 : cleanForKey(key)) {
 			params.put(key2, StringUtils.trin(value));
+			if (key2.startsWith("usebetastyle")) {
+				USE_STYLE2.set("true".equalsIgnoreCase(value));
+			}
+			if (USE_STYLES()) {
+				final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2, value, getCurrentStyleBuilder());
+				final Style style = convertor.getStyle();
+				if (style != null) {
+					muteStyle(style);
+				}
+			}
 		}
-	}
-
-	private SkinParam(UmlDiagramType type) {
-		this.type = type;
 	}
 
 	public static SkinParam create(UmlDiagramType type) {
@@ -1015,15 +1042,17 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public double getPadding() {
-		final String value = getValue("padding");
-		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
-			return Double.parseDouble(value);
-		}
-		return 0;
+		final String name = "padding";
+		return getAsDouble(name);
 	}
 
 	public double getPadding(PaddingParam param) {
-		final String value = getValue(param.getSkinName());
+		final String name = param.getSkinName();
+		return getAsDouble(name);
+	}
+
+	private double getAsDouble(final String name) {
+		final String value = getValue(name);
 		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
 			return Double.parseDouble(value);
 		}
@@ -1079,4 +1108,37 @@ public class SkinParam implements ISkinParam {
 		return useVizJs;
 	}
 
+	public Padder getSequenceDiagramPadder() {
+		final double padding = getAsDouble("SequenceMessagePadding");
+		final double margin = getAsDouble("SequenceMessageMargin");
+		final String borderColor = getValue("SequenceMessageBorderColor");
+		final String backgroundColor = getValue("SequenceMessageBackGroundColor");
+		if (padding == 0 && margin == 0 && borderColor == null && backgroundColor == null) {
+			return Padder.NONE;
+		}
+		final HtmlColor border = getIHtmlColorSet().getColorIfValid(borderColor);
+		final HtmlColor background = getIHtmlColorSet().getColorIfValid(backgroundColor);
+		final double roundCorner = getRoundCorner(CornerParam.DEFAULT, null);
+		return Padder.NONE.withMargin(margin).withPadding(padding).withBackgroundColor(background)
+				.withBorderColor(border).withRoundCorner(roundCorner);
+	}
+
+	private StyleBuilder styleBuilder;
+
+	public StyleBuilder getCurrentStyleBuilder() {
+		if (styleBuilder == null && SkinParam.USE_STYLES()) {
+			try {
+				this.styleBuilder = StyleLoader.mainStyle(this);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return styleBuilder;
+	}
+
+	public void muteStyle(Style modifiedStyle) {
+		if (SkinParam.USE_STYLES()) {
+			styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyle);
+		}
+	}
 }

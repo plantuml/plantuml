@@ -42,6 +42,10 @@ import java.util.List;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleDefinition;
 
 public class Reference extends AbstractEvent implements Event {
 
@@ -52,13 +56,24 @@ public class Reference extends AbstractEvent implements Event {
 
 	private final Display strings;
 
+	final private Style style;
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		return ComponentType.REFERENCE.getDefaultStyleDefinition();
+	}
+
+	public Style[] getUsedStyles() {
+		return new Style[] { style };
+	}
+
 	public Reference(List<Participant> participants, Url url, Display strings, HtmlColor backColorGeneral,
-			HtmlColor backColorElement) {
+			HtmlColor backColorElement, StyleBuilder styleBuilder) {
 		this.participants = participants;
 		this.url = url;
 		this.strings = strings;
 		this.backColorGeneral = backColorGeneral;
 		this.backColorElement = backColorElement;
+		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
 	}
 
 	public List<Participant> getParticipant() {

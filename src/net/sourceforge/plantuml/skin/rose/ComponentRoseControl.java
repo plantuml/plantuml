@@ -39,6 +39,8 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -48,6 +50,7 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Control;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -58,10 +61,14 @@ public class ComponentRoseControl extends AbstractTextualComponent {
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseControl(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay, boolean head,
-			ISkinSimple spriteContainer, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
-		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, false,
-				fontForStereotype, htmlColorForStereotype);
+	public ComponentRoseControl(Style style, Style stereo, SymbolContext biColor, FontConfiguration font,
+			Display stringsToDisplay, boolean head, ISkinSimple spriteContainer, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype) {
+		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
+				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
+		if (SkinParam.USE_STYLES()) {
+			biColor = style.getSymbolContext(getIHtmlColorSet());
+		}
 		this.head = head;
 		this.stickman = new Control(biColor);
 	}

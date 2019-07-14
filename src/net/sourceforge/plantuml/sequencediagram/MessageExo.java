@@ -37,6 +37,9 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleDefinition;
 
 public class MessageExo extends AbstractMessage {
 
@@ -44,18 +47,17 @@ public class MessageExo extends AbstractMessage {
 	final private Participant participant;
 	final private boolean shortArrow;
 
-	public MessageExo(Participant p, MessageExoType type, Display label, ArrowConfiguration arrowConfiguration,
-			String messageNumber, boolean shortArrow) {
-		super(label, arrowConfiguration, messageNumber);
+	public MessageExo(StyleBuilder styleBuilder, Participant p, MessageExoType type, Display label,
+			ArrowConfiguration arrowConfiguration, String messageNumber, boolean shortArrow) {
+		super(styleBuilder, label, arrowConfiguration, messageNumber);
 		this.participant = p;
 		this.type = type;
 		this.shortArrow = shortArrow;
 	}
-	
+
 	public boolean isShortArrow() {
 		return shortArrow;
 	}
-
 
 	@Override
 	protected NotePosition overideNotePosition(NotePosition notePosition) {
@@ -84,11 +86,9 @@ public class MessageExo extends AbstractMessage {
 	public boolean compatibleForCreate(Participant p) {
 		return p == participant;
 	}
-	
+
 	public boolean isSelfMessage() {
 		return false;
 	}
-
-
 
 }

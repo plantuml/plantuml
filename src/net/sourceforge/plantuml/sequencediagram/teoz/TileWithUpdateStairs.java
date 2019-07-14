@@ -40,4 +40,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 public interface TileWithUpdateStairs extends Tile {
 
 	public void updateStairs(StringBounder stringBounder, double y);
+
+	public double getYPoint(StringBounder stringBounder);
+
 }

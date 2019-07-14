@@ -1,0 +1,169 @@
+style root {
+  FontName SansSerif
+  HyperLinkColor red
+  FontColor green
+  FontSize 19
+  FontStyle plain
+  HorizontalAlignment left
+  RoundCorner 15
+  DiagonalCorner 0
+  LineColor #3600A8
+  LineThickness 1.0
+  BackGroundColor #AAA
+  Shadowing 0.0
+}
+
+style stereotype {
+  FontColor blue
+  FontSize 8
+  FontStyle bold
+}
+
+style title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+style header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+style footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+style legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+style caption {
+  FontSize 32
+}
+
+
+style element {
+  BackGroundColor #CEFEFE
+}
+
+style sequenceDiagram {
+}
+
+style classDiagram {
+}
+
+style activityDiagram {
+}
+
+
+style group {
+  LineThickness 3.5
+  BackGroundColor MistyRose
+  LineColor DarkOrange
+  
+  FontSize 12
+  FontStyle italic
+  FontColor red
+}
+
+style groupHeader {
+  BackGroundColor tan
+  LineThickness 0.5
+  LineColor yellow
+
+  FontSize 18
+  FontStyle bold
+  FontColor blue
+}
+
+style lifeLine {
+  BackGroundColor gold
+}
+
+style destroy {
+  LineColor red
+}
+
+style reference {
+  LineColor red
+  FontSize 10
+  FontStyle bold
+  FontColor blue
+  BackGroundColor gold
+  HorizontalAlignment right
+}
+
+style box {
+  LineThickness 0.1
+  LineColor FireBrick
+  BackGroundColor PowderBlue
+
+  FontSize 12
+  FontStyle italic
+  FontColor Maroon
+}
+
+style separator {
+  LineColor red
+  BackGroundColor green
+  
+  FontSize 16
+  FontStyle bold
+  FontColor white
+}
+
+style delay {
+  FontSize 22
+  FontStyle italic
+}
+
+style participant {
+  LineThickness 2.5
+}
+
+style actor {
+  LineThickness 0.5
+}
+
+style boundary {
+  LineThickness 1.5
+}
+
+style control {
+  LineThickness 1.5
+}
+
+style entity {
+  LineThickness 1.5
+}
+
+style queue {
+  LineThickness 1.5
+}
+
+style database {
+  LineThickness 1.5
+}
+
+style collections {
+  LineThickness 1.5
+}
+
+style message {
+}
+
+style note {
+  BackGroundColor GoldenRod
+}
+
+style swimlane {
+}
+
+

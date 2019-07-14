@@ -68,8 +68,8 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateDomain.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", // TODO yy
-						"(requirement|domain)[%s]+"), //
+				new RegexLeaf("TYPE", "(requirement|domain)"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("DISPLAY", DISPLAY_WITH_GENERIC), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //

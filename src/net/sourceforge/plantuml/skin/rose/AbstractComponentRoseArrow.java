@@ -35,16 +35,23 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.Padder;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.PName;
 
 public abstract class AbstractComponentRoseArrow extends AbstractTextualComponent implements ArrowComponent {
 
@@ -53,17 +60,28 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 	private final HtmlColor foregroundColor;
 	private final ArrowConfiguration arrowConfiguration;
 
-	public AbstractComponentRoseArrow(HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay,
-			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, HorizontalAlignment textHorizontalAlignment,
-			LineBreakStrategy maxMessageSize) {
-		super(maxMessageSize, stringsToDisplay, font, textHorizontalAlignment, 7, 7, 1,
-				spriteContainer, false, null, null);
+	public AbstractComponentRoseArrow(Style style, HtmlColor foregroundColor, FontConfiguration font,
+			Display stringsToDisplay, ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer,
+			HorizontalAlignment textHorizontalAlignment, LineBreakStrategy maxMessageSize) {
+		super(style, maxMessageSize, stringsToDisplay, font, textHorizontalAlignment, 7, 7, 1, spriteContainer, false,
+				null, null);
 		this.arrowConfiguration = arrowConfiguration;
-		this.foregroundColor = foregroundColor;
+		if (SkinParam.USE_STYLES()) {
+			this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		} else {
+			this.foregroundColor = foregroundColor;
+		}
 	}
-	
-	abstract public double getYPoint(StringBounder stringBounder);
 
+	@Override
+	final protected TextBlock getTextBlock() {
+		final Padder padder = getISkinSimple() instanceof ISkinParam ? ((ISkinParam) getISkinSimple())
+				.getSequenceDiagramPadder() : Padder.NONE;
+
+		return padder.apply(super.getTextBlock());
+	}
+
+	abstract public double getYPoint(StringBounder stringBounder);
 
 	protected final HtmlColor getForegroundColor() {
 		return foregroundColor;

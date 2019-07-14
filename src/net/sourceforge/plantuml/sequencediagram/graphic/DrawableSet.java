@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -151,8 +152,8 @@ public class DrawableSet {
 		if (englober == null) {
 			return height;
 		}
-		final Component comp = skin.createComponent(ComponentType.ENGLOBER, null, skinParam, englober
-				.getParticipantEnglober().getTitle());
+		final Component comp = skin.createComponent(englober.getUsedStyles(), ComponentType.ENGLOBER, null, skinParam,
+				englober.getParticipantEnglober().getTitle());
 		final double heightEnglober = comp.getPreferredHeight(stringBounder);
 		return height + heightEnglober;
 	}
@@ -171,7 +172,8 @@ public class DrawableSet {
 				pending.add(ent.getKey());
 				continue;
 			}
-			pending = Englober.createPuma(englober, ent.getKey(), getSkinParam(), skin, stringBounder);
+			pending = Englober.createPuma(englober, ent.getKey(), getSkinParam(), skin, stringBounder,
+					skinParam.getCurrentStyleBuilder());
 			result.add(pending);
 		}
 		return Collections.unmodifiableList(result);
@@ -180,7 +182,7 @@ public class DrawableSet {
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
 		for (Englober englober : getExistingParticipantEnglober(stringBounder)) {
-			final Component comp = skin.createComponent(ComponentType.ENGLOBER, null, skinParam, englober
+			final Component comp = skin.createComponent(null, ComponentType.ENGLOBER, null, skinParam, englober
 					.getParticipantEnglober().getTitle());
 			final double height = comp.getPreferredHeight(stringBounder);
 			if (height > result) {
@@ -372,11 +374,10 @@ public class DrawableSet {
 			double x1 = getX1(englober);
 			final double x2 = getX2(ug.getStringBounder(), englober);
 
-			final Component comp = getEngloberComponent(englober.getParticipantEnglober());
+			final Component comp = getEngloberComponent(englober);
 
 			final double width = x2 - x1;
-			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(),
-					englober.getParticipantEnglober());
+			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(), englober);
 			if (preferedWidth > width) {
 				// if (englober.getFirst2() == englober.getLast2()) {
 				x1 -= (preferedWidth - width) / 2;
@@ -390,14 +391,16 @@ public class DrawableSet {
 		}
 	}
 
-	public double getEngloberPreferedWidth(StringBounder stringBounder, ParticipantEnglober englober) {
+	public double getEngloberPreferedWidth(StringBounder stringBounder, Englober englober) {
 		return getEngloberComponent(englober).getPreferredWidth(stringBounder);
 	}
 
-	private Component getEngloberComponent(ParticipantEnglober englober) {
-		final ISkinParam s = englober.getBoxColor() == null ? skinParam : new SkinParamBackcolored(skinParam,
-				englober.getBoxColor());
-		return skin.createComponent(ComponentType.ENGLOBER, null, s, englober.getTitle());
+	private Component getEngloberComponent(Englober englober) {
+		final ParticipantEnglober participantEnglober = englober.getParticipantEnglober();
+		final ISkinParam s = participantEnglober.getBoxColor() == null ? skinParam : new SkinParamBackcolored(
+				skinParam, participantEnglober.getBoxColor());
+		return skin.createComponent(englober.getUsedStyles(), ComponentType.ENGLOBER, null, s,
+				participantEnglober.getTitle());
 	}
 
 	public double getX1(Englober englober) {

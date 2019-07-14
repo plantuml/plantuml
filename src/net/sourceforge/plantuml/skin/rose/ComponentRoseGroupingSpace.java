@@ -42,9 +42,19 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleDefinition;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class ComponentRoseGroupingSpace implements Component {
+
+	public Style[] getUsedStyles() {
+		throw new UnsupportedOperationException();
+	}
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		throw new UnsupportedOperationException();
+	}
 
 	private final double space;
 

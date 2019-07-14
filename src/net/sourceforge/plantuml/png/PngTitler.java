@@ -38,12 +38,19 @@ package net.sourceforge.plantuml.png;
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PngTitler {
@@ -54,9 +61,23 @@ public class PngTitler {
 	private final int fontSize;
 	private final String fontFamily;
 	private final boolean useUnderlineForHyperlink;
+	private final Style style;
+	private final IHtmlColorSet set;
+	private final ISkinSimple spriteContainer;
 
 	public PngTitler(HtmlColor textColor, DisplaySection text, int fontSize, String fontFamily,
-			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, Style style, IHtmlColorSet set,
+			ISkinSimple spriteContainer) {
+		this.style = style;
+		this.set = set;
+		this.spriteContainer = spriteContainer;
+
+		if (SkinParam.USE_STYLES()) {
+			textColor = style.value(PName.FontColor).asColor(set);
+			fontSize = style.value(PName.FontSize).asInt();
+			fontFamily = style.value(PName.FontName).asString();
+			hyperlinkColor = style.value(PName.HyperLinkColor).asColor(set);
+		}
 		this.textColor = textColor;
 		this.text = text;
 		this.fontSize = fontSize;
@@ -75,31 +96,16 @@ public class PngTitler {
 	}
 
 	public TextBlock getRibbonBlock() {
+		if (SkinParam.USE_STYLES()) {
+			final Display display = text.getDisplay();
+			if (display == null) {
+				return null;
+			}
+			return style.createTextBlockBordered(display, set, spriteContainer);
+		}
 		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-		return text.createRibbon(new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
+		return text.createRibbon(
+				new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
 				new SpriteContainerEmpty());
-	}
-
-	private double getOffsetX(double imWidth, StringBounder stringBounder) {
-		final TextBlock textBloc = getRibbonBlock();
-		if (textBloc == null) {
-			return 0;
-		}
-		final Dimension2D dimText = textBloc.calculateDimension(stringBounder);
-
-		if (imWidth >= dimText.getWidth()) {
-			return 0;
-		}
-		return (dimText.getWidth() - imWidth) / 2;
-	}
-
-	private double getOffsetY(StringBounder stringBounder) {
-		final TextBlock textBloc = getRibbonBlock();
-		if (textBloc == null) {
-			return 0;
-		}
-		final Dimension2D dimText = textBloc.calculateDimension(stringBounder);
-		final double height = dimText.getHeight();
-		return height;
 	}
 }

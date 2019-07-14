@@ -36,20 +36,49 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.WithStyle;
 
-public abstract class Grouping implements Event {
+public abstract class Grouping implements Event, WithStyle {
 
 	private final String title;
 	private final GroupingType type;
 	private final String comment;
 	private final HtmlColor backColorElement;
 
-	public Grouping(String title, String comment, GroupingType type,
-			HtmlColor backColorElement) {
+	// private final StyleBuilder styleBuilder;
+
+	final private Style style;
+	final private Style styleHeader;
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		return StyleDefinition.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);
+	}
+
+	private StyleDefinition getHeaderStyleDefinition() {
+		return StyleDefinition.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
+	}
+
+	public Style[] getUsedStyles() {
+		return new Style[] {
+				style,
+				styleHeader == null ? styleHeader : styleHeader.eventuallyOverride(PName.BackGroundColor,
+						backColorElement) };
+	}
+
+	public Grouping(String title, String comment, GroupingType type, HtmlColor backColorElement,
+			StyleBuilder styleBuilder) {
 		this.title = title;
+		// this.styleBuilder = styleBuilder;
 		this.comment = comment;
 		this.type = type;
 		this.backColorElement = backColorElement;
+		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
 	}
 
 	@Override
@@ -68,7 +97,7 @@ public abstract class Grouping implements Event {
 	public abstract int getLevel();
 
 	public abstract HtmlColor getBackColorGeneral();
-	
+
 	final public String getComment() {
 		return comment;
 	}
@@ -76,7 +105,7 @@ public abstract class Grouping implements Event {
 	public final HtmlColor getBackColorElement() {
 		return backColorElement;
 	}
-	
-	public abstract boolean isParallel(); 
+
+	public abstract boolean isParallel();
 
 }

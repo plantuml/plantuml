@@ -46,6 +46,9 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.Padder;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -182,7 +185,7 @@ public class SkinParamDelegator implements ISkinParam {
 	public ConditionEndStyle getConditionEndStyle() {
 		return skinParam.getConditionEndStyle();
 	}
-        
+
 	public double minClassWidth() {
 		return skinParam.minClassWidth();
 	}
@@ -322,10 +325,21 @@ public class SkinParamDelegator implements ISkinParam {
 	public Map<String, String> values() {
 		return skinParam.values();
 	}
-	
+
 	public HorizontalAlignment getStereotypeAlignment() {
 		return skinParam.getStereotypeAlignment();
 	}
 
+	public Padder getSequenceDiagramPadder() {
+		return skinParam.getSequenceDiagramPadder();
+	}
+
+	public StyleBuilder getCurrentStyleBuilder() {
+		return skinParam.getCurrentStyleBuilder();
+	}
+
+	public void muteStyle(Style modifiedStyle) {
+		skinParam.muteStyle(modifiedStyle);
+	}
 
 }

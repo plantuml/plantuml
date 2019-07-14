@@ -42,7 +42,7 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 	private final SingleLineCommand2<D> cmd;
 	private final boolean removeEmptyColumn;
 	private final int nbMaxLines;
-
+	
 	public CommandDecoratorMultine(SingleLineCommand2<D> cmd, int nbMaxLines) {
 		this(cmd, false, nbMaxLines);
 	}

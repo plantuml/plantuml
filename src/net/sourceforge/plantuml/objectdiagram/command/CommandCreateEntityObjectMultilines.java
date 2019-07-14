@@ -64,7 +64,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntityObjectMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(object)"), //
+				new RegexLeaf("TYPE", "object"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([\\p{L}0-9_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -73,7 +73,9 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\{[%s]*"), RegexLeaf.end());
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{"), //
+				RegexLeaf.end());
 	}
 
 	@Override

@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -60,16 +62,20 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseDatabase(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay, boolean head,
-			ISkinSimple spriteContainer, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
-		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, false,
-				fontForStereotype, htmlColorForStereotype);
+	public ComponentRoseDatabase(Style style, Style stereo, SymbolContext biColor, FontConfiguration font,
+			Display stringsToDisplay, boolean head, ISkinSimple spriteContainer, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype) {
+		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
+				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
+		if (SkinParam.USE_STYLES()) {
+			biColor = style.getSymbolContext(getIHtmlColorSet());
+		}
 
 		final SymbolContext symbolContext = new SymbolContext(biColor.getBackColor(), biColor.getForeColor())
 				.withStroke(new UStroke(1.5)).withShadow(biColor.getDeltaShadow() > 0);
-		this.stickman = USymbol.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17),
-				TextBlockUtils.empty(0, 0), symbolContext, HorizontalAlignment.CENTER);
+		this.stickman = USymbol.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
+				symbolContext, HorizontalAlignment.CENTER);
 	}
 
 	@Override

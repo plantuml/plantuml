@@ -78,7 +78,8 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClass.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", //
-						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|circle|diamond)[%s]+"), //
+						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|circle|diamond)"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY1", DISPLAY_WITH_GENERIC), //

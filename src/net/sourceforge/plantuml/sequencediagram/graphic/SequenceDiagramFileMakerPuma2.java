@@ -46,6 +46,9 @@ import java.util.Map;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -66,6 +69,9 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleDefinition;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -153,9 +159,16 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		if (Display.isNull(page.getTitle())) {
 			compTitle = null;
 		} else {
-			compTitle = TextBlockUtils.withMargin(TextBlockUtils.title(new FontConfiguration(
-					drawableSet.getSkinParam(), FontParam.SEQUENCE_TITLE, null), page.getTitle(), drawableSet
-					.getSkinParam()), 7, 7);
+			if (SkinParam.USE_STYLES()) {
+				final Style style = StyleDefinition.of(SName.root, SName.title).getMergedStyle(
+						diagram.getSkinParam().getCurrentStyleBuilder());
+				compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
+						diagram.getSkinParam());
+			} else {
+				compTitle = TextBlockUtils.withMargin(TextBlockUtils.title(
+						new FontConfiguration(drawableSet.getSkinParam(), FontParam.SEQUENCE_TITLE, null),
+						page.getTitle(), drawableSet.getSkinParam()), 7, 7);
+			}
 			final Dimension2D dimTitle = compTitle.calculateDimension(stringBounder);
 			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
 		}
@@ -167,7 +180,14 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		if (legend.isNull()) {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
-			legendBlock = EntityImageLegend.create(legend.getDisplay(), diagram.getSkinParam());
+			if (SkinParam.USE_STYLES()) {
+				final Style style = StyleDefinition.of(SName.root, SName.legend).getMergedStyle(
+						diagram.getSkinParam().getCurrentStyleBuilder());
+				legendBlock = style.createTextBlockBordered(legend.getDisplay(), diagram.getSkinParam()
+						.getIHtmlColorSet(), diagram.getSkinParam());
+			} else {
+				legendBlock = EntityImageLegend.create(legend.getDisplay(), diagram.getSkinParam());
+			}
 		}
 		final Dimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
 
@@ -287,13 +307,19 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	}
 
 	private PngTitler getPngTitler(final FontParam fontParam, int page) {
-		final HtmlColor hyperlinkColor = diagram.getSkinParam().getHyperlinkColor();
-		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(null, fontParam);
-		final String fontFamily = diagram.getSkinParam().getFont(null, false, fontParam).getFamily(null);
-		final int fontSize = diagram.getSkinParam().getFont(null, false, fontParam).getSize();
+		final ISkinParam skinParam = diagram.getSkinParam();
+		final HtmlColor hyperlinkColor = skinParam.getHyperlinkColor();
+		final HtmlColor titleColor = skinParam.getFontHtmlColor(null, fontParam);
+		final String fontFamily = skinParam.getFont(null, false, fontParam).getFamily(null);
+		final int fontSize = skinParam.getFont(null, false, fontParam).getSize();
 		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
-		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor, diagram.getSkinParam()
-				.useUnderlineForHyperlink());
+		Style style = null;
+		if (SkinParam.USE_STYLES()) {
+			final StyleDefinition def = fontParam.getStyleDefinition();
+			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
+				skinParam.useUnderlineForHyperlink(), style, skinParam.getIHtmlColorSet(), skinParam);
 	}
 
 }

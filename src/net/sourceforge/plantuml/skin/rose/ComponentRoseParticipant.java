@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -46,6 +48,9 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -65,19 +70,25 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final boolean collections;
 	private final double padding;
 
-	public ComponentRoseParticipant(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay,
-			ISkinSimple spriteContainer, double roundCorner, UFont fontForStereotype, HtmlColor htmlColorForStereotype,
-			double minWidth, boolean collections, double padding) {
-		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7, spriteContainer, false,
-				fontForStereotype, htmlColorForStereotype);
+	public ComponentRoseParticipant(Style style, Style stereo, SymbolContext biColor, FontConfiguration font,
+			Display stringsToDisplay, ISkinSimple spriteContainer, double roundCorner, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype, double minWidth, boolean collections, double padding) {
+		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
+				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
+		if (SkinParam.USE_STYLES()) {
+			this.roundCorner = style.value(PName.RoundCorner).asInt();
+			biColor = style.getSymbolContext(getIHtmlColorSet());
+			this.stroke = style.getStroke();
+		} else {
+			this.roundCorner = roundCorner;
+			this.stroke = biColor.getStroke();
+		}
 		this.padding = padding;
 		this.minWidth = minWidth;
 		this.collections = collections;
 		this.back = biColor.getBackColor();
-		this.roundCorner = roundCorner;
 		this.deltaShadow = biColor.getDeltaShadow();
 		this.foregroundColor = biColor.getForeColor();
-		this.stroke = biColor.getStroke();
 	}
 
 	@Override

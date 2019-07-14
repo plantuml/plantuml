@@ -43,6 +43,9 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.Padder;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -119,7 +122,7 @@ public interface ISkinParam extends ISkinSimple {
 	public ConditionStyle getConditionStyle();
 
 	public ConditionEndStyle getConditionEndStyle();
-        
+
 	public double minClassWidth();
 
 	public boolean sameClassWidth();
@@ -167,5 +170,11 @@ public interface ISkinParam extends ISkinSimple {
 	public void setUseVizJs(boolean useVizJs);
 
 	public boolean isUseVizJs();
+
+	public Padder getSequenceDiagramPadder();
+
+	public StyleBuilder getCurrentStyleBuilder();
+
+	public void muteStyle(Style modifiedStyle);
 
 }

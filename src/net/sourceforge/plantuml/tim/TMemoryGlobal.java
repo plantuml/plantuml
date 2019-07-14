@@ -63,7 +63,7 @@ public class TMemoryGlobal extends ConditionalContexts implements TMemory {
 		Log.error("[MemGlobal] Number of variable(s) : " + globalVariables.size());
 		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(globalVariables).entrySet()) {
 			final String name = ent.getKey();
-			final TValue value = ent.getValue().getValue2();
+			final TValue value = ent.getValue().getValue();
 			Log.error("[MemGlobal] " + name + " = " + value);
 		}
 	}

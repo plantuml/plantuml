@@ -61,7 +61,10 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 	private static RegexConcat getConcat() {
 		return RegexConcat.build(CommandReferenceOverSeveral.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("REF", "ref(#\\w+)?[%s]+over"), //
+				new RegexLeaf("ref"), //
+				new RegexLeaf("REF", "(#\\w+)?"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("PARTS",
 						"(([\\p{L}0-9_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([\\p{L}0-9_.@]+|[%g][^%g]+[%g]))*)"), //
@@ -95,7 +98,8 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		}
 
 		final HtmlColor backColorGeneral = null;
-		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement);
+		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement, diagram.getSkinParam()
+				.getCurrentStyleBuilder());
 		diagram.addReference(ref);
 		return CommandExecutionResult.ok();
 	}

@@ -59,7 +59,7 @@ public class ElseTile extends AbstractTile implements TileWithCallbackY {
 	public Event getEvent() {
 		return anElse;
 	}
-	
+
 	@Override
 	public double getYPoint(StringBounder stringBounder) {
 		return 0;
@@ -78,7 +78,8 @@ public class ElseTile extends AbstractTile implements TileWithCallbackY {
 				anElse.getBackColorGeneral());
 
 		final Display display = Display.create(anElse.getComment());
-		final Component comp = skin.createComponent(ComponentType.GROUPING_ELSE, null, tmp, display);
+		final Component comp = skin.createComponent(anElse.getUsedStyles(), ComponentType.GROUPING_ELSE, null, tmp,
+				display);
 		return comp;
 	}
 
@@ -103,7 +104,12 @@ public class ElseTile extends AbstractTile implements TileWithCallbackY {
 	public double getPreferredHeight(StringBounder stringBounder) {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return dim.getHeight();
+
+		double height = dim.getHeight();
+		if (anElse.getComment() != null) {
+			height += 10;
+		}
+		return height;
 	}
 
 	public void addConstraints(StringBounder stringBounder) {

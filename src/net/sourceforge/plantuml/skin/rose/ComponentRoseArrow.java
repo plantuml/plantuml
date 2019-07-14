@@ -40,6 +40,7 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -52,6 +53,8 @@ import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.ArrowDressing;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -67,12 +70,15 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	private final boolean niceArrow;
 	private final boolean belowForResponse;
 
-	public ComponentRoseArrow(HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay,
+	public ComponentRoseArrow(Style style, HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay,
 			ArrowConfiguration arrowConfiguration, HorizontalAlignment messagePosition, ISkinSimple spriteContainer,
 			HorizontalAlignment textHorizontalAlignment, LineBreakStrategy maxMessageSize, boolean niceArrow,
 			boolean belowForResponse) {
-		super(foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer, textHorizontalAlignment,
-				maxMessageSize);
+		super(style, foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer,
+				textHorizontalAlignment, maxMessageSize);
+		if (SkinParam.USE_STYLES()) {
+			messagePosition = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
+		}
 		this.messagePosition = messagePosition;
 		this.niceArrow = niceArrow;
 		this.belowForResponse = belowForResponse;

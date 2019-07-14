@@ -73,7 +73,10 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|#?\\w+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\\{[%s]*\\}"), RegexLeaf.end()); //
+				new RegexLeaf("\\{"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\}"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override

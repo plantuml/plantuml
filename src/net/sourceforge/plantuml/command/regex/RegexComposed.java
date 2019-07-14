@@ -61,7 +61,7 @@ public abstract class RegexComposed implements IRegex {
 		}
 		return fullCached;
 	}
-
+	
 	protected boolean isCompiled() {
 		return fullCached != null;
 	}

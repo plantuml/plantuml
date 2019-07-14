@@ -93,6 +93,10 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 		this(dim.getWidth(), dim.getHeight());
 	}
 
+	public URectangle(Dimension2D dim, double rx, double ry) {
+		this(dim.getWidth(), dim.getHeight(), rx, ry);
+	}
+
 	@Override
 	public String toString() {
 		return "width=" + width + " height=" + height;

@@ -51,7 +51,9 @@ public class CommandEndBranch extends SingleLineCommand2<BpmDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEndBranch.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("end branch"), //
+				new RegexLeaf("end"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("branch"), //
 				RegexLeaf.end());
 	}
 

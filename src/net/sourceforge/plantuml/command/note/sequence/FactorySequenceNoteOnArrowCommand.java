@@ -122,37 +122,38 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				return "(?i)^[%s]*end[%s]?note$";
 			}
 
-			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines) {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
-				return executeInternal(system, line0, lines);
+				return executeInternal(diagram, line0, lines);
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram system, final RegexResult line0, BlocLines lines) {
-		final EventWithDeactivate m = system.getLastEventWithDeactivate();
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines) {
+		final EventWithDeactivate m = diagram.getLastEventWithDeactivate();
 		if (m instanceof AbstractMessage || m instanceof GroupingLeaf) {
 			final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get("POSITION", 0)));
 			Url url = null;
 			if (line0.get("URL", 0) != null) {
-				final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 				url = urlBuilder.getUrl(line0.get("URL", 0));
 			}
 
 			final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
-			final Display display = system.manageVariable(lines.toDisplay());
+			final Display display = diagram.manageVariable(lines.toDisplay());
 			final String backcolor0 = line0.get("COLOR", 0);
 			Colors colors = Colors.empty().add(ColorType.BACK, HtmlColorSet.getInstance().getColorIfValid(backcolor0));
+			final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());
 			final String stereotypeString = line0.get("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = new Stereotype(stereotypeString);
-				colors = colors.applyStereotypeForNote(stereotype, system.getSkinParam(), FontParam.NOTE,
+				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), FontParam.NOTE,
 						ColorParam.noteBackground, ColorParam.noteBorder);
+				note.setStereotype(stereotype);
 			}
-			final Note note = new Note(display, position, style);
 			note.setUrl(url);
 			note.setColors(colors);
 			if (m instanceof AbstractMessage) {

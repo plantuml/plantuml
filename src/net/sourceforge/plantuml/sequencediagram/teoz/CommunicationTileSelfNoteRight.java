@@ -82,8 +82,8 @@ public class CommunicationTileSelfNoteRight extends AbstractTile implements Tile
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null,
-				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings());
+		final Component comp = skin.createComponent(null, ComponentType.NOTE,
+				null, noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings());
 		return comp;
 	}
 

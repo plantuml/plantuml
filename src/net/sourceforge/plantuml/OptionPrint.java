@@ -56,10 +56,16 @@ import net.sourceforge.plantuml.version.Version;
 public class OptionPrint {
 
 	static public void printTestDot() throws InterruptedException {
-		for (String s : GraphvizUtils.getTestDotStrings(false)) {
-			System.out.println(s);
+		final List<String> result = new ArrayList<String>();
+		final int errorCode = GraphvizUtils.addDotStatus(result, false);
+		for (String s : result) {
+			if (errorCode == 0) {
+				System.out.println(s);
+			} else {
+				System.err.println(s);
+			}
 		}
-		exit();
+		exit(errorCode);
 	}
 
 	static public void printHelp() throws InterruptedException {
@@ -149,12 +155,12 @@ public class OptionPrint {
 		System.out.println("    -cypher\t\tTo cypher texts of diagrams so that you can share them");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
-		exit();
+		exit(0);
 	}
 
-	static private void exit() throws InterruptedException {
-		if (OptionFlags.getInstance().isSystemExit()) {
-			System.exit(0);
+	static private void exit(int errorCode) throws InterruptedException {
+		if (OptionFlags.getInstance().isSystemExit() || errorCode != 0) {
+			System.exit(errorCode);
 		}
 		throw new InterruptedException("exit");
 	}
@@ -163,11 +169,11 @@ public class OptionPrint {
 		for (String s : License.getCurrent().getTextFull()) {
 			System.out.println(s);
 		}
-		exit();
+		exit(0);
 	}
 
 	public static void printVersion() throws InterruptedException {
-		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
+		System.out.println(Version.fullDescription());
 		System.out.println("(" + License.getCurrent() + " source distribution)");
 		for (String v : interestingProperties()) {
 			System.out.println(v);
@@ -176,10 +182,12 @@ public class OptionPrint {
 			System.out.println(v);
 		}
 		System.out.println();
-		for (String s : GraphvizUtils.getTestDotStrings(false)) {
+		final List<String> result = new ArrayList<String>();
+		final int errorCode = GraphvizUtils.addDotStatus(result, false);
+		for (String s : result) {
 			System.out.println(s);
 		}
-		exit();
+		exit(errorCode);
 	}
 
 	public static Collection<String> interestingProperties() {
@@ -250,7 +258,7 @@ public class OptionPrint {
 	}
 
 	public static void checkVersion() throws InterruptedException {
-		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
+		System.out.println(Version.fullDescription());
 		System.out.println();
 		final int lastversion = PSystemVersion.extractDownloadableVersion(null, null);
 		if (lastversion == -1) {
@@ -270,19 +278,19 @@ public class OptionPrint {
 			}
 		}
 
-		exit();
+		exit(0);
 	}
 
 	public static void printAbout() throws InterruptedException {
 		for (String s : PSystemVersion.getAuthorsStrings(false)) {
 			System.out.println(s);
 		}
-		OptionPrint.exit();
+		exit(0);
 	}
 
 	public static void printLanguage() throws InterruptedException {
 		new LanguageDescriptor().print(System.out);
-		exit();
+		exit(0);
 	}
 
 }

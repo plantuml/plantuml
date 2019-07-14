@@ -81,7 +81,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 								new RegexLeaf("EMPTY", "(empty)"), //
 								RegexLeaf.spaceOneOrMore()) //
 				), //
-				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?|circle\\w*|stereotypes?)"), //
+				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?|circles?|circled?|stereotypes?)"), //
 				RegexLeaf.end());
 	}
 

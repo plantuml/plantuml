@@ -39,14 +39,12 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
 public class DisplaySection {
-
-	// private final Display display;
-	// private final HorizontalAlignment horizontalAlignment;
 
 	private final Map<HorizontalAlignment, Display> map = new EnumMap<HorizontalAlignment, Display>(
 			HorizontalAlignment.class);
@@ -62,13 +60,15 @@ public class DisplaySection {
 		return result;
 	}
 
-	// public static DisplaySection single(Display display, HorizontalAlignment horizontalAlignment) {
-	// return new DisplaySection(display, horizontalAlignment);
-	// }
+	public Display getDisplay() {
+		if (map.size() == 0) {
+			return null;
+		}
+		return map.values().iterator().next();
+	}
 
 	public static DisplaySection none() {
 		return new DisplaySection();
-		// return new DisplaySection(Display.NULL, horizontalAlignment);
 	}
 
 	public final HorizontalAlignment getHorizontalAlignment() {
@@ -94,10 +94,13 @@ public class DisplaySection {
 		if (Display.isNull(display) || display.size() == 0) {
 			return null;
 		}
+		// if (SkinParam.USE_STYLES()) {
+		// throw new UnsupportedOperationException();
+		// }
 		return display.create(fontConfiguration, getHorizontalAlignment(), spriteContainer);
 	}
 
-	public void put(Display display, HorizontalAlignment horizontalAlignment) {
+	public void putDisplay(Display display, HorizontalAlignment horizontalAlignment) {
 		this.map.put(horizontalAlignment, display);
 
 	}

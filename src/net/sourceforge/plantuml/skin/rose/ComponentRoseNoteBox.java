@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -51,11 +52,12 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 
 	private final SymbolContext symbolContext;
+	private final double roundCorner;
 
-	public ComponentRoseNoteBox(SymbolContext symbolContext, FontConfiguration font, Display strings,
-			ISkinSimple spriteContainer, HorizontalAlignment alignment) {
-		super(spriteContainer.wrapWidth(), strings, font, alignment, 4, 4, 4, spriteContainer, false,
-				null, null);
+	public ComponentRoseNoteBox(Style style, SymbolContext symbolContext, FontConfiguration font, Display strings,
+			ISkinSimple spriteContainer, double roundCorner, HorizontalAlignment alignment) {
+		super(style, spriteContainer.wrapWidth(), strings, font, alignment, 4, 4, 4, spriteContainer, false, null, null);
+		this.roundCorner = roundCorner;
 		this.symbolContext = symbolContext;
 	}
 
@@ -95,7 +97,7 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 		}
 
 		ug = symbolContext.apply(ug);
-		final URectangle rect = new URectangle(x2, textHeight);
+		final URectangle rect = new URectangle(x2, textHeight, roundCorner, roundCorner);
 		rect.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.draw(rect);
 		ug = ug.apply(new UStroke());

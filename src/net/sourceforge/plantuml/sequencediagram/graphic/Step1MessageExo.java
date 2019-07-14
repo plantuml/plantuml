@@ -44,9 +44,11 @@ import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.style.Style;
 
 class Step1MessageExo extends Step1Abstract {
 
@@ -58,17 +60,17 @@ class Step1MessageExo extends Step1Abstract {
 
 		setConfig(getArrowType(message));
 
-		this.messageArrow = new MessageExoArrow(freeY.getFreeY(range), drawingSet.getSkin(), drawingSet.getSkin()
-				.createComponentArrow(getConfig(), drawingSet.getSkinParam(), message.getLabelNumbered()),
+		final ArrowComponent comp = drawingSet.getSkin().createComponentArrow(message.getUsedStyles(), getConfig(),
+				drawingSet.getSkinParam(), message.getLabelNumbered());
+		this.messageArrow = new MessageExoArrow(freeY.getFreeY(range), drawingSet.getSkin(), comp,
 				getLivingParticipantBox(), message.getType(), message.getUrl(), message.isShortArrow(),
 				message.getArrowConfiguration());
 
 		final List<Note> noteOnMessages = message.getNoteOnMessages();
 		for (Note noteOnMessage : noteOnMessages) {
 			final ISkinParam skinParam = noteOnMessage.getSkinParamBackcolored(drawingSet.getSkinParam());
-			addNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, null, skinParam,
-					noteOnMessage.getStrings()));
-			// throw new UnsupportedOperationException();
+			addNote(drawingSet.getSkin().createComponent(noteOnMessage.getUsedStyles(),
+					ComponentType.NOTE, null, skinParam, noteOnMessage.getStrings()));
 		}
 
 	}

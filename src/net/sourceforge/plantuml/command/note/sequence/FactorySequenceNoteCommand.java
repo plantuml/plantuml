@@ -132,9 +132,9 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location,
+			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg) {
-				return executeInternal(system, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
+				return executeInternal(diagram, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
 			}
 
 		};
@@ -150,16 +150,17 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			final boolean tryMerge = arg.get("VMERGE", 0) != null;
 			final boolean parallel = arg.get("PARALLEL", 0) != null;
 			final Display display = diagram.manageVariable(strings.toDisplay());
-			final Note note = new Note(p, position, display);
+			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());
 			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = arg.get("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = new Stereotype(stereotypeString);
 				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), FontParam.NOTE,
 						ColorParam.noteBackground, ColorParam.noteBorder);
+				note.setStereotype(stereotype);
 			}
 			note.setColors(colors);
-			note.setStyle(NoteStyle.getNoteStyle(arg.get("STYLE", 0)));
+			note.setNoteStyle(NoteStyle.getNoteStyle(arg.get("STYLE", 0)));
 			if (arg.get("URL", 0) != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 				final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));

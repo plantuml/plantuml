@@ -50,8 +50,11 @@ public class CommandNewBranch extends SingleLineCommand2<BpmDiagram> {
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandNewBranch.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("new branch"), //
+		return RegexConcat.build(CommandNewBranch.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("new"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("branch"), //
 				RegexLeaf.end());
 	}
 

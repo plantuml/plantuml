@@ -50,9 +50,12 @@ public class CommandComment extends SingleLineCommand2<NwDiagram> {
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandComment.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandComment.class.getName(), //
+				RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("//.*"), RegexLeaf.end());
+				new RegexLeaf("//"), //
+				new RegexLeaf(".*"), //
+				RegexLeaf.end());
 	}
 
 	@Override

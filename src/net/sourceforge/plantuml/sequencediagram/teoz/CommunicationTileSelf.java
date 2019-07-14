@@ -93,8 +93,8 @@ public class CommunicationTileSelf extends AbstractTile implements TileWithUpdat
 	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		arrowConfiguration = arrowConfiguration.self();
-		final ArrowComponent comp = skin
-				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
+		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
+				message.getLabelNumbered());
 		return comp;
 	}
 

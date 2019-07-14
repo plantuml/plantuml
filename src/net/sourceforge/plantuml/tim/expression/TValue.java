@@ -34,14 +34,18 @@
  */
 package net.sourceforge.plantuml.tim.expression;
 
+import net.sourceforge.plantuml.json.JsonValue;
+
 public class TValue {
 
 	private final int intValue;
 	private final String stringValue;
+	private final JsonValue jsonValue;
 
 	private TValue(int value) {
 		this.intValue = value;
 		this.stringValue = null;
+		this.jsonValue = null;
 	}
 
 	private TValue(String stringValue) {
@@ -49,7 +53,14 @@ public class TValue {
 			throw new IllegalArgumentException();
 		}
 		this.intValue = 0;
+		this.jsonValue = null;
 		this.stringValue = stringValue;
+	}
+
+	public TValue(JsonValue json) {
+		this.jsonValue = json;
+		this.intValue = 0;
+		this.stringValue = null;
 	}
 
 	public static TValue fromInt(int v) {
@@ -60,8 +71,15 @@ public class TValue {
 		return new TValue(b ? 1 : 0);
 	}
 
+	public static TValue fromJson(JsonValue json) {
+		return new TValue(json);
+	}
+
 	@Override
 	public String toString() {
+		if (jsonValue != null) {
+			return jsonValue.toString();
+		}
 		if (stringValue == null) {
 			return "" + intValue;
 		}
@@ -115,7 +133,11 @@ public class TValue {
 	}
 
 	public boolean isNumber() {
-		return this.stringValue == null;
+		return this.jsonValue == null && this.stringValue == null;
+	}
+
+	public boolean isJson() {
+		return this.jsonValue != null;
 	}
 
 	public Token toToken() {
@@ -184,6 +206,10 @@ public class TValue {
 
 	public TValue logicalOr(TValue v2) {
 		return fromBoolean(this.toBoolean() || v2.toBoolean());
+	}
+
+	public JsonValue toJson() {
+		return jsonValue;
 	}
 
 }

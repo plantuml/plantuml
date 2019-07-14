@@ -140,7 +140,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);
 
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
-		Link link = new Link(cl1, cl2, linkType, label, lenght);
+		Link link = new Link(cl1, cl2, linkType, label, lenght, diagram.getSkinParam().getCurrentStyleBuilder());
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}

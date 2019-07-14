@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.png.PngTitler;
@@ -165,14 +166,20 @@ public class SequenceDiagramArea {
 	public void initFooter(PngTitler pngTitler, StringBounder stringBounder) {
 		final Dimension2D dim = pngTitler.getTextDimension(stringBounder);
 		if (dim != null) {
-			setFooterArea(dim.getWidth(), dim.getHeight(), 3);
+			if (SkinParam.USE_STYLES())
+				setFooterArea(dim.getWidth(), dim.getHeight(), 0);
+			else
+				setFooterArea(dim.getWidth(), dim.getHeight(), 3);
 		}
 	}
 
 	public void initHeader(PngTitler pngTitler, StringBounder stringBounder) {
 		final Dimension2D dim = pngTitler.getTextDimension(stringBounder);
 		if (dim != null) {
-			setHeaderArea(dim.getWidth(), dim.getHeight(), 3);
+			if (SkinParam.USE_STYLES())
+				setHeaderArea(dim.getWidth(), dim.getHeight(), 0);
+			else
+				setHeaderArea(dim.getWidth(), dim.getHeight(), 3);
 		}
 	}
 

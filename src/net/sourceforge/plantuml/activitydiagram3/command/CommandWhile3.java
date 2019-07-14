@@ -59,7 +59,9 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				ColorParser.exp4(), //
 				new RegexLeaf("while"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEST", "\\((.*?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf("\\)"), //
 				new RegexOptional(new RegexConcat(//
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("(is|equals?)"), //

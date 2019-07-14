@@ -56,10 +56,13 @@ abstract class AbstractGraphviz implements Graphviz {
 	}
 
 	private static String findExecutableOnPath(String name) {
-		for (String dirname : System.getenv("PATH").split(File.pathSeparator)) {
-			File file = new File(dirname, name);
-			if (file.isFile() && file.canExecute()) {
-				return file.getAbsolutePath();
+		final String path = System.getenv("PATH");
+		if (path != null) {
+			for (String dirname : path.split(File.pathSeparator)) {
+				File file = new File(dirname, name);
+				if (file.isFile() && file.canExecute()) {
+					return file.getAbsolutePath();
+				}
 			}
 		}
 		return null;

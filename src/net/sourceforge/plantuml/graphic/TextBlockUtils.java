@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
@@ -69,7 +70,15 @@ public class TextBlockUtils {
 		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize);
 	}
 
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor,
+			HtmlColor backgroundColor, double cornersize, double marginX, double marginY) {
+		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, marginX, marginY);
+	}
+
 	public static TextBlock title(FontConfiguration font, Display stringsToDisplay, ISkinParam skinParam) {
+		// if (SkinParam.USE_STYLES()) {
+		// throw new UnsupportedOperationException();
+		// }
 		UStroke stroke = skinParam.getThickness(LineParam.titleBorder, null);
 		final Rose rose = new Rose();
 		HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.titleBorder);

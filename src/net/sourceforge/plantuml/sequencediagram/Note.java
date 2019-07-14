@@ -35,13 +35,22 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.List;
+
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.WithStyle;
 
-public class Note extends AbstractEvent implements Event, SpecificBackcolorable {
+public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {
 
 	private final Participant p;
 	private final Participant p2;
@@ -49,37 +58,62 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 	private final Display strings;
 
 	private final NotePosition position;
-	private NoteStyle style = NoteStyle.NORMAL;
+	private final StyleBuilder styleBuilder;
+	private NoteStyle noteStyle = NoteStyle.NORMAL;
 	private Colors colors = Colors.empty();
 
 	private Url url;
 
-	public Note(Participant p, NotePosition position, Display strings) {
-		this(p, null, position, strings);
+	private Style style;
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		return noteStyle.getDefaultStyleDefinition();
 	}
 
-	public Note(Display strings, NotePosition position, NoteStyle style) {
-		this(null, null, position, strings);
-		this.style = style;
+	public Style[] getUsedStyles() {
+		if (style != null) {
+			return new Style[] { style.eventuallyOverride(colors) };
+		}
+		return new Style[] { style };
 	}
 
-	public Note(Participant p, Participant p2, Display strings) {
-		this(p, p2, NotePosition.OVER_SEVERAL, strings);
+	public Note(Participant p, NotePosition position, Display strings, StyleBuilder styleBuilder) {
+		this(p, null, position, strings, styleBuilder);
 	}
 
-	private Note(Participant p, Participant p2, NotePosition position, Display strings) {
+	public Note(Display strings, NotePosition position, NoteStyle style, StyleBuilder styleBuilder) {
+		this(null, null, position, strings, styleBuilder);
+		this.noteStyle = style;
+	}
+
+	public Note(Participant p, Participant p2, Display strings, StyleBuilder styleBuilder) {
+		this(p, p2, NotePosition.OVER_SEVERAL, strings, styleBuilder);
+	}
+
+	private Note(Participant p, Participant p2, NotePosition position, Display strings, StyleBuilder styleBuilder) {
 		this.p = p;
 		this.p2 = p2;
+		this.styleBuilder = styleBuilder;
 		this.position = position;
 		this.strings = strings;
+		if (SkinParam.USE_STYLES()) {
+			this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		}
+	}
+
+	public void setStereotype(Stereotype stereotype) {
+		if (SkinParam.USE_STYLES()) {
+			final List<Style> others = stereotype.getStyles(styleBuilder);
+			this.style = getDefaultStyleDefinition().mergeWith(others).getMergedStyle(styleBuilder);
+		}
 	}
 
 	public Note withPosition(NotePosition newPosition) {
 		if (position == newPosition) {
 			return this;
 		}
-		final Note result = new Note(p, p2, newPosition, strings);
-		result.style = this.style;
+		final Note result = new Note(p, p2, newPosition, strings, styleBuilder);
+		result.noteStyle = this.noteStyle;
 		result.url = this.url;
 		result.colors = this.colors;
 		result.parallel = this.parallel;
@@ -102,7 +136,7 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		return position;
 	}
 
-	public Colors getColors(ISkinParam skinParam) {
+	final public Colors getColors(ISkinParam skinParam) {
 		return colors;
 	}
 
@@ -122,12 +156,12 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		return url != null;
 	}
 
-	public final NoteStyle getStyle() {
-		return style;
+	public final NoteStyle getNoteStyle() {
+		return noteStyle;
 	}
 
-	public final void setStyle(NoteStyle style) {
-		this.style = style;
+	public final void setNoteStyle(NoteStyle style) {
+		this.noteStyle = style;
 	}
 
 	public ISkinParam getSkinParamBackcolored(ISkinParam skinParam) {
@@ -153,4 +187,14 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		return parallel;
 	}
 
+//	public Style[] applyStyle2(Style[] usedStyles) {
+//		if (usedStyles.length != 1) {
+//			throw new IllegalArgumentException();
+//		}
+//		Style tmp = usedStyles[0];
+//		if (tmp != null) {
+//			tmp = tmp.eventuallyOverride(colors);
+//		}
+//		return new Style[] { tmp };
+//	}
 }

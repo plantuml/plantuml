@@ -1,0 +1,164 @@
+style root {
+  FontName SansSerif
+  HyperLinkColor red
+  FontColor black
+  FontSize 14
+  FontStyle plain
+  HorizontalAlignment left
+  RoundCorner 0
+  DiagonalCorner 0
+  LineThickness 1.0
+  LineColor #A80036
+  BackGroundColor #FEFECE
+  Shadowing 0.0
+}
+
+style stereotype {
+  FontStyle italic
+}
+
+style title {
+  HorizontalAlignment center
+  FontSize 14
+  FontStyle bold
+  Padding 0
+  Margin 4
+  LineColor none
+  BackGroundColor none
+}
+
+style header {
+  HorizontalAlignment center
+  FontSize 10
+  FontColor #888888
+}
+
+style footer {
+  HorizontalAlignment left
+  FontSize 10
+  FontColor #888888
+}
+
+style legend {
+  LineColor black
+  BackGroundColor #DDDDDD
+  FontSize 14
+  RoundCorner 15
+  Padding 6
+  Margin 8
+}
+
+style caption {
+  HorizontalAlignment center
+  FontSize 14
+  Padding 0
+  Margin 1
+  LineColor none
+  BackGroundColor none
+}
+
+
+style element {
+  Shadowing 4.0
+}
+
+style sequenceDiagram {
+}
+
+style classDiagram {
+}
+
+style activityDiagram {
+}
+
+style group {
+  BackGroundColor none
+  LineColor black
+  LineThickness 2.0
+  FontSize 11
+  
+  FontStyle bold
+}
+
+style groupHeader {
+  BackGroundColor #EEEEEE
+  LineColor black
+
+  FontSize 13
+  FontStyle bold
+}
+
+style lifeLine {
+  BackGroundColor none
+}
+
+style destroy {
+}
+
+style reference {
+  LineColor red
+  FontSize 10
+  FontStyle bold
+  FontColor blue
+  BackGroundColor gold
+  HorizontalAlignment right
+}
+
+style box {
+  BackGroundColor #DDDDDD
+
+  FontSize 13
+  FontStyle bold
+}
+
+style separator {
+  LineColor black
+  LineThickness 2.0
+  BackGroundColor #EEEEEE
+  
+  FontSize 13
+  FontStyle bold
+}
+
+style delay {
+  FontSize 22
+  FontStyle italic
+}
+
+style participant {
+  LineThickness 1.5
+}
+
+style actor {
+  LineThickness 2.0
+}
+
+style boundary {
+}
+
+style control {
+}
+
+style entity {
+}
+
+style queue {
+}
+
+style database {
+}
+
+style collections {
+}
+
+style swimlane {
+}
+
+style message {
+  FontSize 13
+}
+
+style note {
+  FontSize 13
+  BackGroundColor #FBFB77
+}

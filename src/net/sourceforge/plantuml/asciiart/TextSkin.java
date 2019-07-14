@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseGroupingSpace;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.Style;
 
 public class TextSkin extends Rose {
 
@@ -55,7 +56,7 @@ public class TextSkin extends Rose {
 	}
 
 	@Override
-	public ArrowComponent createComponentArrow(ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
+	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
 		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL
 				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE
 				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {
@@ -68,8 +69,9 @@ public class TextSkin extends Rose {
 		throw new UnsupportedOperationException();
 	}
 
-	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param,
-			Display stringsToDisplay) {
+	@Override
+	public Component createComponent(Style style[], ComponentType type, ArrowConfiguration config,
+			ISkinParam param, Display stringsToDisplay) {
 		if (type == ComponentType.ACTOR_HEAD || type == ComponentType.ACTOR_TAIL) {
 			return new ComponentTextActor(type, stringsToDisplay, fileFormat,
 					fileFormat == FileFormat.UTXT ? AsciiShape.STICKMAN_UNICODE : AsciiShape.STICKMAN);

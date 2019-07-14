@@ -39,27 +39,31 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleDefinition;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class AbstractComponent implements Component {
 
-//	final protected void stroke(Graphics2D g2d, float dash, float thickness) {
-//		final float[] style = { dash, dash };
-//		g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, style, 0));
-//	}
-//
-//	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
-//		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));
-//	}
-//
-//	final protected void stroke(Graphics2D g2d, float dash) {
-//		stroke(g2d, dash, 1);
-//	}
-//
-//	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace) {
-//		return stroke(ug, dashVisible, dashSpace, 1);
-//	}
+	public final Style[] getUsedStyles() {
+		throw new UnsupportedOperationException();
+	}
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		throw new UnsupportedOperationException();
+	}
+
+	private final Style style;
+
+	public AbstractComponent(Style style) {
+		this.style = style;
+	}
+
+	protected final Style getStyle() {
+		return style;
+	}
+
 
 	abstract protected void drawInternalU(UGraphic ug, Area area);
 

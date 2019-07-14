@@ -60,13 +60,13 @@ public class TMemoryLocal extends ConditionalContexts implements TMemory {
 		Log.error("[MemLocal] Number of overriden variable(s) : " + overridenVariables.size());
 		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(overridenVariables).entrySet()) {
 			final String name = ent.getKey();
-			final TValue value = ent.getValue().getValue2();
+			final TValue value = ent.getValue().getValue();
 			Log.error("[MemLocal] " + name + " = " + value);
 		}
 		Log.error("[MemLocal] Number of local variable(s) : " + localVariables.size());
 		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(localVariables).entrySet()) {
 			final String name = ent.getKey();
-			final TValue value = ent.getValue().getValue2();
+			final TValue value = ent.getValue().getValue();
 			Log.error("[MemLocal] " + name + " = " + value);
 		}
 		Log.error("[MemGlobal] End of memory_dump");

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.core.Diagram;
 public abstract class CommandMultilinesBracket<S extends Diagram> implements Command<S> {
 
 	private final Pattern2 starting;
-
+	
 	public CommandMultilinesBracket(String patternStart) {
 		if (patternStart.startsWith("(?i)^") == false || patternStart.endsWith("$") == false) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart);

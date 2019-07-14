@@ -83,8 +83,8 @@ public class DelayTile extends AbstractTile implements Tile, TileWithCallbackY {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = tileArguments.getSkin().createComponent(ComponentType.DELAY_TEXT, null,
-				tileArguments.getSkinParam(), delay.getText());
+		final Component comp = tileArguments.getSkin().createComponent(delay.getUsedStyles(), ComponentType.DELAY_TEXT,
+				null, tileArguments.getSkinParam(), delay.getText());
 		return comp;
 	}
 

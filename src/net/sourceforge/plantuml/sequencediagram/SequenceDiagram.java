@@ -91,7 +91,8 @@ public class SequenceDiagram extends UmlDiagram {
 	public Participant getOrCreateParticipant(String code, Display display) {
 		Participant result = participantsget(code);
 		if (result == null) {
-			result = new Participant(ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0);
+			result = new Participant(ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0, getSkinParam()
+					.getCurrentStyleBuilder());
 			addWithOrder(result);
 			participantEnglobers2.put(result, participantEnglober);
 		}
@@ -121,7 +122,8 @@ public class SequenceDiagram extends UmlDiagram {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(code);
 		}
-		final Participant result = new Participant(type, code, display, hiddenPortions, order);
+		final Participant result = new Participant(type, code, display, hiddenPortions, order, getSkinParam()
+				.getCurrentStyleBuilder());
 		addWithOrder(result);
 		participantEnglobers2.put(result, participantEnglober);
 		return result;
@@ -200,7 +202,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void divider(Display strings) {
-		events.add(new Divider(strings));
+		events.add(new Divider(strings, getSkinParam().getCurrentStyleBuilder()));
 	}
 
 	public void hspace() {
@@ -214,7 +216,7 @@ public class SequenceDiagram extends UmlDiagram {
 	private Delay lastDelay;
 
 	public void delay(Display strings) {
-		final Delay delay = new Delay(strings);
+		final Delay delay = new Delay(strings, getSkinParam().getCurrentStyleBuilder());
 		events.add(delay);
 		lastDelay = delay;
 	}
@@ -314,8 +316,8 @@ public class SequenceDiagram extends UmlDiagram {
 		final GroupingStart top = openGroupings.size() > 0 ? openGroupings.get(0) : null;
 
 		final Grouping g = type == GroupingType.START ? new GroupingStart(title, comment, backColorGeneral,
-				backColorElement, top)
-				: new GroupingLeaf(title, comment, type, backColorGeneral, backColorElement, top);
+				backColorElement, top, getSkinParam().getCurrentStyleBuilder()) : new GroupingLeaf(title, comment,
+				type, backColorGeneral, backColorElement, top, getSkinParam().getCurrentStyleBuilder());
 		events.add(g);
 
 		if (type == GroupingType.START) {

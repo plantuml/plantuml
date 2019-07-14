@@ -86,7 +86,10 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
-				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("DESC", "\\[(.*)"), RegexLeaf.end());
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\["), //
+				new RegexLeaf("DESC", "(.*)"), //
+				RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

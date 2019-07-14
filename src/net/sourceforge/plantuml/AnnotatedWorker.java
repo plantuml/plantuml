@@ -52,6 +52,9 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleDefinition;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -146,7 +149,6 @@ public class AnnotatedWorker {
 			return original;
 		}
 		final TextBlock text = getCaption();
-
 		return DecorateEntityImage.addBottom(original, text, HorizontalAlignment.CENTER);
 	}
 
@@ -154,6 +156,11 @@ public class AnnotatedWorker {
 		final DisplayPositionned caption = annotated.getCaption();
 		if (caption.isNull()) {
 			return TextBlockUtils.empty(0, 0);
+		}
+		if (SkinParam.USE_STYLES()) {
+			final Style style = StyleDefinition.of(SName.root, SName.caption).getMergedStyle(
+					skinParam.getCurrentStyleBuilder());
+			return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		}
 		return caption.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.CAPTION, null),
 				HorizontalAlignment.CENTER, getSkinParam());
@@ -165,6 +172,9 @@ public class AnnotatedWorker {
 			return original;
 		}
 		ISkinParam skinParam = getSkinParam();
+		// if (SkinParam.USE_STYLES()) {
+		// throw new UnsupportedOperationException();
+		// }
 		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.TITLE, null);
 
 		final TextBlock block = TextBlockUtils.title(fontConfiguration, title.getDisplay(), skinParam);

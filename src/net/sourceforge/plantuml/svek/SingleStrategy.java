@@ -36,47 +36,36 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public enum SingleStrategy {
 
 	SQUARRE, HLINE, VLINE;
 
-	public Collection<Link> generateLinks(List<ILeaf> standalones) {
-		return putInSquare(standalones);
-	}
+//	private Collection<Link> generateLinks(List<ILeaf> standalones) {
+//		return putInSquare(standalones);
+//	}
 
-	private Collection<Link> putInSquare(List<ILeaf> standalones) {
-		final List<Link> result = new ArrayList<Link>();
-		final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
-		final int branch = computeBranch(standalones.size());
-		int headBranch = 0;
-		for (int i = 1; i < standalones.size(); i++) {
-			final int dist = i - headBranch;
-			final IEntity ent2 = standalones.get(i);
-			final Link link;
-			if (dist == branch) {
-				final IEntity ent1 = standalones.get(headBranch);
-				link = new Link(ent1, ent2, linkType, Display.NULL, 2);
-				headBranch = i;
-			} else {
-				final IEntity ent1 = standalones.get(i - 1);
-				link = new Link(ent1, ent2, linkType, Display.NULL, 1);
-			}
-			result.add(link);
-		}
-		return Collections.unmodifiableCollection(result);
-	}
+//	private Collection<Link> putInSquare(List<ILeaf> standalones) {
+//		final List<Link> result = new ArrayList<Link>();
+//		final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
+//		final int branch = computeBranch(standalones.size());
+//		int headBranch = 0;
+//		for (int i = 1; i < standalones.size(); i++) {
+//			final int dist = i - headBranch;
+//			final IEntity ent2 = standalones.get(i);
+//			final Link link;
+//			if (dist == branch) {
+//				final IEntity ent1 = standalones.get(headBranch);
+//				link = new Link(ent1, ent2, linkType, Display.NULL, 2);
+//				headBranch = i;
+//			} else {
+//				final IEntity ent1 = standalones.get(i - 1);
+//				link = new Link(ent1, ent2, linkType, Display.NULL, 1);
+//			}
+//			result.add(link);
+//		}
+//		return Collections.unmodifiableCollection(result);
+//	}
 
 	static int computeBranch(int size) {
 		final double sqrt = Math.sqrt(size);

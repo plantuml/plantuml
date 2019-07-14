@@ -71,7 +71,8 @@ public class DividerTile extends AbstractTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.DIVIDER, null, skinParam, divider.getText());
+		final Component comp = skin.createComponent(divider.getUsedStyles(), ComponentType.DIVIDER, null, skinParam,
+				divider.getText());
 		return comp;
 	}
 

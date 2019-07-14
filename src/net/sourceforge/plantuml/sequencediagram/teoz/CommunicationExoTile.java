@@ -74,20 +74,19 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 		this.skin = skin;
 		this.skinParam = skinParam;
 	}
-	
+
 	@Override
 	public double getYPoint(StringBounder stringBounder) {
 		return getComponent(stringBounder).getYPoint(stringBounder);
 	}
-
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		if (message.getType().getDirection() == -1) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
-		final ArrowComponent comp = skin
-				.createComponentArrow(arrowConfiguration, skinParam, message.getLabelNumbered());
+		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
+				message.getLabelNumbered());
 		return comp;
 	}
 

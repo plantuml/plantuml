@@ -41,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Pragma;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.InstructionList;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -63,6 +64,10 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -76,7 +81,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.comp.SlotSet;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class SwimlanesA extends AbstractTextBlock implements TextBlock {
+public class SwimlanesA extends AbstractTextBlock implements TextBlock, Styleable {
 
 	protected final ISkinParam skinParam;;
 	private final Pragma pragma;
@@ -88,10 +93,22 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock {
 	private Instruction currentInstruction = root;
 
 	private LinkRendering nextLinkRenderer = LinkRendering.none();
+	private Style style;
+
+	public StyleDefinition getDefaultStyleDefinition() {
+		return StyleDefinition.of(SName.root, SName.element, SName.classDiagram, SName.swimlane);
+	}
 
 	public SwimlanesA(ISkinParam skinParam, Pragma pragma) {
 		this.skinParam = skinParam;
 		this.pragma = pragma;
+	}
+
+	protected Style getStyle() {
+		if (style == null) {
+			this.style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return style;
 	}
 
 	private FtileFactory getFtileFactory(StringBounder stringBounder) {

@@ -55,7 +55,9 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf("PART1", "(" + CommandTimeMessage.PLAYER_CODE + ")?"), //
 				TimeTickBuilder.expressionAtWithArobase("TIME1"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ARROW", "\\<(-+)\\>"), //
+				new RegexLeaf("\\<"), //
+				new RegexLeaf("ARROW", "(-+)"), //
+				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				TimeTickBuilder.expressionAtWithArobase("TIME2"), //
 				RegexLeaf.spaceZeroOrMore(), //

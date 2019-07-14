@@ -41,6 +41,9 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class GroupingStart extends Grouping {
 
@@ -51,10 +54,18 @@ public class GroupingStart extends Grouping {
 	private boolean parallel = false;
 
 	public GroupingStart(String title, String comment, HtmlColor backColorGeneral, HtmlColor backColorElement,
-			GroupingStart parent) {
-		super(title, comment, GroupingType.START, backColorElement);
+			GroupingStart parent, StyleBuilder styleBuilder) {
+		super(title, comment, GroupingType.START, backColorElement, styleBuilder);
 		this.backColorGeneral = backColorGeneral;
 		this.parent = parent;
+	}
+
+	public Style[] getUsedStyles() {
+		final Style[] result = super.getUsedStyles();
+		if (result[0] != null) {
+			result[0] = result[0].eventuallyOverride(PName.BackGroundColor, backColorGeneral);
+		}
+		return result;
 	}
 
 	List<GroupingLeaf> getChildren() {

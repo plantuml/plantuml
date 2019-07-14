@@ -55,7 +55,9 @@ public class CommandIfLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandIfLegacy1.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEST", "\\((.+?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("TEST", "(.+?)"), //
+				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("then"), //
 				RegexLeaf.spaceOneOrMore(), //

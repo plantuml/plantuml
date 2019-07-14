@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -44,6 +46,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
@@ -58,14 +62,20 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	private final SymbolContext symbolContext;
 	private final double roundCorner;
 
-	public ComponentRoseNote(SymbolContext symbolContext, FontConfiguration font, Display strings, double paddingX,
-			double paddingY, ISkinSimple spriteContainer, double roundCorner, HorizontalAlignment horizontalAlignment) {
-		super(spriteContainer.wrapWidth(), strings, font, horizontalAlignment,
+	public ComponentRoseNote(Style style, SymbolContext symbolContext, FontConfiguration font, Display strings,
+			double paddingX, double paddingY, ISkinSimple spriteContainer, double roundCorner,
+			HorizontalAlignment horizontalAlignment) {
+		super(style, spriteContainer.wrapWidth(), strings, font, horizontalAlignment,
 				horizontalAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, spriteContainer, true, null, null);
-		this.roundCorner = roundCorner;
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
-		this.symbolContext = symbolContext;
+		if (SkinParam.USE_STYLES()) {
+			this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
+			this.roundCorner = style.value(PName.RoundCorner).asInt();
+		} else {
+			this.symbolContext = symbolContext;
+			this.roundCorner = roundCorner;
+		}
 	}
 
 	@Override

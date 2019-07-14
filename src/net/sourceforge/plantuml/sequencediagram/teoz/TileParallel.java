@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbackY {
 
 	private final List<Tile> tiles = new ArrayList<Tile>();
-	
+
 	public void callbackY(double y) {
 		for (Tile tile : tiles) {
 			if (tile instanceof TileWithCallbackY) {
@@ -58,7 +58,6 @@ public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbac
 			}
 		}
 	}
-
 
 	public void updateStairs(StringBounder stringBounder, double y) {
 		for (Tile tile : tiles) {
@@ -165,5 +164,13 @@ public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbac
 		return null;
 	}
 
+	public boolean matchAnchor(String anchor) {
+		for (Tile tile : tiles) {
+			if (tile.matchAnchor(anchor)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

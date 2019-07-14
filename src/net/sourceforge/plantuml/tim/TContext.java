@@ -50,6 +50,8 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -501,8 +503,39 @@ public class TContext {
 				if (result.toString().endsWith("##")) {
 					result.setLength(result.length() - 2);
 				}
-				result.append(memory.getVariable(presentVariable).getValue2().toString());
+				final TValue value = memory.getVariable(presentVariable).getValue();
 				i += presentVariable.length() - 1;
+				if (value.isJson()) {
+					JsonValue jsonValue = (JsonObject) value.toJson();
+					System.err.println("jsonValue1=" + jsonValue);
+					i++;
+					while (true) {
+						final char n = s.charAt(i);
+						System.err.println("n=" + n);
+						if (n != '.') {
+							if (jsonValue.isString()) {
+								result.append(jsonValue.asString());
+							} else {
+								result.append(jsonValue.toString());
+							}
+							break;
+						}
+						i++;
+						final StringBuilder fieldName = new StringBuilder();
+						while (true) {
+							if (Character.isJavaIdentifierPart(s.charAt(i)) == false) {
+								break;
+							}
+							fieldName.append(s.charAt(i));
+							i++;
+						}
+						System.err.println("fieldName=" + fieldName);
+						jsonValue = ((JsonObject) jsonValue).get(fieldName.toString());
+						System.err.println("jsonValue2=" + jsonValue);
+					}
+				} else {
+					result.append(value.toString());
+				}
 				if (i + 2 < s.length() && s.charAt(i + 1) == '#' && s.charAt(i + 2) == '#') {
 					i += 2;
 				}
@@ -716,6 +749,9 @@ public class TContext {
 	}
 
 	private String getFunctionNameAt(String s, int pos) {
+		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1)) && justAfterBackslashN(s, pos) == false) {
+			return null;
+		}
 		final String fname = functions3.getLonguestMatchStartingIn(s.substring(pos));
 		if (fname.length() == 0) {
 			return null;

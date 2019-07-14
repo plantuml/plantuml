@@ -52,11 +52,16 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Link extends WithLinkType implements Hideable, Removeable {
+
+	public final StyleBuilder getStyleBuilder() {
+		return styleBuilder;
+	}
 
 	final private IEntity cl1;
 	final private IEntity cl2;
@@ -90,20 +95,22 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private boolean horizontalSolitary;
 	private String sametail;
 	private VisibilityModifier visibilityModifier;
+	private final StyleBuilder styleBuilder;
 
 	private Url url;
 
-	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length) {
-		this(cl1, cl2, type, label, length, null, null, null, null, null);
+	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, StyleBuilder styleBuilder) {
+		this(cl1, cl2, type, label, length, null, null, null, null, null, styleBuilder);
 	}
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, String qualifier1,
-			String qualifier2, String labeldistance, String labelangle) {
-		this(cl1, cl2, type, label, length, qualifier1, qualifier2, labeldistance, labelangle, null);
+			String qualifier2, String labeldistance, String labelangle, StyleBuilder styleBuilder) {
+		this(cl1, cl2, type, label, length, qualifier1, qualifier2, labeldistance, labelangle, null, styleBuilder);
 	}
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, String qualifier1,
-			String qualifier2, String labeldistance, String labelangle, HtmlColor specificColor) {
+			String qualifier2, String labeldistance, String labelangle, HtmlColor specificColor,
+			StyleBuilder styleBuilder) {
 		if (length < 1) {
 			throw new IllegalArgumentException();
 		}
@@ -114,6 +121,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 			throw new IllegalArgumentException();
 		}
 
+		this.styleBuilder = styleBuilder;
 		this.cl1 = cl1;
 		this.cl2 = cl2;
 		this.type = type;
@@ -160,7 +168,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		// cl2.setXposition(x-1);
 		// }
 		final Link result = new Link(cl2, cl1, getType().getInversed(), label, length, qualifier2, qualifier1,
-				labeldistance, labelangle, getSpecificColor());
+				labeldistance, labelangle, getSpecificColor(), styleBuilder);
 		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;

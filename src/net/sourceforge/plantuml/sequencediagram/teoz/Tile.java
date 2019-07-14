@@ -56,5 +56,8 @@ public interface Tile extends UDrawable, UShape {
 	public double getYPoint(StringBounder stringBounder);
 
 	public double getZ(StringBounder stringBounder);
+	
+	public boolean matchAnchor(String anchor);
+
 
 }

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -49,7 +50,8 @@ public class ComponentRoseDestroy extends AbstractComponent {
 
 	private final HtmlColor foregroundColor;
 
-	public ComponentRoseDestroy(HtmlColor foregroundColor) {
+	public ComponentRoseDestroy(Style style, HtmlColor foregroundColor) {
+		super(style);
 		this.foregroundColor = foregroundColor;
 	}
 

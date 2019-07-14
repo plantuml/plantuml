@@ -40,12 +40,14 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Pragma;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -66,7 +68,10 @@ public class SwimlanesB extends SwimlanesA {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		final HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneTitleBackground, null, false);
+		HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneTitleBackground, null, false);
+		if (SkinParam.USE_STYLES()) {
+			color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		}
 		if (color != null) {
 			final double titleHeight = getTitlesHeight(stringBounder);
 			final URectangle back = new URectangle(getTitlesWidth(stringBounder), titleHeight);

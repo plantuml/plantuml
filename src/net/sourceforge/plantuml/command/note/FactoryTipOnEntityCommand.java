@@ -70,6 +70,24 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 	}
 
 	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
+		if (withBracket) {
+			return RegexConcat.build(FactoryTipOnEntityCommand.class.getName() + key + withBracket, RegexLeaf.start(), //
+					new RegexLeaf("note"), //
+					RegexLeaf.spaceOneOrMore(), //
+					new RegexLeaf("POSITION", "(right|left)"), //
+					RegexLeaf.spaceOneOrMore(), //
+					new RegexLeaf("of"), //
+					RegexLeaf.spaceOneOrMore(), //
+					partialPattern, //
+					RegexLeaf.spaceZeroOrMore(), //
+					ColorParser.exp1(), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("\\{"), //
+					RegexLeaf.end() //
+					);
+		}
 		return RegexConcat.build(FactoryTipOnEntityCommand.class.getName() + key + withBracket, RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -82,7 +100,6 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
 				RegexLeaf.end() //
 				);
 	}
@@ -142,9 +159,11 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT) {
-				link = new Link(cl1, (IEntity) tips, type, Display.NULL, 1);
+				link = new Link(cl1, (IEntity) tips, type, Display.NULL, 1, diagram.getSkinParam()
+						.getCurrentStyleBuilder());
 			} else {
-				link = new Link((IEntity) tips, cl1, type, Display.NULL, 1);
+				link = new Link((IEntity) tips, cl1, type, Display.NULL, 1, diagram.getSkinParam()
+						.getCurrentStyleBuilder());
 			}
 			diagram.addLink(link);
 		}

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -65,6 +66,10 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleDefinition;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -216,9 +221,18 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		if (diagram.getTitle().isNull()) {
 			return new ComponentAdapter(null);
 		}
-		final TextBlock compTitle = TextBlockUtils.title(new FontConfiguration(getSkinParam(),
-				FontParam.SEQUENCE_TITLE, null), diagram.getTitle().getDisplay(), getSkinParam());
-		return TextBlockUtils.withMargin(compTitle, 7, 7);
+		final TextBlock compTitle;
+		if (SkinParam.USE_STYLES()) {
+			final Style style = StyleDefinition.of(SName.root, SName.title).getMergedStyle(
+					diagram.getSkinParam().getCurrentStyleBuilder());
+			compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(), diagram.getSkinParam()
+					.getIHtmlColorSet(), diagram.getSkinParam());
+			return compTitle;
+		} else {
+			compTitle = TextBlockUtils.title(new FontConfiguration(getSkinParam(), FontParam.SEQUENCE_TITLE, null),
+					diagram.getTitle().getDisplay(), getSkinParam());
+			return TextBlockUtils.withMargin(compTitle, 7, 7);
+		}
 	}
 
 	private TextBlock getLegend() {
@@ -238,8 +252,14 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final HtmlColor titleColor = getSkinParam().getFontHtmlColor(null, param);
 		final String fontFamily = getSkinParam().getFont(null, false, param).getFamily(null);
 		final int fontSize = getSkinParam().getFont(null, false, param).getSize();
+		Style style = null;
+		final ISkinParam skinParam = diagram.getSkinParam();
+		if (SkinParam.USE_STYLES()) {
+			final StyleDefinition def = param.getStyleDefinition();
+			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
 		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
-				getSkinParam().useUnderlineForHyperlink());
+				getSkinParam().useUnderlineForHyperlink(), style, skinParam.getIHtmlColorSet(), skinParam);
 		return new TeozLayer(pngTitler, stringBounder, param);
 	}
 
@@ -258,7 +278,13 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
 		ug = goDown(ug, header);
 
-		printAligned(ug, HorizontalAlignment.CENTER, title);
+		HorizontalAlignment titleAlignment = HorizontalAlignment.CENTER;
+		if (SkinParam.USE_STYLES()) {
+			final StyleDefinition def = FontParam.TITLE.getStyleDefinition();
+			titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())
+					.value(PName.HorizontalAlignment).asHorizontalAlignment();
+		}
+		printAligned(ug, titleAlignment, title);
 		ug = goDown(ug, title);
 
 		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {

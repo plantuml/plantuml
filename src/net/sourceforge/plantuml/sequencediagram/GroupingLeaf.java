@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
 
@@ -47,8 +48,8 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	private final HtmlColor backColorGeneral;
 
 	public GroupingLeaf(String title, String comment, GroupingType type, HtmlColor backColorGeneral,
-			HtmlColor backColorElement, GroupingStart start) {
-		super(title, comment, type, backColorElement);
+			HtmlColor backColorElement, GroupingStart start, StyleBuilder styleBuilder) {
+		super(title, comment, type, backColorElement, styleBuilder);
 		if (start == null) {
 			throw new IllegalArgumentException();
 		}

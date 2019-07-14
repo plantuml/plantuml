@@ -52,7 +52,8 @@ public class CommandHideUnlinked extends SingleLineCommand2<UmlDiagram> {
 		return RegexConcat.build(CommandHideUnlinked.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("HIDE", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("unlinked"), RegexLeaf.end()); //
+				new RegexLeaf("unlinked"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override

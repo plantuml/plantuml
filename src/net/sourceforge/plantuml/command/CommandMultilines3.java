@@ -45,7 +45,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	private final IRegex starting;
 
 	private final MultilinesStrategy strategy;
-
+	
 	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy) {
 		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());

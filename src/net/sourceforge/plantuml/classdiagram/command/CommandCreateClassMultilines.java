@@ -107,7 +107,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 								new RegexLeaf("DISPLAY2", CommandCreateClass.DISPLAY_WITH_GENERIC)), //
 						new RegexLeaf("CODE3", "(" + CommandCreateClass.CODE + ")"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf("GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
+				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf("GENERIC", "\\<("
+						+ GenericRegexProducer.PATTERN + ")\\>"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -117,9 +118,12 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexConcat(new RegexLeaf("##"), new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf("EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + ")"))), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf("IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + ")"))), //
+				new RegexOptional(new RegexConcat(new RegexLeaf("##"), new RegexLeaf("LINECOLOR",
+						"(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
+				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf("EXTENDS",
+						"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + ")"))), //
+				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf("IMPLEMENTS",
+						"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + ")"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -188,7 +192,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		}
 	}
 
-	public static void manageExtends(String keyword, ClassDiagram system, RegexResult arg, final IEntity entity) {
+	public static void manageExtends(String keyword, ClassDiagram diagram, RegexResult arg, final IEntity entity) {
 		if (arg.get(keyword, 0) != null) {
 			final Mode mode = arg.get(keyword, 0).equalsIgnoreCase("extends") ? Mode.EXTENDS : Mode.IMPLEMENTS;
 			LeafType type2 = LeafType.CLASS;
@@ -201,14 +205,15 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			final String codes = arg.get(keyword, 1);
 			for (String s : codes.split(",")) {
 				final Code other = Code.of(StringUtils.trin(s));
-				final IEntity cl2 = system.getOrCreateLeaf(other, type2, null);
+				final IEntity cl2 = diagram.getOrCreateLeaf(other, type2, null);
 				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
 				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE) {
 					typeLink = typeLink.goDashed();
 				}
 				final Link link = new Link(cl2, entity, typeLink, Display.NULL, 2, null, null,
-						system.getLabeldistance(), system.getLabelangle());
-				system.addLink(link);
+						diagram.getLabeldistance(), diagram.getLabelangle(), diagram.getSkinParam()
+								.getCurrentStyleBuilder());
+				diagram.addLink(link);
 			}
 		}
 	}

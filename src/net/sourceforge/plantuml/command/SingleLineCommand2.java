@@ -46,7 +46,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 
 	private final IRegex pattern;
 	private final boolean doTrim;
-
+	
 	public SingleLineCommand2(IRegex pattern) {
 		this(true, pattern);
 	}
@@ -56,10 +56,6 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
-		// if (pattern.getPattern().startsWith("^") == false || pattern.getPattern().endsWith("$") == false) {
-		// throw new IllegalArgumentException("Bad pattern " + pattern.getPattern());
-		// }
-
 		this.pattern = pattern;
 	}
 

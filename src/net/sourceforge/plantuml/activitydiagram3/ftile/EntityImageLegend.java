@@ -38,14 +38,18 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class EntityImageLegend {
@@ -59,7 +63,9 @@ public class EntityImageLegend {
 		final HtmlColor legendColor = rose.getHtmlColor(skinParam, ColorParam.legendBorder);
 		final UStroke stroke = skinParam.getThickness(LineParam.legendBorder, null);
 
-		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, legendColor, legendBackgroundColor, 10);
+		final int cornersize = 10;
+		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, legendColor, legendBackgroundColor,
+				cornersize);
 		return TextBlockUtils.withMargin(result, 8, 8);
 	}
 

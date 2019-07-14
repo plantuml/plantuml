@@ -43,7 +43,7 @@ public class Version {
 	private static final int MAJOR_SEPARATOR = 1000000;
 
 	public static int version() {
-		return 1201907;
+		return 1201908;
 	}
 
 	public static int versionPatched() {
@@ -59,6 +59,11 @@ public class Version {
 		}
 		return dotted(version());
 	}
+	
+	public static String fullDescription() {
+		return "PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")";
+	}
+
 
 	private static String dotted(int nb) {
 		final String minor = "" + nb % MAJOR_SEPARATOR;
@@ -88,7 +93,7 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1561406360205L;
+		return 1563045914306L;
 	}
 
 	public static String compileTimeString() {

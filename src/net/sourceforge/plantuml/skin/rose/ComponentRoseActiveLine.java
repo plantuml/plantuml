@@ -37,10 +37,14 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -54,7 +58,12 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeUp;
 	private final boolean closeDown;
 
-	public ComponentRoseActiveLine(SymbolContext symbolContext, boolean closeUp, boolean closeDown) {
+	public ComponentRoseActiveLine(Style style, SymbolContext symbolContext, boolean closeUp, boolean closeDown,
+			IHtmlColorSet set) {
+		super(style);
+		if (SkinParam.USE_STYLES()) {
+			symbolContext = style.getSymbolContext(set);
+		}
 		this.symbolContext = symbolContext;
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
@@ -74,8 +83,8 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 			ug.apply(new UChangeBackColor(symbolContext.getBackColor())).apply(new UTranslate(x, 0)).draw(rect);
 			return;
 		}
-		ug.apply(new UChangeBackColor(symbolContext.getBackColor())).apply(new UChangeColor(symbolContext.getBackColor()))
-				.apply(new UTranslate(x, 0)).draw(rect);
+		ug.apply(new UChangeBackColor(symbolContext.getBackColor()))
+				.apply(new UChangeColor(symbolContext.getBackColor())).apply(new UTranslate(x, 0)).draw(rect);
 
 		final ULine vline = new ULine(0, dimensionToUse.getHeight());
 		ug.apply(new UTranslate(x, 0)).draw(vline);
@@ -99,5 +108,4 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return 10;
 	}
-
 }

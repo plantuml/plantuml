@@ -39,6 +39,8 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -47,6 +49,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -63,15 +67,25 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	private final boolean empty;
 	private final boolean withShadow;
 	private final UStroke stroke;
+	private final double roundCorner;
 
-	public ComponentRoseDivider(FontConfiguration font, HtmlColor background, Display stringsToDisplay,
+	public ComponentRoseDivider(Style style, FontConfiguration font, HtmlColor background, Display stringsToDisplay,
 			ISkinSimple spriteContainer, boolean withShadow, UStroke stroke, HtmlColor borderColor) {
-		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4, spriteContainer, false, null, null);
-		this.background = background;
-		this.borderColor = borderColor;
+		super(style, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4,
+				spriteContainer, false, null, null);
+		if (SkinParam.USE_STYLES()) {
+			this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+			this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			this.stroke = style.getStroke();
+			this.roundCorner = style.value(PName.RoundCorner).asInt();
+		} else {
+			this.background = background;
+			this.borderColor = borderColor;
+			this.stroke = stroke;
+			this.roundCorner = 0;
+		}
 		this.empty = stringsToDisplay.get(0).length() == 0;
 		this.withShadow = withShadow;
-		this.stroke = stroke;
 	}
 
 	@Override
@@ -94,7 +108,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 
 			ug = ug.apply(new UChangeColor(borderColor));
 			ug = ug.apply(stroke);
-			final URectangle rect = new URectangle(textWidth + deltaX, textHeight);
+			final URectangle rect = new URectangle(textWidth + deltaX, textHeight, roundCorner, roundCorner);
 			if (withShadow) {
 				rect.setDeltaShadow(4);
 			}
@@ -113,7 +127,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	}
 
 	private void drawRectLong(UGraphic ug, double width) {
-		final URectangle rectLong = new URectangle(width, 3);
+		final URectangle rectLong = new URectangle(width, 3, roundCorner, roundCorner);
 		if (withShadow) {
 			rectLong.setDeltaShadow(2);
 		}

@@ -40,6 +40,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringLocated;
@@ -76,6 +77,17 @@ public class RegexLeaf implements IRegex {
 	public RegexLeaf(String name, String regex) {
 		this.pattern = regex;
 		this.name = name;
+		// unknow=(left[%s]to[%s]right|top[%s]to[%s]bottom)
+		// unknow=is off on
+		// unknow=(-+)\>
+		// unknow=\[([^\[\]]+?)\]
+		// unknow=([*]+)
+
+		// if (regex.equals("([*]+)") || regex.equals("\\[([^\\[\\]]+?)\\]") || regex.equals("(-+)\\>")
+		// || regex.equals("is off on")) {
+		// Thread.dumpStack();
+		// System.exit(0);
+		// }
 	}
 
 	@Override
@@ -119,9 +131,25 @@ public class RegexLeaf implements IRegex {
 	}
 
 	static private final Set<String> UNKNOWN = new HashSet<String>();
-	
-	static private final Pattern p1 = Pattern.compile("^[-0A-Za-z_!:@;/=]+$");
-	static private final Pattern p2 = Pattern.compile("^[-0A-Za-z_!:@;/=]+\\?$");
+
+	static private final Pattern p1 = Pattern.compile("^[-0A-Za-z_!:@;/=,\"]+$");
+	static private final Pattern p2 = Pattern.compile("^[-0A-Za-z_!:@;/=,\"]+\\?$");
+	static private final Pattern p3 = Pattern
+			.compile("^\\(?[-0A-Za-z_!:@;/=\" ]+\\??(\\|[-0A-Za-z_!:@;/=,\" ]+\\??)+\\)?$");
+
+	private static long getSignatureP3(String s) {
+		long result = -1L;
+		for (StringTokenizer st = new StringTokenizer(s, "()|"); st.hasMoreTokens();) {
+			final String val = st.nextToken();
+			final long sig = FoxSignature.getFoxSignature(val.endsWith("?") ? val.substring(0, val.length() - 2) : val);
+			result = result & sig;
+		}
+		return result;
+	}
+
+	public long getFoxSignatureNone() {
+		return 0;
+	}
 
 	public long getFoxSignature() {
 		if (p1.matcher(pattern).matches()) {
@@ -130,8 +158,28 @@ public class RegexLeaf implements IRegex {
 		if (p2.matcher(pattern).matches()) {
 			return FoxSignature.getFoxSignature(pattern.substring(0, pattern.length() - 2));
 		}
-		if (pattern.length() == 2 && pattern.startsWith("\\")) {
+		if (p3.matcher(pattern).matches()) {
+			// System.err.println("special " + pattern);
+			// System.err.println("result " + FoxSignature.backToString(getSignatureP3(pattern)));
+			return getSignatureP3(pattern);
+		}
+		if (pattern.length() == 2 && pattern.startsWith("\\") && Character.isLetterOrDigit(pattern.charAt(1)) == false) {
 			return FoxSignature.getFoxSignature(pattern.substring(1));
+		}
+		if (pattern.equals("\\<\\>") || pattern.equals("(\\<\\<.*\\>\\>)")) {
+			return FoxSignature.getFoxSignature("<>");
+		}
+		if (pattern.equals("\\<-\\>")) {
+			return FoxSignature.getFoxSignature("<->");
+		}
+		if (pattern.equals("(-+)")) {
+			return FoxSignature.getFoxSignature("-");
+		}
+		if (pattern.equals("\\|+") || pattern.equals("\\|\\|")) {
+			return FoxSignature.getFoxSignature("|");
+		}
+		if (pattern.equals("([*]+)")) {
+			return FoxSignature.getFoxSignature("*");
 		}
 		if (pattern.equals("[%s]+") || pattern.equals("[%s]*")) {
 			return 0;

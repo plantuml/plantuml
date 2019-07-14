@@ -100,12 +100,14 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
 				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_BODY2", "([-.]*)\\>"), //
+				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
+				new RegexLeaf("\\>"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DESC", "[%g]([^%g]*?)"), //
+				new RegexLeaf("[%g]"), //
+				new RegexLeaf("DESC", "([^%g]*?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
@@ -208,7 +210,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		if (arrow.contains(".")) {
 			type = type.goDotted();
 		}
-		Link link = new Link(entity1, entity2, type, linkLabel, lenght);
+		Link link = new Link(entity1, entity2, type, linkLabel, lenght, diagram.getSkinParam().getCurrentStyleBuilder());
 		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");
 		if (direction == Direction.LEFT || direction == Direction.UP) {
 			link = link.getInv();

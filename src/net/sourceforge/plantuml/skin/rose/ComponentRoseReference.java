@@ -39,6 +39,8 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -48,6 +50,8 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -64,13 +68,20 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final HorizontalAlignment position;
 	private final SymbolContext symbolContext;
 
-	public ComponentRoseReference(FontConfiguration font, SymbolContext symbolContext, FontConfiguration header,
-			Display stringsToDisplay, HorizontalAlignment position, ISkinSimple spriteContainer, HtmlColor background) {
-		super(LineBreakStrategy.NONE, stringsToDisplay.subList(1, stringsToDisplay.size()), font, HorizontalAlignment.LEFT, 4, 4,
-				4, spriteContainer, false, null, null);
-		this.position = position;
-		this.symbolContext = symbolContext;
-		this.background = background;
+	public ComponentRoseReference(Style style, FontConfiguration font, SymbolContext symbolContext,
+			FontConfiguration header, Display stringsToDisplay, HorizontalAlignment position,
+			ISkinSimple spriteContainer, HtmlColor background) {
+		super(style, LineBreakStrategy.NONE, stringsToDisplay.subList(1, stringsToDisplay.size()), font,
+				HorizontalAlignment.LEFT, 4, 4, 4, spriteContainer, false, null, null);
+		if (SkinParam.USE_STYLES()) {
+			this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
+			this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+			this.position = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
+		} else {
+			this.symbolContext = symbolContext;
+			this.background = background;
+			this.position = position;
+		}
 
 		this.textHeader = stringsToDisplay.subList(0, 1).create(header, HorizontalAlignment.LEFT, spriteContainer);
 

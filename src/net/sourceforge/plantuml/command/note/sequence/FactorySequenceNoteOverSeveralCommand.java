@@ -75,7 +75,9 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,"), //
+				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -95,7 +97,9 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,"), //
+				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -154,18 +158,19 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		if (lines.size() > 0) {
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;
 			final Display display = diagram.manageVariable(lines.toDisplay());
-			final Note note = new Note(p1, p2, display);
+			final Note note = new Note(p1, p2, display, diagram.getSkinParam().getCurrentStyleBuilder());
 			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = line0.get("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = new Stereotype(stereotypeString);
 				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), FontParam.NOTE,
 						ColorParam.noteBackground, ColorParam.noteBorder);
+				note.setStereotype(stereotype);
 			}
 			note.setColors(colors);
 			// note.setSpecificColorTOBEREMOVED(ColorType.BACK,
 			// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
-			note.setStyle(NoteStyle.getNoteStyle(line0.get("STYLE", 0)));
+			note.setNoteStyle(NoteStyle.getNoteStyle(line0.get("STYLE", 0)));
 			if (line0.get("URL", 0) != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 				final Url urlLink = urlBuilder.getUrl(line0.get("URL", 0));

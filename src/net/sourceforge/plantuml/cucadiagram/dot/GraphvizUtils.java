@@ -146,7 +146,7 @@ public class GraphvizUtils {
 	public static String getenvLogData() {
 		return getenv("PLANTUML_LOGDATA");
 	}
-	
+
 	public static String getenv(String name) {
 		final String env = System.getProperty(name);
 		if (StringUtils.isNotEmpty(env)) {
@@ -154,8 +154,6 @@ public class GraphvizUtils {
 		}
 		return System.getenv(name);
 	}
-
-
 
 	private static String dotVersion = null;
 
@@ -188,7 +186,7 @@ public class GraphvizUtils {
 		return retrieveVersion(dotVersion());
 	}
 
-	static public List<String> getTestDotStrings(boolean withRichText) {
+	static public int addDotStatus(List<String> result, boolean withRichText) {
 		String red = "";
 		String bold = "";
 		if (withRichText) {
@@ -196,7 +194,8 @@ public class GraphvizUtils {
 			bold = "<b>";
 		}
 
-		final List<String> result = new ArrayList<String>();
+		int error = 0;
+
 		if (useVizJs(null)) {
 			result.add("VizJs library is used!");
 			try {
@@ -209,8 +208,9 @@ public class GraphvizUtils {
 			} catch (Exception e) {
 				result.add(red + e.toString());
 				e.printStackTrace();
+				error = -1;
 			}
-			return Collections.unmodifiableList(result);
+			return error;
 		}
 
 		final String ent = GraphvizUtils.getenvGraphvizDot();
@@ -231,27 +231,32 @@ public class GraphvizUtils {
 				final int v = GraphvizUtils.getDotVersion();
 				if (v == -1) {
 					result.add("Warning : cannot determine dot version");
+					error = -2;
 				} else if (v < DOT_VERSION_LIMIT) {
 					result.add(bold + "Warning : Your dot installation seems old");
 					result.add(bold + "Some diagrams may have issues");
+					error = -3;
 				} else {
 					final String err = getTestCreateSimpleFile();
 					if (err == null) {
 						result.add(bold + "Installation seems OK. File generation OK");
 					} else {
 						result.add(red + err);
+						error = -4;
 					}
 				}
 			} catch (Exception e) {
 				result.add(red + e.toString());
 				e.printStackTrace();
+				error = -5;
 			}
 		} else {
 			result.add(red + "Error: " + exeState.getTextMessage());
 			result.add("Error: only sequence diagrams will be generated");
+			error = -6;
 		}
 
-		return Collections.unmodifiableList(result);
+		return error;
 	}
 
 	static String getTestCreateSimpleFile() throws IOException {

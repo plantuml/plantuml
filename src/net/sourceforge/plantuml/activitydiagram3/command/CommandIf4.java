@@ -58,11 +58,15 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEST", "\\((.*?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("(is|equals?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("WHEN", "\\((.+?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("WHEN", "(.+?)"), //
+				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("then"), //
 				RegexLeaf.spaceZeroOrMore(), //

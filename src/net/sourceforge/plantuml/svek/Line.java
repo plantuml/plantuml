@@ -294,7 +294,7 @@ public class Line implements Moveable, Hideable {
 		if (link.getNote() == null) {
 			noteOnly = null;
 		} else {
-			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColors(), skinParam);
+			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColors(), skinParam, link.getStyleBuilder());
 			if (link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_NOT_PRINTED
 					|| link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_PRINTED_FULL) {
 				divideLabelWidthByTwo = true;

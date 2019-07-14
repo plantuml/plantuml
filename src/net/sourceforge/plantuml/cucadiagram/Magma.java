@@ -39,23 +39,25 @@ import java.util.List;
 
 class Magma {
 
-	private final CucaDiagram system;
+	private final CucaDiagram diagram;
 	private final List<ILeaf> standalones;
 	private final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 
 	public Magma(CucaDiagram system, List<ILeaf> standalones) {
-		this.system = system;
+		this.diagram = system;
 		this.standalones = standalones;
 	}
 
 	public void putInSquare() {
 		final SquareLinker<ILeaf> linker = new SquareLinker<ILeaf>() {
 			public void topDown(ILeaf top, ILeaf down) {
-				system.addLink(new Link(top, down, linkType, Display.NULL, 2));
+				diagram.addLink(new Link(top, down, linkType, Display.NULL, 2, diagram.getSkinParam()
+						.getCurrentStyleBuilder()));
 			}
 
 			public void leftRight(ILeaf left, ILeaf right) {
-				system.addLink(new Link(left, right, linkType, Display.NULL, 1));
+				diagram.addLink(new Link(left, right, linkType, Display.NULL, 1, diagram.getSkinParam()
+						.getCurrentStyleBuilder()));
 			}
 		};
 		new SquareMaker<ILeaf>().putInSquare(standalones, linker);
@@ -101,12 +103,14 @@ class Magma {
 	}
 
 	public void linkToDown(Magma down) {
-		system.addLink(new Link(this.getBottomLeft(), down.getTopLeft(), linkType, Display.NULL, 2));
+		diagram.addLink(new Link(this.getBottomLeft(), down.getTopLeft(), linkType, Display.NULL, 2, diagram
+				.getSkinParam().getCurrentStyleBuilder()));
 
 	}
 
 	public void linkToRight(Magma right) {
-		system.addLink(new Link(this.getTopRight(), right.getTopLeft(), linkType, Display.NULL, 1));
+		diagram.addLink(new Link(this.getTopRight(), right.getTopLeft(), linkType, Display.NULL, 1, diagram
+				.getSkinParam().getCurrentStyleBuilder()));
 	}
 
 }

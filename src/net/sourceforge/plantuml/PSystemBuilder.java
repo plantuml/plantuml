@@ -38,6 +38,9 @@ package net.sourceforge.plantuml;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
@@ -45,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
+import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
@@ -69,7 +73,6 @@ import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.help.HelpFactory;
-import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -139,10 +142,9 @@ public class PSystemBuilder {
 			Log.info("Compilation duration " + (System.currentTimeMillis() - now));
 			RegexConcat.printCacheInfo();
 		}
-
 	}
 
-	private List<PSystemFactory> getAllFactories(ISkinSimple skinParam) {
+	private static List<PSystemFactory> getAllFactories(ISkinSimple skinParam) {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
 		factories.add(new PSystemWelcomeFactory());
 		factories.add(new PSystemColorsFactory());
@@ -173,8 +175,8 @@ public class PSystemBuilder {
 		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
 		factories.add(new PSystemDitaaFactory(DiagramType.UML));
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
-			factories.add(new PSystemJcckitFactory(DiagramType.UML));
+			// factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
+			// factories.add(new PSystemJcckitFactory(DiagramType.UML));
 			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}

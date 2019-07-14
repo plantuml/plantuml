@@ -95,7 +95,12 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
-					RegexLeaf.spaceZeroOrMore(), new RegexLeaf("DESC", "as[%s]*[%g]([^%g]*)"), RegexLeaf.end());
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("as"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("[%g]"), //
+					new RegexLeaf("DESC", "([^%g]*)"), //
+					RegexLeaf.end());
 		}
 		if (type == 1) {
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
@@ -107,7 +112,10 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
-					RegexLeaf.spaceZeroOrMore(), new RegexLeaf("DESC", "\\[(.*)"), RegexLeaf.end());
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("\\["), //
+					new RegexLeaf("DESC", "(.*)"), //
+					RegexLeaf.end());
 		}
 		throw new IllegalArgumentException();
 	}

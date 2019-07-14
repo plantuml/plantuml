@@ -64,7 +64,9 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEST", "\\((.*?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //

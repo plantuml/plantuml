@@ -76,7 +76,11 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		return RegexConcat.build(FactoryNoteCommand.class.getName() + "single", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g][%s]+as"), //
+				new RegexLeaf("[%g]"), //
+				new RegexLeaf("DISPLAY", "([^%g]+)"), //
+				new RegexLeaf("[%g]"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //

@@ -53,7 +53,8 @@ public class CommandGanttArrow extends SingleLineCommand2<GanttDiagram> {
 		return RegexConcat.build(CommandGanttArrow.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ARROW", "(-+)\\>"), //
+				new RegexLeaf("ARROW", "(-+)"), //
+				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());

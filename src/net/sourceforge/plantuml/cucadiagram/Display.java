@@ -83,33 +83,17 @@ public class Display implements Iterable<CharSequence> {
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
-	private void check() {
-		// if (displayData != null)
-		// for (CharSequence s : displayData) {
-		// if (s == null) {
-		// continue;
-		// }
-		// if (s instanceof String) {
-		// continue;
-		// }
-		// if (s instanceof Stereotype) {
-		// continue;
-		// }
-		// // if (s instanceof CharSequence2) {
-		// // continue;
-		// // }
-		// if (s instanceof MessageNumber) {
-		// continue;
-		// }
-		// if (s instanceof EmbeddedDiagram) {
-		// continue;
-		// }
-		// System.err.println("PB=" + s);
-		// System.err.println("PB=" + s.getClass());
-		// for (int i = 0; i < 100; i++)
-		// Thread.dumpStack();
-		// System.exit(0);
-		// }
+	public Display withoutStereotype() {
+		final List<CharSequence> copy = new ArrayList<CharSequence>(displayData);
+		final Display result = new Display(naturalHorizontalAlignment, isNull, defaultCreoleMode);
+		for (Iterator<CharSequence> it = copy.iterator(); it.hasNext();) {
+			final CharSequence cs = it.next();
+			if (cs instanceof Stereotype) {
+				it.remove();
+			}
+		}
+		result.displayData.addAll(copy);
+		return result;
 	}
 
 	public Display replaceBackslashT() {
@@ -120,7 +104,6 @@ public class Display implements Iterable<CharSequence> {
 				result.displayData.set(i, s.toString().replace("\\t", "\t"));
 			}
 		}
-		result.check();
 		return result;
 	}
 
@@ -214,7 +197,6 @@ public class Display implements Iterable<CharSequence> {
 	private Display(Display other, CreoleMode mode) {
 		this(other.naturalHorizontalAlignment, other.isNull, mode);
 		this.displayData.addAll(other.displayData);
-		this.check();
 	}
 
 	private Display(HorizontalAlignment naturalHorizontalAlignment, boolean isNull, CreoleMode defaultCreoleMode) {
@@ -222,7 +204,6 @@ public class Display implements Iterable<CharSequence> {
 		this.isNull = isNull;
 		this.displayData = isNull ? null : new ArrayList<CharSequence>();
 		this.naturalHorizontalAlignment = isNull ? null : naturalHorizontalAlignment;
-		this.check();
 	}
 
 	private Display(Collection<? extends CharSequence> other, HorizontalAlignment naturalHorizontalAlignment,
@@ -231,7 +212,6 @@ public class Display implements Iterable<CharSequence> {
 		if (isNull == false) {
 			this.displayData.addAll(manageEmbeddedDiagrams(other));
 		}
-		this.check();
 	}
 
 	private static List<CharSequence> manageEmbeddedDiagrams(final Collection<? extends CharSequence> strings) {
@@ -325,21 +305,18 @@ public class Display implements Iterable<CharSequence> {
 	public Display addAll(Display other) {
 		final Display result = new Display(this, this.defaultCreoleMode);
 		result.displayData.addAll(other.displayData);
-		result.check();
 		return result;
 	}
 
 	public Display addFirst(CharSequence s) {
 		final Display result = new Display(this, this.defaultCreoleMode);
 		result.displayData.add(0, s);
-		result.check();
 		return result;
 	}
 
 	public Display add(CharSequence s) {
 		final Display result = new Display(this, this.defaultCreoleMode);
 		result.displayData.add(s);
-		result.check();
 		return result;
 	}
 
@@ -351,7 +328,6 @@ public class Display implements Iterable<CharSequence> {
 		} else {
 			result.displayData.set(size - 1, displayData.get(size - 1) + "<" + s + ">");
 		}
-		result.check();
 		return result;
 	}
 

@@ -56,9 +56,12 @@ public class CommandProperty extends SingleLineCommand2<NwDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("="), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("VALUE", "\"(.*)\""), //
+				new RegexLeaf("\""), //
+				new RegexLeaf("VALUE", "(.*)"), //
+				new RegexLeaf("\""), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(";?"), RegexLeaf.end());
+				new RegexLeaf(";?"), //
+				RegexLeaf.end());
 	}
 
 	@Override

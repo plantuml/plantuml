@@ -123,8 +123,8 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		// }
 		// }
 
-		final MessageExo msg = new MessageExo(p, messageExoType, labels, config, diagram.getNextMessageNumber(),
-				isShortArrow(arg));
+		final MessageExo msg = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), p, messageExoType,
+				labels, config, diagram.getNextMessageNumber(), isShortArrow(arg));
 		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 			final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));

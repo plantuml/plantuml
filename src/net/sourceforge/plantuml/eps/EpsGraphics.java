@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.version.Version;
 public class EpsGraphics {
 
 	public static final String END_OF_FILE = "%plantuml done";
+	protected static final long COEF = 100L;
 
 	// http://www.linuxfocus.org/Francais/May1998/article43.html
 	// http://www.tailrecursive.org/postscript/text.html
@@ -186,27 +187,43 @@ public class EpsGraphics {
 	public final void setStrokeWidth(double strokeWidth, double dashVisible, double dashSpace) {
 		checkCloseDone();
 		this.strokeWidth = format(strokeWidth);
-		this.dashVisible = dashVisible;
-		this.dashSpace = dashSpace;
+		this.dashVisible = (long) (dashVisible * COEF);
+		this.dashSpace = (long) (dashSpace * COEF);
 	}
 
-	private double dashVisible = 0;
-	private double dashSpace = 0;
+	private long dashVisible = 0;
+	private long dashSpace = 0;
 
 	public void newpathDot() {
-		final boolean dashed = dashVisible != 0 || dashSpace != 0;
+		final boolean dashed = isDashed();
 		checkCloseDone();
 		append(strokeWidth + " setlinewidth", true);
 		appendColor(color);
 
 		if (dashed) {
-			append("[9 9] 0 setdash", true);
+			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
 		}
 		append("newpath", true);
 	}
 
+	private boolean isDashed() {
+		return dashVisible != 0 || dashSpace != 0;
+	}
+
+	private boolean isDashed2() {
+		return dashVisible == 0 || dashSpace == 0;
+	}
+
+	private boolean isDashed3() {
+		return dashSpace != 0 && dashVisible != 0;
+	}
+
+	private boolean isDashed4() {
+		return dashSpace == 0 && dashVisible == 0;
+	}
+
 	public void closepathDot() {
-		final boolean dashed = dashVisible != 0 || dashSpace != 0;
+		final boolean dashed = isDashed();
 		append("stroke", true);
 		if (dashed) {
 			append("[] 0 setdash", true);
@@ -220,7 +237,7 @@ public class EpsGraphics {
 		append(strokeWidth + " setlinewidth", true);
 		appendColor(color);
 		append("newpath", true);
-		if (dashVisible == 0 || dashSpace == 0) {
+		if (isDashed2()) {
 			append(format(x1) + " " + format(y1) + " moveto", true);
 			append(format(x2 - x1) + " " + format(y2 - y1) + " rlineto", true);
 		} else if (x1 == x2) {
@@ -232,31 +249,31 @@ public class EpsGraphics {
 		ensureVisible(Math.max(x1, x2), Math.max(y1, y2));
 	}
 
-	protected void epsHLine(double x, double ymin, double ymax) {
+	protected void epsHLine(final double x, final double ymin, final double ymax) {
 		append(format(x) + " " + format(ymin) + " moveto", true);
-		for (double y = ymin; y < ymax; y += dashVisible + dashSpace) {
-			final double v;
-			if (y + dashVisible > ymax) {
-				v = y - ymax;
+		for (long y2 = (long) (ymin * COEF); y2 < (long) (ymax * COEF); y2 += (dashVisible + dashSpace)) {
+			final long v;
+			if (y2 + dashVisible > (long) (ymax * COEF)) {
+				v = y2 - (long) (ymax * COEF);
 			} else {
 				v = dashSpace;
 			}
-			append("0 " + format(v) + " rlineto", true);
-			append("0 " + format(dashSpace) + " rmoveto", true);
+			append("0 " + v + " rlineto", true);
+			append("0 " + dashSpace + " rmoveto", true);
 		}
 	}
 
-	protected void epsVLine(double y, double xmin, double xmax) {
+	protected void epsVLine(final double y, final double xmin, final double xmax) {
 		append(format(xmin) + " " + format(y) + " moveto", true);
-		for (double x = xmin; x < xmax; x += dashVisible + dashSpace) {
-			final double v;
-			if (x + dashVisible > xmax) {
-				v = x - xmax;
+		for (long x2 = (long) (xmin * COEF); x2 < (long) (xmax * COEF); x2 += (dashVisible + dashSpace)) {
+			final long v;
+			if (x2 + dashVisible > (long) (xmax * COEF)) {
+				v = x2 - (long) (xmax * COEF);
 			} else {
 				v = dashSpace;
 			}
-			append(format(v) + " 0 rlineto", true);
-			append(format(dashSpace) + " 0 rmoveto", true);
+			append("" + v + " 0 rlineto", true);
+			append("" + dashSpace + " 0 rmoveto", true);
 		}
 	}
 
@@ -367,7 +384,7 @@ public class EpsGraphics {
 			appendColor(fillcolor);
 			epsRectangleInternal(x, y, width, height, rx, ry, true);
 			append("closepath eofill", true);
-			if (dashSpace != 0 && dashVisible != 0) {
+			if (isDashed3()) {
 				append("[] 0 setdash", true);
 			}
 
@@ -378,7 +395,7 @@ public class EpsGraphics {
 			appendColor(color);
 			epsRectangleInternal(x, y, width, height, rx, ry, false);
 			append("closepath stroke", true);
-			if (dashSpace != 0 && dashVisible != 0) {
+			if (isDashed3()) {
 				append("[] 0 setdash", true);
 			}
 		}
@@ -451,8 +468,8 @@ public class EpsGraphics {
 	}
 
 	private void roundRectangle(double x, double y, double width, double height, double rx, double ry) {
-		if (dashSpace != 0 && dashVisible != 0) {
-			append("[" + (int) dashSpace + " " + (int) dashVisible + "] 0 setdash", true);
+		if (isDashed3()) {
+			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
 		}
 		final double round = MathUtils.min((rx + ry) / 2, width / 2, height / 2);
 		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " " + format(round)
@@ -461,10 +478,10 @@ public class EpsGraphics {
 	}
 
 	private void simpleRectangle(double x, double y, double width, double height, boolean fill) {
-		if (dashSpace != 0 && dashVisible != 0) {
-			append("[" + (int) dashSpace + " " + (int) dashVisible + "] 0 setdash", true);
+		if (isDashed3()) {
+			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
 		}
-		if ((dashSpace == 0 && dashVisible == 0) || fill) {
+		if (isDashed4() || fill) {
 			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
 			simplerectUsed = true;
 			// } else {
@@ -560,7 +577,7 @@ public class EpsGraphics {
 		if (x == 0) {
 			return "0";
 		}
-		return Long.toString((long) (x * 100));
+		return Long.toString((long) (x * COEF));
 	}
 
 	public static String formatSimple4(double x) {
@@ -710,11 +727,11 @@ public class EpsGraphics {
 		append("grestore", true);
 	}
 
-	protected final double getDashVisible() {
+	protected final long getDashVisible() {
 		return dashVisible;
 	}
 
-	protected final double getDashSpace() {
+	protected final long getDashSpace() {
 		return dashSpace;
 	}
 

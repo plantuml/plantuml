@@ -38,9 +38,10 @@ package net.sourceforge.plantuml.skin;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public interface Component {
+public interface Component extends WithStyle {
 
 	Dimension2D getPreferredDimension(StringBounder stringBounder);
 

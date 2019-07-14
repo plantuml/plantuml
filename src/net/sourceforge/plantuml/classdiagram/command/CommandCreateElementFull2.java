@@ -74,15 +74,44 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 	}
 
 	private static RegexConcat getRegexConcat(Mode mode) {
-
-		// String regex = "(?:(actor|usecase|component)[%s]+)";
-		String regex = "(?:(state|" + CommandCreateElementFull.ALL_TYPES + ")[%s]+)";
+		String regex = "(state|" + CommandCreateElementFull.ALL_TYPES + ")";
 		if (mode == Mode.WITH_MIX_PREFIX) {
-			regex = "mix_" + regex;
+			return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //
+					RegexLeaf.start(), //
+					new RegexLeaf("mix_"), //
+					new RegexLeaf("SYMBOL", regex), //
+					RegexLeaf.spaceOneOrMore(), //
+					new RegexOr(//
+							new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
+							new RegexConcat(//
+									new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
+									new RegexOptional( //
+											new RegexConcat( //
+													RegexLeaf.spaceOneOrMore(), //
+													new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
+											)), //
+									RegexLeaf.spaceZeroOrMore(), //
+									new RegexLeaf("as"), //
+									RegexLeaf.spaceOneOrMore(), //
+									new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
+					), //
+					new RegexOptional( //
+							new RegexConcat( //
+									RegexLeaf.spaceZeroOrMore(), //
+									new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)")//
+							)), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					ColorParser.exp1(), //
+					RegexLeaf.end());
 		}
-		return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, RegexLeaf.start(), //
+		return RegexConcat.build(CommandCreateElementFull2.class.getName() + mode, //
+				RegexLeaf.start(), //
 				new RegexLeaf("SYMBOL", regex), //
-				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
@@ -107,7 +136,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				ColorParser.exp1(), RegexLeaf.end());
+				ColorParser.exp1(), //
+				RegexLeaf.end());
 	}
 
 	@Override

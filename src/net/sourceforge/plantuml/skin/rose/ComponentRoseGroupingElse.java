@@ -39,6 +39,8 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -47,6 +49,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -60,15 +64,17 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final HtmlColor groupBorder;
 	private final HtmlColor backgroundColor;
 
-	// private final UStroke stroke;
-
-	public ComponentRoseGroupingElse(HtmlColor groupBorder, FontConfiguration smallFont, CharSequence comment,
-			ISkinSimple spriteContainer, HtmlColor backgroundColor) {
-		super(LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
+	public ComponentRoseGroupingElse(Style style, HtmlColor groupBorder, FontConfiguration smallFont,
+			CharSequence comment, ISkinSimple spriteContainer, HtmlColor backgroundColor) {
+		super(style, LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
 				HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, null, null);
-		this.groupBorder = groupBorder;
-		this.backgroundColor = backgroundColor;
-		// this.stroke = stroke;
+		if (SkinParam.USE_STYLES()) {
+			this.groupBorder = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		} else {
+			this.groupBorder = groupBorder;
+			this.backgroundColor = backgroundColor;
+		}
 	}
 
 	@Override

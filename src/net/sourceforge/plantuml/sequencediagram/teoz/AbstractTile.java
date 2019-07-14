@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+import net.sourceforge.plantuml.sequencediagram.Event;
 
 public abstract class AbstractTile implements Tile {
 
@@ -48,5 +50,17 @@ public abstract class AbstractTile implements Tile {
 		assert result >= 0;
 		return result;
 	}
+	
+	public boolean matchAnchor(String anchor) {
+		final Event event = this.getEvent();
+		if (event instanceof AbstractMessage) {
+			final AbstractMessage msg = (AbstractMessage) event;
+			if (anchor.equals(msg.getAnchor())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 }

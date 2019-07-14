@@ -63,7 +63,9 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEST", "\\((.*?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //

@@ -51,8 +51,8 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRobustConcise.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", //
-						"(robust|concise)[%s]+"), //
+				new RegexLeaf("TYPE", "(robust|concise)"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //

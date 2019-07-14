@@ -91,7 +91,8 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
 				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_BODY2", "([-.]*)\\>"), //
+				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
+				new RegexLeaf("\\>"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
@@ -160,7 +161,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			type = type.goDotted();
 		}
 
-		Link link = new Link(entity1, entity2, type, linkLabel, lenght);
+		Link link = new Link(entity1, entity2, type, linkLabel, lenght, diagram.getSkinParam().getCurrentStyleBuilder());
 		if (arrowDirection.contains("*")) {
 			link.setConstraint(false);
 		}

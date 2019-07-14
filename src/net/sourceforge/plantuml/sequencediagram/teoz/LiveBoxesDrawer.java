@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -67,8 +68,11 @@ public class LiveBoxesDrawer {
 	private final Collection<Segment> delays;
 
 	public LiveBoxesDrawer(Context2D context, Rose skin, ISkinParam skinParam, Map<Double, Double> delays) {
-		this.cross = skin.createComponent(ComponentType.DESTROY, null, skinParam, null);
-		this.compForWidth = skin.createComponent(ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam, null);
+		this.cross = skin.createComponent(new Style[] { ComponentType.DESTROY.getDefaultStyleDefinition()
+				.getMergedStyle(skinParam.getCurrentStyleBuilder()) }, ComponentType.DESTROY, null, skinParam, null);
+		this.compForWidth = skin.createComponent(new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE
+				.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder()) },
+				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam, null);
 		this.context = context;
 		this.skin = skin;
 		this.skinParam = skinParam;
@@ -118,7 +122,9 @@ public class LiveBoxesDrawer {
 		final double width = getWidth(ug.getStringBounder());
 		final Area area = new Area(width, yb - ya);
 		final ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, color == null ? null : color.getBackColor());
-		final Component comp = skin.createComponent(type, null, skinParam2, null);
+		final Component comp = skin.createComponent(
+				new Style[] { type.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder()) },
+				type, null, skinParam2, null);
 		comp.drawU(ug.apply(new UTranslate(-width / 2, ya)), area, context);
 	}
 

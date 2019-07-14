@@ -61,6 +61,11 @@
 				<include name="**/*.repx" />
 			</fileset>
 		</copy>
+		<copy todir="build/skin">
+			<fileset dir="skin">
+				<include name="**/*.skin" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="dist" depends="compile">

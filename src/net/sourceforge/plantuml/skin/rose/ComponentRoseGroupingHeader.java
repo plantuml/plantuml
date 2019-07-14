@@ -39,6 +39,8 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -49,6 +51,8 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -66,16 +70,28 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	private final HtmlColor background;
 	private final SymbolContext symbolContext;
+	private final SymbolContext symbolContextCorner;
 	private final double roundCorner;
 
-	public ComponentRoseGroupingHeader(HtmlColor background, SymbolContext symbolContext, FontConfiguration bigFont,
-			FontConfiguration smallFont2, Display strings, ISkinSimple spriteContainer, double roundCorner) {
-		super(LineBreakStrategy.NONE, strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer,
-				null, null);
+	public ComponentRoseGroupingHeader(Style style, Style styleHeader, HtmlColor background,
+			SymbolContext symbolContext, FontConfiguration bigFont, FontConfiguration smallFont2, Display strings,
+			ISkinSimple spriteContainer, double roundCorner) {
+		super(styleHeader, LineBreakStrategy.NONE, strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1,
+				spriteContainer, null, null);
 
-		this.roundCorner = roundCorner;
-		this.symbolContext = symbolContext;
-		this.background = background;
+		if (SkinParam.USE_STYLES()) {
+			this.roundCorner = style.value(PName.RoundCorner).asInt();
+			this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+			this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
+			this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());
+			bigFont = style.getFontConfiguration(getIHtmlColorSet());
+			smallFont2 = style.getFontConfiguration(getIHtmlColorSet());
+		} else {
+			this.roundCorner = roundCorner;
+			this.background = background;
+			this.symbolContext = symbolContext;
+			this.symbolContextCorner = symbolContext;
+		}
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
@@ -141,7 +157,11 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		final int textWidth = (int) getTextWidth(stringBounder);
 		final int textHeight = (int) getTextHeight(stringBounder);
 
-		symbolContext.applyColors(ug).draw(getCorner(textWidth, textHeight));
+		if (SkinParam.USE_STYLES()) {
+			symbolContextCorner.apply(ug).draw(getCorner(textWidth, textHeight));
+		} else {
+			symbolContextCorner.applyColors(ug).draw(getCorner(textWidth, textHeight));
+		}
 
 		ug = symbolContext.applyStroke(ug).apply(new UChangeColor(symbolContext.getForeColor()));
 		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), roundCorner,

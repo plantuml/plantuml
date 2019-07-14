@@ -46,14 +46,16 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseDelayText extends AbstractTextualComponent {
 
-	public ComponentRoseDelayText(FontConfiguration font, Display stringsToDisplay, ISkinSimple spriteContainer) {
-		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 0, 0,
-				4, spriteContainer, false, null, null);
+	public ComponentRoseDelayText(Style style, FontConfiguration font, Display stringsToDisplay,
+			ISkinSimple spriteContainer) {
+		super(style, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 0, 0, 4,
+				spriteContainer, false, null, null);
 	}
 
 	@Override

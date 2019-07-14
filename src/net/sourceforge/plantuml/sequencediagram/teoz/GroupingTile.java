@@ -138,7 +138,8 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.GROUPING_HEADER, null, skinParam, display);
+		final Component comp = skin.createComponent(start.getUsedStyles(), ComponentType.GROUPING_HEADER, null,
+				skinParam, display);
 		return comp;
 	}
 

@@ -58,7 +58,9 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 				ColorParser.exp4(), //
 				new RegexLeaf("switch"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEST", "\\((.*?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

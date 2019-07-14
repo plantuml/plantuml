@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -50,7 +51,8 @@ public class ComponentRoseNewpage extends AbstractComponent {
 
 	private final HtmlColor foregroundColor;
 
-	public ComponentRoseNewpage(HtmlColor foregroundColor) {
+	public ComponentRoseNewpage(Style style, HtmlColor foregroundColor) {
+		super(style);
 		this.foregroundColor = foregroundColor;
 	}
 

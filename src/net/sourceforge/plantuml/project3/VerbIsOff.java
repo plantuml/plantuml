@@ -40,6 +40,7 @@ import java.util.Collection;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
@@ -50,7 +51,11 @@ public class VerbIsOff implements VerbPattern {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf("is off on");
+		return new RegexConcat(new RegexLeaf("is"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("off"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("on"));
 	}
 
 	public Verb getVerb(final GanttDiagram project, RegexResult arg) {

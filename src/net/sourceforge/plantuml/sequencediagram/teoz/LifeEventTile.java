@@ -84,7 +84,7 @@ public class LifeEventTile extends AbstractTile implements TileWithUpdateStairs 
 
 	public void drawU(UGraphic ug) {
 		if (isDestroyWithoutMessage()) {
-			final Component cross = skin.createComponent(ComponentType.DESTROY, null, skinParam, null);
+			final Component cross = skin.createComponent(null, ComponentType.DESTROY, null, skinParam, null);
 			final Dimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());
 			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();
 			cross.drawU(ug.apply(new UTranslate(x - dimCross.getWidth() / 2, 0)), null, (Context2D) ug);
@@ -100,7 +100,7 @@ public class LifeEventTile extends AbstractTile implements TileWithUpdateStairs 
 //			return 20;
 //		}
 		if (isDestroyWithoutMessage()) {
-			final Component cross = skin.createComponent(ComponentType.DESTROY, null, skinParam, null);
+			final Component cross = skin.createComponent(null, ComponentType.DESTROY, null, skinParam, null);
 			final Dimension2D dimCross = cross.getPreferredDimension(stringBounder);
 			return dimCross.getHeight();
 		}

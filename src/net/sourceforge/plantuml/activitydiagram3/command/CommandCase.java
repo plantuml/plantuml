@@ -55,7 +55,9 @@ public class CommandCase extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandCase.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("case"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TEST", "\\((.*?)\\)"), //
+				new RegexLeaf("\\("), //
+				new RegexLeaf("TEST", "(.*?)"), //
+				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}

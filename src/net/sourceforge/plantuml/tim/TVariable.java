@@ -52,7 +52,7 @@ public class TVariable {
 		return super.toString() + " " + value.toString();
 	}
 
-	public TValue getValue2() {
+	public TValue getValue() {
 		return value;
 	}
 

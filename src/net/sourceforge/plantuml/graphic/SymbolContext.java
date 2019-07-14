@@ -98,7 +98,8 @@ public class SymbolContext {
 	}
 
 	public SymbolContext withDeltaShadow(double deltaShadow) {
-		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow, roundCorner, diagonalCorner);
+		return new SymbolContext(backColor, foreColor, stroke, deltaShadow != 0, deltaShadow, roundCorner,
+				diagonalCorner);
 	}
 
 	public SymbolContext withStroke(UStroke newStroke) {

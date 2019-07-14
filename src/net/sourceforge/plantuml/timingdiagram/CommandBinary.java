@@ -51,8 +51,8 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandBinary.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", //
-						"(binary)[%s]+"), //
+				new RegexLeaf("binary"), //
+				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //

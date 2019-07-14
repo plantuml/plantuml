@@ -53,7 +53,7 @@ public class CommandEndPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEndPartition3.class.getName(), //
 				RegexLeaf.start(), //
-				new RegexLeaf("(\\})"), //
+				new RegexLeaf("\\}"), //
 				RegexLeaf.end()); //
 	}
 
