@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
+import java.util.Arrays;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
@@ -56,6 +58,11 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	private final String line;
 	private final char style;
 	private final ISkinSimple skinParam;
+
+	@Override
+	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
+		return Arrays.asList((Atom) this);
+	}
 
 	public static CreoleHorizontalLine create(FontConfiguration fontConfiguration, String line, char style,
 			ISkinSimple skinParam) {
