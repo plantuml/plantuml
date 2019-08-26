@@ -40,6 +40,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -48,6 +49,10 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHidden;
@@ -74,8 +79,12 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			cluster.drawU(ug, new UStroke(1.5), dotData.getUmlDiagramType(), dotData.getSkinParam());
 		}
 
-		final HtmlColor color = HtmlColorUtils.noGradient(rose.getHtmlColor(dotData.getSkinParam(), null,
-				getArrowColorParam()));
+		HtmlColor color = rose.getHtmlColor(dotData.getSkinParam(), null, getArrowColorParam());
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinition().getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+			color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
+		}
+		color = HtmlColorUtils.noGradient(color);
 
 		for (Shape shape : dotStringFactory.getBibliotekon().allShapes()) {
 			final double minX = shape.getMinX();
@@ -109,6 +118,21 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
 			return ColorParam.arrow;
+		}
+		throw new IllegalStateException();
+	}
+
+	private StyleSignature getDefaultStyleDefinition() {
+		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS) {
+			return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.arrow);
+		} else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT) {
+			return StyleSignature.of(SName.root, SName.element, SName.objectDiagram, SName.arrow);
+		} else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
+			return StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.arrow);
+		} else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+			return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
+			return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.arrow);
 		}
 		throw new IllegalStateException();
 	}

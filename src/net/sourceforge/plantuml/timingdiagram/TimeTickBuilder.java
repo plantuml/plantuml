@@ -47,6 +47,8 @@ public class TimeTickBuilder {
 
 	public static IRegex expressionAtWithoutArobase(String name) {
 		return new RegexOr( //
+				new RegexLeaf(name + "DATE", "(\\d+)/(\\d+)/(\\d+)"), //
+				new RegexLeaf(name + "HOUR", "(\\d+):(\\d+):(\\d+)"), //
 				new RegexLeaf(name + "DIGIT", "(\\+?)(-?\\d+\\.?\\d*)"), //
 				new RegexLeaf(name + "CLOCK", "([\\p{L}0-9_.@]+)\\*(\\d+)"));
 	}
@@ -67,6 +69,22 @@ public class TimeTickBuilder {
 			final int number = Integer.parseInt(arg.get(name + "CLOCK", 1));
 			return clock.getClockValue(clockName, number);
 		}
+		final String hour = arg.get(name + "HOUR", 0);
+		if (hour != null) {
+			final int h = Integer.parseInt(arg.get(name + "HOUR", 0));
+			final int m = Integer.parseInt(arg.get(name + "HOUR", 1));
+			final int s = Integer.parseInt(arg.get(name + "HOUR", 2));
+			final BigDecimal value = new BigDecimal(3600 * h + 60 * m + s);
+			return new TimeTick(value, TimingFormat.HOUR);
+		}
+		final String date = arg.get(name + "DATE", 0);
+		if (date != null) {
+			final int yy = Integer.parseInt(arg.get(name + "DATE", 0));
+			final int mm = Integer.parseInt(arg.get(name + "DATE", 1));
+			final int dd = Integer.parseInt(arg.get(name + "DATE", 2));
+
+			return TimingFormat.createDate(yy, mm, dd);
+		}
 		final String number = arg.get(name + "DIGIT", 1);
 		if (number == null) {
 			return clock.getNow();
@@ -76,6 +94,7 @@ public class TimeTickBuilder {
 		if (isRelative) {
 			value = clock.getNow().getTime().add(value);
 		}
-		return new TimeTick(value);
+		return new TimeTick(value, TimingFormat.DECIMAL);
 	}
+
 }

@@ -30,19 +30,24 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.sprite;
 
-public enum StyleKind {
-	STYLE, STEREOTYPE;
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-	public StyleKind add(StyleKind other) {
-		if (this == STEREOTYPE || other == STEREOTYPE) {
-			return STEREOTYPE;
+public class PSystemListInternalSpritesFactory extends PSystemSingleLineFactory {
+
+	@Override
+	protected AbstractPSystem executeLine(String line) {
+		final String lineLower = StringUtils.goLowerCase(line);
+		if (lineLower.startsWith("listsprite")) {
+			return new PSystemListInternalSprites();
 		}
-		return STYLE;
+		return null;
 	}
 
 }

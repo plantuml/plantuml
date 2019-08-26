@@ -129,10 +129,11 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
 				stereoBlock, 0, 0, widthTotal, heightTotal, getStroke());
 
+		final double shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
 		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder),
-				getSkinParam().shadowing(getEntity().getStereotype()), roundCorner, getSkinParam()
-						.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false), getSkinParam()
-						.getStereotypeAlignment());
+				shadowing, roundCorner,
+				getSkinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
+				getSkinParam().getStereotypeAlignment());
 
 		if (url != null) {
 			ug.closeAction();

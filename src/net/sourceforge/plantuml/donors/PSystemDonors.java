@@ -89,6 +89,12 @@ public class PSystemDonors extends AbstractPSystem {
 			+ "b3kGXTfnVAZuJog6mzInmVABPPAYso0dTRs8ErLGzlKlmaaEXSyxHPKTHLoNoZqn8fdO-L6S-TXdJu6R"
 			+ "c-1cwePB1FgU_cwOn45jpHSfDGm7GvwAIAETpri3";
 
+	/*
+	 * Special thanks to our sponsors and donors:
+	 * 
+	 *   - Noam Tamim
+	 */
+
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {

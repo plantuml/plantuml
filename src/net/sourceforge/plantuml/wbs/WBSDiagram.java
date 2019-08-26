@@ -48,6 +48,9 @@ import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.regex.Matcher2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -122,25 +125,33 @@ public class WBSDiagram extends UmlDiagram {
 	}
 
 	private TextBlock getDrawingElement() {
-		return new Fork2(getSkinParam(), root);
+		return new Fork(getSkinParam(), root);
 	}
 
+	private final static Pattern2 patternStereotype = MyPattern.cmpile("^\\s*(.*?)(?:\\s*\\<\\<\\s*(.*)\\s*\\>\\>)?\\s*$");
+
 	public CommandExecutionResult addIdea(int level, String label, Direction direction, IdeaShape shape) {
+		final Matcher2 m = patternStereotype.matcher(label);
+		String stereotype = null;
+		if (m.matches()) {
+			label = m.group(1);
+			stereotype = m.group(2);
+		}
 		if (level == 0) {
 			if (root != null) {
 				return CommandExecutionResult.error("Error 44");
 			}
-			initRoot(label);
+			initRoot(label, stereotype);
 			return CommandExecutionResult.ok();
 		}
-		return add(level, label, direction, shape);
+		return add(level, label, stereotype, direction, shape);
 	}
 
 	private WElement root;
 	private WElement last;
 
-	private void initRoot(String label) {
-		root = new WElement(Display.getWithNewlines(label));
+	private void initRoot(String label, String stereotype) {
+		root = new WElement(Display.getWithNewlines(label), stereotype, getSkinParam().getCurrentStyleBuilder());
 		last = root;
 	}
 
@@ -152,16 +163,17 @@ public class WBSDiagram extends UmlDiagram {
 		return result;
 	}
 
-	private CommandExecutionResult add(int level, String label, Direction direction, IdeaShape shape) {
+	private CommandExecutionResult add(int level, String label, String stereotype, Direction direction, IdeaShape shape) {
 		if (level == last.getLevel() + 1) {
-			final WElement newIdea = last.createElement(level, Display.getWithNewlines(label), direction, shape);
+			final WElement newIdea = last.createElement(level, Display.getWithNewlines(label), stereotype, direction,
+					shape, getSkinParam().getCurrentStyleBuilder());
 			last = newIdea;
 			return CommandExecutionResult.ok();
 		}
 		if (level <= last.getLevel()) {
 			final int diff = last.getLevel() - level + 1;
 			final WElement newIdea = getParentOfLast(diff).createElement(level, Display.getWithNewlines(label),
-					direction, shape);
+					stereotype, direction, shape, getSkinParam().getCurrentStyleBuilder());
 			last = newIdea;
 			return CommandExecutionResult.ok();
 		}

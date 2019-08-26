@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -54,19 +55,19 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ParallelBuilderFork extends ParallelFtilesBuilder {
+public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 
 	private final String label;
 
-	public ParallelBuilderFork(ISkinParam skinParam, StringBounder stringBounder,
-			final List<Ftile> list, Ftile inner, Swimlane swimlane, String label) {
-		super(skinParam, stringBounder, list, inner, swimlane);
+	public ParallelBuilderFork(ISkinParam skinParam, StringBounder stringBounder, final List<Ftile> list, Ftile inner,
+			String label) {
+		super(skinParam, stringBounder, list, inner);
 		this.label = label;
 	}
 
@@ -79,13 +80,21 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 		double x = 0;
 		for (Ftile tmp : getList()) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			conns.add(new ConnectionIn(black, tmp, x, tmp.getInLinkRendering().getRainbow(
-					HtmlColorAndStyle.build(skinParam()))));
+			final Rainbow def;
+			if (SkinParam.USE_STYLES()) {
+				Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+			} else {
+				def = Rainbow.build(skinParam());
+			}
+			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
+			conns.add(new ConnectionIn(black, tmp, x, rainbow));
 			x += dim.getWidth();
 		}
 
 		result = FtileUtils.addConnection(result, conns);
-		((FtileBlackBlock) black).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(), barHeight);
+		((FtileBlackBlock) black).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
+				barHeight);
 
 		return new FtileAssemblySimple(black, result);
 	}
@@ -94,7 +103,8 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 	protected Ftile doStep2(Ftile result) {
 		final Ftile out = new FtileBlackBlock(skinParam(), getRose().getHtmlColor(skinParam(), ColorParam.activityBar),
 				getList().get(0).getSwimlaneIn());
-		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(), barHeight);
+		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
+				barHeight);
 		if (label != null) {
 			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(label)));
 		}
@@ -104,8 +114,15 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 		for (Ftile tmp : getList()) {
 			final UTranslate translate0 = new UTranslate(0, barHeight);
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			conns.add(new ConnectionOut(translate0, tmp, out, x, tmp.getOutLinkRendering().getRainbow(
-					HtmlColorAndStyle.build(skinParam())), getHeightOfMiddle()));
+			final Rainbow def;
+			if (SkinParam.USE_STYLES()) {
+				Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+			} else {
+				def = Rainbow.build(skinParam());
+			}
+			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
+			conns.add(new ConnectionOut(translate0, tmp, out, x, rainbow, getHeightOfMiddle()));
 			x += dim.getWidth();
 		}
 		result = FtileUtils.addConnection(result, conns);

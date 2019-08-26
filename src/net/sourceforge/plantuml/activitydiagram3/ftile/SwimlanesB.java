@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
@@ -75,6 +74,7 @@ public class SwimlanesB extends SwimlanesA {
 		if (color != null) {
 			final double titleHeight = getTitlesHeight(stringBounder);
 			final URectangle back = new URectangle(getTitlesWidth(stringBounder), titleHeight);
+			back.setIgnoreForCompression(true);
 			ug.apply(new UChangeBackColor(color)).apply(new UChangeColor(color)).draw(back);
 		}
 		for (Swimlane swimlane : swimlanes) {
@@ -95,14 +95,18 @@ public class SwimlanesB extends SwimlanesA {
 	}
 
 	private TextBlock getTitle(Swimlane swimlane) {
-		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.SWIMLANE_TITLE, null);
+		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
+		FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.SWIMLANE_TITLE, null);
+		if (SkinParam.USE_STYLES()) {
+			fontConfiguration = getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
+		}
 
 		LineBreakStrategy wrap = getWrap();
 		if (wrap.isAuto()) {
 			wrap = new LineBreakStrategy("" + ((int) swimlane.getActualWidth()));
 		}
 
-		return swimlane.getDisplay().create(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wrap);
+		return swimlane.getDisplay().create(fontConfiguration, horizontalAlignment, skinParam, wrap);
 	}
 
 	private LineBreakStrategy getWrap() {

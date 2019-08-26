@@ -1,6 +1,6 @@
-style root {
+root {
   FontName SansSerif
-  HyperLinkColor red
+  HyperLinkColor blue
   FontColor black
   FontSize 14
   FontStyle plain
@@ -13,11 +13,11 @@ style root {
   Shadowing 0.0
 }
 
-style stereotype {
+stereotype {
   FontStyle italic
 }
 
-style title {
+title {
   HorizontalAlignment center
   FontSize 14
   FontStyle bold
@@ -27,19 +27,23 @@ style title {
   BackGroundColor none
 }
 
-style header {
+header {
+  HorizontalAlignment right
+  FontSize 10
+  FontColor #888888
+  BackGroundColor none
+  LineColor none
+}
+
+footer {
   HorizontalAlignment center
   FontSize 10
   FontColor #888888
+  BackGroundColor none
+  LineColor none
 }
 
-style footer {
-  HorizontalAlignment left
-  FontSize 10
-  FontColor #888888
-}
-
-style legend {
+legend {
   LineColor black
   BackGroundColor #DDDDDD
   FontSize 14
@@ -48,7 +52,7 @@ style legend {
   Margin 8
 }
 
-style caption {
+caption {
   HorizontalAlignment center
   FontSize 14
   Padding 0
@@ -58,21 +62,19 @@ style caption {
 }
 
 
-style element {
+element {
   Shadowing 4.0
 }
 
-style sequenceDiagram {
+sequenceDiagram {
 }
 
-style classDiagram {
+classDiagram {
 }
 
-style activityDiagram {
-}
 
-style group {
-  BackGroundColor none
+group {
+  BackGroundColor white
   LineColor black
   LineThickness 2.0
   FontSize 11
@@ -80,7 +82,7 @@ style group {
   FontStyle bold
 }
 
-style groupHeader {
+groupHeader {
   BackGroundColor #EEEEEE
   LineColor black
 
@@ -88,30 +90,38 @@ style groupHeader {
   FontStyle bold
 }
 
-style lifeLine {
-  BackGroundColor none
+lifeLine {
+  BackGroundColor white
 }
 
-style destroy {
+destroy {
 }
 
-style reference {
-  LineColor red
-  FontSize 10
+reference {
+  FontSize 12
+  LineColor black
+  BackGroundColor while
+  LineThickness 2.0
+  HorizontalAlignment center
+}
+
+referenceHeader {
+  LineColor black
+  BackGroundColor #EEEEEE
+  FontColor black
+  FontSize 13
   FontStyle bold
-  FontColor blue
-  BackGroundColor gold
-  HorizontalAlignment right
+  LineThickness 2.0
 }
 
-style box {
+box {
   BackGroundColor #DDDDDD
 
   FontSize 13
   FontStyle bold
 }
 
-style separator {
+separator {
   LineColor black
   LineThickness 2.0
   BackGroundColor #EEEEEE
@@ -120,45 +130,116 @@ style separator {
   FontStyle bold
 }
 
-style delay {
-  FontSize 22
-  FontStyle italic
+delay {
+  FontSize 11
+  FontStyle plain
+  HorizontalAlignment center
 }
 
-style participant {
+participant {
   LineThickness 1.5
 }
 
-style actor {
+actor {
   LineThickness 2.0
 }
 
-style boundary {
+boundary {
 }
 
-style control {
+control {
 }
 
-style entity {
+entity {
 }
 
-style queue {
+queue {
 }
 
-style database {
+database {
 }
 
-style collections {
+collections {
 }
 
-style swimlane {
+swimlane {
+  BackGroundColor none
+  LineColor black
+  LineThickness 2
+  FontSize 18
 }
 
-style message {
+diamond {
+  Shadowing 3.0
+}
+
+arrow {
   FontSize 13
 }
 
-style note {
+note {
   FontSize 13
   BackGroundColor #FBFB77
+}
+
+partition {
+}
+
+circle {
+}
+
+mindmapDiagram {
+}
+
+mindmapDiagram {
+	node {
+	    Padding 10
+	    Margin 10
+	    RoundCorner 25
+	    LineThickness 1.5
+	}
+	arrow {
+	    LineThickness 1.0
+	}
+}
+
+
+wbsDiagram {
+    Padding 10
+    Margin 15
+    RoundCorner 0
+    LineThickness 1.5
+    FontSize 12
+}
+
+activityDiagram {
+  Shadowing 3.0
+}
+
+activityDiagram {
+	activity {
+	    LineThickness 1.5
+	    Padding 10
+	    FontSize 12
+	    RoundCorner 25
+	}
+	partition {
+	    LineColor black
+	    BackgroundColor none
+	}
+	diamond {
+	    FontSize 11
+	}
+	arrow {
+	    FontSize 11
+	}
+}
+
+activityBar {
+	LineColor black
+}
+
+circle {
+	LineColor black
+	Shadowing 3.0
 }

@@ -93,7 +93,7 @@ public class LinkAnchor {
 		final double ymax = Math.max(y1, y2);
 
 		final HtmlColor color = new Rose().getHtmlColor(param, ColorParam.arrow);
-		final Rainbow rainbow = HtmlColorAndStyle.fromColor(color);
+		final Rainbow rainbow = Rainbow.fromColor(color);
 		final Snake snake = new Snake(Arrows.asToUp(), HorizontalAlignment.CENTER, rainbow, Arrows.asToDown());
 
 		final Display display = Display.getWithNewlines(message);

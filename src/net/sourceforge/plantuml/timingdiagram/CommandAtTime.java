@@ -52,7 +52,8 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAtTime.class.getName(), RegexLeaf.start(), //
 				TimeTickBuilder.expressionAtWithArobase("TIME"), //
-				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end());
 	}
 
 	@Override

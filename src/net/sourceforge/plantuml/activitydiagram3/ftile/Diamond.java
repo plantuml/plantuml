@@ -46,7 +46,7 @@ public class Diamond {
 
 	final static public double diamondHalfSize = 12;
 
-	public static UPolygon asPolygon(boolean shadowing) {
+	public static UPolygon asPolygon(double shadowing) {
 		final UPolygon diams = new UPolygon();
 
 		diams.addPoint(diamondHalfSize, 0);
@@ -55,14 +55,15 @@ public class Diamond {
 		diams.addPoint(0, diamondHalfSize);
 		diams.addPoint(diamondHalfSize, 0);
 
-		if (shadowing) {
-			diams.setDeltaShadow(3);
-		}
+		// if (shadowing) {
+		// diams.setDeltaShadow(3);
+		// }
+		diams.setDeltaShadow(shadowing);
 
 		return diams;
 	}
 
-	public static UPolygon asPolygon(boolean shadowing, double width, double height) {
+	public static UPolygon asPolygon(double shadowing, double width, double height) {
 		final UPolygon diams = new UPolygon();
 
 		diams.addPoint(diamondHalfSize, 0);
@@ -73,9 +74,10 @@ public class Diamond {
 		diams.addPoint(0, height / 2);
 		diams.addPoint(diamondHalfSize, 0);
 
-		if (shadowing) {
-			diams.setDeltaShadow(3);
-		}
+		// if (shadowing) {
+		// diams.setDeltaShadow(3);
+		// }
+		diams.setDeltaShadow(shadowing);
 
 		return diams;
 	}

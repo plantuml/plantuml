@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public abstract class AbstractComponentText implements Component {
 
@@ -55,7 +55,7 @@ public abstract class AbstractComponentText implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	public StyleDefinition getDefaultStyleDefinition() {
+	public StyleSignature getDefaultStyleDefinition() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -77,7 +77,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		super(style, foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer,
 				textHorizontalAlignment, maxMessageSize);
 		if (SkinParam.USE_STYLES()) {
-			messagePosition = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
+			messagePosition = style.getHorizontalAlignment();
 		}
 		this.messagePosition = messagePosition;
 		this.niceArrow = niceArrow;

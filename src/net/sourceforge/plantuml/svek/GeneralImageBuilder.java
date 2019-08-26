@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamForecolored;
 import net.sourceforge.plantuml.SkinParamSameClassWidth;
 import net.sourceforge.plantuml.SkinParamUtils;
@@ -97,6 +98,9 @@ import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.EntityImageActivity;
 import net.sourceforge.plantuml.svek.image.EntityImageArcCircle;
 import net.sourceforge.plantuml.svek.image.EntityImageAssociation;
@@ -124,6 +128,139 @@ import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
 
 public final class GeneralImageBuilder {
 
+	public static IEntityImage createEntityImageBlock(ILeaf leaf, ISkinParam skinParam,
+			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
+			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
+		if (leaf.isRemoved()) {
+			throw new IllegalStateException();
+		}
+		if (leaf.getLeafType().isLikeClass()) {
+			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, (ILeaf) leaf, skinParam,
+					portionShower);
+			final Neighborhood neighborhood = leaf.getNeighborhood();
+			if (neighborhood != null) {
+				return new EntityImageProtected(entityImageClass, 20, neighborhood, bibliotekon);
+			}
+			return entityImageClass;
+		}
+		if (leaf.getLeafType() == LeafType.NOTE) {
+			return new EntityImageNote(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.ACTIVITY) {
+			return new EntityImageActivity(leaf, skinParam, bibliotekon);
+		}
+		if (leaf.getLeafType() == LeafType.STATE) {
+			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
+				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
+				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
+			}
+			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
+				return new EntityImageStateEmptyDescription(leaf, skinParam);
+			}
+			if (leaf.getStereotype() != null
+					&& "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR))) {
+				return new EntityImageState2(leaf, skinParam);
+			}
+			return new EntityImageState(leaf, skinParam);
+
+		}
+		if (leaf.getLeafType() == LeafType.CIRCLE_START) {
+			ColorParam param = ColorParam.activityStart;
+			if (umlDiagramType == UmlDiagramType.STATE) {
+				param = ColorParam.stateStart;
+			}
+			return new EntityImageCircleStart(leaf, skinParam, param);
+		}
+		if (leaf.getLeafType() == LeafType.CIRCLE_END) {
+			ColorParam param = ColorParam.activityEnd;
+			if (umlDiagramType == UmlDiagramType.STATE) {
+				param = ColorParam.stateEnd;
+			}
+			return new EntityImageCircleEnd(leaf, skinParam, param);
+		}
+		if (leaf.getLeafType() == LeafType.BRANCH || leaf.getLeafType() == LeafType.STATE_CHOICE) {
+			return new EntityImageBranch(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF) {
+			return new EntityImageLollipopInterface(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.CIRCLE) {
+			return new EntityImageDescription(leaf, skinParam, portionShower, links);
+		}
+
+		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
+			if (OptionFlags.USE_INTERFACE_EYE1 && leaf.getUSymbol() instanceof USymbolInterface) {
+				return new EntityImageLollipopInterfaceEye1(leaf, skinParam, bibliotekon);
+			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
+				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
+			} else {
+				return new EntityImageDescription(leaf, skinParam, portionShower, links);
+			}
+		}
+		if (leaf.getLeafType() == LeafType.USECASE) {
+			return new EntityImageUseCase(leaf, skinParam, portionShower);
+		}
+		// if (leaf.getEntityType() == LeafType.CIRCLE_INTERFACE) {
+		// return new EntityImageCircleInterface(leaf, skinParam);
+		// }
+		if (leaf.getLeafType() == LeafType.OBJECT) {
+			return new EntityImageObject(leaf, skinParam, portionShower);
+		}
+		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN) {
+			return new EntityImageSynchroBar(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.ARC_CIRCLE) {
+			return new EntityImageArcCircle(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION) {
+			return new EntityImageAssociationPoint(leaf, skinParam);
+		}
+		if (leaf.isGroup()) {
+			return new EntityImageGroup(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
+			if (leaf.getUSymbol() != null) {
+				// final HtmlColor black = HtmlColorUtils.BLACK;
+				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(), leaf.getUSymbol()
+						.getColorParamBorder());
+				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
+						links);
+			}
+			return new EntityImageEmptyPackage(leaf, skinParam, portionShower);
+		}
+		if (leaf.getLeafType() == LeafType.ASSOCIATION) {
+			return new EntityImageAssociation(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.PSEUDO_STATE) {
+			return new EntityImagePseudoState(leaf, skinParam);
+		}
+		if (leaf.getLeafType() == LeafType.TIPS) {
+			return new EntityImageTips(leaf, skinParam, bibliotekon);
+		}
+		// TODO Clean
+		if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isMachineOrSpecification()) {
+			return new EntityImageMachine(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isDesignedOrSolved()) {
+			return new EntityImageDesignedDomain(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.REQUIREMENT) {
+			return new EntityImageRequirement(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isLexicalOrGiven()) {
+			return new EntityImageDomain(leaf, skinParam, 'X');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isCausal()) {
+			return new EntityImageDomain(leaf, skinParam, 'C');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
+				&& leaf.getStereotype().isBiddableOrUncertain()) {
+			return new EntityImageDomain(leaf, skinParam, 'B');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN) {
+			return new EntityImageDomain(leaf, skinParam, 'P');
+		} else
+			throw new UnsupportedOperationException(leaf.getLeafType().toString());
+	}
+
 	private final DotData dotData;
 	private final EntityFactory entityFactory;
 	private final UmlSource source;
@@ -141,6 +278,10 @@ public final class GeneralImageBuilder {
 		this.stringBounder = stringBounder;
 	}
 
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
+
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
 		dotData.removeIrrelevantSametail();
 		final DotStringFactory dotStringFactory = new DotStringFactory(stringBounder, dotData);
@@ -154,7 +295,14 @@ public final class GeneralImageBuilder {
 			}
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+				final FontConfiguration labelFont;
+				if (SkinParam.USE_STYLES()) {
+					final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(
+							skinParam.getCurrentStyleBuilder());
+					labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+				} else {
+					labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+				}
 
 				final Line line = new Line(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
 						labelFont, dotStringFactory.getBibliotekon(), dotData.getPragma());
@@ -325,139 +473,6 @@ public final class GeneralImageBuilder {
 			}
 		}
 		return result;
-	}
-
-	public static IEntityImage createEntityImageBlock(ILeaf leaf, ISkinParam skinParam,
-			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
-			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
-		if (leaf.isRemoved()) {
-			throw new IllegalStateException();
-		}
-		if (leaf.getLeafType().isLikeClass()) {
-			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, (ILeaf) leaf, skinParam,
-					portionShower);
-			final Neighborhood neighborhood = leaf.getNeighborhood();
-			if (neighborhood != null) {
-				return new EntityImageProtected(entityImageClass, 20, neighborhood, bibliotekon);
-			}
-			return entityImageClass;
-		}
-		if (leaf.getLeafType() == LeafType.NOTE) {
-			return new EntityImageNote(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.ACTIVITY) {
-			return new EntityImageActivity(leaf, skinParam, bibliotekon);
-		}
-		if (leaf.getLeafType() == LeafType.STATE) {
-			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
-				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
-				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
-			}
-			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
-				return new EntityImageStateEmptyDescription(leaf, skinParam);
-			}
-			if (leaf.getStereotype() != null
-					&& "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR))) {
-				return new EntityImageState2(leaf, skinParam);
-			}
-			return new EntityImageState(leaf, skinParam);
-
-		}
-		if (leaf.getLeafType() == LeafType.CIRCLE_START) {
-			ColorParam param = ColorParam.activityStart;
-			if (umlDiagramType == UmlDiagramType.STATE) {
-				param = ColorParam.stateStart;
-			}
-			return new EntityImageCircleStart(leaf, skinParam, param);
-		}
-		if (leaf.getLeafType() == LeafType.CIRCLE_END) {
-			ColorParam param = ColorParam.activityEnd;
-			if (umlDiagramType == UmlDiagramType.STATE) {
-				param = ColorParam.stateEnd;
-			}
-			return new EntityImageCircleEnd(leaf, skinParam, param);
-		}
-		if (leaf.getLeafType() == LeafType.BRANCH || leaf.getLeafType() == LeafType.STATE_CHOICE) {
-			return new EntityImageBranch(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF) {
-			return new EntityImageLollipopInterface(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.CIRCLE) {
-			return new EntityImageDescription(leaf, skinParam, portionShower, links);
-		}
-
-		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
-			if (OptionFlags.USE_INTERFACE_EYE1 && leaf.getUSymbol() instanceof USymbolInterface) {
-				return new EntityImageLollipopInterfaceEye1(leaf, skinParam, bibliotekon);
-			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
-				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
-			} else {
-				return new EntityImageDescription(leaf, skinParam, portionShower, links);
-			}
-		}
-		if (leaf.getLeafType() == LeafType.USECASE) {
-			return new EntityImageUseCase(leaf, skinParam, portionShower);
-		}
-		// if (leaf.getEntityType() == LeafType.CIRCLE_INTERFACE) {
-		// return new EntityImageCircleInterface(leaf, skinParam);
-		// }
-		if (leaf.getLeafType() == LeafType.OBJECT) {
-			return new EntityImageObject(leaf, skinParam, portionShower);
-		}
-		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN) {
-			return new EntityImageSynchroBar(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.ARC_CIRCLE) {
-			return new EntityImageArcCircle(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION) {
-			return new EntityImageAssociationPoint(leaf, skinParam);
-		}
-		if (leaf.isGroup()) {
-			return new EntityImageGroup(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
-			if (leaf.getUSymbol() != null) {
-				// final HtmlColor black = HtmlColorUtils.BLACK;
-				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(), leaf.getUSymbol()
-						.getColorParamBorder());
-				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
-						links);
-			}
-			return new EntityImageEmptyPackage(leaf, skinParam, portionShower);
-		}
-		if (leaf.getLeafType() == LeafType.ASSOCIATION) {
-			return new EntityImageAssociation(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.PSEUDO_STATE) {
-			return new EntityImagePseudoState(leaf, skinParam);
-		}
-		if (leaf.getLeafType() == LeafType.TIPS) {
-			return new EntityImageTips(leaf, skinParam, bibliotekon);
-		}
-		// TODO Clean
-		if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
-				&& leaf.getStereotype().isMachineOrSpecification()) {
-			return new EntityImageMachine(leaf, skinParam);
-		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
-				&& leaf.getStereotype().isDesignedOrSolved()) {
-			return new EntityImageDesignedDomain(leaf, skinParam);
-		} else if (leaf.getLeafType() == LeafType.REQUIREMENT) {
-			return new EntityImageRequirement(leaf, skinParam);
-		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
-				&& leaf.getStereotype().isLexicalOrGiven()) {
-			return new EntityImageDomain(leaf, skinParam, 'X');
-		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
-				&& leaf.getStereotype().isCausal()) {
-			return new EntityImageDomain(leaf, skinParam, 'C');
-		} else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
-				&& leaf.getStereotype().isBiddableOrUncertain()) {
-			return new EntityImageDomain(leaf, skinParam, 'B');
-		} else if (leaf.getLeafType() == LeafType.DOMAIN) {
-			return new EntityImageDomain(leaf, skinParam, 'P');
-		} else
-			throw new UnsupportedOperationException(leaf.getLeafType().toString());
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {

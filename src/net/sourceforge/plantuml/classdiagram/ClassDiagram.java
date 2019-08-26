@@ -67,21 +67,6 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		return getNamespace(fullyCode, fullyCode.getSeparator());
 	}
 
-	private final String getNamespace(Code fullyCode, String separator) {
-		String name = fullyCode.getFullName();
-		if (separator == null) {
-			throw new IllegalArgumentException(toString());
-		}
-		do {
-			final int x = name.lastIndexOf(separator);
-			if (x == -1) {
-				return null;
-			}
-			name = name.substring(0, x);
-		} while (entityFactory.getLeafsget(Code.of(name, separator)) != null);
-		return name;
-	}
-
 	public final Code getShortName(Code code) {
 		final String separator = code.getSeparator();
 		if (separator == null) {

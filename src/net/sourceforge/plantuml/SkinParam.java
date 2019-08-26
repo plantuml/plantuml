@@ -64,6 +64,8 @@ import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Padder;
+import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.sprite.SpriteImage;
 import net.sourceforge.plantuml.style.FromSkinparamToStyle;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -78,24 +80,77 @@ import net.sourceforge.plantuml.ugraphic.ColorMapperReverse;
 import net.sourceforge.plantuml.ugraphic.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
-import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 
 public class SkinParam implements ISkinParam {
 
-	public static final String DEFAULT_STYLE = "plantuml.skin";
+	// private String skin = "debug.skin";
 
-	// public static final String DEFAULT_STYLE = "debug.skin";
-
-	static public boolean USE_STYLES() {
-		return USE_STYLE2.get();
-	}
-
-	private static ThreadLocal<Boolean> USE_STYLE2 = new ThreadLocal<Boolean>();
+	private String skin = "plantuml.skin";
 
 	private SkinParam(UmlDiagramType type) {
 		USE_STYLE2.set(false);
 		this.type = type;
+		if (type == UmlDiagramType.MINDMAP) {
+			USE_STYLE2.set(true);
+		}
+		if (type == UmlDiagramType.WBS) {
+			USE_STYLE2.set(true);
+		}
+		// if (type == UmlDiagramType.SEQUENCE) {
+		// skin = "debug.skin";
+		// USE_STYLE2.set(true);
+		// }
+		// if (type == UmlDiagramType.ACTIVITY) {
+		// skin = "debug.skin";
+		// USE_STYLE2.set(true);
+		// }
+	}
+
+	private StyleBuilder styleBuilder;
+
+	public StyleBuilder getCurrentStyleBuilder() {
+		if (styleBuilder == null && SkinParam.USE_STYLES()) {
+			try {
+				this.styleBuilder = getCurrentStyleBuilderInternal();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return styleBuilder;
+	}
+
+	public void muteStyle(Style modifiedStyle) {
+		if (SkinParam.USE_STYLES()) {
+			styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyle);
+		}
+	}
+
+	public String getDefaultSkin() {
+		return skin;
+	}
+
+	public void setDefaultSkin(String newSkin) {
+		this.skin = newSkin;
+	}
+
+	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException {
+		final StyleLoader tmp = new StyleLoader(this);
+		StyleBuilder result = tmp.loadSkin(this.getDefaultSkin());
+		if (result == null) {
+			result = tmp.loadSkin("plantuml.skin");
+		}
+
+		return result;
+	}
+
+	private static ThreadLocal<Boolean> USE_STYLE2 = new ThreadLocal<Boolean>();
+
+	static public boolean USE_STYLES() {
+		final Boolean result = USE_STYLE2.get();
+		if (result == null) {
+			return false;
+		}
+		return result;
 	}
 
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
@@ -696,6 +751,10 @@ public class SkinParam implements ISkinParam {
 
 	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();
 
+	public Collection<String> getAllSpriteNames() {
+		return Collections.unmodifiableCollection(new TreeSet<String>(sprites.keySet()));
+	}
+
 	public void addSprite(String name, Sprite sprite) {
 		sprites.put(name, sprite);
 	}
@@ -1123,22 +1182,4 @@ public class SkinParam implements ISkinParam {
 				.withBorderColor(border).withRoundCorner(roundCorner);
 	}
 
-	private StyleBuilder styleBuilder;
-
-	public StyleBuilder getCurrentStyleBuilder() {
-		if (styleBuilder == null && SkinParam.USE_STYLES()) {
-			try {
-				this.styleBuilder = StyleLoader.mainStyle(this);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return styleBuilder;
-	}
-
-	public void muteStyle(Style modifiedStyle) {
-		if (SkinParam.USE_STYLES()) {
-			styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyle);
-		}
-	}
 }

@@ -39,9 +39,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 
 public class Rainbow {
+
+	private final static Rose rose = new Rose();
 
 	private final List<HtmlColorAndStyle> colors = new ArrayList<HtmlColorAndStyle>();
 	private final int colorArrowSeparationSpace;
@@ -58,6 +65,27 @@ public class Rainbow {
 	public static Rainbow none() {
 		return new Rainbow(0);
 	}
+	
+	public static Rainbow fromColor(HtmlColor color) {
+		if (color == null) {
+			return Rainbow.none();
+		}
+		return Rainbow.build(new HtmlColorAndStyle(color));
+	}
+
+	public static Rainbow build(ISkinParam skinParam) {
+		if (SkinParam.USE_STYLES()) {
+			throw new IllegalStateException();
+		}
+		return fromColor(rose.getHtmlColor(skinParam, ColorParam.arrow));
+	}
+
+	public static Rainbow build(Style style, IHtmlColorSet set) {
+		final HtmlColor color = style.value(PName.LineColor).asColor(set);
+		return fromColor(color);
+	}
+
+
 
 	public Rainbow withDefault(Rainbow defaultColor) {
 		if (this.size() == 0) {

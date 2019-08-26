@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility;
@@ -54,8 +53,9 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
+import net.sourceforge.plantuml.sprite.CommandListSprite;
 import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
-import net.sourceforge.plantuml.style.CommandStyleMultilines;
+import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
@@ -219,11 +219,12 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		addTitleCommands(cmds);
 		addCommonCommands2(cmds);
 		addCommonHides(cmds);
-		cmds.add(new CommandStyleMultilines());
+		cmds.add(new CommandStyleMultilinesCSS());
 
 	}
 
 	final protected void addCommonCommands2(List<Command> cmds) {
+		cmds.add(new CommandListSprite());
 		cmds.add(new CommandNope());
 		cmds.add(new CommandPragma());
 

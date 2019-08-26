@@ -40,7 +40,7 @@ import java.awt.geom.Point2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
-public interface ITF extends TextBlock {
+interface ITF extends TextBlock {
 
 	public Point2D getT1(StringBounder stringBounder);
 

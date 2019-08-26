@@ -98,7 +98,7 @@ public class PlayerClock extends ReallyAbstractPlayer implements Player {
 		int i = 0;
 		double lastx = -Double.MAX_VALUE;
 		while (i < 1000) {
-			final double x = ruler.getPosInPixel(new BigDecimal(i * period));
+			final double x = ruler.getPosInPixel(new TimeTick(new BigDecimal(i * period), TimingFormat.DECIMAL));
 			if (x > ruler.getWidth()) {
 				return;
 			}

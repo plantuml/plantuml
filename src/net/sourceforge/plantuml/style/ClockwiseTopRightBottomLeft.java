@@ -37,4 +37,14 @@ package net.sourceforge.plantuml.style;
 
 public class ClockwiseTopRightBottomLeft {
 
+	private final double value;
+
+	public ClockwiseTopRightBottomLeft(double value) {
+		this.value = value;
+	}
+
+	public double asDouble() {
+		return value;
+	}
+
 }

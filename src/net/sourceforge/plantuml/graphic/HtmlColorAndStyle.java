@@ -35,14 +35,15 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
-import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class HtmlColorAndStyle {
-
-	private final static Rose rose = new Rose();
 
 	private final HtmlColor color;
 	private final LinkStyle style;
@@ -52,18 +53,7 @@ public class HtmlColorAndStyle {
 		return color + " " + style;
 	}
 
-	public static Rainbow fromColor(HtmlColor color) {
-		if (color == null) {
-			return Rainbow.none();
-		}
-		return Rainbow.build(new HtmlColorAndStyle(color));
-	}
-
-	public static Rainbow build(ISkinParam skinParam) {
-		return fromColor(rose.getHtmlColor(skinParam, ColorParam.arrow));
-	}
-
-	private HtmlColorAndStyle(HtmlColor color) {
+	public HtmlColorAndStyle(HtmlColor color) {
 		this(color, LinkStyle.NORMAL());
 	}
 
@@ -83,8 +73,18 @@ public class HtmlColorAndStyle {
 		return style;
 	}
 
+	static final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
+
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) {
-		HtmlColor color = build(skinParam).getColors().get(0).color;
+		HtmlColor color;
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		} else {
+			color = Rainbow.build(skinParam).getColors().get(0).color;
+		}
 		LinkStyle style = LinkStyle.NORMAL();
 		final IHtmlColorSet set = skinParam.getIHtmlColorSet();
 		for (String s : definition.split(",")) {

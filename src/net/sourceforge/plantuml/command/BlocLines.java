@@ -55,33 +55,6 @@ public class BlocLines implements Iterable<StringLocated> {
 
 	private List<StringLocated> lines;
 
-	private void check() {
-		// for (CharSequence s : lines) {
-		// // if (s == null) {
-		// // continue;
-		// // }
-		// if (s instanceof String) {
-		// continue;
-		// }
-		// // if (s instanceof Stereotype) {
-		// // continue;
-		// // }
-		// if (s instanceof CharSequence2) {
-		// continue;
-		// }
-		// // if (s instanceof MessageNumber) {
-		// // continue;
-		// // }
-		// // if (s instanceof EmbeddedDiagram) {
-		// // continue;
-		// // }
-		// System.err.println("PB2=" + s);
-		// System.err.println("PB=" + s.getClass());
-		// Thread.dumpStack();
-		// System.exit(0);
-		// }
-	}
-
 	@Override
 	public String toString() {
 		return lines.toString();
@@ -109,7 +82,6 @@ public class BlocLines implements Iterable<StringLocated> {
 
 	private BlocLines(List<StringLocated> lines) {
 		this.lines = Collections.unmodifiableList(lines);
-		this.check();
 	}
 
 	public Display toDisplay() {

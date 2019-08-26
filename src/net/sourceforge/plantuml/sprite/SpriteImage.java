@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.sprite;
+package net.sourceforge.plantuml.sprite;
 
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;

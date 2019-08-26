@@ -33,53 +33,75 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.sprite;
+package net.sourceforge.plantuml.sprite;
 
 import java.awt.Color;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 
-public class ColorPalette {
+public class ColorPalette4096 {
 
 	private static final String colorValue = "!#$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-	public char getCharFor(Color dest) {
-		return getCharFor(new HtmlColorSimple(dest, false));
+	public String getStringFor(Color dest) {
+		return getStringFor(new HtmlColorSimple(dest, false));
 	}
 
-	public char getCharFor(HtmlColor dest) {
-		char result = 0;
+	public String getStringFor(HtmlColor dest) {
+		int result = 0;
 		double resultDist = Double.MAX_VALUE;
-		for (int i = 0; i < colorValue.length(); i++) {
-			final char c = colorValue.charAt(i);
-			final double dist = ((HtmlColorSimple) dest).distance(getHtmlColorSimpleFor(c));
+		for (int i = 0; i < 4096; i++) {
+			final double dist = ((HtmlColorSimple) dest).distance(getHtmlColorSimpleFor(i));
 			if (dist < resultDist) {
-				result = c;
+				result = i;
 				resultDist = dist;
 			}
 		}
-		assert result != 0;
-		return result;
+		return encodeInt(result);
 	}
 
-	private HtmlColorSimple getHtmlColorSimpleFor(char c) {
-		final Color color = getColorFor(c);
+	protected String encodeInt(int result) {
+		final int v2 = result % 64;
+		final int v1 = result / 64;
+		assert v1 >= 0 && v1 <= 63 && v2 >= 0 && v2 <= 63;
+		return "" + colorValue.charAt(v1) + colorValue.charAt(v2);
+	}
+
+	private HtmlColorSimple getHtmlColorSimpleFor(int s) {
+		final Color color = getColorFor(s);
 		if (color == null) {
 			throw new IllegalArgumentException();
 		}
 		return new HtmlColorSimple(color, false);
 	}
 
-	public Color getColorFor(char c) {
-		final int col = colorValue.indexOf(c);
-		if (col == -1) {
+	public Color getColorFor(String s) {
+		if (s.length() != 2) {
+			throw new IllegalArgumentException();
+		}
+		final int v1 = colorValue.indexOf(s.charAt(0));
+		if (v1 == -1) {
 			return null;
 		}
-		final int blue = (col % 4) * 85;
-		final int green = ((col / 4) % 4) * 85;
-		final int red = ((col / 16) % 4) * 85;
-		return new Color(red, green, blue);
+		final int v2 = colorValue.indexOf(s.charAt(1));
+		if (v2 == -1) {
+			return null;
+		}
+		final int code = v1 * 64 + v2;
+		return getColorFor(code);
+	}
+
+	protected Color getColorFor(final int code) {
+		final int blue = code % 16;
+		final int green = (code / 16) % 16;
+		final int red = (code / 256) % 16;
+		return new Color(dup(red), dup(green), dup(blue));
+	}
+
+	private int dup(int v) {
+		assert v >= 0 && v <= 15;
+		return v * 16 + v;
 	}
 
 }

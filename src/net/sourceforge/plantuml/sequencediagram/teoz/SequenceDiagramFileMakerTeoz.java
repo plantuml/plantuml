@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -109,7 +109,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				+ heightEnglober2 + title.calculateDimension(stringBounder).getHeight()
 				+ header.calculateDimension(stringBounder).getHeight()
 				+ legend.calculateDimension(stringBounder).getHeight()
-				+ footer.calculateDimension(stringBounder).getHeight();
+				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedWorker.hasMainFrame() ? 10 : 0);
 		this.dimTotal = new Dimension2DDouble(totalWidth, totalHeight);
 	}
 
@@ -223,7 +223,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		}
 		final TextBlock compTitle;
 		if (SkinParam.USE_STYLES()) {
-			final Style style = StyleDefinition.of(SName.root, SName.title).getMergedStyle(
+			final Style style = StyleSignature.of(SName.root, SName.title).getMergedStyle(
 					diagram.getSkinParam().getCurrentStyleBuilder());
 			compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(), diagram.getSkinParam()
 					.getIHtmlColorSet(), diagram.getSkinParam());
@@ -255,7 +255,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		Style style = null;
 		final ISkinParam skinParam = diagram.getSkinParam();
 		if (SkinParam.USE_STYLES()) {
-			final StyleDefinition def = param.getStyleDefinition();
+			final StyleSignature def = param.getStyleDefinition();
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
@@ -280,9 +280,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 		HorizontalAlignment titleAlignment = HorizontalAlignment.CENTER;
 		if (SkinParam.USE_STYLES()) {
-			final StyleDefinition def = FontParam.TITLE.getStyleDefinition();
+			final StyleSignature def = FontParam.TITLE.getStyleDefinition();
 			titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())
-					.value(PName.HorizontalAlignment).asHorizontalAlignment();
+					.getHorizontalAlignment();
 		}
 		printAligned(ug, titleAlignment, title);
 		ug = goDown(ug, title);
@@ -293,8 +293,10 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		}
 
 		ug = ug.apply(new UTranslate(0, heightEnglober1));
-		printAligned(ug, HorizontalAlignment.CENTER, body);
-		ug = goDown(ug, body);
+		final TextBlock bodyFramed = annotatedWorker.addFrame(body);
+		printAligned(ug.apply(new UTranslate((annotatedWorker.hasMainFrame() ? 4 : 0), 0)), HorizontalAlignment.CENTER,
+				bodyFramed);
+		ug = goDown(ug, bodyFramed);
 		ug = ug.apply(new UTranslate(0, heightEnglober2));
 
 		printAligned(ug, HorizontalAlignment.CENTER, caption);

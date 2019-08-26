@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
@@ -176,5 +178,12 @@ public interface ISkinParam extends ISkinSimple {
 	public StyleBuilder getCurrentStyleBuilder();
 
 	public void muteStyle(Style modifiedStyle);
+
+	public Collection<String> getAllSpriteNames();
+	
+	public String getDefaultSkin();
+	
+	public void setDefaultSkin(String newSkin);
+
 
 }

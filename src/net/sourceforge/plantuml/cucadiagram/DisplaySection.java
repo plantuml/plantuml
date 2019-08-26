@@ -39,7 +39,6 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;

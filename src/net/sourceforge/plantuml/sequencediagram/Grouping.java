@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
 public abstract class Grouping implements Event, WithStyle {
@@ -55,12 +55,12 @@ public abstract class Grouping implements Event, WithStyle {
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleDefinition getDefaultStyleDefinition() {
-		return StyleDefinition.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);
 	}
 
-	private StyleDefinition getHeaderStyleDefinition() {
-		return StyleDefinition.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
+	private StyleSignature getHeaderStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
 	}
 
 	public Style[] getUsedStyles() {

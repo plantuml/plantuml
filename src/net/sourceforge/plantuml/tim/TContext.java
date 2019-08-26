@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.tim.stdlib.Getenv;
 import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeVoidFunction;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
+import net.sourceforge.plantuml.tim.stdlib.RetrieveVoidFunction;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
 import net.sourceforge.plantuml.tim.stdlib.Strpos;
@@ -87,11 +88,11 @@ import net.sourceforge.plantuml.tim.stdlib.VariableExists;
 
 public class TContext {
 
-	private final List<StringLocated> result = new ArrayList<StringLocated>();
+	private final List<StringLocated> resultList = new ArrayList<StringLocated>();
 	private final List<StringLocated> debug = new ArrayList<StringLocated>();
 	private final Map<TFunctionSignature, TFunction> functions2 = new HashMap<TFunctionSignature, TFunction>();
 	private final Set<TFunctionSignature> functionsFinal = new HashSet<TFunctionSignature>();
-	private final Trie functions3 = new Trie();
+	private final Trie functions3 = new TrieImpl();
 	private ImportedFiles importedFiles;
 	private final String charset;
 
@@ -120,6 +121,7 @@ public class TContext {
 		addFunction(new FunctionExists());
 		addFunction(new VariableExists());
 		addFunction(new CallUserFunction());
+		addFunction(new RetrieveVoidFunction());
 		addFunction(new SetVariableValue());
 		addFunction(new GetVariableValue());
 		addFunction(new IntVal());
@@ -316,7 +318,7 @@ public class TContext {
 				tmp = new StringLocated(pendingAdd + tmp.getString(), tmp.getLocation());
 				pendingAdd = null;
 			}
-			result.add(tmp);
+			resultList.add(tmp);
 		}
 	}
 
@@ -507,11 +509,11 @@ public class TContext {
 				i += presentVariable.length() - 1;
 				if (value.isJson()) {
 					JsonValue jsonValue = (JsonObject) value.toJson();
-					System.err.println("jsonValue1=" + jsonValue);
+					// System.err.println("jsonValue1=" + jsonValue);
 					i++;
 					while (true) {
 						final char n = s.charAt(i);
-						System.err.println("n=" + n);
+						// System.err.println("n=" + n);
 						if (n != '.') {
 							if (jsonValue.isString()) {
 								result.append(jsonValue.asString());
@@ -529,9 +531,9 @@ public class TContext {
 							fieldName.append(s.charAt(i));
 							i++;
 						}
-						System.err.println("fieldName=" + fieldName);
+						// System.err.println("fieldName=" + fieldName);
 						jsonValue = ((JsonObject) jsonValue).get(fieldName.toString());
-						System.err.println("jsonValue2=" + jsonValue);
+						// System.err.println("jsonValue2=" + jsonValue);
 					}
 				} else {
 					result.append(value.toString());
@@ -759,8 +761,8 @@ public class TContext {
 		return fname.substring(0, fname.length() - 1);
 	}
 
-	public List<StringLocated> getResult() {
-		return result;
+	public List<StringLocated> getResultList() {
+		return resultList;
 	}
 
 	public List<StringLocated> getDebug() {
@@ -782,6 +784,18 @@ public class TContext {
 	public void executeEndfunction() {
 		addFunction(pendingFunction);
 		pendingFunction = null;
+	}
+
+	public String extractFromResultList(int n1) {
+		final StringBuilder sb = new StringBuilder();
+		while (resultList.size() > n1) {
+			sb.append(resultList.get(n1).getString());
+			resultList.remove(n1);
+			if (resultList.size() > n1) {
+				sb.append("\\n");
+			}
+		}
+		return sb.toString();
 	}
 
 }

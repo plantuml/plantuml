@@ -49,7 +49,7 @@ final public class StringLocated {
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + s;
+		return s;
 	}
 
 	public StringLocated(String s, LineLocation location, String preprocessorError) {

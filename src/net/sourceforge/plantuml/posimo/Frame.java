@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -66,7 +66,7 @@ public class Frame implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	public StyleDefinition getDefaultStyleDefinition() {
+	public StyleSignature getDefaultStyleDefinition() {
 		throw new UnsupportedOperationException();
 	}
 

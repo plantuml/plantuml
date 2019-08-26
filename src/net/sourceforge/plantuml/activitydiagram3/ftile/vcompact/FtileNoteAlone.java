@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -61,16 +62,25 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class FtileNoteAlone extends AbstractFtile implements Stencil {
+public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable {
 
 	private final Opale opale;
 	private final boolean withOutPoint;
 	private final Swimlane swimlane;
-	
+
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	}
+
 	@Override
 	public Collection<Ftile> getMyChildren() {
 		return Collections.emptyList();
@@ -97,15 +107,27 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil {
 		this.withOutPoint = withOutPoint;
 		final Rose rose = new Rose();
 
-		final HtmlColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-		final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+		final HtmlColor noteBackgroundColor;
+		final HtmlColor borderColor;
+		final double shadowing;
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			shadowing = style.value(PName.Shadowing).asDouble();
+		} else {
+			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
+			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+			shadowing = skinParam.shadowing(null) ? 4 : 0;
+		}
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
 		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(note);
-		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), this, new UStroke(1));
-		opale = new Opale(borderColor, noteBackgroundColor, text, skinParam.shadowing(null), false);
+		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()),
+				this, new UStroke(1));
+		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, false);
 
 	}
 

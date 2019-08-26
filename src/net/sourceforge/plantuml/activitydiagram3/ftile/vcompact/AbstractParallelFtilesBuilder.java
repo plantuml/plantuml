@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -51,8 +52,11 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 
-public abstract class ParallelFtilesBuilder {
+public abstract class AbstractParallelFtilesBuilder {
 
 	protected final double barHeight = 6;
 
@@ -64,16 +68,22 @@ public abstract class ParallelFtilesBuilder {
 	private final List<Ftile> list;
 	private final Ftile middle;
 	private final FtileGeometry middleDimension;
-	private final Swimlane swimlane;
 
-	public ParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, final List<Ftile> list,
-			Ftile middle, Swimlane swimlane) {
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	}
+
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
+
+	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, final List<Ftile> list,
+			Ftile middle) {
 		this.skinParam = skinParam;
 		this.stringBounder = stringBounder;
 		this.list = list;
 		this.middle = middle;
 		this.middleDimension = middle.calculateDimension(getStringBounder());
-		this.swimlane = swimlane;
 	}
 
 	public final Ftile build() {
@@ -102,7 +112,13 @@ public abstract class ParallelFtilesBuilder {
 		if (Display.isNull(display)) {
 			return null;
 		}
-		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		final FontConfiguration fontConfiguration;
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
+		} else {
+			fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		}
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 
@@ -124,8 +140,8 @@ public abstract class ParallelFtilesBuilder {
 		return middleDimension.getHeight();
 	}
 
-	protected final Swimlane swimlane() {
-		return swimlane;
+	protected final Swimlane swimlaneOutForStep2() {
+		return list.get(list.size() - 1).getSwimlaneOut();
 	}
 
 }

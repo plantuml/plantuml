@@ -123,4 +123,9 @@ public class Code implements Comparable<Code> {
 		return separator;
 	}
 
+	public String getLastPart() {
+		final int x = this.fullName.lastIndexOf(separator);
+		return this.fullName.substring(x + separator.length());
+	}
+
 }

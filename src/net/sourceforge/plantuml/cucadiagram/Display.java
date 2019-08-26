@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
@@ -83,12 +84,12 @@ public class Display implements Iterable<CharSequence> {
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
-	public Display withoutStereotype() {
+	public Display withoutStereotype(Style usedStyle) {
 		final List<CharSequence> copy = new ArrayList<CharSequence>(displayData);
 		final Display result = new Display(naturalHorizontalAlignment, isNull, defaultCreoleMode);
 		for (Iterator<CharSequence> it = copy.iterator(); it.hasNext();) {
 			final CharSequence cs = it.next();
-			if (cs instanceof Stereotype) {
+			if (cs instanceof Stereotype && usedStyle.getSignature().match(((Stereotype) cs))) {
 				it.remove();
 			}
 		}

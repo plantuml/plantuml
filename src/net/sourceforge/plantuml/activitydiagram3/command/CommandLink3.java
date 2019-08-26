@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class CommandLink3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -65,7 +65,7 @@ public class CommandLink3 extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
 		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
 		if (color != null) {
-			diagram.setColorNextArrow(HtmlColorAndStyle.fromColor(color));
+			diagram.setColorNextArrow(Rainbow.fromColor(color));
 		}
 		return CommandExecutionResult.ok();
 	}

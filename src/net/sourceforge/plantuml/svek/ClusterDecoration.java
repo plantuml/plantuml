@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ClusterDecoration {
 
-	private final UStroke defaultStroke;// = new UStroke(2);
+	private final UStroke defaultStroke;
 	final private USymbol symbol;
 	final private TextBlock title;
 	final private TextBlock stereo;
@@ -83,7 +83,7 @@ public class ClusterDecoration {
 	public final static int marginTitleY1 = 3;
 	public final static int marginTitleY2 = 3;
 
-	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, boolean shadowing, double roundCorner,
+	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, double shadowing, double roundCorner,
 			HorizontalAlignment titleAlignment, HorizontalAlignment stereoAlignment) {
 		final SymbolContext biColor = new SymbolContext(backColor, borderColor);
 		if (symbol == null) {

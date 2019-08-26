@@ -40,7 +40,6 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -49,23 +48,22 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class ITFLeaf extends AbstractTextBlock implements ITF {
+class ITFLeaf extends AbstractTextBlock implements ITF {
 
-	private final ISkinParam skinParam;
 	private final TextBlock box;
 
-	public ITFLeaf(ISkinParam skinParam, Display label, IdeaShape shape) {
-		this.skinParam = skinParam;
-		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
+	public ITFLeaf(Style style, ISkinParam skinParam, Display label, IdeaShape shape) {
+		// this.skinParam = skinParam;
 
 		if (shape == IdeaShape.BOX) {
-			this.box = new FtileBox(Colors.empty().mute(skinParam), label, font, null, BoxStyle.SDL_TASK);
+			this.box = FtileBox.createWbs(style, skinParam, label);
 		} else {
+			final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 			final TextBlock text = label.create(FontConfiguration.blackBlueTrue(font), HorizontalAlignment.LEFT,
 					skinParam);
 			this.box = TextBlockUtils.withMargin(text, 0, 3, 1, 1);

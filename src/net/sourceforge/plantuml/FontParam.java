@@ -39,7 +39,7 @@ import java.awt.Font;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 interface FontParamConstant {
 	String FAMILY = "SansSerif";
@@ -181,15 +181,15 @@ public enum FontParam {
 		return new FontConfiguration(skinParam, this, null);
 	}
 
-	public StyleDefinition getStyleDefinition() {
+	public StyleSignature getStyleDefinition() {
 		if (this == FOOTER) {
-			return StyleDefinition.of(SName.root, SName.footer);
+			return StyleSignature.of(SName.root, SName.footer);
 		}
 		if (this == HEADER) {
-			return StyleDefinition.of(SName.root, SName.header);
+			return StyleSignature.of(SName.root, SName.header);
 		}
 		if (this == TITLE) {
-			return StyleDefinition.of(SName.root, SName.title);
+			return StyleSignature.of(SName.root, SName.title);
 		}
 		System.err.println("Warning " + this);
 		return null;

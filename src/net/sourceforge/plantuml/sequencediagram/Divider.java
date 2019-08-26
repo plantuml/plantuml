@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
 public class Divider extends AbstractEvent implements Event, WithStyle {
@@ -48,7 +48,7 @@ public class Divider extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
-	public StyleDefinition getDefaultStyleDefinition() {
+	public StyleSignature getDefaultStyleDefinition() {
 		return ComponentType.DIVIDER.getDefaultStyleDefinition();
 	}
 

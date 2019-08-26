@@ -54,9 +54,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
-import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
-import net.sourceforge.plantuml.ugraphic.sprite.SpriteSvg;
+import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.sprite.SpriteImage;
+import net.sourceforge.plantuml.sprite.SpriteSvg;
 
 public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -82,6 +82,10 @@ public class AnnotatedWorker {
 		return (TextBlockBackcolored) result;
 	}
 
+	public boolean hasMainFrame() {
+		return annotated.getMainFrame() != null;
+	}
+
 	public TextBlock addFrame(final TextBlock original) {
 		final Display mainFrame = annotated.getMainFrame();
 		if (mainFrame == null) {
@@ -94,33 +98,37 @@ public class AnnotatedWorker {
 		final double y2 = 10;
 
 		final SymbolContext symbolContext = new SymbolContext(getSkinParam().getBackgroundColor(), HtmlColorUtils.BLACK)
-				.withShadow(getSkinParam().shadowing(null));
+				.withShadow(getSkinParam().shadowing(null) ? 3 : 0);
+		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder);
 		final TextBlock title = mainFrame.create(new FontConfiguration(getSkinParam(), FontParam.CAPTION, null),
 				HorizontalAlignment.CENTER, getSkinParam());
 		final Dimension2D dimTitle = title.calculateDimension(stringBounder);
-		final Dimension2D dimOriginal = original.calculateDimension(stringBounder);
-		final double width = x1 + Math.max(dimOriginal.getWidth(), dimTitle.getWidth()) + x2;
-		final double height = dimTitle.getHeight() + y1 + dimOriginal.getHeight() + y2;
-		final TextBlock result = USymbol.FRAME.asBig(title, HorizontalAlignment.LEFT, TextBlockUtils.empty(0, 0),
-				width, height, symbolContext, skinParam.getStereotypeAlignment());
+		// final Dimension2D dimOriginal = original.calculateDimension(stringBounder);
+		final double width = x1 + Math.max(originalMinMax.getWidth(), dimTitle.getWidth()) + x2;
+		final double height = dimTitle.getHeight() + y1 + originalMinMax.getHeight() + y2;
+		final TextBlock frame = USymbol.FRAME.asBig(title, HorizontalAlignment.LEFT, TextBlockUtils.empty(0, 0), width,
+				height, symbolContext, skinParam.getStereotypeAlignment());
 
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
-				result.drawU(ug);
+				frame.drawU(ug.apply(new UTranslate(originalMinMax.getMinX(), 0)));
 				original.drawU(ug.apply(new UTranslate(x1, y1 + dimTitle.getHeight())));
+				// original.drawU(ug);
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-				return TextBlockUtils.getMinMax(result, stringBounder);
+				return TextBlockUtils.getMinMax(this, stringBounder);
 			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return result.getInnerPosition(member, stringBounder, strategy);
+				final Rectangle2D rect = original.getInnerPosition(member, stringBounder, strategy);
+				return new Rectangle2D.Double(rect.getX() + x1, rect.getY() + y1 + dimTitle.getHeight(),
+						rect.getWidth(), rect.getHeight());
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return result.calculateDimension(stringBounder);
+				return original.calculateDimension(stringBounder);
 			}
 
 			public HtmlColor getBackcolor() {
@@ -158,7 +166,7 @@ public class AnnotatedWorker {
 			return TextBlockUtils.empty(0, 0);
 		}
 		if (SkinParam.USE_STYLES()) {
-			final Style style = StyleDefinition.of(SName.root, SName.caption).getMergedStyle(
+			final Style style = StyleSignature.of(SName.root, SName.caption).getMergedStyle(
 					skinParam.getCurrentStyleBuilder());
 			return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		}
@@ -171,13 +179,18 @@ public class AnnotatedWorker {
 		if (title.isNull()) {
 			return original;
 		}
-		ISkinParam skinParam = getSkinParam();
-		// if (SkinParam.USE_STYLES()) {
-		// throw new UnsupportedOperationException();
-		// }
-		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.TITLE, null);
 
-		final TextBlock block = TextBlockUtils.title(fontConfiguration, title.getDisplay(), skinParam);
+		final TextBlock block;
+		if (SkinParam.USE_STYLES()) {
+			final Style style = StyleSignature.of(SName.root, SName.title).getMergedStyle(
+					skinParam.getCurrentStyleBuilder());
+			block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
+		} else {
+			final ISkinParam skinParam = getSkinParam();
+			final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.TITLE, null);
+			block = TextBlockUtils.title(fontConfiguration, title.getDisplay(), skinParam);
+		}
+
 		return DecorateEntityImage.addTop(original, block, HorizontalAlignment.CENTER);
 	}
 

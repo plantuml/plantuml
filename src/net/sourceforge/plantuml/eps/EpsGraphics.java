@@ -218,10 +218,6 @@ public class EpsGraphics {
 		return dashSpace != 0 && dashVisible != 0;
 	}
 
-	private boolean isDashed4() {
-		return dashSpace == 0 && dashVisible == 0;
-	}
-
 	public void closepathDot() {
 		final boolean dashed = isDashed();
 		append("stroke", true);
@@ -481,15 +477,10 @@ public class EpsGraphics {
 		if (isDashed3()) {
 			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
 		}
-		if (isDashed4() || fill) {
+		// if (isDashed3() || fill) {
 			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
 			simplerectUsed = true;
-			// } else {
-			// epsVLine(y, x, x + width);
-			// epsVLine(y + height, x, x + width);
-			// epsHLine(x, y, y + height);
-			// epsHLine(x + width, y, y + height);
-		}
+		// }
 	}
 
 	public void epsEllipse(double x, double y, double xRadius, double yRadius, double start, double extend) {

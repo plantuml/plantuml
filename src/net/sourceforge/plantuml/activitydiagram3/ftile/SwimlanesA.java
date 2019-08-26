@@ -41,7 +41,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Pragma;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.InstructionList;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -66,7 +65,7 @@ import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
@@ -95,8 +94,8 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock, Styleabl
 	private LinkRendering nextLinkRenderer = LinkRendering.none();
 	private Style style;
 
-	public StyleDefinition getDefaultStyleDefinition() {
-		return StyleDefinition.of(SName.root, SName.element, SName.classDiagram, SName.swimlane);
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.swimlane);
 	}
 
 	public SwimlanesA(ISkinParam skinParam, Pragma pragma) {

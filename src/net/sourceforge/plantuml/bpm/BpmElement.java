@@ -138,7 +138,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 	public TextBlock toTextBlockInternal(ISkinParam skinParam) {
 		if (type == BpmElementType.START) {
-			return new FtileCircleStart(skinParam, HtmlColorUtils.BLACK, null);
+			return new FtileCircleStart(skinParam, HtmlColorUtils.BLACK, null, null);
 		}
 		if (type == BpmElementType.MERGE) {
 			final HtmlColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);
@@ -147,7 +147,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		}
 		if (type == BpmElementType.DOCKED_EVENT) {
 			final UFont font = UFont.serif(14);
-			return new FtileBox(skinParam, display, font, null, BoxStyle.PLAIN);
+			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN);
 		}
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.RED, HtmlColorUtils.RED, false);

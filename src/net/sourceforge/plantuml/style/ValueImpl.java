@@ -61,6 +61,9 @@ public class ValueImpl implements Value {
 	}
 
 	public HtmlColor asColor(IHtmlColorSet set) {
+		if ("none".equalsIgnoreCase(value) || "transparent".equalsIgnoreCase(value)) {
+			return null;
+		}
 		return set.getColorIfValid(value);
 	}
 

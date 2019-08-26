@@ -35,7 +35,11 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import java.awt.geom.Dimension2D;
+
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public enum HorizontalAlignment {
 
@@ -71,6 +75,19 @@ public enum HorizontalAlignment {
 
 	public String getGraphVizValue() {
 		return toString().substring(0, 1).toLowerCase();
+	}
+
+	public void draw(UGraphic ug, TextBlock tb, double padding, Dimension2D dimTotal) {
+		if (this == HorizontalAlignment.LEFT) {
+			tb.drawU(ug.apply(new UTranslate(padding, padding)));
+		} else if (this == HorizontalAlignment.RIGHT) {
+			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
+			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding, padding)));
+		} else if (this == HorizontalAlignment.CENTER) {
+			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
+			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding)));
+		}
+
 	}
 
 }

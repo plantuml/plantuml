@@ -36,9 +36,9 @@ package net.sourceforge.plantuml.tim;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.tim.expression.TValue;
@@ -46,25 +46,29 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public class TMemoryLocal extends ConditionalContexts implements TMemory {
 
 	private final TMemoryGlobal memoryGlobal;
-	private final Map<String, TVariable> overridenVariables = new HashMap<String, TVariable>();
-	private final Map<String, TVariable> localVariables = new HashMap<String, TVariable>();
+	private TrieImpl overridenVariables00;
+	private final Map<String, TVariable> overridenVariables01 = new HashMap<String, TVariable>();
+	private final TrieImpl localVariables00 = new TrieImpl();
+	private final Map<String, TVariable> localVariables01 = new HashMap<String, TVariable>();
 
 	public TMemoryLocal(TMemoryGlobal global, Map<String, TVariable> input) {
 		this.memoryGlobal = global;
-		this.overridenVariables.putAll(input);
+		this.overridenVariables01.putAll(input);
 	}
-	
+
 	public void dumpDebug(String message) {
 		Log.error("[MemLocal] Start of memory_dump " + message);
 		memoryGlobal.dumpMemoryInternal();
-		Log.error("[MemLocal] Number of overriden variable(s) : " + overridenVariables.size());
-		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(overridenVariables).entrySet()) {
+		final TreeMap<String, TVariable> over = new TreeMap<String, TVariable>(overridenVariables01);
+		Log.error("[MemLocal] Number of overriden variable(s) : " + over.size());
+		for (Entry<String, TVariable> ent : over.entrySet()) {
 			final String name = ent.getKey();
 			final TValue value = ent.getValue().getValue();
 			Log.error("[MemLocal] " + name + " = " + value);
 		}
-		Log.error("[MemLocal] Number of local variable(s) : " + localVariables.size());
-		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(localVariables).entrySet()) {
+		final TreeMap<String, TVariable> local = new TreeMap<String, TVariable>(localVariables01);
+		Log.error("[MemLocal] Number of local variable(s) : " + local.size());
+		for (Entry<String, TVariable> ent : local.entrySet()) {
 			final String name = ent.getKey();
 			final TValue value = ent.getValue().getValue();
 			Log.error("[MemLocal] " + name + " = " + value);
@@ -72,35 +76,42 @@ public class TMemoryLocal extends ConditionalContexts implements TMemory {
 		Log.error("[MemGlobal] End of memory_dump");
 	}
 
-
 	public void putVariable(String varname, TVariable value, TVariableScope scope) throws EaterException {
 		if (scope == TVariableScope.GLOBAL) {
 			memoryGlobal.putVariable(varname, value, scope);
 			return;
 		}
-		if (scope == TVariableScope.LOCAL || overridenVariables.containsKey(varname)) {
-			this.overridenVariables.put(varname, value);
+		if (scope == TVariableScope.LOCAL || overridenVariables01.containsKey(varname)) {
+			this.overridenVariables01.put(varname, value);
+			if (this.overridenVariables00 != null) {
+				this.overridenVariables00.add(varname);
+			}
 			Log.info("[MemLocal/overrriden] Setting " + varname);
 		} else if (memoryGlobal.getVariable(varname) != null) {
 			memoryGlobal.putVariable(varname, value, scope);
 		} else {
-			this.localVariables.put(varname, value);
+			this.localVariables01.put(varname, value);
+			this.localVariables00.add(varname);
 			Log.info("[MemLocal/local] Setting " + varname);
 		}
 	}
 
 	public void removeVariable(String varname) {
-		if (overridenVariables.containsKey(varname)) {
-			this.overridenVariables.remove(varname);
+		if (overridenVariables01.containsKey(varname)) {
+			this.overridenVariables01.remove(varname);
+			if (this.overridenVariables00 != null) {
+				this.overridenVariables00.remove(varname);
+			}
 		} else if (memoryGlobal.getVariable(varname) != null) {
 			memoryGlobal.removeVariable(varname);
 		} else {
-			this.localVariables.remove(varname);
+			this.localVariables01.remove(varname);
+			this.localVariables00.remove(varname);
 		}
 	}
 
 	public TVariable getVariable(String varname) {
-		TVariable result = overridenVariables.get(varname);
+		TVariable result = overridenVariables01.get(varname);
 		if (result != null) {
 			return result;
 		}
@@ -108,26 +119,51 @@ public class TMemoryLocal extends ConditionalContexts implements TMemory {
 		if (result != null) {
 			return result;
 		}
-		result = localVariables.get(varname);
+		result = localVariables01.get(varname);
 		return result;
 	}
 
 	public Trie variablesNames3() {
-		final Trie result = new Trie();
-		for (String name : overridenVariables.keySet()) {
-			result.add(name);
+		if (overridenVariables00 == null) {
+			overridenVariables00 = new TrieImpl();
+			for (String name : overridenVariables01.keySet()) {
+				overridenVariables00.add(name);
+			}
 		}
-		for (String name : memoryGlobal.variablesNames()) {
-			result.add(name);
-		}
-		for (String name : localVariables.keySet()) {
-			result.add(name);
-		}
-		return result;
+		return new Trie() {
+			public void add(String s) {
+				throw new UnsupportedOperationException();
+			}
+
+			public String getLonguestMatchStartingIn(String s) {
+				final String s1 = memoryGlobal.variablesNames3().getLonguestMatchStartingIn(s);
+				final String s2 = overridenVariables00.getLonguestMatchStartingIn(s);
+				final String s3 = localVariables00.getLonguestMatchStartingIn(s);
+
+				if (s1.length() >= s2.length() && s1.length() >= s3.length()) {
+					return s1;
+				}
+				if (s2.length() >= s3.length() && s2.length() >= s1.length()) {
+					return s2;
+				}
+				return s3;
+			}
+		};
+		// final Trie result = new TrieImpl();
+		// for (String name : overridenVariables.keySet()) {
+		// result.add(name);
+		// }
+		// for (String name : memoryGlobal.variablesNames()) {
+		// result.add(name);
+		// }
+		// for (String name : localVariables.keySet()) {
+		// result.add(name);
+		// }
+		// return result;
 	}
 
 	public boolean isEmpty() {
-		return memoryGlobal.isEmpty() && localVariables.isEmpty() && overridenVariables.isEmpty();
+		return memoryGlobal.isEmpty() && localVariables01.isEmpty() && overridenVariables01.isEmpty();
 	}
 
 	public Set<String> variablesNames() {

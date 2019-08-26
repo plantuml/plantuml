@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -71,7 +72,9 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 						color().getRegex(), //
 						new RegexLeaf("LEGACYCOLORIGNORED", "(#[0-9a-fA-F]{6}|#?\\w+)?")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\\{?"),
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{?"), //
 				RegexLeaf.end());
 	}
 
@@ -91,12 +94,10 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 		if (colors.isEmpty() == false) {
 			p.setColors(colors);
 		}
+		if (arg.get("STEREOTYPE", 0) != null) {
+			p.setStereotype(new Stereotype(arg.get("STEREOTYPE", 0)));
+		}
 
-		// final String color = arg.get("COLOR", 0);
-		// if (color != null) {
-		// p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
-		// }
 		return CommandExecutionResult.ok();
 	}
 

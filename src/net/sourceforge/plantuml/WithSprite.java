@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
+import net.sourceforge.plantuml.sprite.Sprite;
 
 public interface WithSprite extends Diagram {
 

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -63,6 +64,10 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -77,6 +82,10 @@ public class FtileWithNotes extends AbstractFtile {
 	private TextBlock right;
 
 	private final double suppSpace = 20;
+
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	}
 
 	public Set<Swimlane> getSwimlanes() {
 		return tile.getSwimlanes();
@@ -96,12 +105,30 @@ public class FtileWithNotes extends AbstractFtile {
 
 		final Rose rose = new Rose();
 
-		final HtmlColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-		final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-
-		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
-
 		for (PositionedNote note : notes) {
+			ISkinParam skinParam2 = skinParam;
+			if (note.getColors() != null) {
+				skinParam2 = note.getColors().mute(skinParam2);
+			}
+			final HtmlColor noteBackgroundColor;
+			final HtmlColor borderColor;
+			final FontConfiguration fc;
+			final double shadowing;
+
+			if (SkinParam.USE_STYLES()) {
+				final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
+						.eventuallyOverride(note.getColors());
+				noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+				borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+				fc = style.getFontConfiguration(getIHtmlColorSet());
+				shadowing = style.value(PName.Shadowing).asDouble();
+			} else {
+				noteBackgroundColor = rose.getHtmlColor(skinParam2, ColorParam.noteBackground);
+				borderColor = rose.getHtmlColor(skinParam2, ColorParam.noteBorder);
+				fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+				shadowing = skinParam.shadowing(null) ? 4 : 0;
+			}
+
 			final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
 			final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
@@ -116,7 +143,7 @@ public class FtileWithNotes extends AbstractFtile {
 				}
 			}, new UStroke());
 
-			final Opale opale = new Opale(borderColor, noteBackgroundColor, sheet2, skinParam.shadowing(null), false);
+			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet2, false);
 			final TextBlock opaleMarged = TextBlockUtils.withMargin(opale, 10, 10);
 			if (note.getNotePosition() == NotePosition.LEFT) {
 				if (left == null) {

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -76,7 +75,7 @@ public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 		if (SkinParam.USE_STYLES()) {
 			defaultAlign = FontParam.FOOTER.getStyleDefinition()
 					.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
-					.value(PName.HorizontalAlignment).asHorizontalAlignment();
+					.getHorizontalAlignment();
 		}
 		diagram.getFooter().putDisplay(Display.getWithNewlines(arg.get("LABEL", 0)),
 				HorizontalAlignment.fromString(align, defaultAlign));

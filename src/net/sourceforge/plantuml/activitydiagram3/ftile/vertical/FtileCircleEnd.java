@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -47,6 +48,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -61,16 +64,24 @@ public class FtileCircleEnd extends AbstractFtile {
 
 	private final HtmlColor backColor;
 	private final Swimlane swimlane;
+	private double shadowing;
 
 	@Override
 	public Collection<Ftile> getMyChildren() {
 		return Collections.emptyList();
 	}
 
-	public FtileCircleEnd(ISkinParam skinParam, HtmlColor backColor, Swimlane swimlane) {
+	public FtileCircleEnd(ISkinParam skinParam, HtmlColor backColor, Swimlane swimlane, Style style) {
 		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;
+		if (SkinParam.USE_STYLES()) {
+			this.shadowing = style.value(PName.Shadowing).asDouble();
+		} else {
+			if (skinParam().shadowing(null)) {
+				this.shadowing = 3;
+			}
+		}
 	}
 
 	public Set<Swimlane> getSwimlanes() {
@@ -95,9 +106,7 @@ public class FtileCircleEnd extends AbstractFtile {
 		yTheoricalPosition = Math.round(yTheoricalPosition);
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (skinParam().shadowing(null)) {
-			circle.setDeltaShadow(3);
-		}
+		circle.setDeltaShadow(shadowing);
 		ug = ug.apply(new UChangeColor(backColor));
 		final double thickness = 2.5;
 		ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UStroke(1.5))

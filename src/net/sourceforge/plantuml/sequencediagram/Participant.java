@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
 public class Participant implements SpecificBackcolorable, WithStyle {
@@ -70,18 +70,19 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	private final int order;
 	private final StyleBuilder styleBuilder;
 
-	private Style style;
+	// private Style style;
 
-	public StyleDefinition getDefaultStyleDefinition() {
+	public StyleSignature getDefaultStyleDefinition() {
 		return type.getDefaultStyleDefinition();
 	}
 
 	public Style[] getUsedStyles() {
-		Style tmp = style;
-		if (tmp != null) {
-			tmp = tmp.eventuallyOverride(getColors(null));
+		if (SkinParam.USE_STYLES() == false) {
+			return null;
 		}
-		Style stereo = getDefaultStyleDefinition().with(stereotype).getMergedStyle(styleBuilder);
+		Style tmp = getDefaultStyleDefinition().with(stereotype).getMergedStyle(styleBuilder)
+				.eventuallyOverride(getColors(null));
+		Style stereo = getDefaultStyleDefinition().withStereotype(stereotype).getMergedStyle(styleBuilder);
 		if (tmp != null) {
 			stereo = tmp.mergeWith(stereo);
 		}
@@ -105,9 +106,9 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		this.code = code;
 		this.type = type;
 		this.display = display;
-		if (SkinParam.USE_STYLES()) {
-			this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
-		}
+		// if (SkinParam.USE_STYLES()) {
+		// this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		// }
 	}
 
 	public String getCode() {
@@ -145,11 +146,11 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		this.stereotype = stereotype;
 		this.stereotypePositionTop = stereotypePositionTop;
 
-		if (SkinParam.USE_STYLES()) {
-			for (Style style : stereotype.getStyles(styleBuilder)) {
-				this.style = this.style.mergeWith(style);
-			}
-		}
+		// if (SkinParam.USE_STYLES()) {
+		// for (Style style : stereotype.getStyles(styleBuilder)) {
+		// this.style = this.style.mergeWith(style);
+		// }
+		// }
 	}
 
 	public final int getInitialLife() {

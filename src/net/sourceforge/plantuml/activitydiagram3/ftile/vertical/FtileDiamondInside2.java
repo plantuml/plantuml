@@ -41,6 +41,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -49,6 +50,10 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -64,6 +69,7 @@ public class FtileDiamondInside2 extends AbstractFtile {
 	private final TextBlock east;
 	private final TextBlock north;
 	private final TextBlock south;
+	private final double shadowing;
 
 	public FtileDiamondInside2(ISkinParam skinParam, HtmlColor backColor, HtmlColor borderColor, Swimlane swimlane,
 			TextBlock label) {
@@ -86,10 +92,20 @@ public class FtileDiamondInside2 extends AbstractFtile {
 	public FtileDiamondInside2 withSouth(TextBlock south) {
 		return new FtileDiamondInside2(skinParam(), backColor, borderColor, swimlane, label, north, south, west, east);
 	}
+	
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	}
 
 	private FtileDiamondInside2(ISkinParam skinParam, HtmlColor backColor, HtmlColor borderColor, Swimlane swimlane,
 			TextBlock label, TextBlock north, TextBlock south, TextBlock west, TextBlock east) {
 		super(skinParam);
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			this.shadowing = style.value(PName.Shadowing).asDouble();
+		} else {
+			this.shadowing = skinParam().shadowing(null) ? 3 : 0;
+		}
 		this.backColor = backColor;
 		this.swimlane = swimlane;
 		this.borderColor = borderColor;
@@ -120,7 +136,7 @@ public class FtileDiamondInside2 extends AbstractFtile {
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimensionAlone(stringBounder);
 		ug = ug.apply(new UChangeColor(borderColor)).apply(getThickness()).apply(new UChangeBackColor(backColor));
-		ug.draw(Diamond.asPolygon(skinParam().shadowing(null), dimTotal.getWidth(), dimTotal.getHeight()));
+		ug.draw(Diamond.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
 
 		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
 		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));

@@ -61,25 +61,25 @@ public class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label) {
 
-		final Dimension2D dimSuper = super.createParallel(swimlane, all, style, label).calculateDimension(getStringBounder());
+		final Dimension2D dimSuper = super.createParallel(all, style, label).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
 
 		final List<Ftile> list = new ArrayList<Ftile>();
 		for (Ftile tmp : all) {
 			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
 		}
-		final Ftile inner = super.createParallel(swimlane, list, style, label);
+		final Ftile inner = super.createParallel(list, style, label);
 
-		ParallelFtilesBuilder builder;
+		AbstractParallelFtilesBuilder builder;
 
 		if (style == ForkStyle.SPLIT) {
-			builder = new ParallelBuilderSplit2(skinParam(), getStringBounder(), list, inner, swimlane);
+			builder = new ParallelBuilderSplit(skinParam(), getStringBounder(), list, inner);
 		} else if (style == ForkStyle.MERGE) {
-			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), list, inner, swimlane);
+			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), list, inner);
 		} else if (style == ForkStyle.FORK) {
-			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), list, inner, swimlane, label);
+			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), list, inner, label);
 		} else {
 			throw new IllegalStateException();
 		}

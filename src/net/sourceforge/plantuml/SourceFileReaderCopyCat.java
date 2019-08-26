@@ -37,30 +37,47 @@ package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
-public class SourceFileReader2 extends SourceFileReaderAbstract implements ISourceFileReader {
+public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
 
-	public SourceFileReader2(Defines defines, final File file, File outputFile, List<String> config, String charset,
-			FileFormatOption fileFormatOption) throws IOException {
+	public SourceFileReaderCopyCat(Defines defines, final File file, File outputDirectory, List<String> config,
+			String charset, FileFormatOption fileFormatOption) throws IOException {
 		this.file = file;
 		this.fileFormatOption = fileFormatOption;
-		this.outputFile = outputFile;
 		if (file.exists() == false) {
 			throw new IllegalArgumentException();
 		}
-		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());
-
+		final String path = file.getParentFile().getPath();
+		// System.err.println("SourceFileReaderCopyCat::path=" + path);
+		// System.err.println("SourceFileReaderCopyCat::outputDirectory=" + outputDirectory);
+		this.outputDirectory = new File(outputDirectory, path).getAbsoluteFile();
+		if (outputDirectory.exists() == false) {
+			outputDirectory.mkdirs();
+		}
+		// System.err.println("SourceFileReaderCopyCat=" + this.outputDirectory.getPath() + " "
+		// + this.outputDirectory.getAbsolutePath());
 		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
 				.getParentFile(), FileWithSuffix.getFileName(file));
 	}
 
 	@Override
 	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
-		final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());
+		final String newName = blockUml.getFileOrDirname();
+		SuggestedFile suggested = null;
+		if (newName == null) {
+			suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, file.getName()),
+					fileFormatOption.getFileFormat(), cpt++);
+		} else {
+			suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
+					fileFormatOption.getFileFormat(), cpt++);
+		}
+		// System.err.println("SourceFileReaderCopyCat::suggested=" + suggested);
+		suggested.getParentFile().mkdirs();
 		return suggested;
 	}
 

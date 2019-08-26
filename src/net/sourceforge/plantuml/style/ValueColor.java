@@ -41,13 +41,20 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 public class ValueColor extends ValueAbstract {
 
 	private final HtmlColor color;
+	private final int priority;
 
-	public ValueColor(HtmlColor color) {
+	public ValueColor(HtmlColor color, int priority) {
 		this.color = color;
+		this.priority = priority;
 	}
 
 	public HtmlColor asColor(IHtmlColorSet set) {
 		return color;
+	}
+
+	@Override
+	public int getPriority() {
+		return priority;
 	}
 
 }

@@ -50,10 +50,10 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 
 	private final IEntityImage im;
 	private final HtmlColor borderColor;
-	private final boolean shadowing;
+	private final double shadowing;
 	private final HtmlColor backColor;
 
-	public InnerActivity(final IEntityImage im, HtmlColor borderColor, HtmlColor backColor, boolean shadowing) {
+	public InnerActivity(final IEntityImage im, HtmlColor borderColor, HtmlColor backColor, double shadowing) {
 		this.im = im;
 		this.backColor = backColor;
 		this.borderColor = borderColor;
@@ -69,9 +69,7 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 				.apply(new UStroke(THICKNESS_BORDER));
 		final URectangle rect = new URectangle(total.getWidth(), total.getHeight(), IEntityImage.CORNER,
 				IEntityImage.CORNER);
-		if (shadowing) {
-			rect.setDeltaShadow(4);
-		}
+		rect.setDeltaShadow(shadowing);
 		ug.draw(rect);
 		ug = ug.apply(new UStroke());
 		im.drawU(ug);

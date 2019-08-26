@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -54,6 +55,10 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -126,25 +131,42 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 		final HtmlColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(getColorParamBack(symbol),
 				stereotype, false);
-		final HtmlColor backColor;
+		HtmlColor backColor;
 		if (backColorInSkinparam == null) {
 			backColor = colors.getColor(ColorType.BACK);
 		} else {
 			backColor = backColorInSkinparam;
 		}
-		final HtmlColor titleColor = colors.getColor(ColorType.HEADER);
+		HtmlColor titleColor = colors.getColor(ColorType.HEADER);
 
 		// Warning : titleColor unused in FTileGroupW
 		HtmlColor borderColor = diagram.getSkinParam().getHtmlColor(getColorParamBorder(symbol), stereotype, false);
 		if (borderColor == null) {
 			borderColor = HtmlColorUtils.BLACK;
 		}
-		final double roundCorner = symbol.getSkinParameter().getRoundCorner(diagram.getSkinParam(), stereotype);
+		double roundCorner = symbol.getSkinParameter().getRoundCorner(diagram.getSkinParam(), stereotype);
+
+		if (SkinParam.USE_STYLES()) {
+			final Style stylePartition = getDefaultStyleDefinitionPartition().getMergedStyle(
+					diagram.getSkinParam().getCurrentStyleBuilder());
+			borderColor = stylePartition.value(PName.LineColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
+			backColor = colors.getColor(ColorType.BACK);
+			if (backColor == null) {
+				backColor = stylePartition.value(PName.BackGroundColor).asColor(
+						diagram.getSkinParam().getIHtmlColorSet());
+			}
+			titleColor = HtmlColorUtils.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
+			roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
+		}
 
 		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor, borderColor, symbol,
 				roundCorner);
 
 		return CommandExecutionResult.ok();
+	}
+
+	final public StyleSignature getDefaultStyleDefinitionPartition() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}
 
 }

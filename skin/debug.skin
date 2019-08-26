@@ -1,4 +1,4 @@
-style root {
+root {
   FontName SansSerif
   HyperLinkColor red
   FontColor green
@@ -13,57 +13,57 @@ style root {
   Shadowing 0.0
 }
 
-style stereotype {
+stereotype {
   FontColor blue
   FontSize 8
   FontStyle bold
 }
 
-style title {
+title {
   HorizontalAlignment right
   FontSize 24
   FontColor blue
 }
 
-style header {
+header {
   HorizontalAlignment center
   FontSize 26
   FontColor purple
 }
 
-style footer {
+footer {
   HorizontalAlignment left
   FontSize 28
   FontColor red
 }
 
-style legend {
+legend {
   FontSize 30
   BackGroundColor yellow
   Margin 30
   Padding 50
 }
 
-style caption {
+caption {
   FontSize 32
 }
 
 
-style element {
+element {
   BackGroundColor #CEFEFE
 }
 
-style sequenceDiagram {
+sequenceDiagram {
 }
 
-style classDiagram {
+classDiagram {
 }
 
-style activityDiagram {
+activityDiagram {
 }
 
 
-style group {
+group {
   LineThickness 3.5
   BackGroundColor MistyRose
   LineColor DarkOrange
@@ -73,7 +73,7 @@ style group {
   FontColor red
 }
 
-style groupHeader {
+groupHeader {
   BackGroundColor tan
   LineThickness 0.5
   LineColor yellow
@@ -83,15 +83,15 @@ style groupHeader {
   FontColor blue
 }
 
-style lifeLine {
+lifeLine {
   BackGroundColor gold
 }
 
-style destroy {
+destroy {
   LineColor red
 }
 
-style reference {
+reference {
   LineColor red
   FontSize 10
   FontStyle bold
@@ -100,7 +100,7 @@ style reference {
   HorizontalAlignment right
 }
 
-style box {
+box {
   LineThickness 0.1
   LineColor FireBrick
   BackGroundColor PowderBlue
@@ -110,7 +110,7 @@ style box {
   FontColor Maroon
 }
 
-style separator {
+separator {
   LineColor red
   BackGroundColor green
   
@@ -119,51 +119,103 @@ style separator {
   FontColor white
 }
 
-style delay {
+delay {
   FontSize 22
   FontStyle italic
 }
 
-style participant {
+participant {
   LineThickness 2.5
 }
 
-style actor {
+actor {
   LineThickness 0.5
 }
 
-style boundary {
+boundary {
   LineThickness 1.5
 }
 
-style control {
+control {
   LineThickness 1.5
 }
 
-style entity {
+entity {
   LineThickness 1.5
 }
 
-style queue {
+queue {
   LineThickness 1.5
 }
 
-style database {
+database {
   LineThickness 1.5
 }
 
-style collections {
+collections {
   LineThickness 1.5
 }
 
-style message {
+arrow {
+  FontSize 13
+  LineColor Lime
 }
 
-style note {
+note {
   BackGroundColor GoldenRod
 }
 
-style swimlane {
+diamond {
+}
+
+swimlane {
+}
+
+activity {
+  BackgroundColor #33668E
+  BorderColor #33668E
+  FontColor #888
+  FontName arial
 }
 
 
+activityDiagram {
+	diamond {
+	  BackgroundColor #dae4f1
+	  BorderColor #33668E
+	  FontColor red
+	  FontName arial
+	  FontSize 5
+	}
+	arrow {
+	  FontColor gold
+	  FontName arial
+	  FontSize 15
+	}
+	partition {
+	  LineColor red
+	  FontColor green
+	  RoundCorner 30
+	  BackColor PeachPuff
+	}
+	note {
+	  FontColor Blue
+	  LineColor yellow
+	}
+}
+
+circle {
+  LineColor yellow
+}
+
+activityBar {
+  LineColor lightGreen
+}
+
+mindmapDiagram {
+    Padding 10
+    Margin 10
+}
+
+node {
+}

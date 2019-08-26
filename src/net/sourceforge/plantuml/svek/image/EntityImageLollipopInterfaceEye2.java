@@ -94,7 +94,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		// backcolor = HtmlColorUtils.BLUE;
 		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBorder());
 		this.ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
-				getSkinParam().shadowing(getEntity().getStereotype()));
+				getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);
 
 		if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {

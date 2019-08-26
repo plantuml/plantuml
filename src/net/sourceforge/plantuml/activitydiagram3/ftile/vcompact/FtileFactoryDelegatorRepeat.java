@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -57,9 +58,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -77,16 +79,32 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
-		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(),
-				ColorParam.activityDiamondBackground) : color;
-		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
+		final HtmlColor borderColor;
+		final HtmlColor backColor;
+		final Rainbow arrowColor;
+		final FontConfiguration fcDiamond;
+		final FontConfiguration fcArrow;
+		if (SkinParam.USE_STYLES()) {
+			final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(
+					skinParam().getCurrentStyleBuilder());
+			final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(
+					skinParam().getCurrentStyleBuilder());
+			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
+			backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
+			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
+			fcDiamond = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());
+			fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
+		} else {
+			borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
+			backColor = color == null ? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
+					: color;
+			arrowColor = Rainbow.build(skinParam());
+			fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
+			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		}
 
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();
 		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();
-
-		final FontConfiguration fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
-		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 
 		final Ftile backStart = Display.isNull(startLabel) ? null : this.activity(startLabel, swimlane, BoxStyle.PLAIN,
 				Colors.empty());

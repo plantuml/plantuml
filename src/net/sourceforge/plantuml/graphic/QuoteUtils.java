@@ -35,7 +35,9 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class QuoteUtils {
@@ -315,13 +317,31 @@ public class QuoteUtils {
 					"Whfg zragnyyl gubhtu... ner lbh bxnl ?", "Jr xabj fur'f bxnl orpnhfr fur'f oybaq",
 					"Gh oyhssrf Znegbav", "Lbh thlf ner trggvat cnvq?",
 					"Gurer'f n erq guvatl zbivat gbjneqf gur terra guvatl... V guvax jr'er gur terra guvatl",
-					"Nyy flfgrzf ner shapgvbavat Pbzznaqre");
+					"Nyy flfgrzf ner shapgvbavat Pbzznaqre", "V erzrzore gung fbhaq! Gung'f n onq fbhaq!",
+					"V xabj vg'f uneq sbe lbh gb haqrefgnaq rira fubeg fragraprf",
+					"Gur havirefr vf shyy bs vagryyvtrag yvsr. Vg'f whfg orra gbb vagryyvtrag gb pbzr urer.",
+					"Uryyb, jbhyq lbh yvxr gb urne n GPC wbxr ?",
+					"Rirel snvel gnyr arrqf n tbbq byq-snfuvbarq ivyynva",
+					"Fvapr gurer'f ab pbapyhfvba gb gur cnenqbk gurbel, gurer'f ab jnl gb cebir gurer'f ab cnenqbk.",
+					"Gnxr zr guebhtu gur qnexarff gb gur oernx bs gur qnl",
+					"Vg znxrf gur gehgu rira zber vapbzcerurafvoyr orpnhfr rirelguvat vf arj",
+					"V qba'g xabj ubj ohg V fhqqrayl ybfr pbageby", "Gurer ner zbzragf jura V guvax V'z tbvat penml");
 
 	private QuoteUtils() {
 	}
 
+	static private final List<String> tmp = new ArrayList<String>();
+
 	public static String getSomeQuote() {
-		final int v = (int) (System.currentTimeMillis() / 1000L);
-		return quotes.get(v % quotes.size());
+		synchronized (tmp) {
+			if (tmp.size() == 0) {
+				tmp.addAll(quotes);
+				Collections.shuffle(tmp);
+			}
+			final int size = tmp.size();
+			final String result = tmp.get(size - 1);
+			tmp.remove(size - 1);
+			return result;
+		}
 	}
 }

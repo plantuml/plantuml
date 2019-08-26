@@ -39,6 +39,7 @@ import java.awt.font.LineMetrics;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -62,10 +63,10 @@ import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
+import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class AtomText extends AbstractAtom implements Atom {
@@ -335,6 +336,53 @@ public class AtomText extends AbstractAtom implements Atom {
 
 	@Override
 	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
+		final StringBuilder tmp = new StringBuilder();
+		for (String token : splitted()) {
+			if (tmp.length() > 0 && getWidth(stringBounder, tmp.toString() + token) > width) {
+				final Atom part1 = new AtomText(tmp.toString(), fontConfiguration, url, marginLeft, marginRight);
+				String remain = text.substring(tmp.length());
+				while (remain.startsWith(" ")) {
+					remain = remain.substring(1);
+				}
+
+				final Atom part2 = new AtomText(remain, fontConfiguration, url, marginLeft, marginRight);
+				return Arrays.asList(part1, part2);
+			}
+			tmp.append(token);
+		}
+		return Collections.singletonList((Atom) this);
+	}
+
+	private Collection<String> splitted() {
+		final List<String> result = new ArrayList<String>();
+		for (int i = 0; i < text.length(); i++) {
+			final char ch = text.charAt(i);
+			if (Character.isLetter(ch)) {
+				final StringBuilder tmp = new StringBuilder();
+				tmp.append(ch);
+				while (i + 1 < text.length() && Character.isLetter(text.charAt(i + 1))) {
+					i++;
+					tmp.append(text.charAt(i));
+				}
+				result.add(tmp.toString());
+			} else {
+				result.add("" + text.charAt(i));
+			}
+		}
+		return result;
+	}
+
+	private Collection<String> splittedOld() {
+		final List<String> result = new ArrayList<String>();
+		final StringTokenizer st = new StringTokenizer(text, " ", true);
+		while (st.hasMoreTokens()) {
+			final String token = st.nextToken();
+			result.add(token);
+		}
+		return result;
+	}
+
+	private List<Atom> splitInTwoOld(StringBounder stringBounder, double width) {
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder tmp = new StringBuilder();
 		while (st.hasMoreTokens()) {
@@ -356,27 +404,6 @@ public class AtomText extends AbstractAtom implements Atom {
 
 	private List<String> splitLong1(StringBounder stringBounder, double maxWidth, String add) {
 		return Arrays.asList(add);
-	}
-
-	private List<String> splitLong2(StringBounder stringBounder, double maxWidth, String add) {
-		final List<String> result = new ArrayList<String>();
-		if (getWidth(stringBounder, add) <= maxWidth) {
-			result.add(add);
-			return result;
-		}
-		final StringBuilder current = new StringBuilder();
-		for (int i = 0; i < add.length(); i++) {
-			final char c = add.charAt(i);
-			if (getWidth(stringBounder, current.toString() + c) > maxWidth) {
-				result.add(current.toString());
-				current.setLength(0);
-			}
-			current.append(c);
-		}
-		if (current.length() > 0) {
-			result.add(current.toString());
-		}
-		return result;
 	}
 
 	public final String getText() {

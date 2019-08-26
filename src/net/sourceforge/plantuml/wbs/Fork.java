@@ -47,13 +47,16 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class Fork2 extends WBSTextBlock {
+class Fork extends WBSTextBlock {
 
 	private final TextBlock main;
 	private final List<ITF> right = new ArrayList<ITF>();
 
-	public Fork2(ISkinParam skinParam, WElement idea) {
-		super(skinParam);
+	public Fork(ISkinParam skinParam, WElement idea) {
+		super(skinParam, idea.getStyleBuilder(), idea.getLevel());
+		if (idea.getLevel() != 0) {
+			throw new IllegalArgumentException();
+		}
 		this.main = buildMain(idea);
 		for (WElement child : idea.getChildren(Direction.RIGHT)) {
 			this.right.add(ITFComposed.build2(skinParam, child));
@@ -73,6 +76,9 @@ public class Fork2 extends WBSTextBlock {
 				+ deltay / 2);
 		double x = 0;
 		final double y = mainDim.getHeight() + deltay;
+		if (right.size() == 0) {
+			return;
+		}
 		final double firstX = right.get(0).getT1(stringBounder).getX();
 		double lastX = firstX;
 		for (ITF child : right) {

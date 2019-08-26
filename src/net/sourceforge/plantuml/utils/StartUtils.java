@@ -122,7 +122,7 @@ public class StartUtils {
 		return s2.equals("!exit");
 	}
 
-	private static final Pattern2 append = MyPattern.cmpile("^\\W*[@\\\\]append");
+	private static final Pattern2 append = MyPattern.cmpile("^\\W*[@\\\\](append|a)\\b");
 
 	public static StringLocated getPossibleAppend(StringLocated cs) {
 		final String s = cs.getString();

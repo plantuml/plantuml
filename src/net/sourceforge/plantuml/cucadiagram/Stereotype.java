@@ -58,12 +58,12 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.sprite.SpriteUtils;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
-import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Stereotype implements CharSequence {
 	private final static RegexComposed circleChar = new RegexConcat( //

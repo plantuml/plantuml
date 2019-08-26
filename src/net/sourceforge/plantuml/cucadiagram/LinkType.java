@@ -50,6 +50,23 @@ public class LinkType {
 		return decor1 != LinkDecor.NONE && decor2 != LinkDecor.NONE;
 	}
 
+	public boolean looksLikeRevertedForSvg() {
+		if (this.decor1 == LinkDecor.NONE && this.decor2 != LinkDecor.NONE) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean looksLikeNoDecorAtAllSvg() {
+		if (this.decor1 == LinkDecor.NONE && this.decor2 == LinkDecor.NONE) {
+			return true;
+		}
+		if (this.decor1 != LinkDecor.NONE && this.decor2 != LinkDecor.NONE) {
+			return true;
+		}
+		return false;
+	}
+
 	public LinkType(LinkDecor decor1, LinkDecor decor2) {
 		this(LinkHat.NONE, decor1, decor2, LinkHat.NONE);
 	}
@@ -99,18 +116,6 @@ public class LinkType {
 		this.hat2 = hat2;
 	}
 
-	// private boolean isDashed() {
-	// return style == LinkStyle.DASHED;
-	// }
-	//
-	// private boolean isDotted() {
-	// return style == LinkStyle.DOTTED;
-	// }
-	//
-	// private boolean isBold() {
-	// return style == LinkStyle.BOLD;
-	// }
-
 	public boolean isInvisible() {
 		return style.isInvisible();
 	}
@@ -130,14 +135,6 @@ public class LinkType {
 	public LinkType goBold() {
 		return new LinkType(hat1, decor1, LinkStyle.BOLD(), middleDecor, decor2, hat2);
 	}
-
-	// public LinkType getInterfaceProvider() {
-	// return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_PROVIDER, middleDecor, decor2, hat2);
-	// }
-	//
-	// public LinkType getInterfaceUser() {
-	// return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_USER, middleDecor, decor2, hat2);
-	// }
 
 	public LinkType getInversed() {
 		return new LinkType(hat2, decor2, style, middleDecor, decor1, hat1);

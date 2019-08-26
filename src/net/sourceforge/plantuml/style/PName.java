@@ -47,9 +47,11 @@ public enum PName {
 	DiagonalCorner, //
 	HyperLinkColor, //
 	LineColor, //
-	BorderStyle, //
+	LineStyle, //
 	Padding, //
 	Margin, //
+	MaximumWidth, //
+	MinimumWidth, //
 	ExportedName, //
 	Image, //
 	HorizontalAlignment, //

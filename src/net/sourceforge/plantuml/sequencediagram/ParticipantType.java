@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public enum ParticipantType implements Styleable {
 	PARTICIPANT(ColorParam.participantBackground), //
@@ -60,37 +60,37 @@ public enum ParticipantType implements Styleable {
 		return background;
 	}
 
-	public StyleDefinition getDefaultStyleDefinition() {
+	public StyleSignature getDefaultStyleDefinition() {
 		if (this == PARTICIPANT) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.participant);
 		}
 		if (this == ACTOR) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.actor);
 		}
 		if (this == BOUNDARY) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.boundary);
 		}
 		if (this == CONTROL) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.control);
 		}
 		if (this == ENTITY) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.entity);
 		}
 		if (this == QUEUE) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.queue);
 		}
 		if (this == DATABASE) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.database);
 		}
 		if (this == COLLECTIONS) {
-			return StyleDefinition.of(SName.root, SName.element,
+			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.collections);
 		}
 		return null;

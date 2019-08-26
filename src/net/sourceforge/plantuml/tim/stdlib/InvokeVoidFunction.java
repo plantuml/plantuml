@@ -61,7 +61,7 @@ public class InvokeVoidFunction implements TFunction {
 
 	public void executeVoid(TContext context, TMemory memory, String s) throws EaterException {
 		final EaterFunctionCall call = new EaterFunctionCall(s, false, isUnquoted());
-		call.execute(context, memory);
+		call.execute((TContext) context, memory);
 		final List<TValue> values = call.getValues();
 		final String fname = values.get(0).toString();
 		final List<TValue> args = values.subList(1, values.size());

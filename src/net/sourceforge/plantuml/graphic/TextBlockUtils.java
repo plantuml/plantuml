@@ -76,9 +76,9 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock title(FontConfiguration font, Display stringsToDisplay, ISkinParam skinParam) {
-		// if (SkinParam.USE_STYLES()) {
-		// throw new UnsupportedOperationException();
-		// }
+		if (SkinParam.USE_STYLES()) {
+			throw new UnsupportedOperationException();
+		}
 		UStroke stroke = skinParam.getThickness(LineParam.titleBorder, null);
 		final Rose rose = new Rose();
 		HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.titleBorder);

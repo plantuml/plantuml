@@ -94,7 +94,6 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -659,8 +658,7 @@ public class Line implements Moveable, Hideable {
 		if (opale) {
 			return;
 		}
-		ug.draw(new UComment("link " + link.getEntity1().getCode().getFullName() + " to "
-				+ link.getEntity2().getCode().getFullName()));
+		ug.draw(link.commentForSvg());
 		double x = 0;
 		double y = 0;
 		final Url url = link.getUrl();
@@ -731,9 +729,9 @@ public class Line implements Moveable, Hideable {
 
 		}
 
-		final String comment = link.getEntity1().getCode().getFullName() + "-"
-				+ link.getEntity2().getCode().getFullName();
-		todraw.setComment(uniq(ids, comment));
+		final String comment = link.idCommentForSvg();
+		final String tmp = uniq(ids, comment);
+		todraw.setComment(tmp);
 
 		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors(), stroke);
 

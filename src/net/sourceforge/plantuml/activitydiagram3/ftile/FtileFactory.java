@@ -90,7 +90,7 @@ public interface FtileFactory {
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest);
 
-	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label);
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label);
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
 			HtmlColor borderColor, USymbol type, double roundCorner);

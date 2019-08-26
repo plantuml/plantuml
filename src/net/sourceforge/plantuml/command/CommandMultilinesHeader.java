@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -70,7 +69,7 @@ public class CommandMultilinesHeader extends CommandMultilines<TitledDiagram> {
 			if (SkinParam.USE_STYLES()) {
 				defaultAlign = FontParam.HEADER.getStyleDefinition()
 						.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
-						.value(PName.HorizontalAlignment).asHorizontalAlignment();
+						.getHorizontalAlignment();
 			}
 			diagram.getHeader().putDisplay(strings, HorizontalAlignment.fromString(align, defaultAlign));
 			return CommandExecutionResult.ok();

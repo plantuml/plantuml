@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
@@ -66,6 +67,10 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Line;
 import net.sourceforge.plantuml.svek.Shape;
@@ -82,6 +87,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private final HtmlColor noteBackgroundColor;
 	private final HtmlColor borderColor;
+	private final double shadowing;
 	private final int marginX1 = 6;
 	private final int marginX2 = 15;
 	private final int marginY = 5;
@@ -99,15 +105,24 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 		final Rose rose = new Rose();
 
-		if (entity.getColors(getSkinParam()).getColor(ColorType.BACK) == null) {
-			noteBackgroundColor = rose.getHtmlColor(getSkinParam(), ColorParam.noteBackground);
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			if (entity.getColors(getSkinParam()).getColor(ColorType.BACK) == null) {
+				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			} else {
+				this.noteBackgroundColor = entity.getColors(getSkinParam()).getColor(ColorType.BACK);
+			}
+			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			this.shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
-			noteBackgroundColor = entity.getColors(getSkinParam()).getColor(ColorType.BACK);
+			this.shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
+			if (entity.getColors(getSkinParam()).getColor(ColorType.BACK) == null) {
+				this.noteBackgroundColor = rose.getHtmlColor(getSkinParam(), ColorParam.noteBackground);
+			} else {
+				this.noteBackgroundColor = entity.getColors(getSkinParam()).getColor(ColorType.BACK);
+			}
+			this.borderColor = SkinParamUtils.getColor(getSkinParam(), null, ColorParam.noteBorder);
 		}
-		// this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-		this.borderColor = SkinParamUtils.getColor(getSkinParam(), null, ColorParam.noteBorder);
-		// final HtmlColor fontColor = rose.getFontColor(getSkinParam(), FontParam.NOTE);
-		// final UFont fontNote = getSkinParam().getFont(FontParam.NOTE, null, false);
 
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
@@ -181,6 +196,10 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return new Dimension2DDouble(width, height);
 	}
 
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	}
+
 	final public void drawU(UGraphic ug) {
 		final Url url = getEntity().getUrl99();
 		if (url != null) {
@@ -209,7 +228,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			final Point2D newRefpp2 = move(pp2, shape.getMinX(), shape.getMinY());
 			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -shape.getMinX(),
 					-shape.getMinY());
-			final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(getEntity().getStereotype()), true);
+			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
 			opale.setRoundCorner(getRoundCorner());
 			opale.setOpale(strategy, pp1, projection);
 			final UGraphic stroked = applyStroke(ug2);

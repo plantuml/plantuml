@@ -122,17 +122,18 @@ public class FtileDiamondInside3 extends AbstractFtile implements FtileOverpassi
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimensionAlone(stringBounder);
 		ug = ug.apply(new UChangeColor(borderColor)).apply(getThickness()).apply(new UChangeBackColor(backColor));
-		ug.draw(Diamond.asPolygon(skinParam().shadowing(null), dimTotal.getWidth(), dimTotal.getHeight()));
+		final double shadowing = skinParam().shadowing(null) ? 3 : 0;
+		ug.draw(Diamond.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
 
-		 north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
-		 south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
+		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
+		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
 
 		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;
 		label.drawU(ug.apply(new UTranslate(lx, ly)));
 
 		final Dimension2D dimWeat = west.calculateDimension(stringBounder);
-		 west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2)));
+		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2)));
 
 		final Dimension2D dimEast = east.calculateDimension(stringBounder);
 		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + dimTotal.getHeight() / 2)));
@@ -168,7 +169,7 @@ public class FtileDiamondInside3 extends AbstractFtile implements FtileOverpassi
 		final Dimension2D north = this.north.calculateDimension(stringBounder);
 		final Dimension2D east = this.east.calculateDimension(stringBounder);
 		final Dimension2D west = this.west.calculateDimension(stringBounder);
-		final double height = total.getHeight(); //  + north.getHeight();
+		final double height = total.getHeight(); // + north.getHeight();
 		final double left = total.getWidth() / 2;
 		final double supp = MathUtils.max(north.getWidth(), east.getWidth(), west.getWidth());
 		// final double width = supp > left ? left + supp : diamond.getWidth();

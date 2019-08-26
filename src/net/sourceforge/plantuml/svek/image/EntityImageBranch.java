@@ -40,10 +40,15 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -60,26 +65,43 @@ public class EntityImageBranch extends AbstractEntityImage {
 		super(entity, skinParam);
 	}
 
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	}
+
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return new Dimension2DDouble(SIZE * 2, SIZE * 2);
 	}
 
 	final public void drawU(UGraphic ug) {
 		final UPolygon diams = new UPolygon();
-		if (getSkinParam().shadowing(getEntity().getStereotype())) {
-			diams.setDeltaShadow(5);
-		}
+		double shadowing = 0;
 		diams.addPoint(SIZE, 0);
 		diams.addPoint(SIZE * 2, SIZE);
 		diams.addPoint(SIZE, SIZE * 2);
 		diams.addPoint(0, SIZE);
 		diams.addPoint(SIZE, 0);
 
-		final HtmlColor border = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityDiamondBorder,
+		HtmlColor border = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityDiamondBorder,
 				ColorParam.activityBorder);
-		final HtmlColor back = SkinParamUtils.getColor(getSkinParam(), getStereo(),
-				ColorParam.activityDiamondBackground, ColorParam.activityBackground);
-		ug.apply(new UChangeColor(border)).apply(new UChangeBackColor(back)).apply(new UStroke(1.5)).draw(diams);
+		HtmlColor back = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityDiamondBackground,
+				ColorParam.activityBackground);
+		UStroke stroke = new UStroke(1.5);
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+			stroke = style.getStroke();
+			shadowing = style.value(PName.Shadowing).asDouble();
+		} else {
+			if (getSkinParam().shadowing(getEntity().getStereotype())) {
+				shadowing = 5;
+			}
+
+		}
+		diams.setDeltaShadow(shadowing);
+
+		ug.apply(new UChangeColor(border)).apply(new UChangeBackColor(back)).apply(stroke).draw(diams);
 	}
 
 	public ShapeType getShapeType() {

@@ -113,7 +113,7 @@ public class BlockUml {
 			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, mode.getCharset(),
 					(DefinitionsContainer) mode);
 			timLoader.load(strings);
-			this.data = timLoader.getResult();
+			this.data = timLoader.getResultList();
 			this.debug = timLoader.getDebug();
 			this.preprocessorError = timLoader.isPreprocessorError();
 		} else {

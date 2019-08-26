@@ -44,6 +44,9 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
@@ -61,30 +64,54 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileBox extends AbstractFtile {
 
-	private static final int MARGIN = 10;
+	private double padding() {
+		return padding;
+	}
 
+	private double padding = 10;
 	private final TextBlock tb;
+	private double roundCorner = 25;
+	private final double shadowing;
+	private final HorizontalAlignment horizontalAlignment;
+	private double minimumWidth = 0;
 
-	private final LinkRendering inRenreding;
+	private final LinkRendering inRendering;
 	private final Swimlane swimlane;
-	private final BoxStyle style;
-	// private final ISkinParam skinParam;
+	private final BoxStyle boxStyle;
+
+	private final HtmlColor borderColor;
+	private final HtmlColor backColor;
+	private final Style style;
+
+	static public StyleSignature getDefaultStyleDefinitionActivity() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	}
+
+	static public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
 
 	final public LinkRendering getInLinkRendering() {
-		return inRenreding;
+		return inRendering;
 	}
 
 	public Set<Swimlane> getSwimlanes() {
@@ -105,27 +132,96 @@ public class FtileBox extends AbstractFtile {
 	class MyStencil implements Stencil {
 
 		public double getStartingX(StringBounder stringBounder, double y) {
-			return -MARGIN;
+			return -padding();
 		}
 
 		public double getEndingX(StringBounder stringBounder, double y) {
 			final Dimension2D dim = calculateDimension(stringBounder);
-			return dim.getWidth() - MARGIN;
+			return dim.getWidth() - padding();
 		}
 
 	}
 
-	public FtileBox(ISkinParam skinParam, Display label, UFont font, Swimlane swimlane, BoxStyle style) {
+	public static FtileBox create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle) {
+		Style style = null;
+		Style styleArrow = null;
+		if (SkinParam.USE_STYLES()) {
+			style = getDefaultStyleDefinitionActivity().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
+	}
+
+	public static FtileBox createWbs(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
+			StyleSignature styleDefinition) {
+		Style style = null;
+		Style styleArrow = null;
+		if (SkinParam.USE_STYLES()) {
+			style = styleDefinition.getMergedStyle(styleBuilder);
+			styleArrow = style;
+		}
+		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
+	}
+
+	public static FtileBox createWbs(Style style, ISkinParam skinParam, Display label) {
+		Style styleArrow = null;
+		if (SkinParam.USE_STYLES()) {
+			styleArrow = style;
+		}
+		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
+	}
+
+	public static FtileBox createMindMap(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
+			StyleSignature styleDefinition) {
+		Style style = null;
+		Style styleArrow = null;
+		if (SkinParam.USE_STYLES()) {
+			style = styleDefinition.getMergedStyle(styleBuilder);
+			styleArrow = style;
+		}
+		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
+	}
+
+	private FtileBox(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
+			Style styleArrow) {
 		super(skinParam);
 		this.style = style;
-		// this.skinParam = skinParam;
+		this.boxStyle = boxStyle;
 		this.swimlane = swimlane;
-		this.inRenreding = new LinkRendering(HtmlColorAndStyle.build(skinParam));
-		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
-		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
-				skinParam, CreoleMode.FULL).createSheet(label);
-		this.tb = new SheetBlock2(new SheetBlock1(sheet, skinParam.wrapWidth(), skinParam.getPadding()), new MyStencil(), new UStroke(1));
+		final FontConfiguration fc;
+		final LineBreakStrategy wrapWidth;
+		if (SkinParam.USE_STYLES()) {
+			this.inRendering = new LinkRendering(Rainbow.build(styleArrow, getIHtmlColorSet()));
+			Colors specBack = null;
+			if (skinParam instanceof SkinParamColors) {
+				specBack = ((SkinParamColors) skinParam).getColors();
+			}
+			style = style.eventuallyOverride(specBack);
+			this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+			fc = style.getFontConfiguration(getIHtmlColorSet());
+			horizontalAlignment = style.getHorizontalAlignment();
+			this.padding = style.getPadding().asDouble();
+			this.roundCorner = style.value(PName.RoundCorner).asDouble();
+			this.shadowing = style.value(PName.Shadowing).asDouble();
+			wrapWidth = style.wrapWidth();
+			this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
+		} else {
+			this.inRendering = new LinkRendering(Rainbow.build(skinParam));
+			this.borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
+			this.backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);
+			fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
+			horizontalAlignment = HorizontalAlignment.LEFT;
+			this.shadowing = skinParam().shadowing(null) ? 3.0 : 0.0;
+			wrapWidth = skinParam.wrapWidth();
+
+		}
+		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), skinParam,
+				CreoleMode.FULL).createSheet(label);
+		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), new MyStencil(),
+				new UStroke(1));
 		this.print = label.toString();
+
 	}
 
 	final private String print;
@@ -139,22 +235,35 @@ public class FtileBox extends AbstractFtile {
 		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final UDrawable rect = style.getUDrawable(widthTotal, heightTotal, skinParam().shadowing(null));
+		final UDrawable rect = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
 
-		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
-		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);
+		final UStroke thickness;
+		if (SkinParam.USE_STYLES()) {
+			thickness = style.getStroke();
+		} else {
+			thickness = getThickness();
+		}
 
-		ug = ug.apply(new UChangeColor(borderColor)).apply(new UChangeBackColor(backColor)).apply(getThickness());
+		ug = ug.apply(new UChangeColor(borderColor)).apply(new UChangeBackColor(backColor)).apply(thickness);
 		rect.drawU(ug);
 
-		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
+		if (horizontalAlignment == HorizontalAlignment.LEFT) {
+			tb.drawU(ug.apply(new UTranslate(padding(), padding())));
+		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
+			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
+			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding(), padding())));
+		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
+			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
+			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding())));
+		}
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		final Dimension2D dim = tb.calculateDimension(stringBounder);
-		return new FtileGeometry(Dimension2DDouble.delta(dim, 2 * MARGIN, 2 * MARGIN), dim.getWidth() / 2 + MARGIN, 0,
-				dim.getHeight() + 2 * MARGIN);
+		Dimension2D dim = tb.calculateDimension(stringBounder);
+		dim = Dimension2DDouble.delta(dim, 2 * padding(), 2 * padding());
+		dim = Dimension2DDouble.atLeast(dim, minimumWidth, 0);
+		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
 	}
 
 	public Collection<Ftile> getMyChildren() {

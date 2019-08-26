@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.skin.rose;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -50,8 +49,9 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Padder;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public abstract class AbstractComponentRoseArrow extends AbstractTextualComponent implements ArrowComponent {
 
@@ -65,11 +65,13 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 			HorizontalAlignment textHorizontalAlignment, LineBreakStrategy maxMessageSize) {
 		super(style, maxMessageSize, stringsToDisplay, font, textHorizontalAlignment, 7, 7, 1, spriteContainer, false,
 				null, null);
-		this.arrowConfiguration = arrowConfiguration;
 		if (SkinParam.USE_STYLES()) {
 			this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			final UStroke stroke = style.getStroke();
+			this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());
 		} else {
 			this.foregroundColor = foregroundColor;
+			this.arrowConfiguration = arrowConfiguration;
 		}
 	}
 

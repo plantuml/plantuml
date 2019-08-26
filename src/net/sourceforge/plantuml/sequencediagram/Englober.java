@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.ValueImpl;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -73,7 +73,7 @@ public class Englober implements WithStyle {
 	final private boolean isTeoz;
 	private double marginX = 0;
 
-	public StyleDefinition getDefaultStyleDefinition() {
+	public StyleSignature getDefaultStyleDefinition() {
 		return ComponentType.ENGLOBER.getDefaultStyleDefinition();
 	}
 

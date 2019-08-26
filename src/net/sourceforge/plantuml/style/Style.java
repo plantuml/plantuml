@@ -38,8 +38,10 @@ package net.sourceforge.plantuml.style;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -50,28 +52,29 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Style {
 
 	private final Map<PName, Value> map;
-	private final String name;
-	private final StyleKind kind;
+	private final StyleSignature signature;
 
-	public Style(StyleKind kind, String name, Map<PName, Value> map) {
+	public Style(String name, Map<PName, Value> map) {
 		this.map = map;
-		this.name = name;
-		this.kind = kind;
+		this.signature = StyleSignature.build(name);
 	}
 
-	public final StyleKind getKind() {
-		return kind;
+	public Style(StyleSignature signature, Map<PName, Value> map) {
+		this.map = map;
+		this.signature = signature;
 	}
 
 	@Override
 	public String toString() {
-		return name + " " + map;
+		return signature + " " + map;
 	}
 
 	public Value value(PName name) {
@@ -84,9 +87,7 @@ public class Style {
 
 	public Style mergeWith(Style other) {
 		if (other == null) {
-//			System.err.println("other="+other);
-//			return this;
-			throw new IllegalArgumentException();
+			return this;
 		}
 		final EnumMap<PName, Value> both = new EnumMap<PName, Value>(this.map);
 		for (Entry<PName, Value> ent : other.map.entrySet()) {
@@ -95,40 +96,37 @@ public class Style {
 				both.put(ent.getKey(), ent.getValue());
 			}
 		}
-		if (this.name.equals(other.name)) {
-			return new Style(this.kind.add(other.kind), this.name, both);
-		}
-		return new Style(this.kind.add(other.kind), this.name + "," + other.name, both);
+		return new Style(this.signature.mergeWith(other.getSignature()), both);
+		// if (this.name.equals(other.name)) {
+		// return new Style(this.kind.add(other.kind), this.name, both);
+		// }
+		// return new Style(this.kind.add(other.kind), this.name + "," + other.name, both);
 	}
-
-	// public Style mergeWith(List<Style> others) {
-	// Style result = this;
-	// for (Style other : others) {
-	// result = result.mergeWith(other);
-	// }
-	// return result;
-	// }
 
 	public Style eventuallyOverride(PName param, HtmlColor color) {
 		if (color == null) {
 			return this;
 		}
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
-		result.put(param, new ValueColor(color));
-		return new Style(kind, name + "-" + color, result);
+		final Value old = result.get(param);
+		result.put(param, new ValueColor(color, old.getPriority()));
+		// return new Style(kind, name + "-" + color, result);
+		return new Style(this.signature, result);
 	}
 
 	public Style eventuallyOverride(Colors colors) {
 		Style result = this;
-		final HtmlColor back = colors.getColor(ColorType.BACK);
-		if (back != null) {
-			result = this.eventuallyOverride(PName.BackGroundColor, back);
+		if (colors != null) {
+			final HtmlColor back = colors.getColor(ColorType.BACK);
+			if (back != null) {
+				result = this.eventuallyOverride(PName.BackGroundColor, back);
+			}
 		}
 		return result;
 	}
 
-	public String getStyleName() {
-		return name;
+	public StyleSignature getSignature() {
+		return signature;
 	}
 
 	public UFont getUFont() {
@@ -154,7 +152,40 @@ public class Style {
 
 	public UStroke getStroke() {
 		final double thickness = value(PName.LineThickness).asDouble();
-		return new UStroke(thickness);
+		final String dash = value(PName.LineStyle).asString();
+		if (dash.length() == 0) {
+			return new UStroke(thickness);
+		}
+		try {
+			final StringTokenizer st = new StringTokenizer(dash, "-;,");
+			final double dashVisible = Double.parseDouble(st.nextToken().trim());
+			double dashSpace = dashVisible;
+			if (st.hasMoreTokens()) {
+				dashSpace = Double.parseDouble(st.nextToken().trim());
+			}
+			return new UStroke(dashVisible, dashSpace, thickness);
+		} catch (Exception e) {
+			return new UStroke(thickness);
+		}
+	}
+
+	public LineBreakStrategy wrapWidth() {
+		final String value = value(PName.MaximumWidth).asString();
+		return new LineBreakStrategy(value);
+	}
+
+	public ClockwiseTopRightBottomLeft getPadding() {
+		final double padding = value(PName.Padding).asDouble();
+		return new ClockwiseTopRightBottomLeft(padding);
+	}
+
+	public ClockwiseTopRightBottomLeft getMargin() {
+		final double padding = value(PName.Margin).asDouble();
+		return new ClockwiseTopRightBottomLeft(padding);
+	}
+
+	public HorizontalAlignment getHorizontalAlignment() {
+		return value(PName.HorizontalAlignment).asHorizontalAlignment();
 	}
 
 	private TextBlock createTextBlockInternal(Display display, IHtmlColorSet set, ISkinSimple spriteContainer) {
@@ -177,4 +208,9 @@ public class Style {
 		return TextBlockUtils.withMargin(result, margin, margin);
 	}
 
+	public UGraphic applyStrokeAndLineColor(UGraphic ug, IHtmlColorSet colorSet) {
+		ug = ug.apply(new UChangeColor(value(PName.LineColor).asColor(colorSet)));
+		ug = ug.apply(getStroke());
+		return ug;
+	}
 }

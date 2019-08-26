@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.util.Collection;
 import java.util.Map;
 
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Padder;
+import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
@@ -55,7 +57,6 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class SkinParamDelegator implements ISkinParam {
 
@@ -340,6 +341,18 @@ public class SkinParamDelegator implements ISkinParam {
 
 	public void muteStyle(Style modifiedStyle) {
 		skinParam.muteStyle(modifiedStyle);
+	}
+
+	public Collection<String> getAllSpriteNames() {
+		return skinParam.getAllSpriteNames();
+	}
+
+	public String getDefaultSkin() {
+		return skinParam.getDefaultSkin();
+	}
+
+	public void setDefaultSkin(String newFileName) {
+		skinParam.setDefaultSkin(newFileName);
 	}
 
 }

@@ -35,6 +35,12 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.awt.Font;
+
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 
 public class ValueNull extends ValueAbstract implements Value {
 
@@ -43,12 +49,34 @@ public class ValueNull extends ValueAbstract implements Value {
 	private ValueNull() {
 	}
 
+	@Override
 	public int asInt() {
 		return 0;
 	}
 
+	@Override
 	public double asDouble() {
 		return 0;
+	}
+
+	@Override
+	public String asString() {
+		return "";
+	}
+
+	@Override
+	public int asFontStyle() {
+		return Font.PLAIN;
+	}
+
+	@Override
+	public HtmlColor asColor(IHtmlColorSet set) {
+		return HtmlColorUtils.BLACK;
+	}
+
+	@Override
+	public HorizontalAlignment asHorizontalAlignment() {
+		return HorizontalAlignment.LEFT;
 	}
 
 }

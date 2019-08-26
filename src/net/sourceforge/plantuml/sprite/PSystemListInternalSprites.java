@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.sprite;
+package net.sourceforge.plantuml.sprite;
 
 import java.io.IOException;
 import java.io.OutputStream;

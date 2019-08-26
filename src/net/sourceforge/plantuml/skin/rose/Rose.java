@@ -279,10 +279,11 @@ public class Rose {
 							ColorParam.sequenceDividerBorder));
 		}
 		if (type == ComponentType.REFERENCE) {
-			return new ComponentRoseReference(styles == null ? null : styles[0], getUFont2(param,
-					FontParam.SEQUENCE_REFERENCE), getSymbolContext(param, ColorParam.sequenceReferenceBorder),
-					bigFont, stringsToDisplay, param.getHorizontalAlignment(AlignmentParam.sequenceReferenceAlignment,
-							null, false), param, getHtmlColor(param, ColorParam.sequenceReferenceBackground));
+			return new ComponentRoseReference(styles == null ? null : styles[0], styles == null ? null : styles[1],
+					getUFont2(param, FontParam.SEQUENCE_REFERENCE), getSymbolContext(param,
+							ColorParam.sequenceReferenceBorder), bigFont, stringsToDisplay,
+					param.getHorizontalAlignment(AlignmentParam.sequenceReferenceAlignment, null, false), param,
+					getHtmlColor(param, ColorParam.sequenceReferenceBackground));
 		}
 		if (type == ComponentType.ENGLOBER) {
 			return new ComponentRoseEnglober(styles == null ? null : styles[0], getSymbolContext(param,

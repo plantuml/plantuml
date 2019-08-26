@@ -30,16 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.ugraphic.sprite;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.TextBlock;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
-public interface Sprite {
-	
-	public TextBlock asTextBlock(final HtmlColor color, double scale);
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
+
+public class SourceFileReaderHardFile extends SourceFileReaderAbstract implements ISourceFileReader {
+
+	public SourceFileReaderHardFile(Defines defines, final File file, File outputFile, List<String> config, String charset,
+			FileFormatOption fileFormatOption) throws IOException {
+		this.file = file;
+		this.fileFormatOption = fileFormatOption;
+		this.outputFile = outputFile;
+		if (file.exists() == false) {
+			throw new IllegalArgumentException();
+		}
+		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());
+
+		final File parentFile = file.getAbsoluteFile().getParentFile();
+		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), parentFile,
+				FileWithSuffix.getFileName(file));
+	}
+
+	@Override
+	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
+		final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());
+		return suggested;
+	}
 
 }

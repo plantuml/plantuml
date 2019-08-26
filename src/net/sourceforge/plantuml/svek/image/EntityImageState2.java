@@ -87,7 +87,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBorder());
 
 		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
-				getSkinParam().shadowing(getEntity().getStereotype()));
+				getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);
 
 		this.url = entity.getUrl99();
 		TextBlock stereo = TextBlockUtils.empty(0, 0);

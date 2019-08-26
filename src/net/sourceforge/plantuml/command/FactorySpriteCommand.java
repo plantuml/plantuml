@@ -48,9 +48,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
-import net.sourceforge.plantuml.ugraphic.sprite.SpriteColorBuilder4096;
-import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
+import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.sprite.SpriteColorBuilder4096;
+import net.sourceforge.plantuml.sprite.SpriteGrayLevel;
 
 public final class FactorySpriteCommand implements SingleMultiFactoryCommand<WithSprite> {
 

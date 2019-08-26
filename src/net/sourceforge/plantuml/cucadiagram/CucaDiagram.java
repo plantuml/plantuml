@@ -80,7 +80,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public abstract IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol);
 
-	
 	public CucaDiagram(ISkinSimple orig) {
 		super(orig);
 	}
@@ -172,12 +171,53 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			if (getNamespaceSeparator() != null) {
 				code = getFullyQualifiedCode(code.withSeparator(getNamespaceSeparator()));
 			}
-			gotoGroupInternal(code, display, code, type, parent);
+			gotoGroupInternalWithNamespace(code, display, code, type, parent);
 		} else if (strategy == NamespaceStrategy.SINGLE) {
 			gotoGroupInternal(code, display, null, type, parent);
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	protected final String getNamespace(Code fullyCode, String separator) {
+		String name = fullyCode.getFullName();
+		if (separator == null) {
+			throw new IllegalArgumentException(toString());
+		}
+		do {
+			final int x = name.lastIndexOf(separator);
+			if (x == -1) {
+				return null;
+			}
+			name = name.substring(0, x);
+		} while (entityFactory.getLeafsget(Code.of(name, separator)) != null);
+		return name;
+	}
+
+	final protected void gotoGroupInternalWithNamespace(final Code code, Display display, final Code namespace2,
+			GroupType type, IGroup parent) {
+		if (getNamespaceSeparator() == null) {
+			gotoGroupInternal(code, display, namespace2, type, parent);
+			return;
+		}
+
+		final String namespace = getNamespace(code, getNamespaceSeparator());
+		if (namespace == null) {
+			gotoGroupInternal(code, display, namespace2, type, parent);
+			return;
+		}
+		final IGroup realParent = entityFactory.getGroupsget(Code.of(namespace));
+		if (realParent == null) {
+			gotoGroupInternal(code, display, namespace2, type, parent);
+			return;
+		}
+		display = Display.create(code.getLastPart());
+		IGroup result = entityFactory.createGroup(code, display, namespace2, type, realParent, getHides(),
+				getNamespaceSeparator());
+
+		entityFactory.addGroup(result);
+		currentGroup = result;
+
 	}
 
 	final protected void gotoGroupInternal(final Code code, Display display, final Code namespace2, GroupType type,

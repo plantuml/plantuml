@@ -141,6 +141,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	private final double marginX2 = 5;
 
 	private void drawInternal(UGraphic ug) {
+		ruler.ensureNotEmpty();
 		final StringBounder stringBounder = ug.getStringBounder();
 		final UTranslate lastTranslate = getUTranslateForPlayer(null, stringBounder);
 		final double withBeforeRuler = getWithBeforeRuler(stringBounder);
@@ -235,7 +236,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		final PlayerClock player = new PlayerClock(getTitleStrategy(), getSkinParam(), ruler, period, pulse);
 		players.put(code, player);
 		clocks.put(code, player);
-		final TimeTick tick = new TimeTick(new BigDecimal(period));
+		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);
 		ruler.addTime(tick);
 		return CommandExecutionResult.ok();
 	}
@@ -275,7 +276,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		if (clock == null) {
 			return null;
 		}
-		return new TimeTick(new BigDecimal(nb * clock.getPeriod()));
+		return new TimeTick(new BigDecimal(nb * clock.getPeriod()), TimingFormat.DECIMAL);
 	}
 
 	public void setLastPlayer(Player player) {

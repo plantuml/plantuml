@@ -76,7 +76,8 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 				skinParam, CreoleMode.FULL).createSheet(note);
 		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), this,
 				new UStroke(1));
-		this.opale = new Opale(borderColor, noteBackgroundColor, sheetBlock2, skinParam.shadowing(null), false);
+		final double shadowing;shadowing = skinParam.shadowing(null)?4:0;
+		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, false);
 
 		// this.text = sheetBlock2;
 

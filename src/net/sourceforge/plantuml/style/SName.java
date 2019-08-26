@@ -49,10 +49,11 @@ public enum SName {
 	   group,
 	   groupHeader,
 	   reference,
+	   referenceHeader,
 	   box,
 	   separator,
 	   delay,
-	   message,
+	   arrow,
 	   participant,
 	   actor,
 	   boundary,
@@ -64,7 +65,25 @@ public enum SName {
 	   class_,
 	   classDiagram,
 	   activityDiagram,
+	   activity,
+	   activityBar,
 	   note,
 	   stereotype,
 	   swimlane,
+	   diamond,
+	   partition,
+	   circle,
+	   mindmapDiagram,
+	   node,
+	   rootNode,
+	   leafNode,
+	   wbsDiagram,
+	   objectDiagram,
+	   componentDiagram,
+	   stateDiagram;
+	   
+		public static String depth(int level) {
+			return "depth(" + level + ")";
+		}
+
 }

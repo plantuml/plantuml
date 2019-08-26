@@ -75,7 +75,7 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
-		// diagram.setColorNextArrow(HtmlColorAndStyle.fromColor(color));
+		// diagram.setColorNextArrow(Rainbow.fromColor(color));
 		final String colorString = line0.get("COLOR", 0);
 		if (colorString != null) {
 			Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam()

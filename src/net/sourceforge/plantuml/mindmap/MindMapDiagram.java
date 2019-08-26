@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -138,6 +139,9 @@ public class MindMapDiagram extends UmlDiagram {
 	}
 
 	private void drawMe(UGraphic ug) {
+		if (left.root == null && right.root == null) {
+			return;
+		}
 		computeFinger();
 
 		final StringBounder stringBounder = ug.getStringBounder();
@@ -146,7 +150,7 @@ public class MindMapDiagram extends UmlDiagram {
 		final double y = Math.max(y1, y2);
 
 		final double x = left.finger == null ? 0 : left.finger.getFullElongation(stringBounder)
-				+ ((FingerImpl2) left.finger).getX12();
+				+ ((FingerImpl) left.finger).getX12();
 		if (right.finger != null) {
 			right.finger.drawU(ug.apply(new UTranslate(x, y)));
 		}
@@ -158,10 +162,10 @@ public class MindMapDiagram extends UmlDiagram {
 	private void computeFinger() {
 		if (left.finger == null && right.finger == null) {
 			if (left.root.hasChildren()) {
-				left.finger = FingerImpl2.build(left.root, getSkinParam(), Direction.LEFT);
+				left.finger = FingerImpl.build(left.root, getSkinParam(), Direction.LEFT);
 			}
 			if (left.finger == null || right.root.hasChildren()) {
-				right.finger = FingerImpl2.build(right.root, getSkinParam(), Direction.RIGHT);
+				right.finger = FingerImpl.build(right.root, getSkinParam(), Direction.RIGHT);
 			}
 			if (left.finger != null && right.finger != null) {
 				left.finger.doNotDrawFirstPhalanx();
@@ -180,14 +184,14 @@ public class MindMapDiagram extends UmlDiagram {
 				return CommandExecutionResult
 						.error("I don't know how to draw multi-root diagram. You should suggest an image so that the PlantUML team implements it :-)");
 			}
-			right.initRoot(label, shape);
-			left.initRoot(label, shape);
+			right.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape);
+			left.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape);
 			return CommandExecutionResult.ok();
 		}
 		if (direction == Direction.LEFT) {
-			return left.add(backColor, level, label, shape);
+			return left.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape);
 		}
-		return right.add(backColor, level, label, shape);
+		return right.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape);
 	}
 
 	static class Branch {
@@ -195,8 +199,8 @@ public class MindMapDiagram extends UmlDiagram {
 		private Idea last;
 		private Finger finger;
 
-		private void initRoot(String label, IdeaShape shape) {
-			root = new Idea(Display.getWithNewlines(label), shape);
+		private void initRoot(StyleBuilder styleBuilder, String label, IdeaShape shape) {
+			root = new Idea(styleBuilder, Display.getWithNewlines(label), shape);
 			last = root;
 		}
 
@@ -208,15 +212,18 @@ public class MindMapDiagram extends UmlDiagram {
 			return result;
 		}
 
-		private CommandExecutionResult add(HtmlColor backColor, int level, String label, IdeaShape shape) {
+		private CommandExecutionResult add(StyleBuilder styleBuilder, HtmlColor backColor, int level, String label,
+				IdeaShape shape) {
 			if (level == last.getLevel() + 1) {
-				final Idea newIdea = last.createIdea(backColor, level, Display.getWithNewlines(label), shape);
+				final Idea newIdea = last.createIdea(styleBuilder, backColor, level, Display.getWithNewlines(label),
+						shape);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}
 			if (level <= last.getLevel()) {
 				final int diff = last.getLevel() - level + 1;
-				final Idea newIdea = getParentOfLast(diff).createIdea(backColor, level, Display.getWithNewlines(label), shape);
+				final Idea newIdea = getParentOfLast(diff).createIdea(styleBuilder, backColor, level,
+						Display.getWithNewlines(label), shape);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}

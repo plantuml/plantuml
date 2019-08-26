@@ -85,7 +85,7 @@ public class DiagElement {
 		final TextBlock ad1 = toTextBlock(adress1);
 		final TextBlock ad2 = toTextBlock(adress2);
 		final SymbolContext symbolContext = new SymbolContext(ColorParam.activityBackground.getDefaultValue(),
-				ColorParam.activityBorder.getDefaultValue()).withShadow(true);
+				ColorParam.activityBorder.getDefaultValue()).withShadow(3);
 		final TextBlock desc = toTextBlock(description);
 		final TextBlock box = shape
 				.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0), symbolContext, HorizontalAlignment.CENTER);

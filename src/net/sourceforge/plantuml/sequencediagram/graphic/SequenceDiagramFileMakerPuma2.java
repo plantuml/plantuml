@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -160,7 +160,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			compTitle = null;
 		} else {
 			if (SkinParam.USE_STYLES()) {
-				final Style style = StyleDefinition.of(SName.root, SName.title).getMergedStyle(
+				final Style style = StyleSignature.of(SName.root, SName.title).getMergedStyle(
 						diagram.getSkinParam().getCurrentStyleBuilder());
 				compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
 						diagram.getSkinParam());
@@ -181,7 +181,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			if (SkinParam.USE_STYLES()) {
-				final Style style = StyleDefinition.of(SName.root, SName.legend).getMergedStyle(
+				final Style style = StyleSignature.of(SName.root, SName.legend).getMergedStyle(
 						diagram.getSkinParam().getCurrentStyleBuilder());
 				legendBlock = style.createTextBlockBordered(legend.getDisplay(), diagram.getSkinParam()
 						.getIHtmlColorSet(), diagram.getSkinParam());
@@ -315,7 +315,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
 		Style style = null;
 		if (SkinParam.USE_STYLES()) {
-			final StyleDefinition def = fontParam.getStyleDefinition();
+			final StyleSignature def = fontParam.getStyleDefinition();
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,

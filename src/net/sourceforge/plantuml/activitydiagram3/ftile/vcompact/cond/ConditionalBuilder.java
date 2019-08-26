@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
@@ -64,6 +65,10 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
@@ -87,23 +92,44 @@ public class ConditionalBuilder {
 	private final Ftile tile2;
 	private final Url url;
 
+	public StyleSignature getDefaultStyleDefinitionDiamond() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	}
+
+	public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
+
 	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle,
 			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration fontArrow, FontConfiguration fontTest, Url url) {
-		this.swimlane = swimlane;
-		this.borderColor = borderColor;
-		this.backColor = backColor;
-		this.arrowColor = arrowColor;
+		if (SkinParam.USE_STYLES()) {
+			final Style styleArrow = getDefaultStyleDefinitionArrow()
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(
+					skinParam.getCurrentStyleBuilder());
+			this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			this.backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			this.arrowColor = Rainbow
+					.fromColor(styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet()));
+			this.fontTest = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());
+			this.fontArrow = styleArrow.getFontConfiguration(skinParam.getIHtmlColorSet());
+		} else {
+			this.borderColor = borderColor;
+			this.backColor = backColor;
+			this.arrowColor = arrowColor;
+			this.fontTest = fontTest;
+			this.fontArrow = fontArrow;
+		}
 		this.ftileFactory = ftileFactory;
+		this.swimlane = swimlane;
 		this.conditionStyle = conditionStyle;
 		this.conditionEndStyle = conditionEndStyle;
 		this.branch1 = branch1;
 		this.branch2 = branch2;
 		this.skinParam = skinParam;
 		this.stringBounder = stringBounder;
-		this.fontArrow = fontArrow;
-		this.fontTest = fontTest;
 		this.url = url;
 
 		this.tile1 = new FtileMinWidth(branch1.getFtile(), 30);

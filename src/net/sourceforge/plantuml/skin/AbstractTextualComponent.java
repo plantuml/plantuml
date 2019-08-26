@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
@@ -53,9 +52,8 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.StyleKind;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public abstract class AbstractTextualComponent extends AbstractComponent {
@@ -92,23 +90,23 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 			ISkinSimple spriteContainer, boolean enhanced, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		super(style);
 		this.spriteContainer = spriteContainer;
-		boolean keepStereotype = true;
 		if (SkinParam.USE_STYLES()) {
 			fc = style.getFontConfiguration(getIHtmlColorSet());
 			this.font = style.getUFont();
 			this.fontColor = style.value(PName.FontColor).asColor(getIHtmlColorSet());
-			horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
+			horizontalAlignment = style.getHorizontalAlignment();
 			fontForStereotype = stereo.getUFont();
 			htmlColorForStereotype = stereo.value(PName.FontColor).asColor(getIHtmlColorSet());
-			keepStereotype = style.getKind() == StyleKind.STEREOTYPE;
+			this.display = display.withoutStereotype(style);
 		} else {
 			this.font = fc.getFont();
 			this.fontColor = fc.getColor();
+			this.display = display;
 		}
 		this.marginX1 = marginX1;
 		this.marginX2 = marginX2;
 		this.marginY = marginY;
-		this.display = keepStereotype ? display : display.withoutStereotype();
+		// this.display = keepStereotype ? display : display.withoutStereotype();
 
 		if (this.display.size() == 1 && this.display.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();

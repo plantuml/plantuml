@@ -115,8 +115,28 @@ public abstract class Eater {
 			return eatAndGetQuotedString();
 		}
 		final StringBuilder value = new StringBuilder();
-		addUpTo(',', ')', value);
-		return value.toString();
+		// DEPLICATE eatUntilCloseParenthesisOrComma
+
+		int level = 0;
+		while (true) {
+			char ch = peekChar();
+			if (ch == 0) {
+				throw new EaterException("until001");
+			}
+			if (level == 0 && (ch == ',' || ch == ')')) {
+				return value.toString().trim();
+			}
+			ch = eatOneChar();
+			if (ch == '(') {
+				level++;
+			} else if (ch == ')') {
+				level--;
+			}
+			value.append(ch);
+		}
+
+		// addUpTo(',', ')', value);
+		// return value.toString();
 	}
 
 	final public String eatAndGetNumber() throws EaterException {
@@ -246,16 +266,16 @@ public abstract class Eater {
 		}
 	}
 
-	final protected void addUpTo(char separator1, char separator2, StringBuilder sb) {
-		while (i < s.length()) {
-			final char ch = peekChar();
-			if (ch == separator1 || ch == separator2) {
-				return;
-			}
-			i++;
-			sb.append(ch);
-		}
-	}
+	// final protected void addUpToUnused(char separator1, char separator2, StringBuilder sb) {
+	// while (i < s.length()) {
+	// final char ch = peekChar();
+	// if (ch == separator1 || ch == separator2) {
+	// return;
+	// }
+	// i++;
+	// sb.append(ch);
+	// }
+	// }
 
 	final protected TFunctionImpl eatDeclareFunction(TContext context, TMemory memory, boolean unquoted,
 			LineLocation location, boolean allowNoParenthesis) throws EaterException {

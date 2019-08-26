@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -51,23 +52,21 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileAssemblySimple;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ParallelBuilderMerge extends ParallelFtilesBuilder {
+public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
-	public ParallelBuilderMerge(ISkinParam skinParam, StringBounder stringBounder,
-			final List<Ftile> list, Ftile inner, Swimlane swimlane) {
-		super(skinParam, stringBounder, list, inner, swimlane);
+	public ParallelBuilderMerge(ISkinParam skinParam, StringBounder stringBounder, final List<Ftile> list, Ftile inner) {
+		super(skinParam, stringBounder, list, inner);
 	}
 
 	@Override
@@ -80,22 +79,30 @@ public class ParallelBuilderMerge extends ParallelFtilesBuilder {
 		double x = 0;
 		for (Ftile tmp : getList()) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			conns.add(new ConnectionIn(black, tmp, x, tmp.getInLinkRendering().getRainbow(
-					HtmlColorAndStyle.build(skinParam()))));
+			final Rainbow def;
+			if (SkinParam.USE_STYLES()) {
+				Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+			} else {
+				def = Rainbow.build(skinParam());
+			}
+			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
+			conns.add(new ConnectionIn(black, tmp, x, rainbow));
 			x += dim.getWidth();
 		}
 
 		result = FtileUtils.addConnection(result, conns);
-		((FtileBlackBlock) black).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(), barHeight);
+		((FtileBlackBlock) black).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
+				barHeight);
 
 		return new FtileAssemblySimple(black, result);
 	}
 
 	@Override
-	protected  Ftile doStep2(Ftile result) {
+	protected Ftile doStep2(Ftile result) {
 		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
 		final HtmlColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
-		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlane());
+		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlaneOutForStep2());
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<Connection>();
 		final UTranslate diamondTranslate = result.getTranslateFor(out, getStringBounder());
@@ -104,8 +111,15 @@ public class ParallelBuilderMerge extends ParallelFtilesBuilder {
 		for (Ftile tmp : getList()) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final UTranslate translate0 = new UTranslate(x, barHeight);
-			conns.add(new ConnectionHorizontalThenVertical(tmp, out, tmp.getOutLinkRendering().getRainbow(
-					HtmlColorAndStyle.build(skinParam())), translate0, diamondTranslate, i));
+			final Rainbow def;
+			if (SkinParam.USE_STYLES()) {
+				Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+			} else {
+				def = Rainbow.build(skinParam());
+			}
+			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
+			conns.add(new ConnectionHorizontalThenVertical(tmp, out, rainbow, translate0, diamondTranslate, i));
 			x += dim.getWidth();
 			i++;
 		}

@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
 public abstract class AbstractMessage implements EventWithDeactivate, WithStyle {
@@ -57,9 +57,9 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 		return new Style[] { getDefaultStyleDefinition().getMergedStyle(styleBuilder) };
 	}
 
-	public StyleDefinition getDefaultStyleDefinition() {
-		return StyleDefinition.of(SName.root, SName.element, SName.sequenceDiagram,
-				SName.message);
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram,
+				SName.arrow);
 	}
 
 	private final Display label;

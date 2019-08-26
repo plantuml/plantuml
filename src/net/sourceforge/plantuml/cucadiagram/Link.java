@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
+import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -98,6 +99,28 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private final StyleBuilder styleBuilder;
 
 	private Url url;
+
+	public String idCommentForSvg() {
+		if (type.looksLikeRevertedForSvg()) {
+			final String comment = getEntity1().getCode().getFullName() + "<-" + getEntity2().getCode().getFullName();
+			return comment;
+		}
+		if (type.looksLikeNoDecorAtAllSvg()) {
+			final String comment = getEntity1().getCode().getFullName() + "-" + getEntity2().getCode().getFullName();
+			return comment;
+		}
+		final String comment = getEntity1().getCode().getFullName() + "->" + getEntity2().getCode().getFullName();
+		return comment;
+	}
+
+	public UComment commentForSvg() {
+		if (type.looksLikeRevertedForSvg()) {
+			return new UComment("reverse link " + getEntity1().getCode().getFullName() + " to "
+					+ getEntity2().getCode().getFullName());
+		}
+		return new UComment("link " + getEntity1().getCode().getFullName() + " to "
+				+ getEntity2().getCode().getFullName());
+	}
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, StyleBuilder styleBuilder) {
 		this(cl1, cl2, type, label, length, null, null, null, null, null, styleBuilder);

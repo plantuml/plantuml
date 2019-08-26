@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,18 +30,38 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.skin.bluemodern;
+package net.sourceforge.plantuml.tim.stdlib;
 
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import java.util.List;
 
-public class ShadowShape extends FillRoundShape {
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunction;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	public ShadowShape(double width, double height, double corner) {
-		super(width, height, HtmlColorUtils.LIGHT_GRAY, HtmlColorUtils.GRAY, corner);
+public class RetrieveVoidFunction extends SimpleReturnFunction {
 
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%retrieve_void_func", 1);
+	}
+
+	public boolean canCover(int nbArg) {
+		return nbArg > 0;
+	}
+
+	public TValue executeReturn(TContext context, TMemory memory, List<TValue> values) throws EaterException {
+		final String fname = values.get(0).toString();
+		final List<TValue> args = values.subList(1, values.size());
+		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());
+		final TFunction func = context.getFunctionSmart(signature);
+		final int n1 = context.getResultList().size();
+		func.executeVoidInternal(context, memory, args);
+		final String extracted = context.extractFromResultList(n1);
+		return TValue.fromString(extracted);
 	}
 
 }

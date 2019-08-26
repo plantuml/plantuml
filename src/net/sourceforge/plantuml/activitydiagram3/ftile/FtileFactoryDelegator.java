@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
@@ -51,13 +52,15 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class FtileFactoryDelegator implements FtileFactory {
 
@@ -65,16 +68,40 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	private final Rose rose = new Rose();
 
+	final public StyleSignature getDefaultStyleDefinitionActivity() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	}
+
+	final public StyleSignature getDefaultStyleDefinitionDiamond() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	}
+
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
+
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {
 		Rainbow color;
 		final LinkRendering linkRendering = tile.getInLinkRendering();
 		if (linkRendering == null) {
-			color = HtmlColorAndStyle.build(skinParam());
+			if (SkinParam.USE_STYLES()) {
+				final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(
+						skinParam().getCurrentStyleBuilder());
+				return Rainbow.build(style, skinParam().getIHtmlColorSet());
+			} else {
+				color = Rainbow.build(skinParam());
+			}
 		} else {
 			color = linkRendering.getRainbow();
 		}
 		if (color.size() == 0) {
-			color = HtmlColorAndStyle.build(skinParam());
+			if (SkinParam.USE_STYLES()) {
+				final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(
+						skinParam().getCurrentStyleBuilder());
+				return Rainbow.build(style, skinParam().getIHtmlColorSet());
+			} else {
+				color = Rainbow.build(skinParam());
+			}
 		}
 		return color;
 	}
@@ -84,7 +111,13 @@ public class FtileFactoryDelegator implements FtileFactory {
 		if (Display.isNull(display)) {
 			return null;
 		}
-		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		final FontConfiguration fontConfiguration;
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
+		} else {
+			fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		}
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 
@@ -168,8 +201,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
 	}
 
-	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
-		return factory.createParallel(swimlane, all, style, label);
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label) {
+		return factory.createParallel(all, style, label);
 	}
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,

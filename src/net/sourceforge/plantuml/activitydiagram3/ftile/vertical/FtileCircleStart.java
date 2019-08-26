@@ -40,12 +40,15 @@ import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -57,11 +60,20 @@ public class FtileCircleStart extends AbstractFtile {
 
 	private final HtmlColor backColor;
 	private final Swimlane swimlane;
+	private double shadowing;
 
-	public FtileCircleStart(ISkinParam skinParam, HtmlColor backColor, Swimlane swimlane) {
+	public FtileCircleStart(ISkinParam skinParam, HtmlColor backColor, Swimlane swimlane, Style style) {
 		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;
+		if (SkinParam.USE_STYLES()) {
+			this.shadowing = style.value(PName.Shadowing).asDouble();
+		} else {
+			if (skinParam().shadowing(null)) {
+				this.shadowing = 3;
+			}
+		}
+
 	}
 
 	@Override
@@ -86,9 +98,7 @@ public class FtileCircleStart extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (skinParam().shadowing(null)) {
-			circle.setDeltaShadow(3);
-		}
+		circle.setDeltaShadow(shadowing);
 		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backColor)).draw(circle);
 	}
 

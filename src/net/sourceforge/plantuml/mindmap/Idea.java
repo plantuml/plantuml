@@ -42,8 +42,13 @@ import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 class Idea {
+
+	// public StyleDefinition getDefaultStyleDefinition() {
+	// return StyleDefinition.of(SName.root, SName.element, SName.mindmapDiagram, SName.node);
+	// }
 
 	private final Display label;
 	private final int level;
@@ -51,19 +56,30 @@ class Idea {
 	private final List<Idea> children = new ArrayList<Idea>();
 	private final IdeaShape shape;
 	private final HtmlColor backColor;
+	private final StyleBuilder styleBuilder;
 
-	public Idea(Display label, IdeaShape shape) {
-		this(null, 0, null, label, shape);
+	public Idea(StyleBuilder styleBuilder, Display label, IdeaShape shape) {
+		this(styleBuilder, null, 0, null, label, shape);
 	}
 
-	public Idea createIdea(HtmlColor backColor, int newLevel, Display newDisplay, IdeaShape newShape) {
-		final Idea result = new Idea(backColor, newLevel, this, newDisplay, newShape);
+	public Idea createIdea(StyleBuilder styleBuilder, HtmlColor backColor, int newLevel, Display newDisplay,
+			IdeaShape newShape) {
+		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape);
 		this.children.add(result);
 		return result;
 	}
 
-	private Idea(HtmlColor backColor, int level, Idea parent, Display label, IdeaShape shape) {
+	// public Style getStyle(StyleBuilder styleBuilder) {
+	// Style result = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+	// if (backColor != null) {
+	// result = result.eventuallyOverride(PName.BackGroundColor, backColor);
+	// }
+	// return result;
+	// }
+
+	private Idea(StyleBuilder styleBuilder, HtmlColor backColor, int level, Idea parent, Display label, IdeaShape shape) {
 		this.backColor = backColor;
+		this.styleBuilder = styleBuilder;
 		this.label = label;
 		this.level = level;
 		this.parent = parent;
@@ -101,6 +117,10 @@ class Idea {
 
 	public final HtmlColor getBackColor() {
 		return backColor;
+	}
+
+	public final StyleBuilder getStyleBuilder() {
+		return styleBuilder;
 	}
 
 }

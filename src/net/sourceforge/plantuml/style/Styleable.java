@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.style;
 
 public interface Styleable {
 
-	public StyleDefinition getDefaultStyleDefinition();
+	public StyleSignature getDefaultStyleDefinition();
 
 }

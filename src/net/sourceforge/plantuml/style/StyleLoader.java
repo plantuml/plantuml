@@ -49,20 +49,16 @@ import net.sourceforge.plantuml.command.CommandControl;
 
 public class StyleLoader {
 
-	public static StyleBuilder mainStyle(SkinParam skinParam) throws IOException {
-		return new StyleLoader(skinParam).loadSkin(SkinParam.DEFAULT_STYLE);
-	}
-
 	private final SkinParam skinParam;
 
 	public StyleLoader(SkinParam skinParam) {
 		this.skinParam = skinParam;
 	}
 
-	private StyleBuilder result;
+	private StyleBuilder styleBuilder;
 
 	public StyleBuilder loadSkin(String filename) throws IOException {
-		this.result = new StyleBuilder(skinParam);
+		this.styleBuilder = new StyleBuilder(skinParam);
 
 		InputStream internalIs = null;
 		File localFile = new File(filename);
@@ -74,40 +70,26 @@ public class StyleLoader {
 			Log.info("File found : " + localFile.getAbsolutePath());
 			internalIs = new FileInputStream(localFile);
 		} else {
-			Log.info("File not found");
+			Log.info("File not found : " + localFile.getAbsolutePath());
 			final String res = "/skin/" + filename;
 			internalIs = StyleLoader.class.getResourceAsStream(res);
+			if (internalIs != null) {
+				Log.info("... but " + filename + " found inside the .jar");
+			}
 		}
 		if (internalIs == null) {
 			return null;
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
 		loadSkinInternal(lines2);
-		return result;
+		return styleBuilder;
 	}
 
 	private void loadSkinInternal(final BlocLines lines) {
-		final CommandStyleMultilines cmd2 = new CommandStyleMultilines();
-		for (int i = 0; i < lines.size(); i++) {
-			final BlocLines ext1 = lines.subList(i, i + 1);
-			if (cmd2.isValid(ext1) == CommandControl.OK_PARTIAL) {
-				i = tryMultilines(cmd2, i, lines);
-			}
+		final CommandStyleMultilinesCSS cmd2 = new CommandStyleMultilinesCSS();
+		for (Style newStyle : cmd2.getDeclaredStyles(lines, styleBuilder)) {
+			this.styleBuilder.put(newStyle.getSignature(), newStyle);
 		}
-	}
-
-	private int tryMultilines(CommandStyleMultilines cmd2, int i, BlocLines lines) {
-		for (int j = i + 1; j <= lines.size(); j++) {
-			final BlocLines ext1 = lines.subList(i, j);
-			if (cmd2.isValid(ext1) == CommandControl.OK) {
-				final Style newStyle = cmd2.getDeclaredStyle(ext1, result);
-				this.result.put(newStyle.getStyleName(), newStyle);
-				return j;
-			} else if (cmd2.isValid(ext1) == CommandControl.NOT_OK) {
-				return j;
-			}
-		}
-		return i;
 	}
 
 }

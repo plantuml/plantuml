@@ -43,9 +43,11 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleDefinition;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class Reference extends AbstractEvent implements Event {
 
@@ -57,13 +59,21 @@ public class Reference extends AbstractEvent implements Event {
 	private final Display strings;
 
 	final private Style style;
+	final private Style styleHeader;
 
-	public StyleDefinition getDefaultStyleDefinition() {
-		return ComponentType.REFERENCE.getDefaultStyleDefinition();
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
+	}
+
+	private StyleSignature getHeaderStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
 	}
 
 	public Style[] getUsedStyles() {
-		return new Style[] { style };
+		return new Style[] {
+				style,
+				styleHeader == null ? styleHeader : styleHeader.eventuallyOverride(PName.BackGroundColor,
+						backColorElement) };
 	}
 
 	public Reference(List<Participant> participants, Url url, Display strings, HtmlColor backColorGeneral,
@@ -74,6 +84,7 @@ public class Reference extends AbstractEvent implements Event {
 		this.backColorGeneral = backColorGeneral;
 		this.backColorElement = backColorElement;
 		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
 	}
 
 	public List<Participant> getParticipant() {

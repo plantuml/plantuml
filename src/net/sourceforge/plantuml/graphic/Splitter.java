@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
+import net.sourceforge.plantuml.sprite.SpriteUtils;
 
 public class Splitter {
 

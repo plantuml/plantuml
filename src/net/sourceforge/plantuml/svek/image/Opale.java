@@ -59,7 +59,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	private final int marginX1 = 6;
 	private final int marginX2 = 15;
 	private final int marginY = 5;
-	private final boolean withShadow;
+	private final double shadowing2;
 	private Direction strategy;
 	private Point2D pp1;
 	private Point2D pp2;
@@ -68,12 +68,20 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 
-	public Opale(HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock, boolean withShadow,
+	private Opale(boolean shadowing, HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock,
 			boolean withLink) {
 		this.noteBackgroundColor = noteBackgroundColor;
 		this.withLink = withLink;
+		this.shadowing2 = shadowing ? 4 : 0;
+		this.borderColor = borderColor;
+		this.textBlock = textBlock;
+	}
 
-		this.withShadow = withShadow;
+	public Opale(double shadowing, HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock,
+			boolean withLink) {
+		this.noteBackgroundColor = noteBackgroundColor;
+		this.withLink = withLink;
+		this.shadowing2 = shadowing;
 		this.borderColor = borderColor;
 		this.textBlock = textBlock;
 	}
@@ -120,9 +128,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 		} else {
 			throw new IllegalArgumentException();
 		}
-		if (withShadow) {
-			polygon.setDeltaShadow(4);
-		}
+		polygon.setDeltaShadow(shadowing2);
 		ug.draw(polygon);
 		ug.draw(getCorner(getWidth(stringBounder), roundCorner));
 		textBlock.drawU(ug.apply(new UTranslate(marginX1, marginY)));

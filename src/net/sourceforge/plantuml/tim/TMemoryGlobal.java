@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public class TMemoryGlobal extends ConditionalContexts implements TMemory {
 
 	private final Map<String, TVariable> globalVariables = new HashMap<String, TVariable>();
-	private final Trie variables = new Trie();
+	private final TrieImpl variables = new TrieImpl();
 
 	public TVariable getVariable(String varname) {
 		return this.globalVariables.get(varname);

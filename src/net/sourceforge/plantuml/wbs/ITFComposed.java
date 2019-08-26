@@ -46,10 +46,11 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ITFComposed extends WBSTextBlock implements ITF {
+class ITFComposed extends WBSTextBlock implements ITF {
 
 	private final List<ITF> left;
 	private final List<ITF> right;
@@ -57,18 +58,20 @@ public class ITFComposed extends WBSTextBlock implements ITF {
 	private final TextBlock main;
 
 	final private double delta1x = 10;
-	final private double deltay = 15;
+	final private double deltay;// = 15;
 
 	private ITFComposed(ISkinParam skinParam, WElement idea, List<ITF> left, List<ITF> right) {
-		super(skinParam);
+		super(skinParam, idea.getStyleBuilder(), idea.getLevel());
 		this.left = left;
 		this.right = right;
 		this.main = buildMain(idea);
+		final Style style = idea.getStyle();
+		this.deltay = style.getMargin().asDouble();
 	}
 
 	public static ITF build2(ISkinParam skinParam, WElement idea) {
 		if (idea.isLeaf()) {
-			return new ITFLeaf(skinParam, idea.getLabel(), idea.getShape());
+			return new ITFLeaf(idea.getStyle(), skinParam, idea.getLabel(), idea.getShape());
 		}
 		final List<ITF> left = new ArrayList<ITF>();
 		final List<ITF> right = new ArrayList<ITF>();
@@ -154,7 +157,6 @@ public class ITFComposed extends WBSTextBlock implements ITF {
 		}
 		drawLine(ug, x, mainDim.getHeight(), x, Math.max(lastY1, lastY2));
 	}
-
 
 	final private double getCollWidth(StringBounder stringBounder, Collection<? extends TextBlock> all) {
 		double result = 0;

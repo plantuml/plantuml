@@ -43,33 +43,66 @@ import java.util.List;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 
-class WElement {
+final class WElement {
 
 	private final Display label;
 	private final int level;
+	private final String stereotype;
 	private final WElement parent;
+	private final StyleBuilder styleBuilder;
 	private final List<WElement> childrenLeft = new ArrayList<WElement>();
 	private final List<WElement> childrenRight = new ArrayList<WElement>();
 	private final IdeaShape shape;
 
-	public WElement(Display label) {
-		this(label, 0, null, IdeaShape.BOX);
+	private StyleSignature getDefaultStyleDefinitionNode(int level) {
+		final String depth = SName.depth(level);
+		if (level == 0) {
+			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
+					.add(stereotype).add(depth);
+		}
+		if (isLeaf()) {
+			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
+					.add(stereotype).add(depth);
+		}
+		return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node).add(stereotype).add(depth);
 	}
 
-	private WElement(Display label, int level, WElement parent, IdeaShape shape) {
+	public Style getStyle() {
+		Style result = getDefaultStyleDefinitionNode(level).getMergedStyle(styleBuilder);
+		for (WElement up = parent; up != null; up = up.parent) {
+			final StyleSignature ss = up.getDefaultStyleDefinitionNode(level).addStar();
+			final Style p = ss.getMergedStyle(styleBuilder);
+			result = result.mergeWith(p);
+		}
+		return result;
+	}
+
+	public WElement(Display label, String stereotype, StyleBuilder styleBuilder) {
+		this(0, label, stereotype, null, IdeaShape.BOX, styleBuilder);
+	}
+
+	private WElement(int level, Display label, String stereotype, WElement parent, IdeaShape shape,
+			StyleBuilder styleBuilder) {
 		this.label = label;
 		this.level = level;
 		this.parent = parent;
 		this.shape = shape;
+		this.styleBuilder = styleBuilder;
+		this.stereotype = stereotype;
 	}
 
 	public boolean isLeaf() {
 		return childrenLeft.size() == 0 && childrenRight.size() == 0;
 	}
 
-	public WElement createElement(int newLevel, Display newLabel, Direction direction, IdeaShape shape) {
-		final WElement result = new WElement(newLabel, newLevel, this, shape);
+	public WElement createElement(int newLevel, Display newLabel, String stereotype, Direction direction,
+			IdeaShape shape, StyleBuilder styleBuilder) {
+		final WElement result = new WElement(newLevel, newLabel, stereotype, this, shape, styleBuilder);
 		if (direction == Direction.LEFT) {
 			this.childrenLeft.add(result);
 		} else {
@@ -104,6 +137,10 @@ class WElement {
 
 	public final IdeaShape getShape() {
 		return shape;
+	}
+
+	public final StyleBuilder getStyleBuilder() {
+		return styleBuilder;
 	}
 
 }
