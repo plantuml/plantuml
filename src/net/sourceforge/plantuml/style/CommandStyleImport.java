@@ -30,40 +30,62 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.classdiagram.command;
+package net.sourceforge.plantuml.style;
 
+import java.io.File;
+import java.io.IOException;
+
+import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 
-public class CommandHideShowSpecificStereotype extends SingleLineCommand2<CucaDiagram> {
+public class CommandStyleImport extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandHideShowSpecificStereotype() {
+	public CommandStyleImport() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandHideShowSpecificStereotype.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("COMMAND", "(hide|show)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)"), RegexLeaf.end());
+		return RegexConcat.build(CommandStyleImport.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("\\<style"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\w+"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("="), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("[%q%g]?"), //
+				new RegexLeaf("PATH", "([^%q%g]*)"), //
+				new RegexLeaf("[%q%g]?"), //
+				new RegexLeaf("\\>"), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
-
-		// final String stereotype = arg.get("STEREOTYPE", 0);
-		// diagram.hideOrShow(new Stereotype(stereotype), arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-		//
-		// return CommandExecutionResult.ok();
-		throw new UnsupportedOperationException();
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+		final String path = arg.get("PATH", 0);
+		try {
+			final File f = FileSystem.getInstance().getFile(path);
+			if (f.exists() == false) {
+				return CommandExecutionResult.error("File does not exist: " + path);
+			}
+			final BlocLines lines = BlocLines.load(f, location);
+			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
+			for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines, styleBuilder)) {
+				diagram.getSkinParam().muteStyle(modifiedStyle);
+			}
+		} catch (IOException e) {
+			return CommandExecutionResult.error("File does not exist: " + path);
+		}
+		return CommandExecutionResult.ok();
 	}
 }

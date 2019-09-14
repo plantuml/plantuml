@@ -59,6 +59,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
@@ -90,7 +91,7 @@ public class SvgGraphics {
 	// http://www.adobe.com/svg/demos/samples.html
 
 	private static final String XLINK_HREF = "href";
-	
+
 	final private Document document;
 	final private Element root;
 	final private Element defs;
@@ -807,7 +808,15 @@ public class SvgGraphics {
 		this.hidden = hidden;
 	}
 
+	public static final String MD5_HEADER = "<!--MD5=[";
+
+	public static String getMD5Hex(String comment) {
+		return SignatureUtils.getMD5Hex(comment);
+	}
+
 	public void addComment(String comment) {
+		final String signature = getMD5Hex(comment);
+		comment = "MD5=[" + signature + "]\n" + comment;
 		final Comment commentElement = document.createComment(comment);
 		getG().appendChild(commentElement);
 	}

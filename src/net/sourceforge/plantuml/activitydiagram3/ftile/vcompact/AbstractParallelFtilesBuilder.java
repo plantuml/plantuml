@@ -140,7 +140,7 @@ public abstract class AbstractParallelFtilesBuilder {
 		return middleDimension.getHeight();
 	}
 
-	protected final Swimlane swimlaneOutForStep2() {
+	protected Swimlane swimlaneOutForStep2() {
 		return list.get(list.size() - 1).getSwimlaneOut();
 	}
 

@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.bpm;
 public class CleanerMoveBlock implements GridCleaner {
 
 	public boolean clean(Grid grid) {
-		System.err.println("CleanerMoveBlock");
+		// System.err.println("CleanerMoveBlock");
 		for (Line line : grid.lines().toList()) {
 			tryGrid(grid, line);
 		}
@@ -89,6 +89,6 @@ public class CleanerMoveBlock implements GridCleaner {
 	}
 
 	private void tryBridge(Line line, Col col1, final Col col2) {
-		System.err.println("LINE=" + line + " " + col1 + " " + col2 + " ");
+		// System.err.println("LINE=" + line + " " + col1 + " " + col2 + " ");
 	}
 }

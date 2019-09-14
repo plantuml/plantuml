@@ -42,10 +42,13 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import net.sourceforge.plantuml.braille.BrailleCharFactory;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.png.MetadataTag;
+import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 /**
@@ -201,5 +204,33 @@ public enum FileFormat {
 		}
 		return name.replaceAll("\\" + getFileSuffix() + "$",
 				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", i) + getFileSuffix());
+	}
+
+	public boolean doesSupportMetadata() {
+		return this == PNG || this == SVG;
+	}
+
+	public boolean equalsMetadata(String currentMetadata, File existingFile) {
+		try {
+			if (this == PNG) {
+				final MetadataTag tag = new MetadataTag(existingFile, "plantuml");
+				final String previousMetadata = tag.getData();
+				final boolean sameMetadata = currentMetadata.equals(previousMetadata);
+				return sameMetadata;
+			}
+			if (this == SVG) {
+				final String svg = FileUtils.readSvg(existingFile);
+				final String currentSignature = SvgGraphics.getMD5Hex(currentMetadata);
+				final int idx = svg.lastIndexOf(SvgGraphics.MD5_HEADER);
+				if (idx != -1) {
+					final String part = svg.substring(idx + SvgGraphics.MD5_HEADER.length());
+					return part.startsWith(currentSignature);
+				}
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

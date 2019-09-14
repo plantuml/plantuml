@@ -58,6 +58,10 @@ public class FileWithSuffix {
 	private final String entry;
 	private final String description;
 
+	@Override
+	public String toString() {
+		return file.toString();
+	}
 	public Reader getReader(String charset) throws IOException {
 		if (entry == null) {
 			if (charset == null) {

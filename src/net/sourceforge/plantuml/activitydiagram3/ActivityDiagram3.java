@@ -75,11 +75,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 	private SwimlaneStrategy swimlaneStrategy;
 
 	private final SwimlanesC swinlanes = new SwimlanesC(getSkinParam(), getPragma());
-	
+
 	public ActivityDiagram3(ISkinSimple skinParam) {
 		super(skinParam);
 	}
-
 
 	private void manageSwimlaneStrategy() {
 		if (swimlaneStrategy == null) {
@@ -123,8 +122,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		}
 	}
 
-	public void addSpot(String spot) {
-		final InstructionSpot ins = new InstructionSpot(spot, nextLinkRenderer(), swinlanes.getCurrentSwimlane());
+	public void addSpot(String spot, HtmlColor color) {
+		final InstructionSpot ins = new InstructionSpot(spot, color, nextLinkRenderer(), swinlanes.getCurrentSwimlane());
 		current().add(ins);
 		setNextLinkRendererInternal(LinkRendering.none());
 		manageSwimlaneStrategy();
@@ -238,7 +237,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public void fork() {
-		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(), getSkinParam());
+		manageSwimlaneStrategy();
+		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(), getSkinParam(),
+				swinlanes.getCurrentSwimlane());
 		current().add(instructionFork);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionFork);
@@ -249,7 +250,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 			final InstructionFork currentFork = (InstructionFork) current();
 			currentFork.manageOutRendering(nextLinkRenderer(), false);
 			setNextLinkRendererInternal(LinkRendering.none());
-			currentFork.forkAgain();
+			currentFork.forkAgain(swinlanes.getCurrentSwimlane());
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Cannot find fork");
@@ -258,7 +259,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult endFork(ForkStyle forkStyle, String label) {
 		if (current() instanceof InstructionFork) {
 			final InstructionFork currentFork = (InstructionFork) current();
-			currentFork.setStyle(forkStyle, label);
+			currentFork.setStyle(forkStyle, label, swinlanes.getCurrentSwimlane());
 			currentFork.manageOutRendering(nextLinkRenderer(), true);
 			setNextLinkRendererInternal(LinkRendering.none());
 			setCurrent(currentFork.getParent());
@@ -268,7 +269,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public void split() {
-		final InstructionSplit instructionSplit = new InstructionSplit(current(), nextLinkRenderer(), swinlanes.getCurrentSwimlane());
+		final InstructionSplit instructionSplit = new InstructionSplit(current(), nextLinkRenderer(),
+				swinlanes.getCurrentSwimlane());
 		setNextLinkRendererInternal(LinkRendering.none());
 		current().add(instructionSplit);
 		setCurrent(instructionSplit);
@@ -295,8 +297,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public void startSwitch(Display test, HtmlColor color) {
 		manageSwimlaneStrategy();
-		final InstructionSwitch instructionSwitch = new InstructionSwitch(swinlanes.getCurrentSwimlane(), current(), test,
-				nextLinkRenderer(), color, getSkinParam());
+		final InstructionSwitch instructionSwitch = new InstructionSwitch(swinlanes.getCurrentSwimlane(), current(),
+				test, nextLinkRenderer(), color, getSkinParam());
 		current().add(instructionSwitch);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionSwitch);
@@ -310,7 +312,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 			}
 			setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
-			
+
 		}
 		return CommandExecutionResult.error("Cannot find switch");
 	}

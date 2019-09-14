@@ -77,6 +77,9 @@ public abstract class Eater {
 		}
 		final TokenStack tokenStack = new TokenStack();
 		addIntoTokenStack(tokenStack, false);
+		if (tokenStack.size() == 0) {
+			throw new EaterException("Missing expression");
+		}
 		return tokenStack.getResult(context, memory);
 	}
 

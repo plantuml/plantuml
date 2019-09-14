@@ -121,10 +121,10 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileCircleStop(skinParam(), color, swimlane, style);
 	}
 
-	public Ftile spot(Swimlane swimlane, String spot) {
+	public Ftile spot(Swimlane swimlane, String spot, HtmlColor color) {
 		// final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityBackground);
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-		return new FtileCircleSpot(skinParam(), swimlane, spot, font);
+		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color);
 	}
 
 	public Ftile end(Swimlane swimlane) {
@@ -189,7 +189,7 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileForkInner(ftiles);
 	}
 
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label) {
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
 		return new FtileForkInner(all);
 	}
 

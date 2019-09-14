@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -73,15 +72,16 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	// private Style style;
 
 	public StyleSignature getDefaultStyleDefinition() {
-		return type.getDefaultStyleDefinition();
+		return type.getDefaultStyleDefinition().addClickable(getUrl());
 	}
 
 	public Style[] getUsedStyles() {
 		if (SkinParam.USE_STYLES() == false) {
 			return null;
 		}
-		Style tmp = getDefaultStyleDefinition().with(stereotype).getMergedStyle(styleBuilder)
-				.eventuallyOverride(getColors(null));
+		final StyleSignature signature = getDefaultStyleDefinition().with(stereotype);
+		Style tmp = signature.getMergedStyle(styleBuilder);
+		tmp = tmp.eventuallyOverride(getColors(null));
 		Style stereo = getDefaultStyleDefinition().withStereotype(stereotype).getMergedStyle(styleBuilder);
 		if (tmp != null) {
 			stereo = tmp.mergeWith(stereo);

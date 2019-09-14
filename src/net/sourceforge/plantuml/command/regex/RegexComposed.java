@@ -36,11 +36,13 @@
 package net.sourceforge.plantuml.command.regex;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringLocated;
@@ -48,26 +50,32 @@ import net.sourceforge.plantuml.StringLocated;
 public abstract class RegexComposed implements IRegex {
 
 	protected static final AtomicInteger nbCreateMatches = new AtomicInteger();
-	protected final List<IRegex> partials;
+	private final List<IRegex> partials;
+
+	protected final List<IRegex> partials() {
+		return partials;
+	}
 
 	abstract protected String getFullSlow();
 
-	private Pattern2 fullCached;
+	private final AtomicReference<Pattern2> fullCached = new AtomicReference<Pattern2>();
 
-	private synchronized Pattern2 getPattern2() {
-		if (fullCached == null) {
+	private Pattern2 getPattern2() {
+		Pattern2 result = fullCached.get();
+		if (result == null) {
 			final String fullSlow = getFullSlow();
-			fullCached = MyPattern.cmpile(fullSlow, Pattern.CASE_INSENSITIVE);
+			result = MyPattern.cmpile(fullSlow, Pattern.CASE_INSENSITIVE);
+			fullCached.set(result);
 		}
-		return fullCached;
+		return result;
 	}
-	
-	protected boolean isCompiled() {
-		return fullCached != null;
+
+	final protected boolean isCompiled() {
+		return fullCached.get() != null;
 	}
 
 	public RegexComposed(IRegex... partial) {
-		this.partials = Arrays.asList(partial);
+		this.partials = Collections.unmodifiableList(Arrays.asList(partial));
 	}
 
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {

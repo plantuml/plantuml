@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.Styleable;
 
 public enum ParticipantType implements Styleable {
 	PARTICIPANT(ColorParam.participantBackground), //

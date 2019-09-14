@@ -64,19 +64,29 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 
 	private final String label;
+	private final Swimlane in;
+	private final Swimlane out;
 
 	public ParallelBuilderFork(ISkinParam skinParam, StringBounder stringBounder, final List<Ftile> list, Ftile inner,
-			String label) {
+			String label, Swimlane in, Swimlane out) {
 		super(skinParam, stringBounder, list, inner);
 		this.label = label;
+		this.in = in;
+		this.out = out;
+	}
+
+	@Override
+	protected Swimlane swimlaneOutForStep2() {
+		return out;
 	}
 
 	@Override
 	protected Ftile doStep1() {
 		Ftile result = getMiddle();
 		final List<Connection> conns = new ArrayList<Connection>();
+		final Swimlane swimlaneBlack = in;
 		final Ftile black = new FtileBlackBlock(skinParam(), getRose()
-				.getHtmlColor(skinParam(), ColorParam.activityBar), getList().get(0).getSwimlaneIn());
+				.getHtmlColor(skinParam(), ColorParam.activityBar), swimlaneBlack);
 		double x = 0;
 		for (Ftile tmp : getList()) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
@@ -101,8 +111,9 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 
 	@Override
 	protected Ftile doStep2(Ftile result) {
+		final Swimlane swimlaneBlack = out;
 		final Ftile out = new FtileBlackBlock(skinParam(), getRose().getHtmlColor(skinParam(), ColorParam.activityBar),
-				getList().get(0).getSwimlaneIn());
+				swimlaneBlack);
 		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
 				barHeight);
 		if (label != null) {

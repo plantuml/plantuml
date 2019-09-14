@@ -563,8 +563,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return result;
 	}
 
-	public final void hideOrShow(EntityGender gender, Set<EntityPortion> portions, boolean show) {
-		for (EntityPortion portion : portions) {
+	public final void hideOrShow(EntityGender gender, EntityPortion portions, boolean show) {
+		for (EntityPortion portion : portions.asSet()) {
 			this.hideOrShows.add(new HideOrShow(gender, portion, show));
 		}
 	}
@@ -576,26 +576,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			hides.addAll(visibilities);
 		}
 	}
-
-	// public void hideOrShow(IEntity leaf, boolean show) {
-	// leaf.setRemoved(!show);
-	// }
-
-	// public void hideOrShow(Stereotype stereotype, boolean show) {
-	// if (show) {
-	// hiddenStereotype.remove(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
-	// } else {
-	// hiddenStereotype.add(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
-	// }
-	// }
-	//
-	// public void hideOrShow(LeafType leafType, boolean show) {
-	// if (show) {
-	// hiddenType.remove(leafType);
-	// } else {
-	// hiddenType.add(leafType);
-	// }
-	// }
 
 	public void hideOrShow2(String what, boolean show) {
 		this.hides2.add(new HideOrShow2(what, show));

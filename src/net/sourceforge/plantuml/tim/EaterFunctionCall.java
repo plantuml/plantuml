@@ -93,4 +93,8 @@ public class EaterFunctionCall extends Eater {
 		return Collections.unmodifiableList(values);
 	}
 
+	public final String getEndOfLine() throws EaterException {
+		return this.eatAllToEnd();
+	}
+
 }

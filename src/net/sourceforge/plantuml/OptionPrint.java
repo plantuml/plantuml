@@ -192,12 +192,13 @@ public class OptionPrint {
 
 	public static Collection<String> interestingProperties() {
 		final Properties p = System.getProperties();
-		final List<String> all = withIp() ? Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM",
+		final List<String> list1 = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM",
 				"java.runtime.version", "Java Version", "os.name", "Operating System", "file.encoding",
-				"Default Encoding", "user.language", "Language", "user.country", "Country") : Arrays.asList(
-				"java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "java.runtime.version", "Java Version",
-				"os.name", "Operating System", "os.version", "OS Version", "file.encoding", "Default Encoding",
-				"user.language", "Language", "user.country", "Country");
+				"Default Encoding", "user.language", "Language", "user.country", "Country");
+		final List<String> list2 = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM",
+				"java.runtime.version", "Java Version", "os.name", "Operating System", /* "os.version", "OS Version", */
+				"file.encoding", "Default Encoding", "user.language", "Language", "user.country", "Country");
+		final List<String> all = withIp() ? list1 : list2;
 		final List<String> result = new ArrayList<String>();
 		for (int i = 0; i < all.size(); i += 2) {
 			result.add(all.get(i + 1) + ": " + p.getProperty(all.get(i)));

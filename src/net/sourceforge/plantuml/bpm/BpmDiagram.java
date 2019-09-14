@@ -96,7 +96,7 @@ public class BpmDiagram extends UmlDiagram {
 		cleanGrid(grid);
 		final GridArray gridArray = grid.toArray(SkinParam.create(getUmlDiagramType()));
 		// gridArray.addEdges(edges);
-		System.err.println("gridArray=" + gridArray);
+		// System.err.println("gridArray=" + gridArray);
 		return gridArray;
 	}
 

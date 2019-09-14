@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.PaddingParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -55,7 +56,10 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
@@ -307,10 +311,39 @@ public class Rose {
 					FontParam.ARROW), stringsToDisplay, config, param, param.maxMessageSize(),
 					param.strictUmlStyle() == false);
 		}
-		final HorizontalAlignment messageHorizontalAlignment = param.getHorizontalAlignment(
-				AlignmentParam.sequenceMessageAlignment, config.getArrowDirection(), config.isReverseDefine());
-		final HorizontalAlignment textHorizontalAlignment = param.getHorizontalAlignment(
-				AlignmentParam.sequenceMessageTextAlignment, config.getArrowDirection(), false);
+		HorizontalAlignment messageHorizontalAlignment;
+		final HorizontalAlignment textHorizontalAlignment;
+		final ArrowDirection arrowDirection = config.getArrowDirection();
+		if (SkinParam.USE_STYLES()) {
+			final StyleSignature signature = StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram,
+					SName.arrow);
+			final Style textStyle = signature.getMergedStyle(param.getCurrentStyleBuilder());
+			final String value = textStyle.value(PName.HorizontalAlignment).asString();
+			messageHorizontalAlignment = textStyle.getHorizontalAlignment();
+			textHorizontalAlignment = textStyle.getHorizontalAlignment();
+			if ("direction".equalsIgnoreCase(value)) {
+				if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
+					messageHorizontalAlignment = HorizontalAlignment.LEFT;
+				} else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+					messageHorizontalAlignment = HorizontalAlignment.RIGHT;
+				} else if (arrowDirection == ArrowDirection.BOTH_DIRECTION) {
+					messageHorizontalAlignment = HorizontalAlignment.CENTER;
+				}
+			} else if ("reversedirection".equalsIgnoreCase(value)) {
+				if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
+					messageHorizontalAlignment = HorizontalAlignment.RIGHT;
+				} else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+					messageHorizontalAlignment = HorizontalAlignment.LEFT;
+				} else if (arrowDirection == ArrowDirection.BOTH_DIRECTION) {
+					messageHorizontalAlignment = HorizontalAlignment.CENTER;
+				}
+			}
+		} else {
+			messageHorizontalAlignment = param.getHorizontalAlignment(AlignmentParam.sequenceMessageAlignment,
+					arrowDirection, config.isReverseDefine());
+			textHorizontalAlignment = param.getHorizontalAlignment(AlignmentParam.sequenceMessageTextAlignment,
+					config.getArrowDirection(), false);
+		}
 		return new ComponentRoseArrow(styles == null ? null : styles[0], sequenceArrow, getUFont2(param,
 				FontParam.ARROW), stringsToDisplay, config, messageHorizontalAlignment, param, textHorizontalAlignment,
 				param.maxMessageSize(), param.strictUmlStyle() == false, param.responseMessageBelowArrow());

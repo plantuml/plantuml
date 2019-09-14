@@ -85,8 +85,10 @@ public class TFunctionImpl implements TFunction {
 		final EaterFunctionCall call = new EaterFunctionCall(s, context.isLegacyDefine(signature.getFunctionName()),
 				unquoted);
 		call.execute(context, memory);
+		final String endOfLine = call.getEndOfLine();
 		final List<TValue> args = call.getValues();
 		executeVoidInternal(context, memory, args);
+		context.appendEndOfLine(endOfLine);
 	}
 
 	public void executeVoidInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException {
@@ -114,7 +116,7 @@ public class TFunctionImpl implements TFunction {
 			return executeReturnLegacyDefine(context, memory, args);
 		}
 		if (functionType != TFunctionType.RETURN) {
-			throw new IllegalStateException();
+			throw new EaterException("Illegal call here");
 		}
 		final TMemory copy = getNewMemory(memory, args);
 

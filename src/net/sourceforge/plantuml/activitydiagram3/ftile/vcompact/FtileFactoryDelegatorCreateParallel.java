@@ -61,16 +61,17 @@ public class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label) {
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
 
-		final Dimension2D dimSuper = super.createParallel(all, style, label).calculateDimension(getStringBounder());
+		final Dimension2D dimSuper = super.createParallel(all, style, label, in, out).calculateDimension(
+				getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
 
 		final List<Ftile> list = new ArrayList<Ftile>();
 		for (Ftile tmp : all) {
 			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
 		}
-		final Ftile inner = super.createParallel(list, style, label);
+		final Ftile inner = super.createParallel(list, style, label, in, out);
 
 		AbstractParallelFtilesBuilder builder;
 
@@ -79,7 +80,7 @@ public class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
 		} else if (style == ForkStyle.MERGE) {
 			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), list, inner);
 		} else if (style == ForkStyle.FORK) {
-			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), list, inner, label);
+			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), list, inner, label, in, out);
 		} else {
 			throw new IllegalStateException();
 		}

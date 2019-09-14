@@ -159,7 +159,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	public void createXml(OutputStream os, String metadata) throws IOException {
 		try {
 			if (metadata != null) {
-				getGraphicObject().addComment("\n" + metadata);
+				getGraphicObject().addComment(metadata);
 			}
 			getGraphicObject().createXml(os);
 		} catch (TransformerException e) {

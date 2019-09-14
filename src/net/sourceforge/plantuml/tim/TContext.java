@@ -577,34 +577,43 @@ public class TContext {
 	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
-		final EaterIncludesub include = new EaterIncludesub(s.getTrimmed().getString());
-		include.execute(this, memory);
-		final String location = include.getLocation();
-		final int idx = location.indexOf('!');
-		Sub2 sub = null;
-		if (OptionFlags.ALLOW_INCLUDE && idx != -1) {
-			final String filename = location.substring(0, idx);
-			final String blocname = location.substring(idx + 1);
-			try {
-				final FileWithSuffix f2 = new FileWithSuffix(importedFiles, filename, null);
-				if (f2.fileOk()) {
-					final Reader reader = f2.getReader(charset);
-					ReadLine readerline = ReadLineReader.create(reader, location, s.getLocation());
-					readerline = new UncommentReadLine(readerline);
-					readerline = new ReadLineQuoteComment(true).applyFilter(readerline);
-					sub = Sub2.fromFile(readerline, blocname, this, memory);
+		ImportedFiles saveImportedFiles = null;
+		try {
+			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed().getString());
+			include.execute(this, memory);
+			final String location = include.getLocation();
+			final int idx = location.indexOf('!');
+			Sub2 sub = null;
+			if (OptionFlags.ALLOW_INCLUDE && idx != -1) {
+				final String filename = location.substring(0, idx);
+				final String blocname = location.substring(idx + 1);
+				try {
+					final FileWithSuffix f2 = new FileWithSuffix(importedFiles, filename, null);
+					if (f2.fileOk()) {
+						saveImportedFiles = this.importedFiles;
+						this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
+						final Reader reader = f2.getReader(charset);
+						ReadLine readerline = ReadLineReader.create(reader, location, s.getLocation());
+						readerline = new UncommentReadLine(readerline);
+						readerline = new ReadLineQuoteComment(true).applyFilter(readerline);
+						sub = Sub2.fromFile(readerline, blocname, this, memory);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+					throw new EaterException("cannot include " + e);
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				throw new EaterException("cannot include " + e);
+			} else {
+				sub = subs.get(location);
 			}
-		} else {
-			sub = subs.get(location);
+			if (sub == null) {
+				throw new EaterException("cannot include " + location);
+			}
+			runSub(memory, sub);
+		} finally {
+			if (saveImportedFiles != null) {
+				this.importedFiles = saveImportedFiles;
+			}
 		}
-		if (sub == null) {
-			throw new EaterException("cannot include " + location);
-		}
-		runSub(memory, sub);
 	}
 
 	private void runSub(TMemory memory, final Sub2 sub) throws EaterException {
@@ -671,6 +680,9 @@ public class TContext {
 						reader2 = StartDiagramExtractReader.build(f2, s, charset);
 					} else {
 						final Reader reader = f2.getReader(charset);
+						if (reader == null) {
+							throw new EaterException("Cannot include file");
+						}
 						reader2 = ReadLineReader.create(reader, location, s.getLocation());
 					}
 					saveImportedFiles = this.importedFiles;
@@ -796,6 +808,15 @@ public class TContext {
 			}
 		}
 		return sb.toString();
+	}
+
+	public void appendEndOfLine(String endOfLine) {
+		if (endOfLine.length() > 0) {
+			final int idx = resultList.size() - 1;
+			StringLocated last = resultList.get(idx);
+			last = last.append(endOfLine);
+			resultList.set(idx, last);
+		}
 	}
 
 }

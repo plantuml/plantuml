@@ -496,6 +496,8 @@ public class TikzGraphics {
 				sb.append(couple(coord[4] + x, coord[5] + y));
 			} else if (type == USegmentType.SEG_CLOSE) {
 				// Nothing
+			} else if (type == USegmentType.SEG_ARCTO) {
+				// Nothing
 			} else {
 				Log.println("unknown4 " + seg);
 			}

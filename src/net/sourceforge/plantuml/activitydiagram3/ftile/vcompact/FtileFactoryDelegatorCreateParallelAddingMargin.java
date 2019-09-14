@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixed;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 
 public class FtileFactoryDelegatorCreateParallelAddingMargin extends FtileFactoryDelegator {
 
@@ -56,16 +57,17 @@ public class FtileFactoryDelegatorCreateParallelAddingMargin extends FtileFactor
 	}
 
 	@Override
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label) {
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
 
-		final Dimension2D dimSuper = super.createParallel(all, style, label).calculateDimension(getStringBounder());
+		final Dimension2D dimSuper = super.createParallel(all, style, label, in, out).calculateDimension(
+				getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
 
 		final List<Ftile> list = new ArrayList<Ftile>();
 		for (Ftile tmp : all) {
 			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
 		}
-		return super.createParallel(list, style, label);
+		return super.createParallel(list, style, label, in, out);
 	}
 
 }

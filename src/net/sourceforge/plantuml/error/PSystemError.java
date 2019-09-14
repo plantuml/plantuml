@@ -208,12 +208,12 @@ public abstract class PSystemError extends AbstractPSystem {
 			return new ImageDataSimple(1, 1);
 
 		}
-		// final boolean useRed = fileFormat.isUseRedForError();
 		final TextBlockBackcolored result = getGraphicalFormatted();
 
 		TextBlock udrawable;
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
+		imageBuilder.setRandomPixel(true);
 		if (getSource().getTotalLineCount() < 5) {
 			udrawable = addWelcome(result);
 		} else {
@@ -242,13 +242,6 @@ public abstract class PSystemError extends AbstractPSystem {
 		}
 	}
 
-	// private String getRed(boolean useRed) {
-	// if (useRed) {
-	// return "#CD0A0A";
-	// }
-	// return "red";
-	// }
-	//
 	final public DiagramDescription getDescription() {
 		return new DiagramDescription("(Error)");
 	}

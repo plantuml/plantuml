@@ -63,7 +63,7 @@ public interface FtileFactory {
 
 	public Ftile end(Swimlane swimlane);
 
-	public Ftile spot(Swimlane swimlane, String spot);
+	public Ftile spot(Swimlane swimlane, String spot, HtmlColor color);
 
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors);
 
@@ -90,7 +90,7 @@ public interface FtileFactory {
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest);
 
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label);
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out);
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
 			HtmlColor borderColor, USymbol type, double roundCorner);

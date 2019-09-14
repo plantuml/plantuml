@@ -100,11 +100,13 @@ public class Pipe {
 			} else if (option.isPipeMap()) {
 				final String result = sourceStringReader.getCMapData(option.getImageIndex(),
 						option.getFileFormatOption());
+				// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
+				// We don't check errors
+				error.goOk();
 				if (result == null) {
 					ps.println();
 				} else {
 					ps.println(result);
-					error.goOk();
 				}
 			} else {
 				final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;

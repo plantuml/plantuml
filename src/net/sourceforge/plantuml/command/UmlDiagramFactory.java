@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.sprite.CommandListSprite;
 import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
+import net.sourceforge.plantuml.style.CommandStyleImport;
 import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
@@ -220,7 +221,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		addCommonCommands2(cmds);
 		addCommonHides(cmds);
 		cmds.add(new CommandStyleMultilinesCSS());
-
+		cmds.add(new CommandStyleImport());
 	}
 
 	final protected void addCommonCommands2(List<Command> cmds) {

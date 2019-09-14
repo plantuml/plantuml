@@ -46,6 +46,9 @@ public class ConditionalContext {
 	private final ConditionalContext parent;
 
 	public ConditionalContext(ConditionalContext parent, IEntity branch, Direction direction) {
+		if (branch == null) {
+			throw new IllegalArgumentException("branch is null");
+		}
 		if (branch.getLeafType() != LeafType.BRANCH) {
 			throw new IllegalArgumentException();
 		}

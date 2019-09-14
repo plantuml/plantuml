@@ -36,6 +36,10 @@
 package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -54,6 +58,24 @@ class AtomWithMargin extends AbstractAtom implements Atom {
 		this.marginY2 = marginY2;
 	}
 
+	@Override
+	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
+		final List<Atom> result = new ArrayList<Atom>();
+		final List<Atom> list = atom.splitInTwo(stringBounder, width);
+		for (Atom a : list) {
+			double y1 = marginY1;
+			double y2 = marginY2;
+			if (list.size() == 2 && result.size() == 0) {
+				y2 = 0;
+			}
+			if (list.size() == 2 && result.size() == 1) {
+				y1 = 0;
+			}
+			result.add(new AtomWithMargin(a, y1, y2));
+		}
+		return Collections.unmodifiableList(result);
+	}
+
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return Dimension2DDouble.delta(atom.calculateDimension(stringBounder), 0, marginY1 + marginY2);
 	}
@@ -65,5 +87,5 @@ class AtomWithMargin extends AbstractAtom implements Atom {
 	public void drawU(UGraphic ug) {
 		atom.drawU(ug.apply(new UTranslate(0, marginY1)));
 	}
-	
+
 }

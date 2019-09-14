@@ -65,12 +65,13 @@ public class FtileCircleSpot extends AbstractFtile {
 	private final Swimlane swimlane;
 	private final String spot;
 	private final FontConfiguration fc;
+	private final HtmlColor backColor;
 
-	public FtileCircleSpot(ISkinParam skinParam, Swimlane swimlane, String spot, UFont font) {
+	public FtileCircleSpot(ISkinParam skinParam, Swimlane swimlane, String spot, UFont font, HtmlColor backColor) {
 		super(skinParam);
 		this.spot = spot;
 		this.swimlane = swimlane;
-		// this.font = font;
+		this.backColor = backColor;
 		this.fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
 	}
 
@@ -97,7 +98,8 @@ public class FtileCircleSpot extends AbstractFtile {
 	public void drawU(UGraphic ug) {
 
 		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
-		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);
+		final HtmlColor backColor = this.backColor == null ? SkinParamUtils.getColor(skinParam(), null,
+				ColorParam.activityBackground) : this.backColor;
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		if (skinParam().shadowing(null)) {

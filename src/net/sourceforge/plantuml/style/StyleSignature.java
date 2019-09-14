@@ -42,27 +42,13 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
 public class StyleSignature {
 
 	private final Set<String> names = new LinkedHashSet<String>();
-
-	public static StyleSignature build(String name) {
-		final StyleSignature result = new StyleSignature();
-		for (StringTokenizer st = new StringTokenizer(name.toLowerCase(),
-				CommandStyleMultilinesCSS.STYLE_SELECTOR_SEPARATOR2); st.hasMoreTokens();) {
-			String token = st.nextToken();
-			if (token.endsWith("*")) {
-				throw new IllegalArgumentException();
-				// token = token.substring(0, token.length() - 1);
-			}
-			result.names.add(token);
-		}
-		return result;
-	}
 
 	public StyleSignature(String s) {
 		if (s.contains("*") || s.contains("&") || s.contains("-")) {
@@ -80,6 +66,16 @@ public class StyleSignature {
 
 	private StyleSignature(Collection<String> copy) {
 		this.names.addAll(copy);
+	}
+
+	public StyleSignature addClickable(Url url) {
+		if (url == null) {
+			return this;
+		}
+		final Set<String> result = new HashSet<String>(names);
+		result.add(SName.clickable.name());
+		return new StyleSignature(result);
+
 	}
 
 	public StyleSignature add(String s) {
@@ -200,7 +196,7 @@ public class StyleSignature {
 
 	public boolean match(Stereotype stereotype) {
 		for (String s : stereotype.getMultipleLabels()) {
-			if (names.contains(s)) {
+			if (names.contains(s.toLowerCase())) {
 				return true;
 			}
 		}

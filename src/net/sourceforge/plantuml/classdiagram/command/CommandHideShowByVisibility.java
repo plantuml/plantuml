@@ -54,11 +54,6 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> {
 
-	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
-			EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
-
 	public CommandHideShowByVisibility() {
 		super(getRegexConcat());
 	}
@@ -84,7 +79,7 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 
 	private CommandExecutionResult executeArgClass(ClassDiagram classDiagram, RegexResult arg) {
 
-		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
+		final EntityPortion portion = getEntityPortion(arg.get("PORTION", 0));
 
 		final Set<VisibilityModifier> visibilities = EnumSet.<VisibilityModifier> noneOf(VisibilityModifier.class);
 		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get("VISIBILITY", 0)), " ,");
@@ -97,43 +92,43 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 		return CommandExecutionResult.ok();
 	}
 
-	private void addVisibilities(String token, Set<EntityPortion> portion, Set<VisibilityModifier> result) {
-		if (token.equals("public") && portion.contains(EntityPortion.FIELD)) {
+	private void addVisibilities(String token, EntityPortion portion, Set<VisibilityModifier> result) {
+		if (token.equals("public") && (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {
 			result.add(VisibilityModifier.PUBLIC_FIELD);
 		}
-		if (token.equals("public") && portion.contains(EntityPortion.METHOD)) {
+		if (token.equals("public") && (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {
 			result.add(VisibilityModifier.PUBLIC_METHOD);
 		}
-		if (token.equals("private") && portion.contains(EntityPortion.FIELD)) {
+		if (token.equals("private") && (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {
 			result.add(VisibilityModifier.PRIVATE_FIELD);
 		}
-		if (token.equals("private") && portion.contains(EntityPortion.METHOD)) {
+		if (token.equals("private") && (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {
 			result.add(VisibilityModifier.PRIVATE_METHOD);
 		}
-		if (token.equals("protected") && portion.contains(EntityPortion.FIELD)) {
+		if (token.equals("protected") && (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {
 			result.add(VisibilityModifier.PROTECTED_FIELD);
 		}
-		if (token.equals("protected") && portion.contains(EntityPortion.METHOD)) {
+		if (token.equals("protected") && (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {
 			result.add(VisibilityModifier.PROTECTED_METHOD);
 		}
-		if (token.equals("package") && portion.contains(EntityPortion.FIELD)) {
+		if (token.equals("package") && (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {
 			result.add(VisibilityModifier.PACKAGE_PRIVATE_FIELD);
 		}
-		if (token.equals("package") && portion.contains(EntityPortion.METHOD)) {
+		if (token.equals("package") && (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {
 			result.add(VisibilityModifier.PACKAGE_PRIVATE_METHOD);
 		}
 	}
 
-	private Set<EntityPortion> getEntityPortion(String s) {
+	private EntityPortion getEntityPortion(String s) {
 		final String sub = StringUtils.goLowerCase(s.substring(0, 3));
 		if (sub.equals("met")) {
-			return PORTION_METHOD;
+			return EntityPortion.METHOD;
 		}
 		if (sub.equals("mem")) {
-			return PORTION_MEMBER;
+			return EntityPortion.MEMBER;
 		}
 		if (sub.equals("att") || sub.equals("fie")) {
-			return PORTION_FIELD;
+			return EntityPortion.FIELD;
 		}
 		throw new IllegalArgumentException();
 	}

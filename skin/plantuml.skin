@@ -21,8 +21,8 @@ title {
   HorizontalAlignment center
   FontSize 14
   FontStyle bold
-  Padding 0
-  Margin 4
+  Padding 5
+  Margin 5
   LineColor none
   BackGroundColor none
 }
@@ -145,21 +145,26 @@ actor {
 }
 
 boundary {
+  LineThickness 2.0
 }
 
 control {
+  LineThickness 2.0
 }
 
 entity {
+  LineThickness 2.0
 }
 
 queue {
+  LineThickness 2.0
 }
 
 database {
 }
 
 collections {
+  LineThickness 1.5
 }
 
 swimlane {

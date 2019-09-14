@@ -80,31 +80,33 @@ public class PSystemXearth extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final ACearth earth = new ACearth(markers);
-		final ConfigurationACearth conf = earth.getConf();
-		conf.setInt("imageWidth", width);
-		conf.setInt("imageHeight", height);
+		synchronized (PSystemXearth.class) {
+			final ACearth earth = new ACearth(markers);
+			final ConfigurationACearth conf = earth.getConf();
+			conf.setInt("imageWidth", width);
+			conf.setInt("imageHeight", height);
 
-		for (Map.Entry<String, String> ent : config.entrySet()) {
-			final String key = ent.getKey();
-			final String value = ent.getValue();
-			if (key.equalsIgnoreCase("GMT")) {
-				final Date date = extractGmt(value);
-				conf.setInt("fixedTime", (int) (date.getTime() / 1000L));
-			} else if (enums.contains(key)) {
-				conf.getMOEnum(key).set(value);
-			} else if (doubles.contains(key)) {
-				conf.setDouble(key, Double.parseDouble(value));
-			} else if (integers.contains(key)) {
-				conf.setInt(key, Integer.parseInt(value));
-			} else if (booleans.contains(key)) {
-				conf.setBoolean(key, value.equalsIgnoreCase("true"));
-			} else {
-				throw new UnsupportedOperationException(key);
+			for (Map.Entry<String, String> ent : config.entrySet()) {
+				final String key = ent.getKey();
+				final String value = ent.getValue();
+				if (key.equalsIgnoreCase("GMT")) {
+					final Date date = extractGmt(value);
+					conf.setInt("fixedTime", (int) (date.getTime() / 1000L));
+				} else if (enums.contains(key)) {
+					conf.getMOEnum(key).set(value);
+				} else if (doubles.contains(key)) {
+					conf.setDouble(key, Double.parseDouble(value));
+				} else if (integers.contains(key)) {
+					conf.setInt(key, Integer.parseInt(value));
+				} else if (booleans.contains(key)) {
+					conf.setBoolean(key, value.equalsIgnoreCase("true"));
+				} else {
+					throw new UnsupportedOperationException(key);
+				}
 			}
+			earth.exportPng(os);
+			return new ImageDataSimple(width, height);
 		}
-		earth.exportPng(os);
-		return new ImageDataSimple(width, height);
 	}
 
 	private Date extractGmt(String s) {

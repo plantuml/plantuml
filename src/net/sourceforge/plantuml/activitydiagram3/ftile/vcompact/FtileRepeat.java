@@ -125,7 +125,7 @@ class FtileRepeat extends AbstractFtile {
 		final TextBlock outTb = out.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
 
 		final Ftile diamond1;
-		assert swimlane == repeat.getSwimlaneIn();
+		// assert swimlane == repeat.getSwimlaneIn();
 		if (backStart == null) {
 			diamond1 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, repeat.getSwimlaneIn());
 		} else {

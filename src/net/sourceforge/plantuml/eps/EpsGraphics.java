@@ -291,6 +291,8 @@ public class EpsGraphics {
 					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
+				} else if (type == USegmentType.SEG_ARCTO) {
+					// Nothing
 				} else {
 					Log.println("unknown1 " + seg);
 				}
@@ -314,6 +316,8 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_CUBICTO) {
 					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
 				} else if (type == USegmentType.SEG_CLOSE) {
+					// Nothing
+				} else if (type == USegmentType.SEG_ARCTO) {
 					// Nothing
 				} else {
 					Log.println("unknown2 " + seg);

@@ -52,6 +52,10 @@ final public class StringLocated {
 		return s;
 	}
 
+	public StringLocated append(String endOfLine) {
+		return new StringLocated(s + endOfLine, location, preprocessorError);
+	}
+
 	public StringLocated(String s, LineLocation location, String preprocessorError) {
 		if (s == null) {
 			throw new IllegalArgumentException();
@@ -131,4 +135,5 @@ final public class StringLocated {
 		}
 		return fox;
 	}
+
 }

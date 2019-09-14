@@ -264,7 +264,8 @@ class Step1Message extends Step1Abstract {
 		}
 		if (m.getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX) {
 			result = result.withHead2(m.getArrowConfiguration().getDressing2().getHead());
-			System.err.println("WARNING : CROSSX");
+			// System.err.println("WARNING : CROSSX");
+			// Thread.dumpStack();
 			// assert false;
 		}
 		result = result.withPart(m.getArrowConfiguration().getPart());

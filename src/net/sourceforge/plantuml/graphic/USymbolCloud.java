@@ -153,7 +153,11 @@ class USymbolCloud extends USymbol {
 	private void bubbleLine(Random rnd, List<Point2D> points, Point2D p1, Point2D p2, double bubbleSize) {
 		final CoordinateChange change = new CoordinateChange(p1, p2);
 		final double length = change.getLength();
-		final int nb = (int) (length / bubbleSize);
+		int nb = (int) (length / bubbleSize);
+		if (nb == 0) {
+			bubbleSize = length / 2;
+			nb = (int) (length / bubbleSize);
+		}
 		for (int i = 0; i < nb; i++) {
 			points.add(rnd(rnd, change.getTrueCoordinate(i * length / nb, 0), bubbleSize * .2));
 		}
@@ -239,7 +243,8 @@ class USymbolCloud extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
+			final double width, final double height, final SymbolContext symbolContext,
+			final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

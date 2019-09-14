@@ -43,6 +43,8 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandCircleSpot3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -52,6 +54,7 @@ public class CommandCircleSpot3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCircleSpot3.class.getName(), RegexLeaf.start(), //
+				ColorParser.exp4(), //
 				new RegexLeaf("SPOT", "\\((\\S)\\)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
@@ -59,7 +62,8 @@ public class CommandCircleSpot3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
-		diagram.addSpot(arg.get("SPOT", 0));
+		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
+		diagram.addSpot(arg.get("SPOT", 0), color);
 		return CommandExecutionResult.ok();
 	}
 

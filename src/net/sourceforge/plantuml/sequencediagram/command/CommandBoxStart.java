@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,10 +47,12 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 
@@ -67,7 +71,9 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("NAME2", "([^#]+)")))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				color().getRegex(), RegexLeaf.end());
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				color().getRegex(), //
+				RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -75,16 +81,24 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg2) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
 		if (diagram.isBoxPending()) {
 			return CommandExecutionResult.error("Box cannot be nested");
 		}
-		final String argTitle = arg2.getLazzy("NAME", 0);
-		final String argColor = arg2.get("COLOR", 0);
+		final String argTitle = arg.getLazzy("NAME", 0);
+		final String argColor = arg.get("COLOR", 0);
+
+		final String stereo = arg.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereo != null) {
+			final ISkinParam skinParam = diagram.getSkinParam();
+			stereotype = new Stereotype(stereo);
+		}
+
 		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(argColor);
-		Colors colors = color().getColor(arg2, diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String title = argTitle == null ? "" : argTitle;
-		diagram.boxStart(Display.getWithNewlines(title), colors.getColor(ColorType.BACK));
+		diagram.boxStart(Display.getWithNewlines(title), colors.getColor(ColorType.BACK), stereotype);
 		return CommandExecutionResult.ok();
 	}
 

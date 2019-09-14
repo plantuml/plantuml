@@ -145,8 +145,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.stop(swimlane);
 	}
 
-	public Ftile spot(Swimlane swimlane, String spot) {
-		return factory.spot(swimlane, spot);
+	public Ftile spot(Swimlane swimlane, String spot, HtmlColor color) {
+		return factory.spot(swimlane, spot, color);
 	}
 
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors) {
@@ -201,8 +201,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
 	}
 
-	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label) {
-		return factory.createParallel(all, style, label);
+	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
+		return factory.createParallel(all, style, label, in, out);
 	}
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,

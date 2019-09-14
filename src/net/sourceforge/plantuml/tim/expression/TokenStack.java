@@ -59,6 +59,10 @@ public class TokenStack {
 		this.tokens = list;
 	}
 
+	public int size() {
+		return tokens.size();
+	}
+
 	public TokenStack subTokenStack(int i) {
 		return new TokenStack(Collections.unmodifiableList(tokens.subList(i, tokens.size())));
 	}

@@ -43,10 +43,6 @@ public class UniqueSequence {
 
 	private static final AtomicInteger cpt = new AtomicInteger(1);
 
-	public static void reset() {
-		cpt.set(0);
-	}
-
 	public static int getValue() {
 		return cpt.addAndGet(1);
 	}

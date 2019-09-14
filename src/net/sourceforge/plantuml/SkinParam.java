@@ -96,12 +96,12 @@ public class SkinParam implements ISkinParam {
 		if (type == UmlDiagramType.WBS) {
 			USE_STYLE2.set(true);
 		}
-		// if (type == UmlDiagramType.SEQUENCE) {
-		// skin = "debug.skin";
-		// USE_STYLE2.set(true);
-		// }
+//		if (type == UmlDiagramType.SEQUENCE) {
+//			// skin = "debug.skin";
+//			USE_STYLE2.set(true);
+//		}
 		// if (type == UmlDiagramType.ACTIVITY) {
-		// skin = "debug.skin";
+		// // skin = "debug.skin";
 		// USE_STYLE2.set(true);
 		// }
 	}
@@ -177,8 +177,7 @@ public class SkinParam implements ISkinParam {
 			}
 			if (USE_STYLES()) {
 				final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2, value, getCurrentStyleBuilder());
-				final Style style = convertor.getStyle();
-				if (style != null) {
+				for (Style style : convertor.getStyles()) {
 					muteStyle(style);
 				}
 			}

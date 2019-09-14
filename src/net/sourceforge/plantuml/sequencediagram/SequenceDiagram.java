@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
@@ -391,11 +392,11 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private ParticipantEnglober participantEnglober;
 
-	public void boxStart(Display comment, HtmlColor color) {
+	public void boxStart(Display comment, HtmlColor color, Stereotype stereotype) {
 		if (participantEnglober != null) {
 			throw new IllegalStateException();
 		}
-		this.participantEnglober = new ParticipantEnglober(comment, color);
+		this.participantEnglober = new ParticipantEnglober(comment, color, stereotype);
 	}
 
 	public void endBox() {

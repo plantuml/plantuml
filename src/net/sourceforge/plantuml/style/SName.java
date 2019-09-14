@@ -43,6 +43,7 @@ public enum SName {
 	   legend,
 	   caption,
 	   element,
+	   clickable,
 	   sequenceDiagram,
 	   destroy,
 	   lifeLine,

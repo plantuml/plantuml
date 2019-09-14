@@ -109,16 +109,16 @@ public class TimingRuler {
 		return highestCommonFactorInternal;
 	}
 
-	private int getNbTick() {
+	private int getNbTick(boolean capped) {
 		if (times.size() == 0) {
 			return 1;
 		}
 		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();
-		return (int) (1 + delta / tickUnitary());
+		return Math.min(1000, (int) (1 + delta / tickUnitary()));
 	}
 
 	public double getWidth() {
-		return getNbTick() * tickIntervalInPixels;
+		return getNbTick(false) * tickIntervalInPixels;
 	}
 
 	public final double getPosInPixel(TimeTick when) {
@@ -151,7 +151,7 @@ public class TimingRuler {
 		ug = ug.apply(new UStroke(2.0)).apply(new UChangeColor(HtmlColorUtils.BLACK));
 		final double tickHeight = 5;
 		final ULine line = new ULine(0, tickHeight);
-		final int nb = getNbTick();
+		final int nb = getNbTick(true);
 		for (int i = 0; i <= nb; i++) {
 			ug.apply(new UTranslate(tickIntervalInPixels * i, 0)).draw(line);
 		}
@@ -172,7 +172,7 @@ public class TimingRuler {
 				result.add(round);
 			}
 		} else {
-			final int nb = getNbTick();
+			final int nb = getNbTick(true);
 			for (int i = 0; i <= nb; i++) {
 				final long round = tickUnitary * i;
 				result.add(round);
@@ -187,7 +187,7 @@ public class TimingRuler {
 	public void draw0(UGraphic ug, double height) {
 		ug = ug.apply(new UStroke(3, 5, 0.5)).apply(new UChangeColor(new HtmlColorSetSimple().getColorIfValid("#AAA")));
 		final ULine line = new ULine(0, height);
-		final int nb = getNbTick();
+		final int nb = getNbTick(true);
 		for (int i = 0; i <= nb; i++) {
 			ug.apply(new UTranslate(tickIntervalInPixels * i, 0)).draw(line);
 		}

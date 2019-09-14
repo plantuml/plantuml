@@ -75,7 +75,6 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandParticipantA4;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceOverSeveral;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReturn;
-import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.sequencediagram.command.CommandUrl;
 
 public class SequenceDiagramFactory extends UmlDiagramFactory {

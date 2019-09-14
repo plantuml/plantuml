@@ -62,11 +62,6 @@ public class Style {
 	private final Map<PName, Value> map;
 	private final StyleSignature signature;
 
-	public Style(String name, Map<PName, Value> map) {
-		this.map = map;
-		this.signature = StyleSignature.build(name);
-	}
-
 	public Style(StyleSignature signature, Map<PName, Value> map) {
 		this.map = map;
 		this.signature = signature;
@@ -119,7 +114,11 @@ public class Style {
 		if (colors != null) {
 			final HtmlColor back = colors.getColor(ColorType.BACK);
 			if (back != null) {
-				result = this.eventuallyOverride(PName.BackGroundColor, back);
+				result = result.eventuallyOverride(PName.BackGroundColor, back);
+			}
+			final HtmlColor line = colors.getColor(ColorType.LINE);
+			if (line != null) {
+				result = result.eventuallyOverride(PName.LineColor, line);
 			}
 		}
 		return result;
@@ -188,13 +187,16 @@ public class Style {
 		return value(PName.HorizontalAlignment).asHorizontalAlignment();
 	}
 
-	private TextBlock createTextBlockInternal(Display display, IHtmlColorSet set, ISkinSimple spriteContainer) {
+	private TextBlock createTextBlockInternal(Display display, IHtmlColorSet set, ISkinSimple spriteContainer,
+			HorizontalAlignment alignment) {
 		final FontConfiguration fc = getFontConfiguration(set);
-		return display.create(fc, HorizontalAlignment.LEFT, spriteContainer);
+		return display.create(fc, alignment, spriteContainer);
 	}
 
 	public TextBlock createTextBlockBordered(Display note, IHtmlColorSet set, ISkinSimple spriteContainer) {
-		final TextBlock textBlock = this.createTextBlockInternal(note, set, spriteContainer);
+		// final HorizontalAlignment alignment = HorizontalAlignment.LEFT;
+		final HorizontalAlignment alignment = this.getHorizontalAlignment();
+		final TextBlock textBlock = this.createTextBlockInternal(note, set, spriteContainer, alignment);
 
 		final HtmlColor legendBackgroundColor = this.value(PName.BackGroundColor).asColor(set);
 		final HtmlColor legendColor = this.value(PName.LineColor).asColor(set);

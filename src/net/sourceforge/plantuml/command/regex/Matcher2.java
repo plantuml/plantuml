@@ -57,7 +57,8 @@ public class Matcher2 {
 		final long now = System.currentTimeMillis();
 		final String id = pattern.pattern();
 		try {
-			return new Matcher2(pattern.matcher(input), id);
+			final Matcher matcher2 = pattern.matcher(input);
+			return new Matcher2(matcher2, id);
 		} finally {
 			if (INSTRUMENT) {
 				addTime(id, System.currentTimeMillis() - now);

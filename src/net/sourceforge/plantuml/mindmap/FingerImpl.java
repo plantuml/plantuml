@@ -72,6 +72,7 @@ public class FingerImpl implements Finger, UDrawable {
 
 	private final Display label;
 	private final HtmlColor backColor;
+	private final String stereotype;
 	private final ISkinParam skinParam;
 	private final StyleBuilder styleBuilder;
 	private final IdeaShape shape;
@@ -83,23 +84,25 @@ public class FingerImpl implements Finger, UDrawable {
 	private final List<FingerImpl> nail = new ArrayList<FingerImpl>();
 	private Tetris tetris = null;
 
-	public StyleSignature getDefaultStyleDefinitionNode() {
+	private StyleSignature getDefaultStyleDefinitionNode() {
 		if (level == 0) {
-			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode);
+			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode).add(
+					stereotype);
 		}
 		if (nail.size() == 0) {
-			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode);
+			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode).add(
+					stereotype);
 		}
-		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node);
+		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype);
 	}
 
 	public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow);
+		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).add(stereotype);
 	}
 
 	public static FingerImpl build(Idea idea, ISkinParam skinParam, Direction direction) {
 		final FingerImpl result = new FingerImpl(idea.getStyleBuilder(), idea.getBackColor(), idea.getLabel(),
-				skinParam, idea.getShape(), direction, idea.getLevel());
+				skinParam, idea.getShape(), direction, idea.getLevel(), idea.getStereotype());
 		for (Idea child : idea.getChildren()) {
 			result.addInNail(build(child, skinParam, direction));
 		}
@@ -112,8 +115,9 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	private FingerImpl(StyleBuilder styleBuilder, HtmlColor backColor, Display label, ISkinParam skinParam,
-			IdeaShape shape, Direction direction, int level) {
+			IdeaShape shape, Direction direction, int level, String stereotype) {
 		this.backColor = backColor;
+		this.stereotype = stereotype;
 		this.level = level;
 		this.label = label;
 		this.skinParam = skinParam;

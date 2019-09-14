@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -62,6 +63,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.wbs.WBSDiagram;
 
 public class MindMapDiagram extends UmlDiagram {
 
@@ -179,19 +181,25 @@ public class MindMapDiagram extends UmlDiagram {
 
 	public CommandExecutionResult addIdea(HtmlColor backColor, int level, String label, IdeaShape shape,
 			Direction direction) {
+		final Matcher2 m = WBSDiagram.patternStereotype.matcher(label);
+		String stereotype = null;
+		if (m.matches()) {
+			label = m.group(1);
+			stereotype = m.group(2);
+		}
 		if (level == 0) {
 			if (this.right.root != null) {
 				return CommandExecutionResult
 						.error("I don't know how to draw multi-root diagram. You should suggest an image so that the PlantUML team implements it :-)");
 			}
-			right.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape);
-			left.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape);
+			right.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape, stereotype);
+			left.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape, stereotype);
 			return CommandExecutionResult.ok();
 		}
 		if (direction == Direction.LEFT) {
-			return left.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape);
+			return left.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
 		}
-		return right.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape);
+		return right.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
 	}
 
 	static class Branch {
@@ -199,8 +207,8 @@ public class MindMapDiagram extends UmlDiagram {
 		private Idea last;
 		private Finger finger;
 
-		private void initRoot(StyleBuilder styleBuilder, String label, IdeaShape shape) {
-			root = new Idea(styleBuilder, Display.getWithNewlines(label), shape);
+		private void initRoot(StyleBuilder styleBuilder, String label, IdeaShape shape, String stereotype) {
+			root = new Idea(styleBuilder, Display.getWithNewlines(label), shape, stereotype);
 			last = root;
 		}
 
@@ -213,17 +221,20 @@ public class MindMapDiagram extends UmlDiagram {
 		}
 
 		private CommandExecutionResult add(StyleBuilder styleBuilder, HtmlColor backColor, int level, String label,
-				IdeaShape shape) {
+				IdeaShape shape, String stereotype) {
+			if (last == null) {
+				return CommandExecutionResult.error("Check your indentation ?");
+			}
 			if (level == last.getLevel() + 1) {
 				final Idea newIdea = last.createIdea(styleBuilder, backColor, level, Display.getWithNewlines(label),
-						shape);
+						shape, stereotype);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}
 			if (level <= last.getLevel()) {
 				final int diff = last.getLevel() - level + 1;
 				final Idea newIdea = getParentOfLast(diff).createIdea(styleBuilder, backColor, level,
-						Display.getWithNewlines(label), shape);
+						Display.getWithNewlines(label), shape, stereotype);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}

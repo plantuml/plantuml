@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
@@ -83,7 +84,8 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 		}
 		this.outputDirectory = outputDirectory;
 
-		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
+		final Reader reader = getReader(charset);
+		builder = new BlockUmlBuilder(config, charset, defines, reader, file.getAbsoluteFile()
 				.getParentFile(), FileWithSuffix.getFileName(file));
 	}
 

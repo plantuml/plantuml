@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -54,16 +55,24 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 
-public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
+public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 
-	public CommandNamespace() {
+	public CommandNamespace2() {
 		super(getRegexConcat());
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandNamespace.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandNamespace2.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("namespace"), //
 				RegexLeaf.spaceOneOrMore(), //
+
+				new RegexLeaf("[%g]"), //
+				new RegexLeaf("DISPLAY", "([^%g]+)"), //
+				new RegexLeaf("[%g]"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("as"), //
+				RegexLeaf.spaceOneOrMore(), //
+
 				new RegexLeaf("NAME", "([\\p{L}0-9_][-\\p{L}0-9_.:\\\\]*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
@@ -79,7 +88,8 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final Code code = Code.of(arg.get("NAME", 0));
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final Display display = Display.getWithNewlines(code);
+		final String disp = arg.getLazzy("DISPLAY", 0);
+		final Display display = Display.getWithNewlines(disp);
 		diagram.gotoGroup2(code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);

@@ -67,6 +67,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "multi", RegexLeaf.start(), //
+				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
@@ -89,6 +90,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "single", RegexLeaf.start(), //
+				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
@@ -157,6 +159,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 		if (lines.size() > 0) {
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;
+			final boolean parallel = line0.get("PARALLEL", 0) != null;
 			final Display display = diagram.manageVariable(lines.toDisplay());
 			final Note note = new Note(p1, p2, display, diagram.getSkinParam().getCurrentStyleBuilder());
 			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
@@ -175,6 +178,9 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 				final Url urlLink = urlBuilder.getUrl(line0.get("URL", 0));
 				note.setUrl(urlLink);
+			}
+			if (parallel) {
+				note.goParallel();
 			}
 			diagram.addNote(note, tryMerge);
 		}

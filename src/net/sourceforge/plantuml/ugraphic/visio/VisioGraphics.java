@@ -167,6 +167,8 @@ public class VisioGraphics {
 				ly = coord[5] + y;
 			} else if (type == USegmentType.SEG_CLOSE) {
 				// Nothing
+			} else if (type == USegmentType.SEG_ARCTO) {
+				// Nothing
 			} else {
 				Log.println("unknown5 " + seg);
 			}

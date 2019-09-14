@@ -66,6 +66,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final List<String> strings;
 
 	private final BufferedImage image;
+	private final double imagePadding = 30;
 
 	private final GraphicPosition position;
 
@@ -174,9 +175,9 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 			if (position == GraphicPosition.BOTTOM) {
 				dim = new Dimension2DDouble(dim.getWidth(), dim.getHeight() + image.getHeight());
 			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
-				dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
+				dim = new Dimension2DDouble(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());
 			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
-				dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
+				dim = new Dimension2DDouble(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());
 			}
 		}
 		return dim;

@@ -294,13 +294,29 @@ public class BlocLines implements Iterable<StringLocated> {
 		final String first = getFirst499().getTrimmed().getString();
 		final String second = get499(1).getTrimmed().getString();
 		if (first.endsWith("{") == false && second.equals("{")) {
-			final String vline = first + " {";
+			final StringLocated vline = getFirst499().append(" {");
 			final List<StringLocated> result = new ArrayList<StringLocated>();
-			result.add(new StringLocated(vline, null));
+			result.add(vline);
 			result.addAll(this.lines.subList(2, this.lines.size()));
 			return new BlocLines(result);
 		}
 		return this;
+	}
+
+	public BlocLines eventuallyMoveAllEmptyBracket() {
+		final List<StringLocated> result = new ArrayList<StringLocated>();
+		for (StringLocated line : lines) {
+			if (line.getTrimmed().toString().equals("{")) {
+				if (result.size() > 0) {
+					final int pos = result.size() - 1;
+					StringLocated last = result.get(pos);
+					result.set(pos, last.append(" {"));
+				}
+			} else {
+				result.add(line);
+			}
+		}
+		return new BlocLines(result);
 	}
 
 }

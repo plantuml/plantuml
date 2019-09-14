@@ -145,14 +145,13 @@ public class PSystemBuilder {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
 		factories.add(new PSystemWelcomeFactory());
 		factories.add(new PSystemColorsFactory());
-		factories.add(new ListSpriteDiagramFactory(skinParam));
 		factories.add(new SequenceDiagramFactory(skinParam));
 		factories.add(new ClassDiagramFactory(skinParam));
 		factories.add(new ActivityDiagramFactory(skinParam));
 		factories.add(new DescriptionDiagramFactory(skinParam));
 		factories.add(new StateDiagramFactory(skinParam));
 		factories.add(new ActivityDiagramFactory3(skinParam));
-		factories.add(new CompositeDiagramFactory(skinParam));
+		// factories.add(new CompositeDiagramFactory(skinParam));
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
@@ -179,6 +178,7 @@ public class PSystemBuilder {
 			factories.add(new PSystemSudokuFactory());
 		}
 		factories.add(new PSystemDefinitionFactory());
+		factories.add(new ListSpriteDiagramFactory(skinParam));
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
 		// factories.add(new PSystemStatsFactory());

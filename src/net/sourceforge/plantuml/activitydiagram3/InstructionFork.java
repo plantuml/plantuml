@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,6 +56,8 @@ public class InstructionFork extends WithNote implements Instruction {
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
 	private final ISkinParam skinParam;
+	private final Swimlane swimlaneIn;
+	private Swimlane swimlaneOut;
 	private ForkStyle style = ForkStyle.FORK;
 	private String label;
 	boolean finished = false;
@@ -68,10 +71,12 @@ public class InstructionFork extends WithNote implements Instruction {
 		return false;
 	}
 
-	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam) {
+	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam, Swimlane swimlane) {
 		this.parent = parent;
 		this.inlinkRendering = inlinkRendering;
 		this.skinParam = skinParam;
+		this.swimlaneIn = swimlane;
+		this.swimlaneOut = swimlane;
 		this.forks.add(new InstructionList());
 		if (inlinkRendering == null) {
 			throw new IllegalArgumentException();
@@ -91,7 +96,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		for (InstructionList list : forks) {
 			all.add(list.createFtile(factory));
 		}
-		Ftile result = factory.createParallel(all, style, label);
+		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut);
 		if (getPositionedNotes().size() > 0) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
@@ -102,7 +107,8 @@ public class InstructionFork extends WithNote implements Instruction {
 		return parent;
 	}
 
-	public void forkAgain() {
+	public void forkAgain(Swimlane swimlane) {
+		this.swimlaneOut = swimlane;
 		this.forks.add(new InstructionList());
 	}
 
@@ -126,17 +132,18 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		return InstructionList.getSwimlanes2(forks);
+		final Set<Swimlane> result = new HashSet<Swimlane>(InstructionList.getSwimlanes2(forks));
+		result.add(swimlaneIn);
+		result.add(swimlaneOut);
+		return result;
 	}
 
 	public Swimlane getSwimlaneIn() {
-		// return parent.getSwimlaneOut();
-		return forks.get(0).getSwimlaneIn();
+		return swimlaneIn;
 	}
 
 	public Swimlane getSwimlaneOut() {
-		return forks.get(0).getSwimlaneOut();
-		// return getLastList().getSwimlaneOut();
+		return swimlaneOut;
 	}
 
 	public void manageOutRendering(LinkRendering nextLinkRenderer, boolean endFork) {
@@ -149,9 +156,10 @@ public class InstructionFork extends WithNote implements Instruction {
 		getLastList().setOutRendering(nextLinkRenderer);
 	}
 
-	public void setStyle(ForkStyle style, String label) {
+	public void setStyle(ForkStyle style, String label, Swimlane swimlane) {
 		this.style = style;
 		this.label = label;
+		this.swimlaneOut = swimlane;
 	}
 
 }

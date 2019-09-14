@@ -44,7 +44,7 @@ public class AParentFolderRegular implements AParentFolder {
 
 	public AParentFolderRegular(File dir) {
 		this.dir = dir;
-		Log.info("Creating AParentFolderRegular " + dir);
+		// Log.info("Creating AParentFolderRegular " + dir);
 	}
 
 	@Override
@@ -54,14 +54,14 @@ public class AParentFolderRegular implements AParentFolder {
 
 	public AFile getAFile(String nameOrPath) throws IOException {
 		final File filecurrent;
-		Log.info("AParentFolderRegular::looking for " + nameOrPath);
-		Log.info("AParentFolderRegular::dir = " + dir);
+		// Log.info("AParentFolderRegular::looking for " + nameOrPath);
+		// Log.info("AParentFolderRegular::dir = " + dir);
 		if (dir == null) {
 			filecurrent = new File(nameOrPath);
 		} else {
 			filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
 		}
-		Log.info("AParentFolderRegular::Filecurrent " + filecurrent);
+		// Log.info("AParentFolderRegular::Filecurrent " + filecurrent);
 		if (filecurrent.exists()) {
 			return new AFileRegular(filecurrent.getCanonicalFile());
 		}

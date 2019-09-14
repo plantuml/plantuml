@@ -35,9 +35,6 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -61,38 +58,36 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
-	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
-			EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
-
 	public CommandHideShowByGender() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandHideShowByGender.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("COMMAND", "(hide|show)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("GENDER",
-						"(?:(class|object|interface|enum|annotation|abstract|[\\p{L}0-9_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
-				new RegexOptional( //
-						new RegexConcat( //
-								new RegexLeaf("EMPTY", "(empty)"), //
-								RegexLeaf.spaceOneOrMore()) //
-				), //
-				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?|circles?|circled?|stereotypes?)"), //
-				RegexLeaf.end());
+		return RegexConcat
+				.build(CommandHideShowByGender.class.getName(),
+						RegexLeaf.start(), //
+						new RegexLeaf("COMMAND", "(hide|show)"), //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf("GENDER",
+								"(?:(class|object|interface|enum|annotation|abstract|[\\p{L}0-9_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
+						new RegexOptional( //
+								new RegexConcat( //
+										new RegexLeaf("EMPTY", "(empty)"), //
+										RegexLeaf.spaceOneOrMore()) //
+						), //
+						new RegexLeaf("PORTION",
+								"(members?|attributes?|fields?|methods?|circles?|circled?|stereotypes?)"), //
+						RegexLeaf.end());
 	}
 
-	private final EntityGender emptyByGender(Set<EntityPortion> portion) {
-		if (portion == PORTION_METHOD) {
+	private final EntityGender emptyByGender(EntityPortion portion) {
+		if (portion == EntityPortion.METHOD) {
 			return EntityGenderUtils.emptyMethods();
 		}
-		if (portion == PORTION_FIELD) {
+		if (portion == EntityPortion.FIELD) {
 			return EntityGenderUtils.emptyFields();
 		}
-		if (portion == PORTION_MEMBER) {
+		if (portion == EntityPortion.MEMBER) {
 			throw new IllegalArgumentException();
 			// return EntityGenderUtils.emptyMembers();
 		}
@@ -115,13 +110,13 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	private CommandExecutionResult executeSequenceDiagram(SequenceDiagram diagram, RegexResult arg) {
-		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
-		diagram.hideOrShow(portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		final EntityPortion portion = getEntityPortion(arg.get("PORTION", 0));
+		diagram.hideOrShow(portion.asSet(), arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		return CommandExecutionResult.ok();
 	}
 
 	private CommandExecutionResult executeDescriptionDiagram(DescriptionDiagram diagram, RegexResult arg) {
-		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
+		final EntityPortion portion = getEntityPortion(arg.get("PORTION", 0));
 		final EntityGender gender;
 		final String arg1 = arg.get("GENDER", 0);
 		if (arg1 == null) {
@@ -151,7 +146,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
 	private CommandExecutionResult executeClassDiagram(AbstractClassOrObjectDiagram classDiagram, RegexResult arg) {
 
-		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
+		final EntityPortion portion = getEntityPortion(arg.get("PORTION", 0));
 
 		EntityGender gender = null;
 		final String arg1 = arg.get("GENDER", 0);
@@ -177,7 +172,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		}
 		if (gender != null) {
 			final boolean empty = arg.get("EMPTY", 0) != null;
-			final boolean emptyMembers = empty && portion == PORTION_MEMBER;
+			final boolean emptyMembers = empty && portion == EntityPortion.MEMBER;
 			if (empty == true && emptyMembers == false) {
 				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 			}
@@ -186,9 +181,9 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			}
 
 			if (emptyMembers) {
-				classDiagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(PORTION_FIELD)), PORTION_FIELD, arg
+				classDiagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)), EntityPortion.FIELD, arg
 						.get("COMMAND", 0).equalsIgnoreCase("show"));
-				classDiagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(PORTION_METHOD)), PORTION_METHOD,
+				classDiagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)), EntityPortion.METHOD,
 						arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 			} else {
 				classDiagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
@@ -197,22 +192,22 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	private Set<EntityPortion> getEntityPortion(String s) {
+	private EntityPortion getEntityPortion(String s) {
 		final String sub = StringUtils.goLowerCase(s.substring(0, 3));
 		if (sub.equals("met")) {
-			return PORTION_METHOD;
+			return EntityPortion.METHOD;
 		}
 		if (sub.equals("mem")) {
-			return PORTION_MEMBER;
+			return EntityPortion.MEMBER;
 		}
 		if (sub.equals("att") || sub.equals("fie")) {
-			return PORTION_FIELD;
+			return EntityPortion.FIELD;
 		}
 		if (sub.equals("cir")) {
-			return EnumSet.<EntityPortion> of(EntityPortion.CIRCLED_CHARACTER);
+			return EntityPortion.CIRCLED_CHARACTER;
 		}
 		if (sub.equals("ste")) {
-			return EnumSet.<EntityPortion> of(EntityPortion.STEREOTYPE);
+			return EntityPortion.STEREOTYPE;
 		}
 		throw new IllegalArgumentException();
 	}

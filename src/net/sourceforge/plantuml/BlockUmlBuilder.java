@@ -82,6 +82,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				includer.close();
 				usedFiles = includer.getFilesUsed();
 			}
+			reader.close();
 		}
 	}
 

@@ -128,7 +128,7 @@ public class WBSDiagram extends UmlDiagram {
 		return new Fork(getSkinParam(), root);
 	}
 
-	private final static Pattern2 patternStereotype = MyPattern.cmpile("^\\s*(.*?)(?:\\s*\\<\\<\\s*(.*)\\s*\\>\\>)?\\s*$");
+	public final static Pattern2 patternStereotype = MyPattern.cmpile("^\\s*(.*?)(?:\\s*\\<\\<\\s*(.*)\\s*\\>\\>)?\\s*$");
 
 	public CommandExecutionResult addIdea(int level, String label, Direction direction, IdeaShape shape) {
 		final Matcher2 m = patternStereotype.matcher(label);

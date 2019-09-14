@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -69,6 +70,10 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		super(style, LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
 				HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, null, null);
 		if (SkinParam.USE_STYLES()) {
+			if (spriteContainer instanceof SkinParamBackcolored) {
+				style = style.eventuallyOverride(PName.BackGroundColor,
+						((SkinParamBackcolored) spriteContainer).getBackgroundColor());
+			}
 			this.groupBorder = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 			this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		} else {

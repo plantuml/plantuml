@@ -59,9 +59,9 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class EntityFactory {
 
-	private final Map<Code, ILeaf> leafs = new Protect<ILeaf>(new LinkedHashMap<Code, ILeaf>());
+	private final Map<Code, ILeaf> leafs = new LinkedHashMap<Code, ILeaf>();
 	private final List<Link> links = new ArrayList<Link>();
-	private final Map<Code, IGroup> groups = new Protect<IGroup>(new LinkedHashMap<Code, IGroup>());
+	private final Map<Code, IGroup> groups = new LinkedHashMap<Code, IGroup>();
 	private int rawLayout;
 
 	private final IGroup rootGroup = new GroupRoot(this);
@@ -207,77 +207,6 @@ public class EntityFactory {
 		final IGroup result = (IGroup) leaf;
 		removeLeaf(code);
 		return result;
-	}
-
-	static class Protect<O extends Object> implements Map<Code, O> {
-
-		private final Map<Code, O> m;
-
-		public Protect(Map<Code, O> data) {
-			this.m = data;
-		}
-
-		public O remove(Object key) {
-			if (key instanceof Code == false) {
-				throw new IllegalArgumentException();
-			}
-			return m.remove(key);
-		}
-
-		public O get(Object key) {
-			if (key instanceof Code == false) {
-				throw new IllegalArgumentException();
-			}
-			return m.get(key);
-		}
-
-		public Set<Code> keySet() {
-			return m.keySet();
-		}
-
-		public void putAll(Map<? extends Code, ? extends O> m) {
-			this.m.putAll(m);
-		}
-
-		public boolean containsKey(Object key) {
-			if (key instanceof Code == false) {
-				throw new IllegalArgumentException();
-			}
-			return m.containsKey(key);
-		}
-
-		public boolean isEmpty() {
-			return m.isEmpty();
-		}
-
-		public O put(Code key, O value) {
-			if (key instanceof Code == false) {
-				throw new IllegalArgumentException();
-			}
-			return m.put(key, value);
-		}
-
-		public boolean containsValue(Object value) {
-			return m.containsValue(value);
-		}
-
-		public Set<Map.Entry<Code, O>> entrySet() {
-			return m.entrySet();
-		}
-
-		public Collection<O> values() {
-			return m.values();
-		}
-
-		public void clear() {
-			m.clear();
-
-		}
-
-		public int size() {
-			return m.size();
-		}
-
 	}
 
 }

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.preproc.Defines;

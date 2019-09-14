@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.ValueImpl;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -78,7 +77,7 @@ public class Englober implements WithStyle {
 	}
 
 	public Style[] getUsedStyles() {
-		Style tmp = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		Style tmp = getDefaultStyleDefinition().with(participantEnglober.getStereotype()).getMergedStyle(styleBuilder);
 		final HtmlColor backColor = participantEnglober.getBoxColor();
 		if (tmp != null) {
 			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);
