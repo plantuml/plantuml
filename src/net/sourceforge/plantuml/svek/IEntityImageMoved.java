@@ -30,52 +30,68 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.creole;
+package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class AtomSprite extends AbstractAtom implements Atom {
+public class IEntityImageMoved implements IEntityImage {
 
-	private final Sprite sprite;
-	private final double scale;
-	private final Url url;
-	private final HtmlColor color;
+	private final IEntityImage orig;
+	private final double delta = 7;
 
-	public AtomSprite(HtmlColor newColor, double scale, FontConfiguration fontConfiguration, Sprite sprite, Url url) {
-		this.scale = scale;
-		this.sprite = sprite;
-		this.url = url;
-		this.color = newColor == null ? fontConfiguration.getColor() : newColor;
+	public IEntityImageMoved(IEntityImage orig) {
+		this.orig = orig;
+	}
+
+	public boolean isHidden() {
+		return orig.isHidden();
+	}
+
+	public HtmlColor getBackcolor() {
+		return orig.getBackcolor();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return sprite.asTextBlock(color, scale).calculateDimension(stringBounder);
+		return Dimension2DDouble.delta(orig.calculateDimension(stringBounder), delta * 2, delta * 2);
 	}
 
-	public double getStartingAltitude(StringBounder stringBounder) {
-		return 0;
+	public MinMax getMinMax(StringBounder stringBounder) {
+		return orig.getMinMax(stringBounder);
+		// return orig.getMinMax(stringBounder).translate(new UTranslate(delta, delta));
+		// return orig.getMinMax(stringBounder).appendToMax(delta, delta);
+	}
+
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		return orig.getInnerPosition(member, stringBounder, strategy);
 	}
 
 	public void drawU(UGraphic ug) {
-		if (url != null) {
-			ug.startUrl(url);
-		}
-		sprite.asTextBlock(color, scale).drawU(ug);
-		if (url != null) {
-			ug.closeAction();
-		}
+		orig.drawU(ug.apply(new UTranslate(delta, delta)));
+
+	}
+
+	public ShapeType getShapeType() {
+		return orig.getShapeType();
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+		return orig.getShield(stringBounder);
+	}
+
+	public double getOverscanX(StringBounder stringBounder) {
+		return orig.getOverscanX(stringBounder);
 	}
 
 }

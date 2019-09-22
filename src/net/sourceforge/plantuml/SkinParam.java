@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.awt.Font;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,6 +48,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.command.BlocLines;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -96,10 +99,10 @@ public class SkinParam implements ISkinParam {
 		if (type == UmlDiagramType.WBS) {
 			USE_STYLE2.set(true);
 		}
-//		if (type == UmlDiagramType.SEQUENCE) {
-//			// skin = "debug.skin";
-//			USE_STYLE2.set(true);
-//		}
+		if (type == UmlDiagramType.SEQUENCE) {
+			// skin = "debug.skin";
+			//USE_STYLE2.set(true);
+		}
 		// if (type == UmlDiagramType.ACTIVITY) {
 		// // skin = "debug.skin";
 		// USE_STYLE2.set(true);
@@ -179,6 +182,20 @@ public class SkinParam implements ISkinParam {
 				final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2, value, getCurrentStyleBuilder());
 				for (Style style : convertor.getStyles()) {
 					muteStyle(style);
+				}
+			}
+		}
+		if ("style".equalsIgnoreCase(key) && "strictuml".equalsIgnoreCase(value)) {
+			if (USE_STYLES()) {
+				final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/strictuml.skin");
+				final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
+				try {
+					final BlocLines lines = BlocLines.load(internalIs, null);
+					for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines, styleBuilder)) {
+						this.muteStyle(modifiedStyle);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		}

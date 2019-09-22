@@ -52,10 +52,12 @@ public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 	}
 
+	@Override
 	public String getPatternEnd() {
 		return "(?i)^end[%s]?note$";
 	}
 
+	@Override
 	protected CommandExecutionResult executeNow(final TimingDiagram diagram, BlocLines lines) {
 
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());

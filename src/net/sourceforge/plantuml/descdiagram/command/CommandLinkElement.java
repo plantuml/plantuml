@@ -364,8 +364,9 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			queue = getQueue(arg);
 		}
 
-		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(arg.get("LABEL_LINK", 0)), queue.length(),
-				diagram.getSkinParam().getCurrentStyleBuilder());
+		final Labels labels = new Labels(arg);
+		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(labels.labelLink), queue.length(), diagram
+				.getSkinParam().getCurrentStyleBuilder());
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}

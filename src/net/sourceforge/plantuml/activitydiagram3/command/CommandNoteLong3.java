@@ -61,10 +61,12 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
+	@Override
 	public String getPatternEnd() {
 		return "(?i)^end[%s]?note$";
 	}
 
+	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines) {
 		// final List<? extends CharSequence> in = StringUtils.removeEmptyColumns2(lines.subList(1, lines.size() - 1));
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());

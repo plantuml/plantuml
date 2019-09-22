@@ -76,7 +76,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left)"), //
+				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -90,7 +90,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("POSITION", "(right|left)"), //
+				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //

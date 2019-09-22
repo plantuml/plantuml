@@ -56,6 +56,7 @@ public class ListSpriteDiagramFactory extends UmlDiagramFactory {
 		final List<Command> cmds = new ArrayList<Command>();
 		addCommonCommands1(cmds);
 		addCommonCommands2(cmds);
+		cmds.add(new CommandListSprite());
 		return cmds;
 	}
 

@@ -70,6 +70,10 @@ public class SourceStringReader {
 		this(defines, source, "UTF-8", config);
 	}
 
+	public SourceStringReader(Defines defines, String source) {
+		this(defines, source, "UTF-8", Collections.<String> emptyList());
+	}
+
 	public SourceStringReader(String source, File newCurrentDir) {
 		this(Defines.createEmpty(), source, "UTF-8", Collections.<String> emptyList(), newCurrentDir);
 	}

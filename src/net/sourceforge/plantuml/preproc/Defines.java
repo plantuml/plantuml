@@ -101,12 +101,18 @@ public class Defines implements Truth {
 		final Defines result = createEmpty();
 		result.overrideFilename(file.getName());
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
-		// result.environment.put("filename", file.getName());
-		// result.environment.put("filenameNoExtension", nameNoExtension(file));
 		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
 		return result;
 	}
-	
+
+	public static Defines createWithMap(Map<String, String> init) {
+		final Defines result = createEmpty();
+		for (Map.Entry<String, String> ent : init.entrySet()) {
+			result.environment.put(ent.getKey(), ent.getValue());
+		}
+		return result;
+	}
+
 	public String getEnvironmentValue(String key) {
 		return this.environment.get(key);
 	}

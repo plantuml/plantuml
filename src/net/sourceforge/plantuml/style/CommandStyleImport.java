@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.style;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.LineLocation;
@@ -75,10 +76,18 @@ public class CommandStyleImport extends SingleLineCommand2<UmlDiagram> {
 		final String path = arg.get("PATH", 0);
 		try {
 			final File f = FileSystem.getInstance().getFile(path);
-			if (f.exists() == false) {
+			BlocLines lines = null;
+			if (f.exists()) {
+				lines = BlocLines.load(f, location);
+			} else {
+				final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/" + path);
+				if (internalIs != null) {
+					lines = BlocLines.load(internalIs, location);
+				}
+			}
+			if (lines == null) {
 				return CommandExecutionResult.error("File does not exist: " + path);
 			}
-			final BlocLines lines = BlocLines.load(f, location);
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
 			for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines, styleBuilder)) {
 				diagram.getSkinParam().muteStyle(modifiedStyle);

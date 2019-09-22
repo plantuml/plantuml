@@ -90,7 +90,10 @@ public class SvgGraphics {
 	// http://www.w3schools.com/svg/svg_feoffset.asp
 	// http://www.adobe.com/svg/demos/samples.html
 
-	private static final String XLINK_HREF = "href";
+	private static final String XLINK_TITLE1 = "title";
+	private static final String XLINK_TITLE2 = "xlink:title";
+	private static final String XLINK_HREF1 = "href";
+	private static final String XLINK_HREF2 = "xlink:href";
 
 	final private Document document;
 	final private Element root;
@@ -329,15 +332,18 @@ public class SvgGraphics {
 
 		pendingAction.add(0, (Element) document.createElement("a"));
 		pendingAction.get(0).setAttribute("target", target);
-		pendingAction.get(0).setAttribute(XLINK_HREF, url);
+		pendingAction.get(0).setAttribute(XLINK_HREF1, url);
+		pendingAction.get(0).setAttribute(XLINK_HREF2, url);
 		pendingAction.get(0).setAttribute("xlink:type", "simple");
 		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
 		pendingAction.get(0).setAttribute("xlink:show", "new");
 		if (title == null) {
-			pendingAction.get(0).setAttribute("xlink:title", url);
+			pendingAction.get(0).setAttribute(XLINK_TITLE1, url);
+			pendingAction.get(0).setAttribute(XLINK_TITLE2, url);
 		} else {
 			title = title.replaceAll("\\\\n", "\n");
-			pendingAction.get(0).setAttribute("xlink:title", title);
+			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
+			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
 		}
 	}
 

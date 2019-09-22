@@ -89,25 +89,35 @@ public class FromSkinparamToStyle {
 		addConvert("entityBorderThickness", PName.LineThickness, SName.entity);
 		addConFont("entity", SName.entity);
 		addConFont("footer", SName.footer);
+
+		addConvert("sequenceStereotypeFontSize", PName.FontSize, SName.stereotype);
+		addConvert("sequenceStereotypeFontStyle", PName.FontStyle, SName.stereotype);
+		addConvert("sequenceStereotypeFontColor", PName.FontColor, SName.stereotype);
+		addConvert("sequenceStereotypeFontName", PName.FontName, SName.stereotype);
 		addConvert("SequenceReferenceBorderColor", PName.LineColor, SName.reference);
 		addConvert("SequenceReferenceBorderColor", PName.LineColor, SName.referenceHeader);
 		addConvert("SequenceReferenceBackgroundColor", PName.BackGroundColor, SName.reference);
 		addConvert("sequenceReferenceHeaderBackgroundColor", PName.BackGroundColor, SName.referenceHeader);
 		addConFont("sequenceReference", SName.reference);
 		addConFont("sequenceReference", SName.referenceHeader);
+		addConvert("sequenceGroupBorderThickness", PName.LineThickness, SName.group);
 		addConvert("SequenceGroupBorderColor", PName.LineColor, SName.group);
 		addConvert("SequenceGroupBorderColor", PName.LineColor, SName.groupHeader);
 		addConvert("SequenceGroupBackgroundColor", PName.BackGroundColor, SName.groupHeader);
+		addConFont("SequenceGroup", SName.group);
 		addConFont("SequenceGroupHeader", SName.groupHeader);
 		addConvert("SequenceBoxBorderColor", PName.LineColor, SName.box);
 		addConvert("SequenceBoxBackgroundColor", PName.BackGroundColor, SName.box);
 		addConvert("SequenceLifeLineBorderColor", PName.LineColor, SName.lifeLine);
+		addConvert("SequenceLifeLineBackgroundColor", PName.BackGroundColor, SName.lifeLine);
 		addConvert("sequenceDividerBackgroundColor", PName.BackGroundColor, SName.separator);
 		addConvert("sequenceDividerBorderColor", PName.LineColor, SName.separator);
 		addConFont("sequenceDivider", SName.separator);
 		addConvert("sequenceDividerBorderThickness", PName.LineThickness, SName.separator);
 		addConvert("SequenceMessageAlignment", PName.HorizontalAlignment, SName.arrow);
+		
 		addConFont("note", SName.note);
+		addConvert("noteBorderThickness", PName.LineThickness, SName.note);
 		addConvert("noteBackgroundColor", PName.BackGroundColor, SName.note);
 		addConvert("packageBackgroundColor", PName.BackGroundColor, SName.group);
 		addConvert("packageBorderColor", PName.LineColor, SName.group);
@@ -125,7 +135,12 @@ public class FromSkinparamToStyle {
 		addConvert("activityDiamondBorderColor", PName.LineColor, SName.diamond);
 		addConFont("activityDiamond", SName.diamond);
 		addConvert("arrowColor", PName.LineColor, SName.arrow);
+		
 		addConFont("arrow", SName.arrow);
+		addConvert("arrowThickness", PName.LineThickness, SName.arrow);
+		addConvert("arrowColor", PName.LineColor, SName.arrow);
+		addConvert("arrowStyle", PName.LineStyle, SName.arrow);
+
 		addConvert("defaulttextalignment", PName.HorizontalAlignment, SName.root);
 		addConvert("defaultFontName", PName.FontName, SName.root);
 		addConFont("SwimlaneTitle", SName.swimlane);
@@ -150,7 +165,10 @@ public class FromSkinparamToStyle {
 	private final List<Style> styles = new ArrayList<Style>();
 	private String stereo = null;
 
-	public FromSkinparamToStyle(String key, final String value, final AutomaticCounter counter) {
+	public FromSkinparamToStyle(String key, String value, final AutomaticCounter counter) {
+		if (value.equals("right:right")) {
+			value = "right";
+		}
 		if (key.contains("<<")) {
 			final StringTokenizer st = new StringTokenizer(key, "<>");
 			key = st.nextToken();

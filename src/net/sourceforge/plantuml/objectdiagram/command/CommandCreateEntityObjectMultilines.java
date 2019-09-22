@@ -83,6 +83,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		return "(?i)^[%s]*\\}[%s]*$";
 	}
 
+	@Override
 	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) {
 		lines = lines.trim(true);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());

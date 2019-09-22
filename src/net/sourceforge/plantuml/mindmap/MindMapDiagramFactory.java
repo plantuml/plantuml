@@ -55,6 +55,7 @@ public class MindMapDiagramFactory extends UmlDiagramFactory {
 		addCommonCommands1(cmds);
 		cmds.add(new CommandMindMapTabulation());
 		cmds.add(new CommandMindMapOrgmode());
+		cmds.add(new CommandMindMapOrgmodeMultiline());
 		cmds.add(new CommandMindMapRoot());
 		cmds.add(new CommandMindMapPlus());
 		cmds.add(new CommandMindMapDirection());

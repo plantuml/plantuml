@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class CommandMindMapTabulation extends SingleLineCommand2<MindMapDiagram> {
 
@@ -61,7 +62,8 @@ public class CommandMindMapTabulation extends SingleLineCommand2<MindMapDiagram>
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
-		return diagram.addIdea(null, type.length() - 1, label, IdeaShape.fromDesc(arg.get("SHAPE", 0)));
+		return diagram.addIdea(null, type.length() - 1, Display.getWithNewlines(label),
+				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
 
 }

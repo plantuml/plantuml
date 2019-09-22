@@ -175,16 +175,16 @@ public class MindMapDiagram extends UmlDiagram {
 		}
 	}
 
-	public CommandExecutionResult addIdea(HtmlColor backColor, int level, String label, IdeaShape shape) {
+	public CommandExecutionResult addIdea(HtmlColor backColor, int level, Display label, IdeaShape shape) {
 		return addIdea(backColor, level, label, shape, defaultDirection);
 	}
 
-	public CommandExecutionResult addIdea(HtmlColor backColor, int level, String label, IdeaShape shape,
+	public CommandExecutionResult addIdea(HtmlColor backColor, int level, Display label, IdeaShape shape,
 			Direction direction) {
-		final Matcher2 m = WBSDiagram.patternStereotype.matcher(label);
+		final Matcher2 m = WBSDiagram.patternStereotype.matcher(label.get(0));
 		String stereotype = null;
 		if (m.matches()) {
-			label = m.group(1);
+			label = Display.getWithNewlines(m.group(1));
 			stereotype = m.group(2);
 		}
 		if (level == 0) {
@@ -207,8 +207,8 @@ public class MindMapDiagram extends UmlDiagram {
 		private Idea last;
 		private Finger finger;
 
-		private void initRoot(StyleBuilder styleBuilder, String label, IdeaShape shape, String stereotype) {
-			root = new Idea(styleBuilder, Display.getWithNewlines(label), shape, stereotype);
+		private void initRoot(StyleBuilder styleBuilder, Display label, IdeaShape shape, String stereotype) {
+			root = new Idea(styleBuilder, label, shape, stereotype);
 			last = root;
 		}
 
@@ -220,21 +220,20 @@ public class MindMapDiagram extends UmlDiagram {
 			return result;
 		}
 
-		private CommandExecutionResult add(StyleBuilder styleBuilder, HtmlColor backColor, int level, String label,
+		private CommandExecutionResult add(StyleBuilder styleBuilder, HtmlColor backColor, int level, Display label,
 				IdeaShape shape, String stereotype) {
 			if (last == null) {
 				return CommandExecutionResult.error("Check your indentation ?");
 			}
 			if (level == last.getLevel() + 1) {
-				final Idea newIdea = last.createIdea(styleBuilder, backColor, level, Display.getWithNewlines(label),
-						shape, stereotype);
+				final Idea newIdea = last.createIdea(styleBuilder, backColor, level, label, shape, stereotype);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}
 			if (level <= last.getLevel()) {
 				final int diff = last.getLevel() - level + 1;
-				final Idea newIdea = getParentOfLast(diff).createIdea(styleBuilder, backColor, level,
-						Display.getWithNewlines(label), shape, stereotype);
+				final Idea newIdea = getParentOfLast(diff).createIdea(styleBuilder, backColor, level, label, shape,
+						stereotype);
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}

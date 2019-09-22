@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 
@@ -63,7 +64,8 @@ public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
 		final Direction direction = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
-		return diagram.addIdea(null, type.length() - 1, label, IdeaShape.fromDesc(arg.get("SHAPE", 0)), direction);
+		return diagram.addIdea(null, type.length() - 1, Display.getWithNewlines(label),
+				IdeaShape.fromDesc(arg.get("SHAPE", 0)), direction);
 	}
 
 }

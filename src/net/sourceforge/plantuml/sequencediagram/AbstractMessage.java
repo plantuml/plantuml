@@ -44,6 +44,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -53,12 +54,15 @@ import net.sourceforge.plantuml.style.WithStyle;
 public abstract class AbstractMessage implements EventWithDeactivate, WithStyle {
 
 	public Style[] getUsedStyles() {
-		return new Style[] { getDefaultStyleDefinition().getMergedStyle(styleBuilder) };
+		Style style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		if (style != null && arrowConfiguration.getColor() != null) {
+			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());
+		}
+		return new Style[] { style };
 	}
 
 	public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram,
-				SName.arrow);
+		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.arrow);
 	}
 
 	private final Display label;
@@ -181,7 +185,8 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 	}
 
 	public final void setNote(Note note) {
-		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT) {
+		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT
+				&& note.getPosition() != NotePosition.BOTTOM && note.getPosition() != NotePosition.TOP) {
 			throw new IllegalArgumentException();
 		}
 		note = note.withPosition(overideNotePosition(note.getPosition()));

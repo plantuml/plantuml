@@ -71,6 +71,7 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 				RegexLeaf.end());
 	}
 
+	@Override
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());

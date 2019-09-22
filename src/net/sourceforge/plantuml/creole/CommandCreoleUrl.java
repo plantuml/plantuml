@@ -74,14 +74,6 @@ public class CommandCreoleUrl implements Command {
 		final UrlBuilder urlBuilder = new UrlBuilder(skinParam.getValue("topurl"), ModeUrl.STRICT);
 		final Url url = urlBuilder.getUrl(m.group(1));
 		stripe.addUrl(url);
-
-//		final int size = Integer.parseInt(m.group(2));
-//		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
-//		final FontConfiguration fc2 = fc1.changeSize(size);
-//		// final FontConfiguration fc2 = new AddStyle(style, null).apply(fc1);
-//		stripe.setActualFontConfiguration(fc2);
-		// stripe.analyzeAndAdd("AZERTY");
-//		stripe.setActualFontConfiguration(fc1);
 		return line.substring(m.group(1).length());
 	}
 }

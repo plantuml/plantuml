@@ -68,15 +68,6 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 
-	private Opale(boolean shadowing, HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock,
-			boolean withLink) {
-		this.noteBackgroundColor = noteBackgroundColor;
-		this.withLink = withLink;
-		this.shadowing2 = shadowing ? 4 : 0;
-		this.borderColor = borderColor;
-		this.textBlock = textBlock;
-	}
-
 	public Opale(double shadowing, HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock,
 			boolean withLink) {
 		this.noteBackgroundColor = noteBackgroundColor;

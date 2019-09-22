@@ -71,14 +71,15 @@ public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
 		final String align = arg.get("POSITION", 0);
-		HorizontalAlignment defaultAlign = HorizontalAlignment.CENTER;
-		if (SkinParam.USE_STYLES()) {
-			defaultAlign = FontParam.FOOTER.getStyleDefinition()
+		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
+		if (SkinParam.USE_STYLES() && align == null) {
+			ha = FontParam.FOOTER.getStyleDefinition()
 					.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
 					.getHorizontalAlignment();
 		}
-		diagram.getFooter().putDisplay(Display.getWithNewlines(arg.get("LABEL", 0)),
-				HorizontalAlignment.fromString(align, defaultAlign));
+		diagram.getFooter().putDisplay(Display.getWithNewlines(arg.get("LABEL", 0)), ha);
+
+		
 		return CommandExecutionResult.ok();
 	}
 }

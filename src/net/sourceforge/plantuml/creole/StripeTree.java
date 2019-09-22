@@ -60,7 +60,7 @@ public class StripeTree implements Stripe {
 	public List<Atom> getAtoms() {
 		return Collections.<Atom> singletonList(marged);
 	}
-	
+
 	public Atom getHeader() {
 		return null;
 	}
@@ -70,13 +70,29 @@ public class StripeTree implements Stripe {
 		for (String s : lines) {
 			final StripeSimple cell = new StripeSimple(fontConfiguration, stripeStyle, new CreoleContext(), skinParam,
 					CreoleMode.FULL);
-			// EMTEC
 			final String text = s.replaceFirst("^\\s*\\|_", "");
-			final int level = (s.length() - text.length()) / 2;
+			final int level = computeLevel(s);
 			cell.analyzeAndAdd(text);
 			this.tree.addCell(StripeTable.asAtom(Collections.singletonList(cell), 0), level);
 		}
 
+	}
+
+	private int computeLevel(String s) {
+		int result = 1;
+		while (s.length() > 0) {
+			if (s.startsWith("  ")) {
+				result++;
+				s = s.substring(2);
+				continue;
+			} else if (s.startsWith("\t")) {
+				result++;
+				s = s.substring(1);
+				continue;
+			}
+			return result;
+		}
+		return result;
 	}
 
 }

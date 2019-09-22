@@ -112,6 +112,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				RegexLeaf.end());
 	}
 
+	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());

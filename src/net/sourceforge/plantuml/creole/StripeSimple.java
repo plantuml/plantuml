@@ -164,12 +164,26 @@ public class StripeSimple implements Stripe {
 		}
 		line = CharHidder.hide(line);
 		if (style.getType() == StripeStyleType.HEADING) {
-			atoms.add(AtomText.createHeading(line, fontConfiguration, style.getOrder()));
+			fontConfiguration = fontConfigurationForHeading(fontConfiguration, style.getOrder());
+			modifyStripe(line);
 		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {
 			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));
 		} else {
 			modifyStripe(line);
 		}
+	}
+
+	private static FontConfiguration fontConfigurationForHeading(FontConfiguration fontConfiguration, int order) {
+		if (order == 0) {
+			fontConfiguration = fontConfiguration.bigger(4).bold();
+		} else if (order == 1) {
+			fontConfiguration = fontConfiguration.bigger(2).bold();
+		} else if (order == 2) {
+			fontConfiguration = fontConfiguration.bigger(1).bold();
+		} else {
+			fontConfiguration = fontConfiguration.italic();
+		}
+		return fontConfiguration;
 	}
 
 	public void addImage(String src, double scale) {

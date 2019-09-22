@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
@@ -66,6 +68,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
+import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
@@ -90,6 +93,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
@@ -125,6 +129,8 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateEmptyDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageSynchroBar;
 import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
+import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public final class GeneralImageBuilder {
 
@@ -265,6 +271,7 @@ public final class GeneralImageBuilder {
 	private final EntityFactory entityFactory;
 	private final UmlSource source;
 	private final Pragma pragma;
+	private final boolean strictUmlStyle;
 	private Map<Code, Double> maxX;
 
 	private final StringBounder stringBounder;
@@ -276,13 +283,72 @@ public final class GeneralImageBuilder {
 		this.source = source;
 		this.pragma = pragma;
 		this.stringBounder = stringBounder;
+		this.strictUmlStyle = dotData.getSkinParam().strictUmlStyle();
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
+	private boolean isOpalisable(IEntity entity) {
+		if (strictUmlStyle) {
+			return false;
+		}
+		return entity.isGroup() == false && entity.getLeafType() == LeafType.NOTE && onlyOneLink(entity);
+	}
+
+	static class IEntityImageEmpty implements IEntityImage {
+
+		public boolean isHidden() {
+			return false;
+		}
+
+		public HtmlColor getBackcolor() {
+			return null;
+		}
+
+		public Dimension2D calculateDimension(StringBounder stringBounder) {
+			return new Dimension2DDouble(10, 10);
+		}
+
+		public MinMax getMinMax(StringBounder stringBounder) {
+			return MinMax.fromDim(calculateDimension(stringBounder));
+		}
+
+		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			return null;
+		}
+
+		public void drawU(UGraphic ug) {
+		}
+
+		public ShapeType getShapeType() {
+			return ShapeType.RECTANGLE;
+		}
+
+		public Margins getShield(StringBounder stringBounder) {
+			return Margins.NONE;
+		}
+
+		public double getOverscanX(StringBounder stringBounder) {
+			return 0;
+		}
+
+	}
+
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
+		if (dotData.isDegeneratedWithFewEntities(0)) {
+			return new IEntityImageEmpty();
+		}
+		if (dotData.isDegeneratedWithFewEntities(1) && dotData.getUmlDiagramType() != UmlDiagramType.STATE) {
+			final ILeaf single = dotData.getLeafs().iterator().next();
+			final IGroup group = single.getParentContainer();
+			if (group instanceof GroupRoot) {
+				return new IEntityImageMoved(GeneralImageBuilder.createEntityImageBlock(single, dotData.getSkinParam(),
+						dotData.isHideEmptyDescriptionForState(), dotData, null, null, dotData.getUmlDiagramType(),
+						dotData.getLinks()));
+			}
+		}
 		dotData.removeIrrelevantSametail();
 		final DotStringFactory dotStringFactory = new DotStringFactory(stringBounder, dotData);
 
@@ -309,16 +375,14 @@ public final class GeneralImageBuilder {
 
 				dotStringFactory.getBibliotekon().addLine(line);
 
-				if (link.getEntity1().isGroup() == false && link.getEntity1().getLeafType() == LeafType.NOTE
-						&& onlyOneLink(link.getEntity1())) {
+				if (isOpalisable(link.getEntity1())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
 					if (other != null) {
 						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 						line.setOpale(true);
 					}
-				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getLeafType() == LeafType.NOTE
-						&& onlyOneLink(link.getEntity2())) {
+				} else if (isOpalisable(link.getEntity2())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
 					if (other != null) {
@@ -335,13 +399,10 @@ public final class GeneralImageBuilder {
 			return error(dotStringFactory.getDotExe());
 		}
 
-		// final boolean trace = OptionFlags.getInstance().isKeepTmpFiles() || OptionFlags.TRACE_DOT || isSvekTrace();
-		// option.isDebugSvek
-		// System.err.println("FOO11 svekDebug=" + svekDebug);
 		if (basefile == null && isSvekTrace()) {
 			basefile = new BaseFile();
 		}
-		// System.err.println("FOO11 basefile=" + basefile);
+
 		final String svg;
 		try {
 			svg = dotStringFactory.getSvg(basefile, dotStrings);

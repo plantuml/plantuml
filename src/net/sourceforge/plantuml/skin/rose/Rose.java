@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 public class Rose {
 
 	final private double paddingX = 5;
-	final private double paddingY = 5;
+	final public static double paddingY = 5;
 
 	public HtmlColor getFontColor(ISkinParam skin, FontParam fontParam) {
 		return skin.getFontHtmlColor(null, fontParam);
@@ -321,7 +321,22 @@ public class Rose {
 			final String value = textStyle.value(PName.HorizontalAlignment).asString();
 			messageHorizontalAlignment = textStyle.getHorizontalAlignment();
 			textHorizontalAlignment = textStyle.getHorizontalAlignment();
-			if ("direction".equalsIgnoreCase(value)) {
+			if ("first".equalsIgnoreCase(value)) {
+				final boolean isReverseDefine = config.isReverseDefine();
+				if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+					if (isReverseDefine) {
+						messageHorizontalAlignment = HorizontalAlignment.LEFT;
+					} else {
+						messageHorizontalAlignment = HorizontalAlignment.RIGHT;
+					}
+				} else {
+					if (isReverseDefine) {
+						messageHorizontalAlignment = HorizontalAlignment.RIGHT;
+					} else {
+						messageHorizontalAlignment = HorizontalAlignment.LEFT;
+					}
+				}
+			} else if ("direction".equalsIgnoreCase(value)) {
 				if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
 					messageHorizontalAlignment = HorizontalAlignment.LEFT;
 				} else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {

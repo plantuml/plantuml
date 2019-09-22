@@ -49,14 +49,21 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
-public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {
+final public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {
 
 	private final Participant p;
 	private final Participant p2;
 
 	private final Display strings;
 
-	private final NotePosition position;
+	private/* final */NotePosition position;
+
+	public void temporaryProtectedUntilTeozIsStandard() {
+		if (position == NotePosition.BOTTOM || position == NotePosition.TOP) {
+			position = NotePosition.LEFT;
+		}
+	}
+
 	private final StyleBuilder styleBuilder;
 	private NoteStyle noteStyle = NoteStyle.NORMAL;
 	private Colors colors = Colors.empty();
@@ -186,14 +193,4 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable,
 		return parallel;
 	}
 
-//	public Style[] applyStyle2(Style[] usedStyles) {
-//		if (usedStyles.length != 1) {
-//			throw new IllegalArgumentException();
-//		}
-//		Style tmp = usedStyles[0];
-//		if (tmp != null) {
-//			tmp = tmp.eventuallyOverride(colors);
-//		}
-//		return new Style[] { tmp };
-//	}
 }

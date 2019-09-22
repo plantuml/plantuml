@@ -90,19 +90,20 @@ public class ShuntingYard {
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_MATH) {
 				operatorStack.addFirst(token);
 			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_FUNC) {
-				ouputQueue.add(operatorStack.removeFirst());
+				final Token first = operatorStack.removeFirst();
+				ouputQueue.add(first);
 			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_MATH) {
 				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_MATH) {
 					ouputQueue.add(operatorStack.removeFirst());
-					// System.err.println("Warning 2013");
 				}
 				if (operatorStack.peekFirst().getTokenType() == TokenType.OPEN_PAREN_MATH) {
-					// System.err.println("Warning 4210");
 					operatorStack.removeFirst();
-					// throw new UnsupportedOperationException(token.toString());
 				}
 			} else if (token.getTokenType() == TokenType.COMMA) {
-				// Just ignore
+				while (operatorStack.peekFirst() != null
+						&& operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC) {
+					ouputQueue.add(operatorStack.removeFirst());
+				}
 			} else {
 				throw new UnsupportedOperationException(token.toString());
 			}

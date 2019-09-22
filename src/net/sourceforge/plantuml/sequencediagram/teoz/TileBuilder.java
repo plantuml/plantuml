@@ -107,6 +107,12 @@ public class TileBuilder {
 				} else if (notePosition == NotePosition.RIGHT) {
 					result = new CommunicationTileNoteRight((TileWithUpdateStairs) result, msg, skin, skinParam,
 							reverse ? livingSpace1 : livingSpace2, noteOnMessage);
+				} else if (notePosition == NotePosition.BOTTOM) {
+					result = new CommunicationTileNoteBottom((TileWithUpdateStairs) result, msg, skin, skinParam,
+							noteOnMessage);
+				} else if (notePosition == NotePosition.TOP) {
+					result = new CommunicationTileNoteTop((TileWithUpdateStairs) result, msg, skin, skinParam,
+							noteOnMessage);
 				}
 			}
 			tiles.add(result);

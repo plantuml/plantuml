@@ -65,13 +65,13 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 		lines = lines.subExtract(1, 1);
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			HorizontalAlignment defaultAlign = HorizontalAlignment.CENTER;
-			if (SkinParam.USE_STYLES()) {
-				defaultAlign = FontParam.FOOTER.getStyleDefinition()
+			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
+			if (SkinParam.USE_STYLES() && align == null) {
+				ha = FontParam.FOOTER.getStyleDefinition()
 						.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
 						.getHorizontalAlignment();
 			}
-			diagram.getFooter().putDisplay(strings, HorizontalAlignment.fromString(align, defaultAlign));
+			diagram.getFooter().putDisplay(strings, ha);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty footer");

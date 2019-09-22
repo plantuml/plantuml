@@ -140,6 +140,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
+	@Override
 	protected CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());

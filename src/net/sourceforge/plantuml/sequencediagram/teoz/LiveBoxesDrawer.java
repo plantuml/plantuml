@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class LiveBoxesDrawer {
 
 	private double y1;
-	private SymbolContext color;
+	private SymbolContext symbolContext;
 
 	private final Component cross;
 	private final Context2D context;
@@ -86,9 +86,9 @@ public class LiveBoxesDrawer {
 		return compForWidth.getPreferredWidth(stringBounder);
 	}
 
-	public void addStart(double y1, SymbolContext color) {
+	public void addStart(double y1, SymbolContext symbolContext) {
 		this.y1 = y1;
-		this.color = color;
+		this.symbolContext = symbolContext;
 	}
 
 	public void doDrawing(UGraphic ug, StairsPosition yposition) {
@@ -121,10 +121,13 @@ public class LiveBoxesDrawer {
 	private void drawInternal(UGraphic ug, StairsPosition yposition, double ya, double yb, ComponentType type) {
 		final double width = getWidth(ug.getStringBounder());
 		final Area area = new Area(width, yb - ya);
-		final ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, color == null ? null : color.getBackColor());
-		final Component comp = skin.createComponent(
-				new Style[] { type.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder()) },
-				type, null, skinParam2, null);
+		ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, symbolContext == null ? null
+				: symbolContext.getBackColor());
+		Style style = type.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		if (style != null) {
+			style = style.eventuallyOverride(symbolContext);
+		}
+		final Component comp = skin.createComponent(new Style[] { style }, type, null, skinParam2, null);
 		comp.drawU(ug.apply(new UTranslate(-width / 2, ya)), area, context);
 	}
 

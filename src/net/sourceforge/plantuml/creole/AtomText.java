@@ -90,6 +90,12 @@ public class AtomText extends AbstractAtom implements Atom {
 	public static Atom create(String text, FontConfiguration fontConfiguration) {
 		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}
+	
+//	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
+//		fontConfiguration = FOO(fontConfiguration, order);
+//		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
+//	}
+
 
 	public static Atom createUrl(Url url, FontConfiguration fontConfiguration, ISkinSimple skinSimple) {
 		fontConfiguration = fontConfiguration.hyperlink();
@@ -147,19 +153,6 @@ public class AtomText extends AbstractAtom implements Atom {
 			return result.get(0);
 		}
 		return new AtomHorizontalTexts(result);
-	}
-
-	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
-		if (order == 0) {
-			fontConfiguration = fontConfiguration.bigger(4).bold();
-		} else if (order == 1) {
-			fontConfiguration = fontConfiguration.bigger(2).bold();
-		} else if (order == 2) {
-			fontConfiguration = fontConfiguration.bigger(1).bold();
-		} else {
-			fontConfiguration = fontConfiguration.italic();
-		}
-		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}
 
 	public static Atom createListNumber(final FontConfiguration fontConfiguration, final int order, int localNumber) {

@@ -65,13 +65,13 @@ public class CommandMultilinesHeader extends CommandMultilines<TitledDiagram> {
 		lines = lines.subExtract(1, 1);
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			HorizontalAlignment defaultAlign = HorizontalAlignment.RIGHT;
-			if (SkinParam.USE_STYLES()) {
-				defaultAlign = FontParam.HEADER.getStyleDefinition()
+			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);
+			if (SkinParam.USE_STYLES() && align == null) {
+				ha = FontParam.HEADER.getStyleDefinition()
 						.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
 						.getHorizontalAlignment();
 			}
-			diagram.getHeader().putDisplay(strings, HorizontalAlignment.fromString(align, defaultAlign));
+			diagram.getHeader().putDisplay(strings, ha);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty header");

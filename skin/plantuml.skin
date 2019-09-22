@@ -138,33 +138,41 @@ delay {
 
 participant {
   LineThickness 1.5
+  HorizontalAlignment center
 }
 
 actor {
   LineThickness 2.0
+  HorizontalAlignment center
 }
 
 boundary {
   LineThickness 2.0
+  HorizontalAlignment center
 }
 
 control {
   LineThickness 2.0
+  HorizontalAlignment center
 }
 
 entity {
   LineThickness 2.0
+  HorizontalAlignment center
 }
 
 queue {
   LineThickness 2.0
+  HorizontalAlignment center
 }
 
 database {
+  HorizontalAlignment center
 }
 
 collections {
   LineThickness 1.5
+  HorizontalAlignment center
 }
 
 swimlane {

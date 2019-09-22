@@ -57,12 +57,6 @@ public class AtomTree extends AbstractAtom implements Atom {
 	private final Map<Atom, Integer> levels = new HashMap<Atom, Integer>();
 	private final double margin = 2;
 	
-	@Override
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		return Arrays.asList((Atom) this);
-	}
-
-
 	public AtomTree(HtmlColor lineColor) {
 		this.lineColor = lineColor;
 	}

@@ -177,6 +177,7 @@ class Step1Message extends Step1Abstract {
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
 				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				noteOnMessage.temporaryProtectedUntilTeozIsStandard();
 				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));
 			}
 			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBoxes);
@@ -185,6 +186,7 @@ class Step1Message extends Step1Abstract {
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
 				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				noteOnMessage.temporaryProtectedUntilTeozIsStandard();
 				noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));
 			}
 			return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBoxes);

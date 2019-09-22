@@ -124,6 +124,17 @@ public class Style {
 		return result;
 	}
 
+	public Style eventuallyOverride(SymbolContext symbolContext) {
+		Style result = this;
+		if (symbolContext != null) {
+			final HtmlColor back = symbolContext.getBackColor();
+			if (back != null) {
+				result = result.eventuallyOverride(PName.BackGroundColor, back);
+			}
+		}
+		return result;
+	}
+
 	public StyleSignature getSignature() {
 		return signature;
 	}
@@ -215,4 +226,5 @@ public class Style {
 		ug = ug.apply(getStroke());
 		return ug;
 	}
+
 }

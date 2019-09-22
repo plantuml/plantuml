@@ -59,11 +59,6 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	private final char style;
 	private final ISkinSimple skinParam;
 
-	@Override
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		return Arrays.asList((Atom) this);
-	}
-
 	public static CreoleHorizontalLine create(FontConfiguration fontConfiguration, String line, char style,
 			ISkinSimple skinParam) {
 		return new CreoleHorizontalLine(fontConfiguration, line, style, skinParam);

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -42,7 +43,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 public abstract class AbstractAtom implements Atom {
 
 	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		throw new UnsupportedOperationException(getClass().toString());
+		return Arrays.asList((Atom) this);
 	}
 
 }

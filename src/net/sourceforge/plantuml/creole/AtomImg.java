@@ -45,6 +45,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -69,7 +71,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 	private final BufferedImage image;
 	private final double scale;
 	private final Url url;
-
+	
 	private AtomImg(BufferedImage image, double scale, Url url) {
 		this.image = image;
 		this.scale = scale;
