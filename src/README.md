@@ -2,8 +2,8 @@
 
 ---
 
-(C) Copyright 2009-2013, Arnaud Roques
-Project Info: [http://plantuml.sourceforge.net](http://plantuml.sourceforge.net)
+(C) Copyright 2009-2019, Arnaud Roques
+Project Info: [http://plantuml.com](http://plantuml.com)
 
 This file is part of PlantUML.
 
@@ -34,7 +34,7 @@ PlantUML is an open-source component used to draw UML diagrams from their textua
 
 ### Overview
 This documentation will _not_ describe the PlantUML language description.
-Please refer to [PlantUML site](http://plantuml.sourceforge.net) for that.
+Please refer to [PlantUML site](http://plantuml.com) for that.
 
 Here, some information about how PlantUML is implemented will be provided to help the
 integration of PlantUML with other programs.
