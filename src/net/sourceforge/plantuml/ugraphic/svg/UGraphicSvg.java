@@ -88,20 +88,21 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	public UGraphicSvg(boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper, String backcolor,
-			boolean textAsPath, double scale, String linkTarget, String hover, long seed) {
-		this(minDim, colorMapper, new SvgGraphics(svgDimensionStyle, minDim, backcolor, scale, hover, seed),
-				textAsPath, linkTarget);
+			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio) {
+		this(minDim, colorMapper, new SvgGraphics(svgDimensionStyle, minDim, backcolor, scale, hover, seed,
+				preserveAspectRatio), textAsPath, linkTarget);
 	}
 
 	public UGraphicSvg(boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper, boolean textAsPath,
-			double scale, String linkTarget, String hover, long seed) {
-		this(minDim, colorMapper, new SvgGraphics(svgDimensionStyle, minDim, scale, hover, seed), textAsPath,
-				linkTarget);
+			double scale, String linkTarget, String hover, long seed, String preserveAspectRatio) {
+		this(minDim, colorMapper, new SvgGraphics(svgDimensionStyle, minDim, scale, hover, seed, preserveAspectRatio),
+				textAsPath, linkTarget);
 	}
 
 	public UGraphicSvg(boolean svgDimensionStyle, Dimension2D minDim, ColorMapper mapper, HtmlColorGradient gr,
-			boolean textAsPath, double scale, String linkTarget, String hover, long seed) {
-		this(minDim, mapper, new SvgGraphics(svgDimensionStyle, minDim, scale, hover, seed), textAsPath, linkTarget);
+			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio) {
+		this(minDim, mapper, new SvgGraphics(svgDimensionStyle, minDim, scale, hover, seed, preserveAspectRatio),
+				textAsPath, linkTarget);
 
 		final SvgGraphics svg = getGraphicObject();
 		svg.paintBackcolorGradient(mapper, gr);

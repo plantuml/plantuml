@@ -109,6 +109,8 @@ public class SvgGraphics {
 	private int maxX = 10;
 	private int maxY = 10;
 
+	private final String preserveAspectRatio;
+
 	private final double scale;
 	private final String filterUid;
 	private final String shadowId;
@@ -124,17 +126,19 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover, long seed) {
-		this(svgDimensionStyle, minDim, null, scale, hover, seed);
+	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover, long seed,
+			String preserveAspectRatio) {
+		this(svgDimensionStyle, minDim, null, scale, hover, seed, preserveAspectRatio);
 	}
 
 	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, String backcolor, double scale, String hover,
-			long seed) {
+			long seed, String preserveAspectRatio) {
 		try {
 			this.svgDimensionStyle = svgDimensionStyle;
 			this.scale = scale;
 			this.document = getDocument();
 			this.backcolor = backcolor;
+			this.preserveAspectRatio = preserveAspectRatio;
 			ensureVisible(minDim.getWidth(), minDim.getHeight());
 
 			this.root = getRootNode();
@@ -594,7 +598,7 @@ public class SvgGraphics {
 		}
 		root.setAttribute("viewBox", "0 0 " + maxXscaled + " " + maxYscaled);
 		root.setAttribute("zoomAndPan", "magnify");
-		root.setAttribute("preserveAspectRatio", "none");
+		root.setAttribute("preserveAspectRatio", preserveAspectRatio);
 		root.setAttribute("contentScriptType", "application/ecmascript");
 		root.setAttribute("contentStyleType", "text/css");
 

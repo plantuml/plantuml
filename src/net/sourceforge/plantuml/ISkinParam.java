@@ -141,6 +141,8 @@ public interface ISkinParam extends ISkinSimple {
 
 	public String getSvgLinkTarget();
 
+	public String getPreserveAspectRatio();
+
 	public int getTabSize();
 
 	public int maxAsciiMessageLength();

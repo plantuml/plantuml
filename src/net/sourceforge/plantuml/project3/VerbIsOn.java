@@ -38,25 +38,48 @@ package net.sourceforge.plantuml.project3;
 import java.util.Arrays;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class SubjectResource implements SubjectPattern {
+public class VerbIsOn implements VerbPattern {
 
-	public Collection<VerbPattern> getVerbs() {
-		return Arrays.<VerbPattern> asList(new VerbIsOff(), new VerbIsOn());
+	public Collection<ComplementPattern> getComplements() {
+		return Arrays.<ComplementPattern> asList(new ComplementDate(), new ComplementDates());
 	}
 
 	public IRegex toRegex() {
-		return new RegexConcat( //
-				new RegexLeaf("RESOURCE", "\\{([^{}]+)\\}") //
+		return new RegexConcat(new RegexLeaf("is"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("on"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexOr(//
+						new RegexLeaf("on"),//
+						new RegexLeaf("for"),//
+						new RegexLeaf("the"),//
+						new RegexLeaf("at") //
+				) //
 		);
 	}
 
-	public Subject getSubject(GanttDiagram project, RegexResult arg) {
-		final String s = arg.get("RESOURCE", 0);
-		return project.getResource(s);
+	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
+		return new Verb() {
+			public CommandExecutionResult execute(Subject subject, Complement complement) {
+				final Resource resource = (Resource) subject;
+				if (complement instanceof DaysAsDates) {
+					for (DayAsDate when : (DaysAsDates) complement) {
+						resource.addForceOnDay(project.convert(when));
+					}
+				} else {
+					final DayAsDate when = (DayAsDate) complement;
+					resource.addForceOnDay(project.convert(when));
+				}
+				return CommandExecutionResult.ok();
+			}
+
+		};
 	}
 }

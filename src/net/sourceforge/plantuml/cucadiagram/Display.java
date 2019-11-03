@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.regex.Matcher2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
@@ -74,6 +75,7 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.wbs.WBSDiagram;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -268,6 +270,26 @@ public class Display implements Iterable<CharSequence> {
 			result.add(line);
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
+	}
+
+	public Display removeEndingStereotype() {
+		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));
+		if (m.matches()) {
+			final List<CharSequence> result = new ArrayList<CharSequence>(this.displayData);
+			result.set(result.size() - 1, m.group(1));
+			return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
+		}
+		return this;
+	}
+
+	public final static Pattern2 patternStereotype = MyPattern.cmpile("^(.*?)(?:\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+
+	public String getEndingStereotype() {
+		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));
+		if (m.matches()) {
+			return m.group(2);
+		}
+		return null;
 	}
 
 	public Display underlined() {

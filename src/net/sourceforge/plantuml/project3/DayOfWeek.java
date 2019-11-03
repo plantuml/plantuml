@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project3;
 
 import net.sourceforge.plantuml.StringUtils;
 
-public enum DayOfWeek implements Subject {
+public enum DayOfWeek implements Subject, Complement {
 
 	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 

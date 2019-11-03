@@ -46,10 +46,6 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 class Idea {
 
-	// public StyleDefinition getDefaultStyleDefinition() {
-	// return StyleDefinition.of(SName.root, SName.element, SName.mindmapDiagram, SName.node);
-	// }
-
 	private final Display label;
 	private final int level;
 	private final Idea parent;
@@ -59,8 +55,8 @@ class Idea {
 	private final StyleBuilder styleBuilder;
 	private final String stereotype;
 
-	public Idea(StyleBuilder styleBuilder, Display label, IdeaShape shape, String stereotype) {
-		this(styleBuilder, null, 0, null, label, shape, stereotype);
+	public Idea(StyleBuilder styleBuilder, HtmlColor backColor, Display label, IdeaShape shape, String stereotype) {
+		this(styleBuilder, backColor, 0, null, label, shape, stereotype);
 	}
 
 	public Idea createIdea(StyleBuilder styleBuilder, HtmlColor backColor, int newLevel, Display newDisplay,
@@ -69,14 +65,6 @@ class Idea {
 		this.children.add(result);
 		return result;
 	}
-
-	// public Style getStyle(StyleBuilder styleBuilder) {
-	// Style result = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
-	// if (backColor != null) {
-	// result = result.eventuallyOverride(PName.BackGroundColor, backColor);
-	// }
-	// return result;
-	// }
 
 	private Idea(StyleBuilder styleBuilder, HtmlColor backColor, int level, Idea parent, Display label,
 			IdeaShape shape, String stereotype) {

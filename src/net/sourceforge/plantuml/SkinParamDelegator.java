@@ -234,6 +234,10 @@ public class SkinParamDelegator implements ISkinParam {
 	public String getSvgLinkTarget() {
 		return skinParam.getSvgLinkTarget();
 	}
+	
+	public String getPreserveAspectRatio() {
+		return skinParam.getPreserveAspectRatio();
+	}
 
 	public String getMonospacedFamily() {
 		return skinParam.getMonospacedFamily();
@@ -354,5 +358,6 @@ public class SkinParamDelegator implements ISkinParam {
 	public void setDefaultSkin(String newFileName) {
 		skinParam.setDefaultSkin(newFileName);
 	}
+
 
 }

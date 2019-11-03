@@ -586,7 +586,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 	public Resource getResource(String resourceName) {
 		Resource resource = resources.get(resourceName);
 		if (resource == null) {
-			resource = new Resource(resourceName, getDefaultPlan());
+			resource = new Resource(resourceName, getDefaultPlan(), getCalendarSimple());
 		}
 		resources.put(resourceName, resource);
 		return resource;

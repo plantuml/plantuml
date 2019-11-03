@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.SkinParamBackcolored;
+import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -85,19 +86,23 @@ public class FingerImpl implements Finger, UDrawable {
 	private Tetris tetris = null;
 
 	private StyleSignature getDefaultStyleDefinitionNode() {
+		final String depth = SName.depth(level);
 		if (level == 0) {
-			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode).add(
-					stereotype);
+			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
+					.add(stereotype).add(depth);
 		}
 		if (nail.size() == 0) {
-			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode).add(
-					stereotype);
+			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
+					.add(stereotype).add(depth);
 		}
-		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype);
+		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype)
+				.add(depth);
 	}
 
 	public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).add(stereotype);
+		final String depth = SName.depth(level);
+		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).add(stereotype)
+				.add(depth);
 	}
 
 	public static FingerImpl build(Idea idea, ISkinParam skinParam, Direction direction) {
@@ -237,7 +242,8 @@ public class FingerImpl implements Finger, UDrawable {
 			font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 		}
 		if (shape == IdeaShape.BOX) {
-			final ISkinParam foo = new SkinParamBackcolored(Colors.empty().mute(skinParam), backColor);
+			// final ISkinParam foo = new SkinParamBackcolored(Colors.empty().mute(skinParam), backColor);
+			final ISkinParam foo = new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
 			final FtileBox box = FtileBox.createMindMap(styleBuilder, foo, label, getDefaultStyleDefinitionNode());
 			return TextBlockUtils.withMargin(box, 0, 0, margin(), margin());
 		}

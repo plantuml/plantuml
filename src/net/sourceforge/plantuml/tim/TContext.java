@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.tim.stdlib.FileExists;
 import net.sourceforge.plantuml.tim.stdlib.Filename;
 import net.sourceforge.plantuml.tim.stdlib.FunctionExists;
 import net.sourceforge.plantuml.tim.stdlib.GetVariableValue;
+import net.sourceforge.plantuml.tim.stdlib.GetVersion;
 import net.sourceforge.plantuml.tim.stdlib.Getenv;
 import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeVoidFunction;
@@ -125,6 +126,7 @@ public class TContext {
 		addFunction(new SetVariableValue());
 		addFunction(new GetVariableValue());
 		addFunction(new IntVal());
+		addFunction(new GetVersion());
 		// !exit
 		// !log
 		// %min

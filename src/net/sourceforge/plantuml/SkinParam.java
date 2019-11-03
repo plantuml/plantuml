@@ -1046,6 +1046,15 @@ public class SkinParam implements ISkinParam {
 		}
 		return value;
 	}
+	
+	public String getPreserveAspectRatio() {
+		final String value = getValue("preserveaspectratio");
+		if (value == null) {
+			return "none";
+		}
+		return value;
+	}
+
 
 	public String getMonospacedFamily() {
 		final String value = getValue("defaultMonospacedFontName");

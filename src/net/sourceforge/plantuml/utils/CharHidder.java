@@ -46,7 +46,10 @@ public class CharHidder {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
-			if (c == '~' && i + 1 < s.length()) {
+			if (c == '\\' && i + 1 < s.length() && s.charAt(i + 1) == '~') {
+				result.append(hideChar('~'));
+				i++;
+			} else if (c == '~' && i + 1 < s.length()) {
 				i++;
 				final char c2 = s.charAt(i);
 				if (isToBeHidden(c2)) {

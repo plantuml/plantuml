@@ -116,7 +116,7 @@ public class SkinParameter {
 	public static final SkinParameter CONTROL = new SkinParameter("CONTROL", ColorParam.controlBackground,
 			ColorParam.controlBorder, FontParam.CONTROL, FontParam.CONTROL_STEREOTYPE);
 
-	public static final SkinParameter ENTITY_DOMAIN = new SkinParameter("ENTITY_DOMAIN", ColorParam.entityBackground,
+	public static final SkinParameter ENTITY = new SkinParameter("ENTITY", ColorParam.entityBackground,
 			ColorParam.entityBorder, FontParam.ENTITY, FontParam.ENTITY_STEREOTYPE);
 
 	public static final SkinParameter INTERFACE = new SkinParameter("INTERFACE", ColorParam.interfaceBackground,

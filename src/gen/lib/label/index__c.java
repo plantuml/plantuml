@@ -379,11 +379,12 @@ UNSUPPORTED("1um729vqiy3529kbsrzyl9u3y"); // 	    rtp->InTouchCount++;
  	    		CombineRect((ST_Rect_t)r, (ST_Rect_t) n.branch[i].rect));
  	    return 0;
  	} else {		/* child was split */
-UNSUPPORTED("7evrfdq7uc1smqislqm9d82l6"); // 	    n->branch[i].rect = NodeCover(n->branch[i].child);
-UNSUPPORTED("echuth2qnq0o4n5gkzgtu5bgs"); // 	    b.child = n2;
-UNSUPPORTED("50z4r9qcomgi4o7vvwq0v0xs"); // 	    b.rect = NodeCover(n2);
-UNSUPPORTED("451qw2ioqybj69k9abzvqw4mk"); // 	    rtp->EntryCount++;
-UNSUPPORTED("9uz11nbvh6yp6yq2axvo7e0fb"); // 	    return AddBranch(rtp, &b, n, new);
+ 	    n.branch[i].setStruct("rect",
+ 	    		NodeCover((ST_Node_t___)n.branch[i].child));
+ 	    b.child = n2[0];
+ 	    b.rect.___(NodeCover(n2[0]));
+ 		rtp.setInt("EntryCount", rtp.EntryCount+1);
+ 	 	return AddBranch(rtp, b, n, new_);
  	}
      } else if (n.level == level) {	/* at level for insertion. */
  	/*Add rect, split if necessary */

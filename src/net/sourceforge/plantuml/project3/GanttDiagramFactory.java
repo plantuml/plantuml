@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.project3;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;

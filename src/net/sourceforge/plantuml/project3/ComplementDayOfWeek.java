@@ -30,28 +30,26 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
  * 
+ *
  */
-package net.sourceforge.plantuml.svek.extremity;
+package net.sourceforge.plantuml.project3;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
-import net.sourceforge.plantuml.svek.Side;
+public class ComplementDayOfWeek implements ComplementPattern {
 
-public class ExtremityFactoryCrowfoot extends AbstractExtremityFactory implements ExtremityFactory {
-
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
-		final double ortho = atan2(p0, p2);
-		return new ExtremityCrowfoot(p1, ortho, side);
+	public IRegex toRegex(String suffix) {
+		return new RegexConcat( //
+				new RegexLeaf("COMPLEMENT" + suffix, "(" + DayOfWeek.getRegexString() + ")")); //
 	}
 
-	@Override
-	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
-		angle -= Math.PI / 2;
-		return new ExtremityCrowfoot(p0, angle, side);
+	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+		final String s = arg.get("COMPLEMENT" + suffix, 0);
+		return Failable.<Complement> ok(DayOfWeek.fromString(s));
 	}
 
 }

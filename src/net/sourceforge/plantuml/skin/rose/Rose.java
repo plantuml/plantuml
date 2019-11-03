@@ -370,6 +370,16 @@ public class Rose {
 			skinParameter = SkinParameter.PARTICIPANT;
 		} else if (color == ColorParam.actorBorder) {
 			skinParameter = SkinParameter.ACTOR;
+		} else if (color == ColorParam.boundaryBorder) {
+			skinParameter = SkinParameter.BOUNDARY;
+		} else if (color == ColorParam.controlBorder) {
+			skinParameter = SkinParameter.CONTROL;
+		} else if (color == ColorParam.entityBorder) {
+			skinParameter = SkinParameter.ENTITY;
+		} else if (color == ColorParam.collectionsBorder) {
+			skinParameter = SkinParameter.COLLECTIONS;
+		} else if (color == ColorParam.databaseBorder) {
+			skinParameter = SkinParameter.DATABASE;
 		}
 		final boolean result = skinParameter == null ? param.shadowing(null) : param.shadowing2(null, skinParameter);
 		return result ? 4.0 : 0;
@@ -403,9 +413,10 @@ public class Rose {
 					.withDeltaShadow(deltaShadow(skin, color));
 		}
 		if (color == ColorParam.entityBorder) {
+			final double tmp = deltaShadow(skin, color);
 			return new SymbolContext(getHtmlColor(skin, ColorParam.entityBackground), getHtmlColor(skin,
 					ColorParam.entityBorder)).withStroke(getStroke(skin, LineParam.sequenceActorBorder, 2))
-					.withDeltaShadow(deltaShadow(skin, color));
+					.withDeltaShadow(tmp);
 		}
 		if (color == ColorParam.databaseBorder) {
 			return new SymbolContext(getHtmlColor(skin, ColorParam.databaseBackground), getHtmlColor(skin,

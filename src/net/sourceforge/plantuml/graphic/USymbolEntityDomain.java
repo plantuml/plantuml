@@ -48,7 +48,7 @@ class USymbolEntityDomain extends USymbolSimpleAbstract {
 	
 	@Override
 	public SkinParameter getSkinParameter() {
-		return SkinParameter.ENTITY_DOMAIN;
+		return SkinParameter.ENTITY;
 	}
 
 

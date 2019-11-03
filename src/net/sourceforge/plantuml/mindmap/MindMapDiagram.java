@@ -181,19 +181,17 @@ public class MindMapDiagram extends UmlDiagram {
 
 	public CommandExecutionResult addIdea(HtmlColor backColor, int level, Display label, IdeaShape shape,
 			Direction direction) {
-		final Matcher2 m = WBSDiagram.patternStereotype.matcher(label.get(0));
-		String stereotype = null;
-		if (m.matches()) {
-			label = Display.getWithNewlines(m.group(1));
-			stereotype = m.group(2);
+		String stereotype = label.getEndingStereotype();
+		if (stereotype != null) {
+			label = label.removeEndingStereotype();
 		}
 		if (level == 0) {
 			if (this.right.root != null) {
 				return CommandExecutionResult
 						.error("I don't know how to draw multi-root diagram. You should suggest an image so that the PlantUML team implements it :-)");
 			}
-			right.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape, stereotype);
-			left.initRoot(getSkinParam().getCurrentStyleBuilder(), label, shape, stereotype);
+			right.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
+			left.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
 			return CommandExecutionResult.ok();
 		}
 		if (direction == Direction.LEFT) {
@@ -207,8 +205,8 @@ public class MindMapDiagram extends UmlDiagram {
 		private Idea last;
 		private Finger finger;
 
-		private void initRoot(StyleBuilder styleBuilder, Display label, IdeaShape shape, String stereotype) {
-			root = new Idea(styleBuilder, label, shape, stereotype);
+		private void initRoot(StyleBuilder styleBuilder, HtmlColor backColor, Display label, IdeaShape shape, String stereotype) {
+			root = new Idea(styleBuilder, backColor, label, shape, stereotype);
 			last = root;
 		}
 

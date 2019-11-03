@@ -42,12 +42,14 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class VerbIsOff implements VerbPattern {
 
 	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementDate(), new ComplementDates());
+		return Arrays
+				.<ComplementPattern> asList(new ComplementDate(), new ComplementDates(), new ComplementDayOfWeek());
 	}
 
 	public IRegex toRegex() {
@@ -55,14 +57,21 @@ public class VerbIsOff implements VerbPattern {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("off"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("on"));
+				new RegexOr(//
+						new RegexLeaf("on"),//
+						new RegexLeaf("for"),//
+						new RegexLeaf("the"),//
+						new RegexLeaf("at") //
+				));
 	}
 
 	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
 		return new Verb() {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final Resource resource = (Resource) subject;
-				if (complement instanceof DaysAsDates) {
+				if (complement instanceof DayOfWeek) {
+					resource.addCloseDay(((DayOfWeek) complement));
+				} else if (complement instanceof DaysAsDates) {
 					for (DayAsDate when : (DaysAsDates) complement) {
 						resource.addCloseDay(project.convert(when));
 					}
@@ -75,5 +84,4 @@ public class VerbIsOff implements VerbPattern {
 
 		};
 	}
-
 }

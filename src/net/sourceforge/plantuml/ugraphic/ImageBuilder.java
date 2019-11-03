@@ -393,7 +393,7 @@ public class ImageBuilder {
 			return createUGraphicPNG(colorMapper, dpiFactor, dim, mybackcolor, animationArg, dx, dy);
 		case SVG:
 			return createUGraphicSVG(colorMapper, dpiFactor, dim, mybackcolor, fileFormatOption.getSvgLinkTarget(),
-					fileFormatOption.getHoverColor(), seed);
+					fileFormatOption.getHoverColor(), seed, fileFormatOption.getPreserveAspectRatio());
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -417,7 +417,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
-			String svgLinkTarget, String hover, long seed) {
+			String svgLinkTarget, String hover, long seed, String preserveAspectRatio) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HtmlColorSimple) {
 			backColor = colorMapper.getMappedColor(mybackcolor);
@@ -425,12 +425,12 @@ public class ImageBuilder {
 		final UGraphicSvg ug;
 		if (mybackcolor instanceof HtmlColorGradient) {
 			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HtmlColorGradient) mybackcolor, false, scale,
-					svgLinkTarget, hover, seed);
+					svgLinkTarget, hover, seed, preserveAspectRatio);
 		} else if (backColor == null || backColor.equals(Color.WHITE)) {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed);
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed, preserveAspectRatio);
 		} else {
 			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, StringUtils.getAsHtml(backColor), false, scale,
-					svgLinkTarget, hover, seed);
+					svgLinkTarget, hover, seed, preserveAspectRatio);
 		}
 		return ug;
 

@@ -36,16 +36,13 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
-import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -53,86 +50,45 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
-import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
-public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
+public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 
-	public CommandPackage() {
+	public CommandNamespaceEmpty() {
 		super(getRegexConcat());
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPackage.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(package)"), //
+		return RegexConcat.build(CommandNamespaceEmpty.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("namespace"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("as"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("AS", "([\\p{L}0-9_.]+)") //
-						)), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_][-\\p{L}0-9_.:\\\\]*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				color().getRegex(), //
-				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\{"), RegexLeaf.end());
+				ColorParser.exp1(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\}"), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	public boolean syntaxWithFinalBracket() {
-		return true;
-	}
-
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
-		final Code code;
-		final String display;
-		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
-		if (arg.get("AS", 0) == null) {
-			if (name.length() == 0) {
-				code = Code.of("##" + UniqueSequence.getValue());
-				display = null;
-			} else {
-				code = Code.of(name);
-				display = code.getFullName();
-			}
-		} else {
-			display = name;
-			code = Code.of(arg.get("AS", 0));
-		}
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
+		final Code code = Code.of(arg.get("NAME", 0));
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		diagram.gotoGroup2(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
+		final Display display = Display.getWithNewlines(code);
+		diagram.gotoGroup2(code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		final USymbol type = USymbol.getFromString(arg.get("TYPE", 0));
-		if (type == USymbol.TOGETHER) {
-			p.setUSymbol(type);
-		} else if (stereotype != null) {
-			final USymbol usymbol = USymbol.getFromString(stereotype);
-			if (usymbol == null) {
-				p.setStereotype(new Stereotype(stereotype));
-			} else {
-				p.setUSymbol(usymbol);
-			}
+		if (stereotype != null) {
+			p.setStereotype(new Stereotype(stereotype));
 		}
-		CommandCreateClassMultilines.addTags(p, arg.get("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
@@ -141,9 +97,12 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 			p.addUrl(url);
 		}
 
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		p.setColors(colors);
-
+		final String color = arg.get("COLOR", 0);
+		if (color != null) {
+			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
+					diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
+		}
+		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}
 

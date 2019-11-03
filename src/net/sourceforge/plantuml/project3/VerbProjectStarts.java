@@ -40,8 +40,12 @@ import java.util.Collection;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 
 public class VerbProjectStarts implements VerbPattern {
 
@@ -49,8 +53,21 @@ public class VerbProjectStarts implements VerbPattern {
 		return Arrays.<ComplementPattern> asList(new ComplementDate());
 	}
 
-	public IRegex toRegex() {
+	public IRegex toRegexOld() {
 		return new RegexLeaf("starts[%s]*(the[%s]*|on[%s]*)*");
+	}
+
+	public IRegex toRegex() {
+		return new RegexConcat(new RegexLeaf("start"), //
+				new RegexOptional(new RegexLeaf("s")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexOr(//
+						new RegexLeaf("on"),//
+						new RegexLeaf("for"),//
+						new RegexLeaf("the"),//
+						new RegexLeaf("at") //
+				)) //
+		);
 	}
 
 	public Verb getVerb(final GanttDiagram project, RegexResult arg) {

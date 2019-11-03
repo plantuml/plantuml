@@ -35,19 +35,25 @@
  */
 package net.sourceforge.plantuml.project3;
 
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Resource implements Subject /* , LoadPlanable */{
+public class Resource implements Subject {
 
 	private final String name;
 	private ResourceDraw draw;
-	// private final LoadPlanable loadPlanable;
-	private Set<Instant> closed = new TreeSet<Instant>();
+	private final Set<Instant> closed = new TreeSet<Instant>();
+	private final Set<Instant> forcedOn = new TreeSet<Instant>();
+	private final GCalendar calendar;
 
-	public Resource(String name, LoadPlanable loadPlanable) {
+	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
+
+	public Resource(String name, LoadPlanable loadPlanable, GCalendar calendar) {
 		this.name = name;
-		// this.loadPlanable = loadPlanable;
+		this.calendar = calendar;
 	}
 
 	@Override
@@ -79,17 +85,27 @@ public class Resource implements Subject /* , LoadPlanable */{
 	}
 
 	public boolean isClosedAt(Instant instant) {
-		 return this.closed.contains(instant);
+		if (this.forcedOn.contains(instant)) {
+			return false;
+		}
+		if (closedDayOfWeek.size() > 0 && calendar != null) {
+			final DayAsDate d = calendar.toDayAsDate((InstantDay) instant);
+			if (closedDayOfWeek.contains(d.getDayOfWeek())) {
+				return true;
+			}
+		}
+		return this.closed.contains(instant);
 	}
-
-//	public int getLoadAt(Instant instant) {
-//		if (this.closed.contains(instant)) {
-//			return 0;
-//		}
-//		return loadPlanable.getLoadAt(instant);
-//	}
 
 	public void addCloseDay(Instant instant) {
 		this.closed.add(instant);
+	}
+
+	public void addForceOnDay(Instant instant) {
+		this.forcedOn.add(instant);
+	}
+
+	public void addCloseDay(DayOfWeek dayOfWeek) {
+		closedDayOfWeek.add(dayOfWeek);
 	}
 }

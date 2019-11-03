@@ -75,6 +75,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private final List<HideOrShow2> removed = new ArrayList<HideOrShow2>();
 	protected final EntityFactory entityFactory = new EntityFactory(hides2, removed);
 	private IGroup currentGroup = entityFactory.getRootGroup();
+	private List<IGroup> stacks = new ArrayList<IGroup>();
 
 	private boolean visibilityModifierPresent;
 
@@ -196,6 +197,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final protected void gotoGroupInternalWithNamespace(final Code code, Display display, final Code namespace2,
 			GroupType type, IGroup parent) {
+
+		this.stacks.add(currentGroup);
 		if (getNamespaceSeparator() == null) {
 			gotoGroupInternal(code, display, namespace2, type, parent);
 			return;
@@ -218,6 +221,18 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		entityFactory.addGroup(result);
 		currentGroup = result;
 
+	}
+
+	public void endGroup() {
+		if (EntityUtils.groupRoot(currentGroup)) {
+			Log.error("No parent group");
+			return;
+		}
+		if (stacks.size() > 0) {
+			currentGroup = stacks.remove(stacks.size() - 1);
+		} else {
+			currentGroup = currentGroup.getParentContainer();
+		}
 	}
 
 	final protected void gotoGroupInternal(final Code code, Display display, final Code namespace2, GroupType type,
@@ -275,14 +290,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			// return null;
 		}
 		return p;
-	}
-
-	public void endGroup() {
-		if (EntityUtils.groupRoot(currentGroup)) {
-			Log.error("No parent group");
-			return;
-		}
-		currentGroup = currentGroup.getParentContainer();
 	}
 
 	public final boolean isGroup(Code code) {
