@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Padder;
 import net.sourceforge.plantuml.sprite.Sprite;
@@ -101,7 +102,7 @@ public class SkinParam implements ISkinParam {
 		}
 		if (type == UmlDiagramType.SEQUENCE) {
 			// skin = "debug.skin";
-			//USE_STYLE2.set(true);
+			// USE_STYLE2.set(true);
 		}
 		// if (type == UmlDiagramType.ACTIVITY) {
 		// // skin = "debug.skin";
@@ -1046,7 +1047,7 @@ public class SkinParam implements ISkinParam {
 		}
 		return value;
 	}
-	
+
 	public String getPreserveAspectRatio() {
 		final String value = getValue("preserveaspectratio");
 		if (value == null) {
@@ -1054,7 +1055,6 @@ public class SkinParam implements ISkinParam {
 		}
 		return value;
 	}
-
 
 	public String getMonospacedFamily() {
 		final String value = getValue("defaultMonospacedFontName");
@@ -1205,6 +1205,14 @@ public class SkinParam implements ISkinParam {
 		final double roundCorner = getRoundCorner(CornerParam.DEFAULT, null);
 		return Padder.NONE.withMargin(margin).withPadding(padding).withBackgroundColor(background)
 				.withBorderColor(border).withRoundCorner(roundCorner);
+	}
+
+	public ActorStyle getActorStyle() {
+		final String value = getValue("actorstyle");
+		if ("awesome".equalsIgnoreCase(value)) {
+			return ActorStyle.AWESOME;
+		}
+		return ActorStyle.STICKMAN;
 	}
 
 }

@@ -65,9 +65,9 @@ public final class LinkHtmlPrinter {
 		final String ent2h;
 		if (chiral) {
 			ent1h = htmlLink(link.getEntity1());
-			ent2h = "<i>" + StringUtils.unicodeForHtml(link.getEntity2().getCode().getFullName()) + "</i>";
+			ent2h = "<i>" + StringUtils.unicodeForHtml(link.getEntity2().getCodeGetName()) + "</i>";
 		} else {
-			ent1h = "<i>" + StringUtils.unicodeForHtml(link.getEntity1().getCode().getFullName()) + "</i>";
+			ent1h = "<i>" + StringUtils.unicodeForHtml(link.getEntity1().getCodeGetName()) + "</i>";
 			ent2h = htmlLink(link.getEntity2());
 		}
 		String label = link.getLabel() == null ? null : StringUtils.unicodeForHtml(link.getLabel());
@@ -170,7 +170,7 @@ public final class LinkHtmlPrinter {
 		sb.append("<a href=\"");
 		sb.append(urlOf(ent));
 		sb.append("\">");
-		sb.append(StringUtils.unicodeForHtml(ent.getCode().getFullName()));
+		sb.append(StringUtils.unicodeForHtml(ent.getCodeGetName()));
 		sb.append("</a>");
 		return sb.toString();
 	}
@@ -179,8 +179,8 @@ public final class LinkHtmlPrinter {
 		if (ent.getLeafType() == LeafType.NOTE) {
 			throw new IllegalArgumentException();
 		}
-		if (ent.getCode().getFullName().matches("[-\\w_ .]+")) {
-			return StringUtils.unicodeForHtml(ent.getCode().getFullName()) + ".html";
+		if (ent.getCodeGetName().matches("[-\\w_ .]+")) {
+			return StringUtils.unicodeForHtml(ent.getCodeGetName()) + ".html";
 		}
 		return StringUtils.unicodeForHtml(ent.getUid()) + ".html";
 	}

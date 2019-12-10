@@ -210,7 +210,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				continue;
 			}
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
-				final ILeaf folder = diagram.getEntityFactory().createLeaf(g.getCode(), g.getDisplay(),
+				final ILeaf folder = diagram.getEntityFactory().createLeaf(g.getIdent(), g.getCode(), g.getDisplay(),
 						LeafType.EMPTY_PACKAGE, g.getParentContainer(), null, diagram.getNamespaceSeparator());
 				emptyGroups.put(g, folder);
 				final USymbol symbol = g.getUSymbol();

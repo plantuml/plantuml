@@ -68,13 +68,17 @@ public class FileSystem {
 	}
 
 	public File getFile(String nameOrPath) throws IOException {
-		final File dir = currentDir.get();
-		if (dir == null || isAbsolute(nameOrPath)) {
+		if (isAbsolute(nameOrPath)) {
 			return new File(nameOrPath).getCanonicalFile();
 		}
-		final File filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
-		if (filecurrent.exists()) {
-			return filecurrent.getCanonicalFile();
+		final File dir = currentDir.get();
+		File filecurrent = null;
+		if (dir != null) {
+			filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
+			if (filecurrent.exists()) {
+				return filecurrent.getCanonicalFile();
+
+			}
 		}
 		for (File d : getPath("plantuml.include.path", true)) {
 			if (d.isDirectory()) {
@@ -92,6 +96,11 @@ public class FileSystem {
 				}
 			}
 		}
+		if (dir == null) {
+			assert filecurrent == null;
+			return new File(nameOrPath).getCanonicalFile();
+		}
+		assert filecurrent != null;
 		return filecurrent;
 	}
 

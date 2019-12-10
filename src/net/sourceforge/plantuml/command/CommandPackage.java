@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -102,30 +103,35 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final Code code;
+		final String idShort;
 		final String display;
 		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
 		if (arg.get("AS", 0) == null) {
 			if (name.length() == 0) {
-				code = Code.of("##" + UniqueSequence.getValue());
+				idShort = "##" + UniqueSequence.getValue();
+				code = diagram.buildCode(idShort);
 				display = null;
 			} else {
-				code = Code.of(name);
-				display = code.getFullName();
+				idShort = name;
+				code = diagram.buildCode(idShort);
+				display = code.getName();
 			}
 		} else {
 			display = name;
-			code = Code.of(arg.get("AS", 0));
+			idShort = arg.get("AS", 0);
+			code = diagram.buildCode(idShort);
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		diagram.gotoGroup2(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
+		final Ident idNewLong = diagram.buildLeafIdentSpecial(idShort);
+		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		final USymbol type = USymbol.getFromString(arg.get("TYPE", 0));
+		final USymbol type = USymbol.getFromString(arg.get("TYPE", 0), diagram.getSkinParam().getActorStyle());
 		if (type == USymbol.TOGETHER) {
 			p.setUSymbol(type);
 		} else if (stereotype != null) {
-			final USymbol usymbol = USymbol.getFromString(stereotype);
+			final USymbol usymbol = USymbol.getFromString(stereotype, diagram.getSkinParam().getActorStyle());
 			if (usymbol == null) {
 				p.setStereotype(new Stereotype(stereotype));
 			} else {

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -197,21 +198,26 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 
 		final String pos = line0.get("POSITION", 0);
 
-		final Code code = Code.of(line0.get("ENTITY", 0));
+		final String idShort = line0.get("ENTITY", 0);
 		final IEntity cl1;
-		if (code == null) {
+		if (idShort == null) {
 			cl1 = diagram.getLastEntity();
 			if (cl1 == null) {
 				return CommandExecutionResult.error("Nothing to note to");
 			}
-		} else if (diagram.isGroup(code)) {
-			cl1 = diagram.getGroup(code);
 		} else {
-			cl1 = diagram.getOrCreateLeaf(code, null, null);
+			final Code code = diagram.buildCode(idShort);
+			if (diagram.isGroup(code)) {
+				cl1 = diagram.getGroup(code);
+			} else {
+				cl1 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, null, null);
+			}
 		}
 
-		final IEntity note = diagram
-				.createLeaf(UniqueSequence.getCode("GMN"), strings.toDisplay(), LeafType.NOTE, null);
+		final String tmp = UniqueSequence.getString("GMN");
+		final Ident idNewLong = diagram.buildLeafIdent(tmp);
+		final IEntity note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE,
+				null);
 
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		note.setColors(colors);

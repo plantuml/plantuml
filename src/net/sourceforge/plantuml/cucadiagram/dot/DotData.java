@@ -149,7 +149,7 @@ final public class DotData implements PortionShower {
 	}
 
 	public boolean isDegeneratedWithFewEntities(int nb) {
-		return entityFactory.getGroupsvalues().size() == 0 && getLinks().size() == 0 && getLeafs().size() == nb;
+		return entityFactory.groups().size() == 0 && getLinks().size() == 0 && getLeafs().size() == nb;
 	}
 
 	public final boolean isHideEmptyDescriptionForState() {

@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -125,11 +126,13 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 	}
 
 	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, BlocLines display) {
-		final Code code = Code.of(arg.get("CODE", 0));
+		final String idShort = arg.get("CODE", 0);
+		final Code code = diagram.buildCode(idShort);
 		if (diagram.leafExist(code)) {
-			return CommandExecutionResult.error("Note already created: " + code.getFullName());
+			return CommandExecutionResult.error("Note already created: " + code.getName());
 		}
-		final IEntity entity = diagram.createLeaf(code, display.toDisplay(), LeafType.NOTE, null);
+		final Ident idNewLong = diagram.buildLeafIdent(idShort);
+		final IEntity entity = diagram.createLeaf(idNewLong, code, display.toDisplay(), LeafType.NOTE, null);
 		assert entity != null;
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));

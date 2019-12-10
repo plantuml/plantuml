@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -166,7 +167,8 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 
 		final String display = sb.toString();
-		final Code code = Code.of(lineLast.get(1) == null ? display : lineLast.get(1));
+		final String idShort = lineLast.get(1) == null ? display : lineLast.get(1);
+		final Code code = diagram.buildCode(idShort);
 
 		String partition = null;
 		if (lineLast.get(3) != null) {
@@ -174,10 +176,12 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
 		}
 		if (partition != null) {
-			diagram.gotoGroup2(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE, null,
-					NamespaceStrategy.SINGLE);
+			final Ident idNewLong = diagram.buildLeafIdent(partition);
+			diagram.gotoGroup(idNewLong, diagram.buildCode(partition),
+					Display.getWithNewlines(partition), GroupType.PACKAGE, null, NamespaceStrategy.SINGLE);
 		}
-		final IEntity entity2 = diagram.getOrCreate(code, Display.getWithNewlines(display), LeafType.ACTIVITY);
+		final IEntity entity2 = diagram.getOrCreate(diagram.buildLeafIdent(idShort), code,
+				Display.getWithNewlines(display), LeafType.ACTIVITY);
 		if (entity2 == null) {
 			return CommandExecutionResult.error("No such entity");
 		}

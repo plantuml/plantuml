@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Padder;
 import net.sourceforge.plantuml.sprite.Sprite;
@@ -234,7 +235,7 @@ public class SkinParamDelegator implements ISkinParam {
 	public String getSvgLinkTarget() {
 		return skinParam.getSvgLinkTarget();
 	}
-	
+
 	public String getPreserveAspectRatio() {
 		return skinParam.getPreserveAspectRatio();
 	}
@@ -359,5 +360,8 @@ public class SkinParamDelegator implements ISkinParam {
 		skinParam.setDefaultSkin(newFileName);
 	}
 
+	public ActorStyle getActorStyle() {
+		return skinParam.getActorStyle();
+	}
 
 }

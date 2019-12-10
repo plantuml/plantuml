@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -80,10 +81,12 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
-		final Code code = Code.of(arg.get("NAME", 0));
+		final String idShort = arg.get("NAME", 0);
+		final Code code = diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final Display display = Display.getWithNewlines(code);
-		diagram.gotoGroup2(code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
+		final Ident idNewLong = diagram.buildLeafIdent(idShort);
+		diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {

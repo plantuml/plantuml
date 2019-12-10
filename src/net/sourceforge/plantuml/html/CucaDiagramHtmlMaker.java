@@ -117,7 +117,7 @@ public final class CucaDiagramHtmlMaker {
 		final File f = new File(dir, LinkHtmlPrinter.urlOf(entity));
 		final PrintWriter pw = new PrintWriter(f);
 		pw.println("<html>");
-		pw.println("<title>" + StringUtils.unicodeForHtml(entity.getCode().getFullName()) + "</title>");
+		pw.println("<title>" + StringUtils.unicodeForHtml(entity.getCodeGetName()) + "</title>");
 		pw.println("<h2>" + entity.getLeafType().toHtml() + "</h2>");
 		for (CharSequence s : entity.getDisplay()) {
 			pw.println(StringUtils.unicodeForHtml(s.toString()));

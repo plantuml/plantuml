@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -94,7 +95,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 
 		final String stereotype = arg.get("STEREO", 0);
 
-		if (diagram.leafExist(Code.of(code))) {
+		if (diagram.leafExist(diagram.buildCode(code))) {
 			return CommandExecutionResult.error("Object already exists : " + code);
 		}
 		Display d = Display.getWithNewlines(display);
@@ -103,12 +104,15 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		IEntity entity;
 		if (group != null) {
 			final IGroup currentGroup = diagram.getCurrentGroup();
-			diagram.gotoGroup2(Code.of(code), d, type.equalsIgnoreCase("domain") ? GroupType.DOMAIN
-					: GroupType.REQUIREMENT, currentGroup, NamespaceStrategy.SINGLE);
+			final Ident idNewLong = diagram.buildLeafIdent(code);
+			diagram.gotoGroup(idNewLong, diagram.buildCode(code), d,
+					type.equalsIgnoreCase("domain") ? GroupType.DOMAIN : GroupType.REQUIREMENT, currentGroup,
+					NamespaceStrategy.SINGLE);
 			entity = diagram.getCurrentGroup();
 		} else {
-			entity = diagram.createLeaf(Code.of(code), d, type.equalsIgnoreCase("domain") ? LeafType.DOMAIN
-					: LeafType.REQUIREMENT, null);
+			final Ident idNewLong = diagram.buildLeafIdent(code);
+			entity = diagram.createLeaf(idNewLong, diagram.buildCode(code), d,
+					type.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT, null);
 		}
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
@@ -139,7 +143,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 				type = "biddable";
 			}
 		}
-		USymbol usymbol = USymbol.getFromString(type, diagram.getSkinParam().useUml2ForComponent());
+		USymbol usymbol = USymbol.getFromString(type, diagram.getSkinParam());
 		entity.setUSymbol(usymbol);
 		return CommandExecutionResult.ok();
 	}

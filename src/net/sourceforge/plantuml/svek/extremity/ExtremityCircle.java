@@ -47,32 +47,35 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class ExtremityCircle extends Extremity {
 
-	private final Point2D dest;
 	private static final double radius = 6;
+	private final Point2D dest;
+	private final boolean fill;
 
 	@Override
 	public Point2D somePoint() {
 		return dest;
 	}
 
-	// public static UDrawable createContact(Point2D p1, double angle) {
-	// final double x = p1.getX() - radius + radius * Math.sin(angle);
-	// final double y = p1.getY() - radius - radius * Math.cos(angle);
-	// return new ExtremityCircle(x, y);
-	// }
-
-	public static UDrawable create(Point2D center) {
-		return new ExtremityCircle(center.getX(), center.getY());
+	public static UDrawable create(Point2D center, boolean fill) {
+		return new ExtremityCircle(center.getX(), center.getY(), fill);
 	}
 
-	private ExtremityCircle(double x, double y) {
+	private ExtremityCircle(double x, double y, boolean fill) {
 		this.dest = new Point2D.Double(x, y);
+		this.fill = fill;
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(new UStroke(1.5)).apply(new UChangeBackColor(HtmlColorUtils.WHITE))
-				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
-				.draw(new UEllipse(radius * 2, radius * 2));
+
+		ug = ug.apply(new UStroke(1.5));
+		if (fill) {
+			ug = ug.apply(new UChangeBackColor(ug.getParam().getColor()));
+		} else {
+			ug = ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE));
+		}
+
+		ug = ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius));
+		ug.draw(new UEllipse(radius * 2, radius * 2));
 	}
 
 }

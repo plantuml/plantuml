@@ -103,18 +103,19 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
-		final Code code = Code.of(arg.getLazzy("CODE", 0));
+		final String idShort = arg.getLazzy("CODE", 0);
+		final Code code = diagram.buildCode(idShort);
 		String display = arg.getLazzy("DISPLAY", 0);
 		if (display == null) {
-			display = code.getFullName();
+			display = code.getName();
 		}
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		final LeafType type = getTypeFromStereotype(stereotype);
-		if (diagram.checkConcurrentStateOk(code) == false) {
-			return CommandExecutionResult.error("The state " + code.getFullName()
+		if (diagram.checkConcurrentStateOk(diagram.buildLeafIdent(idShort), code) == false) {
+			return CommandExecutionResult.error("The state " + code.getName()
 					+ " has been created in a concurrent state : it cannot be used here.");
 		}
-		final IEntity ent = diagram.getOrCreateLeaf(code, type, null);
+		final IEntity ent = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, type, null);
 		ent.setDisplay(Display.getWithNewlines(display));
 
 		if (stereotype != null) {

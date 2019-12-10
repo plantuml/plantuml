@@ -102,10 +102,11 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		final String codeRaw = line0.getLazzy("CODE", 0);
 
-		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
+		final Code code = diagram.buildCode(idShort);
 		final String icon = line0.getLazzy("STEREOTYPE", 0);
 
-		final IEntity entity = diagram.getOrCreateLeaf(code, LeafType.DESCRIPTION, USymbol.RECTANGLE);
+		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, LeafType.DESCRIPTION, USymbol.RECTANGLE);
 
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();

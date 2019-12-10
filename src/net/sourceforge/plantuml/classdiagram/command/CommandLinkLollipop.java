@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -113,8 +114,10 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) {
 
-		final Code ent1 = Code.of(arg.get("ENT1", 1));
-		final Code ent2 = Code.of(arg.get("ENT2", 1));
+		final String ent1 = arg.get("ENT1", 1);
+		final String ent2 = arg.get("ENT2", 1);
+		final Code ent1code = diagram.buildCode(ent1);
+		final Code ent2code = diagram.buildCode(ent2);
 
 		final IEntity cl1;
 		final IEntity cl2;
@@ -123,13 +126,15 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final String suffix = "lol" + UniqueSequence.getValue();
 		if (arg.get("LOL_THEN_ENT", 1) == null) {
 			assert arg.get("ENT_THEN_LOL", 0) != null;
-			cl1 = diagram.getOrCreateLeaf(ent1, null, null);
-			cl2 = diagram.createLeaf(cl1.getCode().addSuffix(suffix), Display.getWithNewlines(ent2),
+			cl1 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent1), ent1code, null, null);
+			final Ident idNewLong = diagram.buildLeafIdent(ent1 + suffix);
+			cl2 = diagram.createLeaf(idNewLong, idNewLong.toCode(), Display.getWithNewlines(ent2code),
 					getType(arg.get("ENT_THEN_LOL", 1)), null);
 			normalEntity = cl1;
 		} else {
-			cl2 = diagram.getOrCreateLeaf(ent2, null, null);
-			cl1 = diagram.createLeaf(cl2.getCode().addSuffix(suffix), Display.getWithNewlines(ent1),
+			cl2 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent2), ent2code, null, null);
+			final Ident idNewLong = diagram.buildLeafIdent(ent2 + suffix);
+			cl1 = diagram.createLeaf(idNewLong, idNewLong.toCode(), Display.getWithNewlines(ent1code),
 					getType(arg.get("LOL_THEN_ENT", 0)), null);
 			normalEntity = cl2;
 		}

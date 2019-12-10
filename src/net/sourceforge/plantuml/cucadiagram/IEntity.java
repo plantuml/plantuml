@@ -49,7 +49,9 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 
 	public Code getCode();
 
-	public LongCode getLongCode();
+	public String getCodeGetName();
+
+	public Ident getIdent();
 
 	public USymbol getUSymbol();
 

@@ -72,11 +72,12 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
-		final Code code = Code.of(arg.get("CODE", 0));
+		final String idShort = arg.get("CODE", 0);
+		final Code code = diagram.buildCode(idShort);
 		final String urlString = arg.get("URL", 0);
 		final IEntity entity;
 		if (diagram.leafExist(code)) {
-			entity = diagram.getOrCreateLeaf(code, null, null);
+			entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, null, null);
 		} else if (diagram.isGroup(code)) {
 			entity = diagram.getGroup(code);
 		} else {

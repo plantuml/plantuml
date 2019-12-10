@@ -180,24 +180,24 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		return null;
 	}
 
-	private IEntity getEntityStart(StateDiagram system, String code) {
+	private IEntity getEntityStart(StateDiagram diagram, String code) {
 		if (code.startsWith("[*]")) {
-			return system.getStart();
+			return diagram.getStart();
 		}
 		if (code.equalsIgnoreCase("[H]")) {
-			return system.getHistorical();
+			return diagram.getHistorical();
 		}
 		if (code.endsWith("[H]")) {
-			return system.getHistorical(Code.of(code.substring(0, code.length() - 3)));
+			return diagram.getHistorical(code.substring(0, code.length() - 3));
 		}
 		if (code.startsWith("=") && code.endsWith("=")) {
 			code = removeEquals(code);
-			return system.getOrCreateLeaf(Code.of(code), LeafType.SYNCHRO_BAR, null);
+			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), LeafType.SYNCHRO_BAR, null);
 		}
-		if (system.checkConcurrentStateOk(Code.of(code)) == false) {
+		if (diagram.checkConcurrentStateOk(diagram.buildLeafIdent(code), diagram.buildCode(code)) == false) {
 			return null;
 		}
-		return system.getOrCreateLeaf(Code.of(code), null, null);
+		return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), null, null);
 	}
 
 	private String removeEquals(String code) {
@@ -210,21 +210,21 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		return code;
 	}
 
-	private IEntity getEntityEnd(StateDiagram system, String code) {
+	private IEntity getEntityEnd(StateDiagram diagram, String code) {
 		if (code.startsWith("[*]")) {
-			return system.getEnd();
+			return diagram.getEnd();
 		}
 		if (code.endsWith("[H]")) {
-			return system.getHistorical(Code.of(code.substring(0, code.length() - 3)));
+			return diagram.getHistorical(code.substring(0, code.length() - 3));
 		}
 		if (code.startsWith("=") && code.endsWith("=")) {
 			code = removeEquals(code);
-			return system.getOrCreateLeaf(Code.of(code), LeafType.SYNCHRO_BAR, null);
+			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), LeafType.SYNCHRO_BAR, null);
 		}
-		if (system.checkConcurrentStateOk(Code.of(code)) == false) {
+		if (diagram.checkConcurrentStateOk(diagram.buildLeafIdent(code), diagram.buildCode(code)) == false) {
 			return null;
 		}
-		return system.getOrCreateLeaf(Code.of(code), null, null);
+		return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), null, null);
 	}
 
 }

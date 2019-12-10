@@ -121,7 +121,7 @@ public class Bibliotekon {
 		assert result == null;
 		if (ent.isGroup()) {
 			for (IEntity i : shapeMap.keySet()) {
-				if (ent.getCode().equals(i.getCode())) {
+				if (ent.getCodeGetName().equals(i.getCodeGetName())) {
 					return getShape(i).getUid();
 				}
 			}
@@ -137,7 +137,7 @@ public class Bibliotekon {
 			final double maxX = sh.getMinX() + sh.getWidth();
 			if (maxX > warningOrError) {
 				final IEntity entity = ent.getKey();
-				sb.append(entity.getCode() + " is overpassing the width limit.");
+				sb.append(entity.getCodeGetName() + " is overpassing the width limit.");
 				sb.append("\n");
 			}
 
@@ -145,13 +145,13 @@ public class Bibliotekon {
 		return sb.length() == 0 ? "" : sb.toString();
 	}
 
-	public Map<Code, Double> getMaxX() {
-		final Map<Code, Double> result = new HashMap<Code, Double>();
+	public Map<String, Double> getMaxX() {
+		final Map<String, Double> result = new HashMap<String, Double>();
 		for (Map.Entry<ILeaf, Shape> ent : shapeMap.entrySet()) {
 			final Shape sh = ent.getValue();
 			final double maxX = sh.getMinX() + sh.getWidth();
 			final IEntity entity = ent.getKey();
-			result.put(entity.getCode(), maxX);
+			result.put(entity.getCodeGetName(), maxX);
 		}
 		return Collections.unmodifiableMap(result);
 	}

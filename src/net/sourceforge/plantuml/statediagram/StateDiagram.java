@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
@@ -56,13 +57,20 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	public StateDiagram(ISkinSimple skinParam) {
 		super(skinParam);
+		// setNamespaceSeparator(null);
 	}
 
-	public boolean checkConcurrentStateOk(Code code) {
+	public boolean checkConcurrentStateOk(Ident ident, Code code) {
+		final boolean result = checkConcurrentStateOkInternal(code);
+		// System.err.println("checkConcurrentStateOk " + code + " " + ident + " " + result);
+		return result;
+	}
+
+	private boolean checkConcurrentStateOkInternal(Code code) {
 		if (leafExist(code) == false) {
 			return true;
 		}
-		final IEntity existing = this.getLeafsget(code);
+		final IEntity existing = this.getLeaf(code);
 		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_STATE
 				&& getCurrentGroup() != existing.getParentContainer()) {
 			return false;
@@ -75,51 +83,65 @@ public class StateDiagram extends AbstractEntityDiagram {
 	}
 
 	@Override
-	public IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
-		if (checkConcurrentStateOk(code) == false) {
+	public IEntity getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
+		checkNotNull(ident);
+		if (checkConcurrentStateOk(ident, code) == false) {
 			throw new IllegalStateException("Concurrent State " + code);
 		}
+		// final Ident idNewLong = buildLeafIdent(id);
 		if (type == null) {
-			if (code.getFullName().startsWith("[*]")) {
+			if (code.getName().startsWith("[*]")) {
 				throw new IllegalArgumentException();
 			}
 			if (isGroup(code)) {
 				return getGroup(code);
 			}
-			return getOrCreateLeafDefault(code, LeafType.STATE, null);
+			return getOrCreateLeafDefault(ident, code, LeafType.STATE, null);
 		}
-		return getOrCreateLeafDefault(code, type, symbol);
+		return getOrCreateLeafDefault(ident, code, type, symbol);
 	}
 
 	public IEntity getStart() {
 		final IGroup g = getCurrentGroup();
 		if (EntityUtils.groupRoot(g)) {
-			return getOrCreateLeaf(Code.of("*start"), LeafType.CIRCLE_START, null);
+			return getOrCreateLeaf(buildLeafIdent("*start"), buildCode("*start"),
+					LeafType.CIRCLE_START, null);
 		}
-		return getOrCreateLeaf(Code.of("*start*" + g.getCode().getFullName()), LeafType.CIRCLE_START, null);
+		final String idShort = "*start*" + g.getCodeGetName();
+		return getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort),
+				LeafType.CIRCLE_START, null);
 	}
 
 	public IEntity getEnd() {
 		final IGroup p = getCurrentGroup();
 		if (EntityUtils.groupRoot(p)) {
-			return getOrCreateLeaf(Code.of("*end"), LeafType.CIRCLE_END, null);
+			return getOrCreateLeaf(buildLeafIdent("*end"), buildCode("*end"),
+					LeafType.CIRCLE_END, null);
 		}
-		return getOrCreateLeaf(Code.of("*end*" + p.getCode().getFullName()), LeafType.CIRCLE_END, null);
+		final String idShort = "*end*" + p.getCodeGetName();
+		return getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort), LeafType.CIRCLE_END,
+				null);
 	}
 
 	public IEntity getHistorical() {
 		final IGroup g = getCurrentGroup();
 		if (EntityUtils.groupRoot(g)) {
-			return getOrCreateLeaf(Code.of("*historical"), LeafType.PSEUDO_STATE, null);
+			return getOrCreateLeaf(buildLeafIdent("*historical"), buildCode("*historical"),
+					LeafType.PSEUDO_STATE, null);
 		}
-		return getOrCreateLeaf(Code.of("*historical*" + g.getCode().getFullName()), LeafType.PSEUDO_STATE, null);
+		final String idShort = "*historical*" + g.getCodeGetName();
+		return getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort),
+				LeafType.PSEUDO_STATE, null);
 	}
 
-	public IEntity getHistorical(Code codeGroup) {
-		gotoGroup2(codeGroup, Display.getWithNewlines(codeGroup), GroupType.STATE, getRootGroup(),
+	public IEntity getHistorical(String idShort) {
+		final Code codeGroup = buildCode(idShort);
+		final Ident idNewLong = buildLeafIdent(idShort);
+		gotoGroup(idNewLong, codeGroup, Display.getWithNewlines(codeGroup), GroupType.STATE, getRootGroup(),
 				NamespaceStrategy.SINGLE);
 		final IEntity g = getCurrentGroup();
-		final IEntity result = getOrCreateLeaf(Code.of("*historical*" + g.getCode().getFullName()),
+		final String tmp = "*historical*" + g.getCodeGetName();
+		final IEntity result = getOrCreateLeaf(buildLeafIdent(tmp), buildCode(tmp),
 				LeafType.PSEUDO_STATE, null);
 		endGroup();
 		return result;
@@ -132,14 +154,18 @@ public class StateDiagram extends AbstractEntityDiagram {
 			super.endGroup();
 		}
 		getCurrentGroup().setConcurrentSeparator(direction);
-		gotoGroup2(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
+		final String tmp1 = UniqueSequence.getString(CONCURRENT_PREFIX);
+		final Ident idNewLong1 = buildLeafIdent(tmp1);
+		gotoGroup(idNewLong1, buildCode(tmp1), Display.create(""), GroupType.CONCURRENT_STATE,
 				getCurrentGroup(), NamespaceStrategy.SINGLE);
 		final IGroup conc1 = getCurrentGroup();
 		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
-			gotoGroup2(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
-					getCurrentGroup(), NamespaceStrategy.SINGLE);
+			final String tmp2 = UniqueSequence.getString(CONCURRENT_PREFIX);
+			final Ident idNewLong2 = buildLeafIdent(tmp2);
+			gotoGroup(idNewLong2, buildCode(tmp2), Display.create(""),
+					GroupType.CONCURRENT_STATE, getCurrentGroup(), NamespaceStrategy.SINGLE);
 		}
 		// printlink("AFTER");
 		return true;
@@ -184,8 +210,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final IGroup parent2 = getGroupParentIfItIsConcurrentState(link.getEntity2());
 			if (isCompatible(parent1, parent2) == false) {
 				return "State within concurrent state cannot be linked out of this concurrent state (between "
-						+ link.getEntity1().getCode().getFullName() + " and "
-						+ link.getEntity2().getCode().getFullName() + ")";
+						+ link.getEntity1().getCodeGetName() + " and "
+						+ link.getEntity2().getCodeGetName() + ")";
 			}
 		}
 		return super.checkFinalError();

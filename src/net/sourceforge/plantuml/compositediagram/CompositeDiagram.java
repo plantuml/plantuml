@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
 
@@ -50,14 +51,16 @@ public class CompositeDiagram extends AbstractEntityDiagram {
 	}
 
 	@Override
-	public IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
+	public IEntity getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
+		checkNotNull(ident);
+		// final Ident idNewLong = buildLeafIdent(id);
 		if (type == null) {
 			if (isGroup(code)) {
 				return getGroup(code);
 			}
-			return getOrCreateLeafDefault(code, LeafType.BLOCK, symbol);
+			return getOrCreateLeafDefault(ident, code, LeafType.BLOCK, symbol);
 		}
-		return getOrCreateLeafDefault(code, type, symbol);
+		return getOrCreateLeafDefault(ident, code, type, symbol);
 	}
 
 	@Override

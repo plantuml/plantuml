@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -47,10 +46,9 @@ import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class StickMan extends AbstractTextBlock implements TextBlock {
+public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 
 	private final double armsY = 8;
 	private final double armsLenght = 13;
@@ -61,17 +59,8 @@ public class StickMan extends AbstractTextBlock implements TextBlock {
 
 	private final SymbolContext symbolContext;
 
-	public StickMan(SymbolContext symbolContext) {
+	ActorStickMan(SymbolContext symbolContext) {
 		this.symbolContext = symbolContext;
-	}
-
-	private StickMan(HtmlColor backgroundColor, HtmlColor foregroundColor, double deltaShadow) {
-		this(new SymbolContext(backgroundColor, foregroundColor).withDeltaShadow(deltaShadow)
-				.withStroke(new UStroke(2)));
-	}
-
-	public StickMan(HtmlColor backgroundColor, HtmlColor foregroundColor) {
-		this(new SymbolContext(backgroundColor, foregroundColor).withStroke(new UStroke(2)));
 	}
 
 	public void drawU(UGraphic ug) {

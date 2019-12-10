@@ -52,16 +52,21 @@ import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LongCode;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class EntityFactory {
+public final class EntityFactory {
 
-	private final Map<Code, ILeaf> leafs = new LinkedHashMap<Code, ILeaf>();
+	private final Map<String, ILeaf> leafsByCode = new LinkedHashMap<String, ILeaf>();
+	private final Map<String, IGroup> groupsByCode = new LinkedHashMap<String, IGroup>();
+
+	private final Map<Ident, ILeaf> leafs2 = new LinkedHashMap<Ident, ILeaf>();
+	private final Map<Ident, IGroup> groups2 = new LinkedHashMap<Ident, IGroup>();
+
 	private final List<Link> links = new ArrayList<Link>();
-	private final Map<Code, IGroup> groups = new LinkedHashMap<Code, IGroup>();
+
 	private int rawLayout;
 
 	private final IGroup rootGroup = new GroupRoot(this);
@@ -89,42 +94,104 @@ public class EntityFactory {
 		return result;
 	}
 
-	public ILeaf createLeaf(Code code, Display display, LeafType entityType, IGroup parentContainer,
+	public void thisIsGoingToBeALeaf(Ident ident) {
+		// if (byIdents.containsKey(ident) == false) {
+		// System.err.println("thisIsGoingToBeALeaf::byIdents=" + byIdents.keySet());
+		// System.err.println("thisIsGoingToBeALeaf::ident=" + ident);
+		// // Thread.dumpStack();
+		// // System.exit(0);
+		// }
+		// byIdents.remove(ident);
+	}
+
+	public void thisIsNotArealGroup(Ident ident) {
+		// byIdents.remove(ident);
+	}
+
+	public ILeaf createLeaf(Ident ident, Code code, Display display, LeafType entityType, IGroup parentContainer,
 			Set<VisibilityModifier> hides, String namespaceSeparator) {
 		if (entityType == null) {
 			throw new IllegalArgumentException();
 		}
+		// if (byIdents.containsKey(ident)) {
+		// throw new IllegalArgumentException();
+		// }
 		final Bodier bodier = new Bodier(entityType, hides);
-		final LongCode longCode = getLongCode(code, namespaceSeparator);
-		final EntityImpl result = new EntityImpl(this, code, bodier, parentContainer, entityType, longCode,
+		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, entityType,
 				namespaceSeparator, rawLayout);
 		bodier.setLeaf(result);
 		result.setDisplay(display);
+		// System.err.println("adding1 "+ident);
+		// byIdents.put(ident, result);
+		// System.err.println("EntityFactory::createLeaf=" + result);
 		return result;
 	}
 
-	private LongCode getLongCode(Code code, String namespaceSeparator) {
-		final LongCode result = LongCode.of(code.getFullName(), namespaceSeparator);
-		// if (result.toString().equals(code.toString()) == false) {
-		// System.err.println("result=" + result);
-		// System.err.println(" code =" + code);
-		// throw new UnsupportedOperationException();
-		// }
-		return result;
-	}
-
-	public IGroup createGroup(Code code, Display display, Code namespace2, GroupType groupType, IGroup parentContainer,
-			Set<VisibilityModifier> hides, String namespaceSeparator) {
+	public IGroup createGroup(Ident ident, Code code, Display display, Code namespace, GroupType groupType,
+			IGroup parentContainer, Set<VisibilityModifier> hides, String namespaceSeparator) {
 		if (groupType == null) {
 			throw new IllegalArgumentException();
 		}
+		// if (byIdents.containsKey(ident)) {
+		// throw new IllegalArgumentException();
+		// }
 		final Bodier bodier = new Bodier(null, hides);
-		final LongCode longCode = getLongCode(code, namespaceSeparator);
-		final EntityImpl result = new EntityImpl(this, code, bodier, parentContainer, groupType, namespace2, longCode,
+		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, groupType, namespace,
 				namespaceSeparator, rawLayout);
 		if (Display.isNull(display) == false) {
 			result.setDisplay(display);
 		}
+		// System.err.println("adding2 "+ident);
+		// byIdents.put(ident, result);
+		// System.err.println("EntityFactory::createGroup=" + result);
+		return result;
+	}
+
+	public void addLeaf(ILeaf entity) {
+		// System.err.println("EntityFactory::addLeaf=" + entity);
+		leafsByCode.put(entity.getCodeGetName(), entity);
+		leafs2.put(entity.getIdent(), entity);
+	}
+
+	public void addGroup(IGroup group) {
+		// System.err.println("EntityFactory::addGroup=" + group);
+		groupsByCode.put(group.getCodeGetName(), group);
+		groups2.put(group.getIdent(), group);
+	}
+
+	void removeGroup(String name) {
+		final IEntity removed = groupsByCode.remove(name);
+		if (removed == null) {
+			throw new IllegalArgumentException();
+		}
+		final IEntity removed2 = groups2.remove(removed.getIdent());
+		if (removed != removed2) {
+			bigError();
+		}
+	}
+
+	public static void bigError() {
+		Thread.dumpStack();
+		// System.exit(0);
+		// throw new IllegalArgumentException();
+	}
+
+	void removeLeaf(String name) {
+		final IEntity removed = leafsByCode.remove(name);
+		if (removed == null) {
+			throw new IllegalArgumentException();
+		}
+		final IEntity removed2 = leafs2.remove(removed.getIdent());
+		if (removed != removed2) {
+			bigError();
+		}
+	}
+
+	public IGroup muteToGroup(String name, Code namespace, GroupType type, IGroup parent) {
+		final ILeaf leaf = leafsByCode.get(name);
+		((EntityImpl) leaf).muteToGroup(namespace, type, parent);
+		final IGroup result = (IGroup) leaf;
+		removeLeaf(name);
 		return result;
 	}
 
@@ -132,46 +199,59 @@ public class EntityFactory {
 		return rootGroup;
 	}
 
-	public final ILeaf getLeafsget(Code code) {
-		return leafs.get(code);
+	public final ILeaf getLeaf(Ident ident) {
+		return leafs2.get(ident);
 	}
 
-	public final Collection<ILeaf> getLeafsvalues() {
-		return Collections.unmodifiableCollection(leafs.values());
+	public final ILeaf getLeaf(Code code) {
+		final ILeaf result = leafsByCode.get(code.getName());
+		if (result != null && result != leafs2.get(result.getIdent())) {
+			bigError();
+		}
+		return result;
 	}
 
-	public void addLeaf(ILeaf entity) {
-		leafs.put(entity.getCode(), entity);
+	public final IGroup getGroup(Code code) {
+		final IGroup result = groupsByCode.get(code.getName());
+		if (result != null && result != groups2.get(result.getIdent())) {
+			bigError();
+		}
+		return result;
+	}
+
+	public final IGroup getGroup(Ident ident) {
+		final IGroup result = groups2.get(ident);
+		return result;
+	}
+
+	public final Collection<ILeaf> leafs() {
+		final Collection<ILeaf> result = Collections.unmodifiableCollection(leafsByCode.values());
+		if (new ArrayList<ILeaf>(result).equals(new ArrayList<ILeaf>(leafs2())) == false) {
+			bigError();
+		}
+		return result;
+	}
+
+	public final Collection<IGroup> groups() {
+		final Collection<IGroup> result = Collections.unmodifiableCollection(groupsByCode.values());
+		if (new ArrayList<IGroup>(result).equals(new ArrayList<IGroup>(groups2())) == false) {
+			bigError();
+		}
+		return result;
+	}
+
+	public final Collection<IGroup> groups2() {
+		final Collection<IGroup> result = Collections.unmodifiableCollection(groups2.values());
+		return Collections.unmodifiableCollection(result);
+	}
+
+	public final Collection<ILeaf> leafs2() {
+		final Collection<ILeaf> result = Collections.unmodifiableCollection(leafs2.values());
+		return Collections.unmodifiableCollection(result);
 	}
 
 	public void incRawLayout() {
 		rawLayout++;
-	}
-
-	void removeLeaf(Code code) {
-		final IEntity removed = leafs.remove(code);
-		if (removed == null) {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	public void addGroup(IGroup group) {
-		groups.put(group.getCode(), group);
-	}
-
-	void removeGroup(Code code) {
-		final IEntity removed = groups.remove(code);
-		if (removed == null) {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	public final Collection<IGroup> getGroupsvalues() {
-		return Collections.unmodifiableCollection(groups.values());
-	}
-
-	public final IGroup getGroupsget(Code code) {
-		return groups.get(code);
 	}
 
 	public final List<Link> getLinks() {
@@ -201,12 +281,21 @@ public class EntityFactory {
 		}
 	}
 
-	public IGroup muteToGroup(Code code, Code namespace2, GroupType type, IGroup parent) {
-		final ILeaf leaf = leafs.get(code);
-		((EntityImpl) leaf).muteToGroup(namespace2, type, parent);
-		final IGroup result = (IGroup) leaf;
-		removeLeaf(code);
-		return result;
+	public IGroup getParentContainer(Ident ident, IGroup parentContainer) {
+		if (parentContainer == null) {
+			throw new IllegalArgumentException();
+		}
+		// if (parentContainer == null) {
+		// } else {
+		// final Ident identParent = parentContainer.getIdent();
+		// if (ident.parent().equals(identParent) == false) {
+		// System.err.println("ident=" + ident);
+		// System.err.println("parentContainer=" + identParent);
+		// Thread.dumpStack();
+		// System.exit(0);
+		// }
+		// }
+		return parentContainer;
 	}
 
 }

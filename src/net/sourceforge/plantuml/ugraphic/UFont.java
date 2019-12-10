@@ -38,9 +38,13 @@ package net.sourceforge.plantuml.ugraphic;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
+import java.util.HashSet;
+import java.util.Set;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -50,8 +54,32 @@ public class UFont {
 	private final Font font;
 	private final String family;
 
+	private static final Set<String> names = new HashSet<String>();
+
+	static {
+		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
+			names.add(name.toLowerCase());
+		}
+	}
+
 	public UFont(String fontFamily, int fontStyle, int fontSize) {
-		this(new Font(fontFamily, fontStyle, fontSize), fontFamily);
+		this(buildFont(fontFamily, fontStyle, fontSize), fontFamily);
+	}
+
+	private static Font buildFont(String fontFamily, int fontStyle, int fontSize) {
+		if (fontFamily.contains(",")) {
+			for (String name : fontFamily.split(",")) {
+				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name).trim();
+				if (doesFamilyExists(name)) {
+					return new Font(fontFamily, fontStyle, fontSize);
+				}
+			}
+		}
+		return new Font(fontFamily, fontStyle, fontSize);
+	}
+
+	private static boolean doesFamilyExists(String name) {
+		return names.contains(name.toLowerCase());
 	}
 
 	public static UFont serif(int size) {
@@ -87,6 +115,7 @@ public class UFont {
 		return font;
 	}
 
+	@Deprecated
 	public FontConfiguration toFont2(HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor,
 			int tabSize) {
 		return new FontConfiguration(this, color, hyperlinkColor, useUnderlineForHyperlink, tabSize);
@@ -168,12 +197,6 @@ public class UFont {
 			return false;
 		}
 		return this.font.equals(((UFont) obj).font);
-	}
-
-	@Deprecated
-	public static UFont getCurrentFont(Graphics2D g2d) {
-		// return new UFont(g2d.getFont(), g2d.getFont().getFontName());
-		throw new UnsupportedOperationException();
 	}
 
 	public LineMetrics getLineMetrics(Graphics2D gg, String text) {

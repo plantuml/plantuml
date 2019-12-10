@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -205,8 +206,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			}
 			final String codes = arg.get(keyword, 1);
 			for (String s : codes.split(",")) {
-				final Code other = Code.of(StringUtils.trin(s));
-				final IEntity cl2 = diagram.getOrCreateLeaf(other, type2, null);
+				final String idShort = StringUtils.trin(s);
+				final Code other = diagram.buildCode(idShort);
+				final IEntity cl2 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), other, type2, null);
 				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
 				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE) {
 					typeLink = typeLink.goDashed();
@@ -228,7 +230,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + "FOO", false);
 		}
 
-		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0),
+				"\"([:");
+		final Code code = diagram.buildCode(idShort);
 		final String display = arg.getLazzy("DISPLAY", 0);
 		final String genericOption = arg.getLazzy("DISPLAY", 1);
 		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
@@ -237,12 +241,13 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final ILeaf result;
 		if (diagram.leafExist(code)) {
-			result = diagram.getOrCreateLeaf(code, null, null);
+			result = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, null, null);
 			if (result.muteToType(type, null) == false) {
 				return null;
 			}
 		} else {
-			result = diagram.createLeaf(code, Display.getWithNewlines(display), type, null);
+			final Ident idNewLong = diagram.buildLeafIdent(idShort);
+			result = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
 		}
 		result.setVisibilityModifier(visibilityModifier);
 		if (stereotype != null) {

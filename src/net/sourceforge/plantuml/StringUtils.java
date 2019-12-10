@@ -232,6 +232,9 @@ public class StringUtils {
 	// }
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s, String format) {
+		if (s == null) {
+			return null;
+		}
 		if (format.contains("\"") && s.length() > 1 && isDoubleQuote(s.charAt(0))
 				&& isDoubleQuote(s.charAt(s.length() - 1))) {
 			return s.substring(1, s.length() - 1);

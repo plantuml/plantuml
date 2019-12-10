@@ -33,32 +33,32 @@
  * 
  *
  */
-package net.sourceforge.plantuml.graphic;
+package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.USymbol;
 
-public class UGraphicAddAriaLabel extends UGraphicDelegator {
+public enum ActorStyle {
 
-	private final String ariaLabel;
+	STICKMAN, AWESOME;
 
-	public UGraphicAddAriaLabel(UGraphic ug, String ariaLabel) {
-		super(ug);
-		this.ariaLabel = ariaLabel;
-	}
-
-	public UGraphic apply(UChange change) {
-		return new UGraphicAddAriaLabel(getUg().apply(change), ariaLabel);
-	}
-
-	@Override
-	public void draw(UShape shape) {
-		if (shape instanceof UText) {
-			shape = ((UText) shape).withAriaLabel(ariaLabel);
+	public USymbol getUSymbol() {
+		if (this == STICKMAN) {
+			return USymbol.ACTOR_STICKMAN;
+		} else if (this == AWESOME) {
+			return USymbol.ACTOR_AWESOME;
 		}
-		super.draw(shape);
+		throw new IllegalStateException();
+	}
+
+	public TextBlock getTextBlock(SymbolContext symbolContext) {
+		if (this == STICKMAN) {
+			return new ActorStickMan(symbolContext);
+		} else if (this == AWESOME) {
+			return new ActorAwesome(symbolContext);
+		}
+		throw new IllegalStateException();
 	}
 
 }

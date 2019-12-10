@@ -36,57 +36,49 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 
-public class LongCode implements Comparable<LongCode> {
+public class CodeImpl implements Code {
 
-	private final String fullName;
-	private final String separator;
+	private final String name;
 
-	private LongCode(String fullName, String separator) {
-		if (fullName == null) {
+	private CodeImpl(String name) {
+		if (name == null) {
 			throw new IllegalArgumentException();
 		}
-		this.fullName = fullName;
-		this.separator = separator;
+		this.name = name;
 	}
 
-	public String getNamespaceSeparator() {
-		return separator;
-	}
-
-	public static LongCode of(String code, String separator) {
+	public static Code of(String code) {
 		if (code == null) {
-			throw new IllegalStateException();
+			EntityFactory.bigError();
 		}
-		return new LongCode(code, separator);
+		return new CodeImpl(code);
 	}
 
-	public final String getFullName() {
-		return fullName;
+	public final String getName() {
+		return name;
 	}
 
 	@Override
 	public String toString() {
-		return fullName + "(" + separator + ")";
+		return name;
 	}
 
 	@Override
 	public int hashCode() {
-		return fullName.hashCode();
+		return name.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		final LongCode other = (LongCode) obj;
-		return this.fullName.equals(other.fullName);
+		final CodeImpl other = (CodeImpl) obj;
+		return this.name.equals(other.name);
 	}
 
-	public int compareTo(LongCode other) {
-		return this.fullName.compareTo(other.fullName);
-	}
 
-	private LongCode eventuallyRemoveStartingAndEndingDoubleQuote() {
-		return LongCode.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(fullName), separator);
+	public Code eventuallyRemoveStartingAndEndingDoubleQuote(String format) {
+		return CodeImpl.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getName(), format));
 	}
 
 }

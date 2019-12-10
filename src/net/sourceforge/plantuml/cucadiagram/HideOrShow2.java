@@ -47,7 +47,7 @@ public class HideOrShow2 {
 		if (what.startsWith("<<") && what.endsWith(">>")) {
 			return isApplyableStereotype(leaf, what.substring(2, what.length() - 2).trim());
 		}
-		final String fullName = leaf.getCode().getFullName();
+		final String fullName = leaf.getCodeGetName();
 		// System.err.println("fullName=" + fullName);
 		return match(fullName, what);
 	}

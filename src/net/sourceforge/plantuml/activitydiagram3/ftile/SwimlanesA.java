@@ -222,8 +222,10 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock, Styleabl
 			if (back != null) {
 				final UGraphic background = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(back))
 						.apply(new UTranslate(x2, 0));
-				background.draw(new URectangle(swimlane.getActualWidth(), dimensionFull.getHeight()
-						+ titleHeightTranslate.getDy()));
+				final URectangle rectangle = new URectangle(swimlane.getActualWidth(), dimensionFull.getHeight()
+						+ titleHeightTranslate.getDy());
+				rectangle.setIgnoreForCompression(true);
+				background.draw(rectangle);
 			}
 
 			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane).apply(swimlane.getTranslate()).apply(

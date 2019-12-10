@@ -75,7 +75,6 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.wbs.WBSDiagram;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -147,7 +146,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public static Display getWithNewlines(Code s) {
-		return getWithNewlines(s.getFullName());
+		return getWithNewlines(s.getName());
 	}
 
 	public static Display getWithNewlines(String s) {

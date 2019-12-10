@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> {
@@ -63,11 +64,13 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
-		final Code code = Code.of(arg.get("CODE", 0));
+		final String idShort = arg.get("CODE", 0);
+		final Code code = diagram.buildCode(idShort);
 		if (diagram.leafExist(code)) {
-			return CommandExecutionResult.error("Already existing : " + code.getFullName());
+			return CommandExecutionResult.error("Already existing : " + code.getName());
 		}
-		diagram.createLeaf(code, Display.NULL, LeafType.ASSOCIATION, null);
+		final Ident idNewLong = diagram.buildLeafIdent(idShort);
+		diagram.createLeaf(idNewLong, code, Display.NULL, LeafType.ASSOCIATION, null);
 
 		return CommandExecutionResult.ok();
 	}

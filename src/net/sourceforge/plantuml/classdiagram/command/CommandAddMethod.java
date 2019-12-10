@@ -64,12 +64,14 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram system, LineLocation location, RegexResult arg) {
-		final IEntity entity = system.getOrCreateLeaf(Code.of(arg.get("NAME", 0)), null, null);
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
+		final String idShort = arg.get("NAME", 0);
+		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort),
+				diagram.buildCode(idShort), null, null);
 
 		final String field = arg.get("DATA", 0);
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {
-			system.setVisibilityModifierPresent(true);
+			diagram.setVisibilityModifierPresent(true);
 		}
 		entity.getBodier().addFieldOrMethod(field, entity);
 		return CommandExecutionResult.ok();

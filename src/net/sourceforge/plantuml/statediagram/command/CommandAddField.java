@@ -69,7 +69,8 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 		final String code = arg.getLazzy("CODE", 0);
 		final String field = arg.get("FIELD", 0);
 
-		final IEntity entity = diagram.getOrCreateLeaf(Code.of(code), null, null);
+		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(code),
+				diagram.buildCode(code), null, null);
 
 		entity.getBodier().addFieldOrMethod(field, entity);
 		return CommandExecutionResult.ok();

@@ -125,7 +125,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.draw(new UComment("class " + getEntity().getCode().getFullName()));
+		ug.draw(new UComment("class " + getEntity().getCodeGetName()));
 		if (url != null) {
 			ug.startUrl(url);
 		}
@@ -143,8 +143,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner, getEntity().getCode()
-				.getFullName());
+		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner, getEntity()
+				.getCodeGetName());
 		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			rect.setDeltaShadow(4);
 		}

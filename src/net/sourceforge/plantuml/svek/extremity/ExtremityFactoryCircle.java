@@ -43,14 +43,19 @@ import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactoryCircle extends AbstractExtremityFactory implements ExtremityFactory {
 
+	private final boolean fill;
+
+	public ExtremityFactoryCircle(boolean fill) {
+		this.fill = fill;
+	}
+
 	@Override
 	public UDrawable createUDrawable(Point2D center, double angle, Side side) {
-		// return ExtremityCircle.createContact(center, angle);
-		return ExtremityCircle.create(center);
+		return ExtremityCircle.create(center, fill);
 	}
 
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
-		return ExtremityCircle.create(p1);
+		return ExtremityCircle.create(p1, fill);
 	}
 
 }

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -132,14 +133,15 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			type = LeafType.USECASE;
 			usymbol = null;
 		} else {
-			usymbol = USymbol.getFromString(symbol);
+			usymbol = USymbol.getFromString(symbol, diagram.getSkinParam().getActorStyle());
 			if (usymbol == null) {
 				throw new IllegalStateException();
 			}
 			type = LeafType.DESCRIPTION;
 		}
 
-		final Code code = Code.of(line0.get("CODE", 0));
+		final String idShort = line0.get("CODE", 0);
+		final Code code = diagram.buildCode(idShort);
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
 				.getString());
 		lines = lines.subExtract(1, 1);
@@ -156,11 +158,12 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		final String stereotype = line0.get("STEREO", 0);
 
 		if (CommandCreateElementFull.existsWithBadType(diagram, code, type, usymbol)) {
-			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 		}
-		final ILeaf result = diagram.createLeaf(code, display, type, usymbol);
+		final Ident idNewLong = diagram.buildLeafIdent(idShort);
+		final ILeaf result = diagram.createLeaf(idNewLong, code, display, type, usymbol);
 		if (result == null) {
-			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 		}
 		result.setUSymbol(usymbol);
 		if (stereotype != null) {

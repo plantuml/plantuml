@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -82,6 +83,14 @@ class FtileIfLongVertical extends AbstractFtile {
 	private final Ftile lastDiamond;
 
 	private final Rainbow arrowColor;
+
+	
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		final List<Ftile> result = new ArrayList<Ftile>(tiles);
+		result.add(tile2);
+		return Collections.unmodifiableList(result);
+	}
 
 	private FtileIfLongVertical(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, Rainbow arrowColor,
 			Ftile lastDiamond) {

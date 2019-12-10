@@ -47,7 +47,7 @@ public class MDAEntityImpl implements MDAEntity {
 	}
 
 	public String getName() {
-		return leaf.getCode().getFullName();
+		return leaf.getCodeGetName();
 	}
 
 }

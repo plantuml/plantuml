@@ -71,11 +71,12 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
 		String display = arg.get("DISPLAY", 0);
-		final Code code = Code.of(arg.get("CODE", 0));
+		final String idShort = arg.get("CODE", 0);
+		final Code code = diagram.buildCode(idShort);
 		if (display == null) {
-			display = code.getFullName();
+			display = code.getName();
 		}
-		final IEntity ent = diagram.getOrCreateLeaf(code, null, null);
+		final IEntity ent = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, null, null);
 		ent.setDisplay(Display.getWithNewlines(display));
 		return CommandExecutionResult.ok();
 	}

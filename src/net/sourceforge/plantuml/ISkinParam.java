@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Padder;
 import net.sourceforge.plantuml.style.Style;
@@ -182,10 +183,11 @@ public interface ISkinParam extends ISkinSimple {
 	public void muteStyle(Style modifiedStyle);
 
 	public Collection<String> getAllSpriteNames();
-	
+
 	public String getDefaultSkin();
-	
+
 	public void setDefaultSkin(String newSkin);
 
+	public ActorStyle getActorStyle();
 
 }

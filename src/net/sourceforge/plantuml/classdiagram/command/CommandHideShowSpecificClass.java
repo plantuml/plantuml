@@ -66,7 +66,7 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 		// } else if (codeString.equals("interface")) {
 		// diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		// } else {
-		// final Code code = Code.of(codeString);
+		// final Code code = diagram.buildCode(codeString);
 		// IEntity hidden = diagram.getEntityFactory().getLeafsget(code);
 		// if (hidden == null) {
 		// hidden = diagram.getEntityFactory().getGroupsget(code);

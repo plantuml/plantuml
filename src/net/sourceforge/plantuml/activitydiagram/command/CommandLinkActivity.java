@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -182,82 +183,101 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
 	}
 
-	static IEntity getEntity(ActivityDiagram system, RegexResult arg, final boolean start) {
+	static IEntity getEntity(ActivityDiagram diagram, RegexResult arg, final boolean start) {
 		final String suf = start ? "" : "2";
 
 		final String openBracket2 = arg.get("OPENBRACKET" + suf, 0);
 		if (openBracket2 != null) {
-			return system.createInnerActivity();
+			return diagram.createInnerActivity();
 		}
 		if (arg.get("STAR" + suf, 0) != null) {
 			final String suppId = arg.get("STAR" + suf, 1);
 			if (start) {
 				if (suppId != null) {
-					system.getStart().setTop(true);
+					diagram.getStart().setTop(true);
 				}
-				return system.getStart();
+				return diagram.getStart();
 			}
-			return system.getEnd(suppId);
+			return diagram.getEnd(suppId);
 		}
 		String partition = arg.get("PARTITION" + suf, 0);
 		if (partition != null) {
 			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
 		}
-		final Code code = Code.of(arg.get("CODE" + suf, 0));
-		if (code != null) {
+		final String idShort = arg.get("CODE" + suf, 0);
+		if (idShort != null) {
+			final Code code = diagram.buildCode(idShort);
 			if (partition != null) {
-				system.gotoGroup2(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE,
-						system.getRootGroup(), NamespaceStrategy.SINGLE);
+				final Ident idNewLong = diagram.buildLeafIdent(partition);
+				diagram.gotoGroup(idNewLong, diagram.buildCode(partition), Display.getWithNewlines(partition),
+						GroupType.PACKAGE, diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
-			final IEntity result = system.getOrCreate(code, Display.getWithNewlines(code),
-					CommandLinkActivity.getTypeIfExisting(system, code));
+			final LeafType type = getTypeIfExisting(diagram, code);
+			final IEntity result = diagram.getOrCreate(diagram.buildLeafIdent(idShort), code,
+					Display.getWithNewlines(code), type);
 			if (partition != null) {
-				system.endGroup();
+				diagram.endGroup();
 			}
 			return result;
 		}
 		final String bar = arg.get("BAR" + suf, 0);
 		if (bar != null) {
-			return system.getOrCreate(Code.of(bar), Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR);
+			return diagram.getOrCreate(diagram.buildLeafIdent(bar), diagram.buildCode(bar),
+					Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR);
 		}
 		final RegexPartialMatch quoted = arg.get("QUOTED" + suf);
 		if (quoted.get(0) != null) {
-			final Code quotedCode = Code.of(quoted.get(1) == null ? quoted.get(0) : quoted.get(1));
+			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
+			final Code quotedCode = diagram.buildCode(quotedString);
 			if (partition != null) {
-				system.gotoGroup2(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE,
-						system.getRootGroup(), NamespaceStrategy.SINGLE);
+				final Ident idNewLong = diagram.buildLeafIdent(partition);
+				diagram.gotoGroup(idNewLong, diagram.buildCode(partition), Display.getWithNewlines(partition),
+						GroupType.PACKAGE, diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
-			final IEntity result = system.getOrCreate(quotedCode, Display.getWithNewlines(quoted.get(0)),
-					CommandLinkActivity.getTypeIfExisting(system, quotedCode));
+			final LeafType type = getTypeIfExisting(diagram, quotedCode);
+			final IEntity result = diagram.getOrCreate(diagram.buildLeafIdent(quotedString), quotedCode,
+					Display.getWithNewlines(quoted.get(0)), type);
 			if (partition != null) {
-				system.endGroup();
+				diagram.endGroup();
 			}
 			return result;
 		}
-		final Code quotedInvisible = Code.of(arg.get("QUOTED_INVISIBLE" + suf, 0));
-		if (quotedInvisible != null) {
+		final String quoteInvisibleString = arg.get("QUOTED_INVISIBLE" + suf, 0);
+		if (quoteInvisibleString != null) {
+			final Code quotedInvisible = diagram.buildCode(quoteInvisibleString);
 			if (partition != null) {
-				system.gotoGroup2(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE,
-						system.getRootGroup(), NamespaceStrategy.SINGLE);
+				final Ident idNewLong = diagram.buildLeafIdent(partition);
+				diagram.gotoGroup(idNewLong, diagram.buildCode(partition), Display.getWithNewlines(partition),
+						GroupType.PACKAGE, diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
-			final IEntity result = system.getOrCreate(quotedInvisible, Display.getWithNewlines(quotedInvisible),
-					LeafType.ACTIVITY);
+			final IEntity result = diagram.getOrCreate(diagram.buildLeafIdent(quoteInvisibleString), quotedInvisible,
+					Display.getWithNewlines(quotedInvisible), LeafType.ACTIVITY);
 			if (partition != null) {
-				system.endGroup();
+				diagram.endGroup();
 			}
 			return result;
 		}
 		final String first = arg.get("FIRST" + suf, 0);
 		if (first == null) {
-			return system.getLastEntityConsulted();
+			return diagram.getLastEntityConsulted();
 		}
 
 		return null;
 	}
 
-	static LeafType getTypeIfExisting(ActivityDiagram system, Code code) {
+	private static LeafType getTypeIfExisting(ActivityDiagram system, Ident ident) {
+		if (system.leafExist(ident)) {
+			final IEntity ent = system.getLeaf(ident);
+			if (ent.getLeafType() == LeafType.BRANCH) {
+				return LeafType.BRANCH;
+			}
+		}
+		return LeafType.ACTIVITY;
+	}
+
+	private static LeafType getTypeIfExisting(ActivityDiagram system, Code code) {
 		if (system.leafExist(code)) {
-			final IEntity ent = system.getLeafsget(code);
+			final IEntity ent = system.getLeaf(code);
 			if (ent.getLeafType() == LeafType.BRANCH) {
 				return LeafType.BRANCH;
 			}

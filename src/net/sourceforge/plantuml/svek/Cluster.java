@@ -315,7 +315,7 @@ public class Cluster implements Moveable {
 		if (group.isHidden()) {
 			return;
 		}
-		final String fullName = group.getCode().getFullName();
+		final String fullName = group.getCodeGetName();
 		if (fullName.startsWith("##") == false) {
 			ug.draw(new UComment("cluster " + fullName));
 		}

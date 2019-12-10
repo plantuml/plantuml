@@ -77,17 +77,6 @@ public class RegexLeaf implements IRegex {
 	public RegexLeaf(String name, String regex) {
 		this.pattern = regex;
 		this.name = name;
-		// unknow=(left[%s]to[%s]right|top[%s]to[%s]bottom)
-		// unknow=is off on
-		// unknow=(-+)\>
-		// unknow=\[([^\[\]]+?)\]
-		// unknow=([*]+)
-
-		// if (regex.equals("([*]+)") || regex.equals("\\[([^\\[\\]]+?)\\]") || regex.equals("(-+)\\>")
-		// || regex.equals("is off on")) {
-		// Thread.dumpStack();
-		// System.exit(0);
-		// }
 	}
 
 	@Override

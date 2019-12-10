@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.utils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.sourceforge.plantuml.cucadiagram.Code;
-
 public class UniqueSequence {
 
 	private static final AtomicInteger cpt = new AtomicInteger(1);
@@ -47,8 +45,8 @@ public class UniqueSequence {
 		return cpt.addAndGet(1);
 	}
 
-	public static Code getCode(String prefix) {
-		return Code.of(prefix + getValue());
+	public static String getString(String prefix) {
+		return prefix + getValue();
 	}
 
 }

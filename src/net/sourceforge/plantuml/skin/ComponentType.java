@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.Styleable;
 
 public enum ComponentType implements Styleable {
 

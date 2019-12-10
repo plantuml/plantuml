@@ -92,7 +92,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private Position getPosition() {
-		if (getEntity().getCode().getFullName().endsWith(Position.RIGHT.name())) {
+		if (getEntity().getCodeGetName().endsWith(Position.RIGHT.name())) {
 			return Position.RIGHT;
 		}
 		return Position.LEFT;

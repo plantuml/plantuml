@@ -76,8 +76,12 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
-		final IEntity cl1 = diagram.getOrCreateLeaf(Code.of(arg.get("ENT1", 0)), null, null);
-		final IEntity cl2 = diagram.getOrCreateLeaf(Code.of(arg.get("ENT2", 0)), null, null);
+		final String ent1 = arg.get("ENT1", 0);
+		final String ent2 = arg.get("ENT2", 0);
+		final IEntity cl1 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent1),
+				diagram.buildCode(ent1), null, null);
+		final IEntity cl2 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent2),
+				diagram.buildCode(ent2), null, null);
 
 		final String deco1 = arg.get("DECO1", 0);
 		final String deco2 = arg.get("DECO2", 0);
@@ -91,7 +95,8 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 		final String queue = arg.get("QUEUE", 0);
 
-		final Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(arg.get("DISPLAY", 0)), queue.length(), diagram.getSkinParam().getCurrentStyleBuilder());
+		final Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(arg.get("DISPLAY", 0)), queue.length(),
+				diagram.getSkinParam().getCurrentStyleBuilder());
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}

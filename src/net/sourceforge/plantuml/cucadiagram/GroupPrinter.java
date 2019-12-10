@@ -51,7 +51,7 @@ public class GroupPrinter {
 		pw.println("<table border=1 cellpadding=8 cellspacing=0>");
 		pw.println("<tr>");
 		pw.println("<td bgcolor=#DDDDDD>");
-		pw.println(group.getCode());
+		pw.println(group.getCodeGetName());
 		pw.println("<tr>");
 		pw.println("<td>");
 		if (group.getLeafsDirect().size() == 0) {
@@ -80,7 +80,7 @@ public class GroupPrinter {
 	}
 
 	private void printLeaf(ILeaf leaf) {
-		pw.println("<li>" + leaf.getCode());
+		pw.println("<li>" + leaf.getCodeGetName());
 	}
 
 	public static void print(File f, IGroup rootGroup) {

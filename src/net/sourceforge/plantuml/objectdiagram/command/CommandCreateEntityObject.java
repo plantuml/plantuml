@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -77,13 +78,16 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) {
-		final Code code = Code.of(arg.get("NAME", 1));
+		final String idShort = arg.get("NAME", 1);
+		final Code code = diagram.buildCode(idShort);
 		final String display = arg.get("NAME", 0);
 		final String stereotype = arg.get("STEREO", 0);
 		if (diagram.leafExist(code)) {
 			return CommandExecutionResult.error("Object already exists : " + code);
 		}
-		final IEntity entity = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.OBJECT, null);
+		final Ident idNewLong = diagram.buildLeafIdent(idShort);
+		final IEntity entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display),
+				LeafType.OBJECT, null);
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
 					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()

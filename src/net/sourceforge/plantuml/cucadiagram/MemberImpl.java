@@ -55,6 +55,11 @@ public class MemberImpl implements Member {
 
 	private final VisibilityModifier visibilityModifier;
 
+	@Override
+	public String toString() {
+		return super.toString() + " " + display;
+	}
+
 	public MemberImpl(String tmpDisplay, boolean isMethod, boolean manageModifier) {
 		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)\\}\\s*", "");
 		if (manageModifier) {
@@ -96,7 +101,8 @@ public class MemberImpl implements Member {
 			this.visibilityModifier = null;
 			this.abstractModifier = false;
 			tmpDisplay = StringUtils.trin(tmpDisplay);
-			this.display = tmpDisplay.length() == 0 ? " " : Guillemet.GUILLEMET.manageGuillemet(StringUtils.trin(tmpDisplay));
+			this.display = tmpDisplay.length() == 0 ? " " : Guillemet.GUILLEMET.manageGuillemet(StringUtils
+					.trin(tmpDisplay));
 		}
 	}
 

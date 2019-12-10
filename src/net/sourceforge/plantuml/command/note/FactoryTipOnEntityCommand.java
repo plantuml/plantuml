@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -143,19 +144,22 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 
 		final String pos = line0.get("POSITION", 0);
 
-		final Code code = Code.of(line0.get("ENTITY", 0));
+		final String idShort = line0.get("ENTITY", 0);
+		final Code codeShort = diagram.buildCode(idShort);
 		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
-		if (code == null) {
+		if (codeShort == null) {
 			return CommandExecutionResult.error("Nothing to note to");
 		}
-		final IEntity cl1 = diagram.getOrCreateLeaf(code, null, null);
+		final Ident identShort = diagram.buildLeafIdent(idShort);
+		final IEntity cl1 = diagram.getOrCreateLeaf(identShort, codeShort, null, null);
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
 				diagram.getSkinParam().getRankdir());
 
-		final Code codeTip = code.addSuffix("$$$" + position.name());
-		IEntity tips = diagram.getLeafsget(codeTip);
+		final Ident identTip = diagram.buildLeafIdent(idShort + "$$$" + position.name());
+		IEntity tips = diagram.getLeaf(identTip);
 		if (tips == null) {
-			tips = diagram.getOrCreateLeaf(codeTip, LeafType.TIPS, null);
+			// final Code codeTip = codeShort.addSuffix("$$$" + position.name());
+			tips = diagram.getOrCreateLeaf(identTip, identTip.toCode(), LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT) {

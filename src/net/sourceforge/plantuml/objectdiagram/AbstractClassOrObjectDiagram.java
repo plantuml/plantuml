@@ -105,20 +105,26 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private final List<Association> associations = new ArrayList<Association>();
 
-	public CommandExecutionResult associationClass(Code clName1A, Code clName1B, Code clName2A, Code clName2B,
+	public CommandExecutionResult associationClass(String name1A, String name1B, String name2A, String name2B,
 			LinkType linkType, Display label) {
-		final IEntity entity1A = getOrCreateLeaf(clName1A, null, null);
-		final IEntity entity1B = getOrCreateLeaf(clName1B, null, null);
-		final IEntity entity2A = getOrCreateLeaf(clName2A, null, null);
-		final IEntity entity2B = getOrCreateLeaf(clName2B, null, null);
+		final IEntity entity1A = getOrCreateLeaf(buildLeafIdent(name1A), buildCode(name1A),
+				null, null);
+		final IEntity entity1B = getOrCreateLeaf(buildLeafIdent(name1B), buildCode(name1B),
+				null, null);
+		final IEntity entity2A = getOrCreateLeaf(buildLeafIdent(name2A), buildCode(name2A),
+				null, null);
+		final IEntity entity2B = getOrCreateLeaf(buildLeafIdent(name2B), buildCode(name2B),
+				null, null);
 		final List<Association> same1 = getExistingAssociatedPoints(entity1A, entity1B);
 		final List<Association> same2 = getExistingAssociatedPoints(entity2A, entity2B);
 		if (same1.size() == 0 && same2.size() == 0) {
 
-			final IEntity point1 = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION,
-					null);
-			final IEntity point2 = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION,
-					null);
+			final String tmp1 = UniqueSequence.getString("apoint");
+			final IEntity point1 = getOrCreateLeaf(buildLeafIdent(tmp1), buildCode(tmp1),
+					LeafType.POINT_FOR_ASSOCIATION, null);
+			final String tmp2 = UniqueSequence.getString("apoint");
+			final IEntity point2 = getOrCreateLeaf(buildLeafIdent(tmp2), buildCode(tmp2),
+					LeafType.POINT_FOR_ASSOCIATION, null);
 
 			insertPointBetween(entity1A, entity1B, point1);
 			insertPointBetween(entity2A, entity2B, point2);
@@ -168,10 +174,12 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		addLink(pointToEntity2);
 	}
 
-	public boolean associationClass(int mode, Code clName1, Code clName2, IEntity associed, LinkType linkType,
+	public boolean associationClass(int mode, String name1, String name2, IEntity associed, LinkType linkType,
 			Display label) {
-		final IEntity entity1 = getOrCreateLeaf(clName1, null, null);
-		final IEntity entity2 = getOrCreateLeaf(clName2, null, null);
+		final IEntity entity1 = getOrCreateLeaf(buildLeafIdent(name1), buildCode(name1), null,
+				null);
+		final IEntity entity2 = getOrCreateLeaf(buildLeafIdent(name2), buildCode(name2), null,
+				null);
 		final List<Association> same = getExistingAssociatedPoints(entity1, entity2);
 		if (same.size() > 1) {
 			return false;
@@ -218,7 +226,9 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.entity1 = entity1;
 			this.entity2 = entity2;
 			this.associed = associed;
-			point = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION, null);
+			final String idShort = UniqueSequence.getString("apoint");
+			point = getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort),
+					LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}
 

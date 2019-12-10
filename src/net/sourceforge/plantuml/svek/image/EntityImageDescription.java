@@ -44,9 +44,11 @@ import java.util.Set;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
+import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -111,11 +113,20 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 		this.hideText = symbol == USymbol.INTERFACE;
 
-		final Display codeDisplay = Display.getWithNewlines(entity.getCode());
-		desc = (entity.getDisplay().equals(codeDisplay) && symbol.getSkinParameter() == SkinParameter.PACKAGE)
-				|| entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(entity.getDisplay(),
-				symbol.getFontParam(), getSkinParam(), HorizontalAlignment.LEFT, stereotype,
-				symbol.manageHorizontalLine(), false, entity);
+		final Display codeDisplay = Display.getWithNewlines(entity.getCodeGetName());
+		if ((entity.getDisplay().equals(codeDisplay) && symbol.getSkinParameter() == SkinParameter.PACKAGE)
+				|| entity.getDisplay().isWhite()) {
+			desc = TextBlockUtils.empty(0, 0);
+		} else {
+			desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
+					HorizontalAlignment.LEFT, stereotype, symbol.manageHorizontalLine(), false, entity);
+			// Actor bug?
+			// desc = new BodyEnhanced2(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
+			// HorizontalAlignment.LEFT, new FontConfiguration(skinParam, symbol.getFontParam(), stereotype),
+			// LineBreakStrategy.NONE);
+			// desc = entity.getDisplay().create(new FontConfiguration(skinParam, symbol.getFontParam(), stereotype),
+			// HorizontalAlignment.LEFT, skinParam);
+		}
 
 		this.url = entity.getUrl99();
 
@@ -240,7 +251,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.draw(new UComment("entity " + getEntity().getCode().getFullName()));
+		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
 		if (url != null) {
 			ug.startUrl(url);
 		}

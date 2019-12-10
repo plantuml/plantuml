@@ -72,21 +72,6 @@ public class UrlBuilder {
 		this.mode = mode;
 	}
 
-//	private static String multilineTooltip(String label) {
-//		final Pattern2 p = MyPattern.cmpile("(?i)^(" + URL_PATTERN + ")?(.*)$");
-//		final Matcher2 m = p.matcher(label);
-//		if (m.matches() == false) {
-//			return label;
-//		}
-//		String gr1 = m.group(1);
-//		if (gr1 == null) {
-//			return label;
-//		}
-//		final String gr2 = m.group(m.groupCount());
-//		gr1 = gr1.replaceAll("\\\\n", BackSlash.BS_N);
-//		return gr1 + gr2;
-//	}
-
 	public Url getUrl(String s) {
 		final Pattern2 p;
 		if (mode == ModeUrl.STRICT) {
@@ -100,18 +85,18 @@ public class UrlBuilder {
 		if (m.matches() == false) {
 			return null;
 		}
-		// String url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(1));
-		// if (url.startsWith("http:") == false && url.startsWith("https:") == false) {
-		// // final String top = getSystem().getSkinParam().getValue("topurl");
-		// if (topurl != null) {
-		// url = topurl + url;
-		// }
-		// }
 
 		final String quotedPart = m.group(1);
-		final String full = m.group(2);
-		final int openBracket = full.indexOf('{');
-		final int closeBracket = full.lastIndexOf('}');
+		final String fullpp = m.group(2).replaceAll("\\{scale=([0-9.]+)\\}", "\uE000scale=$1\uE001");
+
+		final int openBracket = openBracketBeforeSpace(fullpp);
+		final int closeBracket;
+		if (openBracket == -1) {
+			closeBracket = -1;
+		} else {
+			closeBracket = fullpp.lastIndexOf('}');
+		}
+		final String full = fullpp.replace('\uE000', '{').replace('\uE001', '}');
 		if (quotedPart == null) {
 			if (openBracket != -1 && closeBracket != -1) {
 				return new Url(withTopUrl(full.substring(0, openBracket)),
@@ -128,6 +113,27 @@ public class UrlBuilder {
 					closeBracket + 1).trim());
 		}
 		return new Url(withTopUrl(quotedPart), null, null);
+	}
+
+	// private int openBracketBeforeSpace(final String full) {
+	// return full.indexOf('{');
+	// }
+
+	private int openBracketBeforeSpace(final String full) {
+		// final int firstSpace = full.indexOf(' ');
+		final int result = full.indexOf('{');
+		// if (result != -1 && full.substring(result).startsWith("{scale")) {
+		// return -1;
+		// }
+		// if (firstSpace == -1 || result == -1) {
+		// return result;
+		// }
+		// assert firstSpace >= 0;
+		// assert result >= 0;
+		// if (result > firstSpace + 1) {
+		// return -1;
+		// }
+		return result;
 	}
 
 	private String withTopUrl(String url) {

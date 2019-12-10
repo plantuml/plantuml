@@ -121,16 +121,17 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
 		final String codeRaw = arg.getLazzy("CODE", 0);
 
-		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
+		final Code code = diagram.buildCode(idShort);
 		final String icon = arg.getLazzy("STEREOTYPE", 0);
 
-		final IEntity entity = diagram.getOrCreateLeaf(code, LeafType.DESCRIPTION, USymbol.ARCHIMATE);
+		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, LeafType.DESCRIPTION, USymbol.ARCHIMATE);
 
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 
 		String display = displayRaw;
 		if (display == null) {
-			display = code.getFullName();
+			display = code.getName();
 		}
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 

@@ -65,7 +65,7 @@ public enum LinkDecor {
 	
 	ARROW(10, true, 0.5), ARROW_TRIANGLE(10, true, 0.8), ARROW_AND_CIRCLE(10, false, 0.5),
 
-	CIRCLE(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5), PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5
+	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5), PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5
 			: 1.0), SQUARE(0, false, 0.5),
 
 	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), SQUARRE_toberemoved(30, false, 0);
@@ -120,7 +120,9 @@ public enum LinkDecor {
 		} else if (this == LinkDecor.COMPOSITION) {
 			return new ExtremityFactoryDiamond(true, backgroundColor);
 		} else if (this == LinkDecor.CIRCLE) {
-			return new ExtremityFactoryCircle();
+			return new ExtremityFactoryCircle(false);
+		} else if (this == LinkDecor.CIRCLE_FILL) {
+			return new ExtremityFactoryCircle(true);
 		} else if (this == LinkDecor.SQUARE) {
 			return new ExtremityFactorySquarre();
 		} else if (this == LinkDecor.PARENTHESIS) {

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -139,23 +140,27 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final String displayRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
 		final Code code;
 		final String display;
+		final String idShort;
 		if (codeRaw.length() == 0) {
-			code = UniqueSequence.getCode("##");
+			idShort = UniqueSequence.getString("##");
+			code = diagram.buildCode(idShort);
 			display = null;
 		} else {
-			code = Code.of(codeRaw);
+			idShort = codeRaw;
+			code = diagram.buildCode(idShort);
 			if (displayRaw == null) {
-				display = code.getFullName();
+				display = code.getName();
 			} else {
 				display = displayRaw;
 			}
 		}
 
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		diagram.gotoGroup2(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
+		final Ident idNewLong = diagram.buildLeafIdent(idShort);
+		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
-		p.setUSymbol(USymbol.getFromString(arg.get("SYMBOL", 0)));
+		p.setUSymbol(USymbol.getFromString(arg.get("SYMBOL", 0), diagram.getSkinParam().getActorStyle()));
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype, false));
@@ -171,5 +176,4 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		p.setColors(colors);
 		return CommandExecutionResult.ok();
 	}
-
 }

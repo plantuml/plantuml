@@ -52,8 +52,10 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -96,7 +98,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 				return "(?i)^[%s]*end[%s]?note$";
 			}
 
-			public final CommandExecutionResult executeNow(final ActivityDiagram system, BlocLines lines) {
+			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
 				// StringUtils.trim(lines, true);
 				final RegexResult arg = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
@@ -106,7 +108,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 				Url url = null;
 				if (strings.size() > 0) {
-					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
+					final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"),
 							ModeUrl.STRICT);
 					url = urlBuilder.getUrl(strings.get(0).toString());
 				}
@@ -116,11 +118,14 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 				// final String s = StringUtils.getMergedLines(strings);
 
-				final IEntity note = system.createLeaf(UniqueSequence.getCode("GMN"), strings, LeafType.NOTE, null);
+				final String code = UniqueSequence.getString("GMN");
+				final Ident idNewLong = diagram.buildLeafIdent(code);
+				final IEntity note = diagram.createLeaf(idNewLong, diagram.buildCode(code),
+						strings, LeafType.NOTE, null);
 				if (url != null) {
 					note.addUrl(url);
 				}
-				return executeInternal(system, arg, note);
+				return executeInternal(diagram, arg, note);
 			}
 		};
 	}
@@ -129,11 +134,13 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<ActivityDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final ActivityDiagram system, LineLocation location,
+			protected CommandExecutionResult executeArg(final ActivityDiagram diagram, LineLocation location,
 					RegexResult arg) {
-				final IEntity note = system.createNote(UniqueSequence.getCode("GN"),
+				final String tmp = UniqueSequence.getString("GN");
+				final Ident idNewLong = diagram.buildLeafIdent(tmp);
+				final IEntity note = diagram.createNote(idNewLong, diagram.buildCode(tmp),
 						Display.getWithNewlines(arg.get("NOTE", 0)));
-				return executeInternal(system, arg, note);
+				return executeInternal(diagram, arg, note);
 			}
 		};
 	}

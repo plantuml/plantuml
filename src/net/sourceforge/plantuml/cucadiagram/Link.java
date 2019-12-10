@@ -102,24 +102,24 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public String idCommentForSvg() {
 		if (type.looksLikeRevertedForSvg()) {
-			final String comment = getEntity1().getCode().getFullName() + "<-" + getEntity2().getCode().getFullName();
+			final String comment = getEntity1().getCodeGetName() + "<-" + getEntity2().getCodeGetName();
 			return comment;
 		}
 		if (type.looksLikeNoDecorAtAllSvg()) {
-			final String comment = getEntity1().getCode().getFullName() + "-" + getEntity2().getCode().getFullName();
+			final String comment = getEntity1().getCodeGetName() + "-" + getEntity2().getCodeGetName();
 			return comment;
 		}
-		final String comment = getEntity1().getCode().getFullName() + "->" + getEntity2().getCode().getFullName();
+		final String comment = getEntity1().getCodeGetName() + "->" + getEntity2().getCodeGetName();
 		return comment;
 	}
 
 	public UComment commentForSvg() {
 		if (type.looksLikeRevertedForSvg()) {
-			return new UComment("reverse link " + getEntity1().getCode().getFullName() + " to "
-					+ getEntity2().getCode().getFullName());
+			return new UComment("reverse link " + getEntity1().getCodeGetName() + " to "
+					+ getEntity2().getCodeGetName());
 		}
-		return new UComment("link " + getEntity1().getCode().getFullName() + " to "
-				+ getEntity2().getCode().getFullName());
+		return new UComment("link " + getEntity1().getCodeGetName() + " to "
+				+ getEntity2().getCodeGetName());
 	}
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, StyleBuilder styleBuilder) {

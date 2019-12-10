@@ -172,7 +172,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		if (symbol == null) {
 			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ACTOR;
+			usymbol = diagram.getSkinParam().getActorStyle().getUSymbol();
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
@@ -181,26 +181,27 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			usymbol = null;
 		} else {
 			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.getFromString(symbol, diagram.getSkinParam().useUml2ForComponent());
+			usymbol = USymbol.getFromString(symbol, diagram.getSkinParam());
 			if (usymbol == null) {
 				throw new IllegalStateException();
 			}
 		}
 
-		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
+		final Code code = diagram.buildCode(idShort);
 		if (diagram.isGroup(code)) {
-			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 		}
 		String display = displayRaw;
 		if (display == null) {
-			display = code.getFullName();
+			display = code.getName();
 		}
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (existsWithBadType(diagram, code, type, usymbol)) {
-			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 		}
-		final IEntity entity = diagram.getOrCreateLeaf(code, type, usymbol);
+		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
 		if (stereotype != null) {
@@ -234,7 +235,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		if (diagram.leafExist(code) == false) {
 			return false;
 		}
-		final ILeaf other = diagram.getLeafsget(code);
+		final ILeaf other = diagram.getLeaf(code);
 		if (other.getLeafType() != type) {
 			return true;
 		}

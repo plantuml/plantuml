@@ -65,7 +65,9 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) {
-		final IEntity entity = diagram.getOrCreateLeaf(Code.of(arg.get("NAME", 0)), null, null);
+		final String name = arg.get("NAME", 0);
+		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(name),
+				diagram.buildCode(name), null, null);
 
 		final String field = arg.get("DATA", 0);
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {

@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.LongCode;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -152,11 +151,12 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());
-		final LongCode parentCode = entity.getParentContainer().getLongCode();
-		if (parentCode == null) {
+		final String parentCode = entity.getIdent().parent().forXmi();
+		// final LongCode parentCode = entity.getParentContainer().getLongCode();
+		if (parentCode.length() == 0) {
 			cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
 		} else {
-			cla.setAttribute("namespace", parentCode.getFullName());
+			cla.setAttribute("namespace", parentCode);
 		}
 
 		final Stereotype stereotype = entity.getStereotype();

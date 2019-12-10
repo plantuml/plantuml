@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -272,7 +271,7 @@ public final class GeneralImageBuilder {
 	private final UmlSource source;
 	private final Pragma pragma;
 	private final boolean strictUmlStyle;
-	private Map<Code, Double> maxX;
+	private Map<String, Double> maxX;
 
 	private final StringBounder stringBounder;
 
@@ -552,8 +551,9 @@ public final class GeneralImageBuilder {
 				continue;
 			}
 			if (dotData.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
-				final ILeaf folder = entityFactory.createLeaf(g.getCode(), g.getDisplay(), LeafType.EMPTY_PACKAGE,
-						g.getParentContainer(), null, dotData.getNamespaceSeparator());
+				entityFactory.thisIsGoingToBeALeaf(g.getIdent());
+				final ILeaf folder = entityFactory.createLeaf(g.getIdent(), g.getCode(), g.getDisplay(),
+						LeafType.EMPTY_PACKAGE, g.getParentContainer(), null, dotData.getNamespaceSeparator());
 				final USymbol symbol = g.getUSymbol();
 				folder.setUSymbol(symbol);
 				folder.setStereotype(g.getStereotype());
@@ -671,7 +671,7 @@ public final class GeneralImageBuilder {
 			return "";
 		}
 		final StringBuilder sb = new StringBuilder();
-		for (Map.Entry<Code, Double> ent : maxX.entrySet()) {
+		for (Map.Entry<String, Double> ent : maxX.entrySet()) {
 			if (ent.getValue() > warningOrError) {
 				sb.append(ent.getKey() + " is overpassing the width limit.");
 				sb.append("\n");

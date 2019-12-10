@@ -91,7 +91,7 @@ public class TimeTickBuilder {
 		}
 		final boolean isRelative = "+".equals(arg.get(name + "DIGIT", 0));
 		BigDecimal value = new BigDecimal(number);
-		if (isRelative) {
+		if (isRelative && clock.getNow() != null) {
 			value = clock.getNow().getTime().add(value);
 		}
 		return new TimeTick(value, TimingFormat.DECIMAL);
