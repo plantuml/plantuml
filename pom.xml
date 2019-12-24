@@ -30,7 +30,8 @@
 	Script Author: Julien Eluard
 	
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.sourceforge.plantuml</groupId>
@@ -40,7 +41,7 @@
 
     <name>PlantUML</name>
     <description>
-      PlantUML is a component that allows to quickly write :
+        PlantUML is a component that allows to quickly write :
         * sequence diagram,
         * use case diagram,
         * class diagram,
@@ -57,12 +58,47 @@
         <version>5</version>
     </parent>
 
+    <properties>
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
+        <mockito.version>3.2.4</mockito.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
             <version>1.8.1</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.glytching</groupId>
+            <artifactId>junit-extensions</artifactId>
+            <version>2.3.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -93,20 +129,21 @@
         </developer>
     </developers>
 
-	<profiles>
-	  <profile>
-		<id>doclint-java8-disable</id>
-		<activation>
-		  <jdk>[1.8,)</jdk>
-		</activation>
-		<properties>
-		  <javadoc.opts>-Xdoclint:none</javadoc.opts>
-		</properties>
-	  </profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>doclint-java8-disable</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <javadoc.opts>-Xdoclint:none</javadoc.opts>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <sourceDirectory>${project.basedir}/src</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/test/java</testSourceDirectory>
         <resources>
             <resource>
                 <directory>${project.basedir}/src</directory>
@@ -127,7 +164,12 @@
                     <include>skin/**/*.skin</include>
                 </includes>
             </resource>
-        </resources>        
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/test/resources</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -157,9 +199,9 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
-			            <configuration>
-							<additionalparam>${javadoc.opts}</additionalparam>
-			            </configuration>
+                        <configuration>
+                            <additionalparam>${javadoc.opts}</additionalparam>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -179,6 +221,10 @@
                 <configuration>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
             </plugin>
         </plugins>
     </build>
