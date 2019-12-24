@@ -7,3 +7,6 @@
 *.iml
 out
 gen
+
+# Maven output directory
+/target
