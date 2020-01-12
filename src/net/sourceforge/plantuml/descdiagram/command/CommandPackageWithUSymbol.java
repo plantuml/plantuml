@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -138,26 +139,24 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final String codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
 		final String displayRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
-		final Code code;
 		final String display;
 		final String idShort;
 		if (codeRaw.length() == 0) {
 			idShort = UniqueSequence.getString("##");
-			code = diagram.buildCode(idShort);
 			display = null;
 		} else {
 			idShort = codeRaw;
-			code = diagram.buildCode(idShort);
 			if (displayRaw == null) {
-				display = code.getName();
+				display = idShort;
 			} else {
 				display = displayRaw;
 			}
 		}
 
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
+		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
 		p.setUSymbol(USymbol.getFromString(arg.get("SYMBOL", 0), diagram.getSkinParam().getActorStyle()));

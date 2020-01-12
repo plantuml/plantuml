@@ -255,4 +255,7 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 		return this.anchor2;
 	}
 
+	public abstract Participant getParticipant1();
+
+	public abstract Participant getParticipant2();
 }

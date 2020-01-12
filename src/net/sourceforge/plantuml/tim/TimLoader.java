@@ -48,8 +48,14 @@ public class TimLoader {
 	private boolean preprocessorError;
 	private List<StringLocated> resultList;
 
-	public TimLoader(ImportedFiles importedFiles, Defines defines, String charset, DefinitionsContainer definitionsContainer) {
+	public TimLoader(ImportedFiles importedFiles, Defines defines, String charset,
+			DefinitionsContainer definitionsContainer) {
 		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);
+		try {
+			defines.copyTo(global);
+		} catch (EaterException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void load(List<StringLocated> input) {

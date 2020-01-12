@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 
 public class UGraphicHandwritten implements UGraphic {
 
@@ -57,6 +58,9 @@ public class UGraphicHandwritten implements UGraphic {
 
 	public UGraphicHandwritten(UGraphic ug) {
 		this.ug = ug;
+		if (ug instanceof UGraphicSvg) {
+			((UGraphicSvg) ug).enlargeClip();
+		}
 	}
 
 	public StringBounder getStringBounder() {

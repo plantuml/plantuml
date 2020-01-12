@@ -49,7 +49,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.command.BlocLines;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;

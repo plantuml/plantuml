@@ -88,9 +88,14 @@ public class EntityImageUseCase extends AbstractEntityImage {
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			this.desc = tmp;
 		} else {
-			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet()))
-					.create(new FontConfiguration(getSkinParam(), FontParam.USECASE_STEREOTYPE, stereotype),
-							HorizontalAlignment.CENTER, skinParam);
+			final TextBlock stereo;
+			if (stereotype.getSprite(getSkinParam()) != null) {
+				stereo = stereotype.getSprite(getSkinParam());
+			} else {
+				stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
+						new FontConfiguration(getSkinParam(), FontParam.USECASE_STEREOTYPE, stereotype),
+						HorizontalAlignment.CENTER, skinParam);
+			}
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}
 		this.url = entity.getUrl99();

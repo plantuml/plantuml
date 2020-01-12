@@ -47,9 +47,11 @@ import net.sourceforge.plantuml.AFileZipEntry;
 import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 
 public class ImportedFiles {
 
+	private static final List<File> INCLUDE_PATH = FileSystem.getPath("plantuml.include.path", true);
 	private final List<File> imported;
 	private final AParentFolder currentDir;
 
@@ -75,8 +77,8 @@ public class ImportedFiles {
 	}
 
 	public AFile getAFile(String nameOrPath) throws IOException {
-		Log.info("ImportedFiles::getAFile nameOrPath = " + nameOrPath);
-		Log.info("ImportedFiles::getAFile currentDir = " + currentDir);
+		// Log.info("ImportedFiles::getAFile nameOrPath = " + nameOrPath);
+		// Log.info("ImportedFiles::getAFile currentDir = " + currentDir);
 		final AParentFolder dir = currentDir;
 		if (dir == null || isAbsolute(nameOrPath)) {
 			return new AFileRegular(new File(nameOrPath).getCanonicalFile());
@@ -105,7 +107,7 @@ public class ImportedFiles {
 
 	public List<File> getPath() {
 		final List<File> result = new ArrayList<File>(imported);
-		result.addAll(FileSystem.getPath("plantuml.include.path", true));
+		result.addAll(INCLUDE_PATH);
 		result.addAll(FileSystem.getPath("java.class.path", true));
 		return result;
 	}
@@ -121,6 +123,37 @@ public class ImportedFiles {
 
 	public AParentFolder getCurrentDir() {
 		return currentDir;
+	}
+
+	public FileWithSuffix getFile(String filename, String suffix) throws IOException {
+		final int idx = filename.indexOf('~');
+		final AFile file;
+		final String entry;
+		if (idx == -1) {
+			file = getAFile(filename);
+			entry = null;
+		} else {
+			file = getAFile(filename.substring(0, idx));
+			entry = filename.substring(idx + 1);
+		}
+		if (isAllowed(file) == false) {
+			return FileWithSuffix.none();
+		}
+		return new FileWithSuffix(filename, suffix, file, entry);
+	}
+
+	private boolean isAllowed(AFile file) throws IOException {
+		if (OptionFlags.ALLOW_INCLUDE) {
+			return true;
+		}
+		if (file != null) {
+			final File folder = file.getSystemFolder();
+			// System.err.println("canonicalPath=" + path + " " + folder + " " + INCLUDE_PATH);
+			if (INCLUDE_PATH.contains(folder)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

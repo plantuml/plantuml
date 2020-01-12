@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -45,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandAddField extends SingleLineCommand2<StateDiagram> {
@@ -66,11 +68,18 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
-		final String code = arg.getLazzy("CODE", 0);
+		final String codeString = arg.getLazzy("CODE", 0);
 		final String field = arg.get("FIELD", 0);
 
-		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(code),
-				diagram.buildCode(code), null, null);
+		Ident ident = diagram.buildLeafIdent(codeString);
+		if (diagram.V1972()) {
+			// This is very bad. xi04 xc06
+			if (ident.parent().getLast().equals(codeString)) {
+				ident = ident.parent();
+			}
+		}
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
+		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 
 		entity.getBodier().addFieldOrMethod(field, entity);
 		return CommandExecutionResult.ok();

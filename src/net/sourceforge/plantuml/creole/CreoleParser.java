@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
@@ -50,11 +51,18 @@ public class CreoleParser {
 	private final FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
 	private final HorizontalAlignment horizontalAlignment;
-	private final CreoleMode modeSimpleLine;
+	private final CreoleMode creoleMode;
+	private final FontConfiguration stereotypeConfiguration;
 
 	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple skinParam, CreoleMode modeSimpleLine) {
-		this.modeSimpleLine = modeSimpleLine;
+			ISkinSimple skinParam, CreoleMode creoleMode) {
+		this(fontConfiguration, horizontalAlignment, skinParam, creoleMode, fontConfiguration.forceFont(null, null));
+	}
+
+	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			ISkinSimple skinParam, CreoleMode creoleMode, FontConfiguration stereotypeConfiguration) {
+		this.stereotypeConfiguration = stereotypeConfiguration;
+		this.creoleMode = creoleMode;
 		this.fontConfiguration = fontConfiguration;
 		this.skinParam = skinParam;
 		if (skinParam == null) {
@@ -63,7 +71,8 @@ public class CreoleParser {
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
-	private Stripe createStripe(String line, CreoleContext context, Stripe lastStripe) {
+	private Stripe createStripe(String line, CreoleContext context, Stripe lastStripe,
+			FontConfiguration fontConfiguration) {
 		if (lastStripe instanceof StripeTable && isTableLine(line)) {
 			final StripeTable table = (StripeTable) lastStripe;
 			table.analyzeAndAddNormal(line);
@@ -77,7 +86,7 @@ public class CreoleParser {
 		} else if (isTreeStart(line)) {
 			return new StripeTree(fontConfiguration, skinParam, line);
 		}
-		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, modeSimpleLine)
+		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, creoleMode)
 				.createStripe(context);
 	}
 
@@ -111,8 +120,13 @@ public class CreoleParser {
 							return Arrays.asList(atom);
 						}
 					};
+				} else if (cs instanceof Stereotype) {
+					for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet())) {
+						sheet.add(createStripe(st, context, sheet.getLastStripe(), stereotypeConfiguration));
+					}
+					continue;
 				} else {
-					stripe = createStripe(cs.toString(), context, sheet.getLastStripe());
+					stripe = createStripe(cs.toString(), context, sheet.getLastStripe(), fontConfiguration);
 				}
 				if (stripe != null) {
 					sheet.add(stripe);

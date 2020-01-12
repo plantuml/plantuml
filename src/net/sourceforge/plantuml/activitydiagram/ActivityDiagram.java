@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -67,7 +68,6 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public ILeaf getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
 		checkNotNull(ident);
-		// final Ident idNewLong = buildLeafIdent(id);
 		return getOrCreateLeafDefault(ident, code, type, symbol);
 	}
 
@@ -77,11 +77,10 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public IEntity getOrCreate(Ident idNewLong, Code code, Display display, LeafType type) {
 		final IEntity result;
-		// final Ident idNewLong = buildLeafIdent(id);
-		if (leafExist(code)) {
+		final boolean leafExist = this.V1972() ? leafExistSmart(idNewLong) : leafExist(code);
+		if (leafExist) {
 			result = getOrCreateLeafDefault(idNewLong, code, type, null);
 			if (result.getLeafType() != type) {
-				// throw new IllegalArgumentException("Already known: " + code + " " + result.getType() + " " + type);
 				return null;
 			}
 		} else {
@@ -90,12 +89,20 @@ public class ActivityDiagram extends CucaDiagram {
 		updateLasts(result);
 		return result;
 	}
+	
+	@Override
+	public /*final*/ ILeaf getLeafVerySmart(Ident ident) {
+		final ILeaf result = super.getLeafVerySmart(ident);
+		updateLasts(result);
+		return result;
+	}
+
 
 	public void startIf(String optionalCodeString) {
 		final String idShort = optionalCodeString == null ? getAutoBranch() : optionalCodeString;
 		final Ident idNewLong = buildLeafIdent(idShort);
-		final IEntity br = createLeaf(idNewLong, buildCode(idShort), Display.create(""),
-				LeafType.BRANCH, null);
+		final Code code = this.V1972() ? idNewLong : buildCode(idShort);
+		final IEntity br = createLeaf(idNewLong, code, Display.create(""), LeafType.BRANCH, null);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
 
@@ -104,14 +111,16 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	public ILeaf getStart() {
-		return (ILeaf) getOrCreate(buildLeafIdent("start"), buildCode("start"),
-				Display.getWithNewlines("start"), LeafType.CIRCLE_START);
+		final Ident ident = buildLeafIdent("start");
+		final Code code = this.V1972() ? ident : buildCode("start");
+		return (ILeaf) getOrCreate(ident, code, Display.getWithNewlines("start"), LeafType.CIRCLE_START);
 	}
 
 	public ILeaf getEnd(String suppId) {
 		final String tmp = suppId == null ? "end" : "end$" + suppId;
-		final Code code = buildCode(tmp);
-		return (ILeaf) getOrCreate(buildLeafIdent(tmp), code, Display.getWithNewlines("end"), LeafType.CIRCLE_END);
+		final Ident ident = buildLeafIdent(tmp);
+		final Code code = this.V1972() ? ident : buildCode(tmp);
+		return (ILeaf) getOrCreate(ident, code, Display.getWithNewlines("end"), LeafType.CIRCLE_END);
 	}
 
 	private void updateLasts(final IEntity result) {
@@ -134,7 +143,6 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public IEntity createNote(Ident idNewLong, Code code, Display display) {
 		checkNotNull(idNewLong);
-		// final Ident idNewLong = buildLeafIdent(id);
 		return super.createLeaf(idNewLong, code, display, LeafType.NOTE, null);
 	}
 
@@ -172,8 +180,8 @@ public class ActivityDiagram extends CucaDiagram {
 	public IEntity createInnerActivity() {
 		// Log.println("createInnerActivity A");
 		final String idShort = "##" + UniqueSequence.getValue();
-		final Code code = buildCode(idShort);
 		final Ident idNewLong = buildLeafIdent(idShort);
+		final Code code = this.V1972() ? idNewLong : buildCode(idShort);
 		gotoGroup(idNewLong, code, Display.getWithNewlines(code), GroupType.INNER_ACTIVITY, getCurrentGroup(),
 				NamespaceStrategy.SINGLE);
 		final IEntity g = getCurrentGroup();

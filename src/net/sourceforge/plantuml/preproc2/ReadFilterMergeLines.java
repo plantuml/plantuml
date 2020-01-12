@@ -33,28 +33,35 @@
  * 
  *
  */
-package net.sourceforge.plantuml.preproc;
+package net.sourceforge.plantuml.preproc2;
+
+import java.io.IOException;
 
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.preproc.ReadLine;
 
-public class ReadLineSingle implements ReadLine {
+public class ReadFilterMergeLines implements ReadFilter {
 
-	private final StringLocated data;
-	private int current = 0;
+	public ReadLine applyFilter(final ReadLine source) {
+		return new ReadLine() {
+			public void close() throws IOException {
+				source.close();
+			}
 
-	public ReadLineSingle(StringLocated s2) {
-		this.data = s2;
-	}
-
-	public void close() {
-	}
-
-	public StringLocated readLine() {
-		if (current > 0) {
-			return null;
-		}
-		current++;
-		return data;
+			public StringLocated readLine() throws IOException {
+				StringLocated result = source.readLine();
+				while (result != null && StringUtils.endsWithBackslash(result.getString())) {
+					final StringLocated next = source.readLine();
+					if (next == null) {
+						break;
+					} else {
+						result = result.mergeEndBackslash(next);
+					}
+				}
+				return result;
+			}
+		};
 	}
 
 }

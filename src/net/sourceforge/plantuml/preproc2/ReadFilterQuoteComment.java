@@ -33,26 +33,50 @@
  * 
  *
  */
-package net.sourceforge.plantuml.preproc;
+package net.sourceforge.plantuml.preproc2;
 
-public class DefinesGet {
+import java.io.IOException;
 
-	private final Defines defines;
+import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.preproc.ReadLine;
 
-	public DefinesGet(Defines defines) {
-		this.defines = defines;
-	}
+public class ReadFilterQuoteComment implements ReadFilter {
 
-	public final Defines get() {
-		return defines;
-	}
+	public ReadLine applyFilter(final ReadLine source) {
+		return new ReadLine() {
+			public void close() throws IOException {
+				source.close();
+			}
 
-	public void saveState() {
-		this.defines.saveState1();
-	}
-
-	public void restoreState() {
-		this.defines.restoreState1();
+			public StringLocated readLine() throws IOException {
+				boolean longComment = false;
+				while (true) {
+					final StringLocated result = source.readLine();
+					if (result == null) {
+						return null;
+					}
+					final String trim = result.getString().replace('\t', ' ').trim();
+					if (longComment && trim.endsWith("'/")) {
+						longComment = false;
+						continue;
+					}
+					if (longComment) {
+						continue;
+					}
+					if (trim.startsWith("'")) {
+						continue;
+					}
+					if (trim.startsWith("/'") && trim.endsWith("'/")) {
+						continue;
+					}
+					if (trim.startsWith("/'") && trim.contains("'/") == false) {
+						longComment = true;
+						continue;
+					}
+					return ((StringLocated) result).removeInnerComment();
+				}
+			}
+		};
 	}
 
 }

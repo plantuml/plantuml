@@ -40,6 +40,7 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -80,6 +81,12 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	@Override
 	public ILeaf getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
 		checkNotNull(ident);
+		if (this.V1972()) {
+			if (type == null) {
+				type = LeafType.CLASS;
+			}
+			return getOrCreateLeafDefault(ident, code, type, symbol);
+		}
 		if (type == null) {
 			code = code.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 			if (getNamespaceSeparator() == null) {
@@ -110,6 +117,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 				&& type != LeafType.LOLLIPOP_HALF && type != LeafType.NOTE) {
 			return super.createLeaf(idNewLong, code, display, type, symbol);
 		}
+		if (this.V1972()) {
+			return super.createLeaf(idNewLong, code, display, type, symbol);
+		}
 		if (getNamespaceSeparator() == null) {
 			return super.createLeaf(idNewLong, code, display, type, symbol);
 		}
@@ -121,6 +131,8 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	}
 
 	private ILeaf createEntityWithNamespace1972(Ident id, Code fullyCode, Display display, LeafType type, USymbol symbol) {
+		if (this.V1972())
+			throw new UnsupportedOperationException();
 		checkNotNull(id);
 		final IGroup backupCurrentGroup = getCurrentGroup();
 		final IGroup group = backupCurrentGroup;

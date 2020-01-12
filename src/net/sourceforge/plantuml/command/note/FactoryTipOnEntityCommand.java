@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -145,21 +146,21 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 		final String pos = line0.get("POSITION", 0);
 
 		final String idShort = line0.get("ENTITY", 0);
-		final Code codeShort = diagram.buildCode(idShort);
+		final Ident identShort = diagram.buildLeafIdent(idShort);
+		final Code codeShort = diagram.V1972() ? identShort : diagram.buildCode(idShort);
 		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
 		if (codeShort == null) {
+			assert false;
 			return CommandExecutionResult.error("Nothing to note to");
 		}
-		final Ident identShort = diagram.buildLeafIdent(idShort);
 		final IEntity cl1 = diagram.getOrCreateLeaf(identShort, codeShort, null, null);
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
 				diagram.getSkinParam().getRankdir());
 
 		final Ident identTip = diagram.buildLeafIdent(idShort + "$$$" + position.name());
-		IEntity tips = diagram.getLeaf(identTip);
+		IEntity tips = diagram.getLeafStrict(identTip);
 		if (tips == null) {
-			// final Code codeTip = codeShort.addSuffix("$$$" + position.name());
-			tips = diagram.getOrCreateLeaf(identTip, identTip.toCode(), LeafType.TIPS, null);
+			tips = diagram.getOrCreateLeaf(identTip, identTip.toCode(diagram), LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT) {

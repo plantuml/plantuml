@@ -55,6 +55,18 @@ public class Ident implements Code {
 		return parts.toString();
 	}
 
+	public boolean startsWith(Ident other) {
+		if (other.parts.size() > this.parts.size()) {
+			return false;
+		}
+		for (int i = 0; i < other.parts.size(); i++) {
+			if (other.parts.get(i).equals(this.parts.get(i)) == false) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public String forXmi() {
 		final StringBuilder sb = new StringBuilder();
 		for (String s : parts) {
@@ -66,15 +78,26 @@ public class Ident implements Code {
 		return sb.toString();
 	}
 
+	public Ident add(Ident added) {
+		final List<String> copy = new ArrayList<String>(parts);
+		copy.addAll(added.parts);
+		return new Ident(copy);
+	}
+
 	public static Ident empty() {
 		return new Ident(Collections.<String> emptyList());
 	}
 
 	public String getLast() {
+		if (parts.size() == 0) {
+			return "";
+		}
 		return parts.get(parts.size() - 1);
 	}
 
-	public Code toCode() {
+	public Code toCode(CucaDiagram diagram) {
+		if (diagram.V1972())
+			return this;
 		return CodeImpl.of(getLast());
 	}
 
@@ -199,7 +222,10 @@ public class Ident implements Code {
 		return sb.toString();
 	}
 
-	public void checkSameAs(Code code, String separator) {
+	public void checkSameAs(Code code, String separator, CucaDiagram diagram) {
+		if (diagram.V1972()) {
+			return;
+		}
 		final String last = parts.get(parts.size() - 1);
 		if (separator == null) {
 			if (code.getName().equals(last) != true && code.getName().equals(toString(separator)) == false) {
@@ -234,6 +260,25 @@ public class Ident implements Code {
 
 	public String getName() {
 		return getLast();
+	}
+
+	public boolean isRoot() {
+		return parts.size() == 0;
+	}
+
+	public Ident move(Ident from, Ident to) {
+		if (this.startsWith(from) == false) {
+			throw new IllegalArgumentException();
+		}
+		final List<String> result = new ArrayList<String>(to.parts);
+		for (int i = from.parts.size(); i < this.parts.size(); i++) {
+			result.add(this.parts.get(i));
+		}
+		return new Ident(result);
+	}
+
+	public int size() {
+		return parts.size();
 	}
 
 }

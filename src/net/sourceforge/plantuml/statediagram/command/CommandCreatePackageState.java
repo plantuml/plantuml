@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -111,12 +112,12 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");
-		final Code code = diagram.buildCode(idShort);
+		final Ident idNewLong = diagram.buildLeafIdentSpecial(idShort);
+		final Code code = diagram.V1972() ? idNewLong : diagram.buildCode(idShort);
 		String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
 		if (display == null) {
 			display = code.getName();
 		}
-		final Ident idNewLong = diagram.buildLeafIdentSpecial(idShort);
 		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.STATE, currentPackage,
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();

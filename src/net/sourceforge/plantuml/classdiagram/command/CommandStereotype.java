@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
 public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
@@ -65,9 +67,10 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final String name = arg.get("NAME", 0);
-		final Code code = diagram.buildCode(name);
+		final Ident ident = diagram.buildLeafIdent(name);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(name);
 		final String stereotype = arg.get("STEREO", 0);
-		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, null, null);
+		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 		entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
 				.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
 				.getIHtmlColorSet()));

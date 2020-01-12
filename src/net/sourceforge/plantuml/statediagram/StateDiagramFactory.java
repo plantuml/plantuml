@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
+import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
@@ -76,10 +77,8 @@ public class StateDiagramFactory extends UmlDiagramFactory {
 		final List<Command> cmds = new ArrayList<Command>();
 		cmds.add(new CommandFootboxIgnored());
 		cmds.add(new CommandRankDir());
-		// cmds.add(new CommandHideEmptyDescription());
 		cmds.add(new CommandRemoveRestore());
 		cmds.add(new CommandCreateState());
-		// addCommand(new CommandLinkState());
 		cmds.add(new CommandLinkState());
 		cmds.add(new CommandCreatePackageState());
 		cmds.add(new CommandEndState());
@@ -105,6 +104,7 @@ public class StateDiagramFactory extends UmlDiagramFactory {
 
 		addCommonCommands1(cmds);
 		cmds.add(new CommandHideShow2());
+		cmds.add(new CommandNamespaceSeparator());
 
 		return cmds;
 	}

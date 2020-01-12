@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 
 public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -73,13 +75,15 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
-		final Code code = diagram.buildCode(idShort);
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		final String urlString = arg.get("URL", 0);
 		final IEntity entity;
-		if (diagram.leafExist(code)) {
-			entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, null, null);
-		} else if (diagram.isGroup(code)) {
-			entity = diagram.getGroup(code);
+		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
+		if (leafExist) {
+			entity = diagram.getOrCreateLeaf(ident, code, null, null);
+		} else if (diagram.V1972() ? diagram.isGroupStrict(ident) : diagram.isGroup(code)) {
+			entity = diagram.V1972() ? diagram.getGroupStrict(ident) : diagram.getGroup(code);
 		} else {
 			return CommandExecutionResult.error(code + " does not exist");
 		}

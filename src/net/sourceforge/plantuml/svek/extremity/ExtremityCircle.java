@@ -56,13 +56,16 @@ class ExtremityCircle extends Extremity {
 		return dest;
 	}
 
-	public static UDrawable create(Point2D center, boolean fill) {
-		return new ExtremityCircle(center.getX(), center.getY(), fill);
+	public static UDrawable create(Point2D center, boolean fill, double angle) {
+		return new ExtremityCircle(center.getX(), center.getY(), fill, angle);
 	}
 
-	private ExtremityCircle(double x, double y, boolean fill) {
-		this.dest = new Point2D.Double(x, y);
+	private ExtremityCircle(double x, double y, boolean fill, double angle) {
+		this.dest = new Point2D.Double(x - radius * Math.cos(angle + Math.PI / 2), y - radius
+				* Math.sin(angle + Math.PI / 2));
 		this.fill = fill;
+		// contact = new Point2D.Double(p1.getX() - xContact * Math.cos(angle + Math.PI / 2), p1.getY() - xContact
+		// * Math.sin(angle + Math.PI / 2));
 	}
 
 	public void drawU(UGraphic ug) {

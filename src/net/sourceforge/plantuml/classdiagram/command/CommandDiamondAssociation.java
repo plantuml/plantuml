@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -65,12 +66,13 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
-		final Code code = diagram.buildCode(idShort);
-		if (diagram.leafExist(code)) {
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
+		if (leafExist) {
 			return CommandExecutionResult.error("Already existing : " + code.getName());
 		}
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		diagram.createLeaf(idNewLong, code, Display.NULL, LeafType.ASSOCIATION, null);
+		diagram.createLeaf(ident, code, Display.NULL, LeafType.ASSOCIATION, null);
 
 		return CommandExecutionResult.ok();
 	}

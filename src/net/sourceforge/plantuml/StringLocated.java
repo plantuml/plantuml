@@ -56,6 +56,13 @@ final public class StringLocated {
 		return new StringLocated(s + endOfLine, location, preprocessorError);
 	}
 
+	public StringLocated mergeEndBackslash(StringLocated next) {
+		if (StringUtils.endsWithBackslash(s) == false) {
+			throw new IllegalArgumentException();
+		}
+		return new StringLocated(s.substring(0, s.length() - 1) + next.s, location, preprocessorError);
+	}
+
 	public StringLocated(String s, LineLocation location, String preprocessorError) {
 		if (s == null) {
 			throw new IllegalArgumentException();

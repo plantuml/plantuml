@@ -47,42 +47,37 @@ import java.util.Set;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
-import net.sourceforge.plantuml.preproc.PreprocessorChangeModeReader;
 import net.sourceforge.plantuml.preproc.ReadLineNumbered;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.Preprocessor;
-import net.sourceforge.plantuml.preproc2.PreprocessorMode;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
 
-	private PreprocessorMode mode = PreprocessorMode.V2_NEW_TIM;
-
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
 	private Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
-	private final UncommentReadLine reader2;
+	private final UncommentReadLine reader;
 	private final Defines defines;
 	private final ImportedFiles importedFiles;
 	private final String charset;
 
-	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir,
+	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader readerInit, File newCurrentDir,
 			String desc) throws IOException {
 		ReadLineNumbered includer = null;
 		this.defines = defines;
 		this.charset = charset;
 		try {
-			this.reader2 = new UncommentReadLine(new PreprocessorChangeModeReader(ReadLineReader.create(reader, desc),
-					this));
+			this.reader = new UncommentReadLine(ReadLineReader.create(readerInit, desc));
 			this.importedFiles = ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir));
-			includer = new Preprocessor(config, reader2, charset, defines, this, importedFiles);
+			includer = new Preprocessor(config, reader);
 			init(includer);
 		} finally {
 			if (includer != null) {
 				includer.close();
 				usedFiles = includer.getFilesUsed();
 			}
-			reader.close();
+			readerInit.close();
 		}
 	}
 
@@ -102,11 +97,11 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 			}
 			if (StartUtils.isArobasePauseDiagram(s.getString())) {
 				paused = true;
-				reader2.setPaused(true);
+				reader.setPaused(true);
 			}
 			if (StartUtils.isExit(s.getString())) {
 				paused = true;
-				reader2.setPaused(true);
+				reader.setPaused(true);
 			}
 			if (current2 != null && paused == false) {
 				current2.add(s);
@@ -119,7 +114,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 			if (StartUtils.isArobaseUnpauseDiagram(s.getString())) {
 				paused = false;
-				reader2.setPaused(false);
+				reader.setPaused(false);
 			}
 			if (StartUtils.isArobaseEndDiagram(s.getString()) && current2 != null) {
 				if (paused) {
@@ -127,7 +122,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				}
 				blocks.add(new BlockUml(current2, defines.cloneMe(), null, this));
 				current2 = null;
-				reader2.setPaused(false);
+				reader.setPaused(false);
 			}
 		}
 	}
@@ -140,31 +135,13 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		return Collections.unmodifiableSet(usedFiles);
 	}
 
-	public List<String> getDefinition1(String name) {
+	public List<String> getDefinition(String name) {
 		for (BlockUml block : blocks) {
 			if (block.isStartDef(name)) {
-				this.defines.importFrom(block.getLocalDefines());
 				return block.getDefinition(false);
 			}
 		}
 		return Collections.emptyList();
-	}
-
-	public List<String> getDefinition2(String name) {
-		for (BlockUml block : blocks) {
-			if (block.isStartDef(name)) {
-				return block.getDefinition2(false);
-			}
-		}
-		return Collections.emptyList();
-	}
-
-	public PreprocessorMode getPreprocessorMode() {
-		return mode;
-	}
-
-	public void setPreprocessorMode(PreprocessorMode mode) {
-		this.mode = mode;
 	}
 
 	public final ImportedFiles getImportedFiles() {

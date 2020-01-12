@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryCircleLine;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryCrowfoot;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryDiamond;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryDoubleLine;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryHalfArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryLineCrowfoot;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryNotNavigable;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryParenthesis;
@@ -57,18 +58,18 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 
 public enum LinkDecor {
 
-	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3), NOT_NAVIGABLE(1,
-			false, 0.5),
+	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3),
+	NOT_NAVIGABLE(1, false, 0.5),
 
-	CROWFOOT(10, true, 0.8), CIRCLE_CROWFOOT(14, false, 0.8), CIRCLE_LINE(10, false, 0.8),
-	DOUBLE_LINE(7, false, 0.7), LINE_CROWFOOT(10, false, 0.8), 
-	
+	CROWFOOT(10, true, 0.8), CIRCLE_CROWFOOT(14, false, 0.8), CIRCLE_LINE(10, false, 0.8), DOUBLE_LINE(7, false, 0.7),
+	LINE_CROWFOOT(10, false, 0.8),
+
 	ARROW(10, true, 0.5), ARROW_TRIANGLE(10, true, 0.8), ARROW_AND_CIRCLE(10, false, 0.5),
 
-	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5), PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5
-			: 1.0), SQUARE(0, false, 0.5),
+	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5),
+	PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), SQUARE(0, false, 0.5),
 
-	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), SQUARRE_toberemoved(30, false, 0);
+	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW(0, false, 1.5), SQUARRE_toberemoved(30, false, 0);
 
 	private final double arrowSize;
 	private final int margin;
@@ -95,6 +96,8 @@ public enum LinkDecor {
 	public ExtremityFactory getExtremityFactory(HtmlColor backgroundColor) {
 		if (this == LinkDecor.PLUS) {
 			return new ExtremityFactoryPlus();
+		} else if (this == LinkDecor.HALF_ARROW) {
+			return new ExtremityFactoryHalfArrow();
 		} else if (this == LinkDecor.ARROW_TRIANGLE) {
 			return new ExtremityFactoryTriangle();
 		} else if (this == LinkDecor.CROWFOOT) {

@@ -68,6 +68,16 @@ public class MessageExo extends AbstractMessage {
 		throw new IllegalStateException();
 	}
 
+	@Override
+	public Participant getParticipant1() {
+		return participant;
+	}
+
+	@Override
+	public Participant getParticipant2() {
+		return participant;
+	}
+
 	public Participant getParticipant() {
 		return participant;
 	}

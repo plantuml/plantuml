@@ -45,9 +45,12 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColorSet;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -75,7 +78,7 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
 
-		Message message1 = diagram.getActivatingMessage();
+		AbstractMessage message1 = diagram.getActivatingMessage();
 		boolean doDeactivation = true;
 		if (message1 == null) {
 			final EventWithDeactivate last = diagram.getLastEventWithDeactivate();
@@ -93,12 +96,18 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		}
 
 		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));
-		final Message message2 = new Message(diagram.getSkinParam().getCurrentStyleBuilder(),
-				message1.getParticipant2(), message1.getParticipant1(), display, arrow,
-				diagram.getNextMessageNumber());
-		final boolean parallel = arg.get("PARALLEL", 0) != null;
-		if (parallel) {
-			message2.goParallel();
+		final AbstractMessage message2;
+		if (message1 instanceof MessageExo) {
+			final MessageExo exo1 = (MessageExo) message1;
+			message2 = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), exo1.getParticipant(), exo1
+					.getType().reverse(), display, arrow, diagram.getNextMessageNumber(), false);
+		} else {
+			message2 = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), message1.getParticipant2(),
+					message1.getParticipant1(), display, arrow, diagram.getNextMessageNumber());
+			final boolean parallel = arg.get("PARALLEL", 0) != null;
+			if (parallel) {
+				message2.goParallel();
+			}
 		}
 		diagram.addMessage(message2);
 
@@ -111,5 +120,4 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		return CommandExecutionResult.ok();
 
 	}
-
 }

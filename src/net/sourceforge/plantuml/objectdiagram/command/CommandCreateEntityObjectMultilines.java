@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -105,14 +106,15 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 
 	private IEntity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) {
 		final String name = line0.get("NAME", 1);
-		final Code code = diagram.buildCode(name);
+		final Ident ident = diagram.buildLeafIdent(name);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(name);
 		final String display = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
-		if (diagram.leafExist(code)) {
+		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
+		if (leafExist) {
 			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, LeafType.OBJECT, null);
 		}
-		final Ident idNewLong = diagram.buildLeafIdent(name);
-		final IEntity entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), LeafType.OBJECT, null);
+		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.OBJECT, null);
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
 					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()

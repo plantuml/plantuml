@@ -253,9 +253,9 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	// support for CommandReturn
-	private final Stack<Message> activationState = new Stack<Message>();
+	private final Stack<AbstractMessage> activationState = new Stack<AbstractMessage>();
 
-	public Message getActivatingMessage() {
+	public AbstractMessage getActivatingMessage() {
 		if (activationState.empty()) {
 			return null;
 		}
@@ -288,8 +288,8 @@ public class SequenceDiagram extends UmlDiagram {
 			}
 			return null;
 		}
-		if (lifeEventType == LifeEventType.ACTIVATE && lastEventWithDeactivate instanceof Message) {
-			activationState.push((Message) lastEventWithDeactivate);
+		if (lifeEventType == LifeEventType.ACTIVATE && lastEventWithDeactivate instanceof AbstractMessage) {
+			activationState.push((AbstractMessage) lastEventWithDeactivate);
 		} else if (lifeEventType == LifeEventType.DEACTIVATE && activationState.empty() == false) {
 			activationState.pop();
 		}

@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.Stdlib;
-import net.sourceforge.plantuml.preproc2.PreprocessorInclude;
+import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -182,7 +182,7 @@ public class PSystemVersion extends AbstractPSystem {
 				strings.add("Word Mode");
 				strings.add("Command Line: " + Run.getCommandLine());
 				strings.add("Current Dir: " + new File(".").getAbsolutePath());
-				strings.add("plantuml.include.path: " + PreprocessorInclude.getenv("plantuml.include.path"));
+				strings.add("plantuml.include.path: " + PreprocessorUtils.getenv("plantuml.include.path"));
 			}
 		}
 		strings.add(" ");

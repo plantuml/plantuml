@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -206,18 +207,25 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				return CommandExecutionResult.error("Nothing to note to");
 			}
 		} else {
-			final Code code = diagram.buildCode(idShort);
+			final Ident ident = diagram.buildLeafIdent(idShort);
+			final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 			if (diagram.isGroup(code)) {
-				cl1 = diagram.getGroup(code);
+				cl1 = diagram.V1972() ? diagram.getGroupStrict(ident) : diagram.getGroup(code);
 			} else {
-				cl1 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, null, null);
+				if (diagram.V1972() && diagram.leafExistSmart(diagram.cleanIdent(ident)))
+					cl1 = diagram.getLeafSmart(diagram.cleanIdent(ident));
+				else
+					cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
 			}
 		}
 
 		final String tmp = UniqueSequence.getString("GMN");
 		final Ident idNewLong = diagram.buildLeafIdent(tmp);
-		final IEntity note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE,
-				null);
+		final IEntity note;
+		if (diagram.V1972())
+			note = diagram.createLeaf(idNewLong, idNewLong, strings.toDisplay(), LeafType.NOTE, null);
+		else
+			note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE, null);
 
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		note.setColors(colors);

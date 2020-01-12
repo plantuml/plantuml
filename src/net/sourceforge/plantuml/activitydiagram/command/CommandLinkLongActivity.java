@@ -168,7 +168,6 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 		final String display = sb.toString();
 		final String idShort = lineLast.get(1) == null ? display : lineLast.get(1);
-		final Code code = diagram.buildCode(idShort);
 
 		String partition = null;
 		if (lineLast.get(3) != null) {
@@ -177,11 +176,12 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 		if (partition != null) {
 			final Ident idNewLong = diagram.buildLeafIdent(partition);
-			diagram.gotoGroup(idNewLong, diagram.buildCode(partition),
-					Display.getWithNewlines(partition), GroupType.PACKAGE, null, NamespaceStrategy.SINGLE);
+			diagram.gotoGroup(idNewLong, diagram.buildCode(partition), Display.getWithNewlines(partition),
+					GroupType.PACKAGE, null, NamespaceStrategy.SINGLE);
 		}
-		final IEntity entity2 = diagram.getOrCreate(diagram.buildLeafIdent(idShort), code,
-				Display.getWithNewlines(display), LeafType.ACTIVITY);
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final IEntity entity2 = diagram.getOrCreate(ident, code, Display.getWithNewlines(display), LeafType.ACTIVITY);
 		if (entity2 == null) {
 			return CommandExecutionResult.error("No such entity");
 		}

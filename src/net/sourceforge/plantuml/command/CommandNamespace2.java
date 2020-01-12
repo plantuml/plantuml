@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -87,12 +88,12 @@ public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("NAME", 0);
-		final Code code = diagram.buildCode(idShort);
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final String disp = arg.getLazzy("DISPLAY", 0);
 		final Display display = Display.getWithNewlines(disp);
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
+		diagram.gotoGroup(ident, code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {

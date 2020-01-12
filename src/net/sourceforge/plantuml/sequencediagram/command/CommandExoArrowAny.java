@@ -92,6 +92,13 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		}
 		config = config.withPart(getArrowPart(dressing));
 		config = CommandArrow.applyStyle(arg.getLazzy("ARROW_STYLE", 0), config);
+		
+		final String activationSpec = arg.get("ACTIVATION", 0);
+
+		if (activationSpec != null && activationSpec.charAt(0) == '*') {
+			diagram.activate(p, LifeEventType.CREATE, null);
+		}
+
 		final MessageExoType messageExoType = getMessageExoType(arg);
 
 		if (messageExoType == MessageExoType.TO_RIGHT || messageExoType == MessageExoType.TO_LEFT) {
@@ -144,7 +151,22 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		final HtmlColor activationColor = diagram.getSkinParam().getIHtmlColorSet()
 				.getColorIfValid(arg.get("LIFECOLOR", 0));
 
-		if (diagram.isAutoactivate() && (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC)) {
+		if (activationSpec != null) {
+			switch (activationSpec.charAt(0)) {
+			case '+':
+				diagram.activate(p, LifeEventType.ACTIVATE, activationColor);
+				break;
+			case '-':
+				diagram.activate(p, LifeEventType.DEACTIVATE, null);
+				break;
+			case '!':
+				diagram.activate(p, LifeEventType.DESTROY, null);
+				break;
+			default:
+				break;
+			}
+		} else if (diagram.isAutoactivate()
+				&& (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC)) {
 			if (config.isDotted()) {
 				diagram.activate(p, LifeEventType.DEACTIVATE, null);
 			} else {

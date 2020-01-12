@@ -60,9 +60,16 @@ public class FileWithSuffix {
 
 	@Override
 	public String toString() {
+		if (file == null) {
+			return super.toString();
+		}
 		return file.toString();
 	}
+
 	public Reader getReader(String charset) throws IOException {
+		if (file == null) {
+			return null;
+		}
 		if (entry == null) {
 			if (charset == null) {
 				Log.info("Using default charset");
@@ -108,45 +115,33 @@ public class FileWithSuffix {
 		this.file = new AFileRegular(file);
 		this.suffix = suffix;
 		this.entry = null;
-		// this.description = file.getAbsolutePath();
 		this.description = getFileName(file);
 	}
 
-	public static String getFileName(File file) {
-		return file.getName();
-	}
-
-	public static String getAbsolutePath(File file) {
-		return file.getAbsolutePath();
-	}
-
-	public FileWithSuffix(ImportedFiles importedFiles, String fileName, String suffix) throws IOException {
-		final int idx = fileName.indexOf('~');
+	FileWithSuffix(String description, String suffix, AFile file, String entry) {
+		this.description = description;
 		this.suffix = suffix;
-		if (idx == -1) {
-			this.file = importedFiles.getAFile(fileName);
-			this.entry = null;
-		} else {
-			this.file = importedFiles.getAFile(fileName.substring(0, idx));
-			this.entry = fileName.substring(idx + 1);
-		}
+		this.file = file;
+		this.entry = entry;
+	}
 
-		if (file == null) {
-			this.description = fileName;
-		} else if (entry == null) {
-			// this.description = file.getAbsolutePath();
-			this.description = fileName;
-		} else {
-			// this.description = file.getAbsolutePath() + "~" + entry;
-			this.description = fileName;
-		}
-
+	static FileWithSuffix none() {
+		return new FileWithSuffix("NONE", null, null, null);
 	}
 
 	@Override
 	public int hashCode() {
-		return (file == null ? 0 : file.hashCode()) + (suffix == null ? 0 : suffix.hashCode() * 43)
-				+ (entry == null ? 0 : entry.hashCode());
+		int v = 0;
+		if (file != null) {
+			v += file.hashCode();
+		}
+		if (suffix != null) {
+			v += suffix.hashCode() * 43;
+		}
+		if (entry != null) {
+			v += entry.hashCode();
+		}
+		return v;
 	}
 
 	@Override
@@ -163,6 +158,23 @@ public class FileWithSuffix {
 			return s1.equals(s2);
 		}
 		return false;
+	}
+
+	public AParentFolder getParentFile() {
+		if (file == null) {
+			return null;
+		}
+		Log.info("Getting parent of " + file);
+		Log.info("-->The parent is " + file.getParentFile());
+		return file.getParentFile();
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public final String getSuffix() {
+		return suffix;
 	}
 
 	private static boolean equals(String s1, String s2) {
@@ -184,22 +196,8 @@ public class FileWithSuffix {
 		return result;
 	}
 
-	public AParentFolder getParentFile() {
-		Log.info("Getting parent of " + file);
-		Log.info("-->The parent is " + file.getParentFile());
-		return file.getParentFile();
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public final String getSuffix() {
-		return suffix;
-	}
-	
-	public String toStringDebug() {
-		return file.getAbsolutePath();
+	public static String getFileName(File file) {
+		return file.getName();
 	}
 
 }

@@ -470,7 +470,11 @@ public class Option {
 	public Defines getDefaultDefines(File f) {
 		final Defines result = Defines.createWithFileName(f);
 		for (Map.Entry<String, String> ent : defines.entrySet()) {
-			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false, null);
+			String value = ent.getValue();
+			if (value == null) {
+				value = "";
+			}
+			result.define(ent.getKey(), Arrays.asList(value), false, null);
 		}
 		return result;
 	}

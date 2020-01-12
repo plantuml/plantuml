@@ -39,10 +39,6 @@ import net.sourceforge.plantuml.preproc.ImportedFiles;
 
 public interface PreprocessorModeSet {
 
-	public PreprocessorMode getPreprocessorMode();
-
-	public void setPreprocessorMode(PreprocessorMode mode);
-	
 	public ImportedFiles getImportedFiles();
 	
 	public String getCharset();

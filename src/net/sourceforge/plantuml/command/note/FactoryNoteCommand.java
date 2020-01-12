@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -127,12 +128,13 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 
 	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, BlocLines display) {
 		final String idShort = arg.get("CODE", 0);
-		final Code code = diagram.buildCode(idShort);
-		if (diagram.leafExist(code)) {
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
+		if (leafExist) {
 			return CommandExecutionResult.error("Note already created: " + code.getName());
 		}
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		final IEntity entity = diagram.createLeaf(idNewLong, code, display.toDisplay(), LeafType.NOTE, null);
+		final IEntity entity = diagram.createLeaf(ident, code, display.toDisplay(), LeafType.NOTE, null);
 		assert entity != null;
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));

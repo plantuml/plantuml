@@ -78,12 +78,12 @@ public class AFileRegular implements AFile {
 		return new AParentFolderRegular(file.getParentFile());
 	}
 
-	public String getAbsolutePath() {
-		return file.getAbsolutePath();
-	}
-
 	public File getUnderlyingFile() {
 		return file;
+	}
+
+	public File getSystemFolder() throws IOException {
+		return file.getParentFile().getCanonicalFile();
 	}
 
 }

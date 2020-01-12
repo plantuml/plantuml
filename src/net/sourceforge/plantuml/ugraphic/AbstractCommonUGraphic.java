@@ -44,6 +44,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private boolean hidden = false;
 	private HtmlColor backColor = null;
 	private HtmlColor color = null;
+	private boolean enlargeClip = false;
 
 	private UTranslate translate = new UTranslate();
 
@@ -80,7 +81,14 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	final public UClip getClip() {
+		if (enlargeClip && clip != null) {
+			return clip.enlarge(1);
+		}
 		return clip;
+	}
+
+	final public void enlargeClip() {
+		this.enlargeClip = true;
 	}
 
 	public AbstractCommonUGraphic(ColorMapper colorMapper) {
@@ -88,6 +96,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	protected AbstractCommonUGraphic(AbstractCommonUGraphic other) {
+		this.enlargeClip = other.enlargeClip;
 		this.colorMapper = other.colorMapper;
 		this.translate = other.translate;
 		this.clip = other.clip;

@@ -57,6 +57,7 @@ import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.common.utils__c.UF_setname;
 import static gen.lib.common.utils__c.UF_singleton;
 import static gen.lib.dotgen.class2__c.class2;
+import static gen.lib.dotgen.class2__c.merge_chain;
 import static gen.lib.dotgen.class2__c.mergeable;
 import static gen.lib.dotgen.dotinit__c.dot_root;
 import static gen.lib.dotgen.fastgr__c.delete_fast_edge;
@@ -67,6 +68,7 @@ import static gen.lib.dotgen.fastgr__c.find_flat_edge;
 import static gen.lib.dotgen.fastgr__c.flat_edge;
 import static gen.lib.dotgen.fastgr__c.merge_oneway;
 import static gen.lib.dotgen.fastgr__c.other_edge;
+import static gen.lib.dotgen.fastgr__c.safe_other_edge;
 import static gen.lib.dotgen.fastgr__c.virtual_edge;
 import static gen.lib.dotgen.fastgr__c.virtual_node;
 import static gen.lib.dotgen.mincross__c.allocate_ranks;
@@ -112,7 +114,6 @@ import h.ST_Agnode_s;
 import h.ST_Agraph_s;
 import h.ST_nodequeue;
 import h.ST_pointf;
-import smetana.core.__ptr__;
 
 public class cluster__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -940,9 +941,9 @@ try {
 	    		ED_to_virt(e, null);
  		if (ED_to_virt(prev) == null)
  			continue;	/* internal edge */
-UNSUPPORTED("8d5mw7m9lzlseqbyx8a8mncgs"); // 		merge_chain(subg, e, ED_to_virt(prev), 0);
-UNSUPPORTED("87mmnlsj8quzlzg0vxax15kt2"); // 		safe_other_edge(e);
-UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
+ 		merge_chain(subg, e, ED_to_virt(prev), false);
+ 		safe_other_edge(e);
+ 		continue;
 	    }
 	    /* flat edges */
 	    if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {

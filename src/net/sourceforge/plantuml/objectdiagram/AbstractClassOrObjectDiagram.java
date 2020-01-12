@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -47,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -59,6 +62,16 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	public AbstractClassOrObjectDiagram(ISkinSimple orig) {
 		super(orig);
 	}
+	
+	@Override
+	public Ident cleanIdent(Ident ident) {
+		String codeString = ident.getName();
+		if (codeString.startsWith("\"") && codeString.endsWith("\"")) {
+			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
+		}
+		return ident;
+	}
+
 
 	final public boolean insertBetween(IEntity entity1, IEntity entity2, IEntity node) {
 		final Link link = foundLink(entity1, entity2);
@@ -107,24 +120,29 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	public CommandExecutionResult associationClass(String name1A, String name1B, String name2A, String name2B,
 			LinkType linkType, Display label) {
-		final IEntity entity1A = getOrCreateLeaf(buildLeafIdent(name1A), buildCode(name1A),
-				null, null);
-		final IEntity entity1B = getOrCreateLeaf(buildLeafIdent(name1B), buildCode(name1B),
-				null, null);
-		final IEntity entity2A = getOrCreateLeaf(buildLeafIdent(name2A), buildCode(name2A),
-				null, null);
-		final IEntity entity2B = getOrCreateLeaf(buildLeafIdent(name2B), buildCode(name2B),
-				null, null);
+		final Ident ident1A = buildLeafIdent(name1A);
+		final Ident ident1B = buildLeafIdent(name1B);
+		final Ident ident2A = buildLeafIdent(name2A);
+		final Ident ident2B = buildLeafIdent(name2B);
+		final Code code1A = this.V1972() ? ident1A : buildCode(name1A);
+		final Code code1B = this.V1972() ? ident1B : buildCode(name1B);
+		final Code code2A = this.V1972() ? ident2A : buildCode(name2A);
+		final Code code2B = this.V1972() ? ident2B : buildCode(name2B);
+		final IEntity entity1A = getOrCreateLeaf(ident1A, code1A, null, null);
+		final IEntity entity1B = getOrCreateLeaf(ident1B, code1B, null, null);
+		final IEntity entity2A = getOrCreateLeaf(ident2A, code2A, null, null);
+		final IEntity entity2B = getOrCreateLeaf(ident2B, code2B, null, null);
 		final List<Association> same1 = getExistingAssociatedPoints(entity1A, entity1B);
 		final List<Association> same2 = getExistingAssociatedPoints(entity2A, entity2B);
 		if (same1.size() == 0 && same2.size() == 0) {
-
 			final String tmp1 = UniqueSequence.getString("apoint");
-			final IEntity point1 = getOrCreateLeaf(buildLeafIdent(tmp1), buildCode(tmp1),
-					LeafType.POINT_FOR_ASSOCIATION, null);
 			final String tmp2 = UniqueSequence.getString("apoint");
-			final IEntity point2 = getOrCreateLeaf(buildLeafIdent(tmp2), buildCode(tmp2),
-					LeafType.POINT_FOR_ASSOCIATION, null);
+			final Ident ident1 = buildLeafIdent(tmp1);
+			final Ident ident2 = buildLeafIdent(tmp2);
+			final Code code1 = this.V1972() ? ident1 : buildCode(tmp1);
+			final Code code2 = this.V1972() ? ident2 : buildCode(tmp2);
+			final IEntity point1 = getOrCreateLeaf(ident1, code1, LeafType.POINT_FOR_ASSOCIATION, null);
+			final IEntity point2 = getOrCreateLeaf(ident2, code2, LeafType.POINT_FOR_ASSOCIATION, null);
 
 			insertPointBetween(entity1A, entity1B, point1);
 			insertPointBetween(entity2A, entity2B, point2);
@@ -176,10 +194,12 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	public boolean associationClass(int mode, String name1, String name2, IEntity associed, LinkType linkType,
 			Display label) {
-		final IEntity entity1 = getOrCreateLeaf(buildLeafIdent(name1), buildCode(name1), null,
-				null);
-		final IEntity entity2 = getOrCreateLeaf(buildLeafIdent(name2), buildCode(name2), null,
-				null);
+		final Ident ident1 = buildLeafIdent(name1);
+		final Ident ident2 = buildLeafIdent(name2);
+		final Code code1 = this.V1972() ? ident1 : buildCode(name1);
+		final Code code2 = this.V1972() ? ident2 : buildCode(name2);
+		final IEntity entity1 = getOrCreateLeaf(ident1, code1, null, null);
+		final IEntity entity2 = getOrCreateLeaf(ident2, code2, null, null);
 		final List<Association> same = getExistingAssociatedPoints(entity1, entity2);
 		if (same.size() > 1) {
 			return false;
@@ -227,8 +247,9 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.entity2 = entity2;
 			this.associed = associed;
 			final String idShort = UniqueSequence.getString("apoint");
-			point = getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort),
-					LeafType.POINT_FOR_ASSOCIATION, null);
+			final Ident ident = buildLeafIdent(idShort);
+			final Code code = AbstractClassOrObjectDiagram.this.V1972() ? ident : buildCode(idShort);
+			point = getOrCreateLeaf(ident, code, LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}
 

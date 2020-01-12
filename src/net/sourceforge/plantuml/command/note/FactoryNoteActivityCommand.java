@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -118,10 +119,10 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 				// final String s = StringUtils.getMergedLines(strings);
 
-				final String code = UniqueSequence.getString("GMN");
-				final Ident idNewLong = diagram.buildLeafIdent(code);
-				final IEntity note = diagram.createLeaf(idNewLong, diagram.buildCode(code),
-						strings, LeafType.NOTE, null);
+				final String codeString = UniqueSequence.getString("GMN");
+				final Ident ident = diagram.buildLeafIdent(codeString);
+				final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
+				final IEntity note = diagram.createLeaf(ident, code, strings, LeafType.NOTE, null);
 				if (url != null) {
 					note.addUrl(url);
 				}
@@ -137,9 +138,9 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 			protected CommandExecutionResult executeArg(final ActivityDiagram diagram, LineLocation location,
 					RegexResult arg) {
 				final String tmp = UniqueSequence.getString("GN");
-				final Ident idNewLong = diagram.buildLeafIdent(tmp);
-				final IEntity note = diagram.createNote(idNewLong, diagram.buildCode(tmp),
-						Display.getWithNewlines(arg.get("NOTE", 0)));
+				final Ident ident = diagram.buildLeafIdent(tmp);
+				final Code code = diagram.V1972() ? ident : diagram.buildCode(tmp);
+				final IEntity note = diagram.createNote(ident, code, Display.getWithNewlines(arg.get("NOTE", 0)));
 				return executeInternal(diagram, arg, note);
 			}
 		};

@@ -56,10 +56,12 @@ public final class Message extends AbstractMessage {
 		return super.toString() + " " + p1 + "->" + p2 + " " + getLabel();
 	}
 
+	@Override
 	public Participant getParticipant1() {
 		return p1;
 	}
 
+	@Override
 	public Participant getParticipant2() {
 		return p2;
 	}

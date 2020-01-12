@@ -61,7 +61,7 @@ public class CommandDeactivateShort extends SingleLineCommand2<SequenceDiagram> 
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location, RegexResult arg2) {
-		Message message = sequenceDiagram.getActivatingMessage();
+		Message message = (Message) sequenceDiagram.getActivatingMessage();
 		if (message == null) {
 			return CommandExecutionResult.error("Nothing to deactivate.");
 		}

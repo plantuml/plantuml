@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -48,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -151,27 +153,6 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	// public static void applyStyle(String arrowStyle, Link link) {
-	// if (arrowStyle == null) {
-	// return;
-	// }
-	// final StringTokenizer st = new StringTokenizer(arrowStyle, ",");
-	// while (st.hasMoreTokens()) {
-	// final String s = st.nextToken();
-	// if (s.equalsIgnoreCase("dashed")) {
-	// link.goDashed();
-	// } else if (s.equalsIgnoreCase("bold")) {
-	// link.goBold();
-	// } else if (s.equalsIgnoreCase("dotted")) {
-	// link.goDotted();
-	// } else if (s.equalsIgnoreCase("hidden")) {
-	// link.goHidden();
-	// } else {
-	// link.setSpecificColor(s);
-	// }
-	// }
-	// }
-
 	private Direction getDirection(RegexResult arg) {
 		final String arrowDirection = arg.get("ARROW_DIRECTION", 0);
 		if (arrowDirection != null) {
@@ -180,24 +161,39 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		return null;
 	}
 
-	private IEntity getEntityStart(StateDiagram diagram, String code) {
-		if (code.startsWith("[*]")) {
+	private IEntity getEntityStart(StateDiagram diagram, final String codeString) {
+		if (codeString.startsWith("[*]")) {
 			return diagram.getStart();
 		}
-		if (code.equalsIgnoreCase("[H]")) {
+		return getFoo1(diagram, codeString);
+	}
+
+	private IEntity getEntityEnd(StateDiagram diagram, final String codeString) {
+		if (codeString.startsWith("[*]")) {
+			return diagram.getEnd();
+		}
+		return getFoo1(diagram, codeString);
+	}
+
+	private IEntity getFoo1(StateDiagram diagram, final String codeString) {
+		if (codeString.equalsIgnoreCase("[H]")) {
 			return diagram.getHistorical();
 		}
-		if (code.endsWith("[H]")) {
-			return diagram.getHistorical(code.substring(0, code.length() - 3));
+		if (codeString.endsWith("[H]")) {
+			return diagram.getHistorical(codeString.substring(0, codeString.length() - 3));
 		}
-		if (code.startsWith("=") && code.endsWith("=")) {
-			code = removeEquals(code);
-			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), LeafType.SYNCHRO_BAR, null);
+		if (codeString.startsWith("=") && codeString.endsWith("=")) {
+			final String codeString1 = removeEquals(codeString);
+			final Ident ident1 = diagram.buildLeafIdent(codeString1);
+			final Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(codeString1);
+			return diagram.getOrCreateLeaf(ident1, code1, LeafType.SYNCHRO_BAR, null);
 		}
-		if (diagram.checkConcurrentStateOk(diagram.buildLeafIdent(code), diagram.buildCode(code)) == false) {
+		final Ident ident = diagram.buildLeafIdent(codeString);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
+		if (diagram.checkConcurrentStateOk(ident, code) == false) {
 			return null;
 		}
-		return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), null, null);
+		return diagram.getOrCreateLeaf(ident, code, null, null);
 	}
 
 	private String removeEquals(String code) {
@@ -208,23 +204,6 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 			code = code.substring(0, code.length() - 1);
 		}
 		return code;
-	}
-
-	private IEntity getEntityEnd(StateDiagram diagram, String code) {
-		if (code.startsWith("[*]")) {
-			return diagram.getEnd();
-		}
-		if (code.endsWith("[H]")) {
-			return diagram.getHistorical(code.substring(0, code.length() - 3));
-		}
-		if (code.startsWith("=") && code.endsWith("=")) {
-			code = removeEquals(code);
-			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), LeafType.SYNCHRO_BAR, null);
-		}
-		if (diagram.checkConcurrentStateOk(diagram.buildLeafIdent(code), diagram.buildCode(code)) == false) {
-			return null;
-		}
-		return diagram.getOrCreateLeaf(diagram.buildLeafIdent(code), diagram.buildCode(code), null, null);
 	}
 
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.statediagram;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -44,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -61,6 +63,9 @@ public class StateDiagram extends AbstractEntityDiagram {
 	}
 
 	public boolean checkConcurrentStateOk(Ident ident, Code code) {
+		if (this.V1972()) {
+			return checkConcurrentStateOkInternal1972(ident);
+		}
 		final boolean result = checkConcurrentStateOkInternal(code);
 		// System.err.println("checkConcurrentStateOk " + code + " " + ident + " " + result);
 		return result;
@@ -82,19 +87,50 @@ public class StateDiagram extends AbstractEntityDiagram {
 		return true;
 	}
 
+	private boolean checkConcurrentStateOkInternal1972(Ident ident) {
+		if (leafExistSmart(ident) == false) {
+			return true;
+		}
+		final IEntity existing = this.getLeafSmart(ident);
+		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_STATE
+				&& getCurrentGroup() != existing.getParentContainer()) {
+			return false;
+		}
+		if (existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE
+				&& getCurrentGroup() != existing.getParentContainer()) {
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public IEntity getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
 		checkNotNull(ident);
 		if (checkConcurrentStateOk(ident, code) == false) {
 			throw new IllegalStateException("Concurrent State " + code);
 		}
-		// final Ident idNewLong = buildLeafIdent(id);
-		if (type == null) {
+		if (!this.V1972() && type == null) {
 			if (code.getName().startsWith("[*]")) {
 				throw new IllegalArgumentException();
 			}
 			if (isGroup(code)) {
 				return getGroup(code);
+			}
+			return getOrCreateLeafDefault(ident, code, LeafType.STATE, null);
+		}
+		if (this.V1972() && type == null) {
+			if (ident.getName().startsWith("[*]")) {
+				throw new IllegalArgumentException();
+			}
+			if (isGroupVerySmart(ident)) {
+				return getGroupVerySmart(ident);
+			}
+			if (getNamespaceSeparator() == null) {
+				final ILeaf result = getLeafVerySmart(ident);
+				if (result != null) {
+					return result;
+				}
+
 			}
 			return getOrCreateLeafDefault(ident, code, LeafType.STATE, null);
 		}
@@ -104,45 +140,52 @@ public class StateDiagram extends AbstractEntityDiagram {
 	public IEntity getStart() {
 		final IGroup g = getCurrentGroup();
 		if (EntityUtils.groupRoot(g)) {
-			return getOrCreateLeaf(buildLeafIdent("*start"), buildCode("*start"),
-					LeafType.CIRCLE_START, null);
+			final Ident ident = buildLeafIdent("*start");
+			final Code code = this.V1972() ? ident : buildCode("*start");
+			return getOrCreateLeaf(ident, code, LeafType.CIRCLE_START, null);
 		}
 		final String idShort = "*start*" + g.getCodeGetName();
-		return getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort),
-				LeafType.CIRCLE_START, null);
+		final Ident ident = buildLeafIdent(idShort);
+		final Code code = this.V1972() ? ident : buildCode(idShort);
+		return getOrCreateLeaf(ident, code, LeafType.CIRCLE_START, null);
 	}
 
 	public IEntity getEnd() {
 		final IGroup p = getCurrentGroup();
 		if (EntityUtils.groupRoot(p)) {
-			return getOrCreateLeaf(buildLeafIdent("*end"), buildCode("*end"),
-					LeafType.CIRCLE_END, null);
+			final Ident ident = buildLeafIdent("*end");
+			final Code code = this.V1972() ? ident : buildCode("*end");
+			return getOrCreateLeaf(ident, code, LeafType.CIRCLE_END, null);
 		}
 		final String idShort = "*end*" + p.getCodeGetName();
-		return getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort), LeafType.CIRCLE_END,
-				null);
+		final Ident ident = buildLeafIdent(idShort);
+		final Code code = this.V1972() ? ident : buildCode(idShort);
+		return getOrCreateLeaf(ident, code, LeafType.CIRCLE_END, null);
 	}
 
 	public IEntity getHistorical() {
 		final IGroup g = getCurrentGroup();
 		if (EntityUtils.groupRoot(g)) {
-			return getOrCreateLeaf(buildLeafIdent("*historical"), buildCode("*historical"),
-					LeafType.PSEUDO_STATE, null);
+			final Ident ident = buildLeafIdent("*historical");
+			final Code code = buildCode("*historical");
+			return getOrCreateLeaf(ident, code, LeafType.PSEUDO_STATE, null);
 		}
 		final String idShort = "*historical*" + g.getCodeGetName();
-		return getOrCreateLeaf(buildLeafIdent(idShort), buildCode(idShort),
-				LeafType.PSEUDO_STATE, null);
+		final Ident ident = buildLeafIdent(idShort);
+		final Code code = this.V1972() ? ident : buildCode(idShort);
+		return getOrCreateLeaf(ident, code, LeafType.PSEUDO_STATE, null);
 	}
 
 	public IEntity getHistorical(String idShort) {
-		final Code codeGroup = buildCode(idShort);
 		final Ident idNewLong = buildLeafIdent(idShort);
+		final Code codeGroup = this.V1972() ? idNewLong : buildCode(idShort);
 		gotoGroup(idNewLong, codeGroup, Display.getWithNewlines(codeGroup), GroupType.STATE, getRootGroup(),
 				NamespaceStrategy.SINGLE);
 		final IEntity g = getCurrentGroup();
 		final String tmp = "*historical*" + g.getCodeGetName();
-		final IEntity result = getOrCreateLeaf(buildLeafIdent(tmp), buildCode(tmp),
-				LeafType.PSEUDO_STATE, null);
+		final Ident ident = buildLeafIdent(tmp);
+		final Code code = this.V1972() ? ident : buildCode(tmp);
+		final IEntity result = getOrCreateLeaf(ident, code, LeafType.PSEUDO_STATE, null);
 		endGroup();
 		return result;
 	}
@@ -155,17 +198,19 @@ public class StateDiagram extends AbstractEntityDiagram {
 		}
 		getCurrentGroup().setConcurrentSeparator(direction);
 		final String tmp1 = UniqueSequence.getString(CONCURRENT_PREFIX);
-		final Ident idNewLong1 = buildLeafIdent(tmp1);
-		gotoGroup(idNewLong1, buildCode(tmp1), Display.create(""), GroupType.CONCURRENT_STATE,
-				getCurrentGroup(), NamespaceStrategy.SINGLE);
+		final Ident ident1 = buildLeafIdent(tmp1);
+		final Code code1 = this.V1972() ? ident1 : buildCode(tmp1);
+		gotoGroup(ident1, code1, Display.create(""), GroupType.CONCURRENT_STATE, getCurrentGroup(),
+				NamespaceStrategy.SINGLE);
 		final IGroup conc1 = getCurrentGroup();
 		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
 			final String tmp2 = UniqueSequence.getString(CONCURRENT_PREFIX);
-			final Ident idNewLong2 = buildLeafIdent(tmp2);
-			gotoGroup(idNewLong2, buildCode(tmp2), Display.create(""),
-					GroupType.CONCURRENT_STATE, getCurrentGroup(), NamespaceStrategy.SINGLE);
+			final Ident ident2 = buildLeafIdent(tmp2);
+			final Code code2 = this.V1972() ? ident2 : buildCode(tmp2);
+			gotoGroup(ident2, code2, Display.create(""), GroupType.CONCURRENT_STATE, getCurrentGroup(),
+					NamespaceStrategy.SINGLE);
 		}
 		// printlink("AFTER");
 		return true;
@@ -210,8 +255,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final IGroup parent2 = getGroupParentIfItIsConcurrentState(link.getEntity2());
 			if (isCompatible(parent1, parent2) == false) {
 				return "State within concurrent state cannot be linked out of this concurrent state (between "
-						+ link.getEntity1().getCodeGetName() + " and "
-						+ link.getEntity2().getCodeGetName() + ")";
+						+ link.getEntity1().getCodeGetName() + " and " + link.getEntity2().getCodeGetName() + ")";
 			}
 		}
 		return super.checkFinalError();

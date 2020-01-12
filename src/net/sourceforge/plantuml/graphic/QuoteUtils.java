@@ -331,7 +331,9 @@ public class QuoteUtils {
 					"Pngnfgebcur vf nyjnlf whfg nebhaq gur pbeare.",
 					"Orjner bs ohtf va gur nobir pbqr; V unir bayl cebirq vg pbeerpg, abg gevrq vg",
 					"V'z abg n erny cebtenzzre. V guebj gbtrgure guvatf hagvy vg jbexf gura V zbir ba",
-					"#qrsvar DHRFGVBA ((oo)||!(oo))");
+					"#qrsvar DHRFGVBA ((oo)||!(oo))", "Pbzchgref ner hfryrff. Gurl pna bayl tvir lbh nafjref",
+					"Gur Vagrearg? Vf gung guvat fgvyy nebhaq?",
+					"Va beqre gb haqrefgnaq erphefvba, bar zhfg svefg haqrefgnaq erphefvba");
 
 	private QuoteUtils() {
 	}

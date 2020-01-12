@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project3;
 
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 

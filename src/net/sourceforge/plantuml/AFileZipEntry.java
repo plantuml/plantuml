@@ -113,12 +113,12 @@ public class AFileZipEntry implements AFile {
 		return new AParentFolderZip(zipFile, entry);
 	}
 
-	public String getAbsolutePath() {
-		return zipFile.getAbsolutePath() + "~" + entry;
-	}
-
 	public File getUnderlyingFile() {
 		return zipFile;
+	}
+
+	public File getSystemFolder() throws IOException {
+		return zipFile.getParentFile().getCanonicalFile();
 	}
 
 }

@@ -266,7 +266,7 @@ public class Stereotype implements CharSequence {
 	public List<String> getLabels(Guillemet guillemet) {
 		final String labelLocal = getLabel(Guillemet.DOUBLE_COMPARATOR);
 		if (labelLocal == null) {
-			return null;
+			return Collections.emptyList();
 		}
 		return cutLabels(labelLocal, guillemet);
 	}

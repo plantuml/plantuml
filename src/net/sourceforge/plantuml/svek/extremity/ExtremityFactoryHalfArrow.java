@@ -30,11 +30,28 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.svek.extremity;
 
-public class Namespace {
+import java.awt.geom.Point2D;
+
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
+import net.sourceforge.plantuml.svek.Side;
+
+public class ExtremityFactoryHalfArrow extends AbstractExtremityFactory implements ExtremityFactory {
+
+	@Override
+	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
+		return new ExtremityHalfArrow(p0, angle);
+	}
+
+	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
+		final double ortho = atan2(p0, p2);
+		final Point2D center = new Point2D.Double((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
+		return new ExtremityHalfArrow(p1, ortho, center);
+	}
 
 }

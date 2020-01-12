@@ -65,6 +65,8 @@ public abstract class USymbol {
 	public final static USymbol FILE = record("FILE", SkinParameter.FILE, new USymbolFile());
 	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE, new USymbolRect(
 			SkinParameter.RECTANGLE));
+	public final static USymbol LABEL = record("LABEL", SkinParameter.RECTANGLE, new USymbolLabel(
+			SkinParameter.RECTANGLE));
 	public final static USymbol ARCHIMATE = record("ARCHIMATE", SkinParameter.ARCHIMATE, new USymbolRect(
 			SkinParameter.ARCHIMATE));
 	public final static USymbol COLLECTIONS = record("COLLECTIONS", SkinParameter.COLLECTIONS, new USymbolCollections(
@@ -210,6 +212,8 @@ public abstract class USymbol {
 			usymbol = USymbol.PACKAGE;
 		} else if (symbol.equalsIgnoreCase("rectangle")) {
 			usymbol = USymbol.RECTANGLE;
+		} else if (symbol.equalsIgnoreCase("label")) {
+			usymbol = USymbol.LABEL;
 		} else if (symbol.equalsIgnoreCase("collections")) {
 			usymbol = USymbol.COLLECTIONS;
 		} else if (symbol.equalsIgnoreCase("node")) {

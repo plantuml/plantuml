@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -206,15 +207,23 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		final String idShort = arg.get("CODE" + suf, 0);
 		if (idShort != null) {
-			final Code code = diagram.buildCode(idShort);
 			if (partition != null) {
 				final Ident idNewLong = diagram.buildLeafIdent(partition);
-				diagram.gotoGroup(idNewLong, diagram.buildCode(partition), Display.getWithNewlines(partition),
-						GroupType.PACKAGE, diagram.getRootGroup(), NamespaceStrategy.SINGLE);
+				final Code codeP = diagram.V1972() ? idNewLong : diagram.buildCode(partition);
+				diagram.gotoGroup(idNewLong, codeP, Display.getWithNewlines(partition), GroupType.PACKAGE,
+						diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
-			final LeafType type = getTypeIfExisting(diagram, code);
-			final IEntity result = diagram.getOrCreate(diagram.buildLeafIdent(idShort), code,
-					Display.getWithNewlines(code), type);
+			final Ident ident = diagram.buildLeafIdent(idShort);
+			final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+			final LeafType type = diagram.V1972() ? getTypeIfExistingSmart(diagram, ident) : getTypeIfExisting(diagram,
+					code);
+			IEntity result;
+			if (diagram.V1972()) {
+				result = diagram.getLeafVerySmart(ident);
+				if (result == null)
+					result = diagram.getOrCreate(ident, code, Display.getWithNewlines(code), type);
+			} else
+				result = diagram.getOrCreate(ident, code, Display.getWithNewlines(code), type);
 			if (partition != null) {
 				diagram.endGroup();
 			}
@@ -222,21 +231,31 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		final String bar = arg.get("BAR" + suf, 0);
 		if (bar != null) {
-			return diagram.getOrCreate(diagram.buildLeafIdent(bar), diagram.buildCode(bar),
-					Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR);
+			final Ident identBar = diagram.buildLeafIdent(bar);
+			final Code codeBar = diagram.V1972() ? identBar : diagram.buildCode(bar);
+			if (diagram.V1972()) {
+				final ILeaf result = diagram.getLeafVerySmart(identBar);
+				if (result != null) {
+					return result;
+				}
+			}
+			return diagram.getOrCreate(identBar, codeBar, Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR);
 		}
 		final RegexPartialMatch quoted = arg.get("QUOTED" + suf);
 		if (quoted.get(0) != null) {
 			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
-			final Code quotedCode = diagram.buildCode(quotedString);
 			if (partition != null) {
 				final Ident idNewLong = diagram.buildLeafIdent(partition);
-				diagram.gotoGroup(idNewLong, diagram.buildCode(partition), Display.getWithNewlines(partition),
-						GroupType.PACKAGE, diagram.getRootGroup(), NamespaceStrategy.SINGLE);
+				final Code codeP = diagram.V1972() ? idNewLong : diagram.buildCode(partition);
+				diagram.gotoGroup(idNewLong, codeP, Display.getWithNewlines(partition), GroupType.PACKAGE,
+						diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
-			final LeafType type = getTypeIfExisting(diagram, quotedCode);
-			final IEntity result = diagram.getOrCreate(diagram.buildLeafIdent(quotedString), quotedCode,
-					Display.getWithNewlines(quoted.get(0)), type);
+			final Ident quotedIdent = diagram.buildLeafIdent(quotedString);
+			final Code quotedCode = diagram.V1972() ? quotedIdent : diagram.buildCode(quotedString);
+			final LeafType type = diagram.V1972() ? getTypeIfExistingSmart(diagram, quotedIdent) : getTypeIfExisting(
+					diagram, quotedCode);
+			final IEntity result = diagram.getOrCreate(quotedIdent, quotedCode, Display.getWithNewlines(quoted.get(0)),
+					type);
 			if (partition != null) {
 				diagram.endGroup();
 			}
@@ -244,13 +263,15 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		final String quoteInvisibleString = arg.get("QUOTED_INVISIBLE" + suf, 0);
 		if (quoteInvisibleString != null) {
-			final Code quotedInvisible = diagram.buildCode(quoteInvisibleString);
 			if (partition != null) {
 				final Ident idNewLong = diagram.buildLeafIdent(partition);
-				diagram.gotoGroup(idNewLong, diagram.buildCode(partition), Display.getWithNewlines(partition),
-						GroupType.PACKAGE, diagram.getRootGroup(), NamespaceStrategy.SINGLE);
+				final Code codeP = diagram.V1972() ? idNewLong : diagram.buildCode(partition);
+				diagram.gotoGroup(idNewLong, codeP, Display.getWithNewlines(partition), GroupType.PACKAGE,
+						diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
-			final IEntity result = diagram.getOrCreate(diagram.buildLeafIdent(quoteInvisibleString), quotedInvisible,
+			final Ident identInvisible = diagram.buildLeafIdent(quoteInvisibleString);
+			final Code quotedInvisible = diagram.V1972() ? identInvisible : diagram.buildCode(quoteInvisibleString);
+			final IEntity result = diagram.getOrCreate(identInvisible, quotedInvisible,
 					Display.getWithNewlines(quotedInvisible), LeafType.ACTIVITY);
 			if (partition != null) {
 				diagram.endGroup();
@@ -265,9 +286,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		return null;
 	}
 
-	private static LeafType getTypeIfExisting(ActivityDiagram system, Ident ident) {
-		if (system.leafExist(ident)) {
-			final IEntity ent = system.getLeaf(ident);
+	private static LeafType getTypeIfExistingSmart(ActivityDiagram system, Ident ident) {
+		final IEntity ent = system.getLeafSmart(ident);
+		if (ent != null) {
 			if (ent.getLeafType() == LeafType.BRANCH) {
 				return LeafType.BRANCH;
 			}

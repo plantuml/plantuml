@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.descdiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -141,7 +142,6 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		}
 
 		final String idShort = line0.get("CODE", 0);
-		final Code code = diagram.buildCode(idShort);
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
 				.getString());
 		lines = lines.subExtract(1, 1);
@@ -157,11 +157,12 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		if (CommandCreateElementFull.existsWithBadType(diagram, code, type, usymbol)) {
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		if (CommandCreateElementFull.existsWithBadType3(diagram, code, ident, type, usymbol)) {
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 		}
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		final ILeaf result = diagram.createLeaf(idNewLong, code, display, type, usymbol);
+		final ILeaf result = diagram.createLeaf(ident, code, display, type, usymbol);
 		if (result == null) {
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 		}

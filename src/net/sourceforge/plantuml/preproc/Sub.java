@@ -35,27 +35,64 @@
  */
 package net.sourceforge.plantuml.preproc;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterStartsub;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TLineType;
+import net.sourceforge.plantuml.tim.TMemory;
 
 public class Sub {
 
 	private final String name;
-	private final List<String> lines = new ArrayList<String>();
+	private final List<StringLocated> lines = new ArrayList<StringLocated>();
 
 	public Sub(String name) {
 		this.name = name;
 	}
 
-	public void add(StringLocated s) {
-		this.lines.add(s.getString());
+	@Override
+	public String toString() {
+		return super.toString() + " " + name;
 	}
 
-	public ReadLine getReadLine(LineLocation lineLocation) {
-		return new ReadLineList(lines, lineLocation);
+	public void add(StringLocated s) {
+		this.lines.add(s);
+	}
+
+	public final List<StringLocated> lines() {
+		return Collections.unmodifiableList(lines);
+	}
+
+	public static Sub fromFile(ReadLine reader, String blocname, TContext context, TMemory memory) throws IOException,
+			EaterException {
+		Sub result = null;
+		StringLocated s = null;
+		while ((s = reader.readLine()) != null) {
+			final TLineType type = TLineType.getFromLine(s.getTrimmed().getString());
+			if (type == TLineType.STARTSUB) {
+				final EaterStartsub eater = new EaterStartsub(s.getTrimmed().getString());
+				eater.execute(context, memory);
+				if (eater.getSubname().equals(blocname)) {
+					result = new Sub(blocname);
+				}
+				continue;
+			}
+			if (type == TLineType.ENDSUB && result != null) {
+				reader.close();
+				return result;
+			}
+			if (result != null) {
+				result.add(s);
+			}
+		}
+		reader.close();
+		return null;
 	}
 
 }

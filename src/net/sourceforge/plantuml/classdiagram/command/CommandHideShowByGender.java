@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -51,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.EntityGenderUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
@@ -136,8 +138,8 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		} else if (arg1.startsWith("<<")) {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
-			final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(arg1),
-					diagram.buildCode(arg1), null, null);
+			final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(arg1), diagram.buildCode(arg1), null,
+					null);
 			gender = EntityGenderUtils.byEntityAlone(entity);
 		}
 
@@ -168,8 +170,9 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		} else if (arg1.startsWith("<<")) {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
-			final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(arg1),
-					diagram.buildCode(arg1), null, null);
+			final Ident ident = diagram.buildLeafIdent(arg1);
+			final Code code = diagram.V1972() ? ident : diagram.buildCode(arg1);
+			final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 			gender = EntityGenderUtils.byEntityAlone(entity);
 		}
 		if (gender != null) {

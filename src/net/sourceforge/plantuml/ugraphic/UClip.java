@@ -52,6 +52,10 @@ public class UClip implements UChange {
 		this.height = height;
 	}
 
+	public UClip enlarge(double delta) {
+		return new UClip(x - delta, y - delta, width + 2 * delta, height + 2 * delta);
+	}
+
 	@Override
 	public String toString() {
 		return "CLIP x=" + x + " y=" + y + " w=" + width + " h=" + height;

@@ -122,7 +122,7 @@ public class GroupRoot implements IGroup {
 	public Code getCode() {
 		return CodeImpl.of("__ROOT__");
 	}
-	
+
 	public String getCodeGetName() {
 		return getCode().getName();
 	}
@@ -143,9 +143,18 @@ public class GroupRoot implements IGroup {
 
 	public Collection<IGroup> getChildren() {
 		final List<IGroup> result = new ArrayList<IGroup>();
-		for (IGroup ent : entityFactory.groups()) {
-			if (ent.getParentContainer() == this) {
-				result.add(ent);
+		if (entityFactory.namespaceSeparator.V1972()) {
+			for (IGroup ent : entityFactory.groups()) {
+				if (ent.getIdent().size() == 1) {
+					result.add(ent);
+				}
+			}
+
+		} else {
+			for (IGroup ent : entityFactory.groups()) {
+				if (ent.getParentContainer() == this) {
+					result.add(ent);
+				}
 			}
 		}
 		return Collections.unmodifiableCollection(result);

@@ -37,69 +37,51 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbeddedDiagram;
-import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
+public final class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 
-	private List<Line> lines2;
+	private List<Line> lines;
 
 	private final Display texts;
 	private final FontConfiguration fontConfiguration;
-	private final UFont fontForStereotype;
 	private final HorizontalAlignment horizontalAlignment;
 	private final SpriteContainer spriteContainer;
 	private final double maxMessageSize;
-	private final HtmlColor htmlColorForStereotype;
-
-	protected TextBlockSimple(Display texts, FontConfiguration fontConfiguration,
-			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer, double maxMessageSize) {
-		this(texts, fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, null, null);
-	}
 
 	public TextBlockSimple(Display texts, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			SpriteContainer spriteContainer, double maxMessageSize, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
+			SpriteContainer spriteContainer, double maxMessageSize) {
 		this.texts = texts;
 		this.fontConfiguration = fontConfiguration;
 		this.horizontalAlignment = horizontalAlignment;
 		this.spriteContainer = spriteContainer;
 		this.maxMessageSize = maxMessageSize;
-		this.fontForStereotype = fontForStereotype;
-		this.htmlColorForStereotype = htmlColorForStereotype;
 	}
 
 	private List<Line> getLines(StringBounder stringBounder) {
-		if (lines2 == null) {
+		if (lines == null) {
 			if (stringBounder == null) {
 				throw new IllegalStateException();
 			}
-			this.lines2 = new ArrayList<Line>();
+			this.lines = new ArrayList<Line>();
 			for (CharSequence s : texts) {
-				if (s instanceof Stereotype) {
-					lines2.addAll(createLinesForStereotype(
-							fontConfiguration.forceFont(fontForStereotype, htmlColorForStereotype), (Stereotype) s,
-							horizontalAlignment, spriteContainer));
-				} else if (s instanceof EmbeddedDiagram) {
-					lines2.add(((EmbeddedDiagram) s).asDraw(null));
+				if (s instanceof EmbeddedDiagram) {
+					lines.add(((EmbeddedDiagram) s).asDraw(null));
 				} else {
 					addInLines(stringBounder, s.toString());
 				}
 			}
 		}
-		return lines2;
+		return lines;
 	}
 
 	private void addInLines(StringBounder stringBounder, String s) {
@@ -145,26 +127,16 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 		if (s.length() == 0 || MyPattern.mtches(s, "^[%s]*$ ")) {
 			return;
 		}
-		lines2.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));
+		lines.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));
 	}
 
 	private void addSingleLine(String s) {
-		lines2.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));
+		lines.add(SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer));
 	}
 
 	private double getTextWidth(StringBounder stringBounder, String s) {
 		final Line line = SingleLine.withSomeHtmlTag(s, fontConfiguration, horizontalAlignment, spriteContainer);
 		return line.calculateDimension(stringBounder).getWidth();
-	}
-
-	private List<SingleLine> createLinesForStereotype(FontConfiguration fontConfiguration, Stereotype s,
-			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
-		assert s.getLabel(Guillemet.DOUBLE_COMPARATOR) != null;
-		final List<SingleLine> result = new ArrayList<SingleLine>();
-		for (String st : s.getLabels(spriteContainer.guillemet())) {
-			result.add(SingleLine.withSomeHtmlTag(st, fontConfiguration, horizontalAlignment, spriteContainer));
-		}
-		return Collections.unmodifiableList(result);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

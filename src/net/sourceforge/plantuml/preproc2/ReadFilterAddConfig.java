@@ -33,61 +33,52 @@
  * 
  *
  */
-package net.sourceforge.plantuml.preproc;
+package net.sourceforge.plantuml.preproc2;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterStartsub;
-import net.sourceforge.plantuml.tim.TContext;
-import net.sourceforge.plantuml.tim.TLineType;
-import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.preproc.ReadLineList;
+import net.sourceforge.plantuml.utils.StartUtils;
 
-public class Sub2 {
+public class ReadFilterAddConfig implements ReadFilter {
 
-	private final String name;
-	private final List<StringLocated> lines = new ArrayList<StringLocated>();
+	private final List<String> config;
 
-	public Sub2(String name) {
-		this.name = name;
+	public ReadFilterAddConfig(List<String> config) {
+		this.config = config;
 	}
 
-	public void add(StringLocated s) {
-		this.lines.add(s);
-	}
+	public ReadLine applyFilter(final ReadLine raw) {
 
-	public final List<StringLocated> lines() {
-		return Collections.unmodifiableList(lines);
-	}
+		return new ReadLine() {
 
-	public static Sub2 fromFile(ReadLine reader, String blocname, TContext context, TMemory memory) throws IOException,
-			EaterException {
-		Sub2 result = null;
-		StringLocated s = null;
-		while ((s = reader.readLine()) != null) {
-			final TLineType type = TLineType.getFromLine(s.getTrimmed().getString());
-			if (type == TLineType.STARTSUB) {
-				final EaterStartsub eater = new EaterStartsub(s.getTrimmed().getString());
-				eater.execute(context, memory);
-				if (eater.getSubname().equals(blocname)) {
-					result = new Sub2(blocname);
-				}
-				continue;
+			private ReadLine inserted;
+
+			public void close() throws IOException {
+				raw.close();
 			}
-			if (type == TLineType.ENDSUB && result != null) {
-				reader.close();
+
+			public StringLocated readLine() throws IOException {
+				StringLocated result = null;
+				if (inserted != null) {
+					result = inserted.readLine();
+					if (result == null) {
+						inserted.close();
+						inserted = null;
+					} else {
+						return result;
+					}
+				}
+				result = raw.readLine();
+				if (result != null && StartUtils.isArobaseStartDiagram(result.getString()) && config.size() > 0) {
+					inserted = new ReadFilterQuoteComment().applyFilter(new ReadLineList(config, result.getLocation()));
+				}
 				return result;
 			}
-			if (result != null) {
-				result.add(s);
-			}
-		}
-		reader.close();
-		return null;
+		};
 	}
 
 }

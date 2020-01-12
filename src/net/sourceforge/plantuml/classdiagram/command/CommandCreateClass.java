@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -126,22 +127,34 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final LeafType type = LeafType.getLeafType(StringUtils.goUpperCase(arg.get("TYPE", 0)));
-		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0), "\"([:");
-		final Code code = diagram.buildCode(idShort);
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0),
+				"\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
 		final String genericOption = arg.getLazzy("DISPLAY", 1);
 		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
 		final ILeaf entity;
-		if (diagram.leafExist(code)) {
-			entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, type, null);
-			if (entity.muteToType(type, null) == false) {
-				return CommandExecutionResult.error("Bad name");
+		final Ident idNewLong = diagram.buildLeafIdent(idShort);
+		if (diagram.V1972()) {
+			if (diagram.leafExistSmart(idNewLong)) {
+				entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
+				if (entity.muteToType(type, null) == false) {
+					return CommandExecutionResult.error("Bad name");
+				}
+			} else {
+				entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
 			}
 		} else {
-			final Ident idNewLong = diagram.buildLeafIdent(idShort);
-			entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+			final Code code = diagram.buildCode(idShort);
+			if (diagram.leafExist(code)) {
+				entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
+				if (entity.muteToType(type, null) == false) {
+					return CommandExecutionResult.error("Bad name");
+				}
+			} else {
+				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+			}
 		}
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram

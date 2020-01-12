@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
-public class UncommentReadLine extends ReadLineInstrumented implements ReadLine {
+public class UncommentReadLine implements ReadLine {
 
 	private static final Pattern2 unpause = MyPattern.cmpile(StartUtils.PAUSE_PATTERN);
 
@@ -55,13 +55,7 @@ public class UncommentReadLine extends ReadLineInstrumented implements ReadLine 
 		this.raw = source;
 	}
 
-	@Override
-	public String toString() {
-		return "UncommentReadLine of " + raw;
-	}
-
-	@Override
-	StringLocated readLineInst() throws IOException {
+	public StringLocated readLine() throws IOException {
 		final StringLocated result = raw.readLine();
 
 		if (result == null) {
@@ -87,8 +81,7 @@ public class UncommentReadLine extends ReadLineInstrumented implements ReadLine 
 		return result;
 	}
 
-	@Override
-	void closeInst() throws IOException {
+	public void close() throws IOException {
 		this.raw.close();
 	}
 

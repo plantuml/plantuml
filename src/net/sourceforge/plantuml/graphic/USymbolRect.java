@@ -49,17 +49,10 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class USymbolRect extends USymbol {
 
 	private final SkinParameter skinParameter;
-	// private final HorizontalAlignment stereotypeAlignement;
 
 	public USymbolRect(SkinParameter skinParameter) {
 		this.skinParameter = skinParameter;
-//		this.stereotypeAlignement = stereotypeAlignement;
 	}
-
-//	@Override
-//	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
-//		return new USymbolRect(skinParameter, alignment);
-//	}
 
 	@Override
 	public SkinParameter getSkinParameter() {

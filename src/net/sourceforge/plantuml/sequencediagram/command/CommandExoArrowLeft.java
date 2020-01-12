@@ -70,6 +70,10 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("PARTICIPANT", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //

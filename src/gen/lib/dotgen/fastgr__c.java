@@ -797,18 +797,17 @@ LEAVING("bf1j97keudu416avridkj9fpb","find_flat_edge");
 
 //3 cttswsffgmw1g710jzvdd3wzn
 // static void  safe_list_append(edge_t * e, elist * L) 
-public static Object safe_list_append(Object... arg) {
-UNSUPPORTED("59dl3yc4jbcy2pb7j1njhlybi"); // static void 
-UNSUPPORTED("3kdqf9wvozj4zu6wrv6ur2k47"); // safe_list_append(edge_t * e, elist * L)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("b17di9c7wgtqm51bvsyxz6e2f"); //     int i;
-UNSUPPORTED("dhvbzrcz6s76mme3x94begmvr"); //     for (i = 0; i < L->size; i++)
-UNSUPPORTED("c0a4ruccwt5263vw39xrttm0y"); // 	if (e == L->list[i])
-UNSUPPORTED("6cprbghvenu9ldc0ez1ifc63q"); // 	    return;
+public static void safe_list_append(ST_Agedge_s e, ST_elist L) {
+ENTERING("cttswsffgmw1g710jzvdd3wzn","safe_list_append");
+try {
+     int i;
+     for (i = 0; i < L.size; i++)
+ 	if (EQ(e, L.list.get(i)))
+ 	    return;
 UNSUPPORTED("cslejjtgepjdwlcykfas4fmvz"); //     elist_append(e, (*L));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+} finally {
+LEAVING("cttswsffgmw1g710jzvdd3wzn","safe_list_append");
+}
 }
 
 
@@ -907,13 +906,13 @@ LEAVING("73oebfcfiescklohgt8mddswc","other_edge");
 
 //3 4zg1fp1b7bhnx2tbeaij8yeel
 // void safe_other_edge(edge_t * e) 
-public static Object safe_other_edge(Object... arg) {
-UNSUPPORTED("3cc9ux78ad0yjajm0nkpos345"); // void safe_other_edge(edge_t * e)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("bn816jsdz3qke6htvbwvztrpc"); //     safe_list_append(e, &(ND_other(agtail(e))));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static void safe_other_edge(ST_Agedge_s e) {
+ENTERING("4zg1fp1b7bhnx2tbeaij8yeel","safe_other_edge");
+try {
+     safe_list_append(e, ND_other(agtail(e)));	
+} finally {
+LEAVING("4zg1fp1b7bhnx2tbeaij8yeel","safe_other_edge");
+}
 }
 
 

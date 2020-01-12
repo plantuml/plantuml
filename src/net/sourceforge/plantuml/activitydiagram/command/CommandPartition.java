@@ -86,10 +86,10 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
-		final Code code = diagram.buildCode(idShort);
+		final Ident ident = diagram.buildLeafIdent(idShort);
+		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(code), GroupType.PACKAGE, currentPackage,
+		diagram.gotoGroup(ident, code, Display.getWithNewlines(code), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
 
