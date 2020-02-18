@@ -56,7 +56,7 @@ public class Stdlib {
 		}
 	}
 
-	private static Stdlib retrieve(final String name) throws IOException {
+	public static Stdlib retrieve(final String name) throws IOException {
 		Stdlib result = all.get(name);
 		if (result == null) {
 			final DataInputStream dataStream = getDataStream(name);
@@ -222,7 +222,7 @@ public class Stdlib {
 	public static void extractStdLib() throws IOException {
 		for (String name : getAll()) {
 			final Stdlib folder = Stdlib.retrieve(name);
-			folder.extractMeFull(new File("stdlib", name));
+			folder.extractMeFull();
 		}
 	}
 
@@ -237,7 +237,7 @@ public class Stdlib {
 		return Collections.unmodifiableCollection(result);
 	}
 
-	private void extractMeFull(File dir) throws IOException {
+	private void extractMeFull() throws IOException {
 		final DataInputStream dataStream = getDataStream();
 		if (dataStream == null) {
 			return;
@@ -273,6 +273,46 @@ public class Stdlib {
 					}
 				}
 				fos.close();
+			}
+		} finally {
+			dataStream.close();
+			spriteStream.close();
+		}
+	}
+
+	public List<String> extractAllSprites() throws IOException {
+		final List<String> result = new ArrayList<String>();
+		final DataInputStream dataStream = getDataStream();
+		if (dataStream == null) {
+			return Collections.unmodifiableList(result);
+		}
+		dataStream.readUTF();
+		final InputStream spriteStream = getSpriteStream();
+		try {
+			while (true) {
+				final String filename = dataStream.readUTF();
+				if (filename.equals(SEPARATOR)) {
+					return Collections.unmodifiableList(result);
+				}
+				while (true) {
+					final String s = dataStream.readUTF();
+					if (s.equals(SEPARATOR)) {
+						break;
+					}
+					if (isSpriteLine(s)) {
+						final Matcher m = sizePattern.matcher(s);
+						final boolean ok = m.find();
+						if (ok == false) {
+							throw new IOException(s);
+						}
+						final int width = Integer.parseInt(m.group(1));
+						final int height = Integer.parseInt(m.group(2));
+						final String sprite = readSprite(width, height, spriteStream);
+						if (s.contains("_LARGE") == false) {
+							result.add(s + "\n" + sprite + "}");
+						}
+					}
+				}
 			}
 		} finally {
 			dataStream.close();

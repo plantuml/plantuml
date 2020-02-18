@@ -100,6 +100,14 @@ public class BlocLines implements Iterable<StringLocated> {
 		return new BlocLines(result);
 	}
 
+	public static BlocLines fromArray(String[] array) {
+		final List<StringLocated> result = new ArrayList<StringLocated>();
+		for (String single : array) {
+			result.add(new StringLocated(single, null));
+		}
+		return new BlocLines(result);
+	}
+
 	public static BlocLines getWithNewlines(String s) {
 		final List<StringLocated> result = new ArrayList<StringLocated>();
 		for (String cs : BackSlash.getWithNewlines(s)) {

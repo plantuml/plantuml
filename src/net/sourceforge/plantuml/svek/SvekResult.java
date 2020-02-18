@@ -86,11 +86,11 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 		}
 		color = HtmlColorUtils.noGradient(color);
 
-		for (Shape shape : dotStringFactory.getBibliotekon().allShapes()) {
-			final double minX = shape.getMinX();
-			final double minY = shape.getMinY();
-			final UGraphic ug2 = shape.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
-			final IEntityImage image = shape.getImage();
+		for (Node node : dotStringFactory.getBibliotekon().allNodes()) {
+			final double minX = node.getMinX();
+			final double minY = node.getMinY();
+			final UGraphic ug2 = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
+			final IEntityImage image = node.getImage();
 			image.drawU(ug2.apply(new UTranslate(minX, minY)));
 			if (image instanceof Untranslated) {
 				((Untranslated) image).drawUntranslated(ug.apply(new UChangeColor(color)), minX, minY);

@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
-import net.sourceforge.plantuml.svek.Shape;
+import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -89,8 +89,8 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 
 	private boolean upPosition() {
 		final Point2D clusterCenter = stateParent.getClusterPosition().getPointCenter();
-		final Shape sh = bibliotekon.getShape(getEntity());
-		return sh.getMinY() < clusterCenter.getY();
+		final Node node = bibliotekon.getNode(getEntity());
+		return node.getMinY() < clusterCenter.getY();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

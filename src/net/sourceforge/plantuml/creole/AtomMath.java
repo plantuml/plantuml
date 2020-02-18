@@ -99,7 +99,7 @@ public class AtomMath extends AbstractAtom implements Atom {
 			final SvgString svg = math.getSvg(scale, fore, back);
 			ug.draw(new UImageSvg(svg));
 		} else {
-			final UImage image = new UImage(math.getImage(scale, fore, back), math.getFormula());
+			final UImage image = new UImage(null, math.getImage(scale, fore, back), math.getFormula());
 			ug.draw(image);
 		}
 	}

@@ -35,8 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -45,8 +47,11 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -56,20 +61,39 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("LABEL", ":(.*?)")), //
-				new RegexLeaf(";?"), //
+				new RegexOptional(new RegexLeaf("STYLE", CommandActivity3.ENDING_GROUP)), //
+				// new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
 		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
+		final BoxStyle boxStyle;
+		final String styleString = arg.get("STYLE", 0);
+		if (styleString == null) {
+			boxStyle = BoxStyle.PLAIN;
+		} else {
+			boxStyle = BoxStyle.fromChar(styleString.charAt(0));
+		}
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final String stereo = arg.get("STEREO", 0);
+		if (stereo != null) {
+			final Stereotype stereotype = new Stereotype(stereo);
+			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
+		}
 
-		diagram.startRepeat(color, label);
+		diagram.startRepeat(color, label, boxStyle, colors);
 
 		return CommandExecutionResult.ok();
 	}

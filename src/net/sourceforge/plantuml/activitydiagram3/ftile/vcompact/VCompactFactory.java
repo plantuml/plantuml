@@ -122,7 +122,8 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	public Ftile spot(Swimlane swimlane, String spot, HtmlColor color) {
-		// final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityBackground);
+		// final HtmlColor color = rose.getHtmlColor(skinParam,
+		// ColorParam.activityBackground);
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color);
 	}
@@ -140,8 +141,10 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors) {
-		// final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.activityBorder);
-		// final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityBackground) :
+		// final HtmlColor borderColor = rose.getHtmlColor(skinParam,
+		// ColorParam.activityBorder);
+		// final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam,
+		// ColorParam.activityBackground) :
 		// color;
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle);
@@ -159,9 +162,9 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileAssemblySimple(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test,
-			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward,
-			boolean noOut) {
+	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
+			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering,
+			Ftile backward, boolean noOut) {
 		return repeat;
 	}
 

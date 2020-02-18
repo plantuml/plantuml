@@ -71,24 +71,24 @@ public class PSystemDonors extends AbstractPSystem {
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;
 
-	public static final String DONORS = "6_C902mFU3XMJbc44wzsvvsjcZxOY0eHBCyJYiF08fxk1iGVuDxfSR-H_YAwqhrlcX5jsPhYFACe5WGz"
-			+ "tYRN3DlSsmEncfYlaZlpHhymBmn9Q4C2N8Sx8ZvLXfGWbehklqpSdcuT5-9WXmgX75BSio7JYHWNmTFc"
-			+ "zIrbijRaGSBf_cywBUuU2c6MPYkSZqQe_GEd6AjhBdS_Yheqwk8kLQrkXHhJgOjZk2eqogi7lhPGCYey"
-			+ "DCvtG8jPCTb3f4JhnX6YHcU6aPgqpiaJUMh_KI-WJUToJOcS2UKnIYIwRYkTsNVG_OBabn0AkM2Bm08g"
-			+ "7BuJj7Ljn4X2CcWOwibeRBbconCt377enBxyer7KkATaUXhQ965Ne2JgQnoGz4eZMiJiz6P09SzeCQD9"
-			+ "KbVcJNXy7PQcQ1qqt0iMOPQq2Qi9v4te2P_mLPTCpl5ILF2cfoIFPflGKDasuDxCwDjSInBbVxSnS-Qx"
-			+ "HxLvIcUhgut_sHnorvHLosz66-qSmRs_BQHWSR50VW2zD2SgoPzbtrX8GhYtqWiPdFklNAC8d3qo5HR_"
-			+ "4LjQe__MbMniHIoF6mjyN5zNcfB1bbo5N8Q-fbNABPqlb9IcnkSXZvQEpoJMbCpgdQUFKJAtyl-xOILc"
-			+ "Li90LwQORRfUK3HMiPgUR4m4fq7tXjm4o0ke3fDRULWznA_p0Pct9ICHkGt9AEJhB-MGYnGciAO7Iim0"
-			+ "5ayfxI69U212JJlGsr1fHTeYzDjDUjgMZ8Nxf3yyxfePepoYaneduO-5mE669JLlfhkqxz4JU8ulpwlk"
-			+ "8tMi0bpBlJTSfFeP3AmhBHY1r1tHsFUoIyAXWH9Px2Ll3V4zmneN3ps-u4mM7M96c-EGvQ5oEncjz1R3"
-			+ "koP3tocJpTkhlyWRIBm8wo4T6OtW_M7oI2qkaOHqi1m_Mm1Yvk8LkrBWcaBLBJidc-iKfhglFeHAyEDy"
-			+ "0gFoBJp3MElkHN46DCgS4_DUMVFHU0qfFXPGFOS8MjA9CaTAKQQjPMJCMeEUWzR1zbFT5lJR-5R3gaBn"
-			+ "RH7TiTW0Q7t6DAFtS0Cy4Ifg5Rpaf330Nxz-JG_6EiJujPVDY8DaSqaCeGAQqtznMfflnz0IrblqVzks"
-			+ "lQsSF_zUHtPm6esxhog8deB0_rsKd8EchlEf-c_WWoJYW9MOjN4IAo-DtWWa9JYE3rPHJqqpwdToHhaj"
-			+ "jUYTnuSg_NQgn84vDoo_QAKeXoznohQtXbEbP3_-nk8aXuP_YYfhChagfJKnefhOsL6Sfx7lKOgxhbf1"
-			+ "17FW4e6zN_zqckOXO_QBbJaC1qD-FY9T3k6kXRMOriPfWVtYhEyjRLqouN_92ByKQzhEwc6wSVnRsWNA"
-			+ "lXr9mdWKi7PAd2Ua1lyb0m00";
+	public static final String DONORS = "6qOA02mFU3XMJbc44wzsfuUeUc2VR6qyRpkVqESmi8ZJNK3y1jWxFUutqbz4LxhtJJEYBLjJd6SKnOAW"
+			+ "nzlacc6RUtiWLXFpLN9dtkWNveKX2Mr8WEjmHyIdof0IVEycQbqbNzfRkOJbCk0By7OGIqNtNoPkJxUE"
+			+ "2t6mGuLG3YdksVytfxRkNbM58LrMhTFH5Ih0gi0ZOdS_QdDfrCPtKvlUX09qAd45DrMLy7hZfYBDuAxZ"
+			+ "N3gqw1GZpI8bNZUE43SwC_JKfF1ByaH6vZ_g1RJfNAufaJEXF4Q9HDTjVqVs7PG_BNb1H48ks2ImW4gE"
+			+ "m0cANXinFY8oQEZgIMDihcRC4oyCAUZ4lloZKTIufsHw6bfyH5s1ahYlSG3Iatgqu6nXDA2i9rkCQ9Ag"
+			+ "C_CbtByEorDwpJJS3nPHbhG9hYd8cz0JFk6hBfcSuwMeuIy_JVB8rmGQBbi6t9iEVOjhaqIvdMsQkVDf"
+			+ "KssUqjdgQkD_DeVSDMNLyfjHH2D7SEzl2obON5e0FmAzD2SgoPzb7rd8Xd1jfHVITQvUkHeHBjcGgM9T"
+			+ "_eWjh-d_wE9ocn7Bus2HpvwlCqt9G4jTYLo6lj3AvhRE5qfAK-FpoAEbupFXcgpPlUFqFihcDF-_RYip"
+			+ "un80dPbY5dJze1YifjNmP0CHc1QwFUGcG5v0TPZSoiFg4R_E1mHlAYCHXGrAB-Hzi-MGYnGciBmxIdG0"
+			+ "9ayfxU4Zve48HUs2daQLUgGiGh_TfATjsPYuJ_fWVzPW3FAOpjOu2Nyi18umpAf5ixvR-m8z1LUvNEPL"
+			+ "Ty_Fgm3M5juBBbBz90DwfGKZ8hL6DFQzx99mQA0mYxFahI6-PrXZvQ7x1vpMeatCQ3CVCWsI6ybgfRSO"
+			+ "tZKP_kOXgzcnMkGvi4V4PaWpenMyFveyKejBV4Hqi9mWMm0Ivk8LU_72dIjLkPoSRAvJcEgnMWiLyhla"
+			+ "4rYgmCBJWxNo7i0piaUnSpZlbJKVZTUGuda1bNAOe2wTA7Ea56NQMY33rghrRBGEjf_gM31lurivAmw5"
+			+ "jqrqrhX1mHGsdHAuqOYHA2SQ5NhPay80V_twbNfoKmSPl_QooJYriY6MGgMSByiNfw3nTWoj-rlqVzks"
+			+ "lQsSF_zUDvkSUkFjAmNGSv0S_nxAhAEBajNzDFWRR9WCSC1AAjeuuSf3Isy5aXRinpk3gFFjZEQTd2ot"
+			+ "f1QzSlvGsT_zoIm7LtF3YejwYdBu4gTiUsi45M_x_ZS6MpaC_4LKcPFXwgzUBICAnFOsuZoDVOzIt5cL"
+			+ "11BCZii4pdxrqscQXupPHoYp7Yu2-Vc8T3c4XnRKqhGuJWHMnHdUUwTroOJ_9JU9kEgdh2tLGq_ZL6vg"
+			+ "5sZuTYMA6qQ1uI9cny3uTfEJ5RZvfeTwgBOVwVGN4oSkAeRTtdDs0W00";
 
 	/*
 	 * Special thanks to our sponsors and donors:
@@ -110,8 +110,8 @@ public class PSystemDonors extends AbstractPSystem {
 		final List<TextBlock> cols = getCols(getDonors(), COLS, FREE_LINES);
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				final TextBlockBackcolored header = GraphicStrings.createBlackOnWhite(Arrays
-						.asList("<b>Special thanks to our sponsors and donors !"));
+				final TextBlockBackcolored header = GraphicStrings
+						.createBlackOnWhite(Arrays.asList("<b>Special thanks to our sponsors and donors !"));
 				header.drawU(ug);
 				final StringBounder stringBounder = ug.getStringBounder();
 				ug = ug.apply(new UTranslate(0, header.calculateDimension(stringBounder).getHeight()));
@@ -143,7 +143,8 @@ public class PSystemDonors extends AbstractPSystem {
 
 	private List<String> getDonors() throws IOException {
 		final List<String> lines = new ArrayList<String>();
-		final Transcoder t = new TranscoderImpl(new AsciiEncoder(), new StringCompressorNone(), new CompressionBrotli());
+		final Transcoder t = new TranscoderImpl(new AsciiEncoder(), new StringCompressorNone(),
+				new CompressionBrotli());
 		final String s = t.decode(DONORS).replace('*', '.');
 		final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);
 		while (st.hasMoreTokens()) {

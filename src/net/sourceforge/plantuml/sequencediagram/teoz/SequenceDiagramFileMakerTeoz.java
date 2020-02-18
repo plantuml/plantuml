@@ -229,7 +229,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 					.getIHtmlColorSet(), diagram.getSkinParam());
 			return compTitle;
 		} else {
-			compTitle = TextBlockUtils.title(new FontConfiguration(getSkinParam(), FontParam.SEQUENCE_TITLE, null),
+			compTitle = TextBlockUtils.title(new FontConfiguration(getSkinParam(), FontParam.TITLE, null),
 					diagram.getTitle().getDisplay(), getSkinParam());
 			return TextBlockUtils.withMargin(compTitle, 7, 7);
 		}

@@ -99,7 +99,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		ug.apply(new UStroke(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);
 		ug = ug.apply(new UChangeBackColor(null));
 
-		Point2D pos = bibliotekon.getShape(getEntity()).getPosition();
+		Point2D pos = bibliotekon.getNode(getEntity()).getPosition();
 
 		final List<Line> lines = bibliotekon.getAllLineConnectedTo(getEntity());
 		final UTranslate reverse = new UTranslate(pos).reverse();

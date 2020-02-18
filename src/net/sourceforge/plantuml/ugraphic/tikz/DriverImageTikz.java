@@ -45,6 +45,15 @@ public class DriverImageTikz implements UDriver<TikzGraphics> {
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final UImage shape = (UImage) ushape;
-		tikz.appendRaw(x, y, shape.getFormula());
+		final String rawFileName = shape.getRawFileName();
+		if (rawFileName != null) {
+			final String raw = "\\includegraphics{" + rawFileName + "}";
+			tikz.appendRaw(x, y, raw);
+			return;
+		}
+		final String formula = shape.getFormula();
+		if (formula != null) {
+			tikz.appendRaw(x, y, formula);
+		}
 	}
 }

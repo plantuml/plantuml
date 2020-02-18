@@ -75,6 +75,10 @@ final public class DotData implements PortionShower {
 	private final ColorMapper colorMapper;
 	private final EntityFactory entityFactory;
 
+	public EntityFactory getEntityFactory() {
+		return entityFactory;
+	}
+
 	public DotData(IGroup topParent, List<Link> links, Collection<ILeaf> leafs, UmlDiagramType umlDiagramType,
 			ISkinParam skinParam, GroupHierarchy groupHierarchy, PortionShower portionShower, ColorMapper colorMapper,
 			EntityFactory entityFactory, boolean isHideEmptyDescriptionForState, DotMode dotMode,

@@ -371,10 +371,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find if");
 	}
 
-	public void startRepeat(HtmlColor color, Display label) {
+	public void startRepeat(HtmlColor color, Display label, BoxStyle boxStyleIn, Colors colors) {
 		manageSwimlaneStrategy();
 		final InstructionRepeat instructionRepeat = new InstructionRepeat(swinlanes.getCurrentSwimlane(), current(),
-				nextLinkRenderer(), color, label);
+				nextLinkRenderer(), color, label, boxStyleIn, colors);
 		current().add(instructionRepeat);
 		setCurrent(instructionRepeat);
 		setNextLinkRendererInternal(LinkRendering.none());

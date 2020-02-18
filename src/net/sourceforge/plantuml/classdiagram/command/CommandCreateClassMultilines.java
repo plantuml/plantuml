@@ -247,6 +247,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			result = diagram.getLeafSmart(ident);
 			if (result != null) {
 				// result = diagram.getOrCreateLeaf(ident, code, null, null);
+				diagram.setLastEntity(result);
 				if (result.muteToType(type, null) == false) {
 					return null;
 				}

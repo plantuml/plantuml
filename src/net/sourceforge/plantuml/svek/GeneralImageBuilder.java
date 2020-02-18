@@ -84,6 +84,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.EntityImageDesignedDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageMachine;
@@ -226,8 +227,8 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null) {
 				// final HtmlColor black = HtmlColorUtils.BLACK;
-				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(), leaf.getUSymbol()
-						.getColorParamBorder());
+				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
+						leaf.getUSymbol().getColorParamBorder());
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
 						links);
 			}
@@ -274,15 +275,17 @@ public final class GeneralImageBuilder {
 	private Map<String, Double> maxX;
 
 	private final StringBounder stringBounder;
+	private final boolean mergeIntricated;
 
-	public GeneralImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma,
-			StringBounder stringBounder) {
+	public GeneralImageBuilder(boolean mergeIntricated, DotData dotData, EntityFactory entityFactory, UmlSource source,
+			Pragma pragma, StringBounder stringBounder) {
 		this.dotData = dotData;
 		this.entityFactory = entityFactory;
 		this.source = source;
 		this.pragma = pragma;
 		this.stringBounder = stringBounder;
 		this.strictUmlStyle = dotData.getSkinParam().strictUmlStyle();
+		this.mergeIntricated = mergeIntricated;
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow() {
@@ -362,8 +365,8 @@ public final class GeneralImageBuilder {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont;
 				if (SkinParam.USE_STYLES()) {
-					final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(
-							skinParam.getCurrentStyleBuilder());
+					final Style style = getDefaultStyleDefinitionArrow()
+							.getMergedStyle(skinParam.getCurrentStyleBuilder());
 					labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 				} else {
 					labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
@@ -375,17 +378,17 @@ public final class GeneralImageBuilder {
 				dotStringFactory.getBibliotekon().addLine(line);
 
 				if (isOpalisable(link.getEntity1())) {
-					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
-					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
+					final Node node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+					final Node other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
 					if (other != null) {
-						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
+						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
 						line.setOpale(true);
 					}
 				} else if (isOpalisable(link.getEntity2())) {
-					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
-					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
+					final Node node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+					final Node other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
 					if (other != null) {
-						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
+						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
 						line.setOpale(true);
 					}
 				}
@@ -413,7 +416,8 @@ public final class GeneralImageBuilder {
 		}
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
-			final ClusterPosition position = dotStringFactory.solve(svg).delta(10, 10);
+			final ClusterPosition position = dotStringFactory.solve(mergeIntricated, dotData.getEntityFactory(), svg)
+					.delta(10, 10);
 			final double minY = position.getMinY();
 			final double minX = position.getMinX();
 			if (minX > 0 || minY > 0) {
@@ -493,12 +497,8 @@ public final class GeneralImageBuilder {
 			throw new IllegalStateException();
 		}
 		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
-		final Dimension2D dim = image.calculateDimension(stringBounder);
-		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder),
-				ent.getEntityPosition());
-		dotStringFactory.addShape(shape);
-		dotStringFactory.getBibliotekon().putShape(ent, shape);
+		final Node node = dotStringFactory.getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
+		dotStringFactory.addNode(node);
 	}
 
 	private IEntityImage printEntityInternal(DotStringFactory dotStringFactory, ILeaf ent) {
@@ -546,29 +546,15 @@ public final class GeneralImageBuilder {
 	}
 
 	private void printGroups(DotStringFactory dotStringFactory, IGroup parent) {
-		for (IGroup g : dotData.getGroupHierarchy().getChildrenGroups(parent)) {
+		final Collection<IGroup> groups = dotData.getGroupHierarchy().getChildrenGroups(parent);
+		for (IGroup g : groups) {
 			if (g.isRemoved()) {
 				continue;
 			}
 			if (dotData.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
+				final ISkinParam skinParam = dotData.getSkinParam();
 				entityFactory.thisIsGoingToBeALeaf(g.getIdent());
-				final ILeaf folder = entityFactory.createLeaf(g.getIdent(), g.getCode(), g.getDisplay(),
-						LeafType.EMPTY_PACKAGE, g.getParentContainer(), null, dotData.getNamespaceSeparator());
-				final USymbol symbol = g.getUSymbol();
-				folder.setUSymbol(symbol);
-				folder.setStereotype(g.getStereotype());
-				if (g.getUrl99() != null) {
-					folder.addUrl(g.getUrl99());
-				}
-				if (g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK) == null) {
-					final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
-					final HtmlColor c1 = dotData.getSkinParam().getHtmlColor(param, g.getStereotype(), false);
-					folder.setSpecificColorTOBEREMOVED(ColorType.BACK, c1 == null ? dotData.getSkinParam()
-							.getBackgroundColor() : c1);
-				} else {
-					folder.setSpecificColorTOBEREMOVED(ColorType.BACK,
-							g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK));
-				}
+				final ILeaf folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
 				printEntity(dotStringFactory, folder);
 			} else {
 				printGroup(dotStringFactory, g);
@@ -579,6 +565,13 @@ public final class GeneralImageBuilder {
 	private void printGroup(DotStringFactory dotStringFactory, IGroup g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE) {
 			return;
+		}
+		if (mergeIntricated) {
+			final IGroup intricated = dotData.getEntityFactory().isIntricated(g);
+			if (intricated != null) {
+				printGroup(dotStringFactory, intricated);
+				return;
+			}
 		}
 		int titleAndAttributeWidth = 0;
 		int titleAndAttributeHeight = 0;
@@ -605,10 +598,11 @@ public final class GeneralImageBuilder {
 			final int suppWidthBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppWidthBecauseOfShape();
 
 			titleAndAttributeWidth = (int) Math.max(dimLabel.getWidth(), attributeWidth) + suppWidthBecauseOfShape;
-			titleAndAttributeHeight = (int) (dimLabel.getHeight() + attributeHeight + marginForFields + suppHeightBecauseOfShape);
+			titleAndAttributeHeight = (int) (dimLabel.getHeight() + attributeHeight + marginForFields
+					+ suppHeightBecauseOfShape);
 		}
 
-		dotStringFactory.openCluster(g, titleAndAttributeWidth, titleAndAttributeHeight, title, stereo);
+		dotStringFactory.openCluster(titleAndAttributeWidth, titleAndAttributeHeight, title, stereo, g);
 		this.printEntities(dotStringFactory, g.getLeafsDirect());
 
 		printGroups(dotStringFactory, g);

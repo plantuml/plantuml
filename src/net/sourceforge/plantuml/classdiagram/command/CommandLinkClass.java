@@ -82,15 +82,15 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 								new RegexLeaf("HEADER", "@([\\d.]+)"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), new RegexOr( //
-						new RegexLeaf("ENT1", getClassIdentifier()),//
-						new RegexLeaf("COUPLE1", COUPLE)), //
+								new RegexLeaf("ENT1", getClassIdentifier()), //
+								new RegexLeaf("COUPLE1", COUPLE)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 
 				new RegexConcat(
-				//
+						//
 						new RegexLeaf("ARROW_HEAD1", "([%s]+[ox]|[)#\\[<*+^}]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
@@ -208,24 +208,24 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				final Matcher2 m1 = p1.matcher(labelLink);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
-					labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
-							StringUtils.trin(m1.group(2)), "\""));
+					labelLink = StringUtils.trin(StringUtils
+							.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2)), "\""));
 					secondLabel = m1.group(3);
 				} else {
 					final Pattern2 p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
 					final Matcher2 m2 = p2.matcher(labelLink);
 					if (m2.matches()) {
 						firstLabel = m2.group(1);
-						labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
-								StringUtils.trin(m2.group(2)), "\""));
+						labelLink = StringUtils.trin(StringUtils
+								.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2)), "\""));
 						secondLabel = null;
 					} else {
 						final Pattern2 p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
 						final Matcher2 m3 = p3.matcher(labelLink);
 						if (m3.matches()) {
 							firstLabel = null;
-							labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
-									StringUtils.trin(m3.group(1)), "\""));
+							labelLink = StringUtils.trin(StringUtils
+									.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1)), "\""));
 							secondLabel = m3.group(2);
 						}
 					}
@@ -281,8 +281,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			if (diagram.V1972()) {
 				return diagram.getGroupVerySmart(ident);
 			}
-			final Code tap = ident.toCode(diagram);
-			return diagram.getGroup(tap);
+//			final Code tap = ident.toCode(diagram);
+			return diagram.getGroup(code);
 		}
 		if (diagram.V1972()) {
 			final IEntity result = pure.size() == 1 ? diagram.getLeafVerySmart(ident) : diagram.getLeafStrict(ident);
@@ -361,10 +361,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final String ent1String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final String ent2String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
-		final IEntity cl1 = diagram.V1972() ? diagram.getGroupVerySmart(diagram.buildLeafIdent(ent1String)) : diagram
-				.getGroup(diagram.buildCode(ent1String));
-		final IEntity cl2 = diagram.V1972() ? diagram.getGroupVerySmart(diagram.buildLeafIdent(ent2String)) : diagram
-				.getGroup(diagram.buildCode(ent2String));
+		final IEntity cl1 = diagram.V1972() ? diagram.getGroupVerySmart(diagram.buildLeafIdent(ent1String))
+				: diagram.getGroup(diagram.buildCode(ent1String));
+		final IEntity cl2 = diagram.V1972() ? diagram.getGroupVerySmart(diagram.buildLeafIdent(ent2String))
+				: diagram.getGroup(diagram.buildCode(ent2String));
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);

@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Line;
-import net.sourceforge.plantuml.svek.Shape;
+import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -211,7 +211,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		} else {
 			final StringBounder stringBounder = ug.getStringBounder();
 			DotPath path = opaleLine.getDotPath();
-			path.moveSvek(-shape.getMinX(), -shape.getMinY());
+			path.moveSvek(-node.getMinX(), -node.getMinY());
 			Point2D p1 = path.getStartPoint();
 			Point2D p2 = path.getEndPoint();
 			final double textWidth = getTextWidth(stringBounder);
@@ -225,9 +225,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			final Direction strategy = getOpaleStrategy(textWidth, textHeight, p1);
 			final Point2D pp1 = path.getStartPoint();
 			final Point2D pp2 = path.getEndPoint();
-			final Point2D newRefpp2 = move(pp2, shape.getMinX(), shape.getMinY());
-			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -shape.getMinX(),
-					-shape.getMinY());
+			final Point2D newRefpp2 = move(pp2, node.getMinX(), node.getMinY());
+			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -node.getMinX(),
+					-node.getMinY());
 			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
 			opale.setRoundCorner(getRoundCorner());
 			opale.setOpale(strategy, pp1, projection);
@@ -296,15 +296,15 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private Line opaleLine;
-	private Shape shape;
-	private Shape other;
+	private Node node;
+	private Node other;
 
-	public void setOpaleLine(Line line, Shape shape, Shape other) {
+	public void setOpaleLine(Line line, Node node, Node other) {
 		if (other == null) {
 			throw new IllegalArgumentException();
 		}
 		this.opaleLine = line;
-		this.shape = shape;
+		this.node = node;
 		this.other = other;
 	}
 

@@ -166,7 +166,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 						diagram.getSkinParam());
 			} else {
 				compTitle = TextBlockUtils.withMargin(TextBlockUtils.title(
-						new FontConfiguration(drawableSet.getSkinParam(), FontParam.SEQUENCE_TITLE, null),
+						new FontConfiguration(drawableSet.getSkinParam(), FontParam.TITLE, null),
 						page.getTitle(), drawableSet.getSkinParam()), 7, 7);
 			}
 			final Dimension2D dimTitle = compTitle.calculateDimension(stringBounder);

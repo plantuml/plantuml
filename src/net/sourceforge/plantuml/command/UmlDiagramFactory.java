@@ -241,7 +241,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds.add(new CommandScaleMaxWidthAndHeight());
 		cmds.add(new CommandAffineTransform());
 		cmds.add(new CommandAffineTransformMultiline());
-		final FactorySpriteCommand factorySpriteCommand = new FactorySpriteCommand();
+		final CommandFactorySprite factorySpriteCommand = new CommandFactorySprite();
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());
 		cmds.add(new CommandSpriteFile());

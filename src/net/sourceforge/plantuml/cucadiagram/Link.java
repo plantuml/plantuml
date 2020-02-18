@@ -115,11 +115,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public UComment commentForSvg() {
 		if (type.looksLikeRevertedForSvg()) {
-			return new UComment("reverse link " + getEntity1().getCodeGetName() + " to "
-					+ getEntity2().getCodeGetName());
+			return new UComment(
+					"reverse link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
 		}
-		return new UComment("link " + getEntity1().getCodeGetName() + " to "
-				+ getEntity2().getCodeGetName());
+		return new UComment("link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
 	}
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, StyleBuilder styleBuilder) {
@@ -196,6 +195,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		result.port1 = this.port2;
 		result.port2 = this.port1;
 		result.url = this.url;
+		result.linkConstraint = this.linkConstraint;
 		return result;
 	}
 
@@ -253,11 +253,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public EntityPort getEntityPort1(Bibliotekon bibliotekon) {
-		return new EntityPort(bibliotekon.getShapeUid((ILeaf) cl1), port1);
+		return new EntityPort(bibliotekon.getNodeUid((ILeaf) cl1), port1);
 	}
 
 	public EntityPort getEntityPort2(Bibliotekon bibliotekon) {
-		return new EntityPort(bibliotekon.getShapeUid((ILeaf) cl2), port2);
+		return new EntityPort(bibliotekon.getNodeUid((ILeaf) cl2), port2);
 	}
 
 	@Override
@@ -474,7 +474,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public boolean hasEntryPoint() {
 		return (getEntity1().isGroup() == false && ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL)
-				|| (getEntity2().isGroup() == false && ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
+				|| (getEntity2().isGroup() == false
+						&& ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
 	}
 
 	public boolean hasTwoEntryPointsSameContainer() {
@@ -568,6 +569,16 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public UmlDiagramType getUmlDiagramType() {
 		return umlType;
+	}
+
+	private LinkConstraint linkConstraint;
+
+	public void setLinkConstraint(LinkConstraint linkConstraint) {
+		this.linkConstraint = linkConstraint;
+	}
+
+	public final LinkConstraint getLinkConstraint() {
+		return linkConstraint;
 	}
 
 }

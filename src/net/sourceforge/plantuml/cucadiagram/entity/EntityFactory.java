@@ -38,13 +38,17 @@ package net.sourceforge.plantuml.cucadiagram.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -58,6 +62,10 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.SuperGroup;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public final class EntityFactory {
@@ -73,14 +81,104 @@ public final class EntityFactory {
 	private int rawLayout;
 
 	private final IGroup rootGroup = new GroupRoot(this);
+	private final SuperGroup rootSuperGroup = new SuperGroup(rootGroup);
+	
 	private final List<HideOrShow2> hides2;
 	private final List<HideOrShow2> removed;
 	/* private */ final public CucaDiagram namespaceSeparator;
+	// private final boolean mergeIntricated;
+	private Map<IGroup, ILeaf> emptyGroupsAsNode = new HashMap<IGroup, ILeaf>();
+
+	public ILeaf getLeafForEmptyGroup(IGroup g) {
+		return emptyGroupsAsNode.get(g);
+	}
+
+	public SuperGroup getRootSuperGroup() {
+		return rootSuperGroup;
+	}
+
+	private Set<SuperGroup> superGroups = null;
+	final Map<IGroup, SuperGroup> groupToSuper = new LinkedHashMap<IGroup, SuperGroup>();
+
+	public Set<SuperGroup> getAllSuperGroups() {
+		return Collections.unmodifiableSet(superGroups);
+	}
+
+	public void buildSuperGroups() {
+		superGroups = new HashSet<SuperGroup>();
+		for (IGroup g : groups2.values()) {
+			final SuperGroup sg = new SuperGroup(g);
+			superGroups.add(sg);
+			groupToSuper.put(g, sg);
+		}
+	}
+
+	public ILeaf createLeafForEmptyGroup(IGroup g, ISkinParam skinParam) {
+		final ILeaf folder = this.createLeaf(g.getIdent(), g.getCode(), g.getDisplay(), LeafType.EMPTY_PACKAGE,
+				g.getParentContainer(), null, this.namespaceSeparator.getNamespaceSeparator());
+		((EntityImpl) folder).setOriginalGroup(g);
+		final USymbol symbol = g.getUSymbol();
+		folder.setUSymbol(symbol);
+		folder.setStereotype(g.getStereotype());
+		if (g.getUrl99() != null) {
+			folder.addUrl(g.getUrl99());
+		}
+		if (g.getColors(skinParam).getColor(ColorType.BACK) == null) {
+			final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
+			final HtmlColor c1 = skinParam.getHtmlColor(param, g.getStereotype(), false);
+			folder.setSpecificColorTOBEREMOVED(ColorType.BACK, c1 == null ? skinParam.getBackgroundColor() : c1);
+		} else {
+			folder.setSpecificColorTOBEREMOVED(ColorType.BACK, g.getColors(skinParam).getColor(ColorType.BACK));
+		}
+		emptyGroupsAsNode.put(g, folder);
+		return folder;
+	}
+
+	public Display getIntricatedDisplay(Ident ident) {
+		final Set<Ident> known = new HashSet<Ident>(groups2.keySet());
+		known.removeAll(hiddenBecauseOfIntrication);
+		String sep = namespaceSeparator.getNamespaceSeparator();
+		if (sep == null) {
+			sep = ".";
+		}
+		for (int check = ident.size() - 1; check > 0; check--) {
+			if (known.contains(ident.getPrefix(check))) {
+				// if (hiddenBecauseOfIntrication.contains(ident.getPrefix(check)) == false) {
+				return Display.getWithNewlines(ident.getSuffix(check).toString(sep))
+						.withCreoleMode(CreoleMode.SIMPLE_LINE);
+			}
+		}
+		return Display.getWithNewlines(ident.toString(sep)).withCreoleMode(CreoleMode.SIMPLE_LINE);
+	}
+
+	private final Collection<Ident> hiddenBecauseOfIntrication = new ArrayList<Ident>();
+
+	public IGroup isIntricated(IGroup parent) {
+		final int leafs = parent.getLeafsDirect().size();
+		final Collection<IGroup> children = parent.getChildren();
+		if (leafs == 0 && children.size() == 1) {
+			final IGroup g = children.iterator().next();
+			if (g.getLeafsDirect().size() == 0 && g.getChildren().size() == 0
+					&& g.getGroupType() == GroupType.PACKAGE) {
+				return null;
+			}
+			for (Link link : this.getLinks()) {
+				if (link.contains(parent)) {
+					return null;
+				}
+			}
+			((EntityImpl) g).setIntricated(true);
+			hiddenBecauseOfIntrication.add(parent.getIdent());
+			return g;
+		}
+		return null;
+	}
 
 	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed, CucaDiagram namespaceSeparator) {
 		this.hides2 = hides2;
 		this.removed = removed;
 		this.namespaceSeparator = namespaceSeparator;
+		// this.mergeIntricated = namespaceSeparator.mergeIntricated();
 
 		// if (OptionFlags.V1972(namespaceSeparator)) {
 		// this.leafsByCode = null;
@@ -400,9 +498,10 @@ public final class EntityFactory {
 			if (result != null) {
 				return result;
 			}
-			System.err.println("getParentContainer::groups2=" + groups2);
-			result = createGroup(parent, parent, Display.getWithNewlines(parent.getName()), null, GroupType.PACKAGE,
-					null, Collections.<VisibilityModifier>emptySet(), namespaceSeparator.getNamespaceSeparator());
+//			System.err.println("getParentContainer::groups2=" + groups2);
+			final Display display = Display.getWithNewlines(parent.getName());
+			result = createGroup(parent, parent, display, null, GroupType.PACKAGE, null,
+					Collections.<VisibilityModifier>emptySet(), namespaceSeparator.getNamespaceSeparator());
 			addGroup(result);
 			return result;
 		}
@@ -411,5 +510,6 @@ public final class EntityFactory {
 		}
 		return parentContainer;
 	}
+
 
 }

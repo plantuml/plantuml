@@ -106,7 +106,8 @@ public class TextBlockUtils {
 		return new TextBlockMarged(textBlock, marginX1, marginX2, marginY1, marginY2);
 	}
 
-	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {
+	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth,
+			HorizontalAlignment horizontalAlignment) {
 		return new TextBlockMinWidth(textBlock, minWidth, horizontalAlignment);
 	}
 
@@ -125,6 +126,10 @@ public class TextBlockUtils {
 		return new PositionableImpl(pt, textBlock.calculateDimension(stringBounder));
 	}
 
+	public static Positionable asPositionable(Dimension2D dim, StringBounder stringBounder, Point2D pt) {
+		return new PositionableImpl(pt, dim);
+	}
+
 	public static TextBlock mergeLR(TextBlock b1, TextBlock b2, VerticalAlignment verticallAlignment) {
 		return new TextBlockHorizontal(b1, b2, verticallAlignment);
 	}
@@ -133,7 +138,8 @@ public class TextBlockUtils {
 		return new TextBlockVertical2(b1, b2, horizontalAlignment);
 	}
 
-	// public static TextBlockBackcolored mergeColoredTB(TextBlockBackcolored b1, TextBlockBackcolored b2,
+	// public static TextBlockBackcolored mergeColoredTB(TextBlockBackcolored b1,
+	// TextBlockBackcolored b2,
 	// HorizontalAlignment horizontalAlignment) {
 	// return addBackcolor(mergeTB(b1, b2, horizontalAlignment), b1.getBackcolor());
 	// }

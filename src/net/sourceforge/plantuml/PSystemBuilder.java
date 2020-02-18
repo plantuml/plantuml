@@ -75,10 +75,11 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
-import net.sourceforge.plantuml.project3.GanttDiagramFactory;
+import net.sourceforge.plantuml.project.GanttDiagramFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.sprite.ListSpriteDiagramFactory;
+import net.sourceforge.plantuml.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.sprite.PSystemListInternalSpritesFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
@@ -88,6 +89,7 @@ import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
+import net.sourceforge.plantuml.wire.WireDiagramFactory;
 
 public class PSystemBuilder {
 
@@ -178,6 +180,7 @@ public class PSystemBuilder {
 		}
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory(skinParam));
+		factories.add(new StdlibDiagramFactory(skinParam));
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
 		// factories.add(new PSystemStatsFactory());
@@ -200,6 +203,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemDedicationFactory());
 		factories.add(new TimingDiagramFactory());
 		factories.add(new HelpFactory());
+		factories.add(new WireDiagramFactory());
 		return factories;
 	}
 

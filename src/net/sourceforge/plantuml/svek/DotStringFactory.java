@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersions;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.Moveable;
@@ -104,8 +105,8 @@ public class DotStringFactory implements Moveable {
 		this.current = root;
 	}
 
-	public void addShape(Shape shape) {
-		current.addShape(shape);
+	public void addNode(Node node) {
+		current.addNode(node);
 	}
 
 	private void printMinRanking(StringBuilder sb) {
@@ -343,7 +344,8 @@ public class DotStringFactory implements Moveable {
 		return graphviz.getDotExe();
 	}
 
-	public ClusterPosition solve(final String svg) throws IOException, InterruptedException {
+	public ClusterPosition solve(boolean mergeIntricated, EntityFactory entityFactory, final String svg)
+			throws IOException, InterruptedException {
 		if (svg.length() == 0) {
 			throw new EmptySvgException();
 		}
@@ -360,18 +362,18 @@ public class DotStringFactory implements Moveable {
 
 		final Point2DFunction move = new YDelta(fullHeight);
 		final SvgResult svgResult = new SvgResult(svg, move);
-		for (Shape sh : bibliotekon.allShapes()) {
-			int idx = svg.indexOf("<title>" + sh.getUid() + "</title>");
-			if (sh.getType() == ShapeType.RECTANGLE || sh.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
-					|| sh.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || sh.getType() == ShapeType.FOLDER
-					|| sh.getType() == ShapeType.DIAMOND) {
+		for (Node node : bibliotekon.allNodes()) {
+			int idx = svg.indexOf("<title>" + node.getUid() + "</title>");
+			if (node.getType() == ShapeType.RECTANGLE || node.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
+					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER
+					|| node.getType() == ShapeType.DIAMOND) {
 				final List<Point2D.Double> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 				final double minY = SvekUtils.getMinY(points);
-				final double overscanX = sh.getOverscanX(stringBounder);
+				final double overscanX = node.getOverscanX(stringBounder);
 				final double minX = SvekUtils.getMinX(points);
 				corner1.manage(minX - overscanX, minY);
-				sh.moveSvek(minX, minY);
-			} else if (sh.getType() == ShapeType.ROUND_RECTANGLE) {
+				node.moveSvek(minX, minY);
+			} else if (node.getType() == ShapeType.ROUND_RECTANGLE) {
 				final int idx2 = svg.indexOf("d=\"", idx + 1);
 				idx = svg.indexOf("points=\"", idx + 1);
 				final List<Point2D.Double> points;
@@ -388,29 +390,35 @@ public class DotStringFactory implements Moveable {
 				final double minX = SvekUtils.getMinX(points);
 				final double minY = SvekUtils.getMinY(points);
 				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-			} else if (sh.getType() == ShapeType.OCTAGON) {
+				node.moveSvek(minX, minY);
+			} else if (node.getType() == ShapeType.OCTAGON) {
 				idx = svg.indexOf("points=\"", idx + 1);
 				final int starting = idx;
 				final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
 				final double minX = SvekUtils.getMinX(points);
 				final double minY = SvekUtils.getMinY(points);
 				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-				sh.setOctagon(minX, minY, points);
-			} else if (sh.getType() == ShapeType.CIRCLE || sh.getType() == ShapeType.CIRCLE_IN_RECT
-					|| sh.getType() == ShapeType.OVAL) {
+				node.moveSvek(minX, minY);
+				node.setOctagon(minX, minY, points);
+			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.CIRCLE_IN_RECT
+					|| node.getType() == ShapeType.OVAL) {
 				final double cx = SvekUtils.getValue(svg, idx, "cx");
 				final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
 				final double rx = SvekUtils.getValue(svg, idx, "rx");
 				final double ry = SvekUtils.getValue(svg, idx, "ry");
-				sh.moveSvek(cx - rx, cy - ry);
+				node.moveSvek(cx - rx, cy - ry);
 			} else {
-				throw new IllegalStateException(sh.getType().toString() + " " + sh.getUid());
+				throw new IllegalStateException(node.getType().toString() + " " + node.getUid());
 			}
 		}
 
 		for (Cluster cluster : bibliotekon.allCluster()) {
+			if (mergeIntricated) {
+				final IGroup group = cluster.getGroups().iterator().next();
+				if (entityFactory.isIntricated(group) != null) {
+					continue;
+				}
+			}
 			int idx = getClusterIndex(svg, cluster.getColor());
 			final int starting = idx;
 			final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
@@ -438,7 +446,7 @@ public class DotStringFactory implements Moveable {
 		}
 
 		for (Line line : bibliotekon.allLines()) {
-			line.manageCollision(bibliotekon.allShapes());
+			line.manageCollision(bibliotekon.allNodes());
 		}
 		corner1.manage(0, 0);
 		return new ClusterPosition(corner1.getMinX(), corner1.getMinY(), fullWidth, fullHeight);
@@ -459,22 +467,22 @@ public class DotStringFactory implements Moveable {
 		return idx;
 	}
 
-	public void openCluster(IGroup g, int titleAndAttributeWidth, int titleAndAttributeHeight, TextBlock title,
-			TextBlock stereo) {
-		this.current = current.createChild(g, titleAndAttributeWidth, titleAndAttributeHeight, title, stereo,
-				colorSequence, skinParam);
+	public void openCluster(int titleAndAttributeWidth, int titleAndAttributeHeight, TextBlock title, TextBlock stereo,
+			IGroup g) {
+		this.current = current.createChild(titleAndAttributeWidth, titleAndAttributeHeight, title, stereo,
+				colorSequence, skinParam, g);
 		bibliotekon.addCluster(this.current);
 	}
 
 	public void closeCluster() {
-		if (current.getParent() == null) {
+		if (current.getParentCluster() == null) {
 			throw new IllegalStateException();
 		}
-		this.current = current.getParent();
+		this.current = current.getParentCluster();
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {
-		for (Shape sh : bibliotekon.allShapes()) {
+		for (Node sh : bibliotekon.allNodes()) {
 			sh.moveSvek(deltaX, deltaY);
 		}
 		for (Line line : bibliotekon.allLines()) {

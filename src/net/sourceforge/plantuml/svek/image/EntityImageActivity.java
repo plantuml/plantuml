@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.Shape;
+import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -122,8 +122,8 @@ public class EntityImageActivity extends AbstractEntityImage {
 	}
 
 	private UGraphic drawOctagon(UGraphic ug) {
-		final Shape shape = bibliotekon.getShape(getEntity());
-		final Shadowable octagon = shape.getOctagon();
+		final Node node = bibliotekon.getNode(getEntity());
+		final Shadowable octagon = node.getOctagon();
 		octagon.setDeltaShadow(shadowing);
 		ug = applyColors(ug);
 		ug.apply(new UStroke(1.5)).draw(octagon);

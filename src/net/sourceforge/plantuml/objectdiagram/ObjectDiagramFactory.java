@@ -49,9 +49,9 @@ import net.sourceforge.plantuml.command.CommandPackage;
 import net.sourceforge.plantuml.command.CommandPage;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
-import net.sourceforge.plantuml.command.note.FactoryNoteCommand;
-import net.sourceforge.plantuml.command.note.FactoryNoteOnEntityCommand;
-import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
+import net.sourceforge.plantuml.command.note.CommandFactoryNote;
+import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
+import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.objectdiagram.command.CommandAddData;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObject;
@@ -78,7 +78,7 @@ public class ObjectDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandLinkClass(UmlDiagramType.OBJECT));
 		//
 		cmds.add(new CommandCreateEntityObject());
-		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
+		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();
 
 		cmds.add(factoryNoteCommand.createSingleLine());
 		cmds.add(new CommandPackage());
@@ -88,7 +88,7 @@ public class ObjectDiagramFactory extends UmlDiagramFactory {
 		// addCommand(new CommandStereotype());
 		//
 		// addCommand(new CommandImport());
-		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand("object",
+		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity("object",
 				new RegexLeaf("ENTITY", "([\\p{L}0-9_.]+|[%g][^%g]+[%g])"));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 
@@ -99,7 +99,7 @@ public class ObjectDiagramFactory extends UmlDiagramFactory {
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
 		cmds.add(new CommandCreateEntityObjectMultilines());
 
-		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();
+		final CommandFactoryNoteOnLink factoryNoteOnLinkCommand = new CommandFactoryNoteOnLink();
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 

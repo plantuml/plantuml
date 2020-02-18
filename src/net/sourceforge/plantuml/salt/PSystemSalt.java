@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.FactorySpriteCommand;
+import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
@@ -143,8 +143,7 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 
 	private List<String> manageSprite() {
 
-		final FactorySpriteCommand factorySpriteCommand = new FactorySpriteCommand();
-		Command<WithSprite> cmd = factorySpriteCommand.createMultiLine(false);
+		final Command<WithSprite> cmd = new CommandFactorySprite().createMultiLine(false);
 
 		final List<String> result = new ArrayList<String>();
 		for (Iterator<String> it = data.iterator(); it.hasNext();) {

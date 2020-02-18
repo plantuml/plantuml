@@ -111,6 +111,7 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		cmds.add(new CommandGroupEnd3());
 		cmds.add(new CommandArrow3());
 		cmds.add(new CommandArrowLong3());
+		cmds.add(new CommandRepeat3());
 		cmds.add(new CommandActivity3());
 		cmds.add(new CommandIf4());
 		cmds.add(new CommandIf2());
@@ -126,7 +127,6 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		cmds.add(new CommandCase());
 		cmds.add(new CommandEndSwitch());
 
-		cmds.add(new CommandRepeat3());
 		cmds.add(new CommandRepeatWhile3());
 		cmds.add(new CommandRepeatWhile3Multilines());
 		cmds.add(new CommandBackward3());

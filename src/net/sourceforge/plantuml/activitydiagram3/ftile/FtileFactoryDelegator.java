@@ -85,8 +85,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		final LinkRendering linkRendering = tile.getInLinkRendering();
 		if (linkRendering == null) {
 			if (SkinParam.USE_STYLES()) {
-				final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(
-						skinParam().getCurrentStyleBuilder());
+				final Style style = getDefaultStyleDefinitionArrow()
+						.getMergedStyle(skinParam().getCurrentStyleBuilder());
 				return Rainbow.build(style, skinParam().getIHtmlColorSet());
 			} else {
 				color = Rainbow.build(skinParam());
@@ -96,8 +96,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		}
 		if (color.size() == 0) {
 			if (SkinParam.USE_STYLES()) {
-				final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(
-						skinParam().getCurrentStyleBuilder());
+				final Style style = getDefaultStyleDefinitionArrow()
+						.getMergedStyle(skinParam().getCurrentStyleBuilder());
 				return Rainbow.build(style, skinParam().getIHtmlColorSet());
 			} else {
 				color = Rainbow.build(skinParam());
@@ -179,10 +179,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.assembly(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test,
-			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward,
+	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
+			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering, Ftile backward,
 			boolean noOut) {
-		return factory.repeat(swimlane, swimlaneOut, startLabel, repeat, test, yes, out, color,
+		return factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, repeat, test, yes, out, colors,
 				backRepeatLinkRendering, backward, noOut);
 	}
 

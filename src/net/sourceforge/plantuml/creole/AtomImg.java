@@ -71,11 +71,13 @@ public class AtomImg extends AbstractAtom implements Atom {
 	private final BufferedImage image;
 	private final double scale;
 	private final Url url;
-	
-	private AtomImg(BufferedImage image, double scale, Url url) {
+	private final String rawFileName;
+
+	private AtomImg(BufferedImage image, double scale, Url url, String rawFileName) {
 		this.image = image;
 		this.scale = scale;
 		this.url = url;
+		this.rawFileName = rawFileName;
 	}
 
 	public static Atom createQrcode(String flash, double scale) {
@@ -84,7 +86,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (im == null) {
 			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		}
-		return new AtomImg(new UImage(im).scaleNearestNeighbor(scale).getImage(), 1, null);
+		return new AtomImg(new UImage(null, im).scaleNearestNeighbor(scale).getImage(), 1, null, null);
 	}
 
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
@@ -118,7 +120,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 			if (read == null) {
 				return AtomText.create("(Cannot decode: " + f.getCanonicalPath() + ")", fc);
 			}
-			return new AtomImg(FileUtils.ImageIO_read(f), scale, url);
+			return new AtomImg(FileUtils.ImageIO_read(f), scale, url, src);
 		} catch (IOException e) {
 			return AtomText.create("ERROR " + e.toString(), fc);
 		}
@@ -130,7 +132,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + source + ")", fc);
 		}
-		return new AtomImg(read, scale, url);
+		return new AtomImg(read, scale, url, null);
 	}
 
 	private static Atom build(String text, final FontConfiguration fc, URL source, double scale, Url url)
@@ -139,7 +141,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + text + ")", fc);
 		}
-		return new AtomImg(read, scale, url);
+		return new AtomImg(read, scale, url, source.getPath());
 	}
 
 	// Added by Alain Corbiere
@@ -178,7 +180,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		ug.draw(new UImage(image).scale(scale));
+		ug.draw(new UImage(rawFileName, image).scale(scale));
 		if (url != null) {
 			ug.closeAction();
 		}

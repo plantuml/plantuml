@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.Shape;
+import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -120,17 +120,17 @@ public class EntityImageTips extends AbstractEntityImage {
 
 		final IEntity other = bibliotekon.getOnlyOther(getEntity());
 
-		final Shape shapeMe = bibliotekon.getShape(getEntity());
-		final Shape shapeOther = bibliotekon.getShape(other);
-		final Point2D positionMe = shapeMe.getPosition();
-		final Point2D positionOther = shapeOther.getPosition();
-		bibliotekon.getShape(getEntity());
+		final Node nodeMe = bibliotekon.getNode(getEntity());
+		final Node nodeOther = bibliotekon.getNode(other);
+		final Point2D positionMe = nodeMe.getPosition();
+		final Point2D positionOther = nodeOther.getPosition();
+		bibliotekon.getNode(getEntity());
 		final Position position = getPosition();
 		Direction direction = position.reverseDirection();
 		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
-			final Rectangle2D memberPosition = shapeOther.getImage().getInnerPosition(ent.getKey(), stringBounder,
+			final Rectangle2D memberPosition = nodeOther.getImage().getInnerPosition(ent.getKey(), stringBounder,
 					InnerStrategy.STRICT);
 			if (memberPosition == null) {
 				return;

@@ -77,9 +77,9 @@ public interface FtileFactory {
 
 	public Ftile assembly(Ftile tile1, Ftile tile2);
 
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test,
-			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward,
-			boolean noOut);
+	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
+			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering,
+			Ftile backward, boolean noOut);
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
 			LinkRendering afterEndwhile, HtmlColor color, Instruction specialOut);

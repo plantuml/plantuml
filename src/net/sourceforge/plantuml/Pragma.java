@@ -62,6 +62,14 @@ public class Pragma {
 		return isDefine("horizontallinebetweendifferentpackageallowed");
 	}
 
+	public boolean backToLegacyPackage() {
+		return isDefine("backtolegacypackage");
+	}
+
+	public boolean useNewPackage() {
+		return isDefine("usenewpackage");
+	}
+
 	public boolean useVerticalIf() {
 		final String teoz = getValue("useverticalif");
 		return "true".equalsIgnoreCase(teoz) || "on".equalsIgnoreCase(teoz);

@@ -90,12 +90,11 @@ public class AtomText extends AbstractAtom implements Atom {
 	public static Atom create(String text, FontConfiguration fontConfiguration) {
 		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}
-	
+
 //	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
 //		fontConfiguration = FOO(fontConfiguration, order);
 //		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 //	}
-
 
 	public static Atom createUrl(Url url, FontConfiguration fontConfiguration, ISkinSimple skinSimple) {
 		fontConfiguration = fontConfiguration.hyperlink();
@@ -113,8 +112,8 @@ public class AtomText extends AbstractAtom implements Atom {
 
 	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
 			ISkinSimple skinSimple) {
-		final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|"
-				+ Splitter.imgPatternNoSrcColon);
+		final Pattern p = Pattern.compile(
+				Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|" + Splitter.imgPatternNoSrcColon);
 		final Matcher m = p.matcher(text);
 		final List<Atom> result = new ArrayList<Atom>();
 		while (m.find()) {
@@ -176,14 +175,15 @@ public class AtomText extends AbstractAtom implements Atom {
 		return text + " " + fontConfiguration;
 	}
 
-	private AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft, DelayedDouble marginRight) {
+	private AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
+			DelayedDouble marginRight) {
 		if (text.contains("" + BackSlash.hiddenNewLine())) {
 			throw new IllegalArgumentException(text);
 		}
 		this.marginLeft = marginLeft;
 		this.marginRight = marginRight;
-		this.text = StringUtils.manageTildeArobaseStart(StringUtils.manageUnicodeNotationUplus(StringUtils
-				.manageAmpDiese(StringUtils.showComparatorCharacters(CharHidder.unhide(text)))));
+		this.text = StringUtils.manageTildeArobaseStart(StringUtils.manageUnicodeNotationUplus(
+				StringUtils.manageAmpDiese(StringUtils.showComparatorCharacters(CharHidder.unhide(text)))));
 		this.fontConfiguration = style;
 		this.url = url;
 	}
@@ -234,42 +234,43 @@ public class AtomText extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (ug.matchesProperty("SPECIALTXT")) {
-			ug.draw(this);
-			return;
-		}
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		HtmlColor textColor = fontConfiguration.getColor();
-		FontConfiguration useFontConfiguration = fontConfiguration;
-		if (textColor instanceof HtmlColorAutomatic && ug.getParam().getBackcolor() != null) {
-			textColor = ((HtmlColorSimple) ug.getParam().getBackcolor()).opposite();
-			useFontConfiguration = fontConfiguration.changeColor(textColor);
-		}
-		if (marginLeft != ZERO) {
-			ug = ug.apply(new UTranslate(marginLeft.getDouble(ug.getStringBounder()), 0));
-		}
+		if (ug.matchesProperty("SPECIALTXT")) {
+			ug.draw(this);
+		} else {
+			HtmlColor textColor = fontConfiguration.getColor();
+			FontConfiguration useFontConfiguration = fontConfiguration;
+			if (textColor instanceof HtmlColorAutomatic && ug.getParam().getBackcolor() != null) {
+				textColor = ((HtmlColorSimple) ug.getParam().getBackcolor()).opposite();
+				useFontConfiguration = fontConfiguration.changeColor(textColor);
+			}
+			if (marginLeft != ZERO) {
+				ug = ug.apply(new UTranslate(marginLeft.getDouble(ug.getStringBounder()), 0));
+			}
 
-		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
+			final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
 
-		double x = 0;
-		// final int ypos = fontConfiguration.getSpace();
-		final Dimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);
-		final double descent = getDescent();
-		final double ypos = rect.getHeight() - descent;
-		if (tokenizer.hasMoreTokens()) {
-			final double tabSize = getTabSize(ug.getStringBounder());
-			while (tokenizer.hasMoreTokens()) {
-				final String s = tokenizer.nextToken();
-				if (s.equals("\t")) {
-					final double remainder = x % tabSize;
-					x += tabSize - remainder;
-				} else {
-					final UText utext = new UText(s, useFontConfiguration);
-					final Dimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);
-					ug.apply(new UTranslate(x, ypos)).draw(utext);
-					x += dim.getWidth();
+			double x = 0;
+			// final int ypos = fontConfiguration.getSpace();
+			final Dimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);
+			final double descent = getDescent();
+			final double ypos = rect.getHeight() - descent;
+			if (tokenizer.hasMoreTokens()) {
+				final double tabSize = getTabSize(ug.getStringBounder());
+				while (tokenizer.hasMoreTokens()) {
+					final String s = tokenizer.nextToken();
+					if (s.equals("\t")) {
+						final double remainder = x % tabSize;
+						x += tabSize - remainder;
+					} else {
+						final UText utext = new UText(s, useFontConfiguration);
+						final Dimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),
+								s);
+						ug.apply(new UTranslate(x, ypos)).draw(utext);
+						x += dim.getWidth();
+					}
 				}
 			}
 		}

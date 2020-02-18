@@ -36,10 +36,17 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.Collection;
+import java.util.Set;
 
 public interface GroupHierarchy {
 
+	public IGroup getRootGroup();
+
+	public SuperGroup getRootSuperGroup();
+
 	public Collection<IGroup> getChildrenGroups(IGroup parent);
-	
+
+	public Set<SuperGroup> getAllSuperGroups();
+
 	public boolean isEmpty(IGroup g);
 }

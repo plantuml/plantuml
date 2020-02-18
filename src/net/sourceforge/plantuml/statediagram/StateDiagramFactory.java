@@ -47,9 +47,9 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
-import net.sourceforge.plantuml.command.note.FactoryNoteCommand;
-import net.sourceforge.plantuml.command.note.FactoryNoteOnEntityCommand;
-import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
+import net.sourceforge.plantuml.command.note.CommandFactoryNote;
+import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
+import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.statediagram.command.CommandAddField;
@@ -85,7 +85,7 @@ public class StateDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandAddField());
 		cmds.add(new CommandConcurrentState());
 
-		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand("state",
+		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity("state",
 				new RegexOr("ENTITY", new RegexLeaf("[\\p{L}0-9_.]+"), //
 						new RegexLeaf("[%g][^%g]+[%g]") //
 				));
@@ -93,12 +93,12 @@ public class StateDiagramFactory extends UmlDiagramFactory {
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
 
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
-		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();
+		final CommandFactoryNoteOnLink factoryNoteOnLinkCommand = new CommandFactoryNoteOnLink();
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 		cmds.add(new CommandUrl());
 
-		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
+		final CommandFactoryNote factoryNoteCommand = new CommandFactoryNote();
 		cmds.add(factoryNoteCommand.createSingleLine());
 		cmds.add(factoryNoteCommand.createMultiLine(false));
 

@@ -281,4 +281,12 @@ public class Ident implements Code {
 		return parts.size();
 	}
 
+	public Ident getPrefix(int toIndex) {
+		return new Ident(this.parts.subList(0, toIndex));
+	}
+
+	public Ident getSuffix(int fromIndex) {
+		return new Ident(this.parts.subList(fromIndex, this.parts.size()));
+	}
+
 }

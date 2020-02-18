@@ -45,9 +45,11 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
@@ -166,6 +168,29 @@ public class DotPath implements UShape, Moveable {
 
 	public Point2D getStartPoint() {
 		return beziers.get(0).getP1();
+	}
+
+	public Set<Point2D> sample() {
+		final Set<Point2D> result = new HashSet<Point2D>();
+		for (CubicCurve2D.Double bez : beziers) {
+			sample(bez, result);
+		}
+		return Collections.unmodifiableSet(result);
+	}
+
+	private static void sample(CubicCurve2D bez, Set<Point2D> result) {
+		final Point2D p1 = bez.getCtrlP1();
+		final Point2D p2 = bez.getCtrlP2();
+		if (bez.getFlatnessSq() > 0.5 || p1.distance(p2) > 4) {
+			final CubicCurve2D.Double left = new CubicCurve2D.Double();
+			final CubicCurve2D.Double right = new CubicCurve2D.Double();
+			bez.subdivide(left, right);
+			sample(left, result);
+			sample(right, result);
+		} else {
+			result.add(p1);
+			result.add(p2);
+		}
 	}
 
 	public PointAndAngle getMiddle() {
@@ -361,8 +386,8 @@ public class DotPath implements UShape, Moveable {
 	public void draw(Graphics2D g2d, double x, double y) {
 		final GeneralPath p = new GeneralPath();
 		for (CubicCurve2D.Double bez : beziers) {
-			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
-					+ bez.ctrly2, x + bez.x2, y + bez.y2);
+			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
+					y + bez.ctrly2, x + bez.x2, y + bez.y2);
 			p.append(bez, true);
 		}
 		g2d.draw(p);
@@ -379,8 +404,8 @@ public class DotPath implements UShape, Moveable {
 	public void drawOk(EpsGraphics eps, double x, double y) {
 		// boolean first = true;
 		for (CubicCurve2D.Double bez : beziers) {
-			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
-					+ bez.ctrly2, x + bez.x2, y + bez.y2);
+			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
+					y + bez.ctrly2, x + bez.x2, y + bez.y2);
 			eps.epsLine(bez.x1, bez.y1, bez.x2, bez.y2);
 		}
 	}
@@ -390,8 +415,8 @@ public class DotPath implements UShape, Moveable {
 		final boolean dashed = false;
 		boolean first = true;
 		for (CubicCurve2D.Double bez : beziers) {
-			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
-					+ bez.ctrly2, x + bez.x2, y + bez.y2);
+			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
+					y + bez.ctrly2, x + bez.x2, y + bez.y2);
 			if (first) {
 				eps.movetoNoMacro(bez.x1, bez.y1);
 				first = dashed;
@@ -504,14 +529,14 @@ public class DotPath implements UShape, Moveable {
 				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),
 						(int) (bez.x2 / pixelXPerChar));
 			} /*
-			 * else { throw new UnsupportedOperationException("bez=" + toString(bez)); }
-			 */
+				 * else { throw new UnsupportedOperationException("bez=" + toString(bez)); }
+				 */
 		}
 	}
 
 	static String toString(CubicCurve2D.Double c) {
-		return "(" + c.x1 + "," + c.y1 + ") " + "(" + c.ctrlx1 + "," + c.ctrly1 + ") " + "(" + c.ctrlx2 + ","
-				+ c.ctrly2 + ") " + "(" + c.x2 + "," + c.y2 + ") ";
+		return "(" + c.x1 + "," + c.y1 + ") " + "(" + c.ctrlx1 + "," + c.ctrly1 + ") " + "(" + c.ctrlx2 + "," + c.ctrly2
+				+ ") " + "(" + c.x2 + "," + c.y2 + ") ";
 
 	}
 
@@ -526,8 +551,8 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public static CubicCurve2D.Double reverse(CubicCurve2D curv) {
-		return new CubicCurve2D.Double(curv.getX2(), curv.getY2(), curv.getCtrlX2(), curv.getCtrlY2(),
-				curv.getCtrlX1(), curv.getCtrlY1(), curv.getX1(), curv.getY1());
+		return new CubicCurve2D.Double(curv.getX2(), curv.getY2(), curv.getCtrlX2(), curv.getCtrlY2(), curv.getCtrlX1(),
+				curv.getCtrlY1(), curv.getX1(), curv.getY1());
 	}
 
 	public DotPath reverse() {
