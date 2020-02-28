@@ -78,11 +78,13 @@ import net.sourceforge.plantuml.tim.stdlib.Getenv;
 import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeVoidFunction;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
+import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.RetrieveVoidFunction;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
 import net.sourceforge.plantuml.tim.stdlib.Strpos;
 import net.sourceforge.plantuml.tim.stdlib.Substr;
+import net.sourceforge.plantuml.tim.stdlib.Upper;
 import net.sourceforge.plantuml.tim.stdlib.VariableExists;
 
 public class TContext {
@@ -125,6 +127,8 @@ public class TContext {
 		addFunction(new GetVariableValue());
 		addFunction(new IntVal());
 		addFunction(new GetVersion());
+		addFunction(new Upper());
+		addFunction(new Lower());
 		// !exit
 		// !log
 		// %min
