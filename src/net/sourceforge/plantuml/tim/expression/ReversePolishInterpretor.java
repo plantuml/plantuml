@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
@@ -51,7 +53,12 @@ public class ReversePolishInterpretor {
 	private boolean trace = false;
 
 	public ReversePolishInterpretor(TokenStack queue, Knowledge knowledge, TMemory memory, TContext context)
-			throws EaterException {
+			throws EaterException, EaterExceptionLocated {
+		this(null, queue, knowledge, memory, context);
+	}
+
+	public ReversePolishInterpretor(LineLocation location, TokenStack queue, Knowledge knowledge, TMemory memory,
+			TContext context) throws EaterException, EaterExceptionLocated {
 
 		final Deque<TValue> stack = new ArrayDeque<TValue>();
 		if (trace)
@@ -64,12 +71,14 @@ public class ReversePolishInterpretor {
 				stack.addFirst(TValue.fromNumber(token));
 			} else if (token.getTokenType() == TokenType.QUOTED_STRING) {
 				stack.addFirst(TValue.fromString(token));
+			} else if (token.getTokenType() == TokenType.JSON_DATA) {
+				stack.addFirst(TValue.fromJson(token.getJson()));
 			} else if (token.getTokenType() == TokenType.OPERATOR) {
 				final TValue v2 = stack.removeFirst();
 				final TValue v1 = stack.removeFirst();
 				final TokenOperator op = token.getTokenOperator();
 				if (op == null) {
-					throw new EaterException("bad op");
+					throw EaterException.unlocated("bad op");
 				}
 				final TValue tmp = op.operate(v1, v2);
 				stack.addFirst(tmp);
@@ -77,7 +86,7 @@ public class ReversePolishInterpretor {
 				final int nb = Integer.parseInt(token.getSurface());
 				final Token token2 = it.nextToken();
 				if (token2.getTokenType() != TokenType.FUNCTION_NAME) {
-					throw new EaterException("rpn43");
+					throw EaterException.unlocated("rpn43");
 				}
 				if (trace)
 					System.err.println("token2=" + token2);
@@ -85,10 +94,11 @@ public class ReversePolishInterpretor {
 				if (trace)
 					System.err.println("function=" + function);
 				if (function == null) {
-					throw new EaterException("Unknow built-in function " + token2.getSurface());
+					throw EaterException.unlocated("Unknow built-in function " + token2.getSurface());
 				}
 				if (function.canCover(nb) == false) {
-					throw new EaterException("Bad number of arguments for " + function.getSignature().getFunctionName());
+					throw EaterException
+							.unlocated("Bad number of arguments for " + function.getSignature().getFunctionName());
 				}
 				final List<TValue> args = new ArrayList<TValue>();
 				for (int i = 0; i < nb; i++) {
@@ -96,12 +106,15 @@ public class ReversePolishInterpretor {
 				}
 				if (trace)
 					System.err.println("args=" + args);
-				final TValue r = function.executeReturn(context, memory, args);
+				if (location == null) {
+					throw EaterException.unlocated("rpn44");
+				}
+				final TValue r = function.executeReturn(context, memory, location, args);
 				if (trace)
 					System.err.println("r=" + r);
 				stack.addFirst(r);
 			} else {
-				throw new EaterException("rpn41");
+				throw EaterException.unlocated("rpn41");
 			}
 		}
 		result = stack.removeFirst();

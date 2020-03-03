@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public interface TFunction {
@@ -46,11 +47,11 @@ public interface TFunction {
 
 	public TFunctionType getFunctionType();
 
-	public void executeVoid(TContext context, TMemory memory, String s) throws EaterException;
+	public void executeVoid(TContext context, TMemory memory, LineLocation location, String s) throws EaterException, EaterExceptionLocated;
 
-	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException;
+	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException, EaterExceptionLocated;
 
-	public void executeVoidInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException;
+	public void executeVoidInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException, EaterExceptionLocated;
 
 	public boolean isUnquoted();
 

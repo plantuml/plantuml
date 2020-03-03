@@ -39,11 +39,11 @@ import net.sourceforge.plantuml.StringLocated;
 public class EaterUndef extends Eater {
 
 	public EaterUndef(StringLocated s) {
-		super(s.getTrimmed().getString());
+		super(s.getTrimmed());
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!undef");
 		skipSpaces();

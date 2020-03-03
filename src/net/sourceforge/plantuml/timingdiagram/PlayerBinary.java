@@ -96,7 +96,11 @@ public class PlayerBinary extends ReallyAbstractPlayer implements Player {
 
 	private final double ymargin = 8;
 
-	public void drawFrameTitle(UGraphic ug) {
+	public PlayerFrame getPlayerFrame() {
+		return new PlayerFrame() {
+			public void drawFrameTitle(UGraphic ug) {
+			}
+		};
 	}
 
 	private double getYpos(boolean state) {

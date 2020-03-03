@@ -60,6 +60,11 @@ public class ValueNull extends ValueAbstract implements Value {
 	}
 
 	@Override
+	public boolean asBoolean() {
+		return false;
+	}
+
+	@Override
 	public String asString() {
 		return "";
 	}

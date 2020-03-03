@@ -58,18 +58,14 @@ public class TimLoader {
 		}
 	}
 
-	public void load(List<StringLocated> input) {
-		for (StringLocated s : input) {
-			final TLineType type = TLineType.getFromLine(s.getTrimmed().getString());
-			try {
-				context.executeOneLine(global, type, s, null);
-			} catch (EaterException e) {
-				context.getResultList().add(s.withErrorPreprocessor(e.getMessage()));
-				this.resultList = context.getResultList();
-				changeLastLine(context.getDebug(), e.getMessage());
-				this.preprocessorError = true;
-				return;
-			}
+	public void load(List<StringLocated> list) {
+//		CodeIteratorImpl.indentNow(list);
+		try {
+			context.executeLines(global, list, null);
+		} catch (EaterExceptionLocated e) {
+			context.getResultList().add(e.getLocation().withErrorPreprocessor(e.getMessage()));
+			changeLastLine(context.getDebug(), e.getMessage());
+			this.preprocessorError = true;
 		}
 		this.resultList = context.getResultList();
 	}

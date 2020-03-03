@@ -34,32 +34,56 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.tim.iterator.CodePosition;
 
-public abstract class ConditionalContexts {
+public class ExecutionContextForeach {
 
-	private final Deque<ConditionalContext> allIfs = new LinkedList<ConditionalContext>();
+	private final String varname;
+	private final JsonArray jsonArray;
+	private final CodePosition codePosition;
+	private boolean skipMe;
+	private int currentIndex;
 
-	public ConditionalContext peekConditionalContext() {
-		return allIfs.peekLast();
+	private ExecutionContextForeach(String varname, JsonArray jsonArray, CodePosition codePosition) {
+		this.varname = varname;
+		this.jsonArray = jsonArray;
+		this.codePosition = codePosition;
 	}
 
-	public void addConditionalContext(ConditionalContext fromValue) {
-		allIfs.addLast(fromValue);
+	public static ExecutionContextForeach fromValue(String varname, JsonArray jsonArray, CodePosition codePosition) {
+		return new ExecutionContextForeach(varname, jsonArray, codePosition);
 	}
 
-	public ConditionalContext pollConditionalContext() {
-		return allIfs.pollLast();
+	public void skipMeNow() {
+		skipMe = true;
 	}
 
-	public boolean areAllIfOk() {
-		for (ConditionalContext conditionalContext : allIfs) {
-			if (conditionalContext.conditionIsOkHere() == false) {
-				return false;
-			}
+	public final boolean isSkipMe() {
+		return skipMe;
+	}
+
+	public CodePosition getStartForeach() {
+		return codePosition;
+	}
+
+	public final int currentIndex() {
+		return currentIndex;
+	}
+
+	public final void inc() {
+		this.currentIndex++;
+		if (currentIndex >= jsonArray.size()) {
+			this.skipMe = true;
 		}
-		return true;
+	}
+
+	public final String getVarname() {
+		return varname;
+	}
+
+	public final JsonArray getJsonArray() {
+		return jsonArray;
 	}
 
 }

@@ -71,6 +71,7 @@ public class TimingDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandConstraint());
 		cmds.add(new CommandScalePixel());
 		cmds.add(new CommandHideTimeAxis());
+		cmds.add(new CommandHighlight());
 
 		return cmds;
 	}

@@ -70,10 +70,10 @@ public abstract class ReallyAbstractPlayer implements Player {
 		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 	
-	private TextBlock createTextBlock(String value) {
-		final Display display = Display.getWithNewlines(value);
-		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
-	}
+//	private TextBlock createTextBlock(String value) {
+//		final Display display = Display.getWithNewlines(value);
+//		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+//	}
 
 
 

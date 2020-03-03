@@ -50,10 +50,9 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SubjectTask implements SubjectPattern {
 
 	public Collection<VerbPattern> getVerbs() {
-		return Arrays
-				.<VerbPattern> asList(new VerbLasts(), new VerbTaskStarts(), new VerbTaskStartsAbsolute(),
-						new VerbHappens(), new VerbEnds(), new VerbTaskEndsAbsolute(), new VerbIsColored(),
-						new VerbIsDeleted(), new VerbIsForTask());
+		return Arrays.<VerbPattern>asList(new VerbLasts(), new VerbTaskStarts(), new VerbTaskStartsAbsolute(),
+				new VerbHappens(), new VerbEnds(), new VerbTaskEndsAbsolute(), new VerbIsColored(), new VerbIsDeleted(),
+				new VerbIsForTask(), new VerbLinksTo());
 	}
 
 	public IRegex toRegex() {

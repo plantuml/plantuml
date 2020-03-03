@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -84,7 +85,11 @@ public class Display implements Iterable<CharSequence> {
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
-	public Display withoutStereotype(Style usedStyle) {
+	public Display withoutStereotypeIfNeeded(Style usedStyle) {
+		final boolean showStereotype = usedStyle.value(PName.ShowStereotype).asBoolean();
+		if (showStereotype) {
+			return this;
+		}
 		final List<CharSequence> copy = new ArrayList<CharSequence>(displayData);
 		final Display result = new Display(naturalHorizontalAlignment, isNull, defaultCreoleMode);
 		for (Iterator<CharSequence> it = copy.iterator(); it.hasNext();) {
@@ -441,8 +446,8 @@ public class Display implements Iterable<CharSequence> {
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode creoleMode) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode,
-				null, null);
+		return create(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode, null,
+				null);
 	}
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
@@ -513,15 +518,15 @@ public class Display implements Iterable<CharSequence> {
 			FontConfiguration stereotypeConfiguration) {
 		final Sheet sheet = new CreoleParser(fontConfiguration, horizontalAlignment, spriteContainer, creoleMode,
 				stereotypeConfiguration).createSheet(this);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, spriteContainer == null ? 0
-				: spriteContainer.getPadding());
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize,
+				spriteContainer == null ? 0 : spriteContainer.getPadding());
 		return new SheetBlock2(sheetBlock1, sheetBlock1, new UStroke(1.5));
 	}
 
 	private TextBlock createMessageNumber(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, FontConfiguration stereotypeConfiguration) {
-		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,
-				maxMessageSize, CreoleMode.FULL, stereotypeConfiguration);
+		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,
+				CreoleMode.FULL, stereotypeConfiguration);
 		tb1 = TextBlockUtils.withMargin(tb1, 0, 4, 0, 0);
 		final TextBlock tb2 = subList(1, size()).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,
 				maxMessageSize, CreoleMode.FULL, stereotypeConfiguration);

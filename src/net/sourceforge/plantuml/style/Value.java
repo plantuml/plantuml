@@ -49,6 +49,8 @@ public interface Value {
 
 	public double asDouble();
 
+	public boolean asBoolean();
+
 	public int asFontStyle();
 
 	public HorizontalAlignment asHorizontalAlignment();

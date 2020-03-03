@@ -34,22 +34,24 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
+
 public class EaterStartsub extends Eater {
 
 	private String subname;
 
-	public EaterStartsub(String s) {
+	public EaterStartsub(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!startsub");
 		skipSpaces();
 		this.subname = eatAllToEnd();
 		if (this.subname.matches("\\w+") == false) {
-			throw new EaterException("Bad sub name");
+			throw EaterException.located("Bad sub name", getStringLocated());
 		}
 	}
 

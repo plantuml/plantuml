@@ -48,7 +48,7 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPatt
 
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf("COMPLEMENT" + suffix,
-				"(?:at|(\\d+)[%s]+days?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
+				"(?:at|with|after|(\\d+)[%s]+days?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {

@@ -128,7 +128,7 @@ public class PreprocessorUtils {
 			return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new EaterException("Cannot open URL");
+			throw EaterException.located("Cannot open URL", s);
 		}
 
 	}

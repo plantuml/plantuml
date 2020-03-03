@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -126,7 +127,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		return y + getHeight() / 2;
 	}
 
-	public void setColorsAndCompletion(ComplementColors colors, int completion) {
+	public void setColorsAndCompletion(ComplementColors colors, int completion, Url url) {
 	}
 
 }

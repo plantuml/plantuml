@@ -42,7 +42,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.Eater;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -93,7 +95,7 @@ public class TokenStack {
 			eater.skipSpaces();
 			final char ch = eater.peekChar();
 			if (ch == 0) {
-				throw new EaterException("until001");
+				throw EaterException.unlocated("until001");
 			}
 			if (level == 0 && (ch == ',' || ch == ')')) {
 				return result;
@@ -114,7 +116,7 @@ public class TokenStack {
 		while (true) {
 			final Token ch = it.peekToken();
 			if (ch == null) {
-				throw new EaterException("until002");
+				throw EaterException.unlocated("until002");
 			}
 			final TokenType typech = ch.getTokenType();
 			if (level == 0 && (typech == TokenType.COMMA || typech == TokenType.CLOSE_PAREN_MATH)
@@ -147,10 +149,10 @@ public class TokenStack {
 			} else if (type == TokenType.COMMA) {
 				result++;
 			} else {
-				throw new EaterException("count13");
+				throw EaterException.unlocated("count13");
 			}
 		}
-		throw new EaterException("count12");
+		throw EaterException.unlocated("count12");
 	}
 
 	public void guessFunctions() throws EaterException {
@@ -172,10 +174,10 @@ public class TokenStack {
 			assert tokens.get(iopen).getTokenType() == TokenType.OPEN_PAREN_MATH;
 			assert tokens.get(iclose).getTokenType() == TokenType.CLOSE_PAREN_MATH;
 			if (iopen > 0 && tokens.get(iopen - 1).getTokenType() == TokenType.PLAIN_TEXT) {
-				tokens.set(iopen - 1, new Token(tokens.get(iopen - 1).getSurface(), TokenType.FUNCTION_NAME));
+				tokens.set(iopen - 1, new Token(tokens.get(iopen - 1).getSurface(), TokenType.FUNCTION_NAME, null));
 				final int nbArg = countFunctionArg(subTokenStack(iopen + 1).tokenIterator());
-				tokens.set(iopen, new Token("" + nbArg, TokenType.OPEN_PAREN_FUNC));
-				tokens.set(iclose, new Token(")", TokenType.CLOSE_PAREN_FUNC));
+				tokens.set(iopen, new Token("" + nbArg, TokenType.OPEN_PAREN_FUNC, null));
+				tokens.set(iclose, new Token(")", TokenType.CLOSE_PAREN_FUNC, null));
 			}
 		}
 		// System.err.println("after=" + toString());
@@ -206,14 +208,14 @@ public class TokenStack {
 		return new InternalIterator();
 	}
 
-	public TValue getResult(TContext context, TMemory memory) throws EaterException {
+	public TValue getResult(LineLocation location, TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		final Knowledge knowledge = context.asKnowledge(memory);
 		final TokenStack tmp = withoutSpace();
 		tmp.guessFunctions();
 		final TokenIterator it = tmp.tokenIterator();
 		final ShuntingYard shuntingYard = new ShuntingYard(it, knowledge);
-		final ReversePolishInterpretor rpn = new ReversePolishInterpretor(shuntingYard.getQueue(), knowledge, memory,
-				context);
+		final ReversePolishInterpretor rpn = new ReversePolishInterpretor(location, shuntingYard.getQueue(), knowledge,
+				memory, context);
 		return rpn.getResult();
 
 	}

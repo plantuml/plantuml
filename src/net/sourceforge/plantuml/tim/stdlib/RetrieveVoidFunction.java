@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.tim.stdlib;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
@@ -53,7 +55,7 @@ public class RetrieveVoidFunction extends SimpleReturnFunction {
 		return nbArg > 0;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, List<TValue> values) throws EaterException {
+	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> values) throws EaterException, EaterExceptionLocated {
 		final String fname = values.get(0).toString();
 		final List<TValue> args = values.subList(1, values.size());
 		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());

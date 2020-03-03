@@ -54,21 +54,28 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TimingDiagram extends UmlDiagram implements Clocks {
+
+	public static final double marginX1 = 5;
+	private final double marginX2 = 5;
 
 	private TitleStrategy getTitleStrategy() {
 		// return TitleStrategy.IN_LEFT_HEADER;
@@ -78,6 +85,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	private final Map<String, Player> players = new LinkedHashMap<String, Player>();
 	private final Map<String, PlayerClock> clocks = new HashMap<String, PlayerClock>();
 	private final List<TimeMessage> messages = new ArrayList<TimeMessage>();
+	private final List<Highlight> highlights = new ArrayList<Highlight>();
 	private final TimingRuler ruler = new TimingRuler(getSkinParam());
 	private TimeTick now;
 	private Player lastPlayer;
@@ -121,10 +129,9 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final UTranslate lastTranslate = getUTranslateForPlayer(null, stringBounder);
-				final double withBeforeRuler = getWithBeforeRuler(stringBounder);
+				final double withBeforeRuler = getWidthBeforeRuler(stringBounder);
 				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;
-				return new Dimension2DDouble(totalWith, lastTranslate.getDy() + ruler.getHeight(stringBounder));
+				return new Dimension2DDouble(totalWith, getHeightTotal(stringBounder));
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
@@ -137,43 +144,96 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		};
 	}
 
-	public static final double marginX1 = 5;
-	private final double marginX2 = 5;
-
 	private void drawInternal(UGraphic ug) {
 		ruler.ensureNotEmpty();
 		final StringBounder stringBounder = ug.getStringBounder();
-		final UTranslate lastTranslate = getUTranslateForPlayer(null, stringBounder);
-		final double withBeforeRuler = getWithBeforeRuler(stringBounder);
-		final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;
-
-		final ULine border = new ULine(0, lastTranslate.getDy());
-		final UStroke borderStroke = new UStroke(1.7);
-		ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(borderStroke).draw(border);
-		ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(borderStroke).apply(new UTranslate(totalWith, 0))
-				.draw(border);
+		final UTranslate beforeRuler = new UTranslate(getWidthBeforeRuler(stringBounder), 0);
+		drawBorder(ug);
 
 		ug = ug.apply(new UTranslate(marginX1, 0));
 
-		ruler.draw0(ug.apply(new UTranslate(withBeforeRuler, 0)), getUTranslateForPlayer(null, stringBounder).getDy());
+		drawHighlightsBack(ug.apply(beforeRuler));
+		ruler.draw0(ug.apply(beforeRuler), getHeightInner(stringBounder));
+
 		for (Player player : players.values()) {
-			final UGraphic playerUg = ug.apply(getUTranslateForPlayer(player, stringBounder));
-			player.drawFrameTitle(playerUg);
-			player.drawContent(playerUg.apply(new UTranslate(withBeforeRuler, 0)));
-			player.drawLeftHeader(playerUg);
-			playerUg.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(borderStroke)
-					.apply(new UTranslate(-marginX1, 0)).draw(new ULine(totalWith, 0));
+			drawHorizontalSeparator(ug.apply(getUTranslateForFrame(player, stringBounder)));
+			player.getPlayerFrame().drawFrameTitle(ug.apply(getUTranslateForFrame(player, stringBounder)));
+			final UGraphic ug2 = ug.apply(getUTranslateForPlayer(player, stringBounder));
+			player.drawContent(ug2.apply(beforeRuler));
+			player.drawLeftHeader(ug2);
 		}
-		ug = ug.apply(new UTranslate(withBeforeRuler, 0));
+		ug = ug.apply(beforeRuler);
 		if (this.drawTimeAxis) {
-			ruler.drawTimeAxis(ug.apply(lastTranslate));
+			ruler.drawTimeAxis(ug.apply(getLastTranslate(stringBounder)));
 		}
 		for (TimeMessage timeMessage : messages) {
 			drawMessages(ug, timeMessage);
 		}
+		drawHighlightsLines(ug);
 	}
 
-	private double getWithBeforeRuler(StringBounder stringBounder) {
+	private void drawHorizontalSeparator(UGraphic ug) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		ug = ug.apply(getBorderStroke());
+		ug = ug.apply(new UTranslate(-marginX1, 0));
+		ug.draw(new ULine(getWidthTotal(stringBounder), 0));
+	}
+
+	private void drawBorder(UGraphic ug) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		final ULine border = new ULine(0, getLastTranslate(stringBounder).getDy());
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(getBorderStroke());
+		ug.draw(border);
+		ug.apply(new UTranslate(getWidthTotal(stringBounder), 0)).draw(border);
+	}
+
+	private UStroke getBorderStroke() {
+		return new UStroke(1.7);
+	}
+
+	private UTranslate getLastTranslate(final StringBounder stringBounder) {
+		return getUTranslateForPlayer(null, stringBounder);
+	}
+
+	private void drawHighlightsBack(UGraphic ug) {
+		final double height = getHeightInner(ug.getStringBounder());
+		for (Highlight highlight : highlights) {
+			highlight.drawHighlightsBack(ug, ruler, height);
+		}
+	}
+
+	private void drawHighlightsLines(UGraphic ug) {
+		final double height = getHeightInner(ug.getStringBounder());
+		for (Highlight highlight : highlights) {
+			highlight.drawHighlightsLines(ug, ruler, height);
+			final double start = ruler.getPosInPixel(highlight.getTickFrom());
+			highlight.getCaption(getSkinParam()).drawU(ug.apply(new UTranslate(start + 3, 2)));
+		}
+	}
+
+	private double getHeightTotal(StringBounder stringBounder) {
+		return getHeightInner(stringBounder) + ruler.getHeight(stringBounder);
+	}
+
+	private double getHeightInner(StringBounder stringBounder) {
+		return getLastTranslate(stringBounder).getDy();
+	}
+
+	private double getHeightHighlights(StringBounder stringBounder) {
+		double result = 0;
+		for (Highlight highlight : highlights) {
+			final TextBlock caption = highlight.getCaption(getSkinParam());
+			result = Math.max(result, caption.calculateDimension(stringBounder).getHeight());
+		}
+		return result;
+	}
+
+	private double getWidthTotal(final StringBounder stringBounder) {
+		return getWidthBeforeRuler(stringBounder) + ruler.getWidth() + marginX1 + marginX2;
+	}
+
+	private double getWidthBeforeRuler(StringBounder stringBounder) {
 		double width = 0;
 		for (Player player : players.values()) {
 			width = Math.max(width, player.getWidthHeader(stringBounder));
@@ -182,14 +242,13 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return width;
 	}
 
-	private double getFirstColumnWidth(StringBounder stringBounder) {
-		double width = 0;
-		for (Player player : players.values()) {
-			width = Math.max(width, player.getFirstColumnWidth(stringBounder));
-
-		}
-		return width;
-	}
+//	private double getWidthFirstColumn(StringBounder stringBounder) {
+//		double width = 0;
+//		for (Player player : players.values()) {
+//			width = Math.max(width, player.getFirstColumnWidth(stringBounder));
+//		}
+//		return width;
+//	}
 
 	private void drawMessages(UGraphic ug, TimeMessage message) {
 		final Player player1 = message.getPlayer1();
@@ -211,8 +270,25 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	}
 
-	public UTranslate getUTranslateForPlayer(Player candidat, StringBounder stringBounder) {
+	private UTranslate getUTranslateForFrame(Player candidat, StringBounder stringBounder) {
 		double y = 0;
+		for (Player player : players.values()) {
+			if (candidat == player) {
+				return new UTranslate(0, y);
+			}
+			if (y == 0) {
+				y += getHeightHighlights(stringBounder);
+			}
+			y += player.getHeight(stringBounder);
+		}
+		if (candidat == null) {
+			return new UTranslate(0, y);
+		}
+		throw new IllegalArgumentException();
+	}
+
+	public UTranslate getUTranslateForPlayer(Player candidat, StringBounder stringBounder) {
+		double y = getHeightHighlights(stringBounder);
 		for (Player player : players.values()) {
 			if (candidat == player) {
 				return new UTranslate(0, y);
@@ -294,6 +370,12 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	public CommandExecutionResult hideTimeAxis() {
 		this.drawTimeAxis = false;
 		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult highlight(TimeTick tickFrom, TimeTick tickTo, Display caption, Colors colors) {
+		this.highlights.add(new Highlight(tickFrom, tickTo, caption, colors));
+		return CommandExecutionResult.ok();
+
 	}
 
 }

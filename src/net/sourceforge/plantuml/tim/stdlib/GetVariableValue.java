@@ -36,11 +36,11 @@ package net.sourceforge.plantuml.tim.stdlib;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
-import net.sourceforge.plantuml.tim.TVariable;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class GetVariableValue extends SimpleReturnFunction {
@@ -53,13 +53,13 @@ public class GetVariableValue extends SimpleReturnFunction {
 		return nbArg == 1;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		final String name = args.get(0).toString();
-		final TVariable variable = memory.getVariable(name);
+		final TValue variable = memory.getVariable(name);
 		if (variable == null) {
 			return TValue.fromString("");
 		}
-		return variable.getValue();
+		return variable;
 	}
 
 }

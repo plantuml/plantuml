@@ -34,18 +34,19 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class EaterReturn extends Eater {
 
 	private TValue value;
 
-	public EaterReturn(String s) {
+	public EaterReturn(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!return");
 		skipSpaces();

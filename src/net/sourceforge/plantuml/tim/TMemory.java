@@ -37,11 +37,13 @@ package net.sourceforge.plantuml.tim;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.tim.expression.TValue;
+
 public interface TMemory {
 
-	public TVariable getVariable(String varname);
+	public TValue getVariable(String varname);
 
-	public void putVariable(String varname, TVariable value, TVariableScope scope) throws EaterException;
+	public void putVariable(String varname, TValue value, TVariableScope scope) throws EaterException;
 
 	public void removeVariable(String varname);
 
@@ -51,15 +53,28 @@ public interface TMemory {
 
 	public Trie variablesNames3();
 
-	public TMemory forkFromGlobal(Map<String, TVariable> input);
+	public TMemory forkFromGlobal(Map<String, TValue> input);
 
-	public ConditionalContext peekConditionalContext();
+	public ExecutionContextIf peekIf();
 
-	public boolean areAllIfOk();
+	public boolean areAllIfOk(TContext context, TMemory memory) throws EaterException;
 
-	public void addConditionalContext(ConditionalContext context);
+	public void addIf(ExecutionContextIf context);
 
-	public ConditionalContext pollConditionalContext();
+	public void addWhile(ExecutionContextWhile value);
+
+	public void addForeach(ExecutionContextForeach value);
+
+	public ExecutionContextIf pollIf();
+
+	public ExecutionContextWhile pollWhile();
+
+	public ExecutionContextWhile peekWhile();
+
+	public ExecutionContextForeach pollForeach();
+
+	public ExecutionContextForeach peekForeach();
 
 	public void dumpDebug(String message);
+
 }

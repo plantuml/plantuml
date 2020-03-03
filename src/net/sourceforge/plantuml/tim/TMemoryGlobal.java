@@ -44,12 +44,12 @@ import java.util.TreeMap;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class TMemoryGlobal extends ConditionalContexts implements TMemory {
+public class TMemoryGlobal extends ExecutionContexts implements TMemory {
 
-	private final Map<String, TVariable> globalVariables = new HashMap<String, TVariable>();
+	private final Map<String, TValue> globalVariables = new HashMap<String, TValue>();
 	private final TrieImpl variables = new TrieImpl();
 
-	public TVariable getVariable(String varname) {
+	public TValue getVariable(String varname) {
 		return this.globalVariables.get(varname);
 	}
 
@@ -61,17 +61,17 @@ public class TMemoryGlobal extends ConditionalContexts implements TMemory {
 
 	void dumpMemoryInternal() {
 		Log.error("[MemGlobal] Number of variable(s) : " + globalVariables.size());
-		for (Entry<String, TVariable> ent : new TreeMap<String, TVariable>(globalVariables).entrySet()) {
+		for (Entry<String, TValue> ent : new TreeMap<String, TValue>(globalVariables).entrySet()) {
 			final String name = ent.getKey();
-			final TValue value = ent.getValue().getValue();
+			final TValue value = ent.getValue();
 			Log.error("[MemGlobal] " + name + " = " + value);
 		}
 	}
 
-	public void putVariable(String varname, TVariable value, TVariableScope scope) throws EaterException {
+	public void putVariable(String varname, TValue value, TVariableScope scope) throws EaterException {
 		Log.info("[MemGlobal] Setting " + varname);
 		if (scope == TVariableScope.LOCAL) {
-			throw new EaterException("Cannot use local variable here");
+			throw EaterException.unlocated("Cannot use local variable here");
 		}
 		this.globalVariables.put(varname, value);
 		this.variables.add(varname);
@@ -94,7 +94,7 @@ public class TMemoryGlobal extends ConditionalContexts implements TMemory {
 		return variables;
 	}
 
-	public TMemory forkFromGlobal(Map<String, TVariable> input) {
+	public TMemory forkFromGlobal(Map<String, TValue> input) {
 		return new TMemoryLocal(this, input);
 	}
 

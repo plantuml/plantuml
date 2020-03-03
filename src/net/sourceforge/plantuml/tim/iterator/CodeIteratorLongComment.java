@@ -32,47 +32,44 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.tim;
+package net.sourceforge.plantuml.tim.iterator;
 
-public class ConditionalContext {
+import java.util.List;
 
-	private boolean isTrue;
-	private boolean hasBeenBurn;
+import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TLineType;
 
-	private ConditionalContext(boolean isTrue) {
-		this.isTrue = isTrue;
-		if (this.isTrue) {
-			hasBeenBurn = true;
+public class CodeIteratorLongComment extends AbstractCodeIterator {
+
+	private final List<StringLocated> logs;
+
+	public CodeIteratorLongComment(CodeIterator source, List<StringLocated> logs) {
+		super(source);
+		this.logs = logs;
+	}
+
+	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+		while (true) {
+			if (source.peek() == null) {
+				return null;
+			}
+			if (source.peek().getType() != TLineType.COMMENT_LONG_START) {
+				return source.peek();
+			}
+			StringLocated s = null;
+			while ((s = source.peek()) != null && s.getTrimmed().getString().endsWith("'/") == false) {
+				logs.add(s);
+				source.next();
+			}
+			assert source.peek() == null || s.getTrimmed().getString().endsWith("'/");
+			if (source.peek() != null) {
+				assert s.getTrimmed().getString().endsWith("'/");
+				logs.add(source.peek());
+				source.next();
+			}
 		}
-	}
 
-	public static ConditionalContext fromValue(boolean isTrue) {
-		return new ConditionalContext(isTrue);
 	}
-
-	public boolean conditionIsOkHere() {
-		return isTrue;
-	}
-
-	public void enteringElseIf() {
-		this.isTrue = false;
-	}
-
-	public void nowInElse() {
-		this.isTrue = !hasBeenBurn;
-	}
-
-	public void nowInSomeElseIf() {
-		this.isTrue = true;
-		this.hasBeenBurn = true;
-	}
-
-	public final boolean hasBeenBurn() {
-		return hasBeenBurn;
-	}
-
-	public final void setHasBeenBurn(boolean hasBeenBurn) {
-		this.hasBeenBurn = hasBeenBurn;
-	}
-
 }

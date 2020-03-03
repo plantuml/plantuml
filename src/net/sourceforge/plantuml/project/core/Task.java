@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
@@ -69,6 +70,8 @@ public interface Task extends Subject, Moment {
 	public boolean isDiamond();
 
 	public void setCompletion(int completion);
+
+	public void setUrl(Url url);
 
 
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -66,6 +67,7 @@ public class TaskDrawRegular implements TaskDraw {
 	private final double y;
 	private ComplementColors colors;
 	private int completion = 100;
+	private Url url;
 
 	private final double margin = 2;
 
@@ -125,22 +127,29 @@ public class TaskDrawRegular implements TaskDraw {
 		if (fullLength < 10) {
 			return;
 		}
+		if (url != null) {
+			ug.startUrl(url);
+		}
 		final URectangle full = new URectangle(fullLength, getShapeHeight(), 8, 8);
 		if (completion == 100) {
 			ug.draw(full);
-			return;
+		} else {
+			final double partialLength = fullLength * completion / 100.;
+			ug.apply(new UChangeColor(HtmlColorUtils.WHITE)).apply(new UChangeBackColor(HtmlColorUtils.WHITE))
+					.draw(full);
+			if (partialLength > 2) {
+				final URectangle partial = new URectangle(partialLength, getShapeHeight(), 8, 8);
+				ug.apply(new UChangeColor(null)).draw(partial);
+			}
+			if (partialLength > 10 && partialLength < fullLength - 10) {
+				final URectangle patch = new URectangle(8, getShapeHeight());
+				ug.apply(new UChangeColor(null)).apply(new UTranslate(partialLength - 8, 0)).draw(patch);
+			}
+			ug.apply(new UChangeBackColor(null)).draw(full);
 		}
-		final double partialLength = fullLength * completion / 100.;
-		ug.apply(new UChangeColor(HtmlColorUtils.WHITE)).apply(new UChangeBackColor(HtmlColorUtils.WHITE)).draw(full);
-		if (partialLength > 2) {
-			final URectangle partial = new URectangle(partialLength, getShapeHeight(), 8, 8);
-			ug.apply(new UChangeColor(null)).draw(partial);
+		if (url != null) {
+			ug.closeAction();
 		}
-		if (partialLength > 10 && partialLength < fullLength - 10) {
-			final URectangle patch = new URectangle(8, getShapeHeight());
-			ug.apply(new UChangeColor(null)).apply(new UTranslate(partialLength - 8, 0)).draw(patch);
-		}
-		ug.apply(new UChangeBackColor(null)).draw(full);
 
 	}
 
@@ -185,8 +194,9 @@ public class TaskDrawRegular implements TaskDraw {
 		return y + getHeight() / 2;
 	}
 
-	public void setColorsAndCompletion(ComplementColors colors, int completion) {
+	public void setColorsAndCompletion(ComplementColors colors, int completion, Url url) {
 		this.colors = colors;
 		this.completion = completion;
+		this.url = url;
 	}
 }

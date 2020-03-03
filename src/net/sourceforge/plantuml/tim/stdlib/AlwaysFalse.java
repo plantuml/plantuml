@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.stdlib;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -52,7 +53,7 @@ public class AlwaysFalse extends SimpleReturnFunction {
 		return nbArg == 0;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		return TValue.fromBoolean(false);
 	}
 }

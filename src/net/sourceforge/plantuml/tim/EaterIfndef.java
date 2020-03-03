@@ -34,16 +34,19 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.tim.expression.TValue;
+
 public class EaterIfndef extends Eater {
 
 	private String varname;
 
-	public EaterIfndef(String s) {
+	public EaterIfndef(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!ifndef");
 		skipSpaces();
@@ -51,7 +54,7 @@ public class EaterIfndef extends Eater {
 	}
 
 	public boolean isTrue(TContext context, TMemory memory) {
-		final TVariable currentValue = memory.getVariable(varname);
+		final TValue currentValue = memory.getVariable(varname);
 		return currentValue == null && context.doesFunctionExist(varname) == false;
 	}
 

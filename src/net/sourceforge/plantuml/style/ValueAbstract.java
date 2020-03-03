@@ -57,6 +57,10 @@ public abstract class ValueAbstract implements Value {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
+	public boolean asBoolean() {
+		throw new UnsupportedOperationException("Class=" + getClass());
+	}
+
 	public int asFontStyle() {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}

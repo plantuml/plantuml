@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -66,11 +67,16 @@ public class TimingRuler {
 
 	private TimingFormat format = TimingFormat.DECIMAL;
 
+	private UGraphic applyForVLines(UGraphic ug) {
+		final UStroke stroke = new UStroke(3, 5, 0.5);
+		final HtmlColor color = new HtmlColorSetSimple().getColorIfValid("#AAA");
+		return ug.apply(stroke).apply(new UChangeColor(color));
+	}
+
 	public void ensureNotEmpty() {
 		if (times.size() == 0) {
 			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));
 		}
-
 	}
 
 	public TimingRuler(ISkinParam skinParam) {
@@ -185,7 +191,7 @@ public class TimingRuler {
 	}
 
 	public void draw0(UGraphic ug, double height) {
-		ug = ug.apply(new UStroke(3, 5, 0.5)).apply(new UChangeColor(new HtmlColorSetSimple().getColorIfValid("#AAA")));
+		ug = applyForVLines(ug);
 		final ULine line = new ULine(0, height);
 		final int nb = getNbTick(true);
 		for (int i = 0; i <= nb; i++) {

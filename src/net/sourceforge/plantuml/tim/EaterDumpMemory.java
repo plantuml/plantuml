@@ -34,14 +34,16 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
+
 public class EaterDumpMemory extends Eater {
 
-	public EaterDumpMemory(String s) {
+	public EaterDumpMemory(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!dump_memory");
 		skipSpaces();

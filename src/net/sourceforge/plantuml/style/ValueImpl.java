@@ -67,6 +67,10 @@ public class ValueImpl implements Value {
 		return set.getColorIfValid(value);
 	}
 
+	public boolean asBoolean() {
+		return "true".equalsIgnoreCase(value);
+	}
+
 	public int asInt() {
 		return Integer.parseInt(value);
 	}

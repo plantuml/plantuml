@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,30 +30,33 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * 
  *
  */
-package net.sourceforge.plantuml.tim;
+package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
 
-public class TVariable {
+public class ComplementUrl implements ComplementPattern {
 
-	private final TValue value;
-
-	public TVariable(TValue value) {
-		if (value == null) {
-			throw new IllegalArgumentException();
-		}
-		this.value = value;
+	public IRegex toRegex(String suffix) {
+		return new RegexConcat( //
+				new RegexLeaf("COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + " " + value.toString();
-	}
-
-	public TValue getValue() {
-		return value;
+	public Failable<Complement> getComplement(GanttDiagram diagram, RegexResult arg, String suffix) {
+		final String urlString = arg.get("COMPLEMENT" + suffix, 0);
+		final UrlBuilder urlBuilder = new UrlBuilder("", ModeUrl.STRICT);
+		final Url url = urlBuilder.getUrl(urlString);
+		return Failable.<Complement>ok(url);
 	}
 
 }

@@ -43,15 +43,15 @@ import java.util.TreeMap;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class TMemoryLocal extends ConditionalContexts implements TMemory {
+public class TMemoryLocal extends ExecutionContexts implements TMemory {
 
 	private final TMemoryGlobal memoryGlobal;
 	private TrieImpl overridenVariables00;
-	private final Map<String, TVariable> overridenVariables01 = new HashMap<String, TVariable>();
+	private final Map<String, TValue> overridenVariables01 = new HashMap<String, TValue>();
 	private final TrieImpl localVariables00 = new TrieImpl();
-	private final Map<String, TVariable> localVariables01 = new HashMap<String, TVariable>();
+	private final Map<String, TValue> localVariables01 = new HashMap<String, TValue>();
 
-	public TMemoryLocal(TMemoryGlobal global, Map<String, TVariable> input) {
+	public TMemoryLocal(TMemoryGlobal global, Map<String, TValue> input) {
 		this.memoryGlobal = global;
 		this.overridenVariables01.putAll(input);
 	}
@@ -59,24 +59,24 @@ public class TMemoryLocal extends ConditionalContexts implements TMemory {
 	public void dumpDebug(String message) {
 		Log.error("[MemLocal] Start of memory_dump " + message);
 		memoryGlobal.dumpMemoryInternal();
-		final TreeMap<String, TVariable> over = new TreeMap<String, TVariable>(overridenVariables01);
+		final TreeMap<String, TValue> over = new TreeMap<String, TValue>(overridenVariables01);
 		Log.error("[MemLocal] Number of overriden variable(s) : " + over.size());
-		for (Entry<String, TVariable> ent : over.entrySet()) {
+		for (Entry<String, TValue> ent : over.entrySet()) {
 			final String name = ent.getKey();
-			final TValue value = ent.getValue().getValue();
+			final TValue value = ent.getValue();
 			Log.error("[MemLocal] " + name + " = " + value);
 		}
-		final TreeMap<String, TVariable> local = new TreeMap<String, TVariable>(localVariables01);
+		final TreeMap<String, TValue> local = new TreeMap<String, TValue>(localVariables01);
 		Log.error("[MemLocal] Number of local variable(s) : " + local.size());
-		for (Entry<String, TVariable> ent : local.entrySet()) {
+		for (Entry<String, TValue> ent : local.entrySet()) {
 			final String name = ent.getKey();
-			final TValue value = ent.getValue().getValue();
+			final TValue value = ent.getValue();
 			Log.error("[MemLocal] " + name + " = " + value);
 		}
 		Log.error("[MemGlobal] End of memory_dump");
 	}
 
-	public void putVariable(String varname, TVariable value, TVariableScope scope) throws EaterException {
+	public void putVariable(String varname, TValue value, TVariableScope scope) throws EaterException {
 		if (scope == TVariableScope.GLOBAL) {
 			memoryGlobal.putVariable(varname, value, scope);
 			return;
@@ -110,8 +110,8 @@ public class TMemoryLocal extends ConditionalContexts implements TMemory {
 		}
 	}
 
-	public TVariable getVariable(String varname) {
-		TVariable result = overridenVariables01.get(varname);
+	public TValue getVariable(String varname) {
+		TValue result = overridenVariables01.get(varname);
 		if (result != null) {
 			return result;
 		}
@@ -170,7 +170,7 @@ public class TMemoryLocal extends ConditionalContexts implements TMemory {
 		throw new UnsupportedOperationException();
 	}
 
-	public TMemory forkFromGlobal(Map<String, TVariable> input) {
+	public TMemory forkFromGlobal(Map<String, TValue> input) {
 		return new TMemoryLocal(memoryGlobal, input);
 	}
 

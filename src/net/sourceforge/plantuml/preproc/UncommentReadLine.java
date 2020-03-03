@@ -76,7 +76,7 @@ public class UncommentReadLine implements ReadLine {
 			return new StringLocated("", result.getLocation());
 		}
 		if (headerToRemove != null && result.getString().startsWith(headerToRemove)) {
-			return result.sub(headerToRemove.length(), result.getString().length());
+			return result.substring(headerToRemove.length(), result.getString().length());
 		}
 		return result;
 	}

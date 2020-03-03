@@ -35,19 +35,20 @@
 package net.sourceforge.plantuml.tim;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringLocated;
 
 public class EaterLog extends Eater {
 
-	public EaterLog(String s) {
+	public EaterLog(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!log");
 		skipSpaces();
-		final String logData = context.applyFunctionsAndVariables(memory, this.eatAllToEnd());
+		final String logData = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
 		Log.error("[Log] " + logData);
 	}
 

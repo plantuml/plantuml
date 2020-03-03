@@ -34,21 +34,22 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
 
 public class EaterIncludeDef extends Eater {
 
 	private String location;
 
-	public EaterIncludeDef(String s) {
+	public EaterIncludeDef(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!includedef");
 		skipSpaces();
-		this.location = context.applyFunctionsAndVariables(memory, this.eatAllToEnd());
+		this.location = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
 
 	}
 

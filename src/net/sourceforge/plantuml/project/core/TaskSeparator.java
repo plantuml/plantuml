@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
@@ -109,6 +110,10 @@ public class TaskSeparator implements Task {
 	}
 
 	public void setCompletion(int completion) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setUrl(Url url) {
 		throw new UnsupportedOperationException();
 	}
 

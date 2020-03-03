@@ -55,6 +55,7 @@ public enum PName {
 	ExportedName, //
 	Image, //
 	HorizontalAlignment, //
+	ShowStereotype, //
 	ImagePosition;
 
 	public static PName getFromName(String name) {

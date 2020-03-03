@@ -34,16 +34,17 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class EaterAssert extends Eater {
 
-	public EaterAssert(String s) {
+	public EaterAssert(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!assert");
 		skipSpaces();
@@ -54,9 +55,9 @@ public class EaterAssert extends Eater {
 			if (ch == ':') {
 				checkAndEatChar(':');
 				final TValue message = eatExpression(context, memory);
-				throw new EaterException("Assertion error : " + message.toString());
+				throw EaterException.located("Assertion error : " + message.toString(), getStringLocated());
 			}
-			throw new EaterException("Assertion error");
+			throw EaterException.located("Assertion error", getStringLocated());
 		}
 	}
 

@@ -37,9 +37,6 @@ package net.sourceforge.plantuml.tim.expression;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.TVariable;
-
 // https://en.wikipedia.org/wiki/Shunting-yard_algorithm
 // https://en.cppreference.com/w/c/language/operator_precedence
 public class ShuntingYard {
@@ -58,7 +55,7 @@ public class ShuntingYard {
 		System.err.println("");
 	}
 
-	public ShuntingYard(TokenIterator it, Knowledge knowledge) throws EaterException {
+	public ShuntingYard(TokenIterator it, Knowledge knowledge) {
 
 		while (it.hasMoreTokens()) {
 			final Token token = it.nextToken();
@@ -71,15 +68,16 @@ public class ShuntingYard {
 				operatorStack.addFirst(token);
 			} else if (token.getTokenType() == TokenType.PLAIN_TEXT) {
 				final String name = token.getSurface();
-				final TVariable variable = knowledge.getVariable(name);
+				final TValue variable = knowledge.getVariable(name);
 				if (variable == null) {
-					throw new EaterException("Unknown variable " + name);
+					ouputQueue.add(new Token("undefined", TokenType.QUOTED_STRING, null));
+				} else {
+					ouputQueue.add(variable.toToken());
 				}
-				ouputQueue.add(variable.getValue().toToken());
 			} else if (token.getTokenType() == TokenType.OPERATOR) {
 				while ((thereIsAFunctionAtTheTopOfTheOperatorStack(token) //
 						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //
-				|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //
+						|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //
 						&& theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(token)) {
 					ouputQueue.add(operatorStack.removeFirst());
 				}

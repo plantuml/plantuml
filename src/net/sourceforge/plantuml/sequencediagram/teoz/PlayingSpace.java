@@ -118,7 +118,9 @@ public class PlayingSpace implements Bordered {
 		for (LinkAnchor linkAnchor : linkAnchors) {
 			final YPositionedTile tile1 = getFromAnchor(positionedTiles, linkAnchor.getAnchor1());
 			final YPositionedTile tile2 = getFromAnchor(positionedTiles, linkAnchor.getAnchor2());
-			linkAnchor.drawAnchor(ug, tile1, tile2, skinParam);
+			if (tile1 != null && tile2 != null) {
+				linkAnchor.drawAnchor(ug, tile1, tile2, skinParam);
+			}
 		}
 		// System.err.println("MainTile::drawUInternal finalY=" + y);
 		return y;

@@ -194,7 +194,7 @@ public class BlocLines implements Iterable<StringLocated> {
 			for (int i = 0; i < copy.size(); i++) {
 				final StringLocated s = copy.get(i);
 				if (s.getString().length() > 0) {
-					copy.set(i, s.sub(1, s.getString().length()));
+					copy.set(i, s.substring(1, s.getString().length()));
 				}
 			}
 		} while (firstColumnRemovable(copy));
@@ -229,7 +229,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		copy.set(0, new StringLocated(data, null));
 		final int n = copy.size() - 1;
 		final StringLocated s = copy.get(n);
-		copy.set(n, s.sub(0, s.getString().length() - 1));
+		copy.set(n, s.substring(0, s.getString().length() - 1));
 		return new BlocLines(copy);
 	}
 
@@ -278,7 +278,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		if (i == 0) {
 			return arg;
 		}
-		return arg.sub(i, arg.getString().length());
+		return arg.substring(i, arg.getString().length());
 	}
 
 	public BlocLines subExtract(int margeStart, int margeEnd) {

@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
 
 public class EaterInclude extends Eater {
@@ -41,12 +42,12 @@ public class EaterInclude extends Eater {
 	private String location;
 	private PreprocessorIncludeStrategy strategy = PreprocessorIncludeStrategy.DEFAULT;
 
-	public EaterInclude(String s) {
+	public EaterInclude(StringLocated s) {
 		super(s);
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!include");
 		final char peekChar = peekChar();
@@ -64,7 +65,7 @@ public class EaterInclude extends Eater {
 			}
 		}
 		skipSpaces();
-		this.location = context.applyFunctionsAndVariables(memory, this.eatAllToEnd());
+		this.location = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
 
 	}
 

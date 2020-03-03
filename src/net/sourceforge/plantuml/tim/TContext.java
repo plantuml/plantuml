@@ -47,6 +47,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.json.JsonObject;
@@ -64,6 +65,18 @@ import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.tim.expression.Knowledge;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.tim.iterator.CodeIterator;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorFunction;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorIf;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorImpl;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorInnerComment;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorLegacyDefine;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorLongComment;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorShortComment;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorSub;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorWhile;
 import net.sourceforge.plantuml.tim.stdlib.AlwaysFalse;
 import net.sourceforge.plantuml.tim.stdlib.AlwaysTrue;
 import net.sourceforge.plantuml.tim.stdlib.CallUserFunction;
@@ -91,15 +104,12 @@ public class TContext {
 
 	private final List<StringLocated> resultList = new ArrayList<StringLocated>();
 	private final List<StringLocated> debug = new ArrayList<StringLocated>();
-	private final Map<TFunctionSignature, TFunction> functions2 = new HashMap<TFunctionSignature, TFunction>();
-	private final Set<TFunctionSignature> functionsFinal = new HashSet<TFunctionSignature>();
-	private final Trie functions3 = new TrieImpl();
+
+	public final FunctionsSet functionsSet = new FunctionsSet();
+
 	private ImportedFiles importedFiles;
 	private final String charset;
 
-	private TFunctionImpl pendingFunction;
-	private Sub pendingSub;
-	private boolean inLongComment;
 	private final Map<String, Sub> subs = new HashMap<String, Sub>();
 	private final DefinitionsContainer definitionsContainer;
 
@@ -107,28 +117,28 @@ public class TContext {
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<FileWithSuffix>();
 
 	private void addStandardFunctions(Defines defines) {
-		addFunction(new Strlen());
-		addFunction(new Substr());
-		addFunction(new FileExists());
-		addFunction(new Getenv());
-		addFunction(new Dirpath(defines));
-		addFunction(new Filename(defines));
-		addFunction(new DateFunction());
-		addFunction(new Strpos());
-		addFunction(new InvokeVoidFunction());
-		addFunction(new AlwaysFalse());
-		addFunction(new AlwaysTrue());
-		addFunction(new LogicalNot());
-		addFunction(new FunctionExists());
-		addFunction(new VariableExists());
-		addFunction(new CallUserFunction());
-		addFunction(new RetrieveVoidFunction());
-		addFunction(new SetVariableValue());
-		addFunction(new GetVariableValue());
-		addFunction(new IntVal());
-		addFunction(new GetVersion());
-		addFunction(new Upper());
-		addFunction(new Lower());
+		functionsSet.addFunction(new Strlen());
+		functionsSet.addFunction(new Substr());
+		functionsSet.addFunction(new FileExists());
+		functionsSet.addFunction(new Getenv());
+		functionsSet.addFunction(new Dirpath(defines));
+		functionsSet.addFunction(new Filename(defines));
+		functionsSet.addFunction(new DateFunction());
+		functionsSet.addFunction(new Strpos());
+		functionsSet.addFunction(new InvokeVoidFunction());
+		functionsSet.addFunction(new AlwaysFalse());
+		functionsSet.addFunction(new AlwaysTrue());
+		functionsSet.addFunction(new LogicalNot());
+		functionsSet.addFunction(new FunctionExists());
+		functionsSet.addFunction(new VariableExists());
+		functionsSet.addFunction(new CallUserFunction());
+		functionsSet.addFunction(new RetrieveVoidFunction());
+		functionsSet.addFunction(new SetVariableValue());
+		functionsSet.addFunction(new GetVariableValue());
+		functionsSet.addFunction(new IntVal());
+		functionsSet.addFunction(new GetVersion());
+		functionsSet.addFunction(new Upper());
+		functionsSet.addFunction(new Lower());
 		// !exit
 		// !log
 		// %min
@@ -151,154 +161,100 @@ public class TContext {
 	public Knowledge asKnowledge(final TMemory memory) {
 		return new Knowledge() {
 
-			public TVariable getVariable(String name) {
+			public TValue getVariable(String name) {
+				if (name.contains(".")) {
+					return fromJson(memory, name);
+				}
 				return memory.getVariable(name);
 			}
 
 			public TFunction getFunction(TFunctionSignature name) {
-				return getFunctionSmart(name);
+				return functionsSet.getFunctionSmart(name);
 			}
 		};
 	}
 
-	public TFunction getFunctionSmart(TFunctionSignature searched) {
-		final TFunction func = functions2.get(searched);
-		if (func != null) {
-			return func;
+	private TValue fromJson(TMemory memory, String name) {
+		final int x = name.indexOf('.');
+		final TValue data = memory.getVariable(name.substring(0, x));
+		if (data == null) {
+			return null;
 		}
-		for (TFunction candidate : functions2.values()) {
-			if (candidate.getSignature().sameNameAs(searched) == false) {
-				continue;
-			}
-			if (candidate.canCover(searched.getNbArg())) {
-				return candidate;
-			}
-		}
-		return null;
+		final JsonObject json = (JsonObject) data.toJson();
+//		System.err.println("json=" + json);
+//		System.err.println("json=" + json.getClass());
+//		System.err.println("json2=" + name.substring(x + 1));
+		final JsonValue result = json.get(name.substring(x + 1));
+//		System.err.println("result=" + result);
+		return TValue.fromJson(result);
 	}
 
-	public void executeOneLine(TMemory memory, TLineType type, StringLocated s, TFunctionType fromType)
-			throws EaterException {
+	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body) {
+		final CodeIterator it10 = new CodeIteratorImpl(body);
+		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);
+		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);
+		final CodeIterator it40 = new CodeIteratorInnerComment(it30);
+		final CodeIterator it50 = new CodeIteratorSub(it40, subs, this, memory);
+		final CodeIterator it60 = new CodeIteratorFunction(it50, this, memory, functionsSet, debug);
+		final CodeIterator it70 = new CodeIteratorIf(it60, this, memory, debug);
+		final CodeIterator it80 = new CodeIteratorLegacyDefine(it70, this, memory, functionsSet, debug);
+		final CodeIterator it90 = new CodeIteratorWhile(it80, this, memory, debug);
+		final CodeIterator it100 = new CodeIteratorForeach(it90, this, memory, debug);
+		final CodeIterator it110 = new CodeIteratorAffectation(it100, this, memory, debug);
 
-		this.debug.add(s);
-		assert type == TLineType.getFromLine(s.getString());
+		final CodeIterator it = it110;
+		return it;
+	}
 
-		if (this.inLongComment == false && type == TLineType.STARTSUB) {
-			if (pendingSub != null) {
-				throw new EaterException("Cannot nest sub");
+	public void executeLines(TMemory memory, List<StringLocated> body, TFunctionType ftype)
+			throws EaterExceptionLocated {
+		final CodeIterator it = buildCodeIterator(memory, body);
+
+		StringLocated s = null;
+		try {
+			while ((s = it.peek()) != null) {
+				executeOneLineSafe(memory, s, ftype);
+				it.next();
 			}
-			final EaterStartsub eater = new EaterStartsub(s.getTrimmed().getString());
-			eater.execute(this, memory);
-			this.pendingSub = new Sub(eater.getSubname());
-			this.subs.put(eater.getSubname(), this.pendingSub);
-			return;
-		}
-		if (this.inLongComment == false && type == TLineType.ENDSUB) {
-			if (pendingSub == null) {
-				throw new EaterException("No corresponding !startsub");
-			}
-			final Sub newly = this.pendingSub;
-			this.pendingSub = null;
-			this.runSub(memory, newly);
-			return;
-		}
-		// if (this.inLongComment == false && type == TLineType.INCLUDESUB) {
-		// this.executeIncludesub(memory, s);
-		// return;
-		// }
-
-		if (pendingSub != null) {
-			pendingSub.add(s);
-			return;
+		} catch (EaterException e) {
+			throw e.withLocation(s);
 		}
 
-		if (this.getPendingFunction() != null) {
-			if (this.inLongComment == false && type == TLineType.END_FUNCTION) {
-				this.executeEndfunction();
-			} else {
-				this.getPendingFunction().addBody(s);
-			}
-			return;
+	}
+
+	private void executeLinesInternal(TMemory memory, List<StringLocated> body, TFunctionType ftype)
+			throws EaterExceptionLocated, EaterException {
+		final CodeIterator it = buildCodeIterator(memory, body);
+
+		StringLocated s = null;
+		while ((s = it.peek()) != null) {
+			executeOneLineSafe(memory, s, ftype);
+			it.next();
 		}
 
-		if (this.inLongComment && s.getTrimmed().getString().endsWith("'/")) {
-			this.inLongComment = false;
-			return;
-		}
+	}
 
-		if (type == TLineType.COMMENT_LONG_START) {
-			this.inLongComment = true;
-			return;
+	private void executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype)
+			throws EaterException, EaterExceptionLocated {
+		try {
+			this.debug.add(s);
+			executeOneLineNotSafe(memory, s, ftype);
+		} catch (Exception e) {
+			if (e instanceof EaterException)
+				throw (EaterException) e;
+			if (e instanceof EaterExceptionLocated)
+				throw (EaterExceptionLocated) e;
+			e.printStackTrace();
+			throw EaterException.located("Fatal parsing error", s);
 		}
-		if (this.inLongComment) {
-			return;
-		}
-		if (type == TLineType.COMMENT_SIMPLE) {
-			return;
-		}
-		s = s.removeInnerComment();
+	}
 
-		if (type == TLineType.IF) {
-			this.executeIf(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.IFDEF) {
-			this.executeIfdef(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.IFNDEF) {
-			this.executeIfndef(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.ELSE) {
-			this.executeElse(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.ELSEIF) {
-			this.executeElseIf(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.ENDIF) {
-			this.executeEndif(memory, s.getTrimmed().getString());
-			return;
-		}
+	private void executeOneLineNotSafe(TMemory memory, StringLocated s, TFunctionType ftype)
+			throws EaterException, EaterExceptionLocated {
+		final TLineType type = s.getType();
 
-		final ConditionalContext conditionalContext = memory.peekConditionalContext();
-		if (conditionalContext != null && memory.areAllIfOk() == false) {
-			return;
-		}
-		if (this.inLongComment == false && type == TLineType.INCLUDESUB) {
+		if (type == TLineType.INCLUDESUB) {
 			this.executeIncludesub(memory, s);
-			return;
-		}
-
-		if (type == TLineType.DUMP_MEMORY) {
-			this.executeDumpMemory(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.ASSERT) {
-			this.executeAssert(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.UNDEF) {
-			this.executeUndef(memory, s);
-			return;
-		} else if (fromType != TFunctionType.RETURN && type == TLineType.PLAIN) {
-			this.addPlain(memory, s);
-			return;
-		} else if (fromType == TFunctionType.RETURN && type == TLineType.RETURN) {
-			// Actually, ignore because we are in a if
-			return;
-		} else if (type == TLineType.LEGACY_DEFINE) {
-			this.executeLegacyDefine(memory, s);
-			return;
-		} else if (type == TLineType.LEGACY_DEFINELONG) {
-			this.executeLegacyDefineLong(memory, s);
-			return;
-		} else if (type == TLineType.AFFECTATION_DEFINE) {
-			this.executeAffectationDefine(memory, s.getTrimmed().getString());
-			return;
-		} else if (type == TLineType.AFFECTATION) {
-			this.executeAffectation(memory, s.getTrimmed().getString());
-			return;
-		} else if (fromType == null && type == TLineType.DECLARE_FUNCTION) {
-			this.executeDeclareFunction(memory, s);
-			return;
-		} else if (fromType == null && type == TLineType.END_FUNCTION) {
-			CommandExecutionResult.error("error endfunc");
 			return;
 		} else if (type == TLineType.INCLUDE) {
 			this.executeInclude(memory, s);
@@ -309,18 +265,39 @@ public class TContext {
 		} else if (type == TLineType.IMPORT) {
 			this.executeImport(memory, s);
 			return;
+		}
+
+		if (type == TLineType.DUMP_MEMORY) {
+			this.executeDumpMemory(memory, s.getTrimmed());
+			return;
+		} else if (type == TLineType.ASSERT) {
+			this.executeAssert(memory, s.getTrimmed());
+			return;
+		} else if (type == TLineType.UNDEF) {
+			this.executeUndef(memory, s);
+			return;
+		} else if (ftype != TFunctionType.RETURN && type == TLineType.PLAIN) {
+			this.addPlain(memory, s);
+			return;
+		} else if (ftype == TFunctionType.RETURN && type == TLineType.RETURN) {
+			// Actually, ignore because we are in a if
+			return;
+		} else if (type == TLineType.AFFECTATION_DEFINE) {
+			this.executeAffectationDefine(memory, s);
+			return;
+		} else if (ftype == null && type == TLineType.END_FUNCTION) {
+			CommandExecutionResult.error("error endfunc");
+			return;
 		} else if (type == TLineType.LOG) {
 			this.executeLog(memory, s);
 			return;
 		} else {
-			// Thread.dumpStack();
-			throw new EaterException("Parsing Error");
-			// throw new UnsupportedOperationException("type=" + type + " fromType=" + fromType);
+			throw EaterException.located("Parsing Error", s);
 		}
 	}
 
-	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
-		StringLocated tmp = applyFunctionsAndVariables(memory, s);
+	private void addPlain(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+		StringLocated tmp = applyFunctionsAndVariablesInternal(memory, s);
 		if (tmp != null) {
 			if (pendingAdd != null) {
 				tmp = new StringLocated(pendingAdd + tmp.getString(), tmp.getLocation());
@@ -330,136 +307,32 @@ public class TContext {
 		}
 	}
 
-	private void executeAffectationDefine(TMemory memory, String s) throws EaterException {
-		new EaterAffectationDefine(s).execute(this, memory);
+	private void executeAffectationDefine(TMemory memory, StringLocated s)
+			throws EaterException, EaterExceptionLocated {
+		new EaterAffectationDefine(s).analyze(this, memory);
 	}
 
-	private void executeAffectation(TMemory memory, String s) throws EaterException {
-		new EaterAffectation(s).execute(this, memory);
-	}
-
-	private void executeIf(TMemory memory, String s) throws EaterException {
-		final EaterIf condition = new EaterIf(s);
-		condition.execute(this, memory);
-		final boolean isTrue = condition.isTrue();
-		memory.addConditionalContext(ConditionalContext.fromValue(isTrue));
-	}
-
-	private void executeElseIf(TMemory memory, String s) throws EaterException {
-		final ConditionalContext poll = memory.peekConditionalContext();
-		if (poll == null) {
-			throw new EaterException("No if related to this else");
-		}
-
-		poll.enteringElseIf();
-		if (poll.hasBeenBurn() == false) {
-			final EaterElseIf condition = new EaterElseIf(s);
-			condition.execute(this, memory);
-			final boolean isTrue = condition.isTrue();
-			if (isTrue) {
-				poll.nowInSomeElseIf();
-			}
-		}
-	}
-
-	private void executeDumpMemory(TMemory memory, String s) throws EaterException {
+	private void executeDumpMemory(TMemory memory, StringLocated s) throws EaterException {
 		final EaterDumpMemory condition = new EaterDumpMemory(s);
-		condition.execute(this, memory);
+		condition.analyze(this, memory);
 	}
 
-	private void executeAssert(TMemory memory, String s) throws EaterException {
+	private void executeAssert(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
 		final EaterAssert condition = new EaterAssert(s);
-		condition.execute(this, memory);
-	}
-
-	private void executeIfdef(TMemory memory, String s) throws EaterException {
-		final EaterIfdef condition = new EaterIfdef(s);
-		condition.execute(this, memory);
-		final boolean isTrue = condition.isTrue(this, memory);
-		memory.addConditionalContext(ConditionalContext.fromValue(isTrue));
-	}
-
-	private void executeIfndef(TMemory memory, String s) throws EaterException {
-		final EaterIfndef condition = new EaterIfndef(s);
-		condition.execute(this, memory);
-		final boolean isTrue = condition.isTrue(this, memory);
-		memory.addConditionalContext(ConditionalContext.fromValue(isTrue));
-	}
-
-	private void executeElse(TMemory memory, String s) throws EaterException {
-		final ConditionalContext poll = memory.peekConditionalContext();
-		if (poll == null) {
-			throw new EaterException("No if related to this else");
-		}
-		poll.nowInElse();
-	}
-
-	private void executeEndif(TMemory memory, String s) throws EaterException {
-		final ConditionalContext poll = memory.pollConditionalContext();
-		if (poll == null) {
-			throw new EaterException("No if related to this endif");
-		}
-	}
-
-	private void executeDeclareFunction(TMemory memory, StringLocated s) throws EaterException {
-		if (this.pendingFunction != null) {
-			throw new EaterException("already0068");
-		}
-		final EaterDeclareFunction declareFunction = new EaterDeclareFunction(s);
-		declareFunction.execute(this, memory);
-		final boolean finalFlag = declareFunction.getFinalFlag();
-		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
-		final TFunction previous = functions2.get(declaredSignature);
-		if (previous != null && (finalFlag || functionsFinal.contains(declaredSignature))) {
-			throw new EaterException("This function is already defined");
-		}
-		if (finalFlag) {
-			functionsFinal.add(declaredSignature);
-		}
-		if (declareFunction.getFunction().hasBody()) {
-			addFunction(declareFunction.getFunction());
-		} else {
-			this.pendingFunction = declareFunction.getFunction();
-		}
+		condition.analyze(this, memory);
 	}
 
 	private void executeUndef(TMemory memory, StringLocated s) throws EaterException {
 		final EaterUndef undef = new EaterUndef(s);
-		undef.execute(this, memory);
+		undef.analyze(this, memory);
 	}
 
-	private void executeLegacyDefine(TMemory memory, StringLocated s) throws EaterException {
-		if (this.pendingFunction != null) {
-			throw new EaterException("already0048");
-		}
-		final EaterLegacyDefine legacyDefine = new EaterLegacyDefine(s);
-		legacyDefine.execute(this, memory);
-		final TFunction function = legacyDefine.getFunction();
-		// if (functions2.containsKey(function.getSignature())) {
-		// throw new EaterException("already0047");
-		// }
-		this.functions2.put(function.getSignature(), function);
-		this.functions3.add(function.getSignature().getFunctionName() + "(");
-	}
-
-	private void executeLegacyDefineLong(TMemory memory, StringLocated s) throws EaterException {
-		if (this.pendingFunction != null) {
-			throw new EaterException("already0068");
-		}
-		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);
-		legacyDefineLong.execute(this, memory);
-		// if (functions2.containsKey(legacyDefineLong.getFunction().getSignature())) {
-		// throw new EaterException("already0066");
-		// }
-		this.pendingFunction = legacyDefineLong.getFunction();
-	}
-
-	private StringLocated applyFunctionsAndVariables(TMemory memory, StringLocated located) throws EaterException {
-		if (memory.isEmpty() && functions2.size() == 0) {
+	private StringLocated applyFunctionsAndVariablesInternal(TMemory memory, StringLocated located)
+			throws EaterException, EaterExceptionLocated {
+		if (memory.isEmpty() && functionsSet.size() == 0) {
 			return located;
 		}
-		final String s = located.getString();
-		final String result = applyFunctionsAndVariables(memory, s);
+		final String result = applyFunctionsAndVariables(memory, located.getLocation(), located.getString());
 		if (result == null) {
 			return null;
 		}
@@ -468,127 +341,89 @@ public class TContext {
 
 	private String pendingAdd = null;
 
-	public String applyFunctionsAndVariables(TMemory memory, String s) throws EaterException {
+	public String applyFunctionsAndVariables(TMemory memory, LineLocation location, String str)
+			throws EaterException, EaterExceptionLocated {
 		// https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
 		// https://stackoverflow.com/questions/1326682/java-replacing-multiple-different-substring-in-a-string-at-once-or-in-the-most
 		// https://en.wikipedia.org/wiki/String-searching_algorithm
 		// https://www.quora.com/What-is-the-most-efficient-algorithm-to-replace-all-occurrences-of-a-pattern-P-in-a-string-with-a-pattern-P
 		// https://en.wikipedia.org/wiki/Trie
-		if (memory.isEmpty() && functions2.size() == 0) {
-			return s;
+		if (memory.isEmpty() && functionsSet.size() == 0) {
+			return str;
 		}
 		final StringBuilder result = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			final String presentFunction = getFunctionNameAt(s, i);
+		for (int i = 0; i < str.length(); i++) {
+			final char c = str.charAt(i);
+			final String presentFunction = getFunctionNameAt(str, i);
 			if (presentFunction != null) {
-				final String sub = s.substring(i);
-				final EaterFunctionCall call = new EaterFunctionCall(sub, isLegacyDefine(presentFunction),
-						isUnquoted(presentFunction));
-				call.execute(this, memory);
-				final TFunction function = getFunctionSmart(new TFunctionSignature(presentFunction, call.getValues()
-						.size()));
+				final String sub = str.substring(i);
+				final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(sub, location),
+						isLegacyDefine(presentFunction), isUnquoted(presentFunction));
+				call.analyze(this, memory);
+				final TFunction function = functionsSet
+						.getFunctionSmart(new TFunctionSignature(presentFunction, call.getValues().size()));
 				if (function == null) {
-					throw new EaterException("Function not found " + presentFunction);
+					throw EaterException.located("Function not found " + presentFunction,
+							new StringLocated(str, location));
 				}
 				if (function.getFunctionType() == TFunctionType.VOID) {
 					this.pendingAdd = result.toString();
-					executeVoid3(memory, sub, function);
+					executeVoid3(location, memory, sub, function);
 					return null;
 				}
 				if (function.getFunctionType() == TFunctionType.LEGACY_DEFINELONG) {
-					this.pendingAdd = s.substring(0, i);
-					executeVoid3(memory, sub, function);
+					this.pendingAdd = str.substring(0, i);
+					executeVoid3(location, memory, sub, function);
 					return null;
 				}
 				assert function.getFunctionType() == TFunctionType.RETURN
 						|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;
-				final TValue functionReturn = function.executeReturn(this, memory, call.getValues());
+				final TValue functionReturn = function.executeReturn(this, memory, location, call.getValues());
 				result.append(functionReturn.toString());
 				i += call.getCurrentPosition() - 1;
-				continue;
+			} else if (new VariableManager(this, memory, location).getVarnameAt(str, i) != null) {
+				i = new VariableManager(this, memory, location).replaceVariables(str, i, result);
+			} else {
+				result.append(c);
 			}
-			final String presentVariable = getVarnameAt(memory, s, i);
-			if (presentVariable != null) {
-				if (result.toString().endsWith("##")) {
-					result.setLength(result.length() - 2);
-				}
-				final TValue value = memory.getVariable(presentVariable).getValue();
-				i += presentVariable.length() - 1;
-				if (value.isJson()) {
-					JsonValue jsonValue = (JsonObject) value.toJson();
-					// System.err.println("jsonValue1=" + jsonValue);
-					i++;
-					while (true) {
-						final char n = s.charAt(i);
-						// System.err.println("n=" + n);
-						if (n != '.') {
-							if (jsonValue.isString()) {
-								result.append(jsonValue.asString());
-							} else {
-								result.append(jsonValue.toString());
-							}
-							break;
-						}
-						i++;
-						final StringBuilder fieldName = new StringBuilder();
-						while (true) {
-							if (Character.isJavaIdentifierPart(s.charAt(i)) == false) {
-								break;
-							}
-							fieldName.append(s.charAt(i));
-							i++;
-						}
-						// System.err.println("fieldName=" + fieldName);
-						jsonValue = ((JsonObject) jsonValue).get(fieldName.toString());
-						// System.err.println("jsonValue2=" + jsonValue);
-					}
-				} else {
-					result.append(value.toString());
-				}
-				if (i + 2 < s.length() && s.charAt(i + 1) == '#' && s.charAt(i + 2) == '#') {
-					i += 2;
-				}
-				continue;
-			}
-			result.append(c);
 		}
 		return result.toString();
 	}
 
-	private void executeVoid3(TMemory memory, String s, TFunction function) throws EaterException {
-		function.executeVoid(this, memory, s);
+	private void executeVoid3(LineLocation location, TMemory memory, String s, TFunction function)
+			throws EaterException, EaterExceptionLocated {
+		function.executeVoid(this, memory, location, s);
 	}
 
-	private void executeImport(TMemory memory, StringLocated s) throws EaterException {
-		final EaterImport _import = new EaterImport(s.getTrimmed().getString());
-		_import.execute(this, memory);
+	private void executeImport(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+		final EaterImport _import = new EaterImport(s.getTrimmed());
+		_import.analyze(this, memory);
 
 		try {
-			final File file = FileSystem.getInstance().getFile(
-					applyFunctionsAndVariables(memory, _import.getLocation()));
+			final File file = FileSystem.getInstance()
+					.getFile(applyFunctionsAndVariables(memory, s.getLocation(), _import.getLocation()));
 			if (file.exists() && file.isDirectory() == false) {
 				importedFiles.add(file);
 				return;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new EaterException("Cannot import " + e.getMessage());
+			throw EaterException.located("Cannot import " + e.getMessage(), s);
 		}
 
-		throw new EaterException("Cannot import");
+		throw EaterException.located("Cannot import", s);
 	}
 
-	private void executeLog(TMemory memory, StringLocated s) throws EaterException {
-		final EaterLog log = new EaterLog(s.getTrimmed().getString());
-		log.execute(this, memory);
+	private void executeLog(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+		final EaterLog log = new EaterLog(s.getTrimmed());
+		log.analyze(this, memory);
 	}
 
-	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
+	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
 		ImportedFiles saveImportedFiles = null;
 		try {
-			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed().getString());
-			include.execute(this, memory);
+			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
+			include.analyze(this, memory);
 			final String location = include.getLocation();
 			final int idx = location.indexOf('!');
 			Sub sub = null;
@@ -603,21 +438,20 @@ public class TContext {
 						final Reader reader = f2.getReader(charset);
 						ReadLine readerline = ReadLineReader.create(reader, location, s.getLocation());
 						readerline = new UncommentReadLine(readerline);
-						// readerline = new ReadLineQuoteComment(true).applyFilter(readerline);
 						sub = Sub.fromFile(readerline, blocname, this, memory);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
-					throw new EaterException("cannot include " + e);
+					throw EaterException.located("cannot include " + e, s);
 				}
 			}
 			if (sub == null) {
 				sub = subs.get(location);
 			}
 			if (sub == null) {
-				throw new EaterException("cannot include " + location);
+				throw EaterException.located("cannot include " + location, s);
 			}
-			runSub(memory, sub);
+			executeLinesInternal(memory, sub.lines(), null);
 		} finally {
 			if (saveImportedFiles != null) {
 				this.importedFiles = saveImportedFiles;
@@ -625,37 +459,32 @@ public class TContext {
 		}
 	}
 
-	private void runSub(TMemory memory, final Sub sub) throws EaterException {
-		for (StringLocated sl : sub.lines()) {
-			executeOneLine(memory, TLineType.getFromLine(sl.getString()), sl, null);
-		}
-	}
-
-	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException {
-		final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed().getString());
-		include.execute(this, memory);
+	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+		final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed());
+		include.analyze(this, memory);
 		final String definitionName = include.getLocation();
 		final List<String> definition = definitionsContainer.getDefinition(definitionName);
 		ReadLine reader2 = new ReadLineList(definition, s.getLocation());
 
 		try {
-			// reader2 = new ReadLineQuoteComment(true).applyFilter(reader2);
+			final List<StringLocated> body = new ArrayList<StringLocated>();
 			do {
 				final StringLocated sl = reader2.readLine();
 				if (sl == null) {
+					executeLinesInternal(memory, body, null);
 					return;
 				}
-				executeOneLine(memory, TLineType.getFromLine(sl.getString()), sl, null);
+				body.add(sl);
 			} while (true);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new EaterException("" + e);
+			throw EaterException.located("" + e, s);
 		}
 	}
 
-	private void executeInclude(TMemory memory, StringLocated s) throws EaterException {
-		final EaterInclude include = new EaterInclude(s.getTrimmed().getString());
-		include.execute(this, memory);
+	private void executeInclude(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+		final EaterInclude include = new EaterInclude(s.getTrimmed());
+		include.analyze(this, memory);
 		String location = include.getLocation();
 		final PreprocessorIncludeStrategy strategy = include.getPreprocessorIncludeStrategy();
 		final int idx = location.lastIndexOf('!');
@@ -682,7 +511,7 @@ public class TContext {
 						return;
 					}
 					if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2)) {
-						throw new EaterException("This file has already been included");
+						throw EaterException.located("This file has already been included", s);
 					}
 
 					if (StartDiagramExtractReader.containsStartDiagram(f2, s, charset)) {
@@ -690,7 +519,7 @@ public class TContext {
 					} else {
 						final Reader reader = f2.getReader(charset);
 						if (reader == null) {
-							throw new EaterException("Cannot include file");
+							throw EaterException.located("Cannot include file", s);
 						}
 						reader2 = ReadLineReader.create(reader, location, s.getLocation());
 					}
@@ -698,18 +527,18 @@ public class TContext {
 					this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
 					assert reader2 != null;
 					filesUsedCurrent.add(f2);
-					// filesUsedGlobal.add(f2);
 				}
 			}
 			if (reader2 != null) {
-				// reader2 = new ReadLineQuoteComment(true).applyFilter(reader2);
 				try {
+					final List<StringLocated> body = new ArrayList<StringLocated>();
 					do {
 						final StringLocated sl = reader2.readLine();
 						if (sl == null) {
+							executeLines(memory, body, null);
 							return;
 						}
-						executeOneLine(memory, TLineType.getFromLine(sl.getString()), sl, null);
+						body.add(sl);
 					} while (true);
 				} finally {
 					if (saveImportedFiles != null) {
@@ -719,14 +548,14 @@ public class TContext {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new EaterException("cannot include " + e);
+			throw EaterException.located("cannot include " + e, s);
 		}
 
-		throw new EaterException("cannot include " + location);
+		throw EaterException.located("cannot include " + location, s);
 	}
 
 	public boolean isLegacyDefine(String functionName) {
-		for (Map.Entry<TFunctionSignature, TFunction> ent : functions2.entrySet()) {
+		for (Map.Entry<TFunctionSignature, TFunction> ent : functionsSet.functions().entrySet()) {
 			if (ent.getKey().getFunctionName().equals(functionName) && ent.getValue().getFunctionType().isLegacy()) {
 				return true;
 			}
@@ -735,7 +564,7 @@ public class TContext {
 	}
 
 	public boolean isUnquoted(String functionName) {
-		for (Map.Entry<TFunctionSignature, TFunction> ent : functions2.entrySet()) {
+		for (Map.Entry<TFunctionSignature, TFunction> ent : functionsSet.functions().entrySet()) {
 			if (ent.getKey().getFunctionName().equals(functionName) && ent.getValue().isUnquoted()) {
 				return true;
 			}
@@ -744,7 +573,7 @@ public class TContext {
 	}
 
 	public boolean doesFunctionExist(String functionName) {
-		for (Map.Entry<TFunctionSignature, TFunction> ent : functions2.entrySet()) {
+		for (Map.Entry<TFunctionSignature, TFunction> ent : functionsSet.functions().entrySet()) {
 			if (ent.getKey().getFunctionName().equals(functionName)) {
 				return true;
 			}
@@ -752,30 +581,12 @@ public class TContext {
 		return false;
 	}
 
-	private static String getVarnameAt(TMemory memory, String s, int pos) {
-		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1)) && justAfterBackslashN(s, pos) == false) {
-			return null;
-		}
-		final String varname = memory.variablesNames3().getLonguestMatchStartingIn(s.substring(pos));
-		if (varname.length() == 0) {
-			return null;
-		}
-		if (pos + varname.length() == s.length()
-				|| TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos + varname.length())) == false) {
-			return varname;
-		}
-		return null;
-	}
-
-	private static boolean justAfterBackslashN(String s, int pos) {
-		return pos > 1 && s.charAt(pos - 2) == '\\' && s.charAt(pos - 1) == 'n';
-	}
-
 	private String getFunctionNameAt(String s, int pos) {
-		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1)) && justAfterBackslashN(s, pos) == false) {
+		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
+				&& VariableManager.justAfterBackslashN(s, pos) == false) {
 			return null;
 		}
-		final String fname = functions3.getLonguestMatchStartingIn(s.substring(pos));
+		final String fname = functionsSet.getLonguestMatchStartingIn(s.substring(pos));
 		if (fname.length() == 0) {
 			return null;
 		}
@@ -788,23 +599,6 @@ public class TContext {
 
 	public List<StringLocated> getDebug() {
 		return debug;
-	}
-
-	public final TFunctionImpl getPendingFunction() {
-		return pendingFunction;
-	}
-
-	private void addFunction(TFunction func) {
-		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG) {
-			((TFunctionImpl) func).finalizeEnddefinelong();
-		}
-		this.functions2.put(func.getSignature(), func);
-		this.functions3.add(func.getSignature().getFunctionName() + "(");
-	}
-
-	public void executeEndfunction() {
-		addFunction(pendingFunction);
-		pendingFunction = null;
 	}
 
 	public String extractFromResultList(int n1) {
@@ -826,6 +620,10 @@ public class TContext {
 			last = last.append(endOfLine);
 			resultList.set(idx, last);
 		}
+	}
+
+	public TFunction getFunctionSmart(TFunctionSignature signature) {
+		return functionsSet.getFunctionSmart(signature);
 	}
 
 }

@@ -36,9 +36,23 @@ package net.sourceforge.plantuml.tim;
 
 public enum TLineType {
 
-	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, DECLARE_FUNCTION, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START;
+	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
+	FOREACH, ENDFOREACH, DECLARE_FUNCTION, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, INCLUDE_DEF,
+	IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START;
 
-	public static TLineType getFromLine(String s) {
+//	private boolean elseLike() {
+//		return this == ELSE || this == ELSEIF;
+//	}
+//
+//	public boolean incIndentAfter() {
+//		return this == IF || this == IFDEF || this == IFNDEF || elseLike();
+//	}
+//
+//	public boolean decIndentBefore() {
+//		return this == ENDIF || elseLike();
+//	}
+
+	public static TLineType getFromLineInternal(String s) {
 		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*")) {
 			return LEGACY_DEFINE;
 		}
@@ -86,6 +100,18 @@ public enum TLineType {
 		}
 		if (s.matches("^\\s*!endif\\b.*")) {
 			return ENDIF;
+		}
+		if (s.matches("^\\s*!while\\s+.*")) {
+			return WHILE;
+		}
+		if (s.matches("^\\s*!endwhile\\b.*")) {
+			return ENDWHILE;
+		}
+		if (s.matches("^\\s*!foreach\\s+.*")) {
+			return FOREACH;
+		}
+		if (s.matches("^\\s*!endfor\\b.*")) {
+			return ENDFOREACH;
 		}
 		if (s.matches("^\\s*!(endfunction|enddefinelong)\\b.*")) {
 			return END_FUNCTION;

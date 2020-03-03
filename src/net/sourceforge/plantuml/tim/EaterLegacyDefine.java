@@ -34,25 +34,22 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 
 public class EaterLegacyDefine extends Eater {
 
 	private TFunctionImpl function;
-	private final LineLocation location;
 
 	public EaterLegacyDefine(StringLocated s) {
-		super(s.getTrimmed().getString());
-		this.location = s.getLocation();
+		super(s.getTrimmed());
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!define");
 		skipSpaces();
-		function = eatDeclareFunction(context, memory, true, location, false);
+		function = eatDeclareFunction(context, memory, true, getLineLocation(), false);
 		final String def = this.eatAllToEnd();
 		function.setFunctionType(TFunctionType.LEGACY_DEFINE);
 		function.setLegacyDefinition(def);

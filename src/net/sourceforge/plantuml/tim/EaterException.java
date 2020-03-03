@@ -39,23 +39,25 @@ import net.sourceforge.plantuml.StringLocated;
 public class EaterException extends Exception {
 
 	private final String message;
-	private final StringLocated location;
 
-	public EaterException(String message, StringLocated location) {
+	private EaterException(String message) {
 		this.message = message;
-		this.location = location;
 	}
 
-	public EaterException(String message) {
-		this(message, null);
+	public static EaterException unlocated(String message) {
+		return new EaterException(message);
+	}
+
+	public static EaterException located(String message, StringLocated unused) {
+		return new EaterException(message);
 	}
 
 	public final String getMessage() {
 		return message;
 	}
 
-	public final StringLocated getLocation() {
-		return location;
+	public EaterExceptionLocated withLocation(StringLocated sl) {
+		return EaterExceptionLocated.located(message, sl);
 	}
 
 }

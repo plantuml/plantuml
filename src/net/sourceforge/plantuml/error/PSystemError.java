@@ -221,11 +221,11 @@ public abstract class PSystemError extends AbstractPSystem {
 		}
 		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
 		// udrawable = addMessageAdopt(udrawable);
-		if (min == 1 || min == 8) {
+		if (min == 1 || min == 8 || min == 13 || min == 55) {
 			udrawable = addMessagePatreon(udrawable);
 		} else if (min == 15) {
 			udrawable = addMessageLiberapay(udrawable);
-		} else if (min == 30) {
+		} else if (min == 30 || min == 39 || min == 48) {
 			udrawable = addMessageDedication(udrawable);
 		} else if (getSource().containsIgnoreCase("arecibo")) {
 			udrawable = addMessageArecibo(udrawable);

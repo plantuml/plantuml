@@ -44,12 +44,12 @@ public class EaterDeclareFunction extends Eater {
 	private boolean finalFlag;
 
 	public EaterDeclareFunction(StringLocated s) {
-		super(s.getTrimmed().getString());
+		super(s.getTrimmed());
 		this.location = s.getLocation();
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!");
 		boolean unquoted = false;

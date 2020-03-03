@@ -34,9 +34,12 @@
  */
 package net.sourceforge.plantuml.tim.expression;
 
+import net.sourceforge.plantuml.json.JsonValue;
+
 public class Token {
 
 	private final String surface;
+	private final JsonValue json;
 	private final TokenType tokenType;
 
 	@Override
@@ -44,13 +47,14 @@ public class Token {
 		return tokenType + "{" + surface + "}";
 	}
 
-	public Token(char surface, TokenType tokenType) {
-		this("" + surface, tokenType);
+	public Token(char surface, TokenType tokenType, JsonValue json) {
+		this("" + surface, tokenType, json);
 	}
 
-	public Token(String surface, TokenType tokenType) {
+	public Token(String surface, TokenType tokenType, JsonValue json) {
 		this.surface = surface;
 		this.tokenType = tokenType;
+		this.json = json;
 	}
 
 	public TokenOperator getTokenOperator() {
@@ -73,7 +77,14 @@ public class Token {
 		if (this.tokenType != TokenType.PLAIN_TEXT) {
 			throw new IllegalStateException();
 		}
-		return new Token(surface, TokenType.FUNCTION_NAME);
+		return new Token(surface, TokenType.FUNCTION_NAME, null);
+	}
+
+	public JsonValue getJson() {
+		if (this.tokenType != TokenType.JSON_DATA) {
+			throw new IllegalStateException();
+		}
+		return json;
 	}
 
 }

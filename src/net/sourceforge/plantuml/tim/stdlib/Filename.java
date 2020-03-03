@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.stdlib;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
@@ -59,7 +60,7 @@ public class Filename extends SimpleReturnFunction {
 		return nbArg == 0;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		if (value == null) {
 			return TValue.fromString("");
 		}

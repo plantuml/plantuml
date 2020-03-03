@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
 
@@ -47,14 +48,14 @@ public class EaterFunctionCall extends Eater {
 	private final boolean isLegacyDefine;
 	private final boolean unquoted;
 
-	public EaterFunctionCall(String s, boolean isLegacyDefine, boolean unquoted) {
+	public EaterFunctionCall(StringLocated s, boolean isLegacyDefine, boolean unquoted) {
 		super(s);
 		this.isLegacyDefine = isLegacyDefine;
 		this.unquoted = unquoted;
 	}
 
 	@Override
-	public void execute(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		skipUntilChar('(');
 		checkAndEatChar('(');
 		skipSpaces();
@@ -66,7 +67,7 @@ public class EaterFunctionCall extends Eater {
 			skipSpaces();
 			if (isLegacyDefine || unquoted) {
 				final String tmp = eatAndGetOptionalQuotedString();
-				final String tmp2 = context.applyFunctionsAndVariables(memory, tmp);
+				final String tmp2 = context.applyFunctionsAndVariables(memory, getLineLocation(), tmp);
 				// final TVariable var = memory.getVariable(tmp);
 				// final TValue result = var == null ? TValue.fromString(tmp) : var.getValue2();
 				final TValue result = TValue.fromString(tmp2);
@@ -74,7 +75,7 @@ public class EaterFunctionCall extends Eater {
 			} else {
 				final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
 				tokens.guessFunctions();
-				final TValue result = tokens.getResult(context, memory);
+				final TValue result = tokens.getResult(getLineLocation(), context, memory);
 				values.add(result);
 			}
 			skipSpaces();
@@ -85,7 +86,7 @@ public class EaterFunctionCall extends Eater {
 			if (ch == ')') {
 				break;
 			}
-			throw new EaterException("call001");
+			throw EaterException.located("call001", getStringLocated());
 		}
 	}
 

@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -54,7 +55,7 @@ public class DateFunction extends SimpleReturnFunction {
 		return nbArg == 0 || nbArg == 1;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		if (args.size() == 0) {
 			return TValue.fromString(new Date().toString());
 		}
@@ -62,7 +63,7 @@ public class DateFunction extends SimpleReturnFunction {
 		try {
 			return TValue.fromString(new SimpleDateFormat(format).format(new Date()));
 		} catch (Exception e) {
-			throw new EaterException("Bad date pattern");
+			throw EaterException.unlocated("Bad date pattern");
 		}
 	}
 }

@@ -97,7 +97,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 			horizontalAlignment = style.getHorizontalAlignment();
 			fontForStereotype = stereo.getUFont();
 			htmlColorForStereotype = stereo.value(PName.FontColor).asColor(getIHtmlColorSet());
-			this.display = display.withoutStereotype(style);
+			this.display = display.withoutStereotypeIfNeeded(style);
 		} else {
 			this.font = fc.getFont();
 			this.fontColor = fc.getColor();
