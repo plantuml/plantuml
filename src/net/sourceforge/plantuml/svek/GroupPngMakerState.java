@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.cucadiagram.SuperGroup;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
@@ -68,6 +67,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class GroupPngMakerState {
 
@@ -149,12 +149,12 @@ public final class GroupPngMakerState {
 			throw new UnsupportedOperationException(group.getGroupType().toString());
 		}
 
-		HtmlColor borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
+		HColor borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
 		if (borderColor == null) {
 			borderColor = getColor(ColorParam.stateBorder, group.getStereotype());
 		}
 		final Stereotype stereo = group.getStereotype();
-		final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null
+		final HColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null
 				? getColor(ColorParam.stateBackground, stereo)
 				: group.getColors(skinParam).getColor(ColorType.BACK);
 		final TextBlockWidth attribute = getAttributes(skinParam);
@@ -219,7 +219,7 @@ public final class GroupPngMakerState {
 
 	private final Rose rose = new Rose();
 
-	private HtmlColor getColor(ColorParam colorParam, Stereotype stereo) {
+	private HColor getColor(ColorParam colorParam, Stereotype stereo) {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		return rose.getHtmlColor(skinParam, stereo, colorParam);
 	}

@@ -44,19 +44,17 @@ import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.PlanUtils;
 import net.sourceforge.plantuml.project.Solver3;
-import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.time.Wink;
 
-public class TaskImpl implements Task, LoadPlanable {
+public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
-	private final TaskCode code;
 	private final Solver3 solver;
 	private final Map<Resource, Integer> resources2 = new LinkedHashMap<Resource, Integer>();
 	private final LoadPlanable defaultPlan;
 	private boolean diamond;
-	
+
 	private Url url;
-	private TaskDraw taskDraw;
 	private ComplementColors colors;
 
 	public void setUrl(Url url) {
@@ -64,7 +62,7 @@ public class TaskImpl implements Task, LoadPlanable {
 	}
 
 	public TaskImpl(TaskCode code, LoadPlanable defaultPlan) {
-		this.code = code;
+		super(code);
 		this.defaultPlan = defaultPlan;
 		this.solver = new Solver3(this);
 		setStart(new Wink(0));
@@ -182,16 +180,6 @@ public class TaskImpl implements Task, LoadPlanable {
 		solver.setData(TaskAttribute.END, end);
 	}
 
-
-	public void setTaskDraw(TaskDraw taskDraw) {
-		taskDraw.setColorsAndCompletion(colors, completion, url);
-		this.taskDraw = taskDraw;
-	}
-
-	public TaskDraw getTaskDraw() {
-		return taskDraw;
-	}
-
 	public void setColors(ComplementColors colors) {
 		this.colors = colors;
 	}
@@ -212,6 +200,18 @@ public class TaskImpl implements Task, LoadPlanable {
 
 	public void setCompletion(int completion) {
 		this.completion = completion;
+	}
+
+	public final Url getUrl() {
+		return url;
+	}
+
+	public final ComplementColors getColors() {
+		return colors;
+	}
+
+	public final int getCompletion() {
+		return completion;
 	}
 
 }

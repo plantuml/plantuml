@@ -35,24 +35,23 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.project.core.TaskSeparator;
-import net.sourceforge.plantuml.project.core.Wink;
+import net.sourceforge.plantuml.project.core.AbstractTask;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TaskDrawSeparator implements TaskDraw {
 
@@ -62,8 +61,8 @@ public class TaskDrawSeparator implements TaskDraw {
 	private final Wink max;
 	private final String name;
 
-	public TaskDrawSeparator(TaskSeparator task, TimeScale timeScale, double y, Wink min, Wink max) {
-		this.name = task.getName();
+	public TaskDrawSeparator(String name, TimeScale timeScale, double y, Wink min, Wink max) {
+		this.name = name;
 		this.y = y;
 		this.timeScale = timeScale;
 		this.min = min;
@@ -71,7 +70,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	public void drawTitle(UGraphic ug) {
-		getTitle().drawU(ug.apply(new UTranslate(MARGIN1, 0)));
+		getTitle().drawU(ug.apply(UTranslate.dx(MARGIN1)));
 	}
 
 	private TextBlock getTitle() {
@@ -84,7 +83,7 @@ public class TaskDrawSeparator implements TaskDraw {
 
 	private FontConfiguration getFontConfiguration() {
 		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
+		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
 	private final static double MARGIN1 = 10;
@@ -95,36 +94,26 @@ public class TaskDrawSeparator implements TaskDraw {
 		final double start = timeScale.getStartingPosition(min) + widthTitle;
 		final double end = timeScale.getEndingPosition(max);
 
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-		ug = ug.apply(new UTranslate(0, getHeight() / 2));
+		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+		ug = ug.apply(UTranslate.dy(getHeight() / 2));
 
 		if (widthTitle == 0) {
-			final ULine line = new ULine(end - start, 0);
+			final ULine line = ULine.hline(end - start);
 			ug.draw(line);
 		} else {
-			final ULine line1 = new ULine(MARGIN1 - MARGIN2, 0);
-			final ULine line2 = new ULine(end - start - MARGIN1 - MARGIN2, 0);
+			final ULine line1 = ULine.hline(MARGIN1 - MARGIN2);
+			final ULine line2 = ULine.hline(end - start - MARGIN1 - MARGIN2);
 			ug.draw(line1);
-			ug.apply(new UTranslate(widthTitle + MARGIN1 + MARGIN2, 0)).draw(line2);
+			ug.apply(UTranslate.dx(widthTitle + MARGIN1 + MARGIN2)).draw(line2);
 		}
 	}
 
 	public double getHeight() {
-		return 16;
+		return AbstractTask.HEIGHT;
 	}
 
 	public double getY() {
 		return y;
-	}
-
-	public double getY(Direction direction) {
-		if (direction == Direction.UP) {
-			return y;
-		}
-		if (direction == Direction.DOWN) {
-			return y + getHeight();
-		}
-		return y + getHeight() / 2;
 	}
 
 	public void setColorsAndCompletion(ComplementColors colors, int completion, Url url) {

@@ -53,8 +53,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -72,6 +70,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class FtileGroup extends AbstractFtile {
@@ -80,8 +80,8 @@ public class FtileGroup extends AbstractFtile {
 	private final Ftile inner;
 	private final TextBlock name;
 	private final TextBlock headerNote;
-	private final HtmlColor borderColor;
-	private final HtmlColor backColor;
+	private final HColor borderColor;
+	private final HColor backColor;
 	private final double shadowing;
 	private final UStroke stroke;
 	private final USymbol type;
@@ -91,14 +91,14 @@ public class FtileGroup extends AbstractFtile {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}
 
-	public FtileGroup(Ftile inner, Display title, Display displayNote, HtmlColor arrowColor, HtmlColor backColor,
-			HtmlColor titleColor, ISkinParam skinParam, HtmlColor borderColor, USymbol type, double roundCorner) {
+	public FtileGroup(Ftile inner, Display title, Display displayNote, HColor arrowColor, HColor backColor,
+			HColor titleColor, ISkinParam skinParam, HColor borderColor, USymbol type, double roundCorner) {
 		super(inner.skinParam());
 		this.roundCorner = roundCorner;
 		this.type = type;
-		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
+		this.backColor = backColor == null ? HColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
-		this.borderColor = borderColor == null ? HtmlColorUtils.BLACK : borderColor;
+		this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
 
 		final FontConfiguration fc;
 		if (SkinParam.USE_STYLES()) {
@@ -107,7 +107,7 @@ public class FtileGroup extends AbstractFtile {
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
 			final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
-			final HtmlColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
+			final HColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
 			fc = new FontConfiguration(font, fontColor, skinParam.getHyperlinkColor(),
 					skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 			this.shadowing = skinParam().shadowing(null) ? 3 : 0;

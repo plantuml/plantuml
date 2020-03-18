@@ -103,7 +103,7 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 		comp.drawU(ug, new Area(dim), context);
 		for (Component note : notes) {
 			final Dimension2D dimNote = note.getPreferredDimension(stringBounder);
-			note.drawU(ug.apply(new UTranslate(x2 - x1, 0)), new Area(dimNote), context);
+			note.drawU(ug.apply(UTranslate.dx(x2 - x1)), new Area(dimNote), context);
 		}
 	}
 

@@ -76,17 +76,17 @@ public enum EntityPosition {
 			if (rankdir == Rankdir.TOP_TO_BOTTOM) {
 				final Shadowable rectangle = new URectangle(RADIUS * 2 * 4, RADIUS * 2);
 				ug.draw(rectangle);
-				final ULine vline = new ULine(0, RADIUS * 2);
-				ug.apply(new UTranslate(RADIUS * 2, 0)).draw(vline);
-				ug.apply(new UTranslate(RADIUS * 2 * 2, 0)).draw(vline);
-				ug.apply(new UTranslate(RADIUS * 2 * 3, 0)).draw(vline);
+				final ULine vline = ULine.vline(RADIUS * 2);
+				ug.apply(UTranslate.dx(RADIUS * 2)).draw(vline);
+				ug.apply(UTranslate.dx(RADIUS * 2 * 2)).draw(vline);
+				ug.apply(UTranslate.dx(RADIUS * 2 * 3)).draw(vline);
 			} else {
 				final Shadowable rectangle = new URectangle(RADIUS * 2, RADIUS * 2 * 4);
-				ug.apply(new UTranslate(0, 0)).draw(rectangle);
-				final ULine hline = new ULine(RADIUS * 2, 0);
-				ug.apply(new UTranslate(0, RADIUS * 2)).draw(hline);
-				ug.apply(new UTranslate(0, RADIUS * 2 * 2)).draw(hline);
-				ug.apply(new UTranslate(0, RADIUS * 2 * 3)).draw(hline);
+				ug.apply(UTranslate.dy(0)).draw(rectangle);
+				final ULine hline = ULine.hline(RADIUS * 2);
+				ug.apply(UTranslate.dy(RADIUS * 2)).draw(hline);
+				ug.apply(UTranslate.dy(RADIUS * 2 * 2)).draw(hline);
+				ug.apply(UTranslate.dy(RADIUS * 2 * 3)).draw(hline);
 			}
 		}
 

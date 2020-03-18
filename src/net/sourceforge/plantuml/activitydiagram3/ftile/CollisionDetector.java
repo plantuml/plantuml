@@ -40,10 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -57,6 +54,9 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class CollisionDetector implements UGraphic {
 
@@ -88,7 +88,7 @@ public class CollisionDetector implements UGraphic {
 					minmax.drawGrey(ug);
 				}
 			}
-			final HtmlColor color = HtmlColorUtils.BLACK;
+			final HColor color = HColorUtils.BLACK;
 			ug = ug.apply(new UChangeColor(color)).apply(new UStroke(5));
 			for (Snake snake : snakes) {
 				for (Line2D line : snake.getHorizontalLines()) {

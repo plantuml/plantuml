@@ -47,9 +47,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 
@@ -72,10 +72,10 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
 		String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
-		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet()
+		final HColor backColorElement = diagram.getSkinParam().getIHtmlColorSet()
 				.getColorIfValid(arg.get("COLORS", 0));
-		final HtmlColor backColorGeneral = diagram.getSkinParam().getIHtmlColorSet()
-				.getColorIfValid(arg.get("COLORS", 1), true);
+		final HColor backColorGeneral = diagram.getSkinParam().getIHtmlColorSet()
+				.getColorIfValid(arg.get("COLORS", 1), diagram.getSkinParam().getBackgroundColor());
 		String comment = arg.get("COMMENT", 0);
 		final GroupingType groupingType = GroupingType.getType(type);
 		if ("group".equals(type)) {

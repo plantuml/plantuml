@@ -35,17 +35,17 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.svek.extremity.MiddleCircleCircledMode;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactory;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactoryCircle;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactoryCircleCircled;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public enum LinkMiddleDecor {
 
 	NONE, CIRCLE, CIRCLE_CIRCLED, CIRCLE_CIRCLED1, CIRCLE_CIRCLED2;
 
-	public MiddleFactory getMiddleFactory(HtmlColor backColor) {
+	public MiddleFactory getMiddleFactory(HColor backColor) {
 		if (this == CIRCLE) {
 			return new MiddleFactoryCircle(backColor);
 		}

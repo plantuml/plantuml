@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.wbs.WBSDiagram;
 
 public class MindMapDiagram extends UmlDiagram {
@@ -134,7 +134,7 @@ public class MindMapDiagram extends UmlDiagram {
 				throw new UnsupportedOperationException();
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return null;
 			}
 		};
@@ -175,11 +175,11 @@ public class MindMapDiagram extends UmlDiagram {
 		}
 	}
 
-	public CommandExecutionResult addIdea(HtmlColor backColor, int level, Display label, IdeaShape shape) {
+	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape) {
 		return addIdea(backColor, level, label, shape, defaultDirection);
 	}
 
-	public CommandExecutionResult addIdea(HtmlColor backColor, int level, Display label, IdeaShape shape,
+	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape,
 			Direction direction) {
 		String stereotype = label.getEndingStereotype();
 		if (stereotype != null) {
@@ -205,7 +205,7 @@ public class MindMapDiagram extends UmlDiagram {
 		private Idea last;
 		private Finger finger;
 
-		private void initRoot(StyleBuilder styleBuilder, HtmlColor backColor, Display label, IdeaShape shape, String stereotype) {
+		private void initRoot(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape, String stereotype) {
 			root = new Idea(styleBuilder, backColor, label, shape, stereotype);
 			last = root;
 		}
@@ -218,7 +218,7 @@ public class MindMapDiagram extends UmlDiagram {
 			return result;
 		}
 
-		private CommandExecutionResult add(StyleBuilder styleBuilder, HtmlColor backColor, int level, Display label,
+		private CommandExecutionResult add(StyleBuilder styleBuilder, HColor backColor, int level, Display label,
 				IdeaShape shape, String stereotype) {
 			if (last == null) {
 				return CommandExecutionResult.error("Check your indentation ?");

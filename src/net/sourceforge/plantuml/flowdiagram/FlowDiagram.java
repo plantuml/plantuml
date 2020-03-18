@@ -57,11 +57,9 @@ import net.sourceforge.plantuml.golem.Tile;
 import net.sourceforge.plantuml.golem.TileArea;
 import net.sourceforge.plantuml.golem.TileGeometry;
 import net.sourceforge.plantuml.golem.TilesField;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -71,6 +69,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class FlowDiagram extends UmlDiagram implements TextBlock {
 
@@ -126,7 +126,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		UGraphicUtils.writeImage(os, null, fileFormatOption, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
+		UGraphicUtils.writeImage(os, null, fileFormatOption, seed(), new ColorMapperIdentity(), HColorUtils.WHITE,
 				this);
 		return ImageDataSimple.ok();
 	}
@@ -150,8 +150,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2),
 					(y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
 		}
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.MY_RED));
-		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.MY_RED));
+		ug = ug.apply(new UChangeColor(HColorUtils.MY_RED));
+		ug = ug.apply(new UChangeBackColor(HColorUtils.MY_RED));
 		final UShape arrow = new UEllipse(7, 7);
 		for (Path p : field.getPaths()) {
 			final TileArea start = p.getStart();

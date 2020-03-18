@@ -41,8 +41,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class EmptyImageBuilder {

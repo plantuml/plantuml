@@ -47,11 +47,11 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
 public class PSystemLicense extends AbstractPSystem implements UDrawable {
 
@@ -95,11 +95,11 @@ public class PSystemLicense extends AbstractPSystem implements UDrawable {
 
 			final TextBlockBackcolored result1 = getGraphicStrings(strings1);
 			result1.drawU(ug);
-			ug = ug.apply(new UTranslate(0, 4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));
+			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));
 			UImage im = new UImage(logo);
-			ug.apply(new UTranslate(20, 0)).draw(im);
+			ug.apply(UTranslate.dx(20)).draw(im);
 
-			ug = ug.apply(new UTranslate(0, im.getHeight()));
+			ug = ug.apply(UTranslate.dy(im.getHeight()));
 			final TextBlockBackcolored result2 = getGraphicStrings(strings2);
 			result2.drawU(ug);
 		}

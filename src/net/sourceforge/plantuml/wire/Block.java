@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -59,6 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Block extends AbstractTextBlock {
 
@@ -125,7 +125,7 @@ public class Block extends AbstractTextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
 		if (children.size() == 0) {
 			final TextBlock label = display.create(new FontConfiguration(skinParam, FontParam.COMPONENT, null),
 					HorizontalAlignment.CENTER, skinParam);

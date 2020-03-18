@@ -85,8 +85,8 @@ public class ElementBorder extends AbstractElement {
 		// - dimSouth.getHeight());
 
 		north.drawU(ug, zIndex, dimToUse);
-		south.drawU(ug.apply(new UTranslate(0, pC.getY())), zIndex, dimToUse);
-		west.drawU(ug.apply(new UTranslate(0, pA.getY())), zIndex, dimToUse);
+		south.drawU(ug.apply(UTranslate.dy(pC.getY())), zIndex, dimToUse);
+		west.drawU(ug.apply(UTranslate.dy(pA.getY())), zIndex, dimToUse);
 		east.drawU(ug.apply(new UTranslate(pB.getX(), pB.getY())), zIndex, dimToUse);
 		center.drawU(ug.apply(new UTranslate(pA.getX(), pA.getY())), zIndex, dimToUse);
 	}

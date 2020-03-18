@@ -53,7 +53,7 @@ public class FtileMargedVertically extends FtileDecorate {
 
 	public void drawU(UGraphic ug) {
 		if (margin1 > 0) {
-			ug = ug.apply(new UTranslate(0, margin1));
+			ug = ug.apply(UTranslate.dy(margin1));
 		}
 		ug.draw(getFtileDelegated());
 	}

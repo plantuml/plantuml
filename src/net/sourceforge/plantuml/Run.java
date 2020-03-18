@@ -291,8 +291,8 @@ public class Run {
 		}
 
 		final String name = getSpriteName(fileName);
-		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level) : SpriteUtils.encode(im, name,
-				level);
+		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level)
+				: SpriteUtils.encode(im, name, level);
 		System.out.println(s);
 	}
 
@@ -326,8 +326,8 @@ public class Run {
 	public static void printFonts() {
 		final Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 		for (Font f : fonts) {
-			System.out.println("f=" + f + "/" + f.getPSName() + "/" + f.getName() + "/" + f.getFontName() + "/"
-					+ f.getFamily());
+			System.out.println(
+					"f=" + f + "/" + f.getPSName() + "/" + f.getName() + "/" + f.getFontName() + "/" + f.getFamily());
 		}
 		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 		for (String n : name) {
@@ -458,8 +458,8 @@ public class Run {
 		ProgressBar.incTotal(nb);
 	}
 
-	private static void manageFileInternal(File f, Option option, ErrorStatus error) throws IOException,
-			InterruptedException {
+	private static void manageFileInternal(File f, Option option, ErrorStatus error)
+			throws IOException, InterruptedException {
 		Log.info("Working on " + f.getAbsolutePath());
 		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			System.out.println("------------------------");
@@ -540,9 +540,19 @@ public class Run {
 			final File file = suggested.getFile(0);
 			Log.info("Export preprocessing source to " + file.getAbsolutePath());
 			final PrintWriter pw = charset == null ? new PrintWriter(file) : new PrintWriter(file, charset);
-			for (CharSequence s : blockUml.getDefinition(true)) {
+			int level = 0;
+			for (CharSequence cs : blockUml.getDefinition(true)) {
+				String s = cs.toString();
 				if (cypher != null) {
-					s = cypher.cypher(s.toString());
+					if (s.contains("skinparam") && s.contains("{")) {
+						level++;
+					}
+					if (level == 0 && s.contains("skinparam") == false) {
+						s = cypher.cypher(s);
+					}
+					if (level > 0 && s.contains("}")) {
+						level--;
+					}
 				}
 				pw.println(s);
 			}

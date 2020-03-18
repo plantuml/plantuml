@@ -35,17 +35,17 @@
 package net.sourceforge.plantuml.ugraphic.svg;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 
@@ -70,13 +70,13 @@ public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 			}
 		}
 
-		final HtmlColor back = param.getBackcolor();
-		if (back instanceof HtmlColorGradient) {
-			final HtmlColorGradient gr = (HtmlColorGradient) back;
+		final HColor back = param.getBackcolor();
+		if (back instanceof HColorGradient) {
+			final HColorGradient gr = (HColorGradient) back;
 			final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
 					StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
-		} else if (back == null || back instanceof HtmlColorTransparent) {
+		} else if (back == null || back instanceof HColorBackground) {
 			svg.setFillColor("none");
 		} else {
 			final String backcolor = StringUtils.getAsSvg(mapper, back);

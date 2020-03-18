@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 
 public interface TimeProjected {
 

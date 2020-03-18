@@ -36,14 +36,14 @@ package net.sourceforge.plantuml.ugraphic.tikz;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class DriverUTextTikz implements UDriver<TikzGraphics> {
 
@@ -51,7 +51,7 @@ public class DriverUTextTikz implements UDriver<TikzGraphics> {
 		final UText shape = (UText) ushape;
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 		final UFont font = fontConfiguration.getFont();
-		final HtmlColor col = fontConfiguration.getColor();
+		final HColor col = fontConfiguration.getColor();
 		tikz.setStrokeColor(mapper.getMappedColor(col));
 		final boolean underline = fontConfiguration.containsStyle(FontStyle.UNDERLINE);
 		final boolean italic = font.isItalic();

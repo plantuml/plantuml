@@ -49,11 +49,9 @@ import net.sourceforge.plantuml.eps.EpsGraphicsMacroAndText;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -61,6 +59,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class DriverTextEps implements UDriver<EpsGraphics> {
 
@@ -115,7 +115,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		drawPathIterator(eps, x, y, getOutline(textLayout));
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
+			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				eps.setStrokeColor(mapper.getMappedColor(extended));
 			}
@@ -131,7 +131,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 				dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
 			}
 			final int ypos = (int) (y + 2.5) - 1;
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
+			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				eps.setStrokeColor(mapper.getMappedColor(extended));
 			}
@@ -143,7 +143,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			eps.setStrokeWidth(1, 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
+			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				eps.setStrokeColor(mapper.getMappedColor(extended));
 			}

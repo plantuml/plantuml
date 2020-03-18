@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageDesignedDomain extends AbstractEntityImage {
 	final private TextBlock name;
@@ -125,11 +125,11 @@ public class EntityImageDesignedDomain extends AbstractEntityImage {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final URectangle rect = new URectangle(widthTotal, heightTotal, 0, 0);
-		URectangle rect2 = new URectangle(4, heightTotal, 0, 0);
+		final URectangle rect = new URectangle(widthTotal, heightTotal);
+		URectangle rect2 = new URectangle(4, heightTotal);
 
 		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.designedBorder)));
-		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.designedBackground);
 		}
@@ -144,7 +144,7 @@ public class EntityImageDesignedDomain extends AbstractEntityImage {
 
 		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
 		header.add(name);
-		header.drawU(ug.apply(new UTranslate(4, 0)), dimTotal.getWidth(), dimTitle.getHeight());
+		header.drawU(ug.apply(UTranslate.dx(4)), dimTotal.getWidth(), dimTitle.getHeight());
 
 		if (url != null) {
 			ug.closeAction();

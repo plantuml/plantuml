@@ -71,7 +71,6 @@ import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -80,6 +79,7 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 final public class EntityImpl implements ILeaf, IGroup {
@@ -683,7 +683,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public FontConfiguration getFontConfigurationForTitle(final ISkinParam skinParam) {
 		final FontParam fontParam = getTitleFontParam();
-		final HtmlColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);
+		final HColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);
 		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);
 		final FontConfiguration fontConfiguration = new FontConfiguration(font, fontHtmlColor,
 				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
@@ -732,7 +732,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.colors = colors;
 	}
 
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
+	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
 		if (color != null) {
 			this.colors = colors.add(type, color);
 		}

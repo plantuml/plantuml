@@ -53,10 +53,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.creole.CommandCreoleImg;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.creole.command.CommandCreoleImg;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.sprite.SpriteUtils;
@@ -64,6 +61,9 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Stereotype implements CharSequence {
 	private final static RegexComposed circleChar = new RegexConcat( //
@@ -103,12 +103,12 @@ public class Stereotype implements CharSequence {
 	private final boolean automaticPackageStyle;
 
 	private String label;
-	private HtmlColor htmlColor;
+	private HColor htmlColor;
 	private char character;
 	private String spriteName;
 	private double spriteScale;
 
-	public Stereotype(String label, double radius, UFont circledFont, IHtmlColorSet htmlColorSet) {
+	public Stereotype(String label, double radius, UFont circledFont, HColorSet htmlColorSet) {
 		this(label, radius, circledFont, true, htmlColorSet);
 	}
 
@@ -129,7 +129,7 @@ public class Stereotype implements CharSequence {
 	}
 
 	public Stereotype(String label, double radius, UFont circledFont, boolean automaticPackageStyle,
-			IHtmlColorSet htmlColorSet) {
+			HColorSet htmlColorSet) {
 		if (label == null) {
 			throw new IllegalArgumentException();
 		}
@@ -153,8 +153,8 @@ public class Stereotype implements CharSequence {
 					local = null;
 				}
 				final String colName = mCircleSprite.get("COLOR", 0);
-				final HtmlColor col = htmlColorSet.getColorIfValid(colName);
-				this.htmlColor = col == null ? HtmlColorUtils.BLACK : col;
+				final HColor col = htmlColorSet.getColorIfValid(colName);
+				this.htmlColor = col == null ? HColorUtils.BLACK : col;
 				this.spriteName = mCircleSprite.get("NAME", 0);
 				this.character = '\0';
 				this.spriteScale = CommandCreoleImg.getScale(mCircleSprite.get("SCALE", 0), 1);
@@ -182,7 +182,7 @@ public class Stereotype implements CharSequence {
 		this(label, true);
 	}
 
-	public HtmlColor getHtmlColor() {
+	public HColor getHtmlColor() {
 		return htmlColor;
 	}
 

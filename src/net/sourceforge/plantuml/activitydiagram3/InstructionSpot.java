@@ -39,20 +39,20 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionSpot extends MonoSwimable implements Instruction {
 
 	private boolean killed = false;
 	private final LinkRendering inlinkRendering;
 	private final String spot;
-	private final HtmlColor color;
+	private final HColor color;
 
 	public boolean containsBreak() {
 		return false;
 	}
 
-	public InstructionSpot(String spot, HtmlColor color, LinkRendering inlinkRendering, Swimlane swimlane) {
+	public InstructionSpot(String spot, HColor color, LinkRendering inlinkRendering, Swimlane swimlane) {
 		super(swimlane);
 		this.spot = spot;
 		this.inlinkRendering = inlinkRendering;

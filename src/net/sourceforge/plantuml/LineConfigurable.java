@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface LineConfigurable {
 
 	public Colors getColors(ISkinParam skinParam);
 	
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
+	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color);
 
 
 

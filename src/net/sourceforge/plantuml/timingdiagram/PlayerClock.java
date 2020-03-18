@@ -39,32 +39,38 @@ import java.math.BigDecimal;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrameEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class PlayerClock extends ReallyAbstractPlayer implements Player {
+public class PlayerClock extends Player {
 
 	private final int period;
 	private final int pulse;
 
-	public PlayerClock(TitleStrategy titleStrategy, ISkinParam skinParam, TimingRuler ruler, int period, int pulse) {
-		super(titleStrategy, "", skinParam, ruler);
+	public PlayerClock(ISkinParam skinParam, TimingRuler ruler, int period, int pulse) {
+		super("", skinParam, ruler);
 		this.period = period;
 		this.pulse = pulse;
 	}
 
-	public double getHeight(StringBounder striWngBounder) {
+	public double getFullHeight(StringBounder striWngBounder) {
 		return 30;
 	}
 
 	private SymbolContext getContext() {
-		return new SymbolContext(HtmlColorUtils.COL_D7E0F2, HtmlColorUtils.COL_038048).withStroke(new UStroke(1.5));
+		return new SymbolContext(HColorUtils.COL_D7E0F2, HColorUtils.COL_038048).withStroke(new UStroke(1.5));
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
@@ -90,35 +96,7 @@ public class PlayerClock extends ReallyAbstractPlayer implements Player {
 	private final double ymargin = 8;
 
 	public PlayerFrame getPlayerFrame() {
-		return new PlayerFrame() {
-			public void drawFrameTitle(UGraphic ug) {
-			}
-		};
-	}
-
-	public void drawContent(UGraphic ug) {
-		ug = getContext().apply(ug);
-		final ULine vline = new ULine(0, getHeight(ug.getStringBounder()) - 2 * ymargin);
-		int i = 0;
-		double lastx = -Double.MAX_VALUE;
-		while (i < 1000) {
-			final double x = ruler.getPosInPixel(new TimeTick(new BigDecimal(i * period), TimingFormat.DECIMAL));
-			if (x > ruler.getWidth()) {
-				return;
-			}
-			i++;
-			if (x > lastx) {
-				final double dx = x - lastx;
-				final ULine hline1 = new ULine(dx * getPulseCoef(), 0);
-				final ULine hline2 = new ULine(dx * (1 - getPulseCoef()), 0);
-				ug.apply(new UTranslate(lastx, ymargin)).draw(vline);
-				ug.apply(new UTranslate(lastx, ymargin)).draw(hline1);
-				final double x2 = lastx + dx * getPulseCoef();
-				ug.apply(new UTranslate(x2, ymargin)).draw(vline);
-				ug.apply(new UTranslate(x2, ymargin + vline.getDY())).draw(hline2);
-			}
-			lastx = x;
-		}
+		return new PlayerFrameEmpty();
 	}
 
 	private double getPulseCoef() {
@@ -128,16 +106,42 @@ public class PlayerClock extends ReallyAbstractPlayer implements Player {
 		return 1.0 * pulse / period;
 	}
 
-	public void drawLeftHeader(UGraphic ug) {
-
-	}
-
-	public double getWidthHeader(StringBounder stringBounder) {
-		return 0;
-	}
-
 	public final int getPeriod() {
 		return period;
+	}
+
+	public TextBlock getPart1() {
+		return TextBlockUtils.empty(0, 0);
+	}
+
+	public UDrawable getPart2() {
+		return new UDrawable() {
+			public void drawU(UGraphic ug) {
+				ug = getContext().apply(ug);
+				final ULine vline = ULine.vline(getFullHeight(ug.getStringBounder()) - 2 * ymargin);
+				int i = 0;
+				double lastx = -Double.MAX_VALUE;
+				while (i < 1000) {
+					final double x = ruler
+							.getPosInPixel(new TimeTick(new BigDecimal(i * period), TimingFormat.DECIMAL));
+					if (x > ruler.getWidth()) {
+						return;
+					}
+					i++;
+					if (x > lastx) {
+						final double dx = x - lastx;
+						final ULine hline1 = ULine.hline(dx * getPulseCoef());
+						final ULine hline2 = ULine.hline(dx * (1 - getPulseCoef()));
+						ug.apply(new UTranslate(lastx, ymargin)).draw(vline);
+						ug.apply(new UTranslate(lastx, ymargin)).draw(hline1);
+						final double x2 = lastx + dx * getPulseCoef();
+						ug.apply(new UTranslate(x2, ymargin)).draw(vline);
+						ug.apply(new UTranslate(x2, ymargin + vline.getDY())).draw(hline2);
+					}
+					lastx = x;
+				}
+			}
+		};
 	}
 
 }

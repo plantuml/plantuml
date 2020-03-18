@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SwimlanesC extends SwimlanesB {
 
@@ -70,17 +70,17 @@ public class SwimlanesC extends SwimlanesB {
 		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);
 
 		for (Swimlane swimlane : swimlanes) {
-			drawSeparation(ug.apply(new UTranslate(x2, 0)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
+			drawSeparation(ug.apply(UTranslate.dx(x2)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
 
 			x2 += swimlane.getActualWidth();
 
 		}
-		drawSeparation(ug.apply(new UTranslate(x2, 0)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
+		drawSeparation(ug.apply(UTranslate.dx(x2)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
 
 	}
 
 	private void drawSeparation(UGraphic ug, double height) {
-		HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneBorder, null, false);
+		HColor color = skinParam.getHtmlColor(ColorParam.swimlaneBorder, null, false);
 		if (color == null) {
 			color = ColorParam.swimlaneBorder.getDefaultValue();
 		}
@@ -89,7 +89,7 @@ public class SwimlanesC extends SwimlanesB {
 			color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			thickness = getStyle().getStroke();
 		}
-		ug.apply(thickness).apply(new UChangeColor(color)).draw(new ULine(0, height));
+		ug.apply(thickness).apply(new UChangeColor(color)).draw(ULine.vline(height));
 	}
 
 }

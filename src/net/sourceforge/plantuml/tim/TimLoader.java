@@ -35,10 +35,12 @@
 package net.sourceforge.plantuml.tim;
 
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 
 public class TimLoader {
@@ -58,7 +60,7 @@ public class TimLoader {
 		}
 	}
 
-	public void load(List<StringLocated> list) {
+	public Set<FileWithSuffix> load(List<StringLocated> list) {
 //		CodeIteratorImpl.indentNow(list);
 		try {
 			context.executeLines(global, list, null);
@@ -68,6 +70,7 @@ public class TimLoader {
 			this.preprocessorError = true;
 		}
 		this.resultList = context.getResultList();
+		return context.getFilesUsedCurrent();
 	}
 
 	private void changeLastLine(List<StringLocated> list, String message) {

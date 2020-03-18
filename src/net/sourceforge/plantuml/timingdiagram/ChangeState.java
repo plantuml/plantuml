@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ChangeState implements Comparable<ChangeState> {
 
@@ -79,16 +79,16 @@ public class ChangeState implements Comparable<ChangeState> {
 		return comment;
 	}
 
-	public final HtmlColor getBackColor() {
+	public final HColor getBackColor() {
 		if (colors == null || colors.getColor(ColorType.BACK) == null) {
-			return HtmlColorUtils.COL_D7E0F2;
+			return HColorUtils.COL_D7E0F2;
 		}
 		return colors.getColor(ColorType.BACK);
 	}
 
-	private final HtmlColor getLineColor() {
+	private final HColor getLineColor() {
 		if (colors == null || colors.getColor(ColorType.LINE) == null) {
-			return HtmlColorUtils.COL_038048;
+			return HColorUtils.COL_038048;
 		}
 		return colors.getColor(ColorType.LINE);
 	}

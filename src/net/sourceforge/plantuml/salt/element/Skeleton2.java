@@ -61,13 +61,13 @@ public class Skeleton2 {
 		void drawHline(UGraphic ug) {
 			final double xpos = getXStartForLevel(level);
 			ug.apply(new UTranslate(xpos + sizeX - 1, ypos - 1)).draw(new URectangle(2, 2));
-			ug.apply(new UTranslate(xpos, ypos)).draw(new ULine(sizeX, 0));
+			ug.apply(new UTranslate(xpos, ypos)).draw(ULine.hline(sizeX));
 		}
 
 		public void drawVline(UGraphic ug, double lastY) {
 			// System.err.println("ypos=" + ypos);
 			final double xpos = getXStartForLevel(level);
-			ug.apply(new UTranslate(xpos, lastY)).draw(new ULine(0, ypos - lastY));
+			ug.apply(new UTranslate(xpos, lastY)).draw(ULine.vline(ypos - lastY));
 		}
 	}
 
@@ -124,7 +124,7 @@ public class Skeleton2 {
 	//
 	// private void drawChild(UGraphic ug, Entry parent, Entry child) {
 	// final double dy = child.ypos - parent.ypos - 2;
-	// ug.apply(new UTranslate(parent.xpos + 1, parent.ypos + 3)).draw(new ULine(0, dy));
+	// ug.apply(new UTranslate(parent.xpos + 1, parent.ypos + 3)).draw(ULine.dy(dy));
 	//
 	// final double dx = child.xpos - parent.xpos - 2;
 	// ug.apply(new UTranslate(parent.xpos + 1, child.ypos + 1)).draw(new ULine(dx, 0));

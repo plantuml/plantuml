@@ -45,11 +45,11 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 
@@ -66,7 +66,7 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 		return skinParam;
 	}
 
-	final public IHtmlColorSet getIHtmlColorSet() {
+	final public HColorSet getIHtmlColorSet() {
 		return skinParam.getIHtmlColorSet();
 	}
 

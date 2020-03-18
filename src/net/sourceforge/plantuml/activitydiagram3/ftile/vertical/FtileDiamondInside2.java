@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -58,11 +57,12 @@ import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileDiamondInside2 extends AbstractFtile {
 
-	private final HtmlColor backColor;
-	private final HtmlColor borderColor;
+	private final HColor backColor;
+	private final HColor borderColor;
 	private final Swimlane swimlane;
 	private final TextBlock label;
 	private final TextBlock west;
@@ -71,7 +71,7 @@ public class FtileDiamondInside2 extends AbstractFtile {
 	private final TextBlock south;
 	private final double shadowing;
 
-	public FtileDiamondInside2(ISkinParam skinParam, HtmlColor backColor, HtmlColor borderColor, Swimlane swimlane,
+	public FtileDiamondInside2(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
 			TextBlock label) {
 		this(skinParam, backColor, borderColor, swimlane, label, TextBlockUtils.empty(0, 0),
 				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));
@@ -97,7 +97,7 @@ public class FtileDiamondInside2 extends AbstractFtile {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	private FtileDiamondInside2(ISkinParam skinParam, HtmlColor backColor, HtmlColor borderColor, Swimlane swimlane,
+	private FtileDiamondInside2(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
 			TextBlock label, TextBlock north, TextBlock south, TextBlock west, TextBlock east) {
 		super(skinParam);
 		if (SkinParam.USE_STYLES()) {

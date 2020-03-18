@@ -37,16 +37,16 @@ package net.sourceforge.plantuml.ugraphic.svg;
 import java.awt.geom.Line2D;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverLineSvg implements UDriver<SvgGraphics> {
 
@@ -79,9 +79,9 @@ public class DriverLineSvg implements UDriver<SvgGraphics> {
 		// svg.svgLineShadow(x, y, x2, y2, shape.getDeltaShadow());
 		// }
 
-		final HtmlColor color = param.getColor();
-		if (color instanceof HtmlColorGradient) {
-			final HtmlColorGradient gr = (HtmlColorGradient) color;
+		final HColor color = param.getColor();
+		if (color instanceof HColorGradient) {
+			final HColorGradient gr = (HColorGradient) color;
 			svg.setStrokeColor(StringUtils.getAsSvg(mapper, gr.getColor1()));
 		} else {
 			svg.setStrokeColor(StringUtils.getAsSvg(mapper, color));

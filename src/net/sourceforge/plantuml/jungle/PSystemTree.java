@@ -45,12 +45,12 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UDrawableUtils;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PSystemTree extends AbstractPSystem {
 
@@ -65,7 +65,7 @@ public class PSystemTree extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE, null, null,
+		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE, null, null,
 				5, 5, null, false);
 		if (rendering == Rendering.NEEDLE) {
 			final UDrawable tmp = Needle.getNeedle(root, 200, 0, 60);

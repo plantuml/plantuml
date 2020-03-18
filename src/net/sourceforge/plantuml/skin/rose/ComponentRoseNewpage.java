@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -46,12 +45,13 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComponentRoseNewpage extends AbstractComponent {
 
-	private final HtmlColor foregroundColor;
+	private final HColor foregroundColor;
 
-	public ComponentRoseNewpage(Style style, HtmlColor foregroundColor) {
+	public ComponentRoseNewpage(Style style, HColor foregroundColor) {
 		super(style);
 		this.foregroundColor = foregroundColor;
 	}
@@ -60,7 +60,7 @@ public class ComponentRoseNewpage extends AbstractComponent {
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(new UChangeColor(foregroundColor));
-		ug.draw(new ULine(dimensionToUse.getWidth(), 0));
+		ug.draw(ULine.hline(dimensionToUse.getWidth()));
 	}
 
 	@Override

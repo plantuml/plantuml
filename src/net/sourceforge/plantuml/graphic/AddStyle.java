@@ -35,13 +35,14 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class AddStyle implements FontChange {
 
 	private final FontStyle style;
-	private final HtmlColor extendedColor;
+	private final HColor extendedColor;
 
-	public AddStyle(FontStyle style, HtmlColor extendedColor) {
+	public AddStyle(FontStyle style, HColor extendedColor) {
 		this.style = style;
 		this.extendedColor = extendedColor;
 	}

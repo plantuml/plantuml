@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -65,14 +64,15 @@ import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageTips extends AbstractEntityImage {
 
 	final private Rose rose = new Rose();
 	private final ISkinParam skinParam;
 
-	private final HtmlColor noteBackgroundColor;
-	private final HtmlColor borderColor;
+	private final HColor noteBackgroundColor;
+	private final HColor borderColor;
 
 	private final Bibliotekon bibliotekon;
 
@@ -151,7 +151,7 @@ public class EntityImageTips extends AbstractEntityImage {
 			final Point2D pp2 = new Point2D.Double(x, y);
 			opale.setOpale(direction, pp1, pp2);
 			opale.drawU(ug);
-			ug = ug.apply(new UTranslate(0, dim.getHeight() + ySpacing));
+			ug = ug.apply(UTranslate.dy(dim.getHeight() + ySpacing));
 			height += dim.getHeight();
 			height += ySpacing;
 		}

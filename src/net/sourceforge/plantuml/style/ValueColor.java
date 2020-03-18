@@ -35,20 +35,20 @@
  */
 package net.sourceforge.plantuml.style;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ValueColor extends ValueAbstract {
 
-	private final HtmlColor color;
+	private final HColor color;
 	private final int priority;
 
-	public ValueColor(HtmlColor color, int priority) {
+	public ValueColor(HColor color, int priority) {
 		this.color = color;
 		this.priority = priority;
 	}
 
-	public HtmlColor asColor(IHtmlColorSet set) {
+	public HColor asColor(HColorSet set) {
 		return color;
 	}
 

@@ -34,32 +34,53 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public interface Player extends TimeProjected {
+public abstract class Player implements TimeProjected {
 
-	public void addNote(TimeTick now, Display note, Position position);
+	protected final ISkinParam skinParam;
+	protected final TimingRuler ruler;
+	private final Display title;
 
-	public void defineState(String stateCode, String label);
+	public Player(String title, ISkinParam skinParam, TimingRuler ruler) {
+		this.skinParam = skinParam;
+		this.ruler = ruler;
+		this.title = Display.getWithNewlines(title);
+	}
 
-	public void setState(TimeTick now, String comment, Colors color, String... states);
+	final protected FontConfiguration getFontConfiguration() {
+		return new FontConfiguration(skinParam, FontParam.TIMING, null);
+	}
 
-	public void createConstraint(TimeTick tick1, TimeTick tick2, String message);
+	final protected TextBlock getTitle() {
+		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+	}
 
-	public PlayerFrame getPlayerFrame();
+	public abstract void addNote(TimeTick now, Display note, Position position);
 
-	public void drawContent(UGraphic ug);
+	public abstract void defineState(String stateCode, String label);
 
-	public void drawLeftHeader(UGraphic ug);
+	public abstract void setState(TimeTick now, String comment, Colors color, String... states);
 
-	public double getWidthHeader(StringBounder stringBounder);
+	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message);
 
-	public double getHeight(StringBounder stringBounder);
+	public abstract PlayerFrame getPlayerFrame();
 
-	public double getFirstColumnWidth(StringBounder stringBounder);
+	public abstract TextBlock getPart1();
+
+	public abstract UDrawable getPart2();
+
+	public abstract double getFullHeight(StringBounder stringBounder);
 
 }

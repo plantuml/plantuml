@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
 
@@ -86,14 +87,14 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 		for (TextBlock block : blocks) {
 			final Dimension2D dimb = block.calculateDimension(ug.getStringBounder());
 			if (block instanceof TextBlockBackcolored) {
-				final HtmlColor back = ((TextBlockBackcolored) block).getBackcolor();
+				final HColor back = ((TextBlockBackcolored) block).getBackcolor();
 				if (back != null) {
-					ug.apply(new UTranslate(0, y)).apply(new UChangeColor(back)).apply(new UChangeBackColor(back))
+					ug.apply(UTranslate.dy(y)).apply(new UChangeColor(back)).apply(new UChangeBackColor(back))
 							.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
 				}
 			}
 			if (horizontalAlignment == HorizontalAlignment.LEFT) {
-				block.drawU(ug.apply(new UTranslate(0, y)));
+				block.drawU(ug.apply(UTranslate.dy(y)));
 			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
 				final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;
 				block.drawU(ug.apply(new UTranslate(dx, y)));
@@ -127,7 +128,7 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 			final Dimension2D dimb = block.calculateDimension(stringBounder);
 			final Rectangle2D result = block.getInnerPosition(member, stringBounder, strategy);
 			if (result != null) {
-				return new UTranslate(0, y).apply(result);
+				return UTranslate.dy(y).apply(result);
 			}
 			y += dimb.getHeight();
 		}

@@ -42,10 +42,12 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class HtmlColorAndStyle {
 
-	private final HtmlColor color;
+	private final HColor color;
 	private final LinkStyle style;
 
 	@Override
@@ -53,11 +55,11 @@ public class HtmlColorAndStyle {
 		return color + " " + style;
 	}
 
-	public HtmlColorAndStyle(HtmlColor color) {
+	public HtmlColorAndStyle(HColor color) {
 		this(color, LinkStyle.NORMAL());
 	}
 
-	public HtmlColorAndStyle(HtmlColor color, LinkStyle style) {
+	public HtmlColorAndStyle(HColor color, LinkStyle style) {
 		if (color == null) {
 			throw new IllegalArgumentException();
 		}
@@ -65,7 +67,7 @@ public class HtmlColorAndStyle {
 		this.style = style;
 	}
 
-	public HtmlColor getColor() {
+	public HColor getColor() {
 		return color;
 	}
 
@@ -78,7 +80,7 @@ public class HtmlColorAndStyle {
 	}
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) {
-		HtmlColor color;
+		HColor color;
 		if (SkinParam.USE_STYLES()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -86,14 +88,14 @@ public class HtmlColorAndStyle {
 			color = Rainbow.build(skinParam).getColors().get(0).color;
 		}
 		LinkStyle style = LinkStyle.NORMAL();
-		final IHtmlColorSet set = skinParam.getIHtmlColorSet();
+		final HColorSet set = skinParam.getIHtmlColorSet();
 		for (String s : definition.split(",")) {
 			final LinkStyle tmpStyle = LinkStyle.fromString1(s);
 			if (tmpStyle.isNormal() == false) {
 				style = tmpStyle;
 				continue;
 			}
-			final HtmlColor tmpColor = set.getColorIfValid(s);
+			final HColor tmpColor = set.getColorIfValid(s);
 			if (tmpColor != null) {
 				color = tmpColor;
 			}

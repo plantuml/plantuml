@@ -35,16 +35,16 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
-import net.sourceforge.plantuml.project.DayAsDate;
-import net.sourceforge.plantuml.project.GCalendar;
-import net.sourceforge.plantuml.project.core.Wink;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.GCalendar;
+import net.sourceforge.plantuml.project.time.Wink;
 
 public final class TimeScaleDaily implements TimeScale {
 
 	private final TimeScaleWink basic;
 	private final double delta;
 
-	public TimeScaleDaily(GCalendar calendar, DayAsDate zeroDay) {
+	public TimeScaleDaily(GCalendar calendar, Day zeroDay) {
 		this.basic = new TimeScaleWink();
 		if (zeroDay == null) {
 			this.delta = 0;

@@ -121,7 +121,7 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 		}
 
 		final Area area = new Area(x2 - x1, dim.getHeight());
-		ug = ug.apply(new UTranslate(x1, 0));
+		ug = ug.apply(UTranslate.dx(x1));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 

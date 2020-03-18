@@ -42,14 +42,15 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockGeneric extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
-	private final HtmlColor background;
-	private final HtmlColor border;
+	private final HColor background;
+	private final HColor border;
 
-	public TextBlockGeneric(TextBlock textBlock, HtmlColor background, HtmlColor border) {
+	public TextBlockGeneric(TextBlock textBlock, HColor background, HColor border) {
 		this.textBlock = textBlock;
 		this.border = border;
 		this.background = background;

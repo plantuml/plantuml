@@ -37,152 +37,108 @@ package net.sourceforge.plantuml.project.draw;
 
 import java.util.Map;
 
-import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.DayAsDate;
-import net.sourceforge.plantuml.project.DayOfWeek;
-import net.sourceforge.plantuml.project.GCalendar;
 import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.core.Month;
-import net.sourceforge.plantuml.project.core.Wink;
-import net.sourceforge.plantuml.project.timescale.TimeScaleWeekly;
+import net.sourceforge.plantuml.project.core.PrintScale;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.time.GCalendar;
+import net.sourceforge.plantuml.project.time.MonthYear;
+import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderWeekly extends TimeHeader {
 
-	private static final int Y_POS_NUMDAY = 16;
-
 	private double getTimeHeaderHeight() {
-		return Y_POS_NUMDAY + 13;
+		return Y_POS_ROW16 + 13;
 	}
 
-	private final HtmlColor veryLightGray = new HtmlColorSetSimple().getColorIfValid("#E0E8E8");
-
 	private final GCalendar calendar;
-	private final LoadPlanable defaultPlan;
-	private final Map<DayAsDate, HtmlColor> colorDays;
-	private final Map<DayAsDate, String> nameDays;
 
 	public TimeHeaderWeekly(GCalendar calendar, Wink min, Wink max, LoadPlanable defaultPlan,
-			Map<DayAsDate, HtmlColor> colorDays, Map<DayAsDate, String> nameDays) {
-		super(min, max, new TimeScaleWeekly(calendar));
+			Map<Day, HColor> colorDays, Map<Day, String> nameDays) {
+		super(min, max, new TimeScaleCompressed(calendar, PrintScale.WEEKLY.getCompress()));
 		this.calendar = calendar;
-		this.defaultPlan = defaultPlan;
-		this.colorDays = colorDays;
-		this.nameDays = nameDays;
 	}
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeight) {
 		drawCalendar(ug, totalHeight);
 		drawHline(ug, 0);
-		drawHline(ug, Y_POS_NUMDAY);
+		drawHline(ug, Y_POS_ROW16);
 		drawHline(ug, getFullHeaderHeight());
 
 	}
 
 	private void drawCalendar(final UGraphic ug, double totalHeight) {
-		Month lastMonth = null;
-		double lastChangeMonth = -1;
-		Wink wink = min;
-		while (wink.compareTo(max) <= 0) {
-			final DayAsDate day = calendar.toDayAsDate(wink);
-			final DayOfWeek dayOfWeek = day.getDayOfWeek();
-			final String d1 = "" + day.getDayOfMonth();
-			final TextBlock num = getTextBlock(d1, 10, false);
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
-			double startingY = getFullHeaderHeight();
-			if (wink.compareTo(max.increment()) < 0) {
-				if (dayOfWeek == DayOfWeek.MONDAY) {
-					printLeft(ug.apply(new UTranslate(0, Y_POS_NUMDAY)), num, x1 + 5);
-				}
-				if (lastMonth != day.getMonth()) {
-					startingY = Y_POS_NUMDAY;
-					drawVbar(ug, x1, 0, Y_POS_NUMDAY);
-					if (lastMonth != null) {
-						printMonth(ug, lastMonth, day.getYear(), lastChangeMonth, x1);
-					}
-					lastChangeMonth = x1;
-					lastMonth = day.getMonth();
-				}
-			}
-			if (dayOfWeek == DayOfWeek.MONDAY) {
-				drawVbar(ug, x1, Y_POS_NUMDAY, totalHeight);
-			}
-			wink = wink.increment();
-		}
-		final DayAsDate day = calendar.toDayAsDate(wink);
-		final double x1 = getTimeScale().getStartingPosition(wink);
-		if (x1 > lastChangeMonth) {
-			printMonth(ug, lastMonth, day.getYear(), lastChangeMonth, x1);
-		}
-
-		printNamedDays(ug);
-
+		printDaysOfMonth(ug);
+		printSmallVbars(ug, totalHeight);
+		printMonths(ug);
 	}
 
-	private void printMonth(UGraphic ug, Month lastMonth, int year, double start, double end) {
-		final TextBlock small = getTextBlock(lastMonth.shortName(), 12, true);
-		final TextBlock big = getTextBlock(lastMonth.shortName() + " " + year, 12, true);
+	private void printMonths(final UGraphic ug) {
+		MonthYear last = null;
+		double lastChangeMonth = -1;
+		for (Wink wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
+			final Day day = calendar.toDayAsDate(wink);
+			final double x1 = getTimeScale().getStartingPosition(wink);
+			if (day.monthYear().equals(last) == false) {
+				drawVbar(ug, x1, 0, Y_POS_ROW16);
+				if (last != null) {
+					printMonth(ug, last, lastChangeMonth, x1);
+				}
+				lastChangeMonth = x1;
+				last = day.monthYear();
+			}
+		}
+		final double x1 = getTimeScale().getStartingPosition(max.increment());
+		if (x1 > lastChangeMonth) {
+			printMonth(ug, last, lastChangeMonth, x1);
+		}
+	}
+
+	private void printSmallVbars(final UGraphic ug, double totalHeight) {
+		for (Wink wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+			if (calendar.toDayAsDate(wink).getDayOfWeek() == DayOfWeek.MONDAY) {
+				drawVbar(ug, getTimeScale().getStartingPosition(wink), Y_POS_ROW16, totalHeight);
+			}
+		}
+	}
+
+	private void printDaysOfMonth(final UGraphic ug) {
+		for (Wink wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
+			final Day day = calendar.toDayAsDate(wink);
+			if (day.getDayOfWeek() == DayOfWeek.MONDAY) {
+				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16)), getTextBlock("" + day.getDayOfMonth(), 10, false),
+						getTimeScale().getStartingPosition(wink) + 5);
+			}
+		}
+	}
+
+	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
+		final TextBlock small = getTextBlock(monthYear.shortName(), 12, true);
+		final TextBlock big = getTextBlock(monthYear.shortNameYYYY(), 12, true);
 		printCentered(ug, start, end, small, big);
 	}
 
 	private void drawVbar(UGraphic ug, double x, double y1, double y2) {
-		final ULine vbar = new ULine(0, y2 - y1);
-		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(x, y1)).draw(vbar);
-	}
-
-	private void printNamedDays(final UGraphic ug) {
-//		if (nameDays.size() > 0) {
-//			String last = null;
-//			for (Wink wink = min; wink.compareTo(max.increment()) <= 0; wink = wink.increment()) {
-//				final DayAsDate tmpday = calendar.toDayAsDate(wink);
-//				final String name = nameDays.get(tmpday);
-//				if (name != null && name.equals(last) == false) {
-//					final double x1 = getTimeScale().getStartingPosition(wink);
-//					final double x2 = getTimeScale().getEndingPosition(wink);
-//					final TextBlock label = getTextBlock(name, 12, false);
-//					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
-//					double y1 = getTimeHeaderHeight();
-//					double y2 = getFullHeaderHeight();
-//					label.drawU(ug.apply(new UTranslate(x1, Y_POS_NUMDAY + 11)));
-//				}
-//				last = name;
-//			}
-//		}
+		final ULine vbar = ULine.vline(y2 - y1);
+		ug.apply(new UChangeColor(HColorUtils.LIGHT_GRAY)).apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {
-		text.drawU(ug.apply(new UTranslate(start, 0)));
+		text.drawU(ug.apply(UTranslate.dx(start)));
 	}
 
 	@Override
 	public double getFullHeaderHeight() {
-		return getTimeHeaderHeight() + getHeaderNameDayHeight();
+		return getTimeHeaderHeight();
 	}
 
-	private double getHeaderNameDayHeight() {
-//		if (nameDays.size() > 0) {
-//			return 16;
-//		}
-		return 0;
-	}
-
-//	private void drawCenter(final UGraphic ug, final TextBlock text, final double x1, final double x2) {
-//		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
-//		final double delta = (x2 - x1) - width;
-//		if (delta < 0) {
-//			return;
-//		}
-//		text.drawU(ug.apply(new UTranslate(x1 + delta / 2, 0)));
-//	}
 }

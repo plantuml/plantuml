@@ -44,17 +44,17 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionWhile extends WithNote implements Instruction, InstructionCollection {
 
 	private final InstructionList repeatList = new InstructionList();
 	private final Instruction parent;
 	private final LinkRendering nextLinkRenderer;
-	private final HtmlColor color;
+	private final HColor color;
 	private boolean killed = false;
 
 	private final Display test;
@@ -73,7 +73,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	public InstructionWhile(Swimlane swimlane, Instruction parent, Display test, LinkRendering nextLinkRenderer,
-			Display yes, HtmlColor color, ISkinParam skinParam) {
+			Display yes, HColor color, ISkinParam skinParam) {
 		if (test == null) {
 			throw new IllegalArgumentException();
 		}

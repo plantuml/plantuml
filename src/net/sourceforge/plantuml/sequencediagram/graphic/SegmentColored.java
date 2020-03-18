@@ -41,7 +41,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.Area;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class SegmentColored {
 
@@ -68,14 +68,14 @@ class SegmentColored {
 		this.pos1Initial = pos1Initial;
 	}
 
-	public HtmlColor getSpecificBackColor() {
+	public HColor getSpecificBackColor() {
 		if (colors == null) {
 			return null;
 		}
 		return colors.getBackColor();
 	}
 
-	public HtmlColor getSpecificLineColor() {
+	public HColor getSpecificLineColor() {
 		if (colors == null) {
 			return null;
 		}

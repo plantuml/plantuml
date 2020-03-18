@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileCircleSpot extends AbstractFtile {
 
@@ -65,9 +65,9 @@ public class FtileCircleSpot extends AbstractFtile {
 	private final Swimlane swimlane;
 	private final String spot;
 	private final FontConfiguration fc;
-	private final HtmlColor backColor;
+	private final HColor backColor;
 
-	public FtileCircleSpot(ISkinParam skinParam, Swimlane swimlane, String spot, UFont font, HtmlColor backColor) {
+	public FtileCircleSpot(ISkinParam skinParam, Swimlane swimlane, String spot, UFont font, HColor backColor) {
 		super(skinParam);
 		this.spot = spot;
 		this.swimlane = swimlane;
@@ -97,8 +97,8 @@ public class FtileCircleSpot extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 
-		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
-		final HtmlColor backColor = this.backColor == null ? SkinParamUtils.getColor(skinParam(), null,
+		final HColor borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
+		final HColor backColor = this.backColor == null ? SkinParamUtils.getColor(skinParam(), null,
 				ColorParam.activityBackground) : this.backColor;
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);

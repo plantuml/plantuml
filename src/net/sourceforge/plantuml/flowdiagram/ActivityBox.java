@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.golem.Tile;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ActivityBox extends AbstractTextBlock {
 
@@ -93,9 +93,9 @@ public class ActivityBox extends AbstractTextBlock {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.MY_RED));
-		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.MY_YELLOW));
+		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(CORNER);
+		ug = ug.apply(new UChangeColor(HColorUtils.MY_RED));
+		ug = ug.apply(new UChangeBackColor(HColorUtils.MY_YELLOW));
 		ug.apply(new UStroke(1.5)).draw(rect);
 
 		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));

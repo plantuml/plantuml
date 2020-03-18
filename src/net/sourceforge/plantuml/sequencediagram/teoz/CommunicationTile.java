@@ -171,7 +171,7 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 			}
 			x2 += LIVE_DELTA_SIZE * level2;
 			area = new Area(x1 - x2, dim.getHeight());
-			ug = ug.apply(new UTranslate(x2, 0));
+			ug = ug.apply(UTranslate.dx(x2));
 			if (isCreate()) {
 				livingSpace2.drawHead(ug, (Context2D) ug, VerticalAlignment.TOP, HorizontalAlignment.RIGHT);
 			}
@@ -184,9 +184,9 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 			x1 += LIVE_DELTA_SIZE * level1;
 			x2 += LIVE_DELTA_SIZE * level2;
 			area = new Area(x2 - x1, dim.getHeight());
-			ug = ug.apply(new UTranslate(x1, 0));
+			ug = ug.apply(UTranslate.dx(x1));
 			if (isCreate()) {
-				livingSpace2.drawHead(ug.apply(new UTranslate(area.getDimensionToUse().getWidth(), 0)), (Context2D) ug,
+				livingSpace2.drawHead(ug.apply(UTranslate.dx(area.getDimensionToUse().getWidth())), (Context2D) ug,
 						VerticalAlignment.TOP, HorizontalAlignment.LEFT);
 			}
 		}

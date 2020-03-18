@@ -296,7 +296,7 @@ public class DrawableSet {
 
 	private UTranslate getTranslate4(final double delta) {
 		if (delta > 0) {
-			return new UTranslate(0, -delta);
+			return UTranslate.dy(-delta);
 		}
 		return new UTranslate();
 	}

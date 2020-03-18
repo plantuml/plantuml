@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -67,6 +66,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageActivity extends AbstractEntityImage {
 
@@ -138,7 +138,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
+		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(CORNER);
 		rect.setDeltaShadow(shadowing);
 
 		ug = applyColors(ug);
@@ -158,8 +158,8 @@ public class EntityImageActivity extends AbstractEntityImage {
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
-		HtmlColor borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBorder);
-		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		HColor borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBorder);
+		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBackground);
 		}

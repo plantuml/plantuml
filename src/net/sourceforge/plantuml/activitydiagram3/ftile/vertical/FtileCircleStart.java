@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -53,16 +52,17 @@ import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileCircleStart extends AbstractFtile {
 
 	private static final int SIZE = 20;
 
-	private final HtmlColor backColor;
+	private final HColor backColor;
 	private final Swimlane swimlane;
 	private double shadowing;
 
-	public FtileCircleStart(ISkinParam skinParam, HtmlColor backColor, Swimlane swimlane, Style style) {
+	public FtileCircleStart(ISkinParam skinParam, HColor backColor, Swimlane swimlane, Style style) {
 		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;

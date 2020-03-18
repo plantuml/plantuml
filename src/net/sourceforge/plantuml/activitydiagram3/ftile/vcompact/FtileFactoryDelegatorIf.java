@@ -50,12 +50,12 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.ConditionalBuilder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 
@@ -74,8 +74,8 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();
 		final Branch branch0 = thens.get(0);
 
-		final HtmlColor borderColor;
-		final HtmlColor backColor;
+		final HColor borderColor;
+		final HColor backColor;
 		final Rainbow arrowColor;
 		final FontConfiguration fcTest;
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
@@ -113,7 +113,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 				conditionEndStyle, thens.get(0), elseBranch, skinParam(), getStringBounder(), fcArrow, fcTest, url);
 	}
 
-	private HtmlColor fontColor(FontParam param) {
+	private HColor fontColor(FontParam param) {
 		return skinParam().getFontHtmlColor(null, param);
 	}
 

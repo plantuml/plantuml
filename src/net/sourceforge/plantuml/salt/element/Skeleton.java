@@ -86,10 +86,10 @@ public class Skeleton {
 
 	private void drawChild(UGraphic ug, Entry parent, Entry child) {
 		final double dy = child.ypos - parent.ypos - 2;
-		ug.apply(new UTranslate(parent.xpos + 1, parent.ypos + 3)).draw(new ULine(0, dy));
+		ug.apply(new UTranslate(parent.xpos + 1, parent.ypos + 3)).draw(ULine.vline(dy));
 
 		final double dx = child.xpos - parent.xpos - 2;
-		ug.apply(new UTranslate(parent.xpos + 1, child.ypos + 1)).draw(new ULine(dx, 0));
+		ug.apply(new UTranslate(parent.xpos + 1, child.ypos + 1)).draw(ULine.hline(dx));
 
 	}
 

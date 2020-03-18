@@ -39,27 +39,27 @@ import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 abstract class AbstractEntityImage {
 
 	private final IEntity entity;
 
-	final private HtmlColor red = HtmlColorUtils.MY_RED;
+	final private HColor red = HColorUtils.MY_RED;
 
-	final private HtmlColor yellow = HtmlColorUtils.MY_YELLOW;
-	private final HtmlColor yellowNote = HtmlColorUtils.COL_FBFB77;
+	final private HColor yellow = HColorUtils.MY_YELLOW;
+	private final HColor yellowNote = HColorUtils.COL_FBFB77;
 
 	final private UFont font14 = UFont.sansSerif(14);
 	final private UFont font17 = UFont.courier(17).bold();
-	final private HtmlColor green = HtmlColorUtils.COL_ADD1B2;
-	final private HtmlColor violet = HtmlColorUtils.COL_B4A7E5;
-	final private HtmlColor blue = HtmlColorUtils.COL_A9DCDF;
-	final private HtmlColor rose = HtmlColorUtils.COL_EB937F;
+	final private HColor green = HColorUtils.COL_ADD1B2;
+	final private HColor violet = HColorUtils.COL_B4A7E5;
+	final private HColor blue = HColorUtils.COL_A9DCDF;
+	final private HColor rose = HColorUtils.COL_EB937F;
 
 	public AbstractEntityImage(IEntity entity) {
 		if (entity == null) {
@@ -76,11 +76,11 @@ abstract class AbstractEntityImage {
 		return entity;
 	}
 
-	protected final HtmlColor getRed() {
+	protected final HColor getRed() {
 		return red;
 	}
 
-	protected final HtmlColor getYellow() {
+	protected final HColor getYellow() {
 		return yellow;
 	}
 
@@ -92,23 +92,23 @@ abstract class AbstractEntityImage {
 		return font14;
 	}
 
-	protected final HtmlColor getGreen() {
+	protected final HColor getGreen() {
 		return green;
 	}
 
-	protected final HtmlColor getViolet() {
+	protected final HColor getViolet() {
 		return violet;
 	}
 
-	protected final HtmlColor getBlue() {
+	protected final HColor getBlue() {
 		return blue;
 	}
 
-	protected final HtmlColor getRose() {
+	protected final HColor getRose() {
 		return rose;
 	}
 
-	protected final HtmlColor getYellowNote() {
+	protected final HColor getYellowNote() {
 		return yellowNote;
 	}
 }

@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class WBSDiagram extends UmlDiagram {
 
@@ -113,7 +113,7 @@ public class WBSDiagram extends UmlDiagram {
 				throw new UnsupportedOperationException();
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return null;
 			}
 		};

@@ -39,16 +39,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
 
 	private final GroupingStart start;
-	private final HtmlColor backColorGeneral;
+	private final HColor backColorGeneral;
 
-	public GroupingLeaf(String title, String comment, GroupingType type, HtmlColor backColorGeneral,
-			HtmlColor backColorElement, GroupingStart start, StyleBuilder styleBuilder) {
+	public GroupingLeaf(String title, String comment, GroupingType type, HColor backColorGeneral,
+			HColor backColorElement, GroupingStart start, StyleBuilder styleBuilder) {
 		super(title, comment, type, backColorElement, styleBuilder);
 		if (start == null) {
 			throw new IllegalArgumentException();
@@ -79,7 +79,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	}
 
 	@Override
-	public final HtmlColor getBackColorGeneral() {
+	public final HColor getBackColorGeneral() {
 		if (backColorGeneral == null) {
 			return start.getBackColorGeneral();
 		}

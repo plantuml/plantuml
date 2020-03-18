@@ -35,71 +35,66 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.core.TaskImpl;
-import net.sourceforge.plantuml.project.core.Wink;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class TaskDrawRegular implements TaskDraw {
+public class TaskDrawRegular extends AbstractTaskDraw {
 
-	// private static final HtmlColor defaultColor = HtmlColorUtils.COL_84BE84;
-	private static final HtmlColor defaultColor = new HtmlColorSetSimple().getColorIfValid("GreenYellow");
-	private final TaskImpl task;
-	private final TimeScale timeScale;
-	private final double y;
+	private static final HColor defaultColor = HColorSet.instance().getColorIfValid("GreenYellow");
+
 	private ComplementColors colors;
 	private int completion = 100;
 	private Url url;
+	private final Wink end;
+	private final boolean oddStart;
+	private final boolean oddEnd;
 
 	private final double margin = 2;
 
-	public TaskDrawRegular(TaskImpl task, TimeScale timeScale, double y) {
-		this.y = y;
-		this.task = task;
-		this.timeScale = timeScale;
+	public TaskDrawRegular(TimeScale timeScale, double y, String prettyDisplay, Wink start, Wink end, boolean oddStart,
+			boolean oddEnd) {
+		super(timeScale, y, prettyDisplay, start);
+		this.end = end;
+		this.oddStart = oddStart;
+		this.oddEnd = oddEnd;
+
 	}
 
 	public void drawTitle(UGraphic ug) {
-		final TextBlock title = Display.getWithNewlines(task.getPrettyDisplay()).create(getFontConfiguration(),
+		final TextBlock title = Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		final double titleHeight = title.calculateDimension(ug.getStringBounder()).getHeight();
 		final double h = (margin + getShapeHeight() - titleHeight) / 2;
-		final double endingPosition;
-		if (isDiamond()) {
-			endingPosition = timeScale.getStartingPosition(task.getStart()) + getHeight();
-		} else {
-			endingPosition = timeScale.getEndingPosition(task.getStart());
-		}
+		final double endingPosition = timeScale.getEndingPosition(start);
 		title.drawU(ug.apply(new UTranslate(endingPosition, h)));
 	}
 
-	private FontConfiguration getFontConfiguration() {
+	@Override
+	protected FontConfiguration getFontConfiguration() {
 		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
+		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
 	public void drawU(UGraphic ug1) {
-		final double start = timeScale.getStartingPosition(task.getStart());
+		final double startPos = timeScale.getStartingPosition(start);
 		ug1 = applyColors(ug1);
-		UGraphic ug2 = ug1.apply(new UTranslate(start + margin, margin));
+		UGraphic ug2 = ug1.apply(new UTranslate(startPos + margin, margin));
 		drawShape(ug2);
 	}
 
@@ -107,91 +102,48 @@ public class TaskDrawRegular implements TaskDraw {
 		if (colors != null && colors.isOk()) {
 			return colors.apply(ug);
 		}
-		if (isDiamond()) {
-			return ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UChangeBackColor(HtmlColorUtils.BLACK));
-		}
-		return ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UChangeBackColor(defaultColor));
+		return ug.apply(new UChangeColor(HColorUtils.BLUE)).apply(new UChangeBackColor(defaultColor));
 	}
 
 	private void drawShape(UGraphic ug) {
-		if (isDiamond()) {
-			ug.draw(getDiamond());
-			return;
-		}
-		final Wink instantStart = task.getStart();
-		final Wink instantEnd = task.getEnd();
-		final double start = timeScale.getStartingPosition(instantStart);
-		final double end = timeScale.getEndingPosition(instantEnd);
+		final double startPos = timeScale.getStartingPosition(start);
+		final double endPos = timeScale.getEndingPosition(end);
 
-		final double fullLength = end - start - 2 * margin;
+		final double fullLength = endPos - startPos - 2 * margin;
 		if (fullLength < 10) {
 			return;
 		}
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		final URectangle full = new URectangle(fullLength, getShapeHeight(), 8, 8);
+		if (oddStart && !oddEnd) {
+			ug.draw(PathUtils.UtoRight(fullLength, getShapeHeight()));
+			return;
+		}
+		if (!oddStart && oddEnd) {
+			ug.draw(PathUtils.UtoLeft(fullLength, getShapeHeight()));
+			return;
+		}
+		final URectangle full = new URectangle(fullLength, getShapeHeight()).rounded(8);
 		if (completion == 100) {
 			ug.draw(full);
 		} else {
 			final double partialLength = fullLength * completion / 100.;
-			ug.apply(new UChangeColor(HtmlColorUtils.WHITE)).apply(new UChangeBackColor(HtmlColorUtils.WHITE))
+			ug.apply(new UChangeColor(HColorUtils.WHITE)).apply(new UChangeBackColor(HColorUtils.WHITE))
 					.draw(full);
 			if (partialLength > 2) {
-				final URectangle partial = new URectangle(partialLength, getShapeHeight(), 8, 8);
+				final URectangle partial = new URectangle(partialLength, getShapeHeight()).rounded(8);
 				ug.apply(new UChangeColor(null)).draw(partial);
 			}
 			if (partialLength > 10 && partialLength < fullLength - 10) {
 				final URectangle patch = new URectangle(8, getShapeHeight());
-				ug.apply(new UChangeColor(null)).apply(new UTranslate(partialLength - 8, 0)).draw(patch);
+				ug.apply(new UChangeColor(null)).apply(UTranslate.dx(partialLength - 8)).draw(patch);
 			}
 			ug.apply(new UChangeBackColor(null)).draw(full);
 		}
 		if (url != null) {
 			ug.closeAction();
 		}
-
-	}
-
-	private double getShapeHeight() {
-		return getHeight() - 2 * margin;
-	}
-
-	private boolean isDiamond() {
-		if (task.isDiamond()) {
-			final Wink instantStart = task.getStart();
-			final Wink instantEnd = task.getEnd();
-			return instantStart.compareTo(instantEnd) == 0;
-		}
-		return false;
-	}
-
-	private UShape getDiamond() {
-		final double h = getHeight() - 2 * margin;
-		final UPolygon result = new UPolygon();
-		result.addPoint(h / 2, 0);
-		result.addPoint(h, h / 2);
-		result.addPoint(h / 2, h);
-		result.addPoint(0, h / 2);
-		return result;
-	}
-
-	public double getHeight() {
-		return 16;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getY(Direction direction) {
-		if (direction == Direction.UP) {
-			return y;
-		}
-		if (direction == Direction.DOWN) {
-			return y + getHeight();
-		}
-		return y + getHeight() / 2;
 	}
 
 	public void setColorsAndCompletion(ComplementColors colors, int completion, Url url) {

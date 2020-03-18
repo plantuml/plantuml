@@ -66,7 +66,7 @@ public class Cypher {
 
 	private String changeWord(final String word) {
 		final String lower = word.toLowerCase();
-		if (except.contains(lower) || lower.matches("^[a-f0-9]{6}$")) {
+		if (except.contains(lower) || lower.matches("^([a-f0-9]{3}|[a-f0-9]{6})$")) {
 			return word;
 		}
 		String res = convert.get(word);

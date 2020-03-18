@@ -79,8 +79,8 @@ class USymbolNode extends USymbol {
 		ug.draw(shape);
 
 		ug.apply(new UTranslate(width - 10, 10)).draw(new ULine(9, -9));
-		ug.apply(new UTranslate(0, 10)).draw(new ULine(width - 10, 0));
-		ug.apply(new UTranslate(width - 10, 10)).draw(new ULine(0, height - 10));
+		ug.apply(UTranslate.dy(10)).draw(ULine.hline(width - 10));
+		ug.apply(new UTranslate(width - 10, 10)).draw(ULine.vline(height - 10));
 
 	}
 
@@ -104,15 +104,15 @@ class USymbolNode extends USymbol {
 
 			drawHlineInternal(ug, line);
 			if (line.isDouble()) {
-				drawHlineInternal(ug.apply(new UTranslate(0, 2)), line);
+				drawHlineInternal(ug.apply(UTranslate.dy(2)), line);
 			}
 			line.drawTitleInternal(ug, 0, endingX - 10, 0, true);
 		}
 
 		private void drawHlineInternal(UGraphic ug, UHorizontalLine line) {
 			ug = ug.apply(line.getStroke()).apply(new UChangeBackColor(null));
-			ug.draw(new ULine(endingX - 10, 0));
-			ug.apply(new UTranslate(endingX - 10, 0)).draw(new ULine(10, -10));
+			ug.draw(ULine.hline(endingX - 10));
+			ug.apply(UTranslate.dx(endingX - 10)).draw(new ULine(10, -10));
 		}
 	}
 

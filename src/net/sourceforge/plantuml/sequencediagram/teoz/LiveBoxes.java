@@ -87,7 +87,7 @@ public class LiveBoxes {
 
 	private void drawOneLevel(UGraphic ug, int levelToDraw, Stairs2 stairs, Context2D context) {
 		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays);
-		ug = ug.apply(new UTranslate((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0, 0));
+		ug = ug.apply(UTranslate.dx((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0));
 
 		boolean pending = true;
 		for (Iterator<StairsPosition> it = stairs.getYs().iterator(); it.hasNext();) {

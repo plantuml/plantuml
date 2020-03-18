@@ -40,7 +40,6 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Placeable, TextBlock, ConnectorPuzzle {
 
@@ -89,7 +89,7 @@ public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Pla
 
 	public void drawU(UGraphic ug) {
 		// System.err.println("DRAWING " + toString());
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLUE));
+		ug = ug.apply(new UChangeColor(HColorUtils.BLUE));
 		for (Where w : Where.values()) {
 			if (have(w)) {
 				drawLine(ug, w);
@@ -100,16 +100,16 @@ public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Pla
 
 	private void drawLine(UGraphic ug, Where w) {
 		if (w == Where.WEST) {
-			ug.apply(new UTranslate(0, 10)).draw(new ULine(10, 0));
+			ug.apply(UTranslate.dy(10)).draw(ULine.hline(10));
 		}
 		if (w == Where.EAST) {
-			ug.apply(new UTranslate(10, 10)).draw(new ULine(10, 0));
+			ug.apply(new UTranslate(10, 10)).draw(ULine.hline(10));
 		}
 		if (w == Where.NORTH) {
-			ug.apply(new UTranslate(10, 0)).draw(new ULine(0, 10));
+			ug.apply(UTranslate.dx(10)).draw(ULine.vline(10));
 		}
 		if (w == Where.SOUTH) {
-			ug.apply(new UTranslate(10, 10)).draw(new ULine(0, 10));
+			ug.apply(new UTranslate(10, 10)).draw(ULine.vline(10));
 		}
 	}
 

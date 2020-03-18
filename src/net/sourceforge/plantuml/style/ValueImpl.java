@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.style;
 import java.awt.Font;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ValueImpl implements Value {
 
@@ -60,7 +60,7 @@ public class ValueImpl implements Value {
 		return value;
 	}
 
-	public HtmlColor asColor(IHtmlColorSet set) {
+	public HColor asColor(HColorSet set) {
 		if ("none".equalsIgnoreCase(value) || "transparent".equalsIgnoreCase(value)) {
 			return null;
 		}

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public interface UGraphic {
 

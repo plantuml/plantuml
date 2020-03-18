@@ -63,7 +63,7 @@ public class RowLayout implements UDrawable {
 	public void drawU(UGraphic ug) {
 		double x = 0;
 		for (TextBlock leaf : all) {
-			leaf.drawU(ug.apply(new UTranslate(x, 0)));
+			leaf.drawU(ug.apply(UTranslate.dx(x)));
 			x += leaf.calculateDimension(ug.getStringBounder()).getWidth() + 20;
 		}
 

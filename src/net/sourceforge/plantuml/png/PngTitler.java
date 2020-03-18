@@ -45,28 +45,28 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class PngTitler {
 
-	private final HtmlColor textColor;
-	private final HtmlColor hyperlinkColor;
+	private final HColor textColor;
+	private final HColor hyperlinkColor;
 	private final DisplaySection text;
 	private final int fontSize;
 	private final String fontFamily;
 	private final boolean useUnderlineForHyperlink;
 	private final Style style;
-	private final IHtmlColorSet set;
+	private final HColorSet set;
 	private final ISkinSimple spriteContainer;
 
-	public PngTitler(HtmlColor textColor, DisplaySection text, int fontSize, String fontFamily,
-			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, Style style, IHtmlColorSet set,
+	public PngTitler(HColor textColor, DisplaySection text, int fontSize, String fontFamily,
+			HColor hyperlinkColor, boolean useUnderlineForHyperlink, Style style, HColorSet set,
 			ISkinSimple spriteContainer) {
 		this.style = style;
 		this.set = set;

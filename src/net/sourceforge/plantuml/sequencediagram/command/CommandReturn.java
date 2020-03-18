@@ -44,16 +44,15 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
-import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 
@@ -92,7 +91,7 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			arrow = arrow.withColor(HtmlColorSet.getInstance().getColorIfValid(color));
+			arrow = arrow.withColor(HColorSet.instance().getColorIfValid(color));
 		}
 
 		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));

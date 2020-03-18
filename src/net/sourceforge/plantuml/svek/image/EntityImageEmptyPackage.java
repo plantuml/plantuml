@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -64,12 +63,13 @@ import net.sourceforge.plantuml.svek.ClusterDecoration;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 	private final TextBlock desc;
 	private final static int MARGIN = 10;
-	private final HtmlColor specificBackColor;
+	private final HColor specificBackColor;
 	private final ISkinParam skinParam;
 	private final Stereotype stereotype;
 	private final TextBlock stereoBlock;
@@ -123,7 +123,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 
-		final HtmlColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype);
+		final HColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype);
 		final double roundCorner = 0;
 
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,

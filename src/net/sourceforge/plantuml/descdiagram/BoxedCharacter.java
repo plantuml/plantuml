@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
@@ -49,17 +48,18 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class BoxedCharacter extends AbstractTextBlock implements TextBlock {
 
 	private final String c;
 	private final UFont font;
-	private final HtmlColor innerCircle;
-	private final HtmlColor circle;
-	private final HtmlColor fontColor;
+	private final HColor innerCircle;
+	private final HColor circle;
+	private final HColor fontColor;
 	private final double radius;
 
-	public BoxedCharacter(char c, double size, UFont font, HtmlColor innerCircle, HtmlColor circle, HtmlColor fontColor) {
+	public BoxedCharacter(char c, double size, UFont font, HColor innerCircle, HColor circle, HColor fontColor) {
 		this.c = "" + c;
 		this.font = font;
 		this.innerCircle = innerCircle;

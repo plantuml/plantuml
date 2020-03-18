@@ -86,7 +86,7 @@ public class FtileHeightFixed extends AbstractFtile {
 		if (dim.getHeight() > fixedHeight) {
 			throw new IllegalStateException();
 		}
-		return new UTranslate(0, (fixedHeight - dim.getHeight()) / 2);
+		return UTranslate.dy((fixedHeight - dim.getHeight()) / 2);
 	}
 
 	public void drawU(UGraphic ug) {

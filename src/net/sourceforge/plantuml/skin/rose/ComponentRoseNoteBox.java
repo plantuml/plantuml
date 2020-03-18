@@ -104,7 +104,7 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 		}
 
 		ug = symbolContext.apply(ug);
-		final URectangle rect = new URectangle(x2, textHeight, roundCorner, roundCorner);
+		final URectangle rect = new URectangle(x2, textHeight).rounded(roundCorner);
 		rect.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.draw(rect);
 		ug = ug.apply(new UStroke());

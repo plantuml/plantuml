@@ -50,10 +50,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
 
@@ -84,7 +84,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	public InstructionIf(Swimlane swimlane, Instruction parent, Display labelTest, Display whenThen,
-			LinkRendering inlinkRendering, HtmlColor color, ISkinParam skinParam, Url url) {
+			LinkRendering inlinkRendering, HColor color, ISkinParam skinParam, Url url) {
 		this.url = url;
 		this.parent = parent;
 		this.skinParam = skinParam;
@@ -142,7 +142,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	public boolean elseIf(Display inlabel, Display test, Display whenThen, LinkRendering nextLinkRenderer,
-			HtmlColor color) {
+			HColor color) {
 		if (elseBranch != null) {
 			return false;
 		}

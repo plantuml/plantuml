@@ -41,7 +41,6 @@ import java.awt.geom.Rectangle2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public enum VisibilityModifier {
 	PRIVATE_FIELD(ColorParam.iconPrivate, null), PROTECTED_FIELD(ColorParam.iconProtected, null), PACKAGE_PRIVATE_FIELD(
@@ -77,7 +77,7 @@ public enum VisibilityModifier {
 		this.backgroundParam = background;
 	}
 
-	public UDrawable getUDrawable(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
+	public UDrawable getUDrawable(final int size, final HColor foregroundColor, final HColor backgoundColor) {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
 				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
@@ -86,7 +86,7 @@ public enum VisibilityModifier {
 		};
 	}
 
-	public TextBlock getUBlock(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor,
+	public TextBlock getUBlock(final int size, final HColor foregroundColor, final HColor backgoundColor,
 			final boolean withInvisibleRectanble) {
 		return new AbstractTextBlock() {
 
@@ -108,7 +108,7 @@ public enum VisibilityModifier {
 		};
 	}
 
-	private void drawInternal(UGraphic ug, int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor,
+	private void drawInternal(UGraphic ug, int size, final HColor foregroundColor, final HColor backgoundColor,
 			double x, double y) {
 		ug = ug.apply(new UChangeBackColor(backgoundColor)).apply(new UChangeColor(foregroundColor));
 		size = ensureEven(size);

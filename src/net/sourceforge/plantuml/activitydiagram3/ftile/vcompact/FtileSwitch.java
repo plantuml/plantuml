@@ -56,13 +56,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInsi
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class FtileSwitch extends AbstractFtile {
 
@@ -95,7 +95,7 @@ class FtileSwitch extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
+	static Ftile create(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, FontConfiguration fcArrow,
 			LinkRendering topInlinkRendering, LinkRendering afterEndwhile, FontConfiguration fcTest) {
 		if (afterEndwhile == null) {
@@ -114,7 +114,7 @@ class FtileSwitch extends AbstractFtile {
 			final TextBlock tbTest = branch.getLabelTest().create(fcTest,
 					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					ftileFactory.skinParam());
-			final HtmlColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
+			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
 			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,
 					swimlane, tbTest);

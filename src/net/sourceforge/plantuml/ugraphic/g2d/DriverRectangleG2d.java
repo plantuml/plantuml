@@ -46,16 +46,16 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.graphic.HtmlColorSimple;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPattern;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UShapeSized;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
 public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
@@ -87,9 +87,9 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 			drawShadow(g2d, shape, rect.getDeltaShadow(), dpiFactor);
 		}
 
-		final HtmlColor back = param.getBackcolor();
-		final HtmlColor color = param.getColor();
-		if (back instanceof HtmlColorGradient) {
+		final HColor back = param.getBackcolor();
+		final HColor color = param.getColor();
+		if (back instanceof HColorGradient) {
 			final GradientPaint paint = getPaintGradient(x, y, mapper, rect.getWidth(), rect.getHeight(), back);
 			g2d.setPaint(paint);
 			g2d.fill(shape);
@@ -107,12 +107,12 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 		}
 	}
 
-	public static void drawBorder(UParam param, HtmlColor color, ColorMapper mapper, UShapeSized sized, Shape shape,
+	public static void drawBorder(UParam param, HColor color, ColorMapper mapper, UShapeSized sized, Shape shape,
 			Graphics2D g2d, double x, double y) {
 		if (color == null) {
 			return;
 		}
-		if (color instanceof HtmlColorGradient) {
+		if (color instanceof HColorGradient) {
 			final GradientPaint paint = getPaintGradient(x, y, mapper, sized.getWidth(), sized.getHeight(), color);
 			g2d.setPaint(paint);
 		} else {
@@ -123,8 +123,8 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 	}
 
 	public static GradientPaint getPaintGradient(double x, double y, ColorMapper mapper, double width, double height,
-			final HtmlColor back) {
-		final HtmlColorGradient gr = (HtmlColorGradient) back;
+			final HColor back) {
+		final HColorGradient gr = (HColorGradient) back;
 		final char policy = gr.getPolicy();
 		final GradientPaint paint;
 		if (policy == '|') {
@@ -149,7 +149,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 		if (pattern == UPattern.VERTICAL_STRIPE) {
 			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
 			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
+			final int rgb = ((HColorSimple) param.getBackcolor()).getColor999().getRGB();
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
 					if (i == 0 || i == 1) {
@@ -161,7 +161,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 		} else if (pattern == UPattern.HORIZONTAL_STRIPE) {
 			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
 			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
+			final int rgb = ((HColorSimple) param.getBackcolor()).getColor999().getRGB();
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
 					if (j == 0 || j == 1) {
@@ -173,7 +173,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 		} else if (pattern == UPattern.SMALL_CIRCLE) {
 			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
 			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
+			final int rgb = ((HColorSimple) param.getBackcolor()).getColor999().getRGB();
 			bi.setRGB(0, 1, rgb);
 			bi.setRGB(1, 0, rgb);
 			bi.setRGB(1, 1, rgb);

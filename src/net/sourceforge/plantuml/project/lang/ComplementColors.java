@@ -35,17 +35,17 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComplementColors implements Complement {
 
-	private final HtmlColor center;
-	private final HtmlColor border;
+	private final HColor center;
+	private final HColor border;
 
-	public ComplementColors(HtmlColor center, HtmlColor border) {
+	public ComplementColors(HColor center, HColor border) {
 		this.center = center;
 		this.border = border;
 	}
@@ -67,7 +67,7 @@ public class ComplementColors implements Complement {
 		return center != null;
 	}
 
-	public HtmlColor getCenter() {
+	public HColor getCenter() {
 		return center;
 	}
 }

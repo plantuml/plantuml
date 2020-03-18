@@ -49,9 +49,9 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 
 // Do not move
 public class StringUtils {
@@ -371,7 +371,9 @@ public class StringUtils {
 
 	public static List<String> splitComma(String s) {
 		s = trin(s);
-		// if (s.matches("([\\p{L}0-9_.]+|[%g][^%g]+[%g])(\\s*,\\s*([\\p{L}0-9_.]+|[%g][^%g]+[%g]))*") == false) {
+		// if
+		// (s.matches("([\\p{L}0-9_.]+|[%g][^%g]+[%g])(\\s*,\\s*([\\p{L}0-9_.]+|[%g][^%g]+[%g]))*")
+		// == false) {
 		// throw new IllegalArgumentException();
 		// }
 		final List<String> result = new ArrayList<String>();
@@ -390,12 +392,12 @@ public class StringUtils {
 		return getAsHtml(color.getRGB());
 	}
 
-	public static String getAsSvg(ColorMapper mapper, HtmlColor color) {
+	public static String getAsSvg(ColorMapper mapper, HColor color) {
 		if (color == null) {
 			return "none";
 		}
-		if (color instanceof HtmlColorTransparent) {
-			return "#FFFFFF";
+		if (color instanceof HColorBackground) {
+			return ((HColorBackground) color).getSvg(mapper);
 		}
 		return getAsHtml(mapper.getMappedColor(color));
 	}

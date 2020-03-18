@@ -50,9 +50,9 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
 public class PSystemCreole extends AbstractPSystem {
 
@@ -86,7 +86,7 @@ public class PSystemCreole extends AbstractPSystem {
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
 		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1, dim, null, false);
-		// // sheetBlock.drawU(ug.apply(new UTranslate(0, 10)));
+		// // sheetBlock.drawU(ug.apply(UTranslate.dy(10)));
 		// sheetBlock.drawU(ug);
 		// ug.writeImageTOBEMOVED(os, null, 96);
 		// return new ImageDataSimple(dim);

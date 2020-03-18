@@ -35,14 +35,14 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class MiddleFactoryCircle implements MiddleFactory {
 	
-	private final HtmlColor backColor;
+	private final HColor backColor;
 
-	public MiddleFactoryCircle(HtmlColor backColor) {
+	public MiddleFactoryCircle(HColor backColor) {
 		this.backColor = backColor;
 	}
 

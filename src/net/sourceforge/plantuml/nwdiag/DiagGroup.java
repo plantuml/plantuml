@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.nwdiag;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class DiagGroup {
 
 	private final String name;
 	private final Network network;
 	private final Set<String> elements = new HashSet<String>();
-	private HtmlColor color;
+	private HColor color;
 
 	@Override
 	public String toString() {
@@ -71,11 +71,11 @@ public class DiagGroup {
 		return elements.contains(tested.getElement().getName());
 	}
 
-	public final HtmlColor getColor() {
+	public final HColor getColor() {
 		return color;
 	}
 
-	public final void setColor(HtmlColor color) {
+	public final void setColor(HColor color) {
 		this.color = color;
 	}
 

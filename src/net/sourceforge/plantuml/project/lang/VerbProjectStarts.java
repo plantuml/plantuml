@@ -45,8 +45,8 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class VerbProjectStarts implements VerbPattern {
 
@@ -74,7 +74,7 @@ public class VerbProjectStarts implements VerbPattern {
 	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
 		return new Verb() {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final DayAsDate start = (DayAsDate) complement;
+				final Day start = (Day) complement;
 				assert project == subject;
 				project.setStartingDate(start);
 				return CommandExecutionResult.ok();

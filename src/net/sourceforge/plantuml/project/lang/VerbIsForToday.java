@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class VerbIsForToday implements VerbPattern {
 
@@ -59,7 +59,7 @@ public class VerbIsForToday implements VerbPattern {
 		return new Verb() {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				// final Today task = (Today) subject;
-				final DayAsDate date = (DayAsDate) complement;
+				final Day date = (Day) complement;
 				return project.setToday(date);
 			}
 		};

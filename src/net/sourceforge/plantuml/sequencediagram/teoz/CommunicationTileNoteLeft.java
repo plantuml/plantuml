@@ -103,7 +103,7 @@ public class CommunicationTileNoteLeft extends AbstractTile implements TileWithU
 		tile.drawU(ug);
 		final Real p = getNotePosition(stringBounder);
 
-		comp.drawU(ug.apply(new UTranslate(p.getCurrentValue(), 0)), area, (Context2D) ug);
+		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

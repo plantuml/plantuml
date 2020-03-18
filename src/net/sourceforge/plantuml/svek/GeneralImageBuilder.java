@@ -92,7 +92,6 @@ import net.sourceforge.plantuml.descdiagram.EntityImageRequirement;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -131,6 +130,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class GeneralImageBuilder {
 
@@ -227,7 +227,7 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null) {
 				// final HtmlColor black = HtmlColorUtils.BLACK;
-				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
+				final HColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
 						leaf.getUSymbol().getColorParamBorder());
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
 						links);
@@ -305,7 +305,7 @@ public final class GeneralImageBuilder {
 			return false;
 		}
 
-		public HtmlColor getBackcolor() {
+		public HColor getBackcolor() {
 			return null;
 		}
 

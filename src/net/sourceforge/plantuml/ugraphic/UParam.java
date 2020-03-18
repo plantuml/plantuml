@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface UParam {
 
-	public HtmlColor getColor();
+	public HColor getColor();
 
-	public HtmlColor getBackcolor();
+	public HColor getBackcolor();
 
 	public UStroke getStroke();
 

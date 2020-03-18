@@ -87,7 +87,7 @@ class FtileForkInner extends AbstractFtile {
 
 		double xpos = 0;
 		for (Ftile ftile : forks) {
-			ug.apply(new UTranslate(xpos, 0)).draw(ftile);
+			ug.apply(UTranslate.dx(xpos)).draw(ftile);
 			final Dimension2D dim = ftile.calculateDimension(stringBounder);
 			xpos += dim.getWidth();
 		}
@@ -112,7 +112,7 @@ class FtileForkInner extends AbstractFtile {
 		double xpos = 0;
 		for (Ftile ftile : forks) {
 			if (ftile == searched) {
-				return new UTranslate(xpos, 0);
+				return UTranslate.dx(xpos);
 			}
 			final Dimension2D dim = ftile.calculateDimension(stringBounder);
 			xpos += dim.getWidth();

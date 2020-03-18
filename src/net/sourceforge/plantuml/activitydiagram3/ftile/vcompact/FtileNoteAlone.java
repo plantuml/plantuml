@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -70,6 +69,7 @@ import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable {
 
@@ -107,8 +107,8 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 		this.withOutPoint = withOutPoint;
 		final Rose rose = new Rose();
 
-		final HtmlColor noteBackgroundColor;
-		final HtmlColor borderColor;
+		final HColor noteBackgroundColor;
+		final HColor borderColor;
 		final double shadowing;
 		if (SkinParam.USE_STYLES()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());

@@ -39,10 +39,10 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class ComplementDates implements ComplementPattern {
 
@@ -66,16 +66,16 @@ public class ComplementDates implements ComplementPattern {
 	}
 
 	public Subject getSubject(GanttDiagram project, RegexResult arg) {
-		final DayAsDate date1 = getDate(arg, "1");
-		final DayAsDate date2 = getDate(arg, "2");
+		final Day date1 = getDate(arg, "1");
+		final Day date2 = getDate(arg, "2");
 		return new DaysAsDates(date1, date2);
 	}
 
-	private DayAsDate getDate(RegexResult arg, String suffix) {
+	private Day getDate(RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("DAY" + suffix, 0));
 		final int month = Integer.parseInt(arg.get("MONTH" + suffix, 0));
 		final int year = Integer.parseInt(arg.get("YEAR" + suffix, 0));
-		return DayAsDate.create(year, month, day);
+		return Day.create(year, month, day);
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
@@ -83,12 +83,12 @@ public class ComplementDates implements ComplementPattern {
 		final int day1 = Integer.parseInt(arg.get("DAY1" + suffix, 0));
 		final int month1 = Integer.parseInt(arg.get("MONTH1" + suffix, 0));
 		final int year1 = Integer.parseInt(arg.get("YEAR1" + suffix, 0));
-		final DayAsDate date1 = DayAsDate.create(year1, month1, day1);
+		final Day date1 = Day.create(year1, month1, day1);
 
 		final int day2 = Integer.parseInt(arg.get("DAY2" + suffix, 0));
 		final int month2 = Integer.parseInt(arg.get("MONTH2" + suffix, 0));
 		final int year2 = Integer.parseInt(arg.get("YEAR2" + suffix, 0));
-		final DayAsDate date2 = DayAsDate.create(year2, month2, day2);
+		final Day date2 = Day.create(year2, month2, day2);
 
 		return Failable.<Complement> ok(new DaysAsDates(date1, date2));
 	}

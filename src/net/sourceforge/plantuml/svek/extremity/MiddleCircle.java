@@ -37,20 +37,20 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class MiddleCircle extends Extremity {
 
 	private final double radius = 6;
 	private final UEllipse circle = new UEllipse(2 * radius, 2 * radius);
-	private final HtmlColor backColor;
+	private final HColor backColor;
 	
-	public MiddleCircle(HtmlColor backColor) {
+	public MiddleCircle(HColor backColor) {
 		this.backColor = backColor;
 	}
 

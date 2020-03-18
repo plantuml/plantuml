@@ -35,20 +35,20 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public abstract class Grouping implements Event, WithStyle {
 
 	private final String title;
 	private final GroupingType type;
 	private final String comment;
-	private final HtmlColor backColorElement;
+	private final HColor backColorElement;
 
 	// private final StyleBuilder styleBuilder;
 
@@ -70,7 +70,7 @@ public abstract class Grouping implements Event, WithStyle {
 						backColorElement) };
 	}
 
-	public Grouping(String title, String comment, GroupingType type, HtmlColor backColorElement,
+	public Grouping(String title, String comment, GroupingType type, HColor backColorElement,
 			StyleBuilder styleBuilder) {
 		this.title = title;
 		// this.styleBuilder = styleBuilder;
@@ -96,13 +96,13 @@ public abstract class Grouping implements Event, WithStyle {
 
 	public abstract int getLevel();
 
-	public abstract HtmlColor getBackColorGeneral();
+	public abstract HColor getBackColorGeneral();
 
 	final public String getComment() {
 		return comment;
 	}
 
-	public final HtmlColor getBackColorElement() {
+	public final HColor getBackColorElement() {
 		return backColorElement;
 	}
 

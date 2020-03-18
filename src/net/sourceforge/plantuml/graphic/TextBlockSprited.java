@@ -71,7 +71,7 @@ public class TextBlockSprited extends AbstractTextBlock {
 
 		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
 
-		parent.drawU(ug.apply(new UTranslate(widthCircledCharacter, 0)));
+		parent.drawU(ug.apply(UTranslate.dx(widthCircledCharacter)));
 	}
 
 }

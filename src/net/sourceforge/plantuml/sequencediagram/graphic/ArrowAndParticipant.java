@@ -97,7 +97,7 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 			arrow.drawInternalU(ug, maxX, context);
 		} else {
 			final double boxWidth = participantBox.getPreferredWidth(ug.getStringBounder());
-			arrow.drawInternalU(ug.apply(new UTranslate(boxWidth / 2 - paddingParticipant, 0)), maxX, context);
+			arrow.drawInternalU(ug.apply(UTranslate.dx(boxWidth / 2 - paddingParticipant)), maxX, context);
 		}
 
 		final double arrowHeight = arrow.getPreferredHeight(ug.getStringBounder());

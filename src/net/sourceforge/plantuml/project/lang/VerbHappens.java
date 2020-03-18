@@ -42,11 +42,11 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class VerbHappens implements VerbPattern {
 
@@ -63,9 +63,9 @@ public class VerbHappens implements VerbPattern {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final Task task = (Task) subject;
 				task.setLoad(Load.inWinks(1));
-				if (complement instanceof DayAsDate) {
-					final DayAsDate start = (DayAsDate) complement;
-					final DayAsDate startingDate = project.getStartingDate();
+				if (complement instanceof Day) {
+					final Day start = (Day) complement;
+					final Day startingDate = project.getStartingDate();
 					if (startingDate == null) {
 						return CommandExecutionResult.error("No starting date for the project");
 					}

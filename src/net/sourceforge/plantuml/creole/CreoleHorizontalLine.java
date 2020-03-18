@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
-import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.creole.atom.AbstractAtom;
+import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -92,7 +92,7 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	public void drawU(UGraphic ug) {
 		// ug = ug.apply(new UChangeColor(fontConfiguration.getColor()));
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
-		ug = ug.apply(new UTranslate(0, dim.getHeight() / 2));
+		ug = ug.apply(UTranslate.dy(dim.getHeight() / 2));
 		ug.draw(getHorizontalLine());
 	}
 

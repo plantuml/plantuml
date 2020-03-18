@@ -37,15 +37,15 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class ExtremityExtends extends Extremity {
 
 	private UPolygon polygon = new UPolygon();
-	private final HtmlColor fill;
+	private final HColor fill;
 	private final Point2D contact;
 
 	@Override
@@ -53,7 +53,7 @@ class ExtremityExtends extends Extremity {
 		return contact;
 	}
 
-	public ExtremityExtends(Point2D p1, double angle, HtmlColor backgroundColor) {
+	public ExtremityExtends(Point2D p1, double angle, HColor backgroundColor) {
 		this.fill = backgroundColor;
 		this.contact = new Point2D.Double(p1.getX(), p1.getY());
 		angle = manageround(angle);

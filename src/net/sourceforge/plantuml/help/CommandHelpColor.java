@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class CommandHelpColor extends SingleLineCommand2<Help> {
 
@@ -65,7 +65,7 @@ public class CommandHelpColor extends SingleLineCommand2<Help> {
 		diagram.add("You may improve it on <i>https://github.com/plantuml/plantuml/tree/master/src/net/sourceforge/plantuml/help</i>");
 		diagram.add(" ");
 		diagram.add(" The possible colors are :");
-		for (String type : new HtmlColorSetSimple().names()) {
+		for (String type : HColorSet.instance().names()) {
 			diagram.add("* " + type);
 		}
 

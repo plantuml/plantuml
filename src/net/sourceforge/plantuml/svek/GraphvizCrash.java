@@ -52,13 +52,13 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
@@ -167,8 +167,8 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		return false;
 	}
 
-	public HtmlColor getBackcolor() {
-		return HtmlColorUtils.WHITE;
+	public HColor getBackcolor() {
+		return HColorUtils.WHITE;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -184,7 +184,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		graphicStrings.drawU(ug);
 		if (flashCode != null) {
 			final double h = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
-			ug = ug.apply(new UTranslate(0, h));
+			ug = ug.apply(UTranslate.dy(h));
 			ug.draw(new UImage(flashCode).scaleNearestNeighbor(3));
 		}
 	}

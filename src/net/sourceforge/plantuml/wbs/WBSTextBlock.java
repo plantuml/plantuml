@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
@@ -59,6 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 abstract class WBSTextBlock extends AbstractTextBlock {
 
@@ -78,7 +78,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet()).draw(
 					line);
 		} else {
-			final HtmlColor color = ColorParam.activityBorder.getDefaultValue();
+			final HColor color = ColorParam.activityBorder.getDefaultValue();
 			ug.apply(new UTranslate(p1)).apply(new UChangeColor(color)).draw(line);
 		}
 	}

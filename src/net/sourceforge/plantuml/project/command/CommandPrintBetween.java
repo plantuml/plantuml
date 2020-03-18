@@ -41,14 +41,10 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
-import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.core.PrintScale;
-import net.sourceforge.plantuml.project.lang.Complement;
 import net.sourceforge.plantuml.project.lang.ComplementDate;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 
@@ -75,8 +71,8 @@ public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
-		final DayAsDate start = (DayAsDate) pattern.getComplement(diagram, arg, "START").get();
-		final DayAsDate end = (DayAsDate) pattern.getComplement(diagram, arg, "END").get();
+		final Day start = (Day) pattern.getComplement(diagram, arg, "START").get();
+		final Day end = (Day) pattern.getComplement(diagram, arg, "END").get();
 		diagram.setPrintInterval(start, end);
 		return CommandExecutionResult.ok();
 	}

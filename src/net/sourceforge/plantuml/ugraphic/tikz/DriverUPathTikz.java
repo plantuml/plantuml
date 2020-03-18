@@ -36,22 +36,22 @@ package net.sourceforge.plantuml.ugraphic.tikz;
 
 import java.awt.Color;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverUPathTikz implements UDriver<TikzGraphics> {
 
 	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final UPath path = (UPath) shape;
-		final HtmlColor back = param.getBackcolor();
-		if (back instanceof HtmlColorGradient) {
-			final HtmlColorGradient gr = (HtmlColorGradient) back;
+		final HColor back = param.getBackcolor();
+		if (back instanceof HColorGradient) {
+			final HColorGradient gr = (HColorGradient) back;
 			final Color color1 = mapper.getMappedColor(gr.getColor1());
 			final Color color2 = mapper.getMappedColor(gr.getColor2());
 			tikz.setGradientColor(color1, color2, gr.getPolicy());

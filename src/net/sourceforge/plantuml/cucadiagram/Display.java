@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockSprited;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -75,6 +74,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -100,6 +100,16 @@ public class Display implements Iterable<CharSequence> {
 		}
 		result.displayData.addAll(copy);
 		return result;
+	}
+
+	public Stereotype getStereotypeIfAny() {
+		for (CharSequence cs : displayData) {
+			if (cs instanceof Stereotype) {
+				return (Stereotype) cs;
+			}
+		}
+		return null;
+
 	}
 
 	public Display replaceBackslashT() {
@@ -464,7 +474,7 @@ public class Display implements Iterable<CharSequence> {
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
-			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+			UFont fontForStereotype, HColor htmlColorForStereotype) {
 		if (maxMessageSize == null) {
 			throw new IllegalArgumentException();
 		}
@@ -493,7 +503,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	private TextBlock createStereotype(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			SpriteContainer spriteContainer, int position, UFont fontForStereotype, HtmlColor htmlColorForStereotype,
+			SpriteContainer spriteContainer, int position, UFont fontForStereotype, HColor htmlColorForStereotype,
 			LineBreakStrategy maxMessageSize, CreoleMode creoleMode) {
 		final Stereotype stereotype = (Stereotype) get(position);
 		TextBlock circledCharacter = null;

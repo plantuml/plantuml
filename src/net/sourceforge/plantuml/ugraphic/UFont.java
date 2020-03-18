@@ -46,8 +46,8 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UFont {
 
@@ -116,7 +116,7 @@ public class UFont {
 	}
 
 	@Deprecated
-	public FontConfiguration toFont2(HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor,
+	public FontConfiguration toFont2(HColor color, boolean useUnderlineForHyperlink, HColor hyperlinkColor,
 			int tabSize) {
 		return new FontConfiguration(this, color, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}

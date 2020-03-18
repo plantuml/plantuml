@@ -37,15 +37,15 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ParticipantEnglober {
 
 	final private Display title;
-	final private HtmlColor boxColor;
+	final private HColor boxColor;
 	final private Stereotype stereotype;
 
-	public ParticipantEnglober(Display title, HtmlColor boxColor, Stereotype stereotype) {
+	public ParticipantEnglober(Display title, HColor boxColor, Stereotype stereotype) {
 		this.title = title;
 		this.boxColor = boxColor;
 		this.stereotype = stereotype;
@@ -55,7 +55,7 @@ public class ParticipantEnglober {
 		return title;
 	}
 
-	public final HtmlColor getBoxColor() {
+	public final HColor getBoxColor() {
 		return boxColor;
 	}
 

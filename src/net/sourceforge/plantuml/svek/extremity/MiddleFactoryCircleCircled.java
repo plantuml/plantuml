@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class MiddleFactoryCircleCircled implements MiddleFactory {
 
 	private final MiddleCircleCircledMode mode;
-	private final HtmlColor backColor;
+	private final HColor backColor;
 
-	public MiddleFactoryCircleCircled(MiddleCircleCircledMode mode, HtmlColor backColor) {
+	public MiddleFactoryCircleCircled(MiddleCircleCircledMode mode, HColor backColor) {
 		this.mode = mode;
 		this.backColor = backColor;
 	}

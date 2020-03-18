@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SubjectDayAsDate implements SubjectPattern {
 
@@ -64,7 +64,7 @@ public class SubjectDayAsDate implements SubjectPattern {
 		final int day = Integer.parseInt(arg.get("DAY", 0));
 		final int month = Integer.parseInt(arg.get("MONTH", 0));
 		final int year = Integer.parseInt(arg.get("YEAR", 0));
-		return DayAsDate.create(year, month, day);
+		return Day.create(year, month, day);
 	}
 
 }

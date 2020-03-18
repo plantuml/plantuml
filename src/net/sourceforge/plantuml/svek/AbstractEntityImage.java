@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public abstract class AbstractEntityImage extends AbstractTextBlock implements IEntityImage {
 
@@ -68,7 +68,7 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 		return skinParam;
 	}
 
-	public final HtmlColor getBackcolor() {
+	public final HColor getBackcolor() {
 		return null;
 	}
 

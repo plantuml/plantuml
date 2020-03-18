@@ -305,6 +305,32 @@ public enum License {
 		text.add(" ");
 		text.add("Project Info:  http://plantuml.com");
 		text.add(" ");
+		text.add(" <b>CoronaVirus License :</b>");
+		text.add(" ");
+		text.add(" The coronavirus is coming to you.");
+		text.add(" It’s coming at an exponential speed: gradually, and then suddenly.");
+		text.add(" It’s a matter of days. Maybe a week or two.");
+		text.add(" When it does, your healthcare system will be overwhelmed.");
+		text.add(" Your fellow citizens will be treated in the hallways.");
+		text.add(" Exhausted healthcare workers will break down. Some will die.");
+		text.add(" They will have to decide which patient gets the oxygen and which one dies.");
+		text.add(" The only way to prevent this is social distancing today. Not tomorrow. Today.");
+		text.add(" That means keeping as many people home as possible, starting now.");
+		text.add(" ");
+		text.add(" To use this program, you <i>must");
+		text.add(" ");
+		text.add(" <b>1) Read the following article:");
+		text.add("<qrcode:https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca>");
+		text.add(" ");
+		text.add(" or go to https://plantuml.com/coronavirus");
+		text.add(" ");
+		text.add(" <b>2) Apply social distancing");
+		text.add(" ");
+		text.add(" If you live in UK, Europe, North & South America, Iran, Japan, Korea...");
+		text.add(" and if you refuse to do so, please uninstall PlantUML from your system and do not use this service anymore.");
+		text.add(" ");
+		text.add(" ");
+		
 		if (licenseInfo.isValid() == false) {
 			text.add("If you like this project or if you find it useful, you can support us at:");
 			text.add(" ");

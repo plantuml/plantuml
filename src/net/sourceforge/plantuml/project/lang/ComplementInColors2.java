@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComplementInColors2 implements ComplementPattern {
 
@@ -51,8 +51,8 @@ public class ComplementInColors2 implements ComplementPattern {
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		final String color1 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color2 = arg.get("COMPLEMENT" + suffix, 1);
-		final HtmlColor col1 = system.getIHtmlColorSet().getColorIfValid(color1);
-		final HtmlColor col2 = system.getIHtmlColorSet().getColorIfValid(color2);
+		final HColor col1 = system.getIHtmlColorSet().getColorIfValid(color1);
+		final HColor col2 = system.getIHtmlColorSet().getColorIfValid(color2);
 		return Failable.<Complement> ok(new ComplementColors(col1, col2));
 	}
 }

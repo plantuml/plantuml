@@ -102,7 +102,7 @@ public class FtileMarged extends AbstractFtile {
 	}
 
 	private UTranslate getTranslate() {
-		return new UTranslate(margin1, 0);
+		return UTranslate.dx(margin1);
 	}
 
 	public void drawU(UGraphic ug) {

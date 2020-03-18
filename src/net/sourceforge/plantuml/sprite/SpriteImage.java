@@ -44,12 +44,12 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
 public class SpriteImage implements Sprite {
 
@@ -59,14 +59,14 @@ public class SpriteImage implements Sprite {
 		this.img = new UImage(img);
 	}
 
-	public TextBlock asTextBlock(final HtmlColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor color, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				if (color == null) {
 					ug.draw(img.scale(scale));
 				} else {
-					ug.draw(img.muteColor(((HtmlColorSimple) color).getColor999()).scale(scale));
+					ug.draw(img.muteColor(((HColorSimple) color).getColor999()).scale(scale));
 				}
 			}
 

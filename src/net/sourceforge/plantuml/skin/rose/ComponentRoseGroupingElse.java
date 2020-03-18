@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -58,14 +56,16 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
-	private final HtmlColor groupBorder;
-	private final HtmlColor backgroundColor;
+	private final HColor groupBorder;
+	private final HColor backgroundColor;
 
-	public ComponentRoseGroupingElse(Style style, HtmlColor groupBorder, FontConfiguration smallFont,
-			CharSequence comment, ISkinSimple spriteContainer, HtmlColor backgroundColor) {
+	public ComponentRoseGroupingElse(Style style, HColor groupBorder, FontConfiguration smallFont,
+			CharSequence comment, ISkinSimple spriteContainer, HColor backgroundColor) {
 		super(style, LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
 				HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, null, null);
 		if (SkinParam.USE_STYLES()) {
@@ -83,7 +83,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-		if (backgroundColor instanceof HtmlColorTransparent) {
+		if (backgroundColor instanceof HColorBackground) {
 			return;
 		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
@@ -95,7 +95,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(new UChangeColor(groupBorder));
-		ug.apply(new UTranslate(0, 1)).draw(new ULine(dimensionToUse.getWidth(), 0));
+		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));
 		ug = ug.apply(new UStroke());
 		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
 	}

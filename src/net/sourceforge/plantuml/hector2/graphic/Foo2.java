@@ -84,7 +84,7 @@ public class Foo2 extends AbstractTextBlock implements TextBlock {
 		final Dimension2D cell = getMaxCellDimension(stringBounder);
 		for (Layer layer : distribution.getLayers()) {
 			drawLayer(ug, layer, cell.getWidth(), cell.getHeight());
-			ug = ug.apply(new UTranslate(0, cell.getHeight()));
+			ug = ug.apply(UTranslate.dy(cell.getHeight()));
 		}
 	}
 

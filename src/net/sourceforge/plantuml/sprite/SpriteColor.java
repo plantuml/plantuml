@@ -41,14 +41,14 @@ import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class SpriteColor implements Sprite {
 
@@ -97,16 +97,16 @@ public class SpriteColor implements Sprite {
 		return width;
 	}
 
-	public UImage toUImage(ColorMapper colorMapper, HtmlColor backcolor, HtmlColor forecolor) {
+	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor forecolor) {
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		if (backcolor == null) {
-			backcolor = HtmlColorUtils.WHITE;
+			backcolor = HColorUtils.WHITE;
 		}
 		if (forecolor == null) {
-			forecolor = HtmlColorUtils.BLACK;
+			forecolor = HColorUtils.BLACK;
 		}
-		final HtmlColorGradient gradient = new HtmlColorGradient(backcolor, forecolor, '\0');
+		final HColorGradient gradient = new HColorGradient(backcolor, forecolor, '\0');
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
 				final int localColor = color[line][col];
@@ -122,7 +122,7 @@ public class SpriteColor implements Sprite {
 		return new UImage(im);
 	}
 
-	public TextBlock asTextBlock(final HtmlColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor color, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

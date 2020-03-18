@@ -58,6 +58,7 @@ public enum LineParam {
 	archimateBorder,
 	componentBorder,
 	cardBorder,
+	queueBorder,
 	agentBorder,
 	domainBorder, designedDomainBorder, machineBorder, requirementBorder;
 //	sequenceBoxBorder(0.1);

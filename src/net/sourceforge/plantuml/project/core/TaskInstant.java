@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.project.lang.Complement;
+import net.sourceforge.plantuml.project.time.Wink;
 
 public class TaskInstant implements Complement {
 

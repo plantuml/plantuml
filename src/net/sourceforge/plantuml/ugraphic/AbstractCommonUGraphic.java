@@ -35,15 +35,17 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperTransparentWrapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public abstract class AbstractCommonUGraphic implements UGraphic {
 
 	private UStroke stroke = new UStroke();
 	private UPattern pattern = UPattern.FULL;
 	private boolean hidden = false;
-	private HtmlColor backColor = null;
-	private HtmlColor color = null;
+	private HColor backColor = null;
+	private HColor color = null;
 	private boolean enlargeClip = false;
 
 	private UTranslate translate = new UTranslate();
@@ -122,11 +124,11 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 				return stroke;
 			}
 
-			public HtmlColor getColor() {
+			public HColor getColor() {
 				return color;
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return backColor;
 			}
 

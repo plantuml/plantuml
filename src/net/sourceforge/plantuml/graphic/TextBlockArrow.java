@@ -44,12 +44,13 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
 
 	private final double size;
 	private final Direction arrow;
-	private final HtmlColor color;
+	private final HColor color;
 
 	public TextBlockArrow(Direction arrow, FontConfiguration fontConfiguration) {
 		if (arrow == null) {

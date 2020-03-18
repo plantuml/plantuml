@@ -87,7 +87,7 @@ public class TextBlockRaw extends AbstractTextBlock implements TextBlock {
 		double y = 0;
 
 		for (Line line : getLines(ug.getStringBounder())) {
-			line.drawU(ug.apply(new UTranslate(0, y)));
+			line.drawU(ug.apply(UTranslate.dy(y)));
 			y += line.calculateDimension(ug.getStringBounder()).getHeight();
 		}
 	}

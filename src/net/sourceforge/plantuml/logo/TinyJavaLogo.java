@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.logo;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class TinyJavaLogo {
 	private final LogoScanner scanner = new LogoScanner();
@@ -47,7 +47,7 @@ public class TinyJavaLogo {
 	private final TurtleGraphicsPane turtleGraphicsPane;
 
 	private final Map<String, String> dictionary = new HashMap<String, String>();
-	private HtmlColor penColor;
+	private HColor penColor;
 
 	public TinyJavaLogo(TurtleGraphicsPane turtleGraphicsPane) {
 		this.turtleGraphicsPane = turtleGraphicsPane;
@@ -191,7 +191,7 @@ public class TinyJavaLogo {
 
 			case LogoToken.SETPC:
 				token = scanner.getToken();
-				final HtmlColor newPenColor = new HtmlColorSetSimple().getColorIfValid(token.lexeme);
+				final HColor newPenColor = HColorSet.instance().getColorIfValid(token.lexeme);
 				if (newPenColor == null) {
 					error("Unrecognized color name");
 					return;

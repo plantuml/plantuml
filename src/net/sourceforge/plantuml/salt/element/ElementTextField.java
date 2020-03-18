@@ -63,10 +63,10 @@ public class ElementTextField extends AbstractElementText implements Element {
 		drawText(ug, 3, 0);
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		final Dimension2D textDim = getTextDimensionAt(ug.getStringBounder(), 0);
-		ug.apply(new UTranslate(1, textDim.getHeight())).draw(new ULine(dim.getWidth() - 3, 0));
+		ug.apply(new UTranslate(1, textDim.getHeight())).draw(ULine.hline(dim.getWidth() - 3));
 		final double y3 = textDim.getHeight() - 3;
-		ug.apply(new UTranslate(1, y3)).draw(new ULine(0, 2));
-		ug.apply(new UTranslate(3 + textDim.getWidth() + 1, y3)).draw(new ULine(0, 2));
+		ug.apply(new UTranslate(1, y3)).draw(ULine.vline(2));
+		ug.apply(new UTranslate(3 + textDim.getWidth() + 1, y3)).draw(ULine.vline(2));
 	}
 
 }

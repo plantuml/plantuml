@@ -60,6 +60,14 @@ public class ULine extends AbstractShadowable implements Scalable, UShapeSized {
 		this.dy = dy;
 	}
 
+	public static ULine hline(double dx) {
+		return new ULine(dx, 0);
+	}
+
+	public static ULine vline(double dy) {
+		return new ULine(0, dy);
+	}
+
 	@Override
 	public String toString() {
 		return "ULine dx=" + dx + " dy=" + dy;

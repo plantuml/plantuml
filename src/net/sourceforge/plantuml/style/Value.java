@@ -36,14 +36,14 @@
 package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public interface Value {
 
 	public String asString();
 
-	public HtmlColor asColor(IHtmlColorSet set);
+	public HColor asColor(HColorSet set);
 
 	public int asInt();
 

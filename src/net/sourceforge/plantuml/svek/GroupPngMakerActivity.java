@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.SuperGroup;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -64,6 +63,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class GroupPngMakerActivity {
 
@@ -139,8 +139,8 @@ public final class GroupPngMakerActivity {
 
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {
 			final Stereotype stereo = group.getStereotype();
-			final HtmlColor borderColor = getColor(ColorParam.activityBorder, stereo);
-			final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null
+			final HColor borderColor = getColor(ColorParam.activityBorder, stereo);
+			final HColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null
 					? getColor(ColorParam.background, stereo)
 					: group.getColors(skinParam).getColor(ColorType.BACK);
 			final double shadowing;
@@ -159,7 +159,7 @@ public final class GroupPngMakerActivity {
 
 	private final Rose rose = new Rose();
 
-	protected final HtmlColor getColor(ColorParam colorParam, Stereotype stereo) {
+	protected final HColor getColor(ColorParam colorParam, Stereotype stereo) {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		return rose.getHtmlColor(skinParam, stereo, colorParam);
 	}

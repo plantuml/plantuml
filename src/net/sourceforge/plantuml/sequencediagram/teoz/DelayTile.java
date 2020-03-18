@@ -102,7 +102,7 @@ public class DelayTile extends AbstractTile implements Tile, TileWithCallbackY {
 		final Area area = new Area(getPreferredWidth(stringBounder), dim.getHeight());
 		tileArguments.getLivingSpaces().delayOn(y, dim.getHeight());
 
-		ug = ug.apply(new UTranslate(getMinX(stringBounder).getCurrentValue(), 0));
+		ug = ug.apply(UTranslate.dx(getMinX(stringBounder).getCurrentValue()));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 

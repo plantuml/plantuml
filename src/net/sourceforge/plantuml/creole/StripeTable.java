@@ -43,9 +43,12 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.creole.atom.Atom;
+import net.sourceforge.plantuml.creole.atom.AtomTable;
+import net.sourceforge.plantuml.creole.atom.AtomWithMargin;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class StripeTable implements Stripe {
 
@@ -53,7 +56,7 @@ public class StripeTable implements Stripe {
 		HEADER, NORMAL
 	};
 
-	private FontConfiguration fontConfiguration;
+	final private FontConfiguration fontConfiguration;
 	final private ISkinSimple skinParam;
 	final private AtomTable table;
 	final private Atom marged;
@@ -62,19 +65,19 @@ public class StripeTable implements Stripe {
 	public StripeTable(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {
 		this.skinParam = skinParam;
 		this.fontConfiguration = fontConfiguration;
-		HtmlColor lineColor = getBackOrFrontColor(line, 1);
+		HColor lineColor = getBackOrFrontColor(line, 1);
 		if (lineColor == null) {
 			lineColor = fontConfiguration.getColor();
 		}
 		this.table = new AtomTable(lineColor);
 		this.marged = new AtomWithMargin(table, 2, 2);
-		analyzeAndAddInternal(line, Mode.HEADER);
+		analyzeAndAddInternal(line);
 	}
 
 	public List<Atom> getAtoms() {
-		return Collections.<Atom> singletonList(marged);
+		return Collections.<Atom>singletonList(marged);
 	}
-	
+
 	public Atom getHeader() {
 		return null;
 	}
@@ -87,7 +90,7 @@ public class StripeTable implements Stripe {
 		return new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
 	}
 
-	private HtmlColor getBackOrFrontColor(String line, int idx) {
+	private HColor getBackOrFrontColor(String line, int idx) {
 		if (CreoleParser.doesStartByColor(line)) {
 			final int idx1 = line.indexOf('#');
 			final int idx2 = line.indexOf('>');
@@ -112,27 +115,29 @@ public class StripeTable implements Stripe {
 
 	private static final String hiddenBar = "\uE000";
 
-	private void analyzeAndAddInternal(String line, Mode mode) {
+	private void analyzeAndAddInternal(String line) {
 		line = line.replace("\\|", hiddenBar);
-		HtmlColor lineBackColor = getBackOrFrontColor(line, 0);
+		HColor lineBackColor = getBackOrFrontColor(line, 0);
 		if (lineBackColor != null) {
 			line = withouBackColor(line);
 		}
 		table.newLine(lineBackColor);
 		for (final StringTokenizer st = new StringTokenizer(line, "|"); st.hasMoreTokens();) {
+			Mode mode = Mode.NORMAL;
 			String v = st.nextToken().replace(hiddenBar.charAt(0), '|');
-			HtmlColor cellBackColor = getBackOrFrontColor(v, 0);
+			if (v.startsWith("=")) {
+				v = v.substring(1);
+				mode = Mode.HEADER;
+			}
+			HColor cellBackColor = getBackOrFrontColor(v, 0);
 			if (cellBackColor != null) {
 				v = withouBackColor(v);
-			}
-			if (mode == Mode.HEADER && v.startsWith("=")) {
-				v = v.substring(1);
 			}
 			final List<String> lines = getWithNewlinesInternal(v);
 			final List<StripeSimple> cells = new ArrayList<StripeSimple>();
 			for (String s : lines) {
-				final StripeSimple cell = new StripeSimple(getFontConfiguration(mode), stripeStyle,
-						new CreoleContext(), skinParam, CreoleMode.FULL);
+				final StripeSimple cell = new StripeSimple(getFontConfiguration(mode), stripeStyle, new CreoleContext(),
+						skinParam, CreoleMode.FULL);
 				if (s.startsWith("<r>")) {
 					cell.setCellAlignment(HorizontalAlignment.RIGHT);
 					s = s.substring("<r>".length());
@@ -179,8 +184,8 @@ public class StripeTable implements Stripe {
 		return fontConfiguration.bold();
 	}
 
-	public void analyzeAndAddNormal(String line) {
-		analyzeAndAddInternal(line, Mode.NORMAL);
+	public void analyzeAndAddLine(String line) {
+		analyzeAndAddInternal(line);
 	}
 
 }

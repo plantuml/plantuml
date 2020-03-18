@@ -59,19 +59,19 @@ public class Grid2 {
 		final double ymin = rowsStart.get(0);
 		final double ymax = rowsStart.get(rowsStart.size() - 1);
 		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE) {
-			ug.apply(new UTranslate(xmin, ymin)).draw(new ULine(xmax - xmin, 0));
-			ug.apply(new UTranslate(xmin, ymax)).draw(new ULine(xmax - xmin, 0));
-			ug.apply(new UTranslate(xmin, ymin)).draw(new ULine(0, ymax - ymin));
-			ug.apply(new UTranslate(xmax, ymin)).draw(new ULine(0, ymax - ymin));
+			ug.apply(new UTranslate(xmin, ymin)).draw(ULine.hline(xmax - xmin));
+			ug.apply(new UTranslate(xmin, ymax)).draw(ULine.hline(xmax - xmin));
+			ug.apply(new UTranslate(xmin, ymin)).draw(ULine.vline(ymax - ymin));
+			ug.apply(new UTranslate(xmax, ymin)).draw(ULine.vline(ymax - ymin));
 		}
 		if (drawHorizontal()) {
 			for (Double y : rowsStart) {
-				ug.apply(new UTranslate(xmin, y)).draw(new ULine(xmax - xmin, 0));
+				ug.apply(new UTranslate(xmin, y)).draw(ULine.hline(xmax - xmin));
 			}
 		}
 		if (drawVertical()) {
 			for (Double x : colsStart) {
-				ug.apply(new UTranslate(x, ymin)).draw(new ULine(0, ymax - ymin));
+				ug.apply(new UTranslate(x, ymin)).draw(ULine.vline(ymax - ymin));
 			}
 		}
 	}

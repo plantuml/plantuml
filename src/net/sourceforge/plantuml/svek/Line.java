@@ -70,8 +70,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockArrow;
@@ -101,6 +99,8 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Line implements Moveable, Hideable {
 
@@ -141,10 +141,10 @@ public class Line implements Moveable, Hideable {
 	private Cluster projectionCluster;
 
 	private final Pragma pragma;
-	private final HtmlColor backgroundColor;
+	private final HColor backgroundColor;
 	private final boolean useRankSame;
 	private final UStroke defaultThickness;
-	private HtmlColor arrowLollipopColor;
+	private HColor arrowLollipopColor;
 	private final ISkinParam skinParam;
 
 	// private final UmlDiagramType umlType;
@@ -252,7 +252,7 @@ public class Line implements Moveable, Hideable {
 		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);
 		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);
 		if (arrowLollipopColor == null) {
-			this.arrowLollipopColor = HtmlColorUtils.WHITE;
+			this.arrowLollipopColor = HColorUtils.WHITE;
 		}
 		this.pragma = pragma;
 		this.bibliotekon = bibliotekon;
@@ -349,7 +349,7 @@ public class Line implements Moveable, Hideable {
 			// final HtmlColor back = visibilityModifier.getBackground() == null ? null :
 			// rose.getHtmlColor(skinParam,
 			// visibilityModifier.getBackground());
-			final HtmlColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());
+			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());
 			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);
 			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);
 			label = TextBlockUtils.mergeLR(visibility, label, VerticalAlignment.CENTER);
@@ -661,7 +661,7 @@ public class Line implements Moveable, Hideable {
 
 	}
 
-	public void drawU(UGraphic ug, HtmlColor color, Set<String> ids) {
+	public void drawU(UGraphic ug, HColor color, Set<String> ids) {
 		if (opale) {
 			return;
 		}
@@ -689,7 +689,7 @@ public class Line implements Moveable, Hideable {
 		}
 
 		if (this.link.getColors() != null) {
-			final HtmlColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
+			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
 			if (newColor != null) {
 				color = newColor;
 			}
@@ -823,7 +823,7 @@ public class Line implements Moveable, Hideable {
 		}
 	}
 
-	private void drawRainbow(UGraphic ug, HtmlColor color, DotPath todraw, List<Colors> supplementaryColors,
+	private void drawRainbow(UGraphic ug, HColor color, DotPath todraw, List<Colors> supplementaryColors,
 			UStroke stroke) {
 		ug.draw(todraw);
 		final LinkType linkType = link.getType();

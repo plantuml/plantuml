@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UParamNull implements UParam {
 
-	public HtmlColor getColor() {
+	public HColor getColor() {
 		return null;
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return null;
 	}
 

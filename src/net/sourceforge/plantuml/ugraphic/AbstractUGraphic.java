@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.ugraphic;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
 public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 
 	private final O graphic;

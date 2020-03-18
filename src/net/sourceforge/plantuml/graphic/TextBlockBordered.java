@@ -45,12 +45,13 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 
 	private final double cornersize;
-	private final HtmlColor backgroundColor;
-	private final HtmlColor borderColor;
+	private final HColor backgroundColor;
+	private final HColor borderColor;
 	private final double marginX;
 	private final double marginY;
 	private final UStroke stroke;
@@ -58,7 +59,7 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 
-	TextBlockBordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor, HtmlColor backgroundColor,
+	TextBlockBordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
 			double cornersize, double marginX, double marginY) {
 		this.marginX = marginX;
 		this.marginY = marginY;
@@ -70,7 +71,7 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 		this.backgroundColor = backgroundColor;
 	}
 
-	TextBlockBordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor, HtmlColor backgroundColor,
+	TextBlockBordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
 			double cornersize) {
 		this(textBlock, stroke, borderColor, backgroundColor, cornersize, 6, 5);
 	}
@@ -129,7 +130,7 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 	private Shadowable getPolygonNormal(final StringBounder stringBounder) {
 		final double height = getTextHeight(stringBounder);
 		final double width = getTextWidth(stringBounder);
-		return new URectangle(width, height, cornersize, cornersize);
+		return new URectangle(width, height).rounded(cornersize);
 	}
 
 }

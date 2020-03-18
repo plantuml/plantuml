@@ -100,7 +100,7 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 		for (Ftile candidate : tiles) {
 			final FtileGeometry dim1 = candidate.calculateDimension(stringBounder);
 			if (candidate == tile) {
-				return new UTranslate(x1, 0);
+				return UTranslate.dx(x1);
 			}
 			x1 += dim1.getWidth() + xSeparation;
 		}

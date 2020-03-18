@@ -43,9 +43,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class SubjectDaysAsDates implements SubjectPattern {
 
@@ -107,26 +107,26 @@ public class SubjectDaysAsDates implements SubjectPattern {
 	public Subject getSubject(GanttDiagram project, RegexResult arg) {
 		final String countAnd = arg.get("COUNT_AND", 0);
 		if (countAnd != null) {
-			final DayAsDate date3 = getDate(arg, "3");
+			final Day date3 = getDate(arg, "3");
 			final int nb = Integer.parseInt(countAnd);
 			return new DaysAsDates(project, date3, nb);
 		}
 		final String countThen = arg.get("COUNT_THEN", 0);
 		if (countThen != null) {
-			final DayAsDate date3 = project.getThenDate();
+			final Day date3 = project.getThenDate();
 			final int nb = Integer.parseInt(countThen);
 			return new DaysAsDates(project, date3, nb);			
 		}
-		final DayAsDate date1 = getDate(arg, "1");
-		final DayAsDate date2 = getDate(arg, "2");
+		final Day date1 = getDate(arg, "1");
+		final Day date2 = getDate(arg, "2");
 		return new DaysAsDates(date1, date2);
 	}
 
-	private DayAsDate getDate(RegexResult arg, String suffix) {
+	private Day getDate(RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("DAY" + suffix, 0));
 		final int month = Integer.parseInt(arg.get("MONTH" + suffix, 0));
 		final int year = Integer.parseInt(arg.get("YEAR" + suffix, 0));
-		return DayAsDate.create(year, month, day);
+		return Day.create(year, month, day);
 	}
 
 }

@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComponentRoseQueue extends AbstractTextualComponent {
 
@@ -63,7 +63,7 @@ public class ComponentRoseQueue extends AbstractTextualComponent {
 
 	public ComponentRoseQueue(Style style, Style stereo, SymbolContext biColor, FontConfiguration font,
 			Display stringsToDisplay, boolean head, ISkinSimple spriteContainer, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
+			HColor htmlColorForStereotype) {
 		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
 				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 		if (SkinParam.USE_STYLES()) {
@@ -80,7 +80,7 @@ public class ComponentRoseQueue extends AbstractTextualComponent {
 		final Dimension2D dimStickman = stickman.calculateDimension(stringBounder);
 		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;
 
-		ug = ug.apply(new UTranslate(delta, 0));
+		ug = ug.apply(UTranslate.dx(delta));
 		stickman.drawU(ug);
 	}
 

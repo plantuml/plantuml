@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ElementDroplist extends AbstractElementText implements Element {
 
@@ -93,11 +93,11 @@ public class ElementDroplist extends AbstractElementText implements Element {
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		if (zIndex == 0) {
-			ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#EEEEEE"))).draw(
+			ug.apply(new UChangeBackColor(HColorSet.instance().getColorIfValid("#EEEEEE"))).draw(
 					new URectangle(dim.getWidth() - 1, dim.getHeight() - 1));
 			drawText(ug, 2, 2);
 			final double xline = dim.getWidth() - box;
-			ug.apply(new UTranslate(xline, 0)).draw(new ULine(0, dim.getHeight() - 1));
+			ug.apply(UTranslate.dx(xline)).draw(ULine.vline(dim.getHeight() - 1));
 
 			final UPolygon poly = new UPolygon();
 			poly.addPoint(0, 0);
@@ -111,10 +111,10 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		if (openDrop != null) {
 			final Dimension2D dimOpen = Dimension2DDouble.atLeast(openDrop.calculateDimension(ug.getStringBounder()),
 					dim.getWidth() - 1, 0);
-			ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#EEEEEE")))
-					.apply(new UTranslate(0, dim.getHeight() - 1))
+			ug.apply(new UChangeBackColor(HColorSet.instance().getColorIfValid("#EEEEEE")))
+					.apply(UTranslate.dy(dim.getHeight() - 1))
 					.draw(new URectangle(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));
-			openDrop.drawU(ug.apply(new UTranslate(0, dim.getHeight() - 1)));
+			openDrop.drawU(ug.apply(UTranslate.dy(dim.getHeight() - 1)));
 		}
 	}
 }

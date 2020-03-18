@@ -74,9 +74,9 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		ug = symbolContext.transparentBackColorToNull().apply(ug);
-		ug.draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), roundCorner, roundCorner));
+		ug.draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()).rounded(roundCorner));
 		final double xpos = (dimensionToUse.getWidth() - getPureTextWidth(ug.getStringBounder())) / 2;
-		getTextBlock().drawU(ug.apply(new UTranslate(xpos, 0)));
+		getTextBlock().drawU(ug.apply(UTranslate.dx(xpos)));
 	}
 
 	@Override

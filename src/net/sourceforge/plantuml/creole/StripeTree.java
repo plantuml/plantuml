@@ -39,6 +39,9 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.creole.atom.Atom;
+import net.sourceforge.plantuml.creole.atom.AtomTree;
+import net.sourceforge.plantuml.creole.atom.AtomWithMargin;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 
 public class StripeTree implements Stripe {

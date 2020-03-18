@@ -39,18 +39,21 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.core.Wink;
+import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import sun.security.x509.AVA;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public abstract class TimeHeader {
+	
+	protected static final int Y_POS_ROW16 = 16;
+	protected static final int Y_POS_ROW28 = 28;
+
 
 	private final TimeScale timeScale;
 	protected final Wink min;
@@ -69,8 +72,8 @@ public abstract class TimeHeader {
 	protected final void drawHline(UGraphic ug, double y) {
 		final double xmin = getTimeScale().getStartingPosition(min);
 		final double xmax = getTimeScale().getEndingPosition(max);
-		final ULine hline = new ULine(xmax - xmin, 0);
-		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(0, y)).draw(hline);
+		final ULine hline = ULine.hline(xmax - xmin);
+		ug.apply(new UChangeColor(HColorUtils.LIGHT_GRAY)).apply(UTranslate.dy(y)).draw(hline);
 	}
 
 	final protected FontConfiguration getFontConfiguration(int size, boolean bold) {
@@ -78,7 +81,7 @@ public abstract class TimeHeader {
 		if (bold) {
 			font = font.bold();
 		}
-		return new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
+		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
 	public final TimeScale getTimeScale() {
@@ -94,7 +97,7 @@ public abstract class TimeHeader {
 		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
 		final double available = end - start;
 		final double diff = Math.max(0, available - width);
-		text.drawU(ug.apply(new UTranslate(start + diff / 2, 0)));
+		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));
 	}
 
 	protected final void printCentered(UGraphic ug, double start, double end, TextBlock... texts) {
@@ -104,7 +107,7 @@ public abstract class TimeHeader {
 			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
 			if (i == 0 || width <= available) {
 				final double diff = Math.max(0, available - width);
-				text.drawU(ug.apply(new UTranslate(start + diff / 2, 0)));
+				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));
 				return;
 			}
 		}

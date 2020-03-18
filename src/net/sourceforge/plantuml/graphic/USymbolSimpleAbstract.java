@@ -39,8 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 abstract class USymbolSimpleAbstract extends USymbol {
@@ -73,7 +71,7 @@ abstract class USymbolSimpleAbstract extends USymbol {
 				label.drawU(ug.apply(new UTranslate(labelX, labelY)));
 
 				final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;
-				stereotype.drawU(ug.apply(new UTranslate(stereoX, 0)));
+				stereotype.drawU(ug.apply(UTranslate.dx(stereoX)));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {

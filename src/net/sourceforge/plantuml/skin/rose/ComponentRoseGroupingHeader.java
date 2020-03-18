@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -59,6 +57,8 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 
 public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
@@ -67,12 +67,12 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	private final TextBlock commentTextBlock;
 
-	private final HtmlColor background;
+	private final HColor background;
 	private final SymbolContext symbolContext;
 	private final SymbolContext symbolContextCorner;
 	private final double roundCorner;
 
-	public ComponentRoseGroupingHeader(Style style, Style styleHeader, HtmlColor background,
+	public ComponentRoseGroupingHeader(Style style, Style styleHeader, HColor background,
 			SymbolContext symbolContext, FontConfiguration bigFont, FontConfiguration smallFont2, Display strings,
 			ISkinSimple spriteContainer, double roundCorner) {
 		super(styleHeader, LineBreakStrategy.NONE, strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1,
@@ -103,7 +103,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		}
 	}
 
-	// new FontConfiguration(smallFont, bigFont.getColor(), bigFont.getHyperlinkColor(),
+	// new FontConfiguration(smallFont, bigFont.getColor(),
+	// bigFont.getHyperlinkColor(),
 	// bigFont.useUnderlineForHyperlink());
 
 	private double getSuppHeightForComment(StringBounder stringBounder) {
@@ -138,13 +139,13 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-		if (background instanceof HtmlColorTransparent) {
+		if (background instanceof HColorBackground) {
 			return;
 		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		ug = symbolContext.applyStroke(ug).apply(new UChangeColor(symbolContext.getForeColor()));
-		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), roundCorner,
-				roundCorner);
+		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight())
+				.rounded(roundCorner);
 		rect.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(new UChangeBackColor(background)).draw(rect);
 	}
@@ -163,8 +164,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		}
 
 		ug = symbolContext.applyStroke(ug).apply(new UChangeColor(symbolContext.getForeColor()));
-		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), roundCorner,
-				roundCorner);
+		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight())
+				.rounded(roundCorner);
 		ug.draw(rect);
 
 		ug = ug.apply(new UStroke());

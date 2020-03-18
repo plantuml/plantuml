@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -77,6 +76,7 @@ import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Styleable {
 
@@ -138,8 +138,8 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 		final Rose rose = new Rose();
 
-		final HtmlColor noteBackgroundColor;
-		final HtmlColor borderColor;
+		final HColor noteBackgroundColor;
+		final HColor borderColor;
 		final FontConfiguration fc;
 
 		final double shadowing;
@@ -189,7 +189,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final double yForNote = (dimTotal.getHeight() - dimNote.getHeight()) / 2;
 
 		if (notePosition == NotePosition.LEFT) {
-			return new UTranslate(0, yForNote);
+			return UTranslate.dy(yForNote);
 		}
 		final double dx = dimTotal.getWidth() - dimNote.getWidth();
 		return new UTranslate(dx, yForNote);

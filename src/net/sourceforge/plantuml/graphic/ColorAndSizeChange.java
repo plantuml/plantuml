@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.graphic;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 class ColorAndSizeChange implements FontChange {
 
@@ -45,13 +47,13 @@ class ColorAndSizeChange implements FontChange {
 
 	static final Pattern2 sizePattern = MyPattern.cmpile("(?i)size\\s*=\\s*[%g]?(\\d+)[%g]?");
 
-	private final HtmlColor color;
+	private final HColor color;
 	private final Integer size;
 
 	ColorAndSizeChange(String s) {
 		final Matcher2 matcherColor = colorPattern.matcher(s);
 		if (matcherColor.find()) {
-			color = HtmlColorSet.getInstance().getColorIfValid(matcherColor.group(1));
+			color = HColorSet.instance().getColorIfValid(matcherColor.group(1));
 		} else {
 			color = null;
 		}
@@ -63,7 +65,7 @@ class ColorAndSizeChange implements FontChange {
 		}
 	}
 
-	HtmlColor getColor() {
+	HColor getColor() {
 		return color;
 	}
 

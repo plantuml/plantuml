@@ -36,21 +36,21 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SkinParamForceColor extends SkinParamDelegator {
 
 	final private ColorParam colorParam;;
-	final private HtmlColor color;
+	final private HColor color;
 
-	public SkinParamForceColor(ISkinParam skinParam, ColorParam colorParam, HtmlColor color) {
+	public SkinParamForceColor(ISkinParam skinParam, ColorParam colorParam, HColor color) {
 		super(skinParam);
 		this.color = color;
 		this.colorParam = colorParam;
 	}
 
 	@Override
-	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
+	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		if (colorParam == param) {
 			return color;
 		}

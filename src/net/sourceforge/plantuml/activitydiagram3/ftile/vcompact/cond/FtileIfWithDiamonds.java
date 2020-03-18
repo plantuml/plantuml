@@ -116,14 +116,14 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	protected UTranslate getTranslate1(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		return super.getTranslate1(stringBounder).compose(
-				new UTranslate(0, dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
+				UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	@Override
 	protected UTranslate getTranslate2(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		return super.getTranslate2(stringBounder).compose(
-				new UTranslate(0, dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
+				UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {

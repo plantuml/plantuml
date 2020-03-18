@@ -67,7 +67,7 @@ class USymbolCloud extends USymbol {
 		if (shadowing) {
 			// shape.setDeltaShadow(3.0);
 		}
-		ug.apply(new UTranslate(0, 0)).draw(shape);
+		ug.apply(UTranslate.dy(0)).draw(shape);
 	}
 
 	private UPath getSpecificFrontierForCloudNew(double width, double height) {

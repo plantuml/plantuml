@@ -43,10 +43,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionRepeat implements Instruction {
 
@@ -73,7 +73,7 @@ public class InstructionRepeat implements Instruction {
 		return repeatList.containsBreak();
 	}
 
-	public InstructionRepeat(Swimlane swimlane, Instruction parent, LinkRendering nextLinkRenderer, HtmlColor color,
+	public InstructionRepeat(Swimlane swimlane, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
 			Display startLabel, BoxStyle boxStyleIn, Colors colors) {
 		this.boxStyleIn = boxStyleIn;
 		this.startLabel = startLabel;

@@ -45,7 +45,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 
 public class Worm implements Iterable<Point2D.Double> {
@@ -67,13 +67,13 @@ public class Worm implements Iterable<Point2D.Double> {
 
 	private boolean ignoreForCompression;
 
-	public final void setIgnoreForCompression(boolean ignoreForCompression) {
-		this.ignoreForCompression = ignoreForCompression;
+	public final void setIgnoreForCompression() {
+		this.ignoreForCompression = true;
 	}
 
 	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle color, double stroke,
 			Direction emphasizeDirection, UPolygon endDecoration) {
-		final HtmlColor color2 = color.getColor();
+		final HColor color2 = color.getColor();
 		if (color2 == null) {
 			throw new IllegalArgumentException();
 		}

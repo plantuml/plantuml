@@ -48,9 +48,21 @@ public class UTranslate implements UChange {
 		return "translate dx=" + dx + " dy=" + dy;
 	}
 
+	public static UTranslate none() {
+		return new UTranslate(0, 0);
+	}
+
 	public UTranslate(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
+	}
+
+	public static UTranslate dx(double dx) {
+		return new UTranslate(dx, 0);
+	}
+
+	public static UTranslate dy(double dy) {
+		return new UTranslate(0, dy);
 	}
 
 	public UTranslate(Point2D p) {

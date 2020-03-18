@@ -60,10 +60,6 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -77,49 +73,57 @@ import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.core.TaskImpl;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.core.TaskSeparator;
-import net.sourceforge.plantuml.project.core.Wink;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
+import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TaskDrawRegular;
 import net.sourceforge.plantuml.project.draw.TaskDrawSeparator;
 import net.sourceforge.plantuml.project.draw.TimeHeader;
 import net.sourceforge.plantuml.project.draw.TimeHeaderDaily;
+import net.sourceforge.plantuml.project.draw.TimeHeaderMonthly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
 import net.sourceforge.plantuml.project.lang.Subject;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.time.GCalendar;
+import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class GanttDiagram extends TitledDiagram implements Subject {
 
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
 	private final Map<String, Task> byShortName = new HashMap<String, Task>();
 	private final List<GanttConstraint> constraints = new ArrayList<GanttConstraint>();
-	private final IHtmlColorSet colorSet = new HtmlColorSetSimple();
+	private final HColorSet colorSet = HColorSet.instance();
 
 	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
-	private final Collection<DayAsDate> closedDayAsDate = new HashSet<DayAsDate>();
-	private final Collection<DayAsDate> openedDayAsDate = new HashSet<DayAsDate>();
+	private final Collection<Day> closedDayAsDate = new HashSet<Day>();
+	private final Collection<Day> openedDayAsDate = new HashSet<Day>();
 
 	private final Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
-	private final Map<DayAsDate, HtmlColor> colorDays = new HashMap<DayAsDate, HtmlColor>();
-	private final Map<DayAsDate, String> nameDays = new HashMap<DayAsDate, String>();
+	private final Map<Day, HColor> colorDays = new HashMap<Day, HColor>();
+	private final Map<Day, String> nameDays = new HashMap<Day, String>();
 
 	private PrintScale printScale = PrintScale.DAILY;
-	private DayAsDate today;
+	private Day today;
 	private GCalendar calendar;
 	private double totalHeight;
 	private Wink min = new Wink(0);
 	private Wink max;
 
-	private DayAsDate printStart;
-	private DayAsDate printEnd;
+	private Day printStart;
+	private Day printEnd;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Project)");
@@ -176,6 +180,19 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		this.printScale = printScale;
 	}
 
+	private boolean isHidden(Task task) {
+		if (printStart == null) {
+			return false;
+		}
+		if (task.getEnd().compareTo(min) < 0) {
+			return true;
+		}
+		if (task.getStart().compareTo(max) > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	private TextBlockBackcolored getTextBlock() {
 		if (printStart == null) {
 			initMinMax();
@@ -188,7 +205,10 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 			timeHeader = new TimeHeaderSimple(min, max);
 		} else if (printScale == PrintScale.WEEKLY) {
 			timeHeader = new TimeHeaderWeekly(calendar, min, max, getDefaultPlan(), colorDays, nameDays);
+		} else if (printScale == PrintScale.MONTHLY) {
+			timeHeader = new TimeHeaderMonthly(calendar, min, max, getDefaultPlan(), colorDays, nameDays);
 		} else {
+//			timeHeader = new TimeHeaderDaily(calendar, min, max, getDefaultPlan(), colorDays, nameDays, null, null);
 			timeHeader = new TimeHeaderDaily(calendar, min, max, getDefaultPlan(), colorDays, nameDays, printStart,
 					printEnd);
 		}
@@ -200,7 +220,8 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 				drawConstraints(ug, timeHeader.getTimeScale());
 				drawTasksRect(ug);
 				drawTasksTitle(ug);
-				drawResources(ug);
+				if (printStart == null)
+					drawResources(ug);
 			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
@@ -217,7 +238,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 				throw new UnsupportedOperationException();
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return null;
 			}
 		};
@@ -225,22 +246,28 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 
 	private void drawTasksRect(UGraphic ug) {
 		for (Task task : tasks.values()) {
-			final TaskDraw draw = task.getTaskDraw();
-			final UTranslate move = new UTranslate(0, draw.getY());
+			final TaskDraw draw = draws.get(task);
+			final UTranslate move = UTranslate.dy(draw.getY());
 			draw.drawU(ug.apply(move));
 		}
 	}
 
 	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
 		for (GanttConstraint constraint : constraints) {
+			if (printStart != null && constraint.isHidden(min, max)) {
+				continue;
+			}
 			constraint.getUDrawable(timeScale).drawU(ug);
 		}
 	}
 
 	private void drawTasksTitle(final UGraphic ug1) {
 		for (Task task : tasks.values()) {
-			final TaskDraw draw = task.getTaskDraw();
-			final UTranslate move = new UTranslate(0, draw.getY());
+			if (isHidden(task)) {
+				continue;
+			}
+			final TaskDraw draw = draws.get(task);
+			final UTranslate move = UTranslate.dy(draw.getY());
 			draw.drawTitle(ug1.apply(move));
 		}
 	}
@@ -248,7 +275,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 	private void drawResources(UGraphic ug) {
 		for (Resource res : resources.values()) {
 			final ResourceDraw draw = res.getResourceDraw();
-			final UTranslate move = new UTranslate(0, draw.getY());
+			final UTranslate move = UTranslate.dy(draw.getY());
 			draw.drawU(ug.apply(move));
 		}
 	}
@@ -259,7 +286,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 				if (calendar == null) {
 					return 100;
 				}
-				final DayAsDate day = calendar.toDayAsDate((Wink) instant);
+				final Day day = calendar.toDayAsDate((Wink) instant);
 				if (isClosed(day)) {
 					return 0;
 				}
@@ -268,7 +295,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		};
 	}
 
-	private boolean isClosed(final DayAsDate day) {
+	private boolean isClosed(final Day day) {
 		if (openedDayAsDate.contains(day)) {
 			return false;
 		}
@@ -280,26 +307,40 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		closedDayOfWeek.add(day);
 	}
 
-	public void closeDayAsDate(DayAsDate day) {
+	public void closeDayAsDate(Day day) {
 		closedDayAsDate.add(day);
 	}
 
-	public void openDayAsDate(DayAsDate day) {
+	public void openDayAsDate(Day day) {
 		openedDayAsDate.add(day);
 	}
+
+	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 
 	private void initTaskAndResourceDraws(TimeScale timeScale, double headerHeight) {
 		double y = headerHeight;
 		for (Task task : tasks.values()) {
+			task.setY(y);
+			y += task.getHeight();
+
+		}
+		for (Task task : tasks.values()) {
 			final TaskDraw draw;
 			if (task instanceof TaskSeparator) {
-				draw = new TaskDrawSeparator((TaskSeparator) task, timeScale, y, min, max);
+				draw = new TaskDrawSeparator(((TaskSeparator) task).getName(), timeScale, task.getY(), min, max);
 			} else {
-				draw = new TaskDrawRegular((TaskImpl) task, timeScale, y);
+				final TaskImpl tmp = (TaskImpl) task;
+				if (tmp.isDiamond()) {
+					draw = new TaskDrawDiamond(timeScale, task.getY(), tmp.getPrettyDisplay(), getStart(tmp));
+				} else {
+					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
+					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;
+					draw = new TaskDrawRegular(timeScale, task.getY(), tmp.getPrettyDisplay(), getStart(tmp),
+							getEnd(tmp), oddStart, oddEnd);
+				}
+				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl());
 			}
-			task.setTaskDraw(draw);
-			y += draw.getHeight();
-
+			draws.put(task, draw);
 		}
 		for (Resource res : resources.values()) {
 			final ResourceDraw draw = new ResourceDraw(this, res, timeScale, y, min, max);
@@ -308,6 +349,20 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 
 		}
 		this.totalHeight = y;
+	}
+
+	private Wink getStart(final TaskImpl tmp) {
+		if (printStart == null) {
+			return tmp.getStart();
+		}
+		return Wink.max(min, tmp.getStart());
+	}
+
+	private Wink getEnd(final TaskImpl tmp) {
+		if (printStart == null) {
+			return tmp.getEnd();
+		}
+		return Wink.min(max, tmp.getEnd());
 	}
 
 	private void initMinMax() {
@@ -330,13 +385,13 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 			}
 		}
 		if (calendar != null) {
-			for (DayAsDate d : colorDays.keySet()) {
+			for (Day d : colorDays.keySet()) {
 				final Wink instant = calendar.fromDayAsDate(d);
 				if (instant.compareTo(max) > 0) {
 					max = instant;
 				}
 			}
-			for (DayAsDate d : nameDays.keySet()) {
+			for (Day d : nameDays.keySet()) {
 				final Wink instant = calendar.fromDayAsDate(d);
 				if (instant.compareTo(max) > 0) {
 					max = instant;
@@ -345,14 +400,14 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		}
 	}
 
-	public DayAsDate getThenDate() {
-		DayAsDate result = getStartingDate();
-		for (DayAsDate d : colorDays.keySet()) {
+	public Day getThenDate() {
+		Day result = getStartingDate();
+		for (Day d : colorDays.keySet()) {
 			if (d.compareTo(result) > 0) {
 				result = d;
 			}
 		}
-		for (DayAsDate d : nameDays.keySet()) {
+		for (Day d : nameDays.keySet()) {
 			if (d.compareTo(result) > 0) {
 				result = d;
 			}
@@ -428,22 +483,22 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		constraints.add(constraint);
 	}
 
-	public IHtmlColorSet getIHtmlColorSet() {
+	public HColorSet getIHtmlColorSet() {
 		return colorSet;
 	}
 
-	public void setStartingDate(DayAsDate start) {
+	public void setStartingDate(Day start) {
 		this.calendar = new GCalendar(start);
 	}
 
-	public DayAsDate getStartingDate() {
+	public Day getStartingDate() {
 		if (this.calendar == null) {
 			return null;
 		}
 		return this.calendar.getStartingDate();
 	}
 
-	public DayAsDate getStartingDate(int nday) {
+	public Day getStartingDate(int nday) {
 		if (this.calendar == null) {
 			return null;
 		}
@@ -454,11 +509,11 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		return 7 - closedDayOfWeek.size();
 	}
 
-	public Wink convert(DayAsDate day) {
+	public Wink convert(Day day) {
 		return calendar.fromDayAsDate(day);
 	}
 
-	public boolean isOpen(DayAsDate day) {
+	public boolean isOpen(Day day) {
 		return getDefaultPlan().getLoadAt(convert(day)) > 0;
 	}
 
@@ -500,9 +555,9 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 	public Moment getExistingMoment(String id) {
 		Moment result = getExistingTask(id);
 		if (result == null) {
-			DayAsDate start = null;
-			DayAsDate end = null;
-			for (Map.Entry<DayAsDate, String> ent : nameDays.entrySet()) {
+			Day start = null;
+			Day end = null;
+			for (Map.Entry<Day, String> ent : nameDays.entrySet()) {
 				if (ent.getValue().equalsIgnoreCase(id) == false) {
 					continue;
 				}
@@ -516,7 +571,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		return result;
 	}
 
-	private DayAsDate min(DayAsDate d1, DayAsDate d2) {
+	private Day min(Day d1, Day d2) {
 		if (d1 == null) {
 			return d2;
 		}
@@ -526,7 +581,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		return d1;
 	}
 
-	private DayAsDate max(DayAsDate d1, DayAsDate d2) {
+	private Day max(Day d1, Day d2) {
 		if (d1 == null) {
 			return d2;
 		}
@@ -536,32 +591,32 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		return d1;
 	}
 
-	public void colorDay(DayAsDate day, HtmlColor color) {
+	public void colorDay(Day day, HColor color) {
 		colorDays.put(day, color);
 	}
 
-	public void nameDay(DayAsDate day, String name) {
+	public void nameDay(Day day, String name) {
 		nameDays.put(day, name);
 	}
 
 	public void setTodayColors(ComplementColors colors) {
 		if (today == null) {
-			this.today = DayAsDate.today();
+			this.today = Day.today();
 		}
 		colorDay(today, colors.getCenter());
 	}
 
-	public CommandExecutionResult setToday(DayAsDate date) {
+	public CommandExecutionResult setToday(Day date) {
 		this.today = date;
 		return CommandExecutionResult.ok();
 	}
 
 	public CommandExecutionResult deleteTask(Task task) {
-		task.setColors(new ComplementColors(HtmlColorUtils.WHITE, HtmlColorUtils.BLACK));
+		task.setColors(new ComplementColors(HColorUtils.WHITE, HColorUtils.BLACK));
 		return CommandExecutionResult.ok();
 	}
 
-	public void setPrintInterval(DayAsDate start, DayAsDate end) {
+	public void setPrintInterval(Day start, Day end) {
 		this.printStart = start;
 		this.printEnd = end;
 	}

@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInsi
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -77,6 +76,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class FtileWhile extends AbstractFtile {
 
@@ -113,8 +113,8 @@ class FtileWhile extends AbstractFtile {
 		this.specialOut = specialOut;
 	}
 
-	public static Ftile create(Swimlane swimlane, Ftile whileBlock, Display test, HtmlColor borderColor,
-			HtmlColor backColor, Rainbow arrowColor, Display yes, Display out2, Rainbow endInlinkColor,
+	public static Ftile create(Swimlane swimlane, Ftile whileBlock, Display test, HColor borderColor,
+			HColor backColor, Rainbow arrowColor, Display yes, Display out2, Rainbow endInlinkColor,
 			LinkRendering afterEndwhile, FontConfiguration fontArrow, FtileFactory ftileFactory,
 			ConditionStyle conditionStyle, FontConfiguration fcTest, Instruction specialOut) {
 

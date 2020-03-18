@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDiagram> {
 
@@ -73,7 +73,7 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
 		final String type = line0.get("TYPE", 0);
 		final String stringColor = line0.get("BACKCOLOR", 0);
-		HtmlColor backColor = null;
+		HColor backColor = null;
 		if (stringColor != null) {
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
 		}

@@ -119,7 +119,7 @@ public class SlotSet implements Iterable<Slot> {
 	public void drawDebugX(UGraphic ug, double size) {
 		for (Slot slot : all) {
 			final URectangle rect = new URectangle(slot.getEnd() - slot.getStart(), size);
-			ug.apply(new UTranslate(slot.getStart(), 0)).draw(rect);
+			ug.apply(UTranslate.dx(slot.getStart())).draw(rect);
 		}
 	}
 

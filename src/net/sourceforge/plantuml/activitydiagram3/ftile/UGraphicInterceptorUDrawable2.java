@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.awt.geom.Point2D;
 import java.util.Map;
 
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 
@@ -89,8 +89,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	private void drawGoto(FtileGoto ftile) {
 		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());
 		final Point2D pt = geom.getPointIn();
-		UGraphic ugGoto = getUg().apply(new UChangeColor(HtmlColorUtils.GREEN)).apply(
-				new UChangeBackColor(HtmlColorUtils.GREEN));
+		UGraphic ugGoto = getUg().apply(new UChangeColor(HColorUtils.GREEN)).apply(
+				new UChangeBackColor(HColorUtils.GREEN));
 		ugGoto = ugGoto.apply(new UTranslate(pt));
 		final UTranslate posNow = getPosition();
 		final UTranslate dest = positions.get(ftile.getName());
@@ -98,8 +98,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 		final double dy = dest.getDy() - posNow.getDy();
 		ugGoto.draw(new UEllipse(3, 3));
 		ugGoto.apply(new UTranslate(dx, dy)).draw(new UEllipse(3, 3));
-		ugGoto.draw(new ULine(dx, 0));
-		ugGoto.apply(new UTranslate(dx, 0)).draw(new ULine(0, dy));
+		ugGoto.draw(ULine.hline(dx));
+		ugGoto.apply(UTranslate.dx(dx)).draw(ULine.vline(dy));
 		// ugGoto.draw(new ULine(dx, dy));
 	}
 

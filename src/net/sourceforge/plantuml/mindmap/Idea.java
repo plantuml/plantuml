@@ -41,8 +41,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class Idea {
 
@@ -51,22 +51,22 @@ class Idea {
 	private final Idea parent;
 	private final List<Idea> children = new ArrayList<Idea>();
 	private final IdeaShape shape;
-	private final HtmlColor backColor;
+	private final HColor backColor;
 	private final StyleBuilder styleBuilder;
 	private final String stereotype;
 
-	public Idea(StyleBuilder styleBuilder, HtmlColor backColor, Display label, IdeaShape shape, String stereotype) {
+	public Idea(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape, String stereotype) {
 		this(styleBuilder, backColor, 0, null, label, shape, stereotype);
 	}
 
-	public Idea createIdea(StyleBuilder styleBuilder, HtmlColor backColor, int newLevel, Display newDisplay,
+	public Idea createIdea(StyleBuilder styleBuilder, HColor backColor, int newLevel, Display newDisplay,
 			IdeaShape newShape, String stereotype) {
 		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape, stereotype);
 		this.children.add(result);
 		return result;
 	}
 
-	private Idea(StyleBuilder styleBuilder, HtmlColor backColor, int level, Idea parent, Display label,
+	private Idea(StyleBuilder styleBuilder, HColor backColor, int level, Idea parent, Display label,
 			IdeaShape shape, String stereotype) {
 		this.backColor = backColor;
 		this.styleBuilder = styleBuilder;
@@ -106,7 +106,7 @@ class Idea {
 		return shape;
 	}
 
-	public final HtmlColor getBackColor() {
+	public final HColor getBackColor() {
 		return backColor;
 	}
 

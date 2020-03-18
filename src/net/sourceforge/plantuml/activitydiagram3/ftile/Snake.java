@@ -68,8 +68,8 @@ public class Snake implements UShape {
 	private Direction emphasizeDirection;
 	private final HorizontalAlignment horizontalAlignment;
 
-	public final void setIgnoreForCompression(boolean ignoreForCompression) {
-		this.worm.setIgnoreForCompression(ignoreForCompression);
+	public final void setIgnoreForCompression() {
+		this.worm.setIgnoreForCompression();
 	}
 
 	public Snake transformX(CompressionTransform compressionTransform) {

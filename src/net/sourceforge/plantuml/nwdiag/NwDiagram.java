@@ -57,12 +57,9 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -70,6 +67,9 @@ import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class NwDiagram extends UmlDiagram {
 
@@ -204,7 +204,7 @@ public class NwDiagram extends UmlDiagram {
 
 	private FontConfiguration getFontConfiguration() {
 		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
+		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
 	private void drawMe(UGraphic ug) {
@@ -271,7 +271,7 @@ public class NwDiagram extends UmlDiagram {
 			currentNetwork().setOwnAdress(value);
 		}
 		if ("color".equalsIgnoreCase(property)) {
-			final HtmlColor color = GridTextBlockDecorated.colors.getColorIfValid(value);
+			final HColor color = GridTextBlockDecorated.colors.getColorIfValid(value);
 			if (currentGroup != null) {
 				currentGroup.setColor(color);
 			} else if (currentNetwork() != null) {

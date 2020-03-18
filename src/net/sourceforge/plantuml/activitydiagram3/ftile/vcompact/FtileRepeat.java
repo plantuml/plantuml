@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -75,6 +74,7 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class FtileRepeat extends AbstractFtile {
 
@@ -111,8 +111,8 @@ class FtileRepeat extends AbstractFtile {
 	}
 
 	public static Ftile create(LinkRendering backRepeatLinkRendering, Swimlane swimlane, Swimlane swimlaneOut,
-			Ftile entry, Ftile repeat, Display test, Display yes, Display out, HtmlColor borderColor,
-			HtmlColor diamondColor, Rainbow arrowColor, Rainbow endRepeatLinkColor, ConditionStyle conditionStyle,
+			Ftile entry, Ftile repeat, Display test, Display yes, Display out, HColor borderColor,
+			HColor diamondColor, Rainbow arrowColor, Rainbow endRepeatLinkColor, ConditionStyle conditionStyle,
 			ISkinSimple spriteContainer, FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward,
 			boolean noOut) {
 
@@ -579,7 +579,7 @@ class FtileRepeat extends AbstractFtile {
 	private UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		final double left = getLeft(stringBounder);
-		return new UTranslate(left - dimDiamond1.getWidth() / 2, 0);
+		return UTranslate.dx(left - dimDiamond1.getWidth() / 2);
 	}
 
 	private UTranslate getTranslateBackward(StringBounder stringBounder) {

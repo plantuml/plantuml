@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileThinSplit;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.SName;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
@@ -123,7 +123,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		return new FtileAssemblySimple(thin, result);
 	}
 
-	private HtmlColor getThin1Color(final Rainbow thinColor) {
+	private HColor getThin1Color(final Rainbow thinColor) {
 		for (Ftile tmp : getList()) {
 			final Rainbow rainbow;
 			final LinkRendering inLinkRendering = tmp.getInLinkRendering();
@@ -174,7 +174,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		double first = 0;
 		double last = 0;
 		for (Ftile tmp : getList()) {
-			final UTranslate translate0 = new UTranslate(0, 1.5);
+			final UTranslate translate0 = UTranslate.dy(1.5);
 			final FtileGeometry dim = tmp.calculateDimension(getStringBounder());
 			if (dim.hasPointOut()) {
 				if (first == 0) {
@@ -220,7 +220,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawU(UGraphic ug) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
@@ -232,7 +232,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Point2D p1 = new Point2D.Double(geo.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
@@ -271,7 +271,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawU(UGraphic ug) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
 			if (geo.hasPointOut() == false) {
 				return;
@@ -288,7 +288,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
 			if (geo.hasPointOut() == false) {
 				return;

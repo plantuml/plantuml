@@ -70,8 +70,6 @@ import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
@@ -79,11 +77,13 @@ import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
@@ -182,7 +182,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 
-		final HtmlColor hover = getSkinParam().getHoverPathColor();
+		final HColor hover = getSkinParam().getHoverPathColor();
 		if (fileFormatOption.getSvgLinkTarget() == null || fileFormatOption.getSvgLinkTarget().equals("_top")) {
 			fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
 		}
@@ -227,7 +227,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE,
 				metadata, null, 0, 0, null, false);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
@@ -246,7 +246,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 				public void drawU(UGraphic ug) {
 					graphicStrings.drawU(ug);
 					final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
-					ug = ug.apply(new UTranslate(0, height));
+					ug = ug.apply(UTranslate.dy(height));
 					ug.draw(new UImage(im).scaleNearestNeighbor(3));
 				}
 			});

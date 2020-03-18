@@ -34,11 +34,11 @@
  */
 package net.sourceforge.plantuml.braille;
 
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverTextBraille implements UDriver<BrailleGrid> {
 

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.lang.Complement;
+import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public class GanttConstraint implements Complement {
@@ -57,5 +58,25 @@ public class GanttConstraint implements Complement {
 
 	public UDrawable getUDrawable(final TimeScale timeScale) {
 		return new GanttArrow(timeScale, source, dest);
+	}
+
+	public boolean isHidden(Wink min, Wink max) {
+		if (isHidden(source.getInstantPrecise(), min, max)) {
+			return true;
+		}
+		if (isHidden(dest.getInstantPrecise(), min, max)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isHidden(Wink now, Wink min, Wink max) {
+		if (now.compareTo(min) < 0) {
+			return true;
+		}
+		if (now.compareTo(max) > 0) {
+			return true;
+		}
+		return false;
 	}
 }

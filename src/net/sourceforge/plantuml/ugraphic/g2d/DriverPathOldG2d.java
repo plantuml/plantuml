@@ -42,15 +42,15 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 
 import net.sourceforge.plantuml.golem.MinMaxDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverPathOldG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
@@ -119,9 +119,9 @@ public class DriverPathOldG2d extends DriverShadowedG2d implements UDriver<Graph
 			}
 		}
 
-		final HtmlColor back = param.getBackcolor();
-		if (back instanceof HtmlColorGradient) {
-			final HtmlColorGradient gr = (HtmlColorGradient) back;
+		final HColor back = param.getBackcolor();
+		if (back instanceof HColorGradient) {
+			final HColorGradient gr = (HColorGradient) back;
 			final char policy = gr.getPolicy();
 			final GradientPaint paint;
 			if (policy == '|') {

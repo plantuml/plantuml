@@ -40,12 +40,12 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class GTileLeftRight extends AbstractTextBlock implements GTile {
 
@@ -67,11 +67,11 @@ public class GTileLeftRight extends AbstractTextBlock implements GTile {
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final double deltaH1 = dimTotal.getHeight() - dimLeft.getHeight();
 		final double deltaH2 = dimTotal.getHeight() - dimRight.getHeight();
-		left.drawU(ug.apply(new UTranslate(0, deltaH1 / 2)));
+		left.drawU(ug.apply(UTranslate.dy(deltaH1 / 2)));
 		final double dx2 = dimLeft.getWidth() + space;
 		right.drawU(ug.apply(new UTranslate(dx2, deltaH2 / 2)));
 
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
 		final double step = dimLeft.getHeight() / (dimRight.getWestPositions().size() + 1);
 		double ystart = step + deltaH1 / 2;
 		for (Double w2 : dimRight.getWestPositions()) {
@@ -89,7 +89,7 @@ public class GTileLeftRight extends AbstractTextBlock implements GTile {
 		path.lineTo(x1 + step, y1);
 		path.lineTo(x2 - step, y2);
 		path.lineTo(x2, y2);
-		ug.apply(new UTranslate(0, 0)).draw(path);
+		ug.apply(UTranslate.dy(0)).draw(path);
 	}
 
 	public GTileGeometry calculateDimension(StringBounder stringBounder) {

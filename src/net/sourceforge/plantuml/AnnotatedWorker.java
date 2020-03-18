@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -60,6 +58,8 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class AnnotatedWorker {
 
@@ -97,7 +97,7 @@ public class AnnotatedWorker {
 		final double y1 = 10;
 		final double y2 = 10;
 
-		final SymbolContext symbolContext = new SymbolContext(getSkinParam().getBackgroundColor(), HtmlColorUtils.BLACK)
+		final SymbolContext symbolContext = new SymbolContext(getSkinParam().getBackgroundColor(), HColorUtils.BLACK)
 				.withShadow(getSkinParam().shadowing(null) ? 3 : 0);
 		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder);
 		final TextBlock title = mainFrame.create(new FontConfiguration(getSkinParam(), FontParam.CAPTION, null),
@@ -112,7 +112,7 @@ public class AnnotatedWorker {
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
-				frame.drawU(ug.apply(new UTranslate(originalMinMax.getMinX(), 0)));
+				frame.drawU(ug.apply(UTranslate.dx(originalMinMax.getMinX())));
 				original.drawU(ug.apply(new UTranslate(x1, y1 + dimTitle.getHeight())));
 				// original.drawU(ug);
 			}
@@ -131,7 +131,7 @@ public class AnnotatedWorker {
 				return original.calculateDimension(stringBounder);
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return symbolContext.getBackColor();
 			}
 		};

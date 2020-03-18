@@ -45,10 +45,6 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -57,6 +53,9 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 class TurtleGraphicsPane {
 	final private double width;
@@ -66,9 +65,9 @@ class TurtleGraphicsPane {
 	private double turtleDirection = 90;
 	private boolean penIsDown = true;
 	private boolean showTurtle = true;
-	private HtmlColor penColor = HtmlColorUtils.BLACK;
+	private HColor penColor = HColorUtils.BLACK;
 	private List<Rectangle2D.Double> lines = new ArrayList<Rectangle2D.Double>();
-	private List<HtmlColor> colors = new ArrayList<HtmlColor>();
+	private List<HColor> colors = new ArrayList<HColor>();
 
 	private String message;
 
@@ -121,9 +120,9 @@ class TurtleGraphicsPane {
 		final double angle = -dtor(turtleDirection - 90);
 		poly.rotate(angle);
 		// ug.setAntiAliasing(false);
-		final IHtmlColorSet htmlColorSet = new HtmlColorSetSimple();
-		final HtmlColor turtleColor1 = htmlColorSet.getColorIfValid("OliveDrab");
-		final HtmlColor turtleColor2 = htmlColorSet.getColorIfValid("MediumSpringGreen");
+		final HColorSet htmlColorSet = HColorSet.instance();
+		final HColor turtleColor1 = htmlColorSet.getColorIfValid("OliveDrab");
+		final HColor turtleColor2 = htmlColorSet.getColorIfValid("MediumSpringGreen");
 
 		ug.apply(new UChangeColor(turtleColor1)).apply(new UChangeBackColor(turtleColor2)).apply(new UTranslate(x, -y))
 				.draw(poly);
@@ -138,7 +137,7 @@ class TurtleGraphicsPane {
 		showTurtle = false;
 	}
 
-	public void setPenColor(HtmlColor newPenColor) {
+	public void setPenColor(HColor newPenColor) {
 		penColor = newPenColor;
 	}
 
@@ -191,7 +190,7 @@ class TurtleGraphicsPane {
 		int n = lines.size();
 
 		for (int i = 0; i < n; i++) {
-			final HtmlColor color = colors.get(i);
+			final HColor color = colors.get(i);
 			final Rectangle2D.Double r = lines.get(i);
 			final ULine line = new ULine(r.width - r.x, -r.height + r.y);
 			ug.apply(new UChangeColor(color)).apply(new UTranslate(r.x, -r.y)).draw(line);
@@ -204,7 +203,7 @@ class TurtleGraphicsPane {
 					new SpriteContainerEmpty());
 			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
 			final double textHeight = dim.getHeight();
-			text.drawU(ug.apply(new UTranslate(0, (height - textHeight))));
+			text.drawU(ug.apply(UTranslate.dy((height - textHeight))));
 		}
 	}
 

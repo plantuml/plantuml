@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.sprite;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface Sprite {
 	
-	public TextBlock asTextBlock(final HtmlColor color, double scale);
+	public TextBlock asTextBlock(final HColor color, double scale);
 
 }

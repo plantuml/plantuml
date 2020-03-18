@@ -61,7 +61,7 @@ public class TileImage extends AbstractTextBlock implements TextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(new UTranslate(0, vspace)).draw(new UImage(image));
+		ug.apply(UTranslate.dy(vspace)).draw(new UImage(image));
 	}
 
 }

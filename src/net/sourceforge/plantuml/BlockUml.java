@@ -40,7 +40,9 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.Transcoder;
@@ -49,6 +51,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
 import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.utils.StartUtils;
@@ -61,6 +64,11 @@ public class BlockUml {
 	private Diagram system;
 	private final Defines localDefines;
 	private final ISkinSimple skinParam;
+	private final Set<FileWithSuffix> included = new HashSet<FileWithSuffix>();
+
+	public Set<FileWithSuffix> getIncluded() {
+		return Collections.unmodifiableSet(included);
+	}
 
 	BlockUml(String... strings) {
 		this(convert(strings), Defines.createEmpty(), null, null);
@@ -111,7 +119,7 @@ public class BlockUml {
 		} else {
 			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, mode.getCharset(),
 					(DefinitionsContainer) mode);
-			timLoader.load(strings);
+			this.included.addAll(timLoader.load(strings));
 			this.data = timLoader.getResultList();
 			this.debug = timLoader.getDebug();
 			this.preprocessorError = timLoader.isPreprocessorError();

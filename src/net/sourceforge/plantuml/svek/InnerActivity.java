@@ -38,22 +38,22 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class InnerActivity extends AbstractTextBlock implements IEntityImage {
 
 	private final IEntityImage im;
-	private final HtmlColor borderColor;
+	private final HColor borderColor;
 	private final double shadowing;
-	private final HtmlColor backColor;
+	private final HColor backColor;
 
-	public InnerActivity(final IEntityImage im, HtmlColor borderColor, HtmlColor backColor, double shadowing) {
+	public InnerActivity(final IEntityImage im, HColor borderColor, HColor backColor, double shadowing) {
 		this.im = im;
 		this.backColor = backColor;
 		this.borderColor = borderColor;
@@ -67,15 +67,14 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 
 		ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor))
 				.apply(new UStroke(THICKNESS_BORDER));
-		final URectangle rect = new URectangle(total.getWidth(), total.getHeight(), IEntityImage.CORNER,
-				IEntityImage.CORNER);
+		final URectangle rect = new URectangle(total.getWidth(), total.getHeight()).rounded(IEntityImage.CORNER);
 		rect.setDeltaShadow(shadowing);
 		ug.draw(rect);
 		ug = ug.apply(new UStroke());
 		im.drawU(ug);
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return im.getBackcolor();
 	}
 
@@ -95,10 +94,9 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 	public boolean isHidden() {
 		return im.isHidden();
 	}
-	
+
 	public double getOverscanX(StringBounder stringBounder) {
 		return 0;
 	}
-
 
 }

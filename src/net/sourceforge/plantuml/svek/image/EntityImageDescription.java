@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -74,6 +73,7 @@ import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class EntityImageDescription extends AbstractEntityImage {
@@ -131,13 +131,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 		this.url = entity.getUrl99();
 
 		final Colors colors = entity.getColors(skinParam);
-		HtmlColor backcolor = colors.getColor(ColorType.BACK);
+		HColor backcolor = colors.getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
 		}
 
 		assert getStereo() == stereotype;
-		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());
+		final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());
 		final double roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
 		final double diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
 		final UStroke stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));

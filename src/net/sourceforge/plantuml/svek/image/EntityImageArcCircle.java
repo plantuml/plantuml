@@ -104,7 +104,7 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 
 		if (stereo != null) {
 			final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;
-			stereo.drawU(ug.apply(new UTranslate(stereoX, 0)));
+			stereo.drawU(ug.apply(UTranslate.dx(stereoX)));
 		}
 	}
 

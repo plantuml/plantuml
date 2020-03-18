@@ -41,11 +41,11 @@ import java.awt.geom.Rectangle2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageProtected extends AbstractTextBlock implements IEntityImage, Untranslated {
 
@@ -70,7 +70,7 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 		return orig.isHidden();
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return orig.getBackcolor();
 	}
 

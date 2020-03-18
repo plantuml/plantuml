@@ -37,15 +37,15 @@ package net.sourceforge.plantuml.ugraphic.html5;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverRectangleHtml5 implements UDriver<Html5Drawer> {
 
@@ -78,8 +78,8 @@ public class DriverRectangleHtml5 implements UDriver<Html5Drawer> {
 //			eps.epsRectangleShadow(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow());
 //		}
 
-		final HtmlColor back = param.getBackcolor();
-		if (back instanceof HtmlColorGradient) {
+		final HColor back = param.getBackcolor();
+		if (back instanceof HColorGradient) {
 //			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
 //			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, (HtmlColorGradient) back, mapper);
 		} else {

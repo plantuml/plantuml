@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicIntercep
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -77,6 +76,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.SlotSet;
 import net.sourceforge.plantuml.utils.MathUtils;
 
@@ -126,7 +126,7 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock, Styleabl
 		return factory;
 	}
 
-	public void swimlane(String name, HtmlColor color, Display label) {
+	public void swimlane(String name, HColor color, Display label) {
 		currentSwimlane = getOrCreate(name);
 		if (color != null) {
 			currentSwimlane.setSpecificColorTOBEREMOVED(ColorType.BACK, color);
@@ -203,7 +203,7 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock, Styleabl
 		drawWhenSwimlanes(ug, full);
 	}
 
-	static private void printDebug(UGraphic ug, SlotSet slot, HtmlColor col, TextBlock full) {
+	static private void printDebug(UGraphic ug, SlotSet slot, HColor col, TextBlock full) {
 		slot.drawDebugX(ug.apply(new UChangeColor(col)).apply(new UChangeBackColor(col)),
 				full.calculateDimension(ug.getStringBounder()).getHeight());
 
@@ -218,13 +218,12 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock, Styleabl
 
 		double x2 = 0;
 		for (Swimlane swimlane : swimlanes) {
-			final HtmlColor back = swimlane.getColors(skinParam).getColor(ColorType.BACK);
+			final HColor back = swimlane.getColors(skinParam).getColor(ColorType.BACK);
 			if (back != null) {
 				final UGraphic background = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(back))
-						.apply(new UTranslate(x2, 0));
+						.apply(UTranslate.dx(x2));
 				final URectangle rectangle = new URectangle(swimlane.getActualWidth(), dimensionFull.getHeight()
-						+ titleHeightTranslate.getDy());
-				rectangle.setIgnoreForCompression(true);
+						+ titleHeightTranslate.getDy()).ignoreForCompression();
 				background.draw(rectangle);
 			}
 
@@ -270,8 +269,8 @@ public class SwimlanesA extends AbstractTextBlock implements TextBlock, Styleabl
 		for (Swimlane swimlane : swimlanes) {
 			final double swimlaneActualWidth = swimlaneActualWidth(ug.getStringBounder(), swimlaneWidth, swimlane);
 
-			final UTranslate translate = new UTranslate(x1 - swimlane.getMinMax().getMinX() + separationMargin
-					+ (swimlaneActualWidth - rawDrawingWidth(swimlane)) / 2.0, 0);
+			final UTranslate translate = UTranslate.dx(x1 - swimlane.getMinMax().getMinX() + separationMargin
+							+ (swimlaneActualWidth - rawDrawingWidth(swimlane)) / 2.0);
 			swimlane.setTranslateAndWidth(translate, swimlaneActualWidth);
 
 			x1 += swimlaneActualWidth;

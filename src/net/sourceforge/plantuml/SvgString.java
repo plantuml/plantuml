@@ -47,6 +47,10 @@ public class SvgString {
 		this.svg = svg;
 		this.scale = scale;
 	}
+	
+	public String getMD5Hex() {
+		return SignatureUtils.getMD5Hex(svg);
+	}
 
 	public String getSvg(boolean raw) {
 		String result = svg;

@@ -128,7 +128,7 @@ public class PlayingSpace implements Bordered {
 
 	private YPositionedTile getFromAnchor(List<YPositionedTile> positionedTiles, String anchor) {
 		for (YPositionedTile tile : positionedTiles) {
-			if (tile.matchAnchor(anchor)) {
+			if (tile.matchAnchorV2(anchor)) {
 				return tile;
 			}
 		}

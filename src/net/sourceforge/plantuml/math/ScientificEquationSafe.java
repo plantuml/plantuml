@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
 public class ScientificEquationSafe {
 
@@ -126,7 +126,7 @@ public class ScientificEquationSafe {
 
 	private void printTrace(Exception e) {
 		System.err.println("formula=" + formula);
-		if (formula != null) {
+		if (equation != null) {
 			System.err.println("Latex=" + equation.getSource());
 		}
 		e.printStackTrace();

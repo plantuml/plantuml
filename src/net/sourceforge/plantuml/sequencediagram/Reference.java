@@ -41,19 +41,19 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Reference extends AbstractEvent implements Event {
 
 	private final List<Participant> participants;
 	private final Url url;
-	private final HtmlColor backColorGeneral;
-	private final HtmlColor backColorElement;
+	private final HColor backColorGeneral;
+	private final HColor backColorElement;
 
 	private final Display strings;
 
@@ -75,8 +75,8 @@ public class Reference extends AbstractEvent implements Event {
 						backColorElement) };
 	}
 
-	public Reference(List<Participant> participants, Url url, Display strings, HtmlColor backColorGeneral,
-			HtmlColor backColorElement, StyleBuilder styleBuilder) {
+	public Reference(List<Participant> participants, Url url, Display strings, HColor backColorGeneral,
+			HColor backColorElement, StyleBuilder styleBuilder) {
 		this.participants = participants;
 		this.url = url;
 		this.strings = strings;
@@ -119,11 +119,11 @@ public class Reference extends AbstractEvent implements Event {
 		return sb.toString();
 	}
 
-	public final HtmlColor getBackColorGeneral() {
+	public final HColor getBackColorGeneral() {
 		return backColorGeneral;
 	}
 
-	public final HtmlColor getBackColorElement() {
+	public final HColor getBackColorElement() {
 		return backColorElement;
 	}
 }

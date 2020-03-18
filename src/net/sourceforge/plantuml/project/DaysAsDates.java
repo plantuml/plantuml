@@ -39,20 +39,21 @@ import java.util.Iterator;
 
 import net.sourceforge.plantuml.project.lang.Complement;
 import net.sourceforge.plantuml.project.lang.Subject;
+import net.sourceforge.plantuml.project.time.Day;
 
-public class DaysAsDates implements Subject, Complement, Iterable<DayAsDate> {
+public class DaysAsDates implements Subject, Complement, Iterable<Day> {
 
-	private final DayAsDate date1;
-	private final DayAsDate date2;
+	private final Day date1;
+	private final Day date2;
 
-	public DaysAsDates(DayAsDate date1, DayAsDate date2) {
+	public DaysAsDates(Day date1, Day date2) {
 		this.date1 = date1;
 		this.date2 = date2;
 	}
 
-	public DaysAsDates(GanttDiagram gantt, DayAsDate date1, int count) {
+	public DaysAsDates(GanttDiagram gantt, Day date1, int count) {
 		this.date1 = date1;
-		DayAsDate tmp = date1;
+		Day tmp = date1;
 		while (count > 0) {
 			if (gantt.isOpen(tmp)) {
 				count--;
@@ -62,11 +63,11 @@ public class DaysAsDates implements Subject, Complement, Iterable<DayAsDate> {
 		this.date2 = tmp;
 	}
 
-	class MyIterator implements Iterator<DayAsDate> {
+	class MyIterator implements Iterator<Day> {
 
-		private DayAsDate current;
+		private Day current;
 
-		public MyIterator(DayAsDate current) {
+		public MyIterator(Day current) {
 			this.current = current;
 		}
 
@@ -74,8 +75,8 @@ public class DaysAsDates implements Subject, Complement, Iterable<DayAsDate> {
 			return current.compareTo(date2) <= 0;
 		}
 
-		public DayAsDate next() {
-			final DayAsDate result = current;
+		public Day next() {
+			final Day result = current;
 			current = current.next();
 			return result;
 		}
@@ -86,7 +87,7 @@ public class DaysAsDates implements Subject, Complement, Iterable<DayAsDate> {
 
 	}
 
-	public Iterator<DayAsDate> iterator() {
+	public Iterator<Day> iterator() {
 		return new MyIterator(date1);
 	}
 

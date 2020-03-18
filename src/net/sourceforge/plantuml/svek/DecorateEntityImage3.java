@@ -38,17 +38,17 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class DecorateEntityImage3 extends AbstractTextBlock  implements TextBlockBackcolored {
 
 	private final TextBlock original;
-	private final HtmlColor color;
+	private final HColor color;
 
-	public DecorateEntityImage3(TextBlock original, HtmlColor color) {
+	public DecorateEntityImage3(TextBlock original, HColor color) {
 		this.original = original;
 		this.color = color;
 	}
@@ -61,7 +61,7 @@ public class DecorateEntityImage3 extends AbstractTextBlock  implements TextBloc
 		original.drawU(ug);
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return color;
 	}
 

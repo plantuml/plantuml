@@ -56,13 +56,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
@@ -72,10 +72,10 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HtmlColor color, Instruction specialOut) {
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut) {
 
-		final HtmlColor borderColor;
-		final HtmlColor backColor;
+		final HColor borderColor;
+		final HColor backColor;
 		final Rainbow arrowColor;
 		final FontConfiguration fontArrow;
 		final FontConfiguration fcTest;

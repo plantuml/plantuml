@@ -42,9 +42,9 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class VerbIsOrAreNamed implements VerbPattern {
 
@@ -62,7 +62,7 @@ public class VerbIsOrAreNamed implements VerbPattern {
 				final ComplementName named = (ComplementName) complement;
 				final String name = named.getName();
 				final DaysAsDates days = (DaysAsDates) subject;
-				for (DayAsDate d : days) {
+				for (Day d : days) {
 					project.nameDay(d, name);
 				}
 				return CommandExecutionResult.ok();

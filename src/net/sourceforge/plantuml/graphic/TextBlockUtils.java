@@ -62,16 +62,18 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TextBlockUtils {
 
-	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor,
-			HtmlColor backgroundColor, double cornersize) {
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor,
+			HColor backgroundColor, double cornersize) {
 		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize);
 	}
 
-	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor,
-			HtmlColor backgroundColor, double cornersize, double marginX, double marginY) {
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor,
+			HColor backgroundColor, double cornersize, double marginX, double marginY) {
 		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, marginX, marginY);
 	}
 
@@ -81,8 +83,8 @@ public class TextBlockUtils {
 		}
 		UStroke stroke = skinParam.getThickness(LineParam.titleBorder, null);
 		final Rose rose = new Rose();
-		HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.titleBorder);
-		final HtmlColor backgroundColor = rose.getHtmlColor(skinParam, ColorParam.titleBackground);
+		HColor borderColor = rose.getHtmlColor(skinParam, ColorParam.titleBorder);
+		final HColor backgroundColor = rose.getHtmlColor(skinParam, ColorParam.titleBackground);
 		final TextBlockTitle result = new TextBlockTitle(font, stringsToDisplay, skinParam);
 		if (stroke == null && borderColor == null) {
 			return result;
@@ -91,7 +93,7 @@ public class TextBlockUtils {
 			stroke = new UStroke(1.5);
 		}
 		if (borderColor == null) {
-			borderColor = HtmlColorUtils.BLACK;
+			borderColor = HColorUtils.BLACK;
 		}
 		final double corner = skinParam.getRoundCorner(CornerParam.titleBorder, null);
 		return withMargin(bordered(result, stroke, borderColor, backgroundColor, corner), 2, 2);
@@ -203,7 +205,7 @@ public class TextBlockUtils {
 		};
 	}
 
-	public static TextBlockBackcolored addBackcolor(final TextBlock text, final HtmlColor backColor) {
+	public static TextBlockBackcolored addBackcolor(final TextBlock text, final HColor backColor) {
 		return new TextBlockBackcolored() {
 			public void drawU(UGraphic ug) {
 				text.drawU(ug);
@@ -221,7 +223,7 @@ public class TextBlockUtils {
 				return text.calculateDimension(stringBounder);
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return backColor;
 			}
 		};

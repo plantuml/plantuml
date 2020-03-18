@@ -98,9 +98,9 @@ class USymbolDatabase extends USymbol {
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
 			final UPath closing = getClosingPath(endingX);
 			ug = ug.apply(translate);
-			ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(new UTranslate(0, -15)).draw(closing);
+			ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(UTranslate.dy(-15)).draw(closing);
 			if (line.isDouble()) {
-				ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(new UTranslate(0, -15 + 2))
+				ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(UTranslate.dy(-15 + 2))
 						.draw(closing);
 			}
 			line.drawTitleInternal(ug, 0, endingX, 0, true);

@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SkinParamUtils {
 
@@ -48,11 +48,11 @@ public class SkinParamUtils {
 		return skinParam.getFont(stereo, false, fontParam);
 	}
 
-	public static HtmlColor getFontColor(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
+	public static HColor getFontColor(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
 		return skinParam.getFontHtmlColor(stereo, fontParam);
 	}
 
-	public static HtmlColor getColor(ISkinParam skinParam, Stereotype stereo, ColorParam... colorParam) {
+	public static HColor getColor(ISkinParam skinParam, Stereotype stereo, ColorParam... colorParam) {
 		return rose.getHtmlColor(skinParam, stereo, colorParam);
 	}
 	

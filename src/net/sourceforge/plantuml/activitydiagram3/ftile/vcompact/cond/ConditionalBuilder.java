@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -71,12 +70,13 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ConditionalBuilder {
 
 	private final Swimlane swimlane;
-	private final HtmlColor borderColor;
-	private final HtmlColor backColor;
+	private final HColor borderColor;
+	private final HColor backColor;
 	private final Rainbow arrowColor;
 	private final FtileFactory ftileFactory;
 	private final ConditionStyle conditionStyle;
@@ -100,7 +100,7 @@ public class ConditionalBuilder {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
-	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
+	public ConditionalBuilder(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle,
 			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration fontArrow, FontConfiguration fontTest, Url url) {
@@ -137,7 +137,7 @@ public class ConditionalBuilder {
 
 	}
 
-	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
+	static public Ftile create(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle,
 			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration fcArrow, FontConfiguration fcTest, Url url) {

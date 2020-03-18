@@ -42,19 +42,19 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ElementMenuEntry extends AbstractElement {
 
 	private final TextBlock block;
 	private final String text;
-	private HtmlColor background;
+	private HColor background;
 	private double xxx;
 
 	public ElementMenuEntry(String text, UFont font, ISkinSimple spriteContainer) {
@@ -90,11 +90,11 @@ public class ElementMenuEntry extends AbstractElement {
 		return text;
 	}
 
-	public HtmlColor getBackground() {
+	public HColor getBackground() {
 		return background;
 	}
 
-	public void setBackground(HtmlColor background) {
+	public void setBackground(HColor background) {
 		this.background = background;
 	}
 }

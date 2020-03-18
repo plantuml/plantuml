@@ -39,13 +39,13 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ConnectedCircle implements UDrawable {
 
@@ -65,7 +65,7 @@ public class ConnectedCircle implements UDrawable {
 			final UEllipse part = new UEllipse(2 * radius, 2 * radius, angle - delta, 2 * delta);
 			ug.draw(part);
 		}
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.GREEN)).apply(new UChangeBackColor(HtmlColorUtils.GREEN));
+		ug = ug.apply(new UChangeColor(HColorUtils.GREEN)).apply(new UChangeBackColor(HColorUtils.GREEN));
 		for (Point2D pt : points) {
 			final UTranslate tr = new UTranslate(pt);
 			// ug.apply(tr).draw(new UEllipse(2, 2));

@@ -74,15 +74,16 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.graphic.HtmlColorSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.crossing.UGraphicCrossing;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -97,7 +98,7 @@ public class ImageBuilder {
 
 	private final ColorMapper colorMapper;
 	private final double dpiFactor;
-	private final HtmlColor mybackcolor;
+	private final HColor mybackcolor;
 	private final String metadata;
 	private final String warningOrError;
 	private final double margin1;
@@ -110,13 +111,13 @@ public class ImageBuilder {
 	private final double externalMargin1;
 	private final double externalMargin2;
 	private UStroke borderStroke;
-	private HtmlColor borderColor;
+	private HColor borderColor;
 	private double borderCorner;
 
 	private boolean svgDimensionStyle;
 	private boolean randomPixel;
 
-	public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HtmlColor mybackcolor, String metadata,
+	public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HColor mybackcolor, String metadata,
 			String warningOrError, double margin1, double margin2, Animation animation, boolean useHandwritten) {
 		this.svgDimensionStyle = true;
 		this.colorMapper = colorMapper;
@@ -137,12 +138,12 @@ public class ImageBuilder {
 
 	public ImageBuilder(ISkinParam skinParam, double dpiFactor, String metadata, String warningOrError, double margin1,
 			double margin2, Animation animation) {
-		this(skinParam, dpiFactor, metadata, warningOrError, margin1, margin2, animation, skinParam
-				.getBackgroundColor());
+		this(skinParam, dpiFactor, metadata, warningOrError, margin1, margin2, animation,
+				skinParam.getBackgroundColor());
 	}
 
 	public ImageBuilder(ISkinParam skinParam, double dpiFactor, String metadata, String warningOrError, double margin1,
-			double margin2, Animation animation, HtmlColor backColor) {
+			double margin2, Animation animation, HColor backColor) {
 		final Rose rose = new Rose();
 		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.diagramBorder);
 		this.borderStroke = skinParam.getThickness(LineParam.diagramBorder, null);
@@ -197,8 +198,8 @@ public class ImageBuilder {
 		if (MAX_PRICE == 0) {
 			return 0;
 		}
-		final int price = Math.min(MAX_PRICE, ((int) (dim.getHeight() * dpiFactor))
-				* ((int) (dim.getWidth() * dpiFactor)));
+		final int price = Math.min(MAX_PRICE,
+				((int) (dim.getHeight() * dpiFactor)) * ((int) (dim.getWidth() * dpiFactor)));
 		return price;
 	}
 
@@ -242,10 +243,9 @@ public class ImageBuilder {
 				ug2 = ug2.apply(new UTranslate(externalMargin1, externalMargin1));
 			}
 			if (borderStroke != null) {
-				final HtmlColor color = borderColor == null ? HtmlColorUtils.BLACK : borderColor;
-				final URectangle shape = new URectangle(
-						dim.getWidth() - externalMargin() - borderStroke.getThickness(), dim.getHeight()
-								- externalMargin() - borderStroke.getThickness(), borderCorner, borderCorner);
+				final HColor color = borderColor == null ? HColorUtils.BLACK : borderColor;
+				final URectangle shape = new URectangle(dim.getWidth() - externalMargin() - borderStroke.getThickness(),
+						dim.getHeight() - externalMargin() - borderStroke.getThickness()).rounded(borderCorner);
 				ug2.apply(new UChangeColor(color)).apply(borderStroke).draw(shape);
 			}
 			if (randomPixel) {
@@ -283,7 +283,7 @@ public class ImageBuilder {
 		final int green = rnd.nextInt(40);
 		final int blue = rnd.nextInt(40);
 		final Color c = new Color(red, green, blue);
-		final HtmlColor color = new HtmlColorSimple(c, false);
+		final HColor color = new HColorSimple(c, false);
 		ug2.apply(new UChangeColor(color)).apply(new UChangeBackColor(color)).draw(new URectangle(1, 1));
 
 	}
@@ -301,8 +301,8 @@ public class ImageBuilder {
 		udrawable.drawU(limitFinder);
 		dim = new Dimension2DDouble(limitFinder.getMaxX(), limitFinder.getMaxY());
 		// }
-		return new Dimension2DDouble(dim.getWidth() + 1 + margin1 + margin2 + externalMargin(), dim.getHeight() + 1
-				+ margin1 + margin2 + externalMargin());
+		return new Dimension2DDouble(dim.getWidth() + 1 + margin1 + margin2 + externalMargin(),
+				dim.getHeight() + 1 + margin1 + margin2 + externalMargin());
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
@@ -327,8 +327,8 @@ public class ImageBuilder {
 
 		final int nbframe = 100;
 
-		final MJPEGGenerator m = new MJPEGGenerator(f, getAviImage(null).getWidth(null), getAviImage(null).getHeight(
-				null), 12.0, nbframe);
+		final MJPEGGenerator m = new MJPEGGenerator(f, getAviImage(null).getWidth(null),
+				getAviImage(null).getHeight(null), 12.0, nbframe);
 		for (int i = 0; i < nbframe; i++) {
 			// AffineTransform at = AffineTransform.getRotateInstance(1.0);
 			AffineTransform at = AffineTransform.getTranslateInstance(dim.getWidth() / 2, dim.getHeight() / 2);
@@ -416,18 +416,19 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HColor mybackcolor,
 			String svgLinkTarget, String hover, long seed, String preserveAspectRatio) {
 		Color backColor = Color.WHITE;
-		if (mybackcolor instanceof HtmlColorSimple) {
+		if (mybackcolor instanceof HColorSimple) {
 			backColor = colorMapper.getMappedColor(mybackcolor);
 		}
 		final UGraphicSvg ug;
-		if (mybackcolor instanceof HtmlColorGradient) {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HtmlColorGradient) mybackcolor, false, scale,
+		if (mybackcolor instanceof HColorGradient) {
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HColorGradient) mybackcolor, false, scale,
 					svgLinkTarget, hover, seed, preserveAspectRatio);
 		} else if (backColor == null || backColor.equals(Color.WHITE)) {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed, preserveAspectRatio);
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed,
+					preserveAspectRatio);
 		} else {
 			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, StringUtils.getAsHtml(backColor), false, scale,
 					svgLinkTarget, hover, seed, preserveAspectRatio);
@@ -437,17 +438,18 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicPNG(ColorMapper colorMapper, double dpiFactor, final Dimension2D dim,
-			HtmlColor mybackcolor, Animation affineTransforms, double dx, double dy) {
+			HColor mybackcolor, Animation affineTransforms, double dx, double dy) {
 		Color backColor = Color.WHITE;
-		if (mybackcolor instanceof HtmlColorSimple) {
+		if (mybackcolor instanceof HColorSimple) {
 			backColor = colorMapper.getMappedColor(mybackcolor);
-		} else if (mybackcolor instanceof HtmlColorTransparent) {
+		} else if (mybackcolor instanceof HColorBackground) {
 			backColor = null;
 		}
 
 		/*
-		 * if (rotation) { builder = new EmptyImageBuilder((int) (dim.getHeight() * dpiFactor), (int) (dim.getWidth() *
-		 * dpiFactor), backColor); graphics2D = builder.getGraphics2D(); graphics2D.rotate(-Math.PI / 2);
+		 * if (rotation) { builder = new EmptyImageBuilder((int) (dim.getHeight() *
+		 * dpiFactor), (int) (dim.getWidth() * dpiFactor), backColor); graphics2D =
+		 * builder.getGraphics2D(); graphics2D.rotate(-Math.PI / 2);
 		 * graphics2D.translate(-builder.getBufferedImage().getHeight(), 0); } else {
 		 */
 		final EmptyImageBuilder builder = new EmptyImageBuilder((int) (dim.getWidth() * dpiFactor),
@@ -455,13 +457,13 @@ public class ImageBuilder {
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
 		// }
-		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, dpiFactor, affineTransforms == null ? null
-				: affineTransforms.getFirst(), dx, dy);
+		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, dpiFactor,
+				affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
-		if (mybackcolor instanceof HtmlColorGradient) {
-			ug.apply(new UChangeBackColor(mybackcolor)).draw(
-					new URectangle(im.getWidth() / dpiFactor, im.getHeight() / dpiFactor));
+		if (mybackcolor instanceof HColorGradient) {
+			ug.apply(new UChangeBackColor(mybackcolor))
+					.draw(new URectangle(im.getWidth() / dpiFactor, im.getHeight() / dpiFactor));
 		}
 
 		return ug;

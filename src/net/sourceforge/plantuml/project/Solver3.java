@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.core.Wink;
+import net.sourceforge.plantuml.project.time.Wink;
 
 public class Solver3 {
 

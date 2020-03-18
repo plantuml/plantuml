@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockGeneric;
@@ -64,6 +63,7 @@ import net.sourceforge.plantuml.svek.HeaderLayout;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageClassHeader2 extends AbstractEntityImage {
 
@@ -92,8 +92,8 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);
 		} else {
 			final Rose rose = new Rose();
-			final HtmlColor back = rose.getHtmlColor(skinParam, modifier.getBackground());
-			final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
+			final HColor back = rose.getHtmlColor(skinParam, modifier.getBackground());
+			final HColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
 			final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back, false);
 			name = TextBlockUtils.mergeLR(uBlock, name, VerticalAlignment.CENTER);
@@ -119,10 +119,10 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 					new FontConfiguration(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
-			final HtmlColor classBackground = SkinParamUtils
+			final HColor classBackground = SkinParamUtils
 					.getColor(getSkinParam(), stereotype, ColorParam.background);
 
-			final HtmlColor classBorder = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE,
+			final HColor classBorder = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE,
 					stereotype);
 			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
@@ -143,15 +143,15 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 			return stereotype.getSprite(skinParam);
 		}
 		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
-		final HtmlColor classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
-		final HtmlColor fontColor = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
+		final HColor classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
+		final HColor fontColor = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
 		if (stereotype != null && stereotype.getCharacter() != 0) {
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
 					stereotype.getHtmlColor(), classBorder, fontColor);
 		}
 		final LeafType leafType = entity.getLeafType();
-		final HtmlColor spotBackColor = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBackground(leafType));
-		HtmlColor spotBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBorder(leafType));
+		final HColor spotBackColor = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBackground(leafType));
+		HColor spotBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBorder(leafType));
 		if (spotBorder == null) {
 			spotBorder = classBorder;
 		}

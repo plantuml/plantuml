@@ -55,7 +55,7 @@ class USymbolComponent2 extends USymbol {
 	private void drawComponent2(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing,
 			double roundCorner) {
 
-		final URectangle form = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner);
+		final URectangle form = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
 		if (shadowing) {
 			form.setDeltaShadow(4);
 		}

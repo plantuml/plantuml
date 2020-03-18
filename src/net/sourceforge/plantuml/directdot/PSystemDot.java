@@ -50,10 +50,10 @@ import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PSystemDot extends AbstractPSystem {
 
@@ -75,7 +75,7 @@ public class PSystemDot extends AbstractPSystem {
 		if (graphviz.getExeState() != ExeState.OK) {
 			final TextBlock result = GraphicStrings.createForError(
 					Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
-			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
+			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HColorUtils.WHITE,
 					result);
 			return ImageDataSimple.error();
 		}
@@ -86,7 +86,7 @@ public class PSystemDot extends AbstractPSystem {
 		// }
 		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {
 			final TextBlock result = GraphicStrings.createForError(Arrays.asList("GraphViz has crashed"), false);
-			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
+			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HColorUtils.WHITE,
 					result);
 			return ImageDataSimple.error();
 		}

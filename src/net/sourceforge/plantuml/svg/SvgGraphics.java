@@ -63,12 +63,12 @@ import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
@@ -174,7 +174,7 @@ public class SvgGraphics {
 
 	private Element pendingBackground;
 
-	public void paintBackcolorGradient(ColorMapper mapper, HtmlColorGradient gr) {
+	public void paintBackcolorGradient(ColorMapper mapper, HColorGradient gr) {
 		final String id = createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
 				StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
 		setFillColor("url(#" + id + ")");
@@ -543,7 +543,7 @@ public class SvgGraphics {
 //					.forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
 //			xformFactory = (TransformerFactory) factoryClass.newInstance();
 //		} catch (Exception e) {
-			xformFactory = TransformerFactory.newInstance();
+		xformFactory = TransformerFactory.newInstance();
 //		}
 		Log.info("TransformerFactory=" + xformFactory.getClass());
 
@@ -569,8 +569,8 @@ public class SvgGraphics {
 		createXmlInternal(baos);
 		String s = new String(baos.toByteArray());
 		for (Map.Entry<String, String> ent : images.entrySet()) {
-			final String k = "\\<" + ent.getKey() + "/\\>";
-			s = s.replaceAll(k, ent.getValue());
+			final String k = "<" + ent.getKey() + "/>";
+			s = s.replace(k, ent.getValue());
 		}
 		os.write(s.getBytes());
 	}
@@ -750,7 +750,7 @@ public class SvgGraphics {
 			String svg = manageScale(image);
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
-			final String key = "imagesvginlined" + images.size();
+			final String key = "imagesvginlined" + image.getMD5Hex() + images.size();
 			final Element elt = (Element) document.createElement(key);
 			getG().appendChild(elt);
 			images.put(key, svg);
@@ -793,8 +793,8 @@ public class SvgGraphics {
 				addFilter(filter, "feGaussianBlur", "result", "blurOut", "stdDeviation", "" + (2 * scale));
 				addFilter(filter, "feColorMatrix", "type", "matrix", "in", "blurOut", "result", "blurOut2", "values",
 						"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0");
-				addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", "" + (4 * scale), "dy", ""
-						+ (4 * scale));
+				addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", "" + (4 * scale), "dy",
+						"" + (4 * scale));
 				addFilter(filter, "feBlend", "in", "SourceGraphic", "in2", "blurOut3", "mode", "normal");
 				defs.appendChild(filter);
 

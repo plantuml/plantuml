@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractComponent;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ComponentRoseActiveLine extends AbstractComponent {
 
@@ -58,7 +58,7 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeDown;
 
 	public ComponentRoseActiveLine(Style style, SymbolContext symbolContext, boolean closeUp, boolean closeDown,
-			IHtmlColorSet set) {
+			HColorSet set) {
 		super(style);
 		if (SkinParam.USE_STYLES()) {
 			symbolContext = style.getSymbolContext(set);
@@ -79,19 +79,19 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 		}
 		ug = ug.apply(new UChangeColor(symbolContext.getForeColor()));
 		if (closeUp && closeDown) {
-			ug.apply(new UChangeBackColor(symbolContext.getBackColor())).apply(new UTranslate(x, 0)).draw(rect);
+			ug.apply(new UChangeBackColor(symbolContext.getBackColor())).apply(UTranslate.dx(x)).draw(rect);
 			return;
 		}
 		ug.apply(new UChangeBackColor(symbolContext.getBackColor()))
-				.apply(new UChangeColor(symbolContext.getBackColor())).apply(new UTranslate(x, 0)).draw(rect);
+				.apply(new UChangeColor(symbolContext.getBackColor())).apply(UTranslate.dx(x)).draw(rect);
 
-		final ULine vline = new ULine(0, dimensionToUse.getHeight());
-		ug.apply(new UTranslate(x, 0)).draw(vline);
-		ug.apply(new UTranslate(x + getPreferredWidth(stringBounder), 0)).draw(vline);
+		final ULine vline = ULine.vline(dimensionToUse.getHeight());
+		ug.apply(UTranslate.dx(x)).draw(vline);
+		ug.apply(UTranslate.dx(x + getPreferredWidth(stringBounder))).draw(vline);
 
-		final ULine hline = new ULine(getPreferredWidth(stringBounder), 0);
+		final ULine hline = ULine.hline(getPreferredWidth(stringBounder));
 		if (closeUp) {
-			ug.apply(new UTranslate(x, 0)).draw(hline);
+			ug.apply(UTranslate.dx(x)).draw(hline);
 		}
 		if (closeDown) {
 			ug.apply(new UTranslate(x, dimensionToUse.getHeight())).draw(hline);

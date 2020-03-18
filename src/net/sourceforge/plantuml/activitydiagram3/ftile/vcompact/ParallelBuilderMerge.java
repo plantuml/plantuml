@@ -55,13 +55,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
@@ -73,7 +73,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 	protected Ftile doStep1() {
 		Ftile result = getMiddle();
 		final List<Connection> conns = new ArrayList<Connection>();
-		final HtmlColor colorBar = getRose().getHtmlColor(skinParam(), ColorParam.activityBar);
+		final HColor colorBar = getRose().getHtmlColor(skinParam(), ColorParam.activityBar);
 
 		final Ftile black = new FtileBlackBlock(skinParam(), colorBar, getList().get(0).getSwimlaneIn());
 		double x = 0;
@@ -100,8 +100,8 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
 	@Override
 	protected Ftile doStep2(Ftile result) {
-		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-		final HtmlColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
+		final HColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
+		final HColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
 		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlaneOutForStep2());
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<Connection>();
@@ -198,7 +198,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawU(UGraphic ug) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
@@ -210,7 +210,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Point2D p1 = new Point2D.Double(geo.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());

@@ -42,11 +42,8 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cute.Balloon;
 import net.sourceforge.plantuml.cute.CrossingSegment;
 import net.sourceforge.plantuml.geom.LineSegmentDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -54,6 +51,9 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class UGraphicCrossing implements UGraphic {
 
@@ -72,7 +72,7 @@ public class UGraphicCrossing implements UGraphic {
 			this.translate = translate;
 		}
 
-		void drawNow(HtmlColor color) {
+		void drawNow(HColor color) {
 			if (color == null) {
 				segment.draw(ug);
 			} else {
@@ -172,14 +172,14 @@ public class UGraphicCrossing implements UGraphic {
 			// }
 		}
 		for (Balloon b : balloons) {
-			b.drawU(ug.apply(new UChangeBackColor(HtmlColorUtils.GREEN)).apply(new UChangeColor(HtmlColorUtils.GREEN)));
+			b.drawU(ug.apply(new UChangeBackColor(HColorUtils.GREEN)).apply(new UChangeColor(HColorUtils.GREEN)));
 		}
 		for (Pending p : lines) {
 			for (Balloon b : balloons) {
 				List<Point2D> pts = new CrossingSegment(b, p.segment).intersection();
 				for (Point2D pt : pts) {
 					final Balloon s2 = new Balloon(pt, 2);
-					s2.drawU(ug.apply(new UChangeBackColor(HtmlColorUtils.BLUE)).apply(new UChangeColor(HtmlColorUtils.BLUE)));
+					s2.drawU(ug.apply(new UChangeBackColor(HColorUtils.BLUE)).apply(new UChangeColor(HColorUtils.BLUE)));
 				}
 			}
 		}

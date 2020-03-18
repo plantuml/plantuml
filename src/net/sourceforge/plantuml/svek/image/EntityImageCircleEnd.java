@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageCircleEnd extends AbstractEntityImage {
 
@@ -82,7 +82,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			shadowing = 3;
 		}
-		HtmlColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), param);
+		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), param);
 		if (SkinParam.USE_STYLES()) {
 			final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(
 					getSkinParam().getCurrentStyleBuilder());

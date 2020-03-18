@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ActorStyle;
@@ -55,9 +53,11 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class SkinParamDelegator implements ISkinParam {
 
@@ -67,11 +67,11 @@ public class SkinParamDelegator implements ISkinParam {
 		this.skinParam = skinParam;
 	}
 
-	public HtmlColor getHyperlinkColor() {
+	public HColor getHyperlinkColor() {
 		return skinParam.getHyperlinkColor();
 	}
 
-	public HtmlColor getBackgroundColor() {
+	public HColor getBackgroundColor() {
 		return skinParam.getBackgroundColor();
 	}
 
@@ -83,11 +83,11 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getFont(stereotype, false, fontParam);
 	}
 
-	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
+	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
 		return skinParam.getFontHtmlColor(stereotype, param);
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
+	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		return skinParam.getHtmlColor(param, stereotype, clickable);
 	}
 
@@ -204,7 +204,7 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.useOctagonForActivity(stereotype);
 	}
 
-	public IHtmlColorSet getIHtmlColorSet() {
+	public HColorSet getIHtmlColorSet() {
 		return skinParam.getIHtmlColorSet();
 	}
 
@@ -276,7 +276,7 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getUmlDiagramType();
 	}
 
-	public HtmlColor getHoverPathColor() {
+	public HColor getHoverPathColor() {
 		return skinParam.getHoverPathColor();
 	}
 

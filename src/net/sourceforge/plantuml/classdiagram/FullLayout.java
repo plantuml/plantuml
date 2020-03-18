@@ -53,7 +53,7 @@ public class FullLayout implements UDrawable {
 	public void drawU(UGraphic ug) {
 		double y = 0;
 		for (RowLayout rawLayout : all) {
-			rawLayout.drawU(ug.apply(new UTranslate(0, y)));
+			rawLayout.drawU(ug.apply(UTranslate.dy(y)));
 			y += rawLayout.getHeight(ug.getStringBounder()) + 20;
 		}
 

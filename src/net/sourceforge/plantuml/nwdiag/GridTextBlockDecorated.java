@@ -36,18 +36,18 @@ package net.sourceforge.plantuml.nwdiag;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class GridTextBlockDecorated extends GridTextBlockSimple {
 
-	public static final HtmlColorSetSimple colors = new HtmlColorSetSimple();
+	public static final HColorSet colors = HColorSet.instance();
 
 	public static final int NETWORK_THIN = 5;
 
@@ -87,7 +87,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			y += lineHeight;
 		}
 		if (size != null) {
-			HtmlColor color = group.getColor();
+			HColor color = group.getColor();
 			if (color == null) {
 				color = colors.getColorIfValid("#AAA");
 			}

@@ -99,7 +99,7 @@ public class NotesTile extends AbstractTile implements Tile {
 			final double x = getX(stringBounder, note).getCurrentValue();
 			final Area area = new Area(getUsedWidth(stringBounder, note), dim.getHeight());
 
-			final UGraphic ug2 = ug.apply(new UTranslate(x, 0));
+			final UGraphic ug2 = ug.apply(UTranslate.dx(x));
 			comp.drawU(ug2, area, (Context2D) ug2);
 		}
 	}

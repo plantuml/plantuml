@@ -49,11 +49,11 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;
 import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PSystemUtils {
 
@@ -300,7 +300,7 @@ public class PSystemUtils {
 		List<File> result = Arrays.asList(suggestedFile.getFile(0));
 
 		if (fileFormat.getFileFormat() == FileFormat.PNG) {
-			final SplitParam splitParam = new SplitParam(HtmlColorUtils.BLACK, null, 5);
+			final SplitParam splitParam = new SplitParam(HColorUtils.BLACK, null, 5);
 			result = new PngSplitter(suggestedFile, system.getHorizontalPages(), system.getVerticalPages(),
 					system.getMetadata(), system.getDpi(fileFormat), fileFormat.isWithMetadata(), splitParam)
 					.getFiles();

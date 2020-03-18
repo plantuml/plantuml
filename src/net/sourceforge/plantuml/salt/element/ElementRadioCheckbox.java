@@ -82,7 +82,7 @@ public class ElementRadioCheckbox extends AbstractElement {
 		if (zIndex != 0) {
 			return;
 		}
-		block.drawU(ug.apply(new UTranslate(margin, 0)));
+		block.drawU(ug.apply(UTranslate.dx(margin)));
 
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		final double height = dim.getHeight();

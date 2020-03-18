@@ -36,22 +36,22 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SkinParamBackcoloredReference extends SkinParamDelegator {
 
-	final private HtmlColor sequenceReferenceHeaderBackground;
-	final private HtmlColor sequenceReferenceBackground;
+	final private HColor sequenceReferenceHeaderBackground;
+	final private HColor sequenceReferenceBackground;
 
-	public SkinParamBackcoloredReference(ISkinParam skinParam, HtmlColor sequenceReferenceHeaderBackground,
-			HtmlColor sequenceReferenceBackground) {
+	public SkinParamBackcoloredReference(ISkinParam skinParam, HColor sequenceReferenceHeaderBackground,
+			HColor sequenceReferenceBackground) {
 		super(skinParam);
 		this.sequenceReferenceBackground = sequenceReferenceBackground;
 		this.sequenceReferenceHeaderBackground = sequenceReferenceHeaderBackground;
 	}
 
 	@Override
-	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
+	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		if (param == ColorParam.sequenceReferenceHeaderBackground && sequenceReferenceHeaderBackground != null) {
 			return sequenceReferenceHeaderBackground;
 		}

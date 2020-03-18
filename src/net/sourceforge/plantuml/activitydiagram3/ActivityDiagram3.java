@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockRecentred;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 import net.sourceforge.plantuml.ugraphic.comp.TextBlockCompressedOnXorY;
 
@@ -86,7 +86,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		}
 	}
 
-	public CommandExecutionResult swimlane(String name, HtmlColor color, Display label) {
+	public CommandExecutionResult swimlane(String name, HColor color, Display label) {
 		if (swimlaneStrategy == null) {
 			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_ALLOWED;
 		}
@@ -122,7 +122,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		}
 	}
 
-	public void addSpot(String spot, HtmlColor color) {
+	public void addSpot(String spot, HColor color) {
 		final InstructionSpot ins = new InstructionSpot(spot, color, nextLinkRenderer(), swinlanes.getCurrentSwimlane());
 		current().add(ins);
 		setNextLinkRendererInternal(LinkRendering.none());
@@ -295,7 +295,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find split");
 	}
 
-	public void startSwitch(Display test, HtmlColor color) {
+	public void startSwitch(Display test, HColor color) {
 		manageSwimlaneStrategy();
 		final InstructionSwitch instructionSwitch = new InstructionSwitch(swinlanes.getCurrentSwimlane(), current(),
 				test, nextLinkRenderer(), color, getSkinParam());
@@ -327,7 +327,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find switch");
 	}
 
-	public void startIf(Display test, Display whenThen, HtmlColor color, Url url) {
+	public void startIf(Display test, Display whenThen, HColor color, Url url) {
 		manageSwimlaneStrategy();
 		final InstructionIf instructionIf = new InstructionIf(swinlanes.getCurrentSwimlane(), current(), test,
 				whenThen, nextLinkRenderer(), color, getSkinParam(), url);
@@ -336,7 +336,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		setCurrent(instructionIf);
 	}
 
-	public CommandExecutionResult elseIf(Display inlabel, Display test, Display whenThen, HtmlColor color) {
+	public CommandExecutionResult elseIf(Display inlabel, Display test, Display whenThen, HColor color) {
 		if (current() instanceof InstructionIf) {
 			final boolean ok = ((InstructionIf) current()).elseIf(inlabel, test, whenThen, nextLinkRenderer(), color);
 			if (ok == false) {
@@ -371,7 +371,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find if");
 	}
 
-	public void startRepeat(HtmlColor color, Display label, BoxStyle boxStyleIn, Colors colors) {
+	public void startRepeat(HColor color, Display label, BoxStyle boxStyleIn, Colors colors) {
 		manageSwimlaneStrategy();
 		final InstructionRepeat instructionRepeat = new InstructionRepeat(swinlanes.getCurrentSwimlane(), current(),
 				nextLinkRenderer(), color, label, boxStyleIn, colors);
@@ -410,7 +410,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	}
 
-	public void doWhile(Display test, Display yes, HtmlColor color) {
+	public void doWhile(Display test, Display yes, HColor color) {
 		manageSwimlaneStrategy();
 		final InstructionWhile instructionWhile = new InstructionWhile(swinlanes.getCurrentSwimlane(), current(), test,
 				nextLinkRenderer(), yes, color, getSkinParam());
@@ -435,7 +435,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor, HtmlColor borderColor,
+	public void startGroup(Display name, HColor backColor, HColor titleColor, HColor borderColor,
 			USymbol type, double roundCorner) {
 		manageSwimlaneStrategy();
 		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor,

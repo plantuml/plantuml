@@ -46,10 +46,10 @@ import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface FtileFactory {
 
@@ -63,7 +63,7 @@ public interface FtileFactory {
 
 	public Ftile end(Swimlane swimlane);
 
-	public Ftile spot(Swimlane swimlane, String spot, HtmlColor color);
+	public Ftile spot(Swimlane swimlane, String spot, HColor color);
 
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors);
 
@@ -82,7 +82,7 @@ public interface FtileFactory {
 			Ftile backward, boolean noOut);
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HtmlColor color, Instruction specialOut);
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut);
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url);
@@ -92,7 +92,7 @@ public interface FtileFactory {
 
 	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out);
 
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor, USymbol type, double roundCorner);
+	public Ftile createGroup(Ftile list, Display name, HColor backColor, HColor titleColor, PositionedNote note,
+			HColor borderColor, USymbol type, double roundCorner);
 
 }

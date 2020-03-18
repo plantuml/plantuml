@@ -55,8 +55,7 @@ class USymbolFrame extends USymbol {
 
 	private void drawFrame(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing,
 			double roundCorner) {
-		final URectangle shape = new URectangle(width, height, roundCorner, roundCorner);
-		shape.setIgnoreForCompression(true);
+		final URectangle shape = new URectangle(width, height).rounded(roundCorner).ignoreForCompression();
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}

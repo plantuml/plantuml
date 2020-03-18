@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface TextBlockBackcolored extends TextBlock {
 
-	HtmlColor getBackcolor();
+	HColor getBackcolor();
 
 }

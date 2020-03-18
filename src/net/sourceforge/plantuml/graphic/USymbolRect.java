@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
-import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -61,26 +60,13 @@ class USymbolRect extends USymbol {
 
 	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double roundCorner,
 			double diagonalCorner) {
-		final Shadowable shape = diagonalCorner > 0 ? getDiagonalShape(width, height, diagonalCorner) : new URectangle(
-				width, height, roundCorner, roundCorner);
+		final URectangle rect = new URectangle(width, height);
+		final Shadowable shape = diagonalCorner > 0 ? rect.diagonalCorner(diagonalCorner)
+				: rect.rounded(roundCorner);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
 		ug.draw(shape);
-	}
-
-	private Shadowable getDiagonalShape(double width, double height, double diagonalCorner) {
-		final UPath result = new UPath();
-		result.moveTo(diagonalCorner, 0);
-		result.lineTo(width - diagonalCorner, 0);
-		result.lineTo(width, diagonalCorner);
-		result.lineTo(width, height - diagonalCorner);
-		result.lineTo(width - diagonalCorner, height);
-		result.lineTo(diagonalCorner, height);
-		result.lineTo(0, height - diagonalCorner);
-		result.lineTo(0, diagonalCorner);
-		result.lineTo(diagonalCorner, 0);
-		return result;
 	}
 
 	private Margin getMargin() {
@@ -113,7 +99,8 @@ class USymbolRect extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, final HorizontalAlignment labelAlignment, final TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
+			final double width, final double height, final SymbolContext symbolContext,
+			final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());

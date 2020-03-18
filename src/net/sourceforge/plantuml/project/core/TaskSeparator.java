@@ -37,18 +37,15 @@ package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.time.Wink;
 
-public class TaskSeparator implements Task {
-	// public static final double SPACE = 15;
+public class TaskSeparator extends AbstractTask implements Task {
 
-	private final TaskCode code;
 	private final String comment;
-	private TaskDraw taskDraw;
 
 	public TaskSeparator(String comment, int id) {
-		this.code = new TaskCode("##" + id);
+		super(new TaskCode("##" + id));
 		this.comment = comment;
 	}
 
@@ -70,15 +67,6 @@ public class TaskSeparator implements Task {
 
 	public void setEnd(Wink end) {
 		throw new UnsupportedOperationException();
-
-	}
-
-	public void setTaskDraw(TaskDraw taskDraw) {
-		this.taskDraw = taskDraw;
-	}
-
-	public TaskDraw getTaskDraw() {
-		return taskDraw;
 	}
 
 	public void setColors(ComplementColors colors) {

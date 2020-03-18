@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.style;
 import java.awt.Font;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ValueNull extends ValueAbstract implements Value {
 
@@ -75,8 +75,8 @@ public class ValueNull extends ValueAbstract implements Value {
 	}
 
 	@Override
-	public HtmlColor asColor(IHtmlColorSet set) {
-		return HtmlColorUtils.BLACK;
+	public HColor asColor(HColorSet set) {
+		return HColorUtils.BLACK;
 	}
 
 	@Override

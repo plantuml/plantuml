@@ -36,11 +36,24 @@
 package net.sourceforge.plantuml.project.core;
 
 public enum PrintScale {
-	DAILY, WEEKLY;
+	DAILY(1), WEEKLY(4), MONTHLY(15);
+
+	private final int compress;
+
+	private PrintScale(int compress) {
+		this.compress = compress;
+	}
+
+	public int getCompress() {
+		return compress;
+	}
 
 	static public PrintScale fromString(String value) {
 		if (value.startsWith("w")) {
 			return WEEKLY;
+		}
+		if (value.startsWith("m")) {
+			return MONTHLY;
 		}
 		return DAILY;
 	}

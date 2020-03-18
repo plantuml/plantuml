@@ -43,13 +43,13 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 
 import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
@@ -66,7 +66,7 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<Graph
 		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));
 		visible.ensureVisible(x, y);
 		visible.ensureVisible(x + ellipse.getWidth(), y + ellipse.getHeight());
-		final HtmlColor color = param.getColor();
+		final HColor color = param.getColor();
 		if (ellipse.getStart() == 0 && ellipse.getExtend() == 0) {
 			final Shape shape = new Ellipse2D.Double(x, y, ellipse.getWidth(), ellipse.getHeight());
 
@@ -75,8 +75,8 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<Graph
 				drawShadow(g2d, shape, ellipse.getDeltaShadow(), dpiFactor);
 			}
 
-			final HtmlColor back = param.getBackcolor();
-			if (back instanceof HtmlColorGradient) {
+			final HColor back = param.getBackcolor();
+			if (back instanceof HColorGradient) {
 				final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, ellipse.getWidth(),
 						ellipse.getHeight(), back);
 				g2d.setPaint(paint);

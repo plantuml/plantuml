@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SkinParamColors extends SkinParamDelegator {
 
@@ -67,8 +67,8 @@ public class SkinParamColors extends SkinParamDelegator {
 	}
 
 	@Override
-	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
-		final HtmlColor value = colors.getColor(ColorType.TEXT);
+	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
+		final HColor value = colors.getColor(ColorType.TEXT);
 		if (value == null) {
 			return super.getFontHtmlColor(stereotype, param);
 		}
@@ -76,12 +76,12 @@ public class SkinParamColors extends SkinParamDelegator {
 	}
 
 	@Override
-	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
+	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		final ColorType type = param.getColorType();
 		if (type == null) {
 			return super.getHtmlColor(param, stereotype, clickable);
 		}
-		final HtmlColor value = colors.getColor(type);
+		final HColor value = colors.getColor(type);
 		if (value != null) {
 			return value;
 		}

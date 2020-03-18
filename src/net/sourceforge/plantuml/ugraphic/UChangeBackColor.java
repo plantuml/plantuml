@@ -35,17 +35,17 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UChangeBackColor implements UChange {
 	
-	private final HtmlColor color;
+	private final HColor color;
 	
-	public UChangeBackColor(HtmlColor color) {
+	public UChangeBackColor(HColor color) {
 		this.color = color;
 	}
 
-	public HtmlColor getBackColor() {
+	public HColor getBackColor() {
 		return color;
 	}
 

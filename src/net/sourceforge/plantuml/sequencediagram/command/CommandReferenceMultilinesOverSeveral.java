@@ -46,10 +46,10 @@ import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<SequenceDiagram> {
 
@@ -66,8 +66,8 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines) {
 		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.getFirst499().getTrimmed()
 				.getString());
-		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get(0));
-		// final HtmlColor backColorGeneral = HtmlColorSet.getInstance().getColorIfValid(line0.get(1));
+		final HColor backColorElement = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get(0));
+		// final HtmlColor backColorGeneral = HtmlColorSetSimple.instance().getColorIfValid(line0.get(1));
 
 		final List<String> participants = StringUtils.splitComma(line0.get(1));
 		final List<Participant> p = new ArrayList<Participant>();
@@ -88,7 +88,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 			strings = strings.subList(1, strings.size());
 		}
 
-		final HtmlColor backColorGeneral = null;
+		final HColor backColorGeneral = null;
 		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement, diagram.getSkinParam()
 				.getCurrentStyleBuilder());
 		diagram.addReference(ref);

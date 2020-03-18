@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -67,6 +66,7 @@ import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Center;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Left;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockWidth, TextBlock, WithPorts {
@@ -77,8 +77,8 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
-	private final HtmlColor color;
-	private final HtmlColor hyperlinkColor;
+	private final HColor color;
+	private final HColor hyperlinkColor;
 	private final boolean useUnderlineForHyperlink;
 	private final Rose rose = new Rose();
 	private final List<Member> members = new ArrayList<Member>();
@@ -221,9 +221,9 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 				}
 			};
 		}
-		final HtmlColor back = modifier.getBackground() == null ? null : rose.getHtmlColor(skinParam,
+		final HColor back = modifier.getBackground() == null ? null : rose.getHtmlColor(skinParam,
 				modifier.getBackground());
-		final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
+		final HColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
 		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back, url != null);
 		return TextBlockWithUrl.withUrl(uBlock, url);

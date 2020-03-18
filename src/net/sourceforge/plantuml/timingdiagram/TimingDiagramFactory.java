@@ -41,6 +41,22 @@ import java.util.List;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.timingdiagram.command.CommandAtPlayer;
+import net.sourceforge.plantuml.timingdiagram.command.CommandAtTime;
+import net.sourceforge.plantuml.timingdiagram.command.CommandBinary;
+import net.sourceforge.plantuml.timingdiagram.command.CommandChangeStateByPlayerCode;
+import net.sourceforge.plantuml.timingdiagram.command.CommandChangeStateByTime;
+import net.sourceforge.plantuml.timingdiagram.command.CommandClock;
+import net.sourceforge.plantuml.timingdiagram.command.CommandConstraint;
+import net.sourceforge.plantuml.timingdiagram.command.CommandDefineStateLong;
+import net.sourceforge.plantuml.timingdiagram.command.CommandDefineStateShort;
+import net.sourceforge.plantuml.timingdiagram.command.CommandHideTimeAxis;
+import net.sourceforge.plantuml.timingdiagram.command.CommandHighlight;
+import net.sourceforge.plantuml.timingdiagram.command.CommandNote;
+import net.sourceforge.plantuml.timingdiagram.command.CommandNoteLong;
+import net.sourceforge.plantuml.timingdiagram.command.CommandRobustConcise;
+import net.sourceforge.plantuml.timingdiagram.command.CommandScalePixel;
+import net.sourceforge.plantuml.timingdiagram.command.CommandTimeMessage;
 
 public class TimingDiagramFactory extends UmlDiagramFactory {
 

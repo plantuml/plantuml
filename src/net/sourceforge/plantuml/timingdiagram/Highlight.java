@@ -39,8 +39,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -51,6 +49,8 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Highlight {
 
@@ -66,18 +66,18 @@ public class Highlight {
 		this.colors = colors;
 	}
 
-	private HtmlColor getBackColor() {
-		final HtmlColor result = colors.getColor(ColorType.BACK);
+	private HColor getBackColor() {
+		final HColor result = colors.getColor(ColorType.BACK);
 		if (result == null) {
-			return HtmlColorUtils.COL_A9DCDF;
+			return HColorUtils.COL_A9DCDF;
 		}
 		return result;
 	}
 
-	private HtmlColor getLineColor() {
-		final HtmlColor result = colors.getColor(ColorType.LINE);
+	private HColor getLineColor() {
+		final HColor result = colors.getColor(ColorType.LINE);
 		if (result == null) {
-			return HtmlColorUtils.BLACK;
+			return HColorUtils.BLACK;
 		}
 		return result;
 	}
@@ -104,17 +104,17 @@ public class Highlight {
 		final double start = ruler.getPosInPixel(this.getTickFrom());
 		final double end = ruler.getPosInPixel(this.getTickTo());
 		final URectangle rect = new URectangle(end - start, height);
-		ug.apply(new UTranslate(start, 0)).draw(rect);
+		ug.apply(UTranslate.dx(start)).draw(rect);
 	}
 
 	public void drawHighlightsLines(UGraphic ug, TimingRuler ruler, double height) {
 		ug = ug.apply(new UStroke(4, 4, 2));
 		ug = ug.apply(new UChangeColor(getLineColor()));
-		final ULine line = new ULine(0, height);
+		final ULine line = ULine.vline(height);
 		final double start = ruler.getPosInPixel(this.getTickFrom());
 		final double end = ruler.getPosInPixel(this.getTickTo());
-		ug.apply(new UTranslate(start, 0)).draw(line);
-		ug.apply(new UTranslate(end, 0)).draw(line);
+		ug.apply(UTranslate.dx(start)).draw(line);
+		ug.apply(UTranslate.dx(end)).draw(line);
 	}
 
 }

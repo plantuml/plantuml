@@ -45,18 +45,19 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 
 	private final String c;
 	private final UFont font;
-	private final HtmlColor innerCircle;
-	private final HtmlColor circle;
-	private final HtmlColor fontColor;
+	private final HColor innerCircle;
+	private final HColor circle;
+	private final HColor fontColor;
 	private final double radius;
 
-	public CircledCharacter(char c, double radius, UFont font, HtmlColor innerCircle, HtmlColor circle,
-			HtmlColor fontColor) {
+	public CircledCharacter(char c, double radius, UFont font, HColor innerCircle, HColor circle,
+			HColor fontColor) {
 		this.c = "" + c;
 		this.radius = radius;
 		this.font = font;

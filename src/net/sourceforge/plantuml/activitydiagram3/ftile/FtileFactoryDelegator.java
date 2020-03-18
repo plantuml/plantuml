@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -61,6 +60,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileFactoryDelegator implements FtileFactory {
 
@@ -145,7 +145,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.stop(swimlane);
 	}
 
-	public Ftile spot(Swimlane swimlane, String spot, HtmlColor color) {
+	public Ftile spot(Swimlane swimlane, String spot, HColor color) {
 		return factory.spot(swimlane, spot, color);
 	}
 
@@ -187,7 +187,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HtmlColor color, Instruction specialOut) {
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut) {
 		return factory.createWhile(swimlane, whileBlock, test, yes, out, afterEndwhile, color, specialOut);
 	}
 
@@ -205,8 +205,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createParallel(all, style, label, in, out);
 	}
 
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
-			HtmlColor borderColor, USymbol type, double roundCorner) {
+	public Ftile createGroup(Ftile list, Display name, HColor backColor, HColor titleColor, PositionedNote note,
+			HColor borderColor, USymbol type, double roundCorner) {
 		return factory.createGroup(list, name, backColor, titleColor, note, borderColor, type, roundCorner);
 	}
 

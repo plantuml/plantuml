@@ -79,7 +79,7 @@ public class TextBlockHorizontal extends AbstractTextBlock implements TextBlock 
 				final double dy = (dimtotal.getHeight() - dimb.getHeight()) / 2;
 				block.drawU(ug.apply(new UTranslate(x, dy)));
 			} else {
-				block.drawU(ug.apply(new UTranslate(x, 0)));
+				block.drawU(ug.apply(UTranslate.dx(x)));
 			}
 			x += dimb.getWidth();
 		}

@@ -177,10 +177,10 @@ public class LivingSpace {
 				p.getSkinParamBackcolored(skinParam), p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		if (horizontalAlignment == HorizontalAlignment.RIGHT) {
-			ug = ug.apply(new UTranslate(-dim.getWidth(), 0));
+			ug = ug.apply(UTranslate.dx(-dim.getWidth()));
 		}
 		if (verticalAlignment == VerticalAlignment.CENTER) {
-			ug = ug.apply(new UTranslate(0, -dim.getHeight() / 2));
+			ug = ug.apply(UTranslate.dy(-dim.getHeight() / 2));
 		}
 		final Area area = new Area(dim);
 		final Url url = getParticipant().getUrl();

@@ -42,15 +42,39 @@ import java.util.List;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.creole.atom.Atom;
+import net.sourceforge.plantuml.creole.atom.AtomImg;
+import net.sourceforge.plantuml.creole.atom.AtomMath;
+import net.sourceforge.plantuml.creole.atom.AtomOpenIcon;
+import net.sourceforge.plantuml.creole.atom.AtomSpace;
+import net.sourceforge.plantuml.creole.atom.AtomSprite;
+import net.sourceforge.plantuml.creole.atom.AtomText;
+import net.sourceforge.plantuml.creole.command.Command;
+import net.sourceforge.plantuml.creole.command.CommandCreoleColorAndSizeChange;
+import net.sourceforge.plantuml.creole.command.CommandCreoleColorChange;
+import net.sourceforge.plantuml.creole.command.CommandCreoleExposantChange;
+import net.sourceforge.plantuml.creole.command.CommandCreoleFontFamilyChange;
+import net.sourceforge.plantuml.creole.command.CommandCreoleImg;
+import net.sourceforge.plantuml.creole.command.CommandCreoleLatex;
+import net.sourceforge.plantuml.creole.command.CommandCreoleMath;
+import net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+import net.sourceforge.plantuml.creole.command.CommandCreoleOpenIcon;
+import net.sourceforge.plantuml.creole.command.CommandCreoleQrcode;
+import net.sourceforge.plantuml.creole.command.CommandCreoleSizeChange;
+import net.sourceforge.plantuml.creole.command.CommandCreoleSpace;
+import net.sourceforge.plantuml.creole.command.CommandCreoleSprite;
+import net.sourceforge.plantuml.creole.command.CommandCreoleStyle;
+import net.sourceforge.plantuml.creole.command.CommandCreoleSvgAttributeChange;
+import net.sourceforge.plantuml.creole.command.CommandCreoleUrl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
@@ -202,14 +226,14 @@ public class StripeSimple implements Stripe {
 		atoms.add(AtomText.createUrl(url, fontConfiguration, skinParam));
 	}
 
-	public void addSprite(String src, double scale, HtmlColor color) {
+	public void addSprite(String src, double scale, HColor color) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null) {
 			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null));
 		}
 	}
 
-	public void addOpenIcon(String src, double scale, HtmlColor color) {
+	public void addOpenIcon(String src, double scale, HColor color) {
 		final OpenIcon openIcon = OpenIcon.retrieve(src);
 		if (openIcon != null) {
 			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));

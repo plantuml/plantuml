@@ -115,7 +115,7 @@ public class USymbolFolder extends USymbol {
 			shape.setDeltaShadow(3.0);
 		}
 		ug.draw(shape);
-		ug.apply(new UTranslate(0, htitle)).draw(new ULine(wtitle + marginTitleX3, 0));
+		ug.apply(UTranslate.dy(htitle)).draw(ULine.hline(wtitle + marginTitleX3));
 	}
 
 	private double getHTitle(Dimension2D dimTitle) {

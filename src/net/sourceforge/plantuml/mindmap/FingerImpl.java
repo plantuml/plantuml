@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -68,11 +67,12 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FingerImpl implements Finger, UDrawable {
 
 	private final Display label;
-	private final HtmlColor backColor;
+	private final HColor backColor;
 	private final String stereotype;
 	private final ISkinParam skinParam;
 	private final StyleBuilder styleBuilder;
@@ -119,7 +119,7 @@ public class FingerImpl implements Finger, UDrawable {
 		nail.add(child);
 	}
 
-	private FingerImpl(StyleBuilder styleBuilder, HtmlColor backColor, Display label, ISkinParam skinParam,
+	private FingerImpl(StyleBuilder styleBuilder, HColor backColor, Display label, ISkinParam skinParam,
 			IdeaShape shape, Direction direction, int level, String stereotype) {
 		this.backColor = backColor;
 		this.stereotype = stereotype;
@@ -157,7 +157,7 @@ public class FingerImpl implements Finger, UDrawable {
 
 	}
 
-	private HtmlColor getLinkColor() {
+	private HColor getLinkColor() {
 		if (SkinParam.USE_STYLES()) {
 			final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(styleBuilder);
 			return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());

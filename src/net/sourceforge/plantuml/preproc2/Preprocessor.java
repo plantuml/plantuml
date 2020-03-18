@@ -65,9 +65,9 @@ public class Preprocessor implements ReadLineNumbered {
 		this.source.close();
 	}
 
-	public Set<FileWithSuffix> getFilesUsed() {
-		// System.err.println("************************** WARNING **************************");
-		return Collections.emptySet();
-		// return Collections.unmodifiableSet(include.getFilesUsedGlobal());
-	}
+//	public Set<FileWithSuffix> getFilesUsedTOBEREMOVED() {
+//		// System.err.println("************************** WARNING **************************");
+//		return Collections.emptySet();
+//		// return Collections.unmodifiableSet(include.getFilesUsedGlobal());
+//	}
 }

@@ -36,12 +36,10 @@
 package net.sourceforge.plantuml.project;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -49,6 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class GanttArrow implements UDrawable {
 
@@ -81,11 +80,11 @@ public class GanttArrow implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.RED_DARK)).apply(new UChangeColor(HtmlColorUtils.RED_DARK))
+		ug = ug.apply(new UChangeBackColor(HColorUtils.RED_DARK)).apply(new UChangeColor(HColorUtils.RED_DARK))
 				.apply(new UStroke(1.5));
 
-		final TaskDraw draw1 = ((Task) source.getMoment()).getTaskDraw();
-		final TaskDraw draw2 = ((Task) dest.getMoment()).getTaskDraw();
+		final Task draw1 = (Task) source.getMoment();
+		final Task draw2 = (Task) dest.getMoment();
 
 		double x1 = getX(source.withDelta(0), atStart);
 		double y1 = draw1.getY(atStart);

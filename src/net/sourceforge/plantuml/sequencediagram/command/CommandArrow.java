@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -63,6 +61,8 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
@@ -263,7 +263,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			return CommandExecutionResult.error(error);
 		}
 
-		final HtmlColor activationColor = diagram.getSkinParam().getIHtmlColorSet()
+		final HColor activationColor = diagram.getSkinParam().getIHtmlColorSet()
 				.getColorIfValid(arg.get("LIFECOLOR", 0));
 
 		if (activationSpec != null) {
@@ -323,7 +323,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				config = config.withBody(ArrowBody.HIDDEN);
 				// link.goHidden();
 			} else {
-				config = config.withColor(HtmlColorSet.getInstance().getColorIfValid(s));
+				config = config.withColor(HColorSet.instance().getColorIfValid(s));
 			}
 		}
 		return config;

@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -115,6 +116,10 @@ public class TContext {
 
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<FileWithSuffix>();
+
+	public Set<FileWithSuffix> getFilesUsedCurrent() {
+		return Collections.unmodifiableSet(filesUsedCurrent);
+	}
 
 	private void addStandardFunctions(Defines defines) {
 		functionsSet.addFunction(new Strlen());

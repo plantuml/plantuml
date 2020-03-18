@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileBlackBlock extends AbstractFtile {
 
@@ -60,10 +60,10 @@ public class FtileBlackBlock extends AbstractFtile {
 	private double width;
 	private double height;
 	private TextBlock label = TextBlockUtils.empty(0, 0);
-	private final HtmlColor colorBar;
+	private final HColor colorBar;
 	private final Swimlane swimlane;
 
-	public FtileBlackBlock(ISkinParam skinParam, HtmlColor colorBar, Swimlane swimlane) {
+	public FtileBlackBlock(ISkinParam skinParam, HColor colorBar, Swimlane swimlane) {
 		super(skinParam);
 		this.colorBar = colorBar;
 		this.swimlane = swimlane;
@@ -91,8 +91,7 @@ public class FtileBlackBlock extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final URectangle rect = new URectangle(width, height, 5, 5);
-		rect.setIgnoreForCompression(true);
+		final URectangle rect = new URectangle(width, height).rounded(5).ignoreForCompression();
 		if (skinParam().shadowing(null)) {
 			rect.setDeltaShadow(3);
 		}

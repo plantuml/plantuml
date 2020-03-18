@@ -44,10 +44,10 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class VerbIsOn implements VerbPattern {
 
@@ -74,11 +74,11 @@ public class VerbIsOn implements VerbPattern {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final Resource resource = (Resource) subject;
 				if (complement instanceof DaysAsDates) {
-					for (DayAsDate when : (DaysAsDates) complement) {
+					for (Day when : (DaysAsDates) complement) {
 						resource.addForceOnDay(project.convert(when));
 					}
 				} else {
-					final DayAsDate when = (DayAsDate) complement;
+					final Day when = (Day) complement;
 					resource.addForceOnDay(project.convert(when));
 				}
 				return CommandExecutionResult.ok();

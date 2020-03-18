@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileThinSplit extends AbstractFtile {
 
@@ -57,10 +57,10 @@ public class FtileThinSplit extends AbstractFtile {
 	private double first;
 	private double last;
 	private final double height = 1.5;
-	private final HtmlColor colorBar;
+	private final HColor colorBar;
 	private final Swimlane swimlane;
 
-	public FtileThinSplit(ISkinParam skinParam, HtmlColor colorBar, Swimlane swimlane) {
+	public FtileThinSplit(ISkinParam skinParam, HColor colorBar, Swimlane swimlane) {
 		super(skinParam);
 		this.colorBar = colorBar;
 		this.swimlane = swimlane;
@@ -78,8 +78,8 @@ public class FtileThinSplit extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final UShape rect = new ULine(last - first, 0);
-		ug = ug.apply(new UTranslate(first, 0));
+		final UShape rect = ULine.hline(last - first);
+		ug = ug.apply(UTranslate.dx(first));
 		ug.apply(new UChangeColor(colorBar)).apply(new UStroke(1.5)).draw(rect);
 	}
 

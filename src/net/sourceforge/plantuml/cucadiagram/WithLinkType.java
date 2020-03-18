@@ -40,10 +40,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public abstract class WithLinkType {
 
@@ -55,15 +55,15 @@ public abstract class WithLinkType {
 
 	private List<Colors> supplementary = new ArrayList<Colors>();
 
-	public final HtmlColor getSpecificColor() {
+	public final HColor getSpecificColor() {
 		return colors.getColor(ColorType.LINE);
 	}
 
-	public final void setSpecificColor(HtmlColor specificColor) {
+	public final void setSpecificColor(HColor specificColor) {
 		setSpecificColor(specificColor, 0);
 	}
 
-	public final void setSpecificColor(HtmlColor specificColor, int i) {
+	public final void setSpecificColor(HColor specificColor, int i) {
 		if (i == 0) {
 			colors = colors.add(ColorType.LINE, specificColor);
 		} else {
@@ -147,7 +147,7 @@ public abstract class WithLinkType {
 			} else if (s.startsWith("thickness=")) {
 				this.goThickness(Double.parseDouble(s.substring("thickness=".length())));
 			} else {
-				final HtmlColor tmp = HtmlColorSet.getInstance().getColorIfValid(s);
+				final HColor tmp = HColorSet.instance().getColorIfValid(s);
 				setSpecificColor(tmp, i);
 			}
 		}

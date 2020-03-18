@@ -43,13 +43,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.teoz.YPositionedTile;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class LinkAnchor {
 
@@ -91,7 +91,7 @@ public class LinkAnchor {
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);
 
-		final HtmlColor color = new Rose().getHtmlColor(param, ColorParam.arrow);
+		final HColor color = new Rose().getHtmlColor(param, ColorParam.arrow);
 		final Rainbow rainbow = Rainbow.fromColor(color);
 		final Snake snake = new Snake(Arrows.asToUp(), HorizontalAlignment.CENTER, rainbow, Arrows.asToDown());
 

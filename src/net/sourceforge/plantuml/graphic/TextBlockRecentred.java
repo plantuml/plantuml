@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBackcolored {
 
@@ -77,7 +78,7 @@ public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBa
 		return minMax.getDimension();
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		if (textBlock instanceof TextBlockBackcolored) {
 			return ((TextBlockBackcolored) textBlock).getBackcolor();
 		}

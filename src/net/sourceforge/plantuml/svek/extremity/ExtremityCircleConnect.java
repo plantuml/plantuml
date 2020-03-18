@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 class ExtremityCircleConnect extends Extremity {
 
@@ -66,7 +66,7 @@ class ExtremityCircleConnect extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UStroke(1.5)).apply(new UChangeBackColor(HtmlColorUtils.WHITE));
+		ug = ug.apply(new UStroke(1.5)).apply(new UChangeBackColor(HColorUtils.WHITE));
 		ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
 		
 		final double deg = -ortho * 180 / Math.PI + 90 - 45;

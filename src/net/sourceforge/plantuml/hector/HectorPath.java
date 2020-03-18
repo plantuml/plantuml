@@ -40,10 +40,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.geom.LineSegmentDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class HectorPath {
 
@@ -62,7 +62,7 @@ public class HectorPath {
 		return segments.toString();
 	}
 
-	public void draw(UGraphic ug, HtmlColor color) {
+	public void draw(UGraphic ug, HColor color) {
 		ug = ug.apply(new UChangeColor(color)).apply(new UStroke(1.5));
 		for (LineSegmentDouble seg : segments) {
 			seg.draw(ug);

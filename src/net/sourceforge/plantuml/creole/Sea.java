@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 

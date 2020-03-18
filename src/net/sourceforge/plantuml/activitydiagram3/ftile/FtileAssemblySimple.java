@@ -133,7 +133,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 
 	private UTranslate getTranslated1(StringBounder stringBounder) {
 		final double left = calculateDimension(stringBounder).getLeft();
-		return new UTranslate(left - tile1.calculateDimension(stringBounder).getLeft(), 0);
+		return UTranslate.dx(left - tile1.calculateDimension(stringBounder).getLeft());
 	}
 
 	private UTranslate getTranslated2(StringBounder stringBounder) {

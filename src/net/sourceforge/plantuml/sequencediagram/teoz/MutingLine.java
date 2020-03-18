@@ -110,7 +110,7 @@ public class MutingLine {
 		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam, null);
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		final Area area = new Area(dim.getWidth(), y2 - y1);
-		comp.drawU(ug.apply(new UTranslate(0, y1)), area, context);
+		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);
 	}
 
 	public void delayOn(double y, double height) {

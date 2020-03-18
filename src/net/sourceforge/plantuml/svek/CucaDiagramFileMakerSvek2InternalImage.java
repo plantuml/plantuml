@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBlock implements IEntityImage {
 
@@ -74,9 +74,9 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 
 		UTranslate move(Dimension2D dim) {
 			if (this == VERTICAL) {
-				return new UTranslate(dim.getWidth(), 0);
+				return UTranslate.dx(dim.getWidth());
 			}
-			return new UTranslate(0, dim.getHeight());
+			return UTranslate.dy(dim.getHeight());
 		}
 
 		Dimension2D add(Dimension2D orig, Dimension2D other) {
@@ -93,15 +93,15 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 			final int DASH = 8;
 			ug = ug.apply(new UStroke(DASH, 10, THICKNESS_BORDER));
 			if (this == VERTICAL) {
-				ug.draw(new ULine(0, dimTotal.getHeight() + DASH));
+				ug.draw(ULine.vline(dimTotal.getHeight() + DASH));
 			} else {
-				ug.draw(new ULine(dimTotal.getWidth() + DASH, 0));
+				ug.draw(ULine.hline(dimTotal.getWidth() + DASH));
 			}
 
 		}
 	}
 
-	private HtmlColor getColor(ColorParam colorParam, Stereotype stereotype) {
+	private HColor getColor(ColorParam colorParam, Stereotype stereotype) {
 		return new Rose().getHtmlColor(skinParam, stereotype, colorParam);
 	}
 
@@ -114,7 +114,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	}
 
 	public void drawU(UGraphic ug) {
-		final HtmlColor dotColor = getColor(ColorParam.stateBorder, stereotype);
+		final HColor dotColor = getColor(ColorParam.stateBorder, stereotype);
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
@@ -139,7 +139,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 		return result;
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return skinParam.getBackgroundColor();
 	}
 	

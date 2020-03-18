@@ -39,12 +39,9 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -52,6 +49,9 @@ import net.sourceforge.plantuml.ugraphic.UFontContext;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverTextSvg implements UDriver<SvgGraphics> {
 
@@ -103,9 +103,9 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 		final double width = dim.getWidth();
 		final double height = dim.getHeight();
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-			final HtmlColor back = fontConfiguration.getExtendedColor();
-			if (back instanceof HtmlColorGradient) {
-				final HtmlColorGradient gr = (HtmlColorGradient) back;
+			final HColor back = fontConfiguration.getExtendedColor();
+			if (back instanceof HColorGradient) {
+				final HColorGradient gr = (HColorGradient) back;
 				final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
 						StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
 				svg.setFillColor("url(#" + id + ")");

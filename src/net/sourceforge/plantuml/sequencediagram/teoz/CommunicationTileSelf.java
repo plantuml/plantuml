@@ -140,7 +140,7 @@ public class CommunicationTileSelf extends AbstractTile implements TileWithUpdat
 		// // x1 += CommunicationTile.LIVE_DELTA_SIZE * levelConsidere;
 		// }
 		area.setDeltaX1((levelIgnore - levelConsidere) * CommunicationTile.LIVE_DELTA_SIZE);
-		ug = ug.apply(new UTranslate(x1, 0));
+		ug = ug.apply(UTranslate.dx(x1));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 

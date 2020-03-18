@@ -63,7 +63,7 @@ public class TextBlockTitle implements TextBlock {
 	}
 
 	public final void drawU(UGraphic ug) {
-		textBlock.drawU(ug.apply(new UTranslate(outMargin, 0)));
+		textBlock.drawU(ug.apply(UTranslate.dx(outMargin)));
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
@@ -80,10 +79,11 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryText;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
 import net.sourceforge.plantuml.sprite.Sprite;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PSystemSalt extends AbstractPSystem implements WithSprite {
 
@@ -115,12 +115,12 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 			if (getScale() != null) {
 				scale = getScale().getScale(size.getWidth(), size.getHeight());
 			}
-			final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), scale, HtmlColorUtils.WHITE, null,
+			final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), scale, HColorUtils.WHITE, null,
 					null, 5, 5, null, false);
 			builder.setUDrawable(new UDrawable() {
 
 				public void drawU(UGraphic ug) {
-					ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+					ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
 					salt.drawU(ug, 0, new Dimension2DDouble(size.getWidth(), size.getHeight()));
 					salt.drawU(ug, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
 				}

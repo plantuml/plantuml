@@ -111,7 +111,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		if (title.isWhite()) {
 			ug2 = ug;
 		} else {
-			ug2 = (UGraphicTxt) ug.apply(new UTranslate(0, title.as().size() + 1));
+			ug2 = (UGraphicTxt) ug.apply(UTranslate.dy(title.as().size() + 1));
 		}
 		drawableSet.drawU22(ug2, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
 		if (title.isWhite() == false) {

@@ -42,13 +42,13 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
@@ -88,9 +88,9 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<Graph
 			drawShadow(g2d, path, shape.getDeltaShadow(), dpiFactor);
 		}
 
-		final HtmlColor back = param.getBackcolor();
-		if (back instanceof HtmlColorGradient) {
-			final HtmlColorGradient gr = (HtmlColorGradient) back;
+		final HColor back = param.getBackcolor();
+		if (back instanceof HColorGradient) {
+			final HColorGradient gr = (HColorGradient) back;
 			final char policy = gr.getPolicy();
 			final GradientPaint paint;
 //			final Rectangle2D bound = path.getBounds();

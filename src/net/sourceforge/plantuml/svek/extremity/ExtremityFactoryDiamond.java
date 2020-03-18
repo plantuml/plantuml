@@ -37,22 +37,22 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ExtremityFactoryDiamond extends AbstractExtremityFactory implements ExtremityFactory {
 
 	private final boolean fill;
-	private final HtmlColor backgroundColor;
+	private final HColor backgroundColor;
 
 	@Override
 	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
 		return new ExtremityDiamond(p0, angle - Math.PI / 2, fill, backgroundColor);
 	}
 
-	public ExtremityFactoryDiamond(boolean fill, HtmlColor backgroundColor) {
+	public ExtremityFactoryDiamond(boolean fill, HColor backgroundColor) {
 		this.fill = fill;
 		this.backgroundColor = backgroundColor;
 	}

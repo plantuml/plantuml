@@ -68,7 +68,7 @@ public class EntityDomain extends AbstractTextBlock implements TextBlock {
 		final UEllipse circle = new UEllipse(radius * 2, radius * 2);
 		circle.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(new UTranslate(x, y)).draw(circle);
-		ug.apply(new UTranslate(x, y + 2 * radius + suppY)).draw(new ULine(2 * radius, 0));
+		ug.apply(new UTranslate(x, y + 2 * radius + suppY)).draw(ULine.hline(2 * radius));
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

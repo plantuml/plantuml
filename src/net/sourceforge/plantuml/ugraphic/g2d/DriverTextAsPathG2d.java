@@ -52,14 +52,14 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 
@@ -106,7 +106,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 		g2d.translate(-x, -y);
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
+			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}
@@ -119,7 +119,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault()), font, shape.getText());
 			final int ypos = (int) (y + 2.5) - 1;
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
+			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}
@@ -132,7 +132,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault()), font, shape.getText());
 			final FontMetrics fm = g2d.getFontMetrics(font.getFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
+			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}

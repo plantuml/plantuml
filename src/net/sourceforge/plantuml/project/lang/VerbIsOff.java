@@ -44,11 +44,11 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
-import net.sourceforge.plantuml.project.DayOfWeek;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
 
 public class VerbIsOff implements VerbPattern {
 
@@ -77,11 +77,11 @@ public class VerbIsOff implements VerbPattern {
 				if (complement instanceof DayOfWeek) {
 					resource.addCloseDay(((DayOfWeek) complement));
 				} else if (complement instanceof DaysAsDates) {
-					for (DayAsDate when : (DaysAsDates) complement) {
+					for (Day when : (DaysAsDates) complement) {
 						resource.addCloseDay(project.convert(when));
 					}
 				} else {
-					final DayAsDate when = (DayAsDate) complement;
+					final Day when = (Day) complement;
 					resource.addCloseDay(project.convert(when));
 				}
 				return CommandExecutionResult.ok();

@@ -55,10 +55,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInsi
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
@@ -113,8 +113,8 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 	}
 
 	private Ftile getDiamond1(Swimlane swimlane, Branch branch0, Display test) {
-		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-		final HtmlColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(skinParam(),
+		final HColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
+		final HColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(skinParam(),
 				ColorParam.activityDiamondBackground) : branch0.getColor();
 
 		final FontConfiguration fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
@@ -126,14 +126,14 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 	}
 
 	private Ftile getDiamond2(Swimlane swimlane, Branch branch0) {
-		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-		final HtmlColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(skinParam(),
+		final HColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
+		final HColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(skinParam(),
 				ColorParam.activityDiamondBackground) : branch0.getColor();
 
 		return new FtileDiamondInside(branch0.skinParam(), backColor, borderColor, swimlane, TextBlockUtils.empty(0, 0));
 	}
 
-	private HtmlColor fontColor(FontParam param) {
+	private HColor fontColor(FontParam param) {
 		return skinParam().getFontHtmlColor(null, param);
 	}
 

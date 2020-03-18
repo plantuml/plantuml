@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 
@@ -66,7 +66,7 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
 		final String stringColor = arg.get("BACKCOLOR", 0);
-		HtmlColor backColor = null;
+		HColor backColor = null;
 		if (stringColor != null) {
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
 		}

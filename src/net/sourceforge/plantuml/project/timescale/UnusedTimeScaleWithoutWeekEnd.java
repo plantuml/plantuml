@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
-import net.sourceforge.plantuml.project.DayAsDate;
-import net.sourceforge.plantuml.project.DayOfWeek;
-import net.sourceforge.plantuml.project.GCalendar;
-import net.sourceforge.plantuml.project.core.Wink;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.time.GCalendar;
+import net.sourceforge.plantuml.project.time.Wink;
 
 public class UnusedTimeScaleWithoutWeekEnd implements TimeScale {
 
@@ -63,7 +63,7 @@ public class UnusedTimeScaleWithoutWeekEnd implements TimeScale {
 	}
 
 	public double getWidth(Wink instant) {
-		final DayAsDate day = calendar.toDayAsDate((Wink) instant);
+		final Day day = calendar.toDayAsDate((Wink) instant);
 		final DayOfWeek dayOfWeek = day.getDayOfWeek();
 		if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
 			return 1;

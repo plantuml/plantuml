@@ -51,13 +51,13 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FloatingNote extends AbstractTextBlock implements Stencil, TextBlock {
 
@@ -67,8 +67,8 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 		final Rose rose = new Rose();
 
-		final HtmlColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-		final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+		final HColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
+		final HColor borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 

@@ -40,7 +40,6 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
@@ -49,21 +48,22 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class InnerStateAutonom extends AbstractTextBlock implements IEntityImage {
 
 	private final IEntityImage im;
 	private final TextBlock title;
 	private final TextBlockWidth attribute;
-	private final HtmlColor borderColor;
-	private final HtmlColor backColor;
+	private final HColor borderColor;
+	private final HColor backColor;
 	private final boolean shadowing;
 	private final Url url;
 	private final boolean withSymbol;
 	private final UStroke stroke;
 
 	public InnerStateAutonom(final IEntityImage im, final TextBlock title, TextBlockWidth attribute,
-			HtmlColor borderColor, HtmlColor backColor, boolean shadowing, Url url, boolean withSymbol, UStroke stroke) {
+			HColor borderColor, HColor backColor, boolean shadowing, Url url, boolean withSymbol, UStroke stroke) {
 		this.im = im;
 		this.withSymbol = withSymbol;
 		this.title = title;
@@ -93,7 +93,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		title.drawU(ug.apply(new UTranslate((total.getWidth() - text.getWidth()) / 2, IEntityImage.MARGIN)));
 		attribute.asTextBlock(total.getWidth()).drawU(
 				ug.apply(new UTranslate(0 + IEntityImage.MARGIN, IEntityImage.MARGIN + text.getHeight()
-						+ IEntityImage.MARGIN)));
+								+ IEntityImage.MARGIN)));
 
 		final double spaceYforURL = getSpaceYforURL(ug.getStringBounder());
 		im.drawU(ug.apply(new UTranslate(IEntityImage.MARGIN, spaceYforURL)));
@@ -117,7 +117,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		return suppY + IEntityImage.MARGIN_LINE;
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return null;
 	}
 

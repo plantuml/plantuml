@@ -40,10 +40,10 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.core.Month;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.Month;
 
 public class ComplementDate implements ComplementPattern {
 
@@ -115,20 +115,20 @@ public class ComplementDate implements ComplementPattern {
 		final int day = Integer.parseInt(arg.get("ADAY" + suffix, 0));
 		final String month = arg.get("AMONTH" + suffix, 0);
 		final int year = Integer.parseInt(arg.get("AYEAR" + suffix, 0));
-		return DayAsDate.create(year, month, day);
+		return Day.create(year, month, day);
 	}
 
 	private Complement resultB(RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
 		final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
 		final int year = Integer.parseInt(arg.get("BYEAR" + suffix, 0));
-		return DayAsDate.create(year, month, day);
+		return Day.create(year, month, day);
 	}
 
 	private Complement resultC(RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("CDAY" + suffix, 0));
 		final String month = arg.get("CMONTH" + suffix, 0);
 		final int year = Integer.parseInt(arg.get("CYEAR" + suffix, 0));
-		return DayAsDate.create(year, month, day);
+		return Day.create(year, month, day);
 	}
 }

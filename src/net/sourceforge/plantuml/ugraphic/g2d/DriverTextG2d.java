@@ -51,15 +51,15 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverTextG2d implements UDriver<Graphics2D> {
 
@@ -84,11 +84,11 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 
 		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
 		final Dimension2D dimBack = calculateDimension(FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault()), font, shape.getText());
-		final HtmlColor extended = fontConfiguration.getExtendedColor();
+		final HColor extended = fontConfiguration.getExtendedColor();
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 			final Rectangle2D.Double area = new Rectangle2D.Double(x, y - dimBack.getHeight() + 1.5,
 					dimBack.getWidth(), dimBack.getHeight());
-			if (extended instanceof HtmlColorGradient) {
+			if (extended instanceof HColorGradient) {
 				final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, dimBack.getWidth(),
 						dimBack.getHeight(), extended);
 				g2d.setPaint(paint);

@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamForceColor;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.Component;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class LifeLine {
 
@@ -203,15 +203,15 @@ public class LifeLine {
 	public void drawU(UGraphic ug, Rose skin, ISkinParam skinParam) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		ug = ug.apply(new UTranslate(getStartingX(stringBounder), 0));
+		ug = ug.apply(UTranslate.dx(getStartingX(stringBounder)));
 
 		for (int i = 0; i < events.size(); i++) {
 			ComponentType type = ComponentType.ALIVE_BOX_CLOSE_OPEN;
 			for (final Iterator<SegmentColored> it = getSegmentsCutted(stringBounder, i).iterator(); it.hasNext();) {
 				final SegmentColored seg = it.next();
-				final HtmlColor specificBackColor = seg.getSpecificBackColor();
+				final HColor specificBackColor = seg.getSpecificBackColor();
 				ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, specificBackColor);
-				final HtmlColor specificLineColor = seg.getSpecificLineColor();
+				final HColor specificLineColor = seg.getSpecificLineColor();
 				if (specificLineColor != null) {
 					skinParam2 = new SkinParamForceColor(skinParam2, ColorParam.sequenceLifeLineBorder,
 							specificLineColor);

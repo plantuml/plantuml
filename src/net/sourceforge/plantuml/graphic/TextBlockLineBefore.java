@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock, WithPorts {
 
@@ -75,7 +76,7 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock,
 	}
 
 	public void drawU(UGraphic ug) {
-		final HtmlColor color = ug.getParam().getColor();
+		final HColor color = ug.getParam().getColor();
 		if (title == null) {
 			UHorizontalLine.infinite(1, 1, separator).drawMe(ug);
 		}

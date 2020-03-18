@@ -57,10 +57,11 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svg.SvgGraphics;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class FontChecker {
 
@@ -173,7 +174,7 @@ public class FontChecker {
 		final double dim = 20;
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {
-				ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+				ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
 				ug.draw(new URectangle(dim - 1, dim - 1));
 				if (ug instanceof UGraphic2) {
 					ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));

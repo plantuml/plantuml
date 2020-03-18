@@ -44,9 +44,9 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class PSystemMath extends AbstractPSystem {
 
@@ -110,7 +110,7 @@ public class PSystemMath extends AbstractPSystem {
 	}
 
 	private Color getColor(final String col) {
-		final HtmlColor col2 = new HtmlColorSetSimple().getColorIfValid(col);
+		final HColor col2 = HColorSet.instance().getColorIfValid(col);
 		final Color col3 = new ColorMapperIdentity().getMappedColor(col2);
 		return col3;
 	}

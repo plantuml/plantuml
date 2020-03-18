@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommunicationTileNoteBottom extends AbstractTile implements TileWithUpdateStairs, TileWithCallbackY {
 
@@ -119,7 +119,7 @@ public class CommunicationTileNoteBottom extends AbstractTile implements TileWit
 	private final double spacey = 10;
 
 	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-		final HtmlColor color = new Rose().getHtmlColor(skinParam, ColorParam.arrow);
+		final HColor color = new Rose().getHtmlColor(skinParam, ColorParam.arrow);
 
 		final double dx = x2 - x1;
 		final double dy = y2 - y1;

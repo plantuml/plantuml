@@ -44,10 +44,10 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 
@@ -74,8 +74,8 @@ public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get("TYPE", 0)));
 		final Participant p = diagram.getOrCreateParticipant(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("WHO", 0)));
-		final HtmlColor backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("BACK", 0));
-		final HtmlColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINE", 0));
+		final HColor backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("BACK", 0));
+		final HColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINE", 0));
 		final String error = diagram.activate(p, type, backColor, lineColor);
 		if (error == null) {
 			return CommandExecutionResult.ok();

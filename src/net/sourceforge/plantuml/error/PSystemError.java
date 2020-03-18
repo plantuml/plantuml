@@ -70,10 +70,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -81,13 +77,17 @@ import net.sourceforge.plantuml.graphic.TextBlockRaw;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 import net.sourceforge.plantuml.version.LicenseInfo;
 import net.sourceforge.plantuml.version.PSystemVersion;
@@ -122,23 +122,22 @@ public abstract class PSystemError extends AbstractPSystem {
 	}
 
 	private TextBlockBackcolored getGraphicalFormatted() {
-		final FontConfiguration fc0 = GraphicStrings.sansSerif14(HtmlColorUtils.BLACK).bold();
-		final FontConfiguration fc1 = GraphicStrings.sansSerif14(HtmlColorUtils.MY_GREEN).bold();
-		final FontConfiguration fc2 = GraphicStrings.sansSerif14(HtmlColorUtils.RED).bold();
+		final FontConfiguration fc0 = GraphicStrings.sansSerif14(HColorUtils.BLACK).bold();
+		final FontConfiguration fc1 = GraphicStrings.sansSerif14(HColorUtils.MY_GREEN).bold();
+		final FontConfiguration fc2 = GraphicStrings.sansSerif14(HColorUtils.RED).bold();
 
 		final List<String> fullBody = getTextFullBody();
 		final TextBlock result0 = TextBlockUtils.addBackcolor(
-				TextBlockUtils.withMargin(new TextBlockRaw(getTextFromStack(), fc0), 1, 1, 1, 4),
-				HtmlColorUtils.MY_GREEN);
+				TextBlockUtils.withMargin(new TextBlockRaw(getTextFromStack(), fc0), 1, 1, 1, 4), HColorUtils.MY_GREEN);
 		final TextBlock result1 = new TextBlockRaw(allButLast(fullBody), fc1);
-		final TextBlock result2 = new TextBlockRaw(onlyLast(fullBody), fc1.wave(HtmlColorUtils.RED));
+		final TextBlock result2 = new TextBlockRaw(onlyLast(fullBody), fc1.wave(HColorUtils.RED));
 		final TextBlock result3 = new TextBlockRaw(getTextError(), fc2);
 		TextBlock result = result0;
 		result = TextBlockUtils.mergeTB(result, result1, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, result2, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, result3, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.withMargin(result, 5, 5);
-		return TextBlockUtils.addBackcolor(result, HtmlColorUtils.BLACK);
+		return TextBlockUtils.addBackcolor(result, HColorUtils.BLACK);
 	}
 
 	private List<String> getPureAsciiFormatted() {
@@ -219,17 +218,17 @@ public abstract class PSystemError extends AbstractPSystem {
 		} else {
 			udrawable = result;
 		}
-		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
-		// udrawable = addMessageAdopt(udrawable);
-		if (min == 1 || min == 8 || min == 13 || min == 55) {
-			udrawable = addMessagePatreon(udrawable);
-		} else if (min == 15) {
-			udrawable = addMessageLiberapay(udrawable);
-		} else if (min == 30 || min == 39 || min == 48) {
-			udrawable = addMessageDedication(udrawable);
-		} else if (getSource().containsIgnoreCase("arecibo")) {
-			udrawable = addMessageArecibo(udrawable);
-		}
+		udrawable = addMessageCoronavirus(udrawable);
+//		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
+//		if (min == 1 || min == 8 || min == 13 || min == 55) {
+//			udrawable = addMessagePatreon(udrawable);
+//		} else if (min == 15) {
+//			udrawable = addMessageLiberapay(udrawable);
+//		} else if (min == 30 || min == 39 || min == 48) {
+//			udrawable = addMessageDedication(udrawable);
+//		} else if (getSource().containsIgnoreCase("arecibo")) {
+//			udrawable = addMessageArecibo(udrawable);
+//		}
 		imageBuilder.setUDrawable(udrawable);
 		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
 		((ImageDataAbstract) imageData).setStatus(FileImageData.ERROR);
@@ -283,6 +282,13 @@ public abstract class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
+	private TextBlock addMessageCoronavirus(final TextBlock source) throws IOException {
+		final TextBlock message = getMessageCoronavirus();
+		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
+		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
+		return result;
+	}
+
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
 			return source;
@@ -309,17 +315,17 @@ public abstract class PSystemError extends AbstractPSystem {
 
 	private TextBlockBackcolored getMessageDedication() {
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final HtmlColorSimple backColor = (HtmlColorSimple) new HtmlColorSetSimple().getColorIfValid("#eae2c9");
+		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorIfValid("#eae2c9");
 
-		final BufferedImage qrcode = smaller(utils.exportFlashcode("http://plantuml.com/dedication", Color.BLACK,
-				backColor.getColor999()));
+		final BufferedImage qrcode = smaller(
+				utils.exportFlashcode("http://plantuml.com/dedication", Color.BLACK, backColor.getColor999()));
 		final Display disp = Display.create("<b>Add your own dedication into PlantUML", " ", "For just $5 per month!",
 				"Details on <i>[[http://plantuml.com/dedication]]");
 
 		final UFont font = UFont.sansSerif(14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
-		final TextBlock text = TextBlockUtils.withMargin(
-				disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
+		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+		final TextBlock text = TextBlockUtils
+				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;
 		if (qrcode == null) {
 			result = text;
@@ -332,17 +338,53 @@ public abstract class PSystemError extends AbstractPSystem {
 	}
 
 	private TextBlockBackcolored getMessageAdopt() {
-		final HtmlColorSimple backColor = (HtmlColorSimple) new HtmlColorSetSimple().getColorIfValid("#eff4d2");
+		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorIfValid("#eff4d2");
 
 		final Display disp = Display.create("<b>Adopt-a-Word and put your message here!", " ",
 				"Details on <i>[[http://plantuml.com/adopt]]", " ");
 
 		final UFont font = UFont.sansSerif(14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
-		final TextBlock text = TextBlockUtils.withMargin(
-				disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
+		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+		final TextBlock text = TextBlockUtils
+				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;
 		result = text;
+		return TextBlockUtils.addBackcolor(result, backColor);
+
+	}
+
+	private TextBlockBackcolored getMessageCoronavirus() {
+
+		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
+		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorIfValid("#fff");
+
+		final BufferedImage qrcode = smaller(utils.exportFlashcode(
+				"https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca", Color.BLACK,
+				backColor.getColor999()));
+		final Display disp = Display.create("<b>Coronavirus: Why You Must Act Now", " ",
+				"Please use the flashcode or go to", "https://plantuml/coronavirus", " ",
+				"If you live in UK, Europe, North & South America, Iran, Japan, Korea...",
+				" <b>please apply social distancing right now!", " ", "The coronavirus is coming to you.",
+				"It’s coming at an exponential speed: gradually, and then suddenly.",
+				"It’s a matter of days. Maybe a week or two.",
+				"When it does, your healthcare system will be overwhelmed.",
+				"Your fellow citizens will be treated in the hallways.",
+				"Exhausted healthcare workers will break down. Some will die.",
+				"They will have to decide which patient gets the oxygen and which one dies.",
+				"The only way to prevent this is social distancing today. Not tomorrow. Today.",
+				"That means keeping as many people home as possible, starting now.", " ");
+
+		final UFont font = UFont.sansSerif(14);
+		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+		final TextBlock text = TextBlockUtils
+				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
+		final TextBlock result;
+		if (qrcode == null) {
+			result = text;
+		} else {
+			final UImage qr = new UImage(qrcode).scaleNearestNeighbor(3);
+			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
+		}
 		return TextBlockUtils.addBackcolor(result, backColor);
 
 	}
@@ -350,17 +392,17 @@ public abstract class PSystemError extends AbstractPSystem {
 	private TextBlockBackcolored getMessagePatreon() {
 		final UImage message = new UImage(PSystemVersion.getTime01());
 		final Color back = new Color(message.getImage().getRGB(0, 0));
-		final HtmlColor backColor = new HtmlColorSimple(back, false);
+		final HColor backColor = new HColorSimple(back, false);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final BufferedImage qrcode = smaller(utils.exportFlashcode("http://plantuml.com/patreon", Color.BLACK,
-				Color.WHITE));
+		final BufferedImage qrcode = smaller(
+				utils.exportFlashcode("http://plantuml.com/patreon", Color.BLACK, Color.WHITE));
 
 		final int scale = 2;
 
 		final double imWidth = message.getWidth() + (qrcode == null ? 0 : qrcode.getWidth() * scale + 20);
-		final double imHeight = qrcode == null ? message.getHeight() : Math.max(message.getHeight(), qrcode.getHeight()
-				* scale + 10);
+		final double imHeight = qrcode == null ? message.getHeight()
+				: Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
@@ -385,7 +427,7 @@ public abstract class PSystemError extends AbstractPSystem {
 				return MinMax.fromMax(imWidth + 1, imHeight + 1);
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return backColor;
 			}
 		};
@@ -395,7 +437,7 @@ public abstract class PSystemError extends AbstractPSystem {
 	private TextBlockBackcolored getMessageLiberapay() {
 		final UImage message = new UImage(PSystemVersion.getTime15());
 		final Color back = new Color(message.getImage().getRGB(0, 0));
-		final HtmlColor backColor = new HtmlColorSimple(back, false);
+		final HColor backColor = new HColorSimple(back, false);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage qrcode = smaller(utils.exportFlashcode("http://plantuml.com/lp", Color.BLACK, Color.WHITE));
@@ -403,8 +445,8 @@ public abstract class PSystemError extends AbstractPSystem {
 		final int scale = 2;
 
 		final double imWidth = message.getWidth() + (qrcode == null ? 0 : qrcode.getWidth() * scale + 20);
-		final double imHeight = qrcode == null ? message.getHeight() : Math.max(message.getHeight(), qrcode.getHeight()
-				* scale + 10);
+		final double imHeight = qrcode == null ? message.getHeight()
+				: Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
@@ -429,7 +471,7 @@ public abstract class PSystemError extends AbstractPSystem {
 				return MinMax.fromMax(imWidth + 1, imHeight + 1);
 			}
 
-			public HtmlColor getBackcolor() {
+			public HColor getBackcolor() {
 				return backColor;
 			}
 		};

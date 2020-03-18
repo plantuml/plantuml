@@ -39,12 +39,12 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class IEntityImageMoved implements IEntityImage {
 
@@ -59,7 +59,7 @@ public class IEntityImageMoved implements IEntityImage {
 		return orig.isHidden();
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return orig.getBackcolor();
 	}
 

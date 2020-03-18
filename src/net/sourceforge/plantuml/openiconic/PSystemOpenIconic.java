@@ -42,9 +42,9 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PSystemOpenIconic extends AbstractPSystem {
 
@@ -64,7 +64,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 5, 5,
 				null, false);
-		imageBuilder.setUDrawable(icon.asTextBlock(HtmlColorUtils.BLACK, factor));
+		imageBuilder.setUDrawable(icon.asTextBlock(HColorUtils.BLACK, factor));
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 
 		// UGraphic2 ug = fileFormat.createUGraphic(dim);

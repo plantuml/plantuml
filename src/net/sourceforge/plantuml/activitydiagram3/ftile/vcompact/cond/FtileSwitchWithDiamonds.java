@@ -155,14 +155,14 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 			final double suppx = (w13 - w9) / (tiles.size() - 1);
 			for (int i = 0; i < tiles.size() - 1; i++) {
 				if (tile == tiles.get(i)) {
-					return main.compose(new UTranslate(dx, 0));
+					return main.compose(UTranslate.dx(dx));
 				}
 				dx += tiles.get(i).calculateDimension(stringBounder).getWidth() + suppx;
 
 			}
 			if (tile == tiles.get(tiles.size() - 1)) {
 				final double dx9 = tiles.get(0).calculateDimension(stringBounder).getWidth() + w13 + SUPP15 + SUPP15;
-				return main.compose(new UTranslate(dx9, 0));
+				return main.compose(UTranslate.dx(dx9));
 			}
 			throw new IllegalArgumentException();
 
@@ -173,7 +173,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 	protected UTranslate getTranslateMain(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		final double dy1 = dimDiamond1.getHeight() + getYdelta1a(stringBounder);
-		return new UTranslate(0, dy1);
+		return UTranslate.dy(dy1);
 	}
 
 	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {

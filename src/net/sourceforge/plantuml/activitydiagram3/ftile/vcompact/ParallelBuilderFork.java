@@ -123,7 +123,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		final List<Connection> conns = new ArrayList<Connection>();
 		double x = 0;
 		for (Ftile tmp : getList()) {
-			final UTranslate translate0 = new UTranslate(0, barHeight);
+			final UTranslate translate0 = UTranslate.dy(barHeight);
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final Rainbow def;
 			if (SkinParam.USE_STYLES()) {
@@ -154,7 +154,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawU(UGraphic ug) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
@@ -166,7 +166,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Point2D p1 = new Point2D.Double(geo.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
@@ -182,7 +182,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			snake.addPoint(mp1a.getX(), middle);
 			snake.addPoint(mp2b.getX(), middle);
 			snake.addPoint(mp2b);
-			snake.setIgnoreForCompression(true);
+			snake.setIgnoreForCompression();
 			ug.draw(snake);
 		}
 	}
@@ -206,7 +206,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawU(UGraphic ug) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
 			if (geo.hasPointOut() == false) {
 				return;
@@ -223,7 +223,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-			ug = ug.apply(new UTranslate(x, 0));
+			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
 			if (geo.hasPointOut() == false) {
 				return;
@@ -242,7 +242,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			snake.addPoint(mp1a.getX(), middle);
 			snake.addPoint(mp2b.getX(), middle);
 			snake.addPoint(mp2b);
-			snake.setIgnoreForCompression(true);
+			snake.setIgnoreForCompression();
 			ug.draw(snake);
 		}
 

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.project.core.Wink;
+import net.sourceforge.plantuml.project.time.Wink;
 
 public interface LoadPlanable {
 

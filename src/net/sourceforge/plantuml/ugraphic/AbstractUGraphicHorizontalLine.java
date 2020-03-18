@@ -67,7 +67,7 @@ public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 
 	public void draw(UShape shape) {
 		if (shape instanceof UHorizontalLine) {
-			drawHline(getUg(), (UHorizontalLine) shape, new UTranslate(0, translate.getDy()));
+			drawHline(getUg(), (UHorizontalLine) shape, UTranslate.dy(translate.getDy()));
 		} else {
 			getUg().apply(translate).draw(shape);
 		}

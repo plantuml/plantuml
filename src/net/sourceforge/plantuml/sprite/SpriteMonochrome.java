@@ -43,15 +43,15 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.graphic.HtmlColorSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class SpriteMonochrome implements Sprite {
 
@@ -181,19 +181,19 @@ public class SpriteMonochrome implements Sprite {
 		return width;
 	}
 
-	public UImage toUImage(ColorMapper colorMapper, HtmlColor backcolor, HtmlColor color) {
+	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
 
 		if (backcolor == null) {
-			backcolor = HtmlColorUtils.WHITE;
+			backcolor = HColorUtils.WHITE;
 		}
 		if (color == null) {
-			color = HtmlColorUtils.BLACK;
+			color = HColorUtils.BLACK;
 		}
 		// if (backcolor instanceof HtmlColorGradient) {
 		// return special(colorMapper, (HtmlColorGradient) backcolor, color);
 		// }
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		final HtmlColorGradient gradient = new HtmlColorGradient(backcolor, color, '\0');
+		final HColorGradient gradient = new HColorGradient(backcolor, color, '\0');
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
 				final double coef = 1.0 * grey[line][col] / (grayLevel - 1);
@@ -204,13 +204,13 @@ public class SpriteMonochrome implements Sprite {
 		return new UImage(im);
 	}
 
-	private UImage special(ColorMapper colorMapper, HtmlColorGradient backcolor, HtmlColor color) {
+	private UImage special(ColorMapper colorMapper, HColorGradient backcolor, HColor color) {
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
-				final HtmlColor backColorLocal = new HtmlColorSimple(backcolor.getColor(colorMapper, 1.0 * line
+				final HColor backColorLocal = new HColorSimple(backcolor.getColor(colorMapper, 1.0 * line
 						/ height), false);
-				final HtmlColorGradient gradient = new HtmlColorGradient(backColorLocal, color, '\0');
+				final HColorGradient gradient = new HColorGradient(backColorLocal, color, '\0');
 				final double coef = 1.0 * grey[line][col] / (grayLevel - 1);
 				final Color c = gradient.getColor(colorMapper, coef);
 				im.setRGB(col, line, c.getRGB());
@@ -219,7 +219,7 @@ public class SpriteMonochrome implements Sprite {
 		return new UImage(im);
 	}
 
-	public TextBlock asTextBlock(final HtmlColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor color, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

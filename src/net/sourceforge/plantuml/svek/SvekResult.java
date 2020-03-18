@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -58,6 +56,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHidden;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public final class SvekResult extends AbstractTextBlock implements IEntityImage, Moveable {
 
@@ -79,12 +79,12 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			cluster.drawU(ug, new UStroke(1.5), dotData.getUmlDiagramType(), dotData.getSkinParam());
 		}
 
-		HtmlColor color = rose.getHtmlColor(dotData.getSkinParam(), null, getArrowColorParam());
+		HColor color = rose.getHtmlColor(dotData.getSkinParam(), null, getArrowColorParam());
 		if (SkinParam.USE_STYLES()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 		}
-		color = HtmlColorUtils.noGradient(color);
+		color = HColorUtils.noGradient(color);
 
 		for (Node node : dotStringFactory.getBibliotekon().allNodes()) {
 			final double minX = node.getMinX();
@@ -137,7 +137,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 		throw new IllegalStateException();
 	}
 
-	public HtmlColor getBackcolor() {
+	public HColor getBackcolor() {
 		return dotData.getSkinParam().getBackgroundColor();
 	}
 

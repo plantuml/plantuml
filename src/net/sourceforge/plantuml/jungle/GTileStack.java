@@ -61,7 +61,7 @@ public class GTileStack extends AbstractTextBlock implements GTile {
 		for (GTile tile : tiles) {
 			tile.drawU(ug);
 			final Dimension2D dim = tile.calculateDimension(ug.getStringBounder());
-			ug = ug.apply(new UTranslate(0, dim.getHeight() + space));
+			ug = ug.apply(UTranslate.dy(dim.getHeight() + space));
 		}
 	}
 

@@ -42,9 +42,9 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DayAsDate;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class VerbTaskStartsAbsolute implements VerbPattern {
 
@@ -60,8 +60,8 @@ public class VerbTaskStartsAbsolute implements VerbPattern {
 		return new Verb() {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final Task task = (Task) subject;
-				final DayAsDate start = (DayAsDate) complement;
-				final DayAsDate startingDate = project.getStartingDate();
+				final Day start = (Day) complement;
+				final Day startingDate = project.getStartingDate();
 				if (startingDate == null) {
 					return CommandExecutionResult.error("No starting date for the project");
 				}

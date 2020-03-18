@@ -43,6 +43,9 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.creole.atom.AbstractAtom;
+import net.sourceforge.plantuml.creole.atom.Atom;
+import net.sourceforge.plantuml.creole.atom.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 

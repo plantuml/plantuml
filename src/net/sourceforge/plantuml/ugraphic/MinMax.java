@@ -39,8 +39,8 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class MinMax {
 
@@ -142,10 +142,10 @@ public class MinMax {
 	}
 
 	public void drawGrey(UGraphic ug) {
-		draw(ug, HtmlColorUtils.GRAY);
+		draw(ug, HColorUtils.GRAY);
 	}
 
-	public void draw(UGraphic ug, HtmlColor color) {
+	public void draw(UGraphic ug, HColor color) {
 		ug = ug.apply(new UChangeColor(color)).apply(new UChangeBackColor(color));
 		ug = ug.apply(new UTranslate(minX, minY));
 		ug.draw(new URectangle(getWidth(), getHeight()));

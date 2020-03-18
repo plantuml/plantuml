@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -56,29 +56,34 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComponentRoseParticipant extends AbstractTextualComponent {
 
-	private final HtmlColor back;
-	private final HtmlColor foregroundColor;
+	private final HColor back;
+	private final HColor foregroundColor;
 	private final double deltaShadow;
 	private final double roundCorner;
+	private final double diagonalCorner;
 	private final UStroke stroke;
 	private final double minWidth;
 	private final boolean collections;
 	private final double padding;
 
 	public ComponentRoseParticipant(Style style, Style stereo, SymbolContext biColor, FontConfiguration font,
-			Display stringsToDisplay, ISkinSimple spriteContainer, double roundCorner, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype, double minWidth, boolean collections, double padding) {
+			Display stringsToDisplay, ISkinSimple spriteContainer, double roundCorner, double diagonalCorner,
+			UFont fontForStereotype, HColor htmlColorForStereotype, double minWidth, boolean collections,
+			double padding) {
 		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
 				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 		if (SkinParam.USE_STYLES()) {
 			this.roundCorner = style.value(PName.RoundCorner).asInt();
+			this.diagonalCorner = style.value(PName.DiagonalCorner).asInt();
 			biColor = style.getSymbolContext(getIHtmlColorSet());
 			this.stroke = style.getStroke();
 		} else {
 			this.roundCorner = roundCorner;
+			this.diagonalCorner = diagonalCorner;
 			this.stroke = biColor.getStroke();
 		}
 		this.padding = padding;
@@ -92,15 +97,15 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(new UTranslate(padding, 0));
+		ug = ug.apply(UTranslate.dx(padding));
 		ug = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(foregroundColor));
 		ug = ug.apply(stroke);
-		final URectangle rect = new URectangle(getTextWidth(stringBounder), getTextHeight(stringBounder), roundCorner,
-				roundCorner);
+		final Shadowable rect = new URectangle(getTextWidth(stringBounder), getTextHeight(stringBounder))
+				.rounded(roundCorner).diagonalCorner(diagonalCorner);
 		rect.setDeltaShadow(deltaShadow);
 		if (collections) {
-			ug.apply(new UTranslate(getDeltaCollection(), 0)).draw(rect);
-			ug = ug.apply(new UTranslate(0, getDeltaCollection()));
+			ug.apply(UTranslate.dx(getDeltaCollection())).draw(rect);
+			ug = ug.apply(UTranslate.dy(getDeltaCollection()));
 		}
 		ug.draw(rect);
 		ug = ug.apply(new UStroke());

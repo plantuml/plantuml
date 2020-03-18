@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class SwimlanesB extends SwimlanesA {
@@ -67,21 +67,20 @@ public class SwimlanesB extends SwimlanesA {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneTitleBackground, null, false);
+		HColor color = skinParam.getHtmlColor(ColorParam.swimlaneTitleBackground, null, false);
 		if (SkinParam.USE_STYLES()) {
 			color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		}
 		if (color != null) {
 			final double titleHeight = getTitlesHeight(stringBounder);
-			final URectangle back = new URectangle(getTitlesWidth(stringBounder), titleHeight);
-			back.setIgnoreForCompression(true);
+			final URectangle back = new URectangle(getTitlesWidth(stringBounder), titleHeight).ignoreForCompression();
 			ug.apply(new UChangeBackColor(color)).apply(new UChangeColor(color)).draw(back);
 		}
 		for (Swimlane swimlane : swimlanes) {
 			final TextBlock swTitle = getTitle(swimlane);
 			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
 			final double posTitle = x2 + (swimlane.getActualWidth() - titleWidth) / 2;
-			swTitle.drawU(ug.apply(new UTranslate(posTitle, 0)));
+			swTitle.drawU(ug.apply(UTranslate.dx(posTitle)));
 			x2 += swimlane.getActualWidth();
 		}
 	}
@@ -132,7 +131,7 @@ public class SwimlanesB extends SwimlanesA {
 	@Override
 	protected UTranslate getTitleHeightTranslate(final StringBounder stringBounder) {
 		double titlesHeight = getTitlesHeight(stringBounder);
-		return new UTranslate(0, titlesHeight > 0 ? titlesHeight + 5 : 0);
+		return UTranslate.dy(titlesHeight > 0 ? titlesHeight + 5 : 0);
 	}
 
 	private double getTitlesHeight(StringBounder stringBounder) {

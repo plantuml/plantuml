@@ -135,19 +135,19 @@ public class WormMutation {
 	private static UTranslate translation(int type, double delta) {
 		switch (type) {
 		case 1:
-			return new UTranslate(0, -delta);
+			return UTranslate.dy(-delta);
 		case 2:
 			return new UTranslate(delta, -delta);
 		case 3:
-			return new UTranslate(delta, 0);
+			return UTranslate.dx(delta);
 		case 4:
 			return new UTranslate(delta, delta);
 		case 5:
-			return new UTranslate(0, delta);
+			return UTranslate.dy(delta);
 		case 6:
 			return new UTranslate(-delta, delta);
 		case 7:
-			return new UTranslate(-delta, 0);
+			return UTranslate.dx(-delta);
 		case 8:
 			return new UTranslate(-delta, -delta);
 		}
@@ -182,7 +182,7 @@ public class WormMutation {
 		for (UTranslate tr : translations) {
 			result.append(tr.getDx());
 		}
-		return new UTranslate(result.getExtreme() * (size - 1), 0);
+		return UTranslate.dx(result.getExtreme() * (size - 1));
 	}
 
 	public boolean isDxNegative() {

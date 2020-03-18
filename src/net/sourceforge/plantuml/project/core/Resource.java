@@ -40,12 +40,13 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.project.DayAsDate;
-import net.sourceforge.plantuml.project.DayOfWeek;
-import net.sourceforge.plantuml.project.GCalendar;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
 import net.sourceforge.plantuml.project.lang.Subject;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.project.time.GCalendar;
+import net.sourceforge.plantuml.project.time.Wink;
 
 public class Resource implements Subject {
 
@@ -95,7 +96,7 @@ public class Resource implements Subject {
 			return false;
 		}
 		if (closedDayOfWeek.size() > 0 && calendar != null) {
-			final DayAsDate d = calendar.toDayAsDate((Wink) instant);
+			final Day d = calendar.toDayAsDate((Wink) instant);
 			if (closedDayOfWeek.contains(d.getDayOfWeek())) {
 				return true;
 			}

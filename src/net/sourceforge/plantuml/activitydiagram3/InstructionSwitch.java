@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
 
@@ -72,7 +72,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	public InstructionSwitch(Swimlane swimlane, Instruction parent, Display labelTest, LinkRendering inlinkRendering,
-			HtmlColor color, ISkinParam skinParam) {
+			HColor color, ISkinParam skinParam) {
 		this.topInlinkRendering = inlinkRendering;
 		this.parent = parent;
 		this.skinParam = skinParam;

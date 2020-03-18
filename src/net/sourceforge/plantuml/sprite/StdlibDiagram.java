@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -64,6 +63,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class StdlibDiagram extends UmlDiagram {
 
@@ -144,7 +144,7 @@ public class StdlibDiagram extends UmlDiagram {
 			final Sprite sprite = getSkinParam().getSprite(n);
 			TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)),
 					HorizontalAlignment.LEFT, getSkinParam());
-			TextBlock tb = sprite.asTextBlock(HtmlColorUtils.BLACK, 1.0);
+			TextBlock tb = sprite.asTextBlock(HColorUtils.BLACK, 1.0);
 			tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);
 			tb.drawU(ug.apply(new UTranslate(x, y)));
 			final Dimension2D dim = tb.calculateDimension(ug.getStringBounder());

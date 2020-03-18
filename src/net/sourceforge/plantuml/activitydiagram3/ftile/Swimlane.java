@@ -38,11 +38,11 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Swimlane implements SpecificBackcolorable {
 
@@ -88,7 +88,7 @@ public class Swimlane implements SpecificBackcolorable {
 		return colors;
 	}
 
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
+	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
 		if (color != null) {
 			this.colors = colors.add(type, color);
 		}

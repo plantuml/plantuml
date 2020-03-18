@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.utils.Cypher;
 
 public class LanguageDescriptor {
@@ -158,6 +158,8 @@ public class LanguageDescriptor {
 		keyword.add("allowmixing");
 		keyword.add("mainframe");
 		keyword.add("accross");
+		keyword.add("stereotype");
+		keyword.add("split");
 
 		preproc.add("!exit");
 		preproc.add("!include");
@@ -187,7 +189,7 @@ public class LanguageDescriptor {
 		for (String s : SkinParam.getPossibleValues()) {
 			cypher.addException(s);
 		}
-		for (String s : new HtmlColorSetSimple().names()) {
+		for (String s : HColorSet.instance().names()) {
 			cypher.addException(s);
 		}
 		cypher.addException("o");
@@ -199,7 +201,7 @@ public class LanguageDescriptor {
 		print(ps, "keyword", keyword);
 		print(ps, "preprocessor", preproc);
 		print(ps, "skinparameter", SkinParam.getPossibleValues());
-		print(ps, "color", new HtmlColorSetSimple().names());
+		print(ps, "color", HColorSet.instance().names());
 		ps.println(";EOF");
 	}
 

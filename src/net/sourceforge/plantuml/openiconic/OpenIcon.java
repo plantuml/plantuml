@@ -47,12 +47,12 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class OpenIcon {
 
@@ -132,7 +132,7 @@ public class OpenIcon {
 		return s.substring(x1 + 1, x2);
 	}
 
-	public TextBlock asTextBlock(final HtmlColor color, final double factor) {
+	public TextBlock asTextBlock(final HColor color, final double factor) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				svgPath.drawMe(ug.apply(new UChangeColor(color)), factor);

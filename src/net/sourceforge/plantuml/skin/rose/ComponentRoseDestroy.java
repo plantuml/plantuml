@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -45,12 +44,13 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComponentRoseDestroy extends AbstractComponent {
 
-	private final HtmlColor foregroundColor;
+	private final HColor foregroundColor;
 
-	public ComponentRoseDestroy(Style style, HtmlColor foregroundColor) {
+	public ComponentRoseDestroy(Style style, HColor foregroundColor) {
 		super(style);
 		this.foregroundColor = foregroundColor;
 	}
@@ -62,7 +62,7 @@ public class ComponentRoseDestroy extends AbstractComponent {
 		ug = ug.apply(new UStroke(2)).apply(new UChangeColor(foregroundColor));
 
 		ug.draw(new ULine(2 * crossSize, 2 * crossSize));
-		ug.apply(new UTranslate(0, 2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));
+		ug.apply(UTranslate.dy(2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));
 	}
 
 	@Override

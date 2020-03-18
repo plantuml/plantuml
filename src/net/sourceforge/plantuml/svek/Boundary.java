@@ -82,7 +82,7 @@ public class Boundary extends AbstractTextBlock {
 		path.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(new UTranslate(x, y)).apply(new UChangeBackColor(null)).draw(path);
 
-		// final ULine line1 = new ULine(0, radius * 2);
+		// final ULine line1 = ULine.dy(radius * 2);
 		// line1.setDeltaShadow(deltaShadow);
 		// ug.apply(new UTranslate(x, y)).draw(line1);
 		// final ULine line2 = new ULine(left, 0);

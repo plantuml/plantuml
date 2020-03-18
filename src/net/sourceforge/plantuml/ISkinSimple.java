@@ -37,8 +37,8 @@ package net.sourceforge.plantuml;
 
 import java.util.Map;
 
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public interface ISkinSimple extends SpriteContainer {
 
@@ -52,7 +52,7 @@ public interface ISkinSimple extends SpriteContainer {
 
 	public int getTabSize();
 
-	public IHtmlColorSet getIHtmlColorSet();
+	public HColorSet getIHtmlColorSet();
 
 	public int getDpi();
 

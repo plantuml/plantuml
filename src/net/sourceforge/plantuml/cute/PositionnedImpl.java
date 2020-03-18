@@ -35,18 +35,18 @@
  */
 package net.sourceforge.plantuml.cute;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PositionnedImpl implements Positionned {
 
 	private final CuteShape cuteShape;
-	private final HtmlColor color;
+	private final HColor color;
 	private final UTranslate position;
 	private final RotationZoom rotationZoom;
 
@@ -62,7 +62,7 @@ public class PositionnedImpl implements Positionned {
 		this.rotationZoom = RotationZoom.fromVarArgs(args);
 	}
 
-	private PositionnedImpl(CuteShape cuteShape, HtmlColor color, UTranslate position, RotationZoom rotationZoom) {
+	private PositionnedImpl(CuteShape cuteShape, HColor color, UTranslate position, RotationZoom rotationZoom) {
 		this.cuteShape = cuteShape;
 		this.color = color;
 		this.position = position;
@@ -71,14 +71,14 @@ public class PositionnedImpl implements Positionned {
 
 	public PositionnedImpl(Group group, RotationZoom rotation) {
 		this.cuteShape = group;
-		this.color = HtmlColorUtils.BLACK;
+		this.color = HColorUtils.BLACK;
 		this.position = new UTranslate();
 		this.rotationZoom = rotation;
 	}
 
 	public PositionnedImpl(Group group, UTranslate translation) {
 		this.cuteShape = group;
-		this.color = HtmlColorUtils.BLACK;
+		this.color = HColorUtils.BLACK;
 		this.position = translation;
 		this.rotationZoom = RotationZoom.none();
 	}

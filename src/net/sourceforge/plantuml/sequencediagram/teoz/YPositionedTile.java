@@ -63,11 +63,12 @@ public class YPositionedTile {
 
 	public void drawInArea(UGraphic ug) {
 		// System.err.println("YPositionedTile::drawU y=" + y + " " + tile);
-		ug.apply(new UTranslate(0, y)).draw(tile);
+		ug.apply(UTranslate.dy(y)).draw(tile);
 	}
 
-	public boolean matchAnchor(String anchor) {
-		return tile.matchAnchor(anchor);
+	public boolean matchAnchorV2(String anchor) {
+		final Tile result = tile.matchAnchorV1(anchor);
+		return result != null;
 	}
 
 	public final double getY(StringBounder stringBounder) {

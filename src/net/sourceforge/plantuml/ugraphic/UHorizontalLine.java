@@ -141,7 +141,7 @@ public class UHorizontalLine implements UShape {
 	private static void drawSimpleHline(UGraphic ug, Stencil stencil, double y) {
 		final double startingX = stencil.getStartingX(ug.getStringBounder(), y);
 		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);
-		ug.apply(new UTranslate(startingX, y)).draw(new ULine(endingX - startingX, 0));
+		ug.apply(new UTranslate(startingX, y)).draw(ULine.hline(endingX - startingX));
 	}
 
 //	public void drawTitleInternalForFootprint(UGraphic ug, double x, double y) {

@@ -63,10 +63,10 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.SuperGroup;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class EntityFactory {
 
@@ -125,7 +125,7 @@ public final class EntityFactory {
 		}
 		if (g.getColors(skinParam).getColor(ColorType.BACK) == null) {
 			final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
-			final HtmlColor c1 = skinParam.getHtmlColor(param, g.getStereotype(), false);
+			final HColor c1 = skinParam.getHtmlColor(param, g.getStereotype(), false);
 			folder.setSpecificColorTOBEREMOVED(ColorType.BACK, c1 == null ? skinParam.getBackgroundColor() : c1);
 		} else {
 			folder.setSpecificColorTOBEREMOVED(ColorType.BACK, g.getColors(skinParam).getColor(ColorType.BACK));

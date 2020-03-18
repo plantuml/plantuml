@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.nwdiag;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Network {
 
 	private final String name;
 	private final Map<DiagElement, String> localElements = new LinkedHashMap<DiagElement, String>();
-	private HtmlColor color;
+	private HColor color;
 
 	private String ownAdress;
 
@@ -92,11 +92,11 @@ public class Network {
 		return name;
 	}
 
-	public final HtmlColor getColor() {
+	public final HColor getColor() {
 		return color;
 	}
 
-	public final void setColor(HtmlColor color) {
+	public final void setColor(HColor color) {
 		this.color = color;
 	}
 

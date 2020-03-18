@@ -43,13 +43,13 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ElementMenuBar extends AbstractElement {
 
@@ -106,10 +106,10 @@ public class ElementMenuBar extends AbstractElement {
 
 		double x1 = 0;
 		if (zIndex == 0) {
-			ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#DDDDDD"))).draw(
+			ug.apply(new UChangeBackColor(HColorSet.instance().getColorIfValid("#DDDDDD"))).draw(
 					new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 			for (ElementMenuEntry entry : entries) {
-				entry.drawU(ug.apply(new UTranslate(x1, 0)), zIndex, dimToUse);
+				entry.drawU(ug.apply(UTranslate.dx(x1)), zIndex, dimToUse);
 				final double w = entry.getPreferredDimension(ug.getStringBounder(), x1, 0).getWidth();
 				entry.setX(x1);
 				x1 += w + 10;
@@ -119,7 +119,7 @@ public class ElementMenuBar extends AbstractElement {
 
 		if (zIndex == 1) {
 			for (ElementMenuEntry entry : popups.keySet()) {
-				entry.setBackground(HtmlColorSet.getInstance().getColorIfValid("#BBBBBB"));
+				entry.setBackground(HColorSet.instance().getColorIfValid("#BBBBBB"));
 			}
 
 			final double y1 = preferred.getHeight();

@@ -49,8 +49,6 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -59,6 +57,8 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -129,20 +129,20 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		final String stereo = arg.get("STEREO", 0);
 		final Stereotype stereotype = stereo == null ? null : new Stereotype(stereo);
 
-		final HtmlColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(getColorParamBack(symbol),
+		final HColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(getColorParamBack(symbol),
 				stereotype, false);
-		HtmlColor backColor;
+		HColor backColor;
 		if (backColorInSkinparam == null) {
 			backColor = colors.getColor(ColorType.BACK);
 		} else {
 			backColor = backColorInSkinparam;
 		}
-		HtmlColor titleColor = colors.getColor(ColorType.HEADER);
+		HColor titleColor = colors.getColor(ColorType.HEADER);
 
 		// Warning : titleColor unused in FTileGroupW
-		HtmlColor borderColor = diagram.getSkinParam().getHtmlColor(getColorParamBorder(symbol), stereotype, false);
+		HColor borderColor = diagram.getSkinParam().getHtmlColor(getColorParamBorder(symbol), stereotype, false);
 		if (borderColor == null) {
-			borderColor = HtmlColorUtils.BLACK;
+			borderColor = HColorUtils.BLACK;
 		}
 		double roundCorner = symbol.getSkinParameter().getRoundCorner(diagram.getSkinParam(), stereotype);
 
@@ -155,7 +155,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 				backColor = stylePartition.value(PName.BackGroundColor).asColor(
 						diagram.getSkinParam().getIHtmlColorSet());
 			}
-			titleColor = HtmlColorUtils.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
+			titleColor = HColorUtils.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
 			roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
 		}
 

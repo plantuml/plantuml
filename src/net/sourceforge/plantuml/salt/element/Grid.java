@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.salt.Cell;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Grid {
 
@@ -90,21 +90,21 @@ public class Grid {
 			final int row1 = seg.getRow();
 			final int col1 = seg.getCol();
 			final double width = colsStart[col1 + 1] - colsStart[col1];
-			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(new ULine(width, 0));
+			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(ULine.hline(width));
 		}
 		// Vlines
 		for (Segment seg : verticals) {
 			final int row1 = seg.getRow();
 			final int col1 = seg.getCol();
 			final double height = rowsStart[row1 + 1] - rowsStart[row1];
-			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(new ULine(0, height));
+			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(ULine.vline(height));
 		}
 
 		final Dimension2D dim = title.calculateDimension(ug.getStringBounder());
 
 		if (dim.getWidth() > 0 && dim.getHeight() > 0) {
 			final UGraphic ug2 = ug.apply(new UTranslate(x + 6, y - dim.getHeight() * 0));
-			ug2.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UChangeColor(HtmlColorUtils.WHITE))
+			ug2.apply(new UChangeBackColor(HColorUtils.WHITE)).apply(new UChangeColor(HColorUtils.WHITE))
 					.draw(new URectangle(dim));
 			title.drawU(ug2);
 		}

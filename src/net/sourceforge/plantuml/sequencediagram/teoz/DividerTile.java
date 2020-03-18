@@ -83,7 +83,7 @@ public class DividerTile extends AbstractTile implements Tile {
 		final Area area = new Area(tileArguments.getBorder2() - tileArguments.getBorder1() - origin.getCurrentValue(),
 				dim.getHeight());
 
-		ug = ug.apply(new UTranslate(tileArguments.getBorder1(), 0));
+		ug = ug.apply(UTranslate.dx(tileArguments.getBorder1()));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 

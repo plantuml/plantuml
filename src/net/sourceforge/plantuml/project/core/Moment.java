@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import net.sourceforge.plantuml.project.time.Wink;
+
 public interface Moment {
 
 	public Wink getStart();

@@ -85,7 +85,7 @@ public class Ident implements Code {
 	}
 
 	public static Ident empty() {
-		return new Ident(Collections.<String> emptyList());
+		return new Ident(Collections.<String>emptyList());
 	}
 
 	public String getLast() {
@@ -150,7 +150,7 @@ public class Ident implements Code {
 
 	static private Ident from(String full, String separator) {
 		final Ident result = new Ident(new ArrayList<String>());
-		if (separator == null || full.contains(separator + separator)) {
+		if (isOdd(full, separator)) {
 			result.parts.add(full);
 			return result;
 		}
@@ -168,12 +168,17 @@ public class Ident implements Code {
 		}
 	}
 
+	private static boolean isOdd(String full, String separator) {
+		return separator == null || full.contains(separator + separator) || full.endsWith(separator);
+	}
+
 	private void checkResult(String separator) {
 		for (String s : this.parts) {
 			if (s.length() == 0) {
 				throw new IllegalStateException(toString());
 			}
-			if (separator != null && s.contains(separator) && s.contains(separator + separator) == false) {
+			if (separator != null && s.contains(separator) && s.endsWith(separator) == false
+					&& s.contains(separator + separator) == false) {
 				throw new IllegalStateException(toString());
 			}
 		}

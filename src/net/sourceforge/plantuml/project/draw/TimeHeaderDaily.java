@@ -37,16 +37,12 @@ package net.sourceforge.plantuml.project.draw;
 
 import java.util.Map;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.DayAsDate;
-import net.sourceforge.plantuml.project.DayOfWeek;
-import net.sourceforge.plantuml.project.GCalendar;
 import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.core.Month;
-import net.sourceforge.plantuml.project.core.Wink;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.GCalendar;
+import net.sourceforge.plantuml.project.time.MonthYear;
+import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -54,26 +50,25 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderDaily extends TimeHeader {
 
-	private static final int Y_POS_WEEKDAY = 16;
-	private static final int Y_POS_NUMDAY = 28;
-
 	private double getTimeHeaderHeight() {
-		return Y_POS_NUMDAY + 13;
+		return Y_POS_ROW28 + 13;
 	}
 
-	private final HtmlColor veryLightGray = new HtmlColorSetSimple().getColorIfValid("#E0E8E8");
+	private final HColor veryLightGray = HColorSet.instance().getColorIfValid("#E0E8E8");
 
 	private final GCalendar calendar;
 	private final LoadPlanable defaultPlan;
-	private final Map<DayAsDate, HtmlColor> colorDays;
-	private final Map<DayAsDate, String> nameDays;
+	private final Map<Day, HColor> colorDays;
+	private final Map<Day, String> nameDays;
 
 	public TimeHeaderDaily(GCalendar calendar, Wink min, Wink max, LoadPlanable defaultPlan,
-			Map<DayAsDate, HtmlColor> colorDays, Map<DayAsDate, String> nameDays, DayAsDate printStart,
-			DayAsDate printEnd) {
+			Map<Day, HColor> colorDays, Map<Day, String> nameDays, Day printStart, Day printEnd) {
 		super(min, max, new TimeScaleDaily(calendar, printStart));
 		this.calendar = calendar;
 		this.defaultPlan = defaultPlan;
@@ -90,74 +85,104 @@ public class TimeHeaderDaily extends TimeHeader {
 	}
 
 	private void drawCalendar(final UGraphic ug, double totalHeight) {
-		Month lastMonth = null;
-		double lastChangeMonth = -1;
-		Wink wink = min;
-		while (wink.compareTo(max) <= 0) {
-			final DayAsDate day = calendar.toDayAsDate(wink);
-			final DayOfWeek dayOfWeek = day.getDayOfWeek();
-			final boolean isWorkingDay = defaultPlan.getLoadAt(wink) > 0;
-			final String d1 = "" + day.getDayOfMonth();
-			final TextBlock num = getTextBlock(d1, 10, false);
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
-			double startingY = getFullHeaderHeight();
-			if (wink.compareTo(max.increment()) < 0) {
-				final TextBlock weekDay = getTextBlock(dayOfWeek.shortName(), 10, false);
-
-				final URectangle rect = new URectangle(x2 - x1 - 1, totalHeight - getFullHeaderHeight());
-				if (isWorkingDay) {
-					final HtmlColor back = colorDays.get(day);
-					if (back != null) {
-						ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(back))
-								.apply(new UTranslate(x1 + 1, getFullHeaderHeight())).draw(rect);
-					}
-					printCentered(ug.apply(new UTranslate(0, Y_POS_WEEKDAY)), weekDay, x1, x2);
-					printCentered(ug.apply(new UTranslate(0, Y_POS_NUMDAY)), num, x1, x2);
-				} else {
-					ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(veryLightGray))
-							.apply(new UTranslate(x1 + 1, getFullHeaderHeight())).draw(rect);
-				}
-				if (lastMonth != day.getMonth()) {
-					startingY = 0;
-					if (lastMonth != null) {
-						printMonth(ug, lastMonth, day.getYear(), lastChangeMonth, x1);
-					}
-					lastChangeMonth = x1;
-					lastMonth = day.getMonth();
-				}
-			}
-			drawVbar(ug, x1, startingY, totalHeight);
-			wink = wink.increment();
-		}
-		final DayAsDate day = calendar.toDayAsDate(max);
-		final double x1 = getTimeScale().getStartingPosition(wink);
-		drawVbar(ug, x1, Y_POS_WEEKDAY, totalHeight);
-		if (x1 > lastChangeMonth) {
-			printMonth(ug, lastMonth, day.getYear(), lastChangeMonth, x1);
-		}
-
+		drawTexts(ug, totalHeight);
+		drawMonths(ug);
+		drawNonWorking(ug, totalHeight);
+		drawVBars(ug, totalHeight);
+		drawVbar(ug, getTimeScale().getStartingPosition(max.increment()), Y_POS_ROW16, totalHeight);
 		printNamedDays(ug);
 
 	}
 
-	private void printMonth(UGraphic ug, Month lastMonth, int year, double start, double end) {
-		final TextBlock tiny = getTextBlock(lastMonth.shortName(), 12, true);
-		final TextBlock small = getTextBlock(lastMonth.niceName(), 12, true);
-		final TextBlock big = getTextBlock(lastMonth.niceName() + " " + year, 12, true);
+	private void drawTexts(final UGraphic ug, double totalHeight) {
+		final double height = totalHeight - getFullHeaderHeight();
+		for (Wink wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x2 = getTimeScale().getEndingPosition(wink);
+			final Day day = calendar.toDayAsDate(wink);
+			if (defaultPlan.getLoadAt(wink) > 0) {
+				final HColor back = colorDays.get(day);
+				if (back != null) {
+					drawRectangle(ug.apply(new UChangeBackColor(back)), height, x1, x2);
+				}
+				printCentered(ug.apply(UTranslate.dy(Y_POS_ROW16)),
+						getTextBlock(day.getDayOfWeek().shortName(), 10, false), x1, x2);
+				printCentered(ug.apply(UTranslate.dy(Y_POS_ROW28)), getTextBlock("" + day.getDayOfMonth(), 10, false),
+						x1, x2);
+			}
+		}
+	}
+
+	private void drawMonths(final UGraphic ug) {
+		MonthYear last = null;
+		double lastChangeMonth = -1;
+		for (Wink wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+			final double x1 = getTimeScale().getStartingPosition(wink);
+			final Day day = calendar.toDayAsDate(wink);
+			if (day.monthYear().equals(last) == false) {
+				if (last != null) {
+					printMonth(ug, last, lastChangeMonth, x1);
+				}
+				lastChangeMonth = x1;
+				last = day.monthYear();
+			}
+		}
+		final double x1 = getTimeScale().getStartingPosition(max.increment());
+		if (x1 > lastChangeMonth) {
+			printMonth(ug, last, lastChangeMonth, x1);
+		}
+	}
+
+	private void drawNonWorking(final UGraphic ug, double totalHeight) {
+		final double height = totalHeight - getFullHeaderHeight();
+		for (Wink wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x2 = getTimeScale().getEndingPosition(wink);
+			if (defaultPlan.getLoadAt(wink) == 0) {
+				drawRectangle(ug.apply(new UChangeBackColor(veryLightGray)), height, x1, x2);
+			}
+		}
+	}
+
+	private void drawRectangle(UGraphic ug, double height, double x1, double x2) {
+		if (height == 0) {
+			return;
+		}
+		ug = ug.apply(new UChangeColor(null));
+		ug = ug.apply(new UTranslate(x1 + 1, getFullHeaderHeight()));
+		ug.draw(new URectangle(x2 - x1 - 1, height));
+	}
+
+	private void drawVBars(final UGraphic ug, double totalHeight) {
+		MonthYear last = null;
+		for (Wink wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+			double startingY = getFullHeaderHeight();
+			final Day day = calendar.toDayAsDate(wink);
+			if (day.monthYear().equals(last) == false) {
+				startingY = 0;
+				last = day.monthYear();
+			}
+			drawVbar(ug, getTimeScale().getStartingPosition(wink), startingY, totalHeight);
+		}
+	}
+
+	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
+		final TextBlock tiny = getTextBlock(monthYear.shortName(), 12, true);
+		final TextBlock small = getTextBlock(monthYear.longName(), 12, true);
+		final TextBlock big = getTextBlock(monthYear.longNameYYYY(), 12, true);
 		printCentered(ug, start, end, tiny, small, big);
 	}
 
 	private void drawVbar(UGraphic ug, double x, double y1, double y2) {
-		final ULine vbar = new ULine(0, y2 - y1);
-		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(x, y1)).draw(vbar);
+		final ULine vbar = ULine.vline(y2 - y1);
+		ug.apply(new UChangeColor(HColorUtils.LIGHT_GRAY)).apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
 			for (Wink wink = min; wink.compareTo(max.increment()) <= 0; wink = wink.increment()) {
-				final DayAsDate tmpday = calendar.toDayAsDate(wink);
+				final Day tmpday = calendar.toDayAsDate(wink);
 				final String name = nameDays.get(tmpday);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);
@@ -166,7 +191,7 @@ public class TimeHeaderDaily extends TimeHeader {
 					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
 					double y1 = getTimeHeaderHeight();
 					double y2 = getFullHeaderHeight();
-					label.drawU(ug.apply(new UTranslate(x1, Y_POS_NUMDAY + 11)));
+					label.drawU(ug.apply(new UTranslate(x1, Y_POS_ROW28 + 11)));
 				}
 				last = name;
 			}

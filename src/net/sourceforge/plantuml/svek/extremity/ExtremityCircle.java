@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 class ExtremityCircle extends Extremity {
 
@@ -74,7 +74,7 @@ class ExtremityCircle extends Extremity {
 		if (fill) {
 			ug = ug.apply(new UChangeBackColor(ug.getParam().getColor()));
 		} else {
-			ug = ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE));
+			ug = ug.apply(new UChangeBackColor(HColorUtils.WHITE));
 		}
 
 		ug = ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius));

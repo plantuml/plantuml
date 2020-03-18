@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -75,7 +76,7 @@ public class CreoleParser {
 			FontConfiguration fontConfiguration) {
 		if (lastStripe instanceof StripeTable && isTableLine(line)) {
 			final StripeTable table = (StripeTable) lastStripe;
-			table.analyzeAndAddNormal(line);
+			table.analyzeAndAddLine(line);
 			return null;
 		} else if (lastStripe instanceof StripeTree && isTreeStart(StringUtils.trinNoTrace(line))) {
 			final StripeTree tree = (StripeTree) lastStripe;
@@ -95,7 +96,7 @@ public class CreoleParser {
 	}
 
 	public static boolean doesStartByColor(String line) {
-		return line.matches("^(\\<#\\w+(,#?\\w+)?\\>).*");
+		return line.matches("^\\=?\\s*(\\<#\\w+(,#?\\w+)?\\>).*");
 	}
 
 	public static boolean isTreeStart(String line) {

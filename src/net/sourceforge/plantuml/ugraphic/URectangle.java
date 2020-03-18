@@ -43,58 +43,86 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 	private final double rx;
 	private final double ry;
 	private final String comment;
+	private boolean ignoreForCompression;
 
 	public URectangle withHeight(double newHeight) {
-		final URectangle result = new URectangle(width, newHeight, rx, ry, comment);
+		final URectangle result = new URectangle(width, newHeight, rx, ry, comment, ignoreForCompression);
 		result.ignoreForCompression = this.ignoreForCompression;
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;
 	}
 
 	public URectangle withWidth(double newWidth) {
-		final URectangle result = new URectangle(newWidth, height, rx, ry, comment);
+		final URectangle result = new URectangle(newWidth, height, rx, ry, comment, ignoreForCompression);
 		result.ignoreForCompression = this.ignoreForCompression;
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;
+	}
+
+	public URectangle withComment(String comment) {
+		return new URectangle(width, height, rx, ry, comment, ignoreForCompression);
+	}
+
+	public URectangle rounded(double round) {
+		return new URectangle(width, height, round, round, comment, ignoreForCompression);
+	}
+
+	public Shadowable diagonalCorner(double diagonalCorner) {
+		if (ignoreForCompression) {
+			throw new IllegalStateException();
+		}
+		if (diagonalCorner == 0) {
+			return this;
+		}
+		final UPath result = new UPath();
+		result.moveTo(diagonalCorner, 0);
+		result.lineTo(width - diagonalCorner, 0);
+		result.lineTo(width, diagonalCorner);
+		result.lineTo(width, height - diagonalCorner);
+		result.lineTo(width - diagonalCorner, height);
+		result.lineTo(diagonalCorner, height);
+		result.lineTo(0, height - diagonalCorner);
+		result.lineTo(0, diagonalCorner);
+		result.lineTo(diagonalCorner, 0);
+		return result;
+	}
+
+	public final URectangle ignoreForCompression() {
+		return new URectangle(width, height, rx, ry, comment, true);
 	}
 
 	public UShape getScaled(double scale) {
 		if (scale == 1) {
 			return this;
 		}
-		final AbstractShadowable result = new URectangle(width * scale, height * scale, rx * scale, ry * scale, comment);
+		final AbstractShadowable result = new URectangle(width * scale, height * scale, rx * scale, ry * scale, comment,
+				ignoreForCompression);
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;
 	}
 
 	public URectangle(double width, double height) {
-		this(width, height, 0, 0, null);
-	}
-
-	public URectangle(double width, double height, double rx, double ry) {
-		this(width, height, rx, ry, null);
-	}
-
-	public URectangle(double width, double height, double rx, double ry, String comment) {
-		// if (height == 0) {
-		// throw new IllegalArgumentException();
-		// }
-		if (width == 0) {
-			throw new IllegalArgumentException();
-		}
-		this.comment = comment;
-		this.width = width;
-		this.height = height;
-		this.rx = rx;
-		this.ry = ry;
+		this(width, height, 0, 0, null, false);
 	}
 
 	public URectangle(Dimension2D dim) {
 		this(dim.getWidth(), dim.getHeight());
 	}
 
-	public URectangle(Dimension2D dim, double rx, double ry) {
-		this(dim.getWidth(), dim.getHeight(), rx, ry);
+	private URectangle(double width, double height, double rx, double ry, String comment,
+			boolean ignoreForCompression) {
+		if (height == 0) {
+			throw new IllegalArgumentException("height=" + height);
+		}
+		if (width == 0) {
+			throw new IllegalArgumentException("width=" + width);
+		}
+		this.ignoreForCompression = ignoreForCompression;
+		this.comment = comment;
+		this.width = width;
+		this.height = height;
+		this.rx = rx;
+		this.ry = ry;
 	}
 
 	@Override
@@ -130,14 +158,8 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 		return comment;
 	}
 
-	private boolean ignoreForCompression;
-
 	public final boolean isIgnoreForCompression() {
 		return ignoreForCompression;
-	}
-
-	public final void setIgnoreForCompression(boolean ignoreForCompression) {
-		this.ignoreForCompression = ignoreForCompression;
 	}
 
 }

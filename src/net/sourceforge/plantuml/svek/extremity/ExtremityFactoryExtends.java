@@ -37,16 +37,16 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ExtremityFactoryExtends extends AbstractExtremityFactory implements ExtremityFactory {
 
-	private final HtmlColor backgroundColor;
+	private final HColor backgroundColor;
 
-	public ExtremityFactoryExtends(HtmlColor backgroundColor) {
+	public ExtremityFactoryExtends(HColor backgroundColor) {
 		this.backgroundColor = backgroundColor;
 	}
 

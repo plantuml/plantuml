@@ -52,16 +52,12 @@ import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
+import net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ActorStyle;
@@ -76,13 +72,17 @@ import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
-import net.sourceforge.plantuml.ugraphic.ColorMapperReverse;
-import net.sourceforge.plantuml.ugraphic.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperLightnessInverse;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperMonochrome;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperReverse;
+import net.sourceforge.plantuml.ugraphic.color.ColorOrder;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class SkinParam implements ISkinParam {
 
@@ -255,18 +255,18 @@ public class SkinParam implements ISkinParam {
 		return s.replaceAll(src, target);
 	}
 
-	public HtmlColor getHyperlinkColor() {
-		final HtmlColor result = getHtmlColor(ColorParam.hyperlink, null, false);
+	public HColor getHyperlinkColor() {
+		final HColor result = getHtmlColor(ColorParam.hyperlink, null, false);
 		if (result == null) {
-			return HtmlColorUtils.BLUE;
+			return HColorUtils.BLUE;
 		}
 		return result;
 	}
 
-	public HtmlColor getBackgroundColor() {
-		final HtmlColor result = getHtmlColor(ColorParam.background, null, false);
+	public HColor getBackgroundColor() {
+		final HColor result = getHtmlColor(ColorParam.background, null, false);
 		if (result == null) {
-			return HtmlColorUtils.WHITE;
+			return HColorUtils.WHITE;
 		}
 		return result;
 	}
@@ -296,7 +296,7 @@ public class SkinParam implements ISkinParam {
 		return sb.toString();
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
+	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 			for (String s : stereotype.getMultipleLabels()) {
@@ -310,9 +310,16 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return null;
 		}
-		final boolean acceptTransparent = param == ColorParam.background
-				|| param == ColorParam.sequenceGroupBodyBackground || param == ColorParam.sequenceBoxBackground;
-		return getIHtmlColorSet().getColorIfValid(value, acceptTransparent);
+		if (param == ColorParam.background && value.equalsIgnoreCase("transparent")) {
+			return null;
+		}
+		if (param == ColorParam.background) {
+			return getIHtmlColorSet().getColorIfValid(value);
+		}
+		assert param != ColorParam.background;
+//		final boolean acceptTransparent = param == ColorParam.background
+//				|| param == ColorParam.sequenceGroupBodyBackground || param == ColorParam.sequenceBoxBackground;
+		return getIHtmlColorSet().getColorIfValid(value, getBackgroundColor());
 	}
 
 	public char getCircledCharacter(Stereotype stereotype) {
@@ -352,7 +359,8 @@ public class SkinParam implements ISkinParam {
 	}
 
 	private void checkStereotype(Stereotype stereotype) {
-		// if (stereotype.startsWith("<<") == false || stereotype.endsWith(">>") == false) {
+		// if (stereotype.startsWith("<<") == false || stereotype.endsWith(">>") ==
+		// false) {
 		// throw new IllegalArgumentException();
 		// }
 	}
@@ -399,7 +407,7 @@ public class SkinParam implements ISkinParam {
 		return param[0].getDefaultFamily();
 	}
 
-	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
+	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
@@ -684,6 +692,9 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return new ColorMapperIdentity();
 		}
+		if ("dark".equalsIgnoreCase(value)) {
+			return new ColorMapperLightnessInverse();
+		}
 		final ColorOrder order = ColorOrder.fromString(value);
 		if (order == null) {
 			return new ColorMapperIdentity();
@@ -876,14 +887,14 @@ public class SkinParam implements ISkinParam {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 
-			final String styleValue = getValue(param.name() + "style"
-					+ stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
+			final String styleValue = getValue(
+					param.name() + "style" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (styleValue != null) {
 				style = LinkStyle.fromString2(styleValue);
 			}
 
-			final String value2 = getValue(param.name() + "thickness"
-					+ stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
+			final String value2 = getValue(
+					param.name() + "thickness" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 			if (value2 != null && value2.matches("[\\d.]+")) {
 				if (style == null) {
 					style = LinkStyle.NORMAL();
@@ -1000,9 +1011,9 @@ public class SkinParam implements ISkinParam {
 		return false;
 	}
 
-	private final IHtmlColorSet htmlColorSet = new HtmlColorSetSimple();
+	private final HColorSet htmlColorSet = HColorSet.instance();
 
-	public IHtmlColorSet getIHtmlColorSet() {
+	public HColorSet getIHtmlColorSet() {
 		return htmlColorSet;
 	}
 
@@ -1116,12 +1127,12 @@ public class SkinParam implements ISkinParam {
 		return type;
 	}
 
-	public HtmlColor getHoverPathColor() {
+	public HColor getHoverPathColor() {
 		final String value = getValue("pathhovercolor");
 		if (value == null) {
 			return null;
 		}
-		return getIHtmlColorSet().getColorIfValid(value, false);
+		return getIHtmlColorSet().getColorIfValid(value, null);
 	}
 
 	public double getPadding() {
@@ -1199,8 +1210,8 @@ public class SkinParam implements ISkinParam {
 		if (padding == 0 && margin == 0 && borderColor == null && backgroundColor == null) {
 			return Padder.NONE;
 		}
-		final HtmlColor border = getIHtmlColorSet().getColorIfValid(borderColor);
-		final HtmlColor background = getIHtmlColorSet().getColorIfValid(backgroundColor);
+		final HColor border = getIHtmlColorSet().getColorIfValid(borderColor);
+		final HColor background = getIHtmlColorSet().getColorIfValid(backgroundColor);
 		final double roundCorner = getRoundCorner(CornerParam.DEFAULT, null);
 		return Padder.NONE.withMargin(margin).withPadding(padding).withBackgroundColor(background)
 				.withBorderColor(border).withRoundCorner(roundCorner);

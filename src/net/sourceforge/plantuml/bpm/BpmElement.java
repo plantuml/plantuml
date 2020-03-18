@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -58,6 +56,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzzle {
 
@@ -97,7 +97,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 			public void drawU(UGraphic ug) {
 				raw.drawU(ug);
-				ug = ug.apply(new UChangeColor(HtmlColorUtils.RED));
+				ug = ug.apply(new UChangeColor(HColorUtils.RED));
 				for (Where w : Where.values()) {
 					if (have(w)) {
 						drawLine(ug, w, raw.calculateDimension(ug.getStringBounder()));
@@ -123,26 +123,26 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		final double width = total.getWidth();
 		final double height = total.getHeight();
 		if (w == Where.WEST) {
-			ug.apply(new UTranslate(-10, height / 2)).draw(new ULine(10, 0));
+			ug.apply(new UTranslate(-10, height / 2)).draw(ULine.hline(10));
 		}
 		if (w == Where.EAST) {
-			ug.apply(new UTranslate(width, height / 2)).draw(new ULine(10, 0));
+			ug.apply(new UTranslate(width, height / 2)).draw(ULine.hline(10));
 		}
 		if (w == Where.NORTH) {
-			ug.apply(new UTranslate(width / 2, -10)).draw(new ULine(0, 10));
+			ug.apply(new UTranslate(width / 2, -10)).draw(ULine.vline(10));
 		}
 		if (w == Where.SOUTH) {
-			ug.apply(new UTranslate(width / 2, height)).draw(new ULine(0, 10));
+			ug.apply(new UTranslate(width / 2, height)).draw(ULine.vline(10));
 		}
 	}
 
 	public TextBlock toTextBlockInternal(ISkinParam skinParam) {
 		if (type == BpmElementType.START) {
-			return new FtileCircleStart(skinParam, HtmlColorUtils.BLACK, null, null);
+			return new FtileCircleStart(skinParam, HColorUtils.BLACK, null, null);
 		}
 		if (type == BpmElementType.MERGE) {
-			final HtmlColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);
-			final HtmlColor backColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBackground);
+			final HColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);
+			final HColor backColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBackground);
 			return new FtileDiamond(skinParam, backColor, borderColor, null);
 		}
 		if (type == BpmElementType.DOCKED_EVENT) {
@@ -150,7 +150,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN);
 		}
 		final UFont font = UFont.serif(14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.RED, HtmlColorUtils.RED, false);
+		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.RED, HColorUtils.RED, false);
 		if (Display.isNull(display)) {
 			return Display.getWithNewlines(type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);
 		}

@@ -43,12 +43,12 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.graphic.HtmlColorGradient;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ShadowManager;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.utils.MathUtils;
 import net.sourceforge.plantuml.version.Version;
 
@@ -328,7 +328,7 @@ public class EpsGraphics {
 
 	}
 
-	public void epsPolygon(HtmlColorGradient gr, ColorMapper mapper, double... points) {
+	public void epsPolygon(HColorGradient gr, ColorMapper mapper, double... points) {
 		assert points.length % 2 == 0;
 		setFillColor(mapper.getMappedColor(gr.getColor1()));
 		epsPolygon(points);
@@ -402,7 +402,7 @@ public class EpsGraphics {
 	}
 
 	public void epsRectangle(double x, double y, double width, double height, double rx, double ry,
-			HtmlColorGradient gr, ColorMapper mapper) {
+			HColorGradient gr, ColorMapper mapper) {
 		checkCloseDone();
 		ensureVisible(x, y);
 		ensureVisible(x + width, y + height);

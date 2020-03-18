@@ -131,7 +131,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D mainDim = main.calculateDimension(stringBounder);
 		final double wx = getw1(stringBounder) - mainDim.getWidth() / 2;
-		main.drawU(ug.apply(new UTranslate(wx, 0)));
+		main.drawU(ug.apply(UTranslate.dx(wx)));
 		final double x = getw1(stringBounder);
 		double y = mainDim.getHeight();
 		double lastY1 = y;

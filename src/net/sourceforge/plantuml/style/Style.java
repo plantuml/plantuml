@@ -45,8 +45,6 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -56,6 +54,8 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class Style {
 
@@ -98,7 +98,7 @@ public class Style {
 		// return new Style(this.kind.add(other.kind), this.name + "," + other.name, both);
 	}
 
-	public Style eventuallyOverride(PName param, HtmlColor color) {
+	public Style eventuallyOverride(PName param, HColor color) {
 		if (color == null) {
 			return this;
 		}
@@ -112,11 +112,11 @@ public class Style {
 	public Style eventuallyOverride(Colors colors) {
 		Style result = this;
 		if (colors != null) {
-			final HtmlColor back = colors.getColor(ColorType.BACK);
+			final HColor back = colors.getColor(ColorType.BACK);
 			if (back != null) {
 				result = result.eventuallyOverride(PName.BackGroundColor, back);
 			}
-			final HtmlColor line = colors.getColor(ColorType.LINE);
+			final HColor line = colors.getColor(ColorType.LINE);
 			if (line != null) {
 				result = result.eventuallyOverride(PName.LineColor, line);
 			}
@@ -127,7 +127,7 @@ public class Style {
 	public Style eventuallyOverride(SymbolContext symbolContext) {
 		Style result = this;
 		if (symbolContext != null) {
-			final HtmlColor back = symbolContext.getBackColor();
+			final HColor back = symbolContext.getBackColor();
 			if (back != null) {
 				result = result.eventuallyOverride(PName.BackGroundColor, back);
 			}
@@ -146,16 +146,16 @@ public class Style {
 		return new UFont(family, fontStyle, size);
 	}
 
-	public FontConfiguration getFontConfiguration(IHtmlColorSet set) {
+	public FontConfiguration getFontConfiguration(HColorSet set) {
 		final UFont font = getUFont();
-		final HtmlColor color = value(PName.FontColor).asColor(set);
-		final HtmlColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);
+		final HColor color = value(PName.FontColor).asColor(set);
+		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);
 		return new FontConfiguration(font, color, hyperlinkColor, true);
 	}
 
-	public SymbolContext getSymbolContext(IHtmlColorSet set) {
-		final HtmlColor backColor = value(PName.BackGroundColor).asColor(set);
-		final HtmlColor foreColor = value(PName.LineColor).asColor(set);
+	public SymbolContext getSymbolContext(HColorSet set) {
+		final HColor backColor = value(PName.BackGroundColor).asColor(set);
+		final HColor foreColor = value(PName.LineColor).asColor(set);
 		final double deltaShadowing = value(PName.Shadowing).asDouble();
 		return new SymbolContext(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing);
 	}
@@ -198,19 +198,19 @@ public class Style {
 		return value(PName.HorizontalAlignment).asHorizontalAlignment();
 	}
 
-	private TextBlock createTextBlockInternal(Display display, IHtmlColorSet set, ISkinSimple spriteContainer,
+	private TextBlock createTextBlockInternal(Display display, HColorSet set, ISkinSimple spriteContainer,
 			HorizontalAlignment alignment) {
 		final FontConfiguration fc = getFontConfiguration(set);
 		return display.create(fc, alignment, spriteContainer);
 	}
 
-	public TextBlock createTextBlockBordered(Display note, IHtmlColorSet set, ISkinSimple spriteContainer) {
+	public TextBlock createTextBlockBordered(Display note, HColorSet set, ISkinSimple spriteContainer) {
 		// final HorizontalAlignment alignment = HorizontalAlignment.LEFT;
 		final HorizontalAlignment alignment = this.getHorizontalAlignment();
 		final TextBlock textBlock = this.createTextBlockInternal(note, set, spriteContainer, alignment);
 
-		final HtmlColor legendBackgroundColor = this.value(PName.BackGroundColor).asColor(set);
-		final HtmlColor legendColor = this.value(PName.LineColor).asColor(set);
+		final HColor legendBackgroundColor = this.value(PName.BackGroundColor).asColor(set);
+		final HColor legendColor = this.value(PName.LineColor).asColor(set);
 		final UStroke stroke = this.getStroke();
 		final int cornersize = this.value(PName.RoundCorner).asInt();
 		final double margin = this.value(PName.Margin).asDouble();
@@ -221,7 +221,7 @@ public class Style {
 		return TextBlockUtils.withMargin(result, margin, margin);
 	}
 
-	public UGraphic applyStrokeAndLineColor(UGraphic ug, IHtmlColorSet colorSet) {
+	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet) {
 		ug = ug.apply(new UChangeColor(value(PName.LineColor).asColor(colorSet)));
 		ug = ug.apply(getStroke());
 		return ug;

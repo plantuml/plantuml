@@ -35,164 +35,164 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 
 public enum ColorParam {
-	background(HtmlColorUtils.WHITE, true, ColorType.BACK),
-	hyperlink(HtmlColorUtils.BLUE),
+	background(HColorUtils.WHITE, true, ColorType.BACK),
+	hyperlink(HColorUtils.BLUE),
 	
-	activityDiamondBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	activityDiamondBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	activityBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	activityBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	activityStart(HtmlColorUtils.BLACK),
-	activityEnd(HtmlColorUtils.BLACK),
-	activityBar(HtmlColorUtils.BLACK),
-	swimlaneBorder(HtmlColorUtils.BLACK),
+	activityDiamondBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	activityDiamondBorder(HColorUtils.MY_RED, ColorType.LINE),
+	activityBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	activityBorder(HColorUtils.MY_RED, ColorType.LINE),
+	activityStart(HColorUtils.BLACK),
+	activityEnd(HColorUtils.BLACK),
+	activityBar(HColorUtils.BLACK),
+	swimlaneBorder(HColorUtils.BLACK),
 	swimlaneTitleBackground(null),
 	
-	usecaseBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	usecaseBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
+	usecaseBorder(HColorUtils.MY_RED, ColorType.LINE),
+	usecaseBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
 
-	objectBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	objectBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	objectBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	objectBorder(HColorUtils.MY_RED, ColorType.LINE),
 	
 	classHeaderBackground(null, true, ColorType.BACK),
-	classBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	enumBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	classBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	stereotypeCBackground(HtmlColorUtils.COL_ADD1B2),
-	stereotypeNBackground(HtmlColorUtils.COL_E3664A),
-	stereotypeABackground(HtmlColorUtils.COL_A9DCDF),
-	stereotypeIBackground(HtmlColorUtils.COL_B4A7E5),
-	stereotypeEBackground(HtmlColorUtils.COL_EB937F),
+	classBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	enumBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	classBorder(HColorUtils.MY_RED, ColorType.LINE),
+	stereotypeCBackground(HColorUtils.COL_ADD1B2),
+	stereotypeNBackground(HColorUtils.COL_E3664A),
+	stereotypeABackground(HColorUtils.COL_A9DCDF),
+	stereotypeIBackground(HColorUtils.COL_B4A7E5),
+	stereotypeEBackground(HColorUtils.COL_EB937F),
 	stereotypeCBorder(null),
 	stereotypeNBorder(null),
 	stereotypeABorder(null),
 	stereotypeIBorder(null),
 	stereotypeEBorder(null),
 		
-	packageBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	packageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	packageBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	packageBorder(HColorUtils.BLACK, ColorType.LINE),
 
-	partitionBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	partitionBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	partitionBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	partitionBorder(HColorUtils.BLACK, ColorType.LINE),
 
-	componentBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	componentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	interfaceBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	interfaceBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	arrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	componentBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	componentBorder(HColorUtils.MY_RED, ColorType.LINE),
+	interfaceBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	interfaceBorder(HColorUtils.MY_RED, ColorType.LINE),
+	arrow(HColorUtils.MY_RED, ColorType.ARROW),
 
-	stateBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	stateBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	stateStart(HtmlColorUtils.BLACK),
-	stateEnd(HtmlColorUtils.BLACK),
+	stateBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	stateBorder(HColorUtils.MY_RED, ColorType.LINE),
+	stateStart(HColorUtils.BLACK),
+	stateEnd(HColorUtils.BLACK),
 
-	noteBackground(HtmlColorUtils.COL_FBFB77, true, ColorType.BACK),
-	noteBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	noteBackground(HColorUtils.COL_FBFB77, true, ColorType.BACK),
+	noteBorder(HColorUtils.MY_RED, ColorType.LINE),
 	
-	legendBackground(HtmlColorUtils.COL_DDDDDD, true, ColorType.BACK),
-	legendBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	legendBackground(HColorUtils.COL_DDDDDD, true, ColorType.BACK),
+	legendBorder(HColorUtils.BLACK, ColorType.LINE),
 	
 	titleBackground(null, true, ColorType.BACK),
 	titleBorder(null, ColorType.LINE),
 
 	diagramBorder(null, ColorType.LINE),
 	
-	actorBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	actorBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	participantBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	participantBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	sequenceGroupBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	sequenceGroupBackground(HtmlColorUtils.COL_EEEEEE, true, ColorType.BACK),
-	sequenceGroupBodyBackground(HtmlColorUtils.RED, true, ColorType.BACK),
-	sequenceReferenceBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	sequenceReferenceHeaderBackground(HtmlColorUtils.COL_EEEEEE, true, ColorType.BACK),
-	sequenceReferenceBackground(HtmlColorUtils.WHITE, true, ColorType.BACK),
-	sequenceDividerBackground(HtmlColorUtils.COL_EEEEEE, true, ColorType.BACK),
-	sequenceDividerBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	sequenceLifeLineBackground(HtmlColorUtils.WHITE, true, ColorType.BACK),
-	sequenceLifeLineBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	sequenceNewpageSeparator(HtmlColorUtils.BLACK, ColorType.LINE),
-	sequenceBoxBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	sequenceBoxBackground(HtmlColorUtils.COL_DDDDDD, true, ColorType.BACK),
+	actorBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	actorBorder(HColorUtils.MY_RED, ColorType.LINE),
+	participantBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	participantBorder(HColorUtils.MY_RED, ColorType.LINE),
+	sequenceGroupBorder(HColorUtils.BLACK, ColorType.LINE),
+	sequenceGroupBackground(HColorUtils.COL_EEEEEE, true, ColorType.BACK),
+	sequenceGroupBodyBackground(HColorUtils.RED, true, ColorType.BACK),
+	sequenceReferenceBorder(HColorUtils.BLACK, ColorType.LINE),
+	sequenceReferenceHeaderBackground(HColorUtils.COL_EEEEEE, true, ColorType.BACK),
+	sequenceReferenceBackground(HColorUtils.WHITE, true, ColorType.BACK),
+	sequenceDividerBackground(HColorUtils.COL_EEEEEE, true, ColorType.BACK),
+	sequenceDividerBorder(HColorUtils.BLACK, ColorType.LINE),
+	sequenceLifeLineBackground(HColorUtils.WHITE, true, ColorType.BACK),
+	sequenceLifeLineBorder(HColorUtils.MY_RED, ColorType.LINE),
+	sequenceNewpageSeparator(HColorUtils.BLACK, ColorType.LINE),
+	sequenceBoxBorder(HColorUtils.MY_RED, ColorType.LINE),
+	sequenceBoxBackground(HColorUtils.COL_DDDDDD, true, ColorType.BACK),
 	
-	artifactBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	artifactBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	cloudBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	cloudBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	queueBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	queueBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	stackBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	stackBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	databaseBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	databaseBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	folderBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	folderBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	fileBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	fileBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	frameBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	frameBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	nodeBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	nodeBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	rectangleBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	rectangleBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	archimateBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	archimateBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	cardBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	cardBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	agentBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	agentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	storageBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	storageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	boundaryBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	boundaryBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	collectionsBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	collectionsBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	controlBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	controlBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	entityBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	entityBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	artifactBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	artifactBorder(HColorUtils.BLACK, ColorType.LINE),
+	cloudBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	cloudBorder(HColorUtils.BLACK, ColorType.LINE),
+	queueBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	queueBorder(HColorUtils.MY_RED, ColorType.LINE),
+	stackBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	stackBorder(HColorUtils.MY_RED, ColorType.LINE),
+	databaseBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	databaseBorder(HColorUtils.BLACK, ColorType.LINE),
+	folderBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	folderBorder(HColorUtils.BLACK, ColorType.LINE),
+	fileBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	fileBorder(HColorUtils.BLACK, ColorType.LINE),
+	frameBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	frameBorder(HColorUtils.BLACK, ColorType.LINE),
+	nodeBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	nodeBorder(HColorUtils.BLACK, ColorType.LINE),
+	rectangleBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	rectangleBorder(HColorUtils.BLACK, ColorType.LINE),
+	archimateBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	archimateBorder(HColorUtils.BLACK, ColorType.LINE),
+	cardBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	cardBorder(HColorUtils.BLACK, ColorType.LINE),
+	agentBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	agentBorder(HColorUtils.MY_RED, ColorType.LINE),
+	storageBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	storageBorder(HColorUtils.BLACK, ColorType.LINE),
+	boundaryBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	boundaryBorder(HColorUtils.MY_RED, ColorType.LINE),
+	collectionsBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	collectionsBorder(HColorUtils.MY_RED, ColorType.LINE),
+	controlBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	controlBorder(HColorUtils.MY_RED, ColorType.LINE),
+	entityBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	entityBorder(HColorUtils.MY_RED, ColorType.LINE),
 
 	
-	iconPrivate(HtmlColorUtils.COL_C82930),
-	iconPrivateBackground(HtmlColorUtils.COL_F24D5C),
-	iconPackage(HtmlColorUtils.COL_1963A0),
-	iconPackageBackground(HtmlColorUtils.COL_4177AF),
-	iconProtected(HtmlColorUtils.COL_B38D22),
-	iconProtectedBackground(HtmlColorUtils.COL_FFFF44),
-	iconPublic(HtmlColorUtils.COL_038048),
-	iconPublicBackground(HtmlColorUtils.COL_84BE84),
-	iconIEMandatory(HtmlColorUtils.BLACK),
+	iconPrivate(HColorUtils.COL_C82930),
+	iconPrivateBackground(HColorUtils.COL_F24D5C),
+	iconPackage(HColorUtils.COL_1963A0),
+	iconPackageBackground(HColorUtils.COL_4177AF),
+	iconProtected(HColorUtils.COL_B38D22),
+	iconProtectedBackground(HColorUtils.COL_FFFF44),
+	iconPublic(HColorUtils.COL_038048),
+	iconPublicBackground(HColorUtils.COL_84BE84),
+	iconIEMandatory(HColorUtils.BLACK),
 	
-	arrowLollipop(HtmlColorUtils.WHITE),
+	arrowLollipop(HColorUtils.WHITE),
 	
-	machineBackground(HtmlColorUtils.WHITE), 
-	machineBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	requirementBackground(HtmlColorUtils.WHITE), 
-	requirementBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	designedBackground(HtmlColorUtils.WHITE), 
-	designedBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	domainBackground(HtmlColorUtils.WHITE), 
-	domainBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	lexicalBackground(HtmlColorUtils.WHITE), 
-	lexicalBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	biddableBackground(HtmlColorUtils.WHITE), 
-	biddableBorder(HtmlColorUtils.BLACK, ColorType.LINE);
+	machineBackground(HColorUtils.WHITE), 
+	machineBorder(HColorUtils.BLACK, ColorType.LINE),
+	requirementBackground(HColorUtils.WHITE), 
+	requirementBorder(HColorUtils.BLACK, ColorType.LINE),
+	designedBackground(HColorUtils.WHITE), 
+	designedBorder(HColorUtils.BLACK, ColorType.LINE),
+	domainBackground(HColorUtils.WHITE), 
+	domainBorder(HColorUtils.BLACK, ColorType.LINE),
+	lexicalBackground(HColorUtils.WHITE), 
+	lexicalBorder(HColorUtils.BLACK, ColorType.LINE),
+	biddableBackground(HColorUtils.WHITE), 
+	biddableBorder(HColorUtils.BLACK, ColorType.LINE);
 
 	private final boolean isBackground;
-	private final HtmlColor defaultValue;
+	private final HColor defaultValue;
 	private final ColorType colorType;
 	
-	private ColorParam(HtmlColor defaultValue, ColorType colorType) {
+	private ColorParam(HColor defaultValue, ColorType colorType) {
 		this(defaultValue, false, colorType);
 	}
 	
-	private ColorParam(HtmlColor defaultValue) {
+	private ColorParam(HColor defaultValue) {
 		this(defaultValue, false, null);
 	}
 	
@@ -204,7 +204,7 @@ public enum ColorParam {
 		this(null, isBackground, null);
 	}
 	
-	private ColorParam(HtmlColor defaultValue, boolean isBackground, ColorType colorType) {
+	private ColorParam(HColor defaultValue, boolean isBackground, ColorType colorType) {
 		this.isBackground = isBackground;
 		this.defaultValue = defaultValue;
 		this.colorType = colorType;
@@ -218,7 +218,7 @@ public enum ColorParam {
 		return isBackground;
 	}
 
-	public final HtmlColor getDefaultValue() {
+	public final HColor getDefaultValue() {
 		return defaultValue;
 	}
 

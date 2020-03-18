@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graph2.GeomUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
@@ -82,11 +81,12 @@ import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
-	private final HtmlColor noteBackgroundColor;
-	private final HtmlColor borderColor;
+	private final HColor noteBackgroundColor;
+	private final HColor borderColor;
 	private final double shadowing;
 	private final int marginX1 = 6;
 	private final int marginX2 = 15;
@@ -141,7 +141,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	static ISkinParam getSkin(ISkinParam skinParam, IEntity entity) {
 		final Stereotype stereotype = entity.getStereotype();
-		HtmlColor back = entity.getColors(skinParam).getColor(ColorType.BACK);
+		HColor back = entity.getColors(skinParam).getColor(ColorType.BACK);
 		if (back != null) {
 			return new SkinParamBackcolored(skinParam, back);
 		}
@@ -152,7 +152,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return skinParam;
 	}
 
-	private static HtmlColor getColorStatic(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
+	private static HColor getColorStatic(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
 		final Rose rose = new Rose();
 		return rose.getHtmlColor(skinParam, stereo, colorParam);
 	}

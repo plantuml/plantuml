@@ -41,7 +41,6 @@ import java.awt.geom.Point2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -49,13 +48,14 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Opale extends AbstractTextBlock implements TextBlock {
 
 	private static final int cornersize = 10;
-	private final HtmlColor noteBackgroundColor;
-	private final HtmlColor borderColor;
+	private final HColor noteBackgroundColor;
+	private final HColor borderColor;
 	private final int marginX1 = 6;
 	private final int marginX2 = 15;
 	private final int marginY = 5;
@@ -68,7 +68,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 
-	public Opale(double shadowing, HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock,
+	public Opale(double shadowing, HColor borderColor, HColor noteBackgroundColor, TextBlock textBlock,
 			boolean withLink) {
 		this.noteBackgroundColor = noteBackgroundColor;
 		this.withLink = withLink;

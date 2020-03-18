@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.code.CompressionZlib;
 import net.sourceforge.plantuml.code.CompressionZopfliZlib;
 import net.sourceforge.plantuml.code.PairInt;
 import net.sourceforge.plantuml.code.SpiralOnRectangle;
-import net.sourceforge.plantuml.ugraphic.ColorChangerMonochrome;
+import net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
 
 public enum SpriteGrayLevel {
 

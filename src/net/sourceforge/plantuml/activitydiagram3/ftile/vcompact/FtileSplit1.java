@@ -111,7 +111,7 @@ class FtileSplit1 extends AbstractFtile {
 	public UTranslate getTranslateFor(Ftile searched, StringBounder stringBounder) {
 		final Dimension2D dim = searched.calculateDimension(stringBounder);
 		final double xpos = calculateDimension(stringBounder).getWidth() - dim.getWidth();
-		return new UTranslate(xpos / 2, 0);
+		return UTranslate.dx(xpos / 2);
 	}
 
 }

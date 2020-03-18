@@ -40,13 +40,13 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class DriverLineG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
@@ -65,7 +65,7 @@ public class DriverLineG2d extends DriverShadowedG2d implements UDriver<Graphics
 		if (shape.getDeltaShadow() != 0) {
 			drawShadow(g2d, line, shape.getDeltaShadow(), dpiFactor);
 		}
-		final HtmlColor color = param.getColor();
+		final HColor color = param.getColor();
 		DriverRectangleG2d.drawBorder(param, color, mapper, shape, line, g2d, x, y);
 //		g2d.setColor(mapper.getMappedColor(color));
 //		g2d.draw(line);

@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComponentRoseDatabase extends AbstractTextualComponent {
 
@@ -64,7 +64,7 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 
 	public ComponentRoseDatabase(Style style, Style stereo, SymbolContext biColor, FontConfiguration font,
 			Display stringsToDisplay, boolean head, ISkinSimple spriteContainer, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
+			HColor htmlColorForStereotype) {
 		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
 				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
@@ -87,9 +87,9 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 
 		if (head) {
 			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), dimStickman.getHeight())));
-			ug = ug.apply(new UTranslate(delta, 0));
+			ug = ug.apply(UTranslate.dx(delta));
 		} else {
-			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), 0)));
+			textBlock.drawU(ug.apply(UTranslate.dx(getTextMiddlePostion(stringBounder))));
 			ug = ug.apply(new UTranslate(delta, getTextHeight(stringBounder)));
 		}
 		stickman.drawU(ug);

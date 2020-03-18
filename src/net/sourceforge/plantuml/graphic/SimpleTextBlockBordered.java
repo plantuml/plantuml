@@ -42,13 +42,14 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class SimpleTextBlockBordered extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
-	private final HtmlColor color;
+	private final HColor color;
 
-	public SimpleTextBlockBordered(TextBlock textBlock, HtmlColor color) {
+	public SimpleTextBlockBordered(TextBlock textBlock, HColor color) {
 		this.textBlock = textBlock;
 		this.color = color;
 	}

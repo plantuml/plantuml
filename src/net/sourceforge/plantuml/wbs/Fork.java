@@ -71,7 +71,7 @@ class Fork extends WBSTextBlock {
 		final Dimension2D fullDim = calculateDimension(stringBounder);
 		final Dimension2D mainDim = main.calculateDimension(stringBounder);
 		final double dx = (fullDim.getWidth() - mainDim.getWidth()) / 2;
-		main.drawU(ug.apply(new UTranslate(dx, 0)));
+		main.drawU(ug.apply(UTranslate.dx(dx)));
 		drawLine(ug, dx + mainDim.getWidth() / 2, mainDim.getHeight(), dx + mainDim.getWidth() / 2, mainDim.getHeight()
 				+ deltay / 2);
 		double x = 0;
