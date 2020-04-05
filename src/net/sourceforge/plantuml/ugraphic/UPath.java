@@ -40,13 +40,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class UPath extends AbstractShadowable implements Iterable<USegment> {
+import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
+
+public class UPath extends AbstractShadowable implements Iterable<USegment>, UShapeIgnorableForCompression {
 
 	private final String comment;
 	private final List<USegment> segments = new ArrayList<USegment>();
 	private MinMax minmax = MinMax.getEmpty(false);
 
 	private boolean isOpenIconic;
+	private boolean ignoreForCompressionOnX;
+	private boolean ignoreForCompressionOnY;
 
 	public UPath(String comment) {
 		this.comment = comment;
@@ -177,6 +181,27 @@ public class UPath extends AbstractShadowable implements Iterable<USegment> {
 
 	public final String getComment() {
 		return comment;
+	}
+
+	public void setIgnoreForCompressionOnX() {
+		this.ignoreForCompressionOnX = true;
+	}
+
+	public void setIgnoreForCompressionOnY() {
+		this.ignoreForCompressionOnY = true;
+	}
+
+	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {
+	}
+
+	public boolean isIgnoreForCompressionOn(CompressionMode mode) {
+		if (mode == CompressionMode.ON_X) {
+			return ignoreForCompressionOnX;
+		}
+		if (mode == CompressionMode.ON_Y) {
+			return ignoreForCompressionOnY;
+		}
+		throw new IllegalArgumentException();
 	}
 
 	// public boolean isEmpty() {

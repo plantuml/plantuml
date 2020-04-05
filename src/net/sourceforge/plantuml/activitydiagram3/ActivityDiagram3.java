@@ -49,6 +49,8 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ISwimlanesA;
+import net.sourceforge.plantuml.activitydiagram3.ftile.SwimlanesAAA;
 import net.sourceforge.plantuml.activitydiagram3.ftile.SwimlanesC;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -64,7 +66,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
-import net.sourceforge.plantuml.ugraphic.comp.TextBlockCompressedOnXorY;
+import net.sourceforge.plantuml.ugraphic.comp.CompressionXorYBuilder;
 
 public class ActivityDiagram3 extends UmlDiagram {
 
@@ -74,7 +76,36 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private SwimlaneStrategy swimlaneStrategy;
 
-	private final SwimlanesC swinlanes = new SwimlanesC(getSkinParam(), getPragma());
+	private final ISwimlanesA swinlanes = new SwimlanesAAA(getSkinParam(), getPragma());
+	// private final ISwimlanesA swinlanes = new SwimlanesC(getSkinParam(),
+	// getPragma());
+
+	private ImageData exportDiagramInternalAAA(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		// BUG42
+		// COMPRESSION
+		swinlanes.computeSize(fileFormatOption.getDefaultStringBounder());
+		TextBlock result = swinlanes;
+
+		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, fileFormatOption.getDefaultStringBounder());
+		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, fileFormatOption.getDefaultStringBounder());
+
+		result = new TextBlockRecentred(result);
+		final ISkinParam skinParam = getSkinParam();
+		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
+
+		final Dimension2D dim = result.getMinMax(fileFormatOption.getDefaultStringBounder()).getDimension();
+		final double margin = 10;
+		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
+
+		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
+				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
+				getAnimation());
+		imageBuilder.setUDrawable(result);
+
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
+
+	}
 
 	public ActivityDiagram3(ISkinSimple skinParam) {
 		super(skinParam);
@@ -123,7 +154,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public void addSpot(String spot, HColor color) {
-		final InstructionSpot ins = new InstructionSpot(spot, color, nextLinkRenderer(), swinlanes.getCurrentSwimlane());
+		final InstructionSpot ins = new InstructionSpot(spot, color, nextLinkRenderer(),
+				swinlanes.getCurrentSwimlane());
 		current().add(ins);
 		setNextLinkRendererInternal(LinkRendering.none());
 		manageSwimlaneStrategy();
@@ -201,17 +233,21 @@ public class ActivityDiagram3 extends UmlDiagram {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
+		if (swinlanes instanceof SwimlanesC == false || swinlanes instanceof SwimlanesAAA) {
+			return exportDiagramInternalAAA(os, index, fileFormatOption);
+		}
 		// BUG42
 		// COMPRESSION
+		swinlanes.computeSize(fileFormatOption.getDefaultStringBounder());
 		TextBlock result = swinlanes;
-		// result = new TextBlockCompressedOnY(CompressionMode.ON_Y, result);
-		result = new TextBlockCompressedOnXorY(CompressionMode.ON_X, result);
-		result = new TextBlockCompressedOnXorY(CompressionMode.ON_Y, result);
+
+		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, fileFormatOption.getDefaultStringBounder());
+		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, fileFormatOption.getDefaultStringBounder());
+
 		result = new TextBlockRecentred(result);
 		final ISkinParam skinParam = getSkinParam();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
-		// final Dimension2D dim = TextBlockUtils.getMinMax(result, fileFormatOption.getDefaultStringBounder())
-		// .getDimension();
+
 		final Dimension2D dim = result.getMinMax(fileFormatOption.getDefaultStringBounder()).getDimension();
 		final double margin = 10;
 		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
@@ -329,8 +365,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public void startIf(Display test, Display whenThen, HColor color, Url url) {
 		manageSwimlaneStrategy();
-		final InstructionIf instructionIf = new InstructionIf(swinlanes.getCurrentSwimlane(), current(), test,
-				whenThen, nextLinkRenderer(), color, getSkinParam(), url);
+		final InstructionIf instructionIf = new InstructionIf(swinlanes.getCurrentSwimlane(), current(), test, whenThen,
+				nextLinkRenderer(), color, getSkinParam(), url);
 		current().add(instructionIf);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionIf);
@@ -396,12 +432,13 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	}
 
-	public CommandExecutionResult backwardWhile(Display label) {
+	public CommandExecutionResult backwardWhile(Display label, BoxStyle boxStyle) {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
-			// final LinkRendering back = new LinkRendering(linkColor).withDisplay(linkLabel);
-			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane());
+			// final LinkRendering back = new
+			// LinkRendering(linkColor).withDisplay(linkLabel);
+			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle);
 			// setCurrent(instructionRepeat.getParent());
 			// this.setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
@@ -435,8 +472,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public void startGroup(Display name, HColor backColor, HColor titleColor, HColor borderColor,
-			USymbol type, double roundCorner) {
+	public void startGroup(Display name, HColor backColor, HColor titleColor, HColor borderColor, USymbol type,
+			double roundCorner) {
 		manageSwimlaneStrategy();
 		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor,
 				swinlanes.getCurrentSwimlane(), borderColor, nextLinkRenderer(), type, roundCorner);

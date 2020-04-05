@@ -661,6 +661,18 @@ final public class EntityImpl implements ILeaf, IGroup {
 		return entityFactory.isRemoved(this);
 	}
 
+	public boolean isAloneAndUnlinked() {
+		if (isGroup()) {
+			return false;
+		}
+		for (Link link : entityFactory.getLinks()) {
+			if (link.contains(this) && link.getType().isInvisible() == false) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	private int layer;
 
 	public int getHectorLayer() {

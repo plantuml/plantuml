@@ -124,7 +124,7 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	private TextBlock getTextBlock(Display members2, StringBounder stringBounder) {
-		final TextBlock result = members2.create(titleConfig, align, spriteContainer, lineBreakStrategy);
+		final TextBlock result = members2.create9(titleConfig, align, spriteContainer, lineBreakStrategy);
 		return result;
 	}
 

@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.UShapeIgnorableForCompression;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -108,32 +109,30 @@ public class SlotFinder implements UGraphic {
 		return new UParamNull();
 	}
 
-	public void draw(UShape shape) {
+	public void draw(UShape sh) {
 		final double x = translate.getDx();
 		final double y = translate.getDy();
-		if (shape instanceof URectangle) {
-			final URectangle rect = (URectangle) shape;
-			if (mode == CompressionMode.ON_X && rect.isIgnoreForCompression()) {
-				drawRectangle(x, y, new URectangle(2, rect.getHeight()));
-				drawRectangle(x + rect.getWidth() - 2, y, new URectangle(2, rect.getHeight()));
+		if (sh instanceof UShapeIgnorableForCompression) {
+			final UShapeIgnorableForCompression shape = (UShapeIgnorableForCompression) sh;
+			if (shape.isIgnoreForCompressionOn(mode)) {
+				shape.drawWhenCompressed(this, mode);
 				return;
 			}
-			if (mode == CompressionMode.ON_Y && rect.isIgnoreForCompression()) {
-				drawRectangle(x, y, new URectangle(rect.getWidth(), 2));
-				drawRectangle(x, y + rect.getHeight() - 2, new URectangle(rect.getWidth(), 2));
-				return;
-			}
-			drawRectangle(x, y, (URectangle) shape);
-		} else if (shape instanceof UPath) {
-			drawPath(x, y, (UPath) shape);
-		} else if (shape instanceof UPolygon) {
-			drawPolygon(x, y, (UPolygon) shape);
-		} else if (shape instanceof UEllipse) {
-			drawEllipse(x, y, (UEllipse) shape);
-		} else if (shape instanceof UText) {
-			drawText(x, y, (UText) shape);
-		} else if (shape instanceof UEmpty) {
-			drawEmpty(x, y, (UEmpty) shape);
+
+		}
+		if (sh instanceof URectangle) {
+			drawRectangle(x, y, (URectangle) sh);
+		} else if (sh instanceof UPath) {
+			drawPath(x, y, (UPath) sh);
+		} else if (sh instanceof UPolygon) {
+			drawPolygon(x, y, (UPolygon) sh);
+		} else if (sh instanceof UEllipse) {
+			drawEllipse(x, y, (UEllipse) sh);
+		} else if (sh instanceof UText) {
+			final UText text = (UText) sh;
+			drawText(x, y, text);
+		} else if (sh instanceof UEmpty) {
+			drawEmpty(x, y, (UEmpty) sh);
 		}
 	}
 
@@ -173,7 +172,7 @@ public class SlotFinder implements UGraphic {
 	}
 
 	private void drawPolygon(double x, double y, UPolygon shape) {
-		if (mode == shape.isIgnoreForCompression()) {
+		if (mode == shape.getCompressionMode()) {
 			return;
 		}
 		if (mode == CompressionMode.ON_X) {

@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.ugraphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
+import net.sourceforge.plantuml.graphic.SpecialText;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.DotPath;
@@ -49,7 +51,7 @@ public class LimitFinder implements UGraphic {
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
-	
+
 	public double dpiFactor() {
 		return 1;
 	}
@@ -141,6 +143,10 @@ public class LimitFinder implements UGraphic {
 			tb.drawU(this);
 		} else if (shape instanceof UCenteredCharacter) {
 			// To be done
+		} else if (shape instanceof CenteredText) {
+			// Ignored
+		} else if (shape instanceof SpecialText) {
+			// Ignored
 		} else if (shape instanceof UPixel) {
 			addPoint(x, y);
 		} else {

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -57,14 +58,22 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				new RegexLeaf("LABEL", "(.*)"), //
-				new RegexLeaf(";"), //
+				new RegexLeaf("STYLE", CommandActivity3.ENDING_GROUP), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
+		final BoxStyle boxStyle;
+		final String styleString = arg.get("STYLE", 0);
+		if (styleString == null) {
+			boxStyle = BoxStyle.PLAIN;
+		} else {
+			boxStyle = BoxStyle.fromChar(styleString.charAt(0));
+		}
+
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
-		return diagram.backwardWhile(label);
+		return diagram.backwardWhile(label, boxStyle);
 	}
 
 }

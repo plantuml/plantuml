@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
-import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
@@ -342,7 +341,7 @@ public class Run {
 		printPattern(new DescriptionDiagramFactory(null));
 		// printPattern(new ComponentDiagramFactory());
 		printPattern(new StateDiagramFactory(null));
-		printPattern(new ObjectDiagramFactory(null));
+		// printPattern(new ObjectDiagramFactory(null));
 	}
 
 	private static void printPattern(UmlDiagramFactory factory) {

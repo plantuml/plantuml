@@ -92,11 +92,6 @@ public class AtomText extends AbstractAtom implements Atom {
 		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}
 
-//	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
-//		fontConfiguration = FOO(fontConfiguration, order);
-//		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
-//	}
-
 	public static Atom createUrl(Url url, FontConfiguration fontConfiguration, ISkinSimple skinSimple) {
 		fontConfiguration = fontConfiguration.hyperlink();
 		final Display display = Display.getWithNewlines(url.getLabel());

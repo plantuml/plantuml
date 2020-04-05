@@ -118,7 +118,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		} else {
 			fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 		}
-		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
+		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 
 	protected Display getInLinkRenderingDisplay(Ftile tile) {

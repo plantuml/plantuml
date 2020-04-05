@@ -91,7 +91,7 @@ public class FtileBlackBlock extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final URectangle rect = new URectangle(width, height).rounded(5).ignoreForCompression();
+		final URectangle rect = new URectangle(width, height).rounded(5).ignoreForCompressionOnX();
 		if (skinParam().shadowing(null)) {
 			rect.setDeltaShadow(3);
 		}

@@ -42,23 +42,31 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class TextBlockCompressedOnXorY extends AbstractTextBlock implements TextBlock {
+public class PiecewiseAffineOnXorYBuilder extends AbstractTextBlock implements TextBlock, TextBlockBackcolored {
 
 	private final TextBlock textBlock;
 	private final CompressionMode mode;
+	private final PiecewiseAffineTransform piecewiseAffineTransform;
 
-	public TextBlockCompressedOnXorY(CompressionMode mode, TextBlock textBlock) {
+	public static TextBlock build(CompressionMode mode, TextBlock textBlock,
+			PiecewiseAffineTransform piecewiseAffineTransform) {
+		return new PiecewiseAffineOnXorYBuilder(mode, textBlock, piecewiseAffineTransform);
+	}
+
+	private PiecewiseAffineOnXorYBuilder(CompressionMode mode, TextBlock textBlock,
+			PiecewiseAffineTransform piecewiseAffineTransform) {
 		this.textBlock = textBlock;
 		this.mode = mode;
+		this.piecewiseAffineTransform = piecewiseAffineTransform;
 	}
 
 	public void drawU(final UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		final CompressionTransform compressionTransform = getCompressionTransform(stringBounder);
-		textBlock.drawU(new UGraphicCompressOnXorY(mode, ug, compressionTransform));
+		textBlock.drawU(new UGraphicCompressOnXorY(mode, ug, piecewiseAffineTransform));
 	}
 
 	private MinMax cachedMinMax;
@@ -71,30 +79,17 @@ public class TextBlockCompressedOnXorY extends AbstractTextBlock implements Text
 		return cachedMinMax;
 	}
 
-	private CompressionTransform cachedCompressionTransform;
-
-	private CompressionTransform getCompressionTransform(final StringBounder stringBounder) {
-		if (cachedCompressionTransform == null) {
-			cachedCompressionTransform = getCompressionTransformSlow(stringBounder);
-		}
-		return cachedCompressionTransform;
-	}
-
-	private CompressionTransform getCompressionTransformSlow(final StringBounder stringBounder) {
-		final SlotFinder slotFinder = new SlotFinder(mode, stringBounder);
-		textBlock.drawU(slotFinder);
-		final SlotSet ysSlotSet = slotFinder.getSlotSet().reverse().smaller(5.0);
-		final CompressionTransform compressionTransform = new CompressionTransform(ysSlotSet);
-		return compressionTransform;
-	}
-
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final CompressionTransform compressionTransform = getCompressionTransform(stringBounder);
 		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
 		if (mode == CompressionMode.ON_X) {
-			return new Dimension2DDouble(compressionTransform.transform(dim.getWidth()), dim.getHeight());
+			return new Dimension2DDouble(piecewiseAffineTransform.transform(dim.getWidth()), dim.getHeight());
 		} else {
-			return new Dimension2DDouble(dim.getWidth(), compressionTransform.transform(dim.getHeight()));
+			return new Dimension2DDouble(dim.getWidth(), piecewiseAffineTransform.transform(dim.getHeight()));
 		}
 	}
+
+	public HColor getBackcolor() {
+		return null;
+	}
+
 }

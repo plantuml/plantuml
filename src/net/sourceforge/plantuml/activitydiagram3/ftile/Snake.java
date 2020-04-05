@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.comp.CompressionTransform;
+import net.sourceforge.plantuml.ugraphic.comp.PiecewiseAffineTransform;
 
 public class Snake implements UShape {
 
@@ -72,7 +72,7 @@ public class Snake implements UShape {
 		this.worm.setIgnoreForCompression();
 	}
 
-	public Snake transformX(CompressionTransform compressionTransform) {
+	public Snake transformX(PiecewiseAffineTransform compressionTransform) {
 		final Snake result = new Snake(startDecoration, horizontalAlignment, color, endDecoration);
 		result.textBlock = this.textBlock;
 		result.mergeable = this.mergeable;

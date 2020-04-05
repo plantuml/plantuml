@@ -87,17 +87,6 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 		return 0;
 	}
 
-	@Override
-	public Tile matchAnchorV1(String anchor) {
-		for (Tile tile : tiles) {
-			final Tile result = tile.matchAnchorV1(anchor);
-			if (result != null) {
-				return result;
-			}
-		}
-		return super.matchAnchorV1(anchor);
-	}
-
 	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBachColorChanged,
 			TileArguments tileArgumentsOriginal) {
 		final StringBounder stringBounder = tileArgumentsOriginal.getStringBounder();
@@ -236,14 +225,16 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 	}
 
 	public static double fillPositionelTiles(StringBounder stringBounder, double y, List<Tile> tiles,
-			final List<YPositionedTile> positionedTiles) {
+			final List<YPositionedTile> local, List<YPositionedTile> full) {
 		for (Tile tile : mergeParallel(tiles)) {
-			positionedTiles.add(new YPositionedTile(tile, y));
+			final YPositionedTile ytile = new YPositionedTile(tile, y);
+			local.add(ytile);
+			full.add(ytile);
 			if (tile instanceof GroupingTile) {
 				final GroupingTile groupingTile = (GroupingTile) tile;
 				final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
-				fillPositionelTiles(stringBounder, y + headerHeight, groupingTile.tiles,
-						new ArrayList<YPositionedTile>());
+				final ArrayList<YPositionedTile> local2 = new ArrayList<YPositionedTile>();
+				fillPositionelTiles(stringBounder, y + headerHeight, groupingTile.tiles, local2, full);
 			}
 			y += tile.getPreferredHeight(stringBounder);
 		}

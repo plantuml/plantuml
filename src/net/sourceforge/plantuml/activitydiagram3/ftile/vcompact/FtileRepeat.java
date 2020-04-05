@@ -154,12 +154,12 @@ class FtileRepeat extends AbstractFtile {
 
 		final List<Connection> conns = new ArrayList<Connection>();
 		final Display in1 = repeat.getInLinkRendering().getDisplay();
-		final TextBlock tbin1 = in1 == null ? null : in1.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
+		final TextBlock tbin1 = in1 == null ? null : in1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
 				CreoleMode.SIMPLE_LINE);
 		conns.add(result.new ConnectionIn(repeat.getInLinkRendering().getRainbow(arrowColor), tbin1));
 
 		final Display backLink1 = backRepeatLinkRendering.getDisplay();
-		final TextBlock tbbackLink1 = backLink1 == null ? null : backLink1.create(fcArrow, HorizontalAlignment.LEFT,
+		final TextBlock tbbackLink1 = backLink1 == null ? null : backLink1.create7(fcArrow, HorizontalAlignment.LEFT,
 				spriteContainer, CreoleMode.SIMPLE_LINE);
 		if (repeat.getSwimlaneIn() == swimlaneOut) {
 			if (backward == null) {
@@ -176,7 +176,7 @@ class FtileRepeat extends AbstractFtile {
 		}
 
 		final Display out1 = repeat.getOutLinkRendering().getDisplay();
-		final TextBlock tbout1 = out1 == null ? null : out1.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
+		final TextBlock tbout1 = out1 == null ? null : out1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
 				CreoleMode.SIMPLE_LINE);
 
 		final Rainbow tmpColor = endRepeatLinkColor.withDefault(arrowColor);

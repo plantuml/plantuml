@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.help.HelpFactory;
+import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -79,8 +80,8 @@ import net.sourceforge.plantuml.project.GanttDiagramFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.sprite.ListSpriteDiagramFactory;
-import net.sourceforge.plantuml.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.sprite.PSystemListInternalSpritesFactory;
+import net.sourceforge.plantuml.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
@@ -109,9 +110,10 @@ public class PSystemBuilder {
 					// Dead code : should not append
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
 					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), /* cpt */
-					s.getLocation());
-					// return PSystemErrorUtils.buildV1(umlSource, err, Collections.<String> emptyList());
-					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String> emptyList(), strings2);
+							s.getLocation());
+					// return PSystemErrorUtils.buildV1(umlSource, err, Collections.<String>
+					// emptyList());
+					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), strings2);
 				}
 			}
 
@@ -173,8 +175,8 @@ public class PSystemBuilder {
 		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
 		factories.add(new PSystemDitaaFactory(DiagramType.UML));
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			// factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
-			// factories.add(new PSystemJcckitFactory(DiagramType.UML));
+			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
+			factories.add(new PSystemJcckitFactory(DiagramType.UML));
 			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}

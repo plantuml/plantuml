@@ -218,17 +218,17 @@ public abstract class PSystemError extends AbstractPSystem {
 		} else {
 			udrawable = result;
 		}
-		udrawable = addMessageCoronavirus(udrawable);
-//		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
-//		if (min == 1 || min == 8 || min == 13 || min == 55) {
-//			udrawable = addMessagePatreon(udrawable);
-//		} else if (min == 15) {
-//			udrawable = addMessageLiberapay(udrawable);
-//		} else if (min == 30 || min == 39 || min == 48) {
-//			udrawable = addMessageDedication(udrawable);
-//		} else if (getSource().containsIgnoreCase("arecibo")) {
-//			udrawable = addMessageArecibo(udrawable);
-//		}
+		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
+		// udrawable = addMessageAdopt(udrawable);
+		if (min == 1 || min == 8 || min == 13 || min == 55) {
+			udrawable = addMessagePatreon(udrawable);
+		} else if (min == 15) {
+			udrawable = addMessageLiberapay(udrawable);
+		} else if (min == 30 || min == 39 || min == 48) {
+			udrawable = addMessageDedication(udrawable);
+		} else if (getSource().containsIgnoreCase("arecibo")) {
+			udrawable = addMessageArecibo(udrawable);
+		}
 		imageBuilder.setUDrawable(udrawable);
 		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
 		((ImageDataAbstract) imageData).setStatus(FileImageData.ERROR);
@@ -277,13 +277,6 @@ public abstract class PSystemError extends AbstractPSystem {
 			return source;
 		}
 		final TextBlock message = getMessagePatreon();
-		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
-		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
-		return result;
-	}
-
-	private TextBlock addMessageCoronavirus(final TextBlock source) throws IOException {
-		final TextBlock message = getMessageCoronavirus();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
 		return result;
@@ -349,42 +342,6 @@ public abstract class PSystemError extends AbstractPSystem {
 				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;
 		result = text;
-		return TextBlockUtils.addBackcolor(result, backColor);
-
-	}
-
-	private TextBlockBackcolored getMessageCoronavirus() {
-
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorIfValid("#fff");
-
-		final BufferedImage qrcode = smaller(utils.exportFlashcode(
-				"https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca", Color.BLACK,
-				backColor.getColor999()));
-		final Display disp = Display.create("<b>Coronavirus: Why You Must Act Now", " ",
-				"Please use the flashcode or go to", "https://plantuml/coronavirus", " ",
-				"If you live in UK, Europe, North & South America, Iran, Japan, Korea...",
-				" <b>please apply social distancing right now!", " ", "The coronavirus is coming to you.",
-				"It’s coming at an exponential speed: gradually, and then suddenly.",
-				"It’s a matter of days. Maybe a week or two.",
-				"When it does, your healthcare system will be overwhelmed.",
-				"Your fellow citizens will be treated in the hallways.",
-				"Exhausted healthcare workers will break down. Some will die.",
-				"They will have to decide which patient gets the oxygen and which one dies.",
-				"The only way to prevent this is social distancing today. Not tomorrow. Today.",
-				"That means keeping as many people home as possible, starting now.", " ");
-
-		final UFont font = UFont.sansSerif(14);
-		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
-		final TextBlock text = TextBlockUtils
-				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
-		final TextBlock result;
-		if (qrcode == null) {
-			result = text;
-		} else {
-			final UImage qr = new UImage(qrcode).scaleNearestNeighbor(3);
-			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
-		}
 		return TextBlockUtils.addBackcolor(result, backColor);
 
 	}

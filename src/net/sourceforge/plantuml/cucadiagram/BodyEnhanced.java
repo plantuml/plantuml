@@ -166,7 +166,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 					}
 					members = new ArrayList<Member>();
 					final List<CharSequence> allTree = buildAllTree(s, it);
-					final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam),
+					final TextBlock bloc = Display.create(allTree).create7(fontParam.getFontConfiguration(skinParam),
 							align, skinParam, CreoleMode.FULL);
 					blocks.add(bloc);
 				} else {

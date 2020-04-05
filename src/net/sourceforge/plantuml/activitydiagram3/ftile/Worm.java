@@ -104,7 +104,7 @@ public class Worm implements Iterable<Point2D.Double> {
 			ug = ug.apply(new UStroke(1.5));
 			final Point2D start = points.get(0);
 			if (ignoreForCompression) {
-				startDecoration.setIgnoreForCompression(CompressionMode.ON_X);
+				startDecoration.setCompressionMode(CompressionMode.ON_X);
 			}
 			ug.apply(new UTranslate(start)).apply(new UStroke()).draw(startDecoration);
 		}
@@ -112,7 +112,7 @@ public class Worm implements Iterable<Point2D.Double> {
 			ug = ug.apply(new UStroke(1.5));
 			final Point2D end = points.get(points.size() - 1);
 			if (ignoreForCompression) {
-				endDecoration.setIgnoreForCompression(CompressionMode.ON_X);
+				endDecoration.setCompressionMode(CompressionMode.ON_X);
 			}
 			ug.apply(new UTranslate(end)).apply(new UStroke()).draw(endDecoration);
 		}

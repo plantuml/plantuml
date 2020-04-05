@@ -79,8 +79,11 @@ public class Swimlane implements SpecificBackcolorable {
 		return translate;
 	}
 
-	public final void setTranslateAndWidth(UTranslate translate, double actualWidth) {
+	public final void setTranslate(UTranslate translate) {
 		this.translate = translate;
+	}
+
+	public final void setWidth(double actualWidth) {
 		this.actualWidth = actualWidth;
 	}
 

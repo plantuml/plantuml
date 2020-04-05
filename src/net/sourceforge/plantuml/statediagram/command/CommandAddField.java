@@ -81,7 +81,7 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 
-		entity.getBodier().addFieldOrMethod(field, entity);
+		entity.getBodier().addFieldOrMethod(field);
 		return CommandExecutionResult.ok();
 	}
 

@@ -342,7 +342,7 @@ public class Line implements Moveable, Hideable {
 	private TextBlock getLineLabel(Link link, ISkinParam skinParam, FontConfiguration labelFont) {
 		final double marginLabel = startUid.equalsId(endUid) ? 6 : 1;
 		final HorizontalAlignment alignment = getMessageTextAlignment(link.getUmlDiagramType(), skinParam);
-		TextBlock label = link.getLabel().create(labelFont, alignment, skinParam, skinParam.maxMessageSize());
+		TextBlock label = link.getLabel().create9(labelFont, alignment, skinParam, skinParam.maxMessageSize());
 		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();
 		if (visibilityModifier != null) {
 			final Rose rose = new Rose();

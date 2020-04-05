@@ -145,7 +145,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 			return new TextBlockRaw(strings, fontConfiguration);
 
 		} else {
-			return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);
+			return display.create7(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);
 		}
 	}
 

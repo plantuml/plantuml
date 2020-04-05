@@ -94,5 +94,8 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 	public void addStereotag(Stereotag tag);
 
 	public Set<Stereotag> stereotags();
+	
+	public boolean isAloneAndUnlinked();
+
 
 }

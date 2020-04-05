@@ -165,14 +165,13 @@ public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbac
 		return null;
 	}
 
-	public Tile matchAnchorV1(String anchor) {
+	public boolean matchAnchorV1(String anchor) {
 		for (Tile tile : tiles) {
-			final Tile result = tile.matchAnchorV1(anchor);
-			if (result != null) {
-				return result;
+			if (tile.matchAnchorV1(anchor)) {
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 }

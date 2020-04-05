@@ -84,7 +84,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.EntityImageDesignedDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageMachine;
@@ -100,7 +99,6 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
-import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -118,6 +116,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageGroup;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye1;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye2;
+import net.sourceforge.plantuml.svek.image.EntityImageMap;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.svek.image.EntityImageObject;
 import net.sourceforge.plantuml.svek.image.EntityImagePseudoState;
@@ -211,6 +210,9 @@ public final class GeneralImageBuilder {
 		// }
 		if (leaf.getLeafType() == LeafType.OBJECT) {
 			return new EntityImageObject(leaf, skinParam, portionShower);
+		}
+		if (leaf.getLeafType() == LeafType.MAP) {
+			return new EntityImageMap(leaf, skinParam, portionShower);
 		}
 		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN) {
 			return new EntityImageSynchroBar(leaf, skinParam);

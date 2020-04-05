@@ -446,33 +446,33 @@ public class Display implements Iterable<CharSequence> {
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, CreoleMode.FULL);
+		return create7(fontConfiguration, horizontalAlignment, spriteContainer, CreoleMode.FULL);
 	}
 
 	public TextBlock createWithNiceCreoleMode(FontConfiguration fontConfiguration,
 			HorizontalAlignment horizontalAlignment, ISkinSimple spriteContainer) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, defaultCreoleMode);
+		return create7(fontConfiguration, horizontalAlignment, spriteContainer, defaultCreoleMode);
 	}
 
-	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+	public TextBlock create7(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode creoleMode) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode, null,
-				null);
+		return create0(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode,
+				null, null);
 	}
 
-	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+	public TextBlock create8(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode modeSimpleLine, LineBreakStrategy maxMessageSize) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine, null,
+		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine, null,
 				null);
 	}
 
-	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+	public TextBlock create9(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, defaultCreoleMode, null,
+		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, defaultCreoleMode, null,
 				null);
 	}
 
-	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+	public TextBlock create0(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			UFont fontForStereotype, HColor htmlColorForStereotype) {
 		if (maxMessageSize == null) {
@@ -528,8 +528,8 @@ public class Display implements Iterable<CharSequence> {
 			FontConfiguration stereotypeConfiguration) {
 		final Sheet sheet = new CreoleParser(fontConfiguration, horizontalAlignment, spriteContainer, creoleMode,
 				stereotypeConfiguration).createSheet(this);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize,
-				spriteContainer == null ? 0 : spriteContainer.getPadding());
+		final double padding = spriteContainer == null ? 0 : spriteContainer.getPadding();
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding);
 		return new SheetBlock2(sheetBlock1, sheetBlock1, new UStroke(1.5));
 	}
 

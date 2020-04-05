@@ -159,14 +159,14 @@ public class UPolygon extends AbstractShadowable {
 		return points;
 	}
 	
-	private CompressionMode ignoreForCompression;
+	private CompressionMode compressionMode;
 
-	public final CompressionMode isIgnoreForCompression() {
-		return ignoreForCompression;
+	public final CompressionMode getCompressionMode() {
+		return compressionMode;
 	}
 
-	public final void setIgnoreForCompression(CompressionMode ignoreForCompression) {
-		this.ignoreForCompression = ignoreForCompression;
+	public final void setCompressionMode(CompressionMode compressionMode) {
+		this.compressionMode = compressionMode;
 	}
 
 

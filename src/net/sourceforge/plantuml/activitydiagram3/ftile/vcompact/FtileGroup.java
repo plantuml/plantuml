@@ -173,8 +173,8 @@ public class FtileGroup extends AbstractFtile {
 		final FtileGeometry orig = getInnerDimension(stringBounder);
 		final Dimension2D dimTitle = name.calculateDimension(stringBounder);
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
-		final double suppWidth = MathUtils
-				.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20) - orig.getWidth();
+		final double suppWidth = MathUtils.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20)
+				- orig.getWidth();
 		return suppWidth;
 	}
 
@@ -207,11 +207,11 @@ public class FtileGroup extends AbstractFtile {
 				+ headerNoteHeight(stringBounder);
 		final double titleAndHeaderNoteHeight = diffHeightTitle(stringBounder) + headerNoteHeight(stringBounder);
 		if (orig.hasPointOut()) {
-			return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2, orig.getInY()
-					+ titleAndHeaderNoteHeight, orig.getOutY() + titleAndHeaderNoteHeight);
+			return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2,
+					orig.getInY() + titleAndHeaderNoteHeight, orig.getOutY() + titleAndHeaderNoteHeight);
 		}
-		return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2, orig.getInY()
-				+ titleAndHeaderNoteHeight);
+		return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2,
+				orig.getInY() + titleAndHeaderNoteHeight);
 	}
 
 	private double headerNoteHeight(StringBounder stringBounder) {
@@ -222,12 +222,14 @@ public class FtileGroup extends AbstractFtile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
-		// final double roundCorner = type.getSkinParameter().getRoundCorner(skinParam(), null);
+		// final double roundCorner =
+		// type.getSkinParameter().getRoundCorner(skinParam(), null);
 		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(shadowing)
 				.withStroke(stroke).withCorner(roundCorner, 0);
 
-		type.asBig(name, inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
-				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,
+		final HorizontalAlignment align = inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment,
+				null, false);
+		type.asBig(name, align, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,
 				skinParam().getStereotypeAlignment()).drawU(ug);
 
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);

@@ -58,7 +58,7 @@ public class TextBlockTitle implements TextBlock {
 			throw new IllegalArgumentException();
 		}
 		final LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
-		textBlock = stringsToDisplay.create(font, HorizontalAlignment.CENTER, spriteContainer, lineBreak,
+		textBlock = stringsToDisplay.create0(font, HorizontalAlignment.CENTER, spriteContainer, lineBreak,
 				CreoleMode.FULL, null, null);
 	}
 

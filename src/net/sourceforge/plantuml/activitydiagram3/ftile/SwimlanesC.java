@@ -91,5 +91,4 @@ public class SwimlanesC extends SwimlanesB {
 		}
 		ug.apply(thickness).apply(new UChangeColor(color)).draw(ULine.vline(height));
 	}
-
 }

@@ -76,7 +76,7 @@ public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
+		this.desc = entity.getDisplay().create8(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
 				HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
 
 		Display list = Display.empty();

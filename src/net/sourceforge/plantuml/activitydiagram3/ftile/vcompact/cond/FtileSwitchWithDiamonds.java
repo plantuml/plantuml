@@ -194,7 +194,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 
 	protected TextBlock getLabelPositive(Branch branch) {
 		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
-		return branch.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
+		return branch.getLabelPositive().create7(fcArrow, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 
 }

@@ -67,8 +67,8 @@ public class YPositionedTile {
 	}
 
 	public boolean matchAnchorV2(String anchor) {
-		final Tile result = tile.matchAnchorV1(anchor);
-		return result != null;
+		final boolean result = tile.matchAnchorV1(anchor);
+		return result;
 	}
 
 	public final double getY(StringBounder stringBounder) {

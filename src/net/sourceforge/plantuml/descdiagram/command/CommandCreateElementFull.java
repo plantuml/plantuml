@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -57,6 +58,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -119,6 +121,8 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)") //
 						)), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -215,6 +219,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
 					.getIHtmlColorSet()));
 		}
+		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

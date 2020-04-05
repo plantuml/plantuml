@@ -181,7 +181,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 	}
 
 	private boolean isHidden(Task task) {
-		if (printStart == null) {
+		if (printStart == null || task instanceof TaskSeparator) {
 			return false;
 		}
 		if (task.getEnd().compareTo(min) < 0) {

@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
@@ -326,7 +327,8 @@ public class SvgGraphics {
 		if (url == null) {
 			throw new IllegalArgumentException();
 		}
-		if (OptionFlags.ALLOW_INCLUDE == false && url.toLowerCase().startsWith("javascript")) {
+		// javascript: security issue
+		if (GraphvizUtils.getJavascriptUnsecure() == false && url.toLowerCase().startsWith("javascript")) {
 			return;
 		}
 

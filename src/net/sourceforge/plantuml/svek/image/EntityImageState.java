@@ -91,7 +91,7 @@ public class EntityImageState extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 		this.withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 
-		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
+		this.desc = entity.getDisplay().create8(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
 				HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
 
 		Display list = Display.empty();
@@ -101,7 +101,7 @@ public class EntityImageState extends AbstractEntityImage {
 
 		this.url = entity.getUrl99();
 
-		this.fields = list.create(new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype),
+		this.fields = list.create8(new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype),
 				HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
 
 	}

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.comp;
 
 import java.util.List;
 
-public class CompressionTransform {
+public class CompressionTransform implements PiecewiseAffineTransform {
 
 	private final List<Slot> all;
 

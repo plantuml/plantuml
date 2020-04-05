@@ -73,6 +73,10 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;
 
+		if (dimensionToUse.getHeight() == 0) {
+			return;
+		}
+
 		final URectangle rect = new URectangle(getPreferredWidth(stringBounder), dimensionToUse.getHeight());
 		if (symbolContext.isShadowing()) {
 			rect.setDeltaShadow(1);

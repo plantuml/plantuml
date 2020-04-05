@@ -46,6 +46,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.VizJsEngine;
@@ -137,6 +138,14 @@ public class GraphvizUtils {
 			return Integer.parseInt(env);
 		}
 		return 4096;
+	}
+
+	public static boolean getJavascriptUnsecure() {
+		final String env = getenv("PLANTUML_JAVASCRIPT_UNSECURE");
+		if ("true".equalsIgnoreCase(env)) {
+			return true;
+		}
+		return OptionFlags.ALLOW_INCLUDE;
 	}
 
 	public static String getenvDefaultConfigFilename() {

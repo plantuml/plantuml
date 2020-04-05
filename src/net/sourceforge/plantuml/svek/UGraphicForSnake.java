@@ -53,7 +53,7 @@ public class UGraphicForSnake extends UGraphicDelegator {
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + getUg();
+		return "UGraphicForSnake " + getUg();
 	}
 
 	public UTranslate getTranslation() {

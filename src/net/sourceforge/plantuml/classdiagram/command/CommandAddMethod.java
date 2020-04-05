@@ -84,7 +84,7 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {
 			diagram.setVisibilityModifierPresent(true);
 		}
-		entity.getBodier().addFieldOrMethod(field, entity);
+		entity.getBodier().addFieldOrMethod(field);
 		return CommandExecutionResult.ok();
 	}
 }

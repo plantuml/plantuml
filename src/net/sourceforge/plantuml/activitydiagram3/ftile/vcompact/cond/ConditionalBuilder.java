@@ -267,7 +267,7 @@ public class ConditionalBuilder {
 	}
 
 	private TextBlock getLabelPositive(Branch branch) {
-		return branch.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
+		return branch.getLabelPositive().create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
 				CreoleMode.SIMPLE_LINE);
 	}
 
@@ -279,10 +279,10 @@ public class ConditionalBuilder {
 		// else use default ConditionEndStyle.DIAMOND
 		if (hasTwoBranches()) {
 			final Display out1 = branch1.getFtile().getOutLinkRendering().getDisplay();
-			final TextBlock tbout1 = out1 == null ? null : out1.create(fontArrow, HorizontalAlignment.LEFT,
+			final TextBlock tbout1 = out1 == null ? null : out1.create7(fontArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam(), CreoleMode.SIMPLE_LINE);
 			final Display out2 = branch2.getFtile().getOutLinkRendering().getDisplay();
-			final TextBlock tbout2 = out2 == null ? null : out2.create(fontArrow, HorizontalAlignment.LEFT,
+			final TextBlock tbout2 = out2 == null ? null : out2.create7(fontArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam(), CreoleMode.SIMPLE_LINE);
 			FtileDiamond tmp = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane);
 			tmp = useNorth ? tmp.withNorth(tbout1) : tmp.withWest(tbout1);

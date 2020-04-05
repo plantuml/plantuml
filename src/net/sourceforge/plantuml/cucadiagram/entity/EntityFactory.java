@@ -50,6 +50,8 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
+import net.sourceforge.plantuml.cucadiagram.BodierImpl;
+import net.sourceforge.plantuml.cucadiagram.BodierMap;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -82,7 +84,7 @@ public final class EntityFactory {
 
 	private final IGroup rootGroup = new GroupRoot(this);
 	private final SuperGroup rootSuperGroup = new SuperGroup(rootGroup);
-	
+
 	private final List<HideOrShow2> hides2;
 	private final List<HideOrShow2> removed;
 	/* private */ final public CucaDiagram namespaceSeparator;
@@ -216,7 +218,7 @@ public final class EntityFactory {
 		if (entityType == null) {
 			throw new IllegalArgumentException();
 		}
-		final Bodier bodier = new Bodier(entityType, hides);
+		final Bodier bodier = entityType == LeafType.MAP ? new BodierMap() : new BodierImpl(entityType, hides);
 		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, entityType,
 				namespaceSeparator, rawLayout);
 		bodier.setLeaf(result);
@@ -229,7 +231,7 @@ public final class EntityFactory {
 		if (groupType == null) {
 			throw new IllegalArgumentException();
 		}
-		final Bodier bodier = new Bodier(null, hides);
+		final Bodier bodier = new BodierImpl(null, hides);
 		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, groupType, namespace,
 				namespaceSeparator, rawLayout);
 		if (Display.isNull(display) == false) {
@@ -510,6 +512,5 @@ public final class EntityFactory {
 		}
 		return parentContainer;
 	}
-
 
 }
