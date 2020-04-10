@@ -213,13 +213,13 @@ public class HColorSet {
 		register("Yellow", "#FFFF00");
 		register("YellowGreen", "#9ACD32");
 		// Archimate
-		register("BUSINESS", "#FFFF00");
-		register("APPLICATION", "#A9DCDF");
-		register("MOTIVATION", "#B19CD9");
-		register("STRATEGY", "#F6E4CC");
-		register("TECHNOLOGY", "#90EE90");
-		register("PHYSICAL", "#CCFFCC");
-		register("IMPLEMENTATION", "#FFA6BF");
+		register("BUSINESS", "#FFFFCC");
+		register("APPLICATION", "#C2F0FF");
+		register("MOTIVATION", "#EFEFFF");
+		register("STRATEGY", "#F8E7C0");
+		register("TECHNOLOGY", "#C9FFC9");
+		register("PHYSICAL", "#97FF97");
+		register("IMPLEMENTATION", "#FFE0E0");
 	}
 
 	private void register(String s, String color) {
