@@ -7,3 +7,14 @@
 *.iml
 out
 gen
+
+# Ant result file
+plantuml.jar
+
+# Maven target folder
+target/
+
+# Eclipse Project files
+.settings/
+.classpath
+.project
