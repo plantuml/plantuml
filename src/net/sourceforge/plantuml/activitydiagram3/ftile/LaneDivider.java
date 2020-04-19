@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -91,7 +90,7 @@ public class LaneDivider extends AbstractTextBlock {
 
 	public void drawU(UGraphic ug) {
 //		final UShape back = new URectangle(x1 + x2, height).ignoreForCompressionOnY();
-//		ug.apply(new UChangeColor(HColorUtils.BLUE)).draw(back);
+//		ug.apply(UChangeColor.nnn(HColorUtils.BLUE)).draw(back);
 		final UShape back = new UEmpty(x1 + x2, 1);
 		ug.draw(back);
 
@@ -104,7 +103,7 @@ public class LaneDivider extends AbstractTextBlock {
 			color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			thickness = getStyle().getStroke();
 		}
-		ug.apply(UTranslate.dx(x1)).apply(thickness).apply(new UChangeColor(color)).draw(ULine.vline(height));
+		ug.apply(UTranslate.dx(x1)).apply(thickness).apply(color).draw(ULine.vline(height));
 
 	}
 

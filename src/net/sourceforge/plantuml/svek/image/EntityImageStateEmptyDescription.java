@@ -56,8 +56,6 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -110,12 +108,12 @@ public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 		}
 
 		ug = ug.apply(new UStroke(1.5))
-				.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder)));
+				.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder));
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
 		}
-		ug = ug.apply(new UChangeBackColor(backcolor));
+		ug = ug.apply(backcolor.bg());
 		ug.draw(rect);
 		final double xDesc = (widthTotal - dimDesc.getWidth()) / 2;
 		final double yDesc = (heightTotal - dimDesc.getHeight()) / 2;

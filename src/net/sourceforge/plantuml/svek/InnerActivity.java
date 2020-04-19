@@ -39,8 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -65,7 +63,7 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 	public void drawU(UGraphic ug) {
 		final Dimension2D total = calculateDimension(ug.getStringBounder());
 
-		ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor))
+		ug = ug.apply(backColor.bg()).apply(borderColor)
 				.apply(new UStroke(THICKNESS_BORDER));
 		final URectangle rect = new URectangle(total.getWidth(), total.getHeight()).rounded(IEntityImage.CORNER);
 		rect.setDeltaShadow(shadowing);

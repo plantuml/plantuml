@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -152,7 +151,7 @@ public class FingerImpl implements Finger, UDrawable {
 					- getX12();
 			final Point2D p2 = new Point2D.Double(x, stp.getY());
 			child.drawU(ug.apply(new UTranslate(p2)));
-			drawLine(ug.apply(new UChangeColor(getLinkColor())).apply(getUStroke()), p1, p2);
+			drawLine(ug.apply(getLinkColor()).apply(getUStroke()), p1, p2);
 		}
 
 	}

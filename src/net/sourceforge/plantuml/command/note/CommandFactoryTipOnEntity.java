@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;

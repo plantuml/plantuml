@@ -45,8 +45,6 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -74,9 +72,9 @@ public class EntityImageAssociation extends AbstractEntityImage {
 		diams.addPoint(0, SIZE);
 		diams.addPoint(SIZE, 0);
 
-		ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder)))
-				.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(),
-						ColorParam.classBackground))).apply(new UStroke(1.5)).draw(diams);
+		ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder))
+				.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(),
+				ColorParam.classBackground).bg()).apply(new UStroke(1.5)).draw(diams);
 	}
 
 	public ShapeType getShapeType() {

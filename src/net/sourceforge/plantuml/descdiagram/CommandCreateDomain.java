@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.descdiagram;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;

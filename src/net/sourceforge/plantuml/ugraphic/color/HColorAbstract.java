@@ -30,22 +30,20 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.color;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.UBackground;
 
-public class UChangeColor implements UChange {
+abstract class HColorAbstract implements HColor {
 
-	private final HColor color;
-
-	public UChangeColor(HColor color) {
-		this.color = color;
+	final public UBackground bg() {
+		return new UBackground() {
+			public HColor getBackColor() {
+				return HColorAbstract.this;
+			}
+		};
 	}
 
-	public HColor getColor() {
-		return color;
-	}
 }

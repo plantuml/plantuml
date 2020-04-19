@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -72,7 +70,7 @@ public final class RoundedContainer {
 
 	public void drawU(UGraphic ug, boolean shadowing) {
 
-		ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor));
+		ug = ug.apply(backColor.bg()).apply(borderColor);
 		final URectangle rect = new URectangle(dim.getWidth(), dim.getHeight()).rounded(IEntityImage.CORNER);
 		if (shadowing) {
 			rect.setDeltaShadow(3.0);
@@ -81,13 +79,13 @@ public final class RoundedContainer {
 
 		final double yLine = titleHeight + attributeHeight;
 
-		ug = ug.apply(new UChangeBackColor(imgBackcolor));
+		ug = ug.apply(imgBackcolor.bg());
 
 		final double thickness = stroke.getThickness();
 
 		final URectangle inner = new URectangle(dim.getWidth() - 4 * thickness,
 				dim.getHeight() - titleHeight - 4 * thickness - attributeHeight).rounded(IEntityImage.CORNER);
-		ug.apply(new UChangeColor(imgBackcolor)).apply(new UTranslate(2 * thickness, yLine + 2 * thickness))
+		ug.apply(imgBackcolor).apply(new UTranslate(2 * thickness, yLine + 2 * thickness))
 				.draw(inner);
 
 		if (titleHeight > 0) {

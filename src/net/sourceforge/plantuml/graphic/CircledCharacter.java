@@ -39,8 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -72,12 +70,12 @@ public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 		if (circle != null) {
-			ug = ug.apply(new UChangeColor(circle));
+			ug = ug.apply(circle);
 		}
 		// final HtmlColor back = ug.getParam().getBackcolor();
-		ug = ug.apply(new UChangeBackColor(innerCircle));
+		ug = ug.apply(innerCircle.bg());
 		ug.draw(new UEllipse(radius * 2, radius * 2));
-		ug = ug.apply(new UChangeColor(fontColor));
+		ug = ug.apply(fontColor);
 		ug = ug.apply(new UTranslate(radius, radius));
 		ug.draw(new UCenteredCharacter(c.charAt(0), font));
 	}

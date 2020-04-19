@@ -80,7 +80,7 @@ public class CommandChangeStateByTime extends CommandChangeState {
 			return CommandExecutionResult.error("Missing @ line before this");
 		}
 		final TimeTick tick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
-		diagram.addTime(tick);
+		diagram.addTime(tick, null);
 		return addState(diagram, arg, player, tick);
 	}
 

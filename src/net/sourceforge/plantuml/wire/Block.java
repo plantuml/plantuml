@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -125,7 +124,7 @@ public class Block extends AbstractTextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+		ug = ug.apply(HColorUtils.BLACK);
 		if (children.size() == 0) {
 			final TextBlock label = display.create(new FontConfiguration(skinParam, FontParam.COMPONENT, null),
 					HorizontalAlignment.CENTER, skinParam);

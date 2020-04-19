@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -130,10 +129,13 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		final USymbol type = USymbol.getFromString(arg.get("TYPE", 0), diagram.getSkinParam().getActorStyle());
-		if (type == USymbol.TOGETHER) {
-			p.setUSymbol(type);
-		} else if (stereotype != null) {
+		// final USymbol type = USymbol.getFromString(arg.get("TYPE", 0),
+		// diagram.getSkinParam().getActorStyle());
+//		if (type == USymbol.TOGETHER) {
+//			p.setUSymbol(type);
+//			p.setThisIsTogether();
+//		} else 
+		if (stereotype != null) {
 			final USymbol usymbol = USymbol.getFromString(stereotype, diagram.getSkinParam().getActorStyle());
 			if (usymbol == null) {
 				p.setStereotype(new Stereotype(stereotype));

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-public class HColorSimple implements HColor {
+public class HColorSimple extends HColorAbstract implements HColor {
 
 	private final Color color;
 	private final boolean monochrome;

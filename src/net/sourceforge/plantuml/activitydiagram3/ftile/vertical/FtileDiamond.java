@@ -55,8 +55,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -146,7 +144,7 @@ public class FtileDiamond extends AbstractFtile {
 
 		final double suppY1 = north.calculateDimension(ug.getStringBounder()).getHeight();
 		ug = ug.apply(UTranslate.dy(suppY1));
-		ug.apply(new UChangeColor(borderColor)).apply(getThickness()).apply(new UChangeBackColor(backColor))
+		ug.apply(borderColor).apply(getThickness()).apply(backColor.bg())
 				.draw(Diamond.asPolygon(shadowing));
 		// final Dimension2D dimNorth = north.calculateDimension(ug.getStringBounder());
 		north.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 1.5, -suppY1)));

@@ -40,7 +40,6 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -70,7 +69,7 @@ public class ElementButton extends AbstractElementText implements Element {
 		}
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		ug = ug.apply(new UStroke(stroke));
-		ug = ug.apply(new UChangeBackColor(HColorSet.instance().getColorIfValid("#EEEEEE")));
+		ug = ug.apply(HColorSet.instance().getColorIfValid("#EEEEEE").bg());
 		ug.apply(new UTranslate(stroke, stroke)).draw(
 				new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke).rounded(10));
 		final Dimension2D dimPureText = getPureTextDimension(ug.getStringBounder());

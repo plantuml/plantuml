@@ -55,7 +55,7 @@ public class DateFunction extends SimpleReturnFunction {
 		return nbArg == 0 || nbArg == 1;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		if (args.size() == 0) {
 			return TValue.fromString(new Date().toString());
 		}

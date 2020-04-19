@@ -57,8 +57,6 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
@@ -130,12 +128,12 @@ public class EntityImageDomain extends AbstractEntityImage {
 		final double heightTotal = dimTotal.getHeight();
 		final URectangle rect = new URectangle(widthTotal, heightTotal);
 
-		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBorder)));
+		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBorder));
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.domainBackground);
 		}
-		ug = ug.apply(new UChangeBackColor(backcolor));
+		ug = ug.apply(backcolor.bg());
 		if (url != null) {
 			ug.startUrl(url);
 		}

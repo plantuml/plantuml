@@ -51,14 +51,14 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.stats.api.Stats;
 import net.sourceforge.plantuml.stats.api.StatsColumn;
 import net.sourceforge.plantuml.stats.api.StatsLine;
 import net.sourceforge.plantuml.stats.api.StatsTable;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class XmlConverter {
 

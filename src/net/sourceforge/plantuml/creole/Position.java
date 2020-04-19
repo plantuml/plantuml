@@ -38,11 +38,10 @@ package net.sourceforge.plantuml.creole;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Position {
@@ -98,8 +97,7 @@ public class Position {
 	}
 
 	public void drawDebug(UGraphic ug) {
-		// ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UChangeBackColor(HtmlColorUtils.LIGHT_GRAY));
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK)).apply(new UChangeBackColor(null));
+		ug = ug.apply(HColorUtils.BLACK).apply(new HColorNone().bg());
 		ug = ug.apply(new UTranslate(x, y));
 		ug.draw(new URectangle(dim));
 	}

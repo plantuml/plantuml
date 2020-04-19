@@ -102,7 +102,7 @@ public class Img implements HtmlCommand {
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 //					final byte image[] = getFile(src);
 //					final BufferedImage read = ImageIO.read(new ByteArrayInputStream(image));
-					final BufferedImage read = FileUtils.ImageIO_read(new URL(src));
+					final BufferedImage read = FileUtils.readRasterImageFromURL(new URL(src));
 					if (read == null) {
 						return new Text("(Cannot decode: " + src + ")");
 					}
@@ -113,11 +113,11 @@ public class Img implements HtmlCommand {
 			if (f.getName().endsWith(".svg")) {
 				return new Img(new TileImageSvg(f));
 			}
-			final BufferedImage read = FileUtils.ImageIO_read(f);
+			final BufferedImage read = FileUtils.readRasterImageFromFile(f);
 			if (read == null) {
 				return new Text("(Cannot decode: " + f + ")");
 			}
-			return new Img(new TileImage(FileUtils.ImageIO_read(f), valign, vspace));
+			return new Img(new TileImage(FileUtils.readRasterImageFromFile(f), valign, vspace));
 		} catch (IOException e) {
 			return new Text("ERROR " + e.toString());
 		}

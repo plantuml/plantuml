@@ -83,7 +83,8 @@ public abstract class Eater {
 		return result;
 	}
 
-	final protected TValue eatExpression(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	final protected TValue eatExpression(TContext context, TMemory memory)
+			throws EaterException, EaterExceptionLocated {
 		if (peekChar() == '{') {
 			String data = eatAllToEnd();
 			// System.err.println("data=" + data);
@@ -104,7 +105,8 @@ public abstract class Eater {
 		return tokenStack;
 	}
 
-	final protected TValue eatExpressionStopAtColon(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	final protected TValue eatExpressionStopAtColon(TContext context, TMemory memory)
+			throws EaterException, EaterExceptionLocated {
 		final TokenStack tokenStack = new TokenStack();
 		addIntoTokenStack(tokenStack, true);
 		return tokenStack.getResult(getLineLocation(), context, memory);
@@ -303,13 +305,14 @@ public abstract class Eater {
 	// }
 
 	final protected TFunctionImpl eatDeclareFunction(TContext context, TMemory memory, boolean unquoted,
-			LineLocation location, boolean allowNoParenthesis) throws EaterException, EaterExceptionLocated {
+			LineLocation location, boolean allowNoParenthesis, TFunctionType type)
+			throws EaterException, EaterExceptionLocated {
 		final List<TFunctionArgument> args = new ArrayList<TFunctionArgument>();
 		final String functionName = eatAndGetFunctionName();
 		skipSpaces();
 		if (safeCheckAndEatChar('(') == false) {
 			if (allowNoParenthesis) {
-				return new TFunctionImpl(functionName, args, unquoted);
+				return new TFunctionImpl(functionName, args, unquoted, type);
 			}
 			throw EaterException.located("Missing opening parenthesis", getStringLocated());
 		}
@@ -340,12 +343,12 @@ public abstract class Eater {
 			}
 		}
 		skipSpaces();
-		return new TFunctionImpl(functionName, args, unquoted);
+		return new TFunctionImpl(functionName, args, unquoted, type);
 	}
 
-	final protected TFunctionImpl eatDeclareFunctionWithOptionalReturn(TContext context, TMemory memory,
+	final protected TFunctionImpl eatDeclareReturnFunctionWithOptionalReturn(TContext context, TMemory memory,
 			boolean unquoted, LineLocation location) throws EaterException, EaterExceptionLocated {
-		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false);
+		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false, TFunctionType.RETURN_FUNCTION);
 		if (peekChar() == 'r') {
 			checkAndEatChar("return");
 			skipSpaces();
@@ -357,6 +360,12 @@ public abstract class Eater {
 			final String line = "!return " + eatAllToEnd();
 			result.addBody(new StringLocated(line, location));
 		}
+		return result;
+	}
+
+	final protected TFunctionImpl eatDeclareProcedure(TContext context, TMemory memory, boolean unquoted,
+			LineLocation location) throws EaterException, EaterExceptionLocated {
+		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false, TFunctionType.PROCEDURE);
 		return result;
 	}
 

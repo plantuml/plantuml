@@ -47,14 +47,14 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public abstract class SimpleReturnFunction implements TFunction {
 
 	final public TFunctionType getFunctionType() {
-		return TFunctionType.RETURN;
+		return TFunctionType.RETURN_FUNCTION;
 	}
 
-	final public void executeVoid(TContext context, TMemory memory, LineLocation location, String s) throws EaterException {
+	final public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s) throws EaterException {
 		throw new UnsupportedOperationException();
 	}
 
-	final public void executeVoidInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+	final public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException {
 		throw new UnsupportedOperationException();
 	}
 	

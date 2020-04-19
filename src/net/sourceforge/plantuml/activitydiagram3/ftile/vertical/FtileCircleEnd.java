@@ -48,8 +48,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -107,9 +105,9 @@ public class FtileCircleEnd extends AbstractFtile {
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
-		ug = ug.apply(new UChangeColor(backColor));
+		ug = ug.apply(backColor);
 		final double thickness = 2.5;
-		ug.apply(new UChangeBackColor(HColorUtils.WHITE)).apply(new UStroke(1.5))
+		ug.apply(HColorUtils.WHITE.bg()).apply(new UStroke(1.5))
 				.apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);
 
 		final double size2 = (SIZE - thickness) / Math.sqrt(2);

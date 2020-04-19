@@ -50,11 +50,10 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class EntityImageCircleStart extends AbstractEntityImage {
 
@@ -88,7 +87,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 			shadowing = style.value(PName.Shadowing).asDouble();
 		}
 		circle.setDeltaShadow(shadowing);
-		ug.apply(new UChangeBackColor(color)).apply(new UChangeColor(null)).draw(circle);
+		ug.apply(color.bg()).apply(new HColorNone()).draw(circle);
 	}
 
 	public ShapeType getShapeType() {

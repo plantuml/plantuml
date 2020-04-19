@@ -41,8 +41,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.salt.Cell;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -104,7 +102,7 @@ public class Grid {
 
 		if (dim.getWidth() > 0 && dim.getHeight() > 0) {
 			final UGraphic ug2 = ug.apply(new UTranslate(x + 6, y - dim.getHeight() * 0));
-			ug2.apply(new UChangeBackColor(HColorUtils.WHITE)).apply(new UChangeColor(HColorUtils.WHITE))
+			ug2.apply(HColorUtils.WHITE.bg()).apply(HColorUtils.WHITE)
 					.draw(new URectangle(dim));
 			title.drawU(ug2);
 		}

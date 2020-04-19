@@ -49,9 +49,9 @@ public class EaterLegacyDefine extends Eater {
 		skipSpaces();
 		checkAndEatChar("!define");
 		skipSpaces();
-		function = eatDeclareFunction(context, memory, true, getLineLocation(), false);
+		function = eatDeclareFunction(context, memory, true, getLineLocation(), false, TFunctionType.LEGACY_DEFINE);
 		final String def = this.eatAllToEnd();
-		function.setFunctionType(TFunctionType.LEGACY_DEFINE);
+//		function.setFunctionType(TFunctionType.LEGACY_DEFINE);
 		function.setLegacyDefinition(def);
 	}
 

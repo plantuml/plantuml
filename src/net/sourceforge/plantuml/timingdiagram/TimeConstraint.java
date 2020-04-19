@@ -45,8 +45,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -90,7 +88,7 @@ public class TimeConstraint {
 	}
 
 	public void drawU(UGraphic ug, TimingRuler ruler) {
-		ug = ug.apply(new UChangeColor(HColorUtils.RED)).apply(new UChangeBackColor(HColorUtils.RED));
+		ug = ug.apply(HColorUtils.RED).apply(HColorUtils.RED.bg());
 		final double x1 = ruler.getPosInPixel(tick1);
 		final double x2 = ruler.getPosInPixel(tick2);
 		ug = ug.apply(UTranslate.dx(x1));

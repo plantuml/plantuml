@@ -70,8 +70,6 @@ import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -211,8 +209,7 @@ public class SwimlanesA extends AbstractTextBlock implements ISwimlanesA, TextBl
 	}
 
 	static private void printDebug(UGraphic ug, SlotSet slot, HColor col, TextBlock full) {
-		slot.drawDebugX(ug.apply(new UChangeColor(col)).apply(new UChangeBackColor(col)),
-				full.calculateDimension(ug.getStringBounder()).getHeight());
+		slot.drawDebugX(ug.apply(col).apply(col.bg()), full.calculateDimension(ug.getStringBounder()).getHeight());
 
 	}
 
@@ -224,12 +221,12 @@ public class SwimlanesA extends AbstractTextBlock implements ISwimlanesA, TextBl
 		for (Swimlane swimlane : swimlanes) {
 			final HColor back = swimlane.getColors(skinParam).getColor(ColorType.BACK);
 			if (back != null) {
-				UGraphic background = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(back));
+				UGraphic background = ug.apply(back.bg()).apply(back);
 				background = background.apply(UTranslate.dx(x2));
 				drawBackColor(background, swimlane, dimensionFull);
 			}
 
-			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane).apply(swimlane.getTranslate())
+			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane, swimlanes).apply(swimlane.getTranslate())
 					.apply(getTitleHeightTranslate(stringBounder)));
 			x2 += swimlane.getActualWidth();
 
@@ -242,7 +239,8 @@ public class SwimlanesA extends AbstractTextBlock implements ISwimlanesA, TextBl
 	protected void drawBackColor(UGraphic ug, Swimlane swimlane, Dimension2D dimensionFull) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double height = dimensionFull.getHeight() + getTitleHeightTranslate(stringBounder).getDy();
-		final URectangle rectangle = new URectangle(swimlane.getActualWidth(), height).ignoreForCompressionOnX().ignoreForCompressionOnY();
+		final URectangle rectangle = new URectangle(swimlane.getActualWidth(), height).ignoreForCompressionOnX()
+				.ignoreForCompressionOnY();
 		ug.draw(rectangle);
 	}
 
@@ -255,7 +253,7 @@ public class SwimlanesA extends AbstractTextBlock implements ISwimlanesA, TextBl
 		for (Swimlane swimlane : swimlanes) {
 			final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
 			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(
-					new UGraphicForSnake(limitFinder), swimlane);
+					new UGraphicForSnake(limitFinder), swimlane, swimlanes);
 			full.drawU(interceptor);
 			interceptor.flushUg();
 			final MinMax minMax = limitFinder.getMinMax();

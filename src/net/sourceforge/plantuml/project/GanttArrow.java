@@ -41,8 +41,6 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -80,7 +78,7 @@ public class GanttArrow implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeBackColor(HColorUtils.RED_DARK)).apply(new UChangeColor(HColorUtils.RED_DARK))
+		ug = ug.apply(HColorUtils.RED_DARK.bg()).apply(HColorUtils.RED_DARK)
 				.apply(new UStroke(1.5));
 
 		final Task draw1 = (Task) source.getMoment();

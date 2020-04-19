@@ -43,11 +43,10 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class EntityImageAssociationPoint extends AbstractEntityImage {
@@ -64,7 +63,7 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		final UShape circle = new UEllipse(SIZE, SIZE);
-		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(HColorUtils.BLACK)).draw(circle);
+		ug.apply(new HColorNone()).apply(HColorUtils.BLACK.bg()).draw(circle);
 	}
 
 	public ShapeType getShapeType() {

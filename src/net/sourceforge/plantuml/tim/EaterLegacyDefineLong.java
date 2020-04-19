@@ -49,8 +49,8 @@ public class EaterLegacyDefineLong extends Eater {
 		skipSpaces();
 		checkAndEatChar("!definelong");
 		skipSpaces();
-		function = eatDeclareFunction(context, memory, true, getLineLocation(), true);
-		function.setFunctionType(TFunctionType.LEGACY_DEFINELONG);
+		function = eatDeclareFunction(context, memory, true, getLineLocation(), true, TFunctionType.LEGACY_DEFINELONG);
+		// function.setFunctionType(TFunctionType.LEGACY_DEFINELONG);
 	}
 
 	public TFunctionImpl getFunction() {

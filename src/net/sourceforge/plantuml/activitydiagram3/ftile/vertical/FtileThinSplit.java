@@ -43,13 +43,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class FtileThinSplit extends AbstractFtile {
 
@@ -80,7 +80,12 @@ public class FtileThinSplit extends AbstractFtile {
 	public void drawU(UGraphic ug) {
 		final UShape rect = ULine.hline(last - first);
 		ug = ug.apply(UTranslate.dx(first));
-		ug.apply(new UChangeColor(colorBar)).apply(new UStroke(1.5)).draw(rect);
+		if (colorBar == null) {
+			ug = ug.apply(new HColorNone());
+		} else {
+			ug = ug.apply(colorBar);
+		}
+		ug.apply(new UStroke(1.5)).draw(rect);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

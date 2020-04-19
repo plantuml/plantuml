@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -99,7 +98,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		im.drawU(ug.apply(new UTranslate(IEntityImage.MARGIN, spaceYforURL)));
 
 		if (withSymbol) {
-			EntityImageState.drawSymbol(ug.apply(new UChangeColor(borderColor)), total.getWidth(), total.getHeight());
+			EntityImageState.drawSymbol(ug.apply(borderColor), total.getWidth(), total.getHeight());
 
 		}
 

@@ -40,8 +40,6 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -81,7 +79,7 @@ public class Bullet extends AbstractAtom implements Atom {
 
 	private void drawU0(UGraphic ug) {
 		final HColor color = fontConfiguration.getColor();
-		ug = ug.apply(new UChangeColor(color)).apply(new UChangeBackColor(color)).apply(new UStroke(0));
+		ug = ug.apply(color).apply(color.bg()).apply(new UStroke(0));
 		// final double width = getWidth(ug.getStringBounder());
 		ug = ug.apply(UTranslate.dx(3));
 		ug.draw(new UEllipse(5, 5));
@@ -97,7 +95,7 @@ public class Bullet extends AbstractAtom implements Atom {
 
 	private void drawU1(UGraphic ug) {
 		final HColor color = fontConfiguration.getColor();
-		ug = ug.apply(new UChangeColor(color)).apply(new UChangeBackColor(color)).apply(new UStroke(0));
+		ug = ug.apply(color).apply(color.bg()).apply(new UStroke(0));
 		final double width = getWidth(ug.getStringBounder());
 		ug = ug.apply(UTranslate.dx(width - 5));
 		ug.draw(new URectangle(3.5, 3.5));

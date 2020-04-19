@@ -40,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextLimitFinder implements UGraphic {
 
@@ -57,9 +58,9 @@ public class TextLimitFinder implements UGraphic {
 			return new TextLimitFinder(stringBounder, minmax, translate.compose((UTranslate) change));
 		} else if (change instanceof UStroke) {
 			return new TextLimitFinder(this);
-		} else if (change instanceof UChangeBackColor) {
+		} else if (change instanceof UBackground) {
 			return new TextLimitFinder(this);
-		} else if (change instanceof UChangeColor) {
+		} else if (change instanceof HColor) {
 			return new TextLimitFinder(this);
 		}
 		throw new UnsupportedOperationException();

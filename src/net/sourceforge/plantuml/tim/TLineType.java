@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.tim;
 public enum TLineType {
 
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
-	FOREACH, ENDFOREACH, DECLARE_FUNCTION, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, INCLUDE_DEF,
+	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE, LEGACY_DEFINELONG, INCLUDE, INCLUDE_DEF,
 	IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START;
 
 //	private boolean elseLike() {
@@ -89,8 +89,11 @@ public enum TLineType {
 		if (s.matches("^\\s*!if\\s+.*")) {
 			return IF;
 		}
-		if (s.matches("^\\s*!(unquoted\\s|final\\s)*function\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
-			return DECLARE_FUNCTION;
+		if (s.matches("^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
+			return DECLARE_RETURN_FUNCTION;
+		}
+		if (s.matches("^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
+			return DECLARE_PROCEDURE;
 		}
 		if (s.matches("^\\s*!else\\b.*")) {
 			return ELSE;
@@ -113,7 +116,7 @@ public enum TLineType {
 		if (s.matches("^\\s*!endfor\\b.*")) {
 			return ENDFOREACH;
 		}
-		if (s.matches("^\\s*!(endfunction|enddefinelong)\\b.*")) {
+		if (s.matches("^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*")) {
 			return END_FUNCTION;
 		}
 		if (s.matches("^\\s*!return\\b.*")) {

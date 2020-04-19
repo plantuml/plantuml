@@ -53,7 +53,7 @@ public class Lower extends SimpleReturnFunction {
 		return nbArg == 1;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args)
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args)
 			throws EaterException {
 		return TValue.fromString(args.get(0).toString().toLowerCase());
 	}

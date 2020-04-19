@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.png.PngIO;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UMotif;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -75,7 +75,7 @@ public class GraphicsPath {
 		final UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, 1.0);
 		ug.setBufferedImage(im);
 		final UMotif motif = new UMotif(path);
-		motif.drawHorizontal(ug.apply(new UChangeColor(HColorUtils.BLACK)), 20, 20, 1);
+		motif.drawHorizontal(ug.apply((UChange) HColorUtils.BLACK), 20, 20, 1);
 
 		g2d.dispose();
 		return im;

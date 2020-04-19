@@ -286,4 +286,8 @@ public class GroupRoot implements IGroup {
 	public boolean isAloneAndUnlinked() {
 		throw new UnsupportedOperationException();
 	}
+
+	public void setThisIsTogether() {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -61,8 +61,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -253,8 +251,8 @@ public class NwDiagram extends UmlDiagram {
 		}
 		deltaX += 5;
 
-		grid.drawU(ug.apply(new UChangeColor(ColorParam.activityBorder.getDefaultValue()))
-				.apply(new UChangeBackColor(ColorParam.activityBackground.getDefaultValue()))
+		grid.drawU(ug.apply(ColorParam.activityBorder.getDefaultValue())
+				.apply(ColorParam.activityBackground.getDefaultValue().bg())
 				.apply(new UTranslate(deltaX, deltaY)));
 		final Dimension2D dimGrid = grid.calculateDimension(stringBounder);
 

@@ -52,11 +52,10 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class EntityImageSynchroBar extends AbstractEntityImage {
 
@@ -89,7 +88,7 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 			shadowing = style.value(PName.Shadowing).asDouble();
 		}
 		rect.setDeltaShadow(shadowing);
-		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(color)).draw(rect);
+		ug.apply(new HColorNone()).apply(color.bg()).draw(rect);
 	}
 
 	public ShapeType getShapeType() {

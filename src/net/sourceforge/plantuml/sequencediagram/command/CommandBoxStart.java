@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -52,7 +51,6 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 

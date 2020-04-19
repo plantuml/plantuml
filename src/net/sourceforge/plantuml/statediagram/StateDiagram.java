@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.statediagram;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;

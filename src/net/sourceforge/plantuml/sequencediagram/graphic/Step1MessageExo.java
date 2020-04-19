@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.style.Style;
 
 class Step1MessageExo extends Step1Abstract {
 

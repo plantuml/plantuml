@@ -62,6 +62,8 @@ public class VariableManager {
 		if (value.isJson()) {
 			if (value.toJson().isString()) {
 				result.append(value.toJson().asString());
+			} else if (value.toJson().isNumber()) {
+				result.append(value.toJson().toString());
 			} else {
 				JsonValue jsonValue = (JsonObject) value.toJson();
 				i++;
@@ -78,15 +80,12 @@ public class VariableManager {
 
 	private int replaceJson(JsonValue jsonValue, String str, int i, StringBuilder result)
 			throws EaterException, EaterExceptionLocated {
-		while (true) {
+		while (i < str.length()) {
 			final char n = str.charAt(i);
 			if (n == '.') {
 				i++;
 				final StringBuilder fieldName = new StringBuilder();
-				while (true) {
-					if (i >= str.length()) {
-						throw EaterException.unlocated("Parsing error");
-					}
+				while (i < str.length()) {
 					if (Character.isJavaIdentifierPart(str.charAt(i)) == false) {
 						break;
 					}
@@ -97,25 +96,40 @@ public class VariableManager {
 			} else if (n == '[') {
 				i++;
 				final StringBuilder inBracket = new StringBuilder();
+				int level = 0;
 				while (true) {
+					if (str.charAt(i) == '[') {
+						level++;
+					}
 					if (str.charAt(i) == ']') {
-						break;
+						if (level == 0)
+							break;
+						level--;
 					}
 					inBracket.append(str.charAt(i));
 					i++;
 				}
 				final String nbString = context.applyFunctionsAndVariables(memory, location, inBracket.toString());
-				final int nb = Integer.parseInt(nbString);
-				jsonValue = ((JsonArray) jsonValue).get(nb);
+				if (jsonValue instanceof JsonArray) {
+					final int nb = Integer.parseInt(nbString);
+					jsonValue = ((JsonArray) jsonValue).get(nb);
+				} else if (jsonValue instanceof JsonObject) {
+					jsonValue = ((JsonObject) jsonValue).get(nbString);
+				} else {
+					throw EaterException.unlocated("Major parsing error");
+				}
+				if (jsonValue == null) {
+					throw EaterException.unlocated("Data parsing error");
+				}
 				i++;
 			} else {
-				if (jsonValue.isString()) {
-					result.append(jsonValue.asString());
-				} else {
-					result.append(jsonValue.toString());
-				}
 				break;
 			}
+		}
+		if (jsonValue.isString()) {
+			result.append(jsonValue.asString());
+		} else {
+			result.append(jsonValue.toString());
 		}
 		return i;
 	}

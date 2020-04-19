@@ -43,8 +43,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -65,9 +64,9 @@ public class CollisionDetector implements UGraphic {
 			return new CollisionDetector(stringBounder, translate.compose((UTranslate) change), this.context);
 		} else if (change instanceof UStroke) {
 			return new CollisionDetector(this);
-		} else if (change instanceof UChangeBackColor) {
+		} else if (change instanceof UBackground) {
 			return new CollisionDetector(this);
-		} else if (change instanceof UChangeColor) {
+		} else if (change instanceof HColor) {
 			return new CollisionDetector(this);
 		}
 		throw new UnsupportedOperationException();
@@ -89,7 +88,7 @@ public class CollisionDetector implements UGraphic {
 				}
 			}
 			final HColor color = HColorUtils.BLACK;
-			ug = ug.apply(new UChangeColor(color)).apply(new UStroke(5));
+			ug = ug.apply(color).apply(new UStroke(5));
 			for (Snake snake : snakes) {
 				for (Line2D line : snake.getHorizontalLines()) {
 					if (collision(line)) {

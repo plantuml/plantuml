@@ -53,10 +53,24 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
-	
+
 	private final SheetBlock1 block;
 	private final UStroke defaultStroke;
 	private final Stencil stencil;
+
+	public SheetBlock2 enlargeMe(final double delta) {
+		final Stencil newStencil = new Stencil() {
+
+			public double getStartingX(StringBounder stringBounder, double y) {
+				return stencil.getStartingX(stringBounder, y) - delta;
+			}
+
+			public double getEndingX(StringBounder stringBounder, double y) {
+				return stencil.getEndingX(stringBounder, y) + delta;
+			}
+		};
+		return new SheetBlock2(block, newStencil, defaultStroke);
+	}
 
 	public SheetBlock2(SheetBlock1 block, Stencil stencil, UStroke defaultStroke) {
 		this.block = block;
@@ -66,7 +80,7 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 			throw new IllegalArgumentException();
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return block.toString();
@@ -86,10 +100,10 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 	public double getStartingAltitude(StringBounder stringBounder) {
 		return 0;
 	}
-	
+
 	@Override
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return block.getInnerPosition(member, stringBounder, strategy);
 	}
-	
+
 }

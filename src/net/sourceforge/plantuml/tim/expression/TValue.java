@@ -77,6 +77,9 @@ public class TValue {
 
 	@Override
 	public String toString() {
+		if (jsonValue != null && jsonValue.isString()) {
+			return jsonValue.asString();
+		}
 		if (jsonValue != null) {
 			return jsonValue.toString();
 		}

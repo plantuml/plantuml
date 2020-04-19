@@ -169,7 +169,7 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut) {
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile back) {
 		return whileBlock;
 	}
 

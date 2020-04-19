@@ -44,8 +44,8 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.Eater;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
 
@@ -209,7 +209,7 @@ public class TokenStack {
 	}
 
 	public TValue getResult(LineLocation location, TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
-		final Knowledge knowledge = context.asKnowledge(memory);
+		final Knowledge knowledge = context.asKnowledge(memory, location);
 		final TokenStack tmp = withoutSpace();
 		tmp.guessFunctions();
 		final TokenIterator it = tmp.tokenIterator();

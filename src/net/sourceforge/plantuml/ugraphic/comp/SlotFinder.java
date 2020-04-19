@@ -39,8 +39,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.TextLimitFinder;
 import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SlotFinder implements UGraphic {
 
@@ -72,9 +72,9 @@ public class SlotFinder implements UGraphic {
 			return new SlotFinder(mode, stringBounder, slot, translate.compose((UTranslate) change));
 		} else if (change instanceof UStroke) {
 			return new SlotFinder(this);
-		} else if (change instanceof UChangeBackColor) {
+		} else if (change instanceof UBackground) {
 			return new SlotFinder(this);
-		} else if (change instanceof UChangeColor) {
+		} else if (change instanceof HColor) {
 			return new SlotFinder(this);
 		}
 		throw new UnsupportedOperationException();

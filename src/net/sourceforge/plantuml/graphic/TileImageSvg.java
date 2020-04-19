@@ -50,11 +50,11 @@ public class TileImageSvg extends AbstractTextBlock implements TextBlock {
 	private final UImageSvg svg;
 
 	public TileImageSvg(File svgFile) throws IOException {
-		this.svg = createSvg(svgFile);
+		this(FileUtils.readSvg(svgFile));
 	}
 
-	private UImageSvg createSvg(File svgFile) throws IOException {
-		return new UImageSvg(new SvgString(FileUtils.readSvg(svgFile), 1));
+	public TileImageSvg(String svg) {
+		this.svg = new UImageSvg(new SvgString(svg, 1));
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

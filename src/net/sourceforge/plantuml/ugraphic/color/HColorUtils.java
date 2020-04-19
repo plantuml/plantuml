@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
+import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+
 public class HColorUtils {
 
 	public static final HColor BLACK;
@@ -118,6 +121,14 @@ public class HColorUtils {
 			return ((HColorGradient) color).getColor1();
 		}
 		return color;
+	}
+
+	public static UChange changeBack(UGraphic ug) {
+		final HColor color = ug.getParam().getColor();
+		if (color == null) {
+			return new HColorNone().bg();
+		}
+		return color.bg();
 	}
 
 }

@@ -72,7 +72,7 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut) {
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward) {
 
 		final HColor borderColor;
 		final HColor backColor;
@@ -83,10 +83,10 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ARROW;
 		if (SkinParam.USE_STYLES()) {
-			final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(
-					skinParam().getCurrentStyleBuilder());
-			final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(
-					skinParam().getCurrentStyleBuilder());
+			final Style styleArrow = getDefaultStyleDefinitionArrow()
+					.getMergedStyle(skinParam().getCurrentStyleBuilder());
+			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
+					.getMergedStyle(skinParam().getCurrentStyleBuilder());
 			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 			backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
 			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
@@ -102,11 +102,12 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		}
 
 		final LinkRendering endInlinkRendering = whileBlock.getOutLinkRendering();
-		final Rainbow endInlinkColor = endInlinkRendering == null || endInlinkRendering.getRainbow().size() == 0 ? arrowColor
+		final Rainbow endInlinkColor = endInlinkRendering == null || endInlinkRendering.getRainbow().size() == 0
+				? arrowColor
 				: endInlinkRendering.getRainbow();
 
 		Ftile result = FtileWhile.create(swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes, out,
-				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest, specialOut);
+				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest, specialOut, backward);
 
 		final List<WeldingPoint> weldingPoints = whileBlock.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
@@ -120,8 +121,8 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 					public void drawU(UGraphic ug) {
 						final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
 
-						final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor, Arrows
-								.asToLeft());
+						final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor,
+								Arrows.asToLeft());
 						snake.addPoint(tr1.getDx(), tr1.getDy());
 						snake.addPoint(Diamond.diamondHalfSize, tr1.getDy());
 						ug.draw(snake);

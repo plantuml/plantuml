@@ -35,44 +35,41 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.svek.Ports;
+
 public class EntityPort {
 
-	private final String uid;
-	private final String portName;
+	private final String entityUid;
+	private final String portId;
 
-	public EntityPort(String uid, String portName) {
-		this.uid = uid;
-		this.portName = portName;
+	public EntityPort(String entityUid, String portName) {
+		this.entityUid = entityUid;
+		this.portId = portName == null ? null : Ports.encodePortNameToId(portName);
 	}
 
 	public String getFullString() {
-		if (portName != null) {
-			return uid + ":" + portName;
+		if (portId != null) {
+			return entityUid + ":" + portId;
 		}
-		return uid;
+		return entityUid;
 	}
 
 	private boolean isShielded() {
-		return uid.endsWith(":h");
+		return entityUid.endsWith(":h");
 	}
 
 	public String getPrefix() {
 		if (isShielded()) {
-			return uid.substring(0, uid.length() - 2);
+			return entityUid.substring(0, entityUid.length() - 2);
 		}
-		return uid;
+		return entityUid;
 	}
 
 	public boolean startsWith(String centerId) {
-		return uid.startsWith(centerId);
+		return entityUid.startsWith(centerId);
 	}
 
 	public boolean equalsId(EntityPort other) {
-		return this.uid.equals(other.uid);
+		return this.entityUid.equals(other.entityUid);
 	}
-
-	// private String getPortName() {
-	// return portName;
-	// }
-
 }

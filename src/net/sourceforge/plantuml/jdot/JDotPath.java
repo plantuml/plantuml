@@ -35,15 +35,14 @@
  */
 package net.sourceforge.plantuml.jdot;
 
+import java.awt.geom.Point2D;
+
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_bezier;
 import h.ST_pointf;
 import h.ST_splines;
 import h.ST_textlabel_t;
-
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -53,13 +52,12 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import smetana.core.Macro;
 
@@ -120,7 +118,7 @@ public class JDotPath implements UDrawable {
 		}
 
 		if (dotPath != null) {
-			ug.apply(new UChangeColor(color)).draw(dotPath);
+			ug.apply(color).draw(dotPath);
 		}
 		if (getLabelRectangleTranslate("label") != null) {
 			label.drawU(ug.apply(getLabelRectangleTranslate("label")));
@@ -136,7 +134,7 @@ public class JDotPath implements UDrawable {
 	}
 
 	private void printDebug(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(HColorUtils.BLUE)).apply(new UChangeBackColor(HColorUtils.BLUE));
+		ug = ug.apply(HColorUtils.BLUE).apply(HColorUtils.BLUE.bg());
 		final ST_splines splines = getSplines(edge);
 		final ST_bezier beziers = splines.list.getPtr();
 		for (int i = 0; i < beziers.size; i++) {
@@ -147,7 +145,7 @@ public class JDotPath implements UDrawable {
 			ug.apply(new UTranslate(pt).compose(new UTranslate(-1, -1))).draw(new UEllipse(3, 3));
 		}
 		if (getLabelRectangleTranslate("label") != null && getLabelURectangle() != null) {
-			ug = ug.apply(new UChangeColor(HColorUtils.BLUE)).apply(new UChangeBackColor(null));
+			ug = ug.apply(HColorUtils.BLUE).apply(new HColorNone().bg());
 			ug.apply(getLabelRectangleTranslate("label")).draw(getLabelURectangle());
 		}
 

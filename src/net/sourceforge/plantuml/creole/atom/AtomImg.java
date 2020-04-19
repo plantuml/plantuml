@@ -95,7 +95,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 			final String data = src.substring(DATA_IMAGE_PNG_BASE64.length(), src.length());
 			try {
 				final byte bytes[] = Base64Coder.decode(data);
-				return build(src, fc, bytes, scale, url);
+				return buildRasterFromData(src, fc, bytes, scale, url);
 			} catch (Exception e) {
 				return AtomText.create("ERROR " + e.toString(), fc);
 			}
@@ -104,8 +104,10 @@ public class AtomImg extends AbstractAtom implements Atom {
 		try {
 			// Check if valid URL
 			if (src.startsWith("http:") || src.startsWith("https:")) {
-				// final byte image[] = getFile(src);
-				return build(src, fc, new URL(src), scale, url);
+				if (src.endsWith(".svg")) {
+					return buildSvgFromUrl(src, fc, new URL(src), scale, url);
+				}
+				return buildRasterFromUrl(src, fc, new URL(src), scale, url);
 			}
 			final File f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
@@ -114,18 +116,18 @@ public class AtomImg extends AbstractAtom implements Atom {
 			if (f.getName().endsWith(".svg")) {
 				return new AtomImgSvg(new TileImageSvg(f));
 			}
-			final BufferedImage read = FileUtils.ImageIO_read(f);
+			final BufferedImage read = FileUtils.readRasterImageFromFile(f);
 			if (read == null) {
 				return AtomText.create("(Cannot decode: " + f.getCanonicalPath() + ")", fc);
 			}
-			return new AtomImg(FileUtils.ImageIO_read(f), scale, url, src);
+			return new AtomImg(FileUtils.readRasterImageFromFile(f), scale, url, src);
 		} catch (IOException e) {
 			return AtomText.create("ERROR " + e.toString(), fc);
 		}
 	}
 
-	private static Atom build(String source, final FontConfiguration fc, final byte[] data, double scale, Url url)
-			throws IOException {
+	private static Atom buildRasterFromData(String source, final FontConfiguration fc, final byte[] data, double scale,
+			Url url) throws IOException {
 		final BufferedImage read = ImageIO.read(new ByteArrayInputStream(data));
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + source + ")", fc);
@@ -133,34 +135,47 @@ public class AtomImg extends AbstractAtom implements Atom {
 		return new AtomImg(read, scale, url, null);
 	}
 
-	private static Atom build(String text, final FontConfiguration fc, URL source, double scale, Url url)
+	private static Atom buildRasterFromUrl(String text, final FontConfiguration fc, URL source, double scale, Url url)
 			throws IOException {
-		final BufferedImage read = FileUtils.ImageIO_read(source);
+		final BufferedImage read = FileUtils.readRasterImageFromURL(source);
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + text + ")", fc);
 		}
 		return new AtomImg(read, scale, url, source.getPath());
 	}
 
+	private static Atom buildSvgFromUrl(String text, final FontConfiguration fc, URL source, double scale, Url url)
+			throws IOException {
+		final byte[] read = getFile(source);
+		if (read == null) {
+			return AtomText.create("(Cannot decode SVG: " + text + ")", fc);
+		}
+		return new AtomImgSvg(new TileImageSvg(new String(read, "UTF-8")));
+	}
+
 	// Added by Alain Corbiere
-	private static byte[] getFile(String host) throws IOException {
+	private static byte[] getFile(URL url) {
 		final ByteArrayOutputStream image = new ByteArrayOutputStream();
-		InputStream input = null;
 		try {
-			final URL url = new URL(host);
-			final URLConnection connection = url.openConnection();
-			input = connection.getInputStream();
-			final byte[] buffer = new byte[1024];
-			int read;
-			while ((read = input.read(buffer)) > 0) {
-				image.write(buffer, 0, read);
+			InputStream input = null;
+			try {
+				final URLConnection connection = url.openConnection();
+				input = connection.getInputStream();
+				final byte[] buffer = new byte[1024];
+				int read;
+				while ((read = input.read(buffer)) > 0) {
+					image.write(buffer, 0, read);
+				}
+				image.close();
+				return image.toByteArray();
+			} finally {
+				if (input != null) {
+					input.close();
+				}
 			}
-			image.close();
-			return image.toByteArray();
-		} finally {
-			if (input != null) {
-				input.close();
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

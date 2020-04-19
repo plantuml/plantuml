@@ -45,9 +45,9 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
-import net.sourceforge.plantuml.Log;
-
 import com.sun.imageio.plugins.png.PNGMetadata;
+
+import net.sourceforge.plantuml.Log;
 
 public class PngIOMetadata {
 

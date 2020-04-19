@@ -53,7 +53,7 @@ public class GetVariableValue extends SimpleReturnFunction {
 		return nbArg == 1;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		final String name = args.get(0).toString();
 		final TValue variable = memory.getVariable(name);
 		if (variable == null) {

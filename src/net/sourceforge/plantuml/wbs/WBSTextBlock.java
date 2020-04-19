@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -79,7 +78,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 					line);
 		} else {
 			final HColor color = ColorParam.activityBorder.getDefaultValue();
-			ug.apply(new UTranslate(p1)).apply(new UChangeColor(color)).draw(line);
+			ug.apply(new UTranslate(p1)).apply(color).draw(line);
 		}
 	}
 

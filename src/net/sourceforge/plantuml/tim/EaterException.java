@@ -49,7 +49,7 @@ public class EaterException extends Exception {
 	}
 
 	public static EaterException located(String message, StringLocated unused) {
-		return new EaterException(message);
+		return unlocated(message);
 	}
 
 	public final String getMessage() {

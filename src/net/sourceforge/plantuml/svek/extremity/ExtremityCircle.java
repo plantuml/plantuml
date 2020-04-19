@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.svek.extremity;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -72,9 +71,9 @@ class ExtremityCircle extends Extremity {
 
 		ug = ug.apply(new UStroke(1.5));
 		if (fill) {
-			ug = ug.apply(new UChangeBackColor(ug.getParam().getColor()));
+			ug = ug.apply(HColorUtils.changeBack(ug));
 		} else {
-			ug = ug.apply(new UChangeBackColor(HColorUtils.WHITE));
+			ug = ug.apply(HColorUtils.WHITE.bg());
 		}
 
 		ug = ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius));

@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svek.WithPorts;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -81,15 +79,13 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 	public void drawU(UGraphic ug) {
 		double y = 0;
 		final Dimension2D dimtotal = calculateDimension(ug.getStringBounder());
-		// if (backColor != null) {
-		// ug.apply(new UChangeColor(backColor)).apply(new UChangeBackColor(backColor)).draw(new URectangle(dimtotal));
-		// }
+
 		for (TextBlock block : blocks) {
 			final Dimension2D dimb = block.calculateDimension(ug.getStringBounder());
 			if (block instanceof TextBlockBackcolored) {
 				final HColor back = ((TextBlockBackcolored) block).getBackcolor();
 				if (back != null) {
-					ug.apply(UTranslate.dy(y)).apply(new UChangeColor(back)).apply(new UChangeBackColor(back))
+					ug.apply(UTranslate.dy(y)).apply(back).apply(back.bg())
 							.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
 				}
 			}

@@ -173,6 +173,17 @@ public class LanguageDescriptor {
 		preproc.add("!else");
 		preproc.add("!definelong");
 		preproc.add("!enddefinelong");
+		preproc.add("!function");
+		preproc.add("!procedure");
+		preproc.add("!endfunction");
+		preproc.add("!endprocedure");
+		preproc.add("!unquoted");
+		preproc.add("!return");
+		preproc.add("!startsub");
+		preproc.add("!endsub");
+		preproc.add("!memorydump");
+		preproc.add("!assert");
+		preproc.add("!log");
 	}
 
 	public Cypher getCypher() {

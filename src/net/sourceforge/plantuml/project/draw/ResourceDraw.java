@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -76,7 +75,7 @@ public class ResourceDraw implements UDrawable {
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
-		ug.apply(new UChangeColor(HColorUtils.BLACK))
+		ug.apply(HColorUtils.BLACK)
 				.apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight())).draw(line);
 		for (Wink i = min; i.compareTo(max) <= 0; i = i.increment()) {
 			final int load = gantt.getLoadForResource(res, i);

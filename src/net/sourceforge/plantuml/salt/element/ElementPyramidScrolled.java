@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.salt.Positionner2;
 import net.sourceforge.plantuml.salt.factory.ScrollStrategy;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -129,16 +128,16 @@ public class ElementPyramidScrolled extends ElementPyramid {
 		ug.draw(new URectangle(width, height));
 		ug.apply(UTranslate.dy(v2)).draw(ULine.hline(width));
 		ug.apply(UTranslate.dy(height - v2)).draw(ULine.hline(width));
-		ug.apply(new UTranslate(4, 4)).apply(new UChangeBackColor(HColorUtils.BLACK)).draw(getTr0());
-		ug.apply(new UTranslate(4, height - v2 + 4)).apply(new UChangeBackColor(HColorUtils.BLACK)).draw(getTr180());
+		ug.apply(new UTranslate(4, 4)).apply(HColorUtils.BLACK.bg()).draw(getTr0());
+		ug.apply(new UTranslate(4, height - v2 + 4)).apply(HColorUtils.BLACK.bg()).draw(getTr180());
 	}
 
 	private void drawH(UGraphic ug, double width, double height) {
 		ug.draw(new URectangle(width, height));
 		ug.apply(UTranslate.dx(v2)).draw(ULine.vline(height));
 		ug.apply(UTranslate.dx(width - v2)).draw(ULine.vline(height));
-		ug.apply(new UTranslate(4, 4)).apply(new UChangeBackColor(HColorUtils.BLACK)).draw(getTr90());
-		ug.apply(new UTranslate(width - v2 + 4, 4)).apply(new UChangeBackColor(HColorUtils.BLACK)).draw(getTr270());
+		ug.apply(new UTranslate(4, 4)).apply(HColorUtils.BLACK.bg()).draw(getTr90());
+		ug.apply(new UTranslate(width - v2 + 4, 4)).apply(HColorUtils.BLACK.bg()).draw(getTr270());
 	}
 
 }

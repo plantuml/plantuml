@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.timingdiagram.ChangeState;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -245,7 +244,7 @@ public class Histogram implements PlayerDrawing {
 			final double len = x2 - getPointx(i);
 			final Point2D[] points = getPoints(i);
 			if (points.length == 2) {
-				drawHBlock(ug.apply(new UChangeBackColor(changes.get(i).getBackColor())), points[0], points[1], len);
+				drawHBlock(ug.apply(changes.get(i).getBackColor().bg()), points[0], points[1], len);
 			}
 			if (i < changes.size() - 1) {
 				for (Point2D pt : points) {

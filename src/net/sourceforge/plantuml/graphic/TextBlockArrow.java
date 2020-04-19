@@ -39,8 +39,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -64,8 +62,8 @@ public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeBackColor(color));
-		ug = ug.apply(new UChangeColor(color));
+		ug = ug.apply(color.bg());
+		ug = ug.apply(color);
 		int triSize = (int) (size * .8 - 3);
 		if (triSize % 2 == 1) {
 			triSize--;

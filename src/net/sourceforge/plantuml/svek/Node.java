@@ -207,12 +207,12 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 		sb.append("<TABLE BGCOLOR=\"" + StringUtils.getAsHtml(color)
 				+ "\" BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 		double position = 0;
-		for (Map.Entry<String, PortGeometry> ent : ports.getAll().entrySet()) {
-			final String portName = ent.getKey();
+		for (Map.Entry<String, PortGeometry> ent : ports.getAllWithEncodedPortId().entrySet()) {
+			final String portId = ent.getKey();
 			final PortGeometry geom = ent.getValue();
 			final double missing = geom.getPosition() - position;
 			appendTr(sb, null, missing);
-			appendTr(sb, portName, geom.getHeight());
+			appendTr(sb, portId, geom.getHeight());
 			position = geom.getLastY();
 		}
 		appendTr(sb, null, getHeight() - position);
@@ -222,15 +222,15 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 		SvekUtils.println(sb);
 	}
 
-	private void appendTr(StringBuilder sb, final String portName, final double height) {
+	private void appendTr(StringBuilder sb, String portId, double height) {
 		if (height <= 0) {
 			return;
 		}
 		sb.append("<TR>");
 		sb.append("<TD ");
 		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + height + "\"");
-		if (portName != null) {
-			sb.append(" PORT=\"" + portName + "\"");
+		if (portId != null) {
+			sb.append(" PORT=\"" + portId + "\"");
 		}
 		sb.append(">");
 		sb.append("</TD>");

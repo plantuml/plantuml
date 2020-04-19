@@ -60,8 +60,6 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -172,8 +170,8 @@ public class EntityImageActivity extends AbstractEntityImage {
 				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 			}
 		}
-		ug = ug.apply(new UChangeColor(borderColor));
-		ug = ug.apply(new UChangeBackColor(backcolor));
+		ug = ug.apply(borderColor);
+		ug = ug.apply(backcolor.bg());
 		return ug;
 	}
 

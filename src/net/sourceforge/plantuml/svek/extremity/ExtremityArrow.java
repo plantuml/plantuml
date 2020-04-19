@@ -37,31 +37,31 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 class ExtremityArrow extends Extremity {
 
 	private UPolygon polygon = new UPolygon();
 	private final ULine line;
 	private final Point2D contact;
-	
+
 	@Override
 	public Point2D somePoint() {
 		return contact;
 	}
-
 
 	public ExtremityArrow(Point2D p1, double angle, Point2D center) {
 		angle = manageround(angle);
 		final int xContact = buildPolygon();
 		polygon.rotate(angle + Math.PI / 2);
 		polygon = polygon.translate(p1.getX(), p1.getY());
-		contact = new Point2D.Double(p1.getX() - xContact * Math.cos(angle + Math.PI / 2), p1.getY() - xContact
-				* Math.sin(angle + Math.PI / 2));
+		contact = new Point2D.Double(p1.getX() - xContact * Math.cos(angle + Math.PI / 2),
+				p1.getY() - xContact * Math.sin(angle + Math.PI / 2));
 		this.line = new ULine(center.getX() - contact.getX(), center.getY() - contact.getY());
 	}
 
@@ -87,12 +87,16 @@ class ExtremityArrow extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeBackColor(ug.getParam().getColor()));
+		final HColor color = ug.getParam().getColor();
+		if (color == null) {
+			ug = ug.apply(new HColorNone().bg());
+		} else {
+			ug = ug.apply(color.bg());
+		}
 		ug.draw(polygon);
 		if (line != null && line.getLength() > 2) {
-			ug.apply(new UTranslate(contact.getX(), contact.getY())).draw(line);
+			ug.apply(new UTranslate(contact)).draw(line);
 		}
 	}
-
 
 }

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-public class HColorMiddle implements HColor {
+public class HColorMiddle extends HColorAbstract implements HColor {
 
 	private final HColor c1;
 	private final HColor c2;

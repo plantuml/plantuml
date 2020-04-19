@@ -38,7 +38,7 @@ import java.awt.Color;
 
 import net.sourceforge.plantuml.StringUtils;
 
-public class HColorBackground implements HColor {
+public class HColorBackground extends HColorAbstract implements HColor {
 
 	private final HColor back;
 

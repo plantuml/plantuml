@@ -55,8 +55,6 @@ import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
@@ -144,7 +142,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 		final double x = getX(pin);
 		final double y = getY(pin);
 		final UEllipse circle = new UEllipse(6, 6);
-		ug.apply(new UChangeColor(HColorUtils.BLACK)).apply(new UChangeBackColor(HColorUtils.BLACK))
+		ug.apply(HColorUtils.BLACK).apply(HColorUtils.BLACK.bg())
 				.apply(new UTranslate(x - 3, y - 3)).draw(circle);
 	}
 

@@ -246,7 +246,7 @@ public class ImageBuilder {
 				final HColor color = borderColor == null ? HColorUtils.BLACK : borderColor;
 				final URectangle shape = new URectangle(dim.getWidth() - externalMargin() - borderStroke.getThickness(),
 						dim.getHeight() - externalMargin() - borderStroke.getThickness()).rounded(borderCorner);
-				ug2.apply(new UChangeColor(color)).apply(borderStroke).draw(shape);
+				ug2.apply(color).apply(borderStroke).draw(shape);
 			}
 			if (randomPixel) {
 				drawRandomPoint(ug2);
@@ -284,7 +284,7 @@ public class ImageBuilder {
 		final int blue = rnd.nextInt(40);
 		final Color c = new Color(red, green, blue);
 		final HColor color = new HColorSimple(c, false);
-		ug2.apply(new UChangeColor(color)).apply(new UChangeBackColor(color)).draw(new URectangle(1, 1));
+		ug2.apply(color).apply(color.bg()).draw(new URectangle(1, 1));
 
 	}
 
@@ -462,7 +462,7 @@ public class ImageBuilder {
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
 		if (mybackcolor instanceof HColorGradient) {
-			ug.apply(new UChangeBackColor(mybackcolor))
+			ug.apply(mybackcolor.bg())
 					.draw(new URectangle(im.getWidth() / dpiFactor, im.getHeight() / dpiFactor));
 		}
 

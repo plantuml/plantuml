@@ -36,12 +36,9 @@
 package net.sourceforge.plantuml.preproc2;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineNumbered;
 

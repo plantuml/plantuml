@@ -47,11 +47,11 @@ public interface TFunction {
 
 	public TFunctionType getFunctionType();
 
-	public void executeVoid(TContext context, TMemory memory, LineLocation location, String s) throws EaterException, EaterExceptionLocated;
+	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s) throws EaterException, EaterExceptionLocated;
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException, EaterExceptionLocated;
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException, EaterExceptionLocated;
 
-	public void executeVoidInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException, EaterExceptionLocated;
+	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException, EaterExceptionLocated;
 
 	public boolean isUnquoted();
 

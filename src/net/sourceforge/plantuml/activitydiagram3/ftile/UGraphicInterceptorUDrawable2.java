@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -89,8 +87,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	private void drawGoto(FtileGoto ftile) {
 		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());
 		final Point2D pt = geom.getPointIn();
-		UGraphic ugGoto = getUg().apply(new UChangeColor(HColorUtils.GREEN)).apply(
-				new UChangeBackColor(HColorUtils.GREEN));
+		UGraphic ugGoto = getUg().apply(HColorUtils.GREEN).apply(
+				HColorUtils.GREEN.bg());
 		ugGoto = ugGoto.apply(new UTranslate(pt));
 		final UTranslate posNow = getPosition();
 		final UTranslate dest = positions.get(ftile.getName());

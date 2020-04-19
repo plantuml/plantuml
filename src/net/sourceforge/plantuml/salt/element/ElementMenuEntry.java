@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -73,7 +72,7 @@ public class ElementMenuEntry extends AbstractElement {
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		if (background != null) {
 			final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
-			ug.apply(new UChangeBackColor(background)).draw(new URectangle(dim.getWidth(), dim.getHeight()));
+			ug.apply(background.bg()).draw(new URectangle(dim.getWidth(), dim.getHeight()));
 		}
 		block.drawU(ug);
 	}

@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public abstract class Player implements TimeProjected {
 

@@ -37,21 +37,20 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 class ExtremityTriangle extends Extremity {
 
 	private UPolygon polygon = new UPolygon();
 	private final boolean fill;
 	private final Point2D contact;
-	
+
 	@Override
 	public Point2D somePoint() {
 		return contact;
 	}
-
 
 	public ExtremityTriangle(Point2D p1, double angle, boolean fill) {
 		this.fill = fill;
@@ -69,7 +68,7 @@ class ExtremityTriangle extends Extremity {
 
 	public void drawU(UGraphic ug) {
 		if (fill) {
-			ug = ug.apply(new UChangeBackColor(ug.getParam().getColor()));
+			ug = ug.apply(HColorUtils.changeBack(ug));
 		}
 		ug.draw(polygon);
 	}

@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -81,8 +79,8 @@ public class Worm implements Iterable<Point2D.Double> {
 		if (style.isInvisible()) {
 			return;
 		}
-		ug = ug.apply(new UChangeColor(color2));
-		ug = ug.apply(new UChangeBackColor(color2));
+		ug = ug.apply(color2);
+		ug = ug.apply(color2.bg());
 		if (style.isNormal()) {
 			ug = ug.apply(new UStroke(stroke));
 		} else {

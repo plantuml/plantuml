@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -74,7 +72,7 @@ public class SwimlanesB extends SwimlanesA {
 		if (color != null) {
 			final double titleHeight = getTitlesHeight(stringBounder);
 			final URectangle back = new URectangle(getTitlesWidth(stringBounder), titleHeight).ignoreForCompressionOnX().ignoreForCompressionOnY();
-			ug.apply(new UChangeBackColor(color)).apply(new UChangeColor(color)).draw(back);
+			ug.apply(color.bg()).apply(color).draw(back);
 		}
 		for (Swimlane swimlane : swimlanes) {
 			final TextBlock swTitle = getTitle(swimlane);

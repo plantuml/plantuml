@@ -39,7 +39,6 @@ import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;

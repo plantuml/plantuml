@@ -49,8 +49,6 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -98,7 +96,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(UTranslate.dx(padding));
-		ug = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(foregroundColor));
+		ug = ug.apply(back.bg()).apply(foregroundColor);
 		ug = ug.apply(stroke);
 		final Shadowable rect = new URectangle(getTextWidth(stringBounder), getTextHeight(stringBounder))
 				.rounded(roundCorner).diagonalCorner(diagonalCorner);

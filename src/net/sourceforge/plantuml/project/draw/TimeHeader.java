@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -73,7 +72,7 @@ public abstract class TimeHeader {
 		final double xmin = getTimeScale().getStartingPosition(min);
 		final double xmax = getTimeScale().getEndingPosition(max);
 		final ULine hline = ULine.hline(xmax - xmin);
-		ug.apply(new UChangeColor(HColorUtils.LIGHT_GRAY)).apply(UTranslate.dy(y)).draw(hline);
+		ug.apply(HColorUtils.LIGHT_GRAY).apply(UTranslate.dy(y)).draw(hline);
 	}
 
 	final protected FontConfiguration getFontConfiguration(int size, boolean bold) {

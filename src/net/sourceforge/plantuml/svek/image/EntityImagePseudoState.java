@@ -51,8 +51,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -82,8 +80,8 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		}
 		ug = ug.apply(new UStroke(1.5));
 		ug = ug.apply(
-				new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground)))
-				.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder)));
+				SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground).bg())
+				.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder));
 		ug.draw(circle);
 		ug = ug.apply(new UStroke());
 

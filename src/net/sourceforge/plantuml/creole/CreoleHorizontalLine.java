@@ -90,7 +90,7 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		// ug = ug.apply(new UChangeColor(fontConfiguration.getColor()));
+		// ug = ug.apply(UChangeColor.nnn(fontConfiguration.getColor()));
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		ug = ug.apply(UTranslate.dy(dim.getHeight() / 2));
 		ug.draw(getHorizontalLine());

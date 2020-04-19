@@ -45,15 +45,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -796,6 +792,13 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public IGroup getOriginalGroup() {
 		return originalGroup;
+	}
+	
+	private boolean together;
+
+	public void setThisIsTogether() {
+		this.together = true;
+		// System.err.println("setThisIsTogether");
 	}
 
 }

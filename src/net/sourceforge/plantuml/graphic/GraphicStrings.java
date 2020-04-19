@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -152,7 +151,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(new UTranslate(margin, margin));
 		final Dimension2D size = calculateDimensionInternal(ug.getStringBounder());
-		getTextBlock().drawU(ug.apply(new UChangeColor(fontConfiguration.getColor())));
+		getTextBlock().drawU(ug.apply(fontConfiguration.getColor()));
 
 		if (image != null) {
 			if (position == GraphicPosition.BOTTOM) {

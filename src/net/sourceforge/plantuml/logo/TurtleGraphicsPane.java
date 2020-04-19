@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -124,7 +122,7 @@ class TurtleGraphicsPane {
 		final HColor turtleColor1 = htmlColorSet.getColorIfValid("OliveDrab");
 		final HColor turtleColor2 = htmlColorSet.getColorIfValid("MediumSpringGreen");
 
-		ug.apply(new UChangeColor(turtleColor1)).apply(new UChangeBackColor(turtleColor2)).apply(new UTranslate(x, -y))
+		ug.apply(turtleColor1).apply(turtleColor2.bg()).apply(new UTranslate(x, -y))
 				.draw(poly);
 		// ug.setAntiAliasing(true);
 	}
@@ -193,7 +191,7 @@ class TurtleGraphicsPane {
 			final HColor color = colors.get(i);
 			final Rectangle2D.Double r = lines.get(i);
 			final ULine line = new ULine(r.width - r.x, -r.height + r.y);
-			ug.apply(new UChangeColor(color)).apply(new UTranslate(r.x, -r.y)).draw(line);
+			ug.apply(color).apply(new UTranslate(r.x, -r.y)).draw(line);
 
 		}
 		drawTurtle(ug);

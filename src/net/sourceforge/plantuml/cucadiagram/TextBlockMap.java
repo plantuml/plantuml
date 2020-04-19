@@ -53,8 +53,6 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -189,7 +187,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 
 		public void drawU(UGraphic ug) {
 			final UShape point = new UEllipse(getDiameter(), getDiameter());
-			ug = ug.apply(new UChangeColor(color)).apply(new UChangeBackColor(color));
+			ug = ug.apply(color).apply(color.bg());
 			ug.draw(point);
 		}
 

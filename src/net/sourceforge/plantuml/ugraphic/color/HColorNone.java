@@ -30,28 +30,20 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.color;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.UBackground;
 
-public class UChangeBackColor implements UChange {
-	
-	private final HColor color;
-	
-	public UChangeBackColor(HColor color) {
-		this.color = color;
+public class HColorNone implements HColor {
+
+	public UBackground bg() {
+		return new UBackground() {
+			public HColor getBackColor() {
+				return null;
+			}
+		};
 	}
-
-	public HColor getBackColor() {
-		return color;
-	}
-
-	// private HtmlColor color = null;
-	// private HtmlColor backcolor = null;
-	// private UStroke stroke = new UStroke(1);
-	// private boolean hidden = false;
 
 }

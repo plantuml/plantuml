@@ -73,12 +73,11 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class FtileBox extends AbstractFtile {
 
@@ -243,7 +242,12 @@ public class FtileBox extends AbstractFtile {
 			thickness = getThickness();
 		}
 
-		ug = ug.apply(new UChangeColor(borderColor)).apply(new UChangeBackColor(backColor)).apply(thickness);
+		if (borderColor == null) {
+			ug = ug.apply(new HColorNone());
+		} else {
+			ug = ug.apply(borderColor);
+		}
+		ug = ug.apply(backColor.bg()).apply(thickness);
 		rect.drawU(ug);
 
 		if (horizontalAlignment == HorizontalAlignment.LEFT) {

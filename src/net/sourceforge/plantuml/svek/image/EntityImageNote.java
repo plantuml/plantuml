@@ -74,8 +74,6 @@ import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Line;
 import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -254,7 +252,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		if (withShadow) {
 			polygon.setDeltaShadow(4);
 		}
-		ug = ug.apply(new UChangeBackColor(noteBackgroundColor)).apply(new UChangeColor(borderColor));
+		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);
 		final UGraphic stroked = applyStroke(ug);
 		stroked.draw(polygon);
 		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));

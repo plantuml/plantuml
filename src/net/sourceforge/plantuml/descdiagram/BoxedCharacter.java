@@ -42,13 +42,12 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class BoxedCharacter extends AbstractTextBlock implements TextBlock {
 
@@ -70,12 +69,15 @@ public class BoxedCharacter extends AbstractTextBlock implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 		if (circle != null) {
-			ug = ug.apply(new UChangeColor(circle));
+			ug = ug.apply(circle);
 		}
-		// final HtmlColor back = ug.getParam().getBackcolor();
-		ug = ug.apply(new UChangeBackColor(innerCircle));
+		if (innerCircle == null) {
+			ug = ug.apply(new HColorNone().bg());
+		} else {
+			ug = ug.apply(innerCircle.bg());
+		}
 		ug.draw(new URectangle(2 * radius, 2 * radius));
-		ug = ug.apply(new UChangeColor(fontColor));
+		ug = ug.apply(fontColor);
 		ug = ug.apply(new UTranslate(radius, radius));
 		ug.draw(new UCenteredCharacter(c.charAt(0), font));
 	}

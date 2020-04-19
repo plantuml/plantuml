@@ -65,11 +65,11 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class EntityImageClassHeader2 extends AbstractEntityImage {
+public class EntityImageClassHeader extends AbstractEntityImage {
 
 	final private HeaderLayout headerLayout;
 
-	public EntityImageClassHeader2(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageClassHeader(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 
 		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS

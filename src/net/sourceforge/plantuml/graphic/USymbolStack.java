@@ -39,14 +39,13 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 class USymbolStack extends USymbol {
 
@@ -61,7 +60,7 @@ class USymbolStack extends USymbol {
 		if (shadowing) {
 			rect.setDeltaShadow(3.0);
 		}
-		ug.apply(new UChangeColor(null)).apply(UTranslate.dx(border)).draw(rect);
+		ug.apply(new HColorNone()).apply(UTranslate.dx(border)).draw(rect);
 		final UPath path = new UPath();
 		if (roundCorner == 0) {
 			path.moveTo(0, 0);
@@ -82,7 +81,7 @@ class USymbolStack extends USymbol {
 			path.arcTo(new Point2D.Double(width - border + roundCorner / 2, 0), roundCorner / 2, 0, 1);
 			path.lineTo(width, 0);
 		}
-		ug.apply(new UChangeBackColor(null)).draw(path);
+		ug.apply(new HColorNone().bg()).draw(path);
 	}
 
 	private Margin getMargin() {

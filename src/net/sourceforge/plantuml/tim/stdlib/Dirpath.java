@@ -60,7 +60,7 @@ public class Dirpath extends SimpleReturnFunction {
 		return nbArg == 0;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		if (value == null) {
 			return TValue.fromString("");
 		}

@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.skin.ArrowDressing;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -94,7 +92,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(new UChangeColor(getForegroundColor()));
+		ug = ug.apply(getForegroundColor());
 
 		final ArrowDressing dressing1 = getArrowConfiguration().getDressing1();
 		final ArrowDressing dressing2 = getArrowConfiguration().getDressing2();
@@ -177,7 +175,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		if (decoration == ArrowDecoration.CIRCLE) {
 			final UEllipse circle = new UEllipse(diamCircle, diamCircle);
-			ug.apply(new UStroke(thinCircle)).apply(new UChangeColor(getForegroundColor()))
+			ug.apply(new UStroke(thinCircle)).apply(getForegroundColor())
 					.apply(new UTranslate(x - diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2))
 					.draw(circle);
 			x += diamCircle / 2 + thinCircle;
@@ -200,7 +198,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 					new ULine(getArrowDeltaX(), -getArrowDeltaX()));
 		} else if (dressing.getHead() == ArrowHead.NORMAL) {
 			final UPolygon polygon = getPolygonReverse(dressing.getPart());
-			ug.apply(new UChangeBackColor(getForegroundColor())).apply(UTranslate.dx(x)).draw(polygon);
+			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x)).draw(polygon);
 		}
 
 	}
@@ -208,7 +206,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	private void drawDressing2(UGraphic ug, double x, ArrowDressing dressing, ArrowDecoration decoration) {
 
 		if (decoration == ArrowDecoration.CIRCLE) {
-			ug = ug.apply(new UStroke(thinCircle)).apply(new UChangeColor(getForegroundColor()));
+			ug = ug.apply(new UStroke(thinCircle)).apply(getForegroundColor());
 			final UEllipse circle = new UEllipse(diamCircle, diamCircle);
 			ug.apply(new UTranslate(x - diamCircle / 2 + thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
 			ug = ug.apply(new UStroke());
@@ -233,7 +231,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 			ug = ug.apply(new UStroke());
 		} else if (dressing.getHead() == ArrowHead.NORMAL) {
 			final UPolygon polygon = getPolygonNormal(dressing.getPart(), x);
-			ug.apply(new UChangeBackColor(getForegroundColor())).draw(polygon);
+			ug.apply(getForegroundColor().bg()).draw(polygon);
 		}
 
 	}

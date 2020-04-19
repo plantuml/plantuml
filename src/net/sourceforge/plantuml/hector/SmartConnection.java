@@ -39,7 +39,6 @@ import java.awt.geom.Point2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.geom.LineSegmentDouble;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -70,9 +69,9 @@ class SmartConnection {
 		final LineSegmentDouble seg = new LineSegmentDouble(x1, y1, x2, y2);
 		boolean clash = intersect(seg);
 		if (clash) {
-			ug = ug.apply(new UChangeColor(HColorUtils.BLACK)).apply(new UStroke(1.0));
+			ug = ug.apply(HColorUtils.BLACK).apply(new UStroke(1.0));
 		} else {
-			ug = ug.apply(new UChangeColor(color)).apply(new UStroke(1.5));
+			ug = ug.apply(color).apply(new UStroke(1.5));
 		}
 		seg.draw(ug);
 	}
@@ -87,7 +86,7 @@ class SmartConnection {
 	}
 
 	public void drawEx1(UGraphic ug, HColor color) {
-		ug = ug.apply(new UChangeColor(color)).apply(new UStroke(1.5));
+		ug = ug.apply(color).apply(new UStroke(1.5));
 		final double orthoX = -(y2 - y1);
 		final double orthoY = x2 - x1;
 		for (int i = -10; i <= 10; i++) {

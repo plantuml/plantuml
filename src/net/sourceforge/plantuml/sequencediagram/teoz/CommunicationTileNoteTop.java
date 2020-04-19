@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -125,7 +124,7 @@ public class CommunicationTileNoteTop extends AbstractTile implements TileWithUp
 		final double dx = x2 - x1;
 		final double dy = y2 - y1;
 
-		ug.apply(new UTranslate(x1, y1)).apply(new UChangeColor(color)).apply(new UStroke(2, 2, 1))
+		ug.apply(new UTranslate(x1, y1)).apply(color).apply(new UStroke(2, 2, 1))
 				.draw(new ULine(dx, dy));
 
 	}

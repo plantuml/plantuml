@@ -40,11 +40,11 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 class USymbolQueue extends USymbol {
 
@@ -72,7 +72,7 @@ class USymbolQueue extends USymbol {
 		ug.draw(shape);
 
 		final UPath closing = getClosingPath(width, height);
-		ug.apply(new UChangeBackColor(null)).draw(closing);
+		ug.apply(new HColorNone().bg()).draw(closing);
 
 	}
 

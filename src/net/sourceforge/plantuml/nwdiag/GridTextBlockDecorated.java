@@ -38,7 +38,6 @@ import java.util.Collection;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -118,7 +117,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			rect.setDeltaShadow(1.0);
 			UGraphic ug2 = ug.apply(new UTranslate(xmin, y));
 			if (network != null && network.getColor() != null) {
-				ug2 = ug2.apply(new UChangeBackColor(network.getColor()));
+				ug2 = ug2.apply(network.getColor().bg());
 			}
 			ug2.draw(rect);
 			y += lineHeight(stringBounder, i);

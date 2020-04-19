@@ -40,10 +40,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class CutePath {
@@ -141,7 +140,7 @@ public class CutePath {
 		for (int i = 0; i < arcs.size(); i++) {
 			final BetweenCorners betweenCorners = new BetweenCorners(getCorner(i), getCorner(i + 1), arcs.get(i)
 					.getTension());
-			betweenCorners.debugMe(ug.apply(new UChangeColor(HColorUtils.BLACK)).apply(new UChangeBackColor(null)));
+			betweenCorners.debugMe(ug.apply(HColorUtils.BLACK).apply(new HColorNone().bg()));
 		}
 	}
 

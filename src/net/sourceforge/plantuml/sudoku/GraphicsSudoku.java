@@ -56,13 +56,12 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.png.PngIO;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -145,7 +144,7 @@ public class GraphicsSudoku {
 			}
 		}
 
-		ug = ug.apply(new UChangeBackColor(HColorUtils.BLACK)).apply(new UChangeColor(null));
+		ug = ug.apply(HColorUtils.BLACK.bg()).apply(new HColorNone());
 		for (int i = 0; i < 10; i++) {
 			final boolean bold = i % boldWidth == 0;
 			final int w = bold ? boldWidth : 1;

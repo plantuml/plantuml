@@ -45,8 +45,6 @@ import net.sourceforge.plantuml.geom.LineSegmentDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -76,7 +74,7 @@ public class UGraphicCrossing implements UGraphic {
 			if (color == null) {
 				segment.draw(ug);
 			} else {
-				segment.draw(ug.apply(new UChangeColor(color)));
+				segment.draw(ug.apply(color));
 			}
 		}
 
@@ -172,14 +170,14 @@ public class UGraphicCrossing implements UGraphic {
 			// }
 		}
 		for (Balloon b : balloons) {
-			b.drawU(ug.apply(new UChangeBackColor(HColorUtils.GREEN)).apply(new UChangeColor(HColorUtils.GREEN)));
+			b.drawU(ug.apply(HColorUtils.GREEN.bg()).apply(HColorUtils.GREEN));
 		}
 		for (Pending p : lines) {
 			for (Balloon b : balloons) {
 				List<Point2D> pts = new CrossingSegment(b, p.segment).intersection();
 				for (Point2D pt : pts) {
 					final Balloon s2 = new Balloon(pt, 2);
-					s2.drawU(ug.apply(new UChangeBackColor(HColorUtils.BLUE)).apply(new UChangeColor(HColorUtils.BLUE)));
+					s2.drawU(ug.apply(HColorUtils.BLUE.bg()).apply(HColorUtils.BLUE));
 				}
 			}
 		}

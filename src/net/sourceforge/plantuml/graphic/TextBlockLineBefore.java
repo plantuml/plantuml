@@ -41,10 +41,10 @@ import java.awt.geom.Rectangle2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock, WithPorts {
 
@@ -81,7 +81,11 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock,
 			UHorizontalLine.infinite(1, 1, separator).drawMe(ug);
 		}
 		textBlock.drawU(ug);
-		ug = ug.apply(new UChangeColor(color));
+		if (color == null) {
+			ug = ug.apply(new HColorNone());
+		} else {
+			ug = ug.apply(color);
+		}
 		if (title != null) {
 			UHorizontalLine.infinite(1, 1, title, separator).drawMe(ug);
 		}

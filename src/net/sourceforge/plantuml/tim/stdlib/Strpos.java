@@ -53,7 +53,7 @@ public class Strpos extends SimpleReturnFunction {
 		return nbArg == 2;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		final String full = args.get(0).toString();
 		final String searched = args.get(1).toString();
 		return TValue.fromInt(full.indexOf(searched));

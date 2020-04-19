@@ -39,8 +39,8 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc.Sub;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterStartsub;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TLineType;

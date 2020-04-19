@@ -54,7 +54,7 @@ public class IntVal extends SimpleReturnFunction {
 		return nbArg == 1;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		final String s = args.get(0).toString();
 		try {
 			return TValue.fromInt(Integer.parseInt(s));

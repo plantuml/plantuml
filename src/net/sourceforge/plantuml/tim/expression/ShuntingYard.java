@@ -37,6 +37,9 @@ package net.sourceforge.plantuml.tim.expression;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+
 // https://en.wikipedia.org/wiki/Shunting-yard_algorithm
 // https://en.cppreference.com/w/c/language/operator_precedence
 public class ShuntingYard {
@@ -55,7 +58,7 @@ public class ShuntingYard {
 		System.err.println("");
 	}
 
-	public ShuntingYard(TokenIterator it, Knowledge knowledge) {
+	public ShuntingYard(TokenIterator it, Knowledge knowledge) throws EaterException, EaterExceptionLocated {
 
 		while (it.hasMoreTokens()) {
 			final Token token = it.nextToken();

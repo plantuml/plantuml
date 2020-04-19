@@ -48,8 +48,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -101,15 +99,15 @@ public class FtileCircleStop extends AbstractFtile {
 	public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
-		ug.apply(new UChangeColor(backColor)).apply(new UChangeBackColor(HColorUtils.WHITE)).draw(circle);
+		ug.apply(backColor).apply(HColorUtils.WHITE.bg()).draw(circle);
 
 		final double delta = 5;
 		final UEllipse circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
 		// if (skinParam().shadowing(null)) {
 		// circleSmall.setDeltaShadow(3);
 		// }
-		ug.apply(new UChangeColor(new HColorMiddle(backColor, HColorUtils.WHITE)))
-				.apply(new UChangeBackColor(backColor)).apply(new UTranslate(delta, delta)).draw(circleSmall);
+		ug.apply(new HColorMiddle(backColor, HColorUtils.WHITE))
+				.apply(backColor.bg()).apply(new UTranslate(delta, delta)).draw(circleSmall);
 	}
 
 	@Override

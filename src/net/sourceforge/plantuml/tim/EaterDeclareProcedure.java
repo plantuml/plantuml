@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.tim;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 
-public class EaterDeclareFunction extends Eater {
+public class EaterDeclareProcedure extends Eater {
 
 	private TFunctionImpl function;
 	private final LineLocation location;
 	private boolean finalFlag;
 
-	public EaterDeclareFunction(StringLocated s) {
+	public EaterDeclareProcedure(StringLocated s) {
 		super(s.getTrimmed());
 		this.location = s.getLocation();
 	}
@@ -64,9 +64,9 @@ public class EaterDeclareFunction extends Eater {
 				finalFlag = true;
 			}
 		}
-		checkAndEatChar("function");
+		checkAndEatChar("procedure");
 		skipSpaces();
-		function = eatDeclareFunctionWithOptionalReturn(context, memory, unquoted, location);
+		function = eatDeclareProcedure(context, memory, unquoted, location);
 	}
 
 	private boolean peekUnquoted() {

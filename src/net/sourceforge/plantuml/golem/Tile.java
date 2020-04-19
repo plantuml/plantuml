@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -79,7 +78,7 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+		ug = ug.apply(HColorUtils.BLACK);
 		final TextBlock n = Display.create("" + num).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		final Dimension2D dimNum = n.calculateDimension(ug.getStringBounder());
 		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());

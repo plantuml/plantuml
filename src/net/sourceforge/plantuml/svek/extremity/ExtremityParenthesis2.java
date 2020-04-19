@@ -72,9 +72,9 @@ class ExtremityParenthesis2 extends Extremity {
 		// final Point2D other = new Point2D.Double(contact.getX() + 10 * Math.cos(deg), contact.getY() + 10
 		// * Math.sin(deg));
 		// final ULine line = new ULine(1, 1);
-		// ug.apply(new UChangeColor(HtmlColorUtils.GREEN)).apply(new UTranslate(contact.getX(), contact.getY()))
+		// ug.apply(UChangeColor.nnn(HtmlColorUtils.GREEN)).apply(new UTranslate(contact.getX(), contact.getY()))
 		// .draw(line);
-		// ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UTranslate(center.getX(),
+		// ug.apply(UChangeColor.nnn(HtmlColorUtils.BLACK)).apply(new UTranslate(center.getX(),
 		// center.getY())).draw(line);
 		// // final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, deg, 2 * ang);
 		// // ug.apply(new UStroke(1.5)).apply(new UTranslate(dest.getX() - radius2, dest.getY() - radius2)).draw(arc1);

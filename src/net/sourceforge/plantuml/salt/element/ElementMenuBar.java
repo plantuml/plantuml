@@ -44,7 +44,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -106,7 +105,7 @@ public class ElementMenuBar extends AbstractElement {
 
 		double x1 = 0;
 		if (zIndex == 0) {
-			ug.apply(new UChangeBackColor(HColorSet.instance().getColorIfValid("#DDDDDD"))).draw(
+			ug.apply(HColorSet.instance().getColorIfValid("#DDDDDD").bg()).draw(
 					new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 			for (ElementMenuEntry entry : entries) {
 				entry.drawU(ug.apply(UTranslate.dx(x1)), zIndex, dimToUse);

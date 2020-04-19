@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.tim.iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.FunctionsSet;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TLineType;

@@ -91,15 +91,13 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Line implements Moveable, Hideable {
@@ -698,7 +696,7 @@ public class Line implements Moveable, Hideable {
 			color = this.link.getSpecificColor();
 		}
 
-		ug = ug.apply(new UChangeBackColor(null)).apply(new UChangeColor(color));
+		ug = ug.apply(new HColorNone().bg()).apply(color);
 		final LinkType linkType = link.getType();
 		UStroke stroke = linkType.getStroke3(defaultThickness);
 		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null) {
@@ -742,7 +740,7 @@ public class Line implements Moveable, Hideable {
 
 		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors(), stroke);
 
-		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));
+		ug = ug.apply(new UStroke()).apply(color);
 
 		if (this.labelText != null && this.labelXY != null
 				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED) {
@@ -829,28 +827,28 @@ public class Line implements Moveable, Hideable {
 		final LinkType linkType = link.getType();
 
 		if (this.extremity2 != null) {
-			UGraphic ug2 = ug.apply(new UChangeColor(color)).apply(stroke.onlyThickness());
+			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
 			if (linkType.getDecor1().isFill()) {
-				ug2 = ug2.apply(new UChangeBackColor(color));
+				ug2 = ug2.apply(color.bg());
 			} else {
-				ug2 = ug2.apply(new UChangeBackColor(null));
+				ug2 = ug2.apply(new HColorNone().bg());
 			}
 			// System.err.println("Line::draw EXTREMITY1");
 			this.extremity2.drawU(ug2);
 		}
 		if (this.extremity1 != null) {
-			UGraphic ug2 = ug.apply(new UChangeColor(color)).apply(stroke.onlyThickness());
+			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
 			if (linkType.getDecor2().isFill()) {
-				ug2 = ug2.apply(new UChangeBackColor(color));
+				ug2 = ug2.apply(color.bg());
 			} else {
-				ug2 = ug2.apply(new UChangeBackColor(null));
+				ug2 = ug2.apply(new HColorNone().bg());
 			}
 			// System.err.println("Line::draw EXTREMITY2");
 			this.extremity1.drawU(ug2);
 		}
 		int i = 0;
 		for (Colors colors : supplementaryColors) {
-			ug.apply(new UTranslate(2 * (i + 1), 2 * (i + 1))).apply(new UChangeColor(colors.getColor(ColorType.LINE)))
+			ug.apply(new UTranslate(2 * (i + 1), 2 * (i + 1))).apply(colors.getColor(ColorType.LINE))
 					.draw(todraw);
 			i++;
 		}

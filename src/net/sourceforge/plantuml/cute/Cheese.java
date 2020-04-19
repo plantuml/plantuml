@@ -71,7 +71,6 @@ public class Cheese implements CuteShape {
 		final Point2D ptA = balloon.getPointOnCircle(angle1);
 		final Point2D ptB = balloon.getPointOnCircle(angle2);
 
-		// balloon.drawU(ug.apply(new UChangeBackColor(null)).apply(new UChangeColor(HtmlColorUtils.BLACK)));
 		final UPath path = new UPath();
 		final Point2D ptA0;
 		if (radius.hasCurvation()) {
@@ -116,12 +115,6 @@ public class Cheese implements CuteShape {
 		path.closePath();
 		ug.draw(path);
 
-		// if (startAngle.hasCurvation()) {
-		// insideA.drawU(ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UChangeBackColor(null)));
-		// }
-		// if (endAngle.hasCurvation()) {
-		// insideB.drawU(ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UChangeBackColor(null)));
-		// }
 	}
 
 	public CuteShape rotateZoom(RotationZoom other) {

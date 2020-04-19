@@ -37,14 +37,15 @@ package net.sourceforge.plantuml.tim.iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.FunctionsSet;
 import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TLineType;
 import net.sourceforge.plantuml.tim.TMemory;
 
-public class CodeIteratorFunction extends AbstractCodeIterator {
+public class CodeIteratorProcedure extends AbstractCodeIterator {
 
 	private final FunctionsSet functionsSet;
 
@@ -52,7 +53,7 @@ public class CodeIteratorFunction extends AbstractCodeIterator {
 	private final TMemory memory;
 	private final List<StringLocated> logs;
 
-	public CodeIteratorFunction(CodeIterator source, TContext context, TMemory memory, FunctionsSet functionsSet,
+	public CodeIteratorProcedure(CodeIterator source, TContext context, TMemory memory, FunctionsSet functionsSet,
 			List<StringLocated> logs) {
 		super(source);
 		this.context = context;
@@ -68,7 +69,9 @@ public class CodeIteratorFunction extends AbstractCodeIterator {
 				return null;
 			}
 
-			if (functionsSet.pendingFunction() != null) {
+			if (functionsSet.pendingFunction() != null
+					&& (functionsSet.pendingFunction().getFunctionType() == TFunctionType.PROCEDURE
+							|| functionsSet.pendingFunction().getFunctionType() == TFunctionType.LEGACY_DEFINELONG)) {
 				logs.add(result);
 				if (result.getType() == TLineType.END_FUNCTION) {
 					functionsSet.executeEndfunction();
@@ -79,9 +82,9 @@ public class CodeIteratorFunction extends AbstractCodeIterator {
 				continue;
 			}
 
-			if (result.getType() == TLineType.DECLARE_FUNCTION) {
+			if (result.getType() == TLineType.DECLARE_PROCEDURE) {
 				logs.add(result);
-				functionsSet.executeDeclareFunction(context, memory, result);
+				functionsSet.executeDeclareProcedure(context, memory, result);
 				next();
 				continue;
 			}

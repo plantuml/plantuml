@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -59,7 +58,7 @@ public class ComponentRoseNewpage extends AbstractComponent {
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
-		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(new UChangeColor(foregroundColor));
+		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(foregroundColor);
 		ug.draw(ULine.hline(dimensionToUse.getWidth()));
 	}
 

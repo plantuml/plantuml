@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -74,8 +73,8 @@ class ExtremityStateLine2 extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(-radius * Math.cos(angle), -radius * Math.sin(angle))).draw(polygon);
-		ug.apply(new UStroke(1.5)).apply(new UChangeBackColor(HColorUtils.WHITE)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
+		ug.apply(ug.getParam().getColor().bg()).apply(new UTranslate(-radius * Math.cos(angle), -radius * Math.sin(angle))).draw(polygon);
+		ug.apply(new UStroke(1.5)).apply(HColorUtils.WHITE.bg()).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
 	}
 
 }

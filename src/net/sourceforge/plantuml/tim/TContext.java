@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -69,12 +70,13 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.iterator.CodeIterator;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach;
-import net.sourceforge.plantuml.tim.iterator.CodeIteratorFunction;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorIf;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorImpl;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorInnerComment;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorLegacyDefine;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorLongComment;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorProcedure;
+import net.sourceforge.plantuml.tim.iterator.CodeIteratorReturnFunction;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorShortComment;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorSub;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorWhile;
@@ -90,11 +92,12 @@ import net.sourceforge.plantuml.tim.stdlib.GetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.GetVersion;
 import net.sourceforge.plantuml.tim.stdlib.Getenv;
 import net.sourceforge.plantuml.tim.stdlib.IntVal;
-import net.sourceforge.plantuml.tim.stdlib.InvokeVoidFunction;
+import net.sourceforge.plantuml.tim.stdlib.InvokeProcedure;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
-import net.sourceforge.plantuml.tim.stdlib.RetrieveVoidFunction;
+import net.sourceforge.plantuml.tim.stdlib.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
+import net.sourceforge.plantuml.tim.stdlib.StringFunction;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
 import net.sourceforge.plantuml.tim.stdlib.Strpos;
 import net.sourceforge.plantuml.tim.stdlib.Substr;
@@ -130,20 +133,21 @@ public class TContext {
 		functionsSet.addFunction(new Filename(defines));
 		functionsSet.addFunction(new DateFunction());
 		functionsSet.addFunction(new Strpos());
-		functionsSet.addFunction(new InvokeVoidFunction());
+		functionsSet.addFunction(new InvokeProcedure());
 		functionsSet.addFunction(new AlwaysFalse());
 		functionsSet.addFunction(new AlwaysTrue());
 		functionsSet.addFunction(new LogicalNot());
 		functionsSet.addFunction(new FunctionExists());
 		functionsSet.addFunction(new VariableExists());
 		functionsSet.addFunction(new CallUserFunction());
-		functionsSet.addFunction(new RetrieveVoidFunction());
+		functionsSet.addFunction(new RetrieveProcedure());
 		functionsSet.addFunction(new SetVariableValue());
 		functionsSet.addFunction(new GetVariableValue());
 		functionsSet.addFunction(new IntVal());
 		functionsSet.addFunction(new GetVersion());
 		functionsSet.addFunction(new Upper());
 		functionsSet.addFunction(new Lower());
+		functionsSet.addFunction(new StringFunction());
 		// !exit
 		// !log
 		// %min
@@ -163,12 +167,13 @@ public class TContext {
 		this.addStandardFunctions(defines);
 	}
 
-	public Knowledge asKnowledge(final TMemory memory) {
+	public Knowledge asKnowledge(final TMemory memory, final LineLocation location) {
 		return new Knowledge() {
 
-			public TValue getVariable(String name) {
-				if (name.contains(".")) {
-					return fromJson(memory, name);
+			public TValue getVariable(String name) throws EaterException, EaterExceptionLocated {
+				if (name.contains(".") || name.contains("[")) {
+					final TValue result = fromJson(memory, name, location);
+					return result;
 				}
 				return memory.getVariable(name);
 			}
@@ -179,18 +184,25 @@ public class TContext {
 		};
 	}
 
-	private TValue fromJson(TMemory memory, String name) {
+	private TValue fromJson(TMemory memory, String name, LineLocation location)
+			throws EaterException, EaterExceptionLocated {
+		final String result = applyFunctionsAndVariables(memory, location, name);
+		try {
+			final JsonValue json = Json.parse(result);
+			return TValue.fromJson(json);
+		} catch (Exception e) {
+			return TValue.fromString(result);
+		}
+	}
+
+	private TValue fromJsonOld(TMemory memory, String name) {
 		final int x = name.indexOf('.');
 		final TValue data = memory.getVariable(name.substring(0, x));
 		if (data == null) {
 			return null;
 		}
 		final JsonObject json = (JsonObject) data.toJson();
-//		System.err.println("json=" + json);
-//		System.err.println("json=" + json.getClass());
-//		System.err.println("json2=" + name.substring(x + 1));
 		final JsonValue result = json.get(name.substring(x + 1));
-//		System.err.println("result=" + result);
 		return TValue.fromJson(result);
 	}
 
@@ -200,8 +212,9 @@ public class TContext {
 		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);
 		final CodeIterator it40 = new CodeIteratorInnerComment(it30);
 		final CodeIterator it50 = new CodeIteratorSub(it40, subs, this, memory);
-		final CodeIterator it60 = new CodeIteratorFunction(it50, this, memory, functionsSet, debug);
-		final CodeIterator it70 = new CodeIteratorIf(it60, this, memory, debug);
+		final CodeIterator it60 = new CodeIteratorReturnFunction(it50, this, memory, functionsSet, debug);
+		final CodeIterator it61 = new CodeIteratorProcedure(it60, this, memory, functionsSet, debug);
+		final CodeIterator it70 = new CodeIteratorIf(it61, this, memory, debug);
 		final CodeIterator it80 = new CodeIteratorLegacyDefine(it70, this, memory, functionsSet, debug);
 		final CodeIterator it90 = new CodeIteratorWhile(it80, this, memory, debug);
 		final CodeIterator it100 = new CodeIteratorForeach(it90, this, memory, debug);
@@ -211,16 +224,20 @@ public class TContext {
 		return it;
 	}
 
-	public void executeLines(TMemory memory, List<StringLocated> body, TFunctionType ftype)
+	public TValue executeLines(TMemory memory, List<StringLocated> body, TFunctionType ftype, boolean modeSpecial)
 			throws EaterExceptionLocated {
 		final CodeIterator it = buildCodeIterator(memory, body);
 
 		StringLocated s = null;
 		try {
 			while ((s = it.peek()) != null) {
-				executeOneLineSafe(memory, s, ftype);
+				final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
+				if (result != null) {
+					return result;
+				}
 				it.next();
 			}
+			return null;
 		} catch (EaterException e) {
 			throw e.withLocation(s);
 		}
@@ -233,17 +250,17 @@ public class TContext {
 
 		StringLocated s = null;
 		while ((s = it.peek()) != null) {
-			executeOneLineSafe(memory, s, ftype);
+			executeOneLineSafe(memory, s, ftype, false);
 			it.next();
 		}
 
 	}
 
-	private void executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype)
+	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException, EaterExceptionLocated {
 		try {
 			this.debug.add(s);
-			executeOneLineNotSafe(memory, s, ftype);
+			return executeOneLineNotSafe(memory, s, ftype, modeSpecial);
 		} catch (Exception e) {
 			if (e instanceof EaterException)
 				throw (EaterException) e;
@@ -254,50 +271,60 @@ public class TContext {
 		}
 	}
 
-	private void executeOneLineNotSafe(TMemory memory, StringLocated s, TFunctionType ftype)
+	private TValue executeOneLineNotSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException, EaterExceptionLocated {
 		final TLineType type = s.getType();
 
 		if (type == TLineType.INCLUDESUB) {
 			this.executeIncludesub(memory, s);
-			return;
+			return null;
 		} else if (type == TLineType.INCLUDE) {
 			this.executeInclude(memory, s);
-			return;
+			return null;
 		} else if (type == TLineType.INCLUDE_DEF) {
 			this.executeIncludeDef(memory, s);
-			return;
+			return null;
 		} else if (type == TLineType.IMPORT) {
 			this.executeImport(memory, s);
-			return;
+			return null;
 		}
-
 		if (type == TLineType.DUMP_MEMORY) {
 			this.executeDumpMemory(memory, s.getTrimmed());
-			return;
+			return null;
 		} else if (type == TLineType.ASSERT) {
 			this.executeAssert(memory, s.getTrimmed());
-			return;
+			return null;
 		} else if (type == TLineType.UNDEF) {
 			this.executeUndef(memory, s);
-			return;
-		} else if (ftype != TFunctionType.RETURN && type == TLineType.PLAIN) {
+			return null;
+		} else if (ftype != TFunctionType.RETURN_FUNCTION && type == TLineType.PLAIN) {
 			this.addPlain(memory, s);
-			return;
-		} else if (ftype == TFunctionType.RETURN && type == TLineType.RETURN) {
+			return null;
+		} else if (ftype == TFunctionType.RETURN_FUNCTION && type == TLineType.RETURN) {
+			if (modeSpecial) {
+				final EaterReturn eaterReturn = new EaterReturn(s);
+				eaterReturn.analyze(this, memory);
+				final TValue result = eaterReturn.getValue2();
+				return result;
+			}
 			// Actually, ignore because we are in a if
-			return;
+			return null;
+		} else if (ftype == TFunctionType.RETURN_FUNCTION && type == TLineType.PLAIN) {
+			this.simulatePlain(memory, s);
+			return null;
 		} else if (type == TLineType.AFFECTATION_DEFINE) {
 			this.executeAffectationDefine(memory, s);
-			return;
+			return null;
 		} else if (ftype == null && type == TLineType.END_FUNCTION) {
 			CommandExecutionResult.error("error endfunc");
-			return;
+			return null;
 		} else if (type == TLineType.LOG) {
 			this.executeLog(memory, s);
-			return;
+			return null;
+		} else if (s.getString().matches("^\\s+$")) {
+			return null;
 		} else {
-			throw EaterException.located("Parsing Error", s);
+			throw EaterException.located("Compile Error " + ftype + " " + type, s);
 		}
 	}
 
@@ -310,6 +337,10 @@ public class TContext {
 			}
 			resultList.add(tmp);
 		}
+	}
+
+	private void simulatePlain(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+		final StringLocated ignored = applyFunctionsAndVariablesInternal(memory, s);
 	}
 
 	private void executeAffectationDefine(TMemory memory, StringLocated s)
@@ -371,7 +402,7 @@ public class TContext {
 					throw EaterException.located("Function not found " + presentFunction,
 							new StringLocated(str, location));
 				}
-				if (function.getFunctionType() == TFunctionType.VOID) {
+				if (function.getFunctionType() == TFunctionType.PROCEDURE) {
 					this.pendingAdd = result.toString();
 					executeVoid3(location, memory, sub, function);
 					return null;
@@ -381,9 +412,9 @@ public class TContext {
 					executeVoid3(location, memory, sub, function);
 					return null;
 				}
-				assert function.getFunctionType() == TFunctionType.RETURN
+				assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION
 						|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;
-				final TValue functionReturn = function.executeReturn(this, memory, location, call.getValues());
+				final TValue functionReturn = function.executeReturnFunction(this, memory, location, call.getValues());
 				result.append(functionReturn.toString());
 				i += call.getCurrentPosition() - 1;
 			} else if (new VariableManager(this, memory, location).getVarnameAt(str, i) != null) {
@@ -397,7 +428,7 @@ public class TContext {
 
 	private void executeVoid3(LineLocation location, TMemory memory, String s, TFunction function)
 			throws EaterException, EaterExceptionLocated {
-		function.executeVoid(this, memory, location, s);
+		function.executeProcedure(this, memory, location, s);
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
@@ -540,7 +571,7 @@ public class TContext {
 					do {
 						final StringLocated sl = reader2.readLine();
 						if (sl == null) {
-							executeLines(memory, body, null);
+							executeLines(memory, body, null, false);
 							return;
 						}
 						body.add(sl);

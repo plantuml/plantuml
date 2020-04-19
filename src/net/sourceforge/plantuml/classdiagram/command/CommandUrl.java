@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;

@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.project.time.GCalendar;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -129,7 +128,7 @@ public class TimeHeaderWeekly extends TimeHeader {
 
 	private void drawVbar(UGraphic ug, double x, double y1, double y2) {
 		final ULine vbar = ULine.vline(y2 - y1);
-		ug.apply(new UChangeColor(HColorUtils.LIGHT_GRAY)).apply(new UTranslate(x, y1)).draw(vbar);
+		ug.apply(HColorUtils.LIGHT_GRAY).apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {

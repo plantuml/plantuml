@@ -38,8 +38,8 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.tim.EaterElseIf;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterIf;
 import net.sourceforge.plantuml.tim.EaterIfdef;
 import net.sourceforge.plantuml.tim.EaterIfndef;

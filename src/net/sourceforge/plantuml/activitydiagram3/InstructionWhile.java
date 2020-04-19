@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
@@ -97,8 +98,10 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
+		final Ftile back = Display.isNull(backward) ? null
+				: factory.activity(backward, swimlane, boxStyle, Colors.empty());
 		Ftile tmp = factory.decorateOut(repeatList.createFtile(factory), endInlinkRendering);
-		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut);
+		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut, back);
 		if (getPositionedNotes().size() > 0) {
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false);
 		}
@@ -168,6 +171,16 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	public boolean containsBreak() {
 		return repeatList.containsBreak();
+	}
+
+	private BoxStyle boxStyle;
+	private Swimlane swimlaneOut;
+	private Display backward = Display.NULL;
+
+	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle) {
+		this.backward = label;
+		this.swimlaneOut = swimlaneOut;
+		this.boxStyle = boxStyle;
 	}
 
 }

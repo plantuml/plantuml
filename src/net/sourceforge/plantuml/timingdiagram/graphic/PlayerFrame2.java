@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -57,7 +56,7 @@ public class PlayerFrame2 implements PlayerFrame {
 	public void drawFrameTitle(UGraphic ug) {
 		title.drawU(ug);
 		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK)).apply(new UStroke(1.0));
+		ug = ug.apply(HColorUtils.BLACK).apply(new UStroke(1.0));
 		final double widthTmp = dimTitle.getWidth() + 1;
 		final double height = getHeight(ug.getStringBounder());
 		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);

@@ -154,26 +154,26 @@ public class FileUtils {
 
 	// http://forum.plantuml.net/9048/img-tag-for-sequence-diagram-participants-does-always-render
 	
-	public synchronized static BufferedImage ImageIO_read(File f) {
+	public synchronized static BufferedImage readRasterImageFromFile(File f) {
 		// https://www.experts-exchange.com/questions/26171948/Why-are-ImageIO-read-images-losing-their-transparency.html
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
 
 		try {
-			return readImage(new ImageIcon(f.getAbsolutePath()));
+			return readRasterImage(new ImageIcon(f.getAbsolutePath()));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	public synchronized static BufferedImage ImageIO_read(URL url) {
+	public synchronized static BufferedImage readRasterImageFromURL(URL url) {
 		try {
-			return readImage(new ImageIcon(url));
+			return readRasterImage(new ImageIcon(url));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	private synchronized static BufferedImage readImage(final ImageIcon imageIcon) {
+	private synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {
 		final Image tmpImage = imageIcon.getImage();
 		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
 				BufferedImage.TYPE_INT_ARGB);

@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -81,13 +79,13 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 		if (symbolContext.isShadowing()) {
 			rect.setDeltaShadow(1);
 		}
-		ug = ug.apply(new UChangeColor(symbolContext.getForeColor()));
+		ug = ug.apply(symbolContext.getForeColor());
 		if (closeUp && closeDown) {
-			ug.apply(new UChangeBackColor(symbolContext.getBackColor())).apply(UTranslate.dx(x)).draw(rect);
+			ug.apply(symbolContext.getBackColor().bg()).apply(UTranslate.dx(x)).draw(rect);
 			return;
 		}
-		ug.apply(new UChangeBackColor(symbolContext.getBackColor()))
-				.apply(new UChangeColor(symbolContext.getBackColor())).apply(UTranslate.dx(x)).draw(rect);
+		ug.apply(symbolContext.getBackColor().bg())
+				.apply(symbolContext.getBackColor()).apply(UTranslate.dx(x)).draw(rect);
 
 		final ULine vline = ULine.vline(dimensionToUse.getHeight());
 		ug.apply(UTranslate.dx(x)).draw(vline);

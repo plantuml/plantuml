@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -73,62 +72,60 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat
-				.build(CommandPackageWithUSymbol.class.getName(),
-						RegexLeaf.start(), //
-						new RegexLeaf("SYMBOL",
-								"(package|rectangle|node|artifact|folder|file|frame|cloud|database|storage|component|card|together|queue|stack)"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexOr(//
-								new RegexConcat( //
-										new RegexLeaf("DISPLAY1", "([%g].+?[%g])"), //
-										new RegexOptional( //
-												new RegexConcat( //
-														RegexLeaf.spaceOneOrMore(), //
-														new RegexLeaf("STEREOTYPE1", "(\\<\\<.+\\>\\>)") //
-												)), //
-										RegexLeaf.spaceZeroOrMore(), //
-										new RegexLeaf("as"), //
-										RegexLeaf.spaceOneOrMore(), //
-										new RegexLeaf("CODE1", "([^#%s{}]+)") //
-								), //
-								new RegexConcat( //
-										new RegexLeaf("CODE2", "([^#%s{}%g]+)"), //
-										new RegexOptional( //
-												new RegexConcat( //
-														RegexLeaf.spaceOneOrMore(), //
-														new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
-												)), //
-										RegexLeaf.spaceZeroOrMore(), //
-										new RegexLeaf("as"), //
-										RegexLeaf.spaceOneOrMore(), //
-										new RegexLeaf("DISPLAY2", "([%g].+?[%g])") //
-								), //
-								new RegexConcat( //
-										new RegexLeaf("DISPLAY3", "([^#%s{}%g]+)"), //
-										new RegexOptional( //
-												new RegexConcat( //
-														RegexLeaf.spaceOneOrMore(), //
-														new RegexLeaf("STEREOTYPE3", "(\\<\\<.+\\>\\>)") //
-												)), //
-										RegexLeaf.spaceZeroOrMore(), //
-										new RegexLeaf("as"), //
-										RegexLeaf.spaceOneOrMore(), //
-										new RegexLeaf("CODE3", "([^#%s{}%g]+)") //
-								), //
-								new RegexLeaf("CODE8", "([%g][^%g]+[%g])"), //
-								new RegexLeaf("CODE9", "([^#%s{}%g]*)") //
+		return RegexConcat.build(CommandPackageWithUSymbol.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("SYMBOL",
+						"(package|rectangle|node|artifact|folder|file|frame|cloud|database|storage|component|card|together|queue|stack)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexOr(//
+						new RegexConcat( //
+								new RegexLeaf("DISPLAY1", "([%g].+?[%g])"), //
+								new RegexOptional( //
+										new RegexConcat( //
+												RegexLeaf.spaceOneOrMore(), //
+												new RegexLeaf("STEREOTYPE1", "(\\<\\<.+\\>\\>)") //
+										)), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("CODE1", "([^#%s{}]+)") //
 						), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						color().getRegex(), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\{"), RegexLeaf.end());
+						new RegexConcat( //
+								new RegexLeaf("CODE2", "([^#%s{}%g]+)"), //
+								new RegexOptional( //
+										new RegexConcat( //
+												RegexLeaf.spaceOneOrMore(), //
+												new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
+										)), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("DISPLAY2", "([%g].+?[%g])") //
+						), //
+						new RegexConcat( //
+								new RegexLeaf("DISPLAY3", "([^#%s{}%g]+)"), //
+								new RegexOptional( //
+										new RegexConcat( //
+												RegexLeaf.spaceOneOrMore(), //
+												new RegexLeaf("STEREOTYPE3", "(\\<\\<.+\\>\\>)") //
+										)), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("CODE3", "([^#%s{}%g]+)") //
+						), //
+						new RegexLeaf("CODE8", "([%g][^%g]+[%g])"), //
+						new RegexLeaf("CODE9", "([^#%s{}%g]*)") //
+				), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				color().getRegex(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -159,7 +156,11 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
-		p.setUSymbol(USymbol.getFromString(arg.get("SYMBOL", 0), diagram.getSkinParam().getActorStyle()));
+		final String symbol = arg.get("SYMBOL", 0);
+		if ("together".equalsIgnoreCase(symbol)) {
+			p.setThisIsTogether();
+		}
+		p.setUSymbol(USymbol.getFromString(symbol, diagram.getSkinParam().getActorStyle()));
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype, false));

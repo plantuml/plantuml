@@ -39,8 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Code;

@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.project.core.AbstractTask;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -94,7 +93,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		final double start = timeScale.getStartingPosition(min) + widthTitle;
 		final double end = timeScale.getEndingPosition(max);
 
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+		ug = ug.apply(HColorUtils.BLACK);
 		ug = ug.apply(UTranslate.dy(getHeight() / 2));
 
 		if (widthTitle == 0) {

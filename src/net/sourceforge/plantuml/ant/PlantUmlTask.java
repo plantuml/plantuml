@@ -46,6 +46,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.FileList;
+import org.apache.tools.ant.types.FileSet;
+
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
@@ -56,12 +62,6 @@ import net.sourceforge.plantuml.Splash;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.stats.StatsUtils;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.types.FileList;
-import org.apache.tools.ant.types.FileSet;
 
 // <?xml version="1.0"?>
 //

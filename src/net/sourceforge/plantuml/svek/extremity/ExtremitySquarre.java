@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -59,7 +58,7 @@ class ExtremitySquarre extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(new UStroke(1.5)).apply(new UChangeBackColor(HColorUtils.WHITE)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new URectangle(radius * 2, radius * 2));
+		ug.apply(new UStroke(1.5)).apply(HColorUtils.WHITE.bg()).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new URectangle(radius * 2, radius * 2));
 	}
 
 }

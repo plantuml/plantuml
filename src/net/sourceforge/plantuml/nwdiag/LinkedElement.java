@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -91,7 +90,7 @@ public class LinkedElement {
 		drawCenter(ug, box, xMiddle, yMiddle);
 
 		final HColor color = ColorParam.activityBorder.getDefaultValue();
-		ug = ug.apply(new UChangeColor(color));
+		ug = ug.apply(color);
 		drawHLine(ug, xMiddle, GridTextBlockDecorated.NETWORK_THIN, y1);
 		if (ad2 != null) {
 			drawHLine(ug, xMiddle, y2, height);

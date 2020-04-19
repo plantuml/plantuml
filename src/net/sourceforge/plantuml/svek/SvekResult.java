@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHidden;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -93,7 +92,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			final IEntityImage image = node.getImage();
 			image.drawU(ug2.apply(new UTranslate(minX, minY)));
 			if (image instanceof Untranslated) {
-				((Untranslated) image).drawUntranslated(ug.apply(new UChangeColor(color)), minX, minY);
+				((Untranslated) image).drawUntranslated(ug.apply(color), minX, minY);
 			}
 			// shape.getImage().drawNeighborhood(ug2, minX, minY);
 		}

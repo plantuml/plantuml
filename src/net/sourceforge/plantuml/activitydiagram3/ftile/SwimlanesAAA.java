@@ -78,8 +78,6 @@ import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -279,14 +277,14 @@ public class SwimlanesAAA extends AbstractTextBlock implements ISwimlanesA, Text
 			final HColor back = swimlane.getColors(skinParam).getColor(ColorType.BACK);
 			if (back != null) {
 				final LaneDivider divider2 = dividers.get(i + 1);
-				final UGraphic background = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(back))
+				final UGraphic background = ug.apply(back.bg()).apply(back)
 						.apply(UTranslate.dx(xpos - divider1.getX2()));
 				final double width = swimlane.getActualWidth() + divider1.getX2() + divider2.getX1();
 				final double height = dimensionFull.getHeight() + titleHeightTranslate.getDy();
 				background.draw(new URectangle(width, height).ignoreForCompressionOnX().ignoreForCompressionOnY());
 			}
 
-			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane).apply(swimlane.getTranslate())
+			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane, swimlanes()).apply(swimlane.getTranslate())
 					.apply(getTitleHeightTranslate(stringBounder)));
 
 			final double dividerWith = divider1.calculateDimension(stringBounder).getWidth();
@@ -312,7 +310,7 @@ public class SwimlanesAAA extends AbstractTextBlock implements ISwimlanesA, Text
 			double fullWidth = swimlanesSpecial().get(swimlanesSpecial().size() - 1).getTranslate().getDx() - 2 * 5 - 1;
 			final URectangle back = new URectangle(fullWidth, titleHeight).ignoreForCompressionOnX()
 					.ignoreForCompressionOnY();
-			ug.apply(UTranslate.dx(5)).apply(new UChangeBackColor(color)).apply(new UChangeColor(color)).draw(back);
+			ug.apply(UTranslate.dx(5)).apply(color.bg()).apply(color).draw(back);
 		}
 	}
 
@@ -330,7 +328,7 @@ public class SwimlanesAAA extends AbstractTextBlock implements ISwimlanesA, Text
 		for (Swimlane swimlane : swimlanes()) {
 			final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
 			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(
-					new UGraphicForSnake(limitFinder), swimlane);
+					new UGraphicForSnake(limitFinder), swimlane, swimlanes());
 			full.drawU(interceptor);
 			interceptor.flushUg();
 			final MinMax minMax = limitFinder.getMinMax();

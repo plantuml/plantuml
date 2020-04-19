@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -62,6 +61,6 @@ class SimpleTextBlockBordered extends AbstractTextBlock implements TextBlock {
 	public void drawU(UGraphic ug) {
 		final Dimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
 		textBlock.drawU(ug.apply(new UTranslate(1, 1)));
-		ug.apply(new UChangeColor(color)).draw(new URectangle(dim.getWidth(), dim.getHeight()));
+		ug.apply(color).draw(new URectangle(dim.getWidth(), dim.getHeight()));
 	}
 }

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.command.BlocLines;

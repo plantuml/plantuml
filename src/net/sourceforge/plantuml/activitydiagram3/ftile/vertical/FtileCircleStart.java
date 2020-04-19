@@ -48,11 +48,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class FtileCircleStart extends AbstractFtile {
 
@@ -99,7 +98,7 @@ public class FtileCircleStart extends AbstractFtile {
 	public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
-		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backColor)).draw(circle);
+		ug.apply(new HColorNone()).apply(backColor.bg()).draw(circle);
 	}
 
 	@Override

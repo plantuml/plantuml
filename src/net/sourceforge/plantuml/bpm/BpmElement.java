@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -97,7 +96,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 			public void drawU(UGraphic ug) {
 				raw.drawU(ug);
-				ug = ug.apply(new UChangeColor(HColorUtils.RED));
+				ug = ug.apply(HColorUtils.RED);
 				for (Where w : Where.values()) {
 					if (have(w)) {
 						drawLine(ug, w, raw.calculateDimension(ug.getStringBounder()));

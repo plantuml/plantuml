@@ -174,7 +174,7 @@ public class FontChecker {
 		final double dim = 20;
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {
-				ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+				ug = ug.apply(HColorUtils.BLACK);
 				ug.draw(new URectangle(dim - 1, dim - 1));
 				if (ug instanceof UGraphic2) {
 					ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
@@ -192,7 +192,7 @@ public class FontChecker {
 	// public BufferedImage getBufferedImageOld(char c) throws IOException {
 	// final double dim = 20;
 	// UGraphic2 ug = new FileFormatOption(FileFormat.PNG).createUGraphic(new Dimension2DDouble(dim, dim));
-	// ug = (UGraphic2) ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+	// ug = (UGraphic2) ug.apply(UChangeColor.nnn(HtmlColorUtils.BLACK));
 	// ug.draw(new URectangle(dim - 1, dim - 1));
 	// ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
 	// final UText text = new UText("" + c, new FontConfiguration(font, HtmlColorUtils.BLACK));

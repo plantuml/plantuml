@@ -55,12 +55,11 @@ import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Line;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 
@@ -84,9 +83,9 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder)));
-		ug = ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), getStereo(),
-				ColorParam.classBackground)));
+		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder));
+		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(),
+		ColorParam.classBackground).bg());
 		if (url != null) {
 			ug.startUrl(url);
 		}
@@ -97,7 +96,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 			// circle.setDeltaShadow(4);
 		}
 		ug.apply(new UStroke(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);
-		ug = ug.apply(new UChangeBackColor(null));
+		ug = ug.apply(new HColorNone().bg());
 
 		Point2D pos = bibliotekon.getNode(getEntity()).getPosition();
 

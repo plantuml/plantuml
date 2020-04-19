@@ -38,14 +38,14 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 
@@ -117,14 +117,23 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 		if (withShadow) {
 			polygon.setDeltaShadow(4);
 		}
-		if (noBorder()) {
-			ug = ug.apply(new UChangeBackColor(backgroundColor)).apply(new UChangeColor(backgroundColor));
+		if (backgroundColor == null) {
+			ug = ug.apply(new HColorNone().bg());
 		} else {
-			ug = ug.apply(new UChangeBackColor(backgroundColor)).apply(new UChangeColor(borderColor));
-			ug = applyStroke(ug);
+			ug = ug.apply(backgroundColor.bg());
 		}
+		HColor color = noBorder() ? backgroundColor : borderColor;
+		if (color == null) {
+			color = new HColorNone();
+		}
+		ug = ug.apply(color);
+		ug = applyStroke(ug);
 		ug.draw(polygon);
-		textBlock.drawU(ugOriginal.apply(new UTranslate(marginX, marginY)));
+		TextBlock toDraw = textBlock;
+		if (textBlock instanceof SheetBlock2) {
+			toDraw = ((SheetBlock2) textBlock).enlargeMe(marginX);
+		}
+		toDraw.drawU(ugOriginal.apply(color).apply(new UTranslate(marginX, marginY)));
 	}
 
 	private Shadowable getPolygonNormal(final StringBounder stringBounder) {

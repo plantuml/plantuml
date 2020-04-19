@@ -39,7 +39,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -106,7 +105,7 @@ public class Needle implements UDrawable {
 		final UDrawable n1 = needle0.addChildren(root.getChildren());
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+				ug = ug.apply(HColorUtils.BLACK);
 				n1.drawU(ug);
 			}
 		};

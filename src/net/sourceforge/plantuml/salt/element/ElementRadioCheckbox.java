@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ElementRadioCheckbox extends AbstractElement {
 
@@ -89,22 +89,32 @@ public class ElementRadioCheckbox extends AbstractElement {
 
 		ug = ug.apply(new UStroke(stroke));
 		if (radio) {
-			ug.apply(new UTranslate(2, (height - ELLIPSE) / 2)).draw(new UEllipse(ELLIPSE, ELLIPSE));
-			if (checked) {
-				ug.apply(new UChangeBackColor(ug.getParam().getColor()))
-						.apply(new UTranslate(2 + (ELLIPSE - ELLIPSE2) / 2, (height - ELLIPSE2) / 2))
-						.draw(new UEllipse(ELLIPSE2, ELLIPSE2));
-			}
+			drawRadio(ug, height);
 		} else {
-			ug.apply(new UTranslate(2, (height - RECTANGLE) / 2)).draw(new URectangle(RECTANGLE, RECTANGLE));
-			if (checked) {
-				final UPolygon poly = new UPolygon();
-				poly.addPoint(0, 0);
-				poly.addPoint(3, 3);
-				poly.addPoint(10, -6);
-				poly.addPoint(3, 1);
-				ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(3, 6)).draw(poly);
-			}
+			drawOther(ug, height);
+		}
+	}
+
+	private void drawOther(UGraphic ug, final double height) {
+		ug.apply(new UTranslate(2, (height - RECTANGLE) / 2)).draw(new URectangle(RECTANGLE, RECTANGLE));
+		if (checked) {
+			final UPolygon poly = new UPolygon();
+			poly.addPoint(0, 0);
+			poly.addPoint(3, 3);
+			poly.addPoint(10, -6);
+			poly.addPoint(3, 1);
+			ug = ug.apply(HColorUtils.changeBack(ug));
+			ug = ug.apply(new UTranslate(3, 6));
+			ug.draw(poly);
+		}
+	}
+
+	private void drawRadio(UGraphic ug, final double height) {
+		ug.apply(new UTranslate(2, (height - ELLIPSE) / 2)).draw(new UEllipse(ELLIPSE, ELLIPSE));
+		if (checked) {
+			ug = ug.apply(HColorUtils.changeBack(ug));
+			ug = ug.apply(new UTranslate(2 + (ELLIPSE - ELLIPSE2) / 2, (height - ELLIPSE2) / 2));
+			ug.draw(new UEllipse(ELLIPSE2, ELLIPSE2));
 		}
 	}
 }

@@ -54,7 +54,7 @@ public class GetVersion extends SimpleReturnFunction {
 		return nbArg == 0;
 	}
 
-	public TValue executeReturn(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
 		return TValue.fromString(Version.versionString());
 	}
 }

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.descdiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;

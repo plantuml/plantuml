@@ -105,7 +105,7 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 				if (isSvg(f.getName())) {
 					sprite = new SpriteSvg(f);
 				} else {
-					sprite = new SpriteImage(FileUtils.ImageIO_read(f));
+					sprite = new SpriteImage(FileUtils.readRasterImageFromFile(f));
 				}
 			}
 		} catch (IOException e) {

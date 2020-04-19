@@ -39,14 +39,14 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.ugraphic.UChange;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicCompressOnXorY extends UGraphicDelegator {
 
@@ -54,7 +54,7 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 		if (change instanceof UTranslate) {
 			return new UGraphicCompressOnXorY(mode, getUg(), compressionTransform,
 					translate.compose((UTranslate) change));
-		} else if (change instanceof UStroke || change instanceof UChangeBackColor || change instanceof UChangeColor) {
+		} else if (change instanceof UStroke || change instanceof UBackground || change instanceof HColor) {
 			return new UGraphicCompressOnXorY(mode, getUg().apply(change), compressionTransform, translate);
 		}
 		throw new UnsupportedOperationException();

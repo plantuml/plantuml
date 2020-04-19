@@ -44,13 +44,12 @@ import net.sourceforge.plantuml.project.time.GCalendar;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
@@ -103,7 +102,7 @@ public class TimeHeaderDaily extends TimeHeader {
 			if (defaultPlan.getLoadAt(wink) > 0) {
 				final HColor back = colorDays.get(day);
 				if (back != null) {
-					drawRectangle(ug.apply(new UChangeBackColor(back)), height, x1, x2);
+					drawRectangle(ug.apply(back.bg()), height, x1, x2);
 				}
 				printCentered(ug.apply(UTranslate.dy(Y_POS_ROW16)),
 						getTextBlock(day.getDayOfWeek().shortName(), 10, false), x1, x2);
@@ -139,7 +138,7 @@ public class TimeHeaderDaily extends TimeHeader {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			if (defaultPlan.getLoadAt(wink) == 0) {
-				drawRectangle(ug.apply(new UChangeBackColor(veryLightGray)), height, x1, x2);
+				drawRectangle(ug.apply(veryLightGray.bg()), height, x1, x2);
 			}
 		}
 	}
@@ -148,7 +147,7 @@ public class TimeHeaderDaily extends TimeHeader {
 		if (height == 0) {
 			return;
 		}
-		ug = ug.apply(new UChangeColor(null));
+		ug = ug.apply(new HColorNone());
 		ug = ug.apply(new UTranslate(x1 + 1, getFullHeaderHeight()));
 		ug.draw(new URectangle(x2 - x1 - 1, height));
 	}
@@ -175,7 +174,7 @@ public class TimeHeaderDaily extends TimeHeader {
 
 	private void drawVbar(UGraphic ug, double x, double y1, double y2) {
 		final ULine vbar = ULine.vline(y2 - y1);
-		ug.apply(new UChangeColor(HColorUtils.LIGHT_GRAY)).apply(new UTranslate(x, y1)).draw(vbar);
+		ug.apply(HColorUtils.LIGHT_GRAY).apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	private void printNamedDays(final UGraphic ug) {

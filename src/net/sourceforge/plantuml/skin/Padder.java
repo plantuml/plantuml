@@ -41,12 +41,11 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class Padder {
 
@@ -63,8 +62,7 @@ public class Padder {
 		return "" + margin + "/" + padding + "/" + borderColor + "/" + backgroundColor;
 	}
 
-	private Padder(double margin, double padding, HColor backgroundColor, HColor borderColor,
-			double roundCorner) {
+	private Padder(double margin, double padding, HColor backgroundColor, HColor borderColor, double roundCorner) {
 		this.margin = margin;
 		this.padding = padding;
 		this.borderColor = borderColor;
@@ -119,8 +117,17 @@ public class Padder {
 
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(new UTranslate(margin, margin));
-				final UGraphic ug2 = ug.apply(new UChangeBackColor(backgroundColor))
-						.apply(new UChangeColor(borderColor));
+				UGraphic ug2 = ug;
+				if (borderColor == null) {
+					ug2 = ug2.apply(new HColorNone());
+				} else {
+					ug2 = ug2.apply(borderColor);
+				}
+				if (backgroundColor == null) {
+					ug2 = ug2.apply(new HColorNone().bg());
+				} else {
+					ug2 = ug2.apply(backgroundColor.bg());
+				}
 				final Dimension2D originalDim = orig.calculateDimension(ug.getStringBounder());
 				final URectangle rect = new URectangle(Dimension2DDouble.delta(originalDim, 2 * padding))
 						.rounded(roundCorner);

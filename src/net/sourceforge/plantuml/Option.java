@@ -456,7 +456,7 @@ public class Option {
 	}
 
 	public final static String getPattern() {
-		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu|pump|hpp|hh)$";
+		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu|puml|hpp|hh)$";
 	}
 
 	public void setOutputDir(File f) {

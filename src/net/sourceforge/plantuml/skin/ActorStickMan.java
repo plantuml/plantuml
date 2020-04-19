@@ -42,11 +42,11 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 
@@ -86,7 +86,7 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 
 		ug = symbolContext.apply(ug);
 		ug.apply(new UTranslate(startX, thickness())).draw(head);
-		ug.apply(new UTranslate(centerX, headDiam + thickness())).apply(new UChangeBackColor(null)).draw(path);
+		ug.apply(new UTranslate(centerX, headDiam + thickness())).apply(new HColorNone().bg()).draw(path);
 	}
 
 	private double thickness() {

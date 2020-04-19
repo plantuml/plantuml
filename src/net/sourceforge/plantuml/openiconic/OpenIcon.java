@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -135,7 +134,7 @@ public class OpenIcon {
 	public TextBlock asTextBlock(final HColor color, final double factor) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
-				svgPath.drawMe(ug.apply(new UChangeColor(color)), factor);
+				svgPath.drawMe(ug.apply(color), factor);
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {

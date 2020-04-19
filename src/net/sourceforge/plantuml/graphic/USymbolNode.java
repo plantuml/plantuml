@@ -39,12 +39,12 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 class USymbolNode extends USymbol {
 
@@ -110,7 +110,7 @@ class USymbolNode extends USymbol {
 		}
 
 		private void drawHlineInternal(UGraphic ug, UHorizontalLine line) {
-			ug = ug.apply(line.getStroke()).apply(new UChangeBackColor(null));
+			ug = ug.apply(line.getStroke()).apply(new HColorNone().bg());
 			ug.draw(ULine.hline(endingX - 10));
 			ug.apply(UTranslate.dx(endingX - 10)).draw(new ULine(10, -10));
 		}

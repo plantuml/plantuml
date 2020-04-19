@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -71,7 +70,7 @@ public class Control extends AbstractTextBlock implements TextBlock {
 		ug.apply(new UTranslate(x, y)).draw(circle);
 		ug = ug.apply(new UStroke());
 		
-		ug = ug.apply(new UChangeBackColor(symbolContext.getForeColor()));
+		ug = ug.apply(symbolContext.getForeColor().bg());
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(0, 0);
 		final int xWing = 6;

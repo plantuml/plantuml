@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -104,7 +102,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(new UChangeBackColor(noteBackgroundColor)).apply(new UChangeColor(borderColor));
+		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);
 		final UPath polygon;
 		if (withLink == false) {
 			polygon = getPolygonNormal(stringBounder);

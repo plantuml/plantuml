@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class SymbolContext {
 
@@ -73,8 +72,12 @@ public class SymbolContext {
 	}
 
 	public UGraphic applyColors(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(foreColor));
-		ug = ug.apply(new UChangeBackColor(backColor));
+		ug = ug.apply(foreColor);
+		if (backColor == null) {
+			ug = ug.apply(new HColorNone().bg());
+		} else {
+			ug = ug.apply(backColor.bg());
+		}
 		return ug;
 	}
 

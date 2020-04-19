@@ -41,8 +41,10 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandMindMapTabulation extends SingleLineCommand2<MindMapDiagram> {
 
@@ -53,6 +55,7 @@ public class CommandMindMapTabulation extends SingleLineCommand2<MindMapDiagram>
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMindMapTabulation.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "([ \t]*[*])"), //
+				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
@@ -62,7 +65,12 @@ public class CommandMindMapTabulation extends SingleLineCommand2<MindMapDiagram>
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
-		return diagram.addIdea(null, type.length() - 1, Display.getWithNewlines(label),
+		final String stringColor = arg.get("BACKCOLOR", 0);
+		HColor backColor = null;
+		if (stringColor != null) {
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
+		}
+		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
 

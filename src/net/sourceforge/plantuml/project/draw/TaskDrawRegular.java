@@ -44,13 +44,12 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.lang.ComplementColors;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
@@ -102,7 +101,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		if (colors != null && colors.isOk()) {
 			return colors.apply(ug);
 		}
-		return ug.apply(new UChangeColor(HColorUtils.BLUE)).apply(new UChangeBackColor(defaultColor));
+		return ug.apply(HColorUtils.BLUE).apply(defaultColor.bg());
 	}
 
 	private void drawShape(UGraphic ug) {
@@ -129,17 +128,17 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			ug.draw(full);
 		} else {
 			final double partialLength = fullLength * completion / 100.;
-			ug.apply(new UChangeColor(HColorUtils.WHITE)).apply(new UChangeBackColor(HColorUtils.WHITE))
+			ug.apply(HColorUtils.WHITE).apply(HColorUtils.WHITE.bg())
 					.draw(full);
 			if (partialLength > 2) {
 				final URectangle partial = new URectangle(partialLength, getShapeHeight()).rounded(8);
-				ug.apply(new UChangeColor(null)).draw(partial);
+				ug.apply(new HColorNone()).draw(partial);
 			}
 			if (partialLength > 10 && partialLength < fullLength - 10) {
 				final URectangle patch = new URectangle(8, getShapeHeight());
-				ug.apply(new UChangeColor(null)).apply(UTranslate.dx(partialLength - 8)).draw(patch);
+				ug.apply(new HColorNone()).apply(UTranslate.dx(partialLength - 8)).draw(patch);
 			}
-			ug.apply(new UChangeBackColor(null)).draw(full);
+			ug.apply(new HColorNone().bg()).draw(full);
 		}
 		if (url != null) {
 			ug.closeAction();

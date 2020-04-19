@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -89,6 +88,6 @@ public class SwimlanesC extends SwimlanesB {
 			color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			thickness = getStyle().getStroke();
 		}
-		ug.apply(thickness).apply(new UChangeColor(color)).draw(ULine.vline(height));
+		ug.apply(thickness).apply(color).draw(ULine.vline(height));
 	}
 }

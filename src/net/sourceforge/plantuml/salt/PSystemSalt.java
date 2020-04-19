@@ -80,7 +80,6 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -120,7 +119,7 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 			builder.setUDrawable(new UDrawable() {
 
 				public void drawU(UGraphic ug) {
-					ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+					ug = ug.apply(HColorUtils.BLACK);
 					salt.drawU(ug, 0, new Dimension2DDouble(size.getWidth(), size.getHeight()));
 					salt.drawU(ug, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
 				}

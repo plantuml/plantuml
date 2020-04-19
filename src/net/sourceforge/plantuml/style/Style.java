@@ -50,11 +50,11 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class Style {
@@ -95,7 +95,8 @@ public class Style {
 		// if (this.name.equals(other.name)) {
 		// return new Style(this.kind.add(other.kind), this.name, both);
 		// }
-		// return new Style(this.kind.add(other.kind), this.name + "," + other.name, both);
+		// return new Style(this.kind.add(other.kind), this.name + "," + other.name,
+		// both);
 	}
 
 	public Style eventuallyOverride(PName param, HColor color) {
@@ -222,7 +223,12 @@ public class Style {
 	}
 
 	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet) {
-		ug = ug.apply(new UChangeColor(value(PName.LineColor).asColor(colorSet)));
+		final HColor color = value(PName.LineColor).asColor(colorSet);
+		if (color == null) {
+			ug = ug.apply(new HColorNone());
+		} else {
+			ug = ug.apply(color);
+		}
 		ug = ug.apply(getStroke());
 		return ug;
 	}

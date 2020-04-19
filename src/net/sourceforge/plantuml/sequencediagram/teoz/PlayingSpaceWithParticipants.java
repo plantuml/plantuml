@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -132,7 +131,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 	}
 
 	private void drawNewPages(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(HColorUtils.BLUE));
+		ug = ug.apply(HColorUtils.BLUE);
 		for (Double change : yNewPages()) {
 			if (change == 0 || change == Double.MAX_VALUE) {
 				continue;

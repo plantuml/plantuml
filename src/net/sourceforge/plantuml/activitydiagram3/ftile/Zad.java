@@ -39,8 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
@@ -55,7 +53,7 @@ public class Zad {
 	}
 
 	public void drawDebug(UGraphic ug) {
-		ug = ug.apply(new UChangeBackColor(HColorUtils.BLUE)).apply(new UChangeColor(HColorUtils.RED_LIGHT));
+		ug = ug.apply(HColorUtils.BLUE.bg()).apply(HColorUtils.RED_LIGHT);
 		for (MinMax minMax : rectangles) {
 			System.err.println("minmax=" + minMax);
 			minMax.drawGrey(ug);

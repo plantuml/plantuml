@@ -46,13 +46,12 @@ import net.sourceforge.plantuml.creole.Position;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class AtomTable extends AbstractAtom implements Atom {
 
@@ -108,7 +107,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 				final double y2 = getStartingY(i + 1);
 				final double x1 = getStartingX(0);
 				final double x2 = getStartingX(getNbCols());
-				ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(line.lineBackColor))
+				ug.apply(new HColorNone()).apply(line.lineBackColor.bg())
 						.apply(new UTranslate(x1, y1)).draw(new URectangle(x2 - x1, y2 - y1));
 			}
 			for (int j = 0; j < getNbCols(); j++) {
@@ -127,7 +126,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 				if (cellBackColor != null) {
 					final double y1 = getStartingY(i);
 					final double y2 = getStartingY(i + 1);
-					ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(cellBackColor))
+					ug.apply(new HColorNone()).apply(cellBackColor.bg())
 							.apply(new UTranslate(x1, y1)).draw(new URectangle(x2 - x1, y2 - y1));
 				}
 				final Position pos = positions.get(cell);
@@ -141,7 +140,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 				cell.drawU(ug.apply(pos.getTranslate().compose(UTranslate.dx(dx))));
 			}
 		}
-		ug = ug.apply(new UChangeColor(lineColor));
+		ug = ug.apply(lineColor);
 		final ULine hline = ULine.hline(getEndingX(getNbCols() - 1));
 		for (int i = 0; i <= getNbLines(); i++) {
 			ug.apply(UTranslate.dy(getStartingY(i))).draw(hline);

@@ -61,8 +61,6 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
@@ -150,8 +148,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2),
 					(y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
 		}
-		ug = ug.apply(new UChangeColor(HColorUtils.MY_RED));
-		ug = ug.apply(new UChangeBackColor(HColorUtils.MY_RED));
+		ug = ug.apply(HColorUtils.MY_RED);
+		ug = ug.apply(HColorUtils.MY_RED.bg());
 		final UShape arrow = new UEllipse(7, 7);
 		for (Path p : field.getPaths()) {
 			final TileArea start = p.getStart();

@@ -41,7 +41,6 @@ import java.util.Arrays;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -71,7 +70,7 @@ public class GTileLeftRight extends AbstractTextBlock implements GTile {
 		final double dx2 = dimLeft.getWidth() + space;
 		right.drawU(ug.apply(new UTranslate(dx2, deltaH2 / 2)));
 
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+		ug = ug.apply(HColorUtils.BLACK);
 		final double step = dimLeft.getHeight() / (dimRight.getWestPositions().size() + 1);
 		double ystart = step + deltaH1 / 2;
 		for (Double w2 : dimRight.getWestPositions()) {

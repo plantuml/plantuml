@@ -34,8 +34,8 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public abstract class AbstractCodeIterator implements CodeIterator {
 

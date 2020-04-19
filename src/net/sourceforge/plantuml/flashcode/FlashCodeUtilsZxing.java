@@ -39,7 +39,6 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
-import net.sourceforge.plantuml.Log;
 import ext.plantuml.com.google.zxing.BarcodeFormat;
 import ext.plantuml.com.google.zxing.EncodeHintType;
 import ext.plantuml.com.google.zxing.WriterException;
@@ -47,6 +46,7 @@ import ext.plantuml.com.google.zxing.client.j2se.MatrixToImageWriter;
 import ext.plantuml.com.google.zxing.common.BitMatrix;
 import ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
 import ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import net.sourceforge.plantuml.Log;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 

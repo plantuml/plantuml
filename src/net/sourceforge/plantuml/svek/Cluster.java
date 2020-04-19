@@ -82,8 +82,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -398,7 +396,7 @@ public class Cluster implements Moveable {
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
 			rect.setDeltaShadow(shadowing);
-			ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor));
+			ug = ug.apply(backColor.bg()).apply(borderColor);
 			ug.apply(new UStroke(2)).apply(new UTranslate(minX, minY)).draw(rect);
 
 		} finally {
@@ -457,7 +455,7 @@ public class Cluster implements Moveable {
 			ztitle.drawU(ug.apply(UTranslate.dx(xTitle)));
 		}
 		final ULine line = ULine.vline(maxY - minY);
-		ug = ug.apply(new UChangeColor(borderColor));
+		ug = ug.apply(borderColor);
 		ug.apply(UTranslate.dx(minX)).draw(line);
 		ug.apply(UTranslate.dx(maxX)).draw(line);
 
@@ -502,7 +500,7 @@ public class Cluster implements Moveable {
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 		if (withSymbol) {
-			EntityImageState.drawSymbol(ug.apply(new UChangeColor(borderColor)), maxX, maxY);
+			EntityImageState.drawSymbol(ug.apply(borderColor), maxX, maxY);
 		}
 
 	}

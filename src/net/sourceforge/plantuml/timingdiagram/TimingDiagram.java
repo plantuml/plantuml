@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -77,6 +76,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	public static final double marginX1 = 5;
 	private final double marginX2 = 5;
 
+	private final Map<String, TimeTick> codes = new HashMap<String, TimeTick>();
 	private final Map<String, Player> players = new LinkedHashMap<String, Player>();
 	private final Map<String, PlayerClock> clocks = new HashMap<String, PlayerClock>();
 	private final List<TimeMessage> messages = new ArrayList<TimeMessage>();
@@ -169,7 +169,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	private void drawHorizontalSeparator(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK));
+		ug = ug.apply(HColorUtils.BLACK);
 		ug = ug.apply(getBorderStroke());
 		ug = ug.apply(UTranslate.dx(-marginX1));
 		ug.draw(ULine.hline(getWidthTotal(stringBounder)));
@@ -178,7 +178,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	private void drawBorder(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final ULine border = ULine.vline(getLastTranslate(stringBounder).getDy());
-		ug = ug.apply(new UChangeColor(HColorUtils.BLACK)).apply(getBorderStroke());
+		ug = ug.apply(HColorUtils.BLACK).apply(getBorderStroke());
 		ug.draw(border);
 		ug.apply(UTranslate.dx(getWidthTotal(stringBounder))).draw(border);
 	}
@@ -317,9 +317,16 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return message;
 	}
 
-	public void addTime(TimeTick time) {
+	public void addTime(TimeTick time, String code) {
 		this.now = time;
 		ruler.addTime(time);
+		if (code != null) {
+			this.codes.put(code, time);
+		}
+	}
+
+	public TimeTick getCodeValue(String code) {
+		return codes.get(code);
 	}
 
 	public void updateNow(TimeTick time) {

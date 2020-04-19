@@ -40,8 +40,8 @@ import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -109,7 +109,7 @@ public class ReversePolishInterpretor {
 				if (location == null) {
 					throw EaterException.unlocated("rpn44");
 				}
-				final TValue r = function.executeReturn(context, memory, location, args);
+				final TValue r = function.executeReturnFunction(context, memory, location, args);
 				if (trace)
 					System.err.println("r=" + r);
 				stack.addFirst(r);

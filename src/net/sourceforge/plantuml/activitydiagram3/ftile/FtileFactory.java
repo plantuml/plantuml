@@ -82,7 +82,7 @@ public interface FtileFactory {
 			Ftile backward, boolean noOut);
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut);
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward);
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url);

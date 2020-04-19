@@ -436,11 +436,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
-			// final LinkRendering back = new
-			// LinkRendering(linkColor).withDisplay(linkLabel);
 			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle);
-			// setCurrent(instructionRepeat.getParent());
-			// this.setNextLinkRendererInternal(LinkRendering.none());
+			return CommandExecutionResult.ok();
+		}
+		if (current() instanceof InstructionWhile) {
+			final InstructionWhile instructionWhile = (InstructionWhile) current();
+			instructionWhile.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Cannot find repeat");

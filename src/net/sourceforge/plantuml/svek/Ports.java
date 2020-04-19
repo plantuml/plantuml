@@ -38,23 +38,29 @@ package net.sourceforge.plantuml.svek;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.SignatureUtils;
+
 public class Ports {
 
-	private final Map<String, PortGeometry> all = new LinkedHashMap<String, PortGeometry>();
+	private final Map<String, PortGeometry> ids = new LinkedHashMap<String, PortGeometry>();
 
 	public void addThis(Ports other) {
-		all.putAll(other.all);
+		ids.putAll(other.ids);
+	}
+
+	public static String encodePortNameToId(String portName) {
+		return "p" + SignatureUtils.getMD5Hex(portName);
 	}
 
 	@Override
 	public String toString() {
-		return all.toString();
+		return ids.toString();
 	}
 
 	public Ports translateY(double deltaY) {
 		final Ports result = new Ports();
-		for (Map.Entry<String, PortGeometry> ent : all.entrySet()) {
-			result.all.put(ent.getKey(), ent.getValue().translateY(deltaY));
+		for (Map.Entry<String, PortGeometry> ent : ids.entrySet()) {
+			result.ids.put(ent.getKey(), ent.getValue().translateY(deltaY));
 		}
 		return result;
 	}
@@ -63,11 +69,12 @@ public class Ports {
 		if (portName == null) {
 			throw new IllegalArgumentException();
 		}
-		all.put(portName, new PortGeometry(position, height));
+		final String id = encodePortNameToId(portName);
+		ids.put(id, new PortGeometry(position, height));
 	}
 
-	public Map<String, PortGeometry> getAll() {
-		return all;
+	public Map<String, PortGeometry> getAllWithEncodedPortId() {
+		return ids;
 	}
 
 }

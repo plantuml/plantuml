@@ -38,8 +38,8 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterForeach;
 import net.sourceforge.plantuml.tim.ExecutionContextForeach;
 import net.sourceforge.plantuml.tim.TContext;

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class LimitFinder implements UGraphic {
 
@@ -61,9 +62,9 @@ public class LimitFinder implements UGraphic {
 			return new LimitFinder(stringBounder, minmax, translate.compose((UTranslate) change), clip);
 		} else if (change instanceof UStroke) {
 			return new LimitFinder(this);
-		} else if (change instanceof UChangeBackColor) {
+		} else if (change instanceof UBackground) {
 			return new LimitFinder(this);
-		} else if (change instanceof UChangeColor) {
+		} else if (change instanceof HColor) {
 			return new LimitFinder(this);
 		} else if (change instanceof UHidden) {
 			return new LimitFinder(this);
