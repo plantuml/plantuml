@@ -67,13 +67,13 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TextBlockUtils {
 
-	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor,
-			HColor backgroundColor, double cornersize) {
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
+			double cornersize) {
 		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize);
 	}
 
-	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor,
-			HColor backgroundColor, double cornersize, double marginX, double marginY) {
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
+			double cornersize, double marginX, double marginY) {
 		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, marginX, marginY);
 	}
 
@@ -146,8 +146,8 @@ public class TextBlockUtils {
 	// return addBackcolor(mergeTB(b1, b2, horizontalAlignment), b1.getBackcolor());
 	// }
 
-	public static MinMax getMinMax(TextBlock tb, StringBounder stringBounder) {
-		final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
+	public static MinMax getMinMax(UDrawable tb, StringBounder stringBounder, boolean initToZero) {
+		final LimitFinder limitFinder = new LimitFinder(stringBounder, initToZero);
 		tb.drawU(limitFinder);
 		return limitFinder.getMinMax();
 	}

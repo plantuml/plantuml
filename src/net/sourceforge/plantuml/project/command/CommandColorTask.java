@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.timingdiagram.command;
+package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -41,50 +41,47 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttConstraint;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.lang.Complement;
+import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class CommandClock extends SingleLineCommand2<TimingDiagram> {
+public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 
-	public CommandClock() {
+	public CommandColorTask() {
 		super(getRegexConcat());
 	}
 
-	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandClock.class.getName(), RegexLeaf.start(), //
-				new RegexOptional( //
-						new RegexConcat( //
-								new RegexLeaf("COMPACT", "(compact)"), //
-								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf("TYPE", "clock"), //
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandColorTask.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("CODE", "\\[([\\p{L}0-9_.]+)\\]"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("with"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("period"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PERIOD", "([0-9]+)"), //
-				new RegexOptional(new RegexConcat( //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("pulse"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("PULSE", "([0-9]+)") //
-				)), RegexLeaf.end());
+				new RegexLeaf("COLORS", "#(\\w+)(?:/(#?\\w+))?"), //
+				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
-		final String compact = arg.get("COMPACT", 0);
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
+
 		final String code = arg.get("CODE", 0);
-		final int period = Integer.parseInt(arg.get("PERIOD", 0));
-		final String pulseString = arg.get("PULSE", 0);
-		int pulse = 0;
-		if (pulseString != null) {
-			pulse = Integer.parseInt(pulseString);
+		final Task task = diagram.getExistingTask(code);
+		if (task == null) {
+			return CommandExecutionResult.error("No such task " + code);
 		}
-		return diagram.createClock(code, code, period, pulse, compact != null);
+
+		final String color1 = arg.get("COLORS", 0);
+		final String color2 = arg.get("COLORS", 1);
+		final HColor col1 = diagram.getIHtmlColorSet().getColorIfValid(color1);
+		final HColor col2 = diagram.getIHtmlColorSet().getColorIfValid(color2);
+		task.setColors(new ComplementColors(col1, col2));
+
+		return CommandExecutionResult.ok();
 	}
 
 }

@@ -189,8 +189,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		fileFormatOption = fileFormatOption.withPreserveAspectRatio(getSkinParam().getPreserveAspectRatio());
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 		if (hover != null) {
-			fileFormatOption = fileFormatOption.withHoverColor(StringUtils.getAsHtml(getSkinParam().getColorMapper()
-					.getMappedColor(hover)));
+			fileFormatOption = fileFormatOption
+					.withHoverColor(getSkinParam().getColorMapper().toHtml(hover));
 		}
 
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
@@ -227,8 +227,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE,
-				metadata, null, 0, 0, null, false);
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE, metadata,
+				null, 0, 0, null, false);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
@@ -316,7 +316,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			final double coef = (nb - 1 - i) * 1.0 / nb;
 			at.setToShear(coef, coef);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			// exportDiagramTOxxBEREMOVED(baos, null, 0, new FileFormatOption(FileFormat.PNG, at));
+			// exportDiagramTOxxBEREMOVED(baos, null, 0, new
+			// FileFormatOption(FileFormat.PNG, at));
 			baos.close();
 			final BufferedImage im = ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
 			m.addImage(im);
@@ -411,7 +412,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		// final String res = "/skin/" + filename + ".skin";
 		// final InputStream internalIs = UmlDiagram.class.getResourceAsStream(res);
 		// if (internalIs != null) {
-		// final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
+		// final BlocLines lines2 = BlocLines.load(internalIs, new
+		// LineLocationImpl(filename, null));
 		// return loadSkinInternal(lines2);
 		// }
 		// if (OptionFlags.ALLOW_INCLUDE == false) {
@@ -421,7 +423,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		// if (f == null || f.exists() == false || f.canRead() == false) {
 		// return CommandExecutionResult.error("Cannot load skin from " + filename);
 		// }
-		// final BlocLines lines = BlocLines.load(f, new LineLocationImpl(f.getName(), null));
+		// final BlocLines lines = BlocLines.load(f, new LineLocationImpl(f.getName(),
+		// null));
 		// return loadSkinInternal(lines);
 	}
 

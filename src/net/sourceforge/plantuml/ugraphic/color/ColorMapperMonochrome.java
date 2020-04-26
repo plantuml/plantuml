@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-public class ColorMapperMonochrome implements ColorMapper {
+public class ColorMapperMonochrome extends AbstractColorMapper implements ColorMapper {
 
 	private final boolean reverse;
 
@@ -45,11 +45,11 @@ public class ColorMapperMonochrome implements ColorMapper {
 		this.reverse = reverse;
 	}
 
-	public Color getMappedColor(HColor htmlColor) {
+	public Color toColor(HColor htmlColor) {
 		if (htmlColor == null) {
 			return null;
 		}
-		final Color color = new ColorMapperIdentity().getMappedColor(htmlColor);
+		final Color color = new ColorMapperIdentity().toColor(htmlColor);
 		if (reverse) {
 			return ColorUtils.getGrayScaleColorReverse(color);
 		}

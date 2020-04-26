@@ -58,7 +58,7 @@ public class DriverCenteredCharacterEps implements UDriver<EpsGraphics> {
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
 		final TextLayout t = new TextLayout("" + c, font.getFont(), TextBlockUtils.getFontRenderContext());
-		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
+		eps.setStrokeColor(mapper.toColor(param.getColor()));
 		DriverTextEps.drawPathIterator(eps, xpos, ypos, t.getOutline(null));
 
 	}

@@ -112,7 +112,7 @@ public class ConditionalBuilder {
 			this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			this.backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 			this.arrowColor = Rainbow
-					.fromColor(styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet()));
+					.fromColor(styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet()), null);
 			this.fontTest = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());
 			this.fontArrow = styleArrow.getFontConfiguration(skinParam.getIHtmlColorSet());
 		} else {

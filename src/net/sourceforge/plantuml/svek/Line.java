@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Pragma;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
@@ -246,7 +245,7 @@ public class Line implements Moveable, Hideable {
 			skinParam = link.getColors().mute(skinParam);
 			labelFont = labelFont.mute(link.getColors());
 		}
-		this.backgroundColor = skinParam.getBackgroundColor();
+		this.backgroundColor = skinParam.getBackgroundColor(false);
 		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);
 		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);
 		if (arrowLollipopColor == null) {
@@ -405,7 +404,7 @@ public class Line implements Moveable, Hideable {
 			sb.append("minlen=" + (length - 1));
 			sb.append(",");
 		}
-		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
+		sb.append("color=\"" + DotStringFactory.sharp000000(lineColor) + "\"");
 		if (labelText != null || link.getLinkConstraint() != null) {
 			sb.append(",");
 			if (graphvizVersion.useXLabelInsteadOfLabel() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
@@ -475,7 +474,7 @@ public class Line implements Moveable, Hideable {
 
 	public static void appendTable(StringBuilder sb, int w, int h, int col) {
 		sb.append("<TABLE ");
-		sb.append("BGCOLOR=\"" + StringUtils.getAsHtml(col) + "\" ");
+		sb.append("BGCOLOR=\"" + DotStringFactory.sharp000000(col) + "\" ");
 		sb.append("FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\">");
 		sb.append("<TR");
 		sb.append(">");

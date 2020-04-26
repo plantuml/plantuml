@@ -97,9 +97,9 @@ public class AnnotatedWorker {
 		final double y1 = 10;
 		final double y2 = 10;
 
-		final SymbolContext symbolContext = new SymbolContext(getSkinParam().getBackgroundColor(), HColorUtils.BLACK)
+		final SymbolContext symbolContext = new SymbolContext(getSkinParam().getBackgroundColor(false), HColorUtils.BLACK)
 				.withShadow(getSkinParam().shadowing(null) ? 3 : 0);
-		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder);
+		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder, false);
 		final TextBlock title = mainFrame.create(new FontConfiguration(getSkinParam(), FontParam.CAPTION, null),
 				HorizontalAlignment.CENTER, getSkinParam());
 		final Dimension2D dimTitle = title.calculateDimension(stringBounder);
@@ -118,7 +118,7 @@ public class AnnotatedWorker {
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-				return TextBlockUtils.getMinMax(this, stringBounder);
+				return TextBlockUtils.getMinMax(this, stringBounder, false);
 			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {

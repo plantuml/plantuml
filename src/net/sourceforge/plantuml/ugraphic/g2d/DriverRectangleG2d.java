@@ -96,7 +96,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 			drawBorder(param, color, mapper, rect, shape, g2d, x, y);
 		} else {
 			if (param.getBackcolor() != null) {
-				g2d.setColor(mapper.getMappedColor(param.getBackcolor()));
+				g2d.setColor(mapper.toColor(param.getBackcolor()));
 				DriverLineG2d.manageStroke(param, g2d);
 				managePattern(param, g2d);
 				g2d.fill(shape);
@@ -116,7 +116,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 			final GradientPaint paint = getPaintGradient(x, y, mapper, sized.getWidth(), sized.getHeight(), color);
 			g2d.setPaint(paint);
 		} else {
-			g2d.setColor(mapper.getMappedColor(color));
+			g2d.setColor(mapper.toColor(color));
 		}
 		DriverLineG2d.manageStroke(param, g2d);
 		g2d.draw(shape);
@@ -128,18 +128,18 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 		final char policy = gr.getPolicy();
 		final GradientPaint paint;
 		if (policy == '|') {
-			paint = new GradientPaint((float) x, (float) (y + height) / 2, mapper.getMappedColor(gr.getColor1()),
-					(float) (x + width), (float) (y + height) / 2, mapper.getMappedColor(gr.getColor2()));
+			paint = new GradientPaint((float) x, (float) (y + height) / 2, mapper.toColor(gr.getColor1()),
+					(float) (x + width), (float) (y + height) / 2, mapper.toColor(gr.getColor2()));
 		} else if (policy == '\\') {
-			paint = new GradientPaint((float) x, (float) (y + height), mapper.getMappedColor(gr.getColor1()),
-					(float) (x + width), (float) y, mapper.getMappedColor(gr.getColor2()));
+			paint = new GradientPaint((float) x, (float) (y + height), mapper.toColor(gr.getColor1()),
+					(float) (x + width), (float) y, mapper.toColor(gr.getColor2()));
 		} else if (policy == '-') {
-			paint = new GradientPaint((float) (x + width) / 2, (float) y, mapper.getMappedColor(gr.getColor1()),
-					(float) (x + width) / 2, (float) (y + height), mapper.getMappedColor(gr.getColor2()));
+			paint = new GradientPaint((float) (x + width) / 2, (float) y, mapper.toColor(gr.getColor1()),
+					(float) (x + width) / 2, (float) (y + height), mapper.toColor(gr.getColor2()));
 		} else {
 			// for /
-			paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()), (float) (x + width),
-					(float) (y + height), mapper.getMappedColor(gr.getColor2()));
+			paint = new GradientPaint((float) x, (float) y, mapper.toColor(gr.getColor1()), (float) (x + width),
+					(float) (y + height), mapper.toColor(gr.getColor2()));
 		}
 		return paint;
 	}

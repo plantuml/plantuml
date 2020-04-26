@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 
 public class Worm implements Iterable<Point2D.Double> {
@@ -69,18 +70,18 @@ public class Worm implements Iterable<Point2D.Double> {
 		this.ignoreForCompression = true;
 	}
 
-	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle color, double stroke,
-			Direction emphasizeDirection, UPolygon endDecoration) {
-		final HColor color2 = color.getColor();
-		if (color2 == null) {
+	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle colorAndStyle,
+			double stroke, Direction emphasizeDirection, UPolygon endDecoration) {
+		final HColor arrowColor = colorAndStyle.getArrowColor();
+		if (arrowColor == null) {
 			throw new IllegalArgumentException();
 		}
-		final LinkStyle style = color.getStyle();
+		final LinkStyle style = colorAndStyle.getStyle();
 		if (style.isInvisible()) {
 			return;
 		}
-		ug = ug.apply(color2);
-		ug = ug.apply(color2.bg());
+		ug = ug.apply(arrowColor);
+		ug = ug.apply(arrowColor.bg());
 		if (style.isNormal()) {
 			ug = ug.apply(new UStroke(stroke));
 		} else {
@@ -98,6 +99,13 @@ public class Worm implements Iterable<Point2D.Double> {
 				drawLine(ug, line, null);
 			}
 		}
+
+		final HColor arrowHeadColor = colorAndStyle.getArrowHeadColor();
+		if (arrowHeadColor != null && arrowHeadColor.equals(HColorUtils.transparent()) == false) {
+			ug = ug.apply(arrowHeadColor);
+			ug = ug.apply(arrowHeadColor.bg());
+		}
+
 		if (startDecoration != null) {
 			ug = ug.apply(new UStroke(1.5));
 			final Point2D start = points.get(0);
@@ -350,7 +358,8 @@ public class Worm implements Iterable<Point2D.Double> {
 		for (int i = 0; i < points.size() - 5; i++) {
 			final List<Direction> patternAt = getPatternAt(i);
 			if (Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.RIGHT).equals(patternAt)
-					|| Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT).equals(patternAt)) {
+					|| Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
+							.equals(patternAt)) {
 				final Point2D.Double newPoint = new Point2D.Double(points.get(i + 1).x, points.get(i + 3).y);
 				points.remove(i + 3);
 				points.remove(i + 2);
@@ -398,7 +407,8 @@ public class Worm implements Iterable<Point2D.Double> {
 		for (int i = 0; i < points.size() - 4; i++) {
 			final List<Direction> patternAt = getPatternAt(i);
 			if (Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.RIGHT).equals(patternAt)
-					|| Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.LEFT).equals(patternAt)) {
+					|| Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.LEFT)
+							.equals(patternAt)) {
 				final Point2D.Double newPoint = new Point2D.Double(points.get(i + 1).x, points.get(i + 3).y);
 				points.remove(i + 3);
 				points.remove(i + 2);

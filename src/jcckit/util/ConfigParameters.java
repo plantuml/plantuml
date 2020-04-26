@@ -303,7 +303,7 @@ public class ConfigParameters {
 static private HColorSet colors = HColorSet.instance();
 private Color decodeInternal(String value) {
 	if (colors.getColorIfValid(value)!=null) {
-		  return new ColorMapperIdentity().getMappedColor(colors.getColorIfValid(value));
+		  return new ColorMapperIdentity().toColor(colors.getColorIfValid(value));
 	}
 	return Color.decode(value);
 }

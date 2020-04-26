@@ -46,8 +46,8 @@ public class DriverPathEps implements UDriver<EpsGraphics> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final UPath shape = (UPath) ushape;
 
-		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
-		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
+		eps.setStrokeColor(mapper.toColor(param.getColor()));
+		eps.setFillColor(mapper.toColor(param.getBackcolor()));
 		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
 				.getStroke().getDashSpace());
 

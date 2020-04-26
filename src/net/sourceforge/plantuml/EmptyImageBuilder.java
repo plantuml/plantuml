@@ -36,9 +36,14 @@
 package net.sourceforge.plantuml;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
@@ -50,11 +55,11 @@ public class EmptyImageBuilder {
 	private final BufferedImage im;
 	private final Graphics2D g2d;
 
-	public EmptyImageBuilder(double width, double height, Color background) {
-		this((int) width, (int) height, background);
+	public EmptyImageBuilder(String watermark, double width, double height, Color background) {
+		this(watermark, (int) width, (int) height, background);
 	}
 
-	public EmptyImageBuilder(int width, int height, Color background) {
+	public EmptyImageBuilder(String watermark, int width, int height, Color background) {
 		if (width > GraphvizUtils.getenvImageLimit()) {
 			Log.info("Width too large " + width + ". You should set PLANTUML_LIMIT_SIZE");
 			width = GraphvizUtils.getenvImageLimit();
@@ -64,18 +69,84 @@ public class EmptyImageBuilder {
 			height = GraphvizUtils.getenvImageLimit();
 		}
 		Log.info("Creating image " + width + "x" + height);
-		im = new BufferedImage(width, height, background == null ? BufferedImage.TYPE_INT_ARGB
-				: BufferedImage.TYPE_INT_RGB);
+		im = new BufferedImage(width, height, getType(background));
 		g2d = im.createGraphics();
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
 		if (background != null) {
 			g2d.setColor(background);
 			g2d.fillRect(0, 0, width, height);
 		}
+		if (watermark != null) {
+			final int gray = 200;
+			g2d.setColor(new Color(gray, gray, gray));
+			printWatermark(watermark, width, height);
+		}
 	}
 
-	public EmptyImageBuilder(int width, int height, Color background, double dpiFactor) {
-		this(width * dpiFactor, height * dpiFactor, background);
+	private int getType(Color background) {
+		if (background == null) {
+			return BufferedImage.TYPE_INT_ARGB;
+		}
+		if (background.getAlpha() != 255) {
+			return BufferedImage.TYPE_INT_ARGB;
+		}
+		return BufferedImage.TYPE_INT_RGB;
+	}
+
+	private void printWatermark(String watermark, int maxWidth, int maxHeight) {
+		final Font javaFont = g2d.getFont();
+		final FontMetrics fm = g2d.getFontMetrics(javaFont);
+		final Rectangle2D rect = fm.getStringBounds(watermark, g2d);
+		final int height = (int) rect.getHeight();
+		final int width = (int) rect.getWidth();
+		if (height < 2 || width < 2) {
+			return;
+		}
+		if (width <= maxWidth)
+			for (int y = height; y < maxHeight; y += height + 1) {
+				for (int x = 0; x < maxWidth; x += width + 10) {
+					g2d.drawString(watermark, x, y);
+				}
+			}
+		else {
+			final List<String> withBreaks = withBreaks(watermark, javaFont, fm, maxWidth);
+			int y = 0;
+			while (y < maxHeight) {
+				for (String s : withBreaks) {
+					g2d.drawString(s, 0, y);
+					y += (int) fm.getStringBounds(s, g2d).getHeight();
+				}
+				y += 10;
+			}
+		}
+	}
+
+	private int getWidth(String line, Font javaFont, FontMetrics fm) {
+		final Rectangle2D rect = fm.getStringBounds(line, g2d);
+		return (int) rect.getWidth();
+	}
+
+	private List<String> withBreaks(String watermark, Font javaFont, FontMetrics fm, int maxWidth) {
+		final String[] words = watermark.split("\\s+");
+		final List<String> result = new ArrayList<String>();
+		String pending = "";
+		for (String word : words) {
+			final String candidate = pending.length() == 0 ? word : pending + " " + word;
+			if (getWidth(candidate, javaFont, fm) < maxWidth) {
+				pending = candidate;
+			} else {
+				result.add(pending);
+				pending = word;
+			}
+		}
+		if (pending.length() > 0) {
+			result.add(pending);
+		}
+		return result;
+	}
+
+	public EmptyImageBuilder(String watermark, int width, int height, Color background, double dpiFactor) {
+		this(watermark, width * dpiFactor, height * dpiFactor, background);
 		if (dpiFactor != 1.0) {
 			g2d.setTransform(AffineTransform.getScaleInstance(dpiFactor, dpiFactor));
 		}

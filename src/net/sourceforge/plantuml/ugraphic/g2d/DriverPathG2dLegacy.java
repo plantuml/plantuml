@@ -88,7 +88,7 @@ public class DriverPathG2dLegacy extends DriverShadowedG2d implements UDriver<Gr
 
 		if (shape.isOpenIconic()) {
 			p.closePath();
-			g2d.setColor(mapper.getMappedColor(param.getColor()));
+			g2d.setColor(mapper.toColor(param.getColor()));
 			g2d.fill(p);
 			return;
 		}
@@ -126,30 +126,30 @@ public class DriverPathG2dLegacy extends DriverShadowedG2d implements UDriver<Gr
 			final GradientPaint paint;
 			if (policy == '|') {
 				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,
-						mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
-						mapper.getMappedColor(gr.getColor2()));
+						mapper.toColor(gr.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
+						mapper.toColor(gr.getColor2()));
 			} else if (policy == '\\') {
-				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr
-						.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMinY(), mapper.getMappedColor(gr
+				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(), mapper.toColor(gr
+						.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMinY(), mapper.toColor(gr
 						.getColor2()));
 			} else if (policy == '-') {
 				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
-						mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
-						mapper.getMappedColor(gr.getColor2()));
+						mapper.toColor(gr.getColor1()), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
+						mapper.toColor(gr.getColor2()));
 			} else {
 				// for /
-				paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()),
-						(float) minMax.getMaxX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr.getColor2()));
+				paint = new GradientPaint((float) x, (float) y, mapper.toColor(gr.getColor1()),
+						(float) minMax.getMaxX(), (float) minMax.getMaxY(), mapper.toColor(gr.getColor2()));
 			}
 			g2d.setPaint(paint);
 			g2d.fill(p);
 		} else if (back != null) {
-			g2d.setColor(mapper.getMappedColor(back));
+			g2d.setColor(mapper.toColor(back));
 			g2d.fill(p);
 		}
 
 		if (param.getColor() != null) {
-			g2d.setColor(mapper.getMappedColor(param.getColor()));
+			g2d.setColor(mapper.toColor(param.getColor()));
 			g2d.draw(p);
 		}
 	}

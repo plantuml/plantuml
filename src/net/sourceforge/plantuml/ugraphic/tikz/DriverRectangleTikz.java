@@ -58,13 +58,13 @@ public class DriverRectangleTikz implements UDriver<TikzGraphics> {
 		final HColor back = param.getBackcolor();
 		if (back instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) back;
-			final Color color1 = mapper.getMappedColor(gr.getColor1());
-			final Color color2 = mapper.getMappedColor(gr.getColor2());
+			final Color color1 = mapper.toColor(gr.getColor1());
+			final Color color2 = mapper.toColor(gr.getColor2());
 			tikz.setGradientColor(color1, color2, gr.getPolicy());
 		} else {
-			tikz.setFillColor(mapper.getMappedColor(back));
+			tikz.setFillColor(mapper.toColor(back));
 		}
-		tikz.setStrokeColor(mapper.getMappedColor(param.getColor()));
+		tikz.setStrokeColor(mapper.toColor(param.getColor()));
 		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());
 		if (r == 0) {
 			tikz.rectangle(x, y, width, height);

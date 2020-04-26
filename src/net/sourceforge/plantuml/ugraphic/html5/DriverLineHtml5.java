@@ -71,12 +71,9 @@ public class DriverLineHtml5 implements UDriver<Html5Drawer> {
 			y2 = line.y2;
 		}
 
-		final String color = param.getColor() == null ? null : StringUtils.getAsHtml(mapper.getMappedColor(param
-				.getColor()));
+		final String color = param.getColor() == null ? null : mapper.toHtml(param.getColor());
 		html.setStrokeColor(color);
 
-//		html.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
-//				.getDashSpace());
 		html.htmlLine(x, y, x2, y2, 0);
 	}
 }

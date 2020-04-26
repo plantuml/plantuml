@@ -70,7 +70,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		if (SkinParam.USE_STYLES()) {
 			if (spriteContainer instanceof SkinParamBackcolored) {
 				style = style.eventuallyOverride(PName.BackGroundColor,
-						((SkinParamBackcolored) spriteContainer).getBackgroundColor());
+						((SkinParamBackcolored) spriteContainer).getBackgroundColor(false));
 			}
 			this.groupBorder = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 			this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());

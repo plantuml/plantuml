@@ -34,47 +34,26 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import java.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.timingdiagram.ChangeState;
+import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
+import net.sourceforge.plantuml.timingdiagram.TimeProjected;
 
-public class PlayerFrame2 implements PlayerFrame {
+public interface PDrawing extends TimeProjected {
 
-	private final TextBlock title;
+	public double getFullHeight(StringBounder stringBounder);
 
-	public PlayerFrame2(TextBlock title) {
-		this.title = title;
-	}
+	public void addChange(ChangeState change);
 
-	public void drawFrameTitle(UGraphic ug) {
-		title.drawU(ug);
-		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-		ug = ug.apply(HColorUtils.BLACK).apply(new UStroke(1.0));
-		final double widthTmp = dimTitle.getWidth() + 1;
-		final double height = getHeight(ug.getStringBounder());
-		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);
-	}
+	public TextBlock getPart1(double fullAvailableWidth);
 
-	private void drawLine(UGraphic ug, double... coord) {
-		for (int i = 0; i < coord.length - 2; i += 2) {
-			final double x1 = coord[i];
-			final double y1 = coord[i + 1];
-			final double x2 = coord[i + 2];
-			final double y2 = coord[i + 3];
-			ug.apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));
-		}
-	}
+	public UDrawable getPart2();
 
-	public double getHeight(StringBounder stringBounder) {
-		final Dimension2D dimTitle = title.calculateDimension(stringBounder);
-		return dimTitle.getHeight() + 1;
-	}
+	public void setInitialState(String initialState, Colors initialColors);
+
+	public void addConstraint(TimeConstraint constraint);
 
 }

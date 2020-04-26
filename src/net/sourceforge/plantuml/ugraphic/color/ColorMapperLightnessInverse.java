@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-public class ColorMapperLightnessInverse implements ColorMapper {
+public class ColorMapperLightnessInverse extends AbstractColorMapper implements ColorMapper {
 
-	public Color getMappedColor(HColor color) {
+	public Color toColor(HColor color) {
 		if (color == null) {
 			return null;
 		}
@@ -51,13 +51,11 @@ public class ColorMapperLightnessInverse implements ColorMapper {
 			return Color.WHITE;
 		}
 		if (color instanceof HColorGradient) {
-			return getMappedColor(((HColorGradient) color).getColor1());
+			return toColor(((HColorGradient) color).getColor1());
 		}
 		if (color instanceof HColorMiddle) {
 			return ((HColorMiddle) color).getMappedColor(this);
 		}
 		return ColorUtils.getReversed(((HColorSimple) color).getColor999());
-		//return ColorOrder.RGB.getReverse(((HColorSimple) color).getColor999());
-		// return ((HColorSimple) color).getColor999();
 	}
 }

@@ -54,7 +54,9 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPrintScale.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("printscale"), //
+				new RegexOr(new RegexLeaf("projectscale"), //
+						new RegexLeaf("ganttscale"), //
+						new RegexLeaf("printscale")), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr("SCALE", //
 						new RegexLeaf("monthly"), //

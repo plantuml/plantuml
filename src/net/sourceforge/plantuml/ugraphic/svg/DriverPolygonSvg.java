@@ -68,15 +68,15 @@ public class DriverPolygonSvg implements UDriver<SvgGraphics> {
 			}
 		}
 
-		final String color = StringUtils.getAsSvg(mapper, param.getColor());
+		final String color = mapper.toSvg(param.getColor());
 		final HColor back = param.getBackcolor();
 		if (back instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) back;
-			final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
-					StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
+			final String id = svg.createSvgGradient(mapper.toHtml(gr.getColor1()),
+					mapper.toHtml(gr.getColor2()), gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
 		} else {
-			final String backcolorString = StringUtils.getAsSvg(mapper, back);
+			final String backcolorString = mapper.toSvg(back);
 			svg.setFillColor(backcolorString);
 		}
 

@@ -73,11 +73,11 @@ public class SkinParamBackcolored extends SkinParamDelegator {
 	}
 
 	@Override
-	public HColor getBackgroundColor() {
+	public HColor getBackgroundColor(boolean replaceTransparentByWhite) {
 		if (backColorGeneral != null) {
 			return backColorGeneral;
 		}
-		return super.getBackgroundColor();
+		return super.getBackgroundColor(replaceTransparentByWhite);
 	}
 
 	@Override

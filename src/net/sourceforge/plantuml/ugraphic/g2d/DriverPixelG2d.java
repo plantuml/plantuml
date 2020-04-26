@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 public class DriverPixelG2d implements UDriver<Graphics2D> {
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		g2d.setColor(mapper.getMappedColor(param.getColor()));
+		g2d.setColor(mapper.toColor(param.getColor()));
 		g2d.fillRect((int) x, (int) y, 1, 1);
 	}
 

@@ -71,25 +71,25 @@ public class PSystemDonors extends AbstractPSystem {
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;
 
-	public static final String DONORS = "6_eA02mFU3XMJYceJdotTlPGzS6YgH0ylZFbdo3X7Mo0347DLH8jYjmdkzS0GG5q3HqzvlQT7lSRwI-Y"
-			+ "AztxfXdHbh_c-7d6K0m4FPw_hePj_hS7Zwa_zqxZk-ioVNvpXqL918Z8CYV51XeoyFvcECytZOzUUWOi"
-			+ "eUgdwBxsVvUkikvULOLPkbkrJf-kK3UsOexfygF0XLEm4rJHe91ZEfLp7GvLZVBgWQyjDCYaSEUtystN"
-			+ "P5QCVeYKJ6riGKPlZD2TazOloOACsd_K9z2YOxgcH2u9nTPB93h_h7HuMK3tQoI-0iaG2pODpA6K8pf1"
-			+ "iNCZXYGfWeREKOp6rX_PyYG4GnvQs8T_r9CZxYcPCGmjafHhe23ZPXo0j4hTcd2skXbGdITR36kIgelZ"
-			+ "8Tnt7AQdd3feU0GiKYoe1QeXo9lG2P_ciruokFIBeeQ__3R9jLa2r5ss1DWtC_eM7aqIvNzwromGTvMo"
-			+ "UKfZgTVU7sDto5rJPXx-Hs-Zb2suryr22XOlBO0VWPwhYKhoyrVMZOKuX6ifVI5TvxOhrr64IpPag5YN"
-			+ "psB9QyuTNN9ZqsAP3XRZ4_ovs8GCjD2LojNG3LfrsQtpXPBKrBX-oAj3-tN0DNLczuxHUY-Ri_p_8gpC"
-			+ "Z8e3TBh4AEX6GC4SJQkXOW4Hc1QwEkGcG2v0kPhSYjNgG_pQ9mZUJ7eW2XiXFH2lFvURN8Gm3MkwFSKC"
-			+ "OFgGKYT9seG8JTe4FOagnKXPXDuEavPXqyRKTT86ZzC6On37T5nz4ZvR2Dp2i4urcft5skSOGt2BxsK-"
-			+ "FUz36LVndMxXFUz9QloG0JlJWXwHAYFgorBsad3JG64MRyb9GtnNsCx5G_S5vvaisi3CsUOuP3PKBYMf"
-			+ "gNzY-A59zxS2MTjURKNUWFGIc8GmCxh1wQt98pMvH98qdEd4s04WgnQVs6-AS6TGTSlBpk8wXCaZLYz2"
-			+ "Xlmk-GIMAhhmT65xT_VZ6SEZo3wSzyAigN7fKdmieERi9YXA2wLwIb6apGaov5Y3dlNMmFQxEXR8rc_L"
-			+ "iEbGUDj4fvKRJ4mXmrMY_sYqI3GguXAz-2GnWB_nyfHwnbW77T_XPODnWAmX2O4gZER8WTFIMDswbh7U"
-			+ "ely_QsspSlxytskooAaddl6g0kWECk8_I57dw6BM3RmDyzNOC0VOO0OJtTdXoWDBxmOI5kp3EwkeAzEC"
-			+ "v4eCbbkKYrPnVAYwhtGFBcP3R5XnKKnHT9_YfBLD8wWKs_Tz4KvoOCv_YYgpKhWgTMfYn8JOxb6SmjXx"
-			+ "ByLTrwn0W-guJE3jgTUtYsckqkTuGQbXk0RafoDooAPvQ45DJPlwH62R6EjxSziXcUQ_IOz-YjREVbOF"
-			+ "GplRlybLeE7R7qAxeISOBX8t3F2xnvpSmCqt5FB6r1rbkPYsSz4zmouHhB3Vz5ra8U6LPQqo4SRSt5ek"
-			+ "F2t4Czk67Bo5xDFLAFg2g2fk80SMctKEOb4fnoDI98Nc72sR4v6s0m00";
+	public static final String DONORS = "6nmB0AmFkBcp0hHmgCOwx9qzUsNuYPYXIV3upfH_WeHti04o13LNIRGeSf_iNWC41T0rTFIOstTwt6-a"
+			+ "luYkTE-RPaHR_fhZvnb3CH3qUFww6hRvtnuyvfxff-Ixcz4JPiBaVmA4fYcNj0L8bI6ba87tDyDvlcaC"
+			+ "lVGCM1vLFqNtjV-xT9LrzwfEcBReReNpfn6gCqUZc6Ew_wF0XIZO2QfeKCWndSgv3eUg3dAs4trL54X2"
+			+ "nJk_dTzsJLR5P2wH4gkDRSICpe3kdFH-IGvajFwZVe0F7TCr9RWd59TU8kZyizhXPG73hv7uDHGEiU38"
+			+ "m1nAEoesA6Lk91J22L3eNCLiRFt1aITUM5H12_lmZqPou9wIh65eKOXu00Knp-02IM_KhKdEJXq6LEUP"
+			+ "BOOrITUjyH3fcuU95AsBXll18iA2Ma0DGzw4RlXqd_MIeNk_A1huos-JNBlbG1so9K3RhEXRU3H9LF-d"
+			+ "csUUkCkKpLEQZdhj_J5sXzmrPURqFteVXLp0SsuMKcJnyWBvCUYvcgWbFvVpO24DuJfANqZtkUtYCOjm"
+			+ "oOOCDUlopIoZHb_iIdGsBSPsif0Vy-TM4n9iuQkKHw0djUfeqVb28JKrhX_oUcg_3d9DdGNUCLeV5NEL"
+			+ "_r-4LPYXE46douoYhb-e6BDvDLGiKGHdZ2uFkGaa5-1SJMx7QlKXVkqJH6yb8n3Bng07ulMlbIwNGbWT"
+			+ "wxezpGfW-R1IDuMeBGAQj1jw4bVoaR88lHqcZMKpnj9pqWOVfut6A4xejCOcShCGfCkmJbNDT8dsEQrX"
+			+ "U3M_b_dql1_9UHNNwIRlUH_IwoSPg3Cjw9XK6l5ObhANHBe6gipYB7NL4DyLjlFmq7t1UHQBDZ1pjhaE"
+			+ "MHOQ5vBKr3yn-Q59npj9sQnzjHLx1_4lWtc8P4OHND-UF5AJonJ2bZET09j0LAh59_PRqhWpg8VbP7Eu"
+			+ "3c7beTMBa2I_Ipv1hAfOE5rO6-v-UOOW2lR9UI_CsXgNBYNN0chE7eAyj51LJocEj3b91kQQzAot3hRV"
+			+ "rRd0jtwhZcr0yPqGdTRSO7CAZ3HHVb6WHDAGbV9BJn8J-5y_Jxb7vZha-2ul6na7oIb93Ac2TCSlN3sD"
+			+ "rSlG2jPR_FsprZOhvy__lIOhEVN4irvD41qWed-J0hYSqnZ1sy1VjuyaRqxCi57GsEJAWrel0ea8zk6T"
+			+ "NTIJoupy8aQMMvIBLd5zgBgluXwvM0snOUiYd-BeFiMLrZODKILZt_T5kCZ1EFyjginAuQgMriA8JR7T"
+			+ "ipYviLilnTFMRY23whX3uEoft-wckKgVwmjBJSFJH7uwa4EskaiBQthQD3O3syJOtrlR3acw_oOT_v9U"
+			+ "q_sk7ePsTlucJuF6RtSO_OQHO41axPXWjymvYS2JRoJaZNauoUrYwPEBxYcxKB32VjClayM4LrQqoaIq"
+			+ "vkRMS-vj8Svk6tFO5hPFLwFu5qKr4O5CBZRhdiH2AU21L9A2EMVBL86qdIPDymc9Inq0";
 
 	/*
 	 * Special thanks to our sponsors and donors:

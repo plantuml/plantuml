@@ -65,7 +65,7 @@ public class PSystemLogo extends AbstractPSystem {
 			throws IOException {
 		final int width = 640;
 		final int height = 480;
-		final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, Color.WHITE);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(fileFormat.getWatermark(), width, height, Color.WHITE);
 		final BufferedImage im = builder.getBufferedImage();
 		final UGraphic ug = new UGraphicG2d(new ColorMapperIdentity(), builder.getGraphics2D(), 1.0);
 		((UGraphicG2d) ug).setBufferedImage(im);
@@ -82,7 +82,8 @@ public class PSystemLogo extends AbstractPSystem {
 
 	// private GraphicStrings getGraphicStrings() throws IOException {
 	// final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-	// final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
+	// final GraphicStrings result = new GraphicStrings(strings, font,
+	// HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
 	// image,
 	// GraphicPosition.BOTTOM, false);
 	// result.setMinWidth(200);

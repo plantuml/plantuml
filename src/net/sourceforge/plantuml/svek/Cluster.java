@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -90,6 +89,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Cluster implements Moveable {
@@ -757,7 +757,7 @@ public class Cluster implements Moveable {
 		}
 		sb.append("subgraph " + getClusterId() + " {");
 		sb.append("style=solid;");
-		sb.append("color=\"" + StringUtils.getAsHtml(color) + "\";");
+		sb.append("color=\"" + DotStringFactory.sharp000000(color) + "\";");
 
 		final String label;
 		if (isLabel()) {
@@ -889,8 +889,8 @@ public class Cluster implements Moveable {
 			if (backColor == null) {
 				backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 			}
-			if (backColor == null /* || stateBack instanceof HtmlColorTransparent */) {
-				backColor = new HColorBackground(skinParam.getBackgroundColor());
+			if (backColor == null || backColor.equals(HColorUtils.transparent()) /* || stateBack instanceof HtmlColorTransparent */) {
+				backColor = new HColorBackground(skinParam.getBackgroundColor(true));
 			}
 			return backColor;
 		}
@@ -900,8 +900,8 @@ public class Cluster implements Moveable {
 		if (backColor == null) {
 			backColor = skinParam.getHtmlColor(ColorParam.background, stereotype, false);
 		}
-		if (backColor == null /* || stateBack instanceof HtmlColorTransparent */) {
-			backColor = new HColorBackground(skinParam.getBackgroundColor());
+		if (backColor == null || backColor.equals(HColorUtils.transparent()) /* || stateBack instanceof HtmlColorTransparent */) {
+			backColor = new HColorBackground(skinParam.getBackgroundColor(true));
 		}
 		return backColor;
 	}

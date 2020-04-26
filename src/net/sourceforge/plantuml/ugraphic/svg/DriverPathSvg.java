@@ -63,7 +63,7 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraph
 			return;
 		}
 
-		final String color = StringUtils.getAsSvg(mapper, param.getColor());
+		final String color = mapper.toSvg(param.getColor());
 		if (shape.isOpenIconic()) {
 			svg.setFillColor(color);
 			svg.setStrokeColor("");
@@ -72,11 +72,11 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraph
 			final HColor back = param.getBackcolor();
 			if (back instanceof HColorGradient) {
 				final HColorGradient gr = (HColorGradient) back;
-				final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
-						StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
+				final String id = svg.createSvgGradient(mapper.toHtml(gr.getColor1()),
+						mapper.toHtml(gr.getColor2()), gr.getPolicy());
 				svg.setFillColor("url(#" + id + ")");
 			} else {
-				final String backcolor = StringUtils.getAsSvg(mapper, back);
+				final String backcolor = mapper.toSvg(back);
 				svg.setFillColor(backcolor);
 			}
 			svg.setStrokeColor(color);

@@ -271,7 +271,6 @@ class FtileWhile extends AbstractFtile {
 			snake.emphasizeDirection(Direction.UP);
 
 			ug.draw(snake);
-
 			ug.apply(new UTranslate(x1, y1bis)).draw(new UEmpty(5, Diamond.diamondHalfSize));
 
 		}
@@ -362,6 +361,7 @@ class FtileWhile extends AbstractFtile {
 			snake.addPoint(x2, y2);
 
 			ug.draw(snake);
+			ug.apply(new UTranslate(x1, y1bis)).draw(new UEmpty(5, Diamond.diamondHalfSize));
 		}
 	}
 

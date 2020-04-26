@@ -325,7 +325,7 @@ public class SwimlanesA extends AbstractTextBlock implements ISwimlanesA, TextBl
 	@Override
 	public MinMax getMinMax(StringBounder stringBounder) {
 		if (cachedMinMax == null) {
-			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder);
+			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);
 		}
 		return cachedMinMax;
 	}

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.timingdiagram.TimingStyle;
@@ -53,6 +54,10 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRobustConcise.class.getName(), RegexLeaf.start(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("COMPACT", "(compact)"), //
+								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("TYPE", "(robust|concise)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
@@ -64,10 +69,11 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		final String full = arg.get("FULL", 0);
 		final TimingStyle type = TimingStyle.valueOf(arg.get("TYPE", 0).toUpperCase());
-		return diagram.createRobustConcise(code, full, type);
+		return diagram.createRobustConcise(code, full, type, compact != null);
 	}
 
 }

@@ -48,8 +48,8 @@ public class HColorMiddle extends HColorAbstract implements HColor {
 	}
 
 	public Color getMappedColor(ColorMapper colorMapper) {
-		final Color cc1 = colorMapper.getMappedColor(c1);
-		final Color cc2 = colorMapper.getMappedColor(c2);
+		final Color cc1 = colorMapper.toColor(c1);
+		final Color cc2 = colorMapper.toColor(c2);
 		final int r1 = cc1.getRed();
 		final int g1 = cc1.getGreen();
 		final int b1 = cc1.getBlue();

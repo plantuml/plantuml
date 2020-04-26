@@ -68,7 +68,7 @@ public class GraphicsPath {
 	}
 
 	private BufferedImage createImage() {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(50, 50, Color.WHITE);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(null, 50, 50, Color.WHITE);
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 

@@ -73,17 +73,17 @@ public class SvgResult {
 	}
 
 	public int getIndexFromColor(int color) {
-		String s = "stroke=\"" + StringUtils.goLowerCase(StringUtils.getAsHtml(color)) + "\"";
+		String s = "stroke=\"" + StringUtils.goLowerCase(DotStringFactory.sharp000000(color)) + "\"";
 		int idx = svg.indexOf(s);
 		if (idx != -1) {
 			return idx;
 		}
-		s = ";stroke:" + StringUtils.goLowerCase(StringUtils.getAsHtml(color)) + ";";
+		s = ";stroke:" + StringUtils.goLowerCase(DotStringFactory.sharp000000(color)) + ";";
 		idx = svg.indexOf(s);
 		if (idx != -1) {
 			return idx;
 		}
-		s = "fill=\"" + StringUtils.goLowerCase(StringUtils.getAsHtml(color)) + "\"";
+		s = "fill=\"" + StringUtils.goLowerCase(DotStringFactory.sharp000000(color)) + "\"";
 		idx = svg.indexOf(s);
 		if (idx != -1) {
 			return idx;

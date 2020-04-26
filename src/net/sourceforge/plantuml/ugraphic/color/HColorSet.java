@@ -269,6 +269,9 @@ public class HColorSet {
 			color = new Color(Integer.parseInt(s, 16));
 		} else if (s.matches("[0-9A-Fa-f]{6}")) {
 			color = new Color(Integer.parseInt(s, 16));
+		} else if (s.matches("[0-9A-Fa-f]{8}")) {
+			final long parse = Long.parseLong(s, 16);
+			color = new Color((int) parse, true);
 		} else {
 			final String value = htmlNames.get(s);
 			if (value == null) {
@@ -285,6 +288,9 @@ public class HColorSet {
 			return true;
 		}
 		if (s.matches("[0-9A-Fa-f]{6}")) {
+			return true;
+		}
+		if (s.matches("[0-9A-Fa-f]{8}")) {
 			return true;
 		}
 		if (s.equalsIgnoreCase("automatic")) {

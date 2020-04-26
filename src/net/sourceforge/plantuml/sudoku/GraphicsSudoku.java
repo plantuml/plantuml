@@ -102,7 +102,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImagePng(OutputStream os) throws IOException {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(sudoWidth, sudoHeight + textTotalHeight, Color.WHITE);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight, Color.WHITE);
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 

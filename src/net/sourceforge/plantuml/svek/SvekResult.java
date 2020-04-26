@@ -137,7 +137,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 	}
 
 	public HColor getBackcolor() {
-		return dotData.getSkinParam().getBackgroundColor();
+		return dotData.getSkinParam().getBackgroundColor(false);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

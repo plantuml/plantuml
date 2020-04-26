@@ -263,9 +263,12 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	public HColor getBackgroundColor() {
+	public HColor getBackgroundColor(boolean replaceTransparentByWhite) {
 		final HColor result = getHtmlColor(ColorParam.background, null, false);
 		if (result == null) {
+			return HColorUtils.WHITE;
+		}
+		if (replaceTransparentByWhite && HColorUtils.transparent().equals(result)) {
 			return HColorUtils.WHITE;
 		}
 		return result;
@@ -310,8 +313,9 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return null;
 		}
-		if (param == ColorParam.background && value.equalsIgnoreCase("transparent")) {
-			return null;
+		if ((param == ColorParam.background || param == ColorParam.arrowHead)
+				&& (value.equalsIgnoreCase("transparent") || value.equalsIgnoreCase("none"))) {
+			return HColorUtils.transparent();
 		}
 		if (param == ColorParam.background) {
 			return getIHtmlColorSet().getColorIfValid(value);
@@ -319,7 +323,7 @@ public class SkinParam implements ISkinParam {
 		assert param != ColorParam.background;
 //		final boolean acceptTransparent = param == ColorParam.background
 //				|| param == ColorParam.sequenceGroupBodyBackground || param == ColorParam.sequenceBoxBackground;
-		return getIHtmlColorSet().getColorIfValid(value, getBackgroundColor());
+		return getIHtmlColorSet().getColorIfValid(value, getBackgroundColor(false));
 	}
 
 	public char getCircledCharacter(Stereotype stereotype) {

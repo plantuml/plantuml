@@ -69,8 +69,8 @@ public class HColorGradient extends HColorAbstract implements HColor {
 		if (coeff > 1 || coeff < 0) {
 			throw new IllegalArgumentException("c=" + coeff);
 		}
-		final Color c1 = mapper.getMappedColor(color1);
-		final Color c2 = mapper.getMappedColor(color2);
+		final Color c1 = mapper.toColor(color1);
+		final Color c2 = mapper.toColor(color2);
 		final int vred = c2.getRed() - c1.getRed();
 		final int vgreen = c2.getGreen() - c1.getGreen();
 		final int vblue = c2.getBlue() - c1.getBlue();

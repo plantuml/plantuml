@@ -86,6 +86,7 @@ public enum ColorParam {
 	interfaceBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
 	interfaceBorder(HColorUtils.MY_RED, ColorType.LINE),
 	arrow(HColorUtils.MY_RED, ColorType.ARROW),
+	arrowHead(HColorUtils.MY_RED, null),
 
 	stateBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
 	stateBorder(HColorUtils.MY_RED, ColorType.LINE),

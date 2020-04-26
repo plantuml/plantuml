@@ -30,19 +30,41 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * 
  *
  */
-package net.sourceforge.plantuml.timingdiagram.graphic;
+package net.sourceforge.plantuml.ugraphic.color;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import java.awt.Color;
 
-public class PlayerFrameEmpty implements PlayerFrame {
+import net.sourceforge.plantuml.svek.DotStringFactory;
 
-	public void drawFrameTitle(UGraphic ug) {
+public abstract class AbstractColorMapper implements ColorMapper {
+
+	final public String toHtml(HColor hcolor) {
+		if (hcolor == null) {
+			return null;
+		}
+		final Color color = toColor(hcolor);
+		return DotStringFactory.sharp000000(color.getRGB());
 	}
 
-	public double getHeight(StringBounder stringBounder) {
-		return 0;
+	final public String toSvg(HColor hcolor) {
+		if (hcolor == null) {
+			return "none";
+		}
+		if (hcolor instanceof HColorBackground) {
+			final HColor result = ((HColorBackground) hcolor).getBack();
+//			Thread.dumpStack();
+//			System.exit(0);
+//			return toHtml(result);
+		}
+		final Color color = toColor(hcolor);
+		final int alpha = color.getAlpha();
+		if (alpha != 255) {
+			return DotStringFactory.sharpAlpha(color.getRGB());
+		}
+		return toHtml(hcolor);
 	}
+
 }

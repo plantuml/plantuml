@@ -71,8 +71,8 @@ public class DriverEllipseEps implements UDriver<EpsGraphics> {
 			eps.epsEllipseShadow(x + width / 2, y + height / 2, width / 2, height / 2, shape.getDeltaShadow());
 		}
 
-		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
-		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
+		eps.setFillColor(mapper.toColor(param.getBackcolor()));
+		eps.setStrokeColor(mapper.toColor(param.getColor()));
 		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
 				.getDashSpace());
 

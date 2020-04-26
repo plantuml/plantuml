@@ -47,28 +47,34 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class HtmlColorAndStyle {
 
-	private final HColor color;
+	private final HColor arrowHeadColor;
+	private final HColor arrowColor;
 	private final LinkStyle style;
 
 	@Override
 	public String toString() {
-		return color + " " + style;
+		return arrowColor + " " + style;
 	}
 
-	public HtmlColorAndStyle(HColor color) {
-		this(color, LinkStyle.NORMAL());
+	public HtmlColorAndStyle(HColor color, HColor arrowHeadColor) {
+		this(color, LinkStyle.NORMAL(), arrowHeadColor);
 	}
 
-	public HtmlColorAndStyle(HColor color, LinkStyle style) {
-		if (color == null) {
+	public HtmlColorAndStyle(HColor arrowColor, LinkStyle style, HColor arrowHeadColor) {
+		if (arrowColor == null) {
 			throw new IllegalArgumentException();
 		}
-		this.color = color;
+		this.arrowHeadColor = arrowHeadColor;
+		this.arrowColor = arrowColor;
 		this.style = style;
 	}
 
-	public HColor getColor() {
-		return color;
+	public HColor getArrowColor() {
+		return arrowColor;
+	}
+
+	public HColor getArrowHeadColor() {
+		return arrowHeadColor;
 	}
 
 	public LinkStyle getStyle() {
@@ -80,12 +86,14 @@ public class HtmlColorAndStyle {
 	}
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) {
-		HColor color;
+		HColor arrowColor;
+		HColor arrowHeadColor = null;
 		if (SkinParam.USE_STYLES()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		} else {
-			color = Rainbow.build(skinParam).getColors().get(0).color;
+			arrowColor = Rainbow.build(skinParam).getColors().get(0).arrowColor;
+			arrowColor = Rainbow.build(skinParam).getColors().get(0).arrowHeadColor;
 		}
 		LinkStyle style = LinkStyle.NORMAL();
 		final HColorSet set = skinParam.getIHtmlColorSet();
@@ -97,10 +105,10 @@ public class HtmlColorAndStyle {
 			}
 			final HColor tmpColor = set.getColorIfValid(s);
 			if (tmpColor != null) {
-				color = tmpColor;
+				arrowColor = tmpColor;
 			}
 		}
-		return new HtmlColorAndStyle(color, style);
+		return new HtmlColorAndStyle(arrowColor, style, arrowHeadColor);
 	}
 
 }

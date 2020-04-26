@@ -42,7 +42,6 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Hideable;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -155,7 +154,7 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 		sb.append(",");
 		sb.append("height=" + SvekUtils.pixelToInches(getHeight()));
 		sb.append(",");
-		sb.append("color=\"" + StringUtils.getAsHtml(color) + "\"");
+		sb.append("color=\"" + DotStringFactory.sharp000000(color) + "\"");
 		sb.append("];");
 		SvekUtils.println(sb);
 	}
@@ -182,7 +181,7 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 		sb.append("</TR>");
 		sb.append("<TR>");
 		appendTd(sb, shield.getX1(), 1);
-		sb.append("<TD BGCOLOR=\"" + StringUtils.getAsHtml(color) + "\"");
+		sb.append("<TD BGCOLOR=\"" + DotStringFactory.sharp000000(color) + "\"");
 		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + getHeight() + "\"");
 		sb.append(" PORT=\"h\">");
 		sb.append("</TD>");
@@ -204,7 +203,7 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 		sb.append("shape=plaintext,");
 		// sb.append("color=\"" + StringUtils.getAsHtml(color) + "\",");
 		sb.append("label=<");
-		sb.append("<TABLE BGCOLOR=\"" + StringUtils.getAsHtml(color)
+		sb.append("<TABLE BGCOLOR=\"" + DotStringFactory.sharp000000(color)
 				+ "\" BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 		double position = 0;
 		for (Map.Entry<String, PortGeometry> ent : ports.getAllWithEncodedPortId().entrySet()) {

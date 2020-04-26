@@ -95,32 +95,32 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<Graph
 			final GradientPaint paint;
 //			final Rectangle2D bound = path.getBounds();
 			if (policy == '|') {
-				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()) / 2, mapper.getMappedColor(gr
+				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()) / 2, mapper.toColor(gr
 						.getColor1()), (float) (x + shape.getWidth()), (float) (y + shape.getHeight()) / 2,
-						mapper.getMappedColor(gr.getColor2()));
+						mapper.toColor(gr.getColor2()));
 			} else if (policy == '\\') {
-				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), mapper.getMappedColor(gr
-						.getColor1()), (float) (x + shape.getWidth()), (float) y, mapper.getMappedColor(gr.getColor2()));
+				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), mapper.toColor(gr
+						.getColor1()), (float) (x + shape.getWidth()), (float) y, mapper.toColor(gr.getColor2()));
 			} else if (policy == '-') {
-				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, mapper.getMappedColor(gr
+				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, mapper.toColor(gr
 						.getColor1()), (float) (x + shape.getWidth()) / 2, (float) (y + shape.getHeight()),
-						mapper.getMappedColor(gr.getColor2()));
+						mapper.toColor(gr.getColor2()));
 			} else {
 				// for /
-				paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()),
-						(float) (x + shape.getWidth()), (float) (y + shape.getHeight()), mapper.getMappedColor(gr
+				paint = new GradientPaint((float) x, (float) y, mapper.toColor(gr.getColor1()),
+						(float) (x + shape.getWidth()), (float) (y + shape.getHeight()), mapper.toColor(gr
 								.getColor2()));
 			}
 			g2d.setPaint(paint);
 			g2d.fill(path);
 		} else if (back!=null) {
-			g2d.setColor(mapper.getMappedColor(back));
+			g2d.setColor(mapper.toColor(back));
 			DriverRectangleG2d.managePattern(param, g2d);
 			g2d.fill(path);
 		}
 
 		if (param.getColor() != null) {
-			g2d.setColor(mapper.getMappedColor(param.getColor()));
+			g2d.setColor(mapper.toColor(param.getColor()));
 			DriverLineG2d.manageStroke(param, g2d);
 			g2d.draw(path);
 		}

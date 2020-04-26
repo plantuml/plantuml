@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
@@ -52,6 +53,10 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandBinary.class.getName(), RegexLeaf.start(), //
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("COMPACT", "(compact)"), //
+								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("binary"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
@@ -63,9 +68,10 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		final String full = arg.get("FULL", 0);
-		return diagram.createBinary(code, full);
+		return diagram.createBinary(code, full, compact != null);
 	}
 
 }

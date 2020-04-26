@@ -67,27 +67,27 @@ public class Rainbow {
 	public static Rainbow none() {
 		return new Rainbow(0);
 	}
-	
-	public static Rainbow fromColor(HColor color) {
-		if (color == null) {
+
+	public static Rainbow fromColor(HColor arrowColor, HColor arrowHeadColor) {
+		if (arrowColor == null) {
 			return Rainbow.none();
 		}
-		return Rainbow.build(new HtmlColorAndStyle(color));
+		return Rainbow.build(new HtmlColorAndStyle(arrowColor, arrowHeadColor));
 	}
 
 	public static Rainbow build(ISkinParam skinParam) {
 		if (SkinParam.USE_STYLES()) {
 			throw new IllegalStateException();
 		}
-		return fromColor(rose.getHtmlColor(skinParam, ColorParam.arrow));
+		final HColor arrow = rose.getHtmlColor(skinParam, ColorParam.arrow);
+		final HColor arrowHead = rose.getHtmlColor(skinParam, null, ColorParam.arrowHead, ColorParam.arrow);
+		return fromColor(arrow, arrowHead);
 	}
 
 	public static Rainbow build(Style style, HColorSet set) {
 		final HColor color = style.value(PName.LineColor).asColor(set);
-		return fromColor(color);
+		return fromColor(color, null);
 	}
-
-
 
 	public Rainbow withDefault(Rainbow defaultColor) {
 		if (this.size() == 0) {
@@ -130,7 +130,7 @@ public class Rainbow {
 	}
 
 	public HColor getColor() {
-		return colors.get(0).getColor();
+		return colors.get(0).getArrowColor();
 	}
 
 	public int getColorArrowSeparationSpace() {

@@ -34,12 +34,41 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import java.awt.geom.Dimension2D;
+
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public interface PlayerFrame {
+public class PlayerFrame {
 
-	public void drawFrameTitle(UGraphic ug);
+	private final TextBlock title;
 
-	public double getHeight(StringBounder stringBounder);
+	public PlayerFrame(TextBlock title) {
+		this.title = title;
+	}
+
+	public void drawFrameTitle(UGraphic ug) {
+		title.drawU(ug);
+		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+		ug = ug.apply(HColorUtils.BLACK).apply(new UStroke(1.0));
+		final double widthTmp = dimTitle.getWidth() + 1;
+		final double height = title.calculateDimension(ug.getStringBounder()).getHeight() + 1;
+		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);
+	}
+
+	private void drawLine(UGraphic ug, double... coord) {
+		for (int i = 0; i < coord.length - 2; i += 2) {
+			final double x1 = coord[i];
+			final double y1 = coord[i + 1];
+			final double x2 = coord[i + 2];
+			final double y2 = coord[i + 3];
+			ug.apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));
+		}
+	}
+
 }

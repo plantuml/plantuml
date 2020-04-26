@@ -82,9 +82,9 @@ public class DriverLineSvg implements UDriver<SvgGraphics> {
 		final HColor color = param.getColor();
 		if (color instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) color;
-			svg.setStrokeColor(StringUtils.getAsSvg(mapper, gr.getColor1()));
+			svg.setStrokeColor(mapper.toSvg(gr.getColor1()));
 		} else {
-			svg.setStrokeColor(StringUtils.getAsSvg(mapper, color));
+			svg.setStrokeColor(mapper.toSvg(color));
 		}
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 		svg.svgLine(x, y, x2, y2, shape.getDeltaShadow());

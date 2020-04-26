@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
-import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
-import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrameEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -58,15 +56,19 @@ public class PlayerClock extends Player {
 
 	private final int period;
 	private final int pulse;
+	private final double ymargin = 8;
 
-	public PlayerClock(ISkinParam skinParam, TimingRuler ruler, int period, int pulse) {
-		super("", skinParam, ruler);
+	public PlayerClock(ISkinParam skinParam, TimingRuler ruler, int period, int pulse, boolean compact) {
+		super("", skinParam, ruler, compact);
 		this.period = period;
 		this.pulse = pulse;
 	}
 
 	public double getFullHeight(StringBounder striWngBounder) {
 		return 30;
+	}
+
+	public void drawFrameTitle(UGraphic ug) {
 	}
 
 	private SymbolContext getContext() {
@@ -93,12 +95,6 @@ public class PlayerClock extends Player {
 		throw new UnsupportedOperationException();
 	}
 
-	private final double ymargin = 8;
-
-	public PlayerFrame getPlayerFrame() {
-		return new PlayerFrameEmpty();
-	}
-
 	private double getPulseCoef() {
 		if (pulse == 0) {
 			return 0.5;
@@ -110,7 +106,7 @@ public class PlayerClock extends Player {
 		return period;
 	}
 
-	public TextBlock getPart1() {
+	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
 		return TextBlockUtils.empty(0, 0);
 	}
 

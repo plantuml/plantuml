@@ -94,7 +94,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 				g2d.setPaint(paint);
 				g2d.fill(area);
 			} else {
-				final Color backColor = mapper.getMappedColor(extended);
+				final Color backColor = mapper.toColor(extended);
 				if (backColor != null) {
 					g2d.setColor(backColor);
 					g2d.setBackground(backColor);
@@ -106,12 +106,12 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		visible.ensureVisible(x + dimBack.getWidth(), y + 1.5);
 
 		g2d.setFont(font.getFont());
-		g2d.setColor(mapper.getMappedColor(fontConfiguration.getColor()));
+		g2d.setColor(mapper.toColor(fontConfiguration.getColor()));
 		g2d.drawString(shape.getText(), (float) x, (float) y);
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
 			if (extended != null) {
-				g2d.setColor(mapper.getMappedColor(extended));
+				g2d.setColor(mapper.toColor(extended));
 			}
 			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault()), font, shape.getText());
 			final int ypos = (int) (y + 2.5);
@@ -123,7 +123,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault()), font, shape.getText());
 			final int ypos = (int) (y + 2.5) - 1;
 			if (extended != null) {
-				g2d.setColor(mapper.getMappedColor(extended));
+				g2d.setColor(mapper.toColor(extended));
 			}
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
 				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);
@@ -135,7 +135,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			final FontMetrics fm = g2d.getFontMetrics(font.getFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			if (extended != null) {
-				g2d.setColor(mapper.getMappedColor(extended));
+				g2d.setColor(mapper.toColor(extended));
 			}
 			g2d.setStroke(new BasicStroke((float) 1.5));
 			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);

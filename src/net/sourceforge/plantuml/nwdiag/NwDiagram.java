@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.nwdiag;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -45,8 +46,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -57,10 +61,14 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -176,19 +184,38 @@ public class NwDiagram extends UmlDiagram {
 		final Scale scale = getScale();
 
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
+		final ISkinParam skinParam = getSkinParam();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), dpiFactor, null, "", "", 0, 0,
 				null, false);
-		final UDrawable result = getUDrawable();
+		TextBlock result = getTextBlock();
+		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, 0, os);
 	}
 
-	private UDrawable getUDrawable() {
-		return new UDrawable() {
+	private TextBlockBackcolored getTextBlock() {
+		return new TextBlockBackcolored() {
 			public void drawU(UGraphic ug) {
 				drawMe(ug);
 			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+				return null;
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return getTotalDimension(stringBounder);
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				throw new UnsupportedOperationException();
+			}
+
+			public HColor getBackcolor() {
+				return null;
+			}
+
 		};
 	}
 
@@ -205,8 +232,17 @@ public class NwDiagram extends UmlDiagram {
 		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
+	private Dimension2D getTotalDimension(StringBounder stringBounder) {
+		return TextBlockUtils.getMinMax(new UDrawable() {
+			public void drawU(UGraphic ug) {
+				drawMe(ug);
+			}
+		}, stringBounder, true).getDimension();
+	}
+
+	private final double margin = 5;
+
 	private void drawMe(UGraphic ug) {
-		final double margin = 5;
 		ug = ug.apply(new UTranslate(margin, margin));
 
 		final StringBounder stringBounder = ug.getStringBounder();
@@ -252,12 +288,11 @@ public class NwDiagram extends UmlDiagram {
 		deltaX += 5;
 
 		grid.drawU(ug.apply(ColorParam.activityBorder.getDefaultValue())
-				.apply(ColorParam.activityBackground.getDefaultValue().bg())
-				.apply(new UTranslate(deltaX, deltaY)));
+				.apply(ColorParam.activityBackground.getDefaultValue().bg()).apply(new UTranslate(deltaX, deltaY)));
 		final Dimension2D dimGrid = grid.calculateDimension(stringBounder);
 
-		ug.apply(new UTranslate(dimGrid.getWidth() + deltaX + margin, dimGrid.getHeight() + deltaY + margin)).draw(
-				new UEmpty(1, 1));
+		ug.apply(new UTranslate(dimGrid.getWidth() + deltaX + margin, dimGrid.getHeight() + deltaY + margin))
+				.draw(new UEmpty(1, 1));
 
 	}
 

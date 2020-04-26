@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
@@ -139,7 +138,7 @@ public class ImageBuilder {
 	public ImageBuilder(ISkinParam skinParam, double dpiFactor, String metadata, String warningOrError, double margin1,
 			double margin2, Animation animation) {
 		this(skinParam, dpiFactor, metadata, warningOrError, margin1, margin2, animation,
-				skinParam.getBackgroundColor());
+				skinParam.getBackgroundColor(false));
 	}
 
 	public ImageBuilder(ISkinParam skinParam, double dpiFactor, String metadata, String warningOrError, double margin1,
@@ -390,7 +389,8 @@ public class ImageBuilder {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
-			return createUGraphicPNG(colorMapper, dpiFactor, dim, mybackcolor, animationArg, dx, dy);
+			return createUGraphicPNG(colorMapper, dpiFactor, dim, mybackcolor, animationArg, dx, dy,
+					fileFormatOption.getWatermark());
 		case SVG:
 			return createUGraphicSVG(colorMapper, dpiFactor, dim, mybackcolor, fileFormatOption.getSvgLinkTarget(),
 					fileFormatOption.getHoverColor(), seed, fileFormatOption.getPreserveAspectRatio());
@@ -416,21 +416,21 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HColor mybackcolor,
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, final HColor suggested,
 			String svgLinkTarget, String hover, long seed, String preserveAspectRatio) {
-		Color backColor = Color.WHITE;
-		if (mybackcolor instanceof HColorSimple) {
-			backColor = colorMapper.getMappedColor(mybackcolor);
+		HColor backColor = HColorUtils.WHITE;
+		if (suggested instanceof HColorSimple) {
+			backColor = suggested;
 		}
 		final UGraphicSvg ug;
-		if (mybackcolor instanceof HColorGradient) {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HColorGradient) mybackcolor, false, scale,
+		if (suggested instanceof HColorGradient) {
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HColorGradient) suggested, false, scale,
 					svgLinkTarget, hover, seed, preserveAspectRatio);
-		} else if (backColor == null || backColor.equals(Color.WHITE)) {
+		} else if (backColor == null || colorMapper.toColor(backColor).equals(Color.WHITE)) {
 			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed,
 					preserveAspectRatio);
 		} else {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, StringUtils.getAsHtml(backColor), false, scale,
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, colorMapper.toSvg(backColor), false, scale,
 					svgLinkTarget, hover, seed, preserveAspectRatio);
 		}
 		return ug;
@@ -438,10 +438,10 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicPNG(ColorMapper colorMapper, double dpiFactor, final Dimension2D dim,
-			HColor mybackcolor, Animation affineTransforms, double dx, double dy) {
+			HColor mybackcolor, Animation affineTransforms, double dx, double dy, String watermark) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HColorSimple) {
-			backColor = colorMapper.getMappedColor(mybackcolor);
+			backColor = colorMapper.toColor(mybackcolor);
 		} else if (mybackcolor instanceof HColorBackground) {
 			backColor = null;
 		}
@@ -452,7 +452,7 @@ public class ImageBuilder {
 		 * builder.getGraphics2D(); graphics2D.rotate(-Math.PI / 2);
 		 * graphics2D.translate(-builder.getBufferedImage().getHeight(), 0); } else {
 		 */
-		final EmptyImageBuilder builder = new EmptyImageBuilder((int) (dim.getWidth() * dpiFactor),
+		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * dpiFactor),
 				(int) (dim.getHeight() * dpiFactor), backColor);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
@@ -462,8 +462,7 @@ public class ImageBuilder {
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
 		if (mybackcolor instanceof HColorGradient) {
-			ug.apply(mybackcolor.bg())
-					.draw(new URectangle(im.getWidth() / dpiFactor, im.getHeight() / dpiFactor));
+			ug.apply(mybackcolor.bg()).draw(new URectangle(im.getWidth() / dpiFactor, im.getHeight() / dpiFactor));
 		}
 
 		return ug;

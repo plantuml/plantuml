@@ -52,9 +52,8 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.timingdiagram.graphic.Histogram;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
-import net.sourceforge.plantuml.timingdiagram.graphic.PlayerDrawing;
+import net.sourceforge.plantuml.timingdiagram.graphic.PDrawing;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
-import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame2;
 import net.sourceforge.plantuml.timingdiagram.graphic.Ribbon;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -68,38 +67,38 @@ public final class PlayerRobustConcise extends Player {
 	private final TimingStyle type;
 
 	private String initialState;
-	private PlayerDrawing cached;
+	private PDrawing cached;
 	private Colors initialColors;
 
-	public PlayerRobustConcise(TimingStyle type, String full, ISkinParam skinParam, TimingRuler ruler) {
-		super(full, skinParam, ruler);
+	public PlayerRobustConcise(TimingStyle type, String full, ISkinParam skinParam, TimingRuler ruler,
+			boolean compact) {
+		super(full, skinParam, ruler, compact);
 		this.type = type;
 	}
 
-	private PlayerDrawing buildPlayerDrawing() {
+	private PDrawing buildPDrawing() {
 		if (type == TimingStyle.CONCISE) {
-			return new Ribbon(ruler, skinParam, notes);
+			return new Ribbon(ruler, skinParam, notes, isCompact(), getTitle());
 		}
 		if (type == TimingStyle.ROBUST) {
-			return new Histogram(ruler, skinParam, statesLabel.values());
+			return new Histogram(ruler, skinParam, statesLabel.values(), isCompact(), getTitle());
 		}
 		throw new IllegalStateException();
 	}
 
-	public final PlayerFrame getPlayerFrame() {
-		return new PlayerFrame2(getTitle());
-	}
-
-	public final TextBlock getPart1() {
+	public final TextBlock getPart1(final double fullAvailableWidth, final double specialVSpace) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				ug = ug.apply(getTranslateForTimeDrawing(ug.getStringBounder()));
-				getTimeDrawing().getPart1().drawU(ug);
+				if (isCompact() == false) {
+					new PlayerFrame(getTitle()).drawFrameTitle(ug);
+				}
+				ug = ug.apply(getTranslateForTimeDrawing(ug.getStringBounder())).apply(UTranslate.dy(specialVSpace));
+				getTimeDrawing().getPart1(fullAvailableWidth).drawU(ug);
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return getTimeDrawing().getPart1().calculateDimension(stringBounder);
+				return getTimeDrawing().getPart1(fullAvailableWidth).calculateDimension(stringBounder);
 			}
 		};
 	}
@@ -122,18 +121,21 @@ public final class PlayerRobustConcise extends Player {
 	}
 
 	private double getTitleHeight(StringBounder stringBounder) {
+		if (isCompact()) {
+			return 6;
+		}
 		return getTitle().calculateDimension(stringBounder).getHeight() + 6;
 	}
 
-	private PlayerDrawing getTimeDrawing() {
+	private PDrawing getTimeDrawing() {
 		if (cached == null) {
 			cached = computeTimeDrawing();
 		}
 		return cached;
 	}
 
-	private PlayerDrawing computeTimeDrawing() {
-		final PlayerDrawing result = buildPlayerDrawing();
+	private PDrawing computeTimeDrawing() {
+		final PDrawing result = buildPDrawing();
 		result.setInitialState(initialState, initialColors);
 		for (ChangeState change : changes) {
 			result.addChange(change);

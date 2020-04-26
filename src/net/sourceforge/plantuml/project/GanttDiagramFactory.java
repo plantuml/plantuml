@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.CommandNope;
 import net.sourceforge.plantuml.command.CommandScale;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.project.command.CommandColorTask;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow2;
 import net.sourceforge.plantuml.project.command.CommandPage;
@@ -87,6 +88,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 		cmds.addAll(getLanguageCommands());
 		cmds.add(new CommandGanttArrow());
 		cmds.add(new CommandGanttArrow2());
+		cmds.add(new CommandColorTask());
 		cmds.add(new CommandSeparator());
 
 		cmds.add(new CommandPrintScale());

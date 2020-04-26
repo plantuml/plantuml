@@ -63,7 +63,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public boolean useUnderlineForHyperlink();
 
-	public HColor getBackgroundColor();
+	public HColor getBackgroundColor(boolean replaceTransparentByWhite);
 
 	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable);
 

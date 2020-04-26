@@ -75,7 +75,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 		final HColor backColorElement = diagram.getSkinParam().getIHtmlColorSet()
 				.getColorIfValid(arg.get("COLORS", 0));
 		final HColor backColorGeneral = diagram.getSkinParam().getIHtmlColorSet()
-				.getColorIfValid(arg.get("COLORS", 1), diagram.getSkinParam().getBackgroundColor());
+				.getColorIfValid(arg.get("COLORS", 1), diagram.getSkinParam().getBackgroundColor(true));
 		String comment = arg.get("COMMENT", 0);
 		final GroupingType groupingType = GroupingType.getType(type);
 		if ("group".equals(type)) {

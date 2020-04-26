@@ -65,7 +65,7 @@ public class CommandLink3 extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
 		final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
 		if (color != null) {
-			diagram.setColorNextArrow(Rainbow.fromColor(color));
+			diagram.setColorNextArrow(Rainbow.fromColor(color, null));
 		}
 		return CommandExecutionResult.ok();
 	}

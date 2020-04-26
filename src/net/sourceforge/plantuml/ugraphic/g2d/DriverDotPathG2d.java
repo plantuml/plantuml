@@ -57,7 +57,7 @@ public class DriverDotPathG2d implements UDriver<Graphics2D> {
 		DriverLineG2d.manageStroke(param, g2d);
 
 		if (param.getColor() != null) {
-			g2d.setColor(mapper.getMappedColor(param.getColor()));
+			g2d.setColor(mapper.toColor(param.getColor()));
 			shape.draw(g2d, x, y);
 			shape.manageEnsureVisible(x, y, visible);
 		}

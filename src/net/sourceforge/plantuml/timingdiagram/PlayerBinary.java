@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -50,8 +51,6 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
-import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
-import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrameEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -62,13 +61,17 @@ public class PlayerBinary extends Player {
 
 	private static final int HEIGHT = 30;
 	private final SortedMap<TimeTick, Boolean> values = new TreeMap<TimeTick, Boolean>();
+	private Boolean initialState;
 
-	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler) {
-		super(code, skinParam, ruler);
+	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact) {
+		super(code, skinParam, ruler, compact);
 	}
 
 	public double getFullHeight(StringBounder stringBounder) {
 		return HEIGHT;
+	}
+
+	public void drawFrameTitle(UGraphic ug) {
 	}
 
 	private SymbolContext getContext() {
@@ -76,7 +79,8 @@ public class PlayerBinary extends Player {
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
-		throw new UnsupportedOperationException();
+		final double x = ruler.getPosInPixel(tick);
+		return new IntricatedPoint(new Point2D.Double(x, getYpos(false)), new Point2D.Double(x, getYpos(true)));
 	}
 
 	public void addNote(TimeTick now, Display note, Position position) {
@@ -89,7 +93,11 @@ public class PlayerBinary extends Player {
 
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
 		final boolean state = getState(states[0]);
-		this.values.put(now, state);
+		if (now == null) {
+			this.initialState = state;
+		} else {
+			this.values.put(now, state);
+		}
 	}
 
 	private boolean getState(String value) {
@@ -102,15 +110,11 @@ public class PlayerBinary extends Player {
 
 	private final double ymargin = 8;
 
-	public PlayerFrame getPlayerFrame() {
-		return new PlayerFrameEmpty();
-	}
-
 	private double getYpos(boolean state) {
 		return state ? ymargin : HEIGHT - ymargin;
 	}
 
-	public TextBlock getPart1() {
+	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -133,7 +137,7 @@ public class PlayerBinary extends Player {
 			public void drawU(UGraphic ug) {
 				ug = getContext().apply(ug);
 				double lastx = 0;
-				boolean lastValue = false;
+				boolean lastValue = initialState == null ? false : initialState;
 				for (Map.Entry<TimeTick, Boolean> ent : values.entrySet()) {
 					final double x = ruler.getPosInPixel(ent.getKey());
 					ug.apply(new UTranslate(lastx, getYpos(lastValue))).draw(ULine.hline(x - lastx));

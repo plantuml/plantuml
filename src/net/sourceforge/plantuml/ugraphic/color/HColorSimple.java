@@ -48,6 +48,14 @@ public class HColorSimple extends HColorAbstract implements HColor {
 	}
 
 	@Override
+	public String toString() {
+		if (color.getAlpha() == 0) {
+			return "transparent";
+		}
+		return color.toString() + " alpha=" + color.getAlpha() + " monochrome=" + monochrome;
+	}
+
+	@Override
 	public boolean equals(Object other) {
 		if (other instanceof HColorSimple == false) {
 			return false;

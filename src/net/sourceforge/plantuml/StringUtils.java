@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
@@ -383,30 +384,6 @@ public class StringUtils {
 			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));
 		}
 		return Collections.unmodifiableList(result);
-	}
-
-	public static String getAsHtml(Color color) {
-		if (color == null) {
-			return null;
-		}
-		return getAsHtml(color.getRGB());
-	}
-
-	public static String getAsSvg(ColorMapper mapper, HColor color) {
-		if (color == null) {
-			return "none";
-		}
-		if (color instanceof HColorBackground) {
-			return ((HColorBackground) color).getSvg(mapper);
-		}
-		return getAsHtml(mapper.getMappedColor(color));
-	}
-
-	public static String getAsHtml(int color) {
-		final int v = 0xFFFFFF & color;
-		String s = "000000" + Integer.toHexString(v).toUpperCase();
-		s = s.substring(s.length() - 6);
-		return "#" + s;
 	}
 
 	public static String getUid(String uid1, int uid2) {

@@ -30,30 +30,38 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * 
  *
  */
-package net.sourceforge.plantuml.timingdiagram.graphic;
+package net.sourceforge.plantuml.timingdiagram.command;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.timingdiagram.ChangeState;
-import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
-import net.sourceforge.plantuml.timingdiagram.TimeProjected;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
-public interface PlayerDrawing extends TimeProjected {
+public class CommandModeCompact extends SingleLineCommand2<TimingDiagram> {
 
-	public double getFullHeight(StringBounder stringBounder);
+	public CommandModeCompact() {
+		super(getRegexConcat());
+	}
 
-	public void addChange(ChangeState change);
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandModeCompact.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("mode"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("compact"), //
+				RegexLeaf.end());
+	}
 
-	public TextBlock getPart1();
-
-	public UDrawable getPart2();
-
-	public void setInitialState(String initialState, Colors initialColors);
-
-	public void addConstraint(TimeConstraint constraint);
+	@Override
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+		diagram.goCompactMode();
+		return CommandExecutionResult.ok();
+	}
 
 }

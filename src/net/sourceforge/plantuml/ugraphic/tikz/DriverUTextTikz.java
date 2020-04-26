@@ -52,7 +52,7 @@ public class DriverUTextTikz implements UDriver<TikzGraphics> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 		final UFont font = fontConfiguration.getFont();
 		final HColor col = fontConfiguration.getColor();
-		tikz.setStrokeColor(mapper.getMappedColor(col));
+		tikz.setStrokeColor(mapper.toColor(col));
 		final boolean underline = fontConfiguration.containsStyle(FontStyle.UNDERLINE);
 		final boolean italic = font.isItalic();
 		final boolean bold = font.isBold();

@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandDefineStateLong;
 import net.sourceforge.plantuml.timingdiagram.command.CommandDefineStateShort;
 import net.sourceforge.plantuml.timingdiagram.command.CommandHideTimeAxis;
 import net.sourceforge.plantuml.timingdiagram.command.CommandHighlight;
+import net.sourceforge.plantuml.timingdiagram.command.CommandModeCompact;
 import net.sourceforge.plantuml.timingdiagram.command.CommandNote;
 import net.sourceforge.plantuml.timingdiagram.command.CommandNoteLong;
 import net.sourceforge.plantuml.timingdiagram.command.CommandRobustConcise;
@@ -88,6 +89,7 @@ public class TimingDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandScalePixel());
 		cmds.add(new CommandHideTimeAxis());
 		cmds.add(new CommandHighlight());
+		cmds.add(new CommandModeCompact());
 
 		return cmds;
 	}

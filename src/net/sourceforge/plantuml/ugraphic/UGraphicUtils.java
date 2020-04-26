@@ -44,7 +44,6 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.png.PngIO;
@@ -60,12 +59,12 @@ public abstract class UGraphicUtils {
 			ColorMapper colorMapper, HColor background, TextBlock image) throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
-			final BufferedImage im = createImage(colorMapper, background, image);
+			final BufferedImage im = createImage(fileFormatOption.getWatermark(), colorMapper, background, image);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
 			final Dimension2D size = computeSize(colorMapper, background, image);
-			final UGraphicSvg svg = new UGraphicSvg(true, size, colorMapper, StringUtils.getAsHtml(colorMapper
-					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
+			final UGraphicSvg svg = new UGraphicSvg(true, size, colorMapper,
+					colorMapper.toHtml(background), false, 1.0, fileFormatOption.getSvgLinkTarget(),
 					fileFormatOption.getHoverColor(), seed, fileFormatOption.getPreserveAspectRatio());
 			image.drawU(svg);
 			svg.createXml(os, fileFormatOption.isWithMetadata() ? metadata : null);
@@ -82,11 +81,12 @@ public abstract class UGraphicUtils {
 		}
 	}
 
-	private static BufferedImage createImage(ColorMapper colorMapper, HColor background, TextBlock image) {
+	private static BufferedImage createImage(String watermark, ColorMapper colorMapper, HColor background,
+			TextBlock image) {
 		final Dimension2D size = computeSize(colorMapper, background, image);
 
-		final EmptyImageBuilder builder = new EmptyImageBuilder(size.getWidth(), size.getHeight(),
-				colorMapper.getMappedColor(background));
+		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, size.getWidth(), size.getHeight(),
+				colorMapper.toColor(background));
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 
@@ -97,7 +97,7 @@ public abstract class UGraphicUtils {
 	}
 
 	private static Dimension2D computeSize(ColorMapper colorMapper, HColor background, TextBlock image) {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, colorMapper.getMappedColor(background));
+		final EmptyImageBuilder builder = new EmptyImageBuilder(null, 10, 10, colorMapper.toColor(background));
 		final Graphics2D g2d = builder.getGraphics2D();
 
 		final UGraphicG2d tmp = new UGraphicG2d(colorMapper, g2d, 1.0);

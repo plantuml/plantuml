@@ -91,7 +91,7 @@ public class MindMapDiagram extends UmlDiagram {
 		final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
 		final ImageBuilder imageBuilder = new ImageBuilder(skinParam.getColorMapper(), dpiFactor,
-				skinParam.getBackgroundColor(), fileFormatOption.isWithMetadata() ? getMetadata() : null, "", 10, 10,
+				skinParam.getBackgroundColor(false), fileFormatOption.isWithMetadata() ? getMetadata() : null, "", 10, 10,
 				null, skinParam.handwritten());
 		TextBlock result = getTextBlock();
 

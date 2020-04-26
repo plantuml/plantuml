@@ -46,7 +46,7 @@ public class DriverDotPathTikz implements UDriver<TikzGraphics> {
 	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final DotPath path = (DotPath) shape;
 		tikz.setFillColor(null);
-		tikz.setStrokeColor(mapper.getMappedColor(param.getColor()));
+		tikz.setStrokeColor(mapper.toColor(param.getColor()));
 		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());
 		tikz.upath(x, y, path.toUPath());
 	}
