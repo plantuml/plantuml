@@ -154,9 +154,11 @@
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
+                        <!--
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        -->
 			            <configuration>
 							<additionalparam>${javadoc.opts}</additionalparam>
 			            </configuration>

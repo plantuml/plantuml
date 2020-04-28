@@ -99,7 +99,7 @@ public class LicenseInfo {
 
 	public static synchronized LicenseInfo retrieveNamedSlow() {
 		cache = LicenseInfo.NONE;
-		if (OptionFlags.ALLOW_INCLUDE == false) {
+		if (OptionFlags.getAllowInclude() == false) {
 			return cache;
 		}
 		final String key = prefs.get("license", "");

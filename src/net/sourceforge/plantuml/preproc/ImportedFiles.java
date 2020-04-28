@@ -143,7 +143,7 @@ public class ImportedFiles {
 	}
 
 	private boolean isAllowed(AFile file) throws IOException {
-		if (OptionFlags.ALLOW_INCLUDE) {
+		if (OptionFlags.getAllowInclude()) {
 			return true;
 		}
 		if (file != null) {

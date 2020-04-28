@@ -135,7 +135,7 @@ public class PSystemKeygen extends AbstractPSystem {
 		final ArrayList<String> strings = new ArrayList<String>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
-		if (OptionFlags.ALLOW_INCLUDE) {
+		if (OptionFlags.getAllowInclude()) {
 			strings.add("Loaded from " + Version.getJarPath());
 		}
 		strings.add(" ");

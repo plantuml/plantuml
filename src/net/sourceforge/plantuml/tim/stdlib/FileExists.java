@@ -56,7 +56,7 @@ public class FileExists extends SimpleReturnFunction {
 	}
 
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
-		if (OptionFlags.ALLOW_INCLUDE == false) {
+		if (OptionFlags.getAllowInclude() == false) {
 			return TValue.fromBoolean(false);
 		}
 		final String path = args.get(0).toString();

@@ -53,10 +53,22 @@ public class OptionFlags {
 	// static public boolean GRAPHVIZCACHE = false;
 	// static public final boolean TRACE_DOT = false;
 
-	static public boolean ALLOW_INCLUDE = true;
+
+	
+	static private boolean pALLOW_INCLUDE = true;
+
+	
+	static public boolean getAllowInclude() {
+		return pALLOW_INCLUDE;
+	}
+
+	static public void setAllowInclude(boolean allow) {
+		pALLOW_INCLUDE = allow;
+	}
 
 	static public void setAllowIncludeFalse() {
-		ALLOW_INCLUDE = false;
+		System.err.println("!! Something tried to set setAllowIncludeFalse() !!");
+		//ALLOW_INCLUDE = false;
 	}
 
 	static public void setMaxPixel(int max) {

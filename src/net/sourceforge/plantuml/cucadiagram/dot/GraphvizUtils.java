@@ -143,7 +143,7 @@ public class GraphvizUtils {
 		if ("true".equalsIgnoreCase(env)) {
 			return true;
 		}
-		return OptionFlags.ALLOW_INCLUDE;
+		return OptionFlags.getAllowInclude();
 	}
 
 	public static String getenvDefaultConfigFilename() {

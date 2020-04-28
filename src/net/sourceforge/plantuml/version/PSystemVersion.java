@@ -176,7 +176,7 @@ public class PSystemVersion extends AbstractPSystem {
 		final List<String> strings = new ArrayList<String>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
-		if (OptionFlags.ALLOW_INCLUDE) {
+		if (OptionFlags.getAllowInclude()) {
 			strings.add("Loaded from " + Version.getJarPath());
 			if (OptionFlags.getInstance().isWord()) {
 				strings.add("Word Mode");
