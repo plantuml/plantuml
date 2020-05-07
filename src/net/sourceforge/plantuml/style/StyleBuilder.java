@@ -108,9 +108,6 @@ public class StyleBuilder implements AutomaticCounter {
 		if (added) {
 			Log.info("Using style " + signature);
 		}
-		// if (signature.isStarred()) {
-		// throw new IllegalArgumentException();
-		// }
 		Style result = null;
 		for (Entry<StyleSignature, Style> ent : styles.entrySet()) {
 			final StyleSignature key = ent.getKey();

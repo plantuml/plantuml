@@ -95,25 +95,25 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<Graph
 			final GradientPaint paint;
 //			final Rectangle2D bound = path.getBounds();
 			if (policy == '|') {
-				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()) / 2, mapper.toColor(gr
-						.getColor1()), (float) (x + shape.getWidth()), (float) (y + shape.getHeight()) / 2,
-						mapper.toColor(gr.getColor2()));
+				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()) / 2,
+						mapper.toColor(gr.getColor1()), (float) (x + shape.getWidth()),
+						(float) (y + shape.getHeight()) / 2, mapper.toColor(gr.getColor2()));
 			} else if (policy == '\\') {
-				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), mapper.toColor(gr
-						.getColor1()), (float) (x + shape.getWidth()), (float) y, mapper.toColor(gr.getColor2()));
+				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), mapper.toColor(gr.getColor1()),
+						(float) (x + shape.getWidth()), (float) y, mapper.toColor(gr.getColor2()));
 			} else if (policy == '-') {
-				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, mapper.toColor(gr
-						.getColor1()), (float) (x + shape.getWidth()) / 2, (float) (y + shape.getHeight()),
+				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, mapper.toColor(gr.getColor1()),
+						(float) (x + shape.getWidth()) / 2, (float) (y + shape.getHeight()),
 						mapper.toColor(gr.getColor2()));
 			} else {
 				// for /
 				paint = new GradientPaint((float) x, (float) y, mapper.toColor(gr.getColor1()),
-						(float) (x + shape.getWidth()), (float) (y + shape.getHeight()), mapper.toColor(gr
-								.getColor2()));
+						(float) (x + shape.getWidth()), (float) (y + shape.getHeight()),
+						mapper.toColor(gr.getColor2()));
 			}
 			g2d.setPaint(paint);
 			g2d.fill(path);
-		} else if (back!=null) {
+		} else if (back != null) {
 			g2d.setColor(mapper.toColor(back));
 			DriverRectangleG2d.managePattern(param, g2d);
 			g2d.fill(path);

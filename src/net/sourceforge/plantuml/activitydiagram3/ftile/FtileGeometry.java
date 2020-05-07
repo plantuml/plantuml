@@ -114,6 +114,10 @@ public class FtileGeometry extends Dimension2D {
 		return new FtileGeometry(width, height + northHeight, left, inY, outY);
 	}
 
+//	public FtileGeometry incInnerHeight(double northHeight) {
+//		return new FtileGeometry(width, height + northHeight, left, inY, outY + northHeight);
+//	}
+
 	public FtileGeometry(Dimension2D dim, double left, double inY, double outY) {
 		this(dim.getWidth(), dim.getHeight(), left, inY, outY);
 	}

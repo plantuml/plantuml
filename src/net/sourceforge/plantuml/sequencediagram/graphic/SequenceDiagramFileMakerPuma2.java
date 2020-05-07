@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -85,7 +86,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private double scale;
 
-	public SequenceDiagramFileMakerPuma2(SequenceDiagram sequenceDiagram, Rose skin, FileFormatOption fileFormatOption) {
+	public SequenceDiagramFileMakerPuma2(SequenceDiagram sequenceDiagram, Rose skin,
+			FileFormatOption fileFormatOption) {
 		this.diagram = sequenceDiagram;
 		this.stringBounder = fileFormatOption.getDefaultStringBounder();
 		this.fileFormatOption = fileFormatOption;
@@ -158,14 +160,15 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			compTitle = null;
 		} else {
 			if (SkinParam.USE_STYLES()) {
-				final Style style = StyleSignature.of(SName.root, SName.title).getMergedStyle(
-						diagram.getSkinParam().getCurrentStyleBuilder());
+				final Style style = StyleSignature.of(SName.root, SName.title)
+						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
 						diagram.getSkinParam());
 			} else {
-				compTitle = TextBlockUtils.withMargin(TextBlockUtils.title(
-						new FontConfiguration(drawableSet.getSkinParam(), FontParam.TITLE, null),
-						page.getTitle(), drawableSet.getSkinParam()), 7, 7);
+				compTitle = TextBlockUtils.withMargin(
+						TextBlockUtils.title(new FontConfiguration(drawableSet.getSkinParam(), FontParam.TITLE, null),
+								page.getTitle(), drawableSet.getSkinParam()),
+						7, 7);
 			}
 			final Dimension2D dimTitle = compTitle.calculateDimension(stringBounder);
 			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
@@ -179,10 +182,10 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			if (SkinParam.USE_STYLES()) {
-				final Style style = StyleSignature.of(SName.root, SName.legend).getMergedStyle(
-						diagram.getSkinParam().getCurrentStyleBuilder());
-				legendBlock = style.createTextBlockBordered(legend.getDisplay(), diagram.getSkinParam()
-						.getIHtmlColorSet(), diagram.getSkinParam());
+				final Style style = StyleSignature.of(SName.root, SName.legend)
+						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+				legendBlock = style.createTextBlockBordered(legend.getDisplay(),
+						diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam());
 			} else {
 				legendBlock = EntityImageLegend.create(legend.getDisplay(), diagram.getSkinParam());
 			}
@@ -197,8 +200,17 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), oneOf(scale, dpiFactor), metadata,
-				null, 3, 10, diagram.getAnimation());
+		final int margin1;
+		final int margin2;
+		if (SkinParam.USE_STYLES()) {
+			margin1 = SkinParam.zeroMargin(3);
+			margin2 = SkinParam.zeroMargin(10);
+		} else {
+			margin1 = 3;
+			margin2 = 10;
+		}
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), diagram.getAnimation(), metadata,
+		null, oneOf(scale, dpiFactor));
 
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {
@@ -231,7 +243,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 					sequenceAreaY += legendBlock.calculateDimension(ug.getStringBounder()).getHeight();
 				}
 				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2, sequenceAreaY);
-				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page, diagram.isShowFootbox());
+				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,
+						diagram.isShowFootbox());
 				core = annotatedWorker.addFrame(core);
 				core.drawU(ug.apply(forCore));
 				// drawableSet.drawU22(ug.apply(forCore), delta, fullDimension.getWidth(), page,
@@ -263,8 +276,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		if (text == null) {
 			return;
 		}
-		text.drawU(ug.apply(new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()), area
-						.getFooterY() + legendHeight)));
+		text.drawU(ug.apply(new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()),
+				area.getFooterY() + legendHeight)));
 	}
 
 	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {
@@ -273,8 +286,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		if (text == null) {
 			return;
 		}
-		text.drawU(ug.apply(new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area
-						.getHeaderY())));
+		text.drawU(ug.apply(
+				new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area.getHeaderY())));
 	}
 
 	private double oneOf(double a, double b) {

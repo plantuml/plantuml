@@ -64,8 +64,8 @@ public class HtmlColorAndStyle {
 		if (arrowColor == null) {
 			throw new IllegalArgumentException();
 		}
-		this.arrowHeadColor = arrowHeadColor;
 		this.arrowColor = arrowColor;
+		this.arrowHeadColor = arrowHeadColor == null ? arrowColor : arrowHeadColor;
 		this.style = style;
 	}
 

@@ -41,5 +41,5 @@ public interface Transcoder {
 
 	public String encode(String text) throws IOException;
 
-	public String decode(String code) throws IOException;
+	public String decode(String code) throws NoPlantumlCompressionException;
 }

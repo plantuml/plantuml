@@ -41,12 +41,14 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UDrawableUtils;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
@@ -65,8 +67,17 @@ public class PSystemTree extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE, null, null,
-				5, 5, null, false);
+		final int margin1;
+		final int margin2;
+		if (SkinParam.USE_STYLES()) {
+			margin1 = SkinParam.zeroMargin(5);
+			margin2 = SkinParam.zeroMargin(5);
+		} else {
+			margin1 = 5;
+			margin2 = 5;
+		}
+		final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
+		null, null, null, 1.0, HColorUtils.WHITE);
 		if (rendering == Rendering.NEEDLE) {
 			final UDrawable tmp = Needle.getNeedle(root, 200, 0, 60);
 			final LimitFinder limitFinder = new LimitFinder(fileFormat.getDefaultStringBounder(), true);

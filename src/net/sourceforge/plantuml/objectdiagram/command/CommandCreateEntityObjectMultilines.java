@@ -86,8 +86,8 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 
 	@Override
 	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) {
-		lines = lines.trim(true);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+		lines = lines.trim().removeEmptyLines();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");

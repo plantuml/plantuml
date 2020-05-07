@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidthCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -104,7 +104,7 @@ class FtileSwitch extends AbstractFtile {
 		final List<Ftile> tiles = new ArrayList<Ftile>();
 
 		for (Branch branch : thens) {
-			tiles.add(new FtileMinWidth(branch.getFtile(), 30));
+			tiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
 		}
 
 		List<Double> inlabelSizes = new ArrayList<Double>();

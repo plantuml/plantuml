@@ -80,7 +80,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 
 		HColor color = rose.getHtmlColor(dotData.getSkinParam(), null, getArrowColorParam());
 		if (SkinParam.USE_STYLES()) {
-			final Style style = getDefaultStyleDefinition().getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+			final Style style = getDefaultStyleDefinition()
+					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 		}
 		color = HColorUtils.noGradient(color);
@@ -122,21 +123,15 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 	}
 
 	private StyleSignature getDefaultStyleDefinition() {
-		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS) {
-			return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.arrow);
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			return StyleSignature.of(SName.root, SName.element, SName.objectDiagram, SName.arrow);
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
-			return StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.arrow);
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
-			return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.arrow);
-		}
-		throw new IllegalStateException();
+		return StyleSignature.of(SName.root, SName.element, dotData.getUmlDiagramType().getStyleName(), SName.arrow);
 	}
 
 	public HColor getBackcolor() {
+		if (SkinParam.USE_STYLES()) {
+			final Style style = StyleSignature.of(SName.root, SName.document)
+					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
+		}
 		return dotData.getSkinParam().getBackgroundColor(false);
 	}
 

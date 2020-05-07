@@ -51,6 +51,7 @@ public abstract class Player implements TimeProjected {
 	protected final TimingRuler ruler;
 	private final boolean compact;
 	private final Display title;
+	protected int suggestedHeight;
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact) {
 		this.skinParam = skinParam;
@@ -85,6 +86,8 @@ public abstract class Player implements TimeProjected {
 
 	public abstract double getFullHeight(StringBounder stringBounder);
 
-	// public abstract void drawFrameTitle(UGraphic ug);
+	public final void setHeight(int height) {
+		this.suggestedHeight = height;
+	}
 
 }

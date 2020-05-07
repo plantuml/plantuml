@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ * Contribution :  Hisashi Miyashita  * 
  *
  */
 package net.sourceforge.plantuml.cucadiagram.entity;
@@ -335,6 +335,15 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public EntityPosition getEntityPosition() {
 		checkNotGroup();
+		if (leafType == LeafType.PORT) {
+			return EntityPosition.PORT;
+		}
+		if (leafType == LeafType.PORTIN) {
+			return EntityPosition.PORTIN;
+		}
+		if (leafType == LeafType.PORTOUT) {
+			return EntityPosition.PORTOUT;
+		}
 		if (leafType != LeafType.STATE) {
 			return EntityPosition.NORMAL;
 		}

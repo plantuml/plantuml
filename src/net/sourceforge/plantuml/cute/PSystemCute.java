@@ -41,9 +41,11 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
@@ -86,8 +88,17 @@ public class PSystemCute extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 10, 10, null,
-				false);
+		final int margin1;
+		final int margin2;
+		if (SkinParam.USE_STYLES()) {
+			margin1 = SkinParam.zeroMargin(10);
+			margin2 = SkinParam.zeroMargin(10);
+		} else {
+			margin1 = 10;
+			margin2 = 10;
+		}
+		final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
+		null, null, null, 1.0, null);
 		builder.setUDrawable(root);
 		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}

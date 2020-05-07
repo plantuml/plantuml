@@ -43,7 +43,7 @@ public class StringCompressorNone implements StringCompressor {
 		return s;
 	}
 
-	public String decompress(String stringAnnoted) throws IOException {
+	public String decompress(String stringAnnoted) {
 		return stringAnnoted;
 	}
 }

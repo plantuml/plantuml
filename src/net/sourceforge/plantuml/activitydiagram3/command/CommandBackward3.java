@@ -58,7 +58,7 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				new RegexLeaf("LABEL", "(.*)"), //
-				new RegexLeaf("STYLE", CommandActivity3.ENDING_GROUP), //
+				new RegexLeaf("STYLE", CommandActivity3.endingGroup()), //
 				RegexLeaf.end());
 	}
 

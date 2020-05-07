@@ -57,6 +57,7 @@ import javax.swing.UIManager;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
+import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
@@ -78,7 +79,7 @@ public class Run {
 
 	private static Cypher cypher;
 
-	public static void main(String[] argsArray) throws IOException, InterruptedException {
+	public static void main(String[] argsArray) throws NoPlantumlCompressionException, IOException, InterruptedException {
 		System.setProperty("log4j.debug", "false");
 		final long start = System.currentTimeMillis();
 		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless")) {
@@ -358,7 +359,7 @@ public class Run {
 		new Pipe(option, System.out, System.in, charset).managePipe(error);
 	}
 
-	private static void manageAllFiles(Option option, ErrorStatus error) throws IOException, InterruptedException {
+	private static void manageAllFiles(Option option, ErrorStatus error) throws NoPlantumlCompressionException, InterruptedException {
 
 		File lockFile = null;
 		try {
@@ -377,7 +378,7 @@ public class Run {
 
 	}
 
-	private static void processArgs(Option option, ErrorStatus error) throws IOException, InterruptedException {
+	private static void processArgs(Option option, ErrorStatus error) throws NoPlantumlCompressionException, InterruptedException {
 		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
 				&& OptionFlags.getInstance().isExtractFromMetadata() == false) {
 			multithread(option, error);

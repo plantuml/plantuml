@@ -123,7 +123,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines) {
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				return executeInternal(diagram, line0, lines);

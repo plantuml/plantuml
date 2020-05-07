@@ -41,6 +41,6 @@ public interface StringCompressor {
 
 	String compress(String s) throws IOException;
 
-	String decompress(String compressed) throws IOException;
+	String decompress(String compressed) throws NoPlantumlCompressionException;
 
 }

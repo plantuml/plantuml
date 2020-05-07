@@ -62,10 +62,11 @@ public class PlayerClock extends Player {
 		super("", skinParam, ruler, compact);
 		this.period = period;
 		this.pulse = pulse;
+		this.suggestedHeight = 30;
 	}
 
 	public double getFullHeight(StringBounder striWngBounder) {
-		return 30;
+		return suggestedHeight;
 	}
 
 	public void drawFrameTitle(UGraphic ug) {

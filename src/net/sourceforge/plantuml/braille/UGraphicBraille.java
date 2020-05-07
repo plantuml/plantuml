@@ -128,8 +128,8 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE,
-				metadata, null, 0, 0, null, false);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
+				false, null, metadata, null, 1.0, HColorUtils.WHITE);
 		imageBuilder.setUDrawable(new BrailleDrawer(getGraphicObject()));
 
 		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, os);

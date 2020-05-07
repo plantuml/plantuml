@@ -75,7 +75,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String align = line0.get("ALIGN", 0);
 		final String valign = line0.get("VALIGN", 0);
 		lines = lines.subExtract(1, 1);

@@ -76,8 +76,11 @@ public class Ribbon implements PDrawing {
 	private final List<TimingNote> notes;
 	private final boolean compact;
 	private final TextBlock title;
+	private final int suggestedHeight;
 
-	public Ribbon(TimingRuler ruler, ISkinParam skinParam, List<TimingNote> notes, boolean compact, TextBlock title) {
+	public Ribbon(TimingRuler ruler, ISkinParam skinParam, List<TimingNote> notes, boolean compact, TextBlock title,
+			int suggestedHeight) {
+		this.suggestedHeight = suggestedHeight == 0 ? 24 : suggestedHeight;
 		this.compact = compact;
 		this.ruler = ruler;
 		this.skinParam = skinParam;
@@ -115,9 +118,6 @@ public class Ribbon implements PDrawing {
 	}
 
 	public TextBlock getPart1(double fullAvailableWidth) {
-//		if (initialState == null) {
-//			return TextBlockUtils.empty(0, 0);
-//		}
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				if (compact) {
@@ -172,7 +172,7 @@ public class Ribbon implements PDrawing {
 	}
 
 	private double getRibbonHeight() {
-		return 24;
+		return suggestedHeight;
 	}
 
 	private void drawPentaB(UGraphic ug, double len, ChangeState change) {

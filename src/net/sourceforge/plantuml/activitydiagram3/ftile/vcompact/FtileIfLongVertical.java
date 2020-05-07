@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidthCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileOverpassing;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
@@ -133,10 +133,10 @@ class FtileIfLongVertical extends AbstractFtile {
 		final List<Ftile> tiles = new ArrayList<Ftile>();
 
 		for (Branch branch : thens) {
-			tiles.add(new FtileMinWidth(branch.getFtile(), 30));
+			tiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
 		}
 
-		final Ftile tile2 = new FtileMinWidth(branch2.getFtile(), 30);
+		final Ftile tile2 = new FtileMinWidthCentered(branch2.getFtile(), 30);
 
 		List<Ftile> diamonds = new ArrayList<Ftile>();
 		for (Branch branch : thens) {

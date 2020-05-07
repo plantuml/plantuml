@@ -43,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.WithSprite;
@@ -59,6 +60,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -88,12 +90,19 @@ public class StdlibDiagram extends UmlDiagram {
 			throws IOException {
 
 		final TextBlock result = getTable();
-		final double margin = 10;
-		final double dpiFactor = 1;
 
-		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
-				getAnimation());
+		final double dpiFactor = 1;
+		final int margin1;
+		final int margin2;
+		if (SkinParam.USE_STYLES()) {
+			margin1 = SkinParam.zeroMargin(10);
+			margin2 = SkinParam.zeroMargin(10);
+		} else {
+			margin1 = 10;
+			margin2 = 10;
+		}
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), getAnimation(), fileFormatOption.isWithMetadata() ? getMetadata() : null,
+		getWarningOrError(), dpiFactor);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);

@@ -48,9 +48,9 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Positionable;
+import net.sourceforge.plantuml.svek.image.AbstractEntityImageBorder;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
-import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
@@ -318,8 +318,13 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 	}
 
 	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
-		final EntityImageStateBorder im = (EntityImageStateBorder) image;
-		return im.getMaxWidthFromLabelForEntryExit(stringBounder);
+		if (image instanceof AbstractEntityImageBorder) {
+			final AbstractEntityImageBorder im = (AbstractEntityImageBorder) image;
+			return im.getMaxWidthFromLabelForEntryExit(stringBounder);
+		} else {
+			final Dimension2D dim = image.calculateDimension(stringBounder);
+			return dim.getWidth();
+		}
 	}
 
 	public boolean isHidden() {

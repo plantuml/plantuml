@@ -210,8 +210,8 @@ public abstract class PSystemError extends AbstractPSystem {
 		final TextBlockBackcolored result = getGraphicalFormatted();
 
 		TextBlock udrawable;
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
-				getMetadata(), null, 0, 0, null, false);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
+				false, null, getMetadata(), null, 1.0, result.getBackcolor());
 		imageBuilder.setRandomPixel(true);
 		if (getSource().getTotalLineCount() < 5) {
 			udrawable = addWelcome(result);

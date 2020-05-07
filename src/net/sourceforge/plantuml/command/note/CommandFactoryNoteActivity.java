@@ -100,7 +100,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
 				// StringUtils.trim(lines, true);
-				final RegexResult arg = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 

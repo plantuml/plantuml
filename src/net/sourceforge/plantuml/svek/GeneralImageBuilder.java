@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
  * 
  *
  */
@@ -119,6 +120,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye2;
 import net.sourceforge.plantuml.svek.image.EntityImageMap;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.svek.image.EntityImageObject;
+import net.sourceforge.plantuml.svek.image.EntityImagePort;
 import net.sourceforge.plantuml.svek.image.EntityImagePseudoState;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageState2;
@@ -153,6 +155,11 @@ public final class GeneralImageBuilder {
 		}
 		if (leaf.getLeafType() == LeafType.ACTIVITY) {
 			return new EntityImageActivity(leaf, skinParam, bibliotekon);
+		}
+		if ((leaf.getLeafType() == LeafType.PORT) || (leaf.getLeafType() == LeafType.PORTIN)
+				|| (leaf.getLeafType() == LeafType.PORTOUT)) {
+			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());
+			return new EntityImagePort(leaf, skinParam, parent, bibliotekon);
 		}
 		if (leaf.getLeafType() == LeafType.STATE) {
 			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
@@ -190,7 +197,7 @@ public final class GeneralImageBuilder {
 			return new EntityImageLollipopInterface(leaf, skinParam);
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE) {
-			return new EntityImageDescription(leaf, skinParam, portionShower, links);
+			return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName());
 		}
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
@@ -199,7 +206,7 @@ public final class GeneralImageBuilder {
 			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
 			} else {
-				return new EntityImageDescription(leaf, skinParam, portionShower, links);
+				return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName());
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE) {
@@ -232,9 +239,9 @@ public final class GeneralImageBuilder {
 				final HColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
 						leaf.getUSymbol().getColorParamBorder());
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
-						links);
+						links, umlDiagramType.getStyleName());
 			}
-			return new EntityImageEmptyPackage(leaf, skinParam, portionShower);
+			return new EntityImageEmptyPackage(leaf, skinParam, portionShower, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.ASSOCIATION) {
 			return new EntityImageAssociation(leaf, skinParam);
@@ -278,10 +285,12 @@ public final class GeneralImageBuilder {
 
 	private final StringBounder stringBounder;
 	private final boolean mergeIntricated;
+	private final SName styleName;
 
 	public GeneralImageBuilder(boolean mergeIntricated, DotData dotData, EntityFactory entityFactory, UmlSource source,
-			Pragma pragma, StringBounder stringBounder) {
+			Pragma pragma, StringBounder stringBounder, SName styleName) {
 		this.dotData = dotData;
+		this.styleName = styleName;
 		this.entityFactory = entityFactory;
 		this.source = source;
 		this.pragma = pragma;
@@ -291,7 +300,7 @@ public final class GeneralImageBuilder {
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+		return StyleSignature.of(SName.root, SName.element, styleName, SName.arrow);
 	}
 
 	private boolean isOpalisable(IEntity entity) {
@@ -301,14 +310,20 @@ public final class GeneralImageBuilder {
 		return entity.isGroup() == false && entity.getLeafType() == LeafType.NOTE && onlyOneLink(entity);
 	}
 
-	static class IEntityImageEmpty implements IEntityImage {
+	static class EntityImageSimpleEmpty implements IEntityImage {
+
+		private final HColor backColor;
+
+		EntityImageSimpleEmpty(HColor backColor) {
+			this.backColor = backColor;
+		}
 
 		public boolean isHidden() {
 			return false;
 		}
 
 		public HColor getBackcolor() {
-			return null;
+			return backColor;
 		}
 
 		public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -342,7 +357,7 @@ public final class GeneralImageBuilder {
 
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
 		if (dotData.isDegeneratedWithFewEntities(0)) {
-			return new IEntityImageEmpty();
+			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor(false));
 		}
 		if (dotData.isDegeneratedWithFewEntities(1) && dotData.getUmlDiagramType() != UmlDiagramType.STATE) {
 			final ILeaf single = dotData.getLeafs().iterator().next();
@@ -499,7 +514,8 @@ public final class GeneralImageBuilder {
 			throw new IllegalStateException();
 		}
 		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
-		final Node node = dotStringFactory.getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
+		final Node node = dotStringFactory.getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
+				stringBounder);
 		dotStringFactory.addNode(node);
 	}
 

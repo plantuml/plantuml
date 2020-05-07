@@ -74,14 +74,15 @@ public final class PlayerRobustConcise extends Player {
 			boolean compact) {
 		super(full, skinParam, ruler, compact);
 		this.type = type;
+		this.suggestedHeight = 0;
 	}
 
 	private PDrawing buildPDrawing() {
 		if (type == TimingStyle.CONCISE) {
-			return new Ribbon(ruler, skinParam, notes, isCompact(), getTitle());
+			return new Ribbon(ruler, skinParam, notes, isCompact(), getTitle(), suggestedHeight);
 		}
 		if (type == TimingStyle.ROBUST) {
-			return new Histogram(ruler, skinParam, statesLabel.values(), isCompact(), getTitle());
+			return new Histogram(ruler, skinParam, statesLabel.values(), isCompact(), getTitle(), suggestedHeight);
 		}
 		throw new IllegalStateException();
 	}

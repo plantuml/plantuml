@@ -99,6 +99,10 @@ final public class StringLocated {
 		return trimmed;
 	}
 
+//	public StringLocated getTrimmedRight() {
+//		return new StringLocated(StringUtils.trinEnding(this.getString()), location, preprocessorError);
+//	}
+
 	public StringLocated removeInnerComment() {
 		final String string = s.toString();
 		final String trim = string.replace('\t', ' ').trim();

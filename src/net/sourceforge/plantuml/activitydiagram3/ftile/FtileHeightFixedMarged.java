@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.awt.geom.Dimension2D;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -43,15 +42,17 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class FtileHeightFixed extends AbstractFtile {
+public class FtileHeightFixedMarged extends AbstractFtile {
 
 	private final Ftile tile;
-	private final double fixedHeight;
+	private final double ymargin1;
+	private final double ymargin2;
 
-	public FtileHeightFixed(Ftile tile, double fixedHeight) {
+	public FtileHeightFixedMarged(double ymargin1, Ftile tile, double ymargin2) {
 		super(tile.skinParam());
 		this.tile = tile;
-		this.fixedHeight = fixedHeight;
+		this.ymargin1 = ymargin1;
+		this.ymargin2 = ymargin2;
 	}
 
 	@Override
@@ -78,15 +79,12 @@ public class FtileHeightFixed extends AbstractFtile {
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		return tile.calculateDimension(stringBounder).translate(getTranslate(stringBounder)).fixedHeight(fixedHeight);
+		final FtileGeometry dim = tile.calculateDimension(stringBounder);
+		return dim.translate(getTranslate(stringBounder)).fixedHeight(ymargin1 + dim.getHeight() + ymargin2);
 	}
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-		final Dimension2D dim = tile.calculateDimension(stringBounder);
-		if (dim.getHeight() > fixedHeight) {
-			throw new IllegalStateException();
-		}
-		return UTranslate.dy((fixedHeight - dim.getHeight()) / 2);
+		return UTranslate.dy(ymargin1);
 	}
 
 	public void drawU(UGraphic ug) {

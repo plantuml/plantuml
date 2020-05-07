@@ -66,8 +66,8 @@ class Idea {
 		return result;
 	}
 
-	private Idea(StyleBuilder styleBuilder, HColor backColor, int level, Idea parent, Display label,
-			IdeaShape shape, String stereotype) {
+	private Idea(StyleBuilder styleBuilder, HColor backColor, int level, Idea parent, Display label, IdeaShape shape,
+			String stereotype) {
 		this.backColor = backColor;
 		this.styleBuilder = styleBuilder;
 		this.label = label;

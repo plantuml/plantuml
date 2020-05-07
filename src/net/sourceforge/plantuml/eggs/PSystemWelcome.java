@@ -84,8 +84,8 @@ public class PSystemWelcome extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
-				getMetadata(), null, 0, 0, null, false);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
+				false, null, getMetadata(), null, 1.0, result.getBackcolor());
 		imageBuilder.setUDrawable(result);
 		// imageBuilder.setUDrawable(TextBlockUtils.withMargin(result, 4, 4));
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);

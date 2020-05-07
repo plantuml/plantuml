@@ -66,7 +66,7 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 			return CommandControl.NOT_OK;
 		}
 		lines = lines.toSingleLineWithHiddenNewLine();
-		if (cmd.isForbidden(lines.getFirst499().getString())) {
+		if (cmd.isForbidden(lines.getFirst().getString())) {
 			return CommandControl.NOT_OK;
 		}
 		final CommandControl tmp = cmd.isValid(lines);

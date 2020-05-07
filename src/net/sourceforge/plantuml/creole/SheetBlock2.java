@@ -58,15 +58,15 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 	private final UStroke defaultStroke;
 	private final Stencil stencil;
 
-	public SheetBlock2 enlargeMe(final double delta) {
+	public SheetBlock2 enlargeMe(final double delta1, final double delta2) {
 		final Stencil newStencil = new Stencil() {
 
 			public double getStartingX(StringBounder stringBounder, double y) {
-				return stencil.getStartingX(stringBounder, y) - delta;
+				return stencil.getStartingX(stringBounder, y) - delta1;
 			}
 
 			public double getEndingX(StringBounder stringBounder, double y) {
-				return stencil.getEndingX(stringBounder, y) + delta;
+				return stencil.getEndingX(stringBounder, y) + delta2;
 			}
 		};
 		return new SheetBlock2(block, newStencil, defaultStroke);

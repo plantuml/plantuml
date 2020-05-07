@@ -40,59 +40,22 @@ import java.io.IOException;
 public class TranscoderSmart implements Transcoder {
 
 	// Legacy encoder
-	private final Transcoder oldOne = new TranscoderImpl(new AsciiEncoder(), new ArobaseStringCompressor(),
+	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
 			new CompressionHuffman());
-	private final Transcoder zlib = new TranscoderImpl(new AsciiEncoder(), new ArobaseStringCompressor(),
+	private final Transcoder zlib = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
 			new CompressionZlib());
-	private final Transcoder brotli = new TranscoderImpl(new AsciiEncoder(), new ArobaseStringCompressor(),
-			new CompressionBrotli());
-	
-	
-	private final Transcoder zlibBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new ArobaseStringCompressor(),
-			new CompressionZlib());
-	private final Transcoder brotliBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new ArobaseStringCompressor(),
-			new CompressionBrotli());
-	private final Transcoder base64only = new TranscoderImpl(new AsciiEncoderBase64(), new ArobaseStringCompressor(),
-			new CompressionNone());
-	private final Transcoder hexOnly = new TranscoderImpl(new AsciiEncoderHex(), new ArobaseStringCompressor(),
-			new CompressionNone());
 
-	public String decode(String code) throws IOException {
+	public String decode(String code) throws NoPlantumlCompressionException {
 		// Work in progress
 		// See https://github.com/plantuml/plantuml/issues/117
 
-		// Two char headers
-		if (code.startsWith("0A")) {
-			return zlibBase64.decode(code.substring(2));
+		if (code.startsWith("~0")) {
+			return zlib.decode(code.substring(2));
 		}
-		if (code.startsWith("0B")) {
-			return brotliBase64.decode(code.substring(2));
-		}
-		if (code.startsWith("0C")) {
-			return base64only.decode(code.substring(2));
-		}
-		if (code.startsWith("0D")) {
-			return hexOnly.decode(code.substring(2));
-		}
-		// Text prefix
-		// Just a wild try: use them only for testing
-		if (code.startsWith("-deflate-")) {
-			return zlibBase64.decode(code.substring("-deflate-".length()));
-		}
-		if (code.startsWith("-brotli-")) {
-			return brotliBase64.decode(code.substring("-brotli-".length()));
-		}
-		if (code.startsWith("-base64-")) {
-			return base64only.decode(code.substring("-base64-".length()));
-		}
-		if (code.startsWith("-hex-")) {
-			return hexOnly.decode(code.substring("-hex-".length()));
+		if (code.startsWith("~1")) {
+			return oldOne.decode(code.substring(2));
 		}
 
-		// Legacy decoding : you should not use it any more.
-		if (code.startsWith("0")) {
-			return brotli.decode(code.substring(1));
-		}
 		try {
 			return zlib.decode(code);
 		} catch (Exception ex) {

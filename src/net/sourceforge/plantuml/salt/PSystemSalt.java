@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.ScaleSimple;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -79,6 +80,7 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryText;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
 import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
@@ -114,8 +116,19 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 			if (getScale() != null) {
 				scale = getScale().getScale(size.getWidth(), size.getHeight());
 			}
-			final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), scale, HColorUtils.WHITE, null,
-					null, 5, 5, null, false);
+			
+			final int margin1;
+			final int margin2;
+			if (SkinParam.USE_STYLES()) {
+				margin1 = SkinParam.zeroMargin(5);
+				margin2 = SkinParam.zeroMargin(5);
+			} else {
+				margin1 = 5;
+				margin2 = 5;
+			}
+
+			final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
+			null, null, null, scale, HColorUtils.WHITE);
 			builder.setUDrawable(new UDrawable() {
 
 				public void drawU(UGraphic ug) {

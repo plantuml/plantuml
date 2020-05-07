@@ -144,7 +144,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 	@Override
 	protected CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");

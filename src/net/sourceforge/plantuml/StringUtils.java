@@ -456,18 +456,33 @@ public class StringUtils {
 		if (arg.length() == 0) {
 			return arg;
 		}
+		return trinEndingInternal(arg, getPositionStartNonSpace(arg));
+	}
+
+	private static int getPositionStartNonSpace(String arg) {
 		int i = 0;
 		while (i < arg.length() && isSpaceOrTabOrNull(arg.charAt(i))) {
 			i++;
 		}
-		int j = arg.length() - 1;
-		while (j >= i && isSpaceOrTabOrNull(arg.charAt(j))) {
-			j--;
-		}
-		if (i == 0 && j == arg.length() - 1) {
+		return i;
+	}
+
+	private static String trinEnding(String arg) {
+		if (arg.length() == 0) {
 			return arg;
 		}
-		return arg.substring(i, j + 1);
+		return trinEndingInternal(arg, 0);
+	}
+
+	private static String trinEndingInternal(String arg, int from) {
+		int j = arg.length() - 1;
+		while (j >= from && isSpaceOrTabOrNull(arg.charAt(j))) {
+			j--;
+		}
+		if (from == 0 && j == arg.length() - 1) {
+			return arg;
+		}
+		return arg.substring(from, j + 1);
 	}
 
 	private static boolean isSpaceOrTabOrNull(char c) {

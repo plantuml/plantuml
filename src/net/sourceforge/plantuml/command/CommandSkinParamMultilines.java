@@ -63,7 +63,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	public CommandExecutionResult execute(UmlDiagram diagram, BlocLines lines) {
 		final SkinLoader skinLoader = new SkinLoader(diagram);
 
-		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		if (mStart.find() == false) {
 			throw new IllegalStateException();
 		}

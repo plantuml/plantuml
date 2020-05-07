@@ -126,10 +126,12 @@ public class VariableManager {
 				break;
 			}
 		}
-		if (jsonValue.isString()) {
-			result.append(jsonValue.asString());
-		} else {
-			result.append(jsonValue.toString());
+		if (jsonValue != null) {
+			if (jsonValue.isString()) {
+				result.append(jsonValue.asString());
+			} else {
+				result.append(jsonValue.toString());
+			}
 		}
 		return i;
 	}

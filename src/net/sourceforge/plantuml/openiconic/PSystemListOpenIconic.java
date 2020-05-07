@@ -63,8 +63,8 @@ public class PSystemListOpenIconic extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final UDrawable result = getGraphicStrings();
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE,
-				fileFormat.isWithMetadata() ? getMetadata() : null, null, 0, 0, null, false);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
+				false, null, fileFormat.isWithMetadata() ? getMetadata() : null, null, 1.0, HColorUtils.WHITE);
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}

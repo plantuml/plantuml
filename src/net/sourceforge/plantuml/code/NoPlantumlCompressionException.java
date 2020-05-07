@@ -31,32 +31,20 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
+ * 
  */
-package net.sourceforge.plantuml.activitydiagram3.ftile;
+package net.sourceforge.plantuml.code;
 
-import net.sourceforge.plantuml.activitydiagram3.Instruction;
-import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import java.io.IOException;
 
-public interface ISwimlanesA extends TextBlock, Styleable {
+public class NoPlantumlCompressionException extends IOException {
 
-	public void computeSize(StringBounder stringBounder);
+	public NoPlantumlCompressionException(Exception cause) {
+		super(cause);
+	}
 
-	public void swimlane(String name, HColor color, Display label);
-
-	public void setCurrent(Instruction ins);
-
-	public Instruction getCurrent();
-
-	public LinkRendering nextLinkRenderer();
-
-	public Swimlane getCurrentSwimlane();
-
-	public void setNextLinkRenderer(LinkRendering link);
+	public NoPlantumlCompressionException(String description) {
+		super(description);
+	}
 
 }

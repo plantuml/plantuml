@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -47,26 +48,34 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts {
 
 	private final TextBlock textBlock;
-	private final double x1;
-	private final double x2;
-	private final double y1;
-	private final double y2;
+	private final double top;
+	private final double right;
+	private final double bottom;
+	private final double left;
 
-	TextBlockMarged(TextBlock textBlock, double x1, double x2, double y1, double y2) {
+	TextBlockMarged(TextBlock textBlock, double top, double right, double bottom, double left) {
 		this.textBlock = textBlock;
-		this.x1 = x1;
-		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
+		this.top = top;
+		this.right = right;
+		this.bottom = bottom;
+		this.left = left;
+	}
+
+	TextBlockMarged(TextBlock textBlock, ClockwiseTopRightBottomLeft margins) {
+		this.textBlock = textBlock;
+		this.top = margins.getTop();
+		this.right = margins.getRight();
+		this.bottom = margins.getBottom();
+		this.left = margins.getLeft();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(dim, x1 + x2, y1 + y2);
+		return Dimension2DDouble.delta(dim, left + right, top + bottom);
 	}
 
 	public void drawU(UGraphic ug) {
-		final UTranslate translate = new UTranslate(x1, y1);
+		final UTranslate translate = new UTranslate(left, top);
 		textBlock.drawU(ug.apply(translate));
 	}
 
@@ -76,12 +85,12 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 		if (parent == null) {
 			return null;
 		}
-		final UTranslate translate = new UTranslate(x1, y1);
+		final UTranslate translate = new UTranslate(left, top);
 		return translate.apply(parent);
 	}
 
 	public Ports getPorts(StringBounder stringBounder) {
-		return ((WithPorts) textBlock).getPorts(stringBounder).translateY(y1);
+		return ((WithPorts) textBlock).getPorts(stringBounder).translateY(top);
 	}
 
 }

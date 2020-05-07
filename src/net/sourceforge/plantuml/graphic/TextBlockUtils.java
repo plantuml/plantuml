@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -75,6 +76,11 @@ public class TextBlockUtils {
 	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
 			double cornersize, double marginX, double marginY) {
 		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, marginX, marginY);
+	}
+
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
+			double cornersize, ClockwiseTopRightBottomLeft margins) {
+		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, margins);
 	}
 
 	public static TextBlock title(FontConfiguration font, Display stringsToDisplay, ISkinParam skinParam) {
@@ -100,12 +106,16 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
-		return new TextBlockMarged(textBlock, marginX, marginX, marginY, marginY);
+		return new TextBlockMarged(textBlock, marginY, marginX, marginY, marginX);
+	}
+
+	public static TextBlock withMargin(TextBlock textBlock, ClockwiseTopRightBottomLeft margins) {
+		return new TextBlockMarged(textBlock, margins);
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX1, double marginX2, double marginY1,
 			double marginY2) {
-		return new TextBlockMarged(textBlock, marginX1, marginX2, marginY1, marginY2);
+		return new TextBlockMarged(textBlock, marginY1, marginX2, marginY2, marginX1);
 	}
 
 	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth,

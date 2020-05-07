@@ -115,8 +115,8 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
-		lines = lines.trim(false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+		lines = lines.trim();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
 		final IEntity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
 		if (entity1 == null) {
@@ -157,7 +157,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			}
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
+		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast()
 				.getString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			if (sb.length() > 0 && sb.toString().endsWith(BackSlash.BS_BS_N) == false) {

@@ -44,6 +44,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
@@ -64,6 +65,10 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -72,6 +77,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class EntityImageDescription extends AbstractEntityImage {
@@ -93,7 +99,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final boolean fixCircleLabelOverlapping;
 
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
-			Collection<Link> links) {
+			Collection<Link> links, SName styleName) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.useRankSame = skinParam.useRankSame();
 		this.fixCircleLabelOverlapping = skinParam.fixCircleLabelOverlapping();
@@ -119,10 +125,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 			desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
 					HorizontalAlignment.LEFT, stereotype, symbol.manageHorizontalLine(), false, entity);
 			// Actor bug?
-			// desc = new BodyEnhanced2(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
-			// HorizontalAlignment.LEFT, new FontConfiguration(skinParam, symbol.getFontParam(), stereotype),
+			// desc = new BodyEnhanced2(entity.getDisplay(), symbol.getFontParam(),
+			// getSkinParam(),
+			// HorizontalAlignment.LEFT, new FontConfiguration(skinParam,
+			// symbol.getFontParam(), stereotype),
 			// LineBreakStrategy.NONE);
-			// desc = entity.getDisplay().create(new FontConfiguration(skinParam, symbol.getFontParam(), stereotype),
+			// desc = entity.getDisplay().create(new FontConfiguration(skinParam,
+			// symbol.getFontParam(), stereotype),
 			// HorizontalAlignment.LEFT, skinParam);
 		}
 
@@ -130,14 +139,29 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final Colors colors = entity.getColors(skinParam);
 		HColor backcolor = colors.getColor(ColorType.BACK);
-		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
+		final HColor forecolor;
+		final double roundCorner;
+		final double diagonalCorner;
+		if (SkinParam.USE_STYLES()) {
+			final Style style = StyleSignature
+					.of(SName.root, SName.element, styleName, symbol.getSkinParameter().getStyleName())
+					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			forecolor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			if (backcolor == null) {
+				backcolor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			}
+			roundCorner = style.value(PName.RoundCorner).asDouble();
+			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
+		} else {
+			forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());
+			if (backcolor == null) {
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
+			}
+			roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
+			diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
 		}
 
 		assert getStereo() == stereotype;
-		final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());
-		final double roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
-		final double diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
 		final UStroke stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
 
 		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke)
@@ -160,16 +184,17 @@ public class EntityImageDescription extends AbstractEntityImage {
 				stereotype, symbol.manageHorizontalLine(), false, entity);
 
 		if (hideText) {
-			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
-					TextBlockUtils.empty(0, 0), ctx, skinParam.getStereotypeAlignment());
+			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
+					ctx, skinParam.getStereotypeAlignment());
 		} else {
 			asSmall = symbol.asSmall(name, desc, stereo, ctx, skinParam.getStereotypeAlignment());
 		}
 	}
 
 	private USymbol getUSymbol(ILeaf entity) {
-		final USymbol result = entity.getUSymbol() == null ? (getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2
-				: USymbol.COMPONENT1) : entity.getUSymbol();
+		final USymbol result = entity.getUSymbol() == null
+				? (getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1)
+				: entity.getUSymbol();
 		if (result == null) {
 			throw new IllegalArgumentException();
 		}

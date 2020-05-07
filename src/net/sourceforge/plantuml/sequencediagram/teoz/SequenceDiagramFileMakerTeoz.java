@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -149,8 +150,17 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final double scale = 1;
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), oneOf(scale, dpiFactor), metadata,
-				null, 3, 10, diagram.getAnimation());
+		final int margin1;
+		final int margin2;
+		if (SkinParam.USE_STYLES()) {
+			margin1 = SkinParam.zeroMargin(3);
+			margin2 = SkinParam.zeroMargin(10);
+		} else {
+			margin1 = 3;
+			margin2 = 10;
+		}
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), diagram.getAnimation(), metadata,
+		null, oneOf(scale, dpiFactor));
 
 		imageBuilder.setUDrawable(new Foo(index));
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);

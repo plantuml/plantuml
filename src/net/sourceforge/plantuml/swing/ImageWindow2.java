@@ -328,8 +328,8 @@ class ImageWindow2 extends JFrame {
 		} catch (IOException ex) {
 			final String msg = "Error reading file: " + ex.toString();
 			final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList(msg), false);
-			final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, error.getBackcolor(),
-					null, null, 0, 0, null, false);
+			final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
+					false, null, null, null, 1.0, error.getBackcolor());
 			imageBuilder.setUDrawable(error);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {

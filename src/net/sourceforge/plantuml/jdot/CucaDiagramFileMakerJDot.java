@@ -65,6 +65,7 @@ import h.ST_boxf;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -91,6 +92,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -416,9 +418,17 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 			final double scale = 1;
 
-			final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), scale,
-					fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, 0, 10,
-					diagram.getAnimation());
+			final int margin1;
+			final int margin2;
+			if (SkinParam.USE_STYLES()) {
+				margin1 = SkinParam.zeroMargin(0);
+				margin2 = SkinParam.zeroMargin(10);
+			} else {
+				margin1 = 0;
+				margin2 = 10;
+			}
+			final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), diagram.getAnimation(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
+			null, scale);
 
 			imageBuilder.setUDrawable(new Drawing(null));
 			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);

@@ -87,7 +87,7 @@ import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 import net.sourceforge.plantuml.ugraphic.comp.SlotFinder;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class SwimlanesAAA extends AbstractTextBlock implements ISwimlanesA, TextBlock, Styleable {
+public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable {
 
 	private final ISkinParam skinParam;;
 	private final Pragma pragma;
@@ -121,7 +121,7 @@ public class SwimlanesAAA extends AbstractTextBlock implements ISwimlanesA, Text
 		return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.swimlane);
 	}
 
-	public SwimlanesAAA(ISkinParam skinParam, Pragma pragma) {
+	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
 		this.skinParam = skinParam;
 		this.pragma = pragma;
 	}

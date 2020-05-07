@@ -43,12 +43,12 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class FtileMinWidth extends FtileDecorate {
+public class FtileMinWidthCentered extends FtileDecorate {
 
 	private final double minWidth;
 	private FtileGeometry calculateDimensionInternal;
 
-	public FtileMinWidth(Ftile tile, double minWidth) {
+	public FtileMinWidthCentered(Ftile tile, double minWidth) {
 		super(tile);
 		this.minWidth = minWidth;
 	}

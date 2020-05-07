@@ -41,8 +41,8 @@ public class CompressionNone implements Compression {
 		return in;
 	}
 
-	public byte[] decompress(byte[] in) {
-		return in;
+	public ByteArray decompress(byte[] in) {
+		return ByteArray.from(in);
 	}
 
 }

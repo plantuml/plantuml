@@ -166,8 +166,8 @@ public class PSystemVersion extends AbstractPSystem {
 			throws IOException {
 		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image,
 				GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
-				getMetadata(), null, 0, 0, null, false);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
+				false, null, getMetadata(), null, 1.0, result.getBackcolor());
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}

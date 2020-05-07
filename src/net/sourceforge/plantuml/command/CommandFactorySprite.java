@@ -82,7 +82,8 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 		return new SingleLineCommand2<WithSprite>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location, RegexResult arg) {
+			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location,
+					RegexResult arg) {
 				return executeInternal(system, arg, Arrays.asList((String) arg.get("DATA", 0)));
 			}
 
@@ -98,8 +99,8 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 			}
 
 			protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines) {
-				lines = lines.trim(true);
-				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+				lines = lines.trim().removeEmptyLines();
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
@@ -113,33 +114,32 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 	}
 
 	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0, final List<String> strings) {
-		try {
-			final Sprite sprite;
-			if (line0.get("DIM", 0) == null) {
-				sprite = SpriteGrayLevel.GRAY_16.buildSprite(-1, -1, strings);
-			} else {
-				final int width = Integer.parseInt(line0.get("DIM", 0));
-				final int height = Integer.parseInt(line0.get("DIM", 1));
-				if (line0.get("DIM", 4) == null) {
-					final int nbLevel = Integer.parseInt(line0.get("DIM", 2));
-					if (nbLevel != 4 && nbLevel != 8 && nbLevel != 16) {
-						return CommandExecutionResult.error("Only 4, 8 or 16 graylevel are allowed.");
-					}
-					final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);
-					if (line0.get("DIM", 3) == null) {
-						sprite = level.buildSprite(width, height, strings);
-					} else {
-						sprite = level.buildSpriteZ(width, height, concat(strings));
-					}
-				} else {
-					sprite = SpriteColorBuilder4096.buildSprite(strings);
+		final Sprite sprite;
+		if (line0.get("DIM", 0) == null) {
+			sprite = SpriteGrayLevel.GRAY_16.buildSprite(-1, -1, strings);
+		} else {
+			final int width = Integer.parseInt(line0.get("DIM", 0));
+			final int height = Integer.parseInt(line0.get("DIM", 1));
+			if (line0.get("DIM", 4) == null) {
+				final int nbLevel = Integer.parseInt(line0.get("DIM", 2));
+				if (nbLevel != 4 && nbLevel != 8 && nbLevel != 16) {
+					return CommandExecutionResult.error("Only 4, 8 or 16 graylevel are allowed.");
 				}
+				final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);
+				if (line0.get("DIM", 3) == null) {
+					sprite = level.buildSprite(width, height, strings);
+				} else {
+					sprite = level.buildSpriteZ(width, height, concat(strings));
+					if (sprite == null) {
+						return CommandExecutionResult.error("Cannot decode sprite.");
+					}
+				}
+			} else {
+				sprite = SpriteColorBuilder4096.buildSprite(strings);
 			}
-			system.addSprite(line0.get("NAME", 0), sprite);
-			return CommandExecutionResult.ok();
-		} catch (IOException e) {
-			return CommandExecutionResult.error("Cannot decode sprite.");
 		}
+		system.addSprite(line0.get("NAME", 0), sprite);
+		return CommandExecutionResult.ok();
 	}
 
 	private String concat(final List<String> strings) {

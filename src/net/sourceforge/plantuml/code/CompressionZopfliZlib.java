@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.code;
 
-import java.io.IOException;
-
 import net.sourceforge.plantuml.zopfli.Options;
 import net.sourceforge.plantuml.zopfli.Options.BlockSplitting;
 import net.sourceforge.plantuml.zopfli.Options.OutputFormat;
@@ -58,7 +56,7 @@ public class CompressionZopfliZlib implements Compression {
 		return compressor.compress(options, in).getResult();
 	}
 
-	public byte[] decompress(byte[] in) throws IOException {
+	public ByteArray decompress(byte[] in) throws NoPlantumlCompressionException {
 		return new CompressionZlib().decompress(in);
 	}
 

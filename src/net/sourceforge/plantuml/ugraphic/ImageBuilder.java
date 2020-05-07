@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
@@ -100,69 +101,96 @@ public class ImageBuilder {
 	private final HColor mybackcolor;
 	private final String metadata;
 	private final String warningOrError;
-	private final double margin1;
-	private final double margin2;
+	private final double top;
+	private final double right;
+	private final double bottom;
+	private final double left;
 	private final Animation animation;
 	private final boolean useHandwritten;
 
 	private UDrawable udrawable;
 
-	private final double externalMargin1;
-	private final double externalMargin2;
-	private UStroke borderStroke;
-	private HColor borderColor;
-	private double borderCorner;
+	private final UStroke borderStroke;
+	private final HColor borderColor;
+	private final double borderCorner;
 
-	private boolean svgDimensionStyle;
+	private final boolean svgDimensionStyle;
 	private boolean randomPixel;
 
-	public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HColor mybackcolor, String metadata,
-			String warningOrError, double margin1, double margin2, Animation animation, boolean useHandwritten) {
-		this.svgDimensionStyle = true;
-		this.colorMapper = colorMapper;
-		this.dpiFactor = dpiFactor;
-		this.mybackcolor = mybackcolor;
+	public static ImageBuilder buildA(ColorMapper colorMapper, boolean useHandwritten, Animation animation,
+			String metadata, String warningOrError, double dpiFactor, HColor mybackcolor) {
+		return new ImageBuilder(colorMapper, useHandwritten, animation, metadata, warningOrError, dpiFactor,
+				mybackcolor, ClockwiseTopRightBottomLeft.none());
+	}
+
+	public static ImageBuilder buildB(ColorMapper colorMapper, boolean useHandwritten,
+			ClockwiseTopRightBottomLeft margins, Animation animation, String metadata, String warningOrError,
+			double dpiFactor, HColor mybackcolor) {
+		return new ImageBuilder(colorMapper, useHandwritten, animation, metadata, warningOrError, dpiFactor,
+				mybackcolor, margins);
+	}
+
+	public static ImageBuilder buildC(ISkinParam skinParam, ClockwiseTopRightBottomLeft margins, Animation animation,
+			String metadata, String warningOrError, double dpiFactor, HColor mybackcolor) {
+		return new ImageBuilder(skinParam, animation, metadata, warningOrError, dpiFactor, mybackcolor, margins);
+	}
+
+	public static ImageBuilder buildD(ISkinParam skinParam, ClockwiseTopRightBottomLeft margins, Animation animation,
+			String metadata, String warningOrError, double dpiFactor) {
+		return new ImageBuilder(skinParam, animation, metadata, warningOrError, dpiFactor,
+				skinParam.getBackgroundColor(false), margins);
+	}
+
+	private ImageBuilder(ColorMapper colorMapper, boolean useHandwritten, Animation animation, String metadata,
+			String warningOrError, double dpiFactor, HColor mybackcolor, ClockwiseTopRightBottomLeft margins) {
+		this.top = margins.getTop();
+		this.right = margins.getRight();
+		this.bottom = margins.getBottom();
+		this.left = margins.getLeft();
+		this.animation = animation;
 		this.metadata = metadata;
 		this.warningOrError = warningOrError;
-		this.margin1 = margin1;
-		this.margin2 = margin2;
-		this.animation = animation;
-		this.useHandwritten = useHandwritten;
-		this.externalMargin1 = 0;
-		this.externalMargin2 = 0;
-		this.borderStroke = null;
+		this.dpiFactor = dpiFactor;
+
 		this.borderColor = null;
 		this.borderCorner = 0;
+
+		this.svgDimensionStyle = true;
+		this.colorMapper = colorMapper;
+		this.mybackcolor = mybackcolor;
+		this.useHandwritten = useHandwritten;
+
+		this.borderStroke = null;
+
 	}
 
-	public ImageBuilder(ISkinParam skinParam, double dpiFactor, String metadata, String warningOrError, double margin1,
-			double margin2, Animation animation) {
-		this(skinParam, dpiFactor, metadata, warningOrError, margin1, margin2, animation,
-				skinParam.getBackgroundColor(false));
-	}
-
-	public ImageBuilder(ISkinParam skinParam, double dpiFactor, String metadata, String warningOrError, double margin1,
-			double margin2, Animation animation, HColor backColor) {
-		final Rose rose = new Rose();
-		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.diagramBorder);
-		this.borderStroke = skinParam.getThickness(LineParam.diagramBorder, null);
-		this.borderCorner = skinParam.getRoundCorner(CornerParam.diagramBorder, null);
-		if (borderStroke == null && borderColor != null) {
-			this.borderStroke = new UStroke();
-		}
-
-		this.colorMapper = skinParam.getColorMapper();
-		this.svgDimensionStyle = skinParam.svgDimensionStyle();
-		this.dpiFactor = dpiFactor;
-		this.mybackcolor = backColor;
+	private ImageBuilder(ISkinParam skinParam, Animation animation, String metadata, String warningOrError,
+			double dpiFactor, HColor mybackcolor, ClockwiseTopRightBottomLeft margins) {
+		this.top = margins.getTop();
+		this.right = margins.getRight();
+		this.bottom = margins.getBottom();
+		this.left = margins.getLeft();
+		this.animation = animation;
 		this.metadata = metadata;
 		this.warningOrError = warningOrError;
-		this.margin1 = margin1;
-		this.margin2 = margin2;
-		this.animation = animation;
+		this.dpiFactor = dpiFactor;
+
+		final Rose rose = new Rose();
+		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.diagramBorder);
+		this.borderCorner = skinParam.getRoundCorner(CornerParam.diagramBorder, null);
+
+		this.svgDimensionStyle = skinParam.svgDimensionStyle();
+		this.colorMapper = skinParam.getColorMapper();
+		this.mybackcolor = mybackcolor;
 		this.useHandwritten = skinParam.handwritten();
-		this.externalMargin1 = 0;
-		this.externalMargin2 = 0;
+
+		final UStroke thickness = skinParam.getThickness(LineParam.diagramBorder, null);
+		if (thickness == null && borderColor != null) {
+			this.borderStroke = new UStroke();
+		} else {
+			this.borderStroke = thickness;
+		}
+
 	}
 
 	public void setUDrawable(UDrawable udrawable) {
@@ -238,22 +266,24 @@ public class ImageBuilder {
 		try {
 			final UGraphic2 ug = createUGraphic(fileFormatOption, seed, dim, animationArg, dx, dy);
 			UGraphic ug2 = ug;
-			if (externalMargin1 > 0) {
-				ug2 = ug2.apply(new UTranslate(externalMargin1, externalMargin1));
-			}
+//			if (externalMargin1 > 0) {
+//				ug2 = ug2.apply(new UTranslate(externalMargin1, externalMargin1));
+//			}
 			if (borderStroke != null) {
 				final HColor color = borderColor == null ? HColorUtils.BLACK : borderColor;
-				final URectangle shape = new URectangle(dim.getWidth() - externalMargin() - borderStroke.getThickness(),
-						dim.getHeight() - externalMargin() - borderStroke.getThickness()).rounded(borderCorner);
+//				final URectangle shape = new URectangle(dim.getWidth() - externalMargin() - borderStroke.getThickness(),
+//						dim.getHeight() - externalMargin() - borderStroke.getThickness()).rounded(borderCorner);
+				final URectangle shape = new URectangle(dim.getWidth() - borderStroke.getThickness(),
+						dim.getHeight() - borderStroke.getThickness()).rounded(borderCorner);
 				ug2.apply(color).apply(borderStroke).draw(shape);
 			}
 			if (randomPixel) {
 				drawRandomPoint(ug2);
 			}
-			if (externalMargin1 > 0) {
-				ug2 = ug2.apply(new UTranslate(externalMargin2, externalMargin2));
-			}
-			ug2 = ug2.apply(new UTranslate(margin1, margin1));
+//			if (externalMargin1 > 0) {
+//				ug2 = ug2.apply(new UTranslate(externalMargin2, externalMargin2));
+//			}
+			ug2 = ug2.apply(new UTranslate(left, top));
 			final UGraphic ugDecored = handwritten(ug2);
 			udrawable.drawU(ugDecored);
 			ugDecored.flushUg();
@@ -287,21 +317,20 @@ public class ImageBuilder {
 
 	}
 
-	private double externalMargin() {
-		return 2 * (externalMargin1 + externalMargin2);
-	}
+//	private double externalMargin() {
+//		return 2 * (externalMargin1 + externalMargin2);
+//	}
 
 	public Dimension2D getFinalDimension(StringBounder stringBounder) {
 		final Dimension2D dim;
-		// if (udrawable instanceof TextBlock) {
-		// dim = ((TextBlock) udrawable).calculateDimension(stringBounder);
-		// } else {
+
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
 		dim = new Dimension2DDouble(limitFinder.getMaxX(), limitFinder.getMaxY());
-		// }
-		return new Dimension2DDouble(dim.getWidth() + 1 + margin1 + margin2 + externalMargin(),
-				dim.getHeight() + 1 + margin1 + margin2 + externalMargin());
+
+//		return new Dimension2DDouble(dim.getWidth() + 1 + margin1 + margin2 + externalMargin(),
+//				dim.getHeight() + 1 + margin1 + margin2 + externalMargin());
+		return new Dimension2DDouble(dim.getWidth() + 1 + left + right, dim.getHeight() + 1 + top + bottom);
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
@@ -319,8 +348,8 @@ public class ImageBuilder {
 
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
-		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2,
-				limitFinder.getMaxY() + 1 + margin1 + margin2);
+		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + left + right,
+				limitFinder.getMaxY() + 1 + top + bottom);
 
 		final File f = new File("c:/tmp.avi");
 
@@ -350,8 +379,8 @@ public class ImageBuilder {
 
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
-		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2,
-				limitFinder.getMaxY() + 1 + margin1 + margin2);
+		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + left + right,
+				limitFinder.getMaxY() + 1 + top + bottom);
 
 		final MinMax minmax = animation.getMinMax(dim);
 

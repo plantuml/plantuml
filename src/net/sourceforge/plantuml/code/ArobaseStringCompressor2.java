@@ -35,17 +35,15 @@
  */
 package net.sourceforge.plantuml.code;
 
-import java.io.IOException;
-
 import net.sourceforge.plantuml.StringUtils;
 
 public class ArobaseStringCompressor2 implements StringCompressor {
 
-	public String compress(String data) throws IOException {
+	public String compress(String data) {
 		return clean2(data);
 	}
 
-	public String decompress(String s) throws IOException {
+	public String decompress(String s) {
 		return clean2(s);
 	}
 

@@ -64,6 +64,7 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<UmlDiagram> {
 	}
 
 	protected CommandExecutionResult executeNow(UmlDiagram diagram, BlocLines lines) {
+		SkinParam.setBetaStyle(true);
 		if (SkinParam.USE_STYLES() == false) {
 			return CommandExecutionResult.ok();
 		}

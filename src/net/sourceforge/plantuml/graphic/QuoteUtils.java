@@ -261,7 +261,13 @@ public class QuoteUtils {
 			"Guvf rkcynvaf abg whfg Ubyyljbbq, ohg nyzbfg gur ragvergl bs Sbk Arjf",
 			"Gur terngrfg rarzl bs xabjyrqtr vf abg vtabenapr; vg vf gur vyyhfvba bs xabjyrqtr",
 			"N fghql sbhaq gung vtabenag crbcyr ner zber yvxryl gb oryvrir gurl'er oevyyvnag",
-			"Dh'rfg-pr dh'ba n qbap n fbaare pbzzr pn, pr zngva ?");
+			"Dh'rfg-pr dh'ba n qbap n fbaare pbzzr pn, pr zngva ?", "Ernyvgl vf gur bayl guvat gung'f erny",
+			"V jbhyq tvir zlfrys na N+", "Lbh rire unir frpbaq gubhtugf nobhg fbzrguvat ?",
+			"V oryvrir vg'f n ebhtu fvghngvba bire gurer", "Whfg fb lbh xabj, V tbg zl yvprafr fhfcraqrq",
+			"Gunax lbh sbe pubbfvat Bprnavp Nveyvarf", "4-8-15-16-23-42",
+			"...naq gnk phgf. Gung'yy fubj gurz znegvnaf.",
+			"Jurarire V srry gur arrq gb rkrepvfr, V yvr qbja hagvy vg tbrf njnl", "Ernyvgl pbagvahrf gb ehva zl yvsr",
+			"Vs lbh gvpxyr hf, qb jr abg ynhtu?", "V xabj n HQC wbxr, ohg lbh zvtug abg trg vg");
 
 	private QuoteUtils() {
 	}

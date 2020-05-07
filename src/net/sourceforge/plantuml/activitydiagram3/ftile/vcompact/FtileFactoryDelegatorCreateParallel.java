@@ -35,56 +35,35 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Dimension2D;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixed;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 
-public class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
-
-	private final double spaceArroundBlackBar = 20;
-	private final double xMargin = 14;
+public final class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
 
 	public FtileFactoryDelegatorCreateParallel(FtileFactory factory) {
 		super(factory);
 	}
 
-	private Ftile allOverlapped(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
-		return new FtileForkInnerOverlapped(all);
-	}
-
 	@Override
 	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
 
-		final Dimension2D dimSuper = super.createParallel(all, style, label, in, out).calculateDimension(
-				getStringBounder());
-		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
-
-		final List<Ftile> list = new ArrayList<Ftile>();
-		for (Ftile tmp : all) {
-			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
-		}
-		final Ftile inner = super.createParallel(list, style, label, in, out);
-
 		AbstractParallelFtilesBuilder builder;
-
 		if (style == ForkStyle.SPLIT) {
-			builder = new ParallelBuilderSplit(skinParam(), getStringBounder(), list, inner);
+			builder = new ParallelBuilderSplit(skinParam(), getStringBounder(), all);
 		} else if (style == ForkStyle.MERGE) {
-			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), list, inner);
+			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), all);
 		} else if (style == ForkStyle.FORK) {
-			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), list, inner, label, in, out);
+			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), label, in, out, all);
 		} else {
 			throw new IllegalStateException();
 		}
-		return builder.build();
+		final Ftile inner = super.createParallel(builder.list99, style, label, in, out);
+		return builder.build(inner);
 	}
 
 }

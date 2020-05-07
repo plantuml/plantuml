@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class BpmDiagram extends UmlDiagram {
@@ -82,10 +83,17 @@ public class BpmDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final double dpiFactor = 1;
-		final double margin = 10;
-		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
-				getAnimation());
+		final int margin1;
+		final int margin2;
+		if (SkinParam.USE_STYLES()) {
+			margin1 = SkinParam.zeroMargin(10);
+			margin2 = SkinParam.zeroMargin(10);
+		} else {
+			margin1 = 10;
+			margin2 = 10;
+		}
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), getAnimation(), fileFormatOption.isWithMetadata() ? getMetadata() : null,
+		getWarningOrError(), dpiFactor);
 		imageBuilder.setUDrawable(getUDrawable());
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);

@@ -66,13 +66,13 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-		lines = lines.cleanList2(strategy);
+		lines = lines.cleanList(strategy);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
 		if (syntaxWithFinalBracket()) {
-			if (lines.size() == 1 && lines.getFirst499().getTrimmed().getString().endsWith("{") == false) {
-				final String vline = ((StringLocated) lines.get499(0)).getString() + " {";
+			if (lines.size() == 1 && lines.getFirst().getTrimmed().getString().endsWith("{") == false) {
+				final String vline = ((StringLocated) lines.getAt(0)).getString() + " {";
 				if (isValid(BlocLines.singleString(vline)) == CommandControl.OK_PARTIAL) {
 					return CommandControl.OK_PARTIAL;
 				}
@@ -80,7 +80,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 			}
 			lines = lines.eventuallyMoveBracket();
 		}
-		final StringLocated first = lines.getFirst499();
+		final StringLocated first = lines.getFirst();
 		if (first == null) {
 			return CommandControl.NOT_OK;
 		}
@@ -92,7 +92,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final Matcher2 m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.getLast499().getTrimmed().getString());
+		final Matcher2 m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.getLast().getTrimmed().getString());
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}
@@ -102,7 +102,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {
-		lines = lines.cleanList2(strategy);
+		lines = lines.cleanList(strategy);
 		if (syntaxWithFinalBracket()) {
 			lines = lines.eventuallyMoveBracket();
 		}

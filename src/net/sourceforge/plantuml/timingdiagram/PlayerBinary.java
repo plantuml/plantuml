@@ -59,16 +59,16 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PlayerBinary extends Player {
 
-	private static final int HEIGHT = 30;
 	private final SortedMap<TimeTick, Boolean> values = new TreeMap<TimeTick, Boolean>();
 	private Boolean initialState;
 
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact) {
 		super(code, skinParam, ruler, compact);
+		this.suggestedHeight = 30;
 	}
 
 	public double getFullHeight(StringBounder stringBounder) {
-		return HEIGHT;
+		return suggestedHeight;
 	}
 
 	public void drawFrameTitle(UGraphic ug) {
@@ -111,7 +111,7 @@ public class PlayerBinary extends Player {
 	private final double ymargin = 8;
 
 	private double getYpos(boolean state) {
-		return state ? ymargin : HEIGHT - ymargin;
+		return state ? ymargin : getFullHeight(null) - ymargin;
 	}
 
 	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
@@ -142,7 +142,7 @@ public class PlayerBinary extends Player {
 					final double x = ruler.getPosInPixel(ent.getKey());
 					ug.apply(new UTranslate(lastx, getYpos(lastValue))).draw(ULine.hline(x - lastx));
 					if (lastValue != ent.getValue()) {
-						ug.apply(new UTranslate(x, ymargin)).draw(ULine.vline(HEIGHT - 2 * ymargin));
+						ug.apply(new UTranslate(x, ymargin)).draw(ULine.vline(getFullHeight(null) - 2 * ymargin));
 					}
 					lastx = x;
 					lastValue = ent.getValue();

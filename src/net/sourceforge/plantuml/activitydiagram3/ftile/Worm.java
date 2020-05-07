@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 
 public class Worm implements Iterable<Point2D.Double> {
@@ -101,10 +100,14 @@ public class Worm implements Iterable<Point2D.Double> {
 		}
 
 		final HColor arrowHeadColor = colorAndStyle.getArrowHeadColor();
-		if (arrowHeadColor != null && arrowHeadColor.equals(HColorUtils.transparent()) == false) {
-			ug = ug.apply(arrowHeadColor);
-			ug = ug.apply(arrowHeadColor.bg());
+		if (arrowHeadColor == null) {
+			throw new IllegalStateException();
 		}
+//		if (arrowHeadColor == null || arrowHeadColor.equals(HColorUtils.transparent())) {
+//			return;
+//		}
+		ug = ug.apply(arrowHeadColor);
+		ug = ug.apply(arrowHeadColor.bg());
 
 		if (startDecoration != null) {
 			ug = ug.apply(new UStroke(1.5));
@@ -212,6 +215,12 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	public void addPoint(double x, double y) {
+		if (Double.isNaN(x)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(y)) {
+			throw new IllegalArgumentException();
+		}
 		if (points.size() > 0) {
 			final Point2D last = getLast();
 			if (last.getX() == x && last.getY() == y) {

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -59,6 +60,7 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
@@ -100,10 +102,17 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final double dpiFactor = 1;
-		final double margin = 10;
-		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
-				getAnimation());
+		final int margin1;
+		final int margin2;
+		if (SkinParam.USE_STYLES()) {
+			margin1 = SkinParam.zeroMargin(10);
+			margin2 = SkinParam.zeroMargin(10);
+		} else {
+			margin1 = 10;
+			margin2 = 10;
+		}
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), getAnimation(), fileFormatOption.isWithMetadata() ? getMetadata() : null,
+		getWarningOrError(), dpiFactor);
 
 		TextBlock result = getTextBlock();
 		final ISkinParam skinParam = getSkinParam();
@@ -151,7 +160,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		ug = ug.apply(UTranslate.dx(marginX1));
 
 		drawHighlightsBack(ug.apply(widthPart1));
-		ruler.draw0(ug.apply(widthPart1), getHeightInner(stringBounder));
+		ruler.drawVlines(ug.apply(widthPart1), getHeightInner(stringBounder));
 		boolean first = true;
 
 		for (Player player : players.values()) {
@@ -306,6 +315,12 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);
 		ruler.addTime(tick);
 		return CommandExecutionResult.ok();
+	}
+
+	public PlayerAnalog createAnalog(String code, String full, boolean compact) {
+		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault);
+		players.put(code, player);
+		return player;
 	}
 
 	public CommandExecutionResult createBinary(String code, String full, boolean compact) {

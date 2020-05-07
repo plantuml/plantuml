@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidthCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileWithUrl;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
@@ -132,8 +132,8 @@ public class ConditionalBuilder {
 		this.stringBounder = stringBounder;
 		this.url = url;
 
-		this.tile1 = new FtileMinWidth(branch1.getFtile(), 30);
-		this.tile2 = new FtileMinWidth(branch2.getFtile(), 30);
+		this.tile1 = new FtileMinWidthCentered(branch1.getFtile(), 30);
+		this.tile2 = new FtileMinWidthCentered(branch2.getFtile(), 30);
 
 	}
 
@@ -166,8 +166,8 @@ public class ConditionalBuilder {
 	}
 
 	private Ftile createDown(Branch branch1, Branch branch2) {
-		final Ftile tile1 = new FtileMinWidth(branch1.getFtile(), 30);
-		final Ftile tile2 = new FtileMinWidth(branch2.getFtile(), 30);
+		final Ftile tile1 = new FtileMinWidthCentered(branch1.getFtile(), 30);
+		final Ftile tile2 = new FtileMinWidthCentered(branch2.getFtile(), 30);
 		final TextBlock tb1 = getLabelPositive(branch1);
 		final TextBlock tb2 = getLabelPositive(branch2);
 		final Ftile diamond1 = getDiamond1(false, tb1, tb2);

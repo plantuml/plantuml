@@ -48,13 +48,18 @@ public class CompressionBrotli implements Compression {
 		throw new UnsupportedOperationException();
 	}
 
-	public byte[] decompress(byte[] in) throws IOException {
-		final BrotliInputStream brotli = new BrotliInputStream(new ByteArrayInputStream(in));
-		final ByteArrayOutputStream result = new ByteArrayOutputStream();
-		FileUtils.copyToStream(brotli, result);
-		brotli.close();
-		result.close();
-		return result.toByteArray();
+	public ByteArray decompress(byte[] in) throws NoPlantumlCompressionException {
+		try {
+			final BrotliInputStream brotli = new BrotliInputStream(new ByteArrayInputStream(in));
+			final ByteArrayOutputStream result = new ByteArrayOutputStream();
+			FileUtils.copyToStream(brotli, result);
+			brotli.close();
+			result.close();
+			return ByteArray.from(result.toByteArray());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new NoPlantumlCompressionException(e);
+		}
 	}
 
 }

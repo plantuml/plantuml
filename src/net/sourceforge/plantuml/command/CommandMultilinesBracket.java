@@ -71,7 +71,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final Matcher2 m1 = starting.matcher(lines.getFirst499().getTrimmed().getString());
+		final Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}

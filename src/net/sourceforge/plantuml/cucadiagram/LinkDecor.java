@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution :  Hisashi Miyashita
  * 
  *
  */
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryCircleLine;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryCrowfoot;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryDiamond;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryDoubleLine;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtendsLike;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryHalfArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryLineCrowfoot;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryNotNavigable;
@@ -60,6 +62,8 @@ public enum LinkDecor {
 
 	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3),
 	NOT_NAVIGABLE(1, false, 0.5),
+
+	REDEFINES(30, false, 2), DEFINEDBY(30, false, 2),
 
 	CROWFOOT(10, true, 0.8), CIRCLE_CROWFOOT(14, false, 0.8), CIRCLE_LINE(10, false, 0.8), DOUBLE_LINE(7, false, 0.7),
 	LINE_CROWFOOT(10, false, 0.8),
@@ -93,48 +97,56 @@ public enum LinkDecor {
 		return arrowSize;
 	}
 
-	public ExtremityFactory getExtremityFactory(HColor backgroundColor) {
-		if (this == LinkDecor.PLUS) {
-			return new ExtremityFactoryPlus();
-		} else if (this == LinkDecor.HALF_ARROW) {
-			return new ExtremityFactoryHalfArrow();
-		} else if (this == LinkDecor.ARROW_TRIANGLE) {
-			return new ExtremityFactoryTriangle();
-		} else if (this == LinkDecor.CROWFOOT) {
-			return new ExtremityFactoryCrowfoot();
-		} else if (this == LinkDecor.CIRCLE_CROWFOOT) {
-			return new ExtremityFactoryCircleCrowfoot();
-		} else if (this == LinkDecor.LINE_CROWFOOT) {
-			return new ExtremityFactoryLineCrowfoot();
-		} else if (this == LinkDecor.CIRCLE_LINE) {
-			return new ExtremityFactoryCircleLine();
-		} else if (this == LinkDecor.DOUBLE_LINE) {
-			return new ExtremityFactoryDoubleLine();
-		} else if (this == LinkDecor.CIRCLE_CROSS) {
-			return new ExtremityFactoryCircleCross();
-		} else if (this == LinkDecor.ARROW) {
-			return new ExtremityFactoryArrow();
-		} else if (this == LinkDecor.ARROW_AND_CIRCLE) {
-			return new ExtremityFactoryArrowAndCircle();
-		} else if (this == LinkDecor.NOT_NAVIGABLE) {
-			return new ExtremityFactoryNotNavigable();
-		} else if (this == LinkDecor.AGREGATION) {
-			return new ExtremityFactoryDiamond(false, backgroundColor);
-		} else if (this == LinkDecor.COMPOSITION) {
-			return new ExtremityFactoryDiamond(true, backgroundColor);
-		} else if (this == LinkDecor.CIRCLE) {
-			return new ExtremityFactoryCircle(false);
-		} else if (this == LinkDecor.CIRCLE_FILL) {
-			return new ExtremityFactoryCircle(true);
-		} else if (this == LinkDecor.SQUARE) {
-			return new ExtremityFactorySquarre();
-		} else if (this == LinkDecor.PARENTHESIS) {
-			return new ExtremityFactoryParenthesis();
-		} else if (this == LinkDecor.CIRCLE_CONNECT) {
-			return new ExtremityFactoryCircleConnect();
-		}
-
-		return null;
+	public boolean isExtendsLike() {
+		return this == EXTENDS || this == REDEFINES || this == DEFINEDBY;
 	}
 
+	public ExtremityFactory getExtremityFactory(HColor backgroundColor) {
+		switch (this) {
+		case PLUS:
+			return new ExtremityFactoryPlus();
+		case REDEFINES:
+			return new ExtremityFactoryExtendsLike(backgroundColor, false);
+		case DEFINEDBY:
+			return new ExtremityFactoryExtendsLike(backgroundColor, true);
+		case HALF_ARROW:
+			return new ExtremityFactoryHalfArrow();
+		case ARROW_TRIANGLE:
+			return new ExtremityFactoryTriangle();
+		case CROWFOOT:
+			return new ExtremityFactoryCrowfoot();
+		case CIRCLE_CROWFOOT:
+			return new ExtremityFactoryCircleCrowfoot();
+		case LINE_CROWFOOT:
+			return new ExtremityFactoryLineCrowfoot();
+		case CIRCLE_LINE:
+			return new ExtremityFactoryCircleLine();
+		case DOUBLE_LINE:
+			return new ExtremityFactoryDoubleLine();
+		case CIRCLE_CROSS:
+			return new ExtremityFactoryCircleCross();
+		case ARROW:
+			return new ExtremityFactoryArrow();
+		case ARROW_AND_CIRCLE:
+			return new ExtremityFactoryArrowAndCircle();
+		case NOT_NAVIGABLE:
+			return new ExtremityFactoryNotNavigable();
+		case AGREGATION:
+			return new ExtremityFactoryDiamond(false, backgroundColor);
+		case COMPOSITION:
+			return new ExtremityFactoryDiamond(true, backgroundColor);
+		case CIRCLE:
+			return new ExtremityFactoryCircle(false);
+		case CIRCLE_FILL:
+			return new ExtremityFactoryCircle(true);
+		case SQUARE:
+			return new ExtremityFactorySquarre();
+		case PARENTHESIS:
+			return new ExtremityFactoryParenthesis();
+		case CIRCLE_CONNECT:
+			return new ExtremityFactoryCircleConnect();
+		default:
+			return null;
+		}
+	}
 }

@@ -65,19 +65,19 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
-	public ParallelBuilderMerge(ISkinParam skinParam, StringBounder stringBounder, final List<Ftile> list, Ftile inner) {
-		super(skinParam, stringBounder, list, inner);
+	public ParallelBuilderMerge(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all) {
+		super(skinParam, stringBounder, all);
 	}
 
 	@Override
-	protected Ftile doStep1() {
-		Ftile result = getMiddle();
+	protected Ftile doStep1(Ftile inner) {
+		Ftile result = inner;
 		final List<Connection> conns = new ArrayList<Connection>();
 		final HColor colorBar = getRose().getHtmlColor(skinParam(), ColorParam.activityBar);
 
-		final Ftile black = new FtileBlackBlock(skinParam(), colorBar, getList().get(0).getSwimlaneIn());
+		final Ftile black = new FtileBlackBlock(skinParam(), colorBar, list99.get(0).getSwimlaneIn());
 		double x = 0;
-		for (Ftile tmp : getList()) {
+		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final Rainbow def;
 			if (SkinParam.USE_STYLES()) {
@@ -99,7 +99,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 	}
 
 	@Override
-	protected Ftile doStep2(Ftile result) {
+	protected Ftile doStep2(Ftile inner, Ftile result) {
 		final HColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
 		final HColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
 		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlaneOutForStep2());
@@ -108,7 +108,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		final UTranslate diamondTranslate = result.getTranslateFor(out, getStringBounder());
 		int i = 0;
 		double x = 0;
-		for (Ftile tmp : getList()) {
+		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final UTranslate translate0 = new UTranslate(x, barHeight);
 			final Rainbow def;

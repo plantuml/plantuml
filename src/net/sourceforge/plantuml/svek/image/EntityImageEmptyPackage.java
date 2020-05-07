@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
@@ -74,9 +75,11 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final Stereotype stereotype;
 	private final TextBlock stereoBlock;
 	private final Url url;
+	private final SName styleName;
 
-	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower, SName styleName) {
 		super(entity, skinParam);
+		this.styleName = styleName;
 		this.skinParam = skinParam;
 		this.specificBackColor = entity.getColors(skinParam).getColor(ColorType.BACK);
 		this.stereotype = entity.getStereotype();
@@ -88,18 +91,17 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			stereoBlock = TextBlockUtils.empty(0, 0);
 		} else {
-			stereoBlock = TextBlockUtils.withMargin(
-					Display.create(stereotype.getLabels(skinParam.guillemet())).create(
-							new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
-							HorizontalAlignment.CENTER, skinParam), 1, 0);
+			stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet())).create(
+					new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
+					HorizontalAlignment.CENTER, skinParam), 1, 0);
 		}
 
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
-		Dimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT).calculateDimension(
-				stringBounder);
+		Dimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)
+				.calculateDimension(stringBounder);
 		dim = Dimension2DDouble.atLeast(dim, 0, 2 * dimDesc.getHeight());
 		return Dimension2DDouble.delta(dim, MARGIN * 2, MARGIN * 2);
 	}
@@ -123,7 +125,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 
-		final HColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype);
+		final HColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName);
 		final double roundCorner = 0;
 
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,

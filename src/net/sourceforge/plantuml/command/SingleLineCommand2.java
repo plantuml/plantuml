@@ -91,9 +91,9 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final StringLocated line2 = myTrim2(lines.getFirst499());
+		final StringLocated line2 = myTrim2(lines.getFirst());
 		if (syntaxWithFinalBracket() && line2.getString().endsWith("{") == false) {
-			final String vline = lines.get499(0).getString() + " {";
+			final String vline = lines.getAt(0).getString() + " {";
 			if (isValid(BlocLines.singleString(vline)) == CommandControl.OK) {
 				return CommandControl.OK_PARTIAL;
 			}
@@ -109,10 +109,10 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	private CommandControl isValidBracket(BlocLines lines) {
 		assert lines.size() == 2;
 		assert syntaxWithFinalBracket();
-		if (myTrim(lines.get499(1)).equals("{") == false) {
+		if (myTrim(lines.getAt(1)).equals("{") == false) {
 			return CommandControl.NOT_OK;
 		}
-		final String vline = lines.get499(0).getString() + " {";
+		final String vline = lines.getAt(0).getString() + " {";
 		return isValid(BlocLines.singleString(vline));
 	}
 
@@ -125,13 +125,13 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {
 		if (syntaxWithFinalBracket() && lines.size() == 2) {
-			assert myTrim(lines.get499(1)).equals("{");
-			lines = BlocLines.singleString(lines.getFirst499().getString() + " {");
+			assert myTrim(lines.getAt(1)).equals("{");
+			lines = BlocLines.singleString(lines.getFirst().getString() + " {");
 		}
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		final StringLocated first = lines.getFirst499();
+		final StringLocated first = lines.getFirst();
 		final String line = myTrim(first);
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Syntax error: " + line);

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
@@ -43,7 +43,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedCentered;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -64,10 +65,7 @@ public abstract class AbstractParallelFtilesBuilder {
 
 	private final ISkinParam skinParam;
 	private final StringBounder stringBounder;
-
-	private final List<Ftile> list;
-	private final Ftile middle;
-	private final FtileGeometry middleDimension;
+	protected final List<Ftile> list99 = new ArrayList<Ftile>();
 
 	public StyleSignature getDefaultStyleDefinition() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
@@ -77,23 +75,47 @@ public abstract class AbstractParallelFtilesBuilder {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
-	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, final List<Ftile> list,
-			Ftile middle) {
+	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all) {
 		this.skinParam = skinParam;
 		this.stringBounder = stringBounder;
-		this.list = list;
-		this.middle = middle;
-		this.middleDimension = middle.calculateDimension(getStringBounder());
+		this.list99.addAll(getFoo2(all));
 	}
 
-	public final Ftile build() {
-		final Ftile step1 = doStep1();
-		return doStep2(step1);
+	protected List<Ftile> getFoo2(List<Ftile> all) {
+		final double maxHeight = computeMaxHeight(all);
+		final List<Ftile> result = new ArrayList<Ftile>();
+		for (Ftile ftile : all) {
+			final Ftile newFtile = computeNewFtile(ftile, maxHeight);
+			result.add(newFtile);
+		}
+		return result;
 	}
 
-	protected abstract Ftile doStep1();
+	private Ftile computeNewFtile(Ftile ftile, double maxHeight) {
+		final double spaceArroundBlackBar = 20;
+		final double xMargin = 14;
+		Ftile tmp;
+		tmp = FtileUtils.addHorizontalMargin(ftile, xMargin);
+		tmp = new FtileHeightFixedCentered(tmp, maxHeight + 2 * spaceArroundBlackBar);
+		return tmp;
+	}
 
-	protected abstract Ftile doStep2(Ftile step1);
+	final protected double computeMaxHeight(List<Ftile> all) {
+		double height = 0;
+		for (Ftile tmp : all) {
+			height = Math.max(height, tmp.calculateDimension(getStringBounder()).getHeight());
+		}
+		return height;
+	}
+
+	public final Ftile build(Ftile inner) {
+		final Ftile step1 = doStep1(inner);
+		return doStep2(inner, step1);
+	}
+
+	protected abstract Ftile doStep1(Ftile inner);
+
+	protected abstract Ftile doStep2(Ftile inner, Ftile step1);
 
 	protected StringBounder getStringBounder() {
 		return stringBounder;
@@ -128,20 +150,12 @@ public abstract class AbstractParallelFtilesBuilder {
 		return getTextBlock(display);
 	}
 
-	protected final List<Ftile> getList() {
-		return Collections.unmodifiableList(list);
-	}
-
-	protected final Ftile getMiddle() {
-		return middle;
-	}
-
-	protected final double getHeightOfMiddle() {
-		return middleDimension.getHeight();
+	protected final double getHeightOfMiddle(Ftile middle) {
+		return middle.calculateDimension(getStringBounder()).getHeight();
 	}
 
 	protected Swimlane swimlaneOutForStep2() {
-		return list.get(list.size() - 1).getSwimlaneOut();
+		return list99.get(list99.size() - 1).getSwimlaneOut();
 	}
 
 }

@@ -207,6 +207,9 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		} catch (Exception e) {
 			e.printStackTrace();
 			exportDiagramError(os, e, fileFormatOption, seed, null);
+		} catch (Error e) {
+			e.printStackTrace();
+			exportDiagramError(os, e, fileFormatOption, seed, null);
 		}
 		return ImageDataSimple.error();
 	}
@@ -227,8 +230,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HColorUtils.WHITE, metadata,
-				null, 0, 0, null, false);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false,
+				null, metadata, null, 1.0, HColorUtils.WHITE);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);

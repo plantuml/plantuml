@@ -102,7 +102,7 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 			}
 
 			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines) {
-				final String line0 = lines.getFirst499().getTrimmed().getString();
+				final String line0 = lines.getFirst().getTrimmed().getString();
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
 				if (lines.size() > 0) {

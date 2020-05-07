@@ -90,8 +90,8 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 
 	@Override
 	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) {
-		lines = lines.trim(true);
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst499().getTrimmed().getString());
+		lines = lines.trim().removeEmptyLines();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final IEntity entity1 = executeArg0(diagram, line0);
 		if (entity1 == null) {
 			return CommandExecutionResult.error("No such entity");

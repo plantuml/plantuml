@@ -45,13 +45,12 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Scale;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
-import net.sourceforge.plantuml.activitydiagram3.ftile.ISwimlanesA;
-import net.sourceforge.plantuml.activitydiagram3.ftile.SwimlanesAAA;
-import net.sourceforge.plantuml.activitydiagram3.ftile.SwimlanesC;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
@@ -76,36 +76,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private SwimlaneStrategy swimlaneStrategy;
 
-	private final ISwimlanesA swinlanes = new SwimlanesAAA(getSkinParam(), getPragma());
-	// private final ISwimlanesA swinlanes = new SwimlanesC(getSkinParam(),
-	// getPragma());
-
-	private ImageData exportDiagramInternalAAA(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		// BUG42
-		// COMPRESSION
-		swinlanes.computeSize(fileFormatOption.getDefaultStringBounder());
-		TextBlock result = swinlanes;
-
-		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, fileFormatOption.getDefaultStringBounder());
-		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, fileFormatOption.getDefaultStringBounder());
-
-		result = new TextBlockRecentred(result);
-		final ISkinParam skinParam = getSkinParam();
-		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
-
-		final Dimension2D dim = result.getMinMax(fileFormatOption.getDefaultStringBounder()).getDimension();
-		final double margin = 10;
-		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
-
-		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
-				getAnimation());
-		imageBuilder.setUDrawable(result);
-
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
-
-	}
+	private final Swimlanes swinlanes = new Swimlanes(getSkinParam(), getPragma());
 
 	public ActivityDiagram3(ISkinSimple skinParam) {
 		super(skinParam);
@@ -233,9 +204,6 @@ public class ActivityDiagram3 extends UmlDiagram {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		if (swinlanes instanceof SwimlanesC == false || swinlanes instanceof SwimlanesAAA) {
-			return exportDiagramInternalAAA(os, index, fileFormatOption);
-		}
 		// BUG42
 		// COMPRESSION
 		swinlanes.computeSize(fileFormatOption.getDefaultStringBounder());
@@ -249,12 +217,18 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
 
 		final Dimension2D dim = result.getMinMax(fileFormatOption.getDefaultStringBounder()).getDimension();
-		final double margin = 10;
-		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
+		final ClockwiseTopRightBottomLeft margins;
+		if (SkinParam.USE_STYLES()) {
+			margins = ClockwiseTopRightBottomLeft.marginForDocument(skinParam.getCurrentStyleBuilder());
+		} else {
+			margins = ClockwiseTopRightBottomLeft.margin1margin2(10, 10);
+		}
 
-		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
-				getAnimation());
+		final double dpiFactor = getDpiFactor(fileFormatOption,
+				Dimension2DDouble.delta(dim, margins.getLeft() + margins.getRight(), 0));
+
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(), margins, getAnimation(),
+				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), dpiFactor);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);

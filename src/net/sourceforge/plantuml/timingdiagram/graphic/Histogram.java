@@ -71,16 +71,17 @@ public class Histogram implements PDrawing {
 	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
 
 	private List<String> allStates;
-	private final double stepHeight = 20;
 
 	private final ISkinParam skinParam;
 	private final TimingRuler ruler;
 	private final boolean compact;
 	private String initialState;
 	private final TextBlock title;
+	private final int suggestedHeight;
 
 	public Histogram(TimingRuler ruler, ISkinParam skinParam, Collection<String> someStates, boolean compact,
-			TextBlock title) {
+			TextBlock title, int suggestedHeight) {
+		this.suggestedHeight = suggestedHeight;
 		this.ruler = ruler;
 		this.skinParam = skinParam;
 		this.allStates = new ArrayList<String>(someStates);
@@ -338,7 +339,6 @@ public class Histogram implements PDrawing {
 			final String state2 = getStatesAt(constraint.getTick2()).get(0);
 			final double y1 = yOfState(state1);
 			final double y2 = yOfState(state2);
-			// constraint.drawU(ug.apply(UTranslate.dy(y1 - stepHeight / 2)), ruler);
 			constraint.drawU(ug.apply(UTranslate.dy(y1)), ruler);
 		}
 	}
@@ -356,7 +356,7 @@ public class Histogram implements PDrawing {
 	}
 
 	public double getFullHeight(StringBounder stringBounder) {
-		return getHeightForConstraints(stringBounder) + stepHeight * (allStates.size() - 1) + getBottomMargin();
+		return getHeightForConstraints(stringBounder) + stepHeight() * (allStates.size() - 1) + getBottomMargin();
 	}
 
 	private double getBottomMargin() {
@@ -365,7 +365,14 @@ public class Histogram implements PDrawing {
 
 	private double yOfState(String state) {
 		final int nb = allStates.size() - 1 - allStates.indexOf(state);
-		return stepHeight * nb;
+		return stepHeight() * nb;
+	}
+
+	private double stepHeight() {
+		if (suggestedHeight == 0 || allStates.size() <= 1) {
+			return 20;
+		}
+		return suggestedHeight / (allStates.size() - 1);
 	}
 
 	private FontConfiguration getFontConfiguration() {

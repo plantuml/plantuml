@@ -66,7 +66,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("LABEL", ":(.*?)")), //
-				new RegexOptional(new RegexLeaf("STYLE", CommandActivity3.ENDING_GROUP)), //
+				new RegexOptional(new RegexLeaf("STYLE", CommandActivity3.endingGroup())), //
 				// new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

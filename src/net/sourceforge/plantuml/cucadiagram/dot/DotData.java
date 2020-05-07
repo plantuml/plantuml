@@ -175,7 +175,7 @@ final public class DotData implements PortionShower {
 	public void removeIrrelevantSametail() {
 		final Map<String, Integer> sametails = new HashMap<String, Integer>();
 		for (Link link : links) {
-			if (link.getType().getDecor2() == LinkDecor.EXTENDS) {
+			if (link.getType().getDecor2().isExtendsLike()) {
 				link.setSametail(link.getEntity1().getUid());
 			}
 			final String sametail = link.getSametail();

@@ -134,8 +134,8 @@ public class ScientificEquationSafe {
 
 	private ImageBuilder getRollback() {
 		final TextBlock block = GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 0, 0,
-				null, false);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, null, null,
+				1.0, null);
 		imageBuilder.setUDrawable(block);
 		return imageBuilder;
 	}

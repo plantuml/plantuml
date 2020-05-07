@@ -63,6 +63,18 @@ public class MinMaxMutable {
 	}
 
 	private MinMaxMutable(double minX, double minY, double maxX, double maxY) {
+		if (Double.isNaN(minX)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(maxX)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(minY)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(maxY)) {
+			throw new IllegalArgumentException();
+		}
 		this.minX = minX;
 		this.minY = minY;
 		this.maxX = maxX;
@@ -70,6 +82,12 @@ public class MinMaxMutable {
 	}
 
 	public void addPoint(double x, double y) {
+		if (Double.isNaN(x)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(y)) {
+			throw new IllegalArgumentException();
+		}
 		this.maxX = Math.max(x, maxX);
 		this.maxY = Math.max(y, maxY);
 		this.minX = Math.min(x, minX);
@@ -77,6 +95,12 @@ public class MinMaxMutable {
 	}
 
 	public static MinMaxMutable fromMax(double maxX, double maxY) {
+		if (Double.isNaN(maxX)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(maxY)) {
+			throw new IllegalArgumentException();
+		}
 		final MinMaxMutable result = MinMaxMutable.getEmpty(true);
 		result.addPoint(maxX, maxY);
 		return result;

@@ -186,13 +186,13 @@ public class Style {
 	}
 
 	public ClockwiseTopRightBottomLeft getPadding() {
-		final double padding = value(PName.Padding).asDouble();
-		return new ClockwiseTopRightBottomLeft(padding);
+		final String padding = value(PName.Padding).asString();
+		return ClockwiseTopRightBottomLeft.read(padding);
 	}
 
 	public ClockwiseTopRightBottomLeft getMargin() {
-		final double padding = value(PName.Margin).asDouble();
-		return new ClockwiseTopRightBottomLeft(padding);
+		final String margin = value(PName.Margin).asString();
+		return ClockwiseTopRightBottomLeft.read(margin);
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {
@@ -214,12 +214,11 @@ public class Style {
 		final HColor legendColor = this.value(PName.LineColor).asColor(set);
 		final UStroke stroke = this.getStroke();
 		final int cornersize = this.value(PName.RoundCorner).asInt();
-		final double margin = this.value(PName.Margin).asDouble();
-		final double padding = this.value(PName.Padding).asDouble();
-
+		final ClockwiseTopRightBottomLeft margin = this.getMargin();
+		final ClockwiseTopRightBottomLeft padding = this.getPadding();
 		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, legendColor, legendBackgroundColor,
-				cornersize, padding, padding);
-		return TextBlockUtils.withMargin(result, margin, margin);
+				cornersize, padding);
+		return TextBlockUtils.withMargin(result, margin);
 	}
 
 	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet) {

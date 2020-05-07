@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ * Contribution :  Hisashi Miyashita
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -56,6 +56,8 @@ public enum LeafType {
 	BLOCK, ENTITY,
 	
 	DOMAIN, REQUIREMENT,
+	
+	PORT, PORTIN, PORTOUT,
 
 	STILL_UNKNOWN;
 

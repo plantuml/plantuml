@@ -90,6 +90,18 @@ public class MinMax {
 		this.minY = minY;
 		this.maxX = maxX;
 		this.maxY = maxY;
+		if (Double.isNaN(minX)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(maxX)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(minY)) {
+			throw new IllegalArgumentException();
+		}
+		if (Double.isNaN(maxY)) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public MinMax addPoint(Point2D pt) {

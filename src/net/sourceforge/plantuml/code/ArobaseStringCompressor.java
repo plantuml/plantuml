@@ -88,7 +88,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 		return "";
 	}
 
-	public String decompress(String s) throws IOException {
+	public String decompress(String s) {
 		String result = clean(s);
 		if (result.startsWith("@start")) {
 			return result;

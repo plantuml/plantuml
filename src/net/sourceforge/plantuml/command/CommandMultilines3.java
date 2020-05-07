@@ -61,11 +61,11 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-		lines = lines.cleanList2(strategy);
+		lines = lines.cleanList(strategy);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final StringLocated first = lines.getFirst499();
+		final StringLocated first = lines.getFirst();
 		if (first == null) {
 			return CommandControl.NOT_OK;
 		}
@@ -77,7 +77,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final StringLocated potentialLast = lines.getLast499().getTrimmed();
+		final StringLocated potentialLast = lines.getLast().getTrimmed();
 		final boolean m1 = getPatternEnd2().match(potentialLast);
 		if (m1 == false) {
 			return CommandControl.OK_PARTIAL;
@@ -88,7 +88,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {
-		lines = lines.cleanList2(strategy);
+		lines = lines.cleanList(strategy);
 		return executeNow(system, lines);
 	}
 

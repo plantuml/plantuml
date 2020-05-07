@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ * Contribution :  Hisashi Miyashita
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -44,64 +44,29 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.cucadiagram.Rankdir;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.Node;
-import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class EntityImageStateBorder extends AbstractEntityImage {
+public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
-	private final TextBlock desc;
-	private final Cluster stateParent;
-	private final EntityPosition entityPosition;
-	private final Bibliotekon bibliotekon;
-	private final Rankdir rankdir;
-
-	public EntityImageStateBorder(ILeaf leaf, ISkinParam skinParam, Cluster stateParent, final Bibliotekon bibliotekon) {
-		super(leaf, skinParam);
-		this.bibliotekon = bibliotekon;
-		this.rankdir = skinParam.getRankdir();
-
-		this.entityPosition = leaf.getEntityPosition();
-		if (entityPosition == EntityPosition.NORMAL) {
-			throw new IllegalArgumentException();
-		}
-		this.stateParent = stateParent;
-		final Stereotype stereotype = leaf.getStereotype();
-
-		this.desc = leaf.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
-				HorizontalAlignment.CENTER, skinParam);
+	public EntityImageStateBorder(ILeaf leaf, ISkinParam skinParam, Cluster stateParent,
+			final Bibliotekon bibliotekon) {
+		super(leaf, skinParam, stateParent, bibliotekon, FontParam.STATE);
 	}
 
 	private boolean upPosition() {
-		final Point2D clusterCenter = stateParent.getClusterPosition().getPointCenter();
+		final Point2D clusterCenter = parent.getClusterPosition().getPointCenter();
 		final Node node = bibliotekon.getNode(getEntity());
 		return node.getMinY() < clusterCenter.getY();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return entityPosition.getDimension(rankdir);
-	}
-
-	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
-		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
-		return dimDesc.getWidth();
-	}
-
 	final public void drawU(UGraphic ug) {
-
 		double y = 0;
 		final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;
@@ -112,8 +77,8 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 		}
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
-		ug = ug.apply(new UStroke(1.5)).apply(
-				SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder));
+		ug = ug.apply(new UStroke(1.5))
+				.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder));
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
@@ -121,11 +86,6 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 		ug = ug.apply(backcolor.bg());
 
 		entityPosition.drawSymbol(ug, rankdir);
-
-	}
-
-	public ShapeType getShapeType() {
-		return entityPosition.getShapeType();
 	}
 
 }
