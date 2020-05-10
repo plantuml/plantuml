@@ -35,37 +35,51 @@
  */
 package net.sourceforge.plantuml.code;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStream;
 
-public class ByteArray {
+public class Upf9Decoder {
 
-	private final byte data[];
-	private final int length;
-
-	private ByteArray(byte data[], int length) {
-		this.data = data;
-		this.length = length;
+	private Upf9Decoder() {
 	}
 
-	public static ByteArray from(byte[] input) {
-		return new ByteArray(input, input.length);
+	static int decodeChar(InputStream is) throws IOException {
+		final int read0 = is.read();
+		if (read0 == -1) {
+			return -1;
+		}
+		if (read0 == 0x0B) {
+			final int read1 = is.read();
+			if (read1 >= 0x80)
+				return (char) read1;
+			return (char) ((0xE0 << 8) + read1);
+		}
+		if (read0 == 0x0C) {
+			final int read1 = is.read();
+			final int read2 = is.read();
+			return (char) ((read1 << 8) + read2);
+		}
+		if (read0 >= 0x01 && read0 <= 0x08) {
+			final int read1 = is.read();
+			return (char) ((read0 << 8) + read1);
+		}
+		if (read0 >= 0x80 && read0 <= 0xFF) {
+			final int read1 = is.read();
+			return (char) (((read0 - 0x60) << 8) + read1);
+		}
+		return (char) read0;
 	}
 
-	public String toUFT8String() throws UnsupportedEncodingException {
-		return new String(data, 0, length, "UTF-8");
-	}
-
-	public String toUPF9String() throws IOException {
-		return Upf9Decoder.decodeString(data, length);
-	}
-
-	public int getByteAt(int i) {
-		return data[i];
-	}
-
-	public int length() {
-		return length;
+	public static String decodeString(byte[] data, int length) throws IOException {
+		final ByteArrayInputStream bais = new ByteArrayInputStream(data, 0, length);
+		final StringBuilder result = new StringBuilder();
+		int read;
+		while ((read = decodeChar(bais)) != -1) {
+			result.append((char) read);
+		}
+		bais.close();
+		return result.toString();
 	}
 
 }

@@ -305,7 +305,7 @@ public enum License {
 		text.add(" ");
 		text.add("Project Info:  https://plantuml.com");
 		text.add(" ");
-		
+
 		if (licenseInfo.isValid() == false) {
 			text.add("If you like this project or if you find it useful, you can support us at:");
 			text.add(" ");
@@ -313,7 +313,8 @@ public enum License {
 			text.add("https://plantuml.com/liberapay (only 1\u20ac per month!)");
 			text.add("https://plantuml.com/paypal");
 			if (withQrcode) {
-				text.add("\t<qrcode:http://plantuml.com/patreon>\t\t<qrcode:http://plantuml.com/lp>\t\t<qrcode:http://plantuml.com/paypal>");
+				text.add(
+						"\t<qrcode:http://plantuml.com/patreon>\t\t<qrcode:http://plantuml.com/lp>\t\t<qrcode:http://plantuml.com/paypal>");
 			} else {
 				text.add("");
 				text.add(" ");
@@ -325,7 +326,8 @@ public enum License {
 		if (licenseInfo.getLicenseType() == LicenseType.NAMED) {
 			text.add("| ");
 			text.add("|      LICENSED TO : " + licenseInfo.getOwner());
-			text.add("|      EXPIRATION DATE : " + DateFormat.getDateInstance().format(licenseInfo.getExpirationDate()));
+			text.add(
+					"|      EXPIRATION DATE : " + DateFormat.getDateInstance().format(licenseInfo.getExpirationDate()));
 			text.add("|  ");
 		} else if (licenseInfo.getLicenseType() == LicenseType.DISTRIBUTOR) {
 			text.add("|  ");
@@ -338,7 +340,7 @@ public enum License {
 		}
 	}
 
-	public List<String> getJavaHeader() {
+	public List<String> getJavaHeader(List<String> contributors) {
 		final List<String> h = new ArrayList<String>();
 		h.add("/* ========================================================================");
 		h.add(" * PlantUML : a free UML diagram generator");
@@ -468,6 +470,7 @@ public enum License {
 		}
 		h.add(" *");
 		h.add(" * Original Author:  Arnaud Roques");
+		h.addAll(contributors);
 		h.add(" */");
 		return Collections.unmodifiableList(h);
 	}

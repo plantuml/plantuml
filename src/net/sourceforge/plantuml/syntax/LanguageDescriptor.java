@@ -161,6 +161,7 @@ public class LanguageDescriptor {
 		keyword.add("stereotype");
 		keyword.add("split");
 		keyword.add("style");
+		keyword.add("sprite");
 
 		preproc.add("!exit");
 		preproc.add("!include");

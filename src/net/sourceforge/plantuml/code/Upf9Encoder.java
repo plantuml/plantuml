@@ -38,11 +38,10 @@ package net.sourceforge.plantuml.code;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
-public class Upf9 {
+public class Upf9Encoder {
 
-	private Upf9() {
+	private Upf9Encoder() {
 
 	}
 
@@ -54,7 +53,7 @@ public class Upf9 {
 
 	private static boolean checkBack(char c, byte[] result) {
 		try {
-			if (c == decodeChar(new ByteArrayInputStream(result)))
+			if (c == Upf9Decoder.decodeChar(new ByteArrayInputStream(result)))
 				return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -64,65 +63,34 @@ public class Upf9 {
 
 	private static byte[] encodeCharInternal(char c) {
 		if (c == '\n' || c == '\r' || c == '\t') {
+			// Using regular ASCII code for <u+0009> <u+000A> and <u+000D>
+			return new byte[] { (byte) c };
+		}
+		if (c >= '\u000E' && c <= '\u0012') {
 			return new byte[] { (byte) c };
 		}
 		if (c >= '\u0020' && c <= '\u007E') {
+			// Using regular ASCII code for ASCII printable char
 			return new byte[] { (byte) c };
 		}
 		if (c >= '\u0080' && c <= '\u00FF') {
+			// Char from <u+0080> to <u+00FF> are encoded as [0x0B 0x80] to [0x0B 0xFF]
 			return new byte[] { 0x0B, (byte) c };
 		}
 		if (c >= '\u0100' && c <= '\u08FF') {
+			// Char from <u+0100> to <u+08FF> are encoded as [0x01 0x00] to [0x08 0xFF]
 			return new byte[] { highByte(c), lowByte(c) };
 		}
-		if (c >= '\u0900' && c <= '\u10FF') {
-			return new byte[] { (byte) (5 + highByte(c)), lowByte(c) };
-		}
-		if (c >= '\u1900' && c <= '\u1FFF') {
-			return new byte[] { (byte) (-3 + highByte(c)), lowByte(c) };
-		}
 		if (c >= '\u2000' && c <= '\u9FFF') {
-			return new byte[] { (byte) (96 + highByte(c)), lowByte(c) };
+			// Char from <u+2000> to <u+9FFF> are encoded as [0x80 0x00] to [0xFF 0xFF]
+			return new byte[] { (byte) (0x60 + highByte(c)), lowByte(c) };
 		}
 		if (c >= '\uE000' && c <= '\uE07F') {
+			// Char from <u+E000> to <u+E07F> are encoded as [0x0B 0x00] to [0x0B 0x7F]
 			return new byte[] { 0x0B, lowByte(c) };
 		}
+		// All other char are encoded on 3 bytes, starting with 0x0C
 		return new byte[] { 0x0C, highByte(c), lowByte(c) };
-	}
-
-	static int decodeChar(InputStream is) throws IOException {
-		final int read0 = is.read();
-		if (read0 == -1) {
-			return -1;
-		}
-		if (read0 == 0x0B) {
-			final int read1 = is.read();
-			if (read1 >= 0x80)
-				return (char) read1;
-			return (char) ((0xE0 << 8) + read1);
-		}
-		if (read0 == 0x0C) {
-			final int read1 = is.read();
-			final int read2 = is.read();
-			return (char) ((read1 << 8) + read2);
-		}
-		if (read0 >= 0x01 && read0 <= 0x08) {
-			final int read1 = is.read();
-			return (char) ((read0 << 8) + read1);
-		}
-		if (read0 >= 0x0E && read0 <= 0x15) {
-			final int read1 = is.read();
-			return (char) (((read0 - 5) << 8) + read1);
-		}
-		if (read0 >= 0x16 && read0 <= 0x1C) {
-			final int read1 = is.read();
-			return (char) (((read0 + 3) << 8) + read1);
-		}
-		if (read0 >= 0x80 && read0 <= 0xFF) {
-			final int read1 = is.read();
-			return (char) (((read0 - 96) << 8) + read1);
-		}
-		return (char) read0;
 	}
 
 	private static byte lowByte(char c) {
@@ -139,18 +107,9 @@ public class Upf9 {
 			baos.write(encodeChar(s.charAt(i)));
 		}
 		baos.close();
-		return baos.toByteArray();
-	}
-
-	public static String decodeString(byte[] data, int length) throws IOException {
-		final ByteArrayInputStream bais = new ByteArrayInputStream(data, 0, length);
-		final StringBuilder result = new StringBuilder();
-		int read;
-		while ((read = decodeChar(bais)) != -1) {
-			result.append((char) read);
-		}
-		bais.close();
-		return result.toString();
+		final byte[] result = baos.toByteArray();
+		assert s.endsWith(Upf9Decoder.decodeString(result, result.length));
+		return result;
 	}
 
 }

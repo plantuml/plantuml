@@ -70,7 +70,7 @@ public class TranscoderImpl implements Transcoder {
 		if (format == Format.UTF8)
 			data = stringAnnoted.getBytes("UTF-8");
 		else
-			data = Upf9.getBytes(stringAnnoted);
+			data = Upf9Encoder.getBytes(stringAnnoted);
 
 		final byte[] compressedData = compression.compress(data);
 

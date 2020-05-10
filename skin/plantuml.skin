@@ -13,6 +13,10 @@ root {
   Shadowing 0.0
 }
 
+document {
+  BackGroundColor White
+}
+
 stereotype {
   FontStyle italic
 }

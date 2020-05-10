@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.OptionFlags;
 
 public class ImportedFiles {
 
-	private static final List<File> INCLUDE_PATH = FileSystem.getPath("plantuml.include.path", true);
 	private final List<File> imported;
 	private final AParentFolder currentDir;
 
@@ -107,9 +106,13 @@ public class ImportedFiles {
 
 	public List<File> getPath() {
 		final List<File> result = new ArrayList<File>(imported);
-		result.addAll(INCLUDE_PATH);
+		result.addAll(includePath());
 		result.addAll(FileSystem.getPath("java.class.path", true));
 		return result;
+	}
+
+	private List<File> includePath() {
+		return FileSystem.getPath("plantuml.include.path", true);
 	}
 
 	private boolean isAbsolute(String nameOrPath) {
@@ -148,8 +151,9 @@ public class ImportedFiles {
 		}
 		if (file != null) {
 			final File folder = file.getSystemFolder();
-			// System.err.println("canonicalPath=" + path + " " + folder + " " + INCLUDE_PATH);
-			if (INCLUDE_PATH.contains(folder)) {
+			// System.err.println("canonicalPath=" + path + " " + folder + " " +
+			// INCLUDE_PATH);
+			if (includePath().contains(folder)) {
 				return true;
 			}
 		}

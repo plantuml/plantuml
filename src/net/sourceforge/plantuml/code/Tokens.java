@@ -40,28 +40,35 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Keywords {
+public class Tokens {
 
 	private final List<String> keywords = new ArrayList<String>();
 
 	public static void main(String[] args) {
-		System.err.println("keywords=" + new Keywords().keywords.size());
-		final Set<String> sorted = new TreeSet<String>(new Keywords().keywords);
+		System.err.println("keywords=" + new Tokens().keywords.size());
+		final Set<String> sorted = new TreeSet<String>(new Tokens().keywords);
 		for (String s : sorted) {
 			System.err.println(s);
 		}
 	}
 
-	public String compress(String s) {
+	public String compressUnicodeE000(String s) {
 		for (int i = 0; i < keywords.size(); i++) {
 			final char c = (char) ('\uE000' + i);
 			s = s.replace(keywords.get(i), "" + c);
 		}
 		return s;
-
 	}
 
-	public Keywords() {
+	public String compressAscii128(String s) {
+		for (int i = 0; i < keywords.size(); i++) {
+			final char c = (char) (128 + i);
+			s = s.replace(keywords.get(i), "" + c);
+		}
+		return s;
+	}
+
+	public Tokens() {
 		add("actor");
 		add("participant");
 		add("usecase");
@@ -145,37 +152,64 @@ public class Keywords {
 		add("stereotype");
 		add("split");
 		add("style");
+		add("sprite");
 
-		add("!exit");
-		add("!include");
-		add("!pragma");
-		add("!undef");
-		add("!ifdef");
-		add("!endif");
-		add("!ifndef");
-		add("!else");
-		add("!function");
-		add("!procedure");
-		add("!endfunction");
-		add("!endprocedure");
-		add("!unquoted");
-		add("!return");
-		add("!startsub");
-		add("!endsub");
-		add("!assert");
-		add("!local");
+		add("exit");
+		add("include");
+		add("pragma");
+		add("undef");
+		add("ifdef");
+		// add("endif");
+		add("ifndef");
+		// add("else");
+		add("function");
+		add("procedure");
+		add("endfunction");
+		add("endprocedure");
+		add("unquoted");
+		// add("return");
+		add("startsub");
+		add("endsub");
+		add("assert");
+		add("local");
+
+		add("!definelong");
+		add("!enddefinelong");
+		add("!define");
+
+		add("define");
+		add("alias");
+		add("shape");
+		add("label");
+		add("BackgroundColor");
+		add("Color");
+		add("color");
+		add("Entity");
+		add("ENTITY");
+		add("COLOR");
+		add("LARGE");
+		add("stereo");
+		add("AZURE");
+		add("Azure");
 
 	}
 
 	private void add(String string) {
 		if (keywords.contains(string)) {
+			System.err.println(string);
 			throw new IllegalArgumentException(string);
 		}
 		if (string.length() <= 3) {
+			System.err.println(string);
+			throw new IllegalArgumentException(string);
+		}
+		if (string.matches("[!@]?[A-Za-z]+") == false) {
+			System.err.println(string);
 			throw new IllegalArgumentException(string);
 		}
 		keywords.add(string);
 		if (keywords.size() > 127) {
+			System.err.println(string);
 			throw new IllegalArgumentException();
 		}
 	}

@@ -119,19 +119,20 @@ abstract class ExtremityExtendsLike extends Extremity {
 		private final UTranslate pos1, pos2;
 		private final UEllipse dot;
 
+		private static UTranslate getDotPos(double x, double y, double angle, double size, Point2D porig) {
+			Point p = new Point(x, y);
+			p.rotate(angle);
+			p.x -= size;
+			p.y -= size;
+			return p.getPos(porig);
+		}
+
 		public DefinedBy(Point2D porig, double angle, HColor backgroundColor) {
 			super(porig, angle, backgroundColor);
 			double w = HALF_WIDTH - DOTHSIZE;
 
-			Point p1 = new Point(XSUFFIX, -w);
-			p1.rotate(angle);
-			p1.x -= DOTHSIZE;
-			this.pos1 = p1.getPos(porig);
-
-			Point p2 = new Point(XSUFFIX, +w);
-			p2.rotate(angle);
-			p2.x -= DOTHSIZE;
-			this.pos2 = p2.getPos(porig);
+			this.pos1 = getDotPos(XSUFFIX, -w, angle, DOTHSIZE, porig);
+			this.pos2 = getDotPos(XSUFFIX, +w, angle, DOTHSIZE, porig);
 
 			double s = DOTHSIZE + DOTHSIZE;
 			this.dot = new UEllipse(s, s);

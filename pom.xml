@@ -35,7 +35,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>1.2020.9-SNAPSHOT</version>
+    <version>1.2020.9</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -75,9 +75,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:svn://svn.code.sf.net/p/plantuml/code/trunk</connection>
-        <developerConnection>scm:svn:https://svn.code.sf.net/p/plantuml/code/trunk</developerConnection>
-        <url>svn://svn.code.sf.net/p/plantuml/code/trunk</url>
+        <connection>scm:svn:svn://svn.code.sf.net/p/plantuml/code/tags/plantuml-1.2020.9</connection>
+        <developerConnection>scm:svn:https://svn.code.sf.net/p/plantuml/code/tags/plantuml-1.2020.9</developerConnection>
+        <url>svn://svn.code.sf.net/p/plantuml/code/tags/plantuml-1.2020.9</url>
     </scm>
 
     <issueManagement>
