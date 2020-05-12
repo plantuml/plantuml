@@ -487,6 +487,17 @@ public class EpsGraphics {
 		// }
 	}
 
+	private double convertToClockwiseAngle(double counterClockwise) {
+
+		// 0 -> 0
+		// 45 -> 315
+		// 90 -> 270
+		// 180 -> 180
+		// 270 -> 90
+
+		return 360.0 - counterClockwise;
+	}
+
 	public void epsEllipse(double x, double y, double xRadius, double yRadius, double start, double extend) {
 		checkCloseDone();
 		ensureVisible(x + xRadius, y + yRadius);
@@ -507,9 +518,12 @@ public class EpsGraphics {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
 			append("newpath", true);
-			final double a1 = -start + 180 + 5;
-			final double a2 = -start - extend + 180 - 5;
-			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " " + format(a1) + " " + format(a2)
+
+
+
+			final double a1 = convertToClockwiseAngle(start + extend);
+			final double a2 = convertToClockwiseAngle(start);
+			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " " + (long)a1 + " " + (long)a2
 					+ " arc", true);
 			append("stroke", true);
 		}
