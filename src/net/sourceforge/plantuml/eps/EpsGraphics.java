@@ -487,14 +487,13 @@ public class EpsGraphics {
 		// }
 	}
 
+	/**
+	 * Converts a counter clockwise angle to a clockwise
+	 * angle. i.e. 0 -> 360, 90 -> 270, 180 -> 180, 270 -> 90
+	 * @param counterClockwise counter clockwise angle in degrees
+	 * @return clockwise angle in degrees
+	 */
 	private double convertToClockwiseAngle(double counterClockwise) {
-
-		// 0 -> 0
-		// 45 -> 315
-		// 90 -> 270
-		// 180 -> 180
-		// 270 -> 90
-
 		return 360.0 - counterClockwise;
 	}
 
