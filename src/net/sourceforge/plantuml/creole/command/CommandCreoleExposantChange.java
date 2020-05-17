@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.creole.command;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.StripeSimple;
+import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 
@@ -53,12 +53,14 @@ public class CommandCreoleExposantChange implements Command {
 	}
 
 	public static Command create(FontPosition position) {
-		return new CommandCreoleExposantChange("^(?i)(" + "\\<" + position.getHtmlTag() + "\\>" + "(.*?)\\</"
-				+ position.getHtmlTag() + "\\>)", position);
+		return new CommandCreoleExposantChange(
+				"^(?i)(" + "\\<" + position.getHtmlTag() + "\\>" + "(.*?)\\</" + position.getHtmlTag() + "\\>)",
+				position);
 	}
 
 	// public static Command createLegacyEol(FontStyle style) {
-	// return new CommandCreoleExposantChange("^(" + style.getActivationPattern() + "(.+))$", style);
+	// return new CommandCreoleExposantChange("^(" + style.getActivationPattern() +
+	// "(.+))$", style);
 	// }
 
 	public int matchingSize(String line) {

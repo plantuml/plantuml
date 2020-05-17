@@ -35,27 +35,10 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
-public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
+public interface SheetBuilder {
 
-	public PSystemCreoleFactory() {
-		super(DiagramType.CREOLE);
-	}
-
-	public PSystemCreole init(String startLine) {
-		if (getDiagramType() == DiagramType.CREOLE) {
-			return new PSystemCreole();
-		}
-
-		return null;
-	}
-
-	@Override
-	public PSystemCreole executeLine(PSystemCreole system, String line) {
-		system.doCommandLine(line);
-		return system;
-	}
+	public Sheet createSheet(Display display);
 
 }

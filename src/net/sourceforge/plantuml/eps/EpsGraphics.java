@@ -97,8 +97,8 @@ public class EpsGraphics {
 				true));
 		roundrect.add(new PostScriptCommandRaw(
 				"2 index 5 index add 1 index sub 2 index 5 index add 2 index sub 2 index 0 90 arc", true));
-		roundrect.add(new PostScriptCommandRaw("dup 3 index add 2 index 5 index add 2 index sub 2 index 90 180 arc",
-				true));
+		roundrect.add(
+				new PostScriptCommandRaw("dup 3 index add 2 index 5 index add 2 index sub 2 index 90 180 arc", true));
 		roundrect.add(new PostScriptCommandRaw("pop pop pop pop pop ", true));
 	}
 
@@ -401,8 +401,8 @@ public class EpsGraphics {
 		}
 	}
 
-	public void epsRectangle(double x, double y, double width, double height, double rx, double ry,
-			HColorGradient gr, ColorMapper mapper) {
+	public void epsRectangle(double x, double y, double width, double height, double rx, double ry, HColorGradient gr,
+			ColorMapper mapper) {
 		checkCloseDone();
 		ensureVisible(x, y);
 		ensureVisible(x + width, y + height);
@@ -482,19 +482,20 @@ public class EpsGraphics {
 			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
 		}
 		// if (isDashed3() || fill) {
-			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
-			simplerectUsed = true;
+		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
+		simplerectUsed = true;
 		// }
 	}
 
 	/**
-	 * Converts a counter clockwise angle to a clockwise
-	 * angle. i.e. 0 -> 360, 90 -> 270, 180 -> 180, 270 -> 90
+	 * Converts a counter clockwise angle to a clockwise angle. i.e. 0 -> 360, 90 ->
+	 * 270, 180 -> 180, 270 -> 90
+	 * 
 	 * @param counterClockwise counter clockwise angle in degrees
 	 * @return clockwise angle in degrees
 	 */
-	private double convertToClockwiseAngle(double counterClockwise) {
-		return 360.0 - counterClockwise;
+	private int convertToClockwiseAngle(double counterClockwise) {
+		return (int) (360.0 - counterClockwise);
 	}
 
 	public void epsEllipse(double x, double y, double xRadius, double yRadius, double start, double extend) {
@@ -509,7 +510,8 @@ public class EpsGraphics {
 		// if (fillcolor != null) {
 		// appendColor(fillcolor);
 		// append("newpath", true);
-		// append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " 0 360 arc", true);
+		// append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " 0 360
+		// arc", true);
 		// append("closepath eofill", true);
 		// }
 
@@ -518,12 +520,9 @@ public class EpsGraphics {
 			appendColor(color);
 			append("newpath", true);
 
-
-
 			final double a1 = convertToClockwiseAngle(start + extend);
 			final double a2 = convertToClockwiseAngle(start);
-			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " " + (long)a1 + " " + (long)a2
-					+ " arc", true);
+			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " " + a1 + " " + a2 + " arc", true);
 			append("stroke", true);
 		}
 
@@ -630,8 +629,8 @@ public class EpsGraphics {
 	}
 
 	final public void curvetoNoMacro(double x1, double y1, double x2, double y2, double x3, double y3) {
-		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " "
-				+ format(y3) + " curveto", true);
+		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " " + format(y3)
+				+ " curveto", true);
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 		ensureVisible(x3, y3);
@@ -649,16 +648,16 @@ public class EpsGraphics {
 	}
 
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " "
-				+ format(y3) + " curveto", true);
+		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " " + format(y3)
+				+ " curveto", true);
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 		ensureVisible(x3, y3);
 	}
 
 	public void quadto(double x1, double y1, double x2, double y2) {
-		append(format(x1) + " " + format(y1) + " " + format(x1) + " " + format(y1) + " " + format(x2) + " "
-				+ format(y2) + " curveto", true);
+		append(format(x1) + " " + format(y1) + " " + format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2)
+				+ " curveto", true);
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 	}

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.code.Base64Coder;
+import net.sourceforge.plantuml.creole.legacy.AtomText;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -195,7 +196,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		}
 		ug.draw(new UImage(rawFileName, image).scale(scale));
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

@@ -291,7 +291,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

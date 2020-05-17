@@ -39,6 +39,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -46,9 +48,11 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.svek.GraphvizCrash;
 
 public class PSystemDitaa extends AbstractPSystem {
 
@@ -120,16 +124,18 @@ public class PSystemDitaa extends AbstractPSystem {
 
 			// final Diagram diagram = new Diagram(grid, options, processingOptions);
 			final Class<?> clDiagram = Class.forName("org.stathissideris.ascii2image.graphics.Diagram");
-			clDiagram.getConstructor(grid.getClass(), options.getClass(), processingOptions.getClass()).newInstance(
-					grid, options, processingOptions);
-			final Object diagram = clDiagram.getConstructor(grid.getClass(), options.getClass(),
-					processingOptions.getClass()).newInstance(grid, options, processingOptions);
+			clDiagram.getConstructor(grid.getClass(), options.getClass(), processingOptions.getClass())
+					.newInstance(grid, options, processingOptions);
+			final Object diagram = clDiagram
+					.getConstructor(grid.getClass(), options.getClass(), processingOptions.getClass())
+					.newInstance(grid, options, processingOptions);
 
 			// final BitmapRenderer bitmapRenderer = new BitmapRenderer();
 			final Object bitmapRenderer = Class.forName("org.stathissideris.ascii2image.graphics.BitmapRenderer")
 					.newInstance();
 
-			// final BufferedImage image = (BufferedImage) bitmapRenderer.renderToImage(diagram, renderingOptions);
+			// final BufferedImage image = (BufferedImage)
+			// bitmapRenderer.renderToImage(diagram, renderingOptions);
 			final Method renderToImage = bitmapRenderer.getClass().getMethod("renderToImage", diagram.getClass(),
 					renderingOptions.getClass());
 			final BufferedImage image = (BufferedImage) renderToImage.invoke(bitmapRenderer, diagram, renderingOptions);
@@ -138,10 +144,15 @@ public class PSystemDitaa extends AbstractPSystem {
 			final int width = image.getWidth();
 			final int height = image.getHeight();
 			return new ImageDataSimple(width, height);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Throwable e) {
+			final List<String> strings = new ArrayList<String>();
+			strings.add("DITAA has crashed");
+			strings.add(" ");
+			GraphvizCrash.youShouldSendThisDiagram(strings);
+			strings.add(" ");
+			UmlDiagram.exportDiagramError(os, e, new FileFormatOption(FileFormat.PNG), seed(), null, null, strings);
+			return ImageDataSimple.error();
 		}
-		return null;
 
 	}
 

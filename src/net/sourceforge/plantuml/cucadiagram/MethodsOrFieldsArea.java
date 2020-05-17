@@ -200,7 +200,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			}
 			bloc.drawU(ug);
 			if (url != null) {
-				ug.closeAction();
+				ug.closeUrl();
 			}
 		}
 

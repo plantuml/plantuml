@@ -38,27 +38,23 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cute.Balloon;
 import net.sourceforge.plantuml.cute.CrossingSegment;
 import net.sourceforge.plantuml.geom.LineSegmentDouble;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class UGraphicCrossing implements UGraphic {
+public class UGraphicCrossing extends UGraphicDelegator implements UGraphic {
 
-	private final UGraphic ug;
 	private final List<Pending> lines;
 	private final UTranslate translate;
-	
+
 	static class Pending {
 		final UGraphic ug;
 		final LineSegmentDouble segment;
@@ -104,55 +100,35 @@ public class UGraphicCrossing implements UGraphic {
 	}
 
 	private UGraphicCrossing(UGraphic ug, UTranslate translate, List<Pending> lines) {
-		this.ug = ug;
+		super(ug);
 		this.translate = translate;
 		this.lines = lines;
-	}
-
-	public StringBounder getStringBounder() {
-		return ug.getStringBounder();
-	}
-
-	public UParam getParam() {
-		return ug.getParam();
 	}
 
 	public void draw(UShape shape) {
 		if (shape instanceof DotPath) {
 			drawDotPath((DotPath) shape);
 		} else {
-			ug.draw(shape);
+			getUg().draw(shape);
 		}
 	}
 
 	private void drawDotPath(DotPath dotPath) {
 		if (dotPath.isLine()) {
 			for (LineSegmentDouble seg : dotPath.getLineSegments()) {
-				lines.add(new Pending(ug.apply(translate.reverse()), translate, seg.translate(translate)));
+				lines.add(new Pending(getUg().apply(translate.reverse()), translate, seg.translate(translate)));
 			}
 		} else {
-			ug.draw(dotPath);
+			getUg().draw(dotPath);
 		}
 	}
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
-			return new UGraphicCrossing(ug.apply(change), translate.compose((UTranslate) change), lines);
+			return new UGraphicCrossing(getUg().apply(change), translate.compose((UTranslate) change), lines);
 		} else {
-			return new UGraphicCrossing(ug.apply(change), translate, lines);
+			return new UGraphicCrossing(getUg().apply(change), translate, lines);
 		}
-	}
-
-	public ColorMapper getColorMapper() {
-		return ug.getColorMapper();
-	}
-
-	public void startUrl(Url url) {
-		ug.startUrl(url);
-	}
-
-	public void closeAction() {
-		ug.closeAction();
 	}
 
 	public void flushUg() {
@@ -170,22 +146,18 @@ public class UGraphicCrossing implements UGraphic {
 			// }
 		}
 		for (Balloon b : balloons) {
-			b.drawU(ug.apply(HColorUtils.GREEN.bg()).apply(HColorUtils.GREEN));
+			b.drawU(getUg().apply(HColorUtils.GREEN.bg()).apply(HColorUtils.GREEN));
 		}
 		for (Pending p : lines) {
 			for (Balloon b : balloons) {
 				List<Point2D> pts = new CrossingSegment(b, p.segment).intersection();
 				for (Point2D pt : pts) {
 					final Balloon s2 = new Balloon(pt, 2);
-					s2.drawU(ug.apply(HColorUtils.BLUE.bg()).apply(HColorUtils.BLUE));
+					s2.drawU(getUg().apply(HColorUtils.BLUE.bg()).apply(HColorUtils.BLUE));
 				}
 			}
 		}
-		ug.flushUg();
-	}
-
-	public boolean matchesProperty(String propertyName) {
-		return ug.matchesProperty(propertyName);
+		getUg().flushUg();
 	}
 
 }

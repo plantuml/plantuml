@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.creole.command.CommandCreoleImg;
+import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.sprite.SpriteUtils;
@@ -122,7 +122,7 @@ public class Stereotype implements CharSequence {
 		if (label.startsWith("<<$") && label.endsWith(">>")) {
 			final RegexResult mCircleSprite = circleSprite.matcher(label);
 			this.spriteName = mCircleSprite.get("NAME", 0);
-			this.spriteScale = CommandCreoleImg.getScale(mCircleSprite.get("SCALE", 0), 1);
+			this.spriteScale = Parser.getScale(mCircleSprite.get("SCALE", 0), 1);
 		} else {
 			this.spriteName = null;
 		}
@@ -157,7 +157,7 @@ public class Stereotype implements CharSequence {
 				this.htmlColor = col == null ? HColorUtils.BLACK : col;
 				this.spriteName = mCircleSprite.get("NAME", 0);
 				this.character = '\0';
-				this.spriteScale = CommandCreoleImg.getScale(mCircleSprite.get("SCALE", 0), 1);
+				this.spriteScale = Parser.getScale(mCircleSprite.get("SCALE", 0), 1);
 			} else if (mCircleChar != null) {
 				if (StringUtils.isNotEmpty(mCircleChar.get("LABEL", 0))) {
 					local = "<<" + mCircleChar.get("LABEL", 0) + ">>";

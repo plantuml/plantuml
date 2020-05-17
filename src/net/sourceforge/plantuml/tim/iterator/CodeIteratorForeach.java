@@ -92,7 +92,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 			} else if (result.getType() == TLineType.ENDFOREACH) {
 				logs.add(result);
 				if (foreach == null) {
-					throw EaterException.located("No foreach related to this endforeach", result);
+					throw EaterException.located("No foreach related to this endforeach");
 				}
 				foreach.inc();
 				if (foreach.isSkipMe()) {

@@ -53,10 +53,14 @@ public interface UGraphic {
 
 	public void startUrl(Url url);
 
-	public void closeAction();
+	public void closeUrl();
+
+	public void startGroup(String id);
+
+	public void closeGroup();
 
 	public void flushUg();
 
 	public boolean matchesProperty(String propertyName);
-	
+
 }

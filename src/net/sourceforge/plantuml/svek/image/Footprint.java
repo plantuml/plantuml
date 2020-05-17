@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphicNo;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -68,7 +69,7 @@ public class Footprint {
 
 	}
 
-	class MyUGraphic implements UGraphic {
+	class MyUGraphic extends UGraphicNo implements UGraphic {
 
 		private final UTranslate translate;
 		private final List<Point2D.Double> all;
@@ -128,12 +129,6 @@ public class Footprint {
 
 		public ColorMapper getColorMapper() {
 			return new ColorMapperIdentity();
-		}
-
-		public void startUrl(Url url) {
-		}
-
-		public void closeAction() {
 		}
 
 		private void addPoint(double x, double y) {

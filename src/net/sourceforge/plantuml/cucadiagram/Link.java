@@ -90,7 +90,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	private boolean constraint = true;
 	private boolean inverted = false;
-	private LinkArrow linkArrow = LinkArrow.NONE;
+	private LinkArrow linkArrow = LinkArrow.NONE_OR_SEVERAL;
 
 	private boolean opale;
 	private boolean horizontalSolitary;

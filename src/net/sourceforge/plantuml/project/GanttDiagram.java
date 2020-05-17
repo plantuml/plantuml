@@ -173,8 +173,8 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 			margin2 = 0;
 		}
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
-		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
-		null, "", "", dpiFactor, null);
+		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, getMetadata(), "", dpiFactor, null);
 		final SkinParam skinParam = SkinParam.create(UmlDiagramType.TIMING);
 
 		TextBlock result = getTextBlock();
@@ -228,8 +228,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 				drawConstraints(ug, timeHeader.getTimeScale());
 				drawTasksRect(ug);
 				drawTasksTitle(ug);
-				if (printStart == null)
-					drawResources(ug);
+				drawResources(ug);
 			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {

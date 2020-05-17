@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.creole.command;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.StripeSimple;
+import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.AddStyle;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -56,8 +56,9 @@ public class CommandCreoleStyle implements Command {
 	}
 
 	public static Command createLegacy(FontStyle style) {
-		return new CommandCreoleStyle("^((" + style.getActivationPattern() + ")(.+?)" + style.getDeactivationPattern()
-				+ ")", style, style.canHaveExtendedColor());
+		return new CommandCreoleStyle(
+				"^((" + style.getActivationPattern() + ")(.+?)" + style.getDeactivationPattern() + ")", style,
+				style.canHaveExtendedColor());
 	}
 
 	public static Command createLegacyEol(FontStyle style) {

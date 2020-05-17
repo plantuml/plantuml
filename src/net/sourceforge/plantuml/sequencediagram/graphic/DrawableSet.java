@@ -345,7 +345,7 @@ public class DrawableSet {
 			}
 			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);
 			if (url != null) {
-				ug.closeAction();
+				ug.closeUrl();
 			}
 		}
 	}

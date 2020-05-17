@@ -121,7 +121,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		// final double y = SIZE;
 		// desc.drawU(ug.apply(new UTranslate(x, y)));
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

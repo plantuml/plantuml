@@ -79,16 +79,6 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 		return stringBounder;
 	}
 
-	public void startUrl(Url url) {
-		// throw new UnsupportedOperationException();
-
-	}
-
-	public void closeAction() {
-		// throw new UnsupportedOperationException();
-
-	}
-
 	// public void close() {
 	// getEpsGraphics().close();
 	// }

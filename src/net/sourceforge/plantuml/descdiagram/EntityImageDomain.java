@@ -149,7 +149,7 @@ public class EntityImageDomain extends AbstractEntityImage {
 		footer.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimTag.getWidth(), dimTitle.getHeight())),
 				dimTag.getWidth(), dimTag.getHeight());
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

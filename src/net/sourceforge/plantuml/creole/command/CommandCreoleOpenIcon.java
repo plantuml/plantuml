@@ -38,7 +38,8 @@ package net.sourceforge.plantuml.creole.command;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.StripeSimple;
+import net.sourceforge.plantuml.creole.Parser;
+import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -71,8 +72,8 @@ public class CommandCreoleOpenIcon implements Command {
 			throw new IllegalStateException();
 		}
 		final String src = m.group(2);
-		final double scale = CommandCreoleImg.getScale(m.group(3), 1);
-		final String colorName = CommandCreoleImg.getColor(m.group(3));
+		final double scale = Parser.getScale(m.group(3), 1);
+		final String colorName = Parser.getColor(m.group(3));
 		HColor color = null;
 		if (colorName != null) {
 			color = colorSet.getColorIfValid(colorName);

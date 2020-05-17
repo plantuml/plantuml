@@ -72,7 +72,7 @@ public class AtomSprite extends AbstractAtom implements Atom {
 		}
 		sprite.asTextBlock(color, scale).drawU(ug);
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

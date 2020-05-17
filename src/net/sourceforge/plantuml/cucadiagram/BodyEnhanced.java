@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.CreoleParser;
+import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -154,15 +154,17 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			} else {
 				final String s = s2.toString();
 				if (manageHorizontalLine && isBlockSeparator(s)) {
-					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
-							stereotype, entity), separator, title));
+					blocks.add(decorate(stringBounder,
+							new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity),
+							separator, title));
 					separator = s.charAt(0);
 					title = getTitle(s, skinParam);
 					members = new ArrayList<Member>();
-				} else if (CreoleParser.isTreeStart(s)) {
+				} else if (Parser.isTreeStart(s)) {
 					if (members.size() > 0) {
-						blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam,
-								align, stereotype, entity), separator, title));
+						blocks.add(decorate(stringBounder,
+								new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity),
+								separator, title));
 					}
 					members = new ArrayList<Member>();
 					final List<CharSequence> allTree = buildAllTree(s, it);
@@ -181,8 +183,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		if (inEllipse && members.size() == 0) {
 			members.add(new Member("", false, false));
 		}
-		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype,
-				entity), separator, title));
+		blocks.add(decorate(stringBounder,
+				new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity), separator, title));
 
 		if (blocks.size() == 1) {
 			this.area2 = blocks.get(0);
@@ -198,7 +200,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		result.add(init);
 		while (it.hasNext()) {
 			final CharSequence s = it.next();
-			if (CreoleParser.isTreeStart(StringUtils.trinNoTrace(s))) {
+			if (Parser.isTreeStart(StringUtils.trinNoTrace(s))) {
 				result.add(s);
 			} else {
 				it.previous();

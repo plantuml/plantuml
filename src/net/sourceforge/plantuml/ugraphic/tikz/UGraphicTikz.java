@@ -40,7 +40,7 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.creole.atom.AtomText;
+import net.sourceforge.plantuml.creole.legacy.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
@@ -113,7 +113,7 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		getGraphicObject().openLink(url.getUrl(), url.getTooltip());
 	}
 
-	public void closeAction() {
+	public void closeUrl() {
 		getGraphicObject().closeLink();
 	}
 

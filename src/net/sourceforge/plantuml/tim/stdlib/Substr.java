@@ -35,9 +35,12 @@
 package net.sourceforge.plantuml.tim.stdlib;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -49,19 +52,20 @@ public class Substr extends SimpleReturnFunction {
 		return new TFunctionSignature("%substr", 3);
 	}
 
-	public boolean canCover(int nbArg) {
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 2 || nbArg == 3;
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
-		final String full = args.get(0).toString();
-		final int pos = args.get(1).toInt();
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+		final String full = values.get(0).toString();
+		final int pos = values.get(1).toInt();
 		if (pos >= full.length()) {
 			return TValue.fromString("");
 		}
 		String result = full.substring(pos);
-		if (args.size() == 3) {
-			final int len = args.get(2).toInt();
+		if (values.size() == 3) {
+			final int len = values.get(2).toInt();
 			if (len < result.length()) {
 				result = result.substring(0, len);
 			}

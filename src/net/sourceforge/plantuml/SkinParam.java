@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -1082,7 +1082,7 @@ public class SkinParam implements ISkinParam {
 	public String getMonospacedFamily() {
 		final String value = getValue("defaultMonospacedFontName");
 		if (value == null) {
-			return CommandCreoleMonospaced.MONOSPACED;
+			return Parser.MONOSPACED;
 		}
 		return value;
 	}

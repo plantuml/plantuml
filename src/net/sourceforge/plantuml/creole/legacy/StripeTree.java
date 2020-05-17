@@ -33,12 +33,17 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole;
+package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.creole.CreoleContext;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.Stripe;
+import net.sourceforge.plantuml.creole.StripeStyle;
+import net.sourceforge.plantuml.creole.StripeStyleType;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.atom.AtomTree;
 import net.sourceforge.plantuml.creole.atom.AtomWithMargin;
@@ -61,10 +66,10 @@ public class StripeTree implements Stripe {
 	}
 
 	public List<Atom> getAtoms() {
-		return Collections.<Atom> singletonList(marged);
+		return Collections.<Atom>singletonList(marged);
 	}
 
-	public Atom getHeader() {
+	public Atom getLHeader() {
 		return null;
 	}
 

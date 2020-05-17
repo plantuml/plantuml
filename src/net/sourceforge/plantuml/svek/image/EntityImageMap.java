@@ -165,7 +165,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		entries.drawU(ug2.apply(UTranslate.dy(dimTitle.getHeight())));
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

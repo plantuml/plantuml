@@ -42,9 +42,10 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.CreoleParser;
+import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
+import net.sourceforge.plantuml.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -69,7 +70,8 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 		final SheetBlock1 sheetBlock1 = getTextBlock(display);
 
 		final SymbolContext symbolContext = new SymbolContext(HColorUtils.MY_YELLOW, HColorUtils.BLACK);
-		tb = USymbol.RECTANGLE.asSmall(null, sheetBlock1, TextBlockUtils.empty(0, 0), symbolContext, HorizontalAlignment.CENTER);
+		tb = USymbol.RECTANGLE.asSmall(null, sheetBlock1, TextBlockUtils.empty(0, 0), symbolContext,
+				HorizontalAlignment.CENTER);
 	}
 
 	public static SheetBlock1 getTextBlock(final Display display) {
@@ -80,7 +82,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
-		final Sheet sheet9 = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
+		final Sheet sheet9 = Parser.build(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(display);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet9, LineBreakStrategy.NONE, 0);
 		return sheetBlock1;

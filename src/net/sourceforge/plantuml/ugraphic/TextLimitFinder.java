@@ -37,21 +37,19 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class TextLimitFinder implements UGraphic {
+public class TextLimitFinder extends UGraphicNo implements UGraphic {
 
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
-	
+
 	public double dpiFactor() {
 		return 1;
 	}
-
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
@@ -102,12 +100,6 @@ public class TextLimitFinder implements UGraphic {
 
 	public ColorMapper getColorMapper() {
 		throw new UnsupportedOperationException();
-	}
-
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
 	}
 
 	private void drawText(double x, double y, UText text) {

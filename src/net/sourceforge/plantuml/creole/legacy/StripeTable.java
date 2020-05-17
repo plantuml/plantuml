@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole;
+package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +43,13 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.creole.CreoleContext;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.Sheet;
+import net.sourceforge.plantuml.creole.SheetBlock1;
+import net.sourceforge.plantuml.creole.Stripe;
+import net.sourceforge.plantuml.creole.StripeStyle;
+import net.sourceforge.plantuml.creole.StripeStyleType;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.atom.AtomTable;
 import net.sourceforge.plantuml.creole.atom.AtomWithMargin;
@@ -78,7 +85,7 @@ public class StripeTable implements Stripe {
 		return Collections.<Atom>singletonList(marged);
 	}
 
-	public Atom getHeader() {
+	public Atom getLHeader() {
 		return null;
 	}
 

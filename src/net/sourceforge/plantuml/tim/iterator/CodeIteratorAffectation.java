@@ -82,7 +82,7 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 				return;
 			} catch (ParseException e) {
 				if (e.getColumn() <= lastLocation) {
-					throw EaterException.located("Error in JSON format", result);
+					throw EaterException.located("Error in JSON format");
 				}
 				lastLocation = e.getColumn();
 				next();

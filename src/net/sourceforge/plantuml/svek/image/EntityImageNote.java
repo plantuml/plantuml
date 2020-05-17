@@ -233,7 +233,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors(skinParam)));
 		}
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

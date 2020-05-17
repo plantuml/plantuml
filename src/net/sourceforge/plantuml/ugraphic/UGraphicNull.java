@@ -64,12 +64,6 @@ public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisi
 		return FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
 	}
 
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
-	}
-
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 	}
 

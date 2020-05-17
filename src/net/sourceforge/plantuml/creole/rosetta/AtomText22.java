@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole.atom;
+package net.sourceforge.plantuml.creole.rosetta;
 
 import java.awt.font.LineMetrics;
 import java.awt.geom.Dimension2D;
@@ -43,25 +43,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.creole.command.CommandCreoleImg;
-import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.creole.atom.AbstractAtom;
+import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.ImgValign;
-import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.openiconic.OpenIcon;
-import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -70,7 +62,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorAutomatic;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.utils.CharHidder;
 
-public class AtomText extends AbstractAtom implements Atom {
+public class AtomText22 extends AbstractAtom implements Atom {
 
 	interface DelayedDouble {
 		public double getDouble(StringBounder stringBounder);
@@ -89,81 +81,7 @@ public class AtomText extends AbstractAtom implements Atom {
 	private final Url url;
 
 	public static Atom create(String text, FontConfiguration fontConfiguration) {
-		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
-	}
-
-	public static Atom createUrl(Url url, FontConfiguration fontConfiguration, ISkinSimple skinSimple) {
-		fontConfiguration = fontConfiguration.hyperlink();
-		final Display display = Display.getWithNewlines(url.getLabel());
-		if (display.size() > 1) {
-			final List<Atom> all = new ArrayList<Atom>();
-			for (CharSequence s : display.as()) {
-				all.add(createAtomText(s.toString(), url, fontConfiguration, skinSimple));
-			}
-			return new AtomVerticalTexts(all);
-
-		}
-		return createAtomText(url.getLabel(), url, fontConfiguration, skinSimple);
-	}
-
-	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
-			ISkinSimple skinSimple) {
-		final Pattern p = Pattern.compile(
-				Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|" + Splitter.imgPatternNoSrcColon);
-		final Matcher m = p.matcher(text);
-		final List<Atom> result = new ArrayList<Atom>();
-		while (m.find()) {
-			final StringBuffer sb = new StringBuffer();
-			m.appendReplacement(sb, "");
-			if (sb.length() > 0) {
-				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO));
-			}
-			final String valOpenicon = m.group(1);
-			final String valSprite = m.group(3);
-			final String valImg = m.group(5);
-			if (valOpenicon != null) {
-				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);
-				if (openIcon != null) {
-					final double scale = CommandCreoleImg.getScale(m.group(2), 1);
-					result.add(new AtomOpenIcon(null, scale, openIcon, fontConfiguration, url));
-				}
-			} else if (valSprite != null) {
-				final Sprite sprite = skinSimple.getSprite(valSprite);
-				if (sprite != null) {
-					final double scale = CommandCreoleImg.getScale(m.group(4), 1);
-					result.add(new AtomSprite(null, scale, fontConfiguration, sprite, url));
-				}
-			} else if (valImg != null) {
-				final double scale = CommandCreoleImg.getScale(m.group(6), 1);
-				result.add(AtomImg.create(valImg, ImgValign.TOP, 0, scale, url));
-
-			}
-		}
-		final StringBuffer sb = new StringBuffer();
-		m.appendTail(sb);
-		if (sb.length() > 0) {
-			result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO));
-		}
-		if (result.size() == 1) {
-			return result.get(0);
-		}
-		return new AtomHorizontalTexts(result);
-	}
-
-	public static Atom createListNumber(final FontConfiguration fontConfiguration, final int order, int localNumber) {
-		final DelayedDouble left = new DelayedDouble() {
-			public double getDouble(StringBounder stringBounder) {
-				final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), "9. ");
-				return dim.getWidth() * order;
-			}
-		};
-		final DelayedDouble right = new DelayedDouble() {
-			public double getDouble(StringBounder stringBounder) {
-				final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), ".");
-				return dim.getWidth();
-			}
-		};
-		return new AtomText("" + (localNumber + 1) + ".", fontConfiguration, null, left, right);
+		return new AtomText22(text, fontConfiguration, null, ZERO, ZERO);
 	}
 
 	@Override
@@ -171,15 +89,16 @@ public class AtomText extends AbstractAtom implements Atom {
 		return text + " " + fontConfiguration;
 	}
 
-	private AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
+	private AtomText22(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
 			DelayedDouble marginRight) {
 		if (text.contains("" + BackSlash.hiddenNewLine())) {
 			throw new IllegalArgumentException(text);
 		}
 		this.marginLeft = marginLeft;
 		this.marginRight = marginRight;
-		this.text = StringUtils.manageTildeArobaseStart(StringUtils.manageUnicodeNotationUplus(
-				StringUtils.manageAmpDiese(StringUtils.showComparatorCharacters(CharHidder.unhide(text)))));
+		this.text = CharHidder.unhide(text);
+//		this.text = StringUtils.manageTildeArobaseStart(StringUtils.manageUnicodeNotationUplus(
+//				StringUtils.manageAmpDiese(StringUtils.showComparatorCharacters(CharHidder.unhide(text)))));
 		this.fontConfiguration = style;
 		this.url = url;
 	}
@@ -235,6 +154,7 @@ public class AtomText extends AbstractAtom implements Atom {
 		}
 		if (ug.matchesProperty("SPECIALTXT")) {
 			ug.draw(this);
+			throw new UnsupportedOperationException("SPECIALTXT");
 		} else {
 			HColor textColor = fontConfiguration.getColor();
 			FontConfiguration useFontConfiguration = fontConfiguration;
@@ -271,7 +191,7 @@ public class AtomText extends AbstractAtom implements Atom {
 			}
 		}
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 
@@ -296,20 +216,20 @@ public class AtomText extends AbstractAtom implements Atom {
 		return x;
 	}
 
-	public List<AtomText> getSplitted(StringBounder stringBounder, LineBreakStrategy maxWidthAsString) {
+	public List<AtomText22> getSplitted(StringBounder stringBounder, LineBreakStrategy maxWidthAsString) {
 		final double maxWidth = maxWidthAsString.getMaxWidth();
 		if (maxWidth == 0) {
 			throw new IllegalStateException();
 		}
-		final List<AtomText> result = new ArrayList<AtomText>();
+		final List<AtomText22> result = new ArrayList<AtomText22>();
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder currentLine = new StringBuilder();
 		while (st.hasMoreTokens()) {
 			final String token1 = st.nextToken();
-			for (String tmp : splitLong1(stringBounder, maxWidth, token1)) {
+			for (String tmp : Arrays.asList(token1)) {
 				final double w = getWidth(stringBounder, currentLine + tmp);
 				if (w > maxWidth) {
-					result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
+					result.add(new AtomText22(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
 					currentLine.setLength(0);
 					if (tmp.startsWith(" ") == false) {
 						currentLine.append(tmp);
@@ -319,7 +239,7 @@ public class AtomText extends AbstractAtom implements Atom {
 				}
 			}
 		}
-		result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
+		result.add(new AtomText22(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
 		return Collections.unmodifiableList(result);
 
 	}
@@ -329,13 +249,13 @@ public class AtomText extends AbstractAtom implements Atom {
 		final StringBuilder tmp = new StringBuilder();
 		for (String token : splitted()) {
 			if (tmp.length() > 0 && getWidth(stringBounder, tmp.toString() + token) > width) {
-				final Atom part1 = new AtomText(tmp.toString(), fontConfiguration, url, marginLeft, marginRight);
+				final Atom part1 = new AtomText22(tmp.toString(), fontConfiguration, url, marginLeft, marginRight);
 				String remain = text.substring(tmp.length());
 				while (remain.startsWith(" ")) {
 					remain = remain.substring(1);
 				}
 
-				final Atom part2 = new AtomText(remain, fontConfiguration, url, marginLeft, marginRight);
+				final Atom part2 = new AtomText22(remain, fontConfiguration, url, marginLeft, marginRight);
 				return Arrays.asList(part1, part2);
 			}
 			tmp.append(token);
@@ -360,40 +280,6 @@ public class AtomText extends AbstractAtom implements Atom {
 			}
 		}
 		return result;
-	}
-
-	private Collection<String> splittedOld() {
-		final List<String> result = new ArrayList<String>();
-		final StringTokenizer st = new StringTokenizer(text, " ", true);
-		while (st.hasMoreTokens()) {
-			final String token = st.nextToken();
-			result.add(token);
-		}
-		return result;
-	}
-
-	private List<Atom> splitInTwoOld(StringBounder stringBounder, double width) {
-		final StringTokenizer st = new StringTokenizer(text, " ", true);
-		final StringBuilder tmp = new StringBuilder();
-		while (st.hasMoreTokens()) {
-			final String token = st.nextToken();
-			if (tmp.length() > 0 && getWidth(stringBounder, tmp.toString() + token) > width) {
-				final Atom part1 = new AtomText(tmp.toString(), fontConfiguration, url, marginLeft, marginRight);
-				String remain = text.substring(tmp.length());
-				while (remain.startsWith(" ")) {
-					remain = remain.substring(1);
-				}
-
-				final Atom part2 = new AtomText(remain, fontConfiguration, url, marginLeft, marginRight);
-				return Arrays.asList(part1, part2);
-			}
-			tmp.append(token);
-		}
-		return Collections.singletonList((Atom) this);
-	}
-
-	private List<String> splitLong1(StringBounder stringBounder, double maxWidth, String add) {
-		return Arrays.asList(add);
 	}
 
 	public final String getText() {

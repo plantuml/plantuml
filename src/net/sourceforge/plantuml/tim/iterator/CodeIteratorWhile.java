@@ -91,7 +91,7 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 			} else if (result.getType() == TLineType.ENDWHILE) {
 				logs.add(result);
 				if (currentWhile == null) {
-					throw EaterException.located("No while related to this endwhile", result);
+					throw EaterException.located("No while related to this endwhile");
 				}
 				final TValue value = currentWhile.conditionValue(result.getLocation(), context, memory);
 				if (value.toBoolean()) {

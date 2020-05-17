@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole;
+package net.sourceforge.plantuml.creole.legacy;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -47,6 +47,10 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.Parser;
+import net.sourceforge.plantuml.creole.Sheet;
+import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -75,17 +79,17 @@ public class PSystemCreole extends AbstractPSystem {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL)
-				.createSheet(display);
+		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT,
+				SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL).createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 
-		final ImageBuilder builder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, null, null, 1.0,
-				null);
+		final ImageBuilder builder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, null, null, 1.0, null);
 		builder.setUDrawable(sheetBlock);
 		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
-		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1, dim, null, false);
+		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1,
+		// dim, null, false);
 		// // sheetBlock.drawU(ug.apply(UTranslate.dy(10)));
 		// sheetBlock.drawU(ug);
 		// ug.writeImageTOBEMOVED(os, null, 96);

@@ -53,8 +53,8 @@ import net.sourceforge.plantuml.version.IteratorCounter2;
 import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 
 /**
- * Represents the textual source of some diagram. The source should start with a <code>@startfoo</code> and end with
- * <code>@endfoo</code>.
+ * Represents the textual source of some diagram. The source should start with a
+ * <code>@startfoo</code> and end with <code>@endfoo</code>.
  * <p>
  * So the diagram does not have to be a UML one.
  * 
@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 final public class UmlSource {
 
 	final private List<StringLocated> source;
+	final private List<StringLocated> rawSource;
 
 	public UmlSource removeInitialSkinparam() {
 		if (hasInitialSkinparam(source) == false) {
@@ -73,7 +74,7 @@ final public class UmlSource {
 		while (hasInitialSkinparam(copy)) {
 			copy.remove(1);
 		}
-		return new UmlSource(copy);
+		return new UmlSource(copy, rawSource);
 	}
 
 	public boolean containsIgnoreCase(String searched) {
@@ -86,23 +87,29 @@ final public class UmlSource {
 	}
 
 	private static boolean hasInitialSkinparam(final List<StringLocated> copy) {
-		return copy.size() > 1 && (copy.get(1).getString().startsWith("skinparam ") || copy.get(1).getString().startsWith("skinparamlocked "));
+		return copy.size() > 1 && (copy.get(1).getString().startsWith("skinparam ")
+				|| copy.get(1).getString().startsWith("skinparamlocked "));
 	}
 
-	private UmlSource(List<StringLocated> source) {
+	private UmlSource(List<StringLocated> source, List<StringLocated> rawSource) {
 		this.source = source;
+		this.rawSource = rawSource;
+	}
+
+	public UmlSource(List<StringLocated> data, boolean checkEndingBackslash) {
+		this(data, checkEndingBackslash, new ArrayList<StringLocated>());
 	}
 
 	/**
 	 * Build the source from a text.
 	 * 
-	 * @param data
-	 *            the source of the diagram
-	 * @param checkEndingBackslash
-	 *            <code>true</code> if an ending backslash means that a line has to be collapsed with the following one.
+	 * @param data                 the source of the diagram
+	 * @param checkEndingBackslash <code>true</code> if an ending backslash means
+	 *                             that a line has to be collapsed with the
+	 *                             following one.
 	 */
-	public UmlSource(List<StringLocated> data, boolean checkEndingBackslash) {
-		this(new ArrayList<StringLocated>());
+	public UmlSource(List<StringLocated> data, boolean checkEndingBackslash, List<StringLocated> rawSource) {
+		this(new ArrayList<StringLocated>(), rawSource);
 
 		if (checkEndingBackslash) {
 			final StringBuilder pending = new StringBuilder();
@@ -122,7 +129,8 @@ final public class UmlSource {
 	}
 
 	/**
-	 * Retrieve the type of the diagram. This is based on the first line <code>@startfoo</code>.
+	 * Retrieve the type of the diagram. This is based on the first line
+	 * <code>@startfoo</code>.
 	 * 
 	 * @return the type of the diagram.
 	 */
@@ -147,6 +155,16 @@ final public class UmlSource {
 	public String getPlainString() {
 		final StringBuilder sb = new StringBuilder();
 		for (StringLocated s : source) {
+			sb.append(s.getString());
+			sb.append('\r');
+			sb.append(BackSlash.CHAR_NEWLINE);
+		}
+		return sb.toString();
+	}
+
+	public String getRawString() {
+		final StringBuilder sb = new StringBuilder();
+		for (StringLocated s : rawSource) {
 			sb.append(s.getString());
 			sb.append('\r');
 			sb.append(BackSlash.CHAR_NEWLINE);
@@ -184,7 +202,8 @@ final public class UmlSource {
 	}
 
 	/**
-	 * Check if a source diagram description is empty. Does not take comment line into account.
+	 * Check if a source diagram description is empty. Does not take comment line
+	 * into account.
 	 * 
 	 * @return <code>true<code> if the diagram does not contain information.
 	 */
@@ -207,7 +226,8 @@ final public class UmlSource {
 	}
 
 	/**
-	 * Retrieve the title, if defined in the diagram source. Never return <code>null</code>.
+	 * Retrieve the title, if defined in the diagram source. Never return
+	 * <code>null</code>.
 	 * 
 	 * @return
 	 */

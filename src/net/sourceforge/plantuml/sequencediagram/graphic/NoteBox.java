@@ -114,7 +114,7 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 		}
 		comp.drawU(ug, new Area(dimensionToUse), context);
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

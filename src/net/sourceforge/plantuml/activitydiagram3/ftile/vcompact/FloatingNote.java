@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.CreoleParser;
+import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -72,11 +72,13 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
-		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
-				skinParam, CreoleMode.FULL).createSheet(note);
-		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), this,
-				new UStroke(1));
-		final double shadowing;shadowing = skinParam.shadowing(null)?4:0;
+		final Sheet sheet = Parser
+				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
+				.createSheet(note);
+		final SheetBlock2 sheetBlock2 = new SheetBlock2(
+				new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), this, new UStroke(1));
+		final double shadowing;
+		shadowing = skinParam.shadowing(null) ? 4 : 0;
 		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, false);
 
 		// this.text = sheetBlock2;

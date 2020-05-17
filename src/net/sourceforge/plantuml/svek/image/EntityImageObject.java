@@ -163,7 +163,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		fields.drawU(ug2.apply(UTranslate.dy(dimTitle.getHeight())));
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

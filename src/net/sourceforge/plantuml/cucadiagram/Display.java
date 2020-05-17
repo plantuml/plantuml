@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.CreoleParser;
+import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -526,8 +526,9 @@ public class Display implements Iterable<CharSequence> {
 	private TextBlock getCreole(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			FontConfiguration stereotypeConfiguration) {
-		final Sheet sheet = new CreoleParser(fontConfiguration, horizontalAlignment, spriteContainer, creoleMode,
-				stereotypeConfiguration).createSheet(this);
+		final Sheet sheet = Parser
+				.build(fontConfiguration, horizontalAlignment, spriteContainer, creoleMode, stereotypeConfiguration)
+				.createSheet(this);
 		final double padding = spriteContainer == null ? 0 : spriteContainer.getPadding();
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding);
 		return new SheetBlock2(sheetBlock1, sheetBlock1, new UStroke(1.5));
@@ -542,6 +543,37 @@ public class Display implements Iterable<CharSequence> {
 				maxMessageSize, CreoleMode.FULL, stereotypeConfiguration);
 		return TextBlockUtils.mergeLR(tb1, tb2, VerticalAlignment.CENTER);
 
+	}
+
+	public boolean hasSeveralGuideLines() {
+		return hasSeveralGuideLines(displayData);
+	}
+
+	public static boolean hasSeveralGuideLines(String s) {
+		final List<String> splitted = Arrays.asList(s.split("\\\\n"));
+		return hasSeveralGuideLines(splitted);
+	}
+
+	private static boolean hasSeveralGuideLines(Collection<? extends CharSequence> all) {
+		if (all.size() <= 1) {
+			return false;
+		}
+		for (CharSequence cs : all) {
+			final String s = cs.toString();
+			if (s.startsWith("< ")) {
+				return true;
+			}
+			if (s.startsWith("> ")) {
+				return true;
+			}
+			if (s.endsWith(" <")) {
+				return true;
+			}
+			if (s.endsWith(" >")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

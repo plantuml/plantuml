@@ -75,7 +75,12 @@ public abstract class AbstractPSystem implements Diagram {
 		if (source == null) {
 			return getVersion();
 		}
-		return source.getPlainString() + BackSlash.NEWLINE + getVersion();
+		final String rawString = source.getRawString();
+		final String plainString = source.getPlainString();
+		if (rawString != null && rawString.equals(plainString)) {
+			return rawString + BackSlash.NEWLINE + getVersion();
+		}
+		return rawString + BackSlash.NEWLINE + plainString + BackSlash.NEWLINE + getVersion();
 	}
 
 	final public UmlSource getSource() {

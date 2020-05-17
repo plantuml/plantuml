@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.creole.command;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.StripeSimple;
+import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.ugraphic.color.HColor;

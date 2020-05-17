@@ -132,7 +132,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		stereo.drawU(ug.apply(new UTranslate(x2, y2)));
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

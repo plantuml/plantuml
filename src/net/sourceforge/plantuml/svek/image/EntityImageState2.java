@@ -114,7 +114,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 		asSmall.drawU(ug);
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

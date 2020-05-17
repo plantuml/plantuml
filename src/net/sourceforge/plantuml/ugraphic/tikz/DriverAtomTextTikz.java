@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.ugraphic.tikz;
 
-import net.sourceforge.plantuml.creole.atom.AtomText;
+import net.sourceforge.plantuml.creole.legacy.AtomText;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.tikz.TikzGraphics;

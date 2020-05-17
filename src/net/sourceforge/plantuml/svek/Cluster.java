@@ -399,7 +399,7 @@ public class Cluster implements Moveable {
 
 		} finally {
 			if (url != null) {
-				ug.closeAction();
+				ug.closeUrl();
 			}
 		}
 

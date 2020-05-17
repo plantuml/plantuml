@@ -63,7 +63,7 @@ public class TextBlockWithUrl implements TextBlock {
 	public void drawU(UGraphic ug) {
 		ug.startUrl(url);
 		block.drawU(ug);
-		ug.closeAction();
+		ug.closeUrl();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

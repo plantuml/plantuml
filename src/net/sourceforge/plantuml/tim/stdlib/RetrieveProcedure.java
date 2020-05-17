@@ -34,7 +34,10 @@
  */
 package net.sourceforge.plantuml.tim.stdlib;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -51,17 +54,18 @@ public class RetrieveProcedure extends SimpleReturnFunction {
 		return new TFunctionSignature("%retrieve_procedure", 1);
 	}
 
-	public boolean canCover(int nbArg) {
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg > 0;
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values) throws EaterException, EaterExceptionLocated {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final String fname = values.get(0).toString();
 		final List<TValue> args = values.subList(1, values.size());
 		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());
 		final TFunction func = context.getFunctionSmart(signature);
 		final int n1 = context.getResultList().size();
-		func.executeProcedureInternal(context, memory, args);
+		func.executeProcedureInternal(context, memory, args, Collections.<String, TValue>emptyMap());
 		final String extracted = context.extractFromResultList(n1);
 		return TValue.fromString(extracted);
 	}

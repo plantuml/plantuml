@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
 import net.sourceforge.plantuml.sprite.Sprite;
@@ -83,7 +83,7 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 	}
 
 	public String getMonospacedFamily() {
-		return CommandCreoleMonospaced.MONOSPACED;
+		return Parser.MONOSPACED;
 	}
 
 	public int getTabSize() {

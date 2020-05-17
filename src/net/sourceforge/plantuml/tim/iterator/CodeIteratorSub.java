@@ -80,7 +80,7 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 			StringLocated s = null;
 			while ((s = source.peek()) != null) {
 				if (s.getType() == TLineType.STARTSUB) {
-					throw EaterException.located("Cannot nest sub", s);
+					throw EaterException.located("Cannot nest sub");
 				} else if (s.getType() == TLineType.ENDSUB) {
 					source.next();
 					readingInProgress = new CodeIteratorImpl(created.lines());

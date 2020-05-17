@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.expression;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
@@ -96,7 +97,7 @@ public class ReversePolishInterpretor {
 				if (function == null) {
 					throw EaterException.unlocated("Unknow built-in function " + token2.getSurface());
 				}
-				if (function.canCover(nb) == false) {
+				if (function.canCover(nb, Collections.<String>emptySet()) == false) {
 					throw EaterException
 							.unlocated("Bad number of arguments for " + function.getSignature().getFunctionName());
 				}
@@ -109,7 +110,8 @@ public class ReversePolishInterpretor {
 				if (location == null) {
 					throw EaterException.unlocated("rpn44");
 				}
-				final TValue r = function.executeReturnFunction(context, memory, location, args);
+				final TValue r = function.executeReturnFunction(context, memory, location, args,
+						Collections.<String, TValue>emptyMap());
 				if (trace)
 					System.err.println("r=" + r);
 				stack.addFirst(r);

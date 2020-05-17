@@ -45,6 +45,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -64,7 +66,6 @@ import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SignatureUtils;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
@@ -175,8 +176,8 @@ public class SvgGraphics {
 	private Element pendingBackground;
 
 	public void paintBackcolorGradient(ColorMapper mapper, HColorGradient gr) {
-		final String id = createSvgGradient(mapper.toHtml(gr.getColor1()),
-				mapper.toHtml(gr.getColor2()), gr.getPolicy());
+		final String id = createSvgGradient(mapper.toHtml(gr.getColor1()), mapper.toHtml(gr.getColor2()),
+				gr.getPolicy());
 		setFillColor("url(#" + id + ")");
 		setStrokeColor(null);
 		pendingBackground = createRectangleInternal(0, 0, 0, 0);
@@ -309,48 +310,7 @@ public class SvgGraphics {
 		this.strokeDasharray = strokeDasharray;
 	}
 
-	public void closeLink() {
-		if (pendingAction.size() > 0) {
-			final Element element = pendingAction.get(0);
-			pendingAction.remove(0);
-			if (element.getFirstChild() != null) {
-				// Empty link
-				getG().appendChild(element);
-			}
-		}
-	}
-
 	private final List<Element> pendingAction = new ArrayList<Element>();
-
-	public void openLink(String url, String title, String target) {
-		if (url == null) {
-			throw new IllegalArgumentException();
-		}
-		// javascript: security issue
-		if (GraphvizUtils.getJavascriptUnsecure() == false && url.toLowerCase().startsWith("javascript")) {
-			return;
-		}
-
-		if (pendingAction.size() > 0) {
-			closeLink();
-		}
-
-		pendingAction.add(0, (Element) document.createElement("a"));
-		pendingAction.get(0).setAttribute("target", target);
-		pendingAction.get(0).setAttribute(XLINK_HREF1, url);
-		pendingAction.get(0).setAttribute(XLINK_HREF2, url);
-		pendingAction.get(0).setAttribute("xlink:type", "simple");
-		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
-		pendingAction.get(0).setAttribute("xlink:show", "new");
-		if (title == null) {
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, url);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, url);
-		} else {
-			title = title.replaceAll("\\\\n", "\n");
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
-		}
-	}
 
 	public final Element getG() {
 		if (pendingAction.size() == 0) {
@@ -830,6 +790,71 @@ public class SvgGraphics {
 		comment = "MD5=[" + signature + "]\n" + comment;
 		final Comment commentElement = document.createComment(comment);
 		getG().appendChild(commentElement);
+	}
+
+	public void openLink(String url, String title, String target) {
+		if (url == null) {
+			throw new IllegalArgumentException();
+		}
+		// javascript: security issue
+		if (GraphvizUtils.getJavascriptUnsecure() == false && url.toLowerCase().startsWith("javascript")) {
+			return;
+		}
+
+//		if (pendingAction.size() > 0) {
+//			closeLink();
+//		}
+
+		pendingAction.add(0, (Element) document.createElement("a"));
+		pendingAction.get(0).setAttribute("target", target);
+		pendingAction.get(0).setAttribute(XLINK_HREF1, url);
+		pendingAction.get(0).setAttribute(XLINK_HREF2, url);
+		pendingAction.get(0).setAttribute("xlink:type", "simple");
+		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
+		pendingAction.get(0).setAttribute("xlink:show", "new");
+		if (title == null) {
+			pendingAction.get(0).setAttribute(XLINK_TITLE1, url);
+			pendingAction.get(0).setAttribute(XLINK_TITLE2, url);
+		} else {
+			title = formatTitle(title);
+			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
+			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
+		}
+	}
+
+	private String formatTitle(String title) {
+		final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
+		final Matcher m = p.matcher(title);
+		final StringBuffer sb = new StringBuffer();
+		while (m.find()) {
+			final String num = m.group(1);
+			final char c = (char) Integer.parseInt(num, 16);
+			m.appendReplacement(sb, "" + c);
+		}
+		m.appendTail(sb);
+
+		title = sb.toString().replaceAll("\\\\n", "\n");
+		return title;
+	}
+
+	public void closeLink() {
+		if (pendingAction.size() > 0) {
+			final Element element = pendingAction.get(0);
+			pendingAction.remove(0);
+			if (element.getFirstChild() != null) {
+				// Empty link
+				getG().appendChild(element);
+			}
+		}
+	}
+
+	public void startGroup(String groupId) {
+		pendingAction.add(0, (Element) document.createElement("g"));
+		pendingAction.get(0).setAttribute("id", groupId);
+	}
+
+	public void closeGroup() {
+		closeLink();
 	}
 
 }

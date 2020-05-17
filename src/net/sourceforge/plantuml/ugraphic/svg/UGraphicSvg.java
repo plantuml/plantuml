@@ -89,8 +89,9 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	public UGraphicSvg(boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper, String backcolor,
 			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio) {
-		this(minDim, colorMapper, new SvgGraphics(svgDimensionStyle, minDim, backcolor, scale, hover, seed,
-				preserveAspectRatio), textAsPath, linkTarget);
+		this(minDim, colorMapper,
+				new SvgGraphics(svgDimensionStyle, minDim, backcolor, scale, hover, seed, preserveAspectRatio),
+				textAsPath, linkTarget);
 	}
 
 	public UGraphicSvg(boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper, boolean textAsPath,
@@ -168,11 +169,25 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		}
 	}
 
+	@Override
+	public void startGroup(String groupId) {
+		getGraphicObject().startGroup(groupId);
+
+	}
+
+	@Override
+	public void closeGroup() {
+		getGraphicObject().closeGroup();
+	}
+
+
+	@Override
 	public void startUrl(Url url) {
 		getGraphicObject().openLink(url.getUrl(), url.getTooltip(), target);
 	}
 
-	public void closeAction() {
+	@Override
+	public void closeUrl() {
 		getGraphicObject().closeLink();
 	}
 

@@ -144,7 +144,7 @@ public class EntityImageMachine extends AbstractEntityImage {
 		header.drawU(ug.apply(UTranslate.dx(5)), dimTotal.getWidth(), dimTitle.getHeight());
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

@@ -47,11 +47,39 @@ import net.sourceforge.plantuml.tim.Eater;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TLineType;
 import net.sourceforge.plantuml.tim.TMemory;
 
 public class TokenStack {
 
 	final private List<Token> tokens;
+
+	public boolean isSpecialAffectationWhenFunctionCall() {
+		if (tokens.size() != 1) {
+			return false;
+		}
+		final Token single = tokens.get(0);
+		if (single.getTokenType() != TokenType.PLAIN_TEXT) {
+			return false;
+		}
+		return isSpecialAffectationWhenFunctionCall(single.getSurface());
+	}
+
+	public static boolean isSpecialAffectationWhenFunctionCall(String surface) {
+		final int idx = surface.indexOf('=');
+		if (idx <= 0) {
+			return false;
+		}
+		if (TLineType.isLetterOrUnderscoreOrDollar(surface.charAt(0)) == false) {
+			return false;
+		}
+		for (int i = 1; i < idx; i++) {
+			if (TLineType.isLetterOrUnderscoreOrDigit(surface.charAt(i)) == false) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public TokenStack() {
 		this(new ArrayList<Token>());
@@ -208,7 +236,8 @@ public class TokenStack {
 		return new InternalIterator();
 	}
 
-	public TValue getResult(LineLocation location, TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public TValue getResult(LineLocation location, TContext context, TMemory memory)
+			throws EaterException, EaterExceptionLocated {
 		final Knowledge knowledge = context.asKnowledge(memory, location);
 		final TokenStack tmp = withoutSpace();
 		tmp.guessFunctions();

@@ -116,7 +116,7 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 			if (getScale() != null) {
 				scale = getScale().getScale(size.getWidth(), size.getHeight());
 			}
-			
+
 			final int margin1;
 			final int margin2;
 			if (SkinParam.USE_STYLES()) {
@@ -127,8 +127,9 @@ public class PSystemSalt extends AbstractPSystem implements WithSprite {
 				margin2 = 5;
 			}
 
-			final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
-			null, null, null, scale, HColorUtils.WHITE);
+			final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
+					ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, getMetadata(), null, scale,
+					HColorUtils.WHITE);
 			builder.setUDrawable(new UDrawable() {
 
 				public void drawU(UGraphic ug) {

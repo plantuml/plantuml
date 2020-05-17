@@ -34,26 +34,35 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import java.util.Collections;
+import java.util.Set;
+
 public class TFunctionSignature {
 
 	private final String functionName;
 	private final int nbArg;
+	private final Set<String> namedArguments;
 
 	public TFunctionSignature(String functionName, int nbArg) {
+		this(functionName, nbArg, Collections.<String>emptySet());
+	}
+
+	public TFunctionSignature(String functionName, int nbArg, Set<String> namedArguments) {
 		if (functionName == null) {
 			throw new IllegalArgumentException();
 		}
 		this.functionName = functionName;
 		this.nbArg = nbArg;
+		this.namedArguments = namedArguments;
 	}
-	
-	public boolean sameNameAs(TFunctionSignature other) {
+
+	public boolean sameFunctionNameAs(TFunctionSignature other) {
 		return getFunctionName().equals(other.getFunctionName());
 	}
 
 	@Override
 	public String toString() {
-		return functionName + "/" + nbArg;
+		return functionName + "/" + nbArg + " " + namedArguments;
 	}
 
 	@Override
@@ -77,5 +86,9 @@ public class TFunctionSignature {
 
 	public final int getNbArg() {
 		return nbArg;
+	}
+
+	public final Set<String> getNamedArguments() {
+		return namedArguments;
 	}
 }

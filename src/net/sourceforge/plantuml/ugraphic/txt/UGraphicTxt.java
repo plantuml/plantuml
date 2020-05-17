@@ -109,12 +109,6 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 		return (int) getTranslateX();
 	}
 
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
-	}
-
 	public Dimension2D getDimension() {
 		return new Dimension2DDouble(0, 0);
 	}

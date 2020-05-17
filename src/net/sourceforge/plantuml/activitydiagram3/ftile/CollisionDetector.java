@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphicNo;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UParamNull;
@@ -57,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class CollisionDetector implements UGraphic {
+public class CollisionDetector extends UGraphicNo implements UGraphic {
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
@@ -197,12 +198,6 @@ public class CollisionDetector implements UGraphic {
 
 	public ColorMapper getColorMapper() {
 		throw new UnsupportedOperationException();
-	}
-
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
 	}
 
 	public void flushUg() {

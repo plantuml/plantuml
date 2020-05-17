@@ -140,7 +140,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		ellipse.drawU(ug2);
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

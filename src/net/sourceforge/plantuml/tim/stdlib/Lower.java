@@ -35,9 +35,10 @@
 package net.sourceforge.plantuml.tim.stdlib;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -49,12 +50,12 @@ public class Lower extends SimpleReturnFunction {
 		return new TFunctionSignature("%lower", 3);
 	}
 
-	public boolean canCover(int nbArg) {
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1;
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args)
-			throws EaterException {
-		return TValue.fromString(args.get(0).toString().toLowerCase());
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) {
+		return TValue.fromString(values.get(0).toString().toLowerCase());
 	}
 }

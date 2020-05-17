@@ -121,12 +121,6 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 		return FileFormat.BRAILLE_PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
 	}
 
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
-	}
-
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
 				false, null, metadata, null, 1.0, HColorUtils.WHITE);

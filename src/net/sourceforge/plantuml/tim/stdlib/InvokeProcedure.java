@@ -34,7 +34,10 @@
  */
 package net.sourceforge.plantuml.tim.stdlib;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
@@ -54,7 +57,7 @@ public class InvokeProcedure implements TFunction {
 		return new TFunctionSignature("%invoke_procedure", 1);
 	}
 
-	public boolean canCover(int nbArg) {
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg > 0;
 	}
 
@@ -62,7 +65,8 @@ public class InvokeProcedure implements TFunction {
 		return TFunctionType.PROCEDURE;
 	}
 
-	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s) throws EaterException, EaterExceptionLocated {
+	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
+			throws EaterException, EaterExceptionLocated {
 		final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(s, location), false, isUnquoted());
 		call.analyze((TContext) context, memory);
 		final List<TValue> values = call.getValues();
@@ -71,17 +75,18 @@ public class InvokeProcedure implements TFunction {
 		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());
 		final TFunction func = context.getFunctionSmart(signature);
 		if (func == null) {
-			throw EaterException.located("Cannot find void function " + fname, new StringLocated(s, location));
+			throw EaterException.located("Cannot find void function " + fname);
 		}
-		func.executeProcedureInternal(context, memory, args);
+		func.executeProcedureInternal(context, memory, args, Collections.<String, TValue>emptyMap());
 	}
 
-	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args) throws EaterException {
+	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args,
+			Map<String, TValue> named) {
 		throw new UnsupportedOperationException();
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args)
-			throws EaterException {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole;
+package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,28 +41,29 @@ import java.util.List;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.creole.CreoleContext;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.Parser;
+import net.sourceforge.plantuml.creole.Sheet;
+import net.sourceforge.plantuml.creole.SheetBuilder;
+import net.sourceforge.plantuml.creole.Stripe;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
-public class CreoleParser {
+public class CreoleParser implements SheetBuilder {
 
 	private final FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
 	private final HorizontalAlignment horizontalAlignment;
 	private final CreoleMode creoleMode;
-	private final FontConfiguration stereotypeConfiguration;
+	private final FontConfiguration stereotype;
 
 	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple skinParam, CreoleMode creoleMode) {
-		this(fontConfiguration, horizontalAlignment, skinParam, creoleMode, fontConfiguration.forceFont(null, null));
-	}
-
-	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple skinParam, CreoleMode creoleMode, FontConfiguration stereotypeConfiguration) {
-		this.stereotypeConfiguration = stereotypeConfiguration;
+			ISkinSimple skinParam, CreoleMode creoleMode, FontConfiguration stereotype) {
+		this.stereotype = stereotype;
 		this.creoleMode = creoleMode;
 		this.fontConfiguration = fontConfiguration;
 		this.skinParam = skinParam;
@@ -78,13 +79,13 @@ public class CreoleParser {
 			final StripeTable table = (StripeTable) lastStripe;
 			table.analyzeAndAddLine(line);
 			return null;
-		} else if (lastStripe instanceof StripeTree && isTreeStart(StringUtils.trinNoTrace(line))) {
+		} else if (lastStripe instanceof StripeTree && Parser.isTreeStart(StringUtils.trinNoTrace(line))) {
 			final StripeTree tree = (StripeTree) lastStripe;
 			tree.analyzeAndAdd(line);
 			return null;
 		} else if (isTableLine(line)) {
 			return new StripeTable(fontConfiguration, skinParam, line);
-		} else if (isTreeStart(line)) {
+		} else if (Parser.isTreeStart(line)) {
 			return new StripeTree(fontConfiguration, skinParam, line);
 		}
 		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, creoleMode)
@@ -99,11 +100,6 @@ public class CreoleParser {
 		return line.matches("^\\=?\\s*(\\<#\\w+(,#?\\w+)?\\>).*");
 	}
 
-	public static boolean isTreeStart(String line) {
-		// return false;
-		return line.startsWith("|_");
-	}
-
 	public Sheet createSheet(Display display) {
 		final Sheet sheet = new Sheet(horizontalAlignment);
 		if (Display.isNull(display) == false) {
@@ -113,7 +109,7 @@ public class CreoleParser {
 				if (cs instanceof EmbeddedDiagram) {
 					final Atom atom = ((EmbeddedDiagram) cs).asDraw(skinParam);
 					stripe = new Stripe() {
-						public Atom getHeader() {
+						public Atom getLHeader() {
 							return null;
 						}
 
@@ -123,7 +119,7 @@ public class CreoleParser {
 					};
 				} else if (cs instanceof Stereotype) {
 					for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet())) {
-						sheet.add(createStripe(st, context, sheet.getLastStripe(), stereotypeConfiguration));
+						sheet.add(createStripe(st, context, sheet.getLastStripe(), stereotype));
 					}
 					continue;
 				} else {

@@ -132,7 +132,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		ellipse.drawU(ug2);
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

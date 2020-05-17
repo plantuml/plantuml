@@ -193,7 +193,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		allUrls.add(url);
 	}
 
-	public void closeAction() {
+	public void closeUrl() {
 		urls.remove(urls.size() - 1);
 	}
 

@@ -37,9 +37,12 @@ package net.sourceforge.plantuml.tim.stdlib;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -51,15 +54,16 @@ public class DateFunction extends SimpleReturnFunction {
 		return new TFunctionSignature("%date", 1);
 	}
 
-	public boolean canCover(int nbArg) {
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 0 || nbArg == 1;
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args) throws EaterException {
-		if (args.size() == 0) {
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+		if (values.size() == 0) {
 			return TValue.fromString(new Date().toString());
 		}
-		final String format = args.get(0).toString();
+		final String format = values.get(0).toString();
 		try {
 			return TValue.fromString(new SimpleDateFormat(format).format(new Date()));
 		} catch (Exception e) {

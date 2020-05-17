@@ -38,7 +38,8 @@ package net.sourceforge.plantuml.creole.command;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.StripeSimple;
+import net.sourceforge.plantuml.creole.Parser;
+import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleQrcode implements Command {
@@ -67,7 +68,7 @@ public class CommandCreoleQrcode implements Command {
 			throw new IllegalStateException();
 		}
 		final String src = m.group(2);
-		final double scale = CommandCreoleImg.getScale(m.group(3), 3);
+		final double scale = Parser.getScale(m.group(3), 3);
 		stripe.addQrcode(src, scale);
 		return line.substring(m.group(1).length());
 	}

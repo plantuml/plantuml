@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class LimitFinder implements UGraphic {
+public class LimitFinder extends UGraphicNo implements UGraphic {
 
 	public boolean matchesProperty(String propertyName) {
 		return false;
@@ -217,12 +217,6 @@ public class LimitFinder implements UGraphic {
 
 	public ColorMapper getColorMapper() {
 		return new ColorMapperIdentity();
-	}
-
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
 	}
 
 	public double getMaxX() {

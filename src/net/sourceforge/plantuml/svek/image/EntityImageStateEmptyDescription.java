@@ -120,7 +120,7 @@ public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 		desc.drawU(ug.apply(new UTranslate(xDesc, yDesc)));
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 

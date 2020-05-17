@@ -83,7 +83,8 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 		if (line.length() == 0) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		final CreoleParser parser = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL);
+		final SheetBuilder parser = Parser.build(fontConfiguration, HorizontalAlignment.LEFT, skinParam,
+				CreoleMode.FULL);
 		final Sheet sheet = parser.createSheet(Display.getWithNewlines(line));
 		final TextBlock tb = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 		return tb;
@@ -107,5 +108,5 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	public double getStartingAltitude(StringBounder stringBounder) {
 		return 0;
 	}
-	
+
 }

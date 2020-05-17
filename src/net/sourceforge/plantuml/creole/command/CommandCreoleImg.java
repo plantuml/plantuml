@@ -35,14 +35,12 @@
  */
 package net.sourceforge.plantuml.creole.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.StripeSimple;
+import net.sourceforge.plantuml.creole.Parser;
+import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleImg implements Command {
@@ -71,37 +69,13 @@ public class CommandCreoleImg implements Command {
 			throw new IllegalStateException();
 		}
 		String src = m.group(2);
-		final double scale = getScale(m.group(3), 1);
+		final double scale = Parser.getScale(m.group(3), 1);
 		if (src.toLowerCase().startsWith("src=")) {
 			src = src.substring(4);
 		}
 		src = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(src, "\"");
 		stripe.addImage(src, scale);
 		return line.substring(m.group(1).length());
-	}
-
-	public static double getScale(String s, double def) {
-		if (s == null) {
-			return def;
-		}
-		final Pattern p = Pattern.compile("(?:scale=|\\*)([0-9.]+)");
-		final Matcher m = p.matcher(s);
-		if (m.find()) {
-			return Double.parseDouble(m.group(1));
-		}
-		return def;
-	}
-
-	public static String getColor(String s) {
-		if (s == null) {
-			return null;
-		}
-		final Pattern p = Pattern.compile("color[= :](#[0-9a-fA-F]{6}|\\w+)");
-		final Matcher m = p.matcher(s);
-		if (m.find()) {
-			return m.group(1);
-		}
-		return null;
 	}
 
 }

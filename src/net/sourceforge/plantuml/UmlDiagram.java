@@ -189,8 +189,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		fileFormatOption = fileFormatOption.withPreserveAspectRatio(getSkinParam().getPreserveAspectRatio());
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 		if (hover != null) {
-			fileFormatOption = fileFormatOption
-					.withHoverColor(getSkinParam().getColorMapper().toHtml(hover));
+			fileFormatOption = fileFormatOption.withHoverColor(getSkinParam().getColorMapper().toHtml(hover));
 		}
 
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
@@ -230,15 +229,19 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
-		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false,
-				null, metadata, null, 1.0, HColorUtils.WHITE);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, metadata, null,
+				1.0, HColorUtils.WHITE);
 
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final BufferedImage im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
-		if (im != null) {
-			GraphvizCrash.addDecodeHint(strings);
+		final BufferedImage im;
+		if (flash == null) {
+			im = null;
+		} else {
+			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
+			im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
+			if (im != null) {
+				GraphvizCrash.addDecodeHint(strings);
+			}
 		}
-
 		final TextBlockBackcolored graphicStrings = GraphicStrings.createBlackOnWhite(strings, IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 

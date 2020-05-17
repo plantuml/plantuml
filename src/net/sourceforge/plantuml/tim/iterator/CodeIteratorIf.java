@@ -117,7 +117,7 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	private void executeElseIf(TContext context, TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();
 		if (poll == null) {
-			throw EaterException.located("No if related to this else", s);
+			throw EaterException.located("No if related to this else");
 		}
 
 		poll.enteringElseIf();
@@ -148,7 +148,7 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	private void executeElse(TContext context, TMemory memory, StringLocated s) throws EaterException {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();
 		if (poll == null) {
-			throw EaterException.located("No if related to this else", s);
+			throw EaterException.located("No if related to this else");
 		}
 		poll.nowInElse();
 	}
@@ -156,7 +156,7 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	private void executeEndif(TContext context, TMemory memory, StringLocated s) throws EaterException {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.pollIf();
 		if (poll == null) {
-			throw EaterException.located("No if related to this endif", s);
+			throw EaterException.located("No if related to this endif");
 		}
 	}
 

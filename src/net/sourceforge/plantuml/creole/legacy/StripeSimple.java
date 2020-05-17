@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole;
+package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,13 +42,18 @@ import java.util.List;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.creole.CreoleContext;
+import net.sourceforge.plantuml.creole.CreoleHorizontalLine;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.Stripe;
+import net.sourceforge.plantuml.creole.StripeStyle;
+import net.sourceforge.plantuml.creole.StripeStyleType;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.atom.AtomImg;
 import net.sourceforge.plantuml.creole.atom.AtomMath;
 import net.sourceforge.plantuml.creole.atom.AtomOpenIcon;
 import net.sourceforge.plantuml.creole.atom.AtomSpace;
 import net.sourceforge.plantuml.creole.atom.AtomSprite;
-import net.sourceforge.plantuml.creole.atom.AtomText;
 import net.sourceforge.plantuml.creole.command.Command;
 import net.sourceforge.plantuml.creole.command.CommandCreoleColorAndSizeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleColorChange;
@@ -103,7 +108,7 @@ public class StripeSimple implements Stripe {
 		return super.toString() + " " + atoms.toString();
 	}
 
-	public Atom getHeader() {
+	public Atom getLHeader() {
 		return header;
 	}
 

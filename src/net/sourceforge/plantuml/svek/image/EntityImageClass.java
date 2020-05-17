@@ -130,7 +130,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		drawInternal(ug);
 
 		if (url != null) {
-			ug.closeAction();
+			ug.closeUrl();
 		}
 	}
 
