@@ -31,6 +31,7 @@
  *
  * Original Author:  Arnaud Roques
  * Contribution :  Hisashi Miyashita
+ * Contribution :  Serge Wenger
  * 
  *
  */
@@ -111,6 +112,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageBranch;
 import net.sourceforge.plantuml.svek.image.EntityImageCircleEnd;
 import net.sourceforge.plantuml.svek.image.EntityImageCircleStart;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
+import net.sourceforge.plantuml.svek.image.EntityImageDeepHistory;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageEmptyPackage;
 import net.sourceforge.plantuml.svek.image.EntityImageGroup;
@@ -249,6 +251,10 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.PSEUDO_STATE) {
 			return new EntityImagePseudoState(leaf, skinParam);
 		}
+		if (leaf.getLeafType() == LeafType.DEEP_HISTORY) {
+			return new EntityImageDeepHistory(leaf, skinParam);
+		}
+				
 		if (leaf.getLeafType() == LeafType.TIPS) {
 			return new EntityImageTips(leaf, skinParam, bibliotekon);
 		}
