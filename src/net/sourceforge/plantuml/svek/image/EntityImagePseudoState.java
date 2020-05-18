@@ -62,11 +62,13 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	private final TextBlock desc;
 
 	public EntityImagePseudoState(ILeaf entity, ISkinParam skinParam) {
+		this(entity, skinParam, "H");
+	}
+	public EntityImagePseudoState(ILeaf entity, ISkinParam skinParam, String historyText) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
-		this.desc = Display.create("H").create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
+		this.desc = Display.create(historyText).create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
 				HorizontalAlignment.CENTER, skinParam);
-
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

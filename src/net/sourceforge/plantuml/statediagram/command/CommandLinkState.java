@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution   :  Serge Wenger
  * 
  *
  */
@@ -92,7 +93,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 	private static RegexLeaf getStatePattern(String name) {
 		return new RegexLeaf(
 				name,
-				"([\\p{L}0-9_.]+|[\\p{L}0-9_.]+\\[H\\]|\\[\\*\\]|\\[H\\]|(?:==+)(?:[\\p{L}0-9_.]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
+				"([\\p{L}0-9_.]+|[\\p{L}0-9_.]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[\\p{L}0-9_.]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
 	}
 
 	@Override
@@ -180,6 +181,12 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		}
 		if (codeString.endsWith("[H]")) {
 			return diagram.getHistorical(codeString.substring(0, codeString.length() - 3));
+		}
+		if (codeString.equalsIgnoreCase("[H*]")) {
+			return diagram.getDeepHistory();
+		}
+		if (codeString.endsWith("[H*]")) {
+			return diagram.getDeepHistory(codeString.substring(0, codeString.length() - 4));
 		}
 		if (codeString.startsWith("=") && codeString.endsWith("=")) {
 			final String codeString1 = removeEquals(codeString);
