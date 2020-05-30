@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.Player;
-import net.sourceforge.plantuml.timingdiagram.PlayerAnalog;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
 public class CommandPixelHeight extends SingleLineCommand2<TimingDiagram> {

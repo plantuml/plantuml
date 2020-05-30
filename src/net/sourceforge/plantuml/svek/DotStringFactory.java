@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.Moveable;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 
@@ -295,7 +296,7 @@ public class DotStringFactory implements Moveable {
 		String dotString = createDotString(dotOptions);
 
 		if (basefile != null) {
-			final File f = basefile.getTraceFile("svek.dot");
+			final SFile f = basefile.getTraceFile("svek.dot");
 			SvekUtils.traceString(f, dotString);
 		}
 
@@ -323,7 +324,7 @@ public class DotStringFactory implements Moveable {
 		final String s = new String(result, "UTF-8");
 
 		if (basefile != null) {
-			final File f = basefile.getTraceFile("svek.svg");
+			final SFile f = basefile.getTraceFile("svek.svg");
 			SvekUtils.traceString(f, s);
 		}
 

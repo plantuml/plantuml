@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.imageio.ImageIO;
+import net.sourceforge.plantuml.security.ImageIO;
 
 public class IconLoader {
 

@@ -43,8 +43,9 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 
-import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
+
+import net.sourceforge.plantuml.security.ImageIO;
 
 public class Dedication {
 

@@ -209,8 +209,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			margin1 = 3;
 			margin2 = 10;
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), diagram.getAnimation(), metadata,
-		null, oneOf(scale, dpiFactor));
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(),
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), diagram.getAnimation(), metadata, null,
+				oneOf(scale, dpiFactor));
 
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {

@@ -77,7 +77,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class EntityImageDescription extends AbstractEntityImage {
@@ -120,19 +119,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final Display codeDisplay = Display.getWithNewlines(entity.getCodeGetName());
 		if ((entity.getDisplay().equals(codeDisplay) && symbol.getSkinParameter() == SkinParameter.PACKAGE)
 				|| entity.getDisplay().isWhite()) {
-			desc = TextBlockUtils.empty(0, 0);
+			desc = TextBlockUtils.empty(skinParam.minClassWidth(), 0);
 		} else {
 			desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
-					HorizontalAlignment.LEFT, stereotype, symbol.manageHorizontalLine(), false, entity);
-			// Actor bug?
-			// desc = new BodyEnhanced2(entity.getDisplay(), symbol.getFontParam(),
-			// getSkinParam(),
-			// HorizontalAlignment.LEFT, new FontConfiguration(skinParam,
-			// symbol.getFontParam(), stereotype),
-			// LineBreakStrategy.NONE);
-			// desc = entity.getDisplay().create(new FontConfiguration(skinParam,
-			// symbol.getFontParam(), stereotype),
-			// HorizontalAlignment.LEFT, skinParam);
+					HorizontalAlignment.LEFT, stereotype, symbol.manageHorizontalLine(), false, entity,
+					skinParam.minClassWidth());
 		}
 
 		this.url = entity.getUrl99();

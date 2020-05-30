@@ -40,8 +40,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 
-import javax.imageio.ImageIO;
-
 import jcckit.GraphicsPlotCanvas;
 import jcckit.data.DataPlot;
 import jcckit.util.ConfigParameters;
@@ -51,6 +49,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.security.ImageIO;
 
 public class PSystemJcckit extends AbstractPSystem {
 

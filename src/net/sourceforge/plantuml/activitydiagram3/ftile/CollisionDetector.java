@@ -39,7 +39,6 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UBackground;

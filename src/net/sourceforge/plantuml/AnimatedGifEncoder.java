@@ -39,8 +39,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -112,23 +110,20 @@ public class AnimatedGifEncoder {
 	protected int sample = 10; // default sample interval for quantizer
 
 	/**
-	 * Sets the delay time between each frame, or changes it for subsequent
-	 * frames (applies to last frame added).
+	 * Sets the delay time between each frame, or changes it for subsequent frames
+	 * (applies to last frame added).
 	 * 
-	 * @param ms
-	 *            int delay time in milliseconds
+	 * @param ms int delay time in milliseconds
 	 */
 	public void setDelay(int ms) {
 		delay = Math.round(ms / 10.0f);
 	}
 
 	/**
-	 * Sets the GIF frame disposal code for the last added frame and any
-	 * subsequent frames. Default is 0 if no transparent color has been set,
-	 * otherwise 2.
+	 * Sets the GIF frame disposal code for the last added frame and any subsequent
+	 * frames. Default is 0 if no transparent color has been set, otherwise 2.
 	 * 
-	 * @param code
-	 *            int disposal code.
+	 * @param code int disposal code.
 	 */
 	public void setDispose(int code) {
 		if (code >= 0) {
@@ -137,12 +132,11 @@ public class AnimatedGifEncoder {
 	}
 
 	/**
-	 * Sets the number of times the set of GIF frames should be played. Default
-	 * is 1; 0 means play indefinitely. Must be invoked before the first image
-	 * is added.
+	 * Sets the number of times the set of GIF frames should be played. Default is
+	 * 1; 0 means play indefinitely. Must be invoked before the first image is
+	 * added.
 	 * 
-	 * @param iter
-	 *            int number of iterations.
+	 * @param iter int number of iterations.
 	 */
 	public void setRepeat(int iter) {
 		if (iter >= 0) {
@@ -153,26 +147,24 @@ public class AnimatedGifEncoder {
 	/**
 	 * Sets the transparent color for the last added frame and any subsequent
 	 * frames. Since all colors are subject to modification in the quantization
-	 * process, the color in the final palette for each frame closest to the
-	 * given color becomes the transparent color for that frame. May be set to
-	 * null to indicate no transparent color.
+	 * process, the color in the final palette for each frame closest to the given
+	 * color becomes the transparent color for that frame. May be set to null to
+	 * indicate no transparent color.
 	 * 
-	 * @param c
-	 *            Color to be treated as transparent on display.
+	 * @param c Color to be treated as transparent on display.
 	 */
 	public void setTransparent(Color c) {
 		transparent = c;
 	}
 
 	/**
-	 * Adds next GIF frame. The frame is not written immediately, but is
-	 * actually deferred until the next frame is received so that timing data
-	 * can be inserted. Invoking <code>finish()</code> flushes all frames. If
-	 * <code>setSize</code> was not invoked, the size of the first image is
-	 * used for all subsequent frames.
+	 * Adds next GIF frame. The frame is not written immediately, but is actually
+	 * deferred until the next frame is received so that timing data can be
+	 * inserted. Invoking <code>finish()</code> flushes all frames. If
+	 * <code>setSize</code> was not invoked, the size of the first image is used for
+	 * all subsequent frames.
 	 * 
-	 * @param im
-	 *            BufferedImage containing frame to write.
+	 * @param im BufferedImage containing frame to write.
 	 * @return true if successful.
 	 */
 	public boolean addFrame(BufferedImage im) {
@@ -246,8 +238,7 @@ public class AnimatedGifEncoder {
 	 * Sets frame rate in frames per second. Equivalent to
 	 * <code>setDelay(1000/fps)</code>.
 	 * 
-	 * @param fps
-	 *            float frame rate (frames per second)
+	 * @param fps float frame rate (frames per second)
 	 */
 	public void setFrameRate(float fps) {
 		if (fps != 0f) {
@@ -256,14 +247,13 @@ public class AnimatedGifEncoder {
 	}
 
 	/**
-	 * Sets quality of color quantization (conversion of images to the maximum
-	 * 256 colors allowed by the GIF specification). Lower values (minimum = 1)
-	 * produce better colors, but slow processing significantly. 10 is the
-	 * default, and produces good color mapping at reasonable speeds. Values
-	 * greater than 20 do not yield significant improvements in speed.
+	 * Sets quality of color quantization (conversion of images to the maximum 256
+	 * colors allowed by the GIF specification). Lower values (minimum = 1) produce
+	 * better colors, but slow processing significantly. 10 is the default, and
+	 * produces good color mapping at reasonable speeds. Values greater than 20 do
+	 * not yield significant improvements in speed.
 	 * 
-	 * @param quality
-	 *            int greater than 0.
+	 * @param quality int greater than 0.
 	 */
 	public void setQuality(int quality) {
 		if (quality < 1)
@@ -275,10 +265,8 @@ public class AnimatedGifEncoder {
 	 * Sets the GIF frame size. The default size is the size of the first frame
 	 * added if this method is not invoked.
 	 * 
-	 * @param w
-	 *            int frame width.
-	 * @param h
-	 *            int frame width.
+	 * @param w int frame width.
+	 * @param h int frame width.
 	 */
 	public void setSize(int w, int h) {
 		if (started && !firstFrame)
@@ -296,8 +284,7 @@ public class AnimatedGifEncoder {
 	 * Initiates GIF file creation on the given stream. The stream is not closed
 	 * automatically.
 	 * 
-	 * @param os
-	 *            OutputStream on which GIF images are written.
+	 * @param os OutputStream on which GIF images are written.
 	 * @return false if initial write failed.
 	 */
 	public boolean start(OutputStream os) {
@@ -314,24 +301,23 @@ public class AnimatedGifEncoder {
 		return started = ok;
 	}
 
-	/**
-	 * Initiates writing of a GIF file with the specified name.
-	 * 
-	 * @param file
-	 *            String containing output file name.
-	 * @return false if open or initial write failed.
-	 */
-	public boolean start(String file) {
-		boolean ok = true;
-		try {
-			out = new BufferedOutputStream(new FileOutputStream(file));
-			ok = start(out);
-			closeStream = true;
-		} catch (IOException e) {
-			ok = false;
-		}
-		return started = ok;
-	}
+//	/**
+//	 * Initiates writing of a GIF file with the specified name.
+//	 * 
+//	 * @param file String containing output file name.
+//	 * @return false if open or initial write failed.
+//	 */
+//	public boolean start(String file) {
+//		boolean ok = true;
+//		try {
+//			out = SecurityUtils.createBufferedOutputStream(file);
+//			ok = start(out);
+//			closeStream = true;
+//		} catch (IOException e) {
+//			ok = false;
+//		}
+//		return started = ok;
+//	}
 
 	/**
 	 * Analyzes image colors and creates color map.
@@ -576,9 +562,9 @@ class NeuQuant {
 	/*
 	 * Program Skeleton ---------------- [select samplefac in range 1..30] [read
 	 * image from input file] pic = (unsigned char*) malloc(3*width*height);
-	 * initnet(pic,3*width*height,samplefac); learn(); unbiasnet(); [write
-	 * output image header, using writecolourmap(f)] inxbuild(); write output
-	 * image using inxsearch(b,g,r)
+	 * initnet(pic,3*width*height,samplefac); learn(); unbiasnet(); [write output
+	 * image header, using writecolourmap(f)] inxbuild(); write output image using
+	 * inxsearch(b,g,r)
 	 */
 
 	/*
@@ -608,8 +594,7 @@ class NeuQuant {
 
 	/* defs for decreasing radius factor */
 	protected static final int initrad = (netsize >> 3); /*
-															 * for 256 cols,
-															 * radius starts
+															 * for 256 cols, radius starts
 															 */
 
 	protected static final int radiusbiasshift = 6; /* at 32.0 biased by 6 bits */
@@ -617,9 +602,7 @@ class NeuQuant {
 	protected static final int radiusbias = (((int) 1) << radiusbiasshift);
 
 	protected static final int initradius = (initrad * radiusbias); /*
-																	 * and
-																	 * decreases
-																	 * by a
+																	 * and decreases by a
 																	 */
 
 	protected static final int radiusdec = 30; /* factor of 1/30 each cycle */
@@ -707,7 +690,8 @@ class NeuQuant {
 	/*
 	 * Insertion sort of network and building of netindex[0..255] (to do after
 	 * unbias)
-	 * -------------------------------------------------------------------------------
+	 * -----------------------------------------------------------------------------
+	 * --
 	 */
 	public void inxbuild() {
 
@@ -837,8 +821,7 @@ class NeuQuant {
 	}
 
 	/*
-	 * Search for BGR values 0..255 (after net is unbiased) and return colour
-	 * index
+	 * Search for BGR values 0..255 (after net is unbiased) and return colour index
 	 * ----------------------------------------------------------------------------
 	 */
 	public int map(int b, int g, int r) {
@@ -915,9 +898,10 @@ class NeuQuant {
 	}
 
 	/*
-	 * Unbias network to give byte values 0..255 and record position i to
-	 * prepare for sort
-	 * -----------------------------------------------------------------------------------
+	 * Unbias network to give byte values 0..255 and record position i to prepare
+	 * for sort
+	 * -----------------------------------------------------------------------------
+	 * ------
 	 */
 	public void unbiasnet() {
 
@@ -934,7 +918,8 @@ class NeuQuant {
 	/*
 	 * Move adjacent neurons by precomputed alpha*(1-((i-j)^2/[r]^2)) in
 	 * radpower[|i-j|]
-	 * ---------------------------------------------------------------------------------
+	 * -----------------------------------------------------------------------------
+	 * ----
 	 */
 	protected void alterneigh(int rad, int i, int b, int g, int r) {
 
@@ -995,8 +980,7 @@ class NeuQuant {
 		/* finds closest neuron (min dist) and updates freq */
 		/* finds best neuron (min dist-bias) and returns position */
 		/*
-		 * for frequently chosen neurons, freq[i] is high and bias[i] is
-		 * negative
+		 * for frequently chosen neurons, freq[i] is high and bias[i] is negative
 		 */
 		/* bias[i] = gamma*((1/netsize)-freq[i]) */
 

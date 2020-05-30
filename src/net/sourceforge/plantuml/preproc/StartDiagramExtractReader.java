@@ -39,10 +39,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class StartDiagramExtractReader implements ReadLine {
@@ -54,7 +54,7 @@ public class StartDiagramExtractReader implements ReadLine {
 		return new StartDiagramExtractReader(getReadLine(f2, s, charset), f2.getSuffix());
 	}
 
-	public static StartDiagramExtractReader build(URL url, StringLocated s, String uid, String charset) {
+	public static StartDiagramExtractReader build(SURL url, StringLocated s, String uid, String charset) {
 		return new StartDiagramExtractReader(getReadLine(url, s, charset), uid);
 	}
 
@@ -117,16 +117,18 @@ public class StartDiagramExtractReader implements ReadLine {
 		return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(is), description));
 	}
 
-	private static ReadLine getReadLine(URL url, StringLocated s, String charset) {
+	private static ReadLine getReadLine(SURL url, StringLocated s, String charset) {
 		try {
+			final InputStream tmp = url.openStream();
+			if (tmp == null) {
+				return new ReadLineSimple(s, "Cannot connect");
+			}
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(url.openStream()),
-						url.toString()));
+				return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(tmp), url.toString()));
 			}
 			Log.info("Using charset " + charset);
-			return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(url.openStream(), charset),
-					url.toString()));
+			return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(tmp, charset), url.toString()));
 		} catch (IOException e) {
 			return new ReadLineSimple(s, e.toString());
 		}
@@ -137,7 +139,7 @@ public class StartDiagramExtractReader implements ReadLine {
 		return containsStartDiagram(r);
 	}
 
-	static public boolean containsStartDiagram(URL url, StringLocated s, String charset) throws IOException {
+	static public boolean containsStartDiagram(SURL url, StringLocated s, String charset) throws IOException {
 		final ReadLine r = getReadLine(url, s, charset);
 		return containsStartDiagram(r);
 	}

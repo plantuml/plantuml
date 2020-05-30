@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.jdot.CucaDiagramFileMakerJDot;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -624,7 +624,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			try {
 				createFilesTxt(os, index, fileFormat);
 			} catch (Throwable t) {
-				t.printStackTrace(new PrintStream(os));
+				t.printStackTrace(SecurityUtils.createPrintStream(os));
 			}
 			return ImageDataSimple.ok();
 		}

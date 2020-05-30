@@ -34,10 +34,8 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,6 +63,8 @@ import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.tim.expression.Knowledge;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.iterator.CodeIterator;
@@ -437,7 +437,7 @@ public class TContext {
 		_import.analyze(this, memory);
 
 		try {
-			final File file = FileSystem.getInstance()
+			final SFile file = FileSystem.getInstance()
 					.getFile(applyFunctionsAndVariables(memory, s.getLocation(), _import.getLocation()));
 			if (file.exists() && file.isDirectory() == false) {
 				importedFiles.add(file);
@@ -473,13 +473,16 @@ public class TContext {
 						saveImportedFiles = this.importedFiles;
 						this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
 						final Reader reader = f2.getReader(charset);
+						if (reader == null) {
+							throw EaterException.located("cannot include " + location);
+						}
 						ReadLine readerline = ReadLineReader.create(reader, location, s.getLocation());
 						readerline = new UncommentReadLine(readerline);
 						sub = Sub.fromFile(readerline, blocname, this, memory);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
-					throw EaterException.located("cannot include " + e);
+					throw EaterException.located("cannot include " + location);
 				}
 			}
 			if (sub == null) {
@@ -535,7 +538,10 @@ public class TContext {
 		ImportedFiles saveImportedFiles = null;
 		try {
 			if (location.startsWith("http://") || location.startsWith("https://")) {
-				final URL url = new URL(location);
+				final SURL url = SURL.create(location);
+				if (url == null) {
+					throw EaterException.located("Cannot open URL");
+				}
 				reader2 = PreprocessorUtils.getReaderIncludeUrl2(url, s, suf, charset);
 
 			}

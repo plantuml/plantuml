@@ -42,8 +42,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -52,6 +50,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Line;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;

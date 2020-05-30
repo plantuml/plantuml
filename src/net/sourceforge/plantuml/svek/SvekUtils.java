@@ -36,22 +36,21 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.security.SFile;
 
 public class SvekUtils {
 
-	static public void traceString(final File f, String text) throws IOException {
+	static public void traceString(final SFile f, String text) throws IOException {
 		PrintWriter pw = null;
 		try {
-			Log.info("Creating intermediate file " + f.getAbsolutePath());
-			pw = new PrintWriter(new FileWriter(f));
+			Log.info("Creating intermediate file " + f.getPrintablePath());
+			pw = f.createPrintWriter();
 			pw.print(text);
 		} finally {
 			if (pw != null) {

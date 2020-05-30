@@ -92,8 +92,8 @@ public class DirWatcher2 {
 									try {
 										final List<GeneratedImage> generatedImages = sourceFileReader
 												.getGeneratedImages();
-										final Set<File> files = FileWithSuffix.convert(sourceFileReader
-												.getIncludedFiles());
+										final Set<File> files = FileWithSuffix
+												.convert(sourceFileReader.getIncludedFiles());
 										files.add(f);
 										modifieds.put(f, new FileWatcher(files));
 										return Collections.unmodifiableList(generatedImages);

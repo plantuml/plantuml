@@ -35,12 +35,13 @@
  */
 package net.sourceforge.plantuml.pdf;
 
-import java.io.File;
 import java.lang.reflect.Method;
+
+import net.sourceforge.plantuml.security.SFile;
 
 public class PdfConverter {
 
-	public static void convert(File svgFile, File pdfFile) {
+	public static void convert(SFile svgFile, SFile pdfFile) {
 
 		if (svgFile.exists() == false) {
 			throw new IllegalArgumentException();

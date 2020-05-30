@@ -57,7 +57,11 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -94,15 +98,21 @@ public class MindMapDiagram extends UmlDiagram {
 		final ISkinParam skinParam = getSkinParam();
 		final int margin1;
 		final int margin2;
+		final HColor backgroundColor;
 		if (SkinParam.USE_STYLES()) {
 			margin1 = SkinParam.zeroMargin(10);
 			margin2 = SkinParam.zeroMargin(10);
+			final Style style = StyleSignature.of(SName.root, SName.document, SName.mindmapDiagram)
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		} else {
 			margin1 = 10;
 			margin2 = 10;
+			backgroundColor = skinParam.getBackgroundColor(false);
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildB(skinParam.getColorMapper(), skinParam.handwritten(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
-		null, fileFormatOption.isWithMetadata() ? getMetadata() : null, "", dpiFactor, skinParam.getBackgroundColor(false));
+		final ImageBuilder imageBuilder = ImageBuilder.buildBB(skinParam.getColorMapper(), skinParam.handwritten(),
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null,
+				fileFormatOption.isWithMetadata() ? getMetadata() : null, "", dpiFactor, backgroundColor);
 		TextBlock result = getTextBlock();
 
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);

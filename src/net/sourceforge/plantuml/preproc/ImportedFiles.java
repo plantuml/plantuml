@@ -36,7 +36,6 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +44,17 @@ import net.sourceforge.plantuml.AFile;
 import net.sourceforge.plantuml.AFileRegular;
 import net.sourceforge.plantuml.AFileZipEntry;
 import net.sourceforge.plantuml.AParentFolder;
-import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class ImportedFiles {
 
-	private final List<File> imported;
+	private final List<SFile> imported;
 	private final AParentFolder currentDir;
 
-	private ImportedFiles(List<File> imported, AParentFolder currentDir) {
+	private ImportedFiles(List<SFile> imported, AParentFolder currentDir) {
 		this.imported = imported;
 		this.currentDir = currentDir;
 	}
@@ -67,7 +67,7 @@ public class ImportedFiles {
 	}
 
 	public static ImportedFiles createImportedFiles(AParentFolder newCurrentDir) {
-		return new ImportedFiles(new ArrayList<File>(), newCurrentDir);
+		return new ImportedFiles(new ArrayList<SFile>(), newCurrentDir);
 	}
 
 	@Override
@@ -80,17 +80,18 @@ public class ImportedFiles {
 		// Log.info("ImportedFiles::getAFile currentDir = " + currentDir);
 		final AParentFolder dir = currentDir;
 		if (dir == null || isAbsolute(nameOrPath)) {
-			return new AFileRegular(new File(nameOrPath).getCanonicalFile());
+			return new AFileRegular(new SFile(nameOrPath).getCanonicalFile());
 		}
-		// final File filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
+		// final File filecurrent = SecurityUtils.File(dir.getAbsoluteFile(),
+		// nameOrPath);
 		final AFile filecurrent = dir.getAFile(nameOrPath);
 		Log.info("ImportedFiles::getAFile filecurrent = " + filecurrent);
 		if (filecurrent != null && filecurrent.isOk()) {
 			return filecurrent;
 		}
-		for (File d : getPath()) {
+		for (SFile d : getPath()) {
 			if (d.isDirectory()) {
-				final File file = new File(d, nameOrPath);
+				final SFile file = d.file(nameOrPath);
 				if (file.exists()) {
 					return new AFileRegular(file.getCanonicalFile());
 				}
@@ -104,23 +105,23 @@ public class ImportedFiles {
 		return filecurrent;
 	}
 
-	public List<File> getPath() {
-		final List<File> result = new ArrayList<File>(imported);
+	public List<SFile> getPath() {
+		final List<SFile> result = new ArrayList<SFile>(imported);
 		result.addAll(includePath());
-		result.addAll(FileSystem.getPath("java.class.path", true));
+		result.addAll(SecurityUtils.getPath("java.class.path"));
 		return result;
 	}
 
-	private List<File> includePath() {
-		return FileSystem.getPath("plantuml.include.path", true);
+	private List<SFile> includePath() {
+		return SecurityUtils.getPath("plantuml.include.path");
 	}
 
 	private boolean isAbsolute(String nameOrPath) {
-		final File f = new File(nameOrPath);
+		final SFile f = new SFile(nameOrPath);
 		return f.isAbsolute();
 	}
 
-	public void add(File file) {
+	public void add(SFile file) {
 		this.imported.add(file);
 	}
 
@@ -150,7 +151,7 @@ public class ImportedFiles {
 			return true;
 		}
 		if (file != null) {
-			final File folder = file.getSystemFolder();
+			final SFile folder = file.getSystemFolder();
 			// System.err.println("canonicalPath=" + path + " " + folder + " " +
 			// INCLUDE_PATH);
 			if (includePath().contains(folder)) {

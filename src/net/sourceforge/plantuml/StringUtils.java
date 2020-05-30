@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Color;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,17 +47,9 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.svek.DotStringFactory;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 
 // Do not move
 public class StringUtils {
-
-	public static String getPlateformDependentAbsolutePath(File file) {
-		return file.getAbsolutePath();
-	}
 
 	final static public List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
@@ -71,7 +61,6 @@ public class StringUtils {
 			result.add(m.group(i));
 		}
 		return result;
-
 	}
 
 	public static boolean isNotEmpty(String input) {
@@ -338,9 +327,9 @@ public class StringUtils {
 		if (uml.startsWith("@startuml\ndonors\n")) {
 			return false;
 		}
-		if (uml.startsWith("@startuml\ncheckversion")) {
-			return false;
-		}
+//		if (uml.startsWith("@startuml\ncheckversion")) {
+//			return false;
+//		}
 		if (uml.startsWith("@startuml\ntestdot\n")) {
 			return false;
 		}

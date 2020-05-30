@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.tim.stdlib;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -67,7 +66,7 @@ public class CallUserFunction extends SimpleReturnFunction {
 		if (func == null) {
 			throw EaterException.unlocated("Cannot find void function " + fname);
 		}
-		return func.executeReturnFunction(context, memory, location, args, Collections.<String, TValue>emptyMap());
+		return func.executeReturnFunction(context, memory, location, args, named);
 	}
 
 }

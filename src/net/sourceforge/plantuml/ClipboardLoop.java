@@ -45,9 +45,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.security.ImageIO;
 
 public class ClipboardLoop {
 

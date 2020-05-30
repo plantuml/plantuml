@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.ugraphic.html5;
 
 import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;

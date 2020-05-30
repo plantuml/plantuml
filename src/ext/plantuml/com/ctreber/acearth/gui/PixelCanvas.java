@@ -3,11 +3,10 @@ package ext.plantuml.com.ctreber.acearth.gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.imageio.ImageIO;
+import net.sourceforge.plantuml.security.ImageIO;
 
 import ext.plantuml.com.ctreber.acearth.renderer.RenderTarget;
 
@@ -30,17 +29,15 @@ public class PixelCanvas implements RenderTarget {
 	 * <p>
 	 * Construct a canvas of the specified size.
 	 * 
-	 * @param pWidth
-	 *            Width
-	 * @param pHeight
-	 *            Height
+	 * @param pWidth  Width
+	 * @param pHeight Height
 	 */
 	public PixelCanvas(int pWidth, int pHeight) {
 		fImageWidth = pWidth;
 		fImageHeight = pHeight;
 		fEarthImage2 = new BufferedImage(fImageWidth, fImageHeight, BufferedImage.TYPE_INT_RGB);
 	}
-	
+
 	public Graphics2D getGraphics2D() {
 		return fEarthImage2.createGraphics();
 	}
@@ -61,10 +58,6 @@ public class PixelCanvas implements RenderTarget {
 		return fImageHeight;
 	}
 
-	public boolean saveToImage(String pFileName, String pFormat) throws IOException {
-		return ImageIO.write(fEarthImage2, pFormat, new File(pFileName));
-	}
-	
 	public void saveToImage(OutputStream os) throws IOException {
 		ImageIO.write(fEarthImage2, "png", os);
 	}

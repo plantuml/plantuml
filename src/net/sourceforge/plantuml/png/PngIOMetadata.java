@@ -41,13 +41,13 @@ import java.io.OutputStream;
 import java.util.Iterator;
 
 import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
 import com.sun.imageio.plugins.png.PNGMetadata;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.security.ImageIO;
 
 public class PngIOMetadata {
 

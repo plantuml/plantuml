@@ -78,6 +78,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.CharHidder;
@@ -160,7 +161,9 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleFontFamilyChange.createEol());
 		this.commands.add(CommandCreoleMonospaced.create(skinParam.getMonospacedFamily()));
 		this.commands.add(CommandCreoleUrl.create(skinParam));
-		this.commands.add(CommandCreoleSvgAttributeChange.create());
+		if (SecurityUtils.allowSvgText()) {
+			this.commands.add(CommandCreoleSvgAttributeChange.create());
+		}
 
 		this.header = style.getHeader(fontConfiguration, context);
 

@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.awt.font.TextLayout;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UnusedSpace;
 import net.sourceforge.plantuml.svg.SvgGraphics;

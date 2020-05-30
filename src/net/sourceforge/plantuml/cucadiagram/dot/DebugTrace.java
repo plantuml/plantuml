@@ -35,20 +35,21 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import net.sourceforge.plantuml.security.SFile;
+
 public class DebugTrace {
 
-	private static final File out = new File("debug" + System.currentTimeMillis() + ".txt");
+	private static final SFile out = new SFile("debug" + System.currentTimeMillis() + ".txt");
 
 	private static PrintWriter pw;
 
 	private synchronized static PrintWriter getPrintWriter() {
 		if (pw == null) {
 			try {
-				pw = new PrintWriter(out);
+				pw = out.createPrintWriter();
 			} catch (FileNotFoundException e) {
 
 			}

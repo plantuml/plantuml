@@ -119,7 +119,8 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 	private void updateLinkColor(final Color newLink) {
 		if (link != newLink) {
 			link = newLink;
-			this.setCursor(link == LINK_NORMAL ? Cursor.getDefaultCursor() : Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			this.setCursor(
+					link == LINK_NORMAL ? Cursor.getDefaultCursor() : Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			repaint();
 		}
 	}
@@ -136,7 +137,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 	public void mouseClicked(MouseEvent event) {
 		if (link != LINK_NORMAL) {
 			try {
-				Desktop.getDesktop().browse(new URL("http://plantuml.com").toURI());
+				Desktop.getDesktop().browse(new URL("https://plantuml.com").toURI());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

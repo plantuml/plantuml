@@ -54,6 +54,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
 class FtpLoop implements Runnable {
 	enum Mode {
@@ -74,7 +75,7 @@ class FtpLoop implements Runnable {
 		this.incoming = socket;
 		this.ftpServer = ftpServer;
 		this.br = new BufferedReader(new InputStreamReader(incoming.getInputStream(), ftpServer.getCharset()));
-		this.pw = new PrintWriter(incoming.getOutputStream(), true);
+		this.pw = SecurityUtils.createPrintWriter(incoming.getOutputStream(), true);
 	}
 
 	// http://www.ncftp.com/libncftp/doc/ftp_overview.html
@@ -178,7 +179,8 @@ class FtpLoop implements Runnable {
 	private void localLog(String s) {
 	}
 
-	private void retr(final String fileName, Socket soc) throws UnknownHostException, IOException, InterruptedException {
+	private void retr(final String fileName, Socket soc)
+			throws UnknownHostException, IOException, InterruptedException {
 		final OutputStream os = soc.getOutputStream();
 		final byte[] data = connexion.getData(fileName);
 
@@ -291,7 +293,7 @@ class FtpLoop implements Runnable {
 	}
 
 	private void list(final Socket soc) throws IOException {
-		final PrintWriter listing = new PrintWriter(soc.getOutputStream(), true);
+		final PrintWriter listing = SecurityUtils.createPrintWriter(soc.getOutputStream(), true);
 		final Collection<String> files = connexion.getFiles();
 		if (files.size() > 0) {
 			int total = 0;

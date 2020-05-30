@@ -35,13 +35,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-
-import javax.imageio.ImageIO;
 
 import org.stathissideris.ascii2image.core.RenderingOptions;
 import org.stathissideris.ascii2image.core.Shape3DOrderingComparator;
@@ -59,42 +55,6 @@ public class BitmapRenderer {
 	Stroke normalStroke;
 	Stroke dashStroke; 
 	
-//	public static void main(String[] args) throws Exception {
-//		
-//		
-//		long startTime = System.currentTimeMillis();
-//		
-//		ConversionOptions options = new ConversionOptions();
-//		
-//		TextGrid grid = new TextGrid();
-//		
-//		String filename = "dak_orgstruktur_vs_be.ditaa.OutOfMemoryError.edit.txt";
-//		
-//		grid.loadFrom("tests/text/"+filename);
-//		
-//		Diagram diagram = new Diagram(grid, options);
-//		new BitmapRenderer().renderToPNG(diagram, "tests/images/"+filename+".png", options.renderingOptions);
-//		long endTime = System.currentTimeMillis();
-//		long totalTime  = (endTime - startTime) / 1000;
-//		System.out.println("Done in "+totalTime+"sec");
-//		
-//		File workDir = new File("tests/images");
-//		//Process p = Runtime.getRuntime().exec("display "+filename+".png", null, workDir);
-//	}
-
-	private boolean renderToPNG(Diagram diagram, String filename, RenderingOptions options){	
-		RenderedImage image = renderToImage(diagram, options);
-		
-		try {
-			File file = new File(filename);
-			ImageIO.write(image, "png", file);
-		} catch (IOException e) {
-			//e.printStackTrace();
-			System.err.println("Error: Cannot write to file "+filename);
-			return false;
-		}
-		return true;
-	}
 	
 	public RenderedImage renderToImage(Diagram diagram,  RenderingOptions options){
 		BufferedImage image = new BufferedImage(

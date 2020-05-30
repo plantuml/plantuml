@@ -48,7 +48,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -68,7 +67,8 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
@@ -797,7 +797,7 @@ public class SvgGraphics {
 			throw new IllegalArgumentException();
 		}
 		// javascript: security issue
-		if (GraphvizUtils.getJavascriptUnsecure() == false && url.toLowerCase().startsWith("javascript")) {
+		if (SecurityUtils.getJavascriptUnsecure() == false && url.toLowerCase().startsWith("javascript")) {
 			return;
 		}
 

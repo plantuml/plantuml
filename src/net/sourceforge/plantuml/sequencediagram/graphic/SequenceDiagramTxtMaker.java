@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -103,7 +104,8 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		final double tailHeight = drawableSet.getTailHeight(dummyStringBounder, diagram.isShowFootbox());
 		final double newpage2 = fullDimension.getHeight() - (diagram.isShowFootbox() ? tailHeight : 0) - headerHeight;
 		final Page page = new Page(headerHeight, 0, newpage2, tailHeight, 0, null);
-		// drawableSet.drawU_REMOVEDME_4243(ug, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
+		// drawableSet.drawU_REMOVEDME_4243(ug, 0, fullDimension.getWidth(), page,
+		// diagram.isShowFootbox());
 
 		final Display title = diagram.getTitle().getDisplay();
 
@@ -124,10 +126,10 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		if (fileFormat == FileFormat.UTXT) {
-			final PrintStream ps = new PrintStream(os, true, "UTF-8");
+			final PrintStream ps = SecurityUtils.createPrintStream(os, true, "UTF-8");
 			ug.getCharArea().print(ps);
 		} else {
-			final PrintStream ps = new PrintStream(os);
+			final PrintStream ps = SecurityUtils.createPrintStream(os);
 			ug.getCharArea().print(ps);
 		}
 		return new ImageDataSimple(1, 1);

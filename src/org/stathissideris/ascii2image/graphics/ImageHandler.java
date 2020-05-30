@@ -21,58 +21,53 @@
 package org.stathissideris.ascii2image.graphics;
 
 import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
-import java.net.URL;
-
-import javax.swing.JLabel;
 
 public class ImageHandler {
-	
+
 //	private static OffScreenSVGRenderer svgRenderer = 
 //		new OffScreenSVGRenderer();
-	
+
 	private static ImageHandler instance = new ImageHandler();
-	
-	public static ImageHandler instance(){
+
+	public static ImageHandler instance() {
 		return instance;
 	}
-	
-	private static final MediaTracker tracker = new MediaTracker(new JLabel());
-	
-	public Image loadImage(String filename){
-		URL url = ClassLoader.getSystemResource(filename);
-		Image result = null;
-		if(url != null)
-			result = Toolkit.getDefaultToolkit().getImage(url);
-		else
-			result = Toolkit.getDefaultToolkit().getImage(filename);
-//			result = null;
 
-		//wait for the image to load before returning
-		tracker.addImage(result, 0);
-		try {
-			tracker.waitForID(0);
-		} catch (InterruptedException e) {
-			System.err.println("Failed to load image "+filename);
-			e.printStackTrace();
-		}
-		tracker.removeImage(result, 0);
-		
-		return result;
+//	private static final MediaTracker tracker = new MediaTracker(new JLabel());
+
+	public Image loadImage(String filename) {
+		return null;
+//		URL url = ClassLoader.getSystemResource(filename);
+//		Image result = null;
+//		if(url != null)
+//			result = Toolkit.getDefaultToolkit().getImage(url);
+//		else
+//			result = Toolkit.getDefaultToolkit().getImage(filename);
+////			result = null;
+//
+//		//wait for the image to load before returning
+//		tracker.addImage(result, 0);
+//		try {
+//			tracker.waitForID(0);
+//		} catch (InterruptedException e) {
+//			System.err.println("Failed to load image "+filename);
+//			e.printStackTrace();
+//		}
+//		tracker.removeImage(result, 0);
+//		
+//		return result;
 	}
-	
+
 //	public BufferedImage renderSVG(String filename, int width, int height, boolean stretch) throws IOException {
-//		File file = new File(filename);
+//		File file = SecurityUtils.File(filename);
 //		URI uri = file.toURI();
 //		return svgRenderer.renderToImage(uri.toString(), width, height, stretch, null, null);
 //	}
 //
 //	public BufferedImage renderSVG(String filename, int width, int height, boolean stretch, String idRegex, Color color) throws IOException {
-//		File file = new File(filename);
+//		File file = SecurityUtils.File(filename);
 //		URI uri = file.toURI();
 //		return svgRenderer.renderToImage(uri.toString(), width, height, stretch, idRegex, color);
 //	}
 
-	
 }

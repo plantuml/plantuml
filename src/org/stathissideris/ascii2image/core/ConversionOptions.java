@@ -80,7 +80,7 @@ public class ConversionOptions {
 //				if(curOption.getLongOpt().equals("config")) {
 //					String configFilename = curOption.getValue();
 //					System.out.println("Parsing configuration file "+configFilename);
-//					File file = new File(configFilename);
+//					File file = SecurityUtils.File(configFilename);
 //					if(file.exists()){
 //						configParser.parseFile(file);
 //						HashMap<String, CustomShapeDefinition> shapes = configParser.getShapeDefinitionsHash();

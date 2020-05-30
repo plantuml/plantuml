@@ -35,9 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
@@ -50,6 +47,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
@@ -74,7 +72,7 @@ public class SourceStringReader {
 		this(defines, source, "UTF-8", Collections.<String>emptyList());
 	}
 
-	public SourceStringReader(String source, File newCurrentDir) {
+	public SourceStringReader(String source, SFile newCurrentDir) {
 		this(Defines.createEmpty(), source, "UTF-8", Collections.<String>emptyList(), newCurrentDir);
 	}
 
@@ -82,7 +80,7 @@ public class SourceStringReader {
 		this(defines, source, charset, config, FileSystem.getInstance().getCurrentDir());
 	}
 
-	public SourceStringReader(Defines defines, String source, String charset, List<String> config, File newCurrentDir) {
+	public SourceStringReader(Defines defines, String source, String charset, List<String> config, SFile newCurrentDir) {
 		// // WARNING GLOBAL LOCK HERE
 		// synchronized (SourceStringReader.class) {
 		try {
@@ -106,12 +104,12 @@ public class SourceStringReader {
 	}
 
 	@Deprecated
-	public String generateImage(File f) throws IOException {
+	public String generateImage(SFile f) throws IOException {
 		return outputImage(f).getDescription();
 	}
 
-	public DiagramDescription outputImage(File f) throws IOException {
-		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
+	public DiagramDescription outputImage(SFile f) throws IOException {
+		final OutputStream os = f.createBufferedOutputStream();
 		DiagramDescription result = null;
 		try {
 			result = outputImage(os, 0);
@@ -226,8 +224,8 @@ public class SourceStringReader {
 	private void noStartumlFound(OutputStream os, FileFormatOption fileFormatOption, long seed) throws IOException {
 		final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList("No @startuml/@enduml found"),
 				fileFormatOption.isUseRedForError());
-		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, null, null,
-				1.0, error.getBackcolor());
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, null, null, 1.0,
+				error.getBackcolor());
 		imageBuilder.setUDrawable(error);
 		imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}

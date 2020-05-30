@@ -34,13 +34,13 @@
  */
 package net.sourceforge.plantuml.tim.stdlib;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
@@ -68,7 +68,7 @@ public class FileExists extends SimpleReturnFunction {
 	}
 
 	private boolean fileExists(String path) {
-		final File f = new File(path);
+		final SFile f = new SFile(path);
 		return f.exists();
 	}
 }

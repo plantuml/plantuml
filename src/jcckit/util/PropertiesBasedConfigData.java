@@ -18,8 +18,6 @@
  */
 package jcckit.util;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -30,19 +28,6 @@ import java.util.Properties;
  */
 public class PropertiesBasedConfigData extends FlatConfigData {
   private final Properties _properties;
-
-  /**
-   * Creates an instance from the specified <tt>.properties</tt> file.
-   * @param fileName File name of the <tt>.properties</tt> file relative
-   *        to the working directory or absolute.
-   * @throws IOException if the <tt>.properties</tt> does not exist or could
-   *         not be read.
-   */
-  public PropertiesBasedConfigData(String fileName) throws IOException {
-    super(null);
-    _properties = new Properties();
-    _properties.load(new FileInputStream(fileName));
-  }
 
   /**
    * Creates an instance based on the specified properties.

@@ -35,20 +35,19 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import net.sourceforge.plantuml.security.SFile;
 
 public class NamedOutputStream extends OutputStream {
 
 	private final OutputStream os;
 	private final BaseFile basefile;
 
-	public NamedOutputStream(File file) throws FileNotFoundException {
-		this.os = new BufferedOutputStream(new FileOutputStream(file));
+	public NamedOutputStream(SFile file) throws FileNotFoundException {
+		this.os = file.createBufferedOutputStream();
 		this.basefile = new BaseFile(file);
 	}
 

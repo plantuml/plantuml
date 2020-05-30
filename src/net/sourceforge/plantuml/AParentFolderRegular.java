@@ -35,31 +35,32 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.File;
 import java.io.IOException;
+
+import net.sourceforge.plantuml.security.SFile;
 
 public class AParentFolderRegular implements AParentFolder {
 
-	private final File dir;
+	private final SFile dir;
 
-	public AParentFolderRegular(File dir) {
+	public AParentFolderRegular(SFile dir) {
 		this.dir = dir;
 		// Log.info("Creating AParentFolderRegular " + dir);
 	}
 
 	@Override
 	public String toString() {
-		return "AParentFolderRegular::" + (dir == null ? "NULL" : dir.getAbsolutePath());
+		return "AParentFolderRegular::" + (dir == null ? "NULL" : dir.getPrintablePath());
 	}
 
 	public AFile getAFile(String nameOrPath) throws IOException {
-		final File filecurrent;
+		final SFile filecurrent;
 		// Log.info("AParentFolderRegular::looking for " + nameOrPath);
 		// Log.info("AParentFolderRegular::dir = " + dir);
 		if (dir == null) {
-			filecurrent = new File(nameOrPath);
+			filecurrent = new SFile(nameOrPath);
 		} else {
-			filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
+			filecurrent = dir.getAbsoluteFile().file(nameOrPath);
 		}
 		// Log.info("AParentFolderRegular::Filecurrent " + filecurrent);
 		if (filecurrent.exists()) {

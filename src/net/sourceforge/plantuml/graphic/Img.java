@@ -36,12 +36,7 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
@@ -49,12 +44,15 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SURL;
 
 public class Img implements HtmlCommand {
 
 	final static private Pattern2 srcPattern = MyPattern.cmpile("(?i)src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
 	final static private Pattern2 vspacePattern = MyPattern.cmpile("(?i)vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
-	final static private Pattern2 valignPattern = MyPattern.cmpile("(?i)valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
+	final static private Pattern2 valignPattern = MyPattern
+			.cmpile("(?i)valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
 	final static private Pattern2 noSrcColonPattern = MyPattern.cmpile("(?i)" + Splitter.imgPatternNoSrcColon);
 
 	private final TextBlock tileImage;
@@ -96,29 +94,36 @@ public class Img implements HtmlCommand {
 		}
 		final String src = m.group(1);
 		try {
-			final File f = FileSystem.getInstance().getFile(src);
+			final SFile f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
-//					final byte image[] = getFile(src);
-//					final BufferedImage read = ImageIO.read(new ByteArrayInputStream(image));
-					final BufferedImage read = FileUtils.readRasterImageFromURL(new URL(src));
+					final SURL tmp = SURL.create(src);
+					if (tmp == null) {
+						return new Text("(Cannot decode: " + src + ")");
+					}
+					final BufferedImage read = tmp.readRasterImageFromURL();
 					if (read == null) {
 						return new Text("(Cannot decode: " + src + ")");
 					}
 					return new Img(new TileImage(read, valign, vspace));
 				}
-				return new Text("(File not found: " + f + ")");
+				return new Text("(Cannot decode: " + f + ")");
 			}
 			if (f.getName().endsWith(".svg")) {
-				return new Img(new TileImageSvg(f));
+				final String tmp = FileUtils.readSvg(f);
+				if (tmp == null) {
+					return new Text("(Cannot decode: " + f + ")");
+				}
+				return new Img(new TileImageSvg(tmp));
 			}
-			final BufferedImage read = FileUtils.readRasterImageFromFile(f);
+			final BufferedImage read = f.readRasterImageFromFile();
 			if (read == null) {
 				return new Text("(Cannot decode: " + f + ")");
 			}
-			return new Img(new TileImage(FileUtils.readRasterImageFromFile(f), valign, vspace));
+			return new Img(new TileImage(f.readRasterImageFromFile(), valign, vspace));
 		} catch (IOException e) {
+			e.printStackTrace();
 			return new Text("ERROR " + e.toString());
 		}
 	}
@@ -126,28 +131,5 @@ public class Img implements HtmlCommand {
 	public TextBlock createMonoImage() {
 		return tileImage;
 	}
-
-	// Added by Alain Corbiere
-	static byte[] getFile(String host) throws IOException {
-		final ByteArrayOutputStream image = new ByteArrayOutputStream();
-		InputStream input = null;
-		try {
-			final URL url = new URL(host);
-			final URLConnection connection = url.openConnection();
-			input = connection.getInputStream();
-			final byte[] buffer = new byte[1024];
-			int read;
-			while ((read = input.read(buffer)) > 0) {
-				image.write(buffer, 0, read);
-			}
-			image.close();
-			return image.toByteArray();
-		} finally {
-			if (input != null) {
-				input.close();
-			}
-		}
-	}
-	// End
 
 }

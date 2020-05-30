@@ -40,7 +40,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -76,6 +75,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockRaw;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -203,15 +203,15 @@ public abstract class PSystemError extends AbstractPSystem {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();
 			area.drawStringsLR(getPureAsciiFormatted(), 0, 0);
-			area.print(new PrintStream(os));
+			area.print(SecurityUtils.createPrintStream(os));
 			return new ImageDataSimple(1, 1);
 
 		}
 		final TextBlockBackcolored result = getGraphicalFormatted();
 
 		TextBlock udrawable;
-		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
-				false, null, getMetadata(), null, 1.0, result.getBackcolor());
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, getMetadata(),
+				null, 1.0, result.getBackcolor());
 		imageBuilder.setRandomPixel(true);
 		if (getSource().getTotalLineCount() < 5) {
 			udrawable = addWelcome(result);

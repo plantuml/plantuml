@@ -36,12 +36,8 @@
 package net.sourceforge.plantuml.sprite;
 
 import java.awt.geom.Dimension2D;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -56,14 +52,6 @@ public class SpriteSvg implements Sprite {
 
 	public SpriteSvg(String svg) {
 		this.img = new UImageSvg(new SvgString(svg, 1));
-	}
-
-	public SpriteSvg(File svgFile) throws IOException {
-		this(FileUtils.readSvg(svgFile));
-	}
-
-	public SpriteSvg(InputStream is) throws IOException {
-		this(FileUtils.readSvg(is));
 	}
 
 	public TextBlock asTextBlock(final HColor color, final double scale) {

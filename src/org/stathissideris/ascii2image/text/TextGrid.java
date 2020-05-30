@@ -21,9 +21,6 @@
 package org.stathissideris.ascii2image.text;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +31,6 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.stathissideris.ascii2image.core.FileUtils;
 import org.stathissideris.ascii2image.core.ProcessingOptions;
 
 
@@ -96,20 +92,6 @@ public class TextGrid {
 		markupTags.addAll(tags);
 	}
 	
-	public static void main(String[] args) throws Exception {
-		TextGrid grid = new TextGrid();
-		grid.loadFrom("tests/text/art10.txt");
-
-		grid.writeStringTo(grid.new Cell(28, 1), "testing");
-
-		grid.findMarkupTags();
-		
-		grid.printDebug();
-		//System.out.println(grid.fillContinuousArea(0, 0, '-').size()+" cells filled");
-		//grid.fillContinuousArea(4, 4, '-');
-		//grid.getSubGrid(1,1,3,3).printDebug();
-		//grid.printDebug();
-	}
 
 
 	public TextGrid(){
@@ -1511,24 +1493,6 @@ public class TextGrid {
 		return StringUtils.isOneOf(c, dashedLines);
 	}
 
-	public boolean loadFrom(String filename)
-			throws FileNotFoundException, IOException
-			{
-		return loadFrom(filename, null);
-	}
-
-	public boolean loadFrom(String filename, ProcessingOptions options)
-		throws IOException
-	{
-				
-		String encoding = (options == null) ? null : options.getCharacterEncoding();
-		ArrayList<StringBuffer> lines = new ArrayList<StringBuffer>();
-		String[] linesArray = FileUtils.readFile(new File(filename), encoding).split("(\r)?\n");
-		for(int i = 0; i  < linesArray.length; i++)
-			lines.add(new StringBuffer(linesArray[i]));
-		
-		return initialiseWithLines(lines, options);
-	}
 
 	public boolean initialiseWithText(String text, ProcessingOptions options) throws UnsupportedEncodingException {
 

@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.File;
+import net.sourceforge.plantuml.security.SFile;
 
 public class SuggestedFile {
 
 	private final FileFormat fileFormat;
 	private final int initialCpt;
-	private final File outputFile;
+	private final SFile outputFile;
 
-	private SuggestedFile(File outputFile, FileFormat fileFormat, int initialCpt) {
+	private SuggestedFile(SFile outputFile, FileFormat fileFormat, int initialCpt) {
 		if (outputFile.getName().endsWith(fileFormat.getFileSuffix())) {
 			throw new IllegalArgumentException();
 		}
@@ -58,14 +58,18 @@ public class SuggestedFile {
 
 	@Override
 	public String toString() {
-		return outputFile.getAbsolutePath() + "[" + initialCpt + "]";
+		return outputFile.getPrintablePath() + "[" + initialCpt + "]";
 	}
 
-	public static SuggestedFile fromOutputFile(File outputFile, FileFormat fileFormat) {
+	public static SuggestedFile fromOutputFile(SFile outputFile, FileFormat fileFormat) {
 		return fromOutputFile(outputFile, fileFormat, 0);
 	}
 
-	public File getParentFile() {
+	public static SuggestedFile fromOutputFile(java.io.File outputFile, FileFormat fileFormat) {
+		return fromOutputFile(outputFile, fileFormat, 0);
+	}
+
+	public SFile getParentFile() {
 		return outputFile.getParentFile();
 	}
 
@@ -73,17 +77,21 @@ public class SuggestedFile {
 		return outputFile.getName();
 	}
 
-	public File getFile(int cpt) {
+	public SFile getFile(int cpt) {
 		final String newName = fileFormat.changeName(outputFile.getName(), initialCpt + cpt);
-		return new File(outputFile.getParentFile(), newName);
+		return outputFile.getParentFile().file(newName);
 	}
 
-	public static SuggestedFile fromOutputFile(File outputFile, FileFormat fileFormat, int initialCpt) {
+	public static SuggestedFile fromOutputFile(SFile outputFile, FileFormat fileFormat, int initialCpt) {
 		return new SuggestedFile(outputFile, fileFormat, initialCpt);
 	}
 
-	public File getTmpFile() {
-		return new File(getParentFile(), getName() + ".tmp");
+	public static SuggestedFile fromOutputFile(java.io.File outputFile, FileFormat fileFormat, int initialCpt) {
+		return new SuggestedFile(SFile.fromFile(outputFile), fileFormat, initialCpt);
+	}
+
+	public SFile getTmpFile() {
+		return getParentFile().file(getName() + ".tmp");
 	}
 
 }

@@ -43,8 +43,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import javax.imageio.ImageIO;
-
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
@@ -54,6 +52,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 

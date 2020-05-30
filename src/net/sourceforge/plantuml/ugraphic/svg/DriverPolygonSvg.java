@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UClip;

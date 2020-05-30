@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.png;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
-import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.ImageInputStream;
@@ -47,17 +45,20 @@ import javax.imageio.stream.ImageInputStream;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
+import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SFile;
+
 public class Metadata {
 
 	public static void main(String[] args) throws IOException {
 		final Metadata meta = new Metadata();
 		final int length = args.length;
 		for (int i = 0; i < length; i++) {
-			meta.readAndDisplayMetadata(new File(args[i]));
+			meta.readAndDisplayMetadata(new SFile(args[i]));
 		}
 	}
 
-	public void readAndDisplayMetadata(File file) throws IOException {
+	public void readAndDisplayMetadata(SFile file) throws IOException {
 		final ImageInputStream iis = ImageIO.createImageInputStream(file);
 		final Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 

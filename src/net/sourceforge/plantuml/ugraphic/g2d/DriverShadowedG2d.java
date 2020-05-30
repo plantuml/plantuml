@@ -73,8 +73,6 @@ public class DriverShadowedG2d {
 		if (dpiFactor < 1) {
 			dpiFactor = 1;
 		}
-		// dpiFactor = 1;
-		// Shadow
 		final Rectangle2D bounds = shape.getBounds2D();
 		final double ww = bounds.getMaxX() - bounds.getMinX();
 		final double hh = bounds.getMaxY() - bounds.getMinY();
@@ -107,7 +105,43 @@ public class DriverShadowedG2d {
 		if (destination != null) {
 			final AffineTransform at = g2d.getTransform();
 			g2d.scale(1 / dpiFactor, 1 / dpiFactor);
-			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor), null);
+			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),
+					null);
+			g2d.setTransform(at);
+		}
+	}
+
+	protected void drawOnlyLineShadow(Graphics2D g2d, Line2D.Double shape, double deltaShadow, double dpiFactor) {
+		if (dpiFactor < 1) {
+			dpiFactor = 1;
+		}
+		final Rectangle2D bounds = shape.getBounds2D();
+		final double ww = bounds.getMaxX() - bounds.getMinX();
+		final double hh = bounds.getMaxY() - bounds.getMinY();
+
+		final double w = (ww + deltaShadow * 2 + 6) * dpiFactor;
+		final double h = (hh + deltaShadow * 2 + 6) * dpiFactor;
+		BufferedImage destination = null;
+		try {
+			destination = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_INT_ARGB);
+			final Graphics2D gg = destination.createGraphics();
+			gg.scale(dpiFactor, dpiFactor);
+			gg.translate(deltaShadow - bounds.getMinX(), deltaShadow - bounds.getMinY());
+			gg.draw(shape);
+			gg.dispose();
+
+			final ConvolveOp simpleBlur = getConvolveOp(6, dpiFactor);
+			destination = simpleBlur.filter(destination, null);
+		} catch (OutOfMemoryError error) {
+			Log.info("Warning: Cannot draw shadow, image too big.");
+		} catch (Exception e) {
+			Log.info("Warning: Cannot draw shadow: " + e);
+		}
+		if (destination != null) {
+			final AffineTransform at = g2d.getTransform();
+			g2d.scale(1 / dpiFactor, 1 / dpiFactor);
+			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),
+					null);
 			g2d.setTransform(at);
 		}
 	}

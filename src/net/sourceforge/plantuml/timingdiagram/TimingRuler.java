@@ -135,6 +135,10 @@ public class TimingRuler {
 		return time / tickUnitary() * tickIntervalInPixels;
 	}
 
+	private long tickToTime(int i) {
+		return tickUnitary * i + getMin().getTime().longValue();
+	}
+
 	public void addTime(TimeTick time) {
 		this.highestCommonFactorInternal = -1;
 		times.add(time);
@@ -179,7 +183,7 @@ public class TimingRuler {
 		} else {
 			final int nb = getNbTick(true);
 			for (int i = 0; i <= nb; i++) {
-				final long round = tickUnitary * i;
+				final long round = tickToTime(i);
 				result.add(round);
 			}
 		}

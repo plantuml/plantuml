@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.security.SFile;
 
 abstract class AbstractGraphviz implements Graphviz {
 
@@ -58,8 +59,8 @@ abstract class AbstractGraphviz implements Graphviz {
 	private static String findExecutableOnPath(String name) {
 		final String path = System.getenv("PATH");
 		if (path != null) {
-			for (String dirname : path.split(File.pathSeparator)) {
-				File file = new File(dirname, name);
+			for (String dirname : path.split(SFile.pathSeparator)) {
+				final File file = new File(dirname, name);
 				if (file.isFile() && file.canExecute()) {
 					return file.getAbsolutePath();
 				}
@@ -98,7 +99,8 @@ abstract class AbstractGraphviz implements Graphviz {
 		}
 
 		if (getExeState() != ExeState.OK) {
-			// createPngNoGraphviz(os, new FileFormatOption(FileFormat.valueOf(type[0].goUpperCase())));
+			// createPngNoGraphviz(os, new
+			// FileFormatOption(FileFormat.valueOf(type[0].goUpperCase())));
 			throw new IllegalStateException();
 		}
 		final String cmd[] = getCommandLine();

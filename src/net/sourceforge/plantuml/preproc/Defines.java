@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +52,9 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.api.ApiWarning;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.TVariableScope;
@@ -106,14 +108,31 @@ public class Defines implements Truth {
 		return result;
 	}
 
-	public static Defines createWithFileName(File file) {
+	public static Defines createWithFileName(SFile file) {
 		if (file == null) {
 			throw new IllegalArgumentException();
 		}
 		final Defines result = createEmpty();
 		result.overrideFilename(file.getName());
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
-		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+			result.environment.put("dirpath",
+					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
+		}
+		return result;
+	}
+
+	public static Defines createWithFileName(java.io.File file) {
+		if (file == null) {
+			throw new IllegalArgumentException();
+		}
+		final Defines result = createEmpty();
+		result.overrideFilename(file.getName());
+		result.environment.put("filedate", new Date(file.lastModified()).toString());
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+			result.environment.put("dirpath",
+					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
+		}
 		return result;
 	}
 

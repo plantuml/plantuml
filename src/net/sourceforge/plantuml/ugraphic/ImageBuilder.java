@@ -43,14 +43,12 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.AnimatedGifEncoder;
@@ -76,6 +74,8 @@ import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -128,6 +128,13 @@ public class ImageBuilder {
 			double dpiFactor, HColor mybackcolor) {
 		return new ImageBuilder(colorMapper, useHandwritten, animation, metadata, warningOrError, dpiFactor,
 				mybackcolor, margins);
+	}
+
+	public static ImageBuilder buildBB(ColorMapper colorMapper, boolean useHandwritten,
+			ClockwiseTopRightBottomLeft margins, Animation animation, String metadata, String warningOrError,
+			double dpiFactor, HColor mybackcolor) {
+		return new ImageBuilder(colorMapper, useHandwritten, animation, metadata, warningOrError, dpiFactor,
+				mybackcolor == null ? HColorUtils.transparent() : mybackcolor, margins);
 	}
 
 	public static ImageBuilder buildC(ISkinParam skinParam, ClockwiseTopRightBottomLeft margins, Animation animation,
@@ -351,7 +358,7 @@ public class ImageBuilder {
 		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + left + right,
 				limitFinder.getMaxY() + 1 + top + bottom);
 
-		final File f = new File("c:/tmp.avi");
+		final SFile f = new SFile("c:/tmp.avi");
 
 		final int nbframe = 100;
 

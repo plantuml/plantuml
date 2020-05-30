@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.tim.stdlib;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -77,7 +76,7 @@ public class InvokeProcedure implements TFunction {
 		if (func == null) {
 			throw EaterException.located("Cannot find void function " + fname);
 		}
-		func.executeProcedureInternal(context, memory, args, Collections.<String, TValue>emptyMap());
+		func.executeProcedureInternal(context, memory, args, call.getNamedArguments());
 	}
 
 	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args,

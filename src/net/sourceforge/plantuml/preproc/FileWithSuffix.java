@@ -37,6 +37,7 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.AFile;
 import net.sourceforge.plantuml.AFileRegular;
 import net.sourceforge.plantuml.AParentFolder;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.security.SFile;
 
 public class FileWithSuffix {
 
@@ -70,15 +72,19 @@ public class FileWithSuffix {
 		if (file == null) {
 			return null;
 		}
+		final InputStream tmp = file.openFile();
+		if (tmp == null) {
+			return null;
+		}
 		if (entry == null) {
 			if (charset == null) {
 				Log.info("Using default charset");
-				return new InputStreamReader(file.open());
+				return new InputStreamReader(tmp);
 			}
 			Log.info("Using charset " + charset);
-			return new InputStreamReader(file.open(), charset);
+			return new InputStreamReader(tmp, charset);
 		}
-		final InputStream is = getDataFromZip(file.open(), entry);
+		final InputStream is = getDataFromZip(tmp, entry);
 		if (is == null) {
 			return null;
 		}
@@ -111,11 +117,11 @@ public class FileWithSuffix {
 		return file != null && file.isOk();
 	}
 
-	FileWithSuffix(File file, String suffix) {
+	FileWithSuffix(SFile file, String suffix) {
 		this.file = new AFileRegular(file);
 		this.suffix = suffix;
 		this.entry = null;
-		this.description = getFileName(file);
+		this.description = file.getName();
 	}
 
 	FileWithSuffix(String description, String suffix, AFile file, String entry) {
@@ -188,10 +194,10 @@ public class FileWithSuffix {
 		return false;
 	}
 
-	public static Set<File> convert(Set<FileWithSuffix> all) {
+	public static Set<File> convert(Set<FileWithSuffix> all) throws FileNotFoundException {
 		final Set<File> result = new HashSet<File>();
 		for (FileWithSuffix f : all) {
-			result.add(f.file.getUnderlyingFile());
+			result.add(f.file.getUnderlyingFile().conv());
 		}
 		return result;
 	}

@@ -40,12 +40,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.imageio.ImageIO;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -56,6 +55,9 @@ public class SpriteImage implements Sprite {
 	private final UImage img;
 
 	public SpriteImage(BufferedImage img) {
+		if (img == null) {
+			throw new IllegalArgumentException();
+		}
 		this.img = new UImage(img);
 	}
 

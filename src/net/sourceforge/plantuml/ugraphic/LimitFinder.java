@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
 import net.sourceforge.plantuml.graphic.SpecialText;
 import net.sourceforge.plantuml.graphic.StringBounder;

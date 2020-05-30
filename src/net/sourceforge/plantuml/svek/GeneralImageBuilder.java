@@ -254,7 +254,7 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.DEEP_HISTORY) {
 			return new EntityImageDeepHistory(leaf, skinParam);
 		}
-				
+
 		if (leaf.getLeafType() == LeafType.TIPS) {
 			return new EntityImageTips(leaf, skinParam, bibliotekon);
 		}

@@ -35,19 +35,19 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.File;
+import net.sourceforge.plantuml.security.SFile;
 
 public class BaseFile {
 
 	private final String basename;
-	private final File basedir;
+	private final SFile basedir;
 
 	public BaseFile() {
 		this.basedir = null;
 		this.basename = null;
 	}
 
-	public BaseFile(File file) {
+	public BaseFile(SFile file) {
 		this.basedir = file.getParentFile();
 		this.basename = extractBasename(file.getName());
 	}
@@ -72,15 +72,15 @@ public class BaseFile {
 		return basename;
 	}
 
-	public File getBasedir() {
+	public SFile getBasedir() {
 		return basedir;
 	}
 
-	public File getTraceFile(String tail) {
+	public SFile getTraceFile(String tail) {
 		if (basedir == null || basename == null) {
-			return new File(tail);
+			return new SFile(tail);
 		}
-		return new File(basedir, basename + "_" + tail);
+		return basedir.file(basename + "_" + tail);
 	}
 
 }

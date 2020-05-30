@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPorts {
 
-	private TextBlock area2;
+	private TextBlock area;
 	private final FontConfiguration titleConfig;
 	private final List<CharSequence> rawBody;
 	private final FontParam fontParam;
@@ -78,6 +78,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	private final Stereotype stereotype;
 	private final ILeaf entity;
 	private final boolean inEllipse;
+	private final double minClassWidth;
 
 	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
 			Stereotype stereotype, ILeaf entity) {
@@ -93,10 +94,18 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		this.manageModifier = manageModifier;
 		this.entity = entity;
 		this.inEllipse = false;
+		this.minClassWidth = 0;
 	}
 
 	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
 			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity) {
+		this(display, fontParam, skinParam, align, stereotype, manageHorizontalLine, manageHorizontalLine, entity, 0);
+	}
+
+	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
+			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity,
+			double minClassWidth) {
+		this.minClassWidth = minClassWidth;
 		this.entity = entity;
 		this.stereotype = stereotype;
 		this.rawBody = new ArrayList<CharSequence>();
@@ -137,8 +146,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	}
 
 	private TextBlock getArea(StringBounder stringBounder) {
-		if (area2 != null) {
-			return area2;
+		if (area != null) {
+			return area;
 		}
 		urls.clear();
 		final List<TextBlock> blocks = new ArrayList<TextBlock>();
@@ -187,12 +196,16 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 				new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity), separator, title));
 
 		if (blocks.size() == 1) {
-			this.area2 = blocks.get(0);
+			this.area = blocks.get(0);
 		} else {
-			this.area2 = new TextBlockVertical2(blocks, align);
+			this.area = new TextBlockVertical2(blocks, align);
+		}
+		if (minClassWidth > 0) {
+			this.area = TextBlockUtils.withMinWidth(this.area, minClassWidth,
+					skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT));
 		}
 
-		return area2;
+		return area;
 	}
 
 	private static List<CharSequence> buildAllTree(String init, ListIterator<CharSequence> it) {

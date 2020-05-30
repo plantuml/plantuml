@@ -35,20 +35,21 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sourceforge.plantuml.security.SFile;
+
 public interface AFile {
 
-	public InputStream open() throws IOException;
+	public InputStream openFile();
 
 	public boolean isOk();
 
 	public AParentFolder getParentFile();
 
-	public File getUnderlyingFile();
+	public SFile getUnderlyingFile();
 
-	public File getSystemFolder() throws IOException;
+	public SFile getSystemFolder() throws IOException;
 
 }

@@ -49,6 +49,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -59,9 +62,6 @@ import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 import net.sourceforge.plantuml.version.Version;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class XmiStateDiagram implements IXmiClassDiagram {
 

@@ -37,17 +37,16 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParam;
@@ -176,13 +175,6 @@ public class TextBlockUtils {
 		return limitFinder.getMinMax();
 	}
 
-	private static final Graphics2D gg;
-
-	static {
-		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-		gg = imDummy.createGraphics();
-	}
-
 	public static boolean isEmpty(TextBlock text, StringBounder dummyStringBounder) {
 		if (text == null) {
 			return true;
@@ -192,15 +184,15 @@ public class TextBlockUtils {
 	}
 
 	public static FontRenderContext getFontRenderContext() {
-		return gg.getFontRenderContext();
+		return FileFormat.gg.getFontRenderContext();
 	}
 
 	public static LineMetrics getLineMetrics(UFont font, String text) {
-		return font.getLineMetrics(gg, text);
+		return font.getLineMetrics(FileFormat.gg, text);
 	}
 
 	public static FontMetrics getFontMetrics(Font font) {
-		return gg.getFontMetrics(font);
+		return FileFormat.gg.getFontMetrics(font);
 	}
 
 	public static TextBlock fullInnerPosition(final TextBlock bloc, final String display) {

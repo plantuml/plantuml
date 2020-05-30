@@ -40,13 +40,13 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
@@ -114,7 +114,7 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		final PrintStream ps = new PrintStream(os, true, "UTF-8");
+		final PrintStream ps = SecurityUtils.createPrintStream(os, true, "UTF-8");
 		getCharArea().print(ps);
 	}
 

@@ -70,7 +70,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 				getStatePattern("ENT1"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexConcat(
-				//
+						//
 						new RegexLeaf("ARROW_CROSS_START", "(x)?"), //
 						new RegexLeaf("ARROW_BODY1", "(-+)"), //
 						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
@@ -91,8 +91,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	private static RegexLeaf getStatePattern(String name) {
-		return new RegexLeaf(
-				name,
+		return new RegexLeaf(name,
 				"([\\p{L}0-9_.]+|[\\p{L}0-9_.]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[\\p{L}0-9_.]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
 	}
 
@@ -103,13 +102,13 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 
 		final IEntity cl1 = getEntityStart(diagram, ent1);
 		if (cl1 == null) {
-			return CommandExecutionResult.error("The state " + ent1
-					+ " has been created in a concurrent state : it cannot be used here.");
+			return CommandExecutionResult
+					.error("The state " + ent1 + " has been created in a concurrent state : it cannot be used here.");
 		}
 		final IEntity cl2 = getEntityEnd(diagram, ent2);
 		if (cl2 == null) {
-			return CommandExecutionResult.error("The state " + ent2
-					+ " has been created in a concurrent state : it cannot be used here.");
+			return CommandExecutionResult
+					.error("The state " + ent2 + " has been created in a concurrent state : it cannot be used here.");
 		}
 
 		if (arg.get("ENT1", 1) != null) {

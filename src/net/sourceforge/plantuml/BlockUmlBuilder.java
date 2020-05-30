@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.preproc.ReadLineNumbered;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.Preprocessor;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
@@ -62,7 +62,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	private final ImportedFiles importedFiles;
 	private final String charset;
 
-	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader readerInit, File newCurrentDir,
+	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader readerInit, SFile newCurrentDir,
 			String desc) throws IOException {
 		ReadLineNumbered includer = null;
 		this.defines = defines;

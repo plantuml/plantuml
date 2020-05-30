@@ -60,7 +60,6 @@ import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.creole.Stencil;
-import net.sourceforge.plantuml.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -251,7 +250,13 @@ public class FtileBox extends AbstractFtile {
 		} else {
 			ug = ug.apply(borderColor);
 		}
-		ug = ug.apply(backColor.bg()).apply(thickness);
+		if (backColor == null) {
+			ug = ug.apply(new HColorNone().bg());
+		} else {
+			ug = ug.apply(backColor.bg());
+		}
+
+		ug = ug.apply(thickness);
 		rect.drawU(ug);
 
 		if (horizontalAlignment == HorizontalAlignment.LEFT) {

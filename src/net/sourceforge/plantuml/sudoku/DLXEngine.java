@@ -16,8 +16,6 @@
 
 package net.sourceforge.plantuml.sudoku;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Random;
 
 /*******************************************************************************
@@ -612,29 +610,6 @@ class dlx_generator {
 	public dlx_generator(Random random) {
 		dbg("In constructor");
 		this.random = random;
-	}
-
-	/**
-	 * Save the generated Sudoku to a file.
-	 */
-	void saveSudokuToFile(String s) {
-		FileOutputStream FO = null;
-		byte[] buffer = new byte[s.length() + 1];
-		int i = 0;
-
-		while (i < s.length()) {
-			buffer[i] = (byte) s.charAt(i);
-			i++;
-		}
-
-		try {
-			FO = new FileOutputStream("generated_sudoku.sdk");
-			FO.write(buffer);
-			FO.close();
-		} catch (IOException IOE) {
-			// Well, well, well....
-			return;
-		}
 	}
 
 	/**

@@ -17,11 +17,6 @@
 package ext.plantuml.com.google.zxing.client.j2se;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-
-import javax.imageio.ImageIO;
 
 import ext.plantuml.com.google.zxing.common.BitMatrix;
 

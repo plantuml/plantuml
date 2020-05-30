@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
 public class EntityImageDeepHistory extends EntityImagePseudoState {
 

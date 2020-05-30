@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -49,17 +48,19 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
+import net.sourceforge.plantuml.security.SFile;
 
 public class SignatureUtils {
 
-	// private static byte[] salting(String pass, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException,
+	// private static byte[] salting(String pass, byte[] salt) throws
+	// NoSuchAlgorithmException, InvalidKeySpecException,
 	// UnsupportedEncodingException {
 	// final byte[] tmp = salting2(pass, salt);
 	// return SignatureUtils.getSHA512raw(tmp);
 	// }
 
-	public static synchronized byte[] salting(String pass, byte[] salt) throws NoSuchAlgorithmException,
-			InvalidKeySpecException {
+	public static synchronized byte[] salting(String pass, byte[] salt)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		final int iterations = 500;
 		final int keyLength = 512;
 		final SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
@@ -123,7 +124,8 @@ public class SignatureUtils {
 		}
 	}
 
-	public static synchronized byte[] getMD5raw(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public static synchronized byte[] getMD5raw(String s)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
 		msgDigest.update(s.getBytes("UTF-8"));
 		return msgDigest.digest();
@@ -133,15 +135,15 @@ public class SignatureUtils {
 		return getSHA512raw(s.getBytes("UTF-8"));
 	}
 
-	public static synchronized byte[] getSHA512raw(byte data[]) throws NoSuchAlgorithmException,
-			UnsupportedEncodingException {
+	public static synchronized byte[] getSHA512raw(byte data[])
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
 		msgDigest.update(data);
 		return msgDigest.digest();
 	}
 
-	public static String getSignatureSha512(File f) throws IOException {
-		final InputStream is = new FileInputStream(f);
+	public static String getSignatureSha512(SFile f) throws IOException {
+		final InputStream is = f.openFile();
 		try {
 			return getSignatureSha512(is);
 		} finally {
@@ -180,10 +182,13 @@ public class SignatureUtils {
 		return s;
 	}
 
-	public static synchronized String getSignature(File f) throws IOException {
+	public static synchronized String getSignature(SFile f) throws IOException {
 		try {
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
-			final FileInputStream is = new FileInputStream(f);
+			final InputStream is = f.openFile();
+			if (is == null) {
+				throw new FileNotFoundException();
+			}
 			int read = -1;
 			while ((read = is.read()) != -1) {
 				msgDigest.update((byte) read);

@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
 import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
+import net.sourceforge.plantuml.eggs.PSystemPathFactory;
 import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
 import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
 import net.sourceforge.plantuml.error.PSystemError;
@@ -78,6 +79,8 @@ import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.sprite.ListSpriteDiagramFactory;
 import net.sourceforge.plantuml.sprite.PSystemListInternalSpritesFactory;
@@ -191,7 +194,9 @@ public class PSystemBuilder {
 		factories.add(new PSystemAppleTwoFactory());
 		factories.add(new PSystemRIPFactory());
 		// factories.add(new PSystemLostFactory());
-		// factories.add(new PSystemPathFactory());
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+			factories.add(new PSystemPathFactory());
+		}
 		factories.add(new PSystemOregonFactory());
 		factories.add(new PSystemCharlieFactory());
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {

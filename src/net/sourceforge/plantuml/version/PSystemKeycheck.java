@@ -45,7 +45,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -113,9 +112,9 @@ public class PSystemKeycheck extends AbstractPSystem {
 		final ArrayList<String> strings = new ArrayList<String>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
-		if (OptionFlags.ALLOW_INCLUDE) {
-			strings.add("Loaded from " + Version.getJarPath());
-		}
+//		if (OptionFlags.ALLOW_INCLUDE) {
+//			strings.add("Loaded from " + Version.getJarPath());
+//		}
 		strings.add(" ");
 		return strings;
 	}

@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Scale;
@@ -196,8 +195,8 @@ public class NwDiagram extends UmlDiagram {
 			margin1 = 0;
 			margin2 = 0;
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
-		null, "", "", dpiFactor, null);
+		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, "", "", dpiFactor, null);
 		TextBlock result = getTextBlock();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
 		imageBuilder.setUDrawable(result);

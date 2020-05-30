@@ -66,7 +66,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 			return checkConcurrentStateOkInternal1972(ident);
 		}
 		final boolean result = checkConcurrentStateOkInternal(code);
-		// System.err.println("checkConcurrentStateOk " + code + " " + ident + " " + result);
+		// System.err.println("checkConcurrentStateOk " + code + " " + ident + " " +
+		// result);
 		return result;
 	}
 
@@ -188,6 +189,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		endGroup();
 		return result;
 	}
+
 	public IEntity getDeepHistory() {
 		final IGroup g = getCurrentGroup();
 		if (EntityUtils.groupRoot(g)) {
@@ -195,7 +197,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final Code code = buildCode("*deephistory");
 			return getOrCreateLeaf(ident, code, LeafType.DEEP_HISTORY, null);
 		}
-		
+
 		final String idShort = "*deephistory*" + g.getCodeGetName();
 		final Ident ident = buildLeafIdent(idShort);
 		final Code code = this.V1972() ? ident : buildCode(idShort);
@@ -215,7 +217,6 @@ public class StateDiagram extends AbstractEntityDiagram {
 		endGroup();
 		return result;
 	}
-
 
 	public boolean concurrentState(char direction) {
 		final IGroup cur = getCurrentGroup();

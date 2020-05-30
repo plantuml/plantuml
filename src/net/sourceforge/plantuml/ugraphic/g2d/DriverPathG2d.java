@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.ugraphic.arc.ExtendedGeneralPath;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
@@ -100,7 +101,7 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 		if (back != null) {
 			slowShadow = true;
 		}
-		if (shape.getDeltaShadow() != 0) {
+		if (shape.getDeltaShadow() != 0 && HColorUtils.isTransparent(back) == false) {
 			if (slowShadow) {
 				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);
 			} else {
@@ -134,9 +135,9 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 						mapper.toColor(gr.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
 						mapper.toColor(gr.getColor2()));
 			} else if (policy == '\\') {
-				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(), mapper.toColor(gr
-						.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMinY(), mapper.toColor(gr
-						.getColor2()));
+				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(),
+						mapper.toColor(gr.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMinY(),
+						mapper.toColor(gr.getColor2()));
 			} else if (policy == '-') {
 				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
 						mapper.toColor(gr.getColor1()), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),

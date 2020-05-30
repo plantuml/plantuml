@@ -41,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.security.SFile;
 
 public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
 
@@ -53,15 +54,17 @@ public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements
 		}
 		final String path = file.getParentFile().getPath();
 		// System.err.println("SourceFileReaderCopyCat::path=" + path);
-		// System.err.println("SourceFileReaderCopyCat::outputDirectory=" + outputDirectory);
+		// System.err.println("SourceFileReaderCopyCat::outputDirectory=" +
+		// outputDirectory);
 		this.outputDirectory = new File(outputDirectory, path).getAbsoluteFile();
 		if (outputDirectory.exists() == false) {
 			outputDirectory.mkdirs();
 		}
-		// System.err.println("SourceFileReaderCopyCat=" + this.outputDirectory.getPath() + " "
+		// System.err.println("SourceFileReaderCopyCat=" +
+		// this.outputDirectory.getPath() + " "
 		// + this.outputDirectory.getAbsolutePath());
-		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
-				.getParentFile(), FileWithSuffix.getFileName(file));
+		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),
+				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));
 	}
 
 	@Override

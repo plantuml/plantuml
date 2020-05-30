@@ -42,13 +42,13 @@ import java.awt.RenderingHints;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.braille.BrailleCharFactory;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.png.MetadataTag;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
@@ -90,7 +90,7 @@ public enum FileFormat {
 	}
 
 	final static private BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
-	final static private Graphics2D gg = imDummy.createGraphics();
+	final static public Graphics2D gg = imDummy.createGraphics();
 	static {
 		// KEY_FRACTIONALMETRICS
 		gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -188,12 +188,12 @@ public enum FileFormat {
 				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", cpt) + getFileSuffix());
 	}
 
-	private File computeFilename(File pngFile, int i) {
+	private SFile computeFilename(SFile pngFile, int i) {
 		if (i == 0) {
 			return pngFile;
 		}
-		final File dir = pngFile.getParentFile();
-		return new File(dir, computeFilenameInternal(pngFile.getName(), i));
+		final SFile dir = pngFile.getParentFile();
+		return dir.file(computeFilenameInternal(pngFile.getName(), i));
 	}
 
 	private String changeName(String fileName, String replacement) {
@@ -216,7 +216,7 @@ public enum FileFormat {
 		return this == PNG || this == SVG;
 	}
 
-	public boolean equalsMetadata(String currentMetadata, File existingFile) {
+	public boolean equalsMetadata(String currentMetadata, SFile existingFile) {
 		try {
 			if (this == PNG) {
 				final MetadataTag tag = new MetadataTag(existingFile, "plantuml");
@@ -226,6 +226,9 @@ public enum FileFormat {
 			}
 			if (this == SVG) {
 				final String svg = FileUtils.readSvg(existingFile);
+				if (svg == null) {
+					return false;
+				}
 				final String currentSignature = SvgGraphics.getMD5Hex(currentMetadata);
 				final int idx = svg.lastIndexOf(SvgGraphics.MD5_HEADER);
 				if (idx != -1) {

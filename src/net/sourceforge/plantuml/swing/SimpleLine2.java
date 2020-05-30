@@ -35,33 +35,33 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.Future;
 
 import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.security.SFile;
 
 class SimpleLine2 implements Comparable<SimpleLine2> {
 
-	private final File file;
+	private final SFile file;
 	private final GeneratedImage generatedImage;
 	private final Future<List<GeneratedImage>> future;
 
-	public static SimpleLine2 fromFuture(File file, Future<List<GeneratedImage>> future) {
+	public static SimpleLine2 fromFuture(SFile file, Future<List<GeneratedImage>> future) {
 		return new SimpleLine2(file, null, future);
 	}
 
-	public static SimpleLine2 fromGeneratedImage(File file, GeneratedImage generatedImage) {
+	public static SimpleLine2 fromGeneratedImage(SFile file, GeneratedImage generatedImage) {
 		return new SimpleLine2(file, generatedImage, null);
 	}
 
-	private SimpleLine2(File file, GeneratedImage generatedImage, Future<List<GeneratedImage>> future) {
+	private SimpleLine2(SFile file, GeneratedImage generatedImage, Future<List<GeneratedImage>> future) {
 		this.generatedImage = generatedImage;
 		this.file = file;
 		this.future = future;
 	}
 
-	public File getFile() {
+	public SFile getFile() {
 		return file;
 	}
 

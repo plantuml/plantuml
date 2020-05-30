@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.openiconic;
 
 import java.awt.geom.Dimension2D;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -100,8 +100,8 @@ public class OpenIcon {
 		}
 	}
 
-	void saveCopy(File fnew) throws IOException {
-		final PrintWriter pw = new PrintWriter(fnew);
+	void saveCopy(SFile fnew) throws IOException {
+		final PrintWriter pw = fnew.createPrintWriter();
 		pw.println(rawData.get(0));
 		pw.println(svgPath.toSvg());
 		pw.println(rawData.get(rawData.size() - 1));

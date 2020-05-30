@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import net.sourceforge.plantuml.security.SFile;
 
 public class GroupPrinter {
 
@@ -83,9 +84,9 @@ public class GroupPrinter {
 		pw.println("<li>" + leaf.getCodeGetName());
 	}
 
-	public static void print(File f, IGroup rootGroup) {
+	public static void print(SFile f, IGroup rootGroup) {
 		try {
-			final PrintWriter pw = new PrintWriter(f);
+			final PrintWriter pw = f.createPrintWriter();
 			pw.println("<html>");
 			new GroupPrinter(pw).printGroup(rootGroup);
 			pw.println("</html>");

@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.stats;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -54,6 +52,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.stats.api.Stats;
 
 public class StatsUtils {
@@ -168,7 +168,7 @@ public class StatsUtils {
 	static void htmlOutput(Stats stats) throws FileNotFoundException {
 		PrintWriter pw = null;
 		try {
-			pw = new PrintWriter("plantuml-stats.html");
+			pw = SecurityUtils.createPrintWriter("plantuml-stats.html");
 			pw.print(new HtmlConverter(stats).toHtml());
 		} finally {
 			if (pw != null) {
@@ -177,11 +177,11 @@ public class StatsUtils {
 		}
 	}
 
-	static void xmlOutput(Stats stats) throws FileNotFoundException, TransformerException,
-			ParserConfigurationException, IOException {
+	static void xmlOutput(Stats stats)
+			throws FileNotFoundException, TransformerException, ParserConfigurationException, IOException {
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream("plantuml-stats.xml");
+			os = SecurityUtils.createFileOutputStream("plantuml-stats.xml");
 			new XmlConverter(stats).createXml(os);
 		} finally {
 			if (os != null) {
@@ -227,7 +227,7 @@ public class StatsUtils {
 		if (linesUsed == 0) {
 			return;
 		}
-		if (File.separatorChar == '/') {
+		if (SFile.separatorChar == '/') {
 			System.out.println(String.format("\033[%dA", linesUsed + 1)); // Move up
 		} else {
 			for (int i = 0; i < 20; i++) {

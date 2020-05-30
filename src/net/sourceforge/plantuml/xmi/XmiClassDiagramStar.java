@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.xmi;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.Element;
+
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.utils.UniqueSequence;
-
-import org.w3c.dom.Element;
 
 public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements IXmiClassDiagram {
 
