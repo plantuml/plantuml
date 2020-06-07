@@ -33,15 +33,19 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.color;
+package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
-public interface ColorMapper {
+public interface MutableImage {
 
-	public Color toColor(HColor color);
+	public BufferedImage getImage();
 
-	public String toSvg(HColor color);
+	public MutableImage withScale(double scale);
 
-	public String toRGB(HColor color);
+	public MutableImage muteColor(Color newColor);
+
+	public MutableImage muteTransparentColor(Color newColor);
+
 }

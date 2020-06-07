@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -58,8 +60,8 @@ public class PSystemLicense extends AbstractPSystem implements UDrawable {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null,
-				getMetadata(), null, 1.0, null);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, getMetadata(),
+				null, 1.0, null);
 		imageBuilder.setUDrawable(this);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
@@ -96,7 +98,7 @@ public class PSystemLicense extends AbstractPSystem implements UDrawable {
 			final TextBlockBackcolored result1 = getGraphicStrings(strings1);
 			result1.drawU(ug);
 			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));
-			UImage im = new UImage(logo);
+			UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));
 			ug.apply(UTranslate.dx(20)).draw(im);
 
 			ug = ug.apply(UTranslate.dy(im.getHeight()));

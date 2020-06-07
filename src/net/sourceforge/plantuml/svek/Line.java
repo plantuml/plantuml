@@ -486,7 +486,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 
 	}
 
-	public void solveLine(SvgResult fullSvg, MinFinder corner1) {
+	public void solveLine(SvgResult fullSvg) {
 		if (this.link.isInvis()) {
 			return;
 		}
@@ -560,7 +560,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 		if (hasNoteLabelText() || link.getLinkConstraint() != null) {
 			final Point2D pos = getXY(fullSvg, this.noteLabelColor);
 			if (pos != null) {
-				corner1.manage(pos);
+//				corner1.manage(pos);
 				this.labelXY = hasNoteLabelText() ? TextBlockUtils.asPositionable(labelText, stringBounder, pos)
 						: TextBlockUtils.asPositionable(CONSTRAINT_SPOT, stringBounder, pos);
 			}
@@ -569,7 +569,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 		if (this.startTailText != null) {
 			final Point2D pos = getXY(fullSvg, this.startTailColor);
 			if (pos != null) {
-				corner1.manage(pos);
+//				corner1.manage(pos);
 				this.startTailLabelXY = TextBlockUtils.asPositionable(startTailText, stringBounder, pos);
 			}
 		}
@@ -577,9 +577,9 @@ public class Line implements Moveable, Hideable, GuideLine {
 		if (this.endHeadText != null) {
 			final Point2D pos = getXY(fullSvg, this.endHeadColor);
 			if (pos != null) {
-				corner1.manage(pos);
+//				corner1.manage(pos);
 				this.endHeadLabelXY = TextBlockUtils.asPositionable(endHeadText, stringBounder, pos);
-				corner1.manage(pos.getX() - 15, pos.getY());
+//				corner1.manage(pos.getX() - 15, pos.getY());
 			}
 		}
 

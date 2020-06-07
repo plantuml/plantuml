@@ -176,7 +176,7 @@ public class SvgGraphics {
 	private Element pendingBackground;
 
 	public void paintBackcolorGradient(ColorMapper mapper, HColorGradient gr) {
-		final String id = createSvgGradient(mapper.toHtml(gr.getColor1()), mapper.toHtml(gr.getColor2()),
+		final String id = createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()),
 				gr.getPolicy());
 		setFillColor("url(#" + id + ")");
 		setStrokeColor(null);

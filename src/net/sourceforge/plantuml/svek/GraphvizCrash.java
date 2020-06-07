@@ -54,6 +54,8 @@ import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -159,7 +161,8 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		strings.addAll(OptionPrint.interestingValues());
 	}
 
-	// private static void addTextProperty(final List<String> strings, String prop) {
+	// private static void addTextProperty(final List<String> strings, String prop)
+	// {
 	// strings.add(prop + ": " + System.getProperty(prop));
 	// }
 
@@ -185,7 +188,8 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		if (flashCode != null) {
 			final double h = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
 			ug = ug.apply(UTranslate.dy(h));
-			ug.draw(new UImage(flashCode).scaleNearestNeighbor(3));
+			ug.draw(new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
+					.scale(3));
 		}
 	}
 
@@ -196,10 +200,9 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	public Margins getShield(StringBounder stringBounder) {
 		return Margins.NONE;
 	}
-	
+
 	public double getOverscanX(StringBounder stringBounder) {
 		return 0;
 	}
-
 
 }

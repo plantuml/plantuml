@@ -76,6 +76,8 @@ import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -188,7 +190,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		fileFormatOption = fileFormatOption.withPreserveAspectRatio(getSkinParam().getPreserveAspectRatio());
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 		if (hover != null) {
-			fileFormatOption = fileFormatOption.withHoverColor(getSkinParam().getColorMapper().toHtml(hover));
+			fileFormatOption = fileFormatOption.withHoverColor(getSkinParam().getColorMapper().toRGB(hover));
 		}
 
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
@@ -252,7 +254,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 					graphicStrings.drawU(ug);
 					final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
 					ug = ug.apply(UTranslate.dy(height));
-					ug.draw(new UImage(im).scaleNearestNeighbor(3));
+					ug.draw(new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
+							.scale(3));
 				}
 			});
 		}

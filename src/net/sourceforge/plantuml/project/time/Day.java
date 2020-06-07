@@ -130,6 +130,16 @@ public class Day implements Complement, Comparable<Day>, Subject {
 		return DayOfWeek.fromH(h);
 	}
 
+	public static int DOW(int y_, int m_, int d_) {
+		final int q = d_;
+		final int m = 3 + (m_ - 1 + 10) % 12;
+		final int y = m >= 13 ? y_ - 1 : y_;
+		final int k = y % 100;
+		final int j = y / 100;
+		final int h = ((q + 13 * (m + 1) / 5) + k + k / 4 + j / 4 + 5 * j) % 7;
+		return h;
+	}
+
 	public Wink asInstantDay(Day reference) {
 		// if (this.compareTo(reference) < 0) {
 		// throw new IllegalArgumentException();
@@ -143,6 +153,8 @@ public class Day implements Complement, Comparable<Day>, Subject {
 		return new Wink(cmp);
 	}
 
+	// https://www.staff.science.uu.nl/~gent0113/calendar/isocalendar_text_5.htm
+	// https://en.wikipedia.org/wiki/ISO_week_date
 	// http://www.proesite.com/timex/wkcalc.htm
 	public int ISO_WN() {
 		final int y = year();
@@ -168,11 +180,6 @@ public class Day implements Complement, Comparable<Day>, Subject {
 
 		return (DOW(y, 1, 1) < 4) ? 1 : 0 + 4 * (m - 1) + (2 * (m - 1) + (d - 1) + dow0101 - dow + 6) * 36 / 256;
 
-	}
-
-	private int DOW(int y, int m, int d) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	public int compareTo(Day other) {

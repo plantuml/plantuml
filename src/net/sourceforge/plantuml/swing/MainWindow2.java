@@ -83,7 +83,6 @@ import net.sourceforge.plantuml.DirWatcher2;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Option;
-import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class MainWindow2 extends JFrame {
@@ -158,6 +157,7 @@ public class MainWindow2 extends JFrame {
 
 	public MainWindow2(Option option, File arg) {
 		super(getDirectory(arg).getAbsolutePath());
+		System.setProperty("PLANTUML_SECURITY_PROFILE", "UNSECURE");
 		final File dir = getDirectory(arg);
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
 		this.option = option;
@@ -356,7 +356,7 @@ public class MainWindow2 extends JFrame {
 			final File file = ent.getKey();
 			removeAllThatUseThisFile(file);
 			final Future<List<GeneratedImage>> future = ent.getValue();
-			final SimpleLine2 simpleLine = SimpleLine2.fromFuture(SFile.fromFile(file), future);
+			final SimpleLine2 simpleLine = SimpleLine2.fromFuture(file, future);
 			currentDirectoryListing2.add(simpleLine);
 			changed = true;
 		}

@@ -257,7 +257,6 @@ public class HColorSet {
 	}
 
 	private HColor build(String s, HColor background) {
-
 		s = removeFirstDieseAndgoLowerCase(s);
 		final Color color;
 		if (s.equalsIgnoreCase("transparent") || s.equalsIgnoreCase("background")) {
@@ -270,8 +269,7 @@ public class HColorSet {
 		} else if (s.matches("[0-9A-Fa-f]{6}")) {
 			color = new Color(Integer.parseInt(s, 16));
 		} else if (s.matches("[0-9A-Fa-f]{8}")) {
-			final long parse = Long.parseLong(s, 16);
-			color = new Color((int) parse, true);
+			color = fromRGBa(s);
 		} else {
 			final String value = htmlNames.get(s);
 			if (value == null) {
@@ -280,6 +278,18 @@ public class HColorSet {
 			color = new Color(Integer.parseInt(value.substring(1), 16));
 		}
 		return new HColorSimple(color, false);
+	}
+
+	private Color fromRGBa(String s) {
+		// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
+		if (s.length() != 8) {
+			throw new IllegalArgumentException();
+		}
+		final int red = Integer.parseInt(s.substring(0, 2), 16);
+		final int green = Integer.parseInt(s.substring(2, 4), 16);
+		final int blue = Integer.parseInt(s.substring(4, 6), 16);
+		final int alpha = Integer.parseInt(s.substring(6, 8), 16);
+		return new Color(red, green, blue, alpha);
 	}
 
 	private boolean isValid(String s, boolean acceptTransparent) {

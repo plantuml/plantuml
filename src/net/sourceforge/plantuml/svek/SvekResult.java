@@ -40,17 +40,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.posimo.Moveable;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHidden;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -58,16 +60,14 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public final class SvekResult extends AbstractTextBlock implements IEntityImage, Moveable {
+public final class SvekResult extends AbstractTextBlock implements IEntityImage {
 
 	private final Rose rose = new Rose();
 
-	private ClusterPosition dim;
 	private final DotData dotData;
 	private final DotStringFactory dotStringFactory;
 
-	public SvekResult(ClusterPosition dim, DotData dotData, DotStringFactory dotStringFactory) {
-		this.dim = dim;
+	public SvekResult(DotData dotData, DotStringFactory dotStringFactory) {
 		this.dotData = dotData;
 		this.dotStringFactory = dotStringFactory;
 	}
@@ -126,6 +126,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 		return StyleSignature.of(SName.root, SName.element, dotData.getUmlDiagramType().getStyleName(), SName.arrow);
 	}
 
+	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
 		if (SkinParam.USE_STYLES()) {
 			final Style style = StyleSignature.of(SName.root, SName.document)
@@ -135,8 +136,14 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 		return dotData.getSkinParam().getBackgroundColor(false);
 	}
 
+	private MinMax minMax;
+
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return dim.getDimension();
+		if (minMax == null) {
+			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);
+			dotStringFactory.moveSvek(6 - minMax.getMinX(), 6 - minMax.getMinY());
+		}
+		return Dimension2DDouble.delta(minMax.getDimension(), 0, 12);
 	}
 
 	public ShapeType getShapeType() {
@@ -145,11 +152,6 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 
 	public Margins getShield(StringBounder stringBounder) {
 		return Margins.NONE;
-	}
-
-	public void moveSvek(double deltaX, double deltaY) {
-		dotStringFactory.moveSvek(deltaX, deltaY);
-		dim = dim.delta(deltaX > 0 ? deltaX : 0, deltaY > 0 ? deltaY : 0);
 	}
 
 	public boolean isHidden() {

@@ -61,6 +61,8 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -86,7 +88,8 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (im == null) {
 			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		}
-		return new AtomImg(new UImage(null, im).scaleNearestNeighbor(scale).getImage(), 1, null, null);
+		return new AtomImg(new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
+				.scale(scale).getImage(1), 1, null, null);
 	}
 
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
@@ -218,7 +221,8 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		ug.draw(new UImage(rawFileName, image).scale(scale));
+		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR))
+				.withRawFileName(rawFileName).scale(scale));
 		if (url != null) {
 			ug.closeUrl();
 		}

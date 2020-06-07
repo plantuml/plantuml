@@ -45,6 +45,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.Icon;
 
 import net.sourceforge.plantuml.SvgString;
+import net.sourceforge.plantuml.ugraphic.MutableImage;
 
 public class LatexBuilder implements ScientificEquation {
 
@@ -60,15 +61,15 @@ public class LatexBuilder implements ScientificEquation {
 		return dimension;
 	}
 
-	private Icon buildIcon(Color foregroundColor) throws ClassNotFoundException, NoSuchMethodException,
-			SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException {
+	private Icon buildIcon(Color foregroundColor)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		return new TeXIconBuilder(tex, foregroundColor).getIcon();
 	}
 
-	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, InstantiationException, IOException {
+	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor)
+			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, InstantiationException, IOException {
 		final Icon icon = buildIcon(foregroundColor);
 		final ConverterSvg converterSvg = new ConverterSvg(icon);
 		final String svg = converterSvg.getSvg(scale, true, backgroundColor);
@@ -76,20 +77,55 @@ public class LatexBuilder implements ScientificEquation {
 		return new SvgString(svg, scale);
 	}
 
-	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)
+	public MutableImage getImage(Color foregroundColor, Color backgroundColor)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		final Icon icon = buildIcon(foregroundColor);
-		final BufferedImage image = new BufferedImage((int) (icon.getIconWidth() * scale),
-				(int) (icon.getIconHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-		final Graphics2D g2 = image.createGraphics();
-		g2.scale(scale, scale);
-		if (backgroundColor != null) {
-			g2.setColor(backgroundColor);
-			g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
+		return new LatexImage(icon, 1, foregroundColor, backgroundColor);
+	}
+
+	class LatexImage implements MutableImage {
+
+		private final double scale;
+		private final Icon icon;
+		private final Color foregroundColor;
+		private final Color backgroundColor;
+		private BufferedImage cache = null;
+
+		public LatexImage(Icon icon, double scale, Color foregroundColor, Color backgroundColor) {
+			this.scale = scale;
+			this.foregroundColor = foregroundColor;
+			this.backgroundColor = backgroundColor;
+			this.icon = icon;
 		}
-		icon.paintIcon(null, g2, 0, 0);
-		return image;
+
+		public BufferedImage getImage() {
+			if (cache == null) {
+				cache = new BufferedImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),
+						BufferedImage.TYPE_INT_ARGB);
+				final Graphics2D g2 = cache.createGraphics();
+				g2.scale(scale, scale);
+				if (backgroundColor != null) {
+					g2.setColor(backgroundColor);
+					g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
+				}
+				icon.paintIcon(null, g2, 0, 0);
+			}
+			return cache;
+		}
+
+		public MutableImage withScale(double scale) {
+			return new LatexImage(icon, this.scale * scale, foregroundColor, backgroundColor);
+		}
+
+		public MutableImage muteColor(Color newColor) {
+			throw new UnsupportedOperationException();
+		}
+
+		public MutableImage muteTransparentColor(Color newColor) {
+			throw new UnsupportedOperationException();
+		}
+
 	}
 
 	public String getSource() {

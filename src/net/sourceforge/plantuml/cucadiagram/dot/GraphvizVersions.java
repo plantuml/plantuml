@@ -39,8 +39,6 @@ import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.sourceforge.plantuml.security.SFile;
-
 public class GraphvizVersions {
 
 	private final static GraphvizVersions singleton = new GraphvizVersions();
@@ -68,7 +66,7 @@ public class GraphvizVersions {
 	}
 
 	static GraphvizVersion checkVersionSlow(String pathExecutable) {
-		final GraphvizVersionFinder finder = new GraphvizVersionFinder(new SFile(pathExecutable));
+		final GraphvizVersionFinder finder = new GraphvizVersionFinder(new File(pathExecutable));
 		return finder.getVersion();
 	}
 

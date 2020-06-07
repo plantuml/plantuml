@@ -45,6 +45,8 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -58,7 +60,7 @@ public class SpriteImage implements Sprite {
 		if (img == null) {
 			throw new IllegalArgumentException();
 		}
-		this.img = new UImage(img);
+		this.img = new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR));
 	}
 
 	public TextBlock asTextBlock(final HColor color, final double scale) {

@@ -45,6 +45,8 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -201,22 +203,22 @@ public class SpriteMonochrome implements Sprite {
 				im.setRGB(col, line, c.getRGB());
 			}
 		}
-		return new UImage(im);
+		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 	}
 
 	private UImage special(ColorMapper colorMapper, HColorGradient backcolor, HColor color) {
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
-				final HColor backColorLocal = new HColorSimple(backcolor.getColor(colorMapper, 1.0 * line
-						/ height), false);
+				final HColor backColorLocal = new HColorSimple(backcolor.getColor(colorMapper, 1.0 * line / height),
+						false);
 				final HColorGradient gradient = new HColorGradient(backColorLocal, color, '\0');
 				final double coef = 1.0 * grey[line][col] / (grayLevel - 1);
 				final Color c = gradient.getColor(colorMapper, coef);
 				im.setRGB(col, line, c.getRGB());
 			}
 		}
-		return new UImage(im);
+		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 	}
 
 	public TextBlock asTextBlock(final HColor color, final double scale) {

@@ -496,7 +496,7 @@ public class Run {
 				sourceFileReader = new SourceFileReaderCopyCat(option.getDefaultDefines(f), f, outputDir,
 						option.getConfig(), option.getCharset(), option.getFileFormatOption());
 			} else {
-				sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, null, option.getConfig(),
+				sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
 						option.getCharset(), option.getFileFormatOption());
 			}
 		} else {

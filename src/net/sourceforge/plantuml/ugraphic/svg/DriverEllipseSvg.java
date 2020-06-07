@@ -72,8 +72,8 @@ public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 		final HColor back = param.getBackcolor();
 		if (back instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) back;
-			final String id = svg.createSvgGradient(mapper.toHtml(gr.getColor1()),
-					mapper.toHtml(gr.getColor2()), gr.getPolicy());
+			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()),
+					mapper.toRGB(gr.getColor2()), gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
 		} else if (back == null || back instanceof HColorBackground) {
 			svg.setFillColor("none");

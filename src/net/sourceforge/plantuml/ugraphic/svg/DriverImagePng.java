@@ -68,7 +68,7 @@ public class DriverImagePng implements UDriver<SvgGraphics> {
 		}
 
 		try {
-			svg.svgImage(image.getImage(), x, y);
+			svg.svgImage(image.getImage(1), x, y);
 		} catch (IOException e) {
 			Log.error("Error in svg for image " + e);
 		}

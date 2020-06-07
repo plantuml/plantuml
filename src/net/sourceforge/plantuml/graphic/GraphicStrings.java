@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -156,12 +158,13 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 		if (image != null) {
 			if (position == GraphicPosition.BOTTOM) {
 				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))
-						.draw(new UImage(image));
+						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
 			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
 				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))
-						.draw(new UImage(image));
+						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
 			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
-				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1)).draw(new UImage(image));
+				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1))
+						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
 			}
 		}
 	}

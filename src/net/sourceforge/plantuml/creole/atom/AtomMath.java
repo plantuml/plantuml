@@ -52,23 +52,20 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
 public class AtomMath extends AbstractAtom implements Atom {
 
-	private final double scale;
 	private final ScientificEquationSafe math;
 	private final HColor foreground;
 	private final HColor background;
 	private final ColorMapper colorMapper;
 
-	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background, double scale,
-			ColorMapper colorMapper) {
+	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background, ColorMapper colorMapper) {
 		this.math = math;
 		this.colorMapper = colorMapper;
 		this.foreground = foreground;
 		this.background = background;
-		this.scale = scale;
 	}
 
 	private Dimension2D calculateDimensionSlow(StringBounder stringBounder) {
-		final BufferedImage image = math.getImage(scale, Color.BLACK, Color.WHITE);
+		final BufferedImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();
 		return new Dimension2DDouble(image.getWidth(), image.getHeight());
 	}
 
@@ -96,10 +93,10 @@ public class AtomMath extends AbstractAtom implements Atom {
 		final Color fore = getColor(foreground, Color.BLACK);
 		// final double dpiFactor = ug.dpiFactor();
 		if (isSvg) {
-			final SvgString svg = math.getSvg(scale, fore, back);
+			final SvgString svg = math.getSvg(1, fore, back);
 			ug.draw(new UImageSvg(svg));
 		} else {
-			final UImage image = new UImage(null, math.getImage(scale, fore, back), math.getFormula());
+			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getFormula());
 			ug.draw(image);
 		}
 	}

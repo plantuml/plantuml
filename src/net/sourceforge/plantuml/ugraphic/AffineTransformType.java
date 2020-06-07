@@ -33,15 +33,21 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.color;
+package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.Color;
+import java.awt.image.AffineTransformOp;
 
-public interface ColorMapper {
+public enum AffineTransformType {
+	TYPE_NEAREST_NEIGHBOR, TYPE_BILINEAR;
 
-	public Color toColor(HColor color);
+	public int toLegacyInt() {
+		switch (this) {
+		case TYPE_BILINEAR:
+			return AffineTransformOp.TYPE_BILINEAR;
+		case TYPE_NEAREST_NEIGHBOR:
+			return AffineTransformOp.TYPE_NEAREST_NEIGHBOR;
+		}
+		throw new AssertionError();
+	}
 
-	public String toSvg(HColor color);
-
-	public String toRGB(HColor color);
 }

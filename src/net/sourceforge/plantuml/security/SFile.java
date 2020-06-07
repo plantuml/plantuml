@@ -261,10 +261,8 @@ public class SFile implements Comparable<SFile> {
 		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE) {
 			// For UNSECURE, we did not do those checks
 			final String path = getCleanPathSecure();
-			if (path.startsWith("/etc/")) {
-				return false;
-			}
-			if (path.startsWith("/dev/")) {
+			if (path.startsWith("/etc/") || path.startsWith("/dev/") || path.startsWith("/boot/")
+					|| path.startsWith("/proc/") || path.startsWith("/sys/")) {
 				return false;
 			}
 			if (path.startsWith("//")) {

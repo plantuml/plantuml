@@ -39,20 +39,24 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class IEntityImageMoved implements IEntityImage {
+public class EntityImageDegenerated implements IEntityImage {
 
 	private final IEntityImage orig;
 	private final double delta = 7;
+	private final HColor backcolor;
 
-	public IEntityImageMoved(IEntityImage orig) {
+	public EntityImageDegenerated(IEntityImage orig, HColor backcolor) {
 		this.orig = orig;
+		this.backcolor = backcolor;
 	}
 
 	public boolean isHidden() {
@@ -60,7 +64,8 @@ public class IEntityImageMoved implements IEntityImage {
 	}
 
 	public HColor getBackcolor() {
-		return orig.getBackcolor();
+		// return orig.getBackcolor();
+		return backcolor;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -79,6 +84,10 @@ public class IEntityImageMoved implements IEntityImage {
 
 	public void drawU(UGraphic ug) {
 		orig.drawU(ug.apply(new UTranslate(delta, delta)));
+		if (SkinParam.USE_STYLES()) {
+			final Dimension2D dim = calculateDimension(ug.getStringBounder());
+			ug.apply(new UTranslate(dim.getWidth() - delta, dim.getHeight() - delta)).draw(new UEmpty(delta, delta));
+		}
 
 	}
 

@@ -66,8 +66,8 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 		final HColor back = param.getBackcolor();
 		if (back instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) back;
-			final String id = svg.createSvgGradient(mapper.toHtml(gr.getColor1()),
-					mapper.toHtml(gr.getColor2()), gr.getPolicy());
+			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()),
+					mapper.toRGB(gr.getColor2()), gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
 			applyColor(svg, mapper, param);
 		} else {
@@ -96,8 +96,8 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 		final HColor color = param.getColor();
 		if (color instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) color;
-			final String id = svg.createSvgGradient(mapper.toHtml(gr.getColor1()),
-					mapper.toHtml(gr.getColor2()), gr.getPolicy());
+			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()),
+					mapper.toRGB(gr.getColor2()), gr.getPolicy());
 			svg.setStrokeColor("url(#" + id + ")");
 		} else {
 			svg.setStrokeColor(mapper.toSvg(color));

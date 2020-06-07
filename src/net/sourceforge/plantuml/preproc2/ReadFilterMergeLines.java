@@ -64,8 +64,13 @@ public class ReadFilterMergeLines implements ReadFilter {
 					this.manageEndingBackslash = true;
 				}
 
+				ReadLine sourceWithoutComment = null;
+
 				while (result != null && manageEndingBackslash && StringUtils.endsWithBackslash(result.getString())) {
-					final StringLocated next = source.readLine();
+					if (sourceWithoutComment == null) {
+						sourceWithoutComment = new ReadFilterQuoteComment().applyFilter(source);
+					}
+					final StringLocated next = sourceWithoutComment.readLine();
 					if (next == null) {
 						break;
 					} else {

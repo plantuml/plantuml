@@ -152,9 +152,8 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleImg.create());
 		this.commands.add(CommandCreoleQrcode.create());
 		this.commands.add(CommandCreoleOpenIcon.create(skinParam.getIHtmlColorSet()));
-		final double scale = skinParam.getDpi() / 96.0;
-		this.commands.add(CommandCreoleMath.create(scale));
-		this.commands.add(CommandCreoleLatex.create(scale));
+		this.commands.add(CommandCreoleMath.create());
+		this.commands.add(CommandCreoleLatex.create());
 		this.commands.add(CommandCreoleSprite.create(skinParam.getIHtmlColorSet()));
 		this.commands.add(CommandCreoleSpace.create());
 		this.commands.add(CommandCreoleFontFamilyChange.create());
@@ -248,8 +247,8 @@ public class StripeSimple implements Stripe {
 		}
 	}
 
-	public void addMath(ScientificEquationSafe math, double scale) {
-		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor(), scale,
+	public void addMath(ScientificEquationSafe math) {
+		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor(),
 				skinParam.getColorMapper()));
 	}
 

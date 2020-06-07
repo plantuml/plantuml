@@ -116,7 +116,7 @@ public class EntityImageState extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.startGroup(getEntity().getIdent().getName());
+		ug.startGroup(getEntity().getIdent().toString("."));
 		if (url != null) {
 			ug.startUrl(url);
 		}

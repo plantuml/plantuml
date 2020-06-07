@@ -48,6 +48,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierImpl;
@@ -125,12 +126,17 @@ public final class EntityFactory {
 		if (g.getUrl99() != null) {
 			folder.addUrl(g.getUrl99());
 		}
-		if (g.getColors(skinParam).getColor(ColorType.BACK) == null) {
-			final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
-			final HColor c1 = skinParam.getHtmlColor(param, g.getStereotype(), false);
-			folder.setSpecificColorTOBEREMOVED(ColorType.BACK, c1 == null ? skinParam.getBackgroundColor(false) : c1);
+		if (SkinParam.USE_STYLES()) {
+			// System.err.println("Backcolor ?");
 		} else {
-			folder.setSpecificColorTOBEREMOVED(ColorType.BACK, g.getColors(skinParam).getColor(ColorType.BACK));
+			if (g.getColors(skinParam).getColor(ColorType.BACK) == null) {
+				final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
+				final HColor c1 = skinParam.getHtmlColor(param, g.getStereotype(), false);
+				folder.setSpecificColorTOBEREMOVED(ColorType.BACK,
+						c1 == null ? skinParam.getBackgroundColor(false) : c1);
+			} else {
+				folder.setSpecificColorTOBEREMOVED(ColorType.BACK, g.getColors(skinParam).getColor(ColorType.BACK));
+			}
 		}
 		emptyGroupsAsNode.put(g, folder);
 		return folder;

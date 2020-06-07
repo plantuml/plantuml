@@ -43,6 +43,8 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -119,7 +121,7 @@ public class SpriteColor implements Sprite {
 				}
 			}
 		}
-		return new UImage(im);
+		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 	}
 
 	public TextBlock asTextBlock(final HColor color, final double scale) {

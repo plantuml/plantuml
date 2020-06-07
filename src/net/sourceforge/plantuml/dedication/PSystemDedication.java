@@ -44,6 +44,8 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.AffineTransformType;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -63,13 +65,13 @@ public class PSystemDedication extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
-				false, null, getMetadata(), null, 1.0, HColorUtils.WHITE);
+		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, getMetadata(),
+				null, 1.0, HColorUtils.WHITE);
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {
 				final BufferedImage bufferedImage = dedication.getBufferedImage(keepLetter);
 				if (bufferedImage != null) {
-					ug.draw(new UImage(bufferedImage));
+					ug.draw(new UImage(new PixelImage(bufferedImage, AffineTransformType.TYPE_BILINEAR)));
 				}
 			}
 		});

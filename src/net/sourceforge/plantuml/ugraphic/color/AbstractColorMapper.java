@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.svek.DotStringFactory;
 
 public abstract class AbstractColorMapper implements ColorMapper {
 
-	final public String toHtml(HColor hcolor) {
+	final public String toRGB(HColor hcolor) {
 		if (hcolor == null) {
 			return null;
 		}
@@ -54,17 +54,31 @@ public abstract class AbstractColorMapper implements ColorMapper {
 			return "none";
 		}
 		if (hcolor instanceof HColorBackground) {
-			final HColor result = ((HColorBackground) hcolor).getBack();
+			hcolor = ((HColorBackground) hcolor).getBack();
 //			Thread.dumpStack();
 //			System.exit(0);
 //			return toHtml(result);
 		}
+		if (HColorUtils.isTransparent(hcolor)) {
+			return "#00000000";
+		}
 		final Color color = toColor(hcolor);
 		final int alpha = color.getAlpha();
-		if (alpha != 255) {
-			return DotStringFactory.sharpAlpha(color.getRGB());
+		if (alpha == 255) {
+			return toRGB(hcolor);
 		}
-		return toHtml(hcolor);
+		String s = "0" + Integer.toHexString(alpha).toUpperCase();
+		s = s.substring(s.length() - 2);
+		return toRGB(hcolor) + s;
+	}
+
+	private static String sharpAlpha(int color) {
+		final int v = color & 0xFFFFFF;
+		String s = "00000" + Integer.toHexString(v).toUpperCase();
+		s = s.substring(s.length() - 6);
+		final int alpha = (int) (((long) color) & 0x000000FF) << 24;
+		final String s2 = "0" + Integer.toHexString(alpha).toUpperCase();
+		return "#" + s + s2.substring(0, 2);
 	}
 
 }

@@ -37,21 +37,21 @@ package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.plantuml.SvgString;
+import net.sourceforge.plantuml.ugraphic.MutableImage;
 
 public interface ScientificEquation {
 
 	public Dimension2D getDimension();
 
-	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, InstantiationException, IOException;
+	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor)
+			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, InstantiationException, IOException;
 
-	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)
+	public MutableImage getImage(Color foregroundColor, Color backgroundColor)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException;
 

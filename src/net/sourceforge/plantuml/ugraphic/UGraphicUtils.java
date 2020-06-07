@@ -64,7 +64,7 @@ public abstract class UGraphicUtils {
 		} else if (fileFormat == FileFormat.SVG) {
 			final Dimension2D size = computeSize(colorMapper, background, image);
 			final UGraphicSvg svg = new UGraphicSvg(true, size, colorMapper,
-					colorMapper.toHtml(background), false, 1.0, fileFormatOption.getSvgLinkTarget(),
+					colorMapper.toRGB(background), false, 1.0, fileFormatOption.getSvgLinkTarget(),
 					fileFormatOption.getHoverColor(), seed, fileFormatOption.getPreserveAspectRatio());
 			image.drawU(svg);
 			svg.createXml(os, fileFormatOption.isWithMetadata() ? metadata : null);

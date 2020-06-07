@@ -45,15 +45,13 @@ import net.sourceforge.plantuml.math.ScientificEquationSafe;
 public class CommandCreoleMath implements Command {
 
 	private final Pattern2 pattern;
-	private final double scale;
 
-	private CommandCreoleMath(String p, double scale) {
+	private CommandCreoleMath(String p) {
 		this.pattern = MyPattern.cmpile(p);
-		this.scale = scale;
 	}
 
-	public static Command create(double scale) {
-		return new CommandCreoleMath("^(?i)(" + Splitter.mathPattern + ")", scale);
+	public static Command create() {
+		return new CommandCreoleMath("^(?i)(" + Splitter.mathPattern + ")");
 	}
 
 	public int matchingSize(String line) {
@@ -70,7 +68,7 @@ public class CommandCreoleMath implements Command {
 			throw new IllegalStateException();
 		}
 		final String math = m.group(2);
-		stripe.addMath(ScientificEquationSafe.fromAsciiMath(math), scale);
+		stripe.addMath(ScientificEquationSafe.fromAsciiMath(math));
 		return line.substring(m.group(1).length());
 	}
 

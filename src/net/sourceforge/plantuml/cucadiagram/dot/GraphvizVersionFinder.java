@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.security.SFile;
 
 public class GraphvizVersionFinder {
 
-	final private SFile dotExe;
+	final private File dotExe;
 	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {
 		public boolean useShield() {
 			return true;
@@ -66,7 +66,7 @@ public class GraphvizVersionFinder {
 		}
 	};
 
-	public GraphvizVersionFinder(SFile dotExe) {
+	public GraphvizVersionFinder(File dotExe) {
 		this.dotExe = dotExe;
 	}
 

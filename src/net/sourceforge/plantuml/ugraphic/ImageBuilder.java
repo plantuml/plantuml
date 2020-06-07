@@ -466,7 +466,8 @@ public class ImageBuilder {
 			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed,
 					preserveAspectRatio);
 		} else {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, colorMapper.toSvg(backColor), false, scale,
+			final String tmp = colorMapper.toSvg(backColor);
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, tmp, false, scale,
 					svgLinkTarget, hover, seed, preserveAspectRatio);
 		}
 		return ug;
