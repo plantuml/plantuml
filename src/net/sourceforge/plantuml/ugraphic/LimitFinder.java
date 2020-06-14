@@ -180,8 +180,9 @@ public class LimitFinder extends UGraphicNo implements UGraphic {
 	}
 
 	private void drawRectangle(double x, double y, URectangle shape) {
-		addPoint(x, y);
-		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
+		addPoint(x - 1, y - 1);
+		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,
+				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);
 	}
 
 	private void drawDotPath(double x, double y, DotPath shape) {
@@ -202,7 +203,8 @@ public class LimitFinder extends UGraphicNo implements UGraphic {
 
 	private void drawEllipse(double x, double y, UEllipse shape) {
 		addPoint(x, y);
-		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
+		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,
+				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);
 	}
 
 	private void drawText(double x, double y, UText text) {

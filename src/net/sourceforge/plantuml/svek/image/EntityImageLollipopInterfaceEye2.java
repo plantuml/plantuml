@@ -76,8 +76,8 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		final USymbol symbol = entity.getUSymbol() == null ? (skinParam.useUml2ForComponent() ? USymbol.COMPONENT2
-				: USymbol.COMPONENT1) : entity.getUSymbol();
+		final USymbol symbol = entity.getUSymbol() == null ? skinParam.componentStyle().toSymbol()
+				: entity.getUSymbol();
 		if (symbol == null) {
 			throw new IllegalArgumentException();
 		}
@@ -93,8 +93,8 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		}
 		// backcolor = HtmlColorUtils.BLUE;
 		final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBorder());
-		this.ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
-				getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);
+		this.ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5))
+				.withShadow(getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);
 
 		if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {

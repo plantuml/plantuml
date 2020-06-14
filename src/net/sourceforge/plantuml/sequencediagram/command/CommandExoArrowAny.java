@@ -142,6 +142,9 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		if (parallel) {
 			msg.goParallel();
 		}
+		msg.setAnchor(arg.get("ANCHOR", 1));
+		msg.setPart1Anchor(arg.get("PART1ANCHOR", 1));
+		msg.setPart2Anchor(arg.get("PART2ANCHOR", 1));
 
 		final String error = diagram.addMessage(msg);
 		if (error != null) {

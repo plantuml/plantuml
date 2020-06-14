@@ -291,7 +291,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.DESCRIPTION,
 					diagram.getSkinParam().getActorStyle().getUSymbol(), pure);
 		} else if (codeChar == '[') {
-			final USymbol sym = diagram.getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1;
+			final USymbol sym = diagram.getSkinParam().componentStyle().toSymbol();
 			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.DESCRIPTION, sym, pure);
 		}
 

@@ -41,7 +41,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.TexturePaint;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
@@ -89,10 +88,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 		// Shadow
 		if (rect.getDeltaShadow() != 0) {
 			if (HColorUtils.isTransparent(back)) {
-				drawOnlyLineShadow(g2d, new Line2D.Double(x, y + rect.getHeight(), x + rect.getWidth(), y + rect.getHeight()),
-						rect.getDeltaShadow(), dpiFactor);
-				drawOnlyLineShadow(g2d, new Line2D.Double(x + rect.getWidth(), y, x + rect.getWidth(), y + rect.getHeight()),
-						rect.getDeltaShadow(), dpiFactor);
+				drawOnlyLineShadowSpecial(g2d, shape, rect.getDeltaShadow(), dpiFactor);
 			} else {
 				drawShadow(g2d, shape, rect.getDeltaShadow(), dpiFactor);
 			}

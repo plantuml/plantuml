@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -61,6 +60,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
+import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -106,14 +106,6 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		return Dimension2DDouble.delta(dim, MARGIN * 2, MARGIN * 2);
 	}
 
-	private UStroke getStroke() {
-		UStroke stroke = getSkinParam().getThickness(LineParam.packageBorder, getStereo());
-		if (stroke == null) {
-			stroke = new UStroke(1.5);
-		}
-		return stroke;
-	}
-
 	final public void drawU(UGraphic ug) {
 		if (url != null) {
 			ug.startUrl(url);
@@ -128,8 +120,9 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final HColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName);
 		final double roundCorner = 0;
 
+		final UStroke stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
-				stereoBlock, 0, 0, widthTotal, heightTotal, getStroke());
+				stereoBlock, 0, 0, widthTotal, heightTotal, stroke);
 
 		final double shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
 		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder),

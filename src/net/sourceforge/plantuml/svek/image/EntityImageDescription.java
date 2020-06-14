@@ -98,7 +98,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final boolean fixCircleLabelOverlapping;
 
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
-			Collection<Link> links, SName styleName) {
+			Collection<Link> links, SName styleName, UStroke forceStroke) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.useRankSame = skinParam.useRankSame();
 		this.fixCircleLabelOverlapping = skinParam.fixCircleLabelOverlapping();
@@ -133,6 +133,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final HColor forecolor;
 		final double roundCorner;
 		final double diagonalCorner;
+		final double deltaShadow;
+		final UStroke stroke;
 		if (SkinParam.USE_STYLES()) {
 			final Style style = StyleSignature
 					.of(SName.root, SName.element, styleName, symbol.getSkinParameter().getStyleName())
@@ -143,6 +145,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 			}
 			roundCorner = style.value(PName.RoundCorner).asDouble();
 			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
+			deltaShadow = style.value(PName.Shadowing).asDouble();
+			stroke = style.getStroke();
 		} else {
 			forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());
 			if (backcolor == null) {
@@ -150,13 +154,17 @@ public class EntityImageDescription extends AbstractEntityImage {
 			}
 			roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
 			diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
+			deltaShadow = getSkinParam().shadowing2(getEntity().getStereotype(), symbol.getSkinParameter()) ? 3 : 0;
+			if (forceStroke == null) {
+				stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
+			} else {
+				stroke = forceStroke;
+			}
 		}
 
 		assert getStereo() == stereotype;
-		final UStroke stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
 
-		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke)
-				.withShadow(getSkinParam().shadowing2(getEntity().getStereotype(), symbol.getSkinParameter()) ? 3 : 0)
+		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow)
 				.withCorner(roundCorner, diagonalCorner);
 
 		stereo = TextBlockUtils.empty(0, 0);
@@ -183,8 +191,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	private USymbol getUSymbol(ILeaf entity) {
-		final USymbol result = entity.getUSymbol() == null
-				? (getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1)
+		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toSymbol()
 				: entity.getUSymbol();
 		if (result == null) {
 			throw new IllegalArgumentException();

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
@@ -134,6 +135,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class GeneralImageBuilder {
@@ -200,7 +202,8 @@ public final class GeneralImageBuilder {
 			return new EntityImageLollipopInterface(leaf, skinParam);
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE) {
-			return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName());
+			return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
+					null);
 		}
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
@@ -209,7 +212,11 @@ public final class GeneralImageBuilder {
 			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
 			} else {
-				return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName());
+				final UStroke forced = leaf.getUSymbol() == USymbol.PACKAGE
+						? getForcedStroke(leaf.getStereotype(), skinParam)
+						: null;
+				return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
+						forced);
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE) {
@@ -242,7 +249,7 @@ public final class GeneralImageBuilder {
 				final HColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
 						leaf.getUSymbol().getColorParamBorder());
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
-						links, umlDiagramType.getStyleName());
+						links, umlDiagramType.getStyleName(), getForcedStroke(leaf.getStereotype(), skinParam));
 			}
 			return new EntityImageEmptyPackage(leaf, skinParam, portionShower, umlDiagramType.getStyleName());
 		}
@@ -281,6 +288,14 @@ public final class GeneralImageBuilder {
 			return new EntityImageDomain(leaf, skinParam, 'P');
 		} else
 			throw new UnsupportedOperationException(leaf.getLeafType().toString());
+	}
+
+	public static UStroke getForcedStroke(Stereotype stereotype, ISkinParam skinParam) {
+		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, stereotype);
+		if (stroke == null) {
+			stroke = new UStroke(1.5);
+		}
+		return stroke;
 	}
 
 	private final DotData dotData;
@@ -371,7 +386,7 @@ public final class GeneralImageBuilder {
 		}
 		return dotData.getSkinParam().getBackgroundColor(false);
 	}
-	
+
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
 		if (dotData.isDegeneratedWithFewEntities(0)) {
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor(false));

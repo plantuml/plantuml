@@ -144,6 +144,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			final Code namespace = buildCode(namespaceString);
 			final Display tmp = Display.getWithNewlines(namespaceString);
 			final Ident newIdLong = buildLeafIdentSpecial(namespaceString);
+			// final Ident newIdLong = buildLeafIdentSpecial2(namespaceString);
 			gotoGroupExternal(newIdLong, namespace, tmp, namespace, GroupType.PACKAGE, getRootGroup());
 		}
 		final Display tmpDisplay;
@@ -212,8 +213,8 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			margin1 = 0;
 			margin2 = 10;
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), null, null,
-		null, (double) 1);
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(),
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, null, null, 1);
 		imageBuilder.setUDrawable(fullLayout);
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
 	}

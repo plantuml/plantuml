@@ -37,10 +37,8 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Line2D;
 
-import net.sourceforge.plantuml.golem.MinMaxDouble;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -65,23 +63,23 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 		final UPath shape = (UPath) ushape;
 		DriverLineG2d.manageStroke(param, g2d);
 
+		final HColor back = param.getBackcolor();
+
 		final ExtendedGeneralPath p = new ExtendedGeneralPath();
-		final MinMaxDouble minMax = new MinMaxDouble();
-		minMax.manage(x, y);
-		boolean slowShadow = false;
+		MinMax minMax = MinMax.getEmpty(false);
+		minMax = minMax.addPoint(x, y);
 		for (USegment seg : shape) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
 			if (type == USegmentType.SEG_MOVETO) {
 				p.moveTo(x + coord[0], y + coord[1]);
-				minMax.manage(x + coord[0], y + coord[1]);
+				minMax = minMax.addPoint(x + coord[0], y + coord[1]);
 			} else if (type == USegmentType.SEG_LINETO) {
 				p.lineTo(x + coord[0], y + coord[1]);
-				minMax.manage(x + coord[0], y + coord[1]);
+				minMax = minMax.addPoint(x + coord[0], y + coord[1]);
 			} else if (type == USegmentType.SEG_CUBICTO) {
 				p.curveTo(x + coord[0], y + coord[1], x + coord[2], y + coord[3], x + coord[4], y + coord[5]);
-				minMax.manage(x + coord[4], y + coord[5]);
-				slowShadow = true;
+				minMax = minMax.addPoint(x + coord[4], y + coord[5]);
 			} else if (type == USegmentType.SEG_ARCTO) {
 				p.arcTo(coord[0], coord[1], coord[2], coord[3] != 0, coord[4] != 0, x + coord[5], y + coord[6]);
 			} else {
@@ -97,32 +95,11 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 		}
 
 		// Shadow
-		final HColor back = param.getBackcolor();
-		if (back != null) {
-			slowShadow = true;
-		}
-		if (shape.getDeltaShadow() != 0 && HColorUtils.isTransparent(back) == false) {
-			if (slowShadow) {
-				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);
+		if (shape.getDeltaShadow() != 0) {
+			if (back == null || HColorUtils.isTransparent(back)) {
+				drawOnlyLineShadowSpecial(g2d, p, shape.getDeltaShadow(), dpiFactor);
 			} else {
-				double lastX = 0;
-				double lastY = 0;
-				for (USegment seg : shape) {
-					final USegmentType type = seg.getSegmentType();
-					final double coord[] = seg.getCoord();
-					// Cast float for Java 1.5
-					if (type == USegmentType.SEG_MOVETO) {
-						lastX = x + coord[0];
-						lastY = y + coord[1];
-					} else if (type == USegmentType.SEG_LINETO) {
-						final Shape line = new Line2D.Double(lastX, lastY, x + coord[0], y + coord[1]);
-						drawShadow(g2d, line, shape.getDeltaShadow(), dpiFactor);
-						lastX = x + coord[0];
-						lastY = y + coord[1];
-					} else {
-						throw new UnsupportedOperationException();
-					}
-				}
+				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);
 			}
 		}
 

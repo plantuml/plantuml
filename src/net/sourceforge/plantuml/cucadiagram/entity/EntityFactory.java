@@ -237,6 +237,11 @@ public final class EntityFactory {
 		if (groupType == null) {
 			throw new IllegalArgumentException();
 		}
+		for (Entry<Ident, IGroup> ent : groups2.entrySet()) {
+			if (ent.getKey().equals(ident)) {
+				return ent.getValue();
+			}
+		}
 		final Bodier bodier = new BodierImpl(null, hides);
 		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, groupType, namespace,
 				namespaceSeparator, rawLayout);

@@ -69,7 +69,7 @@ public enum SecurityProfile {
 	/**
 	 * 
 	 */
-	WHITELIST,
+	ALLOWLIST,
 
 	/**
 	 * This mode is designed for PlantUML running in a web server.
@@ -108,8 +108,8 @@ public enum SecurityProfile {
 		final String env = SecurityUtils.getenv("PLANTUML_SECURITY_PROFILE");
 		if ("SANDBOX".equalsIgnoreCase(env)) {
 			return SANDBOX;
-		} else if ("WHITELIST".equalsIgnoreCase(env)) {
-			return WHITELIST;
+		} else if ("ALLOWLIST".equalsIgnoreCase(env)) {
+			return ALLOWLIST;
 		} else if ("INTERNET".equalsIgnoreCase(env)) {
 			return INTERNET;
 		} else if ("UNSECURE".equalsIgnoreCase(env)) {
@@ -125,7 +125,7 @@ public enum SecurityProfile {
 		switch (this) {
 		case SANDBOX:
 			return "This is completely safe: no access to local files or to distant URL.";
-		case WHITELIST:
+		case ALLOWLIST:
 			return "Some local ressource may be accessible.";
 		case INTERNET:
 			return "<i>Mode designed for server connected to Internet.";

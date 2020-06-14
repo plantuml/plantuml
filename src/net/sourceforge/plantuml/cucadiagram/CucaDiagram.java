@@ -220,12 +220,15 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final public Ident buildLeafIdentSpecial(String id) {
 		return buildFullyQualified(id);
-		// if (namespaceSeparator != null) {
-		// if (id.contains(namespaceSeparator)) {
-		// return Ident.empty().add(id, namespaceSeparator);
-		// }
-		// }
-		// return getLastID().add(id, namespaceSeparator);
+	}
+
+	private Ident buildLeafIdentSpecialUnused(String id) {
+//		if (namespaceSeparator != null) {
+//			if (id.contains(namespaceSeparator)) {
+				return Ident.empty().add(id, ".");
+//			}
+//		}
+//		return getLastID().add(id, namespaceSeparator);
 	}
 
 	final public Ident buildFullyQualified(String id) {

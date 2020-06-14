@@ -47,15 +47,24 @@ public class ComplementSeveralDays implements ComplementPattern {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+(days?|weeks?)")); //
+				new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week)s?" + //
+						"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?" //
+				)); //
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
-		final String number = arg.get("COMPLEMENT" + suffix, 0);
-		final boolean inWeeks = arg.get("COMPLEMENT" + suffix, 1).startsWith("w");
-		final int factor = inWeeks ? system.daysInWeek() : 1;
-		final int days = Integer.parseInt(number) * factor;
-		return Failable.<Complement> ok(Load.inWinks(days));
+		final String nb1 = arg.get("COMPLEMENT" + suffix, 0);
+		final int factor1 = arg.get("COMPLEMENT" + suffix, 1).startsWith("w") ? system.daysInWeek() : 1;
+		final int days1 = Integer.parseInt(nb1) * factor1;
+
+		final String nb2 = arg.get("COMPLEMENT" + suffix, 2);
+		int days2 = 0;
+		if (nb2 != null) {
+			final int factor2 = arg.get("COMPLEMENT" + suffix, 3).startsWith("w") ? system.daysInWeek() : 1;
+			days2 = Integer.parseInt(nb2) * factor2;
+		}
+
+		return Failable.<Complement>ok(Load.inWinks(days1 + days2));
 	}
 
 }

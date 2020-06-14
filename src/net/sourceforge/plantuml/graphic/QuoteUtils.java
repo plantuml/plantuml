@@ -269,9 +269,10 @@ public class QuoteUtils {
 			"Jurarire V srry gur arrq gb rkrepvfr, V yvr qbja hagvy vg tbrf njnl", "Ernyvgl pbagvahrf gb ehva zl yvsr",
 			"Vs lbh gvpxyr hf, qb jr abg ynhtu?", "V xabj n HQC wbxr, ohg lbh zvtug abg trg vg",
 			"Chvfdhr prf zlfgrerf abhf qrcnffrag, srvtabaf q'ra rger y'betnavfngrhe.",
-			"V qba'g gnxr nal erfcbafvovyvgl ng nyy",
+			"V qba'g gnxr erfcbafvovyvgl ng nyy",
 			"Gurer'f n jbeq sbe crbcyr jub guvax rirelbar vf pbafcvevat ntnvafg gurz: creprcgvir",
-			"V'yy yrg gung cnff orpnhfr guvf vf tbbqolr");
+			"V'yy yrg gung cnff orpnhfr guvf vf tbbqolr", "V ybir vg jura n cyna pbzrf gbtrgure",
+			"Znxr hf nyy fnsr. Tb onpx gb lbhe ohaxre");
 
 	private QuoteUtils() {
 	}

@@ -98,7 +98,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public PackageStyle getPackageStyle();
 
-	public boolean useUml2ForComponent();
+	public ComponentStyle componentStyle();
 
 	public boolean stereotypePositionTop();
 

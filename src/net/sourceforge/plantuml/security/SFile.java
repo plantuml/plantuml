@@ -245,17 +245,17 @@ public class SFile implements Comparable<SFile> {
 			// In SANDBOX, we cannot read any files
 			return false;
 		}
-		// Files in "plantuml.include.path" and "plantuml.whitelist.path" are ok.
-		if (isIn(SecurityUtils.getPath("plantuml.include.path"))) {
+		// Files in "plantuml.include.path" and "plantuml.allowlist.path" are ok.
+		if (isInAllowList(SecurityUtils.getPath("plantuml.include.path"))) {
 			return true;
 		}
-		if (isIn(SecurityUtils.getPath("plantuml.whitelist.path"))) {
+		if (isInAllowList(SecurityUtils.getPath("plantuml.allowlist.path"))) {
 			return true;
 		}
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
 			return false;
 		}
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.WHITELIST) {
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST) {
 			return false;
 		}
 		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE) {
@@ -272,11 +272,11 @@ public class SFile implements Comparable<SFile> {
 		return true;
 	}
 
-	private boolean isIn(List<SFile> whiteList) {
+	private boolean isInAllowList(List<SFile> allowlist) {
 		final String path = getCleanPathSecure();
-		for (SFile white : whiteList) {
-			if (path.startsWith(white.getCleanPathSecure())) {
-				// File directory is in the whiteList
+		for (SFile allow : allowlist) {
+			if (path.startsWith(allow.getCleanPathSecure())) {
+				// File directory is in the allowlist
 				return true;
 			}
 		}

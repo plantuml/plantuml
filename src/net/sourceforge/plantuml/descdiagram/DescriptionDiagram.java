@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import net.sourceforge.plantuml.ComponentStyle;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -74,14 +75,14 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		if (type == null) {
 			String codeString = code.getName();
 			if (codeString.startsWith("[") && codeString.endsWith("]")) {
-				final USymbol sym = getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1;
+				final USymbol sym = getSkinParam().componentStyle().toSymbol() ;
 				final Ident idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 				return getOrCreateLeafDefault(idNewLong, idNewLong.toCode(this), LeafType.DESCRIPTION, sym);
 			}
 			if (codeString.startsWith(":") && codeString.endsWith(":")) {
 				final Ident idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-				return getOrCreateLeafDefault(idNewLong, idNewLong.toCode(this), LeafType.DESCRIPTION, getSkinParam()
-						.getActorStyle().getUSymbol());
+				return getOrCreateLeafDefault(idNewLong, idNewLong.toCode(this), LeafType.DESCRIPTION,
+						getSkinParam().getActorStyle().getUSymbol());
 			}
 			if (codeString.startsWith("()")) {
 				codeString = StringUtils.trin(codeString.substring(2));

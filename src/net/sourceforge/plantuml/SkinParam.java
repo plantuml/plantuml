@@ -807,12 +807,16 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	public boolean useUml2ForComponent() {
+	public ComponentStyle componentStyle() {
 		if (strictUmlStyle()) {
-			return true;
+			return ComponentStyle.UML2;
 		}
 		final String value = getValue("componentstyle");
-		return "uml2".equalsIgnoreCase(value);
+		if ("uml2".equalsIgnoreCase(value))
+			return ComponentStyle.UML2;
+		if ("rectangle".equalsIgnoreCase(value))
+			return ComponentStyle.RECTANGLE;
+		return ComponentStyle.UML1;
 	}
 
 	public boolean stereotypePositionTop() {

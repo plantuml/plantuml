@@ -144,7 +144,7 @@ public class StyleLoader {
 			if (mPropertyAndValue.find()) {
 				final PName key = PName.getFromName(mPropertyAndValue.group(1));
 				final String value = mPropertyAndValue.group(2);
-				if (key != null) {
+				if (key != null && maps.size() > 0) {
 					maps.get(maps.size() - 1).put(key, new ValueImpl(value, counter));
 				}
 				continue;

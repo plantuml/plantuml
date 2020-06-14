@@ -53,6 +53,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandExoArrowLeft.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
+				new RegexLeaf("ANCHOR", CommandArrow.ANCHOR), //
 				new RegexLeaf("SHORT", "([?\\[\\]][ox]?)?"), //
 				new RegexOr( //
 						new RegexConcat( //

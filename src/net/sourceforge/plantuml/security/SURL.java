@@ -36,7 +36,8 @@
 package net.sourceforge.plantuml.security;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -110,10 +111,13 @@ public class SURL {
 			// We are UNSECURE anyway
 			return true;
 		}
-		if (isInWhiteList()) {
+		if (isInAllowList()) {
 			return true;
 		}
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
+			if (pureIP(cleanPath(internal.toString()))) {
+				return false;
+			}
 			final int port = internal.getPort();
 			// Using INTERNET profile, port 80 and 443 are ok
 			if (port == 80 || port == 443) {
@@ -123,10 +127,17 @@ public class SURL {
 		return false;
 	}
 
-	private boolean isInWhiteList() {
+	private boolean pureIP(String full) {
+		if (full.matches("^https?://\\d+\\.\\d+\\.\\d+\\.\\d+\\/")) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isInAllowList() {
 		final String full = cleanPath(internal.toString());
-		for (String white : getWhiteList()) {
-			if (full.startsWith(cleanPath(white))) {
+		for (String allow : getAllowList()) {
+			if (full.startsWith(cleanPath(allow))) {
 				return true;
 			}
 		}
@@ -141,31 +152,51 @@ public class SURL {
 		return path;
 	}
 
-	private List<String> getWhiteList() {
-		final String env = SecurityUtils.getenv("plantuml.whitelist.url");
+	private List<String> getAllowList() {
+		final String env = SecurityUtils.getenv("plantuml.allowlist.url");
 		if (env == null) {
 			return Collections.emptyList();
 		}
 		return Arrays.asList(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env).split(";"));
 	}
 
-	public URLConnection openConnection() {
+	// Added by Alain Corbiere
+	public byte[] getBytes() {
 		if (isUrlOk())
 			try {
-				return internal.openConnection();
-			} catch (IOException e) {
+				InputStream input = null;
+				try {
+					final URLConnection connection = internal.openConnection();
+					if (connection == null) {
+						return null;
+					}
+					input = connection.getInputStream();
+					final ByteArrayOutputStream image = new ByteArrayOutputStream();
+					final byte[] buffer = new byte[1024];
+					int read;
+					while ((read = input.read(buffer)) > 0) {
+						image.write(buffer, 0, read);
+					}
+					image.close();
+					return image.toByteArray();
+				} finally {
+					if (input != null) {
+						input.close();
+					}
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		return null;
 	}
 
 	public InputStream openStream() {
-		if (isUrlOk())
-			try {
-				return internal.openStream();
-			} catch (IOException e) {
-				e.printStackTrace();
+		if (isUrlOk()) {
+			final byte data[] = getBytes();
+			if (data != null) {
+				return new ByteArrayInputStream(data);
 			}
+		}
 		return null;
 	}
 

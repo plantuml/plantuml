@@ -75,6 +75,11 @@ public class GroupRoot implements IGroup {
 		return Collections.unmodifiableCollection(result);
 
 	}
+	
+	@Override
+	public String toString() {
+		return "ROOT";
+	}
 
 	public boolean isGroup() {
 		return true;

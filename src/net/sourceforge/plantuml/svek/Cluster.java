@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -305,7 +304,7 @@ public class Cluster implements Moveable {
 		return StyleSignature.of(SName.root, SName.element, styleName, SName.group);
 	}
 
-	public void drawU(UGraphic ug, UStroke stroke, UmlDiagramType umlDiagramType, ISkinParam skinParam2) {
+	public void drawU(UGraphic ug, UStroke strokeForState, UmlDiagramType umlDiagramType, ISkinParam skinParam2) {
 		if (group.isHidden()) {
 			return;
 		}
@@ -345,12 +344,12 @@ public class Cluster implements Moveable {
 			final boolean isState = umlDiagramType == UmlDiagramType.STATE;
 			if (isState) {
 				if (group.getColors(skinParam).getSpecificLineStroke() != null) {
-					stroke = group.getColors(skinParam).getSpecificLineStroke();
+					strokeForState = group.getColors(skinParam).getSpecificLineStroke();
 				}
 				if (group.getColors(skinParam).getColor(ColorType.LINE) != null) {
 					borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
 				}
-				drawUState(ug, borderColor, skinParam2, stroke, umlDiagramType);
+				drawUState(ug, borderColor, skinParam2, strokeForState, umlDiagramType);
 				return;
 			}
 			PackageStyle packageStyle = group.getPackageStyle();
@@ -365,10 +364,12 @@ public class Cluster implements Moveable {
 			}
 
 			final double shadowing;
+			final UStroke stroke;
 			if (SkinParam.USE_STYLES()) {
 				final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
 						.getMergedStyle(skinParam.getCurrentStyleBuilder());
 				shadowing = style.value(PName.Shadowing).asDouble();
+				stroke = style.getStroke();
 			} else {
 				if (group.getUSymbol() == null) {
 					shadowing = skinParam2.shadowing2(group.getStereotype(), USymbol.PACKAGE.getSkinParameter()) ? 3
@@ -377,6 +378,7 @@ public class Cluster implements Moveable {
 					shadowing = skinParam2.shadowing2(group.getStereotype(), group.getUSymbol().getSkinParameter()) ? 3
 							: 0;
 				}
+				stroke = getStrokeInternal(skinParam2);
 			}
 			HColor backColor = getBackColor(umlDiagramType);
 			backColor = getBackColor(backColor, skinParam2, group.getStereotype(), umlDiagramType.getStyleName());
@@ -384,9 +386,8 @@ public class Cluster implements Moveable {
 				final double roundCorner = group.getUSymbol() == null ? 0
 						: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, stereotype);
 
-				final UStroke stroke2 = getStrokeInternal(skinParam2);
 				final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
-						zstereo, minX, minY, maxX, maxY, stroke2);
+						zstereo, minX, minY, maxX, maxY, stroke);
 				decoration.drawU(ug, backColor, borderColor, shadowing, roundCorner,
 						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
 						skinParam2.getStereotypeAlignment());
@@ -410,14 +411,15 @@ public class Cluster implements Moveable {
 		if (colors.getSpecificLineStroke() != null) {
 			return colors.getSpecificLineStroke();
 		}
-		if (group.getUSymbol() != null) {
+		if (group.getUSymbol() != null && group.getUSymbol() != USymbol.PACKAGE) {
 			return group.getUSymbol().getSkinParameter().getStroke(skinParam, group.getStereotype());
 		}
-		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, group.getStereotype());
-		if (stroke == null) {
-			stroke = new UStroke(1.5);
-		}
-		return stroke;
+		return GeneralImageBuilder.getForcedStroke(group.getStereotype(), skinParam);
+//		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, group.getStereotype());
+//		if (stroke == null) {
+//			stroke = new UStroke(1.5);
+//		}
+//		return stroke;
 	}
 
 	public void manageEntryExitPoint(StringBounder stringBounder) {

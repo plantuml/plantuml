@@ -39,10 +39,7 @@ import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLConnection;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
@@ -88,8 +85,9 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (im == null) {
 			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		}
-		return new AtomImg(new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-				.scale(scale).getImage(1), 1, null, null);
+		return new AtomImg(
+				new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(scale).getImage(1), 1,
+				null, null);
 	}
 
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
@@ -171,40 +169,11 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (source == null) {
 			return AtomText.create("(Cannot decode SVG: " + text + ")", fc);
 		}
-		final byte[] read = getFile(source);
+		final byte[] read = source.getBytes();
 		if (read == null) {
 			return AtomText.create("(Cannot decode SVG: " + text + ")", fc);
 		}
 		return new AtomImgSvg(new TileImageSvg(new String(read, "UTF-8")));
-	}
-
-	// Added by Alain Corbiere
-	private static byte[] getFile(SURL url) {
-		try {
-			InputStream input = null;
-			try {
-				final URLConnection connection = url.openConnection();
-				if (connection == null) {
-					return null;
-				}
-				input = connection.getInputStream();
-				final ByteArrayOutputStream image = new ByteArrayOutputStream();
-				final byte[] buffer = new byte[1024];
-				int read;
-				while ((read = input.read(buffer)) > 0) {
-					image.write(buffer, 0, read);
-				}
-				image.close();
-				return image.toByteArray();
-			} finally {
-				if (input != null) {
-					input.close();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	// End
@@ -221,8 +190,8 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR))
-				.withRawFileName(rawFileName).scale(scale));
+		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)).withRawFileName(rawFileName)
+				.scale(scale));
 		if (url != null) {
 			ug.closeUrl();
 		}

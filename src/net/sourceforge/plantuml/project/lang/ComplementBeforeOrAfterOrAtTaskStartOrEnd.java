@@ -46,27 +46,50 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 
 public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPattern {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix,
-				"(?:at|with|after|(\\d+)[%s]+days?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
+	private static final int POS_NB1 = 0;
+	private static final int POS_DAY_OR_WEEK1 = 1;
+	private static final int POS_NB2 = 2;
+	private static final int POS_DAY_OR_WEEK2 = 3;
+	private static final int POS_BEFORE_OR_AFTER = 4;
+	private static final int POS_CODE_OTHER = 5;
+	private static final int POS_START_OR_END = 6;
+
+	public IRegex toRegex(String suffix) { // "+"
+		return new RegexLeaf("COMPLEMENT" + suffix, "(?:at|with|after|" + //
+				"(\\d+)[%s]+(day|week)s?" + //
+				"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?" + //
+				"[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
-		final String code = arg.get("COMPLEMENT" + suffix, 2);
-		final String position = arg.get("COMPLEMENT" + suffix, 3);
+		final String code = arg.get("COMPLEMENT" + suffix, POS_CODE_OTHER);
+		final String startOrEnd = arg.get("COMPLEMENT" + suffix, POS_START_OR_END);
 		final Moment task = system.getExistingMoment(code);
 		if (task == null) {
-			return Failable.<Complement> error("No such task " + code);
+			return Failable.<Complement>error("No such task " + code);
 		}
-		final String days = arg.get("COMPLEMENT" + suffix, 0);
-		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(position));
-		if (days != null) {
-			int delta = Integer.parseInt(days);
-			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT" + suffix, 1))) {
+		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));
+		final String nb1 = arg.get("COMPLEMENT" + suffix, POS_NB1);
+		if (nb1 != null) {
+			final int factor1 = arg.get("COMPLEMENT" + suffix, POS_DAY_OR_WEEK1).startsWith("w") ? system.daysInWeek()
+					: 1;
+			final int days1 = Integer.parseInt(nb1) * factor1;
+
+			final String nb2 = arg.get("COMPLEMENT" + suffix, POS_NB2);
+			int days2 = 0;
+			if (nb2 != null) {
+				final int factor2 = arg.get("COMPLEMENT" + suffix, POS_DAY_OR_WEEK2).startsWith("w")
+						? system.daysInWeek()
+						: 1;
+				days2 = Integer.parseInt(nb2) * factor2;
+			}
+
+			int delta = days1 + days2;
+			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT" + suffix, POS_BEFORE_OR_AFTER))) {
 				delta = -delta;
 			}
 			result = result.withDelta(delta);
 		}
-		return Failable.<Complement> ok(result);
+		return Failable.<Complement>ok(result);
 	}
 }
