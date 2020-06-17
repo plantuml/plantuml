@@ -67,7 +67,7 @@ public class PSystemListInternalSprites extends AbstractPSystem {
 
 	private UDrawable getGraphicStrings() throws IOException {
 		final List<String> lines = new ArrayList<String>();
-		lines.add("<b>List Current Sprits");
+		lines.add("<b>List Current Sprites");
 		lines.add("<i>Credit to");
 		lines.add("http://www.archimatetool.com");
 		lines.add(" ");
