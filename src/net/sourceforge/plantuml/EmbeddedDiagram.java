@@ -140,7 +140,9 @@ public class EmbeddedDiagram implements CharSequence {
 
 		private BufferedImage getImage() throws IOException, InterruptedException {
 			if (image == null) {
+				final boolean sav = SkinParam.USE_STYLES();
 				image = getImageSlow();
+				SkinParam.setBetaStyle(sav);
 			}
 			return image;
 		}

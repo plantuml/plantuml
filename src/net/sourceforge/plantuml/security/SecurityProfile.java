@@ -136,4 +136,24 @@ public enum SecurityProfile {
 		}
 		return "<i>This is completely safe: no access on local files or on distant URL.";
 	}
+
+	/**
+	 * Retrieve the timeout for URL.
+	 */
+	public long getTimeout() {
+		switch (this) {
+		case SANDBOX:
+			return 1000L;
+		case ALLOWLIST:
+			return 1000L * 60 * 5;
+		case INTERNET:
+			return 1000L * 10;
+		case LEGACY:
+			return 1000L * 60;
+		case UNSECURE:
+			return 1000L * 60 * 5;
+		}
+		throw new AssertionError();
+	}
+
 }

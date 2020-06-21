@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -76,14 +77,14 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		final USymbol symbol = entity.getUSymbol() == null ? skinParam.componentStyle().toSymbol()
+		final USymbol symbol = entity.getUSymbol() == null ? skinParam.componentStyle().toUSymbol()
 				: entity.getUSymbol();
 		if (symbol == null) {
 			throw new IllegalArgumentException();
 		}
 
 		this.desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, entity);
+				stereotype, symbol.manageHorizontalLine(), false, entity, SName.componentDiagram);
 
 		this.url = entity.getUrl99();
 

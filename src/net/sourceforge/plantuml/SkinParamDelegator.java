@@ -124,8 +124,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.shadowing2(stereotype, skinParameter);
 	}
 
-	public PackageStyle getPackageStyle() {
-		return skinParam.getPackageStyle();
+	public PackageStyle packageStyle() {
+		return skinParam.packageStyle();
 	}
 
 	public Sprite getSprite(String name) {
@@ -276,8 +276,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getUmlDiagramType();
 	}
 
-	public HColor getHoverPathColor() {
-		return skinParam.getHoverPathColor();
+	public HColor hoverPathColor() {
+		return skinParam.hoverPathColor();
 	}
 
 	public double getPadding(PaddingParam param) {
@@ -336,8 +336,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getStereotypeAlignment();
 	}
 
-	public Padder getSequenceDiagramPadder() {
-		return skinParam.getSequenceDiagramPadder();
+	public Padder sequenceDiagramPadder() {
+		return skinParam.sequenceDiagramPadder();
 	}
 
 	public StyleBuilder getCurrentStyleBuilder() {
@@ -360,8 +360,8 @@ public class SkinParamDelegator implements ISkinParam {
 		skinParam.setDefaultSkin(newFileName);
 	}
 
-	public ActorStyle getActorStyle() {
-		return skinParam.getActorStyle();
+	public ActorStyle actorStyle() {
+		return skinParam.actorStyle();
 	}
 
 }

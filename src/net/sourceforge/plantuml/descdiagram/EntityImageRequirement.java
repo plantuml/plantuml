@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
@@ -78,7 +79,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.REQUIREMENT, skinParam,
-				HorizontalAlignment.CENTER, stereotype, true, false, entity);
+				HorizontalAlignment.CENTER, stereotype, true, false, entity, SName.componentDiagram);
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.desc = tmp;

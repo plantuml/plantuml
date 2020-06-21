@@ -74,7 +74,7 @@ public class LaneDivider extends AbstractTextBlock {
 	}
 
 	public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.swimlane);
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
 	private Style getStyle() {

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -86,14 +87,15 @@ public class EntityImageState2 extends AbstractEntityImage {
 		// backcolor = HtmlColorUtils.BLUE;
 		final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBorder());
 
-		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
-				getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);
+		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5))
+				.withShadow(getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);
 
 		this.url = entity.getUrl99();
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
 		final TextBlock desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam,
-				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, entity);
+				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, entity,
+				SName.stateDiagram);
 
 		asSmall = symbol.asSmall(null, desc, stereo, ctx, skinParam.getStereotypeAlignment());
 

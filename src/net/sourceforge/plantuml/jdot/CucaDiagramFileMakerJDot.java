@@ -93,6 +93,7 @@ import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -236,7 +237,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-						g.getStereotype(), null);
+						g.getStereotype(), null, SName.stateDiagram);
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
@@ -427,8 +428,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				margin1 = 0;
 				margin2 = 10;
 			}
-			final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), diagram.getAnimation(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
-			null, scale);
+			final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(),
+					ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), diagram.getAnimation(),
+					fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, scale);
 
 			imageBuilder.setUDrawable(new Drawing(null));
 			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);

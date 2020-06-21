@@ -39,9 +39,12 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -77,8 +80,8 @@ import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
-import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -183,7 +186,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 
-		final HColor hover = getSkinParam().getHoverPathColor();
+		final HColor hover = getSkinParam().hoverPathColor();
 		if (fileFormatOption.getSvgLinkTarget() == null || fileFormatOption.getSvgLinkTarget().equals("_top")) {
 			fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
 		}
@@ -337,9 +340,9 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	private Dimension2D lastInfo;
 
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
-		final SFile svg = FileUtils.createTempFile("pdf", ".svf");
-		final SFile pdfFile = FileUtils.createTempFile("pdf", ".pdf");
-		final OutputStream fos = svg.createBufferedOutputStream();
+		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
+		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
+		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg));;
 		final ImageData result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
 		fos.close();
 		PdfConverter.convert(svg, pdfFile);

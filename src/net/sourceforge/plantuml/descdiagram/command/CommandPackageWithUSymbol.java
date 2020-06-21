@@ -160,7 +160,8 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		if ("together".equalsIgnoreCase(symbol)) {
 			p.setThisIsTogether();
 		}
-		p.setUSymbol(USymbol.getFromString(symbol, diagram.getSkinParam().getActorStyle()));
+		p.setUSymbol(USymbol.fromString(symbol, diagram.getSkinParam().actorStyle(),
+				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle()));
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype, false));

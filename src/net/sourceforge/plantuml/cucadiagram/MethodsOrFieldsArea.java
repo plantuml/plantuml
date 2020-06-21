@@ -81,30 +81,26 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
-//	private final HColor color;
-//	private final HColor hyperlinkColor;
-//	private final boolean useUnderlineForHyperlink;
 	private final Rose rose = new Rose();
 	private final List<Member> members = new ArrayList<Member>();
 	private final HorizontalAlignment align;
 	private final Stereotype stereotype;
 	private final ILeaf leaf;
+	private final SName diagramType;
 
 	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam, Stereotype stereotype,
-			ILeaf leaf) {
-		this(members, fontParam, skinParam, HorizontalAlignment.LEFT, stereotype, leaf);
+			ILeaf leaf, SName diagramType) {
+		this(members, fontParam, skinParam, HorizontalAlignment.LEFT, stereotype, leaf, diagramType);
 	}
 
 	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam,
-			HorizontalAlignment align, Stereotype stereotype, ILeaf leaf) {
+			HorizontalAlignment align, Stereotype stereotype, ILeaf leaf, SName diagramType) {
+		this.diagramType = diagramType;
 		this.leaf = leaf;
 		this.stereotype = stereotype;
 		this.align = align;
 		this.skinParam = skinParam;
 		this.fontParam = fontParam;
-//		this.color = rose.getFontColor(skinParam, fontParam);
-//		this.hyperlinkColor = skinParam.getHyperlinkColor();
-//		this.useUnderlineForHyperlink = skinParam.useUnderlineForHyperlink();
 		this.members.addAll(members);
 	}
 
@@ -165,7 +161,9 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		}
 		FontConfiguration config;
 		if (SkinParam.USE_STYLES()) {
-			final Style style = StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.component)
+//			final Style style = StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.component)
+//			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final Style style = fontParam.getStyleDefinition(diagramType)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			config = new FontConfiguration(style, skinParam, stereotype, fontParam);
 		} else {

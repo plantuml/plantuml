@@ -41,6 +41,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.EmbeddedDiagram;
@@ -309,6 +311,23 @@ public class Display implements Iterable<CharSequence> {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
 		for (CharSequence line : displayData) {
 			result.add("<u>" + line);
+		}
+		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
+	}
+
+	public Display underlinedName() {
+		final Pattern p = Pattern.compile("^([^:]+?)(\\s*:.+)$");
+		final List<CharSequence> result = new ArrayList<CharSequence>();
+		for (CharSequence line : displayData) {
+			if (result.size() == 0) {
+				final Matcher m = p.matcher(line);
+				if (m.matches())
+					result.add("<u>" + m.group(1) + "</u>" + m.group(2));
+				else
+					result.add("<u>" + line);
+			} else {
+				result.add("<u>" + line);
+			}
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 	}

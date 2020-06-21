@@ -118,7 +118,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.swimlane);
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {

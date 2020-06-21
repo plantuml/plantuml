@@ -41,7 +41,7 @@ public enum ComponentStyle {
 
 	UML1, UML2, RECTANGLE;
 
-	public USymbol toSymbol() {
+	public USymbol toUSymbol() {
 		switch (this) {
 		case UML1:
 			return USymbol.COMPONENT1;

@@ -327,7 +327,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
 		Style style = null;
 		if (SkinParam.USE_STYLES()) {
-			final StyleSignature def = fontParam.getStyleDefinition();
+			final StyleSignature def = fontParam.getStyleDefinition(null);
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,

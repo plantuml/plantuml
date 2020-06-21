@@ -121,7 +121,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double roundCorner = 0;
 
 		final UStroke stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
-		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
+		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,
 				stereoBlock, 0, 0, widthTotal, heightTotal, stroke);
 
 		final double shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;

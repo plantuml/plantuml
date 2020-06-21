@@ -145,7 +145,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 				type = "biddable";
 			}
 		}
-		USymbol usymbol = USymbol.getFromString(type, diagram.getSkinParam());
+		USymbol usymbol = USymbol.fromString(type, diagram.getSkinParam());
 		entity.setUSymbol(usymbol);
 		return CommandExecutionResult.ok();
 	}

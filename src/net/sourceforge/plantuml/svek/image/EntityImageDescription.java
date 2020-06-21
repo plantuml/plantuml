@@ -123,7 +123,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		} else {
 			desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
 					HorizontalAlignment.LEFT, stereotype, symbol.manageHorizontalLine(), false, entity,
-					skinParam.minClassWidth());
+					skinParam.minClassWidth(), SName.componentDiagram);
 		}
 
 		this.url = entity.getUrl99();
@@ -180,7 +180,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 
 		name = new BodyEnhanced(codeDisplay, symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, entity);
+				stereotype, symbol.manageHorizontalLine(), false, entity, SName.componentDiagram);
 
 		if (hideText) {
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
@@ -191,7 +191,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	private USymbol getUSymbol(ILeaf entity) {
-		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toSymbol()
+		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toUSymbol()
 				: entity.getUSymbol();
 		if (result == null) {
 			throw new IllegalArgumentException();

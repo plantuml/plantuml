@@ -354,7 +354,7 @@ public class Cluster implements Moveable {
 			}
 			PackageStyle packageStyle = group.getPackageStyle();
 			if (packageStyle == null) {
-				packageStyle = skinParam2.getPackageStyle();
+				packageStyle = skinParam2.packageStyle();
 			}
 			if (border != null) {
 				final HColor tmp = skinParam2.getHtmlColor(border, group.getStereotype(), false);
@@ -512,7 +512,7 @@ public class Cluster implements Moveable {
 			attribute = new TextBlockEmpty();
 		} else {
 			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, skinParam, group.getStereotype(),
-					null);
+					null, SName.stateDiagram);
 		}
 		return attribute;
 	}
@@ -836,12 +836,12 @@ public class Cluster implements Moveable {
 		printCluster1(sb, lines, stringBounder);
 
 		final Node added = printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
-		if (entityPositionsExceptNormal.size() > 0 && added == null) {
+		if (entityPositionsExceptNormal.size() > 0) {
 			if (hasPort()) {
 				sb.append(empty() + " [shape=rect,width=.01,height=.01,label=");
 				sb.append(label);
 				sb.append("];");
-			} else {
+			} else if (added == null) {
 				sb.append(empty() + " [shape=point,width=.01,label=\"\"];");
 			}
 			SvekUtils.println(sb);
@@ -874,7 +874,11 @@ public class Cluster implements Moveable {
 	}
 
 	private String empty() {
-		return "empty" + color;
+		// return "empty" + color;
+		// We use the same node with one for thereALinkFromOrToGroup2 as an empty
+		// because we cannot put a new node in the nested inside of the cluster
+		// if thereALinkFromOrToGroup2 is enabled.
+		return getSpecialPointId(group);
 	}
 
 	public boolean isLabel() {

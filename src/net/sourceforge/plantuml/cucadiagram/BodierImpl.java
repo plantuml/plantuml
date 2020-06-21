@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.style.SName;
 
 public class BodierImpl implements Bodier {
 
@@ -83,19 +84,10 @@ public class BodierImpl implements Bodier {
 	}
 
 	public void addFieldOrMethod(String s) {
-//		if (leaf == null) {
-//			throw new IllegalArgumentException();
-//		}
 		// Empty cache
 		methodsToDisplay = null;
 		fieldsToDisplay = null;
 		rawBody.add(s);
-//		if (leaf instanceof ILeaf) {
-//			if (this.leaf != null && this.leaf != leaf) {
-//				throw new IllegalArgumentException();
-//			}
-//			this.leaf = (ILeaf) leaf;
-//		}
 	}
 
 	private boolean isBodyEnhanced() {
@@ -203,7 +195,8 @@ public class BodierImpl implements Bodier {
 			final boolean showFields, Stereotype stereotype) {
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
-				return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf);
+				return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf,
+						SName.classDiagram);
 			}
 			return null;
 		}
@@ -211,7 +204,7 @@ public class BodierImpl implements Bodier {
 			throw new IllegalStateException();
 		}
 		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
-				stereotype, leaf);
+				stereotype, leaf, SName.classDiagram);
 		if (type == LeafType.OBJECT) {
 			if (showFields == false) {
 				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
@@ -222,7 +215,7 @@ public class BodierImpl implements Bodier {
 			throw new UnsupportedOperationException();
 		}
 		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
-				stereotype, leaf);
+				stereotype, leaf, SName.classDiagram);
 		if (showFields && showMethods == false) {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {

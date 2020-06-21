@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -59,6 +61,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PlayerBinary extends Player {
 
+	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
 	private final SortedMap<TimeTick, Boolean> values = new TreeMap<TimeTick, Boolean>();
 	private Boolean initialState;
 
@@ -67,8 +70,12 @@ public class PlayerBinary extends Player {
 		this.suggestedHeight = 30;
 	}
 
+	private double getHeightForConstraints(StringBounder stringBounder) {
+		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);
+	}
+
 	public double getFullHeight(StringBounder stringBounder) {
-		return suggestedHeight;
+		return getHeightForConstraints(stringBounder) + suggestedHeight;
 	}
 
 	public void drawFrameTitle(UGraphic ug) {
@@ -80,7 +87,8 @@ public class PlayerBinary extends Player {
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
-		return new IntricatedPoint(new Point2D.Double(x, getYpos(false)), new Point2D.Double(x, getYpos(true)));
+		return new IntricatedPoint(new Point2D.Double(x, getYpos(stringBounder, false)),
+				new Point2D.Double(x, getYpos(stringBounder, true)));
 	}
 
 	public void addNote(TimeTick now, Display note, Position position) {
@@ -105,13 +113,21 @@ public class PlayerBinary extends Player {
 	}
 
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
-		throw new UnsupportedOperationException();
+		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam));
 	}
 
 	private final double ymargin = 8;
 
-	private double getYpos(boolean state) {
-		return state ? ymargin : getFullHeight(null) - ymargin;
+	private double getYpos(StringBounder stringBounder, boolean state) {
+		return state ? getYhigh(stringBounder) : getYlow(stringBounder);
+	}
+
+	private double getYlow(StringBounder stringBounder) {
+		return getFullHeight(stringBounder) - ymargin;
+	}
+
+	private double getYhigh(StringBounder stringBounder) {
+		return ymargin + getHeightForConstraints(stringBounder);
 	}
 
 	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
@@ -138,18 +154,30 @@ public class PlayerBinary extends Player {
 				ug = getContext().apply(ug);
 				double lastx = 0;
 				boolean lastValue = initialState == null ? false : initialState;
+				final StringBounder stringBounder = ug.getStringBounder();
+				final ULine vline = ULine.vline(getYlow(stringBounder) - getYhigh(stringBounder));
 				for (Map.Entry<TimeTick, Boolean> ent : values.entrySet()) {
 					final double x = ruler.getPosInPixel(ent.getKey());
-					ug.apply(new UTranslate(lastx, getYpos(lastValue))).draw(ULine.hline(x - lastx));
+					ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValue))).draw(ULine.hline(x - lastx));
 					if (lastValue != ent.getValue()) {
-						ug.apply(new UTranslate(x, ymargin)).draw(ULine.vline(getFullHeight(null) - 2 * ymargin));
+						ug.apply(new UTranslate(x, getYhigh(stringBounder))).draw(vline);
 					}
 					lastx = x;
 					lastValue = ent.getValue();
 				}
-				ug.apply(new UTranslate(lastx, getYpos(lastValue))).draw(ULine.hline(ruler.getWidth() - lastx));
+				ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValue)))
+						.draw(ULine.hline(ruler.getWidth() - lastx));
+
+				drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
+
 			}
 		};
+	}
+
+	private void drawConstraints(final UGraphic ug) {
+		for (TimeConstraint constraint : constraints) {
+			constraint.drawU(ug, ruler);
+		}
 	}
 
 }

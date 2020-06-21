@@ -140,6 +140,11 @@ public class SkinParameter {
 	private final LineParam lineParam;
 	private final CornerParam roundParam;
 	private final SName styleName;
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 
 	public SName getStyleName() {
 		return styleName;

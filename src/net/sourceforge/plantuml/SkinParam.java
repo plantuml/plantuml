@@ -780,15 +780,6 @@ public class SkinParam implements ISkinParam {
 		return true;
 	}
 
-	public PackageStyle getPackageStyle() {
-		final String value = getValue("packageStyle");
-		final PackageStyle p = PackageStyle.fromString(value);
-		if (p == null) {
-			return PackageStyle.FOLDER;
-		}
-		return p;
-	}
-
 	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();
 
 	public Collection<String> getAllSpriteNames() {
@@ -807,16 +798,27 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	public PackageStyle packageStyle() {
+		final String value = getValue("packageStyle");
+		final PackageStyle p = PackageStyle.fromString(value);
+		if (p == null) {
+			return PackageStyle.FOLDER;
+		}
+		return p;
+	}
+
 	public ComponentStyle componentStyle() {
 		if (strictUmlStyle()) {
 			return ComponentStyle.UML2;
 		}
 		final String value = getValue("componentstyle");
+		if ("uml1".equalsIgnoreCase(value))
+			return ComponentStyle.UML1;
 		if ("uml2".equalsIgnoreCase(value))
 			return ComponentStyle.UML2;
 		if ("rectangle".equalsIgnoreCase(value))
 			return ComponentStyle.RECTANGLE;
-		return ComponentStyle.UML1;
+		return ComponentStyle.UML2;
 	}
 
 	public boolean stereotypePositionTop() {
@@ -1144,7 +1146,7 @@ public class SkinParam implements ISkinParam {
 		return type;
 	}
 
-	public HColor getHoverPathColor() {
+	public HColor hoverPathColor() {
 		final String value = getValue("pathhovercolor");
 		if (value == null) {
 			return null;
@@ -1219,7 +1221,7 @@ public class SkinParam implements ISkinParam {
 		return useVizJs;
 	}
 
-	public Padder getSequenceDiagramPadder() {
+	public Padder sequenceDiagramPadder() {
 		final double padding = getAsDouble("SequenceMessagePadding");
 		final double margin = getAsDouble("SequenceMessageMargin");
 		final String borderColor = getValue("SequenceMessageBorderColor");
@@ -1234,7 +1236,7 @@ public class SkinParam implements ISkinParam {
 				.withBorderColor(border).withRoundCorner(roundCorner);
 	}
 
-	public ActorStyle getActorStyle() {
+	public ActorStyle actorStyle() {
 		final String value = getValue("actorstyle");
 		if ("awesome".equalsIgnoreCase(value)) {
 			return ActorStyle.AWESOME;

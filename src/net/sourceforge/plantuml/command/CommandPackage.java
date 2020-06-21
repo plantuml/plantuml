@@ -136,7 +136,8 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 //			p.setThisIsTogether();
 //		} else 
 		if (stereotype != null) {
-			final USymbol usymbol = USymbol.getFromString(stereotype, diagram.getSkinParam().getActorStyle());
+			final USymbol usymbol = USymbol.fromString(stereotype, diagram.getSkinParam().actorStyle(),
+					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
 			if (usymbol == null) {
 				p.setStereotype(new Stereotype(stereotype));
 			} else {

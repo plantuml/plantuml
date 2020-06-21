@@ -270,7 +270,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		Style style = null;
 		final ISkinParam skinParam = diagram.getSkinParam();
 		if (SkinParam.USE_STYLES()) {
-			final StyleSignature def = param.getStyleDefinition();
+			final StyleSignature def = param.getStyleDefinition(null);
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
@@ -296,7 +296,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 		HorizontalAlignment titleAlignment = HorizontalAlignment.CENTER;
 		if (SkinParam.USE_STYLES()) {
-			final StyleSignature def = FontParam.TITLE.getStyleDefinition();
+			final StyleSignature def = FontParam.TITLE.getStyleDefinition(null);
 			titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())
 					.getHorizontalAlignment();
 		}

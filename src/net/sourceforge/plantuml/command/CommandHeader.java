@@ -74,7 +74,7 @@ public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 		final String align = arg.get("POSITION", 0);
 		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);
 		if (SkinParam.USE_STYLES() && align == null) {
-			ha = FontParam.HEADER.getStyleDefinition()
+			ha = FontParam.HEADER.getStyleDefinition(null)
 					.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
 					.getHorizontalAlignment();
 		}

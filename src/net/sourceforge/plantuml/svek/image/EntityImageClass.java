@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -57,6 +58,10 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.Ports;
@@ -133,6 +138,14 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		}
 	}
 
+	private Style getStyle() {
+		return getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
+	private StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.class_);
+	}
+
 	private void drawInternal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
@@ -147,26 +160,38 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		}
 
 		HColor classBorder = lineConfig.getColors(getSkinParam()).getColor(ColorType.LINE);
+		HColor headerBackcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.HEADER);
+
 		if (classBorder == null) {
-			classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder);
+			if (SkinParam.USE_STYLES())
+				classBorder = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			else
+				classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder);
 		}
-		ug = ug.apply(classBorder);
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			if (leafType == LeafType.ENUM) {
-				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.enumBackground,
-						ColorParam.classBackground);
-			} else {
-				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground);
+			if (SkinParam.USE_STYLES())
+				backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+			else {
+				if (leafType == LeafType.ENUM) {
+					backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.enumBackground,
+							ColorParam.classBackground);
+				} else {
+					backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground);
+				}
 			}
 		}
+
+		ug = ug.apply(classBorder);
 		ug = ug.apply(backcolor.bg());
 
 		final UStroke stroke = getStroke();
 
-		HColor headerBackcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.HEADER);
 		if (headerBackcolor == null) {
-			headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
+			if (SkinParam.USE_STYLES())
+				headerBackcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+			else
+				headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
 		}
 		UGraphic ugHeader = ug;
 		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {

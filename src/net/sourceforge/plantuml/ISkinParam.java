@@ -96,7 +96,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter);
 
-	public PackageStyle getPackageStyle();
+	public PackageStyle packageStyle();
 
 	public ComponentStyle componentStyle();
 
@@ -156,7 +156,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public UmlDiagramType getUmlDiagramType();
 
-	public HColor getHoverPathColor();
+	public HColor hoverPathColor();
 
 	public TikzFontDistortion getTikzFontDistortion();
 
@@ -176,7 +176,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public boolean isUseVizJs();
 
-	public Padder getSequenceDiagramPadder();
+	public Padder sequenceDiagramPadder();
 
 	public StyleBuilder getCurrentStyleBuilder();
 
@@ -188,6 +188,6 @@ public interface ISkinParam extends ISkinSimple {
 
 	public void setDefaultSkin(String newSkin);
 
-	public ActorStyle getActorStyle();
+	public ActorStyle actorStyle();
 
 }

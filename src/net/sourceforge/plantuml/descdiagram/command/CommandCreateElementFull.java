@@ -178,7 +178,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		if (symbol == null) {
 			type = LeafType.DESCRIPTION;
-			usymbol = diagram.getSkinParam().getActorStyle().getUSymbol();
+			usymbol = diagram.getSkinParam().actorStyle().toUSymbol();
 		} else if (symbol.equalsIgnoreCase("portin")) {
 			type = LeafType.PORTIN;
 			usymbol = null;
@@ -196,7 +196,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			usymbol = null;
 		} else {
 			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.getFromString(symbol, diagram.getSkinParam());
+			usymbol = USymbol.fromString(symbol, diagram.getSkinParam());
 			if (usymbol == null) {
 				throw new IllegalStateException();
 			}

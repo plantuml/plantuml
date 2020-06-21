@@ -219,12 +219,9 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		addTitleCommands(cmds);
 		addCommonCommands2(cmds);
 		addCommonHides(cmds);
-		cmds.add(new CommandStyleMultilinesCSS());
-		cmds.add(new CommandStyleImport());
 	}
 
 	final protected void addCommonCommands2(List<Command> cmds) {
-		// cmds.add(new CommandListSprite());
 		cmds.add(new CommandNope());
 		cmds.add(new CommandPragma());
 
@@ -245,6 +242,10 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());
 		cmds.add(new CommandSpriteFile());
+
+		cmds.add(new CommandStyleMultilinesCSS());
+		cmds.add(new CommandStyleImport());
+
 	}
 
 	final protected void addCommonHides(List<Command> cmds) {

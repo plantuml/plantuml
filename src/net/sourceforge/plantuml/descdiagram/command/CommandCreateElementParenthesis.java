@@ -155,7 +155,7 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		final USymbol usymbol;
 
 		type = LeafType.DESCRIPTION;
-		usymbol = USymbol.getFromString(symbol, diagram.getSkinParam());
+		usymbol = USymbol.fromString(symbol, diagram.getSkinParam());
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);

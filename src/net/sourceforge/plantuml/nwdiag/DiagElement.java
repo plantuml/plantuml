@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.nwdiag;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.ComponentStyle;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -44,6 +45,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.ActorStyle;
+import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
@@ -88,8 +90,8 @@ public class DiagElement {
 		final SymbolContext symbolContext = new SymbolContext(ColorParam.activityBackground.getDefaultValue(),
 				ColorParam.activityBorder.getDefaultValue()).withShadow(3);
 		final TextBlock desc = toTextBlock(description);
-		final TextBlock box = shape.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),
-				symbolContext, HorizontalAlignment.CENTER);
+		final TextBlock box = shape.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0), symbolContext,
+				HorizontalAlignment.CENTER);
 		return new LinkedElement(ad1, box, ad2, mainNetwork, this);
 	}
 
@@ -110,7 +112,8 @@ public class DiagElement {
 	}
 
 	public final void setShape(String shapeName) {
-		final USymbol shapeFromString = USymbol.getFromString(shapeName, ActorStyle.STICKMAN);
+		final USymbol shapeFromString = USymbol.fromString(shapeName, ActorStyle.STICKMAN, ComponentStyle.RECTANGLE,
+				PackageStyle.RECTANGLE);
 		if (shapeFromString != null) {
 			this.shape = shapeFromString;
 		}

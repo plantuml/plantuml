@@ -60,6 +60,8 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<AbstractEntityDiagram> {
 
@@ -133,7 +135,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			type = LeafType.USECASE;
 			usymbol = null;
 		} else {
-			usymbol = USymbol.getFromString(symbol, diagram.getSkinParam().getActorStyle());
+			usymbol = USymbol.fromString(symbol, diagram.getSkinParam().actorStyle(),
+					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
 			if (usymbol == null) {
 				throw new IllegalStateException();
 			}
@@ -179,9 +182,18 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			result.addUrl(url);
 		}
 
-		result.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+		// final HColor backColor =
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR",
+		// 0));
+		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+		result.setColors(colors);
+		// result.setSpecificColorTOBEREMOVED(ColorType.BACK, backColor);
 
 		return CommandExecutionResult.ok();
 	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
 }

@@ -178,9 +178,15 @@ public class DriverShadowedG2d {
 			g2d.scale(1 / dpiFactor, 1 / dpiFactor);
 			final Shape sav = g2d.getClip();
 
-			Area full = new Area(new Rectangle2D.Double(0, 0, bounds.getMaxX() + deltaShadow * 2 + 6,
-					bounds.getMaxY() + deltaShadow * 2 + 6));
-			full.subtract(new Area(shape));
+			final Area full = new Area(
+					new Rectangle2D.Double(0, 0, (bounds.getMaxX() + deltaShadow * 2 + 6) * dpiFactor,
+							(bounds.getMaxY() + deltaShadow * 2 + 6) * dpiFactor));
+			if (dpiFactor == 1) {
+				full.subtract(new Area(shape));
+			} else {
+				full.subtract(
+						new Area(shape).createTransformedArea(AffineTransform.getScaleInstance(dpiFactor, dpiFactor)));
+			}
 			g2d.setClip(full);
 
 			g2d.drawImage(destination, (int) (bounds.getMinX() * dpiFactor), (int) (bounds.getMinY() * dpiFactor),

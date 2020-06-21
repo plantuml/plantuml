@@ -66,7 +66,7 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 		if (strings.size() > 0) {
 			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
 			if (SkinParam.USE_STYLES() && align == null) {
-				ha = FontParam.FOOTER.getStyleDefinition()
+				ha = FontParam.FOOTER.getStyleDefinition(null)
 						.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
 						.getHorizontalAlignment();
 			}

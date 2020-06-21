@@ -631,7 +631,7 @@ public final class GeneralImageBuilder {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(),
-						g.getStereotype(), null);
+						g.getStereotype(), null, SName.stateDiagram);
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
