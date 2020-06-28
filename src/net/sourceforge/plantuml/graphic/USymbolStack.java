@@ -56,6 +56,10 @@ class USymbolStack extends USymbol {
 
 	private void drawQueue(UGraphic ug, double width, double height, boolean shadowing, double roundCorner) {
 		final double border = 15;
+
+		final URectangle rect = new URectangle(width - 2 * border, height).rounded(roundCorner);
+		ug.apply(new HColorNone()).apply(UTranslate.dx(border)).draw(rect);
+
 		final UPath path = new UPath();
 		if (roundCorner == 0) {
 			path.moveTo(0, 0);
@@ -80,8 +84,6 @@ class USymbolStack extends USymbol {
 			path.setDeltaShadow(3.0);
 		}
 		ug.apply(new HColorNone().bg()).draw(path);
-		final URectangle rect = new URectangle(width - 2 * border, height).rounded(roundCorner);
-		ug.apply(new HColorNone()).apply(UTranslate.dx(border)).draw(rect);
 	}
 
 	private Margin getMargin() {

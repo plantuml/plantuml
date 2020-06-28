@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -89,8 +90,8 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		return new Style[] { tmp, stereo };
 	}
 
-	public Participant(ParticipantType type, String code, Display display, Set<EntityPortion> hiddenPortions,
-			int order, StyleBuilder styleBuilder) {
+	public Participant(ParticipantType type, String code, Display display, Set<EntityPortion> hiddenPortions, int order,
+			StyleBuilder styleBuilder) {
 		this.hiddenPortions = hiddenPortions;
 		this.styleBuilder = styleBuilder;
 		this.order = order;
@@ -203,6 +204,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public SkinParamBackcolored getSkinParamBackcolored(ISkinParam skinParam) {
+		final ColorParam param = getColorParam();
 		HColor specificBackColor = getColors(skinParam).getColor(ColorType.BACK);
 		final boolean clickable = getUrl() != null;
 		final HColor stereoBackColor = skinParam.getHtmlColor(getBackgroundColorParam(), getStereotype(), clickable);
@@ -210,16 +212,36 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 			specificBackColor = stereoBackColor;
 		}
 		final SkinParamBackcolored result = new SkinParamBackcolored(skinParam, specificBackColor, clickable);
-		final HColor stereoBorderColor = skinParam.getHtmlColor(ColorParam.participantBorder, getStereotype(),
-				clickable);
+		final HColor stereoBorderColor = skinParam.getHtmlColor(param, getStereotype(), clickable);
 		if (stereoBorderColor != null) {
-			result.forceColor(ColorParam.participantBorder, stereoBorderColor);
+			result.forceColor(param, stereoBorderColor);
 		}
 		return result;
 	}
 
 	public int getOrder() {
 		return order;
+	}
+
+	private ColorParam getColorParam() {
+		if (getType() == ParticipantType.PARTICIPANT) {
+			return ColorParam.participantBorder;
+		} else if (getType() == ParticipantType.ACTOR) {
+			return ColorParam.actorBorder;
+		} else if (getType() == ParticipantType.BOUNDARY) {
+			return ColorParam.boundaryBorder;
+		} else if (getType() == ParticipantType.CONTROL) {
+			return ColorParam.controlBorder;
+		} else if (getType() == ParticipantType.ENTITY) {
+			return ColorParam.entityBorder;
+		} else if (getType() == ParticipantType.QUEUE) {
+			return ColorParam.queueBorder;
+		} else if (getType() == ParticipantType.DATABASE) {
+			return ColorParam.databaseBorder;
+		} else if (getType() == ParticipantType.COLLECTIONS) {
+			return ColorParam.collectionsBorder;
+		}
+		return ColorParam.participantBorder;
 	}
 
 }

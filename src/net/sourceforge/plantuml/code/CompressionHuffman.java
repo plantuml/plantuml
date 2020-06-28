@@ -74,7 +74,7 @@ public class CompressionHuffman implements Compression {
 			baos.close();
 			return ByteArray.from(baos.toByteArray());
 		} catch (IOException e) {
-			System.err.println("Not Huffman");
+			// System.err.println("Not Huffman");
 			throw new NoPlantumlCompressionException(e);
 		}
 	}

@@ -84,7 +84,7 @@ public class TranscoderImpl implements Transcoder {
 			final String string = format == Format.UTF8 ? data.toUFT8String() : data.toUPF9String();
 			return stringCompressor.decompress(string);
 		} catch (Exception e) {
-			System.err.println("Cannot decode string");
+			// System.err.println("Cannot decode string");
 			throw new NoPlantumlCompressionException(e);
 		}
 	}

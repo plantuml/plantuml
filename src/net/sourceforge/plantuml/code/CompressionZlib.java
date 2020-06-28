@@ -75,8 +75,7 @@ public class CompressionZlib implements Compression {
 		if (compresser.finished() == false) {
 			return null;
 		}
-		final byte[] result = copyArray(output, compressedDataLength);
-		return result;
+		return copyArray(output, compressedDataLength);
 	}
 
 	public ByteArray decompress(byte[] in) throws NoPlantumlCompressionException {
@@ -102,7 +101,7 @@ public class CompressionZlib implements Compression {
 //		}
 			return ByteArray.from(result);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			throw new NoPlantumlCompressionException(e);
 		}
 

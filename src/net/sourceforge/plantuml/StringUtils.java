@@ -311,34 +311,37 @@ public class StringUtils {
 	}
 
 	public static boolean isDiagramCacheable(String uml) {
-		uml = uml.toLowerCase();
-		if (uml.startsWith("@startuml\nversion\n")) {
+		if (uml.length() < 35) {
 			return false;
 		}
-		if (uml.startsWith("@startuml\nlicense\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nlicence\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nauthor\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\ndonors\n")) {
-			return false;
-		}
-//		if (uml.startsWith("@startuml\ncheckversion")) {
+//		uml = uml.toLowerCase();
+//		if (uml.startsWith("@startuml\nversion\n")) {
 //			return false;
 //		}
-		if (uml.startsWith("@startuml\ntestdot\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nsudoku\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nstdlib\n")) {
-			return false;
-		}
+//		if (uml.startsWith("@startuml\nlicense\n")) {
+//			return false;
+//		}
+//		if (uml.startsWith("@startuml\nlicence\n")) {
+//			return false;
+//		}
+//		if (uml.startsWith("@startuml\nauthor\n")) {
+//			return false;
+//		}
+//		if (uml.startsWith("@startuml\ndonors\n")) {
+//			return false;
+//		}
+////		if (uml.startsWith("@startuml\ncheckversion")) {
+////			return false;
+////		}
+//		if (uml.startsWith("@startuml\ntestdot\n")) {
+//			return false;
+//		}
+//		if (uml.startsWith("@startuml\nsudoku\n")) {
+//			return false;
+//		}
+//		if (uml.startsWith("@startuml\nstdlib\n")) {
+//			return false;
+//		}
 		return true;
 	}
 

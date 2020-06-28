@@ -76,6 +76,7 @@ import net.sourceforge.plantuml.graphic.TextBlockRaw;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
@@ -93,6 +94,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 import net.sourceforge.plantuml.version.LicenseInfo;
 import net.sourceforge.plantuml.version.PSystemVersion;
+import net.sourceforge.plantuml.version.Version;
 
 public abstract class PSystemError extends AbstractPSystem {
 
@@ -127,6 +129,7 @@ public abstract class PSystemError extends AbstractPSystem {
 		final FontConfiguration fc0 = GraphicStrings.sansSerif14(HColorUtils.BLACK).bold();
 		final FontConfiguration fc1 = GraphicStrings.sansSerif14(HColorUtils.MY_GREEN).bold();
 		final FontConfiguration fc2 = GraphicStrings.sansSerif14(HColorUtils.RED).bold();
+		final FontConfiguration fc4 = GraphicStrings.sansSerif12(HColorUtils.MY_GREEN).bold().italic();
 
 		final List<String> fullBody = getTextFullBody();
 		final TextBlock result0 = TextBlockUtils.addBackcolor(
@@ -134,12 +137,21 @@ public abstract class PSystemError extends AbstractPSystem {
 		final TextBlock result1 = new TextBlockRaw(allButLast(fullBody), fc1);
 		final TextBlock result2 = new TextBlockRaw(onlyLast(fullBody), fc1.wave(HColorUtils.RED));
 		final TextBlock result3 = new TextBlockRaw(getTextError(), fc2);
+		final TextBlock result4 = TextBlockUtils.withMargin(new TextBlockRaw(header(), fc4), 0, 2, 0, 8);
 		TextBlock result = result0;
 		result = TextBlockUtils.mergeTB(result, result1, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, result2, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, result3, HorizontalAlignment.LEFT);
+		result = TextBlockUtils.mergeTB(result4, result, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.withMargin(result, 5, 5);
 		return TextBlockUtils.addBackcolor(result, HColorUtils.BLACK);
+	}
+
+	private List<String> header() {
+		final List<String> result = new ArrayList<String>();
+		result.add("PlantUML " + Version.versionString());
+		GraphvizCrash.checkOldVersionWarning(result);
+		return result;
 	}
 
 	private List<String> getPureAsciiFormatted() {
@@ -326,8 +338,7 @@ public abstract class PSystemError extends AbstractPSystem {
 		if (qrcode == null) {
 			result = text;
 		} else {
-			final UImage qr = new UImage(
-					new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);
+			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);
 			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
 		}
 		return TextBlockUtils.addBackcolor(result, backColor);
@@ -371,9 +382,8 @@ public abstract class PSystemError extends AbstractPSystem {
 				if (qrcode == null) {
 					ug.apply(new UTranslate(1, 1)).draw(message);
 				} else {
-					final UImage qr = new UImage(
-							new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-									.scale(scale);
+					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
+							.scale(scale);
 					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}
@@ -418,9 +428,8 @@ public abstract class PSystemError extends AbstractPSystem {
 				if (qrcode == null) {
 					ug.apply(new UTranslate(1, 1)).draw(message);
 				} else {
-					final UImage qr = new UImage(
-							new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-									.scale(scale);
+					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
+							.scale(scale);
 					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}

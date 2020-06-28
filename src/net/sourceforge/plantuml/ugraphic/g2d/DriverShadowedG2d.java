@@ -51,16 +51,12 @@ import net.sourceforge.plantuml.Log;
 public class DriverShadowedG2d {
 
 	private ConvolveOp getConvolveOp(int blurRadius, double dpiFactor) {
-		blurRadius = (int) (blurRadius * dpiFactor);
-		final int blurRadius2 = blurRadius * blurRadius;
-		final float blurRadius2F = blurRadius2;
-		// final float weight = (float) (1.0 / blurRadius2F / dpiFactor);
-		final float weight = (float) (1.0 / blurRadius2F);
-		final float[] elements = new float[blurRadius2];
-		for (int k = 0; k < blurRadius2; k++) {
-			elements[k] = weight;
+		final float[] elements = new float[(int) (blurRadius * blurRadius * dpiFactor)];
+		for (int k = 0; k < elements.length; k++) {
+			elements[k] = (float) (1.0 / elements.length);
 		}
-		final Kernel myKernel = new Kernel(blurRadius, blurRadius, elements);
+		final Kernel myKernel = new Kernel((int) (blurRadius * Math.sqrt(dpiFactor)),
+				(int) (blurRadius * Math.sqrt(dpiFactor)), elements);
 
 		// if EDGE_NO_OP is not selected, EDGE_ZERO_FILL is the default which
 		// creates a black border

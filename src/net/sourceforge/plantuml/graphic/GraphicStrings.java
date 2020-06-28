@@ -115,7 +115,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 				CreoleMode.FULL);
 	}
 
-	private static FontConfiguration sansSerif12(HColor color) {
+	public static FontConfiguration sansSerif12(HColor color) {
 		return new FontConfiguration(UFont.sansSerif(12), color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 

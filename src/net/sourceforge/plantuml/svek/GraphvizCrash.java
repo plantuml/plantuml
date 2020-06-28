@@ -106,19 +106,19 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;
 		if (days >= 90) {
 			strings.add("This version of PlantUML is " + days + " days old, so you should");
-			strings.add("  consider upgrading from http://plantuml.com/download");
+			strings.add("  consider upgrading from https://plantuml.com/download");
 		}
 	}
 
 	public static void pleaseGoTo(final List<String> strings) {
 		strings.add(" ");
-		strings.add("Please go to http://plantuml.com/graphviz-dot to check your GraphViz version.");
+		strings.add("Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.");
 		strings.add(" ");
 	}
 
 	public static void youShouldSendThisDiagram(final List<String> strings) {
 		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
+		strings.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
 		strings.add("You can try to turn arround this issue by simplifing your diagram.");
 	}
 
