@@ -38,25 +38,42 @@ package net.sourceforge.plantuml.project.lang;
 import java.util.Arrays;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 
-public class SubjectDayOfWeek implements SubjectPattern {
-
-	public Collection<VerbPattern> getVerbs() {
-		return Arrays.<VerbPattern> asList(new VerbAre());
-	}
+public class SubjectDayOfWeek implements Subject {
 
 	public IRegex toRegex() {
 		return new RegexLeaf("SUBJECT", "(" + DayOfWeek.getRegexString() + ")");
 	}
 
-	public Subject getSubject(GanttDiagram project, RegexResult arg) {
+	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
-		return DayOfWeek.fromString(s);
+		return Failable.ok(DayOfWeek.fromString(s));
+	}
+
+	public Collection<? extends SentenceSimple> getSentences() {
+		return Arrays.asList(new AreClose());
+	}
+
+	class AreClose extends SentenceSimple {
+
+		public AreClose() {
+			super(SubjectDayOfWeek.this, Verbs.are(), new ComplementClose());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final DayOfWeek day = (DayOfWeek) subject;
+			project.closeDayOfWeek(day);
+			return CommandExecutionResult.ok();
+		}
+
 	}
 
 }

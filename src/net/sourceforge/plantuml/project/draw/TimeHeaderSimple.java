@@ -80,7 +80,7 @@ public class TimeHeaderSimple extends TimeHeader {
 	private void drawSimpleDayCounter(final UGraphic ug, TimeScale timeScale, double totalHeight) {
 		final ULine vbar = ULine.vline(totalHeight);
 		for (Wink i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
-			final TextBlock num = Display.getWithNewlines(i.toShortString()).create(getFontConfiguration(10, false),
+			final TextBlock num = Display.getWithNewlines(i.toShortString()).create(getFontConfiguration(10, false, HColorUtils.BLACK),
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final double x1 = timeScale.getStartingPosition(i);
 			final double x2 = timeScale.getEndingPosition(i);

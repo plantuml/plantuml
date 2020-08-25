@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.project.core.Moment;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPattern {
+public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements Something {
 
 	private static final int POS_NB1 = 0;
 	private static final int POS_DAY_OR_WEEK1 = 1;
@@ -61,12 +61,12 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPatt
 				"[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
 	}
 
-	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<TaskInstant> getMe(GanttDiagram system, RegexResult arg, String suffix) {
 		final String code = arg.get("COMPLEMENT" + suffix, POS_CODE_OTHER);
 		final String startOrEnd = arg.get("COMPLEMENT" + suffix, POS_START_OR_END);
 		final Moment task = system.getExistingMoment(code);
 		if (task == null) {
-			return Failable.<Complement>error("No such task " + code);
+			return Failable.error("No such task " + code);
 		}
 		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));
 		final String nb1 = arg.get("COMPLEMENT" + suffix, POS_NB1);
@@ -90,6 +90,6 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPatt
 			}
 			result = result.withDelta(delta);
 		}
-		return Failable.<Complement>ok(result);
+		return Failable.ok(result);
 	}
 }

@@ -35,33 +35,27 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class VerbIsForToday implements VerbPattern {
+public class SentenceTaskEndsAbsolute extends SentenceSimple {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementInColors(), new ComplementDate());
+	public SentenceTaskEndsAbsolute() {
+		super(new SubjectTask(), Verbs.ends2(), new ComplementDate());
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("is");
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final Day end = (Day) complement;
+		final Day startingDate = project.getStartingDate();
+		if (startingDate == null) {
+			return CommandExecutionResult.error("No starting date for the project");
+		}
+		task.setEnd(end.asInstantDay(startingDate));
+		return CommandExecutionResult.ok();
 	}
 
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				// final Today task = (Today) subject;
-				final Day date = (Day) complement;
-				return project.setToday(date);
-			}
-		};
-	}
 }

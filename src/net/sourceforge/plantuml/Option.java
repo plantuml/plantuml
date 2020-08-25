@@ -348,8 +348,10 @@ public class Option {
 				checkMetadata = true;
 			} else if (s.equalsIgnoreCase("-stdrpt:1")) {
 				stdrpt = 1;
+			} else if (s.equalsIgnoreCase("-stdrpt:2")) {
+				stdrpt = 2;
 			} else if (s.equalsIgnoreCase("-stdrpt")) {
-				stdrpt = 1;
+				stdrpt = 2;
 			} else if (s.equalsIgnoreCase("-pipeimageindex")) {
 				i++;
 				if (i == arg.length) {
@@ -378,6 +380,9 @@ public class Option {
 	public Stdrpt getStdrpt() {
 		if (stdrpt == 1) {
 			return new StdrptV1();
+		}
+		if (stdrpt == 2) {
+			return new StdrptV2();
 		}
 		// Legacy case
 		if (isPipe() || isPipeMap() || isSyntax()) {

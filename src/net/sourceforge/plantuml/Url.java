@@ -38,9 +38,8 @@ package net.sourceforge.plantuml;
 import java.util.Comparator;
 
 import net.sourceforge.plantuml.cucadiagram.dot.DotMaker2;
-import net.sourceforge.plantuml.project.lang.Complement;
 
-public class Url implements EnsureVisible, Complement {
+public class Url implements EnsureVisible {
 
 	private final String url;
 	private final String tooltip;

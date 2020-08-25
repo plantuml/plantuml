@@ -53,14 +53,7 @@ public class GridTextBlockSimple implements TextBlock {
 		this.data = new LinkedElement[lines][cols];
 	}
 
-	protected boolean isPresent(int i, int j) {
-		if (i == -1) {
-			return false;
-		}
-		return data[i][j] != null;
-	}
-
-	public void drawGrid(UGraphic ug) {
+	protected void drawGrid(UGraphic ug) {
 	}
 
 	public void drawU(UGraphic ug) {

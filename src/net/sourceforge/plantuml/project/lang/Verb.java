@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.regex.IRegex;
 
 public interface Verb {
 
-	public CommandExecutionResult execute(Subject subject, Complement complement);
+	public IRegex toRegex();
 
 }

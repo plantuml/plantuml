@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.Month;
 
-public class ComplementDate implements ComplementPattern {
+public class ComplementDate implements Something {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexOr(toRegexA(suffix), toRegexB(suffix), toRegexC(suffix), toRegexD(suffix));
@@ -87,45 +87,45 @@ public class ComplementDate implements ComplementPattern {
 				new RegexLeaf("after"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("start") //
-				);
+		);
 	}
 
-	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<Day> getMe(GanttDiagram system, RegexResult arg, String suffix) {
 		if (arg.get("ADAY" + suffix, 0) != null) {
-			return Failable.<Complement> ok(resultA(arg, suffix));
+			return Failable.ok(resultA(arg, suffix));
 		}
 		if (arg.get("BDAY" + suffix, 0) != null) {
-			return Failable.<Complement> ok(resultB(arg, suffix));
+			return Failable.ok(resultB(arg, suffix));
 		}
 		if (arg.get("CDAY" + suffix, 0) != null) {
-			return Failable.<Complement> ok(resultC(arg, suffix));
+			return Failable.ok(resultC(arg, suffix));
 		}
 		if (arg.get("DCOUNT" + suffix, 0) != null) {
-			return Failable.<Complement> ok(resultD(system, arg, suffix));
+			return Failable.ok(resultD(system, arg, suffix));
 		}
 		throw new IllegalStateException();
 	}
 
-	private Complement resultD(GanttDiagram system, RegexResult arg, String suffix) {
+	private Day resultD(GanttDiagram system, RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
 		return system.getStartingDate(day);
 	}
 
-	private Complement resultA(RegexResult arg, String suffix) {
+	private Day resultA(RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("ADAY" + suffix, 0));
 		final String month = arg.get("AMONTH" + suffix, 0);
 		final int year = Integer.parseInt(arg.get("AYEAR" + suffix, 0));
 		return Day.create(year, month, day);
 	}
 
-	private Complement resultB(RegexResult arg, String suffix) {
+	private Day resultB(RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
 		final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
 		final int year = Integer.parseInt(arg.get("BYEAR" + suffix, 0));
 		return Day.create(year, month, day);
 	}
 
-	private Complement resultC(RegexResult arg, String suffix) {
+	private Day resultC(RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("CDAY" + suffix, 0));
 		final String month = arg.get("CMONTH" + suffix, 0);
 		final int year = Integer.parseInt(arg.get("CYEAR" + suffix, 0));

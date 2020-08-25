@@ -42,34 +42,36 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.GanttConstraint;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class VerbTaskStarts implements VerbPattern {
-
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
-	}
+public class SubjectLinks implements Subject {
 
 	public IRegex toRegex() {
-		return new RegexLeaf("starts");
+		return new RegexLeaf("SUBJECT", "links?");
 	}
 
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final Task task = (Task) subject;
-				final TaskInstant when = (TaskInstant) complement;
-				task.setStart(when.getInstantPrecise());
-				if (when.isTask()) {
-					project.addContraint(new GanttConstraint(when, new TaskInstant(task, TaskAttribute.START)));
-				}
-				return CommandExecutionResult.ok();
-			}
+	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {
+		return Failable.ok(project);
+	}
 
-		};
+	public Collection<? extends SentenceSimple> getSentences() {
+		return Arrays.asList(new InColor());
+	}
+
+	public class InColor extends SentenceSimple {
+
+		public InColor() {
+			super(SubjectLinks.this, Verbs.areColored(), new ComplementInColors());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final CenterBorderColor colors = (CenterBorderColor) complement;
+			project.setLinksColor(colors.getCenter());
+			return CommandExecutionResult.ok();
+
+		}
+
 	}
 }

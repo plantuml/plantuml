@@ -234,15 +234,15 @@ public class Ident implements Code {
 		final String last = parts.get(parts.size() - 1);
 		if (separator == null) {
 			if (code.getName().equals(last) != true && code.getName().equals(toString(separator)) == false) {
-				System.err.println("code1=" + code);
-				System.err.println("this1=" + this);
+//				System.err.println("code1=" + code);
+//				System.err.println("this1=" + this);
 				EntityFactory.bigError();
 			}
 		} else {
 			if (getLastPart(code.getName(), separator).equals(last) != true
 					&& code.getName().equals(toString(separator)) == false) {
-				System.err.println("code2=" + code);
-				System.err.println("this2=" + this);
+//				System.err.println("code2=" + code);
+//				System.err.println("this2=" + this);
 				EntityFactory.bigError();
 			}
 		}

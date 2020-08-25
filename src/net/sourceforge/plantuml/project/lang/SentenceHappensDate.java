@@ -35,18 +35,30 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Collection;
-
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.Load;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.time.Day;
 
-public interface VerbPattern {
+public class SentenceHappensDate extends SentenceSimple {
 
-	public Collection<ComplementPattern> getComplements();
+	public SentenceHappensDate() {
+		super(new SubjectTask(), Verbs.happens(), new ComplementDate());
+	}
 
-	public Verb getVerb(GanttDiagram project, RegexResult arg);
-
-	public IRegex toRegex();
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		task.setLoad(Load.inWinks(1));
+		final Day start = (Day) complement;
+		final Day startingDate = project.getStartingDate();
+		if (startingDate == null) {
+			return CommandExecutionResult.error("No starting date for the project");
+		}
+		task.setStart(start.asInstantDay(startingDate));
+		task.setDiamond(true);
+		return CommandExecutionResult.ok();
+	}
 
 }

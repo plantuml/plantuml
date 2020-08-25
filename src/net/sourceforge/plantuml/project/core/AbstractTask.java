@@ -35,39 +35,21 @@
  */
 package net.sourceforge.plantuml.project.core;
 
-import net.sourceforge.plantuml.Direction;
-
 public abstract class AbstractTask implements Task {
 
-	public static final double HEIGHT = 16;
-
-	public double getHeight() {
-		return HEIGHT;
-	}
-
 	protected final TaskCode code;
-	private double y;
+	private Task row;
 
 	protected AbstractTask(TaskCode code) {
 		this.code = code;
 	}
 
-	public final double getY() {
-		return y;
+	public void putInSameRowAs(Task row) {
+		this.row = row;
 	}
 
-	public final void setY(double y) {
-		this.y = y;
-	}
-
-	public double getY(Direction direction) {
-		if (direction == Direction.UP) {
-			return y;
-		}
-		if (direction == Direction.DOWN) {
-			return y + getHeight();
-		}
-		return y + getHeight() / 2;
+	public final Task getRow() {
+		return row;
 	}
 
 }

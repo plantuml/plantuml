@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.project.lang.Complement;
-
-public class Load implements Value, Complement {
+public class Load implements Value {
 
 	private final int winks;
 

@@ -60,14 +60,15 @@ public class TimeHeaderDaily extends TimeHeader {
 	}
 
 	private final HColor veryLightGray = HColorSet.instance().getColorIfValid("#E0E8E8");
+	private final HColor lightGray = HColorSet.instance().getColorIfValid("#909898");
 
 	private final GCalendar calendar;
 	private final LoadPlanable defaultPlan;
 	private final Map<Day, HColor> colorDays;
 	private final Map<Day, String> nameDays;
 
-	public TimeHeaderDaily(GCalendar calendar, Wink min, Wink max, LoadPlanable defaultPlan,
-			Map<Day, HColor> colorDays, Map<Day, String> nameDays, Day printStart, Day printEnd) {
+	public TimeHeaderDaily(GCalendar calendar, Wink min, Wink max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
+			Map<Day, String> nameDays, Day printStart, Day printEnd) {
 		super(min, max, new TimeScaleDaily(calendar, printStart));
 		this.calendar = calendar;
 		this.defaultPlan = defaultPlan;
@@ -99,16 +100,18 @@ public class TimeHeaderDaily extends TimeHeader {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			final Day day = calendar.toDayAsDate(wink);
-			if (defaultPlan.getLoadAt(wink) > 0) {
-				final HColor back = colorDays.get(day);
-				if (back != null) {
-					drawRectangle(ug.apply(back.bg()), height, x1, x2);
-				}
-				printCentered(ug.apply(UTranslate.dy(Y_POS_ROW16)),
-						getTextBlock(day.getDayOfWeek().shortName(), 10, false), x1, x2);
-				printCentered(ug.apply(UTranslate.dy(Y_POS_ROW28)), getTextBlock("" + day.getDayOfMonth(), 10, false),
-						x1, x2);
+			HColor textColor = HColorUtils.BLACK;
+			if (defaultPlan.getLoadAt(wink) <= 0) {
+				textColor = lightGray;
 			}
+			final HColor back = colorDays.get(day);
+			if (back != null) {
+				drawRectangle(ug.apply(back.bg()), height, x1, x2);
+			}
+			printCentered(ug.apply(UTranslate.dy(Y_POS_ROW16)),
+					getTextBlock(day.getDayOfWeek().shortName(), 10, false, textColor), x1, x2);
+			printCentered(ug.apply(UTranslate.dy(Y_POS_ROW28)),
+					getTextBlock("" + day.getDayOfMonth(), 10, false, textColor), x1, x2);
 		}
 	}
 
@@ -166,9 +169,9 @@ public class TimeHeaderDaily extends TimeHeader {
 	}
 
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock tiny = getTextBlock(monthYear.shortName(), 12, true);
-		final TextBlock small = getTextBlock(monthYear.longName(), 12, true);
-		final TextBlock big = getTextBlock(monthYear.longNameYYYY(), 12, true);
+		final TextBlock tiny = getTextBlock(monthYear.shortName(), 12, true, HColorUtils.BLACK);
+		final TextBlock small = getTextBlock(monthYear.longName(), 12, true, HColorUtils.BLACK);
+		final TextBlock big = getTextBlock(monthYear.longNameYYYY(), 12, true, HColorUtils.BLACK);
 		printCentered(ug, start, end, tiny, small, big);
 	}
 
@@ -186,7 +189,7 @@ public class TimeHeaderDaily extends TimeHeader {
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);
 					final double x2 = getTimeScale().getEndingPosition(wink);
-					final TextBlock label = getTextBlock(name, 12, false);
+					final TextBlock label = getTextBlock(name, 12, false, HColorUtils.BLACK);
 					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
 					double y1 = getTimeHeaderHeight();
 					double y2 = getFullHeaderHeight();

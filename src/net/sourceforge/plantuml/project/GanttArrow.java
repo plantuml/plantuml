@@ -36,16 +36,18 @@
 package net.sourceforge.plantuml.project;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class GanttArrow implements UDrawable {
 
@@ -54,13 +56,20 @@ public class GanttArrow implements UDrawable {
 	private final TaskInstant source;
 	private final Direction atEnd;
 	private final TaskInstant dest;
+	private final HColor color;
+	private final LinkType style;
+	private final ToTaskDraw toTaskDraw;
 
-	public GanttArrow(TimeScale timeScale, TaskInstant source, TaskInstant dest) {
+	public GanttArrow(TimeScale timeScale, TaskInstant source, TaskInstant dest, HColor color, LinkType style,
+			ToTaskDraw toTaskDraw) {
+		this.toTaskDraw = toTaskDraw;
+		this.style = style;
+		this.color = color;
 		this.timeScale = timeScale;
 		this.source = source;
 		this.dest = dest;
 		if (source.getAttribute() == TaskAttribute.END && dest.getAttribute() == TaskAttribute.START) {
-			this.atStart = Direction.DOWN;
+			this.atStart = source.sameRowAs(dest) ? Direction.LEFT : Direction.DOWN;
 			this.atEnd = Direction.RIGHT;
 		} else if (source.getAttribute() == TaskAttribute.END && dest.getAttribute() == TaskAttribute.END) {
 			this.atStart = Direction.RIGHT;
@@ -69,28 +78,33 @@ public class GanttArrow implements UDrawable {
 			this.atStart = Direction.LEFT;
 			this.atEnd = Direction.RIGHT;
 		} else if (source.getAttribute() == TaskAttribute.START && dest.getAttribute() == TaskAttribute.END) {
-			this.atStart = Direction.DOWN;
+			this.atStart = source.sameRowAs(dest) ? Direction.RIGHT : Direction.DOWN;
 			this.atEnd = Direction.LEFT;
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
 
+	private TaskDraw getSource() {
+		return toTaskDraw.getTaskDraw((Task) source.getMoment());
+	}
+
+	private TaskDraw getDestination() {
+		return toTaskDraw.getTaskDraw((Task) dest.getMoment());
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(HColorUtils.RED_DARK.bg()).apply(HColorUtils.RED_DARK).apply(new UStroke(1.5));
-
-		final Task draw1 = (Task) source.getMoment();
-		final Task draw2 = (Task) dest.getMoment();
+		// ug = ug.apply(color.bg()).apply(color).apply(new UStroke(1.5));
+		ug = ug.apply(color.bg()).apply(color).apply(style.getStroke3(new UStroke(1.5)));
 
 		double x1 = getX(source.withDelta(0), atStart);
-		double y1 = draw1.getY(atStart);
+		double y1 = getSource().getY(atStart);
 
 		final double x2 = getX(dest, atEnd.getInv());
-		final double y2 = draw2.getY(atEnd);
+		final double y2 = getDestination().getY(atEnd);
 
 		if (atStart == Direction.DOWN && y2 < y1) {
-			y1 = draw1.getY(atStart.getInv());
+			y1 = getSource().getY(atStart.getInv());
 		}
 
 		if (this.atStart == Direction.DOWN && this.atEnd == Direction.RIGHT) {
@@ -101,7 +115,7 @@ public class GanttArrow implements UDrawable {
 				drawLine(ug, x1, y1, x1, y2, x2, y2);
 			} else {
 				x1 = getX(source.withDelta(0), Direction.RIGHT);
-				y1 = draw1.getY(Direction.RIGHT);
+				y1 = getSource().getY(Direction.RIGHT);
 				drawLine(ug, x1, y1, x1 + 6, y1, x1 + 6, y1 + 8, x2 - 8, y1 + 8, x2 - 8, y2, x2, y2);
 			}
 		} else if (this.atStart == Direction.RIGHT && this.atEnd == Direction.LEFT) {
@@ -116,6 +130,7 @@ public class GanttArrow implements UDrawable {
 			throw new IllegalArgumentException();
 		}
 
+		ug = ug.apply(new UStroke(1.5));
 		ug.apply(new UTranslate(x2, y2)).draw(Arrows.asTo(atEnd));
 
 	}

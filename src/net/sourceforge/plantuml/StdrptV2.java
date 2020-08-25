@@ -38,14 +38,58 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.PrintStream;
 
+import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.eggs.PSystemWelcome;
+import net.sourceforge.plantuml.error.PSystemError;
 
-public interface Stdrpt {
+public class StdrptV2 implements Stdrpt {
 
-	public void printInfo(PrintStream output, Diagram sys);
+	public void finalMessage() {
+	}
 
-	public void finalMessage(ErrorStatus error);
+	public void finalMessage(ErrorStatus error) {
+	}
 
-	public void errorLine(int lineError, File file);
+	public void errorLine(int lineError, File file) {
+	}
+
+	public void printInfo(final PrintStream output, Diagram sys) {
+		if (sys instanceof PSystemWelcome) {
+			sys = null;
+		}
+		if (sys == null || sys instanceof PSystemError) {
+			out(output, (PSystemError) sys);
+		}
+	}
+
+	private void out(final PrintStream output, final PSystemError err) {
+		final StringBuilder line = new StringBuilder();
+		if (empty(err)) {
+		} else {
+			line.append(err.getLineLocation().getDescription());
+			line.append(":");
+			line.append(err.getLineLocation().getPosition());
+			line.append(":");
+			line.append("error");
+			line.append(":");
+			for (ErrorUml er : err.getErrorsUml()) {
+				line.append(er.getError());
+			}
+		}
+		output.println(line);
+		output.flush();
+	}
+
+	private boolean empty(final PSystemError err) {
+		if (err == null) {
+			return true;
+		}
+		for (ErrorUml er : err.getErrorsUml()) {
+			if (PSystemAbstractFactory.EMPTY_DESCRIPTION.equals(er.getError()))
+				return true;
+		}
+		return false;
+	}
 
 }

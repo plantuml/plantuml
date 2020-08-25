@@ -100,17 +100,12 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	private final Pragma pragma = new Pragma();
 	private Animation animation;
 
-	private final SkinParam skinParam;
-
 	public UmlDiagram() {
-		this.skinParam = SkinParam.create(getUmlDiagramType());
+		super();
 	}
 
 	public UmlDiagram(ISkinSimple orig) {
-		this();
-		if (orig != null) {
-			this.skinParam.copyAllFrom(orig);
-		}
+		super(orig);
 	}
 
 	final public int getMinwidth() {
@@ -129,14 +124,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		this.rotation = rotation;
 	}
 
-	public final ISkinParam getSkinParam() {
-		return skinParam;
-	}
-
-	public void setParam(String key, String value) {
-		skinParam.setParam(StringUtils.goLowerCase(key), value);
-	}
-
 	public final DisplaySection getFooterOrHeaderTeoz(FontParam param) {
 		if (param == FontParam.FOOTER) {
 			return getFooter();
@@ -146,8 +133,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		}
 		throw new IllegalArgumentException();
 	}
-
-	abstract public UmlDiagramType getUmlDiagramType();
 
 	public Pragma getPragma() {
 		return pragma;
@@ -399,10 +384,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		return null;
 	}
 
-	public void addSprite(String name, Sprite sprite) {
-		skinParam.addSprite(name, sprite);
-	}
-
 	private boolean useJDot;
 
 	public void setUseJDot(boolean useJDot) {
@@ -417,54 +398,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		return useJDot;
 	}
 
-	public CommandExecutionResult loadSkin(String newSkin) throws IOException {
-		getSkinParam().setDefaultSkin(newSkin + ".skin");
-		return CommandExecutionResult.ok();
-		// final String res = "/skin/" + filename + ".skin";
-		// final InputStream internalIs = UmlDiagram.class.getResourceAsStream(res);
-		// if (internalIs != null) {
-		// final BlocLines lines2 = BlocLines.load(internalIs, new
-		// LineLocationImpl(filename, null));
-		// return loadSkinInternal(lines2);
-		// }
-		// if (OptionFlags.ALLOW_INCLUDE == false) {
-		// return CommandExecutionResult.ok();
-		// }
-		// final File f = FileSystem.getInstance().getFile(filename + ".skin");
-		// if (f == null || f.exists() == false || f.canRead() == false) {
-		// return CommandExecutionResult.error("Cannot load skin from " + filename);
-		// }
-		// final BlocLines lines = BlocLines.load(f, new LineLocationImpl(f.getName(),
-		// null));
-		// return loadSkinInternal(lines);
-	}
-
-	// private CommandExecutionResult loadSkinInternal(final BlocLines lines) {
-	// final CommandSkinParam cmd1 = new CommandSkinParam();
-	// final CommandSkinParamMultilines cmd2 = new CommandSkinParamMultilines();
-	// for (int i = 0; i < lines.size(); i++) {
-	// final BlocLines ext1 = lines.subList(i, i + 1);
-	// if (cmd1.isValid(ext1) == CommandControl.OK) {
-	// cmd1.execute(this, ext1);
-	// } else if (cmd2.isValid(ext1) == CommandControl.OK_PARTIAL) {
-	// i = tryMultilines(cmd2, i, lines);
-	// }
-	// }
-	// return CommandExecutionResult.ok();
-	// }
-
-	private int tryMultilines(CommandSkinParamMultilines cmd2, int i, BlocLines lines) {
-		for (int j = i + 1; j <= lines.size(); j++) {
-			final BlocLines ext1 = lines.subList(i, j);
-			if (cmd2.isValid(ext1) == CommandControl.OK) {
-				cmd2.execute(this, ext1);
-				return j;
-			} else if (cmd2.isValid(ext1) == CommandControl.NOT_OK) {
-				return j;
-			}
-		}
-		return i;
-	}
 
 	public void setHideEmptyDescription(boolean hideEmptyDescription) {
 	}

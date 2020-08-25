@@ -38,17 +38,67 @@ package net.sourceforge.plantuml.project.lang;
 import java.util.Arrays;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class SubjectDayAsDate implements SubjectPattern {
+public class SubjectDayAsDate implements Subject {
 
-	public Collection<VerbPattern> getVerbs() {
-		return Arrays.<VerbPattern> asList(new VerbIsOrAre());
+	public Failable<Day> getMe(GanttDiagram project, RegexResult arg) {
+		final int day = Integer.parseInt(arg.get("DAY", 0));
+		final int month = Integer.parseInt(arg.get("MONTH", 0));
+		final int year = Integer.parseInt(arg.get("YEAR", 0));
+		return Failable.ok(Day.create(year, month, day));
+	}
+
+	public Collection<? extends SentenceSimple> getSentences() {
+		return Arrays.asList(new Close(), new Open(), new InColor());
+	}
+
+	class Close extends SentenceSimple {
+
+		public Close() {
+			super(SubjectDayAsDate.this, Verbs.isOrAre(), new ComplementClose());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			project.closeDayAsDate((Day) subject);
+			return CommandExecutionResult.ok();
+		}
+	}
+
+	class Open extends SentenceSimple {
+		public Open() {
+			super(SubjectDayAsDate.this, Verbs.isOrAre(), new ComplementOpen());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			project.openDayAsDate((Day) subject);
+			return CommandExecutionResult.ok();
+		}
+	}
+
+	class InColor extends SentenceSimple {
+
+		public InColor() {
+			super(SubjectDayAsDate.this, Verbs.isOrAre(), new ComplementInColors2());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final HColor color = ((CenterBorderColor) complement).getCenter();
+			project.colorDay((Day) subject, color);
+			return CommandExecutionResult.ok();
+		}
+
 	}
 
 	public IRegex toRegex() {
@@ -58,13 +108,6 @@ public class SubjectDayAsDate implements SubjectPattern {
 				new RegexLeaf("MONTH", "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("DAY", "([\\d]{1,2})"));
-	}
-
-	public Subject getSubject(GanttDiagram project, RegexResult arg) {
-		final int day = Integer.parseInt(arg.get("DAY", 0));
-		final int month = Integer.parseInt(arg.get("MONTH", 0));
-		final int year = Integer.parseInt(arg.get("YEAR", 0));
-		return Day.create(year, month, day);
 	}
 
 }

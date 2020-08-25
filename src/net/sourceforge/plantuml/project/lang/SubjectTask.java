@@ -44,32 +44,13 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 
-public class SubjectTask implements SubjectPattern {
+public class SubjectTask implements Subject {
 
-	public Collection<VerbPattern> getVerbs() {
-		return Arrays.<VerbPattern>asList(new VerbLasts(), new VerbTaskStarts(), new VerbTaskStartsAbsolute(),
-				new VerbHappens(), new VerbEnds(), new VerbTaskEndsAbsolute(), new VerbIsColored(), new VerbIsDeleted(),
-				new VerbIsForTask(), new VerbLinksTo());
-	}
-
-	public IRegex toRegex() {
-		return new RegexConcat( //
-				new RegexLeaf("THEN", "(then[%s]+)?"), //
-				new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("on"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
-						)) //
-		);
-	}
-
-	public Subject getSubject(GanttDiagram project, RegexResult arg) {
+	public Failable<Task> getMe(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
 		final String shortName = arg.get("SUBJECT", 1);
 		final String then = arg.get("THEN", 0);
@@ -87,6 +68,29 @@ public class SubjectTask implements SubjectPattern {
 			}
 
 		}
-		return result;
+		return Failable.ok(result);
 	}
+
+	public Collection<? extends SentenceSimple> getSentences() {
+		return Arrays.asList(new SentenceLasts(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),
+				new SentenceTaskStartsAbsolute(), new SentenceHappens(), new SentenceHappensDate(), new SentenceEnds(),
+				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsDeleted(),
+				new SentenceIsForTask(), new SentenceLinksTo(), new SentenceOccurs(), new SentenceDisplayOnSameRowAs(),
+				new SentencePausesDate(), new SentencePausesDayOfWeek());
+	}
+
+	public IRegex toRegex() {
+		return new RegexConcat( //
+				new RegexLeaf("THEN", "(then[%s]+)?"), //
+				new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("on"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
+						)) //
+		);
+	}
+
 }

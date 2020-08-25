@@ -176,8 +176,7 @@ public class SvgGraphics {
 	private Element pendingBackground;
 
 	public void paintBackcolorGradient(ColorMapper mapper, HColorGradient gr) {
-		final String id = createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()),
-				gr.getPolicy());
+		final String id = createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()), gr.getPolicy());
 		setFillColor("url(#" + id + ")");
 		setStrokeColor(null);
 		pendingBackground = createRectangleInternal(0, 0, 0, 0);
@@ -320,7 +319,7 @@ public class SvgGraphics {
 	}
 
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow,
-			String id) {
+			String id, String codeLine) {
 		if (height <= 0 || width <= 0) {
 			return;
 			// To be restored when Teoz will be finished
@@ -336,6 +335,9 @@ public class SvgGraphics {
 			}
 			if (id != null) {
 				elt.setAttribute("id", id);
+			}
+			if (codeLine != null) {
+				elt.setAttribute("codeLine", codeLine);
 			}
 			getG().appendChild(elt);
 		}
@@ -622,6 +624,10 @@ public class SvgGraphics {
 			if (id != null) {
 				elt.setAttribute("id", id);
 			}
+			final String codeLine = path.getCodeLine();
+			if (codeLine != null) {
+				elt.setAttribute("codeLine", codeLine);
+			}
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -801,9 +807,9 @@ public class SvgGraphics {
 			return;
 		}
 
-//		if (pendingAction.size() > 0) {
-//			closeLink();
-//		}
+		if (pendingAction.size() > 0) {
+			closeLink();
+		}
 
 		pendingAction.add(0, (Element) document.createElement("a"));
 		pendingAction.get(0).setAttribute("target", target);

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -75,20 +76,37 @@ public class ResourceDraw implements UDrawable {
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
-		ug.apply(HColorUtils.BLACK)
-				.apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight())).draw(line);
-		for (Wink i = min; i.compareTo(max) <= 0; i = i.increment()) {
-			final int load = gantt.getLoadForResource(res, i);
-			if (load > 0) {
-				final FontConfiguration fontConfiguration = getFontConfiguration(9, load > 100 ? HColorUtils.RED
-						: HColorUtils.BLACK);
-				final TextBlock value = Display.getWithNewlines("" + load).create(fontConfiguration,
-						HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-				final double start = (timeScale.getStartingPosition(i) + timeScale.getEndingPosition(i)) / 2
-						- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;
-				value.drawU(ug.apply(new UTranslate(start, 16)));
-			}
+		ug.apply(HColorUtils.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
+				.draw(line);
 
+		double startingPosition = -1;
+		int totalLoad = 0;
+		int totalLimit = 0;
+		for (Wink i = min; i.compareTo(max) <= 0; i = i.increment()) {
+			final boolean isBreaking = timeScale.isBreaking(i);
+			totalLoad += gantt.getLoadForResource(res, i);
+			totalLimit += 100;
+			if (isBreaking) {
+				if (totalLoad > 0) {
+					final boolean over = totalLoad > totalLimit;
+					final FontConfiguration fontConfiguration = getFontConfiguration(9,
+							over ? HColorUtils.RED : HColorUtils.BLACK);
+					final TextBlock value = Display.getWithNewlines("" + totalLoad).create(fontConfiguration,
+							HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+					if (startingPosition == -1)
+						startingPosition = timeScale.getStartingPosition(i);
+					final double endingPosition = timeScale.getEndingPosition(i);
+					final double start = (startingPosition + endingPosition) / 2
+							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;
+					value.drawU(ug.apply(new UTranslate(start, 16)));
+				}
+				startingPosition = -1;
+				totalLoad = 0;
+				totalLimit = 0;
+			} else {
+				if (startingPosition == -1)
+					startingPosition = timeScale.getStartingPosition(i);
+			}
 		}
 
 	}
@@ -101,14 +119,6 @@ public class ResourceDraw implements UDrawable {
 		final UFont font = UFont.serif(size);
 		return new FontConfiguration(font, color, color, false);
 	}
-
-	// public void setColors(ComplementColors colors);
-	//
-	// public double getY();
-	//
-	// public double getY(Direction direction);
-	//
-	// public void drawTitle(UGraphic ug);
 
 	public double getHeight() {
 		return 16 * 2;

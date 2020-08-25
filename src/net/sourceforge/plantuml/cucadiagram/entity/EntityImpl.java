@@ -30,7 +30,8 @@
  *
  *
  * Original Author:  Arnaud Roques
- * Contribution :  Hisashi Miyashita  * 
+ * Contribution:  Hisashi Miyashita
+ * Contribution:  Miguel Esteves
  *
  */
 package net.sourceforge.plantuml.cucadiagram.entity;
@@ -48,6 +49,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
@@ -114,6 +116,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private USymbol symbol;
 	private final int rawLayout;
 	private char concurrentSeparator;
+	private LineLocation codeLine;
 
 	private Set<Stereotag> tags = new LinkedHashSet<Stereotag>();
 
@@ -807,7 +810,17 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public void setThisIsTogether() {
 		this.together = true;
-		// System.err.println("setThisIsTogether");
+	}
+
+	public String getCodeLine() {
+		if (this.codeLine == null) {
+			return null;
+		}
+		return "" + this.codeLine.getPosition();
+	}
+
+	public void setCodeLine(LineLocation codeLine) {
+		this.codeLine = codeLine;
 	}
 
 }

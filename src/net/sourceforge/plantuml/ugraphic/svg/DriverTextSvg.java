@@ -106,12 +106,12 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 			final HColor back = fontConfiguration.getExtendedColor();
 			if (back instanceof HColorGradient) {
 				final HColorGradient gr = (HColorGradient) back;
-				final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()),
-						mapper.toRGB(gr.getColor2()), gr.getPolicy());
+				final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()),
+						gr.getPolicy());
 				svg.setFillColor("url(#" + id + ")");
 				svg.setStrokeColor(null);
 				final double deltaPatch = 2;
-				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0, null);
+				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0, null, null);
 
 			} else {
 				backColor = mapper.toRGB(back);

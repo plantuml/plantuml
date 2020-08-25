@@ -41,14 +41,13 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 
-public class ComplementEmpty implements ComplementPattern {
+public class ComplementEmpty implements Something {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf("");
 	}
 
-	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
-		return Failable.<Complement> ok(new Complement() {
-		});
+	public Failable<Object> getMe(GanttDiagram system, RegexResult arg, String suffix) {
+		return Failable.ok(new Object());
 	}
 }

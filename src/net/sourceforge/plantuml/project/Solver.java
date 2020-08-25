@@ -43,13 +43,13 @@ import java.util.Map.Entry;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.time.Wink;
 
-public class Solver3 {
+public class Solver {
 
 	private final Map<TaskAttribute, Value> values = new LinkedHashMap<TaskAttribute, Value>();
 
 	private final LoadPlanable loadPlanable;
 
-	public Solver3(LoadPlanable loadPlanable) {
+	public Solver(LoadPlanable loadPlanable) {
 		this.loadPlanable = loadPlanable;
 	}
 

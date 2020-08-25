@@ -678,7 +678,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 
 		final String comment = link.idCommentForSvg();
 		final String tmp = uniq(ids, comment);
-		todraw.setComment(tmp);
+		todraw.setCommentAndCodeLine(tmp, link.getCodeLine());
 
 		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors(), stroke);
 

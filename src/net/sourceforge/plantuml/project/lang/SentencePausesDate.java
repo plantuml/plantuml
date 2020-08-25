@@ -35,16 +35,28 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-public class ComplementName implements Complement {
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.Load;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.time.Day;
 
-	private final String name;
+public class SentencePausesDate extends SentenceSimple {
 
-	public ComplementName(String name) {
-		this.name = name;
+	public SentencePausesDate() {
+		super(new SubjectTask(), Verbs.pauses(), new ComplementDate());
 	}
 
-	public final String getName() {
-		return name;
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final Day pause = (Day) complement;
+		final Day startingDate = project.getStartingDate();
+		if (startingDate == null) {
+			return CommandExecutionResult.error("No starting date for the project");
+		}
+		task.addPause(pause.asInstantDay(startingDate));
+		return CommandExecutionResult.ok();
 	}
 
 }

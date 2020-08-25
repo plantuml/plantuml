@@ -38,16 +38,27 @@ package net.sourceforge.plantuml.project.lang;
 import java.util.Arrays;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.DaysAsDates;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Resource;
+import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
 
-public class SubjectResource implements SubjectPattern {
+public class SubjectResource implements Subject {
 
-	public Collection<VerbPattern> getVerbs() {
-		return Arrays.<VerbPattern> asList(new VerbIsOff(), new VerbIsOn());
+	public Failable<Resource> getMe(GanttDiagram project, RegexResult arg) {
+		final String s = arg.get("RESOURCE", 0);
+		return Failable.ok(project.getResource(s));
+	}
+
+	public Collection<? extends SentenceSimple> getSentences() {
+		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates());
 	}
 
 	public IRegex toRegex() {
@@ -56,8 +67,85 @@ public class SubjectResource implements SubjectPattern {
 		);
 	}
 
-	public Subject getSubject(GanttDiagram project, RegexResult arg) {
-		final String s = arg.get("RESOURCE", 0);
-		return project.getResource(s);
+	public class IsOffDate extends SentenceSimple {
+
+		public IsOffDate() {
+			super(SubjectResource.this, Verbs.isOff(), new ComplementDate());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final Resource resource = (Resource) subject;
+			final Day when = (Day) complement;
+			resource.addCloseDay(project.convert(when));
+			return CommandExecutionResult.ok();
+		}
+
 	}
+
+	public class IsOffDates extends SentenceSimple {
+
+		public IsOffDates() {
+			super(SubjectResource.this, Verbs.isOff(), new ComplementDates());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final Resource resource = (Resource) subject;
+			for (Day when : (DaysAsDates) complement) {
+				resource.addCloseDay(project.convert(when));
+			}
+			return CommandExecutionResult.ok();
+		}
+
+	}
+
+	public class IsOffDayOfWeek extends SentenceSimple {
+
+		public IsOffDayOfWeek() {
+			super(SubjectResource.this, Verbs.isOff(), new ComplementDayOfWeek());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final Resource resource = (Resource) subject;
+			resource.addCloseDay(((DayOfWeek) complement));
+			return CommandExecutionResult.ok();
+		}
+
+	}
+
+	public class IsOnDate extends SentenceSimple {
+
+		public IsOnDate() {
+			super(SubjectResource.this, Verbs.isOn(), new ComplementDate());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final Resource resource = (Resource) subject;
+			final Day when = (Day) complement;
+			resource.addForceOnDay(project.convert(when));
+			return CommandExecutionResult.ok();
+		}
+
+	}
+
+	public class IsOnDates extends SentenceSimple {
+
+		public IsOnDates() {
+			super(SubjectResource.this, Verbs.isOn(), new ComplementDates());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final Resource resource = (Resource) subject;
+			for (Day when : (DaysAsDates) complement) {
+				resource.addForceOnDay(project.convert(when));
+			}
+			return CommandExecutionResult.ok();
+		}
+
+	}
+
 }

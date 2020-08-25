@@ -89,7 +89,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				new RegexConcat(
 						//
 						new RegexLeaf("ARROW_HEAD1",
-								"([%s]+[ox]|[)#\\[<*+^}]|\\<\\|[\\:\\|]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
+								"([%s]+[ox]|[)#\\[<*+^}]|\\<_|\\<\\|[\\:\\|]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
@@ -97,7 +97,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
 						new RegexLeaf("ARROW_HEAD2",
-								"([ox][%s]+|:\\>\\>?|[(#\\]>*+^\\{]|[\\|\\:]\\|\\>|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
+								"([ox][%s]+|:\\>\\>?|_\\>|[(#\\]>*+^\\{]|[\\|\\:]\\|\\>|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
 				RegexLeaf.spaceZeroOrMore(), new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr( //
@@ -213,6 +213,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		link.setLinkArrow(labels.getLinkArrow());
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
+		link.setCodeLine(location);
 
 		addLink(diagram, link, arg.get("HEADER", 0));
 
@@ -616,8 +617,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private LinkType getLinkType(RegexResult arg) {
-		final LinkDecor decors1 = getDecors1(arg.get("ARROW_HEAD1", 0));
-		final LinkDecor decors2 = getDecors2(arg.get("ARROW_HEAD2", 0));
+		final LinkDecor decors1 = getDecors1(getArrowHead1(arg));
+		final LinkDecor decors2 = getDecors2(getArrowHead2(arg));
 
 		LinkType result = new LinkType(decors2, decors1);
 		if (arg.get("ARROW_BODY1", 0).contains(".") || arg.get("ARROW_BODY2", 0).contains(".")) {
@@ -643,8 +644,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private Direction getDirection(RegexResult arg) {
-		final LinkDecor decors1 = getDecors1(arg.get("ARROW_HEAD1", 0));
-		final LinkDecor decors2 = getDecors2(arg.get("ARROW_HEAD2", 0));
+		final LinkDecor decors1 = getDecors1(getArrowHead1(arg));
+		final LinkDecor decors2 = getDecors2(getArrowHead2(arg));
 
 		String s = getFullArrow(arg);
 		s = s.replaceAll("[^-.=\\w]", "");
@@ -663,10 +664,21 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return result;
 	}
 
+	private String getArrowHead1(RegexResult arg) {
+		return getArrowHead(arg, "ARROW_HEAD1");
+	}
+
+	private String getArrowHead2(RegexResult arg) {
+		return getArrowHead(arg, "ARROW_HEAD2");
+	}
+
+	private String getArrowHead(RegexResult arg, final String key) {
+		return notNull(arg.get(key, 0));
+	}
+
 	private String getFullArrow(RegexResult arg) {
-		return notNull(arg.get("ARROW_HEAD1", 0)) + notNull(arg.get("ARROW_BODY1", 0))
-				+ notNull(arg.get("ARROW_DIRECTION", 0)) + notNull(arg.get("ARROW_BODY2", 0))
-				+ notNull(arg.get("ARROW_HEAD2", 0));
+		return getArrowHead1(arg) + notNull(arg.get("ARROW_BODY1", 0)) + notNull(arg.get("ARROW_DIRECTION", 0))
+				+ notNull(arg.get("ARROW_BODY2", 0)) + getArrowHead2(arg);
 	}
 
 	public static String notNull(String s) {

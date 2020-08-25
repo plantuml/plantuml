@@ -35,39 +35,95 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.project.core.AbstractTask;
+import net.sourceforge.plantuml.project.ToTaskDraw;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public abstract class AbstractTaskDraw implements TaskDraw {
 
+	protected CenterBorderColor colors;
+	protected int completion = 100;
+	protected Url url;
+	protected Display note;
 	protected final TimeScale timeScale;
 	protected final double y;
 	protected final String prettyDisplay;
 	protected final Wink start;
+	protected final ISkinParam skinParam;
+	private final Task task;
+	private final ToTaskDraw toTaskDraw;
 
 	protected final double margin = 2;
 
-	public AbstractTaskDraw(TimeScale timeScale, double y, String prettyDisplay, Wink start) {
+	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note) {
+		this.colors = colors;
+		this.completion = completion;
+		this.url = url;
+		this.note = note;
+	}
+
+	public AbstractTaskDraw(TimeScale timeScale, double y, String prettyDisplay, Wink start, ISkinParam skinParam,
+			Task task, ToTaskDraw toTaskDraw) {
 		this.y = y;
+		this.toTaskDraw = toTaskDraw;
 		this.start = start;
 		this.prettyDisplay = prettyDisplay;
 		this.timeScale = timeScale;
+		this.skinParam = skinParam;
+		this.task = task;
 	}
 
-	abstract protected FontConfiguration getFontConfiguration();
+	final protected HColor getLineColor() {
+		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+	}
+
+	final protected HColor getBackgroundColor() {
+		return getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+	}
+
+	final protected FontConfiguration getFontConfiguration() {
+		return getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
+	}
+
+	abstract protected Style getStyle();
 
 	final protected double getShapeHeight() {
 		return getHeight() - 2 * margin;
 	}
 
 	final public double getHeight() {
-		return AbstractTask.HEIGHT;
+		return getFontConfiguration().getFont().getSize2D() + 5;
 	}
 
 	final public double getY() {
-		return y;
+		if (task.getRow() == null) {
+			return y;
+		}
+		return toTaskDraw.getTaskDraw(task.getRow()).getY();
+	}
+
+	public final Task getTask() {
+		return task;
+	}
+
+	public final double getY(Direction direction) {
+		if (direction == Direction.UP) {
+			return getY();
+		}
+		if (direction == Direction.DOWN) {
+			return getY() + getHeight();
+		}
+		return getY() + getHeight() / 2;
 	}
 
 }

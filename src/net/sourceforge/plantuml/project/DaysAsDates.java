@@ -37,11 +37,9 @@ package net.sourceforge.plantuml.project;
 
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.project.lang.Complement;
-import net.sourceforge.plantuml.project.lang.Subject;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class DaysAsDates implements Subject, Complement, Iterable<Day> {
+public class DaysAsDates implements Iterable<Day> {
 
 	private final Day date1;
 	private final Day date2;

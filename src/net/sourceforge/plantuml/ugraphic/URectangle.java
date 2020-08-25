@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution:  Miguel Esteves
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -45,29 +46,32 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 	private final double rx;
 	private final double ry;
 	private final String comment;
+	private final String codeLine;
 	private final boolean ignoreForCompressionOnX;
 	private final boolean ignoreForCompressionOnY;
 
 	public URectangle withHeight(double newHeight) {
 		final URectangle result = new URectangle(width, newHeight, rx, ry, comment, ignoreForCompressionOnX,
-				ignoreForCompressionOnY);
+				ignoreForCompressionOnY, codeLine);
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;
 	}
 
 	public URectangle withWidth(double newWidth) {
 		final URectangle result = new URectangle(newWidth, height, rx, ry, comment, ignoreForCompressionOnX,
-				ignoreForCompressionOnY);
+				ignoreForCompressionOnY, codeLine);
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;
 	}
 
-	public URectangle withComment(String comment) {
-		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, ignoreForCompressionOnY);
+	public URectangle withCommentAndCodeLine(String comment, String codeLine) {
+		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, ignoreForCompressionOnY,
+				codeLine);
 	}
 
 	public URectangle rounded(double round) {
-		return new URectangle(width, height, round, round, comment, ignoreForCompressionOnX, ignoreForCompressionOnY);
+		return new URectangle(width, height, round, round, comment, ignoreForCompressionOnX, ignoreForCompressionOnY,
+				codeLine);
 	}
 
 	public Shadowable diagonalCorner(double diagonalCorner) {
@@ -91,11 +95,11 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 	}
 
 	public final URectangle ignoreForCompressionOnX() {
-		return new URectangle(width, height, rx, ry, comment, true, ignoreForCompressionOnY);
+		return new URectangle(width, height, rx, ry, comment, true, ignoreForCompressionOnY, codeLine);
 	}
 
 	public final URectangle ignoreForCompressionOnY() {
-		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, true);
+		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, true, codeLine);
 	}
 
 	public UShape getScaled(double scale) {
@@ -103,13 +107,13 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 			return this;
 		}
 		final AbstractShadowable result = new URectangle(width * scale, height * scale, rx * scale, ry * scale, comment,
-				ignoreForCompressionOnX, ignoreForCompressionOnY);
+				ignoreForCompressionOnX, ignoreForCompressionOnY, codeLine);
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;
 	}
 
 	public URectangle(double width, double height) {
-		this(width, height, 0, 0, null, false, false);
+		this(width, height, 0, 0, null, false, false, null);
 	}
 
 	public URectangle(Dimension2D dim) {
@@ -117,7 +121,7 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 	}
 
 	private URectangle(double width, double height, double rx, double ry, String comment,
-			boolean ignoreForCompressionOnX, boolean ignoreForCompressionOnY) {
+			boolean ignoreForCompressionOnX, boolean ignoreForCompressionOnY, String codeLine) {
 		if (height == 0) {
 			throw new IllegalArgumentException("height=" + height);
 		}
@@ -127,6 +131,7 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 		this.ignoreForCompressionOnX = ignoreForCompressionOnX;
 		this.ignoreForCompressionOnY = ignoreForCompressionOnY;
 		this.comment = comment;
+		this.codeLine = codeLine;
 		this.width = width;
 		this.height = height;
 		this.rx = rx;
@@ -164,6 +169,10 @@ public class URectangle extends AbstractShadowable implements Scalable, UShapeSi
 
 	public final String getComment() {
 		return comment;
+	}
+
+	public String getCodeLine() {
+		return codeLine;
 	}
 
 	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {

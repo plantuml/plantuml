@@ -35,35 +35,39 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.ToTaskDraw;
+import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
-	private ComplementColors colors;
-
-	public TaskDrawDiamond(TimeScale timeScale, double y, String prettyDisplay, Wink start) {
-		super(timeScale, y, prettyDisplay, start);
+	public TaskDrawDiamond(TimeScale timeScale, double y, String prettyDisplay, Wink start, ISkinParam skinParam,
+			Task task, ToTaskDraw toTaskDraw) {
+		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw);
 	}
 
 	@Override
-	protected FontConfiguration getFontConfiguration() {
-		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+	protected Style getStyle() {
+		final Style style = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.milestone)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return style;
 	}
+
+//		final UFont font = UFont.serif(11);
+//		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 
 	final public void drawTitle(UGraphic ug) {
 		final TextBlock title = Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(),
@@ -85,7 +89,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		if (colors != null && colors.isOk()) {
 			return colors.apply(ug);
 		}
-		return ug.apply(HColorUtils.BLACK).apply(HColorUtils.BLACK.bg());
+		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());
 	}
 
 	private void drawShape(UGraphic ug) {
@@ -102,7 +106,4 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		return result;
 	}
 
-	public void setColorsAndCompletion(ComplementColors colors, int completion, Url url) {
-		this.colors = colors;
-	}
 }

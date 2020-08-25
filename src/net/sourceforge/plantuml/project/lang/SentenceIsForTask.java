@@ -35,33 +35,23 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.Completion;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 
-public class VerbIsDeleted implements VerbPattern {
+public class SentenceIsForTask extends SentenceSimple {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementEmpty());
+	public SentenceIsForTask() {
+		super(new SubjectTask(), Verbs.is(), new ComplementCompleted());
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("is[%s]+deleted");
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final Completion completed = (Completion) complement;
+		task.setCompletion(completed.getCompletion());
+		return CommandExecutionResult.ok();
 	}
 
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final Task task = (Task) subject;
-				return project.deleteTask(task);
-			}
-
-		};
-	}
 }

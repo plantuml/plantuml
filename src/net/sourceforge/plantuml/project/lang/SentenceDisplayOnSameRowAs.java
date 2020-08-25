@@ -35,18 +35,25 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Collection;
-
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
 
-public interface SubjectPattern {
+public class SentenceDisplayOnSameRowAs extends SentenceSimple {
 
-	public Collection<VerbPattern> getVerbs();
+	public SentenceDisplayOnSameRowAs() {
+		super(new SubjectTask(), Verbs.displayOnSameRowAs(), new ComplementNamed());
+	}
 
-	public Subject getSubject(GanttDiagram project, RegexResult arg);
-
-	public IRegex toRegex();
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task1 = (Task) subject;
+		final Task task2 = project.getExistingTask((String) complement);
+		if (task2 == null) {
+			return CommandExecutionResult.error("No such task " + task2);
+		}
+		task1.putInSameRowAs(task2);
+		return CommandExecutionResult.ok();
+	}
 
 }

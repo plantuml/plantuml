@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution:  Miguel Esteves
  * 
  *
  */
@@ -45,6 +46,7 @@ import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 public class UPath extends AbstractShadowable implements Iterable<USegment>, UShapeIgnorableForCompression {
 
 	private final String comment;
+	private final String codeLine;
 	private final List<USegment> segments = new ArrayList<USegment>();
 	private MinMax minmax = MinMax.getEmpty(false);
 
@@ -52,12 +54,13 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 	private boolean ignoreForCompressionOnX;
 	private boolean ignoreForCompressionOnY;
 
-	public UPath(String comment) {
+	public UPath(String comment, String codeLine) {
 		this.comment = comment;
+		this.codeLine = codeLine;
 	}
 
 	public UPath() {
-		this(null);
+		this(null, null);
 	}
 
 	public void add(double[] coord, USegmentType pathType) {
@@ -83,7 +86,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 	}
 
 	public UPath translate(double dx, double dy) {
-		final UPath result = new UPath(comment);
+		final UPath result = new UPath(comment, codeLine);
 		for (USegment seg : segments) {
 			result.addInternal(seg.translate(dx, dy));
 		}
@@ -91,7 +94,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 	}
 
 	public UPath rotate(double theta) {
-		final UPath result = new UPath(comment);
+		final UPath result = new UPath(comment, codeLine);
 		for (USegment seg : segments) {
 			result.addInternal(seg.rotate(theta));
 		}
@@ -181,6 +184,10 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 
 	public final String getComment() {
 		return comment;
+	}
+
+	public final String getCodeLine() {
+		return codeLine;
 	}
 
 	public void setIgnoreForCompressionOnX() {

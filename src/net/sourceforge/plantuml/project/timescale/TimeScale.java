@@ -45,4 +45,6 @@ public interface TimeScale {
 
 	public double getWidth(Wink instant);
 
+	public boolean isBreaking(Wink instant);
+
 }

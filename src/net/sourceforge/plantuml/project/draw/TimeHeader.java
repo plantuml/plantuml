@@ -46,13 +46,13 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public abstract class TimeHeader {
-	
+
 	protected static final int Y_POS_ROW16 = 16;
 	protected static final int Y_POS_ROW28 = 28;
-
 
 	private final TimeScale timeScale;
 	protected final Wink min;
@@ -75,20 +75,20 @@ public abstract class TimeHeader {
 		ug.apply(HColorUtils.LIGHT_GRAY).apply(UTranslate.dy(y)).draw(hline);
 	}
 
-	final protected FontConfiguration getFontConfiguration(int size, boolean bold) {
+	final protected FontConfiguration getFontConfiguration(int size, boolean bold, HColor color) {
 		UFont font = UFont.serif(size);
 		if (bold) {
 			font = font.bold();
 		}
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+		return new FontConfiguration(font, color, color, false);
 	}
 
 	public final TimeScale getTimeScale() {
 		return timeScale;
 	}
 
-	protected final TextBlock getTextBlock(final String text, int size, boolean bold) {
-		return Display.getWithNewlines(text).create(getFontConfiguration(size, bold), HorizontalAlignment.LEFT,
+	protected final TextBlock getTextBlock(String text, int size, boolean bold, HColor color) {
+		return Display.getWithNewlines(text).create(getFontConfiguration(size, bold, color), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 

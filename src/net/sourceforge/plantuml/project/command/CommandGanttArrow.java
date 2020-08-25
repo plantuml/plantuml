@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
@@ -58,7 +59,9 @@ public class CommandGanttArrow extends SingleLineCommand2<GanttDiagram> {
 		return RegexConcat.build(CommandGanttArrow.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ARROW", "(-+)"), //
+				new RegexLeaf("(-+)"), //
+				new RegexLeaf("ARROW_STYLE", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+				new RegexLeaf("(-*)"), //
 				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"), //
@@ -79,10 +82,8 @@ public class CommandGanttArrow extends SingleLineCommand2<GanttDiagram> {
 			return CommandExecutionResult.error("No such task " + code2);
 		}
 
-		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);
-
-		task2.setStart(end1.getInstantPrecise());
-		diagram.addContraint(new GanttConstraint(end1, new TaskInstant(task2, TaskAttribute.START)));
+		final GanttConstraint link = diagram.forceTaskOrder(task1, task2);
+		link.applyStyle(arg.get("ARROW_STYLE", 0));
 
 		return CommandExecutionResult.ok();
 	}

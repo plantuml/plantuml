@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -43,7 +44,8 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.project.core.AbstractTask;
-import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -108,14 +110,22 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	public double getHeight() {
-		return AbstractTask.HEIGHT;
+		return 16;
 	}
 
 	public double getY() {
 		return y;
 	}
 
-	public void setColorsAndCompletion(ComplementColors colors, int completion, Url url) {
+	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note) {
+	}
+
+	public Task getTask() {
+		throw new UnsupportedOperationException();
+	}
+
+	public double getY(Direction direction) {
+		throw new UnsupportedOperationException();
 	}
 
 }

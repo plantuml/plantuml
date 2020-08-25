@@ -114,15 +114,15 @@ public class TimeHeaderWeekly extends TimeHeader {
 		for (Wink wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final Day day = calendar.toDayAsDate(wink);
 			if (day.getDayOfWeek() == DayOfWeek.MONDAY) {
-				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16)), getTextBlock("" + day.getDayOfMonth(), 10, false),
+				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16)), getTextBlock("" + day.getDayOfMonth(), 10, false, HColorUtils.BLACK),
 						getTimeScale().getStartingPosition(wink) + 5);
 			}
 		}
 	}
 
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(monthYear.shortName(), 12, true);
-		final TextBlock big = getTextBlock(monthYear.shortNameYYYY(), 12, true);
+		final TextBlock small = getTextBlock(monthYear.shortName(), 12, true, HColorUtils.BLACK);
+		final TextBlock big = getTextBlock(monthYear.shortNameYYYY(), 12, true, HColorUtils.BLACK);
 		printCentered(ug, start, end, small, big);
 	}
 

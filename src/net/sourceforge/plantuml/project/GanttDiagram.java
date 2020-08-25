@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -83,8 +84,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeaderDaily;
 import net.sourceforge.plantuml.project.draw.TimeHeaderMonthly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
-import net.sourceforge.plantuml.project.lang.ComplementColors;
-import net.sourceforge.plantuml.project.lang.Subject;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.GCalendar;
@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class GanttDiagram extends TitledDiagram implements Subject {
+public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
 	private final Map<String, Task> byShortName = new HashMap<String, Task>();
@@ -126,8 +126,15 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 	private Day printStart;
 	private Day printEnd;
 
+	private HColor linksColor = HColorUtils.RED_DARK;
+
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Project)");
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.GANTT;
 	}
 
 	private int horizontalPages = 1;
@@ -175,10 +182,9 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
 				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, getMetadata(), "", dpiFactor, null);
-		final SkinParam skinParam = SkinParam.create(UmlDiagramType.TIMING);
 
 		TextBlock result = getTextBlock();
-		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
+		result = new AnnotatedWorker(this, getSkinParam(), fileFormatOption.getDefaultStringBounder()).addAdd(result);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
@@ -264,7 +270,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 			if (printStart != null && constraint.isHidden(min, max)) {
 				continue;
 			}
-			constraint.getUDrawable(timeScale).drawU(ug);
+			constraint.getUDrawable(timeScale, linksColor, this).drawU(ug);
 		}
 	}
 
@@ -326,26 +332,37 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 
 	private void initTaskAndResourceDraws(TimeScale timeScale, double headerHeight) {
 		double y = headerHeight;
-		for (Task task : tasks.values()) {
-			task.setY(y);
-			y += task.getHeight();
-
-		}
+//		for (Task task : tasks.values()) {
+//			if (task instanceof TaskImpl) {
+//				final TaskImpl taskImpl = (TaskImpl) task;
+//				if (taskImpl.getRow() != null) {
+//					continue;
+//				}
+//			}
+//			task.setY5757(y);
+//			y += task.getHeight();
+//
+//		}
+//		double y2 = headerHeight;
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
 			if (task instanceof TaskSeparator) {
-				draw = new TaskDrawSeparator(((TaskSeparator) task).getName(), timeScale, task.getY(), min, max);
+				draw = new TaskDrawSeparator(((TaskSeparator) task).getName(), timeScale, y, min, max);
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, task.getY(), tmp.getPrettyDisplay(), getStart(tmp));
+					draw = new TaskDrawDiamond(timeScale, y, tmp.getPrettyDisplay(), getStart(tmp), getSkinParam(),
+							task, this);
 				} else {
 					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
 					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;
-					draw = new TaskDrawRegular(timeScale, task.getY(), tmp.getPrettyDisplay(), getStart(tmp),
-							getEnd(tmp), oddStart, oddEnd);
+					draw = new TaskDrawRegular(timeScale, y, tmp.getPrettyDisplay(), getStart(tmp), getEnd(tmp),
+							oddStart, oddEnd, getSkinParam(), task, this);
 				}
-				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl());
+				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote());
+			}
+			if (task.getRow() == null) {
+				y += draw.getHeight();
 			}
 			draws.put(task, draw);
 		}
@@ -434,10 +451,12 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		return tasks.get(code);
 	}
 
-	public void setTaskOrder(final Task task1, final Task task2) {
+	public GanttConstraint forceTaskOrder(Task task1, Task task2) {
 		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);
 		task2.setStart(end1.getInstantPrecise());
-		addContraint(new GanttConstraint(end1, new TaskInstant(task2, TaskAttribute.START)));
+		final GanttConstraint result = new GanttConstraint(end1, new TaskInstant(task2, TaskAttribute.START));
+		addContraint(result);
+		return result;
 	}
 
 	public Task getOrCreateTask(String codeOrShortName, String shortName, boolean linkedToPrevious) {
@@ -459,13 +478,13 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 			if (linkedToPrevious) {
 				previous = getLastCreatedTask();
 			}
-			result = new TaskImpl(code, getDefaultPlan());
+			result = new TaskImpl(code, getDefaultPlan(), calendar);
 			tasks.put(code, result);
 			if (byShortName != null) {
 				byShortName.put(shortName, result);
 			}
 			if (previous != null) {
-				setTaskOrder(previous, result);
+				forceTaskOrder(previous, result);
 			}
 		}
 		return result;
@@ -606,7 +625,7 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 		nameDays.put(day, name);
 	}
 
-	public void setTodayColors(ComplementColors colors) {
+	public void setTodayColors(CenterBorderColor colors) {
 		if (today == null) {
 			this.today = Day.today();
 		}
@@ -619,13 +638,32 @@ public class GanttDiagram extends TitledDiagram implements Subject {
 	}
 
 	public CommandExecutionResult deleteTask(Task task) {
-		task.setColors(new ComplementColors(HColorUtils.WHITE, HColorUtils.BLACK));
+		task.setColors(new CenterBorderColor(HColorUtils.WHITE, HColorUtils.BLACK));
 		return CommandExecutionResult.ok();
 	}
 
 	public void setPrintInterval(Day start, Day end) {
 		this.printStart = start;
 		this.printEnd = end;
+	}
+
+	public void setLinksColor(HColor color) {
+		this.linksColor = color;
+	}
+
+	public TaskDraw getTaskDraw(Task task) {
+		return draws.get(task);
+	}
+
+	public CommandExecutionResult addNote(Display note) {
+		Task last = null;
+		for (Task current : tasks.values())
+			last = current;
+		if (last == null) {
+			return CommandExecutionResult.error("No task defined");
+		}
+		last.setNote(note);
+		return CommandExecutionResult.ok();
 	}
 
 }

@@ -37,10 +37,7 @@ package net.sourceforge.plantuml.project.time;
 
 import java.util.Date;
 
-import net.sourceforge.plantuml.project.lang.Complement;
-import net.sourceforge.plantuml.project.lang.Subject;
-
-public class Day implements Complement, Comparable<Day>, Subject {
+public class Day implements Comparable<Day> {
 
 	private final int dayOfMonth;
 	private final MonthYear monthYear;

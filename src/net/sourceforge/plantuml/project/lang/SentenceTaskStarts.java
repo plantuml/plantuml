@@ -35,36 +35,31 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.Completion;
+import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class VerbIsForTask implements VerbPattern {
+public class SentenceTaskStarts extends SentenceSimple {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern>asList(new ComplementCompleted());
+	public SentenceTaskStarts() {
+		super(new SubjectTask(), Verbs.starts2(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("is");
-	}
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final TaskInstant when;
+		HColor color = null;
+		when = (TaskInstant) complement;
+		task.setStart(when.getInstantPrecise());
+		if (when.isTask()) {
+			project.addContraint(new GanttConstraint(when, new TaskInstant(task, TaskAttribute.START), color));
+		}
+		return CommandExecutionResult.ok();
 
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final Task task = (Task) subject;
-				final Completion completed = (Completion) complement;
-				task.setCompletion(completed.getCompletion());
-				return CommandExecutionResult.ok();
-			}
-
-		};
-	}
+	};
 }

@@ -164,7 +164,7 @@ public class Pipe {
 			}
 		}
 		String source = sb.toString().trim();
-		if (source.length() == 0) {
+		if (sb.length() == 0) {
 			return null;
 		}
 		if (source.startsWith("@start") == false) {

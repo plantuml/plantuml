@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.project.core;
 
-import net.sourceforge.plantuml.project.lang.Complement;
 import net.sourceforge.plantuml.project.time.Wink;
 
-public class TaskInstant implements Complement {
+public class TaskInstant {
 
 	private final Moment task;
 	private final TaskAttribute attribute;
@@ -105,11 +104,22 @@ public class TaskInstant implements Complement {
 	}
 
 	public final boolean isTask() {
-		return task instanceof Task;
+		return task instanceof AbstractTask;
 	}
 
 	public final TaskAttribute getAttribute() {
 		return attribute;
+	}
+
+	public boolean sameRowAs(TaskInstant dest) {
+		if (this.isTask() && dest.isTask()) {
+			final AbstractTask t1 = (AbstractTask) this.getMoment();
+			final AbstractTask t2 = (AbstractTask) dest.getMoment();
+			if (t1 == t2.getRow() || t2 == t1.getRow()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

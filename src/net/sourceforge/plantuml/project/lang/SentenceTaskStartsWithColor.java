@@ -33,50 +33,40 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.command;
+package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
+public class SentenceTaskStartsWithColor extends SentenceSimple {
 
-	public CommandColorTask() {
-		super(getRegexConcat());
-	}
-
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandColorTask.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("CODE", "\\[([\\p{L}0-9_.]+)\\]"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("COLORS", "#(\\w+)(?:/(#?\\w+))?"), //
-				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+	public SentenceTaskStartsWithColor() {
+		super(new SubjectTask(), Verbs.starts2(),
+				new PairOfSomething(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink()));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final TaskInstant when;
 
-		final String code = arg.get("CODE", 0);
-		final Task task = diagram.getExistingTask(code);
-		if (task == null) {
-			return CommandExecutionResult.error("No such task " + code);
+		final Object[] pairs = (Object[]) complement;
+		when = (TaskInstant) pairs[0];
+		final CenterBorderColor complement22 = (CenterBorderColor) pairs[1];
+
+		task.setStart(when.getInstantPrecise());
+		if (when.isTask()) {
+			final HColor color = complement22.getCenter();
+			final GanttConstraint link = new GanttConstraint(when, new TaskInstant(task, TaskAttribute.START), color);
+			link.applyStyle(complement22.getStyle());
+			project.addContraint(link);
 		}
-
-		final String color1 = arg.get("COLORS", 0);
-		final String color2 = arg.get("COLORS", 1);
-		final HColor col1 = diagram.getIHtmlColorSet().getColorIfValid(color1);
-		final HColor col2 = diagram.getIHtmlColorSet().getColorIfValid(color2);
-		task.setColors(new CenterBorderColor(col1, col2));
-
 		return CommandExecutionResult.ok();
-	}
 
+	};
 }

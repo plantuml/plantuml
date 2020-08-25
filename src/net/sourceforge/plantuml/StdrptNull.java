@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.File;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.core.Diagram;
@@ -42,6 +43,19 @@ import net.sourceforge.plantuml.core.Diagram;
 public class StdrptNull implements Stdrpt {
 
 	public void printInfo(final PrintStream output, final Diagram sys) {
+	}
+
+	public void finalMessage(ErrorStatus error) {
+		if (error.hasError()) {
+			Log.error("Some diagram description contains errors");
+		}
+		if (error.isNoData()) {
+			Log.error("No diagram found");
+		}
+	}
+
+	public void errorLine(int lineError, File file) {
+		Log.error("Error line " + lineError + " in file: " + file.getPath());		
 	}
 
 }

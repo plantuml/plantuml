@@ -66,4 +66,8 @@ public final class TimeScaleDaily implements TimeScale {
 		return basic.getWidth(instant);
 	}
 
+	public boolean isBreaking(Wink instant) {
+		return true;
+	}
+
 }

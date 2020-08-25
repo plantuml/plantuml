@@ -35,51 +35,15 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.Day;
 
-public class VerbHappens implements VerbPattern {
+public interface Sentence {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementDate());
-	}
+	public IRegex toRegex();
 
-	public IRegex toRegex() {
-		return new RegexLeaf("happens[%s]*(at[%s]*|the[%s]*|on[%s]*)*");
-	}
-
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final Task task = (Task) subject;
-				task.setLoad(Load.inWinks(1));
-				if (complement instanceof Day) {
-					final Day start = (Day) complement;
-					final Day startingDate = project.getStartingDate();
-					if (startingDate == null) {
-						return CommandExecutionResult.error("No starting date for the project");
-					}
-					task.setStart(start.asInstantDay(startingDate));
-					task.setDiamond(true);
-				} else {
-					final TaskInstant when = (TaskInstant) complement;
-					task.setStart(when.getInstantTheorical());
-					task.setDiamond(true);
-				}
-				return CommandExecutionResult.ok();
-			}
-
-		};
-	}
+	public CommandExecutionResult execute(GanttDiagram project, RegexResult arg);
 
 }

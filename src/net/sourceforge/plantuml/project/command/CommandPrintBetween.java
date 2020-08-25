@@ -71,8 +71,8 @@ public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
-		final Day start = (Day) pattern.getComplement(diagram, arg, "START").get();
-		final Day end = (Day) pattern.getComplement(diagram, arg, "END").get();
+		final Day start = (Day) pattern.getMe(diagram, arg, "START").get();
+		final Day end = (Day) pattern.getMe(diagram, arg, "END").get();
 		diagram.setPrintInterval(start, end);
 		return CommandExecutionResult.ok();
 	}

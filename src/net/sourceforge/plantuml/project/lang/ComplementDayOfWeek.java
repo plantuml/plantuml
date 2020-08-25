@@ -43,16 +43,16 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 
-public class ComplementDayOfWeek implements ComplementPattern {
+public class ComplementDayOfWeek implements Something {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
 				new RegexLeaf("COMPLEMENT" + suffix, "(" + DayOfWeek.getRegexString() + ")")); //
 	}
 
-	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<DayOfWeek> getMe(GanttDiagram project, RegexResult arg, String suffix) {
 		final String s = arg.get("COMPLEMENT" + suffix, 0);
-		return Failable.<Complement> ok(DayOfWeek.fromString(s));
+		return Failable.ok(DayOfWeek.fromString(s));
 	}
 
 }

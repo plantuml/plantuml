@@ -36,71 +36,29 @@
 package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.lang.Complement;
-import net.sourceforge.plantuml.project.lang.ComplementEmpty;
-import net.sourceforge.plantuml.project.lang.ComplementPattern;
-import net.sourceforge.plantuml.project.lang.Subject;
-import net.sourceforge.plantuml.project.lang.SubjectPattern;
-import net.sourceforge.plantuml.project.lang.Verb;
-import net.sourceforge.plantuml.project.lang.VerbPattern;
+import net.sourceforge.plantuml.project.lang.Sentence;
 
 public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 
-	private final SubjectPattern subjectPattern;
-	private final VerbPattern verbPattern;
-	private final ComplementPattern complementPattern;
+	private final Sentence sentence;
 
-	private NaturalCommand(RegexConcat pattern, SubjectPattern subject, VerbPattern verb, ComplementPattern complement) {
-		super(pattern);
-		this.subjectPattern = subject;
-		this.verbPattern = verb;
-		this.complementPattern = complement;
+	public NaturalCommand(Sentence sentence) {
+		super(sentence.toRegex());
+		this.sentence = sentence;
 	}
 
 	@Override
-	public String toString() {
-		return subjectPattern.toString() + " " + verbPattern.toString() + " " + complementPattern.toString();
+	final protected CommandExecutionResult executeArg(GanttDiagram system, LineLocation location, RegexResult arg) {
+		return sentence.execute(system, arg);
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram system, LineLocation location, RegexResult arg) {
-		final Subject subject = subjectPattern.getSubject(system, arg);
-		final Verb verb = verbPattern.getVerb(system, arg);
-		final Failable<Complement> complement = complementPattern.getComplement(system, arg, "0");
-		if (complement.isFail()) {
-			return CommandExecutionResult.error(complement.getError());
-		}
-		return verb.execute(subject, complement.get());
+	public static NaturalCommand create(Sentence sentence) {
+		return new NaturalCommand(sentence);
+
 	}
 
-	public static Command create(SubjectPattern subject, VerbPattern verb, ComplementPattern complement) {
-		final RegexConcat pattern;
-		if (complement instanceof ComplementEmpty) {
-			pattern = new RegexConcat(//
-					RegexLeaf.start(), //
-					subject.toRegex(), //
-					RegexLeaf.spaceOneOrMore(), //
-					verb.toRegex(), //
-					RegexLeaf.end());
-		} else {
-			pattern = new RegexConcat(//
-					RegexLeaf.start(), //
-					subject.toRegex(), //
-					RegexLeaf.spaceOneOrMore(), //
-					verb.toRegex(), //
-					RegexLeaf.spaceOneOrMore(), //
-					complement.toRegex("0"), //
-					RegexLeaf.end());
-		}
-		// System.err.println("NaturalCommand="+pattern.getPattern());
-		return new NaturalCommand(pattern, subject, verb, complement);
-	}
 }

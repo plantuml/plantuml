@@ -35,19 +35,26 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public interface TaskDraw extends UDrawable {
 
-	public void setColorsAndCompletion(ComplementColors colors, int completion, Url url);
+	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
 
 	public double getY();
+
+	public double getY(Direction direction);
 
 	public void drawTitle(UGraphic ug);
 
 	public double getHeight();
+
+	public Task getTask();
 
 }

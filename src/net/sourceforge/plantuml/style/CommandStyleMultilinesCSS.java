@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 
-public class CommandStyleMultilinesCSS extends CommandMultilines2<UmlDiagram> {
+public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram> {
 
 	public CommandStyleMultilinesCSS() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
@@ -60,10 +60,10 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<UmlDiagram> {
 		return RegexConcat.build(CommandStyleMultilinesCSS.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\<style\\>"), //
 				RegexLeaf.end() //
-				);
+		);
 	}
 
-	protected CommandExecutionResult executeNow(UmlDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
 		SkinParam.setBetaStyle(true);
 		if (SkinParam.USE_STYLES() == false) {
 			return CommandExecutionResult.ok();

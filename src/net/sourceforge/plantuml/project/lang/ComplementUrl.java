@@ -45,18 +45,18 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 
-public class ComplementUrl implements ComplementPattern {
+public class ComplementUrl implements Something {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
 				new RegexLeaf("COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
 	}
 
-	public Failable<Complement> getComplement(GanttDiagram diagram, RegexResult arg, String suffix) {
+	public Failable<Url> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
 		final String urlString = arg.get("COMPLEMENT" + suffix, 0);
 		final UrlBuilder urlBuilder = new UrlBuilder("", ModeUrl.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);
-		return Failable.<Complement>ok(url);
+		return Failable.ok(url);
 	}
 
 }

@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.project.core;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.project.lang.ComplementColors;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.Wink;
 
 public class TaskSeparator extends AbstractTask implements Task {
@@ -69,7 +71,7 @@ public class TaskSeparator extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setColors(ComplementColors colors) {
+	public void setColors(CenterBorderColor colors) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -103,6 +105,17 @@ public class TaskSeparator extends AbstractTask implements Task {
 
 	public void setUrl(Url url) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void addPause(Wink pause) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void addPause(DayOfWeek pause) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setNote(Display note) {
 	}
 
 }

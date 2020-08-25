@@ -77,7 +77,7 @@ class USymbolFrame extends USymbol {
 
 		final UPath polygon = new UPath();
 		polygon.setIgnoreForCompressionOnX();
-		polygon.moveTo(textWidth, 1);
+		polygon.moveTo(textWidth, 0);
 
 		polygon.lineTo(textWidth, textHeight - cornersize);
 		polygon.lineTo(textWidth - cornersize, textHeight);

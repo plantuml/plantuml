@@ -70,6 +70,7 @@ public enum SName {
 	folder, //
 	footer, //
 	frame, //
+	ganttDiagram, //
 	group, //
 	groupHeader, //
 	header, //
@@ -77,6 +78,7 @@ public enum SName {
 	leafNode, //
 	legend, //
 	lifeLine, //
+	milestone, //
 	mindmapDiagram, //
 	node, //
 	note, //
@@ -97,6 +99,7 @@ public enum SName {
 	stereotype, //
 	storage, //
 	swimlane, //
+	task, //
 	title, //
 	usecase, //
 	wbsDiagram; //

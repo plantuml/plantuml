@@ -80,14 +80,14 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("HEAD2", "(0\\)|<<|[<^*+#0@)]|<\\|[\\|\\:]?|[%s]+o)?"), //
+				new RegexLeaf("HEAD2", "(0\\)|<<|<_|[<^*+#0@)]|<\\|[\\|\\:]?|[%s]+o)?"), //
 				new RegexLeaf("BODY1", "([-=.~]+)"), //
 				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + LINE_STYLE_MUTILPLES + ")\\])?"), //
 				new RegexOptional(new RegexLeaf("DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()])")), //
 				new RegexOptional(new RegexLeaf("INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
 				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("BODY2", "([-=.~]*)"), //
-				new RegexLeaf("HEAD1", "(\\(0|>>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|o[%s]+)?"), //
+				new RegexLeaf("HEAD1", "(\\(0|>>|_>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|o[%s]+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -103,9 +103,15 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		return ColorParser.simpleColor(ColorType.LINE);
 	}
 
+	private String getHead(RegexResult arg, final String key) {
+		String result = arg.get(key, 0);
+		result = trimAndLowerCase(result);
+		return result.replace("_", "");
+	}
+
 	private LinkType getLinkType(RegexResult arg) {
-		final String head1 = trimAndLowerCase(arg.get("HEAD1", 0));
-		final String head2 = trimAndLowerCase(arg.get("HEAD2", 0));
+		final String head1 = getHead(arg, "HEAD1");
+		final String head2 = getHead(arg, "HEAD2");
 		LinkDecor d1 = LinkDecor.NONE;
 		LinkDecor d2 = LinkDecor.NONE;
 

@@ -122,13 +122,13 @@ public class TimeHeaderMonthly extends TimeHeader {
 	}
 
 	private void printYear(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock("" + monthYear.year(), 12, true);
+		final TextBlock small = getTextBlock("" + monthYear.year(), 12, true, HColorUtils.BLACK);
 		printCentered(ug, start, end, small);
 	}
 
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(monthYear.shortName(), 10, false);
-		final TextBlock big = getTextBlock(monthYear.longName(), 10, false);
+		final TextBlock small = getTextBlock(monthYear.shortName(), 10, false, HColorUtils.BLACK);
+		final TextBlock big = getTextBlock(monthYear.longName(), 10, false, HColorUtils.BLACK);
 		printCentered(ug, start, end, small, big);
 	}
 

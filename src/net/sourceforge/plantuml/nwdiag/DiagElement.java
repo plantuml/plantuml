@@ -34,9 +34,13 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ComponentStyle;
-import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -55,16 +59,18 @@ public class DiagElement {
 	private final String name;
 	private String description;
 	private final Network mainNetwork;
+	private final ISkinSimple spriteContainer;
 
 	@Override
 	public String toString() {
 		return name;
 	}
 
-	public DiagElement(String name, Network network) {
+	public DiagElement(String name, Network network, ISkinSimple spriteContainer) {
 		this.description = name;
 		this.mainNetwork = network;
 		this.name = name;
+		this.spriteContainer = spriteContainer;
 	}
 
 	private TextBlock toTextBlock(String s) {
@@ -75,8 +81,7 @@ public class DiagElement {
 			return TextBlockUtils.empty(0, 0);
 		}
 		s = s.replace(", ", "\\n");
-		return Display.getWithNewlines(s).create(getFontConfiguration(), HorizontalAlignment.LEFT,
-				new SpriteContainerEmpty());
+		return Display.getWithNewlines(s).create(getFontConfiguration(), HorizontalAlignment.LEFT, spriteContainer);
 	}
 
 	private FontConfiguration getFontConfiguration() {
@@ -84,15 +89,17 @@ public class DiagElement {
 		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
-	public LinkedElement asTextBlock(final String adress1, final String adress2) {
-		final TextBlock ad1 = toTextBlock(adress1);
-		final TextBlock ad2 = toTextBlock(adress2);
+	public LinkedElement asTextBlock(Map<Network, String> conns, Network next) {
+		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
+		for (Entry<Network, String> ent : conns.entrySet()) {
+			conns2.put(ent.getKey(), toTextBlock(ent.getValue()));
+		}
 		final SymbolContext symbolContext = new SymbolContext(ColorParam.activityBackground.getDefaultValue(),
 				ColorParam.activityBorder.getDefaultValue()).withShadow(3);
 		final TextBlock desc = toTextBlock(description);
 		final TextBlock box = shape.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0), symbolContext,
 				HorizontalAlignment.CENTER);
-		return new LinkedElement(ad1, box, ad2, mainNetwork, this);
+		return new LinkedElement(this, box, mainNetwork, next, conns2);
 	}
 
 	public String getDescription() {

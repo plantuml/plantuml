@@ -35,36 +35,22 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
 
-public class VerbLasts implements VerbPattern {
+public class SentenceIsColored extends SentenceSimple {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementSeveralDays());
+	public SentenceIsColored() {
+		super(new SubjectTask(), Verbs.isColored(), new ComplementInColors());
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("lasts");
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final CenterBorderColor colors = (CenterBorderColor) complement;
+		task.setColors(colors);
+		return CommandExecutionResult.ok();
 	}
 
-	public Verb getVerb(GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final Task task = (Task) subject;
-				final Load duration = (Load) complement;
-				task.setLoad(duration);
-				return CommandExecutionResult.ok();
-			}
-
-		};
-	}
 }

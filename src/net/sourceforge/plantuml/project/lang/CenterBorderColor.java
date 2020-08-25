@@ -35,40 +35,47 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.GanttConstraint;
-import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.core.TaskInstant;
+public class CenterBorderColor {
 
-public class VerbEnds implements VerbPattern {
+	private final HColor center;
+	private final HColor border;
+	private final String style;
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
+	public CenterBorderColor(HColor center, HColor border) {
+		this(center, border, null);
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("ends");
+	public CenterBorderColor(HColor center, HColor border, String style) {
+		this.center = center;
+		this.border = border;
+		this.style = style;
 	}
 
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final Task task = (Task) subject;
-				final TaskInstant when = (TaskInstant) complement;
-				task.setEnd(when.getInstantPrecise().decrement());
-				project.addContraint(new GanttConstraint(when, new TaskInstant(task, TaskAttribute.END)));
-				return CommandExecutionResult.ok();
-			}
-
-		};
+	public UGraphic apply(UGraphic ug) {
+		if (isOk() == false) {
+			throw new IllegalStateException();
+		}
+		ug = ug.apply(center.bg());
+		if (border == null) {
+			ug = ug.apply(center);
+		} else {
+			ug = ug.apply(border);
+		}
+		return ug;
 	}
 
+	public boolean isOk() {
+		return center != null;
+	}
+
+	public final HColor getCenter() {
+		return center;
+	}
+
+	public final String getStyle() {
+		return style;
+	}
 }

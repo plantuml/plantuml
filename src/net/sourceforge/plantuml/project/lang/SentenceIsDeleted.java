@@ -35,20 +35,20 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
 
-public class ComplementOpen implements Something {
+public class SentenceIsDeleted extends SentenceSimple {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("OPEN" + suffix, "(opene?d?)");
+	public SentenceIsDeleted() {
+		super(new SubjectTask(), Verbs.isDeleted(), new ComplementEmpty());
 	}
 
-	public Failable<Object> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		return Failable.ok(new Object());
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		return project.deleteTask(task);
 	}
 
 }

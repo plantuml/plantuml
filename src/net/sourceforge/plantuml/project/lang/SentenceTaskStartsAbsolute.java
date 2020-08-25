@@ -35,39 +35,27 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class VerbIsOrAreNamed implements VerbPattern {
+public class SentenceTaskStartsAbsolute extends SentenceSimple {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementNamed());
+	public SentenceTaskStartsAbsolute() {
+		super(new SubjectTask(), Verbs.starts3(), new ComplementDate());
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("(is|are)[%s]+named");
-	}
-
-	public Verb getVerb(final GanttDiagram project, final RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final ComplementName named = (ComplementName) complement;
-				final String name = named.getName();
-				final DaysAsDates days = (DaysAsDates) subject;
-				for (Day d : days) {
-					project.nameDay(d, name);
-				}
-				return CommandExecutionResult.ok();
-			}
-		};
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final Day start = (Day) complement;
+		final Day startingDate = project.getStartingDate();
+		if (startingDate == null) {
+			return CommandExecutionResult.error("No starting date for the project");
+		}
+		task.setStart(start.asInstantDay(startingDate));
+		return CommandExecutionResult.ok();
 	}
 
 }

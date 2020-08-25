@@ -260,3 +260,21 @@ circle {
 	LineColor black
 	Shadowing 3.0
 }
+
+
+task {
+    FontSize 11
+}
+
+milestone {
+    FontSize 11
+	BackGroundColor black
+	LineColor black
+}
+
+ganttDiagram {
+	note {
+	  FontSize 9
+      Shadowing 0.0
+	}
+}

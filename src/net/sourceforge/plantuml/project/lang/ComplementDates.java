@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class ComplementDates implements ComplementPattern {
+public class ComplementDates implements Something {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
@@ -65,20 +65,7 @@ public class ComplementDates implements ComplementPattern {
 		);
 	}
 
-	public Subject getSubject(GanttDiagram project, RegexResult arg) {
-		final Day date1 = getDate(arg, "1");
-		final Day date2 = getDate(arg, "2");
-		return new DaysAsDates(date1, date2);
-	}
-
-	private Day getDate(RegexResult arg, String suffix) {
-		final int day = Integer.parseInt(arg.get("DAY" + suffix, 0));
-		final int month = Integer.parseInt(arg.get("MONTH" + suffix, 0));
-		final int year = Integer.parseInt(arg.get("YEAR" + suffix, 0));
-		return Day.create(year, month, day);
-	}
-
-	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg, String suffix) {
 
 		final int day1 = Integer.parseInt(arg.get("DAY1" + suffix, 0));
 		final int month1 = Integer.parseInt(arg.get("MONTH1" + suffix, 0));
@@ -90,7 +77,7 @@ public class ComplementDates implements ComplementPattern {
 		final int year2 = Integer.parseInt(arg.get("YEAR2" + suffix, 0));
 		final Day date2 = Day.create(year2, month2, day2);
 
-		return Failable.<Complement> ok(new DaysAsDates(date1, date2));
+		return Failable.ok(new DaysAsDates(date1, date2));
 	}
 
 }

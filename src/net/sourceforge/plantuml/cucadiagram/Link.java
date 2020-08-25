@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -102,14 +103,14 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public String idCommentForSvg() {
 		if (type.looksLikeRevertedForSvg()) {
-			final String comment = getEntity1().getCodeGetName() + "<-" + getEntity2().getCodeGetName();
+			final String comment = getEntity1().getCodeGetName() + "-backto-" + getEntity2().getCodeGetName();
 			return comment;
 		}
 		if (type.looksLikeNoDecorAtAllSvg()) {
 			final String comment = getEntity1().getCodeGetName() + "-" + getEntity2().getCodeGetName();
 			return comment;
 		}
-		final String comment = getEntity1().getCodeGetName() + "->" + getEntity2().getCodeGetName();
+		final String comment = getEntity1().getCodeGetName() + "-to-" + getEntity2().getCodeGetName();
 		return comment;
 	}
 
@@ -579,6 +580,19 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public final LinkConstraint getLinkConstraint() {
 		return linkConstraint;
+	}
+
+	private LineLocation codeLine;
+
+	public String getCodeLine() {
+		if (codeLine == null) {
+			return null;
+		}
+		return "" + codeLine.getPosition();
+	}
+
+	public void setCodeLine(LineLocation location) {
+		this.codeLine = location;
 	}
 
 }

@@ -142,7 +142,7 @@ public class NwDiagram extends UmlDiagram {
 		if (currentNetwork() != null) {
 			DiagElement element = elements.get(name);
 			if (element == null) {
-				element = new DiagElement(name, currentNetwork());
+				element = new DiagElement(name, currentNetwork(), this.getSkinParam());
 				elements.put(name, element);
 			}
 			final Map<String, String> props = toSet(definition);
@@ -256,22 +256,7 @@ public class NwDiagram extends UmlDiagram {
 		ug = ug.apply(new UTranslate(margin, margin));
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), elements.size(), groups);
-
-		for (int i = 0; i < networks.size(); i++) {
-			final Network current = networks.get(i);
-			final Network next = i + 1 < networks.size() ? networks.get(i + 1) : null;
-			int j = 0;
-			for (Map.Entry<String, DiagElement> ent : elements.entrySet()) {
-				final DiagElement element = ent.getValue();
-				if (element.getMainNetwork() == current && current.constainsLocally(ent.getKey())) {
-					final String ad1 = current.getAdress(element);
-					final String ad2 = next == null ? null : next.getAdress(element);
-					grid.add(i, j, element.asTextBlock(ad1, ad2));
-				}
-				j++;
-			}
-		}
+		final GridTextBlockDecorated grid = buildGrid();
 
 		double deltaX = 0;
 		double deltaY = 0;
@@ -304,6 +289,36 @@ public class NwDiagram extends UmlDiagram {
 		ug.apply(new UTranslate(dimGrid.getWidth() + deltaX + margin, dimGrid.getHeight() + deltaY + margin))
 				.draw(new UEmpty(1, 1));
 
+	}
+
+	private Map<Network, String> getLinks(DiagElement element) {
+		final Map<Network, String> result = new LinkedHashMap<Network, String>();
+		for (Network network : networks) {
+			final String s = network.getAdress(element);
+			if (s != null) {
+				result.put(network, s);
+			}
+		}
+		return result;
+	}
+
+	private GridTextBlockDecorated buildGrid() {
+		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), elements.size(), groups, networks);
+
+		for (int i = 0; i < networks.size(); i++) {
+			final Network current = networks.get(i);
+			final Network next = i + 1 < networks.size() ? networks.get(i + 1) : null;
+			int j = 0;
+			for (Map.Entry<String, DiagElement> ent : elements.entrySet()) {
+				final DiagElement element = ent.getValue();
+				if (element.getMainNetwork() == current) {
+					final Map<Network, String> conns = getLinks(element);
+					grid.add(i, j, element.asTextBlock(conns, next));
+				}
+				j++;
+			}
+		}
+		return grid;
 	}
 
 	public CommandExecutionResult setProperty(String property, String value) {

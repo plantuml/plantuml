@@ -80,7 +80,9 @@ class USymbolNode extends USymbol {
 		}
 		ug.draw(shape);
 
-		ug.apply(new UTranslate(width - 10, 10)).draw(new ULine(9, -9));
+		ug.apply(new UTranslate(width - 10, 10)).draw(new ULine(10, -10));
+		
+		
 		ug.apply(UTranslate.dy(10)).draw(ULine.hline(width - 10));
 		ug.apply(new UTranslate(width - 10, 10)).draw(ULine.vline(height - 10));
 		if (SkinParam.USE_STYLES()) {

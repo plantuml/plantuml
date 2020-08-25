@@ -35,51 +35,26 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
-import net.sourceforge.plantuml.command.regex.RegexOr;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class VerbProjectStarts implements VerbPattern {
+public class SentenceEnds extends SentenceSimple {
 
-	public Collection<ComplementPattern> getComplements() {
-		return Arrays.<ComplementPattern> asList(new ComplementDate());
+	public SentenceEnds() {
+		super(new SubjectTask(), Verbs.ends(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
 	}
 
-	public IRegex toRegexOld() {
-		return new RegexLeaf("starts[%s]*(the[%s]*|on[%s]*)*");
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final TaskInstant when = (TaskInstant) complement;
+		task.setEnd(when.getInstantPrecise().decrement());
+		project.addContraint(new GanttConstraint(when, new TaskInstant(task, TaskAttribute.END)));
+		return CommandExecutionResult.ok();
 	}
 
-	public IRegex toRegex() {
-		return new RegexConcat(new RegexLeaf("start"), //
-				new RegexOptional(new RegexLeaf("s")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexOr(//
-						new RegexLeaf("on"),//
-						new RegexLeaf("for"),//
-						new RegexLeaf("the"),//
-						new RegexLeaf("at") //
-				)) //
-		);
-	}
-
-	public Verb getVerb(final GanttDiagram project, RegexResult arg) {
-		return new Verb() {
-			public CommandExecutionResult execute(Subject subject, Complement complement) {
-				final Day start = (Day) complement;
-				assert project == subject;
-				project.setStartingDate(start);
-				return CommandExecutionResult.ok();
-			}
-
-		};
-	}
 }

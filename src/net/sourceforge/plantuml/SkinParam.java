@@ -99,6 +99,9 @@ public class SkinParam implements ISkinParam {
 		if (type == UmlDiagramType.WBS) {
 			USE_STYLE2.set(true);
 		}
+		if (type == UmlDiagramType.GANTT) {
+			USE_STYLE2.set(true);
+		}
 		if (type == UmlDiagramType.SEQUENCE) {
 			// skin = "debug.skin";
 			// USE_STYLE2.set(true);

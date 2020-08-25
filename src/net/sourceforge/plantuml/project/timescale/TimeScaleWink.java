@@ -54,4 +54,8 @@ public class TimeScaleWink implements TimeScale {
 		return scale;
 	}
 
+	public boolean isBreaking(Wink instant) {
+		return true;
+	}
+
 }

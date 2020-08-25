@@ -150,6 +150,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			return CommandExecutionResult.error("No such entity");
 		}
 		if (lines.size() > 1) {
+			entity.setCodeLine(lines.getAt(0).getLocation());
 			lines = lines.subExtract(1, 1);
 			// final Url url = null;
 			// if (lines.size() > 0) {

@@ -42,13 +42,12 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
-import net.sourceforge.plantuml.project.lang.Subject;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.GCalendar;
 import net.sourceforge.plantuml.project.time.Wink;
 
-public class Resource implements Subject {
+public class Resource {
 
 	private final String name;
 	private ResourceDraw draw;

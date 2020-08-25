@@ -35,20 +35,29 @@
  */
 package net.sourceforge.plantuml.project;
 
+import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.WithLinkType;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.lang.Complement;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class GanttConstraint implements Complement {
+public class GanttConstraint extends WithLinkType {
 
 	private final TaskInstant source;
 	private final TaskInstant dest;
 
-	public GanttConstraint(TaskInstant source, TaskInstant dest) {
+	public GanttConstraint(TaskInstant source, TaskInstant dest, HColor forcedColor) {
 		this.source = source;
 		this.dest = dest;
+		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+		this.setSpecificColor(forcedColor);
+	}
+
+	public GanttConstraint(TaskInstant source, TaskInstant dest) {
+		this(source, dest, null);
 	}
 
 	@Override
@@ -56,8 +65,11 @@ public class GanttConstraint implements Complement {
 		return source.toString() + " --> " + dest.toString();
 	}
 
-	public UDrawable getUDrawable(final TimeScale timeScale) {
-		return new GanttArrow(timeScale, source, dest);
+	public UDrawable getUDrawable(TimeScale timeScale, HColor color, ToTaskDraw toTaskDraw) {
+		if (getSpecificColor() == null) {
+			return new GanttArrow(timeScale, source, dest, color, getType(), toTaskDraw);
+		}
+		return new GanttArrow(timeScale, source, dest, getSpecificColor(), getType(), toTaskDraw);
 	}
 
 	public boolean isHidden(Wink min, Wink max) {
@@ -78,5 +90,9 @@ public class GanttConstraint implements Complement {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void goNorank() {
 	}
 }
