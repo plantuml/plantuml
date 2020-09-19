@@ -160,15 +160,28 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		String port2 = null;
 
 		if (diagram.V1972()) {
-			if (removeMemberPartIdent(diagram, ident1) != null) {
-				port1 = ident1.getPortMember();
-				ident1 = removeMemberPartIdent(diagram, ident1);
-				code1 = ident1;
-			}
-			if (removeMemberPartIdent(diagram, ident2) != null) {
-				port2 = ident2.getPortMember();
-				ident2 = removeMemberPartIdent(diagram, ident2);
-				code2 = ident2;
+			if ("::".equals(diagram.getNamespaceSeparator())) {
+				if (removeMemberPartIdentSpecial(diagram, ident1) != null) {
+					port1 = ident1.getLast();
+					ident1 = removeMemberPartIdentSpecial(diagram, ident1);
+					code1 = ident1;
+				}
+				if (removeMemberPartIdentSpecial(diagram, ident2) != null) {
+					port2 = ident2.getLast();
+					ident2 = removeMemberPartIdentSpecial(diagram, ident2);
+					code2 = ident1;
+				}
+			} else {
+				if (removeMemberPartIdent(diagram, ident1) != null) {
+					port1 = ident1.getPortMember();
+					ident1 = removeMemberPartIdent(diagram, ident1);
+					code1 = ident1;
+				}
+				if (removeMemberPartIdent(diagram, ident2) != null) {
+					port2 = ident2.getPortMember();
+					ident2 = removeMemberPartIdent(diagram, ident2);
+					code2 = ident2;
+				}
 			}
 		} else {
 			if (removeMemberPartLegacy1972(diagram, ident1) != null) {
@@ -249,6 +262,20 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			}
 			return diagram.isGroup(code);
 		}
+	}
+
+	private Ident removeMemberPartIdentSpecial(AbstractClassOrObjectDiagram diagram, Ident ident) {
+		if (diagram.leafExistSmart(ident)) {
+			return null;
+		}
+		final Ident before = ident.parent();
+		if (before == null) {
+			return null;
+		}
+		if (diagram.leafExistSmart(before) == false) {
+			return null;
+		}
+		return before;
 	}
 
 	private Ident removeMemberPartIdent(AbstractClassOrObjectDiagram diagram, Ident ident) {

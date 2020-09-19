@@ -176,21 +176,21 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		area.initFooter(getPngTitler(FontParam.FOOTER, index), stringBounder);
 		area.initHeader(getPngTitler(FontParam.HEADER, index), stringBounder);
 
-		final DisplayPositionned legend = diagram.getLegend();
 		final TextBlock legendBlock;
-		if (legend.isNull()) {
+		if (diagram.getLegend().isNull()) {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			if (SkinParam.USE_STYLES()) {
 				final Style style = StyleSignature.of(SName.root, SName.legend)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-				legendBlock = style.createTextBlockBordered(legend.getDisplay(),
+				legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
 						diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam());
 			} else {
-				legendBlock = EntityImageLegend.create(legend.getDisplay(), diagram.getSkinParam());
+				legendBlock = EntityImageLegend.create(diagram.getLegend().getDisplay(), diagram.getSkinParam());
 			}
 		}
 		final Dimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
+		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());
 
 		scale = getScale(area.getWidth(), area.getHeight());
 
@@ -224,61 +224,40 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 					delta = 0;
 				}
 
-				double legendYdelta = 0;
 				if (compTitle != null) {
-					final StringBounder stringBounder = ug.getStringBounder();
-					final double h = compTitle.calculateDimension(stringBounder).getHeight();
-					legendYdelta += h;
 					compTitle.drawU(ug.apply(new UTranslate(area.getTitleX(), area.getTitleY())));
 				}
-				legendYdelta += area.getHeaderHeightMargin();
 				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));
 
-				final double delta1 = Math.max(0, dimLegend.getWidth() - area.getWidth());
+				final double delta1 = Math.max(0, area.getLegendWidth() - area.getWidth());
 
-				final boolean legendTop = legend.isNull() == false
-						&& legend.getVerticalAlignment() == VerticalAlignment.TOP;
-
-				double sequenceAreaY = area.getSequenceAreaY();
-				if (legendTop) {
-					sequenceAreaY += legendBlock.calculateDimension(ug.getStringBounder()).getHeight();
-				}
-				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2, sequenceAreaY);
+				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2,
+						area.getSequenceAreaY());
 				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,
 						diagram.isShowFootbox());
 				core = annotatedWorker.addFrame(core);
 				core.drawU(ug.apply(forCore));
-				// drawableSet.drawU22(ug.apply(forCore), delta, fullDimension.getWidth(), page,
-				// diagram.isShowFootbox());
 
 				drawHeader(area, ug, index);
-				drawFooter(area, ug, index, dimLegend.getHeight());
+				drawFooter(area, ug, index);
 
-				if (legend.isNull() == false) {
-					final double delta2;
-					if (legend.getHorizontalAlignment() == HorizontalAlignment.LEFT) {
-						delta2 = 0;
-					} else if (legend.getHorizontalAlignment() == HorizontalAlignment.RIGHT) {
-						delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth());
-					} else {
-						delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth()) / 2;
-					}
-					legendBlock.drawU(ug.apply(new UTranslate(delta2, legendTop ? legendYdelta : area.getHeight())));
+				if (area.hasLegend()) {
+					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));
 				}
-
 			}
+
 		});
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 	}
 
-	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page, double legendHeight) {
+	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {
 		final PngTitler pngTitler = getPngTitler(FontParam.FOOTER, page);
 		final TextBlock text = pngTitler.getRibbonBlock();
 		if (text == null) {
 			return;
 		}
-		text.drawU(ug.apply(new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()),
-				area.getFooterY() + legendHeight)));
+		text.drawU(ug.apply(
+				new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()), area.getFooterY())));
 	}
 
 	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {
@@ -332,6 +311,11 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		}
 		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
 				skinParam.useUnderlineForHyperlink(), style, skinParam.getIHtmlColorSet(), skinParam);
+	}
+
+	private boolean isLegendTop() {
+		return diagram.getLegend().isNull() == false
+				&& diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;
 	}
 
 }

@@ -170,12 +170,8 @@ public class FtileBox extends AbstractFtile {
 
 	public static FtileBox createMindMap(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
 			StyleSignature styleDefinition) {
-		Style style = null;
-		Style styleArrow = null;
-		if (SkinParam.USE_STYLES()) {
-			style = styleDefinition.getMergedStyle(styleBuilder);
-			styleArrow = style;
-		}
+		final Style style = styleDefinition.getMergedStyle(styleBuilder);
+		final Style styleArrow = style;
 		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
 	}
 

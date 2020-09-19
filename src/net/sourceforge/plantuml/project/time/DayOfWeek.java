@@ -35,11 +35,36 @@
  */
 package net.sourceforge.plantuml.project.time;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import net.sourceforge.plantuml.StringUtils;
 
 public enum DayOfWeek {
 
 	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+
+	static final private Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+	static final private SimpleDateFormat dateFormatGmt = new SimpleDateFormat("dd MMM yyyy HH:mm:ss.SSS", Locale.US);
+	static {
+		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+	}
+
+	public static synchronized DayOfWeek fromTime(long time) {
+		gmt.setTimeInMillis(time);
+		final int result = gmt.get(Calendar.DAY_OF_WEEK);
+		if (result == Calendar.SUNDAY) {
+			return SUNDAY;
+		}
+		return DayOfWeek.values()[result - 2];
+	}
+
+	public static synchronized String timeToString(long value) {
+		gmt.setTimeInMillis(value);
+		return fromTime(value).shortName() + " " + dateFormatGmt.format(gmt.getTime());
+	}
 
 	static public String getRegexString() {
 		final StringBuilder sb = new StringBuilder();

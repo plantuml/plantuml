@@ -72,8 +72,8 @@ public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 		final HColor back = param.getBackcolor();
 		if (back instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) back;
-			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()),
-					mapper.toRGB(gr.getColor2()), gr.getPolicy());
+			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()),
+					gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
 		} else if (back == null || back instanceof HColorBackground) {
 			svg.setFillColor("none");
@@ -92,15 +92,22 @@ public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 		if (start == 0 && extend == 0) {
 			svg.svgEllipse(cx, cy, width / 2, height / 2, shape.getDeltaShadow());
 		} else {
-			// http://www.itk.ilstu.edu/faculty/javila/SVG/SVG_drawing1/elliptical_curve.htm
 			start = start + 90;
-			final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;
-			final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
-			final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
-			final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
-			// svg.svgEllipse(x1, y1, 1, 1, 0);
-			// svg.svgEllipse(x2, y2, 1, 1, 0);
-			svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
+			if (extend > 0) {
+				// http://www.itk.ilstu.edu/faculty/javila/SVG/SVG_drawing1/elliptical_curve.htm
+				final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;
+				final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
+				final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
+				final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
+				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
+			} else {
+				final double x1 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
+				final double y1 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
+				final double x2 = cx + Math.sin(start * Math.PI / 180.) * width / 2;
+				final double y2 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
+				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
+
+			}
 		}
 	}
 

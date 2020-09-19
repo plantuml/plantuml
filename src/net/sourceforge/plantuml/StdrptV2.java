@@ -69,7 +69,7 @@ public class StdrptV2 implements Stdrpt {
 		} else {
 			line.append(err.getLineLocation().getDescription());
 			line.append(":");
-			line.append(err.getLineLocation().getPosition());
+			line.append(err.getLineLocation().getPosition() + 1);
 			line.append(":");
 			line.append("error");
 			line.append(":");

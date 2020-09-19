@@ -33,35 +33,40 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.core2;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface TaskDraw extends UDrawable {
+public class WorkLoadWithHoles implements WorkLoad {
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	private final WorkLoad source;
+	private final HolesList holes = new HolesList();
 
-	public YMovable getY();
+	public void addHole(long start, long end) {
+		this.holes.add(new Hole(start, end));
+	}
 
-	public YMovable getY(Direction direction);
+	public WorkLoadWithHoles(WorkLoad source) {
+		this.source = source;
+	}
 
-	public void drawTitle(UGraphic ug);
+	class MyIterator implements IteratorSlice {
 
-	public double getHeightTask();
+		private final IteratorSlice slices;
 
-	public double getHeightMax(StringBounder stringBounder);
+		public MyIterator(IteratorSlice slices) {
+			this.slices = slices;
+		}
 
-	public Task getTask();
+		public Slice next() {
+			final Slice candidat = slices.next();
+			throw new UnsupportedOperationException();
+		}
+	}
 
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+	public IteratorSlice slices(long timeBiggerThan) {
+		return new MyIterator(source.slices(timeBiggerThan));
+	}
 
 }

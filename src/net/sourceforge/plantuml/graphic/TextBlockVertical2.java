@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -58,6 +59,23 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 		this.blocks.add(b1);
 		this.blocks.add(b2);
 		this.horizontalAlignment = horizontalAlignment;
+	}
+
+	TextBlockVertical2(TextBlock b1, final UImage image, HorizontalAlignment horizontalAlignment) {
+		this(b1, convertImage(image), horizontalAlignment);
+	}
+
+	static private AbstractTextBlock convertImage(final UImage image) {
+		return new AbstractTextBlock() {
+
+			public void drawU(UGraphic ug) {
+				ug.draw(image);
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(image.getWidth(), image.getHeight());
+			}
+		};
 	}
 
 	public TextBlockVertical2(List<TextBlock> all, HorizontalAlignment horizontalAlignment) {

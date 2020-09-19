@@ -161,10 +161,14 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		char separator = lineFirst ? '_' : 0;
 		TextBlock title = null;
 		List<Member> members = new ArrayList<Member>();
-		// final LineBreakStrategy lineBreakStrategy = skinParam.wrapWidth();
 		for (ListIterator<CharSequence> it = rawBody.listIterator(); it.hasNext();) {
 			final CharSequence s2 = it.next();
 			if (s2 instanceof EmbeddedDiagram) {
+				if (members.size() > 0) {
+					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
+							stereotype, entity, diagramType), separator, title));
+					members = new ArrayList<Member>();
+				}
 				blocks.add(((EmbeddedDiagram) s2).asDraw(skinParam));
 			} else {
 				final String s = s2.toString();

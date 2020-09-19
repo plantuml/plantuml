@@ -55,7 +55,7 @@ public class StdrptV1 implements Stdrpt {
 	}
 
 	public void errorLine(int lineError, File file) {
-		Log.error("Error line " + lineError + " in file: " + file.getPath());
+		Log.error("Error line " + (lineError + 1) + " in file: " + file.getPath());
 	}
 
 	private void out(final PrintStream output, final PSystemError err) {
@@ -64,7 +64,7 @@ public class StdrptV1 implements Stdrpt {
 			output.println("status=NO_DATA");
 		} else {
 			output.println("status=ERROR");
-			output.println("lineNumber=" + err.getLineLocation().getPosition());
+			output.println("lineNumber=" + (err.getLineLocation().getPosition() + 1));
 			for (ErrorUml er : err.getErrorsUml()) {
 				output.println("label=" + er.getError());
 			}

@@ -84,6 +84,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
@@ -459,10 +460,10 @@ public final class GeneralImageBuilder {
 		try {
 			svg = dotStringFactory.getSvg(basefile, dotStrings);
 		} catch (IOException e) {
-			return new GraphvizCrash(source.getPlainString());
+			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows());
 		}
 		if (svg.length() == 0) {
-			return new GraphvizCrash(source.getPlainString());
+			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows());
 		}
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {

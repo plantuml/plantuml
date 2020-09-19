@@ -44,8 +44,9 @@ public class Network {
 	private final String name;
 	private final Map<DiagElement, String> localElements = new LinkedHashMap<DiagElement, String>();
 	private HColor color;
-
+	private boolean visible = true;
 	private String ownAdress;
+	private boolean fullWidth;
 
 	@Override
 	public String toString() {
@@ -98,6 +99,22 @@ public class Network {
 
 	public final void setColor(HColor color) {
 		this.color = color;
+	}
+
+	public void goInvisible() {
+		this.visible = false;
+	}
+
+	public final boolean isVisible() {
+		return visible;
+	}
+
+	public void setFullWidth(boolean fullWidth) {
+		this.fullWidth = fullWidth;
+	}
+
+	public final boolean isFullWidth() {
+		return fullWidth;
 	}
 
 }

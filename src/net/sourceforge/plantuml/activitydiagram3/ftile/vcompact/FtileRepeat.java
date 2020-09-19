@@ -111,16 +111,15 @@ class FtileRepeat extends AbstractFtile {
 	}
 
 	public static Ftile create(LinkRendering backRepeatLinkRendering, Swimlane swimlane, Swimlane swimlaneOut,
-			Ftile entry, Ftile repeat, Display test, Display yes, Display out, HColor borderColor,
-			HColor diamondColor, Rainbow arrowColor, Rainbow endRepeatLinkColor, ConditionStyle conditionStyle,
-			ISkinSimple spriteContainer, FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward,
-			boolean noOut) {
+			Ftile entry, Ftile repeat, Display test, Display yes, Display out, HColor borderColor, HColor diamondColor,
+			Rainbow arrowColor, Rainbow endRepeatLinkColor, ConditionStyle conditionStyle, ISkinSimple spriteContainer,
+			FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward, boolean noOut) {
 
 		final FontConfiguration fontConfiguration1 = conditionStyle == ConditionStyle.INSIDE ? fcDiamond : fcArrow;
 
-		final TextBlock tbTest = (Display.isNull(test) || test.isWhite()) ? TextBlockUtils.empty(0, 0) : test.create(
-				fontConfiguration1, repeat.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
-				spriteContainer);
+		final TextBlock tbTest = (Display.isNull(test) || test.isWhite()) ? TextBlockUtils.empty(0, 0)
+				: test.create(fontConfiguration1, repeat.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
+						spriteContainer);
 		final TextBlock yesTb = yes.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
 		final TextBlock outTb = out.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
 
@@ -146,7 +145,8 @@ class FtileRepeat extends AbstractFtile {
 					.withEast(tbTest);
 			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);
 		} else if (conditionStyle == ConditionStyle.FOO1) {
-			final Ftile diamond2 = new FtileDiamondFoo1(repeat.skinParam(), diamondColor, borderColor, swimlane, tbTest);
+			final Ftile diamond2 = new FtileDiamondFoo1(repeat.skinParam(), diamondColor, borderColor, swimlane,
+					tbTest);
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
 		} else {
 			throw new IllegalStateException();
@@ -154,14 +154,14 @@ class FtileRepeat extends AbstractFtile {
 
 		final List<Connection> conns = new ArrayList<Connection>();
 		final Display in1 = repeat.getInLinkRendering().getDisplay();
-		final TextBlock tbin1 = in1 == null ? null : in1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
-				CreoleMode.SIMPLE_LINE);
+		final TextBlock tbin1 = in1 == null ? null
+				: in1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);
 		conns.add(result.new ConnectionIn(repeat.getInLinkRendering().getRainbow(arrowColor), tbin1));
 
 		final Display backLink1 = backRepeatLinkRendering.getDisplay();
-		final TextBlock tbbackLink1 = backLink1 == null ? null : backLink1.create7(fcArrow, HorizontalAlignment.LEFT,
-				spriteContainer, CreoleMode.SIMPLE_LINE);
-		if (repeat.getSwimlaneIn() == swimlaneOut) {
+		final TextBlock tbbackLink1 = backLink1 == null ? null
+				: backLink1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);
+		if (repeat.getSwimlaneIn() == null || repeat.getSwimlaneIn() == swimlaneOut) {
 			if (backward == null) {
 				conns.add(result.new ConnectionBackSimple(backRepeatLinkRendering.getRainbow(arrowColor), tbbackLink1));
 			} else {
@@ -176,8 +176,8 @@ class FtileRepeat extends AbstractFtile {
 		}
 
 		final Display out1 = repeat.getOutLinkRendering().getDisplay();
-		final TextBlock tbout1 = out1 == null ? null : out1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
-				CreoleMode.SIMPLE_LINE);
+		final TextBlock tbout1 = out1 == null ? null
+				: out1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);
 
 		final Rainbow tmpColor = endRepeatLinkColor.withDefault(arrowColor);
 		conns.add(result.new ConnectionOut(tmpColor, tbout1));
@@ -227,13 +227,13 @@ class FtileRepeat extends AbstractFtile {
 		}
 
 		private Point2D getP1(final StringBounder stringBounder) {
-			return getTranslateForRepeat(stringBounder).getTranslated(
-					getFtile1().calculateDimension(stringBounder).getPointOut());
+			return getTranslateForRepeat(stringBounder)
+					.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());
 		}
 
 		private Point2D getP2(final StringBounder stringBounder) {
-			return getTranslateDiamond2(stringBounder).getTranslated(
-					getFtile2().calculateDimension(stringBounder).getPointIn());
+			return getTranslateDiamond2(stringBounder)
+					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());
 		}
 
 		public void drawU(UGraphic ug) {
@@ -545,8 +545,8 @@ class FtileRepeat extends AbstractFtile {
 		if (backward != null) {
 			width += backward.calculateDimension(stringBounder).getWidth();
 		}
-		final double height = dimDiamond1.getHeight() + dimRepeat.getHeight() + dimDiamond2.getHeight() + 8
-				* Diamond.diamondHalfSize;
+		final double height = dimDiamond1.getHeight() + dimRepeat.getHeight() + dimDiamond2.getHeight()
+				+ 8 * Diamond.diamondHalfSize;
 		return new Dimension2DDouble(width + 2 * Diamond.diamondHalfSize, height);
 
 	}

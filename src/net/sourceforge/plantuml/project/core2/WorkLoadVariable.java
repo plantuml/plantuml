@@ -33,35 +33,38 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.core2;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface TaskDraw extends UDrawable {
+public class WorkLoadVariable implements WorkLoad {
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	private final List<Slice> slices = new ArrayList<Slice>();
 
-	public YMovable getY();
+	public void add(Slice slice) {
+		if (slices.size() > 0) {
+			final Slice last = slices.get(slices.size() - 1);
+			if (slice.getStart() <= last.getEnd()) {
+				throw new IllegalArgumentException();
+			}
+		}
+		slices.add(slice);
+	}
 
-	public YMovable getY(Direction direction);
-
-	public void drawTitle(UGraphic ug);
-
-	public double getHeightTask();
-
-	public double getHeightMax(StringBounder stringBounder);
-
-	public Task getTask();
-
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+	public IteratorSlice slices(long timeBiggerThan) {
+		for (int i = 0; i < slices.size(); i++) {
+			final Slice current = slices.get(i);
+			if (current.getEnd() <= timeBiggerThan) {
+				continue;
+			}
+			assert current.getEnd() > timeBiggerThan;
+			assert current.getStart() >= timeBiggerThan;
+			final List<Slice> tmp = slices.subList(i, slices.size());
+			assert tmp.get(0).getStart() >= timeBiggerThan;
+			return new ListIteratorSlice(tmp);
+		}
+		throw new UnsupportedOperationException();
+	}
 
 }

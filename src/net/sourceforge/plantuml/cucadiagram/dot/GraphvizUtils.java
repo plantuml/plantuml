@@ -163,6 +163,15 @@ public class GraphvizUtils {
 		return dotVersion;
 	}
 
+	public static boolean graphviz244onWindows() {
+		try {
+			return create(null, "png").graphviz244onWindows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public static int retrieveVersion(String s) {
 		if (s == null) {
 			return -1;

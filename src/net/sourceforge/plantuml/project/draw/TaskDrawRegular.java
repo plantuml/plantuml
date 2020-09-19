@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.awt.geom.Dimension2D;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.FontParam;
@@ -48,6 +49,7 @@ import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
@@ -77,8 +79,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	private final double margin = 2;
 
-	public TaskDrawRegular(TimeScale timeScale, double y, String prettyDisplay, Wink start, Wink end, boolean oddStart,
-			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw) {
+	public TaskDrawRegular(TimeScale timeScale, YMovable y, String prettyDisplay, Wink start, Wink end,
+			boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw) {
 		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw);
 		this.end = end;
 		this.oddStart = oddStart;
@@ -106,19 +108,33 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	public void drawU(UGraphic ug) {
-		drawNote(ug.apply(UTranslate.dy(getShapeHeight() + margin * 3)));
-
 		final double startPos = timeScale.getStartingPosition(start);
-		ug = applyColors(ug);
-		ug = ug.apply(new UTranslate(startPos + margin, margin));
+		drawNote(ug.apply((new UTranslate(startPos + margin, getYNotePosition()))));
+
+		ug = applyColors(ug).apply(new UTranslate(margin, margin));
 		drawShape(ug);
+	}
+
+	private double getYNotePosition() {
+		return getShapeHeight() + margin * 3;
 	}
 
 	private void drawNote(UGraphic ug) {
 		if (note == null) {
 			return;
 		}
+		getOpaleNote().drawU(ug);
 
+	}
+
+	public double getHeightMax(StringBounder stringBounder) {
+		if (note == null) {
+			return getHeightTask();
+		}
+		return getYNotePosition() + getOpaleNote().calculateDimension(stringBounder).getHeight();
+	}
+
+	private Opale getOpaleNote() {
 		final Style style = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		FontConfiguration fc = new FontConfiguration(style, skinParam, null, FontParam.NOTE);
@@ -133,8 +149,24 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 
 		Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false);
-		opale.drawU(ug);
+		return opale;
+	}
 
+	public FingerPrint getFingerPrint() {
+		final double h = getHeightTask();
+		final double startPos = timeScale.getStartingPosition(start);
+		final double endPos = timeScale.getEndingPosition(end);
+		return new FingerPrint(startPos, y.getValue(), endPos - startPos, h);
+	}
+
+	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
+		if (note == null) {
+			return null;
+		}
+		final Dimension2D dim = getOpaleNote().calculateDimension(stringBounder);
+		final double startPos = timeScale.getStartingPosition(start);
+		// final double endPos = timeScale.getEndingPosition(end);
+		return new FingerPrint(startPos, y.getValue() + getYNotePosition(), dim.getWidth(), dim.getHeight());
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
@@ -156,26 +188,30 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			ug.startUrl(url);
 		}
 		if (oddStart && !oddEnd) {
-			ug.draw(PathUtils.UtoRight(fullLength, getShapeHeight()));
+			ug.apply(UTranslate.dx(startPos)).draw(PathUtils.UtoRight(fullLength, getShapeHeight()));
 		} else if (!oddStart && oddEnd) {
-			ug.draw(PathUtils.UtoLeft(fullLength, getShapeHeight()));
+			ug.apply(UTranslate.dx(startPos)).draw(PathUtils.UtoLeft(fullLength, getShapeHeight()));
 		} else {
 			final URectangle full = new URectangle(fullLength, getShapeHeight()).rounded(8);
 			if (completion == 100) {
-				ug.draw(full);
+				ug.apply(UTranslate.dx(startPos)).draw(full);
 			} else {
 				final double partialLength = fullLength * completion / 100.;
-				ug.apply(HColorUtils.WHITE).apply(HColorUtils.WHITE.bg()).draw(full);
+				ug.apply(UTranslate.dx(startPos)).apply(HColorUtils.WHITE).apply(HColorUtils.WHITE.bg()).draw(full);
 				if (partialLength > 2) {
 					final URectangle partial = new URectangle(partialLength, getShapeHeight()).rounded(8);
-					ug.apply(new HColorNone()).draw(partial);
+					ug.apply(UTranslate.dx(startPos)).apply(new HColorNone()).draw(partial);
 				}
 				if (partialLength > 10 && partialLength < fullLength - 10) {
 					final URectangle patch = new URectangle(8, getShapeHeight());
-					ug.apply(new HColorNone()).apply(UTranslate.dx(partialLength - 8)).draw(patch);
+					ug.apply(UTranslate.dx(startPos)).apply(new HColorNone()).apply(UTranslate.dx(partialLength - 8))
+							.draw(patch);
 				}
-				ug.apply(new HColorNone().bg()).draw(full);
+				ug.apply(UTranslate.dx(startPos)).apply(new HColorNone().bg()).draw(full);
 			}
+		}
+		if (url != null) {
+			ug.closeUrl();
 		}
 		Wink begin = null;
 		for (Wink pause : paused) {
@@ -189,9 +225,6 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 					drawPause(ug, begin, pause);
 				begin = null;
 			}
-		}
-		if (url != null) {
-			ug.closeUrl();
 		}
 	}
 

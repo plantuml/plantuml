@@ -33,35 +33,37 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.core2;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+public class Solver1 {
 
-public interface TaskDraw extends UDrawable {
+	private final WorkLoad workLoad;
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	public Solver1(WorkLoad workLoad) {
+		this.workLoad = workLoad;
+	}
 
-	public YMovable getY();
+	public TeethRange solveEnd(long start, long fullLoad) {
 
-	public YMovable getY(Direction direction);
+		final IteratorSlice slices = workLoad.slices(start);
+		final TeethRange result = new TeethRange();
 
-	public void drawTitle(UGraphic ug);
+		while (true) {
+			final Slice current = slices.next();
+			assert current.getEnd() >= start;
+			start = Math.max(start, current.getStart());
 
-	public double getHeightTask();
+			final long sliceLoad = 1L * (current.getEnd() - start) * current.getWorkLoad();
+			if (sliceLoad >= fullLoad) {
+				final long theoricalEnd = start + fullLoad / current.getWorkLoad();
+				result.add(new Tooth(start, theoricalEnd, fullLoad));
+				return result;
+			}
+			assert sliceLoad < fullLoad;
+			result.add(new Tooth(start, current.getEnd(), sliceLoad));
+			fullLoad -= sliceLoad;
+		}
 
-	public double getHeightMax(StringBounder stringBounder);
-
-	public Task getTask();
-
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+	}
 
 }

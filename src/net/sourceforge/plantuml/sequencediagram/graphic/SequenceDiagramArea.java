@@ -62,6 +62,36 @@ public class SequenceDiagramArea {
 	private double footerHeight;
 	private double footerMargin;
 
+	private double legendWidth;
+	private double legendHeight;
+	private boolean isLegendTop;
+	private HorizontalAlignment legendHorizontalAlignment;
+
+	public void setLegend(Dimension2D dimLegend, boolean isLegendTop, HorizontalAlignment horizontalAlignment) {
+		this.legendHorizontalAlignment = horizontalAlignment;
+		this.legendWidth = dimLegend.getWidth();
+		this.legendHeight = dimLegend.getHeight();
+		this.isLegendTop = isLegendTop;
+	}
+
+	public double getLegendWidth() {
+		return legendWidth;
+	}
+
+	public boolean hasLegend() {
+		return legendHeight > 0 && legendWidth > 0;
+	}
+
+	public double getLegendX() {
+		if (legendHorizontalAlignment == HorizontalAlignment.LEFT) {
+			return 0;
+		} else if (legendHorizontalAlignment == HorizontalAlignment.RIGHT) {
+			return Math.max(0, getWidth() - legendWidth);
+		} else {
+			return Math.max(0, getWidth() - legendWidth) / 2;
+		}
+	}
+
 	public SequenceDiagramArea(double width, double height) {
 		this.sequenceWidth = width;
 		this.sequenceHeight = height;
@@ -98,7 +128,24 @@ public class SequenceDiagramArea {
 	}
 
 	public double getHeight() {
-		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + footerHeight + captionHeight;
+		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + footerHeight + captionHeight
+				+ legendHeight;
+	}
+
+	public double getFooterY() {
+		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + captionHeight + legendHeight;
+	}
+
+	public double getCaptionY() {
+		return sequenceHeight + headerHeight + headerMargin + titleHeight + legendHeight;
+	}
+
+	public double getLegendY() {
+		if (isLegendTop) {
+			return titleHeight + headerHeight + headerMargin;
+		}
+		return sequenceHeight + headerHeight + headerMargin + titleHeight;
+
 	}
 
 	public double getTitleX() {
@@ -117,24 +164,19 @@ public class SequenceDiagramArea {
 		return (getWidth() - captionWidth) / 2;
 	}
 
-	public double getCaptionY() {
-		return sequenceHeight + headerHeight + headerMargin + titleHeight;
-	}
-
 	public double getSequenceAreaX() {
 		return (getWidth() - sequenceWidth) / 2;
 	}
 
 	public double getSequenceAreaY() {
+		if (isLegendTop) {
+			return getTitleY() + titleHeight + legendHeight;
+		}
 		return getTitleY() + titleHeight;
 	}
 
 	public double getHeaderY() {
 		return 0;
-	}
-
-	public double getFooterY() {
-		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + captionHeight;
 	}
 
 	public double getFooterX(HorizontalAlignment align) {

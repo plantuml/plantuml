@@ -99,17 +99,11 @@ public class MindMapDiagram extends UmlDiagram {
 		final int margin1;
 		final int margin2;
 		final HColor backgroundColor;
-		if (SkinParam.USE_STYLES()) {
-			margin1 = SkinParam.zeroMargin(10);
-			margin2 = SkinParam.zeroMargin(10);
-			final Style style = StyleSignature.of(SName.root, SName.document, SName.mindmapDiagram)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-		} else {
-			margin1 = 10;
-			margin2 = 10;
-			backgroundColor = skinParam.getBackgroundColor(false);
-		}
+		margin1 = SkinParam.zeroMargin(10);
+		margin2 = SkinParam.zeroMargin(10);
+		final Style style = StyleSignature.of(SName.root, SName.document, SName.mindmapDiagram)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final ImageBuilder imageBuilder = ImageBuilder.buildBB(skinParam.getColorMapper(), skinParam.handwritten(),
 				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null,
 				fileFormatOption.isWithMetadata() ? getMetadata() : null, "", dpiFactor, backgroundColor);

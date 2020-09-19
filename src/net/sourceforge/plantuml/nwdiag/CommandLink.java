@@ -52,18 +52,20 @@ public class CommandLink extends SingleLineCommand2<NwDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME1", "[\\p{L}0-9_]+"), //
+				new RegexLeaf("NAME1", "([\\p{L}0-9_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("--"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME2", "[\\p{L}0-9_]+"), //
+				new RegexLeaf("NAME2", "([\\p{L}0-9_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(";?"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.link();
+		final String name1 = arg.get("NAME1", 0);
+		final String name2 = arg.get("NAME2", 0);
+		return diagram.link(name1, name2);
 	}
 
 }

@@ -35,33 +35,25 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+public class YMovable {
 
-public interface TaskDraw extends UDrawable {
+	private double y;
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	public YMovable(double y) {
+		this.y = y;
+	}
 
-	public YMovable getY();
+	public YMovable add(double v) {
+		return new YMovable(y + v);
+	}
 
-	public YMovable getY(Direction direction);
+	public final double getValue() {
+		return y;
+	}
 
-	public void drawTitle(UGraphic ug);
+	public void pushMe(double delta) {
+		this.y += delta;
 
-	public double getHeightTask();
-
-	public double getHeightMax(StringBounder stringBounder);
-
-	public Task getTask();
-
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+	}
 
 }

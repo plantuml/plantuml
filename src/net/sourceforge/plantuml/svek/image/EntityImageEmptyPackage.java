@@ -45,11 +45,14 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -87,13 +90,20 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				HorizontalAlignment.CENTER, skinParam);
 		this.url = entity.getUrl99();
 
-		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
-			stereoBlock = TextBlockUtils.empty(0, 0);
+		final DisplayPositionned legend = ((EntityImpl) entity).getLegend();
+		if (legend != null) {
+			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), skinParam);
+			stereoBlock = legendBlock;
 		} else {
-			stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet())).create(
-					new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
-					HorizontalAlignment.CENTER, skinParam), 1, 0);
+			if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
+					|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+				stereoBlock = TextBlockUtils.empty(0, 0);
+			} else {
+				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet()))
+						.create(new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
+								HorizontalAlignment.CENTER, skinParam),
+						1, 0);
+			}
 		}
 
 	}

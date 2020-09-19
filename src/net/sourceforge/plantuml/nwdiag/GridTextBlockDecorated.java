@@ -134,7 +134,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		for (int i = 0; i < data.length; i++) {
 			final Network network = getNetwork(i);
 			double x = 0;
-			double xmin = -1;
+			double xmin = network.isFullWidth() ? 0 : -1;
 			double xmax = 0;
 			for (int j = 0; j < data[i].length; j++) {
 				final boolean hline = isThereALink(j, network);
@@ -142,10 +142,11 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 					xmin = x;
 				}
 				x += colWidth(stringBounder, j);
-				if (hline) {
+				if (hline || network.isFullWidth()) {
 					xmax = x;
 				}
 			}
+
 			final URectangle rect = new URectangle(xmax - xmin, NETWORK_THIN);
 			rect.setDeltaShadow(1.0);
 			UGraphic ug2 = ug.apply(new UTranslate(xmin, y));
@@ -155,7 +156,9 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			if (network != null) {
 				pos.put(network, y);
 			}
-			ug2.draw(rect);
+			if (network.isVisible()) {
+				ug2.draw(rect);
+			}
 			y += lineHeight(stringBounder, i);
 		}
 		return pos;

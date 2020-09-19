@@ -90,7 +90,8 @@ public class Ribbon implements PDrawing {
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
-		final double y = getHeightForConstraints(stringBounder) + getRibbonHeight() / 2;
+		final double y = getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)
+				+ getHeightForTopComment(stringBounder) + getRibbonHeight() / 2;
 		for (ChangeState change : changes) {
 			if (change.getWhen().compareTo(tick) == 0) {
 				return new IntricatedPoint(new Point2D.Double(x, y), new Point2D.Double(x, y));

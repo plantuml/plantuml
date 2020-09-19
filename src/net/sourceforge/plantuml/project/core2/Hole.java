@@ -33,35 +33,31 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.core2;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+public class Hole implements Comparable<Hole> {
 
-public interface TaskDraw extends UDrawable {
+	private final long start;
+	private final long end;
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	public Hole(long start, long end) {
+		if (end <= start) {
+			throw new IllegalArgumentException();
+		}
+		this.start = start;
+		this.end = end;
+	}
 
-	public YMovable getY();
+	public final long getStart() {
+		return start;
+	}
 
-	public YMovable getY(Direction direction);
+	public final long getEnd() {
+		return end;
+	}
 
-	public void drawTitle(UGraphic ug);
-
-	public double getHeightTask();
-
-	public double getHeightMax(StringBounder stringBounder);
-
-	public Task getTask();
-
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+	public int compareTo(Hole other) {
+		return Long.compare(this.start, other.start);
+	}
 
 }

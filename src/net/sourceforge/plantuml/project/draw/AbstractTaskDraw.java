@@ -56,7 +56,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected Url url;
 	protected Display note;
 	protected final TimeScale timeScale;
-	protected final double y;
+	protected final YMovable y;
 	protected final String prettyDisplay;
 	protected final Wink start;
 	protected final ISkinParam skinParam;
@@ -72,7 +72,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.note = note;
 	}
 
-	public AbstractTaskDraw(TimeScale timeScale, double y, String prettyDisplay, Wink start, ISkinParam skinParam,
+	public AbstractTaskDraw(TimeScale timeScale, YMovable y, String prettyDisplay, Wink start, ISkinParam skinParam,
 			Task task, ToTaskDraw toTaskDraw) {
 		this.y = y;
 		this.toTaskDraw = toTaskDraw;
@@ -98,14 +98,14 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	abstract protected Style getStyle();
 
 	final protected double getShapeHeight() {
-		return getHeight() - 2 * margin;
+		return getHeightTask() - 2 * margin;
 	}
 
-	final public double getHeight() {
+	final public double getHeightTask() {
 		return getFontConfiguration().getFont().getSize2D() + 5;
 	}
 
-	final public double getY() {
+	final public YMovable getY() {
 		if (task.getRow() == null) {
 			return y;
 		}
@@ -116,14 +116,14 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		return task;
 	}
 
-	public final double getY(Direction direction) {
+	public final YMovable getY(Direction direction) {
 		if (direction == Direction.UP) {
 			return getY();
 		}
 		if (direction == Direction.DOWN) {
-			return getY() + getHeight();
+			return getY().add(getHeightTask());
 		}
-		return getY() + getHeight() / 2;
+		return getY().add(getHeightTask() / 2);
 	}
 
 }

@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -57,12 +56,12 @@ public class ResourceDraw implements UDrawable {
 
 	private final Resource res;
 	private final TimeScale timeScale;
-	private final double y;
+	private final YMovable y;
 	private final Wink min;
 	private final Wink max;
 	private final GanttDiagram gantt;
 
-	public ResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Wink min, Wink max) {
+	public ResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, YMovable y, Wink min, Wink max) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;
@@ -125,7 +124,7 @@ public class ResourceDraw implements UDrawable {
 	}
 
 	public double getY() {
-		return y;
+		return y.getValue();
 	}
 
 }

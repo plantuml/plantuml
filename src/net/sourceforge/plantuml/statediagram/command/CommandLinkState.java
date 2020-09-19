@@ -92,7 +92,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 
 	private static RegexLeaf getStatePattern(String name) {
 		return new RegexLeaf(name,
-				"([\\p{L}0-9_.]+|[\\p{L}0-9_.]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[\\p{L}0-9_.]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
+				"([\\p{L}0-9_.:]+|[\\p{L}0-9_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[\\p{L}0-9_.:]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
 	}
 
 	@Override

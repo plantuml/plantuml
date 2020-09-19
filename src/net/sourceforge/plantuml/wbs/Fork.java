@@ -72,8 +72,8 @@ class Fork extends WBSTextBlock {
 		final Dimension2D mainDim = main.calculateDimension(stringBounder);
 		final double dx = (fullDim.getWidth() - mainDim.getWidth()) / 2;
 		main.drawU(ug.apply(UTranslate.dx(dx)));
-		drawLine(ug, dx + mainDim.getWidth() / 2, mainDim.getHeight(), dx + mainDim.getWidth() / 2, mainDim.getHeight()
-				+ deltay / 2);
+		drawLine(ug, dx + mainDim.getWidth() / 2, mainDim.getHeight(), dx + mainDim.getWidth() / 2,
+				mainDim.getHeight() + deltay / 2);
 		double x = 0;
 		final double y = mainDim.getHeight() + deltay;
 		if (right.size() == 0) {
@@ -102,6 +102,7 @@ class Fork extends WBSTextBlock {
 		}
 		final Dimension2D mainDim = main.calculateDimension(stringBounder);
 		height += mainDim.getHeight();
+		height += deltay;
 		width = Math.max(width, mainDim.getWidth());
 		return new Dimension2DDouble(width, height);
 	}

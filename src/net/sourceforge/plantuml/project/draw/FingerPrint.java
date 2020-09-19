@@ -35,33 +35,35 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+public class FingerPrint {
 
-public interface TaskDraw extends UDrawable {
+	private final double x;
+	private final double y;
+	private final double width;
+	private final double height;
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	public FingerPrint(double x, double y, double width, double height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
 
-	public YMovable getY();
+	@Override
+	public String toString() {
+		return "X=(" + x + "->" + (x + width) + ") Y=(" + y + " ->" + (y + height) + ")";
+	}
 
-	public YMovable getY(Direction direction);
+	public double overlap(FingerPrint other) {
+		if (x >= other.x + other.width || other.x >= x + width) {
+			return 0;
+		}
 
-	public void drawTitle(UGraphic ug);
+		if (y >= other.y + other.height || other.y >= y + height) {
+			return 0;
+		}
 
-	public double getHeightTask();
-
-	public double getHeightMax(StringBounder stringBounder);
-
-	public Task getTask();
-
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+		return y + height - other.y;
+	}
 
 }

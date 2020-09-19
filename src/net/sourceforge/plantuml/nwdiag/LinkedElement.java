@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.nwdiag;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
@@ -105,8 +106,15 @@ public class LinkedElement {
 		final double xMiddle = width / 2;
 
 		final TreeSet<Double> skip = new TreeSet<Double>(pos.values());
-		new VerticalLine(ynet1 + GridTextBlockDecorated.NETWORK_THIN, ynet1 + alpha, skip)
-				.drawU(ug.apply(UTranslate.dx(xMiddle)));
+		if (element.hasItsOwnColumn()) {
+			if (element.getMainNetwork().isVisible()) {
+				new VerticalLine(ynet1 + GridTextBlockDecorated.NETWORK_THIN, ynet1 + alpha, skip)
+						.drawU(ug.apply(UTranslate.dx(xMiddle)));
+			} else {
+				new VerticalLine(ynet1, ynet1 + alpha, Collections.<Double>emptySet())
+						.drawU(ug.apply(UTranslate.dx(xMiddle)));
+			}
+		}
 		drawCenter(ug, link1(), xMiddle, ynet1 + alpha / 2);
 
 		final double seven = 7.0;
@@ -144,13 +152,17 @@ public class LinkedElement {
 	}
 
 	private void drawCenter(UGraphic ug, TextBlock block, double x, double y) {
+		if (block == null) {
+			return;
+		}
 		final Dimension2D dim = block.calculateDimension(ug.getStringBounder());
 		block.drawU(ug.apply(new UTranslate(x - dim.getWidth() / 2, y - dim.getHeight() / 2)));
 
 	}
 
 	public Dimension2D naturalDimension(StringBounder stringBounder) {
-		final Dimension2D dim1 = link1().calculateDimension(stringBounder);
+		final Dimension2D dim1 = link1() == null ? new Dimension2DDouble(0, 0)
+				: link1().calculateDimension(stringBounder);
 		final Dimension2D dimBox = box.calculateDimension(stringBounder);
 		final Dimension2D dim2 = link2() == null ? new Dimension2DDouble(0, 0)
 				: link2().calculateDimension(stringBounder);

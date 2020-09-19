@@ -124,6 +124,45 @@ public class NwDiagram extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
+	public CommandExecutionResult link(String name1, String name2) {
+		if (initDone == false) {
+			return error();
+		}
+		if (currentNetwork() == null) {
+			final Network network1 = new Network(name1);
+			networks.add(network1);
+			addElement(null, name2, toSet(null));
+			return CommandExecutionResult.ok();
+		} else {
+			final DiagElement already = elements.get(name1);
+			final Network network1 = new Network("");
+			network1.goInvisible();
+			networks.add(network1);
+			if (already != null) {
+				currentNetwork().addElement(already, toSet(null));
+			}
+			addElement(null, name2, toSet(null));
+			return CommandExecutionResult.ok();
+		}
+	}
+
+	private DiagElement addElement(DiagElement element, String name, Map<String, String> props) {
+		if (element == null) {
+			element = new DiagElement(name, currentNetwork(), this.getSkinParam());
+			elements.put(name, element);
+		}
+		currentNetwork().addElement(element, props);
+		final String description = props.get("description");
+		if (description != null) {
+			element.setDescription(description);
+		}
+		final String shape = props.get("shape");
+		if (shape != null) {
+			element.setShape(shape);
+		}
+		return element;
+	}
+
 	public CommandExecutionResult endSomething() {
 		if (initDone == false) {
 			return error();
@@ -139,22 +178,17 @@ public class NwDiagram extends UmlDiagram {
 		if (currentGroup != null) {
 			currentGroup.addElement(name);
 		}
-		if (currentNetwork() != null) {
-			DiagElement element = elements.get(name);
-			if (element == null) {
-				element = new DiagElement(name, currentNetwork(), this.getSkinParam());
-				elements.put(name, element);
+		if (currentNetwork() == null) {
+			if (currentGroup == null) {
+				final Network network1 = new Network("");
+				network1.goInvisible();
+				networks.add(network1);
+				final DiagElement first = addElement(null, name, toSet(definition));
+				first.doNotHaveItsOwnColumn();
 			}
-			final Map<String, String> props = toSet(definition);
-			final String description = props.get("description");
-			if (description != null) {
-				element.setDescription(description);
-			}
-			final String shape = props.get("shape");
-			if (shape != null) {
-				element.setShape(shape);
-			}
-			currentNetwork().addElement(element, props);
+		} else {
+			final DiagElement element = elements.get(name);
+			addElement(element, name, toSet(definition));
 		}
 		return CommandExecutionResult.ok();
 	}
@@ -303,7 +337,8 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	private GridTextBlockDecorated buildGrid() {
-		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), elements.size(), groups, networks);
+		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), elements.size(), groups,
+				networks);
 
 		for (int i = 0; i < networks.size(); i++) {
 			final Network current = networks.get(i);
@@ -315,7 +350,9 @@ public class NwDiagram extends UmlDiagram {
 					final Map<Network, String> conns = getLinks(element);
 					grid.add(i, j, element.asTextBlock(conns, next));
 				}
-				j++;
+				if (element.hasItsOwnColumn()) {
+					j++;
+				}
 			}
 		}
 		return grid;
@@ -328,6 +365,9 @@ public class NwDiagram extends UmlDiagram {
 		if ("address".equalsIgnoreCase(property) && currentNetwork() != null) {
 			currentNetwork().setOwnAdress(value);
 		}
+		if ("width".equalsIgnoreCase(property) && currentNetwork() != null) {
+			currentNetwork().setFullWidth("full".equalsIgnoreCase(value));
+		}
 		if ("color".equalsIgnoreCase(property)) {
 			final HColor color = GridTextBlockDecorated.colors.getColorIfValid(value);
 			if (currentGroup != null) {
@@ -335,13 +375,6 @@ public class NwDiagram extends UmlDiagram {
 			} else if (currentNetwork() != null) {
 				currentNetwork().setColor(color);
 			}
-		}
-		return CommandExecutionResult.ok();
-	}
-
-	public CommandExecutionResult link() {
-		if (initDone == false) {
-			return error();
 		}
 		return CommandExecutionResult.ok();
 	}

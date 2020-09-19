@@ -33,35 +33,40 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.core2;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface TaskDraw extends UDrawable {
+public class TeethRange {
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	private final List<Tooth> list = new ArrayList<Tooth>();
 
-	public YMovable getY();
+	public void add(Tooth tooth) {
+		if (list.size() > 0) {
+			final Tooth last = list.get(list.size() - 1);
+			if (tooth.getStart() <= last.getEnd()) {
+				throw new IllegalArgumentException();
+			}
+		}
+		list.add(tooth);
+	}
 
-	public YMovable getY(Direction direction);
+	@Override
+	public String toString() {
+		return list.toString();
+	}
 
-	public void drawTitle(UGraphic ug);
+	public long getStart() {
+		return list.get(0).getStart();
+	}
 
-	public double getHeightTask();
+	public long getEnd() {
+		return list.get(list.size() - 1).getEnd();
+	}
 
-	public double getHeightMax(StringBounder stringBounder);
-
-	public Task getTask();
-
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+	public long getDuration() {
+		return getEnd() - getStart();
+	}
 
 }

@@ -40,12 +40,14 @@ import java.io.OutputStream;
 
 public interface Graphviz {
 
-	ProcessState createFile3(OutputStream os);
+	public ProcessState createFile3(OutputStream os);
 
-	File getDotExe();
+	public File getDotExe();
 
-	String dotVersion();
+	public String dotVersion();
 
-	ExeState getExeState();
+	public ExeState getExeState();
+
+	public boolean graphviz244onWindows();
 
 }

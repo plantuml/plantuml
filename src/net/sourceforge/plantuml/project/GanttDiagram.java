@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.core.TaskImpl;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.core.TaskSeparator;
+import net.sourceforge.plantuml.project.draw.FingerPrint;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
@@ -84,6 +85,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeaderDaily;
 import net.sourceforge.plantuml.project.draw.TimeHeaderMonthly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
+import net.sourceforge.plantuml.project.draw.YMovable;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
@@ -183,7 +185,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
 				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, getMetadata(), "", dpiFactor, null);
 
-		TextBlock result = getTextBlock();
+		TextBlock result = getTextBlock(fileFormatOption.getDefaultStringBounder());
 		result = new AnnotatedWorker(this, getSkinParam(), fileFormatOption.getDefaultStringBounder()).addAdd(result);
 		imageBuilder.setUDrawable(result);
 
@@ -207,7 +209,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 		return false;
 	}
 
-	private TextBlockBackcolored getTextBlock() {
+	private TextBlockBackcolored getTextBlock(StringBounder stringBounder) {
 		if (printStart == null) {
 			initMinMax();
 		} else {
@@ -226,7 +228,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 			timeHeader = new TimeHeaderDaily(calendar, min, max, getDefaultPlan(), colorDays, nameDays, printStart,
 					printEnd);
 		}
-		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight());
+		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(), stringBounder);
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
@@ -260,7 +262,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 	private void drawTasksRect(UGraphic ug) {
 		for (Task task : tasks.values()) {
 			final TaskDraw draw = draws.get(task);
-			final UTranslate move = UTranslate.dy(draw.getY());
+			final UTranslate move = UTranslate.dy(draw.getY().getValue());
 			draw.drawU(ug.apply(move));
 		}
 	}
@@ -280,7 +282,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 				continue;
 			}
 			final TaskDraw draw = draws.get(task);
-			final UTranslate move = UTranslate.dy(draw.getY());
+			final UTranslate move = UTranslate.dy(draw.getY().getValue());
 			draw.drawTitle(ug1.apply(move));
 		}
 	}
@@ -330,20 +332,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 
-	private void initTaskAndResourceDraws(TimeScale timeScale, double headerHeight) {
-		double y = headerHeight;
-//		for (Task task : tasks.values()) {
-//			if (task instanceof TaskImpl) {
-//				final TaskImpl taskImpl = (TaskImpl) task;
-//				if (taskImpl.getRow() != null) {
-//					continue;
-//				}
-//			}
-//			task.setY5757(y);
-//			y += task.getHeight();
-//
-//		}
-//		double y2 = headerHeight;
+	private void initTaskAndResourceDraws(TimeScale timeScale, double headerHeight, StringBounder stringBounder) {
+		YMovable y = new YMovable(headerHeight);
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
 			if (task instanceof TaskSeparator) {
@@ -362,17 +352,60 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw {
 				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote());
 			}
 			if (task.getRow() == null) {
-				y += draw.getHeight();
+				y = y.add(draw.getHeightTask());
 			}
 			draws.put(task, draw);
 		}
+		magicPush(stringBounder);
+		y = lastY(stringBounder);
 		for (Resource res : resources.values()) {
 			final ResourceDraw draw = new ResourceDraw(this, res, timeScale, y, min, max);
 			res.setTaskDraw(draw);
-			y += draw.getHeight();
+			y = y.add(draw.getHeight());
 
 		}
-		this.totalHeight = y;
+		this.totalHeight = y.getValue();
+	}
+
+	private YMovable lastY(StringBounder stringBounder) {
+		TaskDraw last = null;
+		for (TaskDraw td : draws.values()) {
+			last = td;
+		}
+		return last.getY().add(last.getHeightMax(stringBounder));
+	}
+
+	private boolean magicPush(StringBounder stringBounder) {
+		final List<FingerPrint> notes = new ArrayList<FingerPrint>();
+		for (TaskDraw td : draws.values()) {
+			final FingerPrint taskPrint = td.getFingerPrint();
+			for (FingerPrint note : notes) {
+				final double deltaY = note.overlap(taskPrint);
+				if (deltaY > 0) {
+					pushIncluding(td, deltaY);
+					return true;
+				}
+			}
+
+			final FingerPrint fingerPrintNote = td.getFingerPrintNote(stringBounder);
+			if (fingerPrintNote != null) {
+				notes.add(fingerPrintNote);
+			}
+		}
+		return false;
+	}
+
+	private void pushIncluding(TaskDraw first, double deltaY) {
+		boolean skipping = true;
+		for (TaskDraw td : draws.values()) {
+			if (td == first)
+				skipping = false;
+			if (skipping)
+				continue;
+			td.getY().pushMe(deltaY + 1);
+
+		}
+
 	}
 
 	private Wink getStart(final TaskImpl tmp) {

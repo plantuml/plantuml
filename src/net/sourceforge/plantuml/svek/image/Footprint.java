@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicNo;
@@ -51,6 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UParamNull;
 import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -93,7 +95,7 @@ public class Footprint {
 		public UGraphic apply(UChange change) {
 			if (change instanceof UTranslate) {
 				return new MyUGraphic(all, translate.compose((UTranslate) change));
-			} else if (change instanceof UStroke || change instanceof HColor) {
+			} else if (change instanceof UStroke || change instanceof HColor || change instanceof UBackground) {
 				return new MyUGraphic(all, translate);
 			}
 			throw new UnsupportedOperationException();
@@ -121,6 +123,8 @@ public class Footprint {
 				drawImage(x, y, (UImage) shape);
 			} else if (shape instanceof UPath) {
 				drawPath(x, y, (UPath) shape);
+			} else if (shape instanceof URectangle) {
+				drawRectangle(x, y, (URectangle) shape);
 			} else {
 				throw new UnsupportedOperationException(shape.getClass().toString());
 			}
@@ -154,6 +158,11 @@ public class Footprint {
 		private void drawPath(double x, double y, UPath path) {
 			addPoint(x + path.getMinX(), y + path.getMinY());
 			addPoint(x + path.getMaxX(), y + path.getMaxY());
+		}
+
+		private void drawRectangle(double x, double y, URectangle rect) {
+			addPoint(x, y);
+			addPoint(x + rect.getWidth(), y + rect.getHeight());
 		}
 
 		public void flushUg() {

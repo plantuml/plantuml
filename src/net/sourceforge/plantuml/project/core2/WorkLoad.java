@@ -33,35 +33,10 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.core2;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+public interface WorkLoad {
 
-public interface TaskDraw extends UDrawable {
-
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
-
-	public YMovable getY();
-
-	public YMovable getY(Direction direction);
-
-	public void drawTitle(UGraphic ug);
-
-	public double getHeightTask();
-
-	public double getHeightMax(StringBounder stringBounder);
-
-	public Task getTask();
-
-	public FingerPrint getFingerPrint();
-
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+	public IteratorSlice slices(long timeBiggerThan);
 
 }
