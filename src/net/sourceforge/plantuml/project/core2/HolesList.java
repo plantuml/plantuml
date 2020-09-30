@@ -44,9 +44,13 @@ public class HolesList implements Iterable<Hole> {
 
 	private final List<Hole> list = new ArrayList<Hole>();
 
-	public void add(Hole tooth) {
+	public void addHole(Hole tooth) {
 		list.add(tooth);
 		Collections.sort(list);
+	}
+
+	public int size() {
+		return list.size();
 	}
 
 	@Override
@@ -64,6 +68,17 @@ public class HolesList implements Iterable<Hole> {
 
 	public Iterator<Hole> iterator() {
 		return Collections.unmodifiableList(list).iterator();
+	}
+
+	public HolesList negate() {
+		final HolesList result = new HolesList();
+		long i = 0;
+		for (Hole hole : list) {
+			result.addHole(new Hole(i, hole.getStart()));
+			i = hole.getEnd();
+		}
+		result.addHole(new Hole(i, 1000L * Integer.MAX_VALUE));
+		return result;
 	}
 
 }

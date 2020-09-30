@@ -92,8 +92,9 @@ public class BpmDiagram extends UmlDiagram {
 			margin1 = 10;
 			margin2 = 10;
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(), ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2), getAnimation(), fileFormatOption.isWithMetadata() ? getMetadata() : null,
-		getWarningOrError(), dpiFactor);
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(),
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), getAnimation(),
+				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), dpiFactor);
 		imageBuilder.setUDrawable(getUDrawable());
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);

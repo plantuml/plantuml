@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -62,7 +62,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(Wink min, Wink max) {
+	public TimeHeaderSimple(Day min, Day max) {
 		super(min, max, new TimeScaleWink());
 	}
 
@@ -72,16 +72,17 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double xmax = getTimeScale().getEndingPosition(max);
 		drawSimpleDayCounter(ug, getTimeScale(), totalHeight);
 		ug.apply(HColorUtils.LIGHT_GRAY).draw(ULine.hline(xmax - xmin));
-		ug.apply(HColorUtils.LIGHT_GRAY).apply(UTranslate.dy(getFullHeaderHeight() - 3))
-				.draw(ULine.hline(xmax - xmin));
+		ug.apply(HColorUtils.LIGHT_GRAY).apply(UTranslate.dy(getFullHeaderHeight() - 3)).draw(ULine.hline(xmax - xmin));
 
 	}
 
 	private void drawSimpleDayCounter(final UGraphic ug, TimeScale timeScale, double totalHeight) {
 		final ULine vbar = ULine.vline(totalHeight);
-		for (Wink i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
-			final TextBlock num = Display.getWithNewlines(i.toShortString()).create(getFontConfiguration(10, false, HColorUtils.BLACK),
-					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
+			final String number = "" + (i.getAbsoluteDayNum() + 1);
+			final TextBlock num = Display.getWithNewlines(number).create(
+					getFontConfiguration(10, false, HColorUtils.BLACK), HorizontalAlignment.LEFT,
+					new SpriteContainerEmpty());
 			final double x1 = timeScale.getStartingPosition(i);
 			final double x2 = timeScale.getEndingPosition(i);
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();

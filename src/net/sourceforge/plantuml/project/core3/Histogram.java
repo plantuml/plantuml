@@ -33,40 +33,10 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.time;
+package net.sourceforge.plantuml.project.core3;
 
-public class GCalendar {
+public interface Histogram extends TimeLine {
 
-	private final Day start;
-
-	public GCalendar(Day start) {
-		this.start = start;
-	}
-
-	public Day toDayAsDate(Wink day) {
-		Day result = start;
-		final int target = day.getWink();
-		int work = 0;
-		while (work < target) {
-			result = result.next();
-			work++;
-		}
-		return result;
-	}
-
-	public Wink fromDayAsDate(Day day) {
-		if (day.compareTo(start) < 0) {
-			throw new IllegalArgumentException();
-		}
-		Wink result = new Wink(0);
-		while (toDayAsDate(result).equals(day) == false) {
-			result = result.increment();
-		}
-		return result;
-	}
-
-	public Day getStartingDate() {
-		return start;
-	}
+	public long getValueAt(long moment);
 
 }

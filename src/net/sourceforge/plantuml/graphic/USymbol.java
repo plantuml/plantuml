@@ -83,8 +83,8 @@ public abstract class USymbol {
 	public final static USymbol COMPONENT2 = record("COMPONENT2", SkinParameter.COMPONENT2, new USymbolComponent2());
 	public final static USymbol BOUNDARY = record("BOUNDARY", SkinParameter.BOUNDARY, new USymbolBoundary());
 	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", SkinParameter.ENTITY,
-			new USymbolEntityDomain(2));
-	public final static USymbol CONTROL = record("CONTROL", SkinParameter.CONTROL, new USymbolControl(2));
+			new USymbolEntityDomain());
+	public final static USymbol CONTROL = record("CONTROL", SkinParameter.CONTROL, new USymbolControl());
 	public final static USymbol INTERFACE = record("INTERFACE", SkinParameter.INTERFACE, new USymbolInterface());
 	public final static USymbol QUEUE = record("QUEUE", SkinParameter.QUEUE, new USymbolQueue());
 	public final static USymbol STACK = record("STACK", SkinParameter.STACK, new USymbolStack());

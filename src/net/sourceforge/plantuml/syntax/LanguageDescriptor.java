@@ -161,7 +161,18 @@ public class LanguageDescriptor {
 		keyword.add("stereotype");
 		keyword.add("split");
 		keyword.add("style");
-		keyword.add("sprite");
+		keyword.add("sprite");		
+		keyword.add("circle");
+		keyword.add("empty");
+		keyword.add("members");
+		keyword.add("description");
+		keyword.add("true");
+		keyword.add("false");
+		keyword.add("normal");
+		keyword.add("italic");
+		keyword.add("bold");
+		keyword.add("plain");
+
 
 		preproc.add("!exit");
 		preproc.add("!include");

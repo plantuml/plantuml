@@ -35,16 +35,16 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 
 public interface TimeScale {
 
-	public double getStartingPosition(Wink instant);
+	public double getStartingPosition(Day instant);
 
-	public double getEndingPosition(Wink instant);
+	public double getEndingPosition(Day instant);
 
-	public double getWidth(Wink instant);
+	public double getWidth(Day instant);
 
-	public boolean isBreaking(Wink instant);
+	public boolean isBreaking(Day instant);
 
 }

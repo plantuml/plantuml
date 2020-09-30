@@ -60,6 +60,29 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class EmbeddedDiagram implements CharSequence {
 
+	public static String getEmbeddedType(CharSequence s) {
+		if (s == null) {
+			return null;
+		}
+		s = StringUtils.trin(s.toString());
+		if (s.equals("{{")) {
+			return "uml";
+		}
+		if (s.equals("{{uml")) {
+			return "uml";
+		}
+		if (s.equals("{{wbs")) {
+			return "wbs";
+		}
+		if (s.equals("{{mindmap")) {
+			return "mindmap";
+		}
+		if (s.equals("{{gantt")) {
+			return "gantt";
+		}
+		return null;
+	}
+
 	private final Display system;
 
 	public EmbeddedDiagram(Display system) {
@@ -131,10 +154,12 @@ public class EmbeddedDiagram implements CharSequence {
 		}
 
 		private String getImageSvg() throws IOException, InterruptedException {
+			final boolean sav = SkinParam.USE_STYLES();
 			final Diagram system = getSystem();
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
 			system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
 			os.close();
+			SkinParam.setBetaStyle(sav);
 			return new String(os.toByteArray());
 		}
 

@@ -38,10 +38,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 
-public class PSystemTreeFactory extends UmlDiagramFactory {
+public class PSystemTreeFactory extends PSystemCommandFactory {
 
 	public PSystemTreeFactory(DiagramType type) {
 		super(type);

@@ -39,24 +39,24 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
-import net.sourceforge.plantuml.project.time.Wink;
 
 public interface Task extends Moment {
 
 	public TaskCode getCode();
 
-	public Wink getStart();
+	public Day getStart();
 
-	public Wink getEnd();
+	public Day getEnd();
 
 	public Load getLoad();
 
 	public void setLoad(Load load);
 
-	public void setStart(Wink start);
+	public void setStart(Day start);
 
-	public void setEnd(Wink end);
+	public void setEnd(Day end);
 
 	public void setColors(CenterBorderColor colors);
 
@@ -74,7 +74,7 @@ public interface Task extends Moment {
 
 	public Task getRow();
 
-	public void addPause(Wink pause);
+	public void addPause(Day pause);
 
 	public void addPause(DayOfWeek pause);
 

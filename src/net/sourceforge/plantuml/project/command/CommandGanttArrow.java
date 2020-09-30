@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.core.TaskInstant;
 
 public class CommandGanttArrow extends SingleLineCommand2<GanttDiagram> {
 

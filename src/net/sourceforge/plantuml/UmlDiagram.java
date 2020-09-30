@@ -55,10 +55,7 @@ import javax.script.ScriptException;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.command.BlocLines;
-import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandSkinParamMultilines;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -75,7 +72,6 @@ import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -97,7 +93,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	private int minwidth = Integer.MAX_VALUE;
 
-	private final Pragma pragma = new Pragma();
 	private Animation animation;
 
 	public UmlDiagram() {
@@ -134,10 +129,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		throw new IllegalArgumentException();
 	}
 
-	public Pragma getPragma() {
-		return pragma;
-	}
-
 	final public void setAnimation(Iterable<CharSequence> animationData) {
 		try {
 			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
@@ -150,13 +141,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	final public Animation getAnimation() {
 		return animation;
-	}
-
-	public final double getScaleCoef(FileFormatOption fileFormatOption) {
-		if (getSkinParam().getDpi() == 96) {
-			return fileFormatOption.getScaleCoef();
-		}
-		return getSkinParam().getDpi() * fileFormatOption.getScaleCoef() / 96.0;
 	}
 
 	public final boolean isHideUnlinkedData() {
@@ -242,8 +226,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 					graphicStrings.drawU(ug);
 					final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
 					ug = ug.apply(UTranslate.dy(height));
-					ug.draw(new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-							.scale(3));
+					ug.draw(new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3));
 				}
 			});
 		}
@@ -327,7 +310,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
 		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
-		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg));;
+		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg));
 		final ImageData result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
 		fos.close();
 		PdfConverter.convert(svg, pdfFile);
@@ -383,21 +366,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		}
 		return null;
 	}
-
-	private boolean useJDot;
-
-	public void setUseJDot(boolean useJDot) {
-		this.useJDot = useJDot;
-	}
-
-	public static final boolean FORCE_JDOT = false;
-
-	public boolean isUseJDot() {
-		if (FORCE_JDOT)
-			return true;
-		return useJDot;
-	}
-
 
 	public void setHideEmptyDescription(boolean hideEmptyDescription) {
 	}

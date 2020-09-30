@@ -42,4 +42,6 @@ public interface ToTaskDraw {
 
 	public TaskDraw getTaskDraw(Task task);
 
+	public LoadPlanable getDefaultPlan();
+
 }

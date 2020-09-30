@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
@@ -55,7 +54,7 @@ public class SentencePausesDate extends SentenceSimple {
 		if (startingDate == null) {
 			return CommandExecutionResult.error("No starting date for the project");
 		}
-		task.addPause(pause.asInstantDay(startingDate));
+		task.addPause(pause);
 		return CommandExecutionResult.ok();
 	}
 

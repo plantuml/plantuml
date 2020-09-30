@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.core2;
 
+import net.sourceforge.plantuml.project.time.DayOfWeek;
+
 public class Hole implements Comparable<Hole> {
 
 	private final long start;
@@ -46,6 +48,11 @@ public class Hole implements Comparable<Hole> {
 		}
 		this.start = start;
 		this.end = end;
+	}
+
+	@Override
+	public String toString() {
+		return DayOfWeek.timeToString(start) + " --> " + DayOfWeek.timeToString(end);
 	}
 
 	public final long getStart() {

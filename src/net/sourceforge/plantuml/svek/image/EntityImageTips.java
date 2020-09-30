@@ -162,8 +162,9 @@ public class EntityImageTips extends AbstractEntityImage {
 		// final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
 		// final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
 		final TextBlock textBlock = new BodyEnhanced2(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
-				new FontConfiguration(skinParam, FontParam.NOTE, null), LineBreakStrategy.NONE);
-		final double shadowing = skinParam.shadowing(getEntity().getStereotype())?4:0;
+				new FontConfiguration(skinParam, FontParam.NOTE, null), LineBreakStrategy.NONE,
+				skinParam.minClassWidth());
+		final double shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
 		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
 		return opale;
 	}

@@ -175,6 +175,24 @@ public class Line implements Moveable, Hideable, GuideLine {
 		return end.getX() > start.getX() ? Direction.RIGHT : Direction.LEFT;
 	}
 
+	public double getArrowDirection2() {
+		if (getLinkArrow() == LinkArrow.BACKWARD) {
+			return Math.PI + getArrowDirectionInternal2();
+		}
+		return getArrowDirectionInternal2();
+	}
+
+	private double getArrowDirectionInternal2() {
+		if (isAutolink()) {
+			final double startAngle = dotPath.getStartAngle();
+			return startAngle;
+		}
+		final Point2D start = dotPath.getStartPoint();
+		final Point2D end = dotPath.getEndPoint();
+		final double ang = Math.atan2(end.getX() - start.getX(), end.getY() - start.getY());
+		return ang;
+	}
+
 	private Cluster getCluster2(Bibliotekon bibliotekon, IEntity entityMutable) {
 		for (Cluster cl : bibliotekon.allCluster()) {
 			if (cl.getGroups().contains(entityMutable)) {

@@ -40,7 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
-import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAnalog;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAtPlayer;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAtTime;
@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandScalePixel;
 import net.sourceforge.plantuml.timingdiagram.command.CommandTicks;
 import net.sourceforge.plantuml.timingdiagram.command.CommandTimeMessage;
 
-public class TimingDiagramFactory extends UmlDiagramFactory {
+public class TimingDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	public TimingDiagram createEmptyDiagram() {

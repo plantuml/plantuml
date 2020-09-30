@@ -208,10 +208,10 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		final int margin2;
 		if (SkinParam.USE_STYLES()) {
 			margin1 = SkinParam.zeroMargin(0);
-			margin2 = SkinParam.zeroMargin(10);
+			margin2 = SkinParam.zeroMargin(0);
 		} else {
 			margin1 = 0;
-			margin2 = 10;
+			margin2 = 0;
 		}
 		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(),
 				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, null, null, 1);

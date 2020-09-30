@@ -44,22 +44,18 @@ import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
-import net.sourceforge.plantuml.project.time.GCalendar;
-import net.sourceforge.plantuml.project.time.Wink;
 
 public class Resource {
 
 	private final String name;
 	private ResourceDraw draw;
-	private final Set<Wink> closed = new TreeSet<Wink>();
-	private final Set<Wink> forcedOn = new TreeSet<Wink>();
-	private final GCalendar calendar;
+	private final Set<Day> closed = new TreeSet<Day>();
+	private final Set<Day> forcedOn = new TreeSet<Day>();
 
 	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
 
-	public Resource(String name, LoadPlanable loadPlanable, GCalendar calendar) {
+	public Resource(String name, LoadPlanable loadPlanable) {
 		this.name = name;
-		this.calendar = calendar;
 	}
 
 	@Override
@@ -90,24 +86,23 @@ public class Resource {
 		this.draw = draw;
 	}
 
-	public boolean isClosedAt(Wink instant) {
+	public boolean isClosedAt(Day instant) {
 		if (this.forcedOn.contains(instant)) {
 			return false;
 		}
-		if (closedDayOfWeek.size() > 0 && calendar != null) {
-			final Day d = calendar.toDayAsDate((Wink) instant);
-			if (closedDayOfWeek.contains(d.getDayOfWeek())) {
+		if (closedDayOfWeek.size() > 0) {
+			if (closedDayOfWeek.contains(instant.getDayOfWeek())) {
 				return true;
 			}
 		}
 		return this.closed.contains(instant);
 	}
 
-	public void addCloseDay(Wink instant) {
+	public void addCloseDay(Day instant) {
 		this.closed.add(instant);
 	}
 
-	public void addForceOnDay(Wink instant) {
+	public void addForceOnDay(Day instant) {
 		this.forcedOn.add(instant);
 	}
 

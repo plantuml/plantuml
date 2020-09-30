@@ -237,9 +237,10 @@ public class Display implements Iterable<CharSequence> {
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
 			CharSequence s = it.next();
-			if (s != null && StringUtils.trin(s.toString()).equals("{{")) {
+			final String type = EmbeddedDiagram.getEmbeddedType(s);
+			if (type != null) {
 				final List<CharSequence> other = new ArrayList<CharSequence>();
-				other.add("@startuml");
+				other.add("@start" + type);
 				while (it.hasNext()) {
 					CharSequence s2 = it.next();
 					if (s2 != null && StringUtils.trin(s2.toString()).equals("}}")) {
@@ -247,7 +248,7 @@ public class Display implements Iterable<CharSequence> {
 					}
 					other.add(s2);
 				}
-				other.add("@enduml");
+				other.add("@end" + type);
 				s = new EmbeddedDiagram(Display.create(other));
 			}
 			result.add(s);

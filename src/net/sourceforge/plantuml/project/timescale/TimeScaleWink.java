@@ -35,26 +35,26 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class TimeScaleWink implements TimeScale {
 
 	private final double scale = 16.0;
 
-	public double getStartingPosition(Wink instant) {
-		final int wink = instant.getWink();
-		return wink * scale;
+	public double getStartingPosition(Day instant) {
+		final long wink = instant.getMillis();
+		return wink * scale / Day.MILLISECONDS_PER_DAY;
 	}
 
-	public double getEndingPosition(Wink instant) {
+	public double getEndingPosition(Day instant) {
 		return getStartingPosition(instant) + getWidth(instant);
 	}
 
-	public double getWidth(Wink instant) {
+	public double getWidth(Day instant) {
 		return scale;
 	}
 
-	public boolean isBreaking(Wink instant) {
+	public boolean isBreaking(Day instant) {
 		return true;
 	}
 

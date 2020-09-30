@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.StringUtils;
@@ -55,21 +56,23 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 
-	private TextBlock area2;
+	private TextBlock area;
 	private final FontConfiguration titleConfig;
-	private final Display rawBody2;
+	private final Display rawBody;
 	private final ISkinSimple spriteContainer;
 
 	private final HorizontalAlignment align;
 	private final LineBreakStrategy lineBreakStrategy;
+	private final double minClassWidth;
 
 	// private final List<Url> urls = new ArrayList<Url>();
 
 	public BodyEnhanced2(Display rawBody, FontParam fontParam, ISkinSimple spriteContainer, HorizontalAlignment align,
-			FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy) {
-		this.rawBody2 = rawBody;
+			FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy, double minClassWidth) {
+		this.rawBody = rawBody;
 		this.lineBreakStrategy = lineBreakStrategy;
 		this.spriteContainer = spriteContainer;
+		this.minClassWidth = minClassWidth;
 
 		this.titleConfig = titleConfig;
 		this.align = align;
@@ -93,38 +96,45 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	private TextBlock getArea(StringBounder stringBounder) {
-		if (area2 != null) {
-			return area2;
+		if (area != null) {
+			return area;
 		}
 		// urls.clear();
 		final List<TextBlock> blocks = new ArrayList<TextBlock>();
 
 		char separator = 0;
 		TextBlock title = null;
-		Display members2 = Display.empty();
-		for (CharSequence s : rawBody2) {
+		Display display = Display.empty();
+		for (CharSequence s : rawBody) {
 			if (isBlockSeparator(s.toString())) {
-				blocks.add(decorate(stringBounder, getTextBlock(members2, stringBounder), separator, title));
+				blocks.add(decorate(stringBounder, getTextBlock(display, stringBounder), separator, title));
 				separator = s.charAt(0);
 				title = getTitle(s.toString(), spriteContainer);
-				members2 = Display.empty();
+				display = Display.empty();
 			} else {
-				members2 = members2.add(s);
+				if (s instanceof String) {
+					s = Guillemet.GUILLEMET.manageGuillemet(s.toString());
+				}
+				display = display.add(s);
 			}
 		}
-		blocks.add(decorate(stringBounder, getTextBlock(members2, stringBounder), separator, title));
+		blocks.add(decorate(stringBounder, getTextBlock(display, stringBounder), separator, title));
 
 		if (blocks.size() == 1) {
-			this.area2 = blocks.get(0);
+			this.area = blocks.get(0);
 		} else {
-			this.area2 = new TextBlockVertical2(blocks, align);
+			this.area = new TextBlockVertical2(blocks, align);
 		}
 
-		return area2;
+		if (minClassWidth > 0) {
+			this.area = TextBlockUtils.withMinWidth(this.area, minClassWidth, align);
+		}
+
+		return area;
 	}
 
-	private TextBlock getTextBlock(Display members2, StringBounder stringBounder) {
-		final TextBlock result = members2.create9(titleConfig, align, spriteContainer, lineBreakStrategy);
+	private TextBlock getTextBlock(Display display, StringBounder stringBounder) {
+		final TextBlock result = display.create9(titleConfig, align, spriteContainer, lineBreakStrategy);
 		return result;
 	}
 

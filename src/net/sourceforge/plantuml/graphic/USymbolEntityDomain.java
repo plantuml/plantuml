@@ -36,25 +36,16 @@
 package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.svek.EntityDomain;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 
 class USymbolEntityDomain extends USymbolSimpleAbstract {
 
-	private final double thickness;
-
-	public USymbolEntityDomain(double thickness) {
-		this.thickness = thickness;
-	}
-	
 	@Override
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.ENTITY;
 	}
 
-
 	@Override
 	protected TextBlock getDrawing(final SymbolContext symbolContext) {
-		return new EntityDomain(symbolContext.withDeltaShadow(symbolContext.isShadowing() ? 4.0 : 0.0).withStroke(
-				new UStroke(thickness)));
+		return new EntityDomain(symbolContext.withDeltaShadow(symbolContext.isShadowing() ? 4.0 : 0.0));
 	}
 }

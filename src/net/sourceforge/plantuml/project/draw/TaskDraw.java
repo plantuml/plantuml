@@ -46,12 +46,16 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public interface TaskDraw extends UDrawable {
 
+	public TaskDraw getTrueRow();
+
 	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
 
-	public YMovable getY();
+	public double getY();
 
-	public YMovable getY(Direction direction);
+	public double getY(Direction direction);
 
+	public void pushMe(double deltaY);
+	
 	public void drawTitle(UGraphic ug);
 
 	public double getHeightTask();
@@ -63,5 +67,6 @@ public interface TaskDraw extends UDrawable {
 	public FingerPrint getFingerPrint();
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+
 
 }

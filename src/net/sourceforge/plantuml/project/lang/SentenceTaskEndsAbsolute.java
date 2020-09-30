@@ -54,7 +54,7 @@ public class SentenceTaskEndsAbsolute extends SentenceSimple {
 		if (startingDate == null) {
 			return CommandExecutionResult.error("No starting date for the project");
 		}
-		task.setEnd(end.asInstantDay(startingDate));
+		task.setEnd(end);
 		return CommandExecutionResult.ok();
 	}
 

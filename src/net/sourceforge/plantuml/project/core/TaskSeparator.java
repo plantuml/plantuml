@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
-import net.sourceforge.plantuml.project.time.Wink;
 
 public class TaskSeparator extends AbstractTask implements Task {
 
@@ -55,19 +55,19 @@ public class TaskSeparator extends AbstractTask implements Task {
 		return code;
 	}
 
-	public Wink getStart() {
+	public Day getStart() {
 		throw new UnsupportedOperationException();
 	}
 
-	public Wink getEnd() {
+	public Day getEnd() {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setStart(Wink start) {
+	public void setStart(Day start) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setEnd(Wink end) {
+	public void setEnd(Day end) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -107,7 +107,7 @@ public class TaskSeparator extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
-	public void addPause(Wink pause) {
+	public void addPause(Day pause) {
 		throw new UnsupportedOperationException();
 	}
 

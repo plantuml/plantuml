@@ -76,7 +76,7 @@ public class SubjectTask implements Subject {
 				new SentenceTaskStartsAbsolute(), new SentenceHappens(), new SentenceHappensDate(), new SentenceEnds(),
 				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsDeleted(),
 				new SentenceIsForTask(), new SentenceLinksTo(), new SentenceOccurs(), new SentenceDisplayOnSameRowAs(),
-				new SentencePausesDate(), new SentencePausesDayOfWeek());
+				new SentencePausesDate(), new SentencePausesDates(), new SentencePausesDayOfWeek());
 	}
 
 	public IRegex toRegex() {

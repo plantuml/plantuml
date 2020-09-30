@@ -164,9 +164,11 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		for (ListIterator<CharSequence> it = rawBody.listIterator(); it.hasNext();) {
 			final CharSequence s2 = it.next();
 			if (s2 instanceof EmbeddedDiagram) {
-				if (members.size() > 0) {
+				if (members.size() > 0 || separator != 0) {
 					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
 							stereotype, entity, diagramType), separator, title));
+					separator = 0;
+					title = null;
 					members = new ArrayList<Member>();
 				}
 				blocks.add(((EmbeddedDiagram) s2).asDraw(skinParam));
@@ -183,6 +185,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 						blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
 								stereotype, entity, diagramType), separator, title));
 					}
+					separator = 0;
+					title = null;
 					members = new ArrayList<Member>();
 					final List<CharSequence> allTree = buildAllTree(s, it);
 					final TextBlock bloc = Display.create(allTree).create7(fontParam.getFontConfiguration(skinParam),

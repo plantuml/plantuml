@@ -80,7 +80,11 @@ public class ClockwiseTopRightBottomLeft {
 	}
 
 	public static ClockwiseTopRightBottomLeft margin1margin2(double margin1, double margin2) {
-		return new ClockwiseTopRightBottomLeft(margin1, margin2, margin2, margin1);
+		return topRightBottomLeft(margin1, margin2, margin1, margin2);
+	}
+
+	public static ClockwiseTopRightBottomLeft topRightBottomLeft(double top, double right, double bottom, double left) {
+		return new ClockwiseTopRightBottomLeft(top, right, bottom, left);
 	}
 
 	private ClockwiseTopRightBottomLeft(double top, double right, double bottom, double left) {

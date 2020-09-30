@@ -51,10 +51,8 @@ import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -200,18 +198,17 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final int margin1;
-		final int margin2;
+		final ClockwiseTopRightBottomLeft margins;
 		if (SkinParam.USE_STYLES()) {
-			margin1 = SkinParam.zeroMargin(3);
-			margin2 = SkinParam.zeroMargin(10);
+			final Style style = StyleSignature.of(SName.root, SName.sequenceDiagram, SName.document)
+					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+			// margins = style.getMargin();
+			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
 		} else {
-			margin1 = 3;
-			margin2 = 10;
+			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(),
-				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), diagram.getAnimation(), metadata, null,
-				oneOf(scale, dpiFactor));
+		final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), margins, diagram.getAnimation(),
+				metadata, null, oneOf(scale, dpiFactor));
 
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {

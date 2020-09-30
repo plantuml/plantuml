@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.project.core;
 
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 
 public interface Moment {
 
-	public Wink getStart();
+	public Day getStart();
 
-	public Wink getEnd();
+	public Day getEnd();
 
 }

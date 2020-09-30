@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -43,10 +42,9 @@ import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockArrow;
+import net.sourceforge.plantuml.graphic.TextBlockArrow2;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
-import net.sourceforge.plantuml.svek.DirectionalTextBlock;
 import net.sourceforge.plantuml.svek.GuideLine;
 
 public class StringWithArrow {
@@ -104,18 +102,17 @@ public class StringWithArrow {
 	}
 
 	static public TextBlock addMagicArrow(TextBlock label, GuideLine guide, FontConfiguration font) {
-		final TextBlock arrowRight = new TextBlockArrow(Direction.RIGHT, font);
-		final TextBlock arrowLeft = new TextBlockArrow(Direction.LEFT, font);
-		final TextBlock arrowUp = new TextBlockArrow(Direction.UP, font);
-		final TextBlock arrowDown = new TextBlockArrow(Direction.DOWN, font);
-		final TextBlock right = TextBlockUtils.mergeLR(label, arrowRight, VerticalAlignment.CENTER);
-		final TextBlock left = TextBlockUtils.mergeLR(arrowLeft, label, VerticalAlignment.CENTER);
-		final TextBlock up = TextBlockUtils.mergeTB(arrowUp, label, HorizontalAlignment.CENTER);
-		final TextBlock down = TextBlockUtils.mergeTB(label, arrowDown, HorizontalAlignment.CENTER);
-		return new DirectionalTextBlock(guide, right, left, up, down);
+		final TextBlock arrow = new TextBlockArrow2(guide, font);
+		return TextBlockUtils.mergeLR(arrow, label, VerticalAlignment.CENTER);
 	}
 
 	static private TextBlock addMagicArrow2(TextBlock label, GuideLine guide, FontConfiguration font) {
+		final TextBlock arrow = new TextBlockArrow2(guide, font);
+		return TextBlockUtils.mergeLR(arrow, label, VerticalAlignment.CENTER);
+	}
+	
+	/*
+	static public TextBlock addMagicArrow2(TextBlock label, GuideLine guide, FontConfiguration font) {
 		final TextBlock arrowRight = new TextBlockArrow(Direction.RIGHT, font);
 		final TextBlock arrowLeft = new TextBlockArrow(Direction.LEFT, font);
 		final TextBlock arrowUp = new TextBlockArrow(Direction.UP, font);
@@ -126,6 +123,27 @@ public class StringWithArrow {
 		final TextBlock down = TextBlockUtils.mergeLR(label, arrowDown, VerticalAlignment.CENTER);
 		return new DirectionalTextBlock(guide, right, left, up, down);
 	}
+
+	static public TextBlock addMagicArrow(TextBlock label, GuideLine guide, FontConfiguration font) {
+		final TextBlock arrow = new TextBlockArrow2(guide, font);
+		return TextBlockUtils.mergeLR(label, arrow, VerticalAlignment.CENTER);
+	}
+
+	public static TextBlock addSeveralMagicArrows(Display label, GuideLine guide, FontConfiguration font,
+			HorizontalAlignment alignment, ISkinParam skinParam) {
+		TextBlock result = TextBlockUtils.EMPTY_TEXT_BLOCK;
+		for (CharSequence cs : label) {
+			StringWithArrow tmp = new StringWithArrow(cs.toString());
+			TextBlock block = tmp.getDisplay().create9(font, alignment, skinParam, skinParam.maxMessageSize());
+			if (tmp.getLinkArrow() != LinkArrow.NONE_OR_SEVERAL) {
+				block = StringWithArrow.addMagicArrow(block, tmp.getLinkArrow().mute(guide), font);
+			}
+			result = TextBlockUtils.mergeTB(result, block, alignment);
+		}
+		return result;
+	}
+
+	 */
 
 	public static TextBlock addSeveralMagicArrows(Display label, GuideLine guide, FontConfiguration font,
 			HorizontalAlignment alignment, ISkinParam skinParam) {

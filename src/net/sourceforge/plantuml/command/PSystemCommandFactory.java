@@ -59,15 +59,15 @@ import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
-public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
+public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	private List<Command> cmds;
 
-	protected UmlDiagramFactory() {
+	protected PSystemCommandFactory() {
 		this(DiagramType.UML);
 	}
 
-	protected UmlDiagramFactory(DiagramType type) {
+	protected PSystemCommandFactory(DiagramType type) {
 		super(type);
 	}
 

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.WithLinkType;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -72,7 +72,7 @@ public class GanttConstraint extends WithLinkType {
 		return new GanttArrow(timeScale, source, dest, getSpecificColor(), getType(), toTaskDraw);
 	}
 
-	public boolean isHidden(Wink min, Wink max) {
+	public boolean isHidden(Day min, Day max) {
 		if (isHidden(source.getInstantPrecise(), min, max)) {
 			return true;
 		}
@@ -82,7 +82,7 @@ public class GanttConstraint extends WithLinkType {
 		return false;
 	}
 
-	private boolean isHidden(Wink now, Wink min, Wink max) {
+	private boolean isHidden(Day now, Day min, Day max) {
 		if (now.compareTo(min) < 0) {
 			return true;
 		}

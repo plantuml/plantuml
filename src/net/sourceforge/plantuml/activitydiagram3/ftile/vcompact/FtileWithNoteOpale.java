@@ -218,7 +218,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 			final Point2D pp2 = new Point2D.Double(-suppSpace, dimNote.getHeight() / 2);
 			opale.setOpale(strategy, pp1, pp2);
 		}
-		if (swimlaneNote == null || intoSw == swimlaneNote) {
+		if (ug instanceof UGraphicInterceptorOneSwimlane == false || swimlaneNote == null || intoSw == swimlaneNote) {
 			opale.drawU(ug.apply(getTranslateForOpale(ug)));
 		}
 		ug.apply(getTranslate(stringBounder)).draw(tile);

@@ -73,8 +73,8 @@ public class PSystemOpenIconic extends AbstractPSystem {
 			margin1 = 5;
 			margin2 = 5;
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
-		null, null, null, 1.0, null);
+		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, null, null, 1.0, null);
 		imageBuilder.setUDrawable(icon.asTextBlock(HColorUtils.BLACK, factor));
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 
@@ -89,7 +89,8 @@ public class PSystemOpenIconic extends AbstractPSystem {
 
 	// private GraphicStrings getGraphicStrings() throws IOException {
 	// final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-	// final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
+	// final GraphicStrings result = new GraphicStrings(strings, font,
+	// HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
 	// UAntiAliasing.ANTI_ALIASING_ON);
 	// return result;
 	// }

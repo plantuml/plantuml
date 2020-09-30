@@ -37,36 +37,31 @@ package net.sourceforge.plantuml.project.timescale;
 
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
-import net.sourceforge.plantuml.project.time.GCalendar;
-import net.sourceforge.plantuml.project.time.Wink;
 
 public class TimeScaleCompressed implements TimeScale {
 
 	private final int compress;
 	private final TimeScale daily;
-	private final GCalendar calendar;
 
-	public TimeScaleCompressed(GCalendar calendar, int compress) {
+	public TimeScaleCompressed(Day calendar, int compress) {
 		this.daily = new TimeScaleDaily(calendar, null);
 		this.compress = compress;
-		this.calendar = calendar;
 	}
 
-	public double getStartingPosition(Wink instant) {
+	public double getStartingPosition(Day instant) {
 		return daily.getStartingPosition(instant) / compress;
 	}
 
-	public double getEndingPosition(Wink instant) {
+	public double getEndingPosition(Day instant) {
 		return daily.getEndingPosition(instant) / compress;
 	}
 
-	public double getWidth(Wink instant) {
+	public double getWidth(Day instant) {
 		return daily.getWidth(instant) / compress;
 	}
 
-	public boolean isBreaking(Wink instant) {
-		final Day day = calendar.toDayAsDate(instant);
-		return day.getDayOfWeek() == DayOfWeek.SUNDAY;
+	public boolean isBreaking(Day instant) {
+		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;
 	}
 
 }

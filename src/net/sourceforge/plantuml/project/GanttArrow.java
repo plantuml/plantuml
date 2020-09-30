@@ -98,13 +98,13 @@ public class GanttArrow implements UDrawable {
 		ug = ug.apply(color.bg()).apply(color).apply(style.getStroke3(new UStroke(1.5)));
 
 		double x1 = getX(source.withDelta(0), atStart);
-		double y1 = getSource().getY(atStart).getValue();
+		double y1 = getSource().getY(atStart);
 
 		final double x2 = getX(dest, atEnd.getInv());
-		final double y2 = getDestination().getY(atEnd).getValue();
+		final double y2 = getDestination().getY(atEnd);
 
 		if (atStart == Direction.DOWN && y2 < y1) {
-			y1 = getSource().getY(atStart.getInv()).getValue();
+			y1 = getSource().getY(atStart.getInv());
 		}
 
 		if (this.atStart == Direction.DOWN && this.atEnd == Direction.RIGHT) {
@@ -115,7 +115,7 @@ public class GanttArrow implements UDrawable {
 				drawLine(ug, x1, y1, x1, y2, x2, y2);
 			} else {
 				x1 = getX(source.withDelta(0), Direction.RIGHT);
-				y1 = getSource().getY(Direction.RIGHT).getValue();
+				y1 = getSource().getY(Direction.RIGHT);
 				drawLine(ug, x1, y1, x1 + 6, y1, x1 + 6, y1 + 8, x2 - 8, y1 + 8, x2 - 8, y2, x2, y2);
 			}
 		} else if (this.atStart == Direction.RIGHT && this.atEnd == Direction.LEFT) {

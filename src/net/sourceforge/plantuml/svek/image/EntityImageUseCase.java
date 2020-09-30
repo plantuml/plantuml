@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -58,7 +59,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
@@ -102,6 +106,10 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private UStroke getStroke() {
+		if (SkinParam.USE_STYLES()) {
+			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			return style.getStroke();
+		}
 		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
 
 		if (stroke == null) {
@@ -126,15 +134,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		}
 
 		ug = ug.apply(getStroke());
-		HColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
-		if (linecolor == null) {
-			linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBorder);
-		}
+		final HColor linecolor = getLineColor();
 		ug = ug.apply(linecolor);
-		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
-		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBackground);
-		}
+		final HColor backcolor = getBackColor();
 		ug = ug.apply(backcolor.bg());
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
 
@@ -143,6 +145,36 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		if (url != null) {
 			ug.closeUrl();
 		}
+	}
+
+	private HColor getBackColor() {
+		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		if (backcolor == null) {
+			if (SkinParam.USE_STYLES()) {
+				final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+			} else {
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBackground);
+			}
+		}
+		return backcolor;
+	}
+
+	private StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.usecase);
+	}
+
+	private HColor getLineColor() {
+		HColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
+		if (linecolor == null) {
+			if (SkinParam.USE_STYLES()) {
+				final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				linecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			} else {
+				linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBorder);
+			}
+		}
+		return linecolor;
 	}
 
 	public ShapeType getShapeType() {

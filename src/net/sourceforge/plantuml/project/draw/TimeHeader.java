@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -55,10 +55,10 @@ public abstract class TimeHeader {
 	protected static final int Y_POS_ROW28 = 28;
 
 	private final TimeScale timeScale;
-	protected final Wink min;
-	protected final Wink max;
+	protected final Day min;
+	protected final Day max;
 
-	public TimeHeader(Wink min, Wink max, TimeScale timeScale) {
+	public TimeHeader(Day min, Day max, TimeScale timeScale) {
 		this.timeScale = timeScale;
 		this.min = min;
 		this.max = max;

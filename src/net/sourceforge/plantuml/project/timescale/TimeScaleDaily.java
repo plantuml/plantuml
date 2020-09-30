@@ -36,37 +36,35 @@
 package net.sourceforge.plantuml.project.timescale;
 
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.GCalendar;
-import net.sourceforge.plantuml.project.time.Wink;
 
 public final class TimeScaleDaily implements TimeScale {
 
 	private final TimeScaleWink basic;
 	private final double delta;
 
-	public TimeScaleDaily(GCalendar calendar, Day zeroDay) {
+	public TimeScaleDaily(Day calendar, Day zeroDay) {
 		this.basic = new TimeScaleWink();
 		if (zeroDay == null) {
-			this.delta = 0;
+			this.delta = basic.getStartingPosition(calendar);
 		} else {
-			this.delta = basic.getStartingPosition(calendar.fromDayAsDate(zeroDay));
+			this.delta = basic.getStartingPosition(zeroDay);
 		}
 
 	}
 
-	public double getStartingPosition(Wink instant) {
+	public double getStartingPosition(Day instant) {
 		return basic.getStartingPosition(instant) - delta;
 	}
 
-	public double getEndingPosition(Wink instant) {
+	public double getEndingPosition(Day instant) {
 		return basic.getEndingPosition(instant) - delta;
 	}
 
-	public double getWidth(Wink instant) {
+	public double getWidth(Day instant) {
 		return basic.getWidth(instant);
 	}
 
-	public boolean isBreaking(Wink instant) {
+	public boolean isBreaking(Day instant) {
 		return true;
 	}
 

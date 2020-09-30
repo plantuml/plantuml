@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionRepeat implements Instruction {
 
-	private final InstructionList repeatList = new InstructionList();
+	private final InstructionList repeatList;
 	private final Instruction parent;
 	private final LinkRendering nextLinkRenderer;
 	private final Swimlane swimlane;
@@ -78,6 +78,7 @@ public class InstructionRepeat implements Instruction {
 
 	public InstructionRepeat(Swimlane swimlane, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
 			Display startLabel, BoxStyle boxStyleIn, Colors colors) {
+		this.repeatList = new InstructionList(swimlane);
 		this.boxStyleIn = boxStyleIn;
 		this.startLabel = startLabel;
 		this.parent = parent;

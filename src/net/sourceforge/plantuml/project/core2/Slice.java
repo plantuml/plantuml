@@ -79,18 +79,25 @@ public class Slice {
 
 	public List<Slice> intersectWith(HolesList holes) {
 		final List<Slice> result = new ArrayList<Slice>();
-		for (Hole hole : holes) {
+		for (Hole hole : holes.negate()) {
 			final Slice inter = intersectWith(hole);
-
+			if (inter != null) {
+				result.add(inter);
+			}
 		}
 		return Collections.unmodifiableList(result);
 	}
 
 	private Slice intersectWith(Hole hole) {
-		if (hole.getEnd() <= start || hole.getStart() <= end) {
+//		if (hole.getEnd() <= start || hole.getStart() <= end) {
+//			return null;
+//		}
+		final long newStart = Math.max(start, hole.getStart());
+		final long newEnd = Math.min(end, hole.getEnd());
+		if (newEnd <= newStart) {
 			return null;
 		}
-		return new Slice(Math.max(start, hole.getStart()), Math.min(end, hole.getEnd()), workLoad);
+		return new Slice(newStart, newEnd, workLoad);
 	}
 
 }

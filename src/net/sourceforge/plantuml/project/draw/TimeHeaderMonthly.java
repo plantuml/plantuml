@@ -41,9 +41,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.GCalendar;
 import net.sourceforge.plantuml.project.time.MonthYear;
-import net.sourceforge.plantuml.project.time.Wink;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -57,12 +55,9 @@ public class TimeHeaderMonthly extends TimeHeader {
 		return Y_POS_ROW16 + 13;
 	}
 
-	private final GCalendar calendar;
-
-	public TimeHeaderMonthly(GCalendar calendar, Wink min, Wink max, LoadPlanable defaultPlan,
-			Map<Day, HColor> colorDays, Map<Day, String> nameDays) {
+	public TimeHeaderMonthly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
+			Map<Day, String> nameDays) {
 		super(min, max, new TimeScaleCompressed(calendar, PrintScale.MONTHLY.getCompress()));
-		this.calendar = calendar;
 	}
 
 	@Override
@@ -82,16 +77,15 @@ public class TimeHeaderMonthly extends TimeHeader {
 	private void drawYears(final UGraphic ug) {
 		MonthYear last = null;
 		double lastChange = -1;
-		for (Wink wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
-			final Day day = calendar.toDayAsDate(wink);
+		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
-			if (last == null || day.monthYear().year() != last.year()) {
+			if (last == null || wink.monthYear().year() != last.year()) {
 				drawVbar(ug, x1, 0, Y_POS_ROW16);
 				if (last != null) {
 					printYear(ug, last, lastChange, x1);
 				}
 				lastChange = x1;
-				last = day.monthYear();
+				last = wink.monthYear();
 			}
 		}
 		final double x1 = getTimeScale().getStartingPosition(max.increment());
@@ -103,16 +97,15 @@ public class TimeHeaderMonthly extends TimeHeader {
 	private void drawMonths(final UGraphic ug) {
 		MonthYear last = null;
 		double lastChange = -1;
-		for (Wink wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
-			final Day day = calendar.toDayAsDate(wink);
+		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
-			if (day.monthYear().equals(last) == false) {
+			if (wink.monthYear().equals(last) == false) {
 				drawVbar(ug, x1, Y_POS_ROW16, Y_POS_ROW28);
 				if (last != null) {
 					printMonth(ug.apply(UTranslate.dy(Y_POS_ROW16)), last, lastChange, x1);
 				}
 				lastChange = x1;
-				last = day.monthYear();
+				last = wink.monthYear();
 			}
 		}
 		final double x1 = getTimeScale().getStartingPosition(max.increment());

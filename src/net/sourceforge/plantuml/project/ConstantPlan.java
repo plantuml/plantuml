@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class ConstantPlan implements LoadPlanable {
 
@@ -53,7 +53,7 @@ public class ConstantPlan implements LoadPlanable {
 		return new ConstantPlan(load);
 	}
 
-	public int getLoadAt(Wink instant) {
+	public int getLoadAt(Day instant) {
 		return loadPerInstant;
 
 	}

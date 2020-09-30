@@ -37,10 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.command.BlocLines;
-import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandSkinParamMultilines;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
@@ -48,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
@@ -61,8 +59,18 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private final SkinParam skinParam;
 
+	private final Pragma pragma = new Pragma();
+
+	public Pragma getPragma() {
+		return pragma;
+	}
+
 	public TitledDiagram() {
 		this.skinParam = SkinParam.create(getUmlDiagramType());
+	}
+
+	public final StyleBuilder getCurrentStyleBuilder() {
+		return skinParam.getCurrentStyleBuilder();
 	}
 
 	public TitledDiagram(ISkinSimple orig) {
@@ -177,6 +185,27 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	final public Display getMainFrame() {
 		return mainFrame;
+	}
+
+	private boolean useJDot;
+
+	public void setUseJDot(boolean useJDot) {
+		this.useJDot = useJDot;
+	}
+
+	public static final boolean FORCE_JDOT = false;
+
+	public boolean isUseJDot() {
+		if (FORCE_JDOT)
+			return true;
+		return useJDot;
+	}
+
+	public final double getScaleCoef(FileFormatOption fileFormatOption) {
+		if (getSkinParam().getDpi() == 96) {
+			return fileFormatOption.getScaleCoef();
+		}
+		return getSkinParam().getDpi() * fileFormatOption.getScaleCoef() / 96.0;
 	}
 
 }

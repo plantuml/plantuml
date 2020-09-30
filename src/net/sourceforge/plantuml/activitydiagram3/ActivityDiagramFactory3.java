@@ -86,9 +86,9 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandWhileEnd3;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandDecoratorMultine;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
-import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 
-public class ActivityDiagramFactory3 extends UmlDiagramFactory {
+public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 
 	private final ISkinSimple skinParam;
 

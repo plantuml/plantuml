@@ -134,7 +134,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			margins = style.getMargin();
 		} else {
-			margins = ClockwiseTopRightBottomLeft.margin1margin2(0, 10);
+			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
 		}
 		final ImageBuilder imageBuilder = ImageBuilder.buildC(diagram.getSkinParam(), margins, diagram.getAnimation(),
 				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError, scale, backcolor);

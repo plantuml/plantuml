@@ -215,36 +215,7 @@ public class ImageBuilder {
 		return writeImageInternal(fileFormatOption, seed, os, animation);
 	}
 
-	private static Semaphore SEMAPHORE_SMALL;
-	private static Semaphore SEMAPHORE_BIG;
-	private static int MAX_PRICE = 0;
-
 	public static void setMaxPixel(int max) {
-		MAX_PRICE = max / 2;
-		SEMAPHORE_SMALL = new Semaphore(MAX_PRICE, true);
-		SEMAPHORE_BIG = new Semaphore(MAX_PRICE, true);
-	}
-
-	private int getPrice(FileFormatOption fileFormatOption, Dimension2D dim) {
-		// if (fileFormatOption.getFileFormat() != FileFormat.PNG) {
-		// return 0;
-		// }
-		if (MAX_PRICE == 0) {
-			return 0;
-		}
-		final int price = Math.min(MAX_PRICE,
-				((int) (dim.getHeight() * dpiFactor)) * ((int) (dim.getWidth() * dpiFactor)));
-		return price;
-	}
-
-	private Semaphore getSemaphore(int price) {
-		if (price == 0) {
-			return null;
-		}
-		if (price == MAX_PRICE) {
-			return SEMAPHORE_BIG;
-		}
-		return SEMAPHORE_SMALL;
 	}
 
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, long seed, OutputStream os,
@@ -260,57 +231,32 @@ public class ImageBuilder {
 			dy = -minmax.getMinY();
 		}
 
-		final int price = getPrice(fileFormatOption, dim);
-		final Semaphore semaphore = getSemaphore(price);
-		if (semaphore != null) {
-			try {
-				semaphore.acquire(price);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				throw new IOException(e);
+		final UGraphic2 ug = createUGraphic(fileFormatOption, seed, dim, animationArg, dx, dy);
+		UGraphic ug2 = ug;
+		if (borderStroke != null) {
+			final HColor color = borderColor == null ? HColorUtils.BLACK : borderColor;
+			final URectangle shape = new URectangle(dim.getWidth() - borderStroke.getThickness(),
+					dim.getHeight() - borderStroke.getThickness()).rounded(borderCorner);
+			ug2.apply(color).apply(borderStroke).draw(shape);
+		}
+		if (randomPixel) {
+			drawRandomPoint(ug2);
+		}
+		ug2 = ug2.apply(new UTranslate(left, top));
+		final UGraphic ugDecored = handwritten(ug2);
+		udrawable.drawU(ugDecored);
+		ugDecored.flushUg();
+		ug.writeImageTOBEMOVED(os, metadata, 96);
+		os.flush();
+
+		if (ug instanceof UGraphicG2d) {
+			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
+			if (urls.size() > 0) {
+				final CMapData cmap = CMapData.cmapString(urls, dpiFactor);
+				return new ImageDataComplex(dim, cmap, warningOrError);
 			}
 		}
-		try {
-			final UGraphic2 ug = createUGraphic(fileFormatOption, seed, dim, animationArg, dx, dy);
-			UGraphic ug2 = ug;
-//			if (externalMargin1 > 0) {
-//				ug2 = ug2.apply(new UTranslate(externalMargin1, externalMargin1));
-//			}
-			if (borderStroke != null) {
-				final HColor color = borderColor == null ? HColorUtils.BLACK : borderColor;
-//				final URectangle shape = new URectangle(dim.getWidth() - externalMargin() - borderStroke.getThickness(),
-//						dim.getHeight() - externalMargin() - borderStroke.getThickness()).rounded(borderCorner);
-				final URectangle shape = new URectangle(dim.getWidth() - borderStroke.getThickness(),
-						dim.getHeight() - borderStroke.getThickness()).rounded(borderCorner);
-				ug2.apply(color).apply(borderStroke).draw(shape);
-			}
-			if (randomPixel) {
-				drawRandomPoint(ug2);
-			}
-//			if (externalMargin1 > 0) {
-//				ug2 = ug2.apply(new UTranslate(externalMargin2, externalMargin2));
-//			}
-			ug2 = ug2.apply(new UTranslate(left, top));
-			final UGraphic ugDecored = handwritten(ug2);
-			udrawable.drawU(ugDecored);
-			ugDecored.flushUg();
-			ug.writeImageTOBEMOVED(os, metadata, 96);
-			os.flush();
-
-			if (ug instanceof UGraphicG2d) {
-				final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
-				if (urls.size() > 0) {
-					final CMapData cmap = CMapData.cmapString(urls, dpiFactor);
-					return new ImageDataComplex(dim, cmap, warningOrError);
-				}
-			}
-			return new ImageDataSimple(dim);
-		} finally {
-			if (semaphore != null) {
-				semaphore.release(price);
-			}
-		}
-
+		return new ImageDataSimple(dim);
 	}
 
 	private void drawRandomPoint(UGraphic ug2) {
@@ -324,10 +270,6 @@ public class ImageBuilder {
 
 	}
 
-//	private double externalMargin() {
-//		return 2 * (externalMargin1 + externalMargin2);
-//	}
-
 	public Dimension2D getFinalDimension(StringBounder stringBounder) {
 		final Dimension2D dim;
 
@@ -335,8 +277,6 @@ public class ImageBuilder {
 		udrawable.drawU(limitFinder);
 		dim = new Dimension2DDouble(limitFinder.getMaxX(), limitFinder.getMaxY());
 
-//		return new Dimension2DDouble(dim.getWidth() + 1 + margin1 + margin2 + externalMargin(),
-//				dim.getHeight() + 1 + margin1 + margin2 + externalMargin());
 		return new Dimension2DDouble(dim.getWidth() + 1 + left + right, dim.getHeight() + 1 + top + bottom);
 	}
 
@@ -467,8 +407,8 @@ public class ImageBuilder {
 					preserveAspectRatio);
 		} else {
 			final String tmp = colorMapper.toSvg(backColor);
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, tmp, false, scale,
-					svgLinkTarget, hover, seed, preserveAspectRatio);
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, tmp, false, scale, svgLinkTarget, hover, seed,
+					preserveAspectRatio);
 		}
 		return ug;
 
@@ -483,17 +423,10 @@ public class ImageBuilder {
 			backColor = null;
 		}
 
-		/*
-		 * if (rotation) { builder = new EmptyImageBuilder((int) (dim.getHeight() *
-		 * dpiFactor), (int) (dim.getWidth() * dpiFactor), backColor); graphics2D =
-		 * builder.getGraphics2D(); graphics2D.rotate(-Math.PI / 2);
-		 * graphics2D.translate(-builder.getBufferedImage().getHeight(), 0); } else {
-		 */
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * dpiFactor),
 				(int) (dim.getHeight() * dpiFactor), backColor);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
-		// }
 		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, dpiFactor,
 				affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());

@@ -39,10 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 
-public class MindMapDiagramFactory extends UmlDiagramFactory {
+public class MindMapDiagramFactory extends PSystemCommandFactory {
 
 	public MindMapDiagramFactory() {
 		super(DiagramType.MINDMAP);

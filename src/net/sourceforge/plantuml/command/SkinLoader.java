@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -50,9 +50,9 @@ public class SkinLoader {
 			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	final private List<String> context = new ArrayList<String>();
-	final private UmlDiagram diagram;
+	final private TitledDiagram diagram;
 
-	public SkinLoader(UmlDiagram diagram) {
+	public SkinLoader(TitledDiagram diagram) {
 		this.diagram = diagram;
 	}
 

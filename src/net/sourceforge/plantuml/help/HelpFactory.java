@@ -39,9 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 
-public class HelpFactory extends UmlDiagramFactory {
+public class HelpFactory extends PSystemCommandFactory {
 
 	@Override
 	public Help createEmptyDiagram() {

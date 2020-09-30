@@ -92,6 +92,7 @@ public enum SName {
 	referenceHeader, //
 	root, //
 	rootNode, //
+	saltDiagram, //
 	separator, //
 	sequenceDiagram, //
 	stack, //

@@ -36,26 +36,17 @@
 package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.svek.Control;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 
 class USymbolControl extends USymbolSimpleAbstract {
 
-	private final double thickness;
-
-	public USymbolControl(double thickness) {
-		this.thickness = thickness;
-	}
-	
 	@Override
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.CONTROL;
 	}
 
-
 	@Override
 	protected TextBlock getDrawing(final SymbolContext symbolContext) {
-		return new Control(symbolContext.withDeltaShadow(symbolContext.isShadowing() ? 4.0 : 0.0).withStroke(
-				new UStroke(thickness)));
+		return new Control(symbolContext.withDeltaShadow(symbolContext.isShadowing() ? 4.0 : 0.0));
 	}
 
 }

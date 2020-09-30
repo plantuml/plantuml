@@ -84,6 +84,9 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 			}
 		} else {
 			player1 = diagram.getPlayer(part1);
+			if (player1 == null) {
+				return CommandExecutionResult.error("No such participant " + part1);
+			}
 		}
 		final TimeTick tick1 = TimeTickBuilder.parseTimeTick("TIME1", arg, diagram);
 		diagram.updateNow(tick1);

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import java.awt.geom.Dimension2D;
 import java.util.Collection;
+import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -54,7 +55,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskImpl;
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -72,20 +73,27 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
-	private final Wink end;
+	private final Day end;
 	private final boolean oddStart;
 	private final boolean oddEnd;
-	private final Collection<Wink> paused;
+	private final Collection<Day> paused;
 
 	private final double margin = 2;
 
-	public TaskDrawRegular(TimeScale timeScale, YMovable y, String prettyDisplay, Wink start, Wink end,
-			boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw) {
+	public TaskDrawRegular(TimeScale timeScale, double y, String prettyDisplay, Day start, Day end, boolean oddStart,
+			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw) {
 		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw);
 		this.end = end;
 		this.oddStart = oddStart;
 		this.oddEnd = oddEnd;
-		this.paused = ((TaskImpl) task).getAllPaused();
+		this.paused = new TreeSet<Day>(((TaskImpl) task).getAllPaused());
+		for (Day tmp = start; tmp.compareTo(end) <= 0; tmp = tmp.increment()) {
+			final int load = toTaskDraw.getDefaultPlan().getLoadAt(tmp);
+			if (load == 0) {
+				this.paused.add(tmp);
+			}
+
+		}
 	}
 
 	public void drawTitle(UGraphic ug) {
@@ -156,7 +164,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final double h = getHeightTask();
 		final double startPos = timeScale.getStartingPosition(start);
 		final double endPos = timeScale.getEndingPosition(end);
-		return new FingerPrint(startPos, y.getValue(), endPos - startPos, h);
+		return new FingerPrint(startPos, getY(), endPos - startPos, h);
 	}
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
@@ -166,7 +174,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final Dimension2D dim = getOpaleNote().calculateDimension(stringBounder);
 		final double startPos = timeScale.getStartingPosition(start);
 		// final double endPos = timeScale.getEndingPosition(end);
-		return new FingerPrint(startPos, y.getValue() + getYNotePosition(), dim.getWidth(), dim.getHeight());
+		return new FingerPrint(startPos, getY() + getYNotePosition(), dim.getWidth(), dim.getHeight());
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
@@ -213,8 +221,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		if (url != null) {
 			ug.closeUrl();
 		}
-		Wink begin = null;
-		for (Wink pause : paused) {
+		Day begin = null;
+		for (Day pause : paused) {
 			if (paused.contains(pause.increment())) {
 				if (begin == null)
 					begin = pause;
@@ -228,7 +236,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		}
 	}
 
-	private void drawPause(UGraphic ug, Wink start1, Wink end) {
+	private void drawPause(UGraphic ug, Day start1, Day end) {
 		final double x1 = timeScale.getStartingPosition(start1);
 		final double x2 = timeScale.getEndingPosition(end);
 		final URectangle small = new URectangle(x2 - x1 - 1, getShapeHeight() + 1);

@@ -33,55 +33,28 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.time;
+package net.sourceforge.plantuml.project.core3;
 
-import net.sourceforge.plantuml.project.Value;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class Wink implements Value, Comparable<Wink> {
+public class TimeLineSimple implements TimeLine {
 
-	private final int wink;
+	private final List<Long> events = new ArrayList<Long>();
 
-	public Wink(int wink) {
-		this.wink = wink;
-	}
-
-	@Override
-	public String toString() {
-		return "(Wink +" + wink + ")";
-	}
-
-	public Wink increment() {
-		return new Wink(wink + 1);
-	}
-
-	public Wink decrement() {
-		return new Wink(wink - 1);
-	}
-
-	public final int getWink() {
-		return wink;
-	}
-
-	public int compareTo(Wink other) {
-		return this.wink - other.wink;
-	}
-
-	public String toShortString() {
-		return "" + (wink + 1);
-	}
-
-	public static Wink min(Wink wink1, Wink wink2) {
-		if (wink2.wink < wink1.wink) {
-			return wink2;
+	public long getNext(long moment) {
+		for (long e : events) {
+			if (e > moment) {
+				return e;
+			}
 		}
-		return wink1;
+		return Long.MAX_VALUE;
 	}
 
-	public static Wink max(Wink wink1, Wink wink2) {
-		if (wink2.wink > wink1.wink) {
-			return wink2;
-		}
-		return wink1;
+	public void add(long event) {
+		this.events.add(event);
+		Collections.sort(events);
 	}
 
 }

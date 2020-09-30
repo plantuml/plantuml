@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +53,7 @@ public class Dedications {
 		addNormal("Boundaries allow discipline to create true strength", "boundaries");
 		addCrypted("0", "pOhci6rKgPXw32AeYXhOpSY0suoauHq5VUSwFqHLHsLYgSO6WaJ7BW5vtHBAoU6ePbcW7d8Flx99MWjPSKQTDm00");
 		addCrypted("1", "LTxN3hdnhSJ515qcA7IQ841axt4GXfUd3n2wgNirYCdLnyX2360Gv1OEOnJ1-gwFzRW5B3HAqLBkR6Ge0WW_Z000");
+		addCrypted("2", "lZqLduj4j1yRqSfAvkhbqVpqK8diklatiFeenDUXSdna9bKYQTzdS264YfUBScUVDYCp2Vcq04updoN98RwxE000");
 	}
 
 	private static void addNormal(String sentence, String name) {
@@ -82,13 +82,13 @@ public class Dedications {
 				if (signature.equals(ent.getKey())) {
 					return dedication;
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				try {
 					if (is != null)
 						is.close();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

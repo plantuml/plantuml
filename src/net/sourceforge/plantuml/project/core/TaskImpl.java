@@ -54,17 +54,14 @@ import net.sourceforge.plantuml.project.Solver;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
-import net.sourceforge.plantuml.project.time.GCalendar;
-import net.sourceforge.plantuml.project.time.Wink;
 
 public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
-	private final SortedSet<Wink> pausedDay = new TreeSet<Wink>();
+	private final SortedSet<Day> pausedDay = new TreeSet<Day>();
 	private final Set<DayOfWeek> pausedDayOfWeek = new HashSet<DayOfWeek>();
 	private final Solver solver;
 	private final Map<Resource, Integer> resources = new LinkedHashMap<Resource, Integer>();
 	private final LoadPlanable defaultPlan;
-	private final GCalendar calendar;
 	private boolean diamond;
 
 	private int completion = 100;
@@ -77,16 +74,19 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.url = url;
 	}
 
-	public TaskImpl(TaskCode code, LoadPlanable defaultPlan, GCalendar calendar) {
+	public TaskImpl(TaskCode code, LoadPlanable defaultPlan, Day calendar) {
 		super(code);
-		this.calendar = calendar;
 		this.defaultPlan = defaultPlan;
 		this.solver = new Solver(this);
-		setStart(new Wink(0));
+		if (calendar == null) {
+			setStart(Day.create(0));
+		} else {
+			setStart(calendar);
+		}
 		setLoad(Load.inWinks(1));
 	}
 
-	public int getLoadAt(Wink instant) {
+	public int getLoadAt(Day instant) {
 		if (pausedDay.contains(instant)) {
 			return 0;
 		}
@@ -101,16 +101,16 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return result.getLoadAt(instant);
 	}
 
-	private boolean pausedDayOfWeek(Wink instant) {
+	private boolean pausedDayOfWeek(Day instant) {
 		for (DayOfWeek dayOfWeek : pausedDayOfWeek) {
-			if (calendar.toDayAsDate(instant).getDayOfWeek() == dayOfWeek) {
+			if (instant.getDayOfWeek() == dayOfWeek) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public int loadForResource(Resource res, Wink instant) {
+	public int loadForResource(Resource res, Day instant) {
 		if (resources.keySet().contains(res) && instant.compareTo(getStart()) >= 0
 				&& instant.compareTo(getEnd()) <= 0) {
 			if (res.isClosedAt(instant)) {
@@ -121,7 +121,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return 0;
 	}
 
-	public void addPause(Wink pause) {
+	public void addPause(Day pause) {
 		this.pausedDay.add(pause);
 	}
 
@@ -134,7 +134,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 			throw new IllegalStateException();
 		}
 		return new LoadPlanable() {
-			public int getLoadAt(Wink instant) {
+			public int getLoadAt(Day instant) {
 				int result = 0;
 				for (Map.Entry<Resource, Integer> ent : resources.entrySet()) {
 					final Resource res = ent.getKey();
@@ -184,16 +184,16 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return code;
 	}
 
-	public Wink getStart() {
-		Wink result = (Wink) solver.getData(TaskAttribute.START);
+	public Day getStart() {
+		Day result = (Day) solver.getData(TaskAttribute.START);
 		while (getLoadAt(result) == 0) {
 			result = result.increment();
 		}
 		return result;
 	}
 
-	public Wink getEnd() {
-		return (Wink) solver.getData(TaskAttribute.END);
+	public Day getEnd() {
+		return (Day) solver.getData(TaskAttribute.END);
 	}
 
 	public Load getLoad() {
@@ -204,11 +204,11 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		solver.setData(TaskAttribute.LOAD, load);
 	}
 
-	public void setStart(Wink start) {
+	public void setStart(Day start) {
 		solver.setData(TaskAttribute.START, start);
 	}
 
-	public void setEnd(Wink end) {
+	public void setEnd(Day end) {
 		solver.setData(TaskAttribute.END, end);
 	}
 
@@ -244,20 +244,20 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return completion;
 	}
 
-	public final Collection<Wink> getAllPaused() {
-		final SortedSet<Wink> result = new TreeSet<Wink>(pausedDay);
+	public final Collection<Day> getAllPaused() {
+		final SortedSet<Day> result = new TreeSet<Day>(pausedDay);
 		for (DayOfWeek dayOfWeek : pausedDayOfWeek) {
 			addAll(result, dayOfWeek);
 		}
 		return Collections.unmodifiableCollection(result);
 	}
 
-	private void addAll(SortedSet<Wink> result, DayOfWeek dayOfWeek) {
-		final Day start = calendar.toDayAsDate(getStart());
-		final Day end = calendar.toDayAsDate(getEnd());
-		for (Day current = start; current.compareTo(end) <= 0; current = current.next()) {
+	private void addAll(SortedSet<Day> result, DayOfWeek dayOfWeek) {
+		final Day start = getStart();
+		final Day end = getEnd();
+		for (Day current = start; current.compareTo(end) <= 0; current = current.increment()) {
 			if (current.getDayOfWeek() == dayOfWeek) {
-				result.add(calendar.fromDayAsDate(current));
+				result.add(current);
 			}
 		}
 	}

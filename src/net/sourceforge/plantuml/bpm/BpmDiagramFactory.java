@@ -40,10 +40,10 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 
-public class BpmDiagramFactory extends UmlDiagramFactory {
+public class BpmDiagramFactory extends PSystemCommandFactory {
 
 	public BpmDiagramFactory(DiagramType type) {
 		super(DiagramType.BPM);

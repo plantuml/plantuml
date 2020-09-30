@@ -69,11 +69,7 @@ public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
 			triSize--;
 		}
 		final UPolygon triangle = getTriangle(triSize);
-		if (arrow == Direction.RIGHT || arrow == Direction.LEFT) {
-			ug.apply(new UTranslate(2, (size - triSize) - 2)).draw(triangle);
-		} else {
-			ug.apply(new UTranslate(2, (size - triSize) - 2)).draw(triangle);
-		}
+		ug.apply(new UTranslate(2, (size - triSize) - 2)).draw(triangle);
 	}
 
 	private UPolygon getTriangle(int triSize) {

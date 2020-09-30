@@ -30,53 +30,45 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.project.timescale;
+package net.sourceforge.plantuml.salt;
 
-import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
-import net.sourceforge.plantuml.project.time.GCalendar;
-import net.sourceforge.plantuml.project.time.Wink;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UnusedTimeScaleWithoutWeekEnd implements TimeScale {
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-	private final double scale = 16.0;
-	private final GCalendar calendar;
+public class PSystemSaltFactory2 extends PSystemCommandFactory {
 
-	public UnusedTimeScaleWithoutWeekEnd(GCalendar calendar) {
-		if (calendar == null) {
-			throw new IllegalArgumentException();
-		}
-		this.calendar = calendar;
+	public PSystemSaltFactory2(DiagramType init) {
+		super(init);
 	}
 
-	public double getStartingPosition(Wink instant) {
-		double result = 0;
-		Wink current = (Wink) instant;
-		while (current.getWink() > 0) {
-			current = current.decrement();
-			result += getWidth(current);
+	@Override
+	protected List<Command> createCommands() {
+
+		final List<Command> cmds = new ArrayList<Command>();
+		if (getDiagramType() == DiagramType.UML) {
+			cmds.add(new CommandSalt());
+		}
+		addCommonCommands2(cmds);
+		addTitleCommands(cmds);
+		cmds.add(new CommandAnything());
+
+		return cmds;
+	}
+
+	@Override
+	public PSystemSalt createEmptyDiagram() {
+		final PSystemSalt result = new PSystemSalt();
+		if (getDiagramType() == DiagramType.SALT) {
+			result.setIamSalt(true);
 		}
 		return result;
-	}
-
-	public double getWidth(Wink instant) {
-		final Day day = calendar.toDayAsDate((Wink) instant);
-		final DayOfWeek dayOfWeek = day.getDayOfWeek();
-		if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-			return 1;
-		}
-		return scale;
-	}
-
-	public double getEndingPosition(Wink instant) {
-		throw new UnsupportedOperationException();
-	}
-
-	public boolean isBreaking(Wink instant) {
-		throw new UnsupportedOperationException();
 	}
 
 }

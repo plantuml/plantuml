@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
-	public TaskDrawDiamond(TimeScale timeScale, YMovable y, String prettyDisplay, Wink start, ISkinParam skinParam,
+	public TaskDrawDiamond(TimeScale timeScale, double y, String prettyDisplay, Day start, ISkinParam skinParam,
 			Task task, ToTaskDraw toTaskDraw) {
 		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw);
 	}
@@ -108,7 +108,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	public FingerPrint getFingerPrint() {
 		final double h = getHeightTask();
 		final double startPos = timeScale.getStartingPosition(start);
-		return new FingerPrint(startPos, y.getValue(), startPos + h, y.getValue() + h);
+		return new FingerPrint(startPos, getY(), startPos + h, getY() + h);
 	}
 
 	private UShape getDiamond() {

@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.project.core.TaskAttribute;
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 
 public class Solver {
 
@@ -56,8 +56,8 @@ public class Solver {
 	public void setData(TaskAttribute attribute, Value value) {
 		final Value previous = values.remove(attribute);
 		if (previous != null && attribute == TaskAttribute.START) {
-			final Wink previousInstant = (Wink) previous;
-			if (previousInstant.compareTo((Wink) value) > 0) {
+			final Day previousInstant = (Day) previous;
+			if (previousInstant.compareTo((Day) value) > 0) {
 				value = previous;
 			}
 		}
@@ -90,8 +90,8 @@ public class Solver {
 		return result;
 	}
 
-	private Wink computeEnd() {
-		Wink current = (Wink) values.get(TaskAttribute.START);
+	private Day computeEnd() {
+		Day current = (Day) values.get(TaskAttribute.START);
 		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
 		while (fullLoad > 0) {
 			fullLoad -= loadPlanable.getLoadAt(current);
@@ -100,13 +100,13 @@ public class Solver {
 		return current.decrement();
 	}
 
-	private Wink computeStart() {
-		Wink current = (Wink) values.get(TaskAttribute.END);
+	private Day computeStart() {
+		Day current = (Day) values.get(TaskAttribute.END);
 		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
 		while (fullLoad > 0) {
 			fullLoad -= loadPlanable.getLoadAt(current);
 			current = current.decrement();
-			if (current.getWink() <= 0) {
+			if (current.getMillis() <= 0) {
 				return current;
 			}
 		}

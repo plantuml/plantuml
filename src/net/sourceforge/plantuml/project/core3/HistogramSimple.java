@@ -33,27 +33,43 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.core3;
 
-public class YMovable {
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
-	private double y;
+public class HistogramSimple implements Histogram {
 
-	public YMovable(double y) {
-		this.y = y;
+	private final Map<Long, Long> events = new TreeMap<Long, Long>();
+
+	public long getNext(long moment) {
+		for (long e : events.keySet()) {
+			if (e > moment) {
+				return e;
+			}
+		}
+		return 1000L * Integer.MAX_VALUE;
 	}
 
-	public YMovable add(double v) {
-		return new YMovable(y + v);
+	public void put(long event, long value) {
+		this.events.put(event, value);
 	}
 
-	public final double getValue() {
-		return y;
+	@Override
+	public String toString() {
+		return events.toString();
 	}
 
-	public void pushMe(double delta) {
-		this.y += delta;
-
+	public long getValueAt(long moment) {
+		long last = 0;
+		for (Entry<Long, Long> ent : events.entrySet()) {
+			if (ent.getKey() > moment) {
+				return last;
+			}
+			last = ent.getValue();
+		}
+		return last;
 	}
 
 }

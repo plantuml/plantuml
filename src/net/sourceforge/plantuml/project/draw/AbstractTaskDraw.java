@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
-import net.sourceforge.plantuml.project.time.Wink;
+import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -56,14 +56,19 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected Url url;
 	protected Display note;
 	protected final TimeScale timeScale;
-	protected final YMovable y;
+	private double y;
 	protected final String prettyDisplay;
-	protected final Wink start;
+	protected final Day start;
 	protected final ISkinParam skinParam;
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
 
 	protected final double margin = 2;
+
+	@Override
+	final public String toString() {
+		return super.toString() + " " + task;
+	}
 
 	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note) {
 		this.colors = colors;
@@ -72,7 +77,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.note = note;
 	}
 
-	public AbstractTaskDraw(TimeScale timeScale, YMovable y, String prettyDisplay, Wink start, ISkinParam skinParam,
+	public AbstractTaskDraw(TimeScale timeScale, double y, String prettyDisplay, Day start, ISkinParam skinParam,
 			Task task, ToTaskDraw toTaskDraw) {
 		this.y = y;
 		this.toTaskDraw = toTaskDraw;
@@ -105,25 +110,35 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		return getFontConfiguration().getFont().getSize2D() + 5;
 	}
 
-	final public YMovable getY() {
+	public TaskDraw getTrueRow() {
+		return toTaskDraw.getTaskDraw(task.getRow());
+	}
+
+	final public double getY() {
 		if (task.getRow() == null) {
 			return y;
 		}
-		return toTaskDraw.getTaskDraw(task.getRow()).getY();
+		return getTrueRow().getY();
+	}
+
+	public void pushMe(double deltaY) {
+		if (task.getRow() == null) {
+			this.y += deltaY;
+		}
 	}
 
 	public final Task getTask() {
 		return task;
 	}
 
-	public final YMovable getY(Direction direction) {
+	public final double getY(Direction direction) {
 		if (direction == Direction.UP) {
 			return getY();
 		}
 		if (direction == Direction.DOWN) {
-			return getY().add(getHeightTask());
+			return getY() + getHeightTask();
 		}
-		return getY().add(getHeightTask() / 2);
+		return getY() + getHeightTask() / 2;
 	}
 
 }

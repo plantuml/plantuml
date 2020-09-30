@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
-import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.png.MetadataTag;
@@ -349,7 +349,7 @@ public class Run {
 		// printPattern(new ObjectDiagramFactory(null));
 	}
 
-	private static void printPattern(UmlDiagramFactory factory) {
+	private static void printPattern(PSystemCommandFactory factory) {
 		System.out.println();
 		System.out.println(factory.getClass().getSimpleName().replaceAll("Factory", ""));
 		final List<String> descriptions = factory.getDescription();

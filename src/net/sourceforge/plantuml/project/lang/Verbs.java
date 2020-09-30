@@ -68,7 +68,7 @@ public class Verbs {
 	}
 
 	public static IRegex pauses() {
-		return new RegexLeaf("pauses?[%s]*(at[%s]*|the[%s]*|on[%s]*)*");
+		return new RegexLeaf("pauses?[%s]*(at[%s]*|the[%s]*|on[%s]*|from[%s]*)*");
 	}
 
 	public static IRegex isDeleted() {

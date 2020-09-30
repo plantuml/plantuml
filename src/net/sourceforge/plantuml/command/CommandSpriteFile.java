@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.sprite.SpriteImage;
 import net.sourceforge.plantuml.sprite.SpriteSvg;
 
-public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
+public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 
 	public CommandSpriteFile() {
 		super(getRegexConcat());
@@ -73,7 +73,7 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram system, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
 		final String src = arg.get("FILE", 0);
 		final Sprite sprite;
 		try {

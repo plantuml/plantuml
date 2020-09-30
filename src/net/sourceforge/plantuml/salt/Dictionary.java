@@ -121,4 +121,8 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 		throw new UnsupportedOperationException();
 	}
 
+	public double minClassWidth() {
+		return 0;
+	}
+
 }

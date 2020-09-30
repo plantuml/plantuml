@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project.core2;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WorkLoadWithHoles implements WorkLoad {
@@ -44,7 +43,7 @@ public class WorkLoadWithHoles implements WorkLoad {
 	private final HolesList holes = new HolesList();
 
 	public void addHole(long start, long end) {
-		this.holes.add(new Hole(start, end));
+		this.holes.addHole(new Hole(start, end));
 	}
 
 	public WorkLoadWithHoles(WorkLoad source) {
@@ -61,6 +60,8 @@ public class WorkLoadWithHoles implements WorkLoad {
 
 		public Slice next() {
 			final Slice candidat = slices.next();
+			final List<Slice> pending = candidat.intersectWith(holes);
+			System.err.println("pending=" + pending);
 			throw new UnsupportedOperationException();
 		}
 	}

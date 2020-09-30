@@ -62,4 +62,6 @@ public interface ISkinSimple extends SpriteContainer {
 
 	public void copyAllFrom(ISkinSimple other);
 
+	public double minClassWidth();
+
 }

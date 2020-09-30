@@ -97,8 +97,8 @@ public class PSystemCute extends AbstractPSystem {
 			margin1 = 10;
 			margin2 = 10;
 		}
-		final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false, ClockwiseTopRightBottomLeft.margin1margin2((double) margin1, (double) margin2),
-		null, null, null, 1.0, null);
+		final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
+				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, null, null, 1.0, null);
 		builder.setUDrawable(root);
 		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}

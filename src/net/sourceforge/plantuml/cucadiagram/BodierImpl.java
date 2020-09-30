@@ -209,7 +209,9 @@ public class BodierImpl implements Bodier {
 			if (showFields == false) {
 				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
 			}
-			return fields.asBlockMemberImpl();
+			// return fields.asBlockMemberImpl();
+			return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf,
+					SName.objectDiagram);
 		}
 		if (type.isLikeClass() == false) {
 			throw new UnsupportedOperationException();
