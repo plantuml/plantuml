@@ -72,7 +72,8 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward) {
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward, String incoming,
+			String outcoming) {
 
 		final HColor borderColor;
 		final HColor backColor;
@@ -107,7 +108,8 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 				: endInlinkRendering.getRainbow();
 
 		Ftile result = FtileWhile.create(swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes, out,
-				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest, specialOut, backward);
+				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest, specialOut, backward,
+				incoming, outcoming);
 
 		final List<WeldingPoint> weldingPoints = whileBlock.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
@@ -121,8 +123,7 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 					public void drawU(UGraphic ug) {
 						final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
 
-						final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor,
-								Arrows.asToLeft());
+						final Snake snake = Snake.create(arrowColor, Arrows.asToLeft());
 						snake.addPoint(tr1.getDx(), tr1.getDy());
 						snake.addPoint(Diamond.diamondHalfSize, tr1.getDy());
 						ug.draw(snake);

@@ -181,14 +181,14 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering,
-			Ftile backward, boolean noOut) {
+			Ftile backward, boolean noOut, Display labelBackward) {
 		return factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, repeat, test, yes, out, colors,
-				backRepeatLinkRendering, backward, noOut);
+				backRepeatLinkRendering, backward, noOut, labelBackward);
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile back) {
-		return factory.createWhile(swimlane, whileBlock, test, yes, out, afterEndwhile, color, specialOut, back);
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile back, String incoming, String outcoming) {
+		return factory.createWhile(swimlane, whileBlock, test, yes, out, afterEndwhile, color, specialOut, back, incoming, outcoming);
 	}
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,

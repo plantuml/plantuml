@@ -62,6 +62,9 @@ public class InstructionRepeat implements Instruction {
 	private final BoxStyle boxStyleIn;
 
 	private Display backward = Display.NULL;
+	private Display backwardArrowLabel = Display.NULL;
+	private String incoming;
+	private String outcoming;
 	private List<PositionedNote> backwardNotes = new ArrayList<PositionedNote>();
 	private Display test = Display.NULL;
 	private Display yes = Display.NULL;
@@ -97,10 +100,21 @@ public class InstructionRepeat implements Instruction {
 		return false;
 	}
 
-	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle) {
+	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, String incoming, String outcoming) {
 		this.backward = label;
 		this.swimlaneOut = swimlaneOut;
 		this.boxStyle = boxStyle;
+		this.incoming = incoming;
+		this.outcoming = outcoming;
+		this.backwardArrowLabel = Display.getWithNewlines(outcoming);
+	}
+
+	public void setBackwardArrowLabel(Display label) {
+		// this.backwardArrowLabel = label;
+	}
+
+	public boolean hasBackward() {
+		return this.backward != Display.NULL;
 	}
 
 	public void add(Instruction ins) {
@@ -110,8 +124,10 @@ public class InstructionRepeat implements Instruction {
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = getBackward(factory);
 		final Ftile decorateOut = factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering);
+		final LinkRendering tmp = incoming == null ? backRepeatLinkRendering
+				: backRepeatLinkRendering.withDisplay(Display.create(incoming));
 		final Ftile result = factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
-				colors, backRepeatLinkRendering, back, isLastOfTheParent());
+				colors, tmp, back, isLastOfTheParent(), backwardArrowLabel);
 		if (killed) {
 			return new FtileKilled(result);
 		}

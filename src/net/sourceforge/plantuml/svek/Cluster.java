@@ -483,6 +483,10 @@ public class Cluster implements Moveable {
 		final HColor background = getColor(skinParam2, ColorParam.background, null);
 		final TextBlockWidth attribute = getTextBlockAttribute(skinParam2);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
+		if (total.getWidth() == 0) {
+			System.err.println("Cluster::drawUState issue");
+			return;
+		}
 		final RoundedContainer r = new RoundedContainer(total, suppY,
 				attributeHeight + (attributeHeight > 0 ? IEntityImage.MARGIN : 0), borderColor, stateBack, background,
 				stroke);

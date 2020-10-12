@@ -138,7 +138,7 @@ public class LinkType {
 	}
 
 	public LinkType getInversed() {
-		return new LinkType(hat2, decor2, style, middleDecor, decor1, hat1);
+		return new LinkType(hat2, decor2, style, middleDecor.getInversed(), decor1, hat1);
 	}
 
 	public LinkType withMiddleCircle() {

@@ -101,7 +101,8 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		final Ftile back = Display.isNull(backward) ? null
 				: factory.activity(backward, swimlane, boxStyle, Colors.empty());
 		Ftile tmp = factory.decorateOut(repeatList.createFtile(factory), endInlinkRendering);
-		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut, back);
+		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut, back, incoming,
+				outcoming);
 		if (getPositionedNotes().size() > 0) {
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false);
 		}
@@ -176,11 +177,15 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	private BoxStyle boxStyle;
 	private Swimlane swimlaneOut;
 	private Display backward = Display.NULL;
+	private String incoming;
+	private String outcoming;
 
-	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle) {
+	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, String incoming, String outcoming) {
 		this.backward = label;
 		this.swimlaneOut = swimlaneOut;
 		this.boxStyle = boxStyle;
+		this.incoming = incoming;
+		this.outcoming = outcoming;
 	}
 
 }

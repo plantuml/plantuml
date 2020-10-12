@@ -62,6 +62,7 @@ import h.ST_Agraph_s;
 import h.ST_Agraphinfo_t;
 import h.ST_GVC_s;
 import h.ST_boxf;
+import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -82,6 +83,7 @@ import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
@@ -90,10 +92,11 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
-import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -102,10 +105,12 @@ import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Node;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import smetana.core.CString;
 import smetana.core.JUtils;
 import smetana.core.JUtilsDebug;
@@ -123,12 +128,14 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private final DotStringFactory dotStringFactory;
 
-	class Drawing implements UDrawable {
+	class Drawing extends AbstractTextBlock implements TextBlockBackcolored {
 
 		private final YMirror ymirror;
+		private final Dimension2D dim;
 
-		public Drawing(YMirror ymirror) {
+		public Drawing(YMirror ymirror, Dimension2D dim) {
 			this.ymirror = ymirror;
+			this.dim = dim;
 		}
 
 		public void drawU(UGraphic ug) {
@@ -149,10 +156,20 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
+				if (link.isInvis()) {
+					continue;
+				}
 				final ST_Agedge_s edge = ent.getValue();
 				new JDotPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2))
 						.drawU(ug);
 			}
+		}
+
+		public Dimension2D calculateDimension(StringBounder stringBounder) {
+			if (dim == null) {
+				throw new UnsupportedOperationException();
+			}
+			return dim;
 		}
 
 		private Point2D getCorner(ST_Agnode_s n) {
@@ -166,6 +183,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				return new Point2D.Double(x - width / 2, y - height / 2);
 			}
 			return ymirror.getMirrored(new Point2D.Double(x - width / 2, y + height / 2));
+		}
+
+		public HColor getBackcolor() {
+			return null;
 		}
 
 	}
@@ -419,23 +440,27 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 			final double scale = 1;
 
-			final int margin1;
-			final int margin2;
+			final ClockwiseTopRightBottomLeft margins;
 			if (SkinParam.USE_STYLES()) {
-				margin1 = SkinParam.zeroMargin(0);
-				margin2 = SkinParam.zeroMargin(0);
+				final Style style = StyleSignature.of(SName.root, SName.document)
+						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+				margins = style.getMargin();
 			} else {
-				margin1 = 0;
-				margin2 = 0;
+				margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
 			}
-			final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(),
-					ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), diagram.getAnimation(),
-					fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, scale);
 
-			imageBuilder.setUDrawable(new Drawing(null));
+			final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), margins,
+					diagram.getAnimation(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null,
+					scale);
+
+			imageBuilder.setUDrawable(new Drawing(null, null));
 			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);
 
-			imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
+			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, diagram.getSkinParam(),
+					fileFormatOption.getDefaultStringBounder());
+
+			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
+			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(dim.getHeight()), dim)));
 
 			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 		} catch (Throwable e) {
@@ -466,6 +491,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private void exportGroup(ST_Agraph_s graph, IGroup group) {
 		final Cluster cluster = getBibliotekon().getCluster(group);
+		if (cluster == null) {
+			System.err.println("CucaDiagramFileMakerJDot::exportGroup issue");
+			return;
+		}
 		JUtils.LOG2("cluster = " + cluster.getClusterId());
 		final ST_Agraph_s cluster1 = agsubg(graph, new CString(cluster.getClusterId()), true);
 		if (cluster.isLabel()) {

@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
+import net.sourceforge.plantuml.picoweb.PicoWebServer;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.ImageIO;
@@ -141,6 +142,11 @@ public class Run {
 
 		if (option.getFtpPort() != -1) {
 			goFtp(option);
+			return;
+		}
+
+		if (option.getPicowebPort() != -1) {
+			goPicoweb(option);
 			return;
 		}
 
@@ -325,6 +331,12 @@ public class Run {
 		System.err.println("ftpPort=" + ftpPort);
 		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormatOption().getFileFormat());
 		ftpServer.go();
+	}
+
+	private static void goPicoweb(Option option) throws IOException {
+		final int picoWebport = option.getPicowebPort();
+		System.err.println("webPort=" + picoWebport);
+		PicoWebServer.startServer(picoWebport);
 	}
 
 	public static void printFonts() {

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 
@@ -92,6 +93,12 @@ public class UEllipse extends AbstractShadowable implements Scalable, UShapeSize
 		return result;
 	}
 
+	public UEllipse scale(double factor) {
+		final UEllipse result = new UEllipse(width * factor, height * factor);
+		result.setDeltaShadow(getDeltaShadow());
+		return result;
+	}
+
 	public double getStartingX(double y) {
 		y = y / height * 2;
 		final double x = 1 - Math.sqrt(1 - (y - 1) * (y - 1));
@@ -102,6 +109,12 @@ public class UEllipse extends AbstractShadowable implements Scalable, UShapeSize
 		y = y / height * 2;
 		final double x = 1 + Math.sqrt(1 - (y - 1) * (y - 1));
 		return x * width / 2;
+	}
+
+	public Point2D getPointAtAngle(double alpha) {
+		final double x = width / 2 + width / 2 * Math.cos(alpha);
+		final double y = height / 2 + height / 2 * Math.sin(alpha);
+		return new Point2D.Double(x, y);
 	}
 
 }

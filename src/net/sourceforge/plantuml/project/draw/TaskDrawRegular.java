@@ -188,9 +188,9 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final double startPos = timeScale.getStartingPosition(start);
 		final double endPos = timeScale.getEndingPosition(end);
 
-		final double fullLength = endPos - startPos - 2 * margin;
-		if (fullLength < 10) {
-			return;
+		double fullLength = endPos - startPos - 2 * margin;
+		if (fullLength < 3) {
+			fullLength = 3;
 		}
 		if (url != null) {
 			ug.startUrl(url);

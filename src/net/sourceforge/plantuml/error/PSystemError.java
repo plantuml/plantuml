@@ -175,7 +175,7 @@ public abstract class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
-	private List<String> getTextFullBody() {
+	protected List<String> getTextFullBody() {
 		final List<String> result = new ArrayList<String>();
 		result.add(" ");
 		final int traceSize = trace.size();
@@ -227,7 +227,7 @@ public abstract class PSystemError extends AbstractPSystem {
 		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, getMetadata(),
 				null, 1.0, result.getBackcolor());
 		imageBuilder.setRandomPixel(true);
-		if (getSource().getTotalLineCount() < 5) {
+		if (getSource().getTotalLineCountLessThan5()) {
 			udrawable = addWelcome(result);
 		} else {
 			udrawable = result;

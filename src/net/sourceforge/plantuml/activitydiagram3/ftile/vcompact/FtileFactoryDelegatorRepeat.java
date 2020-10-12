@@ -76,7 +76,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel,
 			final Ftile repeat, Display test, Display yes, Display out, Colors colors,
-			LinkRendering backRepeatLinkRendering, Ftile backward, boolean noOut) {
+			LinkRendering backRepeatLinkRendering, Ftile backward, boolean noOut, Display labelBackward) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
@@ -116,7 +116,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 		Ftile result = FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, entry, repeat, test, yes, out,
 				borderColor, diamondColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond,
-				fcArrow, backward, noOut);
+				fcArrow, backward, noOut, labelBackward);
 
 		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
@@ -134,8 +134,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 					final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());
 					final Dimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
 
-					final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor,
-							Arrows.asToRight());
+					final Snake snake = Snake.create(arrowColor, Arrows.asToRight());
 					snake.addPoint(tr1.getDx(), tr1.getDy());
 					snake.addPoint(0, tr1.getDy());
 					snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);

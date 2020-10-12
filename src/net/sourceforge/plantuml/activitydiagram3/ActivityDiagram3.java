@@ -406,16 +406,16 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	}
 
-	public CommandExecutionResult backwardWhile(Display label, BoxStyle boxStyle) {
+	public CommandExecutionResult backwardWhile(Display label, BoxStyle boxStyle, String incoming, String outcoming) {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
-			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle);
+			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle, incoming, outcoming);
 			return CommandExecutionResult.ok();
 		}
 		if (current() instanceof InstructionWhile) {
 			final InstructionWhile instructionWhile = (InstructionWhile) current();
-			instructionWhile.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle);
+			instructionWhile.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle, incoming, outcoming);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Cannot find repeat");
@@ -489,6 +489,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public void setLabelNextArrow(Display label) {
+		if (current() instanceof InstructionRepeat && ((InstructionRepeat) current()).hasBackward()) {
+			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
+			instructionRepeat.setBackwardArrowLabel(label);
+			return;
+		}
 		if (current() instanceof InstructionWhile && ((InstructionWhile) current()).getLast() == null) {
 			((InstructionWhile) current()).overwriteYes(label);
 			return;

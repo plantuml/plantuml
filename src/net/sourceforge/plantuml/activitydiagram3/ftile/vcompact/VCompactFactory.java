@@ -164,12 +164,13 @@ public class VCompactFactory implements FtileFactory {
 
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering,
-			Ftile backward, boolean noOut) {
+			Ftile backward, boolean noOut, Display labelBackward) {
 		return repeat;
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile back) {
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile back, String incoming,
+			String outcoming) {
 		return whileBlock;
 	}
 

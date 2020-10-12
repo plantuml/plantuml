@@ -30,37 +30,23 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.skin;
+package net.sourceforge.plantuml.error;
 
-import net.sourceforge.plantuml.graphic.SymbolContext;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.USymbol;
+import java.util.List;
 
-public enum ActorStyle {
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.core.UmlSource;
 
-	STICKMAN, STICKMAN_BUSINESS, AWESOME;
+public class PSystemErrorEmpty extends PSystemError {
 
-	public USymbol toUSymbol() {
-		if (this == STICKMAN) {
-			return USymbol.ACTOR_STICKMAN;
-		} else if (this == AWESOME) {
-			return USymbol.ACTOR_AWESOME;
-		}
-		throw new IllegalStateException();
-	}
+	public PSystemErrorEmpty(UmlSource source, List<StringLocated> trace, ErrorUml singleError) {
+		this.setSource(source);
+		this.trace = trace;
+		this.singleError = singleError;
 
-	public TextBlock getTextBlock(SymbolContext symbolContext) {
-		if (this == STICKMAN) {
-			return new ActorStickMan(symbolContext, false);
-		} else if (this == STICKMAN_BUSINESS) {
-			return new ActorStickMan(symbolContext, true);
-		} else if (this == AWESOME) {
-			return new ActorAwesome(symbolContext);
-		}
-		throw new IllegalStateException();
 	}
 
 }

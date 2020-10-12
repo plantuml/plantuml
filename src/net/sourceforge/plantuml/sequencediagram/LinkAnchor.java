@@ -93,12 +93,12 @@ public class LinkAnchor {
 
 		final HColor color = new Rose().getHtmlColor(param, ColorParam.arrow);
 		final Rainbow rainbow = Rainbow.fromColor(color, null);
-		final Snake snake = new Snake(Arrows.asToUp(), HorizontalAlignment.CENTER, rainbow, Arrows.asToDown());
 
 		final Display display = Display.getWithNewlines(message);
 		final TextBlock title = display.create(new FontConfiguration(param, FontParam.ARROW, null),
 				HorizontalAlignment.CENTER, param);
-		snake.setLabel(title);
+		final Snake snake = Snake.create(Arrows.asToUp(), rainbow, Arrows.asToDown())
+				.withLabel(title, HorizontalAlignment.CENTER);
 
 		snake.addPoint(x, ymin + 2);
 		snake.addPoint(x, ymax - 2);

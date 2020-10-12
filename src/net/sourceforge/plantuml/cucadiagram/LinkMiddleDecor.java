@@ -61,4 +61,13 @@ public enum LinkMiddleDecor {
 		throw new UnsupportedOperationException();
 	}
 
+	public LinkMiddleDecor getInversed() {
+		if (this == CIRCLE_CIRCLED1) {
+			return CIRCLE_CIRCLED2;
+		} else if (this == CIRCLE_CIRCLED2) {
+			return CIRCLE_CIRCLED1;
+		}
+		return this;
+	}
+
 }

@@ -94,7 +94,7 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 						new RegexOr(//
 								new RegexLeaf("LABEL", "(.*)"), //
 								new RegexLeaf("")) //
-						)), //
+				)), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}
@@ -110,8 +110,8 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 		if (colorString == null) {
 			rainbow = Rainbow.none();
 		} else {
-			rainbow = Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam()
-					.colorArrowSeparationSpace());
+			rainbow = Rainbow.build(diagram.getSkinParam(), colorString,
+					diagram.getSkinParam().colorArrowSeparationSpace());
 		}
 
 		final Display linkLabel = Display.getWithNewlines(arg.get("LABEL", 0));

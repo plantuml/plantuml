@@ -79,10 +79,11 @@ public interface FtileFactory {
 
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering,
-			Ftile backward, boolean noOut);
+			Ftile backward, boolean noOut, Display labelBackward);
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward);
+			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward, String incoming,
+			String outcoming);
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url);

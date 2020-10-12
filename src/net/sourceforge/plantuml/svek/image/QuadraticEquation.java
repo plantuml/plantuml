@@ -33,34 +33,29 @@
  * 
  *
  */
-package net.sourceforge.plantuml.skin;
+package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.graphic.SymbolContext;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.USymbol;
+public class QuadraticEquation {
 
-public enum ActorStyle {
+	private final double a;
+	private final double b;
+	private final double c;
 
-	STICKMAN, STICKMAN_BUSINESS, AWESOME;
-
-	public USymbol toUSymbol() {
-		if (this == STICKMAN) {
-			return USymbol.ACTOR_STICKMAN;
-		} else if (this == AWESOME) {
-			return USymbol.ACTOR_AWESOME;
-		}
-		throw new IllegalStateException();
+	public QuadraticEquation(double a, double b, double c) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
 	}
 
-	public TextBlock getTextBlock(SymbolContext symbolContext) {
-		if (this == STICKMAN) {
-			return new ActorStickMan(symbolContext, false);
-		} else if (this == STICKMAN_BUSINESS) {
-			return new ActorStickMan(symbolContext, true);
-		} else if (this == AWESOME) {
-			return new ActorAwesome(symbolContext);
-		}
-		throw new IllegalStateException();
+	public double[] solve() {
+		final double delta = b * b - 4 * a * c;
+		final double x0 = (-b - Math.sqrt(delta)) / 2 / a;
+		final double x1 = (-b + Math.sqrt(delta)) / 2 / a;
+		return new double[] { x0, x1 };
+	}
+
+	public double getV(double x) {
+		return a * x * x + b * x + c;
 	}
 
 }

@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolRect extends USymbol {
@@ -61,8 +60,7 @@ class USymbolRect extends USymbol {
 	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double roundCorner,
 			double diagonalCorner) {
 		final URectangle rect = new URectangle(width, height);
-		final Shadowable shape = diagonalCorner > 0 ? rect.diagonalCorner(diagonalCorner)
-				: rect.rounded(roundCorner);
+		final Shadowable shape = diagonalCorner > 0 ? rect.diagonalCorner(diagonalCorner) : rect.rounded(roundCorner);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
@@ -80,7 +78,7 @@ class USymbolRect extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
-				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
+				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
 						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());

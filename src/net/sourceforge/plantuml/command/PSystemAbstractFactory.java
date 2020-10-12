@@ -58,17 +58,15 @@ public abstract class PSystemAbstractFactory implements PSystemFactory {
 
 	final protected PSystemError buildEmptyError(UmlSource source, LineLocation lineLocation,
 			List<StringLocated> trace) {
-		final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, EMPTY_DESCRIPTION, /* 1, */lineLocation);
-		// final AbstractPSystemError result = PSystemErrorUtils.buildV1(source, err, null);
+		final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, EMPTY_DESCRIPTION, lineLocation);
 		final PSystemError result = PSystemErrorUtils.buildV2(source, err, null, trace);
 		result.setSource(source);
 		return result;
 	}
 
-	final protected PSystemError buildExecutionError(UmlSource source, String stringError,
-			LineLocation lineLocation, List<StringLocated> trace) {
-		final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, stringError, /* 1, */
-		lineLocation);
+	final protected PSystemError buildExecutionError(UmlSource source, String stringError, LineLocation lineLocation,
+			List<StringLocated> trace) {
+		final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, stringError, lineLocation);
 		final PSystemError result = PSystemErrorUtils.buildV2(source, err, null, trace);
 		result.setSource(source);
 		return result;

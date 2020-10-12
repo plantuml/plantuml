@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "artifact|actor|folder|card|file|package|rectangle|label|node|frame|cloud|database|queue|stack|storage|agent|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout";
+	public static final String ALL_TYPES = "artifact|actor/|actor|folder|card|file|package|rectangle|label|node|frame|cloud|database|queue|stack|storage|agent|usecase/|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
@@ -137,11 +137,11 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return ColorParser.simpleColor(ColorType.BACK, "COLOR2");
 	}
 
-	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
+	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]";
 	public static final String CODE = "(" + CODE_CORE + ")";
 	public static final String CODE_WITH_QUOTE = "(" + CODE_CORE + "|[%g].+?[%g])";
 
-	private static final String DISPLAY_CORE = "[%g].+?[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
+	private static final String DISPLAY_CORE = "[%g].+?[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]";
 	public static final String DISPLAY = "(" + DISPLAY_CORE + ")";
 	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
 
@@ -156,7 +156,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	@Override
 	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
 		String codeRaw = arg.getLazzy("CODE", 0);
-		final String displayRaw = arg.getLazzy("DISPLAY", 0);
+		String displayRaw = arg.getLazzy("DISPLAY", 0);
 		final char codeChar = getCharEncoding(codeRaw);
 		final char codeDisplay = getCharEncoding(displayRaw);
 		final String symbol;
@@ -164,9 +164,29 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			symbol = "interface";
 			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));
 		} else if (codeChar == '(' || codeDisplay == '(') {
-			symbol = "usecase";
+			if (arg.get("SYMBOL", 0) != null && arg.get("SYMBOL", 0).endsWith("/")) {
+				symbol = "usecase/";
+			} else if (displayRaw != null && displayRaw.endsWith(")/")) {
+				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);
+				symbol = "usecase/";
+			} else if (codeRaw.endsWith(")/")) {
+				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);
+				symbol = "usecase/";
+			} else {
+				symbol = "usecase";
+			}
 		} else if (codeChar == ':' || codeDisplay == ':') {
-			symbol = "actor";
+			if (arg.get("SYMBOL", 0) != null && arg.get("SYMBOL", 0).endsWith("/")) {
+				symbol = "actor/";
+			} else if (displayRaw != null && displayRaw.endsWith(":/")) {
+				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);
+				symbol = "actor/";
+			} else if (codeRaw.endsWith(":/")) {
+				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);
+				symbol = "actor/";
+			} else {
+				symbol = "actor";
+			}
 		} else if (codeChar == '[' || codeDisplay == '[') {
 			symbol = "component";
 		} else {
@@ -190,6 +210,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
+			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("usecase/")) {
+			type = LeafType.USECASE_BUSINESS;
 			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("circle")) {
 			type = LeafType.CIRCLE;
@@ -284,4 +307,3 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return codeRaw != null && codeRaw.length() > 2 ? codeRaw.charAt(0) : 0;
 	}
 }
-	

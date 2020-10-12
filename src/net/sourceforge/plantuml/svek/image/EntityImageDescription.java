@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -154,7 +155,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 
 		assert getStereo() == stereotype;
-		
+
 		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow)
 				.withCorner(roundCorner, diagonalCorner);
 
@@ -289,7 +290,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 			final Dimension2D dimSmall = asSmall.calculateDimension(ug.getStringBounder());
 			final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;
-			desc.drawU(ug.apply(new UTranslate(posx1, space + dimSmall.getHeight())));
+			
+			UGraphic ugDesc = ug.apply(new UTranslate(posx1, space + dimSmall.getHeight()));
+			ugDesc = UGraphicStencil.create(ugDesc, dimDesc);
+			desc.drawU(ugDesc);
+			
 			final Dimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());
 			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;
 			stereo.drawU(ug.apply(new UTranslate(posx2, -space - dimStereo.getHeight())));

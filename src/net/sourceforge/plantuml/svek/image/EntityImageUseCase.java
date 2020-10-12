@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -70,6 +72,7 @@ import net.sourceforge.plantuml.ugraphic.TextBlockInEllipse;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
+import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -141,10 +144,42 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
 
 		ellipse.drawU(ug2);
+		if (getEntity().getLeafType() == LeafType.USECASE_BUSINESS) {
+			specialBusiness(ug, ellipse.getUEllipse());
+		}
 
 		if (url != null) {
 			ug.closeUrl();
 		}
+	}
+
+	private void specialBusiness(UGraphic ug, UEllipse frontier) {
+		final RotatedEllipse rotatedEllipse = new RotatedEllipse(frontier, Math.PI / 4);
+
+		final double theta1 = 20.0 * Math.PI / 180;
+		final double theta2 = rotatedEllipse.getOtherTheta(theta1);
+
+		final UEllipse frontier2 = frontier.scale(0.99);
+		final Point2D p1 = frontier2.getPointAtAngle(-theta1);
+		final Point2D p2 = frontier2.getPointAtAngle(-theta2);
+		drawLine(ug, p1, p2);
+	}
+
+	private void specialBusiness0(UGraphic ug, UEllipse frontier) {
+		final double c = frontier.getWidth() / frontier.getHeight();
+		final double ouverture = Math.PI / 2;
+		final Point2D p1 = frontier.getPointAtAngle(getTrueAngle(c, Math.PI / 4 - ouverture));
+		final Point2D p2 = frontier.getPointAtAngle(getTrueAngle(c, Math.PI / 4 + ouverture));
+		drawLine(ug, p1, p2);
+	}
+
+	private void drawLine(UGraphic ug, final Point2D p1, final Point2D p2) {
+		ug = ug.apply(new UTranslate(p1));
+		ug.draw(new ULine(p2.getX() - p1.getX(), p2.getY() - p1.getY()));
+	}
+
+	private double getTrueAngle(final double c, final double gamma) {
+		return Math.atan2(Math.sin(gamma), Math.cos(gamma) / c);
 	}
 
 	private HColor getBackColor() {

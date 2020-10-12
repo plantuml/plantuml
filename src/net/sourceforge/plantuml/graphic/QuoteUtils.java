@@ -194,7 +194,7 @@ public class QuoteUtils {
 			"Lbh xabj jung fhecevfrq zr gur zbfg? Vg jnfa'g zrrgvat gurz. Vg jnf zrrgvat lbh.",
 			"Va jne gurer ner ab jvaaref, bayl jvqbjf",
 			"Vs lbh guvax guvf Havirefr vf onq, lbh fubhyq frr fbzr bs gur bguref", "Cnp-Zna'f n onq thl?",
-			"Zl ernyvgl vf whfg qvssrerag guna lbhef", "L'ra n dh'bag rffnlr, vyf bag rh qrf ceboyrzrf",
+			"L'ra n dh'bag rffnlr, vyf bag rh qrf ceboyrzrf",
 			"Gb ree vf uhzna, ohg gb ernyyl sbhy guvatf hc erdhverf n pbzchgre.",
 			"Vs lbh oryvrir rirelguvat lbh ernq, lbh orggre abg ernq",
 			"Gurer vf ab ceboyrz fb onq lbh pna'g znxr vg jbefr", "Pn p'rfg qh ybheq... Ha gehp qr znynqr.",
@@ -276,7 +276,8 @@ public class QuoteUtils {
 			"Vs lbh ner abg rzoneenffrq ol gur svefg irefvba bs lbhe cebqhpg, lbh'ir ynhapurq gbb yngr",
 			"Zvfgnxrf znqr zl fhpprff: V znxr ehoore renfre", "Ovt Oebgure vf Jngpuvat Lbh.",
 			"Ab bar'f gnyxvat nobhg yrnivat gur fvatyr znexrg", "...rnfvrfg oht gb svk va uhzna uvfgbel",
-			"Arire nggevohgr gb znyvpr jung pna or rkcynvarq ol fghcvqvgl", "Guvf oht nssrpgf iveghnyyl abobql");
+			"Arire nggevohgr gb znyvpr jung pna or rkcynvarq ol fghcvqvgl", "Guvf oht nssrpgf iveghnyyl abobql",
+			"Qba'g rire hfr gur jbeq fzneg jvgu zr", "Gur Ertrareba vf ernyyl xvpxvat va guvf zbeavat");
 
 	private QuoteUtils() {
 	}

@@ -68,10 +68,35 @@ public class SvgString {
 			final int idx = result.indexOf(">");
 			result = "<svg>" + result.substring(idx + 1);
 		}
+		final String style = extractSvgStyle();
+		if (style != null) {
+			final String background = extractBackground(style);
+			if (background != null) {
+				result = result.replaceFirst("<g>", "<g><rect fill=\"" + background + "\" style=\"" + style + "\" /> ");
+			}
+		}
 		if (result.startsWith("<svg>") == false) {
 			throw new IllegalArgumentException();
 		}
 		return result;
+	}
+
+	private String extractBackground(String style) {
+		final Pattern p = Pattern.compile("background:([^;]+)");
+		final Matcher m = p.matcher(style);
+		if (m.find()) {
+			return m.group(1);
+		}
+		return null;
+	}
+
+	private String extractSvgStyle() {
+		final Pattern p = Pattern.compile("(?i)\\<svg[^>]+style=\"([^\">]+)\"");
+		final Matcher m = p.matcher(svg);
+		if (m.find()) {
+			return m.group(1);
+		}
+		return null;
 	}
 
 	public int getData(String name) {

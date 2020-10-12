@@ -66,7 +66,9 @@ import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
 	private static final String SINGLE = "[.\\\\]{0,2}[\\p{L}0-9_]+(?:[.\\\\]{1,2}[\\p{L}0-9_]+)*";
-	private static final String COUPLE = "\\([%s]*(" + SINGLE + ")[%s]*,[%s]*(" + SINGLE + ")[%s]*\\)";
+	private static final String SINGLE_GUILLEMENT = "[%g][.\\\\]{0,2}[\\p{L}0-9_]+(?:[.\\\\]{1,2}[\\p{L}0-9_]+)*[%g]";
+	private static final String SINGLE2 = "(?:" + SINGLE + "|" + SINGLE_GUILLEMENT + ")";
+	private static final String COUPLE = "\\([%s]*(" + SINGLE2 + ")[%s]*,[%s]*(" + SINGLE2 + ")[%s]*\\)";
 
 	public CommandLinkClass(UmlDiagramType umlDiagramType) {
 		super(getRegexConcat(umlDiagramType));
@@ -364,8 +366,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	private CommandExecutionResult executeArgSpecial1(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		if (diagram.V1972())
 			return executeArgSpecial1972Ident1(diagram, arg);
-		final String name1A = arg.get("COUPLE1", 0);
-		final String name1B = arg.get("COUPLE1", 1);
+		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
+		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));
 		final Code clName1A = diagram.buildCode(name1A);
 		final Code clName1B = diagram.buildCode(name1B);
 		if (diagram.leafExist(clName1A) == false) {

@@ -141,6 +141,10 @@ public class Splitter {
 		return splitted;
 	}
 
+	public static String purgeAllTag(String s) {
+		return s.replaceAll(htmlTag, "");
+	}
+
 	public List<HtmlCommand> getHtmlCommands(boolean newLineAlone) {
 		final HtmlCommandFactory factory = new HtmlCommandFactory();
 		final List<HtmlCommand> result = new ArrayList<HtmlCommand>();
