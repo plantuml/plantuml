@@ -1244,6 +1244,9 @@ public class SkinParam implements ISkinParam {
 		if ("awesome".equalsIgnoreCase(value)) {
 			return ActorStyle.AWESOME;
 		}
+		if("hollow".equalsIgnoreCase(value)) {
+			return ActorStyle.HOLLOW;
+		}
 		return ActorStyle.STICKMAN;
 	}
 
