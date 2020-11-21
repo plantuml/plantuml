@@ -37,14 +37,17 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -58,7 +61,13 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandElseIf2.class.getName(), RegexLeaf.start(), //
 				ColorParser.exp4(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("INLABEL", "\\((.+?)\\)")), //
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf("\\("), //
+						new RegexOptional(new RegexOr(//
+								new RegexLeaf("->"), //
+								new RegexLeaf("INCOMING_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf("INCOMING", "(.*?)"), //
+						new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("else"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -72,7 +81,14 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 						new RegexConcat( //
 								new RegexLeaf("then"), //
 								RegexLeaf.spaceZeroOrMore(), //
-								new RegexOptional(new RegexLeaf("WHEN", "\\((.+?)\\)")) //
+								new RegexOptional(new RegexConcat( //
+										new RegexLeaf("\\("), //
+										new RegexOptional(new RegexOr(//
+												new RegexLeaf("->"), //
+												new RegexLeaf("WHEN_COLOR",
+														CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+										new RegexLeaf("WHEN", "(.*?)"), //
+										new RegexLeaf("\\)"))) //
 						)), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
@@ -87,10 +103,10 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 			test = null;
 		}
 
-		final String inlabel = arg.get("INLABEL", 0);
+		final LinkRendering incoming = CommandBackward3.getBackRendering(diagram, arg, "INCOMING");
+		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, "WHEN");
 
-		return diagram.elseIf(Display.getWithNewlines(inlabel), Display.getWithNewlines(test),
-				Display.getWithNewlines(arg.get("WHEN", 0)), color);
+		return diagram.elseIf(incoming, Display.getWithNewlines(test), when, color);
 	}
 
 }

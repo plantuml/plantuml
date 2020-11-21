@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dtrenew__c {
@@ -115,6 +118,8 @@ public class dtrenew__c {
 
 //3 dpntyaoee84n51hi5hei3meki
 // void* dtrenew(Dt_t* dt, register void* obj)      
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtrenew.c", name="dtrenew", key="dpntyaoee84n51hi5hei3meki", definition="void* dtrenew(Dt_t* dt, register void* obj)")
 public static Object dtrenew(Object... arg) {
 UNSUPPORTED("c1icavxc4bdl41jaglud7ov9y"); // void* dtrenew(Dt_t* dt, register void* obj)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

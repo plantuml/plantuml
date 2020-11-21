@@ -53,16 +53,12 @@ public class MindMapDiagramFactory extends PSystemCommandFactory {
 
 		final List<Command> cmds = new ArrayList<Command>();
 		addCommonCommands1(cmds);
-		cmds.add(new CommandMindMapTabulation());
+		// cmds.add(new CommandMindMapTabulation());
 		cmds.add(new CommandMindMapOrgmode());
 		cmds.add(new CommandMindMapOrgmodeMultiline());
 		cmds.add(new CommandMindMapRoot());
 		cmds.add(new CommandMindMapPlus());
 		cmds.add(new CommandMindMapDirection());
-//		cmds.add(new CommandMindMapRight());
-//		cmds.add(new CommandMindMapRightNumber());
-//		cmds.add(new CommandMindMapLeft());
-//		cmds.add(new CommandMindMapLeftNumber());
 
 		return cmds;
 	}

@@ -277,7 +277,8 @@ public class QuoteUtils {
 			"Zvfgnxrf znqr zl fhpprff: V znxr ehoore renfre", "Ovt Oebgure vf Jngpuvat Lbh.",
 			"Ab bar'f gnyxvat nobhg yrnivat gur fvatyr znexrg", "...rnfvrfg oht gb svk va uhzna uvfgbel",
 			"Arire nggevohgr gb znyvpr jung pna or rkcynvarq ol fghcvqvgl", "Guvf oht nssrpgf iveghnyyl abobql",
-			"Qba'g rire hfr gur jbeq fzneg jvgu zr", "Gur Ertrareba vf ernyyl xvpxvat va guvf zbeavat");
+			"Qba'g rire hfr gur jbeq fzneg jvgu zr", "Gur Ertrareba vf ernyyl xvpxvat va guvf zbeavat",
+			"V'ir frra fbsgjner fb onq gung rira vgf ohtf unq ohtf");
 
 	private QuoteUtils() {
 	}

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -68,7 +68,7 @@ public class ST_Branch_t extends UnsupportedStructAndPtr implements HardcodedStr
 
 	@Override
 	public __ptr__ castTo(Class dest) {
-		if (dest == Branch_t.class) {
+		if (dest == ST_Branch_t.class) {
 			return ST_Branch_t.this;
 		}
 		if (dest == ST_Rect_t.class) {

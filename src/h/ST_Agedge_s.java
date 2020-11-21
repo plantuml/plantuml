@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,14 +45,9 @@
  */
 package h;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import smetana.core.HardcodedStruct;
 import smetana.core.OFFSET;
-import smetana.core.UnsupportedArrayOfPtr;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -66,79 +61,11 @@ public class ST_Agedge_s extends UnsupportedStructAndPtr implements HardcodedStr
 	public final ST_dtlink_s seq_link = new ST_dtlink_s(this);
 	public ST_Agnode_s node;
 
-	public static class ArrayOfStar extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
+	public String NAME;
 
-		private final List<ST_Agedge_s> data;
-		private final int pos;
-
-		public ArrayOfStar(int size) {
-			this.data = new ArrayList<ST_Agedge_s>();
-			this.pos = 0;
-			for (int i = 0; i < size; i++) {
-				data.add(null);
-			}
-		}
-
-		public void swap(int i, int j) {
-			ST_Agedge_s e1 = data.get(i);
-			ST_Agedge_s e2 = data.get(j);
-			data.set(i, e2);
-			data.set(j, e1);
-		}
-
-		public ArrayOfStar(List<ST_Agedge_s> data, int pos) {
-			this.data = data;
-			this.pos = pos;
-		}
-
-		public ArrayOfStar reallocJ(int newsize) {
-			while (data.size() < newsize) {
-				data.add(null);
-			}
-			return this;
-		}
-
-		@Override
-		public ArrayOfStar plus(int delta) {
-			return new ArrayOfStar(data, pos + delta);
-		}
-		
-		public ST_Agedge_s get(int i) {
-			return plus(i).getPtr();
-		}
-
-
-		@Override
-		public ArrayOfStar asPtr() {
-			return this;
-		}
-
-		@Override
-		public void setPtr(__ptr__ value) {
-			this.data.set(pos, (ST_Agedge_s) value);
-		}
-
-		@Override
-		public ST_Agedge_s getPtr() {
-			return this.data.get(pos);
-		}
-
-		@Override
-		public int comparePointer(__ptr__ other) {
-			final ArrayOfStar this2 = (ArrayOfStar) other;
-			if (this.data != this2.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos - this2.pos;
-		}
-
-		public boolean isSameThan2(ArrayOfStar other) {
-			if (this.data != other.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos == other.pos;
-		}
-
+	@Override
+	public String toString() {
+		return super.toString()+" "+NAME;
 	}
 
 	@Override

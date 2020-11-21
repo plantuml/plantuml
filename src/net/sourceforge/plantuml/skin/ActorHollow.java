@@ -29,7 +29,7 @@
  * USA.
  *
  *
- * Original Author:  Vjekoslav Leonard Prčić
+ * Original Author:  Vjekoslav Leonard Prcic
  * 
  *
  */

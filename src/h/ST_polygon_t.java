@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,20 +45,21 @@
  */
 package h;
 
+import smetana.core.CStar;
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
-	public int regular;
+	public boolean regular;
 	public int peripheries;
 	public int sides;
 	public double orientation;
 	public double distortion;
 	public double skew;
 	public int option;
-	public ST_pointf.Array vertices;
+	public CStar<ST_pointf> vertices;
 
 	// "pointf *vertices",
 
@@ -74,7 +75,7 @@ public class ST_polygon_t extends UnsupportedStructAndPtr implements HardcodedSt
 	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("regular")) {
-			this.regular = data;
+			this.regular = data!=0;
 			return;
 		}
 		if (fieldName.equals("peripheries")) {

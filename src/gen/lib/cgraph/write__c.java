@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class write__c {
@@ -187,6 +190,8 @@ public class write__c {
 
 //3 btji1owz81k2d77wfwt916p37
 // static int ioput(Agraph_t * g, iochan_t * ofile, char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="ioput", key="btji1owz81k2d77wfwt916p37", definition="static int ioput(Agraph_t * g, iochan_t * ofile, char *str)")
 public static Object ioput(Object... arg) {
 UNSUPPORTED("9aaodmphwoa7or45852lcbtet"); // static int ioput(Agraph_t * g, iochan_t * ofile, char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -217,6 +222,8 @@ throw new UnsupportedOperationException();
 
 //3 alc947m7qhu6bnfokb9fxhwhb
 // static int indent(Agraph_t * g, iochan_t * ofile) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="indent", key="alc947m7qhu6bnfokb9fxhwhb", definition="static int indent(Agraph_t * g, iochan_t * ofile)")
 public static Object indent(Object... arg) {
 UNSUPPORTED("40912tixu4uq4phusbevely94"); // static int indent(Agraph_t * g, iochan_t * ofile)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -232,37 +239,19 @@ throw new UnsupportedOperationException();
 
 
 
-//3 aquh9vkpmogoajxkl7kq8pukp
-// static int strcasecmp(const char *s1, const char *s2) 
-public static Object strcasecmp(Object... arg) {
-UNSUPPORTED("55i7mwlbxqd1zslhu44ix4gza"); // static int strcasecmp(const char *s1, const char *s2)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9470qtwtv37oof0w731kh9mcd"); //     while ((*s1 != '\0')
-UNSUPPORTED("7tdf84gz2hakxs756j3v0w4iv"); // 	   && (tolower(*(unsigned char *) s1) ==
-UNSUPPORTED("co97u0db3a8mz1pp77hkxq0h3"); // 	       tolower(*(unsigned char *) s2))) {
-UNSUPPORTED("2hh1h5gydepd3ut3g43bzn51g"); // 	s1++;
-UNSUPPORTED("7x8zh0pm8zj83pbc2d812jz90"); // 	s2++;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("1jrt0skm3a5djo3vfej4kwffc"); //     return tolower(*(unsigned char *) s1) - tolower(*(unsigned char *) s2);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
 //3 2ojpbtgz2c08fy2xlrhgbhcy4
 // static char *_agstrcanon(char *arg, char *buf) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="", key="2ojpbtgz2c08fy2xlrhgbhcy4", definition="static char *_agstrcanon(char *arg, char *buf)")
 public static Object _agstrcanon(Object... arg) {
 UNSUPPORTED("5ahyn8mq6pzmkxszxeuiey91e"); // static char *_agstrcanon(char *arg, char *buf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("9uldk42hjnckjndgz1sd6utof"); //     char *s, *p;
 UNSUPPORTED("54eg86g95y7q6jevr2tq6ehrg"); //     unsigned char uc;
 UNSUPPORTED("3n6j4vooz01bauxf0x735587g"); //     int cnt = 0, dotcnt = 0;
-UNSUPPORTED("53cl57zz7angk2fz9q8i9936z"); //     int needs_quotes = (0);
+UNSUPPORTED("53cl57zz7angk2fz9q8i9936z"); //     int needs_quotes = 0;
 UNSUPPORTED("2wr9q842ohxj2ycucqna9tlrq"); //     int maybe_num;
-UNSUPPORTED("byb61zbgjorc2zybgctqz7ndl"); //     int backslash_pending = (0);
+UNSUPPORTED("byb61zbgjorc2zybgctqz7ndl"); //     int backslash_pending = 0;
 UNSUPPORTED("7nrc43frlcod90tqudlokiltw"); //     static const char *tokenlist[]	/* must agree with scan.l */
 UNSUPPORTED("2z6417vrkzwojo65uicgj0ld5"); // 	= { "node", "edge", "strict", "graph", "digraph", "subgraph",
 UNSUPPORTED("6e42116ruyo5sfksdjqb7k691"); // 	((char *)0)
@@ -283,18 +272,18 @@ UNSUPPORTED("8nzcpbtoi924xzu8ze3z6dbft"); // 	}
 UNSUPPORTED("boo8lxly4fx140xmtb994j62j"); // 	else if (maybe_num) {
 UNSUPPORTED("byw5stodlmd743wbq8w0lp6e5"); // 	    if (uc == '-') {
 UNSUPPORTED("ch6epb3d0o3y71kr8cf0cr778"); // 		if (cnt) {
-UNSUPPORTED("92uh7detqycxvk4j84os7jjrx"); // 		    maybe_num = (0);
+UNSUPPORTED("92uh7detqycxvk4j84os7jjrx"); // 		    maybe_num = 0;
 UNSUPPORTED("1zi6cnn21vajv2p9guz4u0eyr"); // 		    needs_quotes = (!(0));
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("80niwic42cqbazv2vfmpokfiz"); // 	    else if (uc == '.') {
 UNSUPPORTED("7wa32rmgq2t0s8q2vygfs0on9"); // 		if (dotcnt++) {
-UNSUPPORTED("92uh7detqycxvk4j84os7jjrx"); // 		    maybe_num = (0);
+UNSUPPORTED("92uh7detqycxvk4j84os7jjrx"); // 		    maybe_num = 0;
 UNSUPPORTED("1zi6cnn21vajv2p9guz4u0eyr"); // 		    needs_quotes = (!(0));
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("2w4vdk52vdon2nuo203y11zio"); // 	    else if (!isdigit(uc)) {
-UNSUPPORTED("8ewnu9yn4sp7izb230lq2qwol"); // 		maybe_num = (0);
+UNSUPPORTED("8ewnu9yn4sp7izb230lq2qwol"); // 		maybe_num = 0;
 UNSUPPORTED("15rsfjpgyg6utb04u8l4x3f4c"); // 		needs_quotes = (!(0));
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
@@ -311,7 +300,7 @@ UNSUPPORTED("755u0yc4wr61hznjhzfrfko48"); //             if (uc && backslash_pen
 UNSUPPORTED("cl1ikibcqt1ygqbum3xi5bk79"); //         	*p++ = '\\';
 UNSUPPORTED("cnwc77tzwdfyrgdp1t6g4m6xi"); //         	*p++ = '\n';
 UNSUPPORTED("3ako06kvsu28ggk2b9rs5pz48"); //         	needs_quotes = (!(0));
-UNSUPPORTED("a2igyeujb49rhtvgheg64bogt"); //         	backslash_pending = (0);
+UNSUPPORTED("a2igyeujb49rhtvgheg64bogt"); //         	backslash_pending = 0;
 UNSUPPORTED("ay9m9sdx7o92emcp6gjb31h4a"); // 		cnt = 0;
 UNSUPPORTED("88eck934lobkga6adny14gqe2"); //             } else if (uc && (cnt >= Max_outputline)) {
 UNSUPPORTED("3v26gypvwqprroryvbtfyvl7u"); //         	if (!((isalnum(p[-1]) || ((p[-1]) == '.') || ((p[-1]) == '-') || !isascii(p[-1])) || (p[-1] == '\\')) && (isalnum(uc) || ((uc) == '.') || ((uc) == '-') || !isascii(uc))) {
@@ -345,6 +334,8 @@ throw new UnsupportedOperationException();
 
 //3 10ev68p7aeqzm8tqvi1j5g6c0
 // static char *agcanonhtmlstr(char *arg, char *buf) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="", key="10ev68p7aeqzm8tqvi1j5g6c0", definition="static char *agcanonhtmlstr(char *arg, char *buf)")
 public static Object agcanonhtmlstr(Object... arg) {
 UNSUPPORTED("8u1d8u9bl7jguved1qmtwv38g"); // static char *agcanonhtmlstr(char *arg, char *buf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -367,6 +358,8 @@ throw new UnsupportedOperationException();
 
 //3 5el4k6xor36xwe2zw5pbxwvxg
 // char *agstrcanon(char *arg, char *buf) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="", key="5el4k6xor36xwe2zw5pbxwvxg", definition="char *agstrcanon(char *arg, char *buf)")
 public static Object agstrcanon(Object... arg) {
 UNSUPPORTED("2eugjkuvwod6onqy9kfs2rzsm"); // char *agstrcanon(char *arg, char *buf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -384,6 +377,8 @@ throw new UnsupportedOperationException();
 
 //3 9ykg6r8cft6m1eqz84ptrhkkm
 // static char *getoutputbuffer(char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="", key="9ykg6r8cft6m1eqz84ptrhkkm", definition="static char *getoutputbuffer(char *str)")
 public static Object getoutputbuffer(Object... arg) {
 UNSUPPORTED("561sswbojerghf2xu4dg5bt1s"); // static char *getoutputbuffer(char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -409,6 +404,8 @@ throw new UnsupportedOperationException();
 
 //3 ewe36i40rrl3fpv7w0ryw05ni
 // char *agcanonStr(char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="", key="ewe36i40rrl3fpv7w0ryw05ni", definition="char *agcanonStr(char *str)")
 public static Object agcanonStr(Object... arg) {
 UNSUPPORTED("eyq4o9s8y123aetgpoe3yv8vb"); // char *agcanonStr(char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -423,6 +420,8 @@ throw new UnsupportedOperationException();
 
 //3 dkk9fge4n0ji352t2bmtqxgcq
 // char *agcanon(char *str, int html) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="", key="dkk9fge4n0ji352t2bmtqxgcq", definition="char *agcanon(char *str, int html)")
 public static Object agcanon(Object... arg) {
 UNSUPPORTED("6rhv4om26ccgv3sf274hlssrb"); // char *agcanon(char *str, int html)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -441,6 +440,8 @@ throw new UnsupportedOperationException();
 
 //3 c3jnf1oiv9b8aheuv9llnqtg
 // static int _write_canonstr(Agraph_t * g, iochan_t * ofile, char *str, 			   int chk) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="_write_canonstr", key="c3jnf1oiv9b8aheuv9llnqtg", definition="static int _write_canonstr(Agraph_t * g, iochan_t * ofile, char *str, 			   int chk)")
 public static Object _write_canonstr(Object... arg) {
 UNSUPPORTED("zr1y2wf05ldfglo6vrypd4d7"); // static int _write_canonstr(Agraph_t * g, iochan_t * ofile, char *str,
 UNSUPPORTED("6jsqaz0aadg586twc1a3xkgp4"); // 			   int chk)
@@ -460,6 +461,8 @@ throw new UnsupportedOperationException();
 
 //3 4wklmg8c4xwrlh8zj8mzsqqgy
 // static int write_canonstr(Agraph_t * g, iochan_t * ofile, char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_canonstr", key="4wklmg8c4xwrlh8zj8mzsqqgy", definition="static int write_canonstr(Agraph_t * g, iochan_t * ofile, char *str)")
 public static Object write_canonstr(Object... arg) {
 UNSUPPORTED("9s58htjsqxlqmo523tjez4v1v"); // static int write_canonstr(Agraph_t * g, iochan_t * ofile, char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -474,6 +477,8 @@ throw new UnsupportedOperationException();
 
 //3 y99h25djxm7t672axpq6s9so
 // static int write_dict(Agraph_t * g, iochan_t * ofile, char *name, 		      Dict_t * dict, int top) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_dict", key="y99h25djxm7t672axpq6s9so", definition="static int write_dict(Agraph_t * g, iochan_t * ofile, char *name, 		      Dict_t * dict, int top)")
 public static Object write_dict(Object... arg) {
 UNSUPPORTED("2hsbtmft7fp9pqzt27syqpe99"); // static int write_dict(Agraph_t * g, iochan_t * ofile, char *name,
 UNSUPPORTED("cbjl3cpko6q4cka2s9mb8kbhs"); // 		      Dict_t * dict, int top)
@@ -529,6 +534,8 @@ throw new UnsupportedOperationException();
 
 //3 aul5zu4oj0o9yrzdmyk88qt2s
 // static int write_dicts(Agraph_t * g, iochan_t * ofile, int top) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_dicts", key="aul5zu4oj0o9yrzdmyk88qt2s", definition="static int write_dicts(Agraph_t * g, iochan_t * ofile, int top)")
 public static Object write_dicts(Object... arg) {
 UNSUPPORTED("9za417mkt9iven86uu3v8o7tr"); // static int write_dicts(Agraph_t * g, iochan_t * ofile, int top)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -549,6 +556,8 @@ throw new UnsupportedOperationException();
 
 //3 cg729l895pi0qnmlxnjytf8pd
 // static int write_hdr(Agraph_t * g, iochan_t * ofile, int top) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_hdr", key="cg729l895pi0qnmlxnjytf8pd", definition="static int write_hdr(Agraph_t * g, iochan_t * ofile, int top)")
 public static Object write_hdr(Object... arg) {
 UNSUPPORTED("bv82284a2i51n13utave7gi65"); // static int write_hdr(Agraph_t * g, iochan_t * ofile, int top)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -598,6 +607,8 @@ throw new UnsupportedOperationException();
 
 //3 3ledn06tna47mr73hhkiydl5l
 // static int write_trl(Agraph_t * g, iochan_t * ofile) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_trl", key="3ledn06tna47mr73hhkiydl5l", definition="static int write_trl(Agraph_t * g, iochan_t * ofile)")
 public static Object write_trl(Object... arg) {
 UNSUPPORTED("b4cjvzzfv0u8yh5ym5v2dmx2e"); // static int write_trl(Agraph_t * g, iochan_t * ofile)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -616,6 +627,8 @@ throw new UnsupportedOperationException();
 
 //3 eyh488kxcrbg6le1efk7a3xpu
 // static int irrelevant_subgraph(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="irrelevant_subgraph", key="eyh488kxcrbg6le1efk7a3xpu", definition="static int irrelevant_subgraph(Agraph_t * g)")
 public static Object irrelevant_subgraph(Object... arg) {
 UNSUPPORTED("4oyi2kt79cxmi0rtl1m5q6g6h"); // static int irrelevant_subgraph(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -650,6 +663,8 @@ throw new UnsupportedOperationException();
 
 //3 ck85o9cm7ekqx3c2l0adsac5s
 // int node_in_subg(Agraph_t * g, Agnode_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="node_in_subg", key="ck85o9cm7ekqx3c2l0adsac5s", definition="int node_in_subg(Agraph_t * g, Agnode_t * n)")
 public static Object node_in_subg(Object... arg) {
 UNSUPPORTED("lttsft2kddk4usoa58k8snym"); // int node_in_subg(Agraph_t * g, Agnode_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -671,6 +686,8 @@ throw new UnsupportedOperationException();
 
 //3 ksojc2a5losovfniqlzgt1vt
 // static int has_no_edges(Agraph_t * g, Agnode_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="has_no_edges", key="ksojc2a5losovfniqlzgt1vt", definition="static int has_no_edges(Agraph_t * g, Agnode_t * n)")
 public static Object has_no_edges(Object... arg) {
 UNSUPPORTED("64vkuv5tpo1b1viokvi658vrb"); // static int has_no_edges(Agraph_t * g, Agnode_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -686,6 +703,8 @@ throw new UnsupportedOperationException();
 
 //3 2iad3x6pf4ovvofoylnqwe2wc
 // static int has_no_predecessor_below(Agraph_t * g, Agnode_t * n, 				    unsigned long val) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="has_no_predecessor_below", key="2iad3x6pf4ovvofoylnqwe2wc", definition="static int has_no_predecessor_below(Agraph_t * g, Agnode_t * n, 				    unsigned long val)")
 public static Object has_no_predecessor_below(Object... arg) {
 UNSUPPORTED("7lbmpmt9voddi7i14szyn3qmm"); // static int has_no_predecessor_below(Agraph_t * g, Agnode_t * n,
 UNSUPPORTED("1fr81p8hxc1nvf0lvodnf29px"); // 				    unsigned long val)
@@ -707,6 +726,8 @@ throw new UnsupportedOperationException();
 
 //3 tn031eypwz2gs5143bxpsnuu
 // static int not_default_attrs(Agraph_t * g, Agnode_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="not_default_attrs", key="tn031eypwz2gs5143bxpsnuu", definition="static int not_default_attrs(Agraph_t * g, Agnode_t * n)")
 public static Object not_default_attrs(Object... arg) {
 UNSUPPORTED("emqc8yarfq0dgf06cnadhmpy7"); // static int not_default_attrs(Agraph_t * g, Agnode_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -731,6 +752,8 @@ throw new UnsupportedOperationException();
 
 //3 3hudq21u19r8v940lhosa07zk
 // static int write_subgs(Agraph_t * g, iochan_t * ofile) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_subgs", key="3hudq21u19r8v940lhosa07zk", definition="static int write_subgs(Agraph_t * g, iochan_t * ofile)")
 public static Object write_subgs(Object... arg) {
 UNSUPPORTED("81exc454cwr51dk4iq3g3so7e"); // static int write_subgs(Agraph_t * g, iochan_t * ofile)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -756,6 +779,8 @@ throw new UnsupportedOperationException();
 
 //3 61m4d49ffhloytgknml3f3wr9
 // static int write_edge_name(Agedge_t * e, iochan_t * ofile, int terminate) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_edge_name", key="61m4d49ffhloytgknml3f3wr9", definition="static int write_edge_name(Agedge_t * e, iochan_t * ofile, int terminate)")
 public static Object write_edge_name(Object... arg) {
 UNSUPPORTED("7653rldgp23j0jh9w5u24afy9"); // static int write_edge_name(Agedge_t * e, iochan_t * ofile, int terminate)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -771,7 +796,7 @@ UNSUPPORTED("d1a8tpm0uunsuvxjpppo8iww6"); // 	if (terminate)
 UNSUPPORTED("cjtrrjw2cx48bap924touvqbx"); // 	    {if ((ioput(g, ofile, "]")) == EOF) return EOF;};
 UNSUPPORTED("e1ueu04zlv0zdyfii20b8r0rk"); // 	rv = (!(0));
 UNSUPPORTED("2lkbqgh2h6urnppaik3zo7ywi"); //     } else
-UNSUPPORTED("f5bn92wqqc6u64vmryax7oqh4"); // 	rv = (0);
+UNSUPPORTED("f5bn92wqqc6u64vmryax7oqh4"); // 	rv = 0;
 UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
 
@@ -783,6 +808,8 @@ throw new UnsupportedOperationException();
 
 //3 29knq7812qkc7yve3ynqs319m
 // static int write_nondefault_attrs(void *obj, iochan_t * ofile, 				  Dict_t * defdict) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_nondefault_attrs", key="29knq7812qkc7yve3ynqs319m", definition="static int write_nondefault_attrs(void *obj, iochan_t * ofile, 				  Dict_t * defdict)")
 public static Object write_nondefault_attrs(Object... arg) {
 UNSUPPORTED("2eq8u2i8o96r7kj3kvvpk8pp8"); // static int write_nondefault_attrs(void *obj, iochan_t * ofile,
 UNSUPPORTED("f427jfb8dxus2g2a3h2u8o5xu"); // 				  Dict_t * defdict)
@@ -838,6 +865,8 @@ throw new UnsupportedOperationException();
 
 //3 cxw4svv83nd76h7g9n4wtvyhe
 // static int write_nodename(Agnode_t * n, iochan_t * ofile) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_nodename", key="cxw4svv83nd76h7g9n4wtvyhe", definition="static int write_nodename(Agnode_t * n, iochan_t * ofile)")
 public static Object write_nodename(Object... arg) {
 UNSUPPORTED("cpgq7yh759xl1zrvqft4831wz"); // static int write_nodename(Agnode_t * n, iochan_t * ofile)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -862,6 +891,8 @@ throw new UnsupportedOperationException();
 
 //3 evmg0r67fn4l8l3ivojk7rt0g
 // static int attrs_written(void *obj) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="attrs_written", key="evmg0r67fn4l8l3ivojk7rt0g", definition="static int attrs_written(void *obj)")
 public static Object attrs_written(Object... arg) {
 UNSUPPORTED("7psl0ji9q989ywpylalpurvqy"); // static int attrs_written(void *obj)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -876,6 +907,8 @@ throw new UnsupportedOperationException();
 
 //3 2m70lxskcmbyg6wdxe5r6ai1e
 // static int write_node(Agnode_t * n, iochan_t * ofile, Dict_t * d) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_node", key="2m70lxskcmbyg6wdxe5r6ai1e", definition="static int write_node(Agnode_t * n, iochan_t * ofile, Dict_t * d)")
 public static Object write_node(Object... arg) {
 UNSUPPORTED("cqa550o688iknrhl43di42f58"); // static int write_node(Agnode_t * n, iochan_t * ofile, Dict_t * d)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -896,6 +929,8 @@ throw new UnsupportedOperationException();
 
 //3 f14lr3pcw3fr38egphpz5nnu4
 // static int write_node_test(Agraph_t * g, Agnode_t * n, 			   unsigned long pred_id) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_node_test", key="f14lr3pcw3fr38egphpz5nnu4", definition="static int write_node_test(Agraph_t * g, Agnode_t * n, 			   unsigned long pred_id)")
 public static Object write_node_test(Object... arg) {
 UNSUPPORTED("5dzvb8cmg948ujvvba4qgoohs"); // static int write_node_test(Agraph_t * g, Agnode_t * n,
 UNSUPPORTED("5wtydk3j3fgnkmg8zhzz67wtx"); // 			   unsigned long pred_id)
@@ -915,6 +950,8 @@ throw new UnsupportedOperationException();
 
 //3 5zf7u1r6hz67tt7a3231b6prh
 // static int write_port(Agedge_t * e, iochan_t * ofile, Agsym_t * port) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_port", key="5zf7u1r6hz67tt7a3231b6prh", definition="static int write_port(Agedge_t * e, iochan_t * ofile, Agsym_t * port)")
 public static Object write_port(Object... arg) {
 UNSUPPORTED("4xje10w5oamectfsdzliliyqw"); // static int write_port(Agedge_t * e, iochan_t * ofile, Agsym_t * port)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -952,6 +989,8 @@ throw new UnsupportedOperationException();
 
 //3 4ldk2wgnwzswqi3af43tel24y
 // static int write_edge_test(Agraph_t * g, Agedge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_edge_test", key="4ldk2wgnwzswqi3af43tel24y", definition="static int write_edge_test(Agraph_t * g, Agedge_t * e)")
 public static Object write_edge_test(Object... arg) {
 UNSUPPORTED("9yp7jgxf5ed1bvk0sw51xbkbo"); // static int write_edge_test(Agraph_t * g, Agedge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -974,6 +1013,8 @@ throw new UnsupportedOperationException();
 
 //3 achkvduksnhmlem44ia61tdpm
 // static int write_edge(Agedge_t * e, iochan_t * ofile, Dict_t * d) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_edge", key="achkvduksnhmlem44ia61tdpm", definition="static int write_edge(Agedge_t * e, iochan_t * ofile, Dict_t * d)")
 public static Object write_edge(Object... arg) {
 UNSUPPORTED("35w5n554uravyh0k7gmn73zup"); // static int write_edge(Agedge_t * e, iochan_t * ofile, Dict_t * d)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1004,6 +1045,8 @@ throw new UnsupportedOperationException();
 
 //3 uu07lrf43gcxm3lfka71pyvs
 // static int write_body(Agraph_t * g, iochan_t * ofile) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="write_body", key="uu07lrf43gcxm3lfka71pyvs", definition="static int write_body(Agraph_t * g, iochan_t * ofile)")
 public static Object write_body(Object... arg) {
 UNSUPPORTED("24udwe07nmfa7mly8u6t458cy"); // static int write_body(Agraph_t * g, iochan_t * ofile)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1039,6 +1082,8 @@ throw new UnsupportedOperationException();
 
 //3 6qzik6sn6t699oya0mtmc09kj
 // static void set_attrwf(Agraph_t * g, int toplevel, int value) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="set_attrwf", key="6qzik6sn6t699oya0mtmc09kj", definition="static void set_attrwf(Agraph_t * g, int toplevel, int value)")
 public static Object set_attrwf(Object... arg) {
 UNSUPPORTED("8qq9xih8ju452kzwi2vfuflx1"); // static void set_attrwf(Agraph_t * g, int toplevel, int value)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1066,6 +1111,8 @@ throw new UnsupportedOperationException();
 
 //3 9bptgx2xn1o2lmf9b3bmbjcx8
 // int agwrite(Agraph_t * g, void *ofile) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/write.c", name="agwrite", key="9bptgx2xn1o2lmf9b3bmbjcx8", definition="int agwrite(Agraph_t * g, void *ofile)")
 public static Object agwrite(Object... arg) {
 UNSUPPORTED("354j237921gksw95lxhfou3c9"); // int agwrite(Agraph_t * g, void *ofile)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

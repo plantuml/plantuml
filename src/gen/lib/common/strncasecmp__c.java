@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class strncasecmp__c {
@@ -51,6 +54,8 @@ public class strncasecmp__c {
 
 //3 6fpqvqq5eso7d44vai4lz77jd
 // int strncasecmp(const char *s1, const char *s2, unsigned int n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/strncasecmp.c", name="strncasecmp", key="6fpqvqq5eso7d44vai4lz77jd", definition="int strncasecmp(const char *s1, const char *s2, unsigned int n)")
 public static Object strncasecmp(Object... arg) {
 UNSUPPORTED("41sf831iel4ggk6nxgerc7lrz"); // int strncasecmp(const char *s1, const char *s2, unsigned int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

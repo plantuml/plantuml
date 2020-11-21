@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -79,6 +80,11 @@ public class FtileDiamondFoo1 extends AbstractFtile {
 	public FtileDiamondFoo1 withEast(TextBlock east) {
 		return new FtileDiamondFoo1(skinParam(), backColor, borderColor, swimlane, label, north, west, east);
 	}
+	
+	public Ftile withWestAndEast(TextBlock tb1, TextBlock tb2) {
+		return withWest(tb1).withEast(tb2);
+	}
+
 
 	private FtileDiamondFoo1(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
 			TextBlock label, TextBlock north, TextBlock west, TextBlock east) {

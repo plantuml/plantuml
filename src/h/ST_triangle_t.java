@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,9 +45,6 @@
  */
 package h;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.amiga.StarStruct;
 
@@ -63,57 +60,9 @@ public class ST_triangle_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	public static class Array {
-
-		private final List<ST_triangle_t> data;
-		private final int pos;
-
-		public Array(int size) {
-			this.data = new ArrayList<ST_triangle_t>();
-			this.pos = 0;
-			for (int i = 0; i < size; i++) {
-				data.add(new ST_triangle_t());
-			}
-		}
-
-		public Array reallocJ(int newsize) {
-			while (data.size() < newsize) {
-				data.add(new ST_triangle_t());
-			}
-			return this;
-		}
-
-		private Array(List<ST_triangle_t> data, int pos) {
-			this.data = data;
-			this.pos = pos;
-		}
-
-		public ST_triangle_t get(int i) {
-			return this.data.get(pos + i);
-		}
-
-		public Array plusJ(int i) {
-			return new Array(data, pos + i);
-		}
-
-		public int minus(Array other) {
-			if (this.data != other.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos - other.pos;
-		}
-
-	}
-
-	// "typedef struct triangle_t",
-	// "{",
 	public int mark;
 
 	public final ST_tedge_t e[] = new ST_tedge_t[] { new ST_tedge_t(), new ST_tedge_t(), new ST_tedge_t() };
-
-	// "struct tedge_t e[3]",
-	// "}",
-	// "triangle_t");
 
 	@Override
 	public void setInt(String fieldName, int data) {

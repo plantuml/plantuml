@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -65,7 +65,8 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 	public final ST_Agrec_s hdr = new ST_Agrec_s(this);
 
 	public ST_shape_desc shape;
-	public ST_polygon_t shape_info;
+	public __ptr__ shape_info;
+	// public ST_polygon_t shape_info;
 	public final ST_pointf coord = new ST_pointf(this);
 	public double width, height;
 
@@ -213,7 +214,12 @@ public class ST_Agnodeinfo_t extends UnsupportedStructAndPtr {
 			return shape;
 		}
 		if (fieldName.equals("shape_info")) {
-			this.shape_info = (ST_polygon_t) newData;
+			if (newData instanceof ST_polygon_t)
+				this.shape_info = (ST_polygon_t) newData;
+			else if (newData instanceof ST_field_t)
+				this.shape_info = (ST_field_t) newData;
+			else
+				throw new UnsupportedOperationException();
 			return shape_info;
 		}
 		if (fieldName.equals("label")) {

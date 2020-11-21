@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -71,7 +71,8 @@ import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGOUTEDGE;
 import static smetana.core.Macro.AGTYPE;
-import static smetana.core.Macro.ALLOC_allocated_ST_Agnode_s;
+import static smetana.core.Macro.BOTTOM_IX;
+import static smetana.core.Macro.CL_OFFSET;
 import static smetana.core.Macro.ED_dist;
 import static smetana.core.Macro.ED_head_port;
 import static smetana.core.Macro.ED_label;
@@ -99,6 +100,7 @@ import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.GD_ranksep;
 import static smetana.core.Macro.GD_rn;
 import static smetana.core.Macro.INT_MAX;
+import static smetana.core.Macro.LEAFSET;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.MIN;
 import static smetana.core.Macro.N;
@@ -126,11 +128,20 @@ import static smetana.core.Macro.ND_save_in;
 import static smetana.core.Macro.ND_save_out;
 import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.ROUND;
+import static smetana.core.Macro.TOP_IX;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.UNSURE_ABOUT;
 import static smetana.core.Macro.aghead;
 import static smetana.core.Macro.agtail;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.Macro.free_list;
+
+import gen.annotation.Difficult;
+import gen.annotation.HasND_Rank;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Todo;
+import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_Agedgepair_s;
@@ -141,251 +152,27 @@ import h.ST_point;
 import h.ST_pointf;
 import h.ST_rank_t;
 import h.ratio_t;
+import smetana.core.CStar;
+import smetana.core.CStarStar;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
 
+
+/*
+ * position(g): set ND_coord(n) (x and y) for all nodes n of g, using GD_rank(g).
+ * (the graph may be modified by merging certain edges with a common endpoint.)
+ * the coordinates are computed by constructing and ranking an auxiliary graph.
+ * then leaf nodes are inserted in the fast graph.  cluster boundary nodes are
+ * created and correctly separated.
+ */
 public class position__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
-
-
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
-
-
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
-
-
 
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -401,29 +188,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
 
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -445,6 +216,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -460,29 +233,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -500,6 +255,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -517,6 +274,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -534,6 +293,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -551,6 +312,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -568,6 +331,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -585,6 +350,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -602,6 +369,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -621,6 +390,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -640,6 +411,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -659,6 +432,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -678,6 +453,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -692,6 +469,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -706,6 +485,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -720,6 +501,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -734,6 +517,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -751,6 +536,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -768,6 +555,8 @@ throw new UnsupportedOperationException();
 
 //3 6knxbdrmgk6294aw61s2lpvvf
 // static double largeMinlen (double l) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="largeMinlen", key="6knxbdrmgk6294aw61s2lpvvf", definition="static double largeMinlen (double l)")
 public static double largeMinlen(double l) {
 ENTERING("6knxbdrmgk6294aw61s2lpvvf","largeMinlen");
 try {
@@ -789,6 +578,9 @@ LEAVING("6knxbdrmgk6294aw61s2lpvvf","largeMinlen");
 
 //3 ccowbxkwmrj75tojopmhcmubx
 // static void connectGraph (graph_t* g) 
+@Unused
+@HasND_Rank
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="connectGraph", key="ccowbxkwmrj75tojopmhcmubx", definition="static void connectGraph (graph_t* g)")
 public static void connectGraph(ST_Agraph_s g) {
 ENTERING("ccowbxkwmrj75tojopmhcmubx","connectGraph");
 try {
@@ -797,15 +589,16 @@ try {
     ST_Agnode_s hp;
     ST_Agnode_s sn;
     ST_Agedge_s e;
-    ST_rank_t.Array2 rp;
+    CStar<ST_rank_t> rp;
+    
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	rp = GD_rank(g).plus(r);
+	rp = GD_rank(g).plus_(r);
 	found =0;
         tp = null;
-	for (i = 0; i < rp.getPtr().n; i++) {
-	    tp = (ST_Agnode_s) rp.getPtr().v.get(i);
-	    if (ND_save_out(tp).listNotNull()) {
-        	for (j = 0; (e = (ST_Agedge_s) ND_save_out(tp).getFromList(j))!=null; j++) {
+	for (i = 0; i < rp.get__(0).n; i++) {
+	    tp = (ST_Agnode_s) rp.get__(0).v.get_(i);
+	    if (ND_save_out(tp).list!=null) {
+        	for (j = 0; (e = (ST_Agedge_s) ND_save_out(tp).list.get_(j))!=null; j++) {
 		    if ((ND_rank(aghead(e)) > r) || (ND_rank(agtail(e)) > r)) {
 			found = 1;
 			break;
@@ -813,8 +606,8 @@ try {
         	}
 		if (found!=0) break;
 	    }
-	    if (ND_save_in(tp).listNotNull()) {
-        	for (j = 0; (e = (ST_Agedge_s) ND_save_in(tp).getFromList(j))!=null; j++) {
+	    if (ND_save_in(tp).list!=null) {
+        	for (j = 0; (e = (ST_Agedge_s) ND_save_in(tp).list.get_(j))!=null; j++) {
 		    if ((ND_rank(agtail(e)) > r) || (ND_rank(aghead(e)) > r)) {
 			found = 1;
 			break;
@@ -824,9 +617,9 @@ try {
 	    }
 	}
 	if (found!=0 || N(tp)) continue;
-	tp = (ST_Agnode_s) rp.getPtr().v.get(0);
-	if (r < GD_maxrank(g)) hp = (ST_Agnode_s) rp.get(1).v.get(0);
-	else hp = (ST_Agnode_s) rp.plus(-1).getPtr().v.get(0);
+	tp = rp.get__(0).v.get_(0);
+	if (r < GD_maxrank(g)) hp = (ST_Agnode_s) rp.get__(1).v.get_(0);
+	else hp = (ST_Agnode_s) rp.get__(-1).v.get_(0);
 	//assert (hp);
 	sn = virtual_node(g);
 	ND_node_type(sn, 2);
@@ -842,8 +635,8 @@ LEAVING("ccowbxkwmrj75tojopmhcmubx","connectGraph");
 
 
 
-//3 33snzyd9z0loienur06dnily9
-// void dot_position(graph_t * g, aspect_t* asp) 
+@Reviewed(when = "15/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="dot_position", key="33snzyd9z0loienur06dnily9", definition="void dot_position(graph_t * g, aspect_t* asp)")
 public static void dot_position(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("33snzyd9z0loienur06dnily9","dot_position");
 try {
@@ -854,7 +647,7 @@ try {
     if (Z.z().Concentrate)
 	dot_concentrate(g);
     expand_leaves(g);
-    if (flat_edges(g)!=0)
+    if (flat_edges(g))
 	set_ycoords(g);
     create_aux_edges(g);
     if (rank(g, 2, nsiter2(g))!=0) { /* LR balance == 2 */
@@ -876,6 +669,8 @@ LEAVING("33snzyd9z0loienur06dnily9","dot_position");
 
 //3 90vn63m6v0w9fn9a2dgfxxx3h
 // static int nsiter2(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="nsiter2", key="90vn63m6v0w9fn9a2dgfxxx3h", definition="static int nsiter2(graph_t * g)")
 public static int nsiter2(ST_Agraph_s g) {
 ENTERING("90vn63m6v0w9fn9a2dgfxxx3h","nsiter2");
 try {
@@ -894,16 +689,18 @@ LEAVING("90vn63m6v0w9fn9a2dgfxxx3h","nsiter2");
 
 //3 5bax8ut6nnk4pr7yxdumk9chl
 // static int go(node_t * u, node_t * v) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="go", key="5bax8ut6nnk4pr7yxdumk9chl", definition="static int go(node_t * u, node_t * v)")
 public static boolean go(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("5bax8ut6nnk4pr7yxdumk9chl","go");
 try {
     int i;
     ST_Agedge_s e;
     if (EQ(u, v))
-	return NOT(false);
-    for (i = 0; (e = (ST_Agedge_s) ND_out(u).getFromList(i))!=null; i++) {
+	return true;
+    for (i = 0; (e = (ST_Agedge_s) ND_out(u).list.get_(i))!=null; i++) {
 	if (go(aghead(e), v))
-	    return NOT(false);
+	    return true;
     }
     return false;
 } finally {
@@ -916,6 +713,8 @@ LEAVING("5bax8ut6nnk4pr7yxdumk9chl","go");
 
 //3 9xz8numztzj4qsq85pziahv1k
 // static int canreach(node_t * u, node_t * v) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="canreach", key="9xz8numztzj4qsq85pziahv1k", definition="static int canreach(node_t * u, node_t * v)")
 public static boolean canreach(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("9xz8numztzj4qsq85pziahv1k","canreach");
 try {
@@ -930,6 +729,8 @@ LEAVING("9xz8numztzj4qsq85pziahv1k","canreach");
 
 //3 4cvgiatny97ou6mhqoq6aqwek
 // edge_t *make_aux_edge(node_t * u, node_t * v, double len, int wt) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="", key="4cvgiatny97ou6mhqoq6aqwek", definition="edge_t *make_aux_edge(node_t * u, node_t * v, double len, int wt)")
 public static ST_Agedge_s make_aux_edge(ST_Agnode_s u, ST_Agnode_s v, double len, int wt) {
 ENTERING("4cvgiatny97ou6mhqoq6aqwek","make_aux_edge");
 try {
@@ -957,6 +758,8 @@ LEAVING("4cvgiatny97ou6mhqoq6aqwek","make_aux_edge");
 
 //3 53fvij7oun7aezlb7x66vzuyb
 // static void allocate_aux_edges(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="allocate_aux_edges", key="53fvij7oun7aezlb7x66vzuyb", definition="static void allocate_aux_edges(graph_t * g)")
 public static void allocate_aux_edges(ST_Agraph_s g) {
 ENTERING("53fvij7oun7aezlb7x66vzuyb","allocate_aux_edges");
 try {
@@ -966,8 +769,8 @@ try {
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	ND_save_in(n, ND_in(n));
 	ND_save_out(n, ND_out(n));
-	for (i = 0; ND_out(n).getFromList(i)!=null; i++);
-	for (j = 0; ND_in(n).getFromList(j)!=null; j++);
+	for (i = 0; ND_out(n).list.get_(i)!=null; i++);
+	for (j = 0; ND_in(n).list.get_(j)!=null; j++);
 	n_in = i + j;
 	alloc_elist(n_in + 3, ND_in(n));
 	alloc_elist(3, ND_out(n));
@@ -982,6 +785,9 @@ LEAVING("53fvij7oun7aezlb7x66vzuyb","allocate_aux_edges");
 
 //3 ah28nr6mxpjeosr85bhmzd3si
 // static void  make_LR_constraints(graph_t * g) 
+@Unused
+@HasND_Rank
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="make_LR_constraints", key="ah28nr6mxpjeosr85bhmzd3si", definition="static void  make_LR_constraints(graph_t * g)")
 public static void make_LR_constraints(ST_Agraph_s g) {
 ENTERING("ah28nr6mxpjeosr85bhmzd3si","make_LR_constraints");
 try {
@@ -993,7 +799,7 @@ try {
     int nodesep;      /* separation between nodes on same rank */
     ST_Agedge_s e, e0, e1, ff;
     ST_Agnode_s u, v, t0, h0;
-    ST_rank_t.Array2 rank = GD_rank(g);
+    CStar<ST_rank_t> rank = GD_rank(g);
     /* Use smaller separation on odd ranks if g has edge labels */
     if ((GD_has_labels(g) & (1 << 0))!=0) {
 	sep[0] = GD_nodesep(g);
@@ -1005,11 +811,11 @@ try {
     /* make edges to constrain left-to-right ordering */
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
 	double last;
-	ND_rank(rank.get(i).v.get(0), 0);
+	ND_rank(rank.get__(i).v.get_(0), 0);
 	last = 0;
 	nodesep = sep[i & 1];
-	for (j = 0; j < rank.get(i).n; j++) {
-	    u = (ST_Agnode_s) rank.get(i).v.get(j);
+	for (j = 0; j < rank.get__(i).n; j++) {
+	    u = rank.get__(i).v.get_(j);
 	    ND_mval(u, ND_rw(u));	/* keep it somewhere safe */
 	    if (ND_other(u).size > 0) {	/* compute self size */
 		/* FIX: dot assumes all self-edges go to the right. This
@@ -1021,14 +827,14 @@ try {
                  * positioning but may also affect interrank spacing.
                  */
 		sw = 0;
-		for (k = 0; (e = (ST_Agedge_s) ND_other(u).getFromList(k))!=null; k++) {
+		for (k = 0; (e = (ST_Agedge_s) ND_other(u).list.get_(k))!=null; k++) {
 		    if (EQ(agtail(e), aghead(e))) {
 			sw += selfRightSpace (e);
 		    }
 		}
 		ND_rw(u, ND_rw(u) + sw);	/* increment to include self edges */
 	    }
-	    v = (ST_Agnode_s) rank.get(i).v.plus(j + 1).getPtr();
+	    v = rank.get__(i).v.get_(j + 1);
 	    if (v!=null) {
 		width = ND_rw(u) + ND_lw(v) + nodesep;
 		e0 = make_aux_edge(u, v, width, 0);
@@ -1037,8 +843,8 @@ try {
 	    }
 	    /* constraints from labels of flat edges on previous rank */
 	    if ((e = (ST_Agedge_s) ND_alg(u))!=null) {
-		e0 = (ST_Agedge_s) ND_save_out(u).getFromList(0);
-		e1 = (ST_Agedge_s) ND_save_out(u).getFromList(1);
+		e0 = (ST_Agedge_s) ND_save_out(u).list.get_(0);
+		e1 = (ST_Agedge_s) ND_save_out(u).list.get_(1);
 		if (ND_order(aghead(e0)) > ND_order(aghead(e1))) {
 		    ff = e0;
 		    e0 = e1;
@@ -1058,7 +864,7 @@ try {
 	    }
 	    /* position flat edge endpoints */
 	    for (k = 0; k < ND_flat_out(u).size; k++) {
-		e = (ST_Agedge_s) ND_flat_out(u).getFromList(k);
+		e = (ST_Agedge_s) ND_flat_out(u).list.get_(k);
 		if (ND_order(agtail(e)) < ND_order(aghead(e))) {
 		    t0 = agtail(e);
 		    h0 = aghead(e);
@@ -1101,6 +907,9 @@ LEAVING("ah28nr6mxpjeosr85bhmzd3si","make_LR_constraints");
 
 //3 6uruo8mutxgcni9fm8jcrw4cr
 // static void make_edge_pairs(graph_t * g) 
+@Unused
+@HasND_Rank
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="make_edge_pairs", key="6uruo8mutxgcni9fm8jcrw4cr", definition="static void make_edge_pairs(graph_t * g)")
 public static void make_edge_pairs(ST_Agraph_s g) {
 ENTERING("6uruo8mutxgcni9fm8jcrw4cr","make_edge_pairs");
 try {
@@ -1108,8 +917,8 @@ try {
     ST_Agnode_s n, sn;
     ST_Agedge_s e;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	if (ND_save_out(n).listNotNull())
-	    for (i = 0; (e = (ST_Agedge_s) ND_save_out(n).getFromList(i))!=null; i++) {
+	if (ND_save_out(n).list!=null)
+	    for (i = 0; (e = (ST_Agedge_s) ND_save_out(n).list.get_(i))!=null; i++) {
 		sn = virtual_node(g);
 		ND_node_type(sn, 2);
 		m0 = (int)(ED_head_port(e).p.x - ED_tail_port(e).p.x);
@@ -1136,6 +945,8 @@ LEAVING("6uruo8mutxgcni9fm8jcrw4cr","make_edge_pairs");
 
 //3 79v3omwzni0nm3h05l3onjsbz
 // static void contain_clustnodes(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="contain_clustnodes", key="79v3omwzni0nm3h05l3onjsbz", definition="static void contain_clustnodes(graph_t * g)")
 public static void contain_clustnodes(ST_Agraph_s g) {
 ENTERING("79v3omwzni0nm3h05l3onjsbz","contain_clustnodes");
 try {
@@ -1149,7 +960,7 @@ try {
 	    make_aux_edge(GD_ln(g), GD_rn(g), 1, 128);	/* clust compaction edge */
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
-	contain_clustnodes((ST_Agraph_s) GD_clust(g).get(c).getPtr());
+	contain_clustnodes((ST_Agraph_s) GD_clust(g).get_(c).getPtr());
 } finally {
 LEAVING("79v3omwzni0nm3h05l3onjsbz","contain_clustnodes");
 }
@@ -1160,18 +971,20 @@ LEAVING("79v3omwzni0nm3h05l3onjsbz","contain_clustnodes");
 
 //3 24yfgklubun581fbfyx62lzsm
 // static int vnode_not_related_to(graph_t * g, node_t * v) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="vnode_not_related_to", key="24yfgklubun581fbfyx62lzsm", definition="static int vnode_not_related_to(graph_t * g, node_t * v)")
 public static boolean vnode_not_related_to(ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("24yfgklubun581fbfyx62lzsm","vnode_not_related_to");
 try {
     ST_Agedge_s e;
     if (ND_node_type(v) != 1)
 	return false;
-    for (e = (ST_Agedge_s) ND_save_out(v).getFromList(0); ED_to_orig(e)!=null; e = ED_to_orig(e));
+    for (e = (ST_Agedge_s) ND_save_out(v).list.get_(0); ED_to_orig(e)!=null; e = ED_to_orig(e));
     if (agcontains(g, agtail(e)))
 	return false;
     if (agcontains(g, aghead(e)))
 	return false;
-    return NOT(false);
+    return true;
 } finally {
 LEAVING("24yfgklubun581fbfyx62lzsm","vnode_not_related_to");
 }
@@ -1182,6 +995,8 @@ LEAVING("24yfgklubun581fbfyx62lzsm","vnode_not_related_to");
 
 //3 73cdgjl47ohty2va766evbo4
 // static void keepout_othernodes(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="keepout_othernodes", key="73cdgjl47ohty2va766evbo4", definition="static void keepout_othernodes(graph_t * g)")
 public static void keepout_othernodes(ST_Agraph_s g) {
 ENTERING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 try {
@@ -1189,22 +1004,22 @@ try {
     ST_Agnode_s u, v;
     margin = late_int (g, Z.z().G_margin, 8, 0);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	if (GD_rank(g).get(r).n == 0)
+	if (GD_rank(g).get__(r).n == 0)
 	    continue;
-	v = (ST_Agnode_s) GD_rank(g).get(r).v.get(0);
+	v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(0);
 	if (v == null)
 	    continue;
 	for (i = ND_order(v) - 1; i >= 0; i--) {
-	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get(r).v.get(i);
+	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get__(r).v.get_(i);
 	    /* can't use "is_a_vnode_of" because elists are swapped */
 	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
 		make_aux_edge(u, GD_ln(g), margin + ND_rw(u), 0);
 		break;
 	    }
 	}
-	for (i = ND_order(v) + GD_rank(g).get(r).n; i < GD_rank(dot_root(g)).get(r).n;
+	for (i = ND_order(v) + GD_rank(g).get__(r).n; i < GD_rank(dot_root(g)).get__(r).n;
 	     i++) {
-	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get(r).v.get(i);
+	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get__(r).v.get_(i);
 	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
 		make_aux_edge(GD_rn(g), u, margin + ND_lw(u), 0);
 		break;
@@ -1212,7 +1027,7 @@ try {
 	}
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
-	keepout_othernodes((ST_Agraph_s) GD_clust(g).get(c).getPtr());
+	keepout_othernodes((ST_Agraph_s) GD_clust(g).get_(c).getPtr());
 } finally {
 LEAVING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 }
@@ -1223,6 +1038,8 @@ LEAVING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 
 //3 c734mx1638sfqtl7vh7itaxyx
 // static void contain_subclust(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="contain_subclust", key="c734mx1638sfqtl7vh7itaxyx", definition="static void contain_subclust(graph_t * g)")
 public static void contain_subclust(ST_Agraph_s g) {
 ENTERING("c734mx1638sfqtl7vh7itaxyx","contain_subclust");
 try {
@@ -1231,7 +1048,7 @@ try {
     margin = late_int (g, Z.z().G_margin, 8, 0);
     make_lrvn(g);
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	subg = (ST_Agraph_s) GD_clust(g).get(c).getPtr();
+	subg = (ST_Agraph_s) GD_clust(g).get_(c).getPtr();
 	make_lrvn(subg);
 	make_aux_edge(GD_ln(g), GD_ln(subg),
 		      margin + GD_border(g)[3].x, 0);
@@ -1249,6 +1066,8 @@ LEAVING("c734mx1638sfqtl7vh7itaxyx","contain_subclust");
 
 //3 6oruu1p1b7kxr5moh3kmcmvr3
 // static void separate_subclust(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="separate_subclust", key="6oruu1p1b7kxr5moh3kmcmvr3", definition="static void separate_subclust(graph_t * g)")
 public static void separate_subclust(ST_Agraph_s g) {
 ENTERING("6oruu1p1b7kxr5moh3kmcmvr3","separate_subclust");
 try {
@@ -1257,11 +1076,11 @@ try {
     ST_Agraph_s left, right;
     margin = late_int (g, Z.z().G_margin, 8, 0);
     for (i = 1; i <= GD_n_cluster(g); i++)
-	make_lrvn((ST_Agraph_s) GD_clust(g).get(i).getPtr());
+	make_lrvn((ST_Agraph_s) GD_clust(g).get_(i).getPtr());
     for (i = 1; i <= GD_n_cluster(g); i++) {
 	for (j = i + 1; j <= GD_n_cluster(g); j++) {
-	    low = (ST_Agraph_s) GD_clust(g).get(i).getPtr();
-	    high = (ST_Agraph_s) GD_clust(g).get(j).getPtr();
+	    low = (ST_Agraph_s) GD_clust(g).get_(i).getPtr();
+	    high = (ST_Agraph_s) GD_clust(g).get_(j).getPtr();
 	    if (GD_minrank(low) > GD_minrank(high)) {
 		ST_Agraph_s temp = low;
 		low = high;
@@ -1269,8 +1088,8 @@ try {
 	    }
 	    if (GD_maxrank(low) < GD_minrank(high))
 		continue;
-	    if (ND_order(GD_rank(low).get(GD_minrank(high)).v.get(0))
-		< ND_order(GD_rank(high).get(GD_minrank(high)).v.get(0))) {
+	    if (ND_order(GD_rank(low).get__(GD_minrank(high)).v.get_(0))
+		< ND_order(GD_rank(high).get__(GD_minrank(high)).v.get_(0))) {
 		left = low;
 		right = high;
 	    } else {
@@ -1279,7 +1098,7 @@ try {
 	    }
 	    make_aux_edge(GD_rn(left), GD_ln(right), margin, 0);
 	}
-	separate_subclust((ST_Agraph_s) GD_clust(g).get(i).getPtr());
+	separate_subclust((ST_Agraph_s) GD_clust(g).get_(i).getPtr());
     }
 } finally {
 LEAVING("6oruu1p1b7kxr5moh3kmcmvr3","separate_subclust");
@@ -1291,6 +1110,8 @@ LEAVING("6oruu1p1b7kxr5moh3kmcmvr3","separate_subclust");
 
 //3 8f8gs2zivo4pnd3hmtb9g23x4
 // static void pos_clusters(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="pos_clusters", key="8f8gs2zivo4pnd3hmtb9g23x4", definition="static void pos_clusters(graph_t * g)")
 public static void pos_clusters(ST_Agraph_s g) {
 ENTERING("8f8gs2zivo4pnd3hmtb9g23x4","pos_clusters");
 try {
@@ -1310,6 +1131,8 @@ LEAVING("8f8gs2zivo4pnd3hmtb9g23x4","pos_clusters");
 
 //3 fywsxto7yvl5wa2dfu7u7jj1
 // static void compress_graph(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="compress_graph", key="fywsxto7yvl5wa2dfu7u7jj1", definition="static void compress_graph(graph_t * g)")
 public static void compress_graph(ST_Agraph_s g) {
 ENTERING("fywsxto7yvl5wa2dfu7u7jj1","compress_graph");
 try {
@@ -1344,6 +1167,8 @@ LEAVING("fywsxto7yvl5wa2dfu7u7jj1","compress_graph");
 
 //3 b7y0htx4svbhaqb1a12dihlue
 // static void create_aux_edges(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="create_aux_edges", key="b7y0htx4svbhaqb1a12dihlue", definition="static void create_aux_edges(graph_t * g)")
 public static void create_aux_edges(ST_Agraph_s g) {
 ENTERING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 try {
@@ -1362,6 +1187,8 @@ LEAVING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 
 //3 euzeilq92ry8a4tcrij5s52t5
 // static void remove_aux_edges(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="remove_aux_edges", key="euzeilq92ry8a4tcrij5s52t5", definition="static void remove_aux_edges(graph_t * g)")
 public static void remove_aux_edges(ST_Agraph_s g) {
 ENTERING("euzeilq92ry8a4tcrij5s52t5","remove_aux_edges");
 try {
@@ -1369,7 +1196,7 @@ try {
     ST_Agnode_s n, nnext, nprev;
     ST_Agedge_s e;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	for (i = 0; (e = (ST_Agedge_s) ND_out(n).getFromList(i))!=null; i++) {
+	for (i = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++) {
 	    Memory.free(e.base.data);
 	    Memory.free(e);
 	}
@@ -1403,15 +1230,18 @@ LEAVING("euzeilq92ry8a4tcrij5s52t5","remove_aux_edges");
 
 //3 1oobmglea9t819y95xeel37h8
 // static void  set_xcoords(graph_t * g) 
+@Unused
+@HasND_Rank
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="set_xcoords", key="1oobmglea9t819y95xeel37h8", definition="static void  set_xcoords(graph_t * g)")
 public static void set_xcoords(ST_Agraph_s g) {
 ENTERING("1oobmglea9t819y95xeel37h8","set_xcoords");
 try {
     int i, j;
     ST_Agnode_s v;
-    ST_rank_t.Array2 rank = GD_rank(g);
+    CStar<ST_rank_t> rank = GD_rank(g);
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
-	for (j = 0; j < rank.get(i).n; j++) {
-	    v = (ST_Agnode_s) rank.get(i).v.get(j);
+	for (j = 0; j < rank.get__(i).n; j++) {
+	    v = (ST_Agnode_s) rank.get__(i).v.get_(j);
 	    ND_coord(v).x = ND_rank(v);
 	    ND_rank(v, i);
 	}
@@ -1426,6 +1256,8 @@ LEAVING("1oobmglea9t819y95xeel37h8","set_xcoords");
 
 //3 6mip7s1k9xt9tp6x6nnsbt34p
 // static void adjustSimple(graph_t * g, int delta, int margin_total) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="adjustSimple", key="6mip7s1k9xt9tp6x6nnsbt34p", definition="static void adjustSimple(graph_t * g, int delta, int margin_total)")
 public static Object adjustSimple(Object... arg) {
 UNSUPPORTED("6b5zs45snahyh3bzod53vasjx"); // static void adjustSimple(graph_t * g, int delta, int margin_total)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1463,6 +1295,8 @@ throw new UnsupportedOperationException();
 
 //3 9sv968rni5moio662r9kjzai3
 // static void adjustRanks(graph_t * g, int margin_total) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="adjustRanks", key="9sv968rni5moio662r9kjzai3", definition="static void adjustRanks(graph_t * g, int margin_total)")
 public static Object adjustRanks(Object... arg) {
 UNSUPPORTED("47ywar141vmwjartmboxs38cz"); // static void adjustRanks(graph_t * g, int margin_total)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1511,46 +1345,57 @@ throw new UnsupportedOperationException();
 
 
 
-//3 emtrqv582hdma5aajqtjd76m1
-// static int clust_ht(Agraph_t * g) 
+/* clust_ht:
+ * recursively compute cluster ht requirements.  assumes GD_ht1(subg) and ht2
+ * are computed from primitive nodes only.  updates ht1 and ht2 to reflect
+ * cluster nesting and labels.  also maintains global rank ht1 and ht2.
+ * Return true if some cluster has a label.
+ */
+@Reviewed(when = "15/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="clust_ht", key="emtrqv582hdma5aajqtjd76m1", definition="static int clust_ht(Agraph_t * g)")
 public static int clust_ht(ST_Agraph_s g) {
 ENTERING("emtrqv582hdma5aajqtjd76m1","clust_ht");
 try {
     int c;
     double ht1, ht2;
     ST_Agraph_s subg;
-    ST_rank_t.Array2 rank = GD_rank(dot_root(g));
+    CStar<ST_rank_t> rank = GD_rank(dot_root(g));
     int margin, haveClustLabel = 0;
+    
     if (EQ(g, dot_root(g))) 
-	margin = 8;
+	margin = CL_OFFSET;
     else
-	margin = late_int (g, Z.z().G_margin, 8, 0);
+	margin = late_int (g, Z.z().G_margin, CL_OFFSET, 0);
+    
     ht1 = GD_ht1(g);
     ht2 = GD_ht2(g);
+    
     /* account for sub-clusters */
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	subg = (ST_Agraph_s) GD_clust(g).get(c).getPtr();
+	subg = GD_clust(g).get_(c);
 	haveClustLabel |= clust_ht(subg);
 	if (GD_maxrank(subg) == GD_maxrank(g))
 	    ht1 = MAX(ht1, GD_ht1(subg) + margin);
 	if (GD_minrank(subg) == GD_minrank(g))
 	    ht2 = MAX(ht2, GD_ht2(subg) + margin);
     }
+    
     /* account for a possible cluster label in clusters */
     /* room for root graph label is handled in dotneato_postprocess */
     if (NEQ(g, dot_root(g)) && GD_label(g)!=null) {
 	haveClustLabel = 1;
 	if (N(GD_flip(agroot(g)))) {
-	    ht1 += GD_border(g)[0].y;
-	    ht2 += GD_border(g)[2].y;
+	    ht1 += GD_border(g)[BOTTOM_IX].y;
+	    ht2 += GD_border(g)[TOP_IX].y;
 	}
     }
     GD_ht1(g, ht1);
     GD_ht2(g, ht2);
+    
     /* update the global ranks */
     if (NEQ(g, dot_root(g))) {
-	rank.plus(GD_minrank(g)).setDouble("ht2", MAX(rank.get(GD_minrank(g)).ht2, ht2));
-	rank.plus(GD_maxrank(g)).setDouble("ht1", MAX(rank.get(GD_maxrank(g)).ht1, ht1));
+	rank.get__(GD_minrank(g)).ht2 = MAX(rank.get__(GD_minrank(g)).ht2, ht2);
+	rank.get__(GD_maxrank(g)).ht1 = MAX(rank.get__(GD_maxrank(g)).ht1, ht1);
     }
     return haveClustLabel;
 } finally {
@@ -1561,8 +1406,9 @@ LEAVING("emtrqv582hdma5aajqtjd76m1","clust_ht");
 
 
 
-//3 bp8vmol4ncadervcfossysdtd
-// static void set_ycoords(graph_t * g) 
+@Reviewed(when = "15/11/2020")
+@Difficult
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="set_ycoords", key="bp8vmol4ncadervcfossysdtd", definition="static void set_ycoords(graph_t * g)")
 public static void set_ycoords(ST_Agraph_s g) {
 ENTERING("bp8vmol4ncadervcfossysdtd","set_ycoords");
 try {
@@ -1570,36 +1416,43 @@ try {
     double ht2, maxht, delta, d0, d1;
     ST_Agnode_s n;
     ST_Agedge_s e;
-    ST_rank_t.Array2 rank = GD_rank(g);
+    CStar<ST_rank_t> rank = GD_rank(g);
     ST_Agraph_s clust;
     int lbl;
+    
     ht2 = maxht = 0;
+    
     /* scan ranks for tallest nodes.  */
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	for (i = 0; i < rank.get(r).n; i++) {
-	    n = (ST_Agnode_s) rank.get(r).v.get(i);
+	for (i = 0; i < rank.get__(r).n; i++) {
+	    n = rank.get__(r).v.get_(i);
+	    
 	    /* assumes symmetry, ht1 = ht2 */
 	    ht2 = ND_ht(n) / 2;
+	    
+	    
 	    /* have to look for high self-edge labels, too */
-	    if (ND_other(n).listNotNull())
-		for (j = 0; (e = (ST_Agedge_s) ND_other(n).getFromList(j))!=null; j++) {
+	    if (ND_other(n).list!=null)
+		for (j = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(j))!=null; j++) {
 		    if (EQ(agtail(e), aghead(e))) {
 			if (ED_label(e)!=null)
 			    ht2 = MAX(ht2, ED_label(e).dimen.y / 2);
 		    }
 		}
+	    
 	    /* update global rank ht */
-	    if (rank.get(r).pht2 < ht2) {
-		rank.plus(r).setDouble("ht2", ht2);
-		rank.plus(r).setDouble("pht2", ht2);
+	    if (rank.get__(r).pht2 < ht2) {
+		rank.get__(r).ht2 = ht2;
+		rank.get__(r).pht2 = ht2;
 		}
-	    if (rank.get(r).pht1 < ht2) {
-		rank.plus(r).setDouble("ht1", ht2);
-		rank.plus(r).setDouble("pht1", ht2);
+	    if (rank.get__(r).pht1 < ht2) {
+		rank.get__(r).ht1 = ht2;
+		rank.get__(r).pht1 = ht2;
 		}
+	    
 	    /* update nearest enclosing cluster rank ht */
 	    if ((clust = ND_clust(n))!=null) {
-		int yoff = (clust == g ? 0 : late_int (clust, Z.z().G_margin, 8, 0));
+		int yoff = (clust == g ? 0 : late_int (clust, Z.z().G_margin, CL_OFFSET, 0));
 		if (ND_rank(n) == GD_minrank(clust))
 		    GD_ht2(clust, MAX(GD_ht2(clust), ht2 + yoff));
 		if (ND_rank(n) == GD_maxrank(clust))
@@ -1607,26 +1460,29 @@ try {
 	    }
 	}
     }
+    
     /* scan sub-clusters */
     lbl = clust_ht(g);
+    
     /* make the initial assignment of ycoords to leftmost nodes by ranks */
     maxht = 0;
     r = GD_maxrank(g);
-    (ND_coord(rank.get(r).v.get(0))).setDouble("y", rank.get(r).ht1);
+    ND_coord(rank.get__(r).v.get_(0)).y = rank.get__(r).ht1;
     while (--r >= GD_minrank(g)) {
-	d0 = rank.get(r + 1).pht2 + rank.get(r).pht1 + GD_ranksep(g);	/* prim node sep */
-	d1 = rank.get(r + 1).ht2 + rank.get(r).ht1 + 8;	/* cluster sep */
+	d0 = rank.get__(r + 1).pht2 + rank.get__(r).pht1 + GD_ranksep(g);	/* prim node sep */
+	d1 = rank.get__(r + 1).ht2 + rank.get__(r).ht1 + CL_OFFSET;	/* cluster sep */
 	delta = MAX(d0, d1);
-	if (rank.get(r).n > 0)	/* this may reflect some problem */
-		(ND_coord(rank.get(r).v.get(0))).setDouble("y", (ND_coord(rank.plus(r + 1).getPtr().v.get(0))).y + delta);
+	if (rank.get__(r).n > 0)	/* this may reflect some problem */
+		ND_coord(rank.get__(r).v.get_(0)).y = (ND_coord(rank.get__(r + 1).v.get_(0))).y + delta;
 	maxht = MAX(maxht, delta);
     }
+    
     /* If there are cluster labels and the drawing is rotated, we need special processing to
      * allocate enough room. We use adjustRanks for this, and then recompute the maxht if
      * the ranks are to be equally spaced. This seems simpler and appears to work better than
      * handling equal spacing as a special case.
      */
-    if (lbl!=0 && GD_flip(g)!=0) {
+    if (lbl!=0 && GD_flip(g)) {
 UNSUPPORTED("bxjqk5nu40mwo1156dicr9tur"); // 	adjustRanks(g, 0);
 UNSUPPORTED("6vy9qfed3u61pmvy12724s9l4"); // 	if (GD_exact_ranksep(g)) {  /* recompute maxht */
 UNSUPPORTED("74f5n6u4x39ngn0gsan7fgzyr"); // 	    maxht = 0;
@@ -1640,6 +1496,7 @@ UNSUPPORTED("5irf6cp6xdzi2ik033azsbauo"); // 		d0 = d1;
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
+    
     /* re-assign if ranks are equally spaced */
     if (GD_exact_ranksep(g)!=0) {
 UNSUPPORTED("cyxbyjrdzywkc46nl8lkrngai"); // 	for (r = GD_maxrank(g) - 1; r >= GD_minrank(g); r--)
@@ -1647,9 +1504,10 @@ UNSUPPORTED("5sd5ltavyp6llt0t2t0xmqwj5"); // 	    if (rank[r].n > 0)	/* this may
 UNSUPPORTED("5zoeqpznt31feqxjcx2rg0o1f"); // 			(ND_coord(rank[r].v[0])).y=
 UNSUPPORTED("e6dfx5uesysjaefb0djyfp7f"); // 		    (ND_coord(rank[r + 1].v[0])).y + maxht;
     }
+    
     /* copy ycoord assignment from leftmost nodes to others */
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
-    ND_coord(n).y = ND_coord(rank.plus(ND_rank(n)).getPtr().v.get(0)).y;
+    ND_coord(n).y = ND_coord(rank.get__(ND_rank(n)).v.get_(0)).y;
 } finally {
 LEAVING("bp8vmol4ncadervcfossysdtd","set_ycoords");
 }
@@ -1658,8 +1516,18 @@ LEAVING("bp8vmol4ncadervcfossysdtd","set_ycoords");
 
 
 
+/* dot_compute_bb:
+ * Compute bounding box of g.
+ * The x limits of clusters are given by the x positions of ln and rn.
+ * This information is stored in the rank field, since it was calculated
+ * using network simplex.
+ * For the root graph, we don't enforce all the constraints on lr and 
+ * rn, so we traverse the nodes and subclusters.
+ */
 //3 9ay2xnnmh407i32pfokujfda5
 //static void dot_compute_bb(graph_t * g, graph_t * root) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="dot_compute_bb", key="9ay2xnnmh407i32pfokujfda5", definition="tatic void dot_compute_bb(graph_t * g, graph_t * root)")
 public static void dot_compute_bb(ST_Agraph_s g, ST_Agraph_s root) {
 ENTERING("9ay2xnnmh407i32pfokujfda5","dot_compute_bb");
 try {
@@ -1672,38 +1540,38 @@ try {
 	LL.x = INT_MAX;
 	UR.x = -((double)INT_MAX);
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	    int rnkn = GD_rank(g).get(r).n;
+	    int rnkn = GD_rank(g).get__(r).n;
 	    if (rnkn == 0)
 		continue;
-	    if ((v = (ST_Agnode_s) GD_rank(g).get(r).v.get(0)) == null)
+	    if ((v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(0)) == null)
 		continue;
 	    for (c = 1; (ND_node_type(v) != 0) && c < rnkn; c++)
-		v = (ST_Agnode_s) GD_rank(g).get(r).v.get(c);
+		v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(c);
 	    if (ND_node_type(v) == 0) {
 		x = ND_coord(v).x - ND_lw(v);
-		LL.setDouble("x", MIN(LL.x, x));
+		LL.x = (MIN(LL.x, x));
 	    }
 	    else continue;
 		/* At this point, we know the rank contains a NORMAL node */
-	    v = (ST_Agnode_s) GD_rank(g).get(r).v.plus(rnkn - 1).getPtr();
+	    v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(rnkn - 1);
 	    for (c = rnkn-2; ND_node_type(v) != 0; c--)
-		v = (ST_Agnode_s) GD_rank(g).get(r).v.get(c);
+		v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(c);
 	    x = ND_coord(v).x + ND_rw(v);
 	    UR.x = MAX(UR.x, x);
 	}
 	offset = 8;
 	for (c = 1; c <= GD_n_cluster(g); c++) {
-	    x = (double)(GD_bb(GD_clust(g).plus(c)).LL.x - offset);
+	    x = (double)(GD_bb(GD_clust(g).get_(c)).LL.x - offset);
 	    LL.x = MIN(LL.x, x);
-	    x = (double)(GD_bb(GD_clust(g).plus(c)).UR.x + offset);
+	    x = (double)(GD_bb(GD_clust(g).get_(c)).UR.x + offset);
 	    UR.x = MAX(UR.x, x);
 	}
  } else {
 	LL.x = (double)(ND_rank(GD_ln(g)));
 	UR.x = (double)(ND_rank(GD_rn(g)));
  }
- LL.y = ND_coord(GD_rank(root).plus(GD_maxrank(g)).getPtr().v.get(0)).y - GD_ht1(g);
- UR.y = ND_coord(GD_rank(root).plus(GD_minrank(g)).getPtr().v.get(0)).y + GD_ht2(g);
+ LL.y = ND_coord(GD_rank(root).get__(GD_maxrank(g)).v.get_(0)).y - GD_ht1(g);
+ UR.y = ND_coord(GD_rank(root).get__(GD_minrank(g)).v.get_(0)).y + GD_ht2(g);
  GD_bb(g).setStruct("LL", LL);
  GD_bb(g).setStruct("UR", UR);
 } finally {
@@ -1717,12 +1585,14 @@ LEAVING("9ay2xnnmh407i32pfokujfda5","dot_compute_bb");
 
 //3 dlbpiimh9g9ff9w7wjoabf817
 // static void rec_bb(graph_t * g, graph_t * root) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="rec_bb", key="dlbpiimh9g9ff9w7wjoabf817", definition="static void rec_bb(graph_t * g, graph_t * root)")
 public static void rec_bb(ST_Agraph_s g, ST_Agraph_s root) {
 ENTERING("dlbpiimh9g9ff9w7wjoabf817","rec_bb");
 try {
     int c;
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_bb((ST_Agraph_s) GD_clust(g).get(c).getPtr(), root);
+	rec_bb((ST_Agraph_s) GD_clust(g).get_(c).getPtr(), root);
     dot_compute_bb(g, root);
 } finally {
 LEAVING("dlbpiimh9g9ff9w7wjoabf817","rec_bb");
@@ -1734,6 +1604,8 @@ LEAVING("dlbpiimh9g9ff9w7wjoabf817","rec_bb");
 
 //3 2p3nacev7k2jft9xov90nke50
 // static void scale_bb(graph_t * g, graph_t * root, double xf, double yf) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="scale_bb", key="2p3nacev7k2jft9xov90nke50", definition="static void scale_bb(graph_t * g, graph_t * root, double xf, double yf)")
 public static Object scale_bb(Object... arg) {
 UNSUPPORTED("9zkkf6x8cj12vuzqrjaoxfn8s"); // static void scale_bb(graph_t * g, graph_t * root, double xf, double yf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1754,6 +1626,8 @@ throw new UnsupportedOperationException();
 
 //3 53z9yhpfixulhgqsauulkllvc
 // static void adjustAspectRatio (graph_t* g, aspect_t* asp) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="adjustAspectRatio", key="53z9yhpfixulhgqsauulkllvc", definition="static void adjustAspectRatio (graph_t* g, aspect_t* asp)")
 public static Object adjustAspectRatio(Object... arg) {
 UNSUPPORTED("ezldb6r0csirv1fmkq5itw1v2"); // static void adjustAspectRatio (graph_t* g, aspect_t* asp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1785,6 +1659,8 @@ throw new UnsupportedOperationException();
 
 //3 7effq6z6ur101wrch6ttozr26
 // static void set_aspect(graph_t * g, aspect_t* asp) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="set_aspect", key="7effq6z6ur101wrch6ttozr26", definition="static void set_aspect(graph_t * g, aspect_t* asp)")
 public static void set_aspect(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("7effq6z6ur101wrch6ttozr26","set_aspect");
 try {
@@ -1805,7 +1681,7 @@ UNSUPPORTED("4ct8ztqxnsskgphsp1v3aw5ec"); // 	scale_it = NOT(0);
 UNSUPPORTED("8v772n1u4wqlmskqfswlzcz2o"); // 	if (GD_drawing(g)->ratio_kind == R_AUTO)
 UNSUPPORTED("8mtmgag5dxj8ttlcabbpd865p"); // 	    filled = idealsize(g, .5);
 UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("bxtk5e5ls8qsd36eucvhufg9y"); // 	    filled = (GD_drawing(g)->ratio_kind == R_FILL);
+UNSUPPORTED("bxtk5e5ls8qsd36eucvhufg9y"); // 	    filled = GD_drawing(g)->ratio_kind == R_FILL;
 UNSUPPORTED("2atgu691bmn6h9jvk8lve5qzc"); // 	if (filled) {
 UNSUPPORTED("1zx5etcjofceqjvogfn8urkdj"); // 	    /* fill is weird because both X and Y can stretch */
 UNSUPPORTED("7ezqjon4u21dwg4qvxssrnwfc"); // 	    if (GD_drawing(g)->size.x <= 0)
@@ -1873,6 +1749,8 @@ LEAVING("7effq6z6ur101wrch6ttozr26","set_aspect");
 
 //3 41mmud7cyx1rwhd0k7g7weaf8
 // static point resize_leaf(node_t * leaf, point lbound) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="resize_leaf", key="41mmud7cyx1rwhd0k7g7weaf8", definition="static point resize_leaf(node_t * leaf, point lbound)")
 public static Object resize_leaf(Object... arg) {
 UNSUPPORTED("alcqddrml4aj55twvzwyyvfjh"); // static point resize_leaf(node_t * leaf, point lbound)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1891,6 +1769,8 @@ throw new UnsupportedOperationException();
 
 //3 4jx34mwc4aby8v45omelmfluv
 // static point place_leaf(graph_t* ing, node_t * leaf, point lbound, int order) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="place_leaf", key="4jx34mwc4aby8v45omelmfluv", definition="static point place_leaf(graph_t* ing, node_t * leaf, point lbound, int order)")
 public static Object place_leaf(Object... arg) {
 UNSUPPORTED("cetlk9m8mjd69vuru3rjho0lw"); // static point place_leaf(graph_t* ing, node_t * leaf, point lbound, int order)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1911,32 +1791,35 @@ throw new UnsupportedOperationException();
 
 
 
-//3 1lejhh3evsa10auyj7cgqj8ub
-// static void make_leafslots(graph_t * g) 
+/* make space for the leaf nodes of each rank */
+@Unused
+@Reviewed(when = "16/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="make_leafslots", key="1lejhh3evsa10auyj7cgqj8ub", definition="static void make_leafslots(graph_t * g)")
 public static void make_leafslots(ST_Agraph_s g) {
 ENTERING("1lejhh3evsa10auyj7cgqj8ub","make_leafslots");
 try {
     int i, j, r;
     ST_Agnode_s v;
+    
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	j = 0;
-	for (i = 0; i < GD_rank(g).get(r).n; i++) {
-	    v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
+	for (i = 0; i < GD_rank(g).get__(r).n; i++) {
+	    v = GD_rank(g).get__(r).v.get_(i);
 	    ND_order(v, j);
-	    if (ND_ranktype(v) == 6)
+	    if (ND_ranktype(v) == LEAFSET)
 		j = j + ND_UF_size(v);
 	    else
 		j++;
 	}
-	if (j <= GD_rank(g).get(r).n)
+	if (j <= GD_rank(g).get__(r).n)
 	    continue;
-	GD_rank(g).plus(r).setPtr("v", ALLOC_allocated_ST_Agnode_s((ST_Agnode_s.ArrayOfStar) GD_rank(g).get(r).v, j + 1));
-	for (i = GD_rank(g).get(r).n - 1; i >= 0; i--) {
-	    v = (ST_Agnode_s) GD_rank(g).get(r).v.get(i);
-	    GD_rank(g).get(r).v.plus(ND_order(v)).setPtr(v);
+	GD_rank(g).get__(r).v = CStarStar.<ST_Agnode_s>REALLOC(j + 1, GD_rank(g).get__(r).v, ST_Agnode_s.class);
+	for (i = GD_rank(g).get__(r).n - 1; i >= 0; i--) {
+	    v = GD_rank(g).get__(r).v.get_(i);
+	    GD_rank(g).get__(r).v.plus(ND_order(v)).setPtr(v);
 	}
-	GD_rank(g).plus(r).setInt("n", j);
-	GD_rank(g).get(r).v.plus(j).setPtr(null);
+	GD_rank(g).get__(r).n = j;
+	GD_rank(g).get__(r).v.plus(j).setPtr(null);
     }
 } finally {
 LEAVING("1lejhh3evsa10auyj7cgqj8ub","make_leafslots");
@@ -1948,6 +1831,8 @@ LEAVING("1lejhh3evsa10auyj7cgqj8ub","make_leafslots");
 
 //3 wb2wvxthkr2sp9u8113go3j3
 // static void do_leaves(graph_t * g, node_t * leader) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="do_leaves", key="wb2wvxthkr2sp9u8113go3j3", definition="static void do_leaves(graph_t * g, node_t * leader)")
 public static Object do_leaves(Object... arg) {
 UNSUPPORTED("5nmyuqyhfqfwbmgdj5aot9fp4"); // static void do_leaves(graph_t * g, node_t * leader)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1992,16 +1877,18 @@ throw new UnsupportedOperationException();
 
 //3 alpljm8o6nsam95ly6leelnbp
 // int ports_eq(edge_t * e, edge_t * f) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="ports_eq", key="alpljm8o6nsam95ly6leelnbp", definition="int ports_eq(edge_t * e, edge_t * f)")
 public static boolean ports_eq(ST_Agedge_s e, ST_Agedge_s f) {
 ENTERING("alpljm8o6nsam95ly6leelnbp","ports_eq");
 try {
     return ((ED_head_port(e).defined == ED_head_port(f).defined)
 	    && (((ED_head_port(e).p.x == ED_head_port(f).p.x) &&
 		 (ED_head_port(e).p.y == ED_head_port(f).p.y))
-		|| (ED_head_port(e).defined == 0))
+		|| (ED_head_port(e).defined == false))
 	    && (((ED_tail_port(e).p.x == ED_tail_port(f).p.x) &&
 		 (ED_tail_port(e).p.y == ED_tail_port(f).p.y))
-		|| (ED_tail_port(e).defined == 0))
+		|| (ED_tail_port(e).defined == false))
 	);
 } finally {
 LEAVING("alpljm8o6nsam95ly6leelnbp","ports_eq");
@@ -2011,26 +1898,30 @@ LEAVING("alpljm8o6nsam95ly6leelnbp","ports_eq");
 
 
 
-//3 cfotmdif5xv7n6oauyvzv0qwa
-// static void expand_leaves(graph_t * g) 
+@Difficult
+@Todo(what = "review zapinlist(&(ND_other(n)), e);")
+@Reviewed(when = "16/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="expand_leaves", key="cfotmdif5xv7n6oauyvzv0qwa", definition="static void expand_leaves(graph_t * g)")
 public static void expand_leaves(ST_Agraph_s g) {
 ENTERING("cfotmdif5xv7n6oauyvzv0qwa","expand_leaves");
 try {
     int i, d;
     ST_Agnode_s n;
     ST_Agedge_s e, f;
+    
     make_leafslots(g);
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	if (ND_inleaf(n)!=null)
 	    do_leaves(g, ND_inleaf(n));
 	if (ND_outleaf(n)!=null)
 	    do_leaves(g, ND_outleaf(n));
-	if (ND_other(n).listNotNull())
-	    for (i = 0; (e = (ST_Agedge_s) ND_other(n).getFromList(i))!=null; i++) {
+	if (ND_other(n).list!=null)
+	    for (i = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(i))!=null; i++) {
 		if ((d = ND_rank(aghead(e)) - ND_rank(aghead(e))) == 0)
 		    continue;
 		f = ED_to_orig(e);
 		if (ports_eq(e, f) == false) {
+			UNSURE_ABOUT("zapinlist(&(ND_other(n)), e);");
 		    zapinlist(ND_other(n), e);
 		    if (d == 1)
 			fast_edge(e);
@@ -2049,6 +1940,8 @@ LEAVING("cfotmdif5xv7n6oauyvzv0qwa","expand_leaves");
 
 //3 d4b57ugpwxy567pfmxn14ed8d
 // static void make_lrvn(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="make_lrvn", key="d4b57ugpwxy567pfmxn14ed8d", definition="static void make_lrvn(graph_t * g)")
 public static void make_lrvn(ST_Agraph_s g) {
 ENTERING("d4b57ugpwxy567pfmxn14ed8d","make_lrvn");
 try {
@@ -2075,6 +1968,8 @@ LEAVING("d4b57ugpwxy567pfmxn14ed8d","make_lrvn");
 
 //3 daz786541idcxnywckcbncazb
 // static void contain_nodes(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="contain_nodes", key="daz786541idcxnywckcbncazb", definition="static void contain_nodes(graph_t * g)")
 public static void contain_nodes(ST_Agraph_s  g) {
 ENTERING("daz786541idcxnywckcbncazb","contain_nodes");
 try {
@@ -2085,9 +1980,9 @@ try {
     ln = GD_ln(g);
     rn = GD_rn(g);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	if (GD_rank(g).get(r).n == 0)
+	if (GD_rank(g).get__(r).n == 0)
 	    continue;
-	v = (ST_Agnode_s) GD_rank(g).get(r).v.get(0);
+	v = GD_rank(g).get__(r).v.get_(0);
 	if (v == null) {
 UNSUPPORTED("1f2esoodtcrdhljk1cq1klyao"); // 	    agerr(AGERR, "contain_nodes clust %s rank %d missing node\n",
 UNSUPPORTED("7w6lv4ywtczwz2y1mg0p3jdav"); // 		  agnameof(g), r);
@@ -2095,7 +1990,7 @@ UNSUPPORTED("6hqli9m8yickz1ox1qfgtdbnd"); // 	    continue;
 	}
 	make_aux_edge(ln, v,
 		      ND_lw(v) + margin + GD_border(g)[3].x, 0);
-	v = (ST_Agnode_s) GD_rank(g).get(r).v.plus(GD_rank(g).get(r).n - 1).getPtr();
+	v = GD_rank(g).get__(r).v.get_(GD_rank(g).get__(r).n - 1);
 	make_aux_edge(v, rn,
 		      ND_rw(v) + margin + GD_border(g)[1].x, 0);
     }
@@ -2109,6 +2004,8 @@ LEAVING("daz786541idcxnywckcbncazb","contain_nodes");
 
 //3 betdvb8dk8icvqkn6e6y5h94x
 // static boolean idealsize(graph_t * g, double minallowed) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/position.c", name="idealsize", key="betdvb8dk8icvqkn6e6y5h94x", definition="static boolean idealsize(graph_t * g, double minallowed)")
 public static Object idealsize(Object... arg) {
 UNSUPPORTED("74m5dgfkgpr7bq7elj8bk5w6z"); // static boolean idealsize(graph_t * g, double minallowed)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

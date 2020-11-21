@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pathplan;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtils.atan2;
 import static smetana.core.JUtils.cos;
 import static smetana.core.JUtils.pow;
@@ -56,6 +59,8 @@ public class solvers__c {
 
 //3 2rap7a11ad4ugnphkh9gbn4xl
 // int solve3(double *coeff, double *roots) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/solvers.c", name="solve3", key="2rap7a11ad4ugnphkh9gbn4xl", definition="int solve3(double *coeff, double *roots)")
 public static int solve3(double coeff[], double roots[]) {
 ENTERING("2rap7a11ad4ugnphkh9gbn4xl","solve3");
 try {
@@ -103,6 +108,8 @@ LEAVING("2rap7a11ad4ugnphkh9gbn4xl","solve3");
 
 //3 9b5238tdddphds1x726z0osdm
 // int solve2(double *coeff, double *roots) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/solvers.c", name="solve2", key="9b5238tdddphds1x726z0osdm", definition="int solve2(double *coeff, double *roots)")
 public static int solve2(double coeff[], double roots[]) {
 ENTERING("9b5238tdddphds1x726z0osdm","solve2");
 try {
@@ -134,6 +141,8 @@ LEAVING("9b5238tdddphds1x726z0osdm","solve2");
 
 //3 8xtqt7j6wyxc1b6tj0qtcu1rd
 // int solve1(double *coeff, double *roots) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/solvers.c", name="solve1", key="8xtqt7j6wyxc1b6tj0qtcu1rd", definition="int solve1(double *coeff, double *roots)")
 public static int solve1(double coeff[], double roots[]) {
 ENTERING("8xtqt7j6wyxc1b6tj0qtcu1rd","solve1");
 try {

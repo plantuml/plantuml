@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -65,7 +66,7 @@ public interface FtileFactory {
 
 	public Ftile spot(Swimlane swimlane, String spot, HColor color);
 
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype);
 
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes);
 
@@ -78,14 +79,13 @@ public interface FtileFactory {
 	public Ftile assembly(Ftile tile1, Ftile tile2);
 
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
-			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering,
-			Ftile backward, boolean noOut, Display labelBackward);
+			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
+			LinkRendering incoming1, LinkRendering incoming2);
 
-	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward, String incoming,
-			String outcoming);
+	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
+			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2);
 
-	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
+	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering outColor,
 			LinkRendering topInlinkRendering, Url url);
 
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,

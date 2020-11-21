@@ -62,7 +62,7 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
-		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), BoxStyle.PLAIN, null, Colors.empty());
+		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), BoxStyle.PLAIN, null, Colors.empty(), null);
 		return CommandExecutionResult.ok();
 	}
 

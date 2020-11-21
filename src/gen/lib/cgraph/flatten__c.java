@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class flatten__c {
@@ -183,6 +186,8 @@ public class flatten__c {
 
 //3 69ucljsqnzi8rzbvuqpjp4hfx
 // static void agflatten_elist(Dict_t * d, Dtlink_t ** lptr, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/flatten.c", name="agflatten_elist", key="69ucljsqnzi8rzbvuqpjp4hfx", definition="static void agflatten_elist(Dict_t * d, Dtlink_t ** lptr, int flag)")
 public static Object agflatten_elist(Object... arg) {
 UNSUPPORTED("bpx3af0xjz85367rnoh2ipdrn"); // static void agflatten_elist(Dict_t * d, Dtlink_t ** lptr, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -199,6 +204,8 @@ throw new UnsupportedOperationException();
 
 //3 c4syafe2mgpp13hj8vel7hdwh
 // void agflatten_edges(Agraph_t * g, Agnode_t * n, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/flatten.c", name="agflatten_edges", key="c4syafe2mgpp13hj8vel7hdwh", definition="void agflatten_edges(Agraph_t * g, Agnode_t * n, int flag)")
 public static Object agflatten_edges(Object... arg) {
 UNSUPPORTED("4ttg1k6ryqoueza8gtu0qesmc"); // void agflatten_edges(Agraph_t * g, Agnode_t * n, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -219,6 +226,8 @@ throw new UnsupportedOperationException();
 
 //3 aswf367vm4ypgb50vecx6oy0e
 // void agflatten(Agraph_t * g, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/flatten.c", name="agflatten", key="aswf367vm4ypgb50vecx6oy0e", definition="void agflatten(Agraph_t * g, int flag)")
 public static Object agflatten(Object... arg) {
 UNSUPPORTED("epc3qpwcrvpagpod79vqkiktz"); // void agflatten(Agraph_t * g, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -235,7 +244,7 @@ UNSUPPORTED("bacueyt9l2eudlsl4z5n0t9l7"); // 	if (g->desc.flatlock) {
 UNSUPPORTED("b0wcdyp5hit8sc1jbi4asmalp"); // 	    dtmethod(g->n_seq,Dtoset);
 UNSUPPORTED("feknc9jq0v1n93q583pigog"); // 	    for (n = agfstnode(g); n; n = agnxtnode(g,n))
 UNSUPPORTED("4ufjmlytpm2l2msb8zuxor8s2"); // 		agflatten_edges(g, n, flag);
-UNSUPPORTED("1mvsjktpob2pzvo0s5wp5hbl0"); // 	    g->desc.flatlock = (0);
+UNSUPPORTED("1mvsjktpob2pzvo0s5wp5hbl0"); // 	    g->desc.flatlock = 0;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
@@ -248,6 +257,8 @@ throw new UnsupportedOperationException();
 
 //3 602i6cqy4kebb7g16m580nxsd
 // void agnotflat(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/flatten.c", name="agnotflat", key="602i6cqy4kebb7g16m580nxsd", definition="void agnotflat(Agraph_t * g)")
 public static Object agnotflat(Object... arg) {
 UNSUPPORTED("cu099fjwopup8fb0dz3ob3yui"); // void agnotflat(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

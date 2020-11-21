@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.label;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -160,29 +163,13 @@ public class nrtmain__c {
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
 
 
 
 //3 2i713kmewjct2igf3lwm80462
 // static pointf centerPt(xlabel_t * xlp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="centerPt", key="2i713kmewjct2igf3lwm80462", definition="static pointf centerPt(xlabel_t * xlp)")
 public static Object centerPt(Object... arg) {
 UNSUPPORTED("2ehkj7fn7wtb77mg9wdqpdig1"); // static pointf centerPt(xlabel_t * xlp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -201,6 +188,8 @@ throw new UnsupportedOperationException();
 
 //3 axo7jzudoju3r02pbuzu5u5cg
 // static int printData(object_t * objs, int n_objs, xlabel_t * lbls, int n_lbls, 	  label_params_t * params) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="printData", key="axo7jzudoju3r02pbuzu5u5cg", definition="static int printData(object_t * objs, int n_objs, xlabel_t * lbls, int n_lbls, 	  label_params_t * params)")
 public static Object printData(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("1ts7sby2d9t84a9e3n3h9z7i4"); // printData(object_t * objs, int n_objs, xlabel_t * lbls, int n_lbls,
@@ -243,6 +232,8 @@ throw new UnsupportedOperationException();
 
 //3 c4cg32mzgkpbcst0jy2upq5w3
 // int doxlabel(opts_t * opts) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="doxlabel", key="c4cg32mzgkpbcst0jy2upq5w3", definition="int doxlabel(opts_t * opts)")
 public static Object doxlabel(Object... arg) {
 UNSUPPORTED("8wurvokwz90fe88uipw31lwep"); // int doxlabel(opts_t * opts)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -362,6 +353,8 @@ throw new UnsupportedOperationException();
 
 //3 9wfwgoq79qhinosrkyial6epj
 // int checkOpt(char *l, char *legal[], int n) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="checkOpt", key="9wfwgoq79qhinosrkyial6epj", definition="int checkOpt(char *l, char *legal[], int n)")
 public static Object checkOpt(Object... arg) {
 UNSUPPORTED("16prj059n95sysjma58fiqgzu"); // int checkOpt(char *l, char *legal[], int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -381,6 +374,8 @@ throw new UnsupportedOperationException();
 
 //3 8q6likcxw6ut5zeraaze8shtb
 // void usage(char *pp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="usage", key="8q6likcxw6ut5zeraaze8shtb", definition="void usage(char *pp)")
 public static Object usage(Object... arg) {
 UNSUPPORTED("7m2ltqr2kx3w6q4t3g8dzfqpp"); // void usage(char *pp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -398,6 +393,8 @@ throw new UnsupportedOperationException();
 
 //3 3u8wp1vjie9akflq8id8h4jml
 // static FILE *openFile(char *name, char *mode) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="", key="3u8wp1vjie9akflq8id8h4jml", definition="static FILE *openFile(char *name, char *mode)")
 public static Object openFile(Object... arg) {
 UNSUPPORTED("d20hfpuvv6zzaoadalivef5gx"); // static FILE *openFile(char *name, char *mode)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -424,6 +421,8 @@ throw new UnsupportedOperationException();
 
 //3 egkkwztfbkxu9vvlc0sm05nxv
 // static void init(int argc, char *argv[], opts_t * opts) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="init", key="egkkwztfbkxu9vvlc0sm05nxv", definition="static void init(int argc, char *argv[], opts_t * opts)")
 public static Object init(Object... arg) {
 UNSUPPORTED("elmto38lhyd8ckgkm1qswhosv"); // static void init(int argc, char *argv[], opts_t * opts)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -497,6 +496,8 @@ throw new UnsupportedOperationException();
 
 //3 7i7prctjnltgmsf7dgzmddjg9
 // int main(int argc, char *argv[]) 
+@Unused
+@Original(version="2.38.0", path="lib/label/nrtmain.c", name="main", key="7i7prctjnltgmsf7dgzmddjg9", definition="int main(int argc, char *argv[])")
 public static Object main(Object... arg) {
 UNSUPPORTED("8fr3wh1xwllvel0m0nkh09bjl"); // int main(int argc, char *argv[])
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

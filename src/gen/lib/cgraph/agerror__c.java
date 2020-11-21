@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class agerror__c {
@@ -207,6 +210,8 @@ public class agerror__c {
 
 //3 4629q3lk91auv6a511v0x4vlz
 // agusererrf agseterrf (agusererrf newf) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agseterrf", key="4629q3lk91auv6a511v0x4vlz", definition="agusererrf agseterrf (agusererrf newf)")
 public static Object agseterrf(Object... arg) {
 UNSUPPORTED("8jzbxfdt0lvxx1g5lts7oux6h"); // agusererrf
 UNSUPPORTED("7ncs6gpd4ul7ye0ebi5sdte6g"); // agseterrf (agusererrf newf)
@@ -224,6 +229,8 @@ throw new UnsupportedOperationException();
 
 //3 e5jdgza2l5zc0kupfteq5aukb
 // agerrlevel_t agseterr(agerrlevel_t lvl) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agseterr", key="e5jdgza2l5zc0kupfteq5aukb", definition="agerrlevel_t agseterr(agerrlevel_t lvl)")
 public static Object agseterr(Object... arg) {
 UNSUPPORTED("1jwdh9fku47yepwmadw9neu42"); // agerrlevel_t agseterr(agerrlevel_t lvl)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -240,6 +247,8 @@ throw new UnsupportedOperationException();
 
 //3 603i8wgwc04zi1eda5oxbfu3t
 // char *aglasterr() 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="", key="603i8wgwc04zi1eda5oxbfu3t", definition="char *aglasterr()")
 public static Object aglasterr(Object... arg) {
 UNSUPPORTED("7sb3l26vza0sr80wy19whq07s"); // char *aglasterr()
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -267,6 +276,8 @@ throw new UnsupportedOperationException();
 
 //3 8nu6iilhr8fc6ltddy6ukbeav
 // static void userout (agerrlevel_t level, const char *fmt, va_list args) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="userout", key="8nu6iilhr8fc6ltddy6ukbeav", definition="static void userout (agerrlevel_t level, const char *fmt, va_list args)")
 public static Object userout(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("a92ywlsdaen90yka53m479wkl"); // userout (agerrlevel_t level, const char *fmt, va_list args)
@@ -309,6 +320,8 @@ throw new UnsupportedOperationException();
 
 //3 bg9mt0ayklk7lbw3v07dtfigf
 // static int agerr_va(agerrlevel_t level, const char *fmt, va_list args) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agerr_va", key="bg9mt0ayklk7lbw3v07dtfigf", definition="static int agerr_va(agerrlevel_t level, const char *fmt, va_list args)")
 public static Object agerr_va(Object... arg) {
 UNSUPPORTED("863t2xdlf52lqifpg4efkawgu"); // static int agerr_va(agerrlevel_t level, const char *fmt, va_list args)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -317,7 +330,7 @@ UNSUPPORTED("6lzzzfyhdb5tirbg1ccf9a5m3"); //     /* Use previous error level if 
 UNSUPPORTED("czykt0ac8rrwoqsh6nt389fu3"); //      * Convert AGMAX to AGERROR;
 UNSUPPORTED("4f8vlc80ixgxk5xc2y425pevt"); //      * else use input level
 UNSUPPORTED("795vpnc8yojryr8b46aidsu69"); //      */
-UNSUPPORTED("9u6tfrdzyinkomy2qh16oj4d2"); //     lvl = (level == AGPREV ? agerrno : (level == AGMAX) ? AGERR : level);
+UNSUPPORTED("9u6tfrdzyinkomy2qh16oj4d2"); //     lvl = level == AGPREV ? agerrno : (level == AGMAX) ? AGERR : level;
 UNSUPPORTED("ah9u8brmn3qarkrtj9yx70p41"); //     /* store this error level */
 UNSUPPORTED("9e0amfta5xoupadiuupa6cuk7"); //     agerrno = lvl;
 UNSUPPORTED("bwyv65veemjr0y9un4vygtwxb"); //     agmaxerr = ((agmaxerr)>(agerrno)?(agmaxerr):(agerrno));
@@ -355,6 +368,8 @@ throw new UnsupportedOperationException();
 
 //3 f1dcuhccwam2p309jxc9b2r0t
 // int agerr(agerrlevel_t level, const char *fmt, ...) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agerr", key="f1dcuhccwam2p309jxc9b2r0t", definition="int agerr(agerrlevel_t level, const char *fmt, ...)")
 public static Object agerr(Object... arg) {
 UNSUPPORTED("ducszxizpq2a6cql4p9bb47a0"); // int agerr(agerrlevel_t level, const char *fmt, ...)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -371,6 +386,8 @@ throw new UnsupportedOperationException();
 
 //3 7e34h9jajkjs3ho44gntjj2j7
 // void agerrorf(const char *fmt, ...) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agerrorf", key="7e34h9jajkjs3ho44gntjj2j7", definition="void agerrorf(const char *fmt, ...)")
 public static Object agerrorf(Object... arg) {
 UNSUPPORTED("6x8x6k3hp05ros0ch1hlv6581"); // void agerrorf(const char *fmt, ...)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -387,6 +404,8 @@ throw new UnsupportedOperationException();
 
 //3 gpzdsjhtcu403ei3vn2ux3bm
 // void agwarningf(const char *fmt, ...) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agwarningf", key="gpzdsjhtcu403ei3vn2ux3bm", definition="void agwarningf(const char *fmt, ...)")
 public static Object agwarningf(Object... arg) {
 UNSUPPORTED("715xbkxnriyga0q1ic2xuml6n"); // void agwarningf(const char *fmt, ...)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -403,6 +422,8 @@ throw new UnsupportedOperationException();
 
 //3 6by0h6d4uor86q4dcd9xjw31m
 // int agerrors() 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agerrors", key="6by0h6d4uor86q4dcd9xjw31m", definition="int agerrors()")
 public static Object agerrors(Object... arg) {
 UNSUPPORTED("92pi4jdtb8fnjjy0lzzbtg1so"); // int agerrors() { return agmaxerr; }
 
@@ -414,6 +435,8 @@ throw new UnsupportedOperationException();
 
 //3 aj45yt9ph7b1gdx6hqrt0zr2s
 // int agreseterrors()  
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agerror.c", name="agreseterrors", key="aj45yt9ph7b1gdx6hqrt0zr2s", definition="int agreseterrors()")
 public static Object agreseterrors(Object... arg) {
 UNSUPPORTED("dw5u39aul656iwk9wm0luqblz"); // int agreseterrors() 
 UNSUPPORTED("yo7buicdiu29rv5vxhas0v3s"); // { 

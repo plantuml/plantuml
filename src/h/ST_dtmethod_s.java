@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.CFunction;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 
 public class ST_dtmethod_s extends UnsupportedStructAndPtr {
 

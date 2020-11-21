@@ -41,15 +41,21 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 final class WElement {
 
+	private final HColor backColor;
 	private final Display label;
 	private final int level;
 	private final String stereotype;
@@ -72,6 +78,13 @@ final class WElement {
 		return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node).add(stereotype).add(depth);
 	}
 
+	public ISkinParam withBackColor(ISkinParam skinParam) {
+		if (backColor == null) {
+			return skinParam;
+		}
+		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
+	}
+
 	public Style getStyle() {
 		Style result = getDefaultStyleDefinitionNode(level).getMergedStyle(styleBuilder);
 		for (WElement up = parent; up != null; up = up.parent) {
@@ -82,13 +95,14 @@ final class WElement {
 		return result;
 	}
 
-	public WElement(Display label, String stereotype, StyleBuilder styleBuilder) {
-		this(0, label, stereotype, null, IdeaShape.BOX, styleBuilder);
+	public WElement(HColor backColor, Display label, String stereotype, StyleBuilder styleBuilder) {
+		this(backColor, 0, label, stereotype, null, IdeaShape.BOX, styleBuilder);
 	}
 
-	private WElement(int level, Display label, String stereotype, WElement parent, IdeaShape shape,
+	private WElement(HColor backColor, int level, Display label, String stereotype, WElement parent, IdeaShape shape,
 			StyleBuilder styleBuilder) {
 		this.label = label;
+		this.backColor = backColor;
 		this.level = level;
 		this.parent = parent;
 		this.shape = shape;
@@ -100,9 +114,9 @@ final class WElement {
 		return childrenLeft.size() == 0 && childrenRight.size() == 0;
 	}
 
-	public WElement createElement(int newLevel, Display newLabel, String stereotype, Direction direction,
-			IdeaShape shape, StyleBuilder styleBuilder) {
-		final WElement result = new WElement(newLevel, newLabel, stereotype, this, shape, styleBuilder);
+	public WElement createElement(HColor backColor, int newLevel, Display newLabel, String stereotype,
+			Direction direction, IdeaShape shape, StyleBuilder styleBuilder) {
+		final WElement result = new WElement(backColor, newLevel, newLabel, stereotype, this, shape, styleBuilder);
 		if (direction == Direction.LEFT) {
 			this.childrenLeft.add(result);
 		} else {

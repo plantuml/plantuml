@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svg;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -535,7 +536,13 @@ public class SvgGraphics {
 			final String k = "<" + ent.getKey() + "/>";
 			s = s.replace(k, ent.getValue());
 		}
+		s = removeXmlHeader(s);
 		os.write(s.getBytes());
+	}
+
+	private String removeXmlHeader(String s) {
+		s = s.replaceFirst("^<\\?xml [^<>]+?\\>", "");
+		return s;
 	}
 
 	private void createXmlInternal(OutputStream os) throws TransformerException {
@@ -688,12 +695,42 @@ public class SvgGraphics {
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
+			elt.setAttribute("fill", fill);
 			// elt elt.setAttribute("style", getStyle());
 			getG().appendChild(elt);
 		}
 		currentPath = null;
 
 	}
+	
+	public void drawPathIterator(double x, double y, PathIterator path) {
+
+		this.newpath();
+		final double coord[] = new double[6];
+		while (path.isDone() == false) {
+			final int code = path.currentSegment(coord);
+			if (code == PathIterator.SEG_MOVETO) {
+				this.moveto(coord[0] + x, coord[1] + y);
+			} else if (code == PathIterator.SEG_LINETO) {
+				this.lineto(coord[0] + x, coord[1] + y);
+			} else if (code == PathIterator.SEG_CLOSE) {
+				this.closepath();
+			} else if (code == PathIterator.SEG_CUBICTO) {
+				this.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+			} else if (code == PathIterator.SEG_QUADTO) {
+				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+			} else {
+				throw new UnsupportedOperationException("code=" + code);
+			}
+
+			path.next();
+		}
+
+		this.fill(path.getWindingRule());
+
+	}
+
+
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
 		if (hidden == false) {

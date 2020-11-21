@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -54,6 +57,8 @@ public class geom__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -69,29 +74,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -113,6 +101,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -128,29 +118,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -168,6 +140,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -185,6 +159,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -202,6 +178,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -219,6 +197,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -236,6 +216,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -253,6 +235,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -270,6 +254,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -289,6 +275,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -308,6 +296,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -327,6 +317,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -346,6 +338,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -360,6 +354,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -374,6 +370,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -388,6 +386,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -402,6 +402,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -419,6 +421,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -436,6 +440,8 @@ throw new UnsupportedOperationException();
 
 //3 an3osr8wbab08w759hwbbqhm9
 // box mkbox(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="mkbox", key="an3osr8wbab08w759hwbbqhm9", definition="box mkbox(point p, point q)")
 public static Object mkbox(Object... arg) {
 UNSUPPORTED("ehmvylmllzguxcdpk8dz6hwdr"); // box mkbox(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -465,6 +471,8 @@ throw new UnsupportedOperationException();
 
 //3 2c7s1wgyibdpn3cqrdci4mqwj
 // boxf mkboxf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="mkboxf", key="2c7s1wgyibdpn3cqrdci4mqwj", definition="boxf mkboxf(pointf p, pointf q)")
 public static Object mkboxf(Object... arg) {
 UNSUPPORTED("6axbrwdhhyfo8coxq5s27j6ph"); // boxf mkboxf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -494,6 +502,8 @@ throw new UnsupportedOperationException();
 
 //3 29pnbvw6n2yoezie6xudgnrrc
 // int lineToBox(pointf p, pointf q, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="lineToBox", key="29pnbvw6n2yoezie6xudgnrrc", definition="int lineToBox(pointf p, pointf q, boxf b)")
 public static Object lineToBox(Object... arg) {
 UNSUPPORTED("4yjnf6y95sbc4ugjerul6vk9m"); // int lineToBox(pointf p, pointf q, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -598,6 +608,8 @@ throw new UnsupportedOperationException();
 
 //3 1r7uvomrrc3o0z8d9ompm1ig4
 // void rect2poly(pointf *p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="rect2poly", key="1r7uvomrrc3o0z8d9ompm1ig4", definition="void rect2poly(pointf *p)")
 public static Object rect2poly(Object... arg) {
 UNSUPPORTED("4upujvzyed550abavjj8vlza1"); // void rect2poly(pointf *p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -615,6 +627,8 @@ throw new UnsupportedOperationException();
 
 //3 3aiyj7urv33rvps5ds204tciu
 // static pointf rotatepf(pointf p, int cwrot) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="rotatepf", key="3aiyj7urv33rvps5ds204tciu", definition="static pointf rotatepf(pointf p, int cwrot)")
 public static ST_pointf rotatepf(final ST_pointf p, int cwrot) {
 // WARNING!! STRUCT
 return rotatepf_w_(p.copy(), cwrot).copy();
@@ -649,6 +663,8 @@ LEAVING("3aiyj7urv33rvps5ds204tciu","rotatepf");
 
 //3 tytryqs1gqpghjdmwwvf1klb
 // static point rotatep(point p, int cwrot) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="rotatep", key="tytryqs1gqpghjdmwwvf1klb", definition="static point rotatep(point p, int cwrot)")
 public static Object rotatep(Object... arg) {
 UNSUPPORTED("5e2i6bk41qflr7y85q1osu5ts"); // static point rotatep(point p, int cwrot)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -667,6 +683,8 @@ throw new UnsupportedOperationException();
 
 //3 66bs8dyk14129mi4jhjnm40yf
 // point cwrotatep(point p, int cwrot) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="cwrotatep", key="66bs8dyk14129mi4jhjnm40yf", definition="point cwrotatep(point p, int cwrot)")
 public static Object cwrotatep(Object... arg) {
 UNSUPPORTED("bjpc8zmw5o75ij41axaonr91n"); // point cwrotatep(point p, int cwrot)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -704,6 +722,8 @@ throw new UnsupportedOperationException();
 
 //3 5q8h2tm3jifiasn423wrm0y60
 // pointf cwrotatepf(pointf p, int cwrot) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="cwrotatepf", key="5q8h2tm3jifiasn423wrm0y60", definition="pointf cwrotatepf(pointf p, int cwrot)")
 public static ST_pointf cwrotatepf(final ST_pointf p, int cwrot) {
 // WARNING!! STRUCT
 return cwrotatepf_w_(p.copy(), cwrot).copy();
@@ -716,16 +736,16 @@ try {
     case 0:
 	break;
     case 90:
-	p.setDouble("x", y);
-	p.setDouble("y", -x);
+	p.x = y;
+	p.y = -x;
 	break;
     case 180:
-	p.setDouble("x", x);
-	p.setDouble("y", -y);
+	p.x = x;
+	p.y = -y;
 	break;
     case 270:
-	p.setDouble("x", y);
-	p.setDouble("y", x);
+	p.x = y;
+	p.y = x;
 	break;
     default:
 	if (cwrot < 0)
@@ -745,6 +765,8 @@ LEAVING("5q8h2tm3jifiasn423wrm0y60","cwrotatepf");
 
 //3 8v4jp36jzoo7itgk1f2139cvz
 // point ccwrotatep(point p, int ccwrot) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="ccwrotatep", key="8v4jp36jzoo7itgk1f2139cvz", definition="point ccwrotatep(point p, int ccwrot)")
 public static Object ccwrotatep(Object... arg) {
 UNSUPPORTED("4netvfi1o450fu9936ptrychj"); // point ccwrotatep(point p, int ccwrot)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -782,6 +804,8 @@ throw new UnsupportedOperationException();
 
 //3 6np74e9pfmv8uek8irqru2tma
 // pointf ccwrotatepf(pointf p, int ccwrot) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="ccwrotatepf", key="6np74e9pfmv8uek8irqru2tma", definition="pointf ccwrotatepf(pointf p, int ccwrot)")
 public static ST_pointf ccwrotatepf(final ST_pointf p, int ccwrot) {
 // WARNING!! STRUCT
 return ccwrotatepf_w_(p.copy(), ccwrot).copy();
@@ -794,16 +818,16 @@ try {
     case 0:
 	break;
     case 90:
-	p.setDouble("x", -y);
-	p.setDouble("y", x);
+	p.x = -y;
+	p.y = x;
 	break;
     case 180:
-	p.setDouble("x", x);
-	p.setDouble("y", -y);
+	p.x = x;
+	p.y = -y;
 	break;
     case 270:
-	p.setDouble("x", y);
-	p.setDouble("y", x);
+	p.x = y;
+	p.y = x;
 	break;
     default:
 	if (ccwrot < 0)
@@ -823,6 +847,8 @@ LEAVING("6np74e9pfmv8uek8irqru2tma","ccwrotatepf");
 
 //3 5vf3yrj3pdre7b1b7c8sq4vnr
 // inline box flip_rec_box(box b, point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="flip_rec_box", key="5vf3yrj3pdre7b1b7c8sq4vnr", definition="inline box flip_rec_box(box b, point p)")
 public static Object flip_rec_box(Object... arg) {
 UNSUPPORTED("azqv2nylg3fv81xe2h7obme6h"); // inline box flip_rec_box(box b, point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -848,6 +874,8 @@ throw new UnsupportedOperationException();
 
 //3 10berg5l071upv3r6ei5ri6h6
 // boxf flip_rec_boxf(boxf b, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="flip_rec_boxf", key="10berg5l071upv3r6ei5ri6h6", definition="boxf flip_rec_boxf(boxf b, pointf p)")
 public static Object flip_rec_boxf(Object... arg) {
 UNSUPPORTED("7lxs02hyh7jlorkakwwex7np1"); // boxf flip_rec_boxf(boxf b, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -873,6 +901,8 @@ throw new UnsupportedOperationException();
 
 //3 90k9l4o3khu3dw0fzkrcd97nk
 // double ptToLine2 (pointf a, pointf b, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="ptToLine2", key="90k9l4o3khu3dw0fzkrcd97nk", definition="double ptToLine2 (pointf a, pointf b, pointf p)")
 public static double ptToLine2(final ST_pointf a, final ST_pointf b, final ST_pointf p) {
 // WARNING!! STRUCT
 return ptToLine2_w_(a.copy(), b.copy(), p.copy());
@@ -896,6 +926,8 @@ LEAVING("90k9l4o3khu3dw0fzkrcd97nk","ptToLine2");
 
 //3 7a3ftw4ubky8oz0e6sd4diag1
 // int line_intersect (pointf a, pointf b, pointf c, pointf d, pointf* p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/geom.c", name="line_intersect", key="7a3ftw4ubky8oz0e6sd4diag1", definition="int line_intersect (pointf a, pointf b, pointf c, pointf d, pointf* p)")
 public static Object line_intersect(Object... arg) {
 UNSUPPORTED("4owj0m9g05vi1yxcownz0rtry"); // int line_intersect (pointf a, pointf b, pointf c, pointf d, pointf* p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -903,7 +935,7 @@ UNSUPPORTED("5kh3p8pi4ouhb71qxt1wc19p4"); //     pointf mv = sub_pointf(b,a);
 UNSUPPORTED("4qjn6j13besul6kp2zbryihnw"); //     pointf lv = sub_pointf(d,c);
 UNSUPPORTED("cp5xvl6z479t3k1iqlafo0tu5"); //     pointf ln = perp (lv);
 UNSUPPORTED("e6xr6qn23vmjveolqf2by1ynk"); //     double lc = -(ln.x*c.x+ln.y*c.y);
-UNSUPPORTED("ez3o3rbsr12u6yt8icumd4ct"); //     double dt = (ln.x*mv.x+ln.y*mv.y);
+UNSUPPORTED("ez3o3rbsr12u6yt8icumd4ct"); //     double dt = ln.x*mv.x+ln.y*mv.y;
 UNSUPPORTED("c13p9pc06v96fokdr0tm36rec"); //     if (fabs(dt) < 0.0000000001) return 0;
 UNSUPPORTED("4rkov8dzjqgoc0f65iwx9dri2"); //     *p = sub_pointf(a,scale(((ln.x*a.x+ln.y*a.y)+lc)/dt,mv));
 UNSUPPORTED("3tcgz4dupb6kw5tdk7n3pca2l"); //     return 1;

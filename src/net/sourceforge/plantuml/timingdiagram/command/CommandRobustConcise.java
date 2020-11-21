@@ -60,18 +60,24 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("TYPE", "(robust|concise)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("as"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), RegexLeaf.end());
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore())), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
+				RegexLeaf.end());
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
-		final String full = arg.get("FULL", 0);
+		String full = arg.get("FULL", 0);
+		if (full == null) {
+			full = code;
+		}
 		final TimingStyle type = TimingStyle.valueOf(arg.get("TYPE", 0).toUpperCase());
 		return diagram.createRobustConcise(code, full, type, compact != null);
 	}

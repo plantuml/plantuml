@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.label;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.label.node__c.AddBranch;
 import static gen.lib.label.node__c.DisconBranch;
 import static gen.lib.label.node__c.NodeCover;
@@ -69,6 +72,8 @@ public class index__c {
 
 //3 1rfaqe5urty5uyp5xb2r0idce
 // LeafList_t *RTreeNewLeafList(Leaf_t * lp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="", key="1rfaqe5urty5uyp5xb2r0idce", definition="LeafList_t *RTreeNewLeafList(Leaf_t * lp)")
 public static ST_LeafList_t RTreeNewLeafList(ST_Branch_t lp) {
 ENTERING("1rfaqe5urty5uyp5xb2r0idce","RTreeNewLeafList");
 try {
@@ -95,6 +100,8 @@ LEAVING("1rfaqe5urty5uyp5xb2r0idce","RTreeNewLeafList");
 
 //3 6pvstz7axi8a7saeqe3nrrmg5
 // LeafList_t *RTreeLeafListAdd(LeafList_t * llp, Leaf_t * lp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="", key="6pvstz7axi8a7saeqe3nrrmg5", definition="LeafList_t *RTreeLeafListAdd(LeafList_t * llp, Leaf_t * lp)")
 public static ST_LeafList_t RTreeLeafListAdd(ST_LeafList_t llp, ST_Branch_t lp) {
 ENTERING("6pvstz7axi8a7saeqe3nrrmg5","RTreeLeafListAdd");
 try {
@@ -114,6 +121,8 @@ LEAVING("6pvstz7axi8a7saeqe3nrrmg5","RTreeLeafListAdd");
 
 //3 6zraor7x44vrnm19d2igkvow2
 // void RTreeLeafListFree(LeafList_t * llp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="RTreeLeafListFree", key="6zraor7x44vrnm19d2igkvow2", definition="void RTreeLeafListFree(LeafList_t * llp)")
 public static void RTreeLeafListFree(ST_LeafList_t llp) {
 ENTERING("6zraor7x44vrnm19d2igkvow2","RTreeLeafListFree");
 try {
@@ -156,6 +165,8 @@ LEAVING("6zraor7x44vrnm19d2igkvow2","RTreeLeafListFree");
 //
 //3 aa29m7d7qc06m8id896e60lkg
 //RTree_t *RTreeOpen()
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="", key="aa29m7d7qc06m8id896e60lkg", definition="Tree_t *RTreeOpen()")
 public static __ptr__ RTreeOpen() {
 ENTERING("aa29m7d7qc06m8id896e60lkg","RTreeOpen");
 try {
@@ -172,6 +183,8 @@ LEAVING("aa29m7d7qc06m8id896e60lkg","RTreeOpen");
 /* Make a new index, empty.  Consists of a single node. */
 //3 aa39m7d7qc06m8id896e60lkg
 //Node_t *RTreeNewIndex(RTree_t * rtp)
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="", key="aa39m7d7qc06m8id896e60lkg", definition="ode_t *RTreeNewIndex(RTree_t * rtp)")
 public static ST_Node_t___ RTreeNewIndex(ST_RTree rtp) {
 ENTERING("aa39m7d7qc06m8id896e60lkg","RTreeNewIndex");
 try {
@@ -187,6 +200,8 @@ LEAVING("aa39m7d7qc06m8id896e60lkg","RTreeNewIndex");
 
 //3 aa49m7d7qc06m8id896e60lkg
 //static int RTreeClose2(RTree_t * rtp, Node_t * n)
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="RTreeClose2", key="aa49m7d7qc06m8id896e60lkg", definition="tatic int RTreeClose2(RTree_t * rtp, Node_t * n)")
 public static int RTreeClose2(ST_RTree rtp, ST_Node_t___ n) {
 ENTERING("aa49m7d7qc06m8id896e60lkg","RTreeClose2");
 try {
@@ -224,6 +239,8 @@ LEAVING("aa49m7d7qc06m8id896e60lkg","RTreeClose2");
 
 //3 aa59m7d7qc06m8id896e60lkg
 //int RTreeClose(RTree_t * rtp)
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="RTreeClose", key="aa59m7d7qc06m8id896e60lkg", definition="nt RTreeClose(RTree_t * rtp)")
 public static int RTreeClose(ST_RTree rtp) {
 ENTERING("aa59m7d7qc06m8id896e60lkg","RTreeClose");
 try {
@@ -244,6 +261,8 @@ LEAVING("aa59m7d7qc06m8id896e60lkg","RTreeClose");
 */
 //3 aa69m7d7qc06m8id896e60lkg
 //LeafList_t *RTreeSearch(RTree_t * rtp, Node_t * n, Rect_t * r)
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="", key="aa69m7d7qc06m8id896e60lkg", definition="eafList_t *RTreeSearch(RTree_t * rtp, Node_t * n, Rect_t * r)")
 public static ST_LeafList_t RTreeSearch(ST_RTree rtp, ST_Node_t___ n, ST_Rect_t r) {
 ENTERING("aa69m7d7qc06m8id896e60lkg","RTreeSearch");
 try {
@@ -299,6 +318,8 @@ LEAVING("aa69m7d7qc06m8id896e60lkg","RTreeSearch");
 
 //3 3wss9r0zgt5k06j8ovjv7hq0d
 // int RTreeInsert(RTree_t * rtp, Rect_t * r, void *data, Node_t ** n, int level) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="RTreeInsert", key="3wss9r0zgt5k06j8ovjv7hq0d", definition="int RTreeInsert(RTree_t * rtp, Rect_t * r, void *data, Node_t ** n, int level)")
 public static int RTreeInsert(ST_RTree rtp, ST_Rect_t r, __ptr__ data, ST_Node_t___ n[], int level) {
 ENTERING("3wss9r0zgt5k06j8ovjv7hq0d","RTreeInsert");
 try {
@@ -352,6 +373,8 @@ LEAVING("3wss9r0zgt5k06j8ovjv7hq0d","RTreeInsert");
 
 //3 bsc9m7d7qc06m8id896e60lkg
 // static int RTreeInsert2(RTree_t * rtp, Rect_t * r, void *data, 	     Node_t * n, Node_t ** new, int level) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="RTreeInsert2", key="bsc9m7d7qc06m8id896e60lkg", definition="static int RTreeInsert2(RTree_t * rtp, Rect_t * r, void *data, 	     Node_t * n, Node_t ** new, int level)")
 public static int RTreeInsert2(ST_RTree rtp, ST_Rect_t r, __ptr__ data, ST_Node_t___ n, ST_Node_t___ new_[], int level) {
 ENTERING("bsc9m7d7qc06m8id896e60lkg","RTreeInsert2");
 try {
@@ -408,6 +431,8 @@ LEAVING("bsc9m7d7qc06m8id896e60lkg","RTreeInsert2");
 
 //3 eybi74pqddw71yno71n1dxch1
 // static void FreeListNode(register struct ListNode *p) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="FreeListNode", key="eybi74pqddw71yno71n1dxch1", definition="static void FreeListNode(register struct ListNode *p)")
 public static Object FreeListNode(Object... arg) {
 UNSUPPORTED("enkn7pc4meks3igihpafaoxnl"); // static void FreeListNode(register struct ListNode *p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -422,6 +447,8 @@ throw new UnsupportedOperationException();
 
 //3 a4tq9skwvzdutka9ei6pbydrk
 // int RTreeDelete(RTree_t * rtp, Rect_t * r, void *data, Node_t ** nn) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="RTreeDelete", key="a4tq9skwvzdutka9ei6pbydrk", definition="int RTreeDelete(RTree_t * rtp, Rect_t * r, void *data, Node_t ** nn)")
 public static Object RTreeDelete(Object... arg) {
 UNSUPPORTED("dxan13j7zc5tysdskndrhp0jy"); // int RTreeDelete(RTree_t * rtp, Rect_t * r, void *data, Node_t ** nn)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -468,10 +495,10 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("5ba1w7saym0g246ykbjnn0qrf"); // 	    RTreeFreeNode(rtp, *nn);
 UNSUPPORTED("dnoogjer2v3hmfm7qtw2p4qrv"); // 	    *nn = t;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("cpwomgmpysmof2uglfr37v494"); // 	rtp->Deleting = (0);
+UNSUPPORTED("cpwomgmpysmof2uglfr37v494"); // 	rtp->Deleting = 0;
 UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
 UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
-UNSUPPORTED("cpwomgmpysmof2uglfr37v494"); // 	rtp->Deleting = (0);
+UNSUPPORTED("cpwomgmpysmof2uglfr37v494"); // 	rtp->Deleting = 0;
 UNSUPPORTED("eleqpc2p2r3hvma6tipoy7tr"); // 	return 1;
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
@@ -484,6 +511,8 @@ throw new UnsupportedOperationException();
 
 //3 bax12o5n6n8s94wnn7cxgn99
 // static int RTreeDelete2(RTree_t * rtp, Rect_t * r, void *data, Node_t * n, 	     ListNode_t ** ee) 
+@Unused
+@Original(version="2.38.0", path="lib/label/index.c", name="RTreeDelete2", key="bax12o5n6n8s94wnn7cxgn99", definition="static int RTreeDelete2(RTree_t * rtp, Rect_t * r, void *data, Node_t * n, 	     ListNode_t ** ee)")
 public static Object RTreeDelete2(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("dl163ikex89epdeiymlnlhkkt"); // RTreeDelete2(RTree_t * rtp, Rect_t * r, void *data, Node_t * n,

@@ -137,7 +137,10 @@ public class AtomTable extends AbstractAtom implements Atom {
 				} else {
 					dx = 0;
 				}
-				cell.drawU(ug.apply(pos.getTranslate().compose(UTranslate.dx(dx))));
+				if (cellBackColor == null)
+					cell.drawU(ug.apply(pos.getTranslate().compose(UTranslate.dx(dx))));
+				else
+					cell.drawU(ug.apply(cellBackColor.bg()).apply(pos.getTranslate().compose(UTranslate.dx(dx))));
 			}
 		}
 		ug = ug.apply(lineColor);

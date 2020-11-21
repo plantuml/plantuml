@@ -35,12 +35,7 @@
  */
 package net.sourceforge.plantuml.project.core;
 
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Set;
-import java.util.TreeSet;
-
-import net.sourceforge.plantuml.project.LoadPlanable;
+import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
@@ -49,12 +44,10 @@ public class Resource {
 
 	private final String name;
 	private ResourceDraw draw;
-	private final Set<Day> closed = new TreeSet<Day>();
-	private final Set<Day> forcedOn = new TreeSet<Day>();
 
-	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
+	private final OpenClose openClose = new OpenClose();
 
-	public Resource(String name, LoadPlanable loadPlanable) {
+	public Resource(String name) {
 		this.name = name;
 	}
 
@@ -86,27 +79,19 @@ public class Resource {
 		this.draw = draw;
 	}
 
-	public boolean isClosedAt(Day instant) {
-		if (this.forcedOn.contains(instant)) {
-			return false;
-		}
-		if (closedDayOfWeek.size() > 0) {
-			if (closedDayOfWeek.contains(instant.getDayOfWeek())) {
-				return true;
-			}
-		}
-		return this.closed.contains(instant);
+	public boolean isClosedAt(Day day) {
+		return openClose.isClosed(day);
 	}
 
-	public void addCloseDay(Day instant) {
-		this.closed.add(instant);
+	public void addCloseDay(Day day) {
+		openClose.close(day);
 	}
 
-	public void addForceOnDay(Day instant) {
-		this.forcedOn.add(instant);
+	public void addForceOnDay(Day day) {
+		openClose.open(day);
 	}
 
-	public void addCloseDay(DayOfWeek dayOfWeek) {
-		closedDayOfWeek.add(dayOfWeek);
+	public void addCloseDay(DayOfWeek day) {
+		openClose.close(day);
 	}
 }

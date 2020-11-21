@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,6 +45,7 @@
  */
 package h;
 
+import smetana.core.CStar;
 import smetana.core.CString;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
@@ -71,28 +72,15 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 	public final ST_pointf space = new ST_pointf(this);
 	public final ST_pointf pos = new ST_pointf(this);
 
-	// "union",
-	// "{",
-	// "struct",
-	// "{",
-	// private ST_textspan_t span;
-	public ST_textspan_t.Array span;
+	public CStar<ST_textspan_t> span;
 	public int nspans;
 
-	// "}",
-	// "txt",
-	// "htmllabel_t *html",
 	public final __ptr__ html__ = null;
-	// "}",
-	// "u",
 	public int valign;
 
 	public int set;
 
 	public boolean html;
-	// "boolean html",
-	// "}",
-	// "textlabel_t");
 
 	@Override
 	public void setStruct(String fieldName, __struct__ newData) {
@@ -122,7 +110,7 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 			return fontcolor;
 		}
 		if (fieldName.equals("u.txt.span")) {
-			this.span = (ST_textspan_t.Array) newData;
+			this.span = (CStar<ST_textspan_t>) newData;
 			return span;
 		}
 		return super.setPtr(fieldName, newData);

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,8 +45,10 @@
  */
 package h;
 
+import smetana.core.ACCESS;
 import smetana.core.HardcodedStruct;
 import smetana.core.OFFSET;
+import smetana.core.STARSTAR;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -142,6 +144,49 @@ public class ST_Agsubnode_s extends UnsupportedStructAndPtr implements Hardcoded
 		return super.setPtr(fieldName, newData);
 	}
 
+	public STARSTAR<ST_dtlink_s> out_seq__AMP() {
+		return STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+			public ST_dtlink_s get() {
+				return out_seq;
+			}
+			public void set(ST_dtlink_s obj) {
+				out_seq = obj;
+			}
+		});
+	}
+
+	public STARSTAR<ST_dtlink_s> in_seq__AMP() {
+		return STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+			public ST_dtlink_s get() {
+				return in_seq;
+			}
+			public void set(ST_dtlink_s obj) {
+				in_seq = obj;
+			}
+		});
+	}
+
+	public STARSTAR<ST_dtlink_s> out_id__AMP() {
+		return STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+			public ST_dtlink_s get() {
+				return out_id;
+			}
+			public void set(ST_dtlink_s obj) {
+				out_id = obj;
+			}
+		});
+	}
+
+	public STARSTAR<ST_dtlink_s> in_id__AMP() {
+		return STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
+			public ST_dtlink_s get() {
+				return in_id;
+			}
+			public void set(ST_dtlink_s obj) {
+				in_id = obj;
+			}
+		});
+	}
 
 	// public interface ST_Agsubnode_s extends __ptr__ {
 	// public static List<String> DEFINITION = Arrays.asList(

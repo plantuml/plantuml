@@ -73,6 +73,9 @@ public class ShuntingYard {
 				final String name = token.getSurface();
 				final TValue variable = knowledge.getVariable(name);
 				if (variable == null) {
+					if (isVariableName(name) == false) {
+						throw EaterException.unlocated("Parsing syntax error about " + name);
+					}
 					ouputQueue.add(new Token("undefined", TokenType.QUOTED_STRING, null));
 				} else {
 					ouputQueue.add(variable.toToken());
@@ -116,6 +119,10 @@ public class ShuntingYard {
 		}
 
 		// System.err.println("ouputQueue=" + ouputQueue);
+	}
+
+	private boolean isVariableName(String name) {
+		return name.matches("[a-zA-Z0-9.$_]+");
 	}
 
 	private boolean thereIsAFunctionAtTheTopOfTheOperatorStack(Token token) {

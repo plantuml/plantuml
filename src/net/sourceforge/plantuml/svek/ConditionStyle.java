@@ -41,8 +41,11 @@ import java.util.EnumSet;
 public enum ConditionStyle {
 
 	DIAMOND, INSIDE, FOO1;
-	
+
 	public static ConditionStyle fromString(String value) {
+		if ("InsideDiamond".equalsIgnoreCase(value)) {
+			return FOO1;
+		}
 		for (ConditionStyle p : EnumSet.allOf(ConditionStyle.class)) {
 			if (p.toString().equalsIgnoreCase(value)) {
 				return p;
@@ -50,6 +53,5 @@ public enum ConditionStyle {
 		}
 		return null;
 	}
-
 
 }

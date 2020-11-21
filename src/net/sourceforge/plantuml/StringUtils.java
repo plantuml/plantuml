@@ -481,5 +481,9 @@ public class StringUtils {
 		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';
 	}
 
+	public static String manageEscapedTabs(String s) {
+		return s.replace("\\t", "\t");
+	}
+
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html
 }

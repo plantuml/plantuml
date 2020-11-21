@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -293,6 +296,8 @@ public class textspan__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -308,29 +313,14 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
 
 
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -351,6 +341,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -366,29 +358,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -406,6 +380,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -423,6 +399,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -440,6 +418,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -457,6 +437,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -474,6 +456,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -491,6 +475,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -508,6 +494,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -527,6 +515,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -546,6 +536,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -565,6 +557,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -584,6 +578,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -598,6 +594,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -612,6 +610,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -626,6 +626,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -640,6 +642,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -657,6 +661,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -686,6 +692,8 @@ throw new UnsupportedOperationException();
 
 //3 c5mvc1s1l5vtwvqfbwwlzvb2k
 // static void estimate_textspan_size(textspan_t * span, char **fontpath) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="estimate_textspan_size", key="c5mvc1s1l5vtwvqfbwwlzvb2k", definition="static void estimate_textspan_size(textspan_t * span, char **fontpath)")
 public static Object estimate_textspan_size(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("bz0vk28zh43zq01osv1pdbnoy"); // estimate_textspan_size(textspan_t * span, char **fontpath)
@@ -735,6 +743,8 @@ throw new UnsupportedOperationException();
 
 //3 2skgvoud1m9bi0twctu87d9w0
 // static int fontcmpf(const void *a, const void *b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="fontcmpf", key="2skgvoud1m9bi0twctu87d9w0", definition="static int fontcmpf(const void *a, const void *b)")
 public static Object fontcmpf(Object... arg) {
 UNSUPPORTED("cv6ykfir8zyyc5gmbvqflk8az"); // static int fontcmpf(const void *a, const void *b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -749,6 +759,8 @@ throw new UnsupportedOperationException();
 
 //3 ch4ydg69bw2im7u9vwmlyqqe6
 // static PostscriptAlias* translate_postscript_fontname(char* fontname) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="translate_postscript_fontname", key="ch4ydg69bw2im7u9vwmlyqqe6", definition="static PostscriptAlias* translate_postscript_fontname(char* fontname)")
 public static Object translate_postscript_fontname(Object... arg) {
 UNSUPPORTED("5uomt2e0iurhuaodxzopllgt6"); // static PostscriptAlias* translate_postscript_fontname(char* fontname)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -773,6 +785,8 @@ throw new UnsupportedOperationException();
 
 //3 n8tcl06mifdn779rzenam44z
 // pointf textspan_size(GVC_t *gvc, textspan_t * span) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="textspan_size", key="n8tcl06mifdn779rzenam44z", definition="pointf textspan_size(GVC_t *gvc, textspan_t * span)")
 public static ST_pointf textspan_size(ST_GVC_s gvc, ST_textspan_t span) {
 // WARNING!! STRUCT
 return textspan_size_w_(gvc, span).copy();
@@ -781,8 +795,8 @@ private static ST_pointf textspan_size_w_(ST_GVC_s gvc, ST_textspan_t span) {
 ENTERING("n8tcl06mifdn779rzenam44z","textspan_size");
 try {
 	System.err.println("Warning:textspan_size "+span);
-	span.size.setDouble("x", 30);
-	span.size.setDouble("y", 20);
+	span.size.x = 30;
+	span.size.y = 20;
     return span.size.copy();
 } finally {
 LEAVING("n8tcl06mifdn779rzenam44z","textspan_size");
@@ -794,6 +808,8 @@ LEAVING("n8tcl06mifdn779rzenam44z","textspan_size");
 
 //3 3bbrz9gqi8j8b5c1fxsnv6txg
 // static void* textfont_makef(Dt_t* dt, void* obj, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="textfont_makef", key="3bbrz9gqi8j8b5c1fxsnv6txg", definition="static void* textfont_makef(Dt_t* dt, void* obj, Dtdisc_t* disc)")
 public static Object textfont_makef(Object... arg) {
 UNSUPPORTED("ezwm25dnds89i6n9bz6jxfpyv"); // static void* textfont_makef(Dt_t* dt, void* obj, Dtdisc_t* disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -817,6 +833,8 @@ throw new UnsupportedOperationException();
 
 //3 p4o48ztsya6bv2xz1m59jzrk
 // static void textfont_freef(Dt_t* dt, void* obj, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="textfont_freef", key="p4o48ztsya6bv2xz1m59jzrk", definition="static void textfont_freef(Dt_t* dt, void* obj, Dtdisc_t* disc)")
 public static Object textfont_freef(Object... arg) {
 UNSUPPORTED("d6z1bfrko1uq2uadgutf42fpr"); // static void textfont_freef(Dt_t* dt, void* obj, Dtdisc_t* disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -834,6 +852,8 @@ throw new UnsupportedOperationException();
 
 //3 3xya6188lnt9kg5uwchhya2wt
 // static int textfont_comparf (Dt_t* dt, void* key1, void* key2, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="textfont_comparf", key="3xya6188lnt9kg5uwchhya2wt", definition="static int textfont_comparf (Dt_t* dt, void* key1, void* key2, Dtdisc_t* disc)")
 public static Object textfont_comparf(Object... arg) {
 UNSUPPORTED("9w5158s061nd0o3p6dbh4tnqz"); // static int textfont_comparf (Dt_t* dt, void* key1, void* key2, Dtdisc_t* disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -851,7 +871,7 @@ UNSUPPORTED("7xj68kytc2wzv6iq8ddwkwqlk"); //         if (! f2->color) return 1;
 UNSUPPORTED("bcepjb2zqe0moqakgmofmbpq2"); //         rc = strcmp(f1->color, f2->color);
 UNSUPPORTED("b9i8cahaxv9md4mvlw484iqeg"); //         if (rc) return rc;
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("9gf3266sjn2sm6m3mxf19197l"); //     rc = (f1->flags - f2->flags);
+UNSUPPORTED("9gf3266sjn2sm6m3mxf19197l"); //     rc = f1->flags - f2->flags;
 UNSUPPORTED("9ngqgld29f5nt7h1ffl4s0em4"); //     if (rc) return rc;
 UNSUPPORTED("d3e2n6libjqhx2xs4516lxyrf"); //     if (f1->size < f2->size) return -1;
 UNSUPPORTED("1kww1mevjniiermvdkcyihkqp"); //     if (f1->size > f2->size) return 1;
@@ -866,6 +886,8 @@ throw new UnsupportedOperationException();
 
 //3 9mfrgcpzz2d9f7nxfgx4nxj2q
 // Dt_t * textfont_dict_open(GVC_t *gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="textfont_dict_open", key="9mfrgcpzz2d9f7nxfgx4nxj2q", definition="Dt_t * textfont_dict_open(GVC_t *gvc)")
 public static ST_dt_s textfont_dict_open(ST_GVC_s gvc) {
 ENTERING("9mfrgcpzz2d9f7nxfgx4nxj2q","textfont_dict_open");
 try {
@@ -886,6 +908,8 @@ LEAVING("9mfrgcpzz2d9f7nxfgx4nxj2q","textfont_dict_open");
 
 //3 5o4jyd0j7s18vl7inlo4o0w99
 // void textfont_dict_close(GVC_t *gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/textspan.c", name="textfont_dict_close", key="5o4jyd0j7s18vl7inlo4o0w99", definition="void textfont_dict_close(GVC_t *gvc)")
 public static Object textfont_dict_close(Object... arg) {
 UNSUPPORTED("7uxwdoqc8jmcbexpk4lhvdgg"); // void textfont_dict_close(GVC_t *gvc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

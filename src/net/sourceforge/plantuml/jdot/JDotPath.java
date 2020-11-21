@@ -159,9 +159,13 @@ public class JDotPath implements UDrawable {
 			p0 = ymirror.getMirrored(p0);
 			startAngle = -startAngle + Math.PI;
 		}
-		final UDrawable extremity2 = extremityFactory2.createUDrawable(p0, startAngle, null);
-		if (extremity2 != null) {
-			extremity2.drawU(ug);
+		try {
+			final UDrawable extremity2 = extremityFactory2.createUDrawable(p0, startAngle, null);
+			if (extremity2 != null) {
+				extremity2.drawU(ug);
+			}
+		} catch (UnsupportedOperationException e) {
+			System.err.println("CANNOT DRAW printExtremityAtStart");
 		}
 	}
 
@@ -179,16 +183,20 @@ public class JDotPath implements UDrawable {
 			p0 = ymirror.getMirrored(p0);
 			endAngle = -endAngle;
 		}
-		final UDrawable extremity1 = extremityFactory1.createUDrawable(p0, endAngle, null);
-		if (extremity1 != null) {
-			extremity1.drawU(ug);
+		try {
+			final UDrawable extremity1 = extremityFactory1.createUDrawable(p0, endAngle, null);
+			if (extremity1 != null) {
+				extremity1.drawU(ug);
+			}
+		} catch (UnsupportedOperationException e) {
+			System.err.println("CANNOT DRAW printExtremityAtEnd");
 		}
 	}
 
 	private void printDebug(UGraphic ug) {
 		ug = ug.apply(HColorUtils.BLUE).apply(HColorUtils.BLUE.bg());
 		final ST_splines splines = getSplines(edge);
-		final ST_bezier beziers = splines.list.getPtr();
+		final ST_bezier beziers = splines.list.get__(0);
 		for (int i = 0; i < beziers.size; i++) {
 			Point2D pt = getPoint(splines, i);
 			if (ymirror != null) {
@@ -264,7 +272,7 @@ public class JDotPath implements UDrawable {
 			return null;
 		}
 		DotPath result = new DotPath();
-		final ST_bezier beziers = (ST_bezier) splines.list.getPtr();
+		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
 		final Point2D pt1 = getPoint(splines, 0);
 		final Point2D pt2 = getPoint(splines, 1);
 		final Point2D pt3 = getPoint(splines, 2);
@@ -281,8 +289,8 @@ public class JDotPath implements UDrawable {
 	}
 
 	private Point2D getPoint(ST_splines splines, int i) {
-		final ST_bezier beziers = (ST_bezier) splines.list.getPtr();
-		final ST_pointf pt = beziers.list.get(i);
+		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
+		final ST_pointf pt = beziers.list.get__(i);
 		return new Point2D.Double(pt.x, pt.y);
 	}
 

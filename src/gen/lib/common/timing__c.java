@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class timing__c {
@@ -55,6 +58,8 @@ public class timing__c {
 
 //3 5651jzaik1he1ffxyznovdahf
 // void start_timer(void) 
+@Unused
+@Original(version="2.38.0", path="lib/common/timing.c", name="start_timer", key="5651jzaik1he1ffxyznovdahf", definition="void start_timer(void)")
 public static Object start_timer(Object... arg) {
 UNSUPPORTED("69qokxdamqf1bxhaqbcnpwkw1"); // void start_timer(void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -69,6 +74,8 @@ throw new UnsupportedOperationException();
 
 //3 11o22f2clw6ou6c0hmn76feu4
 // double elapsed_sec(void) 
+@Unused
+@Original(version="2.38.0", path="lib/common/timing.c", name="elapsed_sec", key="11o22f2clw6ou6c0hmn76feu4", definition="double elapsed_sec(void)")
 public static Object elapsed_sec(Object... arg) {
 UNSUPPORTED("ap51jenuew5js107vu8srvn3x"); // double elapsed_sec(void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.xdot;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class xdot__c {
@@ -51,6 +54,8 @@ public class xdot__c {
 
 //3 18i9xd96uncylv9umnz90gzrh
 // static void agxbinit(agxbuf * xb, unsigned int hint, unsigned char *init) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="agxbinit", key="18i9xd96uncylv9umnz90gzrh", definition="static void agxbinit(agxbuf * xb, unsigned int hint, unsigned char *init)")
 public static Object agxbinit(Object... arg) {
 UNSUPPORTED("84pe35dre7aor7etu052tqf8t"); // static void agxbinit(agxbuf * xb, unsigned int hint, unsigned char *init)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -76,6 +81,8 @@ throw new UnsupportedOperationException();
 
 //3 deo0nqa6fmyacu293m9q0f3ad
 // static int agxbmore(agxbuf * xb, unsigned int ssz) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="agxbmore", key="deo0nqa6fmyacu293m9q0f3ad", definition="static int agxbmore(agxbuf * xb, unsigned int ssz)")
 public static Object agxbmore(Object... arg) {
 UNSUPPORTED("dr7xxpbudfd4q496z1hjh0uam"); // static int agxbmore(agxbuf * xb, unsigned int ssz)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -109,6 +116,8 @@ throw new UnsupportedOperationException();
 
 //3 8zf71o02uu26r06lmjzr6c8df
 // static int agxbput(char *s, agxbuf * xb) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="agxbput", key="8zf71o02uu26r06lmjzr6c8df", definition="static int agxbput(char *s, agxbuf * xb)")
 public static Object agxbput(Object... arg) {
 UNSUPPORTED("dpuodut5jl740qijx0viiicj3"); // static int agxbput(char *s, agxbuf * xb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -128,6 +137,8 @@ throw new UnsupportedOperationException();
 
 //3 6pn991iar889bzaq1znh7dj3b
 // static void agxbfree(agxbuf * xb) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="agxbfree", key="6pn991iar889bzaq1znh7dj3b", definition="static void agxbfree(agxbuf * xb)")
 public static Object agxbfree(Object... arg) {
 UNSUPPORTED("3dnzpw59o9bwwyrb7eat7i3u4"); // static void agxbfree(agxbuf * xb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -143,6 +154,8 @@ throw new UnsupportedOperationException();
 
 //3 4l360un6jpvisf8n73t7pqy9
 // static char *parseReal(char *s, double *fp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="4l360un6jpvisf8n73t7pqy9", definition="static char *parseReal(char *s, double *fp)")
 public static Object parseReal(Object... arg) {
 UNSUPPORTED("27cxezovcf9115tk1jj1gyw8j"); // static char *parseReal(char *s, double *fp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -162,6 +175,8 @@ throw new UnsupportedOperationException();
 
 //3 bsxeh14qqmz6v3qdi9irrllr
 // static char *parseInt(char *s, int *ip) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="bsxeh14qqmz6v3qdi9irrllr", definition="static char *parseInt(char *s, int *ip)")
 public static Object parseInt(Object... arg) {
 UNSUPPORTED("73v5uzvbtjguvilqpgltjnq7t"); // static char *parseInt(char *s, int *ip)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -181,6 +196,8 @@ throw new UnsupportedOperationException();
 
 //3 3mwttoeqe8u9fia2d46vwzsve
 // static char *parseUInt(char *s, unsigned int *ip) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="3mwttoeqe8u9fia2d46vwzsve", definition="static char *parseUInt(char *s, unsigned int *ip)")
 public static Object parseUInt(Object... arg) {
 UNSUPPORTED("enlzxotrmwou3zcdcg63q0u1i"); // static char *parseUInt(char *s, unsigned int *ip)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -200,6 +217,8 @@ throw new UnsupportedOperationException();
 
 //3 8jcdtdxdrx01gn9f1nebzs68r
 // static char *parseRect(char *s, xdot_rect * rp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="8jcdtdxdrx01gn9f1nebzs68r", definition="static char *parseRect(char *s, xdot_rect * rp)")
 public static Object parseRect(Object... arg) {
 UNSUPPORTED("8cfahk8txxaintbez7726qocf"); // static char *parseRect(char *s, xdot_rect * rp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -235,6 +254,8 @@ throw new UnsupportedOperationException();
 
 //3 9zgiw1nnozptos14kotjlqzes
 // static char *parsePolyline(char *s, xdot_polyline * pp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="9zgiw1nnozptos14kotjlqzes", definition="static char *parsePolyline(char *s, xdot_polyline * pp)")
 public static Object parsePolyline(Object... arg) {
 UNSUPPORTED("5vennd9p6hb7tz8vier5n3awr"); // static char *parsePolyline(char *s, xdot_polyline * pp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -276,6 +297,8 @@ throw new UnsupportedOperationException();
 
 //3 9ndna3jb07n84p1schywyuztb
 // static char *parseString(char *s, char **sp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="9ndna3jb07n84p1schywyuztb", definition="static char *parseString(char *s, char **sp)")
 public static Object parseString(Object... arg) {
 UNSUPPORTED("6ho8lvhy0v0vmiwxtchvowdag"); // static char *parseString(char *s, char **sp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -312,6 +335,8 @@ throw new UnsupportedOperationException();
 
 //3 7reshvtfhworq8s9q6lowo6nl
 // static char *parseAlign(char *s, xdot_align * ap) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="7reshvtfhworq8s9q6lowo6nl", definition="static char *parseAlign(char *s, xdot_align * ap)")
 public static Object parseAlign(Object... arg) {
 UNSUPPORTED("8si3sn14sdmyqz32r6ja6zl9h"); // static char *parseAlign(char *s, xdot_align * ap)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -334,6 +359,8 @@ throw new UnsupportedOperationException();
 
 //3 ehnxo19guzhgzj6t8jgklcy9t
 // static char *parseOp(xdot_op * op, char *s, drawfunc_t ops[], int* error) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="ehnxo19guzhgzj6t8jgklcy9t", definition="static char *parseOp(xdot_op * op, char *s, drawfunc_t ops[], int* error)")
 public static Object parseOp(Object... arg) {
 UNSUPPORTED("6n4wgd5e0tmwigktwbqr7b2mh"); // static char *parseOp(xdot_op * op, char *s, drawfunc_t ops[], int* error)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -494,6 +521,8 @@ throw new UnsupportedOperationException();
 
 //3 5wc1slq9x7lxo1mohysgr0u9v
 // xdot *parseXDotFOn (char *s, drawfunc_t fns[], int sz, xdot* x) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="5wc1slq9x7lxo1mohysgr0u9v", definition="xdot *parseXDotFOn (char *s, drawfunc_t fns[], int sz, xdot* x)")
 public static Object parseXDotFOn(Object... arg) {
 UNSUPPORTED("del1weqvytt23ivpfz8ioo7lq"); // xdot *parseXDotFOn (char *s, drawfunc_t fns[], int sz, xdot* x)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -554,6 +583,8 @@ throw new UnsupportedOperationException();
 
 //3 4460p54l4myil3tss1cr4fryd
 // xdot *parseXDotF(char *s, drawfunc_t fns[], int sz) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="4460p54l4myil3tss1cr4fryd", definition="xdot *parseXDotF(char *s, drawfunc_t fns[], int sz)")
 public static Object parseXDotF(Object... arg) {
 UNSUPPORTED("969km4cd3fzkxaw7yidsr8p7p"); // xdot *parseXDotF(char *s, drawfunc_t fns[], int sz)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -568,6 +599,8 @@ throw new UnsupportedOperationException();
 
 //3 1l1kp80xwz00t0yjxs3q5rmk3
 // xdot *parseXDot(char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="1l1kp80xwz00t0yjxs3q5rmk3", definition="xdot *parseXDot(char *s)")
 public static Object parseXDot(Object... arg) {
 UNSUPPORTED("8q2xd8yodlhxzirc9af1nt5x5"); // xdot *parseXDot(char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -582,6 +615,8 @@ throw new UnsupportedOperationException();
 
 //3 2f1smkubo9aphaw4mu9x6fqep
 // static void trim (char* buf) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="trim", key="2f1smkubo9aphaw4mu9x6fqep", definition="static void trim (char* buf)")
 public static Object trim(Object... arg) {
 UNSUPPORTED("16qqcors2mtgshjsd8bo4p83w"); // static void trim (char* buf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -607,6 +642,8 @@ throw new UnsupportedOperationException();
 
 //3 dkdckkwtr1hxr1itqzjgv1uwc
 // static void printRect(xdot_rect * r, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="printRect", key="dkdckkwtr1hxr1itqzjgv1uwc", definition="static void printRect(xdot_rect * r, pf print, void *info)")
 public static Object printRect(Object... arg) {
 UNSUPPORTED("1j4yxl2tdu1mgcs8f18wo7y1p"); // static void printRect(xdot_rect * r, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -633,6 +670,8 @@ throw new UnsupportedOperationException();
 
 //3 42jio1rnt74r1eotoz52e2103
 // static void printPolyline(xdot_polyline * p, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="printPolyline", key="42jio1rnt74r1eotoz52e2103", definition="static void printPolyline(xdot_polyline * p, pf print, void *info)")
 public static Object printPolyline(Object... arg) {
 UNSUPPORTED("5duf17af1csfzpnc3dyas5huc"); // static void printPolyline(xdot_polyline * p, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -658,6 +697,8 @@ throw new UnsupportedOperationException();
 
 //3 4gdy7r7tpkmrd0prm55gzhki5
 // static void printString(char *p, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="printString", key="4gdy7r7tpkmrd0prm55gzhki5", definition="static void printString(char *p, pf print, void *info)")
 public static Object printString(Object... arg) {
 UNSUPPORTED("9f4f8ckw2jx1xeiecbc5j14jx"); // static void printString(char *p, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -675,6 +716,8 @@ throw new UnsupportedOperationException();
 
 //3 8sfpijalp2tilivgvo7ipgyo2
 // static void printInt(int i, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="printInt", key="8sfpijalp2tilivgvo7ipgyo2", definition="static void printInt(int i, pf print, void *info)")
 public static Object printInt(Object... arg) {
 UNSUPPORTED("9vsvsk7dh3k27thd38londqpp"); // static void printInt(int i, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -691,6 +734,8 @@ throw new UnsupportedOperationException();
 
 //3 bb85wa9ydpjx8azkt6j8fkk9z
 // static void printFloat(float f, pf print, void *info, int space) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="printFloat", key="bb85wa9ydpjx8azkt6j8fkk9z", definition="static void printFloat(float f, pf print, void *info, int space)")
 public static Object printFloat(Object... arg) {
 UNSUPPORTED("d94ew8o9g8u5ic657j9wqhrwz"); // static void printFloat(float f, pf print, void *info, int space)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -711,6 +756,8 @@ throw new UnsupportedOperationException();
 
 //3 cewa9h3fzdsvn1pbwq6owgc41
 // static void printAlign(xdot_align a, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="printAlign", key="cewa9h3fzdsvn1pbwq6owgc41", definition="static void printAlign(xdot_align a, pf print, void *info)")
 public static Object printAlign(Object... arg) {
 UNSUPPORTED("8miq75j7m3nbilqa8rw1slpm9"); // static void printAlign(xdot_align a, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -735,6 +782,8 @@ throw new UnsupportedOperationException();
 
 //3 8sdpv3zwgeio07qexxyifrki9
 // static void gradprint (char* s, void* v) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="gradprint", key="8sdpv3zwgeio07qexxyifrki9", definition="static void gradprint (char* s, void* v)")
 public static Object gradprint(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("e9q23vdw8dsq7sa76x8tatioi"); // gradprint (char* s, void* v)
@@ -750,6 +799,8 @@ throw new UnsupportedOperationException();
 
 //3 d8h0f1ny0lfqgdlltgznth70f
 // static void toGradString (agxbuf* xb, xdot_color* cp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="toGradString", key="d8h0f1ny0lfqgdlltgznth70f", definition="static void toGradString (agxbuf* xb, xdot_color* cp)")
 public static Object toGradString(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("e098a5mtgj1bjdwal9mpcyohu"); // toGradString (agxbuf* xb, xdot_color* cp)
@@ -795,6 +846,8 @@ throw new UnsupportedOperationException();
 
 //3 2ifo26ctb4oo4z48u3q84ejrn
 // static void printXDot_Op(xdot_op * op, pf print, void *info, int more) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="printXDot_Op", key="2ifo26ctb4oo4z48u3q84ejrn", definition="static void printXDot_Op(xdot_op * op, pf print, void *info, int more)")
 public static Object printXDot_Op(Object... arg) {
 UNSUPPORTED("1793b7u18bt999rej4hfqd18z"); // static void printXDot_Op(xdot_op * op, pf print, void *info, int more)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -888,6 +941,8 @@ throw new UnsupportedOperationException();
 
 //3 22qizeibm0jpts105p4r4ssu7
 // static void jsonRect(xdot_rect * r, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="jsonRect", key="22qizeibm0jpts105p4r4ssu7", definition="static void jsonRect(xdot_rect * r, pf print, void *info)")
 public static Object jsonRect(Object... arg) {
 UNSUPPORTED("atngzawms4mstydgpenmodeae"); // static void jsonRect(xdot_rect * r, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -904,6 +959,8 @@ throw new UnsupportedOperationException();
 
 //3 cfkyn9xd2i5z05dsbh0ne2rjg
 // static void jsonPolyline(xdot_polyline * p, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="jsonPolyline", key="cfkyn9xd2i5z05dsbh0ne2rjg", definition="static void jsonPolyline(xdot_polyline * p, pf print, void *info)")
 public static Object jsonPolyline(Object... arg) {
 UNSUPPORTED("egjrc5eqaywh9r95et92i5j12"); // static void jsonPolyline(xdot_polyline * p, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -926,6 +983,8 @@ throw new UnsupportedOperationException();
 
 //3 aje680ivpjh0mfzcsw9x1ht0r
 // static void jsonString(char *p, pf print, void *info) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="jsonString", key="aje680ivpjh0mfzcsw9x1ht0r", definition="static void jsonString(char *p, pf print, void *info)")
 public static Object jsonString(Object... arg) {
 UNSUPPORTED("xd8vixlem3ryrydnitavheuh"); // static void jsonString(char *p, pf print, void *info)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -952,6 +1011,8 @@ throw new UnsupportedOperationException();
 
 //3 en6kdtyyuve3yy1mk979yf17k
 // static void jsonXDot_Op(xdot_op * op, pf print, void *info, int more) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="jsonXDot_Op", key="en6kdtyyuve3yy1mk979yf17k", definition="static void jsonXDot_Op(xdot_op * op, pf print, void *info, int more)")
 public static Object jsonXDot_Op(Object... arg) {
 UNSUPPORTED("9emtpnf2em1erh1ibaoqmcvew"); // static void jsonXDot_Op(xdot_op * op, pf print, void *info, int more)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1057,6 +1118,8 @@ throw new UnsupportedOperationException();
 
 //3 2zdgagi4yv5fkpnso5ildjfj5
 // static void _printXDot(xdot * x, pf print, void *info, print_op ofn) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="_printXDot", key="2zdgagi4yv5fkpnso5ildjfj5", definition="static void _printXDot(xdot * x, pf print, void *info, print_op ofn)")
 public static Object _printXDot(Object... arg) {
 UNSUPPORTED("beqsyisd37qh2rmab3wmlihg9"); // static void _printXDot(xdot * x, pf print, void *info, print_op ofn)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1077,6 +1140,8 @@ throw new UnsupportedOperationException();
 
 //3 1c9ib0ywnb7bedzxnss4cmagy
 // char *sprintXDot(xdot * x) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="", key="1c9ib0ywnb7bedzxnss4cmagy", definition="char *sprintXDot(xdot * x)")
 public static Object sprintXDot(Object... arg) {
 UNSUPPORTED("2e52l2dihzy7a2f1vl7qlv1xl"); // char *sprintXDot(xdot * x)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1098,6 +1163,8 @@ throw new UnsupportedOperationException();
 
 //3 eyjcl48szw6vtlxtutpssg7q5
 // void fprintXDot(FILE * fp, xdot * x) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="fprintXDot", key="eyjcl48szw6vtlxtutpssg7q5", definition="void fprintXDot(FILE * fp, xdot * x)")
 public static Object fprintXDot(Object... arg) {
 UNSUPPORTED("85u4x93wot46fvnzf3cz0cfk0"); // void fprintXDot(FILE * fp, xdot * x)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1112,6 +1179,8 @@ throw new UnsupportedOperationException();
 
 //3 701gu0x25va3ckongikjzclu2
 // void jsonXDot(FILE * fp, xdot * x) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="jsonXDot", key="701gu0x25va3ckongikjzclu2", definition="void jsonXDot(FILE * fp, xdot * x)")
 public static Object jsonXDot(Object... arg) {
 UNSUPPORTED("8gckq5ubk6r40s6smk07wzmip"); // void jsonXDot(FILE * fp, xdot * x)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1128,6 +1197,8 @@ throw new UnsupportedOperationException();
 
 //3 eu3dz6gm2u949z4rva28vws5z
 // static void freeXOpData(xdot_op * x) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="freeXOpData", key="eu3dz6gm2u949z4rva28vws5z", definition="static void freeXOpData(xdot_op * x)")
 public static Object freeXOpData(Object... arg) {
 UNSUPPORTED("d67njmp17xncuo32921x74jb7"); // static void freeXOpData(xdot_op * x)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1176,6 +1247,8 @@ throw new UnsupportedOperationException();
 
 //3 6w9r3p709c95b1186uuktgd6w
 // void freeXDot (xdot * x) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="freeXDot", key="6w9r3p709c95b1186uuktgd6w", definition="void freeXDot (xdot * x)")
 public static Object freeXDot(Object... arg) {
 UNSUPPORTED("bkwtbjppiirw4uu074jdrqmwx"); // void freeXDot (xdot * x)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1202,6 +1275,8 @@ throw new UnsupportedOperationException();
 
 //3 5ppkb51932f7y8920b91b8yz0
 // int statXDot (xdot* x, xdot_stats* sp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="statXDot", key="5ppkb51932f7y8920b91b8yz0", definition="int statXDot (xdot* x, xdot_stats* sp)")
 public static Object statXDot(Object... arg) {
 UNSUPPORTED("b17qzxcu2x9pfzv1bgj20qzsu"); // int statXDot (xdot* x, xdot_stats* sp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1271,6 +1346,8 @@ throw new UnsupportedOperationException();
 
 //3 99e5rt9esmjy9qkrpjj7ynswj
 // xdot_grad_type  colorType (char* cp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="colorType", key="99e5rt9esmjy9qkrpjj7ynswj", definition="xdot_grad_type  colorType (char* cp)")
 public static Object colorType(Object... arg) {
 UNSUPPORTED("cwdrzw5wilfdxd4c2q0iq3jk7"); // xdot_grad_type 
 UNSUPPORTED("4mpmfofo3mrmcqks805lq8fcz"); // colorType (char* cp)
@@ -1298,6 +1375,8 @@ throw new UnsupportedOperationException();
 
 //3 cr8h18xais4lf1qgyf0g4asw8
 // static char* radGradient (char* cp, xdot_color* clr) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="radGradient", key="cr8h18xais4lf1qgyf0g4asw8", definition="static char* radGradient (char* cp, xdot_color* clr)")
 public static Object radGradient(Object... arg) {
 UNSUPPORTED("1yranxmu2maol02ulzd1ka1re"); // static char*
 UNSUPPORTED("c06wjt41hfdz5kqs2bgvfzceu"); // radGradient (char* cp, xdot_color* clr)
@@ -1341,6 +1420,8 @@ throw new UnsupportedOperationException();
 
 //3 etmxebtapyaikihfpbsuehvzw
 // static char* linGradient (char* cp, xdot_color* clr) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="linGradient", key="etmxebtapyaikihfpbsuehvzw", definition="static char* linGradient (char* cp, xdot_color* clr)")
 public static Object linGradient(Object... arg) {
 UNSUPPORTED("1yranxmu2maol02ulzd1ka1re"); // static char*
 UNSUPPORTED("b55lo3bj9pnkmwxlyocdqefjc"); // linGradient (char* cp, xdot_color* clr)
@@ -1380,6 +1461,8 @@ throw new UnsupportedOperationException();
 
 //3 2xdgjw8k00kahh9gsbqku1umv
 // char* parseXDotColor (char* cp, xdot_color* clr) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="parseXDotColor", key="2xdgjw8k00kahh9gsbqku1umv", definition="char* parseXDotColor (char* cp, xdot_color* clr)")
 public static Object parseXDotColor(Object... arg) {
 UNSUPPORTED("cqm25rponse4rsi686sbn1lo0"); // char*
 UNSUPPORTED("b1mfye1zmcj65mtkq9c97iewc"); // parseXDotColor (char* cp, xdot_color* clr)
@@ -1417,6 +1500,8 @@ throw new UnsupportedOperationException();
 
 //3 am6ngtbh04wxuyw4ohmmjtiy2
 // void freeXDotColor (xdot_color* cp) 
+@Unused
+@Original(version="2.38.0", path="lib/xdot/xdot.c", name="freeXDotColor", key="am6ngtbh04wxuyw4ohmmjtiy2", definition="void freeXDotColor (xdot_color* cp)")
 public static Object freeXDotColor(Object... arg) {
 UNSUPPORTED("dz8v7jtcg5p1c58myh27zc9pt"); // void freeXDotColor (xdot_color* cp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

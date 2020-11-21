@@ -36,32 +36,44 @@
 
 package smetana.core;
 
+import static gen.lib.cdt.dtrestore__c.dtrestore;
+import static gen.lib.cgraph.attr__c.agattr;
+import static gen.lib.cgraph.edge__c.agedge;
+import static smetana.core.JUtils.strcmp;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import h.Dtcompar_f;
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
+import h.ST_Agiddisc_s;
+import h.ST_Agiodisc_s;
+import h.ST_Agmemdisc_s;
 import h.ST_Agnode_s;
 import h.ST_Agnodeinfo_t;
 import h.ST_Agobj_s;
 import h.ST_Agraph_s;
 import h.ST_Agraphinfo_t;
 import h.ST_Agrec_s;
+import h.ST_Agsym_s;
 import h.ST_Agtag_s;
 import h.ST_GVC_s;
-import h.ST_Pedge_t;
-import h.ST_bezier;
 import h.ST_boxf;
+import h.ST_dt_s;
+import h.ST_dtdisc_s;
+import h.ST_dtlink_s;
 import h.ST_elist;
 import h.ST_layout_t;
 import h.ST_nlist_t;
+import h.ST_point;
 import h.ST_pointf;
 import h.ST_port;
 import h.ST_rank_t;
 import h.ST_shape_desc;
 import h.ST_splines;
+import h.ST_subtree_t;
 import h.ST_textlabel_t;
-import h.ST_textspan_t;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Macro {
 
@@ -117,6 +129,10 @@ public class Macro {
 
 	public static void TRACE(String functionName) {
 		// System.err.println(functionName);
+	}
+
+	public static void UNSURE_ABOUT(String comment) {
+		System.err.println("UNSURE_ABOUT: "+comment);
 	}
 
 	public static __ptr__ UNSUPPORTED(String comment) {
@@ -331,7 +347,7 @@ public class Macro {
 
 	// #define GD_cl_cnt(g) (((Agraphinfo_t*)AGDATA(g))->cl_nt)
 	// #define GD_clust(g) (((Agraphinfo_t*)AGDATA(g))->clust)
-	public static ST_Agraph_s.Array GD_clust(ST_Agraph_s g) {
+	public static CStarStar<ST_Agraph_s> GD_clust(ST_Agraph_s g) {
 		return ((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).clust;
 	}
 
@@ -472,12 +488,22 @@ public class Macro {
 	}
 
 	// #define GD_flip(g) (GD_rankdir(g) & 1)
-	public static int GD_flip(ST_Agraph_s g) {
-		return GD_rankdir(g) & 1;
+	public static boolean GD_flip(ST_Agraph_s g) {
+		return (GD_rankdir(g) & 1) != 0;
 	}
 
 	// #define GD_realrankdir(g) ((((Agraphinfo_t*)AGDATA(g))->rankdir) >> 2)
+	public static int GD_realrankdir(ST_Agraph_s g) {
+		return ((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).rankdir >> 2;
+	}
+	
+	
 	// #define GD_realflip(g) (GD_realrankdir(g) & 1)
+	public static int GD_realflip(ST_Agraph_s g) {
+		return GD_realrankdir(g) & 1;
+	}
+	
+	
 	// #define GD_ln(g) (((Agraphinfo_t*)AGDATA(g))->ln)
 	public static ST_Agnode_s GD_ln(ST_Agraph_s g) {
 		return (ST_Agnode_s) ((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).ln;
@@ -559,20 +585,21 @@ public class Macro {
 
 	// #define GD_outleaf(g) (((Agraphinfo_t*)AGDATA(g))->outleaf)
 	// #define GD_rank(g) (((Agraphinfo_t*)AGDATA(g))->rank)
-	public static ST_rank_t.Array2 GD_rank(ST_Agraph_s g) {
-		return (ST_rank_t.Array2) ((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).rank;
+	public static CStar<ST_rank_t> GD_rank(ST_Agraph_s g) {
+		return ((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).rank;
 	}
 
-	public static void GD_rank(ST_Agraph_s g, ST_rank_t.Array2 v) {
+	public static void GD_rank(ST_Agraph_s g, CStar<ST_rank_t> v) {
 		((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).setPtr("rank", v);
+		JUtilsDebug.LOG("set GD_rank "+v);
 	}
 
 	// #define GD_rankleader(g) (((Agraphinfo_t*)AGDATA(g))->rankleader)
-	public static ST_Agnode_s.Array GD_rankleader(ST_Agraph_s g) {
+	public static CStarStar<ST_Agnode_s> GD_rankleader(ST_Agraph_s g) {
 		return ((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).rankleader;
 	}
 
-	public static void GD_rankleader(ST_Agraph_s g, __ptr__ v) {
+	public static void GD_rankleader(ST_Agraph_s g, CStarStar<ST_Agnode_s> v) {
 		((ST_Agraphinfo_t)AGDATA(g).castTo(ST_Agraphinfo_t.class)).setPtr("rankleader", v);
 	}
 
@@ -698,6 +725,9 @@ public class Macro {
 	// #define ND_has_port(n) (((Agnodeinfo_t*)AGDATA(n))->has_port)
 	public static boolean ND_has_port(ST_Agnode_s n) {
 		return ((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).has_port;
+	}
+	public static void ND_has_port(ST_Agnode_s n, boolean v) {
+		((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).has_port = v;
 	}
 
 	// #define ND_rep(n) (((Agnodeinfo_t*)AGDATA(n))->rep)
@@ -888,12 +918,16 @@ public class Macro {
 	}
 
 	// #define ND_rank(n) (((Agnodeinfo_t*)AGDATA(n))->rank)
-	public static int ND_rank(__ptr__ n) {
-		return ((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).rank;
+	public static int ND_rank(ST_Agnode_s n) {
+		final int result = ((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).rank;
+		// JUtilsDebug.LOG("ND_rank get "+result);
+		return result;
 	}
 
-	public static void ND_rank(__ptr__ n, int v) {
+	public static void ND_rank(ST_Agnode_s n, int v) {
 		((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).setInt("rank", v);
+		JUtilsDebug.LOG("ND_rank set for " + n.NAME + " v=" + v);
+		int a = 0;
 	}
 
 	// #define ND_ranktype(n) (((Agnodeinfo_t*)AGDATA(n))->ranktype)
@@ -906,7 +940,7 @@ public class Macro {
 	}
 
 	// #define ND_rw(n) (((Agnodeinfo_t*)AGDATA(n))->rw)
-	public static double ND_rw(__ptr__ n) {
+	public static double ND_rw(ST_Agnode_s n) {
 		return ((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).rw;
 	}
 
@@ -944,6 +978,9 @@ public class Macro {
 	// #define ND_shape_info(n) (((Agnodeinfo_t*)AGDATA(n))->shape_info)
 	public static __ptr__ ND_shape_info(__ptr__ n) {
 		return ((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).shape_info;
+	}
+	public static void ND_shape_info(ST_Agnode_s n, __ptr__ v) {
+		((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).setPtr("shape_info", v);
 	}
 
 	// #define ND_showboxes(n) (((Agnodeinfo_t*)AGDATA(n))->showboxes)
@@ -1208,25 +1245,43 @@ public class Macro {
 
 	// #define ALLOC(size,ptr,type) (ptr? (type*)realloc(ptr,(size)*sizeof(type)):(type*)malloc((size)*sizeof(type)))
 
-	public static ST_Agedge_s.ArrayOfStar ALLOC_allocated_ST_Agedge_s(ST_Agedge_s.ArrayOfStar old, int size) {
-		return old != null ? old.reallocJ(size) : new ST_Agedge_s.ArrayOfStar(size);
-	}
-
-	public static ST_Agnode_s.ArrayOfStar ALLOC_allocated_ST_Agnode_s(ST_Agnode_s.ArrayOfStar old, int size) {
-		return old != null ? old.reallocJ(size) : new ST_Agnode_s.ArrayOfStar(size);
-	}
-
-	public static ST_pointf.Array ALLOC_allocated_ST_pointf(ST_pointf.Array old, int size) {
-		return old != null ? old.reallocJ(size) : new ST_pointf.Array(size);
-	}
-
-	public static ST_Pedge_t.Array ALLOC_allocated_ST_Pedge_t(ST_Pedge_t.Array old, int size) {
-		return old != null ? old.reallocJ(size) : new ST_Pedge_t.Array(size);
-	}
-
-	public static __ptr__ ALLOC_INT(int size, __ptr__ ptr) {
-		return (__ptr__) (ptr != null ? JUtils.size_t_array_of_integer(size).realloc(ptr) : JUtils
-				.size_t_array_of_integer(size).malloc());
+//	public static CStarStar<ST_Agnode_s> ALLOC_allocated_ST_Agnode_s(CStarStar<ST_Agnode_s> old, int size) {
+//		if (old == null) {
+//			return new CStarStar<ST_Agnode_s>(size);
+//		}
+//		old.realloc(size);
+//		return old;
+//	}
+//
+//	public static CStarStar<ST_Agnode_s> ALLOC_Agnode_s(int size, CStarStar<ST_Agnode_s> old) {
+//		if (old == null) {
+//			return new CStarStar<ST_Agnode_s>(size);
+//		}
+//		old.realloc(size);
+//		return old;
+//	}
+//	
+//	public static CStarStar<ST_Agedge_s> ALLOC_allocated_ST_Agedge_s(CStarStar<ST_Agedge_s> old, int size) {
+//		if (old == null) {
+//			return new CStarStar<ST_Agedge_s>(size);
+//		}
+//		old.realloc(size);
+//		return old;
+//	}
+	
+	public static int[] ALLOC_INT(int size, int[] old) {
+		if (old == null)
+			return new int[size];
+		
+		if (old.length > size)
+			return old;
+		
+		final int result[] = new int[size];
+		
+		for (int i=0; i<old.length; i++) result[i] = old[i];
+		return result;
+//		return (__ptr__) (ptr != null ? JUtils.size_t_array_of_integer(size).realloc(ptr) : JUtils
+//				.size_t_array_of_integer(size).malloc());
 	}
 
 	// #define RALLOC(size,ptr,type) ((type*)realloc(ptr,(size)*sizeof(type)))
@@ -1234,48 +1289,24 @@ public class Macro {
 		throw new UnsupportedOperationException();
 	}
 
-	public static ST_Agnode_s.ArrayOfStar ALLOC_Agnode_s(int nb, ST_Agnode_s.ArrayOfStar old) {
-		if (old == null) {
-			return new ST_Agnode_s.ArrayOfStar(nb);
-		}
-		return old.reallocJ(nb);
-	}
-
-	public static ST_bezier.Array2 ALLOC_ST_bezier(int nb, ST_bezier.Array2 old) {
-		if (old == null) {
-			return new ST_bezier.Array2(nb);
-		}
-		return old.reallocJ(nb);
-	}
-
-	public static ST_rank_t.Array2 ALLOC_ST_rank_t(int nb, ST_rank_t.Array2 old) {
-		if (old == null) {
-			return new ST_rank_t.Array2(nb);
-		}
-		return old.reallocJ(nb);
-	}
-
 	// #define elist_append(item,L) do {L.list = ALLOC(L.size + 2,L.list,edge_t*); L.list[L.size++] = item;
 	// L.list[L.size] = NULL;} while(0)
-	public static void elist_append(__ptr__ item, ST_elist L) {
-		// L.setPtr("list", ALLOC_empty(L.size + 2, L.getPtr("list"), Agedge_s.class));
-		L.realloc(L.size + 2);
-		L.setInList(L.size, item);
-		L.size = 1 + L.size;
-		L.setInList(L.size, null);
+	public static void elist_append(ST_Agedge_s item, ST_elist L) {
+		L.list = CStarStar.<ST_Agedge_s> REALLOC(L.size + 2, L.list, ST_Agedge_s.class);
+		L.list.set_(L.size++, item);
+		L.list.set_(L.size, null);
 	}
 
 	// #define alloc_elist(n,L) do {L.size = 0; L.list = N_NEW(n + 1,edge_t*); } while (0)
 	public static void alloc_elist(int n, ST_elist L) {
 		L.size = 0;
-		L.mallocEmpty(n + 1);
-		// L.setPtr("list", (__ptr__) JUtils.sizeof_starstar_empty(cl, n + 1).malloc());
+		L.list = CStarStar.<ST_Agedge_s> ALLOC(n + 1, ST_Agedge_s.class);
 	}
 
 	// #define free_list(L) do {if (L.list) free(L.list);} while (0)
 	public static void free_list(ST_elist L) {
-		if (L.listNotNull())
-			L.free();
+		if (L.list!=null)
+			Memory.free(L.list);
 		// Memory.free(L.getPtr("list"));
 	}
 
@@ -1348,19 +1379,21 @@ public class Macro {
 		ED_to_orig(newp, old);
 	}
 
-	// #define VIRTUAL 1 /* virtual nodes in long edge chains */
-	public static final int VIRTUAL = 1;
+//	// #define ZALLOC(size,ptr,type,osize) (ptr?
+//	// (type*)zrealloc(ptr,size,sizeof(type),osize):(type*)zmalloc((size)*sizeof(type)))
+//
+//	public static CStar<ST_textspan_t> ZALLOC_ST_textspan_t(ST_textspan_t.Array old, int size) {
+//		return old != null ? old.reallocJ(size) : new ST_textspan_t.Array(size);
+//	}
 
-	// #define ZALLOC(size,ptr,type,osize) (ptr?
-	// (type*)zrealloc(ptr,size,sizeof(type),osize):(type*)zmalloc((size)*sizeof(type)))
-
-	public static ST_textspan_t.Array ZALLOC_ST_textspan_t(ST_textspan_t.Array old, int size) {
-		return old != null ? old.reallocJ(size) : new ST_textspan_t.Array(size);
-	}
-
-	public static ST_Agraph_s.Array ZALLOC_ST_Agraph_s(ST_Agraph_s.Array old, int size) {
-		return old != null ? old.reallocJ(size) : new ST_Agraph_s.Array(size);
-	}
+//	public static CStarStar<ST_Agraph_s> ZALLOC_ST_Agraph_s(CStarStar<ST_Agraph_s> old, int size) {
+//		if (old == null) {
+//			return new CStarStar<ST_Agraph_s>(size);
+//		}
+//		old.realloc(size);
+//		return old;
+//		// return old != null ? old.reallocJ(size) : new ST_Agraph_s.Array(size);
+//	}
 
 	public static final int MAXSHORT = 0x7fff;
 
@@ -1419,6 +1452,9 @@ public class Macro {
 	public static double DIST2(ST_pointf p, ST_pointf q) {
 		return (LEN2(((p).x - (q).x), ((p).y - (q).y)));
 	}
+	public static double DIST2(ST_point p, ST_point q) {
+		return (LEN2(((p).x - (q).x), ((p).y - (q).y)));
+	}
 
 	// #define DIST(p,q) (sqrt(DIST2((p),(q))))
 
@@ -1454,13 +1490,411 @@ public class Macro {
 			}
 			int ww = Integer.parseInt(m.group(1));
 			int hh = Integer.parseInt(m.group(2));
-			size.setDouble("x", ww);
-			size.setDouble("y", hh);
+			size.x = ww;
+			size.y = hh;
 			JUtils.LOG2("Hacking dimension to width=" + ww + " height=" + hh);
+//		} else {
+//			throw new IllegalArgumentException(label);
 		}
 	}
 
 	public static CString createHackInitDimensionFromLabel(int width, int height) {
 		return new CString("_dim_" + width + "_" + height + "_");
 	}
+	
+	
+	// geom.h
+	
+	//#define P2PF(p,pf)		((pf).x = (p).x,(pf).y = (p).y)
+	
+	
+	//#define PF2P(pf,p)		((p).x = ROUND((pf).x),(p).y = ROUND((pf).y))
+	public static void PF2P(ST_pointf pf, ST_pointf p) {
+		p.x = ROUND(pf.x);
+		p.y = ROUND(pf.y);
+	}
+	public static void PF2P(ST_pointf pf, ST_point p) {
+		p.x = ROUND(pf.x);
+		p.y = ROUND(pf.y);
+	}
+
+	//#define B2BF(b,bf)		(P2PF((b).LL,(bf).LL),P2PF((b).UR,(bf).UR))
+	//#define BF2B(bf,b)		(PF2P((bf).LL,(b).LL),PF2P((bf).UR,(b).UR))
+
+	//#define APPROXEQ(a,b,tol)	(ABS((a) - (b)) < (tol))
+	//#define APPROXEQPT(p,q,tol)	(DIST2((p),(q)) < SQR(tol))
+
+	/* some common tolerance values */
+	//#define MILLIPOINT .001
+	//#define MICROPOINT .000001
+	
+	// ADDED AFTER PREPROCESSING EXTRACTION
+	public static final int LEFT = (1<<3);
+	public static final int RIGHT = (1<<1);
+	public static final int BOTTOM = (1<<0);
+	public static final int TOP = (1<<2);
+
+
+	/* label types */
+	public static final int LT_NONE =	(0 << 1);
+	public static final int LT_HTML =	(1 << 1);
+	public static final int LT_RECD =	(2 << 1);
+
+	
+	/* existence of labels */
+	public static final int EDGE_LABEL =	(1 << 0);
+	public static final int HEAD_LABEL =	(1 << 1);
+	public static final int TAIL_LABEL =	(1 << 2);
+	public static final int GRAPH_LABEL =	(1 << 3);
+	public static final int NODE_XLABEL =	(1 << 4);
+	public static final int EDGE_XLABEL =	(1 << 5);
+//
+	
+	/* edge types */
+	public static final int ET_NONE =	(0 << 1);
+	public static final int ET_LINE =	(1 << 1);
+	public static final int ET_CURVED =	(2 << 1);
+	public static final int ET_PLINE =	(3 << 1);
+	public static final int ET_ORTHO =	(4 << 1);
+	public static final int ET_SPLINE =	(5 << 1);
+	public static final int ET_COMPOUND =	(6 << 1);
+	
+	/* New ranking is used */
+	public static final int NEW_RANK =  	(1 << 4);
+	
+	/*	node,edge types */
+	public static final int NORMAL =		0;	/* an original input node */
+	public static final int VIRTUAL =		1;	/* virtual nodes in long edge chains */
+	public static final int SLACKNODE =		2;	/* encode edges in node position phase */
+	public static final int REVERSED =		3;	/* reverse of an original edge */
+	public static final int FLATORDER =		4;	/* for ordered edges */
+	public static final int CLUSTER_EDGE = 	5;	/* for ranking clusters */
+	public static final int IGNORED =		6;	/* concentrated multi-edges */
+
+	/* collapsed node classifications */
+	public static final int NOCMD =			0;	/* default */
+	public static final int SAMERANK =		1;	/* place on same rank */
+	public static final int MINRANK =		2;	/* place on "least" rank */
+	public static final int SOURCERANK =	3;	/* strict version of MINRANK */
+	public static final int MAXRANK =		4;	/* place on "greatest" rank */
+	public static final int SINKRANK =		5;	/* strict version of MAXRANK */
+	public static final int LEAFSET =		6;	/* set of collapsed leaf nodes */
+	public static final int CLUSTER =		7;	/* set of clustered nodes */
+
+	/* type of graph label: GD_label_pos */
+	public static final int LABEL_AT_BOTTOM =	0;
+	public static final int LABEL_AT_TOP =		1;
+	public static final int LABEL_AT_LEFT =		2;
+	public static final int LABEL_AT_RIGHT =	4;
+
+	/* values specifying rankdir */
+	public static final int RANKDIR_TB = 0;
+	public static final int RANKDIR_LR = 1;
+	public static final int RANKDIR_BT = 2;
+	public static final int RANKDIR_RL = 3;
+
+	/* edge types */
+	public static final int REGULAREDGE 	= 1;
+	public static final int FLATEDGE    	= 2;
+	public static final int SELFWPEDGE  	= 4;
+	public static final int SELFNPEDGE  	= 8;
+	public static final int SELFEDGE    	= 8;
+	public static final int EDGETYPEMASK	= 15;	/* the OR of the above */
+	
+	
+	public static final int LAYOUT_USES_RANKDIR = (1<<0);
+
+	public static void dtinsert(ST_dt_s d, Object o) {
+		d.searchf.exe(d, o, DT_INSERT);
+	}
+	
+	public static Object dtsearch(ST_dt_s d, Object o) {
+		return d.searchf.exe(d, o, DT_SEARCH);
+	}
+	
+	public static Object dtfirst(ST_dt_s d) {
+		return d.searchf.exe(d, null, DT_FIRST);
+	}
+
+	public static Object dtnext(ST_dt_s d, Object o) {
+		return d.searchf.exe(d, o, DT_NEXT);
+	}
+
+
+
+//	#define dtlink(d,e)	(((Dtlink_t*)(e))->right)
+//	#define dtobj(d,e)	_DTOBJ((e), _DT(d)->disc->link)
+//	#define dtfinger(d)	(_DT(d)->data->here ? dtobj((d),_DT(d)->data->here):(Void_t*)(0))
+//
+//	#define dtfirst(d)	(*(_DT(d)->searchf))((d),(Void_t*)(0),DT_FIRST)
+//	#define dtnext(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_NEXT)
+//	#define dtleast(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_SEARCH|DT_NEXT)
+//	#define dtlast(d)	(*(_DT(d)->searchf))((d),(Void_t*)(0),DT_LAST)
+//	#define dtprev(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_PREV)
+//	#define dtmost(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_SEARCH|DT_PREV)
+//	#define dtsearch(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_SEARCH)
+//	#define dtmatch(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_MATCH)
+//	#define dtinsert(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_INSERT)
+//	#define dtappend(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_INSERT|DT_APPEND)
+//	#define dtdelete(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_DELETE)
+//	#define dtattach(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_ATTACH)
+//	#define dtdetach(d,o)	(*(_DT(d)->searchf))((d),(Void_t*)(o),DT_DETACH)
+//	#define dtclear(d)	(*(_DT(d)->searchf))((d),(Void_t*)(0),DT_CLEAR)
+//	#define dtfound(d)	(_DT(d)->type & DT_FOUND)
+	
+	
+
+/* flag set if the last search operation actually found the object */
+	public static final int DT_FOUND	= 0100000;
+
+/* supported storage methods */
+	public static final int DT_SET		= 0000001;	/* set with unique elements		*/
+	public static final int DT_BAG		= 0000002;	/* multiset				*/
+	public static final int DT_OSET		= 0000004;	/* ordered set (self-adjusting tree)	*/
+	public static final int DT_OBAG		= 0000010;	/* ordered multiset			*/
+	public static final int DT_LIST		= 0000020;	/* linked list				*/
+	public static final int DT_STACK	= 0000040;	/* stack: insert/delete at top		*/
+	public static final int DT_QUEUE	= 0000100;	/* queue: insert at top, delete at tail	*/
+	public static final int DT_DEQUE	= 0000200;  /* deque: insert at top, append at tail	*/
+	public static final int DT_METHODS	= 0000377;	/* all currently supported methods	*/
+
+/* asserts to dtdisc() */
+	public static final int DT_SAMECMP	= 0000001;	/* compare methods equivalent		*/
+	public static final int DT_SAMEHASH	= 0000002;	/* hash methods equivalent		*/
+
+/* types of search */
+	public static final int DT_INSERT	= 0000001;	/* insert object if not found		*/
+	public static final int DT_DELETE	= 0000002;	/* delete object if found		*/
+	public static final int DT_SEARCH	= 0000004;	/* look for an object			*/
+	public static final int DT_NEXT		= 0000010;	/* look for next element		*/
+	public static final int DT_PREV		= 0000020;	/* find previous element		*/
+	public static final int DT_RENEW	= 0000040;	/* renewing an object			*/
+	public static final int DT_CLEAR	= 0000100;	/* clearing all objects			*/
+	public static final int DT_FIRST	= 0000200;	/* get first object			*/
+	public static final int DT_LAST		= 0000400;	/* get last object			*/
+	public static final int DT_MATCH	= 0001000;	/* find object matching key		*/
+	public static final int DT_VSEARCH	= 0002000;	/* search using internal representation	*/
+	public static final int DT_ATTACH	= 0004000;	/* attach an object to the dictionary	*/
+	public static final int DT_DETACH	= 0010000;	/* detach an object from the dictionary	*/
+	public static final int DT_APPEND	= 0020000;	/* used on Dtlist to append an object	*/
+
+/* events */
+	public static final int DT_OPEN		= 1;	/* a dictionary is being opened		*/
+	public static final int DT_CLOSE	= 2;	/* a dictionary is being closed		*/
+	public static final int DT_DISC		= 3;	/* discipline is about to be changed	*/
+	public static final int DT_METH		= 4;	/* method is about to be changed	*/
+	public static final int DT_ENDOPEN	= 5;	/* dtopen() is done			*/
+	public static final int DT_ENDCLOSE	= 6;	/* dtclose() is done			*/
+	public static final int DT_HASHSIZE	= 7;	/* setting hash table size		*/
+
+	/* this must be disjoint from DT_METHODS */
+	public static final int  DT_FLATTEN =	010000;	/* dictionary already flattened	*/
+	public static final int  DT_WALK	=	020000;	/* hash table being walked	*/
+
+	/* how the Dt_t handle was allocated */
+	public static final int  DT_MALLOC	= 0;
+	public static final int  DT_MEMORYF	= 1;
+
+	/* tree rotation/linking functions */
+//	#define rrotate(x,y)	((x)->left  = (y)->right, (y)->right = (x))
+//	#define lrotate(x,y)	((x)->right = (y)->left,  (y)->left  = (x))
+//	#define rlink(r,x)	((r) = (r)->left   = (x) )
+//	#define llink(l,x)	((l) = (l)->right  = (x) )
+	public static void rrotate(ST_dtlink_s x, ST_dtlink_s y) {
+		x._left = y.right; y.right = x;
+	}
+	public static void lrotate(ST_dtlink_s x, ST_dtlink_s y) {
+		x.right = y._left; y._left = x;
+	}
+	public static ST_dtlink_s rlink____warning(ST_dtlink_s r, ST_dtlink_s x) {
+		r._left = x;
+		// r = x; WARNING THIS IS DIFFERENT FROM C: you must use returned value
+		return x;
+	}
+	public static ST_dtlink_s llink____warning(ST_dtlink_s l, ST_dtlink_s x) {
+		l.right = x;
+		// l = x; WARNING THIS IS DIFFERENT FROM C: you must use returned value
+		return x;
+	}
+
+	public static final int	GVRENDER_PLUGIN = 300;	/* a plugin supported language */
+	public static final int	NO_SUPPORT = 999;	/* no support */
+
+	/* type of cluster rank assignment */
+	public static final int			LOCAL	=	100;
+	public static final int			GLOBAL	=	101;
+	public static final int			NOCLUST	=	102;
+
+//	#define agfindedge(g,t,h) (agedge(g,t,h,NULL,0))
+//	#define agfindnode(g,n) (agnode(g,n,0))
+//	#define agfindgraphattr(g,a) (agattr(g,AGRAPH,a,NULL))
+//	#define agfindnodeattr(g,a) (agattr(g,AGNODE,a,NULL))
+//	#define agfindedgeattr(g,a) (agattr(g,AGEDGE,a,NULL))
+	
+	public static ST_Agsym_s agfindgraphattr(ST_Agraph_s g, final String a) {
+		return agattr(g, AGRAPH, new CString(a), null);
+	}
+	public static ST_Agsym_s agfindnodeattr(ST_Agraph_s g, final String a) {
+		return agattr(g, AGNODE, new CString(a), null);
+	}
+	public static ST_Agsym_s agfindedgeattr(ST_Agraph_s g, final String a) {
+		return agattr(g, AGEDGE, new CString(a), null);
+	}
+
+	public static final double			DEFAULT_NODESEP	= 0.25;
+	public static final double			MIN_NODESEP		= 0.02;
+	public static final double			DEFAULT_RANKSEP	= 0.5;
+	public static final double			MIN_RANKSEP		= 0.02;
+
+	public static final int			POINTS_PER_INCH		= 72;
+	
+	public static int POINTS(double a_inches) {
+		return ROUND((a_inches)*POINTS_PER_INCH);
+	}
+	public static double INCH2PS(double a_inches) {
+		return ((a_inches)*(double)POINTS_PER_INCH);
+	}
+	public static double PS2INCH(double a_points) {
+		return ((a_points)/(double)POINTS_PER_INCH);
+	}
+
+	/* drawing phases */
+	public static final int	 GVBEGIN        = 0;
+	public static final int	 GVSPLINES      = 1;
+
+	/* for neato */
+	public static final double	 Spring_coeff    = 1.0;
+	public static final double	 MYHUGE          = (1.0e+37);
+	public static final int	 MAXDIM			= 10;
+
+	public static final String NODENAME_ESC = "\\N";
+	public static final String DEFAULT_NODESHAPE = "ellipse";
+	
+	public static final double			DEFAULT_NODEHEIGHT 	= 0.5;
+	public static final double			MIN_NODEHEIGHT	   	= 0.02;
+	public static final double			DEFAULT_NODEWIDTH	= 0.75;
+	public static final double			MIN_NODEWIDTH		= 0.01;
+
+	
+	/* sides (e.g. of cluster margins) */
+	public static final int			BOTTOM_IX	= 0;
+	public static final int			RIGHT_IX	= 1;
+	public static final int			TOP_IX		= 2;
+	public static final int			LEFT_IX		= 3;
+
+	
+	public static final int			GAP		= 4;
+	
+	public static void PAD(ST_pointf d) {
+		XPAD(d);
+		YPAD(d);
+	}
+	public static void YPAD(ST_pointf d) {
+		d.y += 2*GAP;
+	}
+	public static void XPAD(ST_pointf d) {
+		d.x += 4*GAP;
+	}
+
+	public static void UNFLATTEN(ST_dt_s dt) {
+		if ((dt.data.type&DT_FLATTEN)!=0) dtrestore(dt,null);
+	}
+	
+	
+	public static final int	 CB_INITIALIZE	= 100;
+	public static final int	 CB_UPDATE		= 101;
+	public static final int	 CB_DELETION	= 102;
+
+	public static final int			CL_BACK		= 10;	/* cost of backward pointing edge */
+	public static final int			CL_OFFSET	= 8;	/* margin of cluster box in PS points */
+	public static final int			CL_CROSS	= 1000;	/* cost of cluster skeleton edge crossing */
+
+	
+	public static __ptr__ AGCLOS_id(ST_Agraph_s g) {
+		return g.clos.state.id;
+	}
+	public static ST_Agiddisc_s AGDISC_id(ST_Agraph_s g) {
+		return g.clos.disc.id;
+	}
+	public static __ptr__ AGCLOS_mem(ST_Agraph_s g) {
+		return g.clos.state.mem;
+	}
+	public static ST_Agmemdisc_s AGDISC_mem(ST_Agraph_s g) {
+		return g.clos.disc.mem;
+	}
+	public static ST_Agiodisc_s AGDISC_io(ST_Agraph_s g) {
+		return g.clos.disc.io;
+	}
+
+	public static final double			DEFAULT_FONTSIZE		= 14.00;
+	public static final double			DEFAULT_LABEL_FONTSIZE	= 11.0;	/* for head/taillabel */
+	public static final double			MIN_FONTSIZE			= 1.0;
+	
+	
+	/* style flags (0-23)*/
+	public static final int	 FILLED		= (1 << 0);
+	public static final int	 RADIAL		= (1 << 1);
+	public static final int	 ROUNDED		= (1 << 2);
+	public static final int	 DIAGONALS	= (1 << 3);
+	public static final int	 AUXLABELS	= (1 << 4);
+	public static final int	 INVISIBLE	= (1 << 5);
+	public static final int	 STRIPED		= (1 << 6);
+	public static final int	 DOTTED		= (1 << 7);
+	public static final int	 DASHED		= (1 << 8);
+	public static final int	 WEDGED		= (1 << 9);
+	public static final int	 UNDERLINE	= (1 << 10);
+	public static final int	 FIXEDSHAPE	= (1 << 11);
+
+	public static final int	 SHAPE_MASK	= (127 << 24);
+
+	public static final CString HEAD_ID = new CString("headport");
+	public static final CString TAIL_ID = new CString("tailport");
+
+	public static __ptr__ _DTKEY(__ptr__ o, int ky, int sz) {
+		return (__ptr__) (sz < 0 ? ((__ptr__)o).addVirtualBytes(ky) : ((__ptr__)o).addVirtualBytes(ky));
+	}
+	
+	public static int _DTCMP(ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, Dtcompar_f cmpf, int sz) {
+		return cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,k1,k2,dc) : 
+			(sz <= 0 ? strcmp((CString)k1,(CString)k2) : UNSUPPORTED_INT("memcmp(ok,nk,sz)"));
+	}
+
+	public static final int SEARCHSIZE = 30;
+	
+	public static ST_Agedge_s agfindedge(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
+		return agedge(g, t, h, null, false);
+	}
+	
+	public static int flatindex(ST_Agnode_s v) {
+		return ND_low(v);
+	}
+	public static void flatindex(ST_Agnode_s v, int data) {
+		ND_low(v, data);
+	}
+
+	public static final int NODECARD = 64;
+	public static final int SMALLBUF = 128;
+
+//	#define ND_subtree(n) (subtree_t*)ND_par(n)
+//	#define ND_subtree_set(n,value) (ND_par(n) = (edge_t*)value)
+	
+	
+	public static ST_subtree_t ND_subtree(ST_Agnode_s n) {
+		// return (ST_subtree_t) ((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).par;
+		throw new UnsupportedOperationException();
+	}
+	public static void ND_subtree_set(ST_Agnode_s n, ST_subtree_t value) {
+		// ((ST_Agnodeinfo_t)AGDATA(n).castTo(ST_Agnodeinfo_t.class)).par = value;
+		throw new UnsupportedOperationException();
+	}
+
+	// #define streq(a,b)		(*(a)==*(b)&&!strcmp(a,b))
+	public static boolean streq(CString a, CString b) {
+		return a.charAt(0)==b.charAt(0) && N(strcmp(a,b));
+	}
+	public static boolean streq(CString a, String b) {
+		return streq(a, new CString(b));
+	}
+
+
 }

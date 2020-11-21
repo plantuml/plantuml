@@ -141,6 +141,9 @@ public class Histogram implements PDrawing {
 
 	public void addChange(ChangeState change) {
 		changes.add(change);
+		if (change.isCompletelyHidden()) {
+			return;
+		}
 		final String[] states = change.getStates();
 		for (String state : states) {
 			if (allStates.contains(state) == false) {
@@ -273,6 +276,9 @@ public class Histogram implements PDrawing {
 			}
 		}
 		for (int i = 0; i < changes.size(); i++) {
+			if (changes.get(i).isCompletelyHidden()) {
+				continue;
+			}
 			final double x2 = i < changes.size() - 1 ? getPointx(i + 1) : ruler.getWidth();
 			final double len = x2 - getPointx(i);
 			final Point2D[] points = getPoints(i);
@@ -285,9 +291,12 @@ public class Histogram implements PDrawing {
 				}
 			}
 		}
-		for (Point2D pt : getPoints(changes.size() - 1)) {
-			final double len = ruler.getWidth() - pt.getX();
-			drawHLine(ug, pt, len);
+
+		if (changes.get(changes.size() - 1).isCompletelyHidden() == false) {
+			for (Point2D pt : getPoints(changes.size() - 1)) {
+				final double len = ruler.getWidth() - pt.getX();
+				drawHLine(ug, pt, len);
+			}
 		}
 	}
 
@@ -314,6 +323,9 @@ public class Histogram implements PDrawing {
 			ug.apply(new UTranslate(current)).draw(ULine.vline(before.getY() - current.getY()));
 		}
 		for (int i = 1; i < changes.size(); i++) {
+			if (changes.get(i - 1).isCompletelyHidden() || changes.get(i).isCompletelyHidden()) {
+				continue;
+			}
 			final double minY = Math.min(getPointMinY(i), getPointMinY(i - 1));
 			final double maxY = Math.max(getPointMaxY(i), getPointMaxY(i - 1));
 			ug.apply(new UTranslate(getPointx(i), minY)).draw(ULine.vline(maxY - minY));

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.gvc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class gvloadimage__c {
@@ -151,6 +154,8 @@ public class gvloadimage__c {
 
 //3 ep6jmhv0is26drryogw6fohi3
 // static int gvloadimage_select(GVJ_t * job, char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvloadimage.c", name="gvloadimage_select", key="ep6jmhv0is26drryogw6fohi3", definition="static int gvloadimage_select(GVJ_t * job, char *str)")
 public static Object gvloadimage_select(Object... arg) {
 UNSUPPORTED("5bb69p9z62wipd3lyplljm2v4"); // static int gvloadimage_select(GVJ_t * job, char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -174,6 +179,8 @@ throw new UnsupportedOperationException();
 
 //3 a1485vryn659qrl2rhyrgd6dt
 // void gvloadimage(GVJ_t * job, usershape_t *us, boxf b, boolean filled, const char *target) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvloadimage.c", name="gvloadimage", key="a1485vryn659qrl2rhyrgd6dt", definition="void gvloadimage(GVJ_t * job, usershape_t *us, boxf b, boolean filled, const char *target)")
 public static Object gvloadimage(Object... arg) {
 UNSUPPORTED("21k2magil01siu25ovmraoqbg"); // void gvloadimage(GVJ_t * job, usershape_t *us, boxf b, boolean filled, const char *target)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

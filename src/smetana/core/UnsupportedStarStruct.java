@@ -56,10 +56,6 @@ public class UnsupportedStarStruct implements StarStruct {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public int minus(__ptr__ other) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public int getInt() {
 		throw new UnsupportedOperationException(getClass().toString());
 	}

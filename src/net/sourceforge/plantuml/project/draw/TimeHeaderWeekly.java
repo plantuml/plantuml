@@ -52,28 +52,78 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderWeekly extends TimeHeader {
 
-	private double getTimeHeaderHeight() {
-		return Y_POS_ROW16 + 13;
+	private final LoadPlanable defaultPlan;
+	private final Map<Day, HColor> colorDays;
+
+	protected double getTimeHeaderHeight() {
+		return 16 + 13;
+	}
+
+	public double getTimeFooterHeight() {
+		return 16;
 	}
 
 	public TimeHeaderWeekly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
 			Map<Day, String> nameDays) {
 		super(min, max, new TimeScaleCompressed(calendar, PrintScale.WEEKLY.getCompress()));
+		this.defaultPlan = defaultPlan;
+		this.colorDays = colorDays;
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeight) {
-		drawCalendar(ug, totalHeight);
+	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+		drawCalendar(ug, totalHeightWithoutFooter);
 		drawHline(ug, 0);
-		drawHline(ug, Y_POS_ROW16);
+		drawHline(ug, Y_POS_ROW16());
 		drawHline(ug, getFullHeaderHeight());
-
 	}
 
-	private void drawCalendar(final UGraphic ug, double totalHeight) {
-		printDaysOfMonth(ug);
-		printSmallVbars(ug, totalHeight);
+	@Override
+	public void drawTimeFooter(UGraphic ug) {
+		drawHline(ug, 0);
 		printMonths(ug);
+		drawHline(ug, getTimeFooterHeight());
+	}
+
+	private void drawCalendar(final UGraphic ug, double totalHeightWithoutFooter) {
+		drawTexts(ug, totalHeightWithoutFooter);
+		printDaysOfMonth(ug);
+		printSmallVbars(ug, totalHeightWithoutFooter);
+		printMonths(ug);
+	}
+
+	private void drawTexts(final UGraphic ug, double totalHeightWithoutFooter) {
+		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
+		Day firstDay = null;
+		HColor lastColor = null;
+
+		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+
+			HColor back = colorDays.get(wink);
+			if (back == null && defaultPlan.getLoadAt(wink) == 0) {
+				back = veryLightGray;
+			}
+			if (back == null) {
+				if (lastColor != null)
+					drawBack(ug.apply(lastColor.bg()), firstDay, wink, height);
+				firstDay = null;
+				lastColor = null;
+			} else {
+				assert back != null;
+				if (lastColor != null && lastColor.equals(back) == false) {
+					drawBack(ug.apply(lastColor.bg()), firstDay, wink, height);
+				}
+				if (firstDay == null)
+					firstDay = wink;
+				lastColor = back;
+			}
+		}
+	}
+
+	private void drawBack(UGraphic ug, Day start, Day end, double height) {
+		final double x1 = getTimeScale().getStartingPosition(start);
+		final double x2 = getTimeScale().getStartingPosition(end);
+		drawRectangle(ug, height, x1, x2);
 	}
 
 	private void printMonths(final UGraphic ug) {
@@ -82,7 +132,7 @@ public class TimeHeaderWeekly extends TimeHeader {
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
-				drawVbar(ug, x1, 0, Y_POS_ROW16);
+				drawVbar(ug, x1, 0, Y_POS_ROW16());
 				if (last != null) {
 					printMonth(ug, last, lastChangeMonth, x1);
 				}
@@ -90,24 +140,26 @@ public class TimeHeaderWeekly extends TimeHeader {
 				last = wink.monthYear();
 			}
 		}
+		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, Y_POS_ROW16());
 		final double x1 = getTimeScale().getStartingPosition(max.increment());
 		if (x1 > lastChangeMonth) {
 			printMonth(ug, last, lastChangeMonth, x1);
 		}
 	}
 
-	private void printSmallVbars(final UGraphic ug, double totalHeight) {
+	private void printSmallVbars(final UGraphic ug, double totalHeightWithoutFooter) {
 		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
 			if (wink.getDayOfWeek() == DayOfWeek.MONDAY) {
-				drawVbar(ug, getTimeScale().getStartingPosition(wink), Y_POS_ROW16, totalHeight);
+				drawVbar(ug, getTimeScale().getStartingPosition(wink), Y_POS_ROW16(), totalHeightWithoutFooter);
 			}
 		}
+		drawVbar(ug, getTimeScale().getEndingPosition(max), Y_POS_ROW16(), totalHeightWithoutFooter);
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			if (wink.getDayOfWeek() == DayOfWeek.MONDAY) {
-				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16)),
+				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16())),
 						getTextBlock("" + wink.getDayOfMonth(), 10, false, HColorUtils.BLACK),
 						getTimeScale().getStartingPosition(wink) + 5);
 			}

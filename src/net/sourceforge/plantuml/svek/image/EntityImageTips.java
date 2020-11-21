@@ -123,6 +123,10 @@ public class EntityImageTips extends AbstractEntityImage {
 		final Node nodeMe = bibliotekon.getNode(getEntity());
 		final Node nodeOther = bibliotekon.getNode(other);
 		final Point2D positionMe = nodeMe.getPosition();
+		if (nodeOther == null) {
+			System.err.println("Error in EntityImageTips");
+			return;
+		}
 		final Point2D positionOther = nodeOther.getPosition();
 		bibliotekon.getNode(getEntity());
 		final Position position = getPosition();

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.gvc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class gvdevice__c {
@@ -155,6 +158,8 @@ public class gvdevice__c {
 
 //3 2bgvvqltcp240iwsswb2msc4b
 // static size_t gvwrite_no_z (GVJ_t * job, const char *s, size_t len) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvwrite_no_z", key="2bgvvqltcp240iwsswb2msc4b", definition="static size_t gvwrite_no_z (GVJ_t * job, const char *s, size_t len)")
 public static Object gvwrite_no_z(Object... arg) {
 UNSUPPORTED("avituu19zqjw7jh9tfrcm2vaa"); // static size_t gvwrite_no_z (GVJ_t * job, const char *s, size_t len)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -188,6 +193,8 @@ throw new UnsupportedOperationException();
 
 //3 cc376t4uiy6qsmjtdc2stei85
 // static void auto_output_filename(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="auto_output_filename", key="cc376t4uiy6qsmjtdc2stei85", definition="static void auto_output_filename(GVJ_t *job)")
 public static Object auto_output_filename(Object... arg) {
 UNSUPPORTED("7bmm5yx4a4rufskcsnxv6wl0z"); // static void auto_output_filename(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -233,6 +240,8 @@ throw new UnsupportedOperationException();
 
 //3 9zdt3xvyjnxhf42eizyfy29ly
 // int gvdevice_initialize(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvdevice_initialize", key="9zdt3xvyjnxhf42eizyfy29ly", definition="int gvdevice_initialize(GVJ_t * job)")
 public static Object gvdevice_initialize(Object... arg) {
 UNSUPPORTED("2same1m1pu1ldefe93fodijcl"); // int gvdevice_initialize(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -274,6 +283,8 @@ throw new UnsupportedOperationException();
 
 //3 ajhncfer509k2pk55o2k8w9aw
 // size_t gvwrite (GVJ_t * job, const char *s, size_t len) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvwrite", key="ajhncfer509k2pk55o2k8w9aw", definition="size_t gvwrite (GVJ_t * job, const char *s, size_t len)")
 public static Object gvwrite(Object... arg) {
 UNSUPPORTED("bwx5n843dguc728qqcypic3er"); // size_t gvwrite (GVJ_t * job, const char *s, size_t len)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -302,6 +313,8 @@ throw new UnsupportedOperationException();
 
 //3 38q4ri7dsm0ur36bqkxqeeu6y
 // int gvferror (FILE* stream) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvferror", key="38q4ri7dsm0ur36bqkxqeeu6y", definition="int gvferror (FILE* stream)")
 public static Object gvferror(Object... arg) {
 UNSUPPORTED("bw6pcxpys8yj8g1611fjiq85f"); // int gvferror (FILE* stream)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -319,6 +332,8 @@ throw new UnsupportedOperationException();
 
 //3 ejkm659i2t9ni9abwvls81srg
 // size_t gvfwrite (const void *ptr, size_t size, size_t nmemb, FILE *stream) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvfwrite", key="ejkm659i2t9ni9abwvls81srg", definition="size_t gvfwrite (const void *ptr, size_t size, size_t nmemb, FILE *stream)")
 public static Object gvfwrite(Object... arg) {
 UNSUPPORTED("9jmr6dp0tzh6pynfebkrgg0qu"); // size_t gvfwrite (const void *ptr, size_t size, size_t nmemb, FILE *stream)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -334,6 +349,8 @@ throw new UnsupportedOperationException();
 
 //3 baq4lnmy9b8h5r38t5kac1wfp
 // int gvputs(GVJ_t * job, const char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvputs", key="baq4lnmy9b8h5r38t5kac1wfp", definition="int gvputs(GVJ_t * job, const char *s)")
 public static Object gvputs(Object... arg) {
 UNSUPPORTED("1p5e428gxaoorzh5qz00rfy0k"); // int gvputs(GVJ_t * job, const char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -352,6 +369,8 @@ throw new UnsupportedOperationException();
 
 //3 dmzoqt3ukt72kvftmdjotritt
 // int gvputc(GVJ_t * job, int c) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvputc", key="dmzoqt3ukt72kvftmdjotritt", definition="int gvputc(GVJ_t * job, int c)")
 public static Object gvputc(Object... arg) {
 UNSUPPORTED("9mag55jpuhl60bjf9unj7xp92"); // int gvputc(GVJ_t * job, int c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -370,6 +389,8 @@ throw new UnsupportedOperationException();
 
 //3 cv9w48stixnm7kbet4eftjadx
 // int gvflush (GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvflush", key="cv9w48stixnm7kbet4eftjadx", definition="int gvflush (GVJ_t * job)")
 public static Object gvflush(Object... arg) {
 UNSUPPORTED("5ckii4epkwj83v2nnt54ofh8d"); // int gvflush (GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -390,6 +411,8 @@ throw new UnsupportedOperationException();
 
 //3 330e9khckra3n5ssrwak5tfea
 // static void gvdevice_close(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvdevice_close", key="330e9khckra3n5ssrwak5tfea", definition="static void gvdevice_close(GVJ_t * job)")
 public static Object gvdevice_close(Object... arg) {
 UNSUPPORTED("1kd1owjv512h3o8vja7myre50"); // static void gvdevice_close(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -412,6 +435,8 @@ throw new UnsupportedOperationException();
 
 //3 b8iwpcj6eij03r64m0360e7qs
 // void gvdevice_format(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvdevice_format", key="b8iwpcj6eij03r64m0360e7qs", definition="void gvdevice_format(GVJ_t * job)")
 public static Object gvdevice_format(Object... arg) {
 UNSUPPORTED("6z5f8fkhpqc1bo4eeaxujv2lr"); // void gvdevice_format(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -429,6 +454,8 @@ throw new UnsupportedOperationException();
 
 //3 46sqk4d6tbspekxqa4h32d301
 // void gvdevice_finalize(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvdevice_finalize", key="46sqk4d6tbspekxqa4h32d301", definition="void gvdevice_finalize(GVJ_t * job)")
 public static Object gvdevice_finalize(Object... arg) {
 UNSUPPORTED("e4zp9r9c2a5l12d2tadisfxsi"); // void gvdevice_finalize(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -459,6 +486,8 @@ throw new UnsupportedOperationException();
 
 //3 1egirdomc1btc6kjc3dgard3o
 // void gvprintf(GVJ_t * job, const char *format, ...) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvprintf", key="1egirdomc1btc6kjc3dgard3o", definition="void gvprintf(GVJ_t * job, const char *format, ...)")
 public static Object gvprintf(Object... arg) {
 UNSUPPORTED("6fhkk7sp6y4sbd7qnk0vy9c"); // void gvprintf(GVJ_t * job, const char *format, ...)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -490,6 +519,8 @@ throw new UnsupportedOperationException();
 
 //3 alkcimcmn7kdav5dab3x68rin
 // static char * gvprintnum (size_t *len, double number) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvprintnum", key="alkcimcmn7kdav5dab3x68rin", definition="static char * gvprintnum (size_t *len, double number)")
 public static Object gvprintnum(Object... arg) {
 UNSUPPORTED("3sz3rah6s15fileyrygtyvsy4"); // static char * gvprintnum (size_t *len, double number)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -554,6 +585,8 @@ throw new UnsupportedOperationException();
 
 //3 bmeyiwkpu2qs7dejvs5sh6o8v
 // void gvprintdouble(GVJ_t * job, double num) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvprintdouble", key="bmeyiwkpu2qs7dejvs5sh6o8v", definition="void gvprintdouble(GVJ_t * job, double num)")
 public static Object gvprintdouble(Object... arg) {
 UNSUPPORTED("cn6ds26lgsd3ujjqzrqcox1x5"); // void gvprintdouble(GVJ_t * job, double num)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -571,6 +604,8 @@ throw new UnsupportedOperationException();
 
 //3 5duaexp4igxjoostpe3eattxa
 // void gvprintpointf(GVJ_t * job, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvprintpointf", key="5duaexp4igxjoostpe3eattxa", definition="void gvprintpointf(GVJ_t * job, pointf p)")
 public static Object gvprintpointf(Object... arg) {
 UNSUPPORTED("ctyuokdenka2j9jhskd3ql9px"); // void gvprintpointf(GVJ_t * job, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -591,6 +626,8 @@ throw new UnsupportedOperationException();
 
 //3 9mtarrxfoqaaz8anygvcs0eni
 // void gvprintpointflist(GVJ_t * job, pointf *p, int n) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvdevice.c", name="gvprintpointflist", key="9mtarrxfoqaaz8anygvcs0eni", definition="void gvprintpointflist(GVJ_t * job, pointf *p, int n)")
 public static Object gvprintpointflist(Object... arg) {
 UNSUPPORTED("bbdhtxxtsiyz2al9t7saa9yqh"); // void gvprintpointflist(GVJ_t * job, pointf *p, int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

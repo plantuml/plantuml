@@ -62,9 +62,7 @@ public class Fission {
 		}
 	}
 
-	static private boolean NEW_MODE = true;
-
-	public List<Stripe> getSplitted2(StringBounder stringBounder) {
+	public List<Stripe> getSplitted(StringBounder stringBounder) {
 		final double valueMaxWidth = maxWidth.getMaxWidth();
 		if (valueMaxWidth == 0) {
 			return Arrays.asList(stripe);
@@ -97,31 +95,6 @@ public class Fission {
 			}
 		}
 		if (remainingSpace < valueMaxWidth) {
-			result.add(current);
-		}
-		return Collections.unmodifiableList(result);
-	}
-
-	public List<Stripe> getSplitted(StringBounder stringBounder) {
-		if (NEW_MODE)
-			return getSplitted2(stringBounder);
-		final double valueMaxWidth = maxWidth.getMaxWidth();
-		if (valueMaxWidth == 0) {
-			return Arrays.asList(stripe);
-		}
-		final List<Stripe> result = new ArrayList<Stripe>();
-		StripeSimpleInternal current = new StripeSimpleInternal(stripe.getLHeader());
-		for (Atom atom : noHeader()) {
-			for (Atom atomSplitted : getSplitted(stringBounder, atom)) {
-				final double width = atomSplitted.calculateDimension(stringBounder).getWidth();
-				if (current.totalWidth + width > valueMaxWidth) {
-					result.add(current);
-					current = new StripeSimpleInternal(blank(stripe.getLHeader()));
-				}
-				current.addAtom(atomSplitted, width);
-			}
-		}
-		if (current.totalWidth > 0) {
 			result.add(current);
 		}
 		return Collections.unmodifiableList(result);

@@ -172,6 +172,11 @@ public class LanguageDescriptor {
 		keyword.add("italic");
 		keyword.add("bold");
 		keyword.add("plain");
+		keyword.add("color");
+		keyword.add("dotted");
+		keyword.add("dashed");
+		keyword.add("bold");
+		keyword.add("map");
 
 
 		preproc.add("!exit");

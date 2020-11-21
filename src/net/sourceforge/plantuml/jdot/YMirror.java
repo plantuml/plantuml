@@ -51,14 +51,13 @@ public class YMirror {
 
 	public double getMirrored(double v) {
 		if (v < 0 || v > max) {
-			throw new IllegalArgumentException();
+			System.err.println("BAD VALUE IN YMirror");
 		}
-		//return v;
 		return max - v;
 	}
 
 	public Point2D getMirrored(Point2D pt) {
-		//return pt;
+		// return pt;
 		return new Point2D.Double(pt.getX(), max - pt.getY());
 	}
 
@@ -73,7 +72,7 @@ public class YMirror {
 
 	public UTranslate getMirrored(UTranslate tr) {
 		return new UTranslate(tr.getDx(), max - tr.getDy());
-		//return tr;
+		// return tr;
 	}
 
 }

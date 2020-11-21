@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.gvc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.cgraph.attr__c.agattr;
 import static gen.lib.common.textspan__c.textfont_dict_open;
 import static gen.lib.gvc.gvcontext__c.gvNEWcontext;
@@ -161,6 +164,8 @@ public class gvc__c {
 
 //3 f3vdhir2c7dz3pvmx9d3m4lx1
 // GVC_t *gvContext(void) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="", key="f3vdhir2c7dz3pvmx9d3m4lx1", definition="GVC_t *gvContext(void)")
 public static ST_GVC_s gvContext(Object... arg) {
 ENTERING("f3vdhir2c7dz3pvmx9d3m4lx1","gvContext");
 try {
@@ -183,6 +188,8 @@ LEAVING("f3vdhir2c7dz3pvmx9d3m4lx1","gvContext");
 
 //3 71uhxq27gz2h6tw2jii3pv0m1
 // GVC_t *gvContextPlugins(const lt_symlist_t *builtins, int demand_loading) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="", key="71uhxq27gz2h6tw2jii3pv0m1", definition="GVC_t *gvContextPlugins(const lt_symlist_t *builtins, int demand_loading)")
 public static Object gvContextPlugins(Object... arg) {
 UNSUPPORTED("ed1o9q8yu974j7v5vbap4dlsk"); // GVC_t *gvContextPlugins(const lt_symlist_t *builtins, int demand_loading)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -201,6 +208,8 @@ throw new UnsupportedOperationException();
 
 //3 dnud6ljljblwvlx76imgoo8i8
 // int gvLayout(GVC_t *gvc, graph_t *g, const char *engine) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="gvLayout", key="dnud6ljljblwvlx76imgoo8i8", definition="int gvLayout(GVC_t *gvc, graph_t *g, const char *engine)")
 public static Object gvLayout(Object... arg) {
 UNSUPPORTED("6y1to7xw4qcx9wxk34th6ze7q"); // int gvLayout(GVC_t *gvc, graph_t *g, const char *engine)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -237,6 +246,8 @@ throw new UnsupportedOperationException();
 
 //3 2kh108ndzn77vjo1ch0gt1bak
 // int gvRender(GVC_t *gvc, graph_t *g, const char *format, FILE *out) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="gvRender", key="2kh108ndzn77vjo1ch0gt1bak", definition="int gvRender(GVC_t *gvc, graph_t *g, const char *format, FILE *out)")
 public static Object gvRender(Object... arg) {
 UNSUPPORTED("e2g1sf67k7u629a0lf4qtd4w8"); // int gvRender(GVC_t *gvc, graph_t *g, const char *format, FILE *out)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -273,6 +284,8 @@ throw new UnsupportedOperationException();
 
 //3 2e8uwmja1nq8v3iktli5cq851
 // int gvRenderFilename(GVC_t *gvc, graph_t *g, const char *format, const char *filename) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="gvRenderFilename", key="2e8uwmja1nq8v3iktli5cq851", definition="int gvRenderFilename(GVC_t *gvc, graph_t *g, const char *format, const char *filename)")
 public static Object gvRenderFilename(Object... arg) {
 UNSUPPORTED("9xxpjotl5x2p5wtwqunca24kv"); // int gvRenderFilename(GVC_t *gvc, graph_t *g, const char *format, const char *filename)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -308,6 +321,8 @@ throw new UnsupportedOperationException();
 
 //3 e73ju97kxz883q0hp1udq4rd7
 // int gvRenderContext(GVC_t *gvc, graph_t *g, const char *format, void *context) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="gvRenderContext", key="e73ju97kxz883q0hp1udq4rd7", definition="int gvRenderContext(GVC_t *gvc, graph_t *g, const char *format, void *context)")
 public static Object gvRenderContext(Object... arg) {
 UNSUPPORTED("6bxfu9f9cshxn0i97berfl9bw"); // int gvRenderContext(GVC_t *gvc, graph_t *g, const char *format, void *context)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -344,6 +359,8 @@ throw new UnsupportedOperationException();
 
 //3 2p4eja1ksp0cdz8qxl7wpzez9
 // int gvRenderData(GVC_t *gvc, graph_t *g, const char *format, char **result, unsigned int *length) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="gvRenderData", key="2p4eja1ksp0cdz8qxl7wpzez9", definition="int gvRenderData(GVC_t *gvc, graph_t *g, const char *format, char **result, unsigned int *length)")
 public static Object gvRenderData(Object... arg) {
 UNSUPPORTED("epzew3wavf5f9mykc38usb6r9"); // int gvRenderData(GVC_t *gvc, graph_t *g, const char *format, char **result, unsigned int *length)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -389,6 +406,8 @@ throw new UnsupportedOperationException();
 
 //3 9dmqkq749nve1m6f0uz279w5x
 // void gvFreeRenderData (char* data) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="gvFreeRenderData", key="9dmqkq749nve1m6f0uz279w5x", definition="void gvFreeRenderData (char* data)")
 public static Object gvFreeRenderData(Object... arg) {
 UNSUPPORTED("4zoblerqjutmiyqrcnymyvo8"); // void gvFreeRenderData (char* data)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -403,6 +422,8 @@ throw new UnsupportedOperationException();
 
 //3 63riwkqx5e0b3n3yyjalaveuy
 // void gvAddLibrary(GVC_t *gvc, gvplugin_library_t *lib) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="gvAddLibrary", key="63riwkqx5e0b3n3yyjalaveuy", definition="void gvAddLibrary(GVC_t *gvc, gvplugin_library_t *lib)")
 public static Object gvAddLibrary(Object... arg) {
 UNSUPPORTED("31dpjbojh15wnjppy2p096exn"); // void gvAddLibrary(GVC_t *gvc, gvplugin_library_t *lib)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -417,6 +438,8 @@ throw new UnsupportedOperationException();
 
 //3 bpzhymnb55ana0o9q691it06
 // char **gvcInfo(GVC_t* gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="", key="bpzhymnb55ana0o9q691it06", definition="char **gvcInfo(GVC_t* gvc)")
 public static Object gvcInfo(Object... arg) {
 UNSUPPORTED("4o912yqrgsuc4t2uym0i2siv3"); // char **gvcInfo(GVC_t* gvc) { return gvc->common.info; }
 
@@ -428,6 +451,8 @@ throw new UnsupportedOperationException();
 
 //3 6gnk937rtz89xtqqmf7nb8mod
 // char *gvcVersion(GVC_t* gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="", key="6gnk937rtz89xtqqmf7nb8mod", definition="char *gvcVersion(GVC_t* gvc)")
 public static Object gvcVersion(Object... arg) {
 UNSUPPORTED("34219rcx2cc7lx28xxwdo2zic"); // char *gvcVersion(GVC_t* gvc) { return gvc->common.info[1]; }
 
@@ -439,6 +464,8 @@ throw new UnsupportedOperationException();
 
 //3 if7qohbqqln8g7vnhx128b1k
 // char *gvcBuildDate(GVC_t* gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvc.c", name="", key="if7qohbqqln8g7vnhx128b1k", definition="char *gvcBuildDate(GVC_t* gvc)")
 public static Object gvcBuildDate(Object... arg) {
 UNSUPPORTED("7r5j1w6y3ov7ta18s257h2rqv"); // char *gvcBuildDate(GVC_t* gvc) { return gvc->common.info[2]; }
 

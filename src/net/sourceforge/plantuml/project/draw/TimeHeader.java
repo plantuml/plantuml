@@ -45,14 +45,25 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public abstract class TimeHeader {
 
-	protected static final int Y_POS_ROW16 = 16;
-	protected static final int Y_POS_ROW28 = 28;
+	protected final double Y_POS_ROW16() {
+		return 16;
+	}
+
+	protected final double Y_POS_ROW28() {
+		return 28;
+	}
+
+	protected final HColor veryLightGray = HColorSet.instance().getColorIfValid("#E0E8E8");
+	protected final HColor lightGray = HColorSet.instance().getColorIfValid("#909898");
 
 	private final TimeScale timeScale;
 	protected final Day min;
@@ -64,7 +75,13 @@ public abstract class TimeHeader {
 		this.max = max;
 	}
 
-	public abstract void drawTimeHeader(final UGraphic ug, double totalHeight);
+	protected abstract double getTimeHeaderHeight();
+
+	public abstract double getTimeFooterHeight();
+
+	public abstract void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter);
+
+	public abstract void drawTimeFooter(UGraphic ug);
 
 	public abstract double getFullHeaderHeight();
 
@@ -110,6 +127,15 @@ public abstract class TimeHeader {
 				return;
 			}
 		}
+	}
+
+	protected final void drawRectangle(UGraphic ug, double height, double x1, double x2) {
+		if (height == 0) {
+			return;
+		}
+		ug = ug.apply(new HColorNone());
+		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight()));
+		ug.draw(new URectangle(x2 - x1, height));
 	}
 
 }

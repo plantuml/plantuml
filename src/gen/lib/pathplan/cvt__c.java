@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pathplan;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -70,6 +73,8 @@ public class cvt__c {
 
 //3 1xzun807liyzhh33wecbjr36t
 // static void *mymalloc(size_t newsize) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="", key="1xzun807liyzhh33wecbjr36t", definition="static void *mymalloc(size_t newsize)")
 public static Object mymalloc(Object... arg) {
 UNSUPPORTED("4sbfatyg3fhc2c20h2xhk3mx9"); // static void *mymalloc(size_t newsize)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -89,6 +94,8 @@ throw new UnsupportedOperationException();
 
 //3 4pfhgk8c796mhpyfqs8fd3fy9
 // vconfig_t *Pobsopen(Ppoly_t ** obs, int n_obs) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="", key="4pfhgk8c796mhpyfqs8fd3fy9", definition="vconfig_t *Pobsopen(Ppoly_t ** obs, int n_obs)")
 public static Object Pobsopen(Object... arg) {
 UNSUPPORTED("dz610tzpr6mx5ioen71yt9lw2"); // vconfig_t *Pobsopen(Ppoly_t ** obs, int n_obs)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -137,6 +144,8 @@ throw new UnsupportedOperationException();
 
 //3 e4migs6coi22m83vhdmasdpq2
 // void Pobsclose(vconfig_t * config) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="Pobsclose", key="e4migs6coi22m83vhdmasdpq2", definition="void Pobsclose(vconfig_t * config)")
 public static Object Pobsclose(Object... arg) {
 UNSUPPORTED("54tyi1oh5fd4a8lh1107ysppi"); // void Pobsclose(vconfig_t * config)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -159,6 +168,8 @@ throw new UnsupportedOperationException();
 
 //3 8doijz2zl7icgvbs59qtqw2e6
 // int Pobspath(vconfig_t * config, Ppoint_t p0, int poly0, Ppoint_t p1, 	     int poly1, Ppolyline_t * output_route) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="Pobspath", key="8doijz2zl7icgvbs59qtqw2e6", definition="int Pobspath(vconfig_t * config, Ppoint_t p0, int poly0, Ppoint_t p1, 	     int poly1, Ppolyline_t * output_route)")
 public static Object Pobspath(Object... arg) {
 UNSUPPORTED("es9wttiuk2pkcqinglvdetmxh"); // int Pobspath(vconfig_t * config, Ppoint_t p0, int poly0, Ppoint_t p1,
 UNSUPPORTED("8waigfzvwmpsy4nk2ybswloiu"); // 	     int poly1, Ppolyline_t * output_route)
@@ -199,6 +210,8 @@ throw new UnsupportedOperationException();
 
 //3 dya1texcjg4i2qyusjnmin7d1
 // int Pobsbarriers(vconfig_t * config, Pedge_t ** barriers, int *n_barriers) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="Pobsbarriers", key="dya1texcjg4i2qyusjnmin7d1", definition="int Pobsbarriers(vconfig_t * config, Pedge_t ** barriers, int *n_barriers)")
 public static Object Pobsbarriers(Object... arg) {
 UNSUPPORTED("bbaf03fwbv3733qfrsvd4eoom"); // int Pobsbarriers(vconfig_t * config, Pedge_t ** barriers, int *n_barriers)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -231,6 +244,8 @@ throw new UnsupportedOperationException();
 
 //3 oneie60d998qei37slgf3ce4
 // static void addpt(Ppoint_t p) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="addpt", key="oneie60d998qei37slgf3ce4", definition="static void addpt(Ppoint_t p)")
 public static Object addpt(Object... arg) {
 UNSUPPORTED("3r6t7ceh9f1lplt1ewgna2ynh"); // static void addpt(Ppoint_t p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -247,6 +262,8 @@ throw new UnsupportedOperationException();
 
 //3 3xaxtxslceffm0wx9zcpiqjgb
 // static ilcoord_t Bezier(ilcoord_t * V, int degree, double t, 			ilcoord_t * Left, ilcoord_t * Right) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="Bezier", key="3xaxtxslceffm0wx9zcpiqjgb", definition="static ilcoord_t Bezier(ilcoord_t * V, int degree, double t, 			ilcoord_t * Left, ilcoord_t * Right)")
 public static ST_pointf Bezier(ST_pointf V, int degree, double t, ST_pointf Left, ST_pointf Right) {
 // WARNING!! STRUCT
 return Bezier_w_(V, degree, t, Left, Right).copy();
@@ -289,6 +306,8 @@ LEAVING("3xaxtxslceffm0wx9zcpiqjgb","Bezier");
 
 //3 2e1dbsqqgp7k8i5doa7prt6jc
 // static void append_bezier(Ppoint_t * bezier) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/cvt.c", name="append_bezier", key="2e1dbsqqgp7k8i5doa7prt6jc", definition="static void append_bezier(Ppoint_t * bezier)")
 public static Object append_bezier(Object... arg) {
 UNSUPPORTED("5zm80zw3vn3gsj6zre2ynedck"); // static void append_bezier(Ppoint_t * bezier)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

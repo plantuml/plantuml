@@ -51,8 +51,12 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderMonthly extends TimeHeader {
 
-	private double getTimeHeaderHeight() {
-		return Y_POS_ROW16 + 13;
+	protected double getTimeHeaderHeight() {
+		return 16 + 13;
+	}
+
+	public double getTimeFooterHeight() {
+		return 16 + 13 - 1;
 	}
 
 	public TimeHeaderMonthly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
@@ -61,17 +65,22 @@ public class TimeHeaderMonthly extends TimeHeader {
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeight) {
-		drawCalendar(ug, totalHeight);
+	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+		drawYears(ug);
+		drawMonths(ug.apply(UTranslate.dy(16)));
 		drawHline(ug, 0);
-		drawHline(ug, Y_POS_ROW16);
+		drawHline(ug, 16);
 		drawHline(ug, getFullHeaderHeight());
-
 	}
 
-	private void drawCalendar(final UGraphic ug, double totalHeight) {
-		drawYears(ug);
+	@Override
+	public void drawTimeFooter(UGraphic ug) {
+		ug = ug.apply(UTranslate.dy(3));
 		drawMonths(ug);
+		drawYears(ug.apply(UTranslate.dy(13)));
+		drawHline(ug, 0);
+		drawHline(ug, 13);
+		drawHline(ug, getTimeFooterHeight());
 	}
 
 	private void drawYears(final UGraphic ug) {
@@ -80,7 +89,7 @@ public class TimeHeaderMonthly extends TimeHeader {
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (last == null || wink.monthYear().year() != last.year()) {
-				drawVbar(ug, x1, 0, Y_POS_ROW16);
+				drawVbar(ug, x1, 0, 15);
 				if (last != null) {
 					printYear(ug, last, lastChange, x1);
 				}
@@ -92,17 +101,18 @@ public class TimeHeaderMonthly extends TimeHeader {
 		if (x1 > lastChange) {
 			printYear(ug, last, lastChange, x1);
 		}
+		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, 15);
 	}
 
-	private void drawMonths(final UGraphic ug) {
+	private void drawMonths(UGraphic ug) {
 		MonthYear last = null;
 		double lastChange = -1;
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
-				drawVbar(ug, x1, Y_POS_ROW16, Y_POS_ROW28);
+				drawVbar(ug, x1, 0, 12);
 				if (last != null) {
-					printMonth(ug.apply(UTranslate.dy(Y_POS_ROW16)), last, lastChange, x1);
+					printMonth(ug, last, lastChange, x1);
 				}
 				lastChange = x1;
 				last = wink.monthYear();
@@ -110,8 +120,9 @@ public class TimeHeaderMonthly extends TimeHeader {
 		}
 		final double x1 = getTimeScale().getStartingPosition(max.increment());
 		if (x1 > lastChange) {
-			printMonth(ug.apply(UTranslate.dy(Y_POS_ROW16)), last, lastChange, x1);
+			printMonth(ug, last, lastChange, x1);
 		}
+		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, 12);
 	}
 
 	private void printYear(UGraphic ug, MonthYear monthYear, double start, double end) {

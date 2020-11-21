@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileIfWithLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -196,27 +195,33 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			final Ftile ftile = tiles.get(i);
 			final Ftile diam = diamonds.get(i);
 
-			final Rainbow rainbowIn = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
+			final Rainbow rainbowIn = thens.get(i).getInColor(arrowColor);
 			final Branch branch = thens.get(i);
 
 			if (branch.getFtile().calculateDimension(ftileFactory.getStringBounder()).hasPointOut()) {
 				nbOut++;
 			}
-			final Rainbow rainbowOut = branch.getInlinkRenderingColorAndStyle();
+			final Rainbow rainbowOut = branch.getOut();
 			TextBlock out2 = null;
 			if (branch.getSpecial() != null) {
 				out2 = branch.getSpecial().getDisplay().create(fcTest, HorizontalAlignment.LEFT,
 						ftileFactory.skinParam());
 			}
-			conns.add(result.new ConnectionVerticalIn(diam, ftile, rainbowIn.size() == 0 ? arrowColor : rainbowIn));
-			conns.add(result.new ConnectionVerticalOut(ftile, rainbowOut.size() == 0 ? arrowColor : rainbowOut, out2));
+			final Rainbow rainbow1 = rainbowIn.size() == 0 ? arrowColor : rainbowIn;
+			final Rainbow rainbow2 = rainbowOut.size() == 0 ? arrowColor : rainbowOut;
+
+			conns.add(result.new ConnectionVerticalIn(diam, ftile, rainbow1));
+			conns.add(result.new ConnectionVerticalOut(ftile, rainbow2, out2));
 		}
 
 		final Rainbow topInColor = topInlinkRendering.getRainbow(arrowColor);
 		for (int i = 0; i < diamonds.size() - 1; i++) {
 			final Ftile diam1 = diamonds.get(i);
 			final Ftile diam2 = diamonds.get(i + 1);
-			conns.add(result.new ConnectionHorizontal(diam1, diam2, arrowColor));
+
+			final Branch branch = thens.get(i + 1);
+
+			conns.add(result.new ConnectionHorizontal(diam1, diam2, branch.getInRainbow(arrowColor)));
 		}
 		conns.add(result.new ConnectionIn(topInColor));
 		TextBlock out2 = null;
@@ -224,8 +229,13 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			out2 = branch2.getSpecial().getDisplay().create(fcTest, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 		}
 
-		conns.add(result.new ConnectionLastElseIn(FtileIfWithLinks.getInColor(branch2, arrowColor)));
-		conns.add(result.new ConnectionLastElseOut(arrowColor, out2, nbOut));
+		final Rainbow rainbowOut = branch2.getOut();
+		final Rainbow rainbowIn = branch2.getInColor(arrowColor);
+		final Rainbow rainbow1 = rainbowIn.size() == 0 ? arrowColor : rainbowIn;
+		final Rainbow rainbow2 = rainbowOut.size() == 0 ? arrowColor : rainbowOut;
+
+		conns.add(result.new ConnectionLastElseIn(rainbow1));
+		conns.add(result.new ConnectionLastElseOut(rainbow2, out2, nbOut));
 		final boolean horizontalOut = nbOut > 0;
 		if (horizontalOut) {
 			final Rainbow horizontalOutColor = afterEndwhile.getRainbow(arrowColor);

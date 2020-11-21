@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -60,14 +61,21 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	private final Display test;
 	private Display yes;
-	private Display out = Display.NULL;
+
 	private boolean testCalled = false;
-	private LinkRendering endInlinkRendering = LinkRendering.none();
-	private LinkRendering afterEndwhile = LinkRendering.none();
+
+	private LinkRendering outColor = LinkRendering.none();
 	private final Swimlane swimlane;
 	private final ISkinParam skinParam;
 
 	private Instruction specialOut;
+
+	private BoxStyle boxStyle;
+	private Swimlane swimlaneOut;
+	private Display backward = Display.NULL;
+	private LinkRendering incoming1 = LinkRendering.none();
+	private LinkRendering incoming2 = LinkRendering.none();
+	private boolean backwardCalled;
 
 	public void overwriteYes(Display yes) {
 		this.yes = yes;
@@ -99,10 +107,9 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = Display.isNull(backward) ? null
-				: factory.activity(backward, swimlane, boxStyle, Colors.empty());
-		Ftile tmp = factory.decorateOut(repeatList.createFtile(factory), endInlinkRendering);
-		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut, back, incoming,
-				outcoming);
+				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
+		Ftile tmp = repeatList.createFtile(factory);
+		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2);
 		if (getPositionedNotes().size() > 0) {
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false);
 		}
@@ -128,17 +135,15 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return nextLinkRenderer;
 	}
 
-	public void endwhile(LinkRendering nextLinkRenderer, Display out) {
-		this.endInlinkRendering = nextLinkRenderer;
-		this.out = out;
+	public void outDisplay(Display out) {
 		if (out == null) {
 			throw new IllegalArgumentException();
 		}
-		this.testCalled = true;
+		this.outColor = outColor.withDisplay(out);
 	}
 
-	public void afterEndwhile(LinkRendering linkRenderer) {
-		this.afterEndwhile = linkRenderer;
+	public void outColor(Rainbow rainbow) {
+		this.outColor = outColor.withRainbow(rainbow);
 	}
 
 	@Override
@@ -174,18 +179,22 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return repeatList.containsBreak();
 	}
 
-	private BoxStyle boxStyle;
-	private Swimlane swimlaneOut;
-	private Display backward = Display.NULL;
-	private String incoming;
-	private String outcoming;
-
-	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, String incoming, String outcoming) {
+	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, LinkRendering incoming1,
+			LinkRendering incoming2) {
 		this.backward = label;
 		this.swimlaneOut = swimlaneOut;
 		this.boxStyle = boxStyle;
-		this.incoming = incoming;
-		this.outcoming = outcoming;
+		this.incoming1 = incoming1;
+		this.incoming2 = incoming2;
+		this.backwardCalled = true;
+	}
+
+	public void incoming(LinkRendering incoming) {
+		if (backwardCalled == false) {
+			this.incoming1 = incoming;
+			this.incoming2 = incoming;
+		}
+		this.testCalled = true;
 	}
 
 }

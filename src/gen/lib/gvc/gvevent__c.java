@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.gvc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class gvevent__c {
@@ -195,6 +198,8 @@ public class gvevent__c {
 
 //3 4u7xeq4u9gjav5v1ds6xt32a7
 // static void gv_graph_state(GVJ_t *job, graph_t *g) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gv_graph_state", key="4u7xeq4u9gjav5v1ds6xt32a7", definition="static void gv_graph_state(GVJ_t *job, graph_t *g)")
 public static Object gv_graph_state(Object... arg) {
 UNSUPPORTED("qi2r1zf56fhta95dbdc4uqh7"); // static void gv_graph_state(GVJ_t *job, graph_t *g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -237,6 +242,8 @@ throw new UnsupportedOperationException();
 
 //3 1tqun4sawrqin1i1cpsek6xis
 // static void gv_node_state(GVJ_t *job, node_t *n) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gv_node_state", key="1tqun4sawrqin1i1cpsek6xis", definition="static void gv_node_state(GVJ_t *job, node_t *n)")
 public static Object gv_node_state(Object... arg) {
 UNSUPPORTED("a6a2p7o7hjze8ck9u2wsgbhnz"); // static void gv_node_state(GVJ_t *job, node_t *n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -272,6 +279,8 @@ throw new UnsupportedOperationException();
 
 //3 ermyhp9u235dyyeyqapv0xkc7
 // static void gv_edge_state(GVJ_t *job, edge_t *e) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gv_edge_state", key="ermyhp9u235dyyeyqapv0xkc7", definition="static void gv_edge_state(GVJ_t *job, edge_t *e)")
 public static Object gv_edge_state(Object... arg) {
 UNSUPPORTED("bd6orj26b0p27h7kfbrazb9io"); // static void gv_edge_state(GVJ_t *job, edge_t *e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -329,6 +338,8 @@ throw new UnsupportedOperationException();
 
 //3 8ukey801l8kyj584x8r8s19fn
 // static void gvevent_refresh(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_refresh", key="8ukey801l8kyj584x8r8s19fn", definition="static void gvevent_refresh(GVJ_t * job)")
 public static Object gvevent_refresh(Object... arg) {
 UNSUPPORTED("60f7iu3hlagh8mzyzi1gzv2do"); // static void gvevent_refresh(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -350,6 +361,8 @@ throw new UnsupportedOperationException();
 
 //3 4s1y5j1ypefa3r6swg9s4epez
 // static graph_t *gvevent_find_cluster(graph_t *g, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="", key="4s1y5j1ypefa3r6swg9s4epez", definition="static graph_t *gvevent_find_cluster(graph_t *g, boxf b)")
 public static Object gvevent_find_cluster(Object... arg) {
 UNSUPPORTED("efgiax9xi0giix6ubrt3ygjvi"); // static graph_t *gvevent_find_cluster(graph_t *g, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -375,6 +388,8 @@ throw new UnsupportedOperationException();
 
 //3 10ow7fob9ddjkodlmx7wb3vlm
 // static void * gvevent_find_obj(graph_t *g, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_find_obj", key="10ow7fob9ddjkodlmx7wb3vlm", definition="static void * gvevent_find_obj(graph_t *g, boxf b)")
 public static Object gvevent_find_obj(Object... arg) {
 UNSUPPORTED("3kn145oul66bpk12w0lrsexgk"); // static void * gvevent_find_obj(graph_t *g, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -406,6 +421,8 @@ throw new UnsupportedOperationException();
 
 //3 5b9dwyqfdvc0ntrai28ti5pry
 // static void gvevent_leave_obj(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_leave_obj", key="5b9dwyqfdvc0ntrai28ti5pry", definition="static void gvevent_leave_obj(GVJ_t * job)")
 public static Object gvevent_leave_obj(Object... arg) {
 UNSUPPORTED("2udbvguh4g3rx7hlo1neqvx58"); // static void gvevent_leave_obj(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -434,6 +451,8 @@ throw new UnsupportedOperationException();
 
 //3 9bgq52z2yvkxbxgkigzxo155j
 // static void gvevent_enter_obj(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_enter_obj", key="9bgq52z2yvkxbxgkigzxo155j", definition="static void gvevent_enter_obj(GVJ_t * job)")
 public static Object gvevent_enter_obj(Object... arg) {
 UNSUPPORTED("1j8b2x22wexvd0rg7rsvrcvdc"); // static void gvevent_enter_obj(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -482,6 +501,8 @@ throw new UnsupportedOperationException();
 
 //3 3bfngnj00p5wmq3vn6ezfbf94
 // static pointf pointer2graph (GVJ_t *job, pointf pointer) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="pointer2graph", key="3bfngnj00p5wmq3vn6ezfbf94", definition="static pointf pointer2graph (GVJ_t *job, pointf pointer)")
 public static Object pointer2graph(Object... arg) {
 UNSUPPORTED("f3p1sbwml36d6avt439q10bzv"); // static pointf pointer2graph (GVJ_t *job, pointf pointer)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -506,6 +527,8 @@ throw new UnsupportedOperationException();
 
 //3 60qzqk2f8g5r608jr61n4m8fl
 // static void gvevent_find_current_obj(GVJ_t * job, pointf pointer) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_find_current_obj", key="60qzqk2f8g5r608jr61n4m8fl", definition="static void gvevent_find_current_obj(GVJ_t * job, pointf pointer)")
 public static Object gvevent_find_current_obj(Object... arg) {
 UNSUPPORTED("73itu563p91qxc75le40uri3v"); // static void gvevent_find_current_obj(GVJ_t * job, pointf pointer)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -537,6 +560,8 @@ throw new UnsupportedOperationException();
 
 //3 56do4vqpnbnmg3ft0lfzt4eny
 // static void gvevent_select_current_obj(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_select_current_obj", key="56do4vqpnbnmg3ft0lfzt4eny", definition="static void gvevent_select_current_obj(GVJ_t * job)")
 public static Object gvevent_select_current_obj(Object... arg) {
 UNSUPPORTED("d4h54hfakl4a6svzusjuvsqkx"); // static void gvevent_select_current_obj(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -589,6 +614,8 @@ throw new UnsupportedOperationException();
 
 //3 ex60hox8s3z8id5zo7lak7xbi
 // static void gvevent_button_press(GVJ_t * job, int button, pointf pointer) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_button_press", key="ex60hox8s3z8id5zo7lak7xbi", definition="static void gvevent_button_press(GVJ_t * job, int button, pointf pointer)")
 public static Object gvevent_button_press(Object... arg) {
 UNSUPPORTED("b9kw1b3m8gqabvmmm2gedhmms"); // static void gvevent_button_press(GVJ_t * job, int button, pointf pointer)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -659,6 +686,8 @@ throw new UnsupportedOperationException();
 
 //3 65hgbjypgt12lezyx7wgj6mhm
 // static void gvevent_button_release(GVJ_t *job, int button, pointf pointer) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_button_release", key="65hgbjypgt12lezyx7wgj6mhm", definition="static void gvevent_button_release(GVJ_t *job, int button, pointf pointer)")
 public static Object gvevent_button_release(Object... arg) {
 UNSUPPORTED("d2aelqvksu4avszxarr327x9o"); // static void gvevent_button_release(GVJ_t *job, int button, pointf pointer)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -674,6 +703,8 @@ throw new UnsupportedOperationException();
 
 //3 40ck841yiiqu2vr67m7w0ayru
 // static void gvevent_motion(GVJ_t * job, pointf pointer) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_motion", key="40ck841yiiqu2vr67m7w0ayru", definition="static void gvevent_motion(GVJ_t * job, pointf pointer)")
 public static Object gvevent_motion(Object... arg) {
 UNSUPPORTED("1k2shillcd8968xvxu3cbamfb"); // static void gvevent_motion(GVJ_t * job, pointf pointer)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -714,6 +745,8 @@ throw new UnsupportedOperationException();
 
 //3 309h3ymhziboe2mht4n46ru47
 // static int quit_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="quit_cb", key="309h3ymhziboe2mht4n46ru47", definition="static int quit_cb(GVJ_t * job)")
 public static Object quit_cb(Object... arg) {
 UNSUPPORTED("d2aasjdi3qo1v67f1xh4m4a9q"); // static int quit_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -728,6 +761,8 @@ throw new UnsupportedOperationException();
 
 //3 2d3158r4aw8sdu1oeit21vqmq
 // static int left_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="left_cb", key="2d3158r4aw8sdu1oeit21vqmq", definition="static int left_cb(GVJ_t * job)")
 public static Object left_cb(Object... arg) {
 UNSUPPORTED("521h83irh6091dct76cd4wq3o"); // static int left_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -745,6 +780,8 @@ throw new UnsupportedOperationException();
 
 //3 djqsh8zi6zin7tc1ablymhqyd
 // static int right_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="right_cb", key="djqsh8zi6zin7tc1ablymhqyd", definition="static int right_cb(GVJ_t * job)")
 public static Object right_cb(Object... arg) {
 UNSUPPORTED("e0rr45fh4bimynpp3tyzov053"); // static int right_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -762,6 +799,8 @@ throw new UnsupportedOperationException();
 
 //3 9yjypnd484350411fozpecu1w
 // static int up_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="up_cb", key="9yjypnd484350411fozpecu1w", definition="static int up_cb(GVJ_t * job)")
 public static Object up_cb(Object... arg) {
 UNSUPPORTED("2xwjivk6gbwmjk2orf31i0bn1"); // static int up_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -779,6 +818,8 @@ throw new UnsupportedOperationException();
 
 //3 ao1epwwls96l9rn7aorg8t57w
 // static int down_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="down_cb", key="ao1epwwls96l9rn7aorg8t57w", definition="static int down_cb(GVJ_t * job)")
 public static Object down_cb(Object... arg) {
 UNSUPPORTED("xxaph7ayk44vfwcpj202iq1k"); // static int down_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -796,6 +837,8 @@ throw new UnsupportedOperationException();
 
 //3 s9fxrizmsy50pmyuxkmqxk6u
 // static int zoom_in_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="zoom_in_cb", key="s9fxrizmsy50pmyuxkmqxk6u", definition="static int zoom_in_cb(GVJ_t * job)")
 public static Object zoom_in_cb(Object... arg) {
 UNSUPPORTED("2riwlfksx6nk9oydtk942wbs8"); // static int zoom_in_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -813,6 +856,8 @@ throw new UnsupportedOperationException();
 
 //3 dwx7pk3xbbk6xsv7okp2izif4
 // static int zoom_out_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="zoom_out_cb", key="dwx7pk3xbbk6xsv7okp2izif4", definition="static int zoom_out_cb(GVJ_t * job)")
 public static Object zoom_out_cb(Object... arg) {
 UNSUPPORTED("adt5ckz3j0b6igqhekyzi9j3c"); // static int zoom_out_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -830,6 +875,8 @@ throw new UnsupportedOperationException();
 
 //3 3v74j066qbm5zjvdffnjqqjsb
 // static int toggle_fit_cb(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="toggle_fit_cb", key="3v74j066qbm5zjvdffnjqqjsb", definition="static int toggle_fit_cb(GVJ_t * job)")
 public static Object toggle_fit_cb(Object... arg) {
 UNSUPPORTED("calj7u9drqvbnznvt9qpgpco"); // static int toggle_fit_cb(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -862,6 +909,8 @@ throw new UnsupportedOperationException();
 
 //3 56ccrkgaretp9luumyk09sglf
 // static void gvevent_modify (GVJ_t * job, const char *name, const char *value) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_modify", key="56ccrkgaretp9luumyk09sglf", definition="static void gvevent_modify (GVJ_t * job, const char *name, const char *value)")
 public static Object gvevent_modify(Object... arg) {
 UNSUPPORTED("9a50fbnlu9tkk620l868zqnuy"); // static void gvevent_modify (GVJ_t * job, const char *name, const char *value)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -876,6 +925,8 @@ throw new UnsupportedOperationException();
 
 //3 9y8ix71hznhgpqhdprgm6k2bf
 // static void gvevent_delete (GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_delete", key="9y8ix71hznhgpqhdprgm6k2bf", definition="static void gvevent_delete (GVJ_t * job)")
 public static Object gvevent_delete(Object... arg) {
 UNSUPPORTED("e1gm68y4wg586b527136y2y6z"); // static void gvevent_delete (GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -890,6 +941,8 @@ throw new UnsupportedOperationException();
 
 //3 biioemf5ai5iuyoolocr03hc3
 // static void gvevent_read (GVJ_t * job, const char *filename, const char *layout) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_read", key="biioemf5ai5iuyoolocr03hc3", definition="static void gvevent_read (GVJ_t * job, const char *filename, const char *layout)")
 public static Object gvevent_read(Object... arg) {
 UNSUPPORTED("4h0co0klq5h3sj7yxdyzcvncb"); // static void gvevent_read (GVJ_t * job, const char *filename, const char *layout)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -938,6 +991,8 @@ throw new UnsupportedOperationException();
 
 //3 1k1rh0zcbdhmc63pah8p3v9a5
 // static void gvevent_layout (GVJ_t * job, const char *layout) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_layout", key="1k1rh0zcbdhmc63pah8p3v9a5", definition="static void gvevent_layout (GVJ_t * job, const char *layout)")
 public static Object gvevent_layout(Object... arg) {
 UNSUPPORTED("84aq06ks1526mvfbsygstl1m6"); // static void gvevent_layout (GVJ_t * job, const char *layout)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -952,6 +1007,8 @@ throw new UnsupportedOperationException();
 
 //3 8m9msj4hgktq8ewa10u5wbtf7
 // static void gvevent_render (GVJ_t * job, const char *format, const char *filename) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvevent.c", name="gvevent_render", key="8m9msj4hgktq8ewa10u5wbtf7", definition="static void gvevent_render (GVJ_t * job, const char *format, const char *filename)")
 public static Object gvevent_render(Object... arg) {
 UNSUPPORTED("6lp11ec3wv4z0karcudj7m75i"); // static void gvevent_render (GVJ_t * job, const char *format, const char *filename)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

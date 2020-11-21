@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,6 +45,7 @@
  */
 package h;
 
+import smetana.core.CStar;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.amiga.StarStruct;
 
@@ -63,7 +64,7 @@ public class ST_splines extends UnsupportedStructAndPtr {
 	// "typedef struct splines",
 	// "{",
 // 	bezier *list;
-	public ST_bezier.Array2 list;
+	public CStar<ST_bezier> list;
 	public int size;
 
 	// "boxf bb",

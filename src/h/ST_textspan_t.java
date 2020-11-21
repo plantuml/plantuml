@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,16 +45,9 @@
  */
 package h;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import smetana.core.CString;
-import smetana.core.UnsupportedArrayOfStruct2;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.size_t;
 import smetana.core.amiga.StarStruct;
 
 // UNUSED ?
@@ -79,89 +72,6 @@ public class ST_textspan_t extends UnsupportedStructAndPtr {
 	public final ST_pointf size = new ST_pointf(this);
 	public int just;
 
-	public static class Array extends UnsupportedArrayOfStruct2 implements __ptr__, __array_of_ptr__{
-
-		private final List<ST_textspan_t> data;
-		private final int pos;
-	
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ data) {
-			return getStruct().setPtr(fieldName, data);
-		}
-		
-		@Override
-		public void setInt(String fieldName, int data) {
-			getStruct().setInt(fieldName, data);
-		}
-		
-		@Override
-		public void setStruct(String fieldName, __struct__ data) {
-			getStruct().setStruct(fieldName, data);
-		}
-		
-		@Override
-		public Array asPtr() {
-			return this;
-		}
-		
-		@Override
-		public ST_textspan_t getStruct() {
-			return data.get(pos);
-		}
-		
-		public Array(int size) {
-			this.data = new ArrayList<ST_textspan_t>();
-			this.pos = 0;
-			for (int i = 0; i < size; i++) {
-				data.add(new ST_textspan_t());
-			}
-		}
-
-		public Array reallocJ(int newsize) {
-			while (data.size() < newsize) {
-				data.add(new ST_textspan_t());
-			}
-			return this;
-		}
-		
-		public Array plus(int delta) {
-			return plusJ(delta);
-		}
-
-		private Array(List<ST_textspan_t> data, int pos) {
-			this.data = data;
-			this.pos = pos;
-		}
-
-		public ST_textspan_t get(int i) {
-			return this.data.get(pos + i);
-		}
-
-		public Array plusJ(int i) {
-			return new Array(data, pos + i);
-		}
-
-		public int minus(Array other) {
-			if (this.data != other.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos - other.pos;
-		}
-
-		public Array move(int delta) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void realloc(size_t nb) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public int comparePointerInternal(__array_of_ptr__ other) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-
-	}
 
 
 	@Override

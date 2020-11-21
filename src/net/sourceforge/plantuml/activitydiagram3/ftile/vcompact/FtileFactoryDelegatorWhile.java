@@ -71,9 +71,8 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile backward, String incoming,
-			String outcoming) {
+	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
+			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2) {
 
 		final HColor borderColor;
 		final HColor backColor;
@@ -102,14 +101,12 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 			fcTest = new FontConfiguration(skinParam(), testParam, null);
 		}
 
-		final LinkRendering endInlinkRendering = whileBlock.getOutLinkRendering();
-		final Rainbow endInlinkColor = endInlinkRendering == null || endInlinkRendering.getRainbow().size() == 0
-				? arrowColor
-				: endInlinkRendering.getRainbow();
+		incoming1 = ensureColor(incoming1, arrowColor);
+		incoming2 = ensureColor(incoming2, arrowColor);
+		outColor = ensureColor(outColor, arrowColor);
 
-		Ftile result = FtileWhile.create(swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes, out,
-				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest, specialOut, backward,
-				incoming, outcoming);
+		Ftile result = FtileWhile.create(outColor, swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes,
+				fontArrow, getFactory(), conditionStyle, fcTest, specialOut, backward, incoming1, incoming2);
 
 		final List<WeldingPoint> weldingPoints = whileBlock.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
@@ -142,6 +139,13 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		}
 
 		return result;
+	}
+
+	private LinkRendering ensureColor(LinkRendering link, Rainbow color) {
+		if (link.getRainbow().size() == 0) {
+			return link.withRainbow(color);
+		}
+		return link;
 	}
 
 }

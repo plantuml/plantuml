@@ -74,8 +74,8 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 	final protected void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
 		final ULine line = new ULine(p1, p2);
 		if (SkinParam.USE_STYLES()) {
-			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet()).draw(
-					line);
+			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet())
+					.draw(line);
 		} else {
 			final HColor color = ColorParam.activityBorder.getDefaultValue();
 			ug.apply(new UTranslate(p1)).apply(color).draw(line);
@@ -99,7 +99,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 
 		if (idea.getShape() == IdeaShape.BOX) {
-			final FtileBox box = FtileBox.createWbs(idea.getStyle(), skinParam, label);
+			final FtileBox box = FtileBox.createWbs(idea.getStyle(), idea.withBackColor(skinParam), label);
 			return box;
 		}
 

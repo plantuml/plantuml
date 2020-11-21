@@ -43,6 +43,7 @@ import java.util.TreeMap;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -60,8 +61,10 @@ public class MutingLine {
 	private final boolean useContinueLineBecauseOfDelay;
 	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
 	private final StyleBuilder styleBuilder;
+	private final Participant participant;
 
-	public MutingLine(Rose skin, ISkinParam skinParam, List<Event> events) {
+	public MutingLine(Rose skin, ISkinParam skinParam, List<Event> events, Participant participant) {
+		this.participant = participant;
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
@@ -99,7 +102,8 @@ public class MutingLine {
 		}
 	}
 
-	private void drawInternal(UGraphic ug, Context2D context, double y1, double y2, final ComponentType defaultLineType) {
+	private void drawInternal(UGraphic ug, Context2D context, double y1, double y2,
+			final ComponentType defaultLineType) {
 		if (y2 == y1) {
 			return;
 		}
@@ -107,7 +111,8 @@ public class MutingLine {
 			throw new IllegalArgumentException();
 		}
 		final Style style = defaultLineType.getDefaultStyleDefinition().getMergedStyle(styleBuilder);
-		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam, null);
+		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,
+				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		final Area area = new Area(dim.getWidth(), y2 - y1);
 		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);

@@ -673,8 +673,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private Direction getDirection(RegexResult arg) {
-		final LinkDecor decors1 = getDecors1(getArrowHead1(arg));
-		final LinkDecor decors2 = getDecors2(getArrowHead2(arg));
+//		final LinkDecor decors1 = getDecors1(getArrowHead1(arg));
+//		final LinkDecor decors2 = getDecors2(getArrowHead2(arg));
 
 		String s = getFullArrow(arg);
 		s = s.replaceAll("[^-.=\\w]", "");
@@ -686,9 +686,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 
 		Direction result = StringUtils.getQueueDirection(s);
-		if (isInversed(decors1, decors2) && s.matches(".*\\w.*")) {
-			result = result.getInv();
-		}
+//		if (isInversed(decors1, decors2) && s.matches(".*\\w.*")) {
+		// result = result.getInv();
+//		}
 
 		return result;
 	}
@@ -717,23 +717,23 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return s;
 	}
 
-	private boolean isInversed(LinkDecor decors1, LinkDecor decors2) {
-		if (decors1 == LinkDecor.ARROW && decors2 != LinkDecor.ARROW) {
-			return true;
-		}
-		if (decors2 == LinkDecor.AGREGATION) {
-			return true;
-		}
-		if (decors2 == LinkDecor.COMPOSITION) {
-			return true;
-		}
-		if (decors2 == LinkDecor.PLUS) {
-			return true;
-		}
-		// if (decors2 == LinkDecor.EXTENDS) {
-		// return true;
-		// }
-		return false;
-	}
+//	private boolean isInversed(LinkDecor decors1, LinkDecor decors2) {
+//		if (decors1 == LinkDecor.ARROW && decors2 != LinkDecor.ARROW) {
+//			return true;
+//		}
+//		if (decors2 == LinkDecor.AGREGATION) {
+//			return true;
+//		}
+//		if (decors2 == LinkDecor.COMPOSITION) {
+//			return true;
+//		}
+//		if (decors2 == LinkDecor.PLUS) {
+//			return true;
+//		}
+//		// if (decors2 == LinkDecor.EXTENDS) {
+//		// return true;
+//		// }
+//		return false;
+//	}
 
 }

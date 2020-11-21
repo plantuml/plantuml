@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -53,8 +53,12 @@ import static gen.lib.label.rectangle__c.RectArea;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
+import static smetana.core.Macro.NODECARD;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Branch_t;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import h.ST_Branch_t;
 import h.ST_Node_t___;
 import h.ST_PartitionVars;
@@ -64,8 +68,12 @@ import h.ST_Rect_t;
 public class split_q__c {
 
 
+
+
 //3 6vl3snxd6k95gamfkwfsfdguc
 // void SplitNode(RTree_t * rtp, Node_t * n, Branch_t * b, Node_t ** nn) 
+@Unused
+@Original(version="2.38.0", path="lib/label/split_q.c", name="SplitNode", key="6vl3snxd6k95gamfkwfsfdguc", definition="void SplitNode(RTree_t * rtp, Node_t * n, Branch_t * b, Node_t ** nn)")
 public static void SplitNode(ST_RTree rtp, ST_Node_t___ n, ST_Branch_t b, ST_Node_t___ nn[]) {
 ENTERING("6vl3snxd6k95gamfkwfsfdguc","SplitNode");
 try {
@@ -106,6 +114,8 @@ LEAVING("6vl3snxd6k95gamfkwfsfdguc","SplitNode");
 
 //3 al7lyin008m7kvrvuxhcuvn61
 // static void GetBranches(RTree_t * rtp, Node_t * n, Branch_t * b) 
+@Unused
+@Original(version="2.38.0", path="lib/label/split_q.c", name="GetBranches", key="al7lyin008m7kvrvuxhcuvn61", definition="static void GetBranches(RTree_t * rtp, Node_t * n, Branch_t * b)")
 public static void GetBranches(ST_RTree rtp, ST_Node_t___ n, ST_Branch_t b) {
 ENTERING("al7lyin008m7kvrvuxhcuvn61","GetBranches");
 try {
@@ -137,6 +147,8 @@ LEAVING("al7lyin008m7kvrvuxhcuvn61","GetBranches");
 
 //3 4woz5xy4gjlahoj7no3ljxmex
 // static void MethodZero(RTree_t * rtp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/split_q.c", name="MethodZero", key="4woz5xy4gjlahoj7no3ljxmex", definition="static void MethodZero(RTree_t * rtp)")
 public static void MethodZero(ST_RTree rtp) {
 ENTERING("4woz5xy4gjlahoj7no3ljxmex","MethodZero");
 try {
@@ -216,6 +228,8 @@ LEAVING("4woz5xy4gjlahoj7no3ljxmex","MethodZero");
 
 //3 8rui4cun4tvq5xy6ke6r3p55e
 // static void PickSeeds(RTree_t * rtp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/split_q.c", name="PickSeeds", key="8rui4cun4tvq5xy6ke6r3p55e", definition="static void PickSeeds(RTree_t * rtp)")
 public static void PickSeeds(ST_RTree rtp) {
 ENTERING("8rui4cun4tvq5xy6ke6r3p55e","PickSeeds");
 try {
@@ -256,6 +270,8 @@ LEAVING("8rui4cun4tvq5xy6ke6r3p55e","PickSeeds");
 
 //3 4qyy2dpbkziuubssvfwb8u1sh
 // static void Classify(RTree_t * rtp, int i, int group) 
+@Unused
+@Original(version="2.38.0", path="lib/label/split_q.c", name="Classify", key="4qyy2dpbkziuubssvfwb8u1sh", definition="static void Classify(RTree_t * rtp, int i, int group)")
 public static void Classify(ST_RTree rtp, int i, int group) {
 ENTERING("4qyy2dpbkziuubssvfwb8u1sh","Classify");
 try {
@@ -282,22 +298,26 @@ LEAVING("4qyy2dpbkziuubssvfwb8u1sh","Classify");
 
 
 
-//3 ay7l4setwyl3hbx4o2jpa7vyz
-// static void LoadNodes(RTree_t * rtp, Node_t * n, Node_t * q, 		      struct PartitionVars *p) 
+/*-----------------------------------------------------------------------------
+| Copy branches from the buffer into two nodes according to the partition.
+-----------------------------------------------------------------------------*/
+@Reviewed(when = "16/11/2020")
+@Original(version="2.38.0", path="lib/label/split_q.c", name="LoadNodes", key="ay7l4setwyl3hbx4o2jpa7vyz", definition="static void LoadNodes(RTree_t * rtp, Node_t * n, Node_t * q, 		      struct PartitionVars *p)")
 public static void LoadNodes(ST_RTree rtp, ST_Node_t___ n, ST_Node_t___ q, ST_PartitionVars p) {
 ENTERING("ay7l4setwyl3hbx4o2jpa7vyz","LoadNodes");
 try {
      int i;
-//     assert(n);
-//     assert(q);
-//     assert(p);
-     for (i = 0; i < 64 + 1; i++) {
-// 	assert(rtp->split.Partitions[0].partition[i] == 0 ||
-// 	       rtp->split.Partitions[0].partition[i] == 1);
+     assert(n!=null);
+     assert(q!=null);
+     assert(p!=null);
+     
+     for (i = 0; i < NODECARD + 1; i++) {
+ 	assert(rtp.split.Partitions[0].partition[i] == 0 ||
+ 	       rtp.split.Partitions[0].partition[i] == 1);
  	if (rtp.split.Partitions[0].partition[i] == 0)
- 	    AddBranch(rtp, (ST_Branch_t)rtp.split.BranchBuf[i].castTo(Branch_t.class), n, null);
+ 	    AddBranch(rtp, rtp.split.BranchBuf[i], n, null);
  	else if (rtp.split.Partitions[0].partition[i] == 1)
- 	    AddBranch(rtp, (ST_Branch_t)rtp.split.BranchBuf[i].castTo(Branch_t.class), q, null);
+ 	    AddBranch(rtp, rtp.split.BranchBuf[i], q, null);
      }
 } finally {
 LEAVING("ay7l4setwyl3hbx4o2jpa7vyz","LoadNodes");
@@ -309,6 +329,8 @@ LEAVING("ay7l4setwyl3hbx4o2jpa7vyz","LoadNodes");
 
 //3 dvgjc83sogjhzf5kxpir405rh
 // static void InitPVars(RTree_t * rtp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/split_q.c", name="InitPVars", key="dvgjc83sogjhzf5kxpir405rh", definition="static void InitPVars(RTree_t * rtp)")
 public static void InitPVars(ST_RTree rtp) {
 ENTERING("dvgjc83sogjhzf5kxpir405rh","InitPVars");
      int i;

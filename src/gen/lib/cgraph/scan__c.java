@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class scan__c {
@@ -359,6 +362,8 @@ public class scan__c {
 
 //3 1oj4owfzrg4azkuildy8ykqr9
 // void agreadline(int n) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="agreadline", key="1oj4owfzrg4azkuildy8ykqr9", definition="void agreadline(int n)")
 public static Object agreadline(Object... arg) {
 UNSUPPORTED("dsihmt5ebg62c8jribqmgy0dy"); // void agreadline(int n) { line_num = n; }
 
@@ -370,6 +375,8 @@ throw new UnsupportedOperationException();
 
 //3 bf0ltyw37l11aswamj8q178wi
 // void agsetfile(char* f) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="agsetfile", key="bf0ltyw37l11aswamj8q178wi", definition="void agsetfile(char* f)")
 public static Object agsetfile(Object... arg) {
 UNSUPPORTED("1efvmz7xvqmxk6ohmzmamgezx"); // void agsetfile(char* f) { InputFile = f; line_num = 1; }
 
@@ -381,6 +388,8 @@ throw new UnsupportedOperationException();
 
 //3 3r1v6x85pa9sbewoebj1wpjuu
 // void aglexinit(Agdisc_t *disc, void *ifile) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aglexinit", key="3r1v6x85pa9sbewoebj1wpjuu", definition="void aglexinit(Agdisc_t *disc, void *ifile)")
 public static Object aglexinit(Object... arg) {
 UNSUPPORTED("3744yvxht2vnrh2n60myij0q3"); // void aglexinit(Agdisc_t *disc, void *ifile) { Disc = disc; Ifile = ifile; graphType = 0;}
 
@@ -396,6 +405,8 @@ throw new UnsupportedOperationException();
 
 //3 ci1omlit75xbk0j3loutg4m5g
 // static void beginstr(void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="beginstr", key="ci1omlit75xbk0j3loutg4m5g", definition="static void beginstr(void)")
 public static Object beginstr(Object... arg) {
 UNSUPPORTED("dstkjoto15vp16xvlg2k09goi"); // static void beginstr(void) {
 UNSUPPORTED("5hieqyyy30hbesj8bpug2z9z6"); // 	if (Sbuf == ((char*)0)) {
@@ -414,6 +425,8 @@ throw new UnsupportedOperationException();
 
 //3 81ls7ujxrb181svnc5awggx7n
 // static void addstr(char *src) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="addstr", key="81ls7ujxrb181svnc5awggx7n", definition="static void addstr(char *src)")
 public static Object addstr(Object... arg) {
 UNSUPPORTED("703gu6b5q51kg4f4w94snc2mn"); // static void addstr(char *src) {
 UNSUPPORTED("3fj8t64rrnh5407ihxrbavnt6"); // 	char	c;
@@ -439,6 +452,8 @@ throw new UnsupportedOperationException();
 
 //3 2rmqzhh7aovtupqfrlts8pa2m
 // static void endstr(void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="endstr", key="2rmqzhh7aovtupqfrlts8pa2m", definition="static void endstr(void)")
 public static Object endstr(Object... arg) {
 UNSUPPORTED("2sracqywd1qg2l7v5nmpvufkp"); // static void endstr(void) {
 UNSUPPORTED("err7e2gsasgf22nnv8bahct4d"); // 	aaglval.str = (char*)agstrdup(Ag_G_global,Sbuf);
@@ -452,6 +467,8 @@ throw new UnsupportedOperationException();
 
 //3 4t56dhvw52uu822nlaokivf85
 // static void endstr_html(void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="endstr_html", key="4t56dhvw52uu822nlaokivf85", definition="static void endstr_html(void)")
 public static Object endstr_html(Object... arg) {
 UNSUPPORTED("dnnpz2205l3ln51f1bs93btf9"); // static void endstr_html(void) {
 UNSUPPORTED("ajzrml1ygau4ao515bwvwgn19"); // 	aaglval.str = (char*)agstrdup_html(Ag_G_global,Sbuf);
@@ -465,6 +482,8 @@ throw new UnsupportedOperationException();
 
 //3 9nr6wfm5bmxh70x9saeavz26m
 // static void storeFileName (char* fname, int len) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="storeFileName", key="9nr6wfm5bmxh70x9saeavz26m", definition="static void storeFileName (char* fname, int len)")
 public static Object storeFileName(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("cvgvah1jrmrhswwg3rel7x5y0"); // storeFileName (char* fname, int len)
@@ -488,6 +507,8 @@ throw new UnsupportedOperationException();
 
 //3 bj9zjg1k93tugikci6pdacgv8
 // static void ppDirective (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="ppDirective", key="bj9zjg1k93tugikci6pdacgv8", definition="static void ppDirective (void)")
 public static Object ppDirective(Object... arg) {
 UNSUPPORTED("amadyb8blecbhpmr03nv1yysj"); // static void ppDirective (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -518,6 +539,8 @@ throw new UnsupportedOperationException();
 
 //3 7fcnmcd19oiyoyaqr7swnx68s
 // static int chkNum(void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="chkNum", key="7fcnmcd19oiyoyaqr7swnx68s", definition="static int chkNum(void)")
 public static Object chkNum(Object... arg) {
 UNSUPPORTED("q1tlhq1m7q8bylnobldsy8ul"); // static int chkNum(void) {
 UNSUPPORTED("5xen5v195vyw2zxeos5j4b39u"); //     unsigned char c = (unsigned char)aagtext[aagleng-1];   /* last character */
@@ -552,6 +575,8 @@ throw new UnsupportedOperationException();
 
 //3 e5pbkh72mgktxf6bfh0n4gt4
 // int aaglex (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aaglex", key="e5pbkh72mgktxf6bfh0n4gt4", definition="int aaglex (void)")
 public static Object aaglex(Object... arg) {
 UNSUPPORTED("pdpjzk6673jkdk1hkeeb2q3a"); // int aaglex (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -576,14 +601,14 @@ UNSUPPORTED("5vdfn4vw8baq4bh6qaiza5ces"); // 		aag_load_buffer_state( );
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("64w7kx5jkbrgxchxynb9z68sl"); // 	while ( 1 )		/* loops until end-of-file is reached */
 UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
-UNSUPPORTED("19a62hiie1pmtcddghe0bqc4p"); // 		aag_cp = (aag_c_buf_p);
+UNSUPPORTED("19a62hiie1pmtcddghe0bqc4p"); // 		aag_cp = aag_c_buf_p;
 UNSUPPORTED("3dylne08x28cpv7rgbl9342u9"); // 		/* Support of aagtext. */
-UNSUPPORTED("a4qna0rrphiukyt2cx9xxl4uq"); // 		*aag_cp = (aag_hold_char);
+UNSUPPORTED("a4qna0rrphiukyt2cx9xxl4uq"); // 		*aag_cp = aag_hold_char;
 UNSUPPORTED("cqe8nsxx8zip9neqzuass52k7"); // 		/* aag_bp points to the position in aag_ch_buf of the start of
 UNSUPPORTED("2hkvmkbfi5k14h6ad5el1ypm4"); // 		 * the current run.
 UNSUPPORTED("edw1ss2r31mqgsvca2gowi52v"); // 		 */
 UNSUPPORTED("2uu83ztfrm2rf4gilr4ndnado"); // 		aag_bp = aag_cp;
-UNSUPPORTED("1cgpurhged2awokk4s92iw776"); // 		aag_current_state = (aag_start);
+UNSUPPORTED("1cgpurhged2awokk4s92iw776"); // 		aag_current_state = aag_start;
 UNSUPPORTED("22smyx4x537664ve7600il5k2"); // 		aag_current_state += ((aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol);
 UNSUPPORTED("8n4v70w7yvxxi7wyk8h2ozq69"); // aag_match:
 UNSUPPORTED("9ksbpucly3ydjrripsbhxyhi6"); // 		do
@@ -608,8 +633,8 @@ UNSUPPORTED("9m6gq3wy7dxf2989ifsn5cm9t"); // aag_find_action:
 UNSUPPORTED("6dd3zbwpg5nll3gotac8xs0jk"); // 		aag_act = aag_accept[aag_current_state];
 UNSUPPORTED("3uvb9f03g7dp9se542b3fch97"); // 		if ( aag_act == 0 )
 UNSUPPORTED("9vnsdr0cb64wib7xchxmeffe1"); // 			{ /* have to back up */
-UNSUPPORTED("5jmzc2p8ihqh3pl8yk426jjs8"); // 			aag_cp = (aag_last_accepting_cpos);
-UNSUPPORTED("4bqktwvoql4rinftb1wb6bwux"); // 			aag_current_state = (aag_last_accepting_state);
+UNSUPPORTED("5jmzc2p8ihqh3pl8yk426jjs8"); // 			aag_cp = aag_last_accepting_cpos;
+UNSUPPORTED("4bqktwvoql4rinftb1wb6bwux"); // 			aag_current_state = aag_last_accepting_state;
 UNSUPPORTED("913oa8bs5aedunutrp23qi71j"); // 			aag_act = aag_accept[aag_current_state];
 UNSUPPORTED("3to5h0rvqxdeqs38mhv47mm3o"); // 			}
 UNSUPPORTED("7z2vv0d273lknczgkvpqne3ly"); // 		(aagtext) = aag_bp; aagleng = (size_t) (aag_cp - aag_bp); (aag_hold_char) = *aag_cp; *aag_cp = '\0'; (aag_c_buf_p) = aag_cp;;
@@ -618,148 +643,148 @@ UNSUPPORTED("8el9cnpl89mu1fuzqhwwf5qxk"); // 		switch ( aag_act )
 UNSUPPORTED("dco2y6y1hd2mnc3n7yoiq7qru"); // 	{ /* beginning of action switch */
 UNSUPPORTED("66t1xamwgf1zbtor3asfj4mlj"); // 			case 0: /* must back up */
 UNSUPPORTED("8y7kg3jmm0mxlcmreiqklvczm"); // 			/* undo the effects of YY_DO_BEFORE_ACTION */
-UNSUPPORTED("edfoo8bmsxnzpivnh86hp8g4j"); // 			*aag_cp = (aag_hold_char);
-UNSUPPORTED("5jmzc2p8ihqh3pl8yk426jjs8"); // 			aag_cp = (aag_last_accepting_cpos);
-UNSUPPORTED("4bqktwvoql4rinftb1wb6bwux"); // 			aag_current_state = (aag_last_accepting_state);
+UNSUPPORTED("edfoo8bmsxnzpivnh86hp8g4j"); // 			*aag_cp = aag_hold_char;
+UNSUPPORTED("5jmzc2p8ihqh3pl8yk426jjs8"); // 			aag_cp = aag_last_accepting_cpos;
+UNSUPPORTED("4bqktwvoql4rinftb1wb6bwux"); // 			aag_current_state = aag_last_accepting_state;
 UNSUPPORTED("2t20blf7b2e9uh29x86jqn0uu"); // 			goto aag_find_action;
 UNSUPPORTED("4et457vtxvdfcniwgvkmgg27m"); // case 1:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("e9sweqn31kfcpevqzc35so2x7"); // return(EOF);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("ni2wdzcw22kpb7r5rbiir6um"); // case 2:
 UNSUPPORTED("8fsfk45iz6r1xpxwqpgh87zzc"); // /* rule 2 can match eol */
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("1om5gjxjxp5p6gu6fqz2e1z4d"); // line_num++;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("29xaavsx8kmwlhodww81f29mi"); // case 3:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("jx9vmge6p0hhmb643cbkitrm"); // (aag_start) = 1 + 2 *(1);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("9cpt0kyqy9di8h2cd6iika4bw"); // case 4:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("8vr3x5prkq9bx5x7yv4sasjrd"); // /* eat anything not a '*' */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("c7mpoiwvhax172146g6phlprw"); // case 5:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("dij0hf9wozgcp2ki3m2kifoig"); // /* eat up '*'s not followed by '/'s */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("9k5fookwzuytueisvyyz0caqk"); // case 6:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("3wg696bpwfs7vhwcw7iif6yt6"); // (aag_start) = 1 + 2 *(0);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("2q7wq83jxx2tqprtgvfd30b2i"); // case 7:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("6xambzauc9qg5hiyrjp9cv94v"); // /* ignore C++-style comments */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("kmgl4qg4fe9op81j902qtcn6"); // case 8:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("6c3vej4do0hnpt0ddel7ijipo"); // ppDirective ();
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("3qm4f4fp7kvh4l1xcdwlzcdom"); // case 9:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("e3h3y3usy8rlcha932xyo8bb7"); // /* ignore shell-like comments */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("9b848ct8iyxow7s4as982amzi"); // case 10:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("a2zmhocyae95g5xo9bfaljr7k"); // /* ignore whitespace */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("947tafpsnhhss094u71s9ubk9"); // case 11:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("87jhtwvxnhipza9f1s895uull"); // /* ignore BOM */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("2l2qmr4rskdcgekd3oqxqj7f2"); // case 12:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("5ps7dxq4k1qcbyiigtbvitzij"); // return(259);			/* see tokens in agcanonstr */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("4b055gsjgrpcvywbk7up4fg5l"); // case 13:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("1l0aw0zsqx2vbkr3zneykykxd"); // return(260);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("8njscivqvdlk4vdfnqdcn9p48"); // case 14:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("eilvuennhlsv84ebtaqqz00iw"); // if (!graphType) graphType = 258; return(258);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("72drdinb4kuj1ahx4pw5lzm0v"); // case 15:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("s9a7uspzll6isipj7m07vk6h"); // if (!graphType) graphType = 261; return(261);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("556y3hjg8xc217kgz7oded7kt"); // case 16:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("3yeeq5bkp5kiybo6jn3eyjs2o"); // return(263);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("2gqru8meihkhpbhyd7jcdcsob"); // case 17:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("1avovk9rb0j1co3gabz86001b"); // return(262);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("cxgy20vpnrsxhz5ksw5ht4pww"); // case 18:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("3jmo6uhihr6ouy9u6117d2797"); // if (graphType == 261) return(264); else return('-');
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("alztpmrrh7gk4sd7fc990467l"); // case 19:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("e6ipohsip8k8qzqpgc992rx8c"); // if (graphType == 258) return(264); else return('-');
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("6k7gr42ju1rb53hcb5rqnquyu"); // case 20:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("9nt30eaqhmml8uiohjf1h5hdb"); // { aaglval.str = (char*)agstrdup(Ag_G_global,aagtext); return(267); }
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("6in850eoepou96lnb2c2t1mpb"); // case 21:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
-UNSUPPORTED("b15ywfomgq02hcjkw9ampx24y"); // { if (chkNum()) do { int aagless_macro_arg = (aagleng-1); ; *aag_cp = (aag_hold_char);  (aag_c_buf_p) = aag_cp = aag_bp + aagless_macro_arg - 0; (aagtext) = aag_bp; aagleng = (size_t) (aag_cp - aag_bp); (aag_hold_char) = *aag_cp; *aag_cp = '\0'; (aag_c_buf_p) = aag_cp;; } while ( 0 ); aaglval.str = (char*)agstrdup(Ag_G_global,aagtext); return(267); }
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
+UNSUPPORTED("b15ywfomgq02hcjkw9ampx24y"); // { if (chkNum()) do { int aagless_macro_arg = aagleng-1; ; *aag_cp = aag_hold_char;  (aag_c_buf_p) = aag_cp = aag_bp + aagless_macro_arg - 0; (aagtext) = aag_bp; aagleng = (size_t) (aag_cp - aag_bp); (aag_hold_char) = *aag_cp; *aag_cp = '\0'; (aag_c_buf_p) = aag_cp;; } while ( 0 ); aaglval.str = (char*)agstrdup(Ag_G_global,aagtext); return(267); }
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("cl2w7n3yx4n622lafbt0bwfz1"); // case 22:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("ees73wgk7mwg9zrh612sgsvy1"); // (aag_start) = 1 + 2 *(2); beginstr();
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("27zayxvq2pc68g5ar0432yw9t"); // case 23:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("c5xf7sj3w7fr0pqstn18tj413"); // (aag_start) = 1 + 2 *(0); endstr(); return (268);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("6z3m8132yn8zgtthzycjgz78x"); // case 24:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("8h6g770m5l5g215hhlrt2hx9n"); // addstr ("\"");
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("952jh9bx0tpblu7shq5rrwpq2"); // case 25:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("8modtlsmam68shpdmcz87uq8h"); // addstr ("\\\\");
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("52vnyui9jklyykligf30zeaai"); // case 26:
 UNSUPPORTED("4i9tx8f8c3v6bspkwavhtwano"); // /* rule 26 can match eol */
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("a8vlwazdypu664ivx6wi8rko2"); // line_num++; /* ignore escaped newlines */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("5n1mokd7dgwogbhb2jas6mb00"); // case 27:
 UNSUPPORTED("61heacv6izappfw5yjlcp4so4"); // /* rule 27 can match eol */
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("3mzcrqnslnbq9vtv1zu9sule8"); // addstr(aagtext);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("6gczfeucbsq4yjto6hu1ofs42"); // case 28:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("6g9v7q7xrlzfufvlruovef42p"); // (aag_start) = 1 + 2 *(3); html_nest = 1; beginstr();
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("f16p1igprp064qa5n56o1m2wc"); // case 29:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("f3otz7hfp3792v4zck6dvnmo3"); // html_nest--; if (html_nest) addstr(aagtext); else {(aag_start) = 1 + 2 *(0); endstr_html(); return (268);}
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("72s0wtcj4jofeozc8iz5zbhxl"); // case 30:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("aw1td26c2oe06ysc6u6vj8koz"); // html_nest++; addstr(aagtext);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("6xefk8kdpp7y1m3tbc0tpw8wa"); // case 31:
 UNSUPPORTED("7x4ipn0el32pfjyg76p0z4oz8"); // /* rule 31 can match eol */
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("9xv0goh9ck9y3mkaftbg7vmfd"); // addstr(aagtext); line_num++; /* add newlines */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("9m9x22bqi8pwhtev4msso0yze"); // case 32:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("3mzcrqnslnbq9vtv1zu9sule8"); // addstr(aagtext);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("18v1y33kqilsfbxil4b3yna75"); // case 33:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("92pt2p1sqtdccyfawj6shkj14"); // return (aagtext[0]);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("7rr77fryfl2ub6miww7jg5y4o"); // case 34:
-UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (aagtext[aagleng - 1] == '\n'); 
+UNSUPPORTED("cbtwhhcbw0kd10g8r34kiet35"); // if ( aagleng > 0 ) (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = aagtext[aagleng - 1] == '\n'; 
 UNSUPPORTED("6bhj3owfzoyf3s0aoqazgzy0q"); // do { if (fwrite( aagtext, aagleng, 1, aagout )) {} } while (0);
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("82mqzfrl2p6jfpf29nu6fgxdb"); // case (35 + 0 + 1):
@@ -772,7 +797,7 @@ UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
 UNSUPPORTED("av9evic7ammi9pcxoqac9s8fe"); // 		/* Amount of text matched not including the EOB char. */
 UNSUPPORTED("1jjcl1pqge71gvb9dki5a07ws"); // 		int aag_amount_of_matched_text = (int) (aag_cp - (aagtext)) - 1;
 UNSUPPORTED("7pvmj2k0z8lp6jgvv2n65nbps"); // 		/* Undo the effects of YY_DO_BEFORE_ACTION. */
-UNSUPPORTED("a4qna0rrphiukyt2cx9xxl4uq"); // 		*aag_cp = (aag_hold_char);
+UNSUPPORTED("a4qna0rrphiukyt2cx9xxl4uq"); // 		*aag_cp = aag_hold_char;
 UNSUPPORTED("ap1b7l55ctbh41rm7yh9a6jyo"); // 		if ( (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_buffer_status == 0 )
 UNSUPPORTED("2mdt9jdl3qwktdzlvb0pw8fgo"); // 			{
 UNSUPPORTED("1ukrm4fttw7velp3gbz6awwne"); // 			/* We're scanning a new file or input source.  It's
@@ -819,7 +844,7 @@ UNSUPPORTED("ba9wj7om5zk7mol03zxpekt7j"); // 				goto aag_match;
 UNSUPPORTED("cysnuxd51taci3hbg5lifz8ce"); // 				}
 UNSUPPORTED("cqgi8f4d37bqva8z6bx5rvn7w"); // 			else
 UNSUPPORTED("4pcl1pdojya6hzq73u51kpoch"); // 				{
-UNSUPPORTED("3nanwdupbkgohlzpjzoaukbr4"); // 				aag_cp = (aag_c_buf_p);
+UNSUPPORTED("3nanwdupbkgohlzpjzoaukbr4"); // 				aag_cp = aag_c_buf_p;
 UNSUPPORTED("9l6wm3vx0rph8i8h7m4dcq34x"); // 				goto aag_find_action;
 UNSUPPORTED("cysnuxd51taci3hbg5lifz8ce"); // 				}
 UNSUPPORTED("3to5h0rvqxdeqs38mhv47mm3o"); // 			}
@@ -854,14 +879,14 @@ UNSUPPORTED("5hg15npsnnf19eml2makv9mgf"); // 			case 0:
 UNSUPPORTED("5igou3g3x4fk7tev76iwuz4eu"); // 				(aag_c_buf_p) =
 UNSUPPORTED("8z7l3eh0oo09flvmepzomf8p5"); // 					(aagtext) + aag_amount_of_matched_text;
 UNSUPPORTED("1aotx4d0a8ouhfouerkr911ty"); // 				aag_current_state = aag_get_previous_state(  );
-UNSUPPORTED("3nanwdupbkgohlzpjzoaukbr4"); // 				aag_cp = (aag_c_buf_p);
+UNSUPPORTED("3nanwdupbkgohlzpjzoaukbr4"); // 				aag_cp = aag_c_buf_p;
 UNSUPPORTED("ak6tf6umjq968y5h6qwp3ceo3"); // 				aag_bp = (aagtext) + 0;
 UNSUPPORTED("ba9wj7om5zk7mol03zxpekt7j"); // 				goto aag_match;
 UNSUPPORTED("ewxk0u6la5xyi9w9bnvvvi27w"); // 			case 2:
 UNSUPPORTED("5igou3g3x4fk7tev76iwuz4eu"); // 				(aag_c_buf_p) =
 UNSUPPORTED("5818biabe0znc0ppmei5vo5wo"); // 				&(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_ch_buf[(aag_n_chars)];
 UNSUPPORTED("1aotx4d0a8ouhfouerkr911ty"); // 				aag_current_state = aag_get_previous_state(  );
-UNSUPPORTED("3nanwdupbkgohlzpjzoaukbr4"); // 				aag_cp = (aag_c_buf_p);
+UNSUPPORTED("3nanwdupbkgohlzpjzoaukbr4"); // 				aag_cp = aag_c_buf_p;
 UNSUPPORTED("ak6tf6umjq968y5h6qwp3ceo3"); // 				aag_bp = (aagtext) + 0;
 UNSUPPORTED("9l6wm3vx0rph8i8h7m4dcq34x"); // 				goto aag_find_action;
 UNSUPPORTED("3to5h0rvqxdeqs38mhv47mm3o"); // 			}
@@ -882,11 +907,13 @@ throw new UnsupportedOperationException();
 
 //3 1bk2c3ez7bpnqxz6emq8dv629
 // static int aag_get_next_buffer (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_get_next_buffer", key="1bk2c3ez7bpnqxz6emq8dv629", definition="static int aag_get_next_buffer (void)")
 public static Object aag_get_next_buffer(Object... arg) {
 UNSUPPORTED("bntfc8vc6ws60twpz2ksf3ytd"); // static int aag_get_next_buffer (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("7ebw6rt1a8gwit3l70juuhrut"); //     	register char *dest = (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_ch_buf;
-UNSUPPORTED("ep8exp77z0cdsbzoahv0n7pga"); // 	register char *source = (aagtext);
+UNSUPPORTED("ep8exp77z0cdsbzoahv0n7pga"); // 	register char *source = aagtext;
 UNSUPPORTED("85flzwsp2wkcuz6e6p5ey0ja4"); // 	register int number_to_move, i;
 UNSUPPORTED("aipx13znfwyxln9k8crlo39qe"); // 	int ret_val;
 UNSUPPORTED("ft3hwcdb787h4u0eu9f0gq84"); // 	if ( (aag_c_buf_p) > &(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_ch_buf[(aag_n_chars) + 1] )
@@ -955,7 +982,7 @@ UNSUPPORTED("1msizybwtesl5m6srryjf8r50"); // 			num_to_read = 8192;
 UNSUPPORTED("9hh9s07ydq4w9w37dlrlncmbt"); // 		/* Read in more data. */
 UNSUPPORTED("6g59dwr892s73mmz5s1084rpw"); // 		if ((
 UNSUPPORTED("28bayw02ppqcuffpcnzwuat5f"); // (aag_n_chars) = Disc->io->afread(Ifile, (&(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_ch_buf[number_to_move]), num_to_read)) < 0) aag_fatal_error( "input in flex scanner failed" );
-UNSUPPORTED("2uvf85bz227zpcsxn55l3cvsw"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_n_chars = (aag_n_chars);
+UNSUPPORTED("2uvf85bz227zpcsxn55l3cvsw"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_n_chars = aag_n_chars;
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("ah0h9w907nopolcfy6oyiwctm"); // 	if ( (aag_n_chars) == 0 )
 UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
@@ -995,12 +1022,14 @@ throw new UnsupportedOperationException();
 
 //3 dge0pk480ox74sfkkc1y9j2az
 // static aag_state_type aag_get_previous_state (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_get_previous_state", key="dge0pk480ox74sfkkc1y9j2az", definition="static aag_state_type aag_get_previous_state (void)")
 public static Object aag_get_previous_state(Object... arg) {
 UNSUPPORTED("2f7ywxbd41kv0w35fr0s3gwtv"); // static aag_state_type aag_get_previous_state (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("eyp458tyziuc5smdf8nmisuv0"); // 	register aag_state_type aag_current_state;
 UNSUPPORTED("8uf0gbbm46tqgc4hioxy8vjiz"); // 	register char *aag_cp;
-UNSUPPORTED("bieja928rkcqrr592kae9apln"); // 	aag_current_state = (aag_start);
+UNSUPPORTED("bieja928rkcqrr592kae9apln"); // 	aag_current_state = aag_start;
 UNSUPPORTED("jczmn8egwv4b13o2oyfr7nrl"); // 	aag_current_state += ((aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol);
 UNSUPPORTED("9b7y7lw6mfst8xpmeih019ad"); // 	for ( aag_cp = (aagtext) + 0; aag_cp < (aag_c_buf_p); ++aag_cp )
 UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
@@ -1029,11 +1058,13 @@ throw new UnsupportedOperationException();
 
 //3 1bqrp6l15lwke1ldr6rocxdac
 // static aag_state_type aag_try_NUL_trans  (aag_state_type aag_current_state ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_try_NUL_trans", key="1bqrp6l15lwke1ldr6rocxdac", definition="static aag_state_type aag_try_NUL_trans  (aag_state_type aag_current_state )")
 public static Object aag_try_NUL_trans(Object... arg) {
 UNSUPPORTED("1c5zau9pxlkse3pyxct71b9b6"); // static aag_state_type aag_try_NUL_trans  (aag_state_type aag_current_state )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("5cttrvxgf8tj171oltic9kuxk"); // 	register int aag_is_jam;
-UNSUPPORTED("607lnmo0y2p5f2uu142fznvum"); //     	register char *aag_cp = (aag_c_buf_p);
+UNSUPPORTED("607lnmo0y2p5f2uu142fznvum"); //     	register char *aag_cp = aag_c_buf_p;
 UNSUPPORTED("dom9fqyl48xmfjoext3bee9m3"); // 	register YY_CHAR aag_c = 1;
 UNSUPPORTED("31kqmiupr0r27efmb8f7imz5i"); // 	if ( aag_accept[aag_current_state] )
 UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
@@ -1047,7 +1078,7 @@ UNSUPPORTED("9a13x8h85yf4gv3bob5ag8x9f"); // 		if ( aag_current_state >= 93 )
 UNSUPPORTED("e1mfyn6wjy9wyaq80y0xgwjhr"); // 			aag_c = aag_meta[(unsigned int) aag_c];
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("14xmpnv4kpg47d1zmttc99fz0"); // 	aag_current_state = aag_nxt[aag_base[aag_current_state] + (unsigned int) aag_c];
-UNSUPPORTED("13un885faeok3sujcnk8wsrm3"); // 	aag_is_jam = (aag_current_state == 92);
+UNSUPPORTED("13un885faeok3sujcnk8wsrm3"); // 	aag_is_jam = aag_current_state == 92;
 UNSUPPORTED("6l9txnev1x47auh1g4bpko864"); // 		return aag_is_jam ? 0 : aag_current_state;
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
 
@@ -1059,13 +1090,15 @@ throw new UnsupportedOperationException();
 
 //3 kz1k3qeyyshqirx2726nc2lb
 // static void aagunput (int c, register char * aag_bp ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagunput", key="kz1k3qeyyshqirx2726nc2lb", definition="static void aagunput (int c, register char * aag_bp )")
 public static Object aagunput(Object... arg) {
 UNSUPPORTED("6qb36grs4pj0ke1dlwgx370i1"); // static void aagunput (int c, register char * aag_bp )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("8uf0gbbm46tqgc4hioxy8vjiz"); // 	register char *aag_cp;
-UNSUPPORTED("3rlqat2geccfwfzu8sgn63j61"); //     aag_cp = (aag_c_buf_p);
+UNSUPPORTED("3rlqat2geccfwfzu8sgn63j61"); //     aag_cp = aag_c_buf_p;
 UNSUPPORTED("9oaabjtrdlssvq6fvlwffi1f2"); // 	/* undo effects of setting up aagtext */
-UNSUPPORTED("11cebwack73ecjllyd3vaefq4"); // 	*aag_cp = (aag_hold_char);
+UNSUPPORTED("11cebwack73ecjllyd3vaefq4"); // 	*aag_cp = aag_hold_char;
 UNSUPPORTED("3mir5tgsoqs63hlvlewrogbvr"); // 	if ( aag_cp < (aag_buffer_stack)[(aag_buffer_stack_top)]->aag_ch_buf + 2 )
 UNSUPPORTED("14vg05mqua5r457g6eyrugk5q"); // 		{ /* need to shift things up to make room */
 UNSUPPORTED("1ec7aezzerjgwgwx53i84wstu"); // 		/* +2 for EOB chars. */
@@ -1097,11 +1130,13 @@ throw new UnsupportedOperationException();
 
 //3 23mhytvy8ivrz8bn5qfjy7jm5
 // static int input  (void)   
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="input", key="23mhytvy8ivrz8bn5qfjy7jm5", definition="static int input  (void)")
 public static Object input(Object... arg) {
 UNSUPPORTED("8vrkofm3h8bcnpmtcw7xt22kr"); // static int input  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("bf60xh4vwy9e0mvwv89b3f8cu"); // 	int c;
-UNSUPPORTED("f2j3r93ldwabmgkvopbu8ke69"); // 	*(aag_c_buf_p) = (aag_hold_char);
+UNSUPPORTED("f2j3r93ldwabmgkvopbu8ke69"); // 	*(aag_c_buf_p) = aag_hold_char;
 UNSUPPORTED("c8eyfnv59jx8hpsjk089mtwrr"); // 	if ( *(aag_c_buf_p) == 0 )
 UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
 UNSUPPORTED("b32kgmqpglza1bwirwnd6tlkl"); // 		/* aag_c_buf_p now points to the character we want to return.
@@ -1147,7 +1182,7 @@ UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("eq7rg75ncqkmice90l768lltk"); // 	c = *(unsigned char *) (aag_c_buf_p);	/* cast for 8-bit char's */
 UNSUPPORTED("2pzbicuaj8qxlozp4jb49ela9"); // 	*(aag_c_buf_p) = '\0';	/* preserve aagtext */
 UNSUPPORTED("63aemjzvkjbuuwy5niv1p8ems"); // 	(aag_hold_char) = *++(aag_c_buf_p);
-UNSUPPORTED("7mz0nhmwr7rhmhe4726mxy930"); // 	(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = (c == '\n');
+UNSUPPORTED("7mz0nhmwr7rhmhe4726mxy930"); // 	(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_at_bol = c == '\n';
 UNSUPPORTED("7q6l09k0u87z31e0nmv2lwr94"); // 	return c;
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
 
@@ -1159,6 +1194,8 @@ throw new UnsupportedOperationException();
 
 //3 b91gjad0l9xznwagmx7tqnomu
 // void aagrestart  (FILE * input_file ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagrestart", key="b91gjad0l9xznwagmx7tqnomu", definition="void aagrestart  (FILE * input_file )")
 public static Object aagrestart(Object... arg) {
 UNSUPPORTED("a7s7ae3oh1mpb0t6l6gwghp8t"); // void aagrestart  (FILE * input_file )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1179,6 +1216,8 @@ throw new UnsupportedOperationException();
 
 //3 418kp3955qaorltr2gp3n7hr3
 // void aag_switch_to_buffer  (YY_BUFFER_STATE  new_buffer ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_switch_to_buffer", key="418kp3955qaorltr2gp3n7hr3", definition="void aag_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )")
 public static Object aag_switch_to_buffer(Object... arg) {
 UNSUPPORTED("7s07x3nube8908f082kwgj234"); // void aag_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1193,9 +1232,9 @@ UNSUPPORTED("6bj8inpmr5ulm16jmfxsstjtn"); // 		return;
 UNSUPPORTED("aqaux0xumrbi1suoc6u75bn9h"); // 	if ( ( (aag_buffer_stack) ? (aag_buffer_stack)[(aag_buffer_stack_top)] : NULL) )
 UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
 UNSUPPORTED("hjirhak021dywcjxs66ukoqh"); // 		/* Flush out information for old buffer. */
-UNSUPPORTED("cbtw5voc0x2dgb1nir3oodu4h"); // 		*(aag_c_buf_p) = (aag_hold_char);
-UNSUPPORTED("1lg74bgprfb93mb6yie4nebk2"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_buf_pos = (aag_c_buf_p);
-UNSUPPORTED("2uvf85bz227zpcsxn55l3cvsw"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_n_chars = (aag_n_chars);
+UNSUPPORTED("cbtw5voc0x2dgb1nir3oodu4h"); // 		*(aag_c_buf_p) = aag_hold_char;
+UNSUPPORTED("1lg74bgprfb93mb6yie4nebk2"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_buf_pos = aag_c_buf_p;
+UNSUPPORTED("2uvf85bz227zpcsxn55l3cvsw"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_n_chars = aag_n_chars;
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("8zeem234b4537a5t9ii8mjp5e"); // 	(aag_buffer_stack)[(aag_buffer_stack_top)] = new_buffer;
 UNSUPPORTED("a4b2f8asd493ruq5ci95a6m81"); // 	aag_load_buffer_state( );
@@ -1215,6 +1254,8 @@ throw new UnsupportedOperationException();
 
 //3 2n1quqa5b6mm0p65k3ewgjdll
 // static void aag_load_buffer_state  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_load_buffer_state", key="2n1quqa5b6mm0p65k3ewgjdll", definition="static void aag_load_buffer_state  (void)")
 public static Object aag_load_buffer_state(Object... arg) {
 UNSUPPORTED("m33qzmtmg0y53g5pbnlx9mmy"); // static void aag_load_buffer_state  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1232,6 +1273,8 @@ throw new UnsupportedOperationException();
 
 //3 bz2sdl6duvmrjgptg3i8pek7d
 // YY_BUFFER_STATE aag_create_buffer  (FILE * file, int  size ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_create_buffer", key="bz2sdl6duvmrjgptg3i8pek7d", definition="YY_BUFFER_STATE aag_create_buffer  (FILE * file, int  size )")
 public static Object aag_create_buffer(Object... arg) {
 UNSUPPORTED("9a1gw2xo54z6vxuqswldwr5vh"); // YY_BUFFER_STATE aag_create_buffer  (FILE * file, int  size )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1259,6 +1302,8 @@ throw new UnsupportedOperationException();
 
 //3 cvxw0l0ojnracqk5o3c07vf4m
 // void aag_delete_buffer (YY_BUFFER_STATE  b ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_delete_buffer", key="cvxw0l0ojnracqk5o3c07vf4m", definition="void aag_delete_buffer (YY_BUFFER_STATE  b )")
 public static Object aag_delete_buffer(Object... arg) {
 UNSUPPORTED("bpqurydddo1eg834j6t2mywht"); // void aag_delete_buffer (YY_BUFFER_STATE  b )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1279,6 +1324,8 @@ throw new UnsupportedOperationException();
 
 //3 8z0ws8ykdt2m53k269y0s3uau
 // static void aag_init_buffer  (YY_BUFFER_STATE  b, FILE * file )  
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_init_buffer", key="8z0ws8ykdt2m53k269y0s3uau", definition="static void aag_init_buffer  (YY_BUFFER_STATE  b, FILE * file )")
 public static Object aag_init_buffer(Object... arg) {
 UNSUPPORTED("7j4p3tv8442q9xyfpqokcny92"); // static void aag_init_buffer  (YY_BUFFER_STATE  b, FILE * file )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1306,6 +1353,8 @@ throw new UnsupportedOperationException();
 
 //3 euu43g3i43888wantq0lgdqe8
 // void aag_flush_buffer (YY_BUFFER_STATE  b ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_flush_buffer", key="euu43g3i43888wantq0lgdqe8", definition="void aag_flush_buffer (YY_BUFFER_STATE  b )")
 public static Object aag_flush_buffer(Object... arg) {
 UNSUPPORTED("5rlwsfuuevgt6j59owhk0vsyc"); // void aag_flush_buffer (YY_BUFFER_STATE  b )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1333,6 +1382,8 @@ throw new UnsupportedOperationException();
 
 //3 19g3ujgwn6wfrv2pvydtxr75
 // void aagpush_buffer_state (YY_BUFFER_STATE new_buffer ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagpush_buffer_state", key="19g3ujgwn6wfrv2pvydtxr75", definition="void aagpush_buffer_state (YY_BUFFER_STATE new_buffer )")
 public static Object aagpush_buffer_state(Object... arg) {
 UNSUPPORTED("7dnx37wzyytlwuntjzywbpjrz"); // void aagpush_buffer_state (YY_BUFFER_STATE new_buffer )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1343,9 +1394,9 @@ UNSUPPORTED("aoawljluu5zfqg5fymr0tnk1b"); // 	/* This block is copied from aag_s
 UNSUPPORTED("aqaux0xumrbi1suoc6u75bn9h"); // 	if ( ( (aag_buffer_stack) ? (aag_buffer_stack)[(aag_buffer_stack_top)] : NULL) )
 UNSUPPORTED("3lflizih274xjqgv1g0wjdgeq"); // 		{
 UNSUPPORTED("hjirhak021dywcjxs66ukoqh"); // 		/* Flush out information for old buffer. */
-UNSUPPORTED("cbtw5voc0x2dgb1nir3oodu4h"); // 		*(aag_c_buf_p) = (aag_hold_char);
-UNSUPPORTED("1lg74bgprfb93mb6yie4nebk2"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_buf_pos = (aag_c_buf_p);
-UNSUPPORTED("2uvf85bz227zpcsxn55l3cvsw"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_n_chars = (aag_n_chars);
+UNSUPPORTED("cbtw5voc0x2dgb1nir3oodu4h"); // 		*(aag_c_buf_p) = aag_hold_char;
+UNSUPPORTED("1lg74bgprfb93mb6yie4nebk2"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_buf_pos = aag_c_buf_p;
+UNSUPPORTED("2uvf85bz227zpcsxn55l3cvsw"); // 		(aag_buffer_stack)[(aag_buffer_stack_top)]->aag_n_chars = aag_n_chars;
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("eilb2lnorspm9kmjezs2hxn6q"); // 	/* Only push if top exists. Otherwise, replace top. */
 UNSUPPORTED("ecdndvrvbw37q3nfvqrhf4fie"); // 	if (( (aag_buffer_stack) ? (aag_buffer_stack)[(aag_buffer_stack_top)] : NULL))
@@ -1364,6 +1415,8 @@ throw new UnsupportedOperationException();
 
 //3 27b1vcsegbixqbqjzrwamdpcn
 // void aagpop_buffer_state (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagpop_buffer_state", key="27b1vcsegbixqbqjzrwamdpcn", definition="void aagpop_buffer_state (void)")
 public static Object aagpop_buffer_state(Object... arg) {
 UNSUPPORTED("aho9q6pa29mrtlxb4s78qp3od"); // void aagpop_buffer_state (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1387,6 +1440,8 @@ throw new UnsupportedOperationException();
 
 //3 1iyph8hj357vj714inph32tcl
 // static void aagensure_buffer_stack (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagensure_buffer_stack", key="1iyph8hj357vj714inph32tcl", definition="static void aagensure_buffer_stack (void)")
 public static Object aagensure_buffer_stack(Object... arg) {
 UNSUPPORTED("3sdjpuqouzn047v1nnvh67d1l"); // static void aagensure_buffer_stack (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1431,6 +1486,8 @@ throw new UnsupportedOperationException();
 
 //3 7yvjra4z1kimbp0xfvzml1ge1
 // YY_BUFFER_STATE aag_scan_buffer  (char * base, aag_size_t  size ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_scan_buffer", key="7yvjra4z1kimbp0xfvzml1ge1", definition="YY_BUFFER_STATE aag_scan_buffer  (char * base, aag_size_t  size )")
 public static Object aag_scan_buffer(Object... arg) {
 UNSUPPORTED("34agdjyirk3pcfm9jjwp8i13w"); // YY_BUFFER_STATE aag_scan_buffer  (char * base, aag_size_t  size )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1464,6 +1521,8 @@ throw new UnsupportedOperationException();
 
 //3 43izorque2e7plck393cc6hsz
 // YY_BUFFER_STATE aag_scan_string ( char * aagstr ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_scan_string", key="43izorque2e7plck393cc6hsz", definition="YY_BUFFER_STATE aag_scan_string ( char * aagstr )")
 public static Object aag_scan_string(Object... arg) {
 UNSUPPORTED("9bpq4eoai3kbg3afd97p0nyyj"); // YY_BUFFER_STATE aag_scan_string ( char * aagstr )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1478,6 +1537,8 @@ throw new UnsupportedOperationException();
 
 //3 74bdwb6md7bl3lpynnjoca8pm
 // YY_BUFFER_STATE aag_scan_bytes  ( char * aagbytes, aag_size_t  _aagbytes_len ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_scan_bytes", key="74bdwb6md7bl3lpynnjoca8pm", definition="YY_BUFFER_STATE aag_scan_bytes  ( char * aagbytes, aag_size_t  _aagbytes_len )")
 public static Object aag_scan_bytes(Object... arg) {
 UNSUPPORTED("22n9ywf6bno4e1ogc0rfnzt43"); // YY_BUFFER_STATE aag_scan_bytes  ( char * aagbytes, aag_size_t  _aagbytes_len )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1511,6 +1572,8 @@ throw new UnsupportedOperationException();
 
 //3 ar1fz1d00siup070hcy6exvpz
 // static void aag_fatal_error ( char* msg ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_fatal_error", key="ar1fz1d00siup070hcy6exvpz", definition="static void aag_fatal_error ( char* msg )")
 public static Object aag_fatal_error(Object... arg) {
 UNSUPPORTED("cv6qbndhb3hcgxfakqgoab5dx"); // static void aag_fatal_error ( char* msg )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1526,6 +1589,8 @@ throw new UnsupportedOperationException();
 
 //3 ak2o99rit6h1dzbfugt87rz4l
 // int aagget_lineno  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagget_lineno", key="ak2o99rit6h1dzbfugt87rz4l", definition="int aagget_lineno  (void)")
 public static Object aagget_lineno(Object... arg) {
 UNSUPPORTED("64s6gh6lrs0ga7y5j8aphzsa6"); // int aagget_lineno  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1540,6 +1605,8 @@ throw new UnsupportedOperationException();
 
 //3 c4xsc4x2etna327n4r43l0src
 // FILE *aagget_in  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="", key="c4xsc4x2etna327n4r43l0src", definition="FILE *aagget_in  (void)")
 public static Object aagget_in(Object... arg) {
 UNSUPPORTED("4uts7eli4y8zgttbczqktzi41"); // FILE *aagget_in  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1554,6 +1621,8 @@ throw new UnsupportedOperationException();
 
 //3 4werkxqgsv51e1huizt8jy900
 // FILE *aagget_out  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="", key="4werkxqgsv51e1huizt8jy900", definition="FILE *aagget_out  (void)")
 public static Object aagget_out(Object... arg) {
 UNSUPPORTED("2t24qlethc17kk7k367jup5g7"); // FILE *aagget_out  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1568,6 +1637,8 @@ throw new UnsupportedOperationException();
 
 //3 c930io2oqys6cwcw6hokf74af
 // aag_size_t aagget_leng  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagget_leng", key="c930io2oqys6cwcw6hokf74af", definition="aag_size_t aagget_leng  (void)")
 public static Object aagget_leng(Object... arg) {
 UNSUPPORTED("4vayu55eo4kfs8mo20fxch8dg"); // aag_size_t aagget_leng  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1582,6 +1653,8 @@ throw new UnsupportedOperationException();
 
 //3 elqro7uvtzkdgrd0axaati5dn
 // char *aagget_text  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="", key="elqro7uvtzkdgrd0axaati5dn", definition="char *aagget_text  (void)")
 public static Object aagget_text(Object... arg) {
 UNSUPPORTED("u3fnt7o1fu5m0mf5jq7k196a"); // char *aagget_text  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1596,6 +1669,8 @@ throw new UnsupportedOperationException();
 
 //3 ddyawmdmhp4bhddv0ycwtja18
 // void aagset_lineno (int  line_number ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagset_lineno", key="ddyawmdmhp4bhddv0ycwtja18", definition="void aagset_lineno (int  line_number )")
 public static Object aagset_lineno(Object... arg) {
 UNSUPPORTED("42mnbz5hirksqibxvq5ihajy5"); // void aagset_lineno (int  line_number )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1610,6 +1685,8 @@ throw new UnsupportedOperationException();
 
 //3 rnmvgky3jm4cqnymq9s4bzig
 // void aagset_in (FILE *  in_str ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagset_in", key="rnmvgky3jm4cqnymq9s4bzig", definition="void aagset_in (FILE *  in_str )")
 public static Object aagset_in(Object... arg) {
 UNSUPPORTED("cixzcd1qs551hgk5cdud9swy1"); // void aagset_in (FILE *  in_str )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1624,6 +1701,8 @@ throw new UnsupportedOperationException();
 
 //3 bho3hef6ijshlmjirs3pp56ov
 // void aagset_out (FILE *  out_str ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagset_out", key="bho3hef6ijshlmjirs3pp56ov", definition="void aagset_out (FILE *  out_str )")
 public static Object aagset_out(Object... arg) {
 UNSUPPORTED("cnivj2d0k3i5uxijj3x5cwwse"); // void aagset_out (FILE *  out_str )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1638,6 +1717,8 @@ throw new UnsupportedOperationException();
 
 //3 43ss154kldgxk2nhdusc1m4rz
 // int aagget_debug  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagget_debug", key="43ss154kldgxk2nhdusc1m4rz", definition="int aagget_debug  (void)")
 public static Object aagget_debug(Object... arg) {
 UNSUPPORTED("c9hk96h0qduz10qw4i5zsu12w"); // int aagget_debug  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1652,6 +1733,8 @@ throw new UnsupportedOperationException();
 
 //3 ccfhizqhlcd8o5g92d987s2m2
 // void aagset_debug (int  bdebug ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagset_debug", key="ccfhizqhlcd8o5g92d987s2m2", definition="void aagset_debug (int  bdebug )")
 public static Object aagset_debug(Object... arg) {
 UNSUPPORTED("wx4hkxwknbvqstpbtb6zpxai"); // void aagset_debug (int  bdebug )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1666,6 +1749,8 @@ throw new UnsupportedOperationException();
 
 //3 5fcbavnjmbu31asyzd62fwq2d
 // static int aag_init_globals (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aag_init_globals", key="5fcbavnjmbu31asyzd62fwq2d", definition="static int aag_init_globals (void)")
 public static Object aag_init_globals(Object... arg) {
 UNSUPPORTED("1cdheakmv5siut1ebpy3mw4nu"); // static int aag_init_globals (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1695,6 +1780,8 @@ throw new UnsupportedOperationException();
 
 //3 b88yq5tilv62doe0lqk0odlu8
 // int aaglex_destroy  (void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aaglex_destroy", key="b88yq5tilv62doe0lqk0odlu8", definition="int aaglex_destroy  (void)")
 public static Object aaglex_destroy(Object... arg) {
 UNSUPPORTED("bzhkd6vhm4xizgdkxnz37txnh"); // int aaglex_destroy  (void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1721,6 +1808,8 @@ throw new UnsupportedOperationException();
 
 //3 c8en52xb7jekcv34dmaqouq5x
 // void *aagalloc (aag_size_t  size ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="", key="c8en52xb7jekcv34dmaqouq5x", definition="void *aagalloc (aag_size_t  size )")
 public static Object aagalloc(Object... arg) {
 UNSUPPORTED("8ojxikfh5gpuanc8ijbcbcr9g"); // void *aagalloc (aag_size_t  size )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1735,6 +1824,8 @@ throw new UnsupportedOperationException();
 
 //3 5hlwjmuqfpjsqydhktwpbidq2
 // void *aagrealloc  (void * ptr, aag_size_t  size ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="", key="5hlwjmuqfpjsqydhktwpbidq2", definition="void *aagrealloc  (void * ptr, aag_size_t  size )")
 public static Object aagrealloc(Object... arg) {
 UNSUPPORTED("cyz4ldrm5jj00yg11pg1vc1g1"); // void *aagrealloc  (void * ptr, aag_size_t  size )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1756,6 +1847,8 @@ throw new UnsupportedOperationException();
 
 //3 dt3z1styelhok5vdef4znud0x
 // void aagfree (void * ptr ) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagfree", key="dt3z1styelhok5vdef4znud0x", definition="void aagfree (void * ptr )")
 public static Object aagfree(Object... arg) {
 UNSUPPORTED("33a9his43erc77yrkij7w4xak"); // void aagfree (void * ptr )
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1770,6 +1863,8 @@ throw new UnsupportedOperationException();
 
 //3 b7djg5vf8k7q1bmscjoxbdi7m
 // void aagerror(char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagerror", key="b7djg5vf8k7q1bmscjoxbdi7m", definition="void aagerror(char *str)")
 public static Object aagerror(Object... arg) {
 UNSUPPORTED("72z931gdsqdectne9thcxcwaj"); // void aagerror(char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1798,6 +1893,8 @@ throw new UnsupportedOperationException();
 
 //3 d7y223uahk83hp7is4nahwefj
 // void aglexeof() 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aglexeof", key="d7y223uahk83hp7is4nahwefj", definition="void aglexeof()")
 public static Object aglexeof(Object... arg) {
 UNSUPPORTED("9h2m1giehawxuk7dgr9dsfvl4"); // void aglexeof() { aagunput( '@', (aagtext) ); }
 
@@ -1809,6 +1906,8 @@ throw new UnsupportedOperationException();
 
 //3 3ufv8can0vbou4fqbz8jayves
 // void aglexbad() 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aglexbad", key="3ufv8can0vbou4fqbz8jayves", definition="void aglexbad()")
 public static Object aglexbad(Object... arg) {
 UNSUPPORTED("bf2kdrql8l9oten5fku6ysi2n"); // void aglexbad() { aag_flush_buffer(( (aag_buffer_stack) ? (aag_buffer_stack)[(aag_buffer_stack_top)] : NULL) ); }
 
@@ -1820,6 +1919,8 @@ throw new UnsupportedOperationException();
 
 //3 8mvwigk3z82cg7dw50v9tpfaw
 // int aagwrap(void) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/scan.c", name="aagwrap", key="8mvwigk3z82cg7dw50v9tpfaw", definition="int aagwrap(void)")
 public static Object aagwrap(Object... arg) {
 UNSUPPORTED("9prn9oo8emos6tvglwqc6ejj9"); // int aagwrap(void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

@@ -122,6 +122,9 @@ public class EntityImageActivity extends AbstractEntityImage {
 	private UGraphic drawOctagon(UGraphic ug) {
 		final Node node = bibliotekon.getNode(getEntity());
 		final Shadowable octagon = node.getOctagon();
+		if (octagon == null) {
+			return drawNormal(ug);
+		}
 		octagon.setDeltaShadow(shadowing);
 		ug = applyColors(ug);
 		ug.apply(new UStroke(1.5)).draw(octagon);

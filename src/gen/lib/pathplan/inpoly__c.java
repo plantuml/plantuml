@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pathplan;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class inpoly__c {
@@ -59,6 +62,8 @@ public class inpoly__c {
 
 //3 8npqmbhzypa3vnvez32eenjfm
 // int in_poly(Ppoly_t poly, Ppoint_t q) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/inpoly.c", name="in_poly", key="8npqmbhzypa3vnvez32eenjfm", definition="int in_poly(Ppoly_t poly, Ppoint_t q)")
 public static Object in_poly(Object... arg) {
 UNSUPPORTED("591yna7lwmr02zotphxiz9jfy"); // int in_poly(Ppoly_t poly, Ppoint_t q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

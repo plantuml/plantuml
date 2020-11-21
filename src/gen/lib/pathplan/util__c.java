@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pathplan;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class util__c {
@@ -59,6 +62,8 @@ public class util__c {
 
 //3 carluwds75s8h206m05m74b3h
 // Ppoly_t copypoly(Ppoly_t argpoly) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/util.c", name="copypoly", key="carluwds75s8h206m05m74b3h", definition="Ppoly_t copypoly(Ppoly_t argpoly)")
 public static Object copypoly(Object... arg) {
 UNSUPPORTED("98pcxyqxy9rpxukga9lzhom1l"); // Ppoly_t copypoly(Ppoly_t argpoly)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -79,6 +84,8 @@ throw new UnsupportedOperationException();
 
 //3 74f2l3kbysoz1jx37ybw786si
 // void freePath(Ppolyline_t* p) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/util.c", name="freePath", key="74f2l3kbysoz1jx37ybw786si", definition="void freePath(Ppolyline_t* p)")
 public static Object freePath(Object... arg) {
 UNSUPPORTED("arisensk81s44uevsoenjkx4k"); // void freePath(Ppolyline_t* p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -94,6 +101,8 @@ throw new UnsupportedOperationException();
 
 //3 b1oegen4vbhrooizaesj0qbc4
 // void freepoly(Ppoly_t argpoly) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/util.c", name="freepoly", key="b1oegen4vbhrooizaesj0qbc4", definition="void freepoly(Ppoly_t argpoly)")
 public static Object freepoly(Object... arg) {
 UNSUPPORTED("37smh22suphf2psfo815rvfa5"); // void freepoly(Ppoly_t argpoly)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -108,6 +117,8 @@ throw new UnsupportedOperationException();
 
 //3 4lkt0le495f2sbojevq677n62
 // int Ppolybarriers(Ppoly_t ** polys, int npolys, Pedge_t ** barriers, 		  int *n_barriers) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/util.c", name="Ppolybarriers", key="4lkt0le495f2sbojevq677n62", definition="int Ppolybarriers(Ppoly_t ** polys, int npolys, Pedge_t ** barriers, 		  int *n_barriers)")
 public static Object Ppolybarriers(Object... arg) {
 UNSUPPORTED("6tzncqs5o5i3rjuimqmwkco8c"); // int Ppolybarriers(Ppoly_t ** polys, int npolys, Pedge_t ** barriers,
 UNSUPPORTED("1ciabmjyrm3si7ov5e2nq2yre"); // 		  int *n_barriers)
@@ -145,6 +156,8 @@ throw new UnsupportedOperationException();
 
 //3 ct6tszngugakbl42zkaqrt7p1
 // void make_polyline(Ppolyline_t line, Ppolyline_t* sline) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/util.c", name="make_polyline", key="ct6tszngugakbl42zkaqrt7p1", definition="void make_polyline(Ppolyline_t line, Ppolyline_t* sline)")
 public static Object make_polyline(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("caslgp07xc1rz7m4io9o6y06u"); // make_polyline(Ppolyline_t line, Ppolyline_t* sline)

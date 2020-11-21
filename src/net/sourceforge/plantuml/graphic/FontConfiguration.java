@@ -85,7 +85,8 @@ public class FontConfiguration {
 				skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 	}
 
-	public FontConfiguration(Style style, ISkinParam skinParam, Stereotype stereo, FontParam fontParam) {
+	public FontConfiguration(ISkinParam skinParam, Style style) {
+		// User getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()) instead ?
 		this(style.getUFont(), style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet()),
 				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 	}

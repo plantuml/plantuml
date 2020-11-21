@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,6 +45,7 @@
  */
 package h;
 
+import smetana.core.CString;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -76,8 +77,8 @@ public class ST_layout_t extends UnsupportedStructAndPtr {
 
 	// "ratio_t ratio_kind",
 	public int ratio_kind;
-	// "void* xdots",
-	// "char* id",
+	public __ptr__ xdots; // Always null
+	public CString id; // Not used
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {

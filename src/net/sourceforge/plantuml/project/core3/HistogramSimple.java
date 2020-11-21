@@ -49,7 +49,18 @@ public class HistogramSimple implements Histogram {
 				return e;
 			}
 		}
-		return 1000L * Integer.MAX_VALUE;
+		return TimeLine.MAX_TIME;
+	}
+
+	public long getPrevious(long moment) {
+		long last = -TimeLine.MAX_TIME;
+		for (long e : events.keySet()) {
+			if (e >= moment) {
+				return last;
+			}
+			last = e;
+		}
+		return last;
 	}
 
 	public void put(long event, long value) {

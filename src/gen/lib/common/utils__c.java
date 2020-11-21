@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -53,8 +53,8 @@ import static gen.lib.cgraph.refstr__c.aghtmlstr;
 import static gen.lib.common.labels__c.make_label;
 import static gen.lib.common.shapes__c.bind_shape;
 import static gen.lib.common.shapes__c.shapeOf;
+import static gen.lib.common.strcasecmp__c.strcasecmp;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.enumAsInt;
@@ -63,23 +63,38 @@ import static smetana.core.JUtils.strchr;
 import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtils.strtod;
 import static smetana.core.JUtils.strtol;
-import static smetana.core.JUtils.tolower;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.DEFAULT_FONTSIZE;
+import static smetana.core.Macro.DEFAULT_NODEHEIGHT;
+import static smetana.core.Macro.DEFAULT_NODESHAPE;
+import static smetana.core.Macro.DEFAULT_NODEWIDTH;
 import static smetana.core.Macro.DIST2;
+import static smetana.core.Macro.EDGE_LABEL;
 import static smetana.core.Macro.ED_head_label;
 import static smetana.core.Macro.ED_head_port;
 import static smetana.core.Macro.ED_label;
 import static smetana.core.Macro.ED_label_ontop;
 import static smetana.core.Macro.ED_tail_label;
 import static smetana.core.Macro.ED_tail_port;
+import static smetana.core.Macro.ET_NONE;
 import static smetana.core.Macro.GD_bb;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
 import static smetana.core.Macro.GD_has_labels;
+import static smetana.core.Macro.HEAD_ID;
+import static smetana.core.Macro.HEAD_LABEL;
+import static smetana.core.Macro.INCH2PS;
+import static smetana.core.Macro.LT_HTML;
+import static smetana.core.Macro.LT_NONE;
+import static smetana.core.Macro.LT_RECD;
+import static smetana.core.Macro.MIN_FONTSIZE;
+import static smetana.core.Macro.MIN_NODEHEIGHT;
+import static smetana.core.Macro.MIN_NODEWIDTH;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_UF_parent;
 import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_has_port;
 import static smetana.core.Macro.ND_height;
 import static smetana.core.Macro.ND_ht;
 import static smetana.core.Macro.ND_id;
@@ -90,8 +105,15 @@ import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.ND_shape;
 import static smetana.core.Macro.ND_showboxes;
 import static smetana.core.Macro.ND_width;
+import static smetana.core.Macro.NORMAL;
+import static smetana.core.Macro.TAIL_ID;
+import static smetana.core.Macro.TAIL_LABEL;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.fabs;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
 import h.ST_Agraph_s;
@@ -106,252 +128,27 @@ import h.ST_splines;
 import h.ST_textlabel_t;
 import h.shape_kind;
 import smetana.core.CFunction;
+import smetana.core.CStar;
+import smetana.core.CStarStar;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
 
 public class utils__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
 
 
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
 
 
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
 
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
 
 
 
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -367,29 +164,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
-
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -411,6 +190,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -426,29 +207,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
 
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -466,6 +230,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -483,6 +249,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -500,6 +268,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -517,6 +287,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -534,6 +306,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -551,6 +325,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -568,6 +344,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -587,6 +365,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -606,6 +386,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -625,6 +407,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -644,6 +428,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -658,6 +444,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -672,6 +460,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -686,6 +476,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -700,6 +492,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -717,6 +511,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -732,19 +528,20 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c7cptalfn8k75wyfirbnptnav
-// nodequeue *new_queue(int sz) 
+/*
+ *  a queue of nodes
+ */
+@Reviewed(when = "15/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="c7cptalfn8k75wyfirbnptnav", definition="nodequeue *new_queue(int sz)")
 public static ST_nodequeue new_queue(int sz) {
 ENTERING("c7cptalfn8k75wyfirbnptnav","new_queue");
 try {
     ST_nodequeue q = new ST_nodequeue();
+    
     if (sz <= 1)
 	sz = 2;
-	final ST_Agnode_s.ArrayOfStar tmp__ = new ST_Agnode_s.ArrayOfStar(sz);
-	q.setPtr("store", tmp__);
-	q.setPtr("tail", tmp__);
-	q.setPtr("head", tmp__);
-	q.setPtr("limit", tmp__.plus(sz));
+    q.head = q.tail = q.store = CStarStar.<ST_Agnode_s>ALLOC(sz, ST_Agnode_s.class);
+	q.limit = q.store.plus_(sz);
     return q;
 } finally {
 LEAVING("c7cptalfn8k75wyfirbnptnav","new_queue");
@@ -754,8 +551,8 @@ LEAVING("c7cptalfn8k75wyfirbnptnav","new_queue");
 
 
 
-//3 1uj5nmdvwmuklnpd3v5py547f
-// void free_queue(nodequeue * q) 
+@Reviewed(when = "15/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="free_queue", key="1uj5nmdvwmuklnpd3v5py547f", definition="void free_queue(nodequeue * q)")
 public static void free_queue(ST_nodequeue q) {
 ENTERING("1uj5nmdvwmuklnpd3v5py547f","free_queue");
 try {
@@ -769,15 +566,15 @@ LEAVING("1uj5nmdvwmuklnpd3v5py547f","free_queue");
 
 
 
-//3 20pwd6i141q3o25lfvrdqytot
-// void enqueue(nodequeue * q, node_t * n) 
+@Reviewed(when = "15/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="enqueue", key="20pwd6i141q3o25lfvrdqytot", definition="void enqueue(nodequeue * q, node_t * n)")
 public static void enqueue(ST_nodequeue q, ST_Agnode_s n) {
 ENTERING("20pwd6i141q3o25lfvrdqytot","enqueue");
 try {
-    q.tail.plus(0).setPtr(n);
-    q.setPtr("tail", q.tail.plus(1));
-    if (q.tail.comparePointer(q.limit) >= 0)
-	q.setPtr("tail", q.store);
+    q.tail.set_(0, n);
+    q.tail =q.tail.plus_(1);
+    if (q.tail.comparePointer_(q.limit) >= 0)
+	q.tail = q.store;
 } finally {
 LEAVING("20pwd6i141q3o25lfvrdqytot","enqueue");
 }
@@ -786,8 +583,8 @@ LEAVING("20pwd6i141q3o25lfvrdqytot","enqueue");
 
 
 
-//3 b612nmtf16au96ztbs8pike9r
-// node_t *dequeue(nodequeue * q) 
+@Reviewed(when = "15/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="b612nmtf16au96ztbs8pike9r", definition="node_t *dequeue(nodequeue * q)")
 public static ST_Agnode_s dequeue(ST_nodequeue q) {
 ENTERING("b612nmtf16au96ztbs8pike9r","dequeue");
 try {
@@ -795,10 +592,10 @@ try {
     if (EQ(q.head, q.tail))
 	n = null;
     else {
-	n = (ST_Agnode_s) q.head.get(0);
-	q.setPtr("head", q.head.plus(1));
-	if (q.head.comparePointer(q.limit) >= 0)
-	    q.setPtr("head", q.store);
+	n = q.head.get_(0);
+	q.head = q.head.plus_(1);
+	if (q.head.comparePointer_(q.limit) >= 0)
+	    q.head = q.store;
     }
     return n;
 } finally {
@@ -809,8 +606,9 @@ LEAVING("b612nmtf16au96ztbs8pike9r","dequeue");
 
 
 
-//3 6nydxv4f2m7jcfh8ljs0neu0x
-// int late_int(void *obj, attrsym_t * attr, int def, int low) 
+
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="late_int", key="6nydxv4f2m7jcfh8ljs0neu0x", definition="int late_int(void *obj, attrsym_t * attr, int def, int low)")
 public static int late_int(__ptr__ obj, ST_Agsym_s attr, int def, int low) {
 ENTERING("6nydxv4f2m7jcfh8ljs0neu0x","late_int");
 try {
@@ -834,14 +632,15 @@ LEAVING("6nydxv4f2m7jcfh8ljs0neu0x","late_int");
 
 
 
-//3 d68314e4f20r79tt0cnmxugme
-// double late_double(void *obj, attrsym_t * attr, double def, double low) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="late_double", key="d68314e4f20r79tt0cnmxugme", definition="double late_double(void *obj, attrsym_t * attr, double def, double low)")
 public static double late_double(__ptr__ obj, ST_Agsym_s attr, double def, double low) {
 ENTERING("d68314e4f20r79tt0cnmxugme","late_double");
 try {
     CString p;
     CString endp[] = new CString[1];
     double rv;
+    
     if (N(attr) || N(obj))
 	return def;
     p = agxget(obj,attr);
@@ -861,6 +660,8 @@ LEAVING("d68314e4f20r79tt0cnmxugme","late_double");
 
 //3 70otpdqcum1z6ht6udvuxl7r2
 // double get_inputscale (graph_t* g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="get_inputscale", key="70otpdqcum1z6ht6udvuxl7r2", definition="double get_inputscale (graph_t* g)")
 public static Object get_inputscale(Object... arg) {
 UNSUPPORTED("9ufij3opw003w1a5l59wehdi6"); // double get_inputscale (graph_t* g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -877,8 +678,8 @@ throw new UnsupportedOperationException();
 
 
 
-//3 83xm6yc9q5h1bzufhsnv0v2up
-// char *late_string(void *obj, attrsym_t * attr, char *def) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="late_string", key="83xm6yc9q5h1bzufhsnv0v2up", definition="char *late_string(void *obj, attrsym_t * attr, char *def)")
 public static CString late_string(__ptr__ obj, ST_Agsym_s attr, CString def) {
 ENTERING("83xm6yc9q5h1bzufhsnv0v2up","late_string");
 try {
@@ -892,9 +693,8 @@ LEAVING("83xm6yc9q5h1bzufhsnv0v2up","late_string");
 
 
 
-
-//3 8oon4q1mrublaru177xfntqgd
-// char *late_nnstring(void *obj, attrsym_t * attr, char *def) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="8oon4q1mrublaru177xfntqgd", definition="char *late_nnstring(void *obj, attrsym_t * attr, char *def)")
 public static CString late_nnstring(__ptr__ obj, ST_Agsym_s attr, CString def) {
 ENTERING("8oon4q1mrublaru177xfntqgd","late_nnstring");
 try {
@@ -910,8 +710,8 @@ LEAVING("8oon4q1mrublaru177xfntqgd","late_nnstring");
 
 
 
-//3 87ifze04q7qzigjj1fb9y9by2
-// boolean late_bool(void *obj, attrsym_t * attr, int def) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="late_bool", key="87ifze04q7qzigjj1fb9y9by2", definition="boolean late_bool(void *obj, attrsym_t * attr, int def)")
 public static boolean late_bool(__ptr__ obj, ST_Agsym_s attr, int def) {
 ENTERING("87ifze04q7qzigjj1fb9y9by2","late_bool");
 try {
@@ -929,8 +729,9 @@ LEAVING("87ifze04q7qzigjj1fb9y9by2","late_bool");
 
 
 
-//3 aeq0acpkhfv3gd5jx8op4jf18
-// node_t *UF_find(node_t * n) 
+/* union-find */
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="aeq0acpkhfv3gd5jx8op4jf18", definition="node_t *UF_find(node_t * n)")
 public static ST_Agnode_s UF_find(ST_Agnode_s n) {
 ENTERING("aeq0acpkhfv3gd5jx8op4jf18","UF_find");
 try {
@@ -948,8 +749,8 @@ LEAVING("aeq0acpkhfv3gd5jx8op4jf18","UF_find");
 
 
 
-//3 9ldxwfr4vvijrvfcvs1hvdzrt
-// node_t *UF_union(node_t * u, node_t * v) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="9ldxwfr4vvijrvfcvs1hvdzrt", definition="node_t *UF_union(node_t * u, node_t * v)")
 public static ST_Agnode_s UF_union(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("9ldxwfr4vvijrvfcvs1hvdzrt","UF_union");
 try {
@@ -959,15 +760,15 @@ try {
 	ND_UF_parent(u, u);
 	ND_UF_size(u, 1);
     } else
-UNSUPPORTED("35c97tyk6tzw1g527j6rp6xoo"); // 	u = UF_find(u);
+    UNSUPPORTED("35c97tyk6tzw1g527j6rp6xoo"); // 	u = UF_find(u);
     if (ND_UF_parent(v) == null) {
 	ND_UF_parent(v, v);
 	ND_UF_size(v, 1);
     } else
 	v = UF_find(v);
     if (ND_id(u) > ND_id(v)) {
-UNSUPPORTED("2igr3ntnkm6svji4pbnjlp54e"); // 	ND_UF_parent(u) = v;
-UNSUPPORTED("3lht90i6tvxbr10meir8nvcic"); // 	ND_UF_size(v) += ND_UF_size(u);
+	UNSUPPORTED("2igr3ntnkm6svji4pbnjlp54e"); // 	ND_UF_parent(u) = v;
+	UNSUPPORTED("3lht90i6tvxbr10meir8nvcic"); // 	ND_UF_size(v) += ND_UF_size(u);
     } else {
 	ND_UF_parent(v, u);
 	ND_UF_size(u, ND_UF_size(u) + ND_UF_size(v));
@@ -984,6 +785,8 @@ LEAVING("9ldxwfr4vvijrvfcvs1hvdzrt","UF_union");
 
 //3 3j3pbee3o14ctlm51gqul3y1b
 // void UF_remove(node_t * u, node_t * v) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="UF_remove", key="3j3pbee3o14ctlm51gqul3y1b", definition="void UF_remove(node_t * u, node_t * v)")
 public static Object UF_remove(Object... arg) {
 UNSUPPORTED("4mdu14gpibvzmm5t9g0h7oaek"); // void UF_remove(node_t * u, node_t * v)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -998,14 +801,14 @@ throw new UnsupportedOperationException();
 
 
 
-//3 22k0u1imxyw06k9rizqlfz153
-// void UF_singleton(node_t * u) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="UF_singleton", key="22k0u1imxyw06k9rizqlfz153", definition="void UF_singleton(node_t * u)")
 public static void UF_singleton(ST_Agnode_s u) {
 ENTERING("22k0u1imxyw06k9rizqlfz153","UF_singleton");
 try {
     ND_UF_size(u, 1);
     ND_UF_parent(u, null);
-    ND_ranktype(u, 0);
+    ND_ranktype(u, NORMAL);
 } finally {
 LEAVING("22k0u1imxyw06k9rizqlfz153","UF_singleton");
 }
@@ -1014,8 +817,8 @@ LEAVING("22k0u1imxyw06k9rizqlfz153","UF_singleton");
 
 
 
-//3 e0fn8xuzkdt0q8xoofl6j1txb
-// void UF_setname(node_t * u, node_t * v) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="UF_setname", key="e0fn8xuzkdt0q8xoofl6j1txb", definition="void UF_setname(node_t * u, node_t * v)")
 public static void UF_setname(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("e0fn8xuzkdt0q8xoofl6j1txb","UF_setname");
 try {
@@ -1032,6 +835,8 @@ LEAVING("e0fn8xuzkdt0q8xoofl6j1txb","UF_setname");
 
 //3 31rkmp5c1ie1pfzbkla6b4ag
 // pointf coord(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="coord", key="31rkmp5c1ie1pfzbkla6b4ag", definition="pointf coord(node_t * n)")
 public static Object coord(Object... arg) {
 UNSUPPORTED("880b2lkxm37hksgryyrw8qqvj"); // pointf coord(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1045,44 +850,56 @@ throw new UnsupportedOperationException();
 }
 
 
+/* from Glassner's Graphics Gems */
+private static final int W_DEGREE = 5;
 
-
+/*
+ *  Bezier : 
+ *	Evaluate a Bezier curve at a particular parameter value
+ *      Fill in control points for resulting sub-curves if "Left" and
+ *	"Right" are non-null.
+ * 
+ */
 //3 6p0ey2c2ujk2o7h221p0b4xon
 // pointf Bezier(pointf * V, int degree, double t, pointf * Left, pointf * Right) 
-public static ST_pointf Bezier(final ST_pointf.Array V, int degree, double t, __ptr__ Left, __ptr__ Right) {
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="Bezier", key="6p0ey2c2ujk2o7h221p0b4xon", definition="pointf Bezier(pointf * V, int degree, double t, pointf * Left, pointf * Right)")
+public static ST_pointf Bezier(CStar<ST_pointf> V, int degree, double t, CStar<ST_pointf> Left, CStar<ST_pointf> Right) {
 // WARNING!! STRUCT
 return Bezier_w_(V, degree, t, Left, Right).copy();
 }
-private static ST_pointf Bezier_w_(final ST_pointf.Array V, int degree, double t, __ptr__ Left, __ptr__ Right) {
+private static ST_pointf Bezier_w_(CStar<ST_pointf> V, int degree, double t, CStar<ST_pointf> Left, CStar<ST_pointf> Right) {
 ENTERING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 try {
     int i, j;			/* Index variables      */
-    final ST_pointf.Array Vtemp[] = new ST_pointf.Array[] { new ST_pointf.Array( 5+1),
-    new ST_pointf.Array( 5+1),
-    new ST_pointf.Array( 5+1),
-    new ST_pointf.Array( 5+1),
-    new ST_pointf.Array( 5+1),
-    new ST_pointf.Array( 5+1) };
+    final CStar<ST_pointf> Vtemp[] = new CStar[] { CStar.ALLOC__(W_DEGREE+1,ST_pointf.class),
+    		CStar.ALLOC__(W_DEGREE+1,ST_pointf.class),
+    		CStar.ALLOC__(W_DEGREE+1,ST_pointf.class),
+    		CStar.ALLOC__(W_DEGREE+1,ST_pointf.class),
+    		CStar.ALLOC__(W_DEGREE+1,ST_pointf.class),
+    		CStar.ALLOC__(W_DEGREE+1,ST_pointf.class)};
+
     /* Copy control points  */
     for (j = 0; j <= degree; j++) {
-	Vtemp[0].plus(j).setStruct(V.plus(j).getStruct());
+	Vtemp[0].get__(j).___(V.get__(j));
     }
+    
     /* Triangle computation */
     for (i = 1; i <= degree; i++) {
 	for (j = 0; j <= degree - i; j++) {
-	    Vtemp[i].plus(j).setDouble("x",
-		(1.0 - t) * Vtemp[i - 1].get(j).x + t * Vtemp[i - 1].get(j + 1).x);
-	    Vtemp[i].plus(j).setDouble("y",
-		(1.0 - t) * Vtemp[i - 1].get(j).y + t * Vtemp[i - 1].get(j + 1).y);
+	    Vtemp[i].get__(j).x =
+		(1.0 - t) * Vtemp[i - 1].get__(j).x + t * Vtemp[i - 1].get__(j + 1).x;
+	    Vtemp[i].get__(j).y =
+		(1.0 - t) * Vtemp[i - 1].get__(j).y + t * Vtemp[i - 1].get__(j + 1).y;
 	}
     }
     if (Left != null)
 	for (j = 0; j <= degree; j++)
-	    Left.plus(j).setStruct(Vtemp[j].plus(0).getStruct());
+	    Left.get__(j).___(Vtemp[j].get__(0));
     if (Right != null)
 	for (j = 0; j <= degree; j++)
-	    Right.plus(j).setStruct(Vtemp[degree - j].plus(j).getStruct());
-    return (ST_pointf) (Vtemp[degree].plus(0).getStruct());
+	    Right.get__(j).___(Vtemp[degree - j].get__(j));
+    return (ST_pointf) (Vtemp[degree].get__(0));
 } finally {
 LEAVING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 }
@@ -1093,6 +910,8 @@ LEAVING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 
 //3 3ly0ylecb4k9xk5b7ffrlolt9
 // char *Fgets(FILE * fp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="3ly0ylecb4k9xk5b7ffrlolt9", definition="char *Fgets(FILE * fp)")
 public static Object Fgets(Object... arg) {
 UNSUPPORTED("4q07n5lkhirby89lrss95tlri"); // char *Fgets(FILE * fp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1125,6 +944,8 @@ throw new UnsupportedOperationException();
 
 //3 24n59f0dfjbrcciik6yp7reuz
 // static char** mkDirlist (const char* list, int* maxdirlen) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="mkDirlist", key="24n59f0dfjbrcciik6yp7reuz", definition="static char** mkDirlist (const char* list, int* maxdirlen)")
 public static Object mkDirlist(Object... arg) {
 UNSUPPORTED("52rxugfl5uyz0px71ixefqszi"); // static char** mkDirlist (const char* list, int* maxdirlen)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1151,6 +972,8 @@ throw new UnsupportedOperationException();
 
 //3 49gli3uq79rprx3u3opdhcx1m
 // static char* findPath (char** dirs, int maxdirlen, const char* str) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="findPath", key="49gli3uq79rprx3u3opdhcx1m", definition="static char* findPath (char** dirs, int maxdirlen, const char* str)")
 public static Object findPath(Object... arg) {
 UNSUPPORTED("a5bmudkw4k7jkxvyb8gptf73c"); // static char* findPath (char** dirs, int maxdirlen, const char* str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1175,12 +998,8 @@ throw new UnsupportedOperationException();
 
 
 
-//static boolean onetime = (!(0));
-//static char *pathlist = (void *)0;
-//static int maxdirlen;
-//static char** dirs;
-//3 3xll2b0v9nthwvx9dafq49t8s
-// const char *safefile(const char *filename) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="3xll2b0v9nthwvx9dafq49t8s", definition="const char *safefile(const char *filename)")
 public static CString safefile(CString filename) {
 ENTERING("3xll2b0v9nthwvx9dafq49t8s","safefile");
 try {
@@ -1193,8 +1012,8 @@ LEAVING("3xll2b0v9nthwvx9dafq49t8s","safefile");
 
 
 
-//3 2ihv17oajyaaaycirwsbgz1m7
-// int maptoken(char *p, char **name, int *val) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="maptoken", key="2ihv17oajyaaaycirwsbgz1m7", definition="int maptoken(char *p, char **name, int *val)")
 public static int maptoken(CString p, CString name[], int val[]) {
 ENTERING("2ihv17oajyaaaycirwsbgz1m7","maptoken");
 try {
@@ -1212,8 +1031,8 @@ LEAVING("2ihv17oajyaaaycirwsbgz1m7","maptoken");
 
 
 
-//3 4esyuq2yqdaqoddgfqs24m5m3
-// boolean mapBool(char *p, boolean dflt) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="mapBool", key="4esyuq2yqdaqoddgfqs24m5m3", definition="boolean mapBool(char *p, boolean dflt)")
 public static boolean mapBool(CString p, boolean dflt) {
 ENTERING("4esyuq2yqdaqoddgfqs24m5m3","mapBool");
 try {
@@ -1239,8 +1058,8 @@ LEAVING("4esyuq2yqdaqoddgfqs24m5m3","mapBool");
 
 
 
-//3 ehkvqh6bwf4jw3mj1w5p7a8m8
-// boolean mapbool(char *p) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="mapbool", key="ehkvqh6bwf4jw3mj1w5p7a8m8", definition="boolean mapbool(char *p)")
 public static boolean mapbool(CString p) {
 ENTERING("ehkvqh6bwf4jw3mj1w5p7a8m8","mapbool");
 try {
@@ -1255,6 +1074,8 @@ LEAVING("ehkvqh6bwf4jw3mj1w5p7a8m8","mapbool");
 
 //3 37hgj44s94wf9bmz16he85pgq
 // pointf dotneato_closest(splines * spl, pointf pt) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="dotneato_closest", key="37hgj44s94wf9bmz16he85pgq", definition="pointf dotneato_closest(splines * spl, pointf pt)")
 public static ST_pointf dotneato_closest(ST_splines spl, final ST_pointf pt) {
 ENTERING("37hgj44s94wf9bmz16he85pgq","dotneato_closest");
 try {
@@ -1268,17 +1089,17 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
      double bestdist2, d2, dlow2, dhigh2; /* squares of distances */
      double low, high, t;
      // final ST_pointf c[] = new ST_pointf[] {new ST_pointf(),new ST_pointf(),new ST_pointf(),new ST_pointf()};
-	 final ST_pointf.Array c = new ST_pointf.Array( 4);
+	 final CStar<ST_pointf> c = CStar.<ST_pointf>ALLOC__(4, ST_pointf.class);
      final ST_pointf pt2 = new ST_pointf();
      final ST_bezier bz = new ST_bezier();
      besti = bestj = -1;
      bestdist2 = 1e+38;
      for (i = 0; i < spl.size; i++) {
- 	bz.____(spl.list.get(i));
+ 	bz.____(spl.list.get__(i));
  	for (j = 0; j < bz.size; j++) {
  	    final ST_pointf b = new ST_pointf();
- 	    b.x = bz.list.get(j).x;
- 	    b.y = bz.list.get(j).y;
+ 	    b.x = bz.list.get__(j).x;
+ 	    b.y = bz.list.get__(j).y;
  	    d2 = DIST2(b, pt);
  	    if ((bestj == -1) || (d2 < bestdist2)) {
  		besti = i;
@@ -1287,7 +1108,7 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
  	    }
  	}
      }
-  	bz.____(spl.list.get(besti));
+  	bz.____(spl.list.get__(besti));
      /* Pick best Bezier. If bestj is the last point in the B-spline, decrement.
       * Then set j to be the first point in the corresponding Bezier by dividing
       * then multiplying be 3. Thus, 0,1,2 => 0; 3,4,5 => 3, etc.
@@ -1296,13 +1117,13 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
  	bestj--;
      j = 3*(bestj / 3);
      for (k = 0; k < 4; k++) {
- 	  	c.plus(k).setDouble("x", bz.list.get(j + k).x);
- 	  	c.plus(k).setDouble("y", bz.list.get(j + k).y);
+ 	  	c.get__(k).x = bz.list.get__(j + k).x;
+ 	  	c.get__(k).y = bz.list.get__(j + k).y;
      }
      low = 0.0;
      high = 1.0;
-     dlow2 = DIST2(c.get(0), pt);
-     dhigh2 = DIST2(c.get(3), pt);
+     dlow2 = DIST2(c.get__(0), pt);
+     dhigh2 = DIST2(c.get__(3), pt);
      do {
  	t = (low + high) / 2.0;
  	pt2.___(Bezier(c, 3, t, null, null));
@@ -1326,6 +1147,8 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 
 //3 8v6t685mjc3ps5m4i5m7kj5r5
 // pointf spline_at_y(splines * spl, double y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="spline_at_y", key="8v6t685mjc3ps5m4i5m7kj5r5", definition="pointf spline_at_y(splines * spl, double y)")
 public static Object spline_at_y(Object... arg) {
 UNSUPPORTED("6z59zacy0w6awy33d9vj3ka38"); // pointf spline_at_y(splines * spl, double y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1389,6 +1212,8 @@ throw new UnsupportedOperationException();
 
 //3 4ws2d4r4z8psnleuxber6j3s6
 // pointf neato_closest(splines * spl, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="neato_closest", key="4ws2d4r4z8psnleuxber6j3s6", definition="pointf neato_closest(splines * spl, pointf p)")
 public static Object neato_closest(Object... arg) {
 UNSUPPORTED("8hg1y8i9xy00n3blyechtqvvh"); // pointf neato_closest(splines * spl, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1408,6 +1233,8 @@ throw new UnsupportedOperationException();
 
 //3 ak4q69g3z2si69q7q6mmtp9qi
 // void gvToggle(int s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="gvToggle", key="ak4q69g3z2si69q7q6mmtp9qi", definition="void gvToggle(int s)")
 public static Object gvToggle(Object... arg) {
 UNSUPPORTED("46ptgxtzrw0bu7ggbzxrodqnw"); // void gvToggle(int s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1423,6 +1250,8 @@ throw new UnsupportedOperationException();
 
 //3 6h6t4myqjvz5d7nv9s4fme7ol
 // int test_toggle() 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="test_toggle", key="6h6t4myqjvz5d7nv9s4fme7ol", definition="int test_toggle()")
 public static Object test_toggle(Object... arg) {
 UNSUPPORTED("66b64g196uijyd7jhapf68wvg"); // int test_toggle()
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1435,31 +1264,32 @@ throw new UnsupportedOperationException();
 
 
 
-//3 cr81drt18h5feqzxyh3jb0u49
-// void common_init_node(node_t * n) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="common_init_node", key="cr81drt18h5feqzxyh3jb0u49", definition="void common_init_node(node_t * n)")
 public static void common_init_node(ST_Agnode_s n) {
 ENTERING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 try {
 	ST_fontinfo fi = new ST_fontinfo();
     CString str;
     ND_width(n,
-	late_double(n, Z.z().N_width, 0.75, 0.01));
+	late_double(n, Z.z().N_width, DEFAULT_NODEWIDTH, MIN_NODEWIDTH));
     ND_height(n,
-	late_double(n, Z.z().N_height, 0.5, 0.02));
+	late_double(n, Z.z().N_height, DEFAULT_NODEHEIGHT, MIN_NODEHEIGHT));
     ND_shape(n,
-	bind_shape(late_nnstring(n, Z.z().N_shape, new CString("ellipse")), n));
+	bind_shape(late_nnstring(n, Z.z().N_shape, new CString(DEFAULT_NODESHAPE)), n));
     str = agxget(n, Z.z().N_label);
-    fi.setDouble("fontsize", late_double(n, Z.z().N_fontsize, 14.0, 1.0));
-    fi.setPtr("fontname", late_nnstring(n, Z.z().N_fontname, new CString("Times-Roman")));
-    fi.setPtr("fontcolor", late_nnstring(n, Z.z().N_fontcolor, new CString("black")));
+    fi.fontsize = late_double(n, Z.z().N_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);
+    fi.fontname = late_nnstring(n, Z.z().N_fontname, new CString("Times-Roman"));
+    fi.fontcolor = late_nnstring(n, Z.z().N_fontcolor, new CString("black"));
     ND_label(n, make_label(n, str,
-	        ((aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)) | ( (shapeOf(n) == enumAsInt(shape_kind.class, "SH_RECORD")) ? (2 << 1) : (0 << 1))),
+	        ((aghtmlstr(str)!=0 ? LT_HTML : LT_NONE) | ( (shapeOf(n) == enumAsInt(shape_kind.class, "SH_RECORD")) ? LT_RECD : LT_NONE)),
 		fi.fontsize, fi.fontname, fi.fontcolor));
     if (Z.z().N_xlabel!=null && (str = agxget(n, Z.z().N_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("4ua9vld76wpovsm1celv2ff6e"); // 	ND_xlabel(n) = make_label((void*)n, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
 UNSUPPORTED("b0zm6fkpjlt9jacykbgugjodg"); // 				fi.fontsize, fi.fontname, fi.fontcolor);
 UNSUPPORTED("ail0d4qmxj2aqh2q721inwgqu"); // 	GD_has_labels(agraphof(n)) |= (1 << 4);
     }
+    
     ND_showboxes(n, late_int(n, Z.z().N_showboxes, 0, 0));
     ND_shape(n).fns.initfn.exe(n);
 } finally {
@@ -1470,14 +1300,14 @@ LEAVING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 
 
 
-//3 d2v8l80y27ue2fag5c0qplah8
-// static void initFontEdgeAttr(edge_t * e, struct fontinfo *fi) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="initFontEdgeAttr", key="d2v8l80y27ue2fag5c0qplah8", definition="static void initFontEdgeAttr(edge_t * e, struct fontinfo *fi)")
 public static void initFontEdgeAttr(ST_Agedge_s e, ST_fontinfo fi) {
 ENTERING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 try {
-    fi.setDouble("fontsize", late_double(e, Z.z().E_fontsize, 14.0, 1.0));
-    fi.setPtr("fontname", late_nnstring(e, Z.z().E_fontname, new CString("Times-Roman")));
-    fi.setPtr("fontcolor", late_nnstring(e, Z.z().E_fontcolor, new CString("black")));
+    fi.fontsize = late_double(e, Z.z().E_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);
+    fi.fontname = late_nnstring(e, Z.z().E_fontname, new CString("Times-Roman"));
+    fi.fontcolor = late_nnstring(e, Z.z().E_fontcolor, new CString("black"));
 } finally {
 LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 }
@@ -1486,15 +1316,15 @@ LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 
 
 
-//3 ak3pxrdrq900wymudwnjmbito
-// static void initFontLabelEdgeAttr(edge_t * e, struct fontinfo *fi, 		      struct fontinfo *lfi) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="initFontLabelEdgeAttr", key="ak3pxrdrq900wymudwnjmbito", definition="static void initFontLabelEdgeAttr(edge_t * e, struct fontinfo *fi, 		      struct fontinfo *lfi)")
 public static void initFontLabelEdgeAttr(ST_Agedge_s e, ST_fontinfo fi, ST_fontinfo lfi) {
 ENTERING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 try {
 	if (N(fi.fontname)) initFontEdgeAttr(e, fi);
-    lfi.setDouble("fontsize", late_double(e, Z.z().E_labelfontsize, fi.fontsize, 1.0));
-    lfi.setPtr("fontname", late_nnstring(e, Z.z().E_labelfontname, fi.fontname));
-    lfi.setPtr("fontcolor", late_nnstring(e, Z.z().E_labelfontcolor, fi.fontcolor));
+    lfi.fontsize = late_double(e, Z.z().E_labelfontsize, fi.fontsize, MIN_FONTSIZE);
+    lfi.fontname = late_nnstring(e, Z.z().E_labelfontname, fi.fontname);
+    lfi.fontcolor = late_nnstring(e, Z.z().E_labelfontcolor, fi.fontcolor);
 } finally {
 LEAVING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 }
@@ -1503,13 +1333,18 @@ LEAVING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 
 
 
-//3 bgnk1zwht9rwx6thmly98iofb
-// static boolean  noClip(edge_t *e, attrsym_t* sym) 
+/* noClip:
+ * Return true if head/tail end of edge should not be clipped
+ * to node.
+ */
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="noClip", key="bgnk1zwht9rwx6thmly98iofb", definition="static boolean  noClip(edge_t *e, attrsym_t* sym)")
 public static boolean noClip(ST_Agedge_s e, ST_Agsym_s sym) {
 ENTERING("bgnk1zwht9rwx6thmly98iofb","noClip");
 try {
     CString str;
     boolean		rv = false;
+    
     if (sym!=null) {	/* mapbool isn't a good fit, because we want "" to mean true */
 	str = agxget(e,sym);
 	if (str!=null && str.charAt(0)!='\0') rv = !mapbool(str);
@@ -1524,8 +1359,8 @@ LEAVING("bgnk1zwht9rwx6thmly98iofb","noClip");
 
 
 
-//3 9vnr1bc7p533acazoxbhbfmx3
-// static port chkPort (port (*pf)(node_t*, char*, char*), node_t* n, char* s) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="chkPort", key="9vnr1bc7p533acazoxbhbfmx3", definition="static port chkPort (port (*pf)(node_t*, char*, char*), node_t* n, char* s)")
 public static ST_port chkPort(CFunction pf, ST_Agnode_s n, CString s) {
 // WARNING!! STRUCT
 return chkPort_w_(pf, n, s).copy();
@@ -1538,10 +1373,10 @@ try {
 	if(s!=null)
 		cp= strchr(s,':');
     if (cp!=null) {
-UNSUPPORTED("cbuf05ko7kaxq2n9zw35l5v2h"); // 	*cp = '\0';
-UNSUPPORTED("7ofc3q8txvlvus6qwefbnbaxu"); // 	pt = pf(n, s, cp+1);
-UNSUPPORTED("971i954brvgqb35cftazlqhon"); // 	*cp = ':';
-UNSUPPORTED("2o9oidtrr5gspl1dh6vnz7mlz"); // 	pt.name = cp+1;
+	UNSUPPORTED("cbuf05ko7kaxq2n9zw35l5v2h"); // 	*cp = '\0';
+	UNSUPPORTED("7ofc3q8txvlvus6qwefbnbaxu"); // 	pt = pf(n, s, cp+1);
+	UNSUPPORTED("971i954brvgqb35cftazlqhon"); // 	*cp = ':';
+	UNSUPPORTED("2o9oidtrr5gspl1dh6vnz7mlz"); // 	pt.name = cp+1;
     }
     else
 	pt.___((ST_port) pf.exe(n, s, null));
@@ -1554,9 +1389,8 @@ LEAVING("9vnr1bc7p533acazoxbhbfmx3","chkPort");
 
 
 
-
-//3 3aqh64lxwv4da2snfe7fvr45b
-// int common_init_edge(edge_t * e) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="common_init_edge", key="3aqh64lxwv4da2snfe7fvr45b", definition="int common_init_edge(edge_t * e)")
 public static int common_init_edge(ST_Agedge_s e) {
 ENTERING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
 try {
@@ -1565,17 +1399,20 @@ try {
     final ST_fontinfo fi = new ST_fontinfo();
     final ST_fontinfo lfi = new ST_fontinfo();
     ST_Agraph_s sg = agraphof(agtail(e));
-    fi.setPtr("fontname", null);
-    lfi.setPtr("fontname", null);
+    
+    fi.fontname = null;
+    lfi.fontname = null;
     if (Z.z().E_label!=null && (str = agxget(e, Z.z().E_label))!=null && (str.charAt(0)!='\0')) {
 	r = 1;
 	initFontEdgeAttr(e, fi);
-	ED_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
+	ED_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
 				fi.fontsize, fi.fontname, fi.fontcolor));
-	GD_has_labels(sg, GD_has_labels(sg) | (1 << 0));
+	GD_has_labels(sg, GD_has_labels(sg) | EDGE_LABEL);
 	ED_label_ontop(e,
 	    mapbool(late_string(e, Z.z().E_label_float, new CString("false"))));
     }
+    
+    
     if (Z.z().E_xlabel!=null && (str = agxget(e, Z.z().E_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("1j3mhgq7abuh3n19q2jtjddbc"); // 	if (!fi.fontname)
 UNSUPPORTED("bmqo2g5g107quod3h31r8iudr"); // 	    initFontEdgeAttr(e, &fi);
@@ -1583,43 +1420,44 @@ UNSUPPORTED("3s7kg9x748riuy3tm697s6e8t"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-
 UNSUPPORTED("b0zm6fkpjlt9jacykbgugjodg"); // 				fi.fontsize, fi.fontname, fi.fontcolor);
 UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->has_labels) |= (1 << 5);
     }
+    
+    
     /* vladimir */
     if (Z.z().E_headlabel!=null && (str = agxget(e, Z.z().E_headlabel))!=null && (str.charAt(0)!='\0')) {
     	initFontLabelEdgeAttr(e, fi, lfi);
-    	ED_head_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
+    	ED_head_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
 				lfi.fontsize, lfi.fontname, lfi.fontcolor));
-    	GD_has_labels(sg, GD_has_labels(sg) | (1 << 1));
+    	GD_has_labels(sg, GD_has_labels(sg) | HEAD_LABEL);
     }
     if (Z.z().E_taillabel!=null && (str = agxget(e, Z.z().E_taillabel))!=null && (str.charAt(0)!='\0')) {
     	initFontLabelEdgeAttr(e, fi, lfi);
-    	ED_tail_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
+    	ED_tail_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
 				lfi.fontsize, lfi.fontname, lfi.fontcolor));
-    	GD_has_labels(sg, GD_has_labels(sg) | (1 << 2));
+    	GD_has_labels(sg, GD_has_labels(sg) | TAIL_LABEL);
     }
     /* end vladimir */
+    
     /* We still accept ports beginning with colons but this is deprecated 
      * That is, we allow tailport = ":abc" as well as the preferred 
      * tailport = "abc".
      */
-    str = agget(e, new CString("tailport"));
+    str = agget(e, TAIL_ID);
     /* libgraph always defines tailport/headport; libcgraph doesn't */
     if (N(str)) str = new CString("");
     if (str!=null && str.charAt(0)!='\0')
-UNSUPPORTED("j71lo2acx1ydov0uj7xjjce"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(((((((Agobj_t*)(e))->tag).objtype) == 3?(e):((e)+1))->node)))->data))->has_port) = (!(0));
-
-    ED_tail_port(e, chkPort ((CFunction) ND_shape(agtail(e)).fns.portfn, agtail(e), str));
+    ND_has_port(agtail(e), true);
+    ED_tail_port(e, chkPort (ND_shape(agtail(e)).fns.portfn, agtail(e), str));
     if (noClip(e, Z.z().E_tailclip))
-UNSUPPORTED("cg4z67u0dm6h9nrcx8kkalnlt"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->tail_port).clip = 0;
-    str = agget(e, new CString("headport"));
+    UNSUPPORTED("cg4z67u0dm6h9nrcx8kkalnlt"); // 	ED_tail_port(e).clip = FALSE;
+    str = agget(e, HEAD_ID);
+    
     /* libgraph always defines tailport/headport; libcgraph doesn't */
     if (N(str)) str = new CString("");
     if (str!=null && str.charAt(0)!='\0')
-UNSUPPORTED("542y57dbsosmjvsmdnzon2qb5"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(((((((Agobj_t*)(e))->tag).objtype) == 2?(e):((e)-1))->node)))->data))->has_port) = (!(0));
-
-    ED_head_port(e, chkPort((CFunction) ND_shape(aghead(e)).fns.portfn, aghead(e), str));
-
+    ND_has_port(aghead(e), true);
+    ED_head_port(e, chkPort(ND_shape(aghead(e)).fns.portfn, aghead(e), str));
     if (noClip(e, Z.z().E_headclip))
-UNSUPPORTED("ayqscz30ekhcje94wh4ib1hcu"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->head_port).clip = 0;
+    UNSUPPORTED("ayqscz30ekhcje94wh4ib1hcu"); // 	ED_head_port(e).clip = FALSE;
     return r;
 } finally {
 LEAVING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
@@ -1631,6 +1469,8 @@ LEAVING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
 
 //3 3mkqvtbyq9j8ktzil6t7vakg5
 // static boxf addLabelBB(boxf bb, textlabel_t * lp, boolean flipxy) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="addLabelBB", key="3mkqvtbyq9j8ktzil6t7vakg5", definition="static boxf addLabelBB(boxf bb, textlabel_t * lp, boolean flipxy)")
 public static ST_boxf addLabelBB(final ST_boxf bb, ST_textlabel_t lp, boolean flipxy) {
 // WARNING!! STRUCT
 return addLabelBB_w_(bb.copy(), lp, flipxy).copy();
@@ -1673,6 +1513,8 @@ LEAVING("3mkqvtbyq9j8ktzil6t7vakg5","addLabelBB");
 
 //3 abydt85ykexa59r4o9fw9r77o
 // boxf polyBB (polygon_t* poly) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="polyBB", key="abydt85ykexa59r4o9fw9r77o", definition="boxf polyBB (polygon_t* poly)")
 public static Object polyBB(Object... arg) {
 UNSUPPORTED("eog6k627mwt0j7tauh94xvup8"); // boxf
 UNSUPPORTED("a4oqb702qwzmhj4ubv8nvwnut"); // polyBB (polygon_t* poly)
@@ -1699,10 +1541,12 @@ throw new UnsupportedOperationException();
 
 //3 bz7kjecium6a7xa39qfobwwnc
 // void updateBB(graph_t * g, textlabel_t * lp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="updateBB", key="bz7kjecium6a7xa39qfobwwnc", definition="void updateBB(graph_t * g, textlabel_t * lp)")
 public static void updateBB(ST_Agraph_s g, ST_textlabel_t lp) {
 ENTERING("bz7kjecium6a7xa39qfobwwnc","updateBB");
 try {
-    GD_bb(g).___(addLabelBB(GD_bb(g), lp, GD_flip(g)!=0));
+    GD_bb(g).___(addLabelBB(GD_bb(g), lp, GD_flip(g)));
 } finally {
 LEAVING("bz7kjecium6a7xa39qfobwwnc","updateBB");
 }
@@ -1713,6 +1557,8 @@ LEAVING("bz7kjecium6a7xa39qfobwwnc","updateBB");
 
 //3 2dhrilz05n4iopa5go0ir09tq
 // void compute_bb(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="compute_bb", key="2dhrilz05n4iopa5go0ir09tq", definition="void compute_bb(graph_t * g)")
 public static Object compute_bb(Object... arg) {
 UNSUPPORTED("43z8pxvn2vwb16wsrtd6eb4x4"); // void compute_bb(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1780,6 +1626,8 @@ throw new UnsupportedOperationException();
 
 //3 1ihcngl4nnl0l3a4lazjawjak
 // int is_a_cluster (Agraph_t* g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="is_a_cluster", key="1ihcngl4nnl0l3a4lazjawjak", definition="int is_a_cluster (Agraph_t* g)")
 public static Object is_a_cluster(Object... arg) {
 UNSUPPORTED("c7v1kpsifryrniar3pr9lj2vb"); // int is_a_cluster (Agraph_t* g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1794,6 +1642,8 @@ throw new UnsupportedOperationException();
 
 //3 3eb5x8fxszk05rs03aw3w8bal
 // Agsym_t *setAttr(graph_t * g, void *obj, char *name, char *value, 			Agsym_t * ap) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="3eb5x8fxszk05rs03aw3w8bal", definition="Agsym_t *setAttr(graph_t * g, void *obj, char *name, char *value, 			Agsym_t * ap)")
 public static Object setAttr(Object... arg) {
 UNSUPPORTED("7hwd7388n90vnhk5ry6nk24pv"); // Agsym_t *setAttr(graph_t * g, void *obj, char *name, char *value,
 UNSUPPORTED("4gdje67ttlpied9791ewdlrd0"); // 			Agsym_t * ap)
@@ -1823,6 +1673,8 @@ throw new UnsupportedOperationException();
 
 //3 68c4u42h1oec8puw4huxzsram
 // static node_t *clustNode(node_t * n, graph_t * cg, agxbuf * xb, 			 graph_t * clg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="68c4u42h1oec8puw4huxzsram", definition="static node_t *clustNode(node_t * n, graph_t * cg, agxbuf * xb, 			 graph_t * clg)")
 public static Object clustNode(Object... arg) {
 UNSUPPORTED("expuexpqhy52jx8egr4nmadbq"); // static node_t *clustNode(node_t * n, graph_t * cg, agxbuf * xb,
 UNSUPPORTED("83ctmg1k8dzy4himebqtr1m1y"); // 			 graph_t * clg)
@@ -1858,6 +1710,8 @@ throw new UnsupportedOperationException();
 
 //3 c1dr4tu5yewu3tcstfq3jkcfg
 // static int cmpItem(Dt_t * d, void *p1[], void *p2[], Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="cmpItem", key="c1dr4tu5yewu3tcstfq3jkcfg", definition="static int cmpItem(Dt_t * d, void *p1[], void *p2[], Dtdisc_t * disc)")
 public static Object cmpItem(Object... arg) {
 UNSUPPORTED("2l8537eo2smrl3yniwkv96fhy"); // static int cmpItem(Dt_t * d, void *p1[], void *p2[], Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1883,6 +1737,8 @@ throw new UnsupportedOperationException();
 
 //3 bsharuh63hyx8gytgj0drcbxn
 // static void *newItem(Dt_t * d, item * objp, Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="bsharuh63hyx8gytgj0drcbxn", definition="static void *newItem(Dt_t * d, item * objp, Dtdisc_t * disc)")
 public static Object newItem(Object... arg) {
 UNSUPPORTED("akr8nubtu1wjzyw77dyu7l818"); // static void *newItem(Dt_t * d, item * objp, Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1903,6 +1759,8 @@ throw new UnsupportedOperationException();
 
 //3 9k3952c7spf98nnxwfwnp246t
 // static void freeItem(Dt_t * d, item * obj, Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="freeItem", key="9k3952c7spf98nnxwfwnp246t", definition="static void freeItem(Dt_t * d, item * obj, Dtdisc_t * disc)")
 public static Object freeItem(Object... arg) {
 UNSUPPORTED("8rxgun8stoo6nah2bndbm87b9"); // static void freeItem(Dt_t * d, item * obj, Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1921,6 +1779,8 @@ throw new UnsupportedOperationException();
 
 //3 cmped1c3ho0jglvwjjj6a228t
 // static edge_t *cloneEdge(edge_t * e, node_t * ct, node_t * ch) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="cmped1c3ho0jglvwjjj6a228t", definition="static edge_t *cloneEdge(edge_t * e, node_t * ct, node_t * ch)")
 public static Object cloneEdge(Object... arg) {
 UNSUPPORTED("d4tyhi7zzf9xmns1lnu336v3r"); // static edge_t *cloneEdge(edge_t * e, node_t * ct, node_t * ch)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1939,6 +1799,8 @@ throw new UnsupportedOperationException();
 
 //3 c5a3lmz7tpara4c6bxtihr7m6
 // static void insertEdge(Dt_t * map, void *t, void *h, edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="insertEdge", key="c5a3lmz7tpara4c6bxtihr7m6", definition="static void insertEdge(Dt_t * map, void *t, void *h, edge_t * e)")
 public static Object insertEdge(Object... arg) {
 UNSUPPORTED("9k64e2wql9m602qa681rgo7i7"); // static void insertEdge(Dt_t * map, void *t, void *h, edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1963,6 +1825,8 @@ throw new UnsupportedOperationException();
 
 //3 dkpu53gf0kuy7km1pxs1quv6w
 // static item *mapEdge(Dt_t * map, edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="dkpu53gf0kuy7km1pxs1quv6w", definition="static item *mapEdge(Dt_t * map, edge_t * e)")
 public static Object mapEdge(Object... arg) {
 UNSUPPORTED("8o6iypv3kzhmwkk0ssw2py2yj"); // static item *mapEdge(Dt_t * map, edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1980,6 +1844,8 @@ throw new UnsupportedOperationException();
 
 //3 evei1rlt3rpux3ayqs9tyofmw
 // static void checkCompound(edge_t * e, graph_t * clg, agxbuf * xb, Dt_t * map, Dt_t* cmap) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="checkCompound", key="evei1rlt3rpux3ayqs9tyofmw", definition="static void checkCompound(edge_t * e, graph_t * clg, agxbuf * xb, Dt_t * map, Dt_t* cmap)")
 public static Object checkCompound(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("y76yzntmrne9d5t1m4t7ott3"); // checkCompound(edge_t * e, graph_t * clg, agxbuf * xb, Dt_t * map, Dt_t* cmap)
@@ -2053,6 +1919,8 @@ throw new UnsupportedOperationException();
 
 //3 dwutwgt4iv7io73xbnfs967wi
 // int processClusterEdges(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="processClusterEdges", key="dwutwgt4iv7io73xbnfs967wi", definition="int processClusterEdges(graph_t * g)")
 public static Object processClusterEdges(Object... arg) {
 UNSUPPORTED("4oyug57mkqcdxkzes2u1byitf"); // int processClusterEdges(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2097,6 +1965,8 @@ throw new UnsupportedOperationException();
 
 //3 5kmpn0ajfqqlgj5cw9vpfasej
 // static node_t *mapN(node_t * n, graph_t * clg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="", key="5kmpn0ajfqqlgj5cw9vpfasej", definition="static node_t *mapN(node_t * n, graph_t * clg)")
 public static Object mapN(Object... arg) {
 UNSUPPORTED("buha873k6dpip6wp1k6884zn8"); // static node_t *mapN(node_t * n, graph_t * clg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2130,6 +2000,8 @@ throw new UnsupportedOperationException();
 
 //3 789ww738n8t5kluf6zeo8zwsj
 // static void undoCompound(edge_t * e, graph_t * clg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="undoCompound", key="789ww738n8t5kluf6zeo8zwsj", definition="static void undoCompound(edge_t * e, graph_t * clg)")
 public static Object undoCompound(Object... arg) {
 UNSUPPORTED("4gm4tyoex45q7hsr07asvlb3v"); // static void undoCompound(edge_t * e, graph_t * clg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2152,6 +2024,8 @@ throw new UnsupportedOperationException();
 
 //3 6s7x7ut8o7wrwuw5nfdbknslk
 // void undoClusterEdges(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="undoClusterEdges", key="6s7x7ut8o7wrwuw5nfdbknslk", definition="void undoClusterEdges(graph_t * g)")
 public static Object undoClusterEdges(Object... arg) {
 UNSUPPORTED("xsvmylok7lqoljd2ftvt8eki"); // void undoClusterEdges(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2179,6 +2053,8 @@ throw new UnsupportedOperationException();
 
 //3 6dwase854hhoz11vcuphugbij
 // attrsym_t* safe_dcl(graph_t * g, int obj_kind, char *name, char *def) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="safe_dcl", key="6dwase854hhoz11vcuphugbij", definition="attrsym_t* safe_dcl(graph_t * g, int obj_kind, char *name, char *def)")
 public static Object safe_dcl(Object... arg) {
 UNSUPPORTED("850d7lqcvt2dszn9wl9f6zef0"); // attrsym_t*
 UNSUPPORTED("4dafq6zrc7d2eg2y3pxdhhp6k"); // safe_dcl(graph_t * g, int obj_kind, char *name, char *def)
@@ -2197,6 +2073,8 @@ throw new UnsupportedOperationException();
 
 //3 8vn95uhvbccfyutd9itvpk8vy
 // static int comp_entities(const void *e1, const void *e2) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="comp_entities", key="8vn95uhvbccfyutd9itvpk8vy", definition="static int comp_entities(const void *e1, const void *e2)")
 public static Object comp_entities(Object... arg) {
 UNSUPPORTED("28uhwy0iibw08ehww04k9s3le"); // static int comp_entities(const void *e1, const void *e2) {
 UNSUPPORTED("3c7l2zx25w9zqhkqe16urhizu"); //   return strcmp(((struct entities_s *)e1)->name, ((struct entities_s *)e2)->name);
@@ -2210,6 +2088,8 @@ throw new UnsupportedOperationException();
 
 //3 7t94y8iigozdjfx36lfzyak08
 // char* scanEntity (char* t, agxbuf* xb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="scanEntity", key="7t94y8iigozdjfx36lfzyak08", definition="char* scanEntity (char* t, agxbuf* xb)")
 public static Object scanEntity(Object... arg) {
 UNSUPPORTED("bz1schmt8gz4xlf2x79u589jz"); // char* scanEntity (char* t, agxbuf* xb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2241,6 +2121,8 @@ throw new UnsupportedOperationException();
 
 //3 6ol0iqfokq31kpiqngns9cnkm
 // static int htmlEntity (char** s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="htmlEntity", key="6ol0iqfokq31kpiqngns9cnkm", definition="static int htmlEntity (char** s)")
 public static Object htmlEntity(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("61r6m6shucv4zvnmx9obkeu9e"); // htmlEntity (char** s)
@@ -2314,6 +2196,8 @@ throw new UnsupportedOperationException();
 
 //3 e3fdq03jg6298zgwjnftvhivy
 // static unsigned char cvtAndAppend (unsigned char c, agxbuf* xb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="cvtAndAppend", key="e3fdq03jg6298zgwjnftvhivy", definition="static unsigned char cvtAndAppend (unsigned char c, agxbuf* xb)")
 public static Object cvtAndAppend(Object... arg) {
 UNSUPPORTED("at0aua2ntxsp0j1h4yidmr4si"); // static unsigned char
 UNSUPPORTED("dh6zi66v19z0wdg8u346fccp4"); // cvtAndAppend (unsigned char c, agxbuf* xb)
@@ -2337,14 +2221,16 @@ throw new UnsupportedOperationException();
 }
 
 
-
-
-//3 9yungx7uxqkmzfh2ub6gs9l48
-// char* htmlEntityUTF8 (char* s, graph_t* g) 
+/* htmlEntityUTF8:
+ * substitute html entities like: &#123; and: &amp; with the UTF8 equivalents
+ * check for invalid utf8. If found, treat a single byte as Latin-1, convert it to
+ * utf8 and warn the user.
+ */
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="htmlEntityUTF8", key="9yungx7uxqkmzfh2ub6gs9l48", definition="char* htmlEntityUTF8 (char* s, graph_t* g)")
 public static CString htmlEntityUTF8(CString s, ST_Agraph_s g) {
 ENTERING("9yungx7uxqkmzfh2ub6gs9l48","htmlEntityUTF8");
 try {
-	LOG2("htmlEntityUTF8 "+s);
 if (s!=null) return s.duplicate();
 UNSUPPORTED("1xtgr84lklglr4gz1i1m3t30"); // char* htmlEntityUTF8 (char* s, graph_t* g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2437,6 +2323,8 @@ LEAVING("9yungx7uxqkmzfh2ub6gs9l48","htmlEntityUTF8");
 
 //3 6spvz5rdt5uhtcpz0ypysuf8j
 // char* latin1ToUTF8 (char* s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="latin1ToUTF8", key="6spvz5rdt5uhtcpz0ypysuf8j", definition="char* latin1ToUTF8 (char* s)")
 public static Object latin1ToUTF8(Object... arg) {
 UNSUPPORTED("6k189l7y3kfe03zj65a0hi02l"); // char* latin1ToUTF8 (char* s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2480,6 +2368,8 @@ throw new UnsupportedOperationException();
 
 //3 913nrt0i8mr2gg2mz9qxdqh8o
 // char* utf8ToLatin1 (char* s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="utf8ToLatin1", key="913nrt0i8mr2gg2mz9qxdqh8o", definition="char* utf8ToLatin1 (char* s)")
 public static Object utf8ToLatin1(Object... arg) {
 UNSUPPORTED("cqm25rponse4rsi686sbn1lo0"); // char*
 UNSUPPORTED("8jj111wbaa8z4z3poc1q0t8y5"); // utf8ToLatin1 (char* s)
@@ -2515,6 +2405,8 @@ throw new UnsupportedOperationException();
 
 //3 9bvrwdmh7tm5thehp9lgdr6xd
 // boolean overlap_node(node_t *n, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="overlap_node", key="9bvrwdmh7tm5thehp9lgdr6xd", definition="boolean overlap_node(node_t *n, boxf b)")
 public static Object overlap_node(Object... arg) {
 UNSUPPORTED("adn6r7oz1h6uvg69bvfoypzf2"); // boolean overlap_node(node_t *n, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2537,6 +2429,8 @@ throw new UnsupportedOperationException();
 
 //3 1iephta6pfgcjwjxaz7n7hg3h
 // boolean overlap_label(textlabel_t *lp, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="overlap_label", key="1iephta6pfgcjwjxaz7n7hg3h", definition="boolean overlap_label(textlabel_t *lp, boxf b)")
 public static Object overlap_label(Object... arg) {
 UNSUPPORTED("91umgryo5zqgish79s8i949au"); // boolean overlap_label(textlabel_t *lp, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2557,6 +2451,8 @@ throw new UnsupportedOperationException();
 
 //3 1pi7b3b4i7f0w0nru6z6tl31b
 // static boolean overlap_arrow(pointf p, pointf u, double scale, int flag, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="overlap_arrow", key="1pi7b3b4i7f0w0nru6z6tl31b", definition="static boolean overlap_arrow(pointf p, pointf u, double scale, int flag, boxf b)")
 public static Object overlap_arrow(Object... arg) {
 UNSUPPORTED("2hwfhh60l88kcz3nw2gniuiic"); // static boolean overlap_arrow(pointf p, pointf u, double scale, int flag, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2575,6 +2471,8 @@ throw new UnsupportedOperationException();
 
 //3 7ic0hdq8fpa9fby43hy9p96n
 // static boolean overlap_bezier(bezier bz, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="overlap_bezier", key="7ic0hdq8fpa9fby43hy9p96n", definition="static boolean overlap_bezier(bezier bz, boxf b)")
 public static Object overlap_bezier(Object... arg) {
 UNSUPPORTED("awzwsadmtjnsr4l5ln0gwca6f"); // static boolean overlap_bezier(bezier bz, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2608,6 +2506,8 @@ throw new UnsupportedOperationException();
 
 //3 4usdn4gxfza3j6zxmsnoslmsu
 // boolean overlap_edge(edge_t *e, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="overlap_edge", key="4usdn4gxfza3j6zxmsnoslmsu", definition="boolean overlap_edge(edge_t *e, boxf b)")
 public static Object overlap_edge(Object... arg) {
 UNSUPPORTED("dfrqxx7kxp0xo56gn56prf49k"); // boolean overlap_edge(edge_t *e, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2633,6 +2533,8 @@ throw new UnsupportedOperationException();
 
 //3 ckavkcnz5rcrqs17lleds1uxu
 // int edgeType (char* s, int dflt) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="edgeType", key="ckavkcnz5rcrqs17lleds1uxu", definition="int edgeType (char* s, int dflt)")
 public static int edgeType(CString s, int dflt) {
 ENTERING("ckavkcnz5rcrqs17lleds1uxu","edgeType");
 try {
@@ -2640,10 +2542,10 @@ try {
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("26e08yupzx95a4pzp1af0t6og"); //     int et;
 UNSUPPORTED("73z43mn6ha09hbnvzynnbkvqg"); //     if (!s || (*s == '\0')) return dflt;
-UNSUPPORTED("527zd48lq0ay6p16b2whyuafo"); //     et = (0 << 1);
+UNSUPPORTED("527zd48lq0ay6p16b2whyuafo"); //     et = 0 << 1;
 UNSUPPORTED("1ctayzw7ya308i4wpppul6b9o"); //     switch (*s) {
 UNSUPPORTED("acwxya6p4cjrbqeuf7gymcmx2"); //     case '0' :    /* false */
-UNSUPPORTED("18fcibo027r3vczxrvtju3nah"); // 	et = (1 << 1);
+UNSUPPORTED("18fcibo027r3vczxrvtju3nah"); // 	et = 1 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("no8amccag0mew2zmsprfyekp"); //     case '1' :    /* true */
 UNSUPPORTED("8to0pat5o6zmyuqjfl01xs9xc"); //     case '2' :
@@ -2654,24 +2556,24 @@ UNSUPPORTED("cr0jhqsceb5y1hcmvtjd1ttgu"); //     case '6' :
 UNSUPPORTED("8jq47j7ezu18niwotmuj92cz3"); //     case '7' :
 UNSUPPORTED("ami8xk8243o5ku0cyeqxoeiut"); //     case '8' :
 UNSUPPORTED("3onv8t8a6v1tmfaz8y7hk9lvv"); //     case '9' :
-UNSUPPORTED("8m599inlx0lbuns9r3iiokwxw"); // 	et = (5 << 1);
+UNSUPPORTED("8m599inlx0lbuns9r3iiokwxw"); // 	et = 5 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("vwxe2prs0tywhf20ycwdwa8o"); //     case 'c' :
 UNSUPPORTED("e2ux7lqsbmsyyrououuijooiy"); //     case 'C' :
 UNSUPPORTED("8zxim9f3q8qdl919cv1v3jf8e"); // 	if (!strcasecmp (s+1, "urved"))
-UNSUPPORTED("azc7d85av8k7f1to3mr59m3mz"); // 	    et = (2 << 1);
+UNSUPPORTED("azc7d85av8k7f1to3mr59m3mz"); // 	    et = 2 << 1;
 UNSUPPORTED("b7i0q9ysed6zrjftn8ilgtn0a"); // 	else if (!strcasecmp (s+1, "ompound"))
-UNSUPPORTED("aihlhslp3nd26f10vuyjlnb3q"); // 	    et = (6 << 1);
+UNSUPPORTED("aihlhslp3nd26f10vuyjlnb3q"); // 	    et = 6 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("2ix1d2vw6unhjetclv9vkaw1p"); //     case 'f' :
 UNSUPPORTED("2chzjgs8kmwelk00c6469lpx2"); //     case 'F' :
 UNSUPPORTED("42jngi39nkk27q16s1sa7sftl"); // 	if (!strcasecmp (s+1, "alse"))
-UNSUPPORTED("7xut5zuu25vrpn9gt0f3kc5hz"); // 	    et = (1 << 1);
+UNSUPPORTED("7xut5zuu25vrpn9gt0f3kc5hz"); // 	    et = 1 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("7ozigs1hjxmhvwgapx2in25cy"); //     case 'l' :
 UNSUPPORTED("c2gttjqnkmx1rnuyjknw7segb"); //     case 'L' :
 UNSUPPORTED("96lnofxeiqa1g3g7s02b86h6z"); // 	if (!strcasecmp (s+1, "ine"))
-UNSUPPORTED("7xut5zuu25vrpn9gt0f3kc5hz"); // 	    et = (1 << 1);
+UNSUPPORTED("7xut5zuu25vrpn9gt0f3kc5hz"); // 	    et = 1 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("5o5i90c7m363f5yyxamxuzok6"); //     case 'n' :
 UNSUPPORTED("3ttrfea54jmrshv2796w3a9h2"); //     case 'N' :
@@ -2681,27 +2583,27 @@ UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("18t59gw7hrgsezibz7bbm0ng3"); //     case 'o' :
 UNSUPPORTED("4q6jdsek20d4i9sc5ftmm3mdl"); //     case 'O' :
 UNSUPPORTED("8scb0vjws7o3davin33k87o2p"); // 	if (!strcasecmp (s+1, "rtho"))
-UNSUPPORTED("48rqxx6odtdnqf676ffe1ll7g"); // 	    et = (4 << 1);
+UNSUPPORTED("48rqxx6odtdnqf676ffe1ll7g"); // 	    et = 4 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("5cc40qlotkkym6enwcv916835"); //     case 'p' :
 UNSUPPORTED("al1clonjqyw2bo1z0li974ijp"); //     case 'P' :
 UNSUPPORTED("68l1a5153ouil03qaammm1zty"); // 	if (!strcasecmp (s+1, "olyline"))
-UNSUPPORTED("5ytop08aei3hhllfd12904hh7"); // 	    et = (3 << 1);
+UNSUPPORTED("5ytop08aei3hhllfd12904hh7"); // 	    et = 3 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("20wayzvdomwexzhjzj4wojf4d"); //     case 's' :
 UNSUPPORTED("boxft69fzv6rof5elda0zs33z"); //     case 'S' :
 UNSUPPORTED("3qs8m2esm62d50tk701b8m0xz"); // 	if (!strcasecmp (s+1, "pline"))
-UNSUPPORTED("5l4kd6c21h4bjm98grnqqwra6"); // 	    et = (5 << 1);
+UNSUPPORTED("5l4kd6c21h4bjm98grnqqwra6"); // 	    et = 5 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("ce41quxcxpj3oi50zybc75b9r"); //     case 't' :
 UNSUPPORTED("8drchetff3h6zpsu3m08rqi0q"); //     case 'T' :
 UNSUPPORTED("7ln0pymv14hb45h3ypy5955nk"); // 	if (!strcasecmp (s+1, "rue"))
-UNSUPPORTED("5l4kd6c21h4bjm98grnqqwra6"); // 	    et = (5 << 1);
+UNSUPPORTED("5l4kd6c21h4bjm98grnqqwra6"); // 	    et = 5 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("3d55ucqxr8xg0otty2j39hkgz"); //     case 'y' :
 UNSUPPORTED("7oihco3xpq1kek2q2dnrfxmcx"); //     case 'Y' :
 UNSUPPORTED("679wmbnx0dakltwkxx2svg5ex"); // 	if (!strcasecmp (s+1, "es"))
-UNSUPPORTED("5l4kd6c21h4bjm98grnqqwra6"); // 	    et = (5 << 1);
+UNSUPPORTED("5l4kd6c21h4bjm98grnqqwra6"); // 	    et = 5 << 1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
 UNSUPPORTED("ckjgbybnvrshn8g32qqpy0ppd"); //     if (!et) {
@@ -2720,18 +2622,32 @@ LEAVING("ckavkcnz5rcrqs17lleds1uxu","edgeType");
 
 
 
-//3 13cpqbf2ztcjdfz4a6v7nv00u
-// void setEdgeType (graph_t* g, int dflt) 
+/* setEdgeType:
+ * Sets graph's edge type based on the "splines" attribute.
+ * If the attribute is not defined, use default.
+ * If the attribute is "", use NONE.
+ * If attribute value matches (case indepedent), use match.
+ *   ortho => ET_ORTHO
+ *   none => ET_NONE
+ *   line => ET_LINE
+ *   polyline => ET_PLINE
+ *   spline => ET_SPLINE
+ * If attribute is boolean, true means ET_SPLINE, false means ET_LINE.
+ * Else warn and use default.
+ */
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="setEdgeType", key="13cpqbf2ztcjdfz4a6v7nv00u", definition="void setEdgeType (graph_t* g, int dflt)")
 public static void setEdgeType(ST_Agraph_s g, int dflt) {
 ENTERING("13cpqbf2ztcjdfz4a6v7nv00u","setEdgeType");
 try {
     CString s = agget(g, new CString("splines"));
     int et;
+    
     if (N(s)) {
 	et = dflt;
     }
     else if (s.charAt(0) == '\0') {
-	et = (0 << 1);
+	et = ET_NONE;
     }
     else et = edgeType (s, dflt);
     GD_flags(g, GD_flags(g) | et);
@@ -2745,6 +2661,8 @@ LEAVING("13cpqbf2ztcjdfz4a6v7nv00u","setEdgeType");
 
 //3 azj18si1ncbqf4nggo3u0iudc
 // void get_gradient_points(pointf * A, pointf * G, int n, float angle, int flags) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="get_gradient_points", key="azj18si1ncbqf4nggo3u0iudc", definition="void get_gradient_points(pointf * A, pointf * G, int n, float angle, int flags)")
 public static Object get_gradient_points(Object... arg) {
 UNSUPPORTED("4l4q9435jsq43snp6e2muhph9"); // void get_gradient_points(pointf * A, pointf * G, int n, float angle, int flags)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2812,28 +2730,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 22n1uekxezky6gx3cn22ansew
-// int strcasecmp(const char *s1, const char *s2) 
-public static int strcasecmp(CString s1, CString s2) {
-ENTERING("22n1uekxezky6gx3cn22ansew","strcasecmp");
-try {
-    while ((s1.charAt(0) != '\0')
-	   && (tolower(s1.charAt(0)) ==
-	       tolower(s2.charAt(0)))) {
-	s1=s1.plus(1);
-	s2=s2.plus(1);
-    }
-    return tolower(s1.charAt(0)) - tolower(s2.charAt(0));
-} finally {
-LEAVING("22n1uekxezky6gx3cn22ansew","strcasecmp");
-}
-}
-
-
-
 
 //3 6fpqvqq5eso7d44vai4lz77jd
 // int strncasecmp(const char *s1, const char *s2, unsigned int n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="strncasecmp", key="6fpqvqq5eso7d44vai4lz77jd", definition="int strncasecmp(const char *s1, const char *s2, unsigned int n)")
 public static Object strncasecmp(Object... arg) {
 UNSUPPORTED("41sf831iel4ggk6nxgerc7lrz"); // int strncasecmp(const char *s1, const char *s2, unsigned int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2858,6 +2759,8 @@ throw new UnsupportedOperationException();
 
 //3 952xm45ro3rezebjyrjins8hi
 // void gv_free_splines(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="gv_free_splines", key="952xm45ro3rezebjyrjins8hi", definition="void gv_free_splines(edge_t * e)")
 public static Object gv_free_splines(Object... arg) {
 UNSUPPORTED("20npjsygvjocwl1s38vrpf2nb"); // void gv_free_splines(edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2879,6 +2782,8 @@ throw new UnsupportedOperationException();
 
 //3 4tdxbfozyzm9hv9jau5qpr18r
 // void gv_cleanup_edge(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="gv_cleanup_edge", key="4tdxbfozyzm9hv9jau5qpr18r", definition="void gv_cleanup_edge(edge_t * e)")
 public static Object gv_cleanup_edge(Object... arg) {
 UNSUPPORTED("b1scm8t8tgb3dnua8wogcy076"); // void gv_cleanup_edge(edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2900,6 +2805,8 @@ throw new UnsupportedOperationException();
 
 //3 c7yb1wfh6sfz3dklp3914m81m
 // void gv_cleanup_node(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="gv_cleanup_node", key="c7yb1wfh6sfz3dklp3914m81m", definition="void gv_cleanup_node(node_t * n)")
 public static Object gv_cleanup_node(Object... arg) {
 UNSUPPORTED("d6dkt4wezkpueb74an06bmm1k"); // void gv_cleanup_node(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2917,24 +2824,24 @@ throw new UnsupportedOperationException();
 
 
 
-
-//3 80q488y0eqojtsm7osnfydmo5
-// void gv_nodesize(node_t * n, boolean flip) 
-public static void gv_nodesize(ST_Agnode_s n, int flip) {
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/utils.c", name="gv_nodesize", key="80q488y0eqojtsm7osnfydmo5", definition="void gv_nodesize(node_t * n, boolean flip)")
+public static void gv_nodesize(ST_Agnode_s n, boolean flip) {
 ENTERING("80q488y0eqojtsm7osnfydmo5","gv_nodesize");
 try {
     double w;
-    if (flip!=0) {
-        w = ((ND_height(n))*(double)72);
+    
+    if (flip) {
+        w = INCH2PS(ND_height(n));
         ND_rw(n, w / 2);
         ND_lw(n, w / 2);
-        ND_ht(n, ((ND_width(n))*(double)72));
+        ND_ht(n, INCH2PS(ND_width(n)));
     } 
     else {
-        w = ((ND_width(n))*(double)72);
+        w = INCH2PS(ND_width(n));
         ND_rw(n, w / 2);
         ND_lw(n, w / 2);
-        ND_ht(n, ((ND_height(n))*(double)72));
+        ND_ht(n, INCH2PS(ND_height(n)));
     }
 } finally {
 LEAVING("80q488y0eqojtsm7osnfydmo5","gv_nodesize");
@@ -2946,6 +2853,8 @@ LEAVING("80q488y0eqojtsm7osnfydmo5","gv_nodesize");
 
 //3 7uxrf3fkz919opkirpd9xtuv
 // double drand48(void) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="drand48", key="7uxrf3fkz919opkirpd9xtuv", definition="double drand48(void)")
 public static Object drand48(Object... arg) {
 UNSUPPORTED("6vlwifmfxk6zn6tvonk13jp3i"); // double drand48(void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2963,6 +2872,8 @@ throw new UnsupportedOperationException();
 
 //3 8lktrcvj65bvhh04y89vecvo2
 // static void free_clust (Dt_t* dt, clust_t* clp, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="free_clust", key="8lktrcvj65bvhh04y89vecvo2", definition="static void free_clust (Dt_t* dt, clust_t* clp, Dtdisc_t* disc)")
 public static Object free_clust(Object... arg) {
 UNSUPPORTED("5hvfjwzuuptbbsu4s4tmqioey"); // static void free_clust (Dt_t* dt, clust_t* clp, Dtdisc_t* disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2981,6 +2892,8 @@ throw new UnsupportedOperationException();
 
 //3 eedsifpflx8hq0boycnhkyhwi
 // static void fillMap (Agraph_t* g, Dt_t* map) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="fillMap", key="eedsifpflx8hq0boycnhkyhwi", definition="static void fillMap (Agraph_t* g, Dt_t* map)")
 public static Object fillMap(Object... arg) {
 UNSUPPORTED("4bysjhruz2e3wqk783h9g1lup"); // static void fillMap (Agraph_t* g, Dt_t* map)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3012,6 +2925,8 @@ throw new UnsupportedOperationException();
 
 //3 82wzptlrwslbvgp3xyj03p9ba
 // Dt_t* mkClustMap (Agraph_t* g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="mkClustMap", key="82wzptlrwslbvgp3xyj03p9ba", definition="Dt_t* mkClustMap (Agraph_t* g)")
 public static Object mkClustMap(Object... arg) {
 UNSUPPORTED("1q58ugun4bvkmr2ue91rmuq8"); // Dt_t* mkClustMap (Agraph_t* g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3028,6 +2943,8 @@ throw new UnsupportedOperationException();
 
 //3 aohw5khae06vhhp2t4cczvcbv
 // Agraph_t* findCluster (Dt_t* map, char* name) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="findCluster", key="aohw5khae06vhhp2t4cczvcbv", definition="Agraph_t* findCluster (Dt_t* map, char* name)")
 public static Object findCluster(Object... arg) {
 UNSUPPORTED("6fo3oeygde19o95996mbrkjdk"); // Agraph_t*
 UNSUPPORTED("43my0gnzq82k0lsp86rb9j31r"); // findCluster (Dt_t* map, char* name)
@@ -3047,6 +2964,8 @@ throw new UnsupportedOperationException();
 
 //3 7q676xlzj32nbxuf2qlgu9xgc
 // Agnodeinfo_t* ninf(Agnode_t* n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="ninf", key="7q676xlzj32nbxuf2qlgu9xgc", definition="Agnodeinfo_t* ninf(Agnode_t* n)")
 public static Object ninf(Object... arg) {
 UNSUPPORTED("e4ol03qir8voknrrta1ulkew3"); // Agnodeinfo_t* ninf(Agnode_t* n) {return (Agnodeinfo_t*)AGDATA(n);}
 
@@ -3058,6 +2977,8 @@ throw new UnsupportedOperationException();
 
 //3 3gguivz30v6fwn9nun51m5652
 // Agraphinfo_t* ginf(Agraph_t* g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="ginf", key="3gguivz30v6fwn9nun51m5652", definition="Agraphinfo_t* ginf(Agraph_t* g)")
 public static Object ginf(Object... arg) {
 UNSUPPORTED("cjr1gck7jmlygsn7321ppbe2o"); // Agraphinfo_t* ginf(Agraph_t* g) {return (Agraphinfo_t*)AGDATA(g);}
 
@@ -3069,6 +2990,8 @@ throw new UnsupportedOperationException();
 
 //3 5nsm1cj6268trw4hp3gljvk83
 // Agedgeinfo_t* einf(Agedge_t* e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/utils.c", name="einf", key="5nsm1cj6268trw4hp3gljvk83", definition="Agedgeinfo_t* einf(Agedge_t* e)")
 public static Object einf(Object... arg) {
 UNSUPPORTED("3zxj8s1l4qy0pf2wpn6vy5ix3"); // Agedgeinfo_t* einf(Agedge_t* e) {return (Agedgeinfo_t*)AGDATA(e);}
 

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -66,10 +66,10 @@ public class ST_pack_info extends UnsupportedStructAndPtr {
 	// "float aspect",
 	public int sz;
 	public int margin;
-	private int doSplines;
+	public int doSplines;
 	// "pack_mode mode",
 	public int mode;
-	private __ptr__ fixed;
+	public __ptr__ fixed;
 	// "boolean *fixed",
 	// "packval_t* vals",
 	public __ptr__ vals;

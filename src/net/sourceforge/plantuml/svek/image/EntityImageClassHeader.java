@@ -84,9 +84,9 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		FontConfiguration fontConfigurationName;
 
 		if (SkinParam.USE_STYLES()) {
-			final Style style = FontParam.CLASS.getStyleDefinition(SName.classDiagram)
+			final Style style = FontParam.CLASS.getStyleDefinition(SName.classDiagram).with(stereotype)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			fontConfigurationName = new FontConfiguration(style, skinParam, stereotype, FontParam.CLASS);
+			fontConfigurationName = new FontConfiguration(skinParam, style);
 		} else {
 			fontConfigurationName = new FontConfiguration(getSkinParam(), FontParam.CLASS, stereotype);
 		}

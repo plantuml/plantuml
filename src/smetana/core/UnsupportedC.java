@@ -47,10 +47,6 @@ public class UnsupportedC implements __ptr__ {
 	}
 	
 
-	public int minus(__ptr__ other) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	public double getDouble() {
 		throw new UnsupportedOperationException(getClass().toString());
 	}

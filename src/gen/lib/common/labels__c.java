@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -51,7 +51,6 @@ import static gen.lib.cgraph.obj__c.agobjkind;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.common.htmltable__c.make_html_label;
-import static gen.lib.common.memory__c.gmalloc;
 import static gen.lib.common.utils__c.htmlEntityUTF8;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strlen;
@@ -63,271 +62,42 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.ED_head_port;
 import static smetana.core.Macro.ED_label;
 import static smetana.core.Macro.ED_tail_port;
+import static smetana.core.Macro.GD_charset;
+import static smetana.core.Macro.GD_gvc;
 import static smetana.core.Macro.GD_label;
+import static smetana.core.Macro.LT_HTML;
+import static smetana.core.Macro.LT_RECD;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.N;
+import static smetana.core.Macro.ND_label;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.ZALLOC_ST_textspan_t;
 import static smetana.core.Macro.agtail;
 import static smetana.core.Macro.hackInitDimensionFromLabel;
+
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
-import h.ST_Agnodeinfo_t;
-import h.ST_Agobj_s;
 import h.ST_Agraph_s;
-import h.ST_Agraphinfo_t;
-import h.ST_Agrec_s;
 import h.ST_GVC_s;
 import h.ST_pointf;
 import h.ST_port;
 import h.ST_textlabel_t;
 import h.ST_textspan_t;
+import smetana.core.CStar;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
 
 public class labels__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
-
-
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
-
-
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
-
-
-
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -343,29 +113,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
 
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -387,6 +141,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -402,29 +158,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
 
 
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -442,6 +182,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -459,6 +201,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -476,6 +220,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -493,6 +239,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -510,6 +258,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -527,6 +277,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -544,6 +296,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -563,6 +317,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -582,6 +338,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -601,6 +359,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -620,6 +380,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -634,6 +396,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -648,6 +412,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -662,6 +428,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -676,6 +444,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -693,6 +463,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -708,35 +480,30 @@ throw new UnsupportedOperationException();
 
 
 
-//3 4wkeqik2dt7ecr64ej6ltbnvb
-// static void storeline(GVC_t *gvc, textlabel_t *lp, char *line, char terminator) 
-//private static __struct__<textfont_t> tf = JUtils.from(textfont_t.class);
+@Reviewed(when = "13/11/2020")
+@Difficult
+@Original(version="2.38.0", path="lib/common/labels.c", name="storeline", key="4wkeqik2dt7ecr64ej6ltbnvb", definition="static void storeline(GVC_t *gvc, textlabel_t *lp, char *line, char terminator)")
 public static void storeline(ST_GVC_s gvc, ST_textlabel_t lp, CString line, char terminator) {
 ENTERING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 try {
     final ST_pointf size = new ST_pointf();
     ST_textspan_t span = null;
     int oldsz = lp.nspans + 1;
-    lp.span = ZALLOC_ST_textspan_t((ST_textspan_t.Array) lp.span, oldsz + 1);
-    span = lp.span.get(lp.nspans);
+    
+    lp.span = CStar.<ST_textspan_t>REALLOC__(oldsz + 1, lp.span, ST_textspan_t.class);
+    span = lp.span.get__(lp.nspans);
     span.str = line;
     span.just = terminator;
-    if (line!=null && line.charAt(0)!='\0') {
+
+	// WE CHEAT
 	Z.z().tf.name = lp.fontname;
 	Z.z().tf.size = lp.fontsize;
-	// WE CHEAT
 	size.x = 0.0;
 	size.y = (int)(lp.fontsize * 1.20);
 	hackInitDimensionFromLabel(size, line.getContent());
 	span.size.y = (int)size.y;
-    }
-    else {
-	System.err.println("YOU SHOULD NOT SEE THAT");
-	size.x = 0.0;
-	size.y = (int)(lp.fontsize * 1.20);
-	span.size.y = (int)(lp.fontsize * 1.20);
-    }
-    lp.nspans = lp.nspans + 1;
+
+    lp.nspans++;
     /* width = max line width */
     lp.dimen.x = MAX(lp.dimen.x, size.x);
     /* accumulate height */
@@ -749,21 +516,22 @@ LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 
 
 
-//3 22ar72ye93a8ntj8pagnt5b5k
-// void make_simple_label(GVC_t * gvc, textlabel_t * lp) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/labels.c", name="make_simple_label", key="22ar72ye93a8ntj8pagnt5b5k", definition="void make_simple_label(GVC_t * gvc, textlabel_t * lp)")
 public static void make_simple_label(ST_GVC_s gvc, ST_textlabel_t lp) {
 ENTERING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 try {
     char c;
     CString p, line, lineptr, str = lp.text;
     char bytee = 0x00;
-    ((ST_pointf) lp.dimen).x = 0.0;
-    ((ST_pointf) lp.dimen).y = 0.0;
+    
+    lp.dimen.x = lp.dimen.y = 0.0;
     if (str.charAt(0) == '\0')
 	return;
+    
     line = lineptr = null;
     p = str;
-    line = lineptr = gmalloc((strlen(p) + 1));
+    line = lineptr = CString.gmalloc((strlen(p) + 1));
     line.setCharAt(0, '\0');
     while ((c = p.charAt(0))!='\0') {
     p = p.plus(1);
@@ -803,17 +571,20 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 		storeline(gvc, lp, line, 'n');
 		line = lineptr;
 	    } else {
-		    lineptr.setCharAt(0, c);
-		    lineptr = lineptr.plus(1);
+	    lineptr.setCharAt(0, c);
+	    lineptr = lineptr.plus(1);
 	    }
 	}
     }
+    
+    
     if (NEQ(line, lineptr)) {
 	lineptr.setCharAt(0, '\0');
 	lineptr = lineptr.plus(1);
 	storeline(gvc, lp, line, 'n');
     }
-    lp.setStruct("space", lp.dimen);
+    
+    lp.space.___(lp.dimen);
 } finally {
 LEAVING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 }
@@ -822,8 +593,8 @@ LEAVING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 
 
 
-//3 ecq5lydlrjrlaz8o6vm6svc8i
-// textlabel_t *make_label(void *obj, char *str, int kind, double fontsize, char *fontname, char *fontcolor) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/labels.c", name="", key="ecq5lydlrjrlaz8o6vm6svc8i", definition="textlabel_t *make_label(void *obj, char *str, int kind, double fontsize, char *fontname, char *fontcolor)")
 public static ST_textlabel_t make_label(__ptr__ obj, CString str, int kind, double fontsize, CString fontname, CString fontcolor) {
 ENTERING("ecq5lydlrjrlaz8o6vm6svc8i","make_label");
 try {
@@ -832,6 +603,8 @@ try {
     ST_Agnode_s n = null;
     ST_Agedge_s e = null;
         CString s = null;
+        
+        
     switch (agobjkind(obj)) {
     case AGRAPH:
         sg = (ST_Agraph_s)obj;
@@ -846,19 +619,19 @@ try {
 	g = agroot(agraphof(aghead(e)));
 	break;
     }
-    rv.setPtr("fontname", fontname);
-    rv.setPtr("fontcolor", fontcolor);
-    rv.setDouble("fontsize", fontsize);
-    rv.charset = ((ST_Agraphinfo_t)g.castTo_ST_Agobj_s().data.castTo(ST_Agraphinfo_t.class)).charset;
-    if ((kind & (2 << 1))!=0) {
-	rv.setPtr("text", str.strdup());
-        if ((kind & (1 << 1))!=0) {
+    rv.fontname =  fontname;
+    rv.fontcolor = fontcolor;
+    rv.fontsize = fontsize;
+    rv.charset = GD_charset(g);
+    if ((kind & LT_RECD)!=0) {
+	rv.text = str.strdup();
+        if ((kind & LT_HTML)!=0) {
 	    rv.html = (N(0));
 	}
     }
-    else if (kind == (1 << 1)) {
-	rv.setPtr("text", str.strdup());
-	rv.html = N(0);
+    else if (kind == LT_HTML) {
+	rv.text = str.strdup();
+	rv.html = true;
 	if (make_html_label(obj, rv)!=0) {
 	    switch (agobjkind(obj)) {
     case AGRAPH:
@@ -879,7 +652,7 @@ try {
 	/* This call just processes the graph object based escape sequences. The formatting escape
          * sequences (\n, \l, \r) are processed in make_simple_label. That call also replaces \\ with \.
          */
-	rv.setPtr("text", strdup_and_subst_obj0(str, obj, 0));
+	rv.text = strdup_and_subst_obj0(str, obj, 0);
         switch (rv.charset) {
     case 1:
 	    UNSUPPORTED("s = latin1ToUTF8(rv->text);");
@@ -889,8 +662,8 @@ try {
 	    break;
 	}
         Memory.free(rv.text);
-        rv.setPtr("text", s);
-	make_simple_label(g.castTo_ST_Agobj_s().data.castTo_ST_Agraphinfo_t().gvc, rv);
+        rv.text = s;
+	make_simple_label(GD_gvc(g), rv);
     }
     return rv;
 } finally {
@@ -903,6 +676,8 @@ LEAVING("ecq5lydlrjrlaz8o6vm6svc8i","make_label");
 
 //3 1qv9kl0wi0snf1xtrb6vo2yiu
 // void free_textspan(textspan_t * tl, int cnt) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="free_textspan", key="1qv9kl0wi0snf1xtrb6vo2yiu", definition="void free_textspan(textspan_t * tl, int cnt)")
 public static Object free_textspan(Object... arg) {
 UNSUPPORTED("eh9j8hhtolluyaegv937nnpys"); // void free_textspan(textspan_t * tl, int cnt)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -927,6 +702,8 @@ throw new UnsupportedOperationException();
 
 //3 2palqnlr5u0ssnag1bp5tq510
 // void free_label(textlabel_t * p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="free_label", key="2palqnlr5u0ssnag1bp5tq510", definition="void free_label(textlabel_t * p)")
 public static Object free_label(Object... arg) {
 UNSUPPORTED("7fgqv20ow9mktpealn2ueqf9i"); // void free_label(textlabel_t * p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -949,6 +726,8 @@ throw new UnsupportedOperationException();
 
 //3 a0gse5mgpw0xhsmu4lwellfdq
 // void emit_label(GVJ_t * job, emit_state_t emit_state, textlabel_t * lp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="emit_label", key="a0gse5mgpw0xhsmu4lwellfdq", definition="void emit_label(GVJ_t * job, emit_state_t emit_state, textlabel_t * lp)")
 public static Object emit_label(Object... arg) {
 UNSUPPORTED("2bspalmq4q86q66b0sehcnui"); // void emit_label(GVJ_t * job, emit_state_t emit_state, textlabel_t * lp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1008,8 +787,15 @@ throw new UnsupportedOperationException();
 
 
 
-//3 ajohywvjbrvkc7zca2uew6ghm
-// static char *strdup_and_subst_obj0 (char *str, void *obj, int escBackslash) 
+/* strdup_and_subst_obj0:
+ * Replace various escape sequences with the name of the associated
+ * graph object. A double backslash \\ can be used to avoid a replacement.
+ * If escBackslash is true, convert \\ to \; else leave alone. All other dyads 
+ * of the form \. are passed through unchanged.
+ */
+@Difficult
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/labels.c", name="", key="ajohywvjbrvkc7zca2uew6ghm", definition="static char *strdup_and_subst_obj0 (char *str, void *obj, int escBackslash)")
 public static CString strdup_and_subst_obj0(CString str, __ptr__ obj, int escBackslash) {
 ENTERING("ajohywvjbrvkc7zca2uew6ghm","strdup_and_subst_obj0");
 try {
@@ -1024,6 +810,8 @@ try {
     int isEdge = 0;
     ST_textlabel_t tl;
     final ST_port pt = new ST_port();
+    
+    
     /* prepare substitution strings */
     switch (agobjkind(obj)) {
 	case AGRAPH:
@@ -1040,7 +828,7 @@ try {
 	    g_len = strlen(g_str);
 	    n_str = agnameof(obj.castTo(ST_Agnode_s.class));
 	    n_len = strlen(n_str);
-	    tl =  (ST_textlabel_t) ((ST_Agnode_s)obj.castTo(ST_Agnode_s.class)).castTo_ST_Agobj_s().data.castTo_ST_Agnodeinfo_t().label;
+	    tl = ND_label((ST_Agnode_s)obj.castTo(ST_Agnode_s.class));
 	    if (tl!=null) {
 		l_str = tl.text;
 	    	if (str!=null) l_len = strlen(l_str);
@@ -1118,7 +906,9 @@ try {
 	}
     }
     /* allocate new string */
-    newstr = gmalloc(newlen + 1);
+    newstr = CString.gmalloc(newlen + 1);
+    
+    
     /* second pass over str assembles new string */
     p = newstr;
     for (s = str; ;) {
@@ -1182,8 +972,8 @@ try {
 	    p = p.plus(1);
 	}
     }
-	    p.setCharAt(0, '\0');
-	    p = p.plus(1);
+    p.setCharAt(0, '\0');
+    p = p.plus(1);
     return newstr;
 } finally {
 LEAVING("ajohywvjbrvkc7zca2uew6ghm","strdup_and_subst_obj0");
@@ -1195,6 +985,8 @@ LEAVING("ajohywvjbrvkc7zca2uew6ghm","strdup_and_subst_obj0");
 
 //3 af2a0cdl8ld7bbq0qu0rt1d8z
 // char *strdup_and_subst_obj(char *str, void *obj) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="", key="af2a0cdl8ld7bbq0qu0rt1d8z", definition="char *strdup_and_subst_obj(char *str, void *obj)")
 public static CString strdup_and_subst_obj(CString str, __ptr__ obj) {
 ENTERING("af2a0cdl8ld7bbq0qu0rt1d8z","strdup_and_subst_obj");
 try {
@@ -1214,6 +1006,8 @@ LEAVING("af2a0cdl8ld7bbq0qu0rt1d8z","strdup_and_subst_obj");
 
 //3 bevzgi4opmmgxwksl1lssepxc
 // static int xml_isentity(char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="xml_isentity", key="bevzgi4opmmgxwksl1lssepxc", definition="static int xml_isentity(char *s)")
 public static Object xml_isentity(Object... arg) {
 UNSUPPORTED("ddxpdim5n11qvep9b61kpijae"); // static int xml_isentity(char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1248,6 +1042,8 @@ throw new UnsupportedOperationException();
 
 //3 57faqt3qjliznr0tkqn1ebjgk
 // char *xml_string(char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="", key="57faqt3qjliznr0tkqn1ebjgk", definition="char *xml_string(char *s)")
 public static Object xml_string(Object... arg) {
 UNSUPPORTED("bnxc0qd7mqxuf0ayp7tmgh9i0"); // char *xml_string(char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1262,6 +1058,8 @@ throw new UnsupportedOperationException();
 
 //3 2ukbjx5sti6tulvxdrftanx4p
 // char *xml_string0(char *s, boolean raw) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="", key="2ukbjx5sti6tulvxdrftanx4p", definition="char *xml_string0(char *s, boolean raw)")
 public static Object xml_string0(Object... arg) {
 UNSUPPORTED("c15krv3c4yexqimy1thaiy4zm"); // char *xml_string0(char *s, boolean raw)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1335,6 +1133,8 @@ throw new UnsupportedOperationException();
 
 //3 d3mybo5t72cpoks3gfdfynkjw
 // char *xml_url_string(char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/labels.c", name="", key="d3mybo5t72cpoks3gfdfynkjw", definition="char *xml_url_string(char *s)")
 public static Object xml_url_string(Object... arg) {
 UNSUPPORTED("9u7qpiphyo8n8zc8n1071b67e"); // char *xml_url_string(char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

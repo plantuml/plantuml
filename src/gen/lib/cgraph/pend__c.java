@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class pend__c {
@@ -187,6 +190,8 @@ public class pend__c {
 
 //3 byhbwh2n3ga4l1qwnurcynxym
 // static void free_symlist(pending_cb_t * pcb) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="free_symlist", key="byhbwh2n3ga4l1qwnurcynxym", definition="static void free_symlist(pending_cb_t * pcb)")
 public static Object free_symlist(Object... arg) {
 UNSUPPORTED("3ghvg7ys2fzlmdd0nfqzopisv"); // static void free_symlist(pending_cb_t * pcb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -205,6 +210,8 @@ throw new UnsupportedOperationException();
 
 //3 1x8gmra18kgia8023n42trx6s
 // static void freef(Dict_t * dict, void *ptr, Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="freef", key="1x8gmra18kgia8023n42trx6s", definition="static void freef(Dict_t * dict, void *ptr, Dtdisc_t * disc)")
 public static Object freef(Object... arg) {
 UNSUPPORTED("ctg6vmef59dajuf3reb8gedms"); // static void freef(Dict_t * dict, void *ptr, Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -228,6 +235,8 @@ throw new UnsupportedOperationException();
 
 //3 cvwttyefig4x3yibqx8zu9rpg
 // static Dict_t *dictof(pendingset_t * ds, Agobj_t * obj, int kind) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="", key="cvwttyefig4x3yibqx8zu9rpg", definition="static Dict_t *dictof(pendingset_t * ds, Agobj_t * obj, int kind)")
 public static Object dictof(Object... arg) {
 UNSUPPORTED("9138xlja2ni7mmvi0cd4temyb"); // static Dict_t *dictof(pendingset_t * ds, Agobj_t * obj, int kind)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -297,6 +306,8 @@ throw new UnsupportedOperationException();
 
 //3 9u07pj11z97vzx0rdu35dy5b6
 // static unsigned long genkey(Agobj_t * obj) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="genkey", key="9u07pj11z97vzx0rdu35dy5b6", definition="static unsigned long genkey(Agobj_t * obj)")
 public static Object genkey(Object... arg) {
 UNSUPPORTED("6wrgawykukpwhj0d0ha4mzab4"); // static unsigned long genkey(Agobj_t * obj)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -311,6 +322,8 @@ throw new UnsupportedOperationException();
 
 //3 d1eeyb9xae1m5jodp0tq4maaw
 // static pending_cb_t *lookup(Dict_t * dict, Agobj_t * obj) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="", key="d1eeyb9xae1m5jodp0tq4maaw", definition="static pending_cb_t *lookup(Dict_t * dict, Agobj_t * obj)")
 public static Object lookup(Object... arg) {
 UNSUPPORTED("94gs9x3we2rbx577uw4x9elm2"); // static pending_cb_t *lookup(Dict_t * dict, Agobj_t * obj)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -328,6 +341,8 @@ throw new UnsupportedOperationException();
 
 //3 f35guneihrs1ux86uvf6heyj6
 // static void record_sym(Agobj_t * obj, pending_cb_t * handle, 		       Agsym_t * optsym) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="record_sym", key="f35guneihrs1ux86uvf6heyj6", definition="static void record_sym(Agobj_t * obj, pending_cb_t * handle, 		       Agsym_t * optsym)")
 public static Object record_sym(Object... arg) {
 UNSUPPORTED("bl646bfryeajicgd7718m70ed"); // static void record_sym(Agobj_t * obj, pending_cb_t * handle,
 UNSUPPORTED("amek1l9br0si8a9jvgv8v9jkb"); // 		       Agsym_t * optsym)
@@ -357,6 +372,8 @@ throw new UnsupportedOperationException();
 
 //3 bjiqwdwumf3dnt54kft0r6k0d
 // static pending_cb_t *insert(Dict_t * dict, Agraph_t * g, Agobj_t * obj, 			    Agsym_t * optsym) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="", key="bjiqwdwumf3dnt54kft0r6k0d", definition="static pending_cb_t *insert(Dict_t * dict, Agraph_t * g, Agobj_t * obj, 			    Agsym_t * optsym)")
 public static Object insert(Object... arg) {
 UNSUPPORTED("ckcre9wwmah3rfq66mljy5lh"); // static pending_cb_t *insert(Dict_t * dict, Agraph_t * g, Agobj_t * obj,
 UNSUPPORTED("a2kv73jmjelhmpqkjs8m1xjhw"); // 			    Agsym_t * optsym)
@@ -383,6 +400,8 @@ throw new UnsupportedOperationException();
 
 //3 6xukd3ssn86gjgbed1tgfj2d3
 // static void purge(Dict_t * dict, Agobj_t * obj) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="purge", key="6xukd3ssn86gjgbed1tgfj2d3", definition="static void purge(Dict_t * dict, Agobj_t * obj)")
 public static Object purge(Object... arg) {
 UNSUPPORTED("5e5swvwz1c1vwauwkpqhyba29"); // static void purge(Dict_t * dict, Agobj_t * obj)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -400,6 +419,8 @@ throw new UnsupportedOperationException();
 
 //3 77vpxparxzmm27mmm1mqs0m0y
 // void agrecord_callback(Agraph_t * g, Agobj_t * obj, int kind, 		       Agsym_t * optsym) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="agrecord_callback", key="77vpxparxzmm27mmm1mqs0m0y", definition="void agrecord_callback(Agraph_t * g, Agobj_t * obj, int kind, 		       Agsym_t * optsym)")
 public static Object agrecord_callback(Object... arg) {
 UNSUPPORTED("8kh7tdu40e0f5hui0hcx3ojw"); // void agrecord_callback(Agraph_t * g, Agobj_t * obj, int kind,
 UNSUPPORTED("amek1l9br0si8a9jvgv8v9jkb"); // 		       Agsym_t * optsym)
@@ -450,6 +471,8 @@ throw new UnsupportedOperationException();
 
 //3 74sr5sunzimzs4dop6e56ylqr
 // static void cb(Dict_t * dict, int callback_kind) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="cb", key="74sr5sunzimzs4dop6e56ylqr", definition="static void cb(Dict_t * dict, int callback_kind)")
 public static Object cb(Object... arg) {
 UNSUPPORTED("8z1461yc2ld1pp01ko4qua5ob"); // static void cb(Dict_t * dict, int callback_kind)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -485,6 +508,8 @@ throw new UnsupportedOperationException();
 
 //3 e7sb9ozah1m8hcgr0r26yztet
 // static void agrelease_callbacks(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="agrelease_callbacks", key="e7sb9ozah1m8hcgr0r26yztet", definition="static void agrelease_callbacks(Agraph_t * g)")
 public static Object agrelease_callbacks(Object... arg) {
 UNSUPPORTED("6nqqqrpb95kihyqznxyew5ax6"); // static void agrelease_callbacks(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -515,6 +540,8 @@ throw new UnsupportedOperationException();
 
 //3 8uhdzlydn56607gimdrofjtex
 // int agcallbacks(Agraph_t * g, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/pend.c", name="agcallbacks", key="8uhdzlydn56607gimdrofjtex", definition="int agcallbacks(Agraph_t * g, int flag)")
 public static Object agcallbacks(Object... arg) {
 UNSUPPORTED("6grr09xacc6khqaw6ho0nky79"); // int agcallbacks(Agraph_t * g, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

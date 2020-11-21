@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dtstat__c {
@@ -115,6 +118,8 @@ public class dtstat__c {
 
 //3 91c7rdavgvzhuigvve5ibdpn0
 // static void dttstat(Dtstat_t* ds, Dtlink_t* root, int depth, int* level)        
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtstat.c", name="dttstat", key="91c7rdavgvzhuigvve5ibdpn0", definition="static void dttstat(Dtstat_t* ds, Dtlink_t* root, int depth, int* level)")
 public static Object dttstat(Object... arg) {
 UNSUPPORTED("96759a5l0ygg0om48m2a6t0ng"); // static void dttstat(Dtstat_t* ds, Dtlink_t* root, int depth, int* level)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -136,6 +141,8 @@ throw new UnsupportedOperationException();
 
 //3 a8o5okh4tw99gnboco3s2dmxd
 // static void dthstat(register Dtdata_t* data, Dtstat_t* ds, register int* count)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtstat.c", name="dthstat", key="a8o5okh4tw99gnboco3s2dmxd", definition="static void dthstat(register Dtdata_t* data, Dtstat_t* ds, register int* count)")
 public static Object dthstat(Object... arg) {
 UNSUPPORTED("48ylybwp2yevlr561pyv3jui"); // static void dthstat(register Dtdata_t* data, Dtstat_t* ds, register int* count)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -163,6 +170,8 @@ throw new UnsupportedOperationException();
 
 //3 1kbkj84h5jc45cmi7lzd45dp
 // int dtstat(register Dt_t* dt, Dtstat_t* ds, int all)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtstat.c", name="dtstat", key="1kbkj84h5jc45cmi7lzd45dp", definition="int dtstat(register Dt_t* dt, Dtstat_t* ds, int all)")
 public static Object dtstat(Object... arg) {
 UNSUPPORTED("ao2i3bpekp72m9gi7y5ckz4rk"); // int dtstat(register Dt_t* dt, Dtstat_t* ds, int all)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

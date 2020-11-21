@@ -36,14 +36,13 @@
 
 package smetana.core;
 
-import h.ST_Ppoly_t;
-import h.ST_pointf;
-import h.htmllabel_t;
-
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import h.ST_Ppoly_t;
+import h.ST_pointf;
 
 public class CType {
 
@@ -131,9 +130,6 @@ public class CType {
 		}
 		if (type.equals("pointf_s")) {
 			return ST_pointf.class;
-		}
-		if (type.endsWith("htmllabel_t")) {
-			return htmllabel_t.class;
 		}
 		try {
 			final Class result = Class.forName("h." + type);

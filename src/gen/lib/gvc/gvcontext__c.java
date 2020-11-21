@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -48,8 +48,10 @@ import static smetana.core.JUtils.function;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_GVC_s;
-import h.lt_symlist_t;
 import smetana.core.__ptr__;
 
 public class gvcontext__c {
@@ -166,7 +168,9 @@ public static __ptr__ LibInfo = null;
 
 //3 8jwauh4lo3kcvxhomy40s94b
 // GVC_t *gvNEWcontext(const lt_symlist_t *builtins, int demand_loading) 
-public static ST_GVC_s gvNEWcontext(lt_symlist_t builtins, boolean demand_loading) {
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvcontext.c", name="", key="8jwauh4lo3kcvxhomy40s94b", definition="GVC_t *gvNEWcontext(const lt_symlist_t *builtins, int demand_loading)")
+public static ST_GVC_s gvNEWcontext(__ptr__ builtins, boolean demand_loading) {
 ENTERING("8jwauh4lo3kcvxhomy40s94b","gvNEWcontext");
 try {
 	ST_GVC_s gvc = new ST_GVC_s();
@@ -187,6 +191,8 @@ LEAVING("8jwauh4lo3kcvxhomy40s94b","gvNEWcontext");
 
 //3 7i8lj0jlmprrj5kmbegtkh46n
 // void gvFinalize(GVC_t * gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvcontext.c", name="gvFinalize", key="7i8lj0jlmprrj5kmbegtkh46n", definition="void gvFinalize(GVC_t * gvc)")
 public static Object gvFinalize(Object... arg) {
 UNSUPPORTED("1dio7yofln4lzxco3d0eucybt"); // void gvFinalize(GVC_t * gvc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -202,6 +208,8 @@ throw new UnsupportedOperationException();
 
 //3 ctg42qeu1yvs2g9r5wcv4zzrl
 // int gvFreeContext(GVC_t * gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvcontext.c", name="gvFreeContext", key="ctg42qeu1yvs2g9r5wcv4zzrl", definition="int gvFreeContext(GVC_t * gvc)")
 public static Object gvFreeContext(Object... arg) {
 UNSUPPORTED("cdc5p7gur1o2qu1rfaiwrhdyj"); // int gvFreeContext(GVC_t * gvc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

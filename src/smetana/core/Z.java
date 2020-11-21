@@ -37,6 +37,11 @@
 package smetana.core;
 
 import static smetana.core.JUtils.function;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
 import gen.lib.cdt.dttree__c;
 import gen.lib.cgraph.attr__c;
 import gen.lib.cgraph.edge__c;
@@ -80,10 +85,6 @@ import h.ST_splineInfo;
 import h.ST_textfont_t;
 import h.ST_tna_t;
 import h.ST_triangle_t;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 public class Z {
 
@@ -198,15 +199,15 @@ public class Z {
 
 	public int routeinit;
 
-	public ST_pointf.Array ps;
+	public CStar<ST_pointf> ps;
 
 	public int maxpn;
 
-	public ST_pointf.Array polypoints;
+	public CStar<ST_pointf> polypoints;
 
 	public int polypointn;
 
-	public ST_Pedge_t.Array edges;
+	public CStar<ST_Pedge_t> edges;
 
 	public int edgen;
 
@@ -222,9 +223,9 @@ public class Z {
 
 	public boolean ReMincross;
 
-	public ST_Agedge_s.ArrayOfStar TE_list;
+	public CStarStar<ST_Agedge_s> TE_list;
 
-	public __ptr__ TI_list;
+	public int TI_list[];
 
 	public ST_Agnode_s Last_node_decomp;
 	public ST_Agnode_s Last_node_rank;
@@ -233,7 +234,7 @@ public class Z {
 
 	public int trin, tril;
 
-	public ST_triangle_t.Array tris;
+	public CStar<ST_triangle_t> tris;
 
 	public int pnln, pnll;
 
@@ -248,11 +249,16 @@ public class Z {
 
 	public final ST_shape_functions poly_fns = new ST_shape_functions();
 
-	public ST_tna_t.Array tnas;
+	public final ST_shape_functions record_fns = new ST_shape_functions();
+
+	public CStar<ST_tna_t> tnas;
 	public int tnan;
 
-	public final ST_shape_desc Shapes[] = { __Shapes__("box", poly_fns, p_box),
-			__Shapes__("ellipse", poly_fns, p_ellipse), __Shapes__(null, null, null) };
+	public final ST_shape_desc Shapes[] = {
+			__Shapes__("box", poly_fns, p_box),
+			__Shapes__("ellipse", poly_fns, p_ellipse), 
+			__Shapes__("record", record_fns, null), 
+			__Shapes__(null, null, null) };
 
 	public final ST_dtdisc_s Ag_mainedge_id_disc = new ST_dtdisc_s();
 
@@ -266,17 +272,17 @@ public class Z {
 	public ST_polygon_t poly;
 	public int last, outp, sides;
 	public final ST_pointf O = new ST_pointf(); /* point (0,0) */
-	public ST_pointf.Array vertex;
+	public CStar<ST_pointf> vertex;
 	public double xsize, ysize, scalex, scaley, box_URx, box_URy;
 
 	public final ST_textfont_t tf = new ST_textfont_t();
 
-	public ST_pointf.Array pointfs;
-	public ST_pointf.Array pointfs2;
+	public CStar<ST_pointf> pointfs;
+	public CStar<ST_pointf> pointfs2;
 	public int numpts;
 	public int numpts2;
 
-	public __ptr__ Count;
+	public int[] Count;
 	public int C;
 
 	public int ctr = 1;
@@ -292,8 +298,10 @@ public class Z {
 	public int opn_route;
 	public int opn_shortest;
 
-	public ST_pointf.Array ops_route;
-	public ST_pointf.Array ops_shortest;
+	public CStar<ST_pointf> ops_route;
+	public CStar<ST_pointf> ops_shortest;
+	
+	public CString reclblp;
 
 	public static Z z() {
 		return instances2.get().peekFirst();
@@ -479,10 +487,10 @@ public class Z {
 		Center.p.y = 0;
 		Center.theta = -1;
 		Center.bp = null;
-		Center.defined = 0;
-		Center.constrained = 0;
-		Center.clip = 1;
-		Center.dyna = 0;
+		Center.defined = false;
+		Center.constrained = false;
+		Center.clip = true;
+		Center.dyna = false;
 		Center.order = 0;
 		Center.side = 0;
 
@@ -506,6 +514,13 @@ public class Z {
 		poly_fns.setPtr("insidefn", function(shapes__c.class, "poly_inside"));
 		poly_fns.setPtr("pboxfn", function(shapes__c.class, "poly_path"));
 		poly_fns.setPtr("codefn", function(shapes__c.class, "poly_gencode"));
+
+		record_fns.setPtr("initfn", function(shapes__c.class, "record_init"));
+		record_fns.setPtr("freefn", function(shapes__c.class, "record_free"));
+		record_fns.setPtr("portfn", function(shapes__c.class, "record_port"));
+		record_fns.setPtr("insidefn", function(shapes__c.class, "record_inside"));
+		record_fns.setPtr("pboxfn", function(shapes__c.class, "record_path"));
+		record_fns.setPtr("codefn", function(shapes__c.class, "record_gencode"));
 
 		Ag_mainedge_id_disc.key = 0;
 		Ag_mainedge_id_disc.size = 0;

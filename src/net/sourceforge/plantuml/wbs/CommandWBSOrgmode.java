@@ -42,8 +42,10 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandWBSOrgmode extends SingleLineCommand2<WBSDiagram> {
 
@@ -54,6 +56,7 @@ public class CommandWBSOrgmode extends SingleLineCommand2<WBSDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWBSOrgmode.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "([*]+)"), //
+				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("DIRECTION", "([<>])?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
@@ -63,9 +66,14 @@ public class CommandWBSOrgmode extends SingleLineCommand2<WBSDiagram> {
 	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg) {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
+		final String stringColor = arg.get("BACKCOLOR", 0);
+		HColor backColor = null;
+		if (stringColor != null) {
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
+		}
 		final String direction = arg.get("DIRECTION", 0);
 		final Direction dir = "<".equals(direction) ? Direction.LEFT : Direction.RIGHT;
-		return diagram.addIdea(type.length() - 1, label, dir, IdeaShape.BOX);
+		return diagram.addIdea(backColor, type.length() - 1, label, dir, IdeaShape.BOX);
 	}
 
 }

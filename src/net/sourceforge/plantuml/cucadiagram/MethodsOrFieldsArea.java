@@ -164,7 +164,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 //			.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final Style style = fontParam.getStyleDefinition(diagramType)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			config = new FontConfiguration(style, skinParam, stereotype, fontParam);
+			config = new FontConfiguration(skinParam, style);
 		} else {
 			config = new FontConfiguration(skinParam, fontParam, stereotype);
 		}

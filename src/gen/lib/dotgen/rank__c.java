@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -68,11 +68,12 @@ import static gen.lib.dotgen.class1__c.class1_;
 import static gen.lib.dotgen.decomp__c.decompose;
 import static gen.lib.dotgen.dotinit__c.dot_root;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strncmp;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.CLUSTER;
+import static smetana.core.Macro.EDGE_LABEL;
 import static smetana.core.Macro.ED_minlen;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.ED_to_virt;
@@ -90,7 +91,11 @@ import static smetana.core.Macro.GD_nlist;
 import static smetana.core.Macro.GD_parent;
 import static smetana.core.Macro.GD_ranksep;
 import static smetana.core.Macro.GD_set_type;
+import static smetana.core.Macro.LEAFSET;
+import static smetana.core.Macro.LOCAL;
+import static smetana.core.Macro.MAXRANK;
 import static smetana.core.Macro.MAXSHORT;
+import static smetana.core.Macro.MINRANK;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_in;
@@ -100,8 +105,19 @@ import static smetana.core.Macro.ND_node_type;
 import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_ranktype;
+import static smetana.core.Macro.NEW_RANK;
+import static smetana.core.Macro.NORMAL;
+import static smetana.core.Macro.SAMERANK;
+import static smetana.core.Macro.SINKRANK;
+import static smetana.core.Macro.SOURCERANK;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.ZALLOC_ST_Agraph_s;
+
+import gen.annotation.Difficult;
+import gen.annotation.HasND_Rank;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Todo;
+import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
 import h.ST_Agraph_s;
@@ -109,251 +125,17 @@ import h.ST_aspect_t;
 import h.ST_elist;
 import h.ST_point;
 import h.ST_pointf;
+import smetana.core.CStarStar;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
 
 public class rank__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
-
-
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
-
-
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
-
-
-
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -369,29 +151,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -413,6 +178,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -427,30 +194,10 @@ throw new UnsupportedOperationException();
 
 
 
-
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
-
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -468,6 +215,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -485,6 +234,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -502,6 +253,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -519,6 +272,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -536,6 +291,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -553,6 +310,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -570,6 +329,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -589,6 +350,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -608,6 +371,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -627,6 +392,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -646,6 +413,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -660,6 +429,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -674,6 +445,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -688,6 +461,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -702,6 +477,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -719,6 +496,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -734,14 +513,14 @@ throw new UnsupportedOperationException();
 
 
 
-//3 3f1re3nfkhxwjjb90kppwuupr
-// static void  renewlist(elist * L) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="renewlist", key="3f1re3nfkhxwjjb90kppwuupr", definition="static void  renewlist(elist * L)")
 public static void renewlist(ST_elist L) {
 ENTERING("3f1re3nfkhxwjjb90kppwuupr","renewlist");
 try {
     int i;
     for (i = L.size; i >= 0; i--)
-	L.list.set(i, null);
+	L.list.set_(i, null);
     L.size = 0;
 } finally {
 LEAVING("3f1re3nfkhxwjjb90kppwuupr","renewlist");
@@ -751,16 +530,19 @@ LEAVING("3f1re3nfkhxwjjb90kppwuupr","renewlist");
 
 
 
-//3 1xov2qhuxj1f9nbzu3xsa6679
-// static void  cleanup1(graph_t * g) 
+@Difficult
+@Reviewed(when = "14/11/2020")
+@Todo(what = "check why GD_comp(g).resetList comes from GD_comp(g).list = NULL")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="cleanup1", key="1xov2qhuxj1f9nbzu3xsa6679", definition="static void  cleanup1(graph_t * g)")
 public static void cleanup1(ST_Agraph_s g) {
 ENTERING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
 try {
     ST_Agnode_s n;
     ST_Agedge_s e, f;
     int c;
+    
     for (c = 0; c < GD_comp(g).size; c++) {
-    	GD_nlist(g, GD_comp(g).getFromList(c));
+    GD_nlist(g, GD_comp(g).list.get_(c));
 	for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	    renewlist(ND_in(n));
 	    renewlist(ND_out(n));
@@ -793,7 +575,8 @@ try {
 	    ED_to_virt(e, null);
 	}
     }
-    GD_comp(g).resetList();
+    Memory.free(GD_comp(g).list);
+    GD_comp(g).list = null;
     GD_comp(g).size = 0;
 } finally {
 LEAVING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
@@ -802,15 +585,19 @@ LEAVING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
 
 
 
-
-//3 bxjf5g7g953ii1hfodl1j0y4u
-// static void  edgelabel_ranks(graph_t * g) 
+/* When there are edge labels, extra ranks are reserved here for the virtual
+ * nodes of the labels.  This is done by doubling the input edge lengths.
+ * The input rank separation is adjusted to compensate.
+ */
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="edgelabel_ranks", key="bxjf5g7g953ii1hfodl1j0y4u", definition="static void  edgelabel_ranks(graph_t * g)")
 public static void edgelabel_ranks(ST_Agraph_s g) {
 ENTERING("bxjf5g7g953ii1hfodl1j0y4u","edgelabel_ranks");
 try {
     ST_Agnode_s n;
     ST_Agedge_s e;
-    if ((GD_has_labels(g) & (1 << 0))!=0) {
+    
+    if ((GD_has_labels(g) & EDGE_LABEL)!=0) {
 	for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
 	    for (e = agfstout(g, n); e!=null; e = agnxtout(g, e))
 		ED_minlen(e, ED_minlen(e) * 2);
@@ -826,6 +613,8 @@ LEAVING("bxjf5g7g953ii1hfodl1j0y4u","edgelabel_ranks");
 
 //3 9kjpoxcxoy3nhqd9rflwclo7c
 // static void  collapse_rankset(graph_t * g, graph_t * subg, int kind) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="collapse_rankset", key="9kjpoxcxoy3nhqd9rflwclo7c", definition="static void  collapse_rankset(graph_t * g, graph_t * subg, int kind)")
 public static Object collapse_rankset(Object... arg) {
 UNSUPPORTED("59dl3yc4jbcy2pb7j1njhlybi"); // static void 
 UNSUPPORTED("8hizp29cxh1rnp84yrlv4nl8x"); // collapse_rankset(graph_t * g, graph_t * subg, int kind)
@@ -871,16 +660,18 @@ throw new UnsupportedOperationException();
 
 
 
-//3 65qi5f0bxp6d6vahhlcolpk88
-// static int  rank_set_class(graph_t * g) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="rank_set_class", key="65qi5f0bxp6d6vahhlcolpk88", definition="static int  rank_set_class(graph_t * g)")
 public static int rank_set_class(ST_Agraph_s g) {
 ENTERING("65qi5f0bxp6d6vahhlcolpk88","rank_set_class");
 try {
     CString name[] = new CString[] { new CString("same"), new CString("min"), new CString("source"), new CString("max"), new CString("sink"), null };
-    int class_[] = new int[] { 1, 2, 3, 4, 5, 0 };
+    int class_[] = new int[] 
+    { SAMERANK, MINRANK, SOURCERANK, MAXRANK, SINKRANK, 0 };
     int val;
+    
     if (is_cluster(g))
-	return 7;
+	return CLUSTER;
     val = maptoken(agget(g, new CString("rank")), name, class_);
     GD_set_type(g, val);
     return val;
@@ -891,17 +682,17 @@ LEAVING("65qi5f0bxp6d6vahhlcolpk88","rank_set_class");
 
 
 
-
-//3 5189iviqj57iztftckz86y6jj
-// static int  make_new_cluster(graph_t * g, graph_t * subg) 
+@Difficult
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="make_new_cluster", key="5189iviqj57iztftckz86y6jj", definition="static int  make_new_cluster(graph_t * g, graph_t * subg)")
 public static int make_new_cluster(ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("5189iviqj57iztftckz86y6jj","make_new_cluster");
 try {
     int cno;
     GD_n_cluster(g, GD_n_cluster(g)+1);
     cno = GD_n_cluster(g);
-    GD_clust(g, ZALLOC_ST_Agraph_s((ST_Agraph_s.Array) GD_clust(g), cno + 1));
-    GD_clust(g).plus(cno).setPtr(subg);
+    GD_clust(g, CStarStar.<ST_Agraph_s>REALLOC(cno + 1, GD_clust(g), ST_Agraph_s.class));
+    GD_clust(g).set_(cno, subg);
     do_graph_label(subg);
     return cno;
 } finally {
@@ -911,16 +702,15 @@ LEAVING("5189iviqj57iztftckz86y6jj","make_new_cluster");
 
 
 
-
-//3 9lvm2ufqjzl2bsbpo0zg9go58
-// static void  node_induce(graph_t * par, graph_t * g) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="node_induce", key="9lvm2ufqjzl2bsbpo0zg9go58", definition="static void  node_induce(graph_t * par, graph_t * g)")
 public static void node_induce(ST_Agraph_s par, ST_Agraph_s g) {
 ENTERING("9lvm2ufqjzl2bsbpo0zg9go58","node_induce");
 try {
     ST_Agnode_s n, nn;
     ST_Agedge_s e;
     int i;
-    LOG2("node_induce");
+
     /* enforce that a node is in at most one cluster at this level */
     for (n = agfstnode(g); n!=null; n = nn) {
 	nn = agnxtnode(g, n);
@@ -929,12 +719,13 @@ try {
 	    continue;
 	}
 	for (i = 1; i < GD_n_cluster(par); i++)
-	    if (agcontains((ST_Agraph_s) GD_clust(par).get(i).getPtr(), n))
+	    if (agcontains(GD_clust(par).get_(i), n))
 		break;
 	if (i < GD_n_cluster(par))
 	    agdelete(g, n);
 	ND_clust(n, null);
     }
+    
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
 	for (e = agfstout(dot_root(g), n); e!=null; e = agnxtout(dot_root(g), e)) {
 	    if (agcontains(g, aghead(e)))
@@ -951,6 +742,8 @@ LEAVING("9lvm2ufqjzl2bsbpo0zg9go58","node_induce");
 
 //3 650rxyqioihwhhqkex61prwfs
 // void  dot_scan_ranks(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="dot_scan_ranks", key="650rxyqioihwhhqkex61prwfs", definition="void  dot_scan_ranks(graph_t * g)")
 public static Object dot_scan_ranks(Object... arg) {
 UNSUPPORTED("347dderd02mvlozoheqo4ejwo"); // void 
 UNSUPPORTED("3qe2zolxii33gr1krcjkgygwm"); // dot_scan_ranks(graph_t * g)
@@ -979,27 +772,29 @@ throw new UnsupportedOperationException();
 
 
 
-//3 2rbs5deyvlh5s7lkhv6zouqbe
-// static void cluster_leader(graph_t * clust) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="cluster_leader", key="2rbs5deyvlh5s7lkhv6zouqbe", definition="static void cluster_leader(graph_t * clust)")
 public static void cluster_leader(ST_Agraph_s clust) {
 ENTERING("2rbs5deyvlh5s7lkhv6zouqbe","cluster_leader");
 try {
     ST_Agnode_s leader, n;
     int maxrank = 0;
+    
     /* find number of ranks and select a leader */
     leader = null;
     for (n = GD_nlist(clust); n!=null; n = ND_next(n)) {
-	if ((ND_rank(n) == 0) && (ND_node_type(n) == 0))
+	if ((ND_rank(n) == 0) && (ND_node_type(n) == NORMAL))
 	    leader = n;
 	if (maxrank < ND_rank(n))
 	    maxrank = ND_rank(n);
     }
     assert(leader != null);
     GD_leader(clust, leader);
+    
     for (n = agfstnode(clust); n!=null; n = agnxtnode(clust, n)) {
 	//assert((ND_UF_size(n) <= 1) || (n == leader));
 	UF_union(n, leader);
-	ND_ranktype(n, 7);
+	ND_ranktype(n, CLUSTER);
     }
 } finally {
 LEAVING("2rbs5deyvlh5s7lkhv6zouqbe","cluster_leader");
@@ -1008,9 +803,15 @@ LEAVING("2rbs5deyvlh5s7lkhv6zouqbe","cluster_leader");
 
 
 
-
-//3 f3sl627dqmre3kru883bpdxc3
-// static void  collapse_cluster(graph_t * g, graph_t * subg) 
+/*
+ * A cluster is collapsed in three steps.
+ * 1) The nodes of the cluster are ranked locally.
+ * 2) The cluster is collapsed into one node on the least rank.
+ * 3) In class1(), any inter-cluster edges are converted using
+ *    the "virtual node + 2 edges" trick.
+ */
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="collapse_cluster", key="f3sl627dqmre3kru883bpdxc3", definition="static void  collapse_cluster(graph_t * g, graph_t * subg)")
 public static void collapse_cluster(ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("f3sl627dqmre3kru883bpdxc3","collapse_cluster");
 try {
@@ -1022,11 +823,13 @@ try {
     if (agfstnode(subg) == null)
 	return;
     make_new_cluster(g, subg);
-    if (Z.z().CL_type == 100) {
+    if (Z.z().CL_type == LOCAL) {
 	dot1_rank(subg, null);
 	cluster_leader(subg);
     } else
-UNSUPPORTED("1os84mtyrb110i4sd8bdjrwk"); // 	dot_scan_ranks(subg);
+    UNSUPPORTED("1os84mtyrb110i4sd8bdjrwk"); // 	dot_scan_ranks(subg);
+    
+    
 } finally {
 LEAVING("f3sl627dqmre3kru883bpdxc3","collapse_cluster");
 }
@@ -1034,23 +837,27 @@ LEAVING("f3sl627dqmre3kru883bpdxc3","collapse_cluster");
 
 
 
-
-//3 din4qnipewrwnelaimzvlplft
-// static void  collapse_sets(graph_t *rg, graph_t *g) 
+/* Execute union commands for "same rank" subgraphs and clusters. */
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="collapse_sets", key="din4qnipewrwnelaimzvlplft", definition="static void  collapse_sets(graph_t *rg, graph_t *g)")
 public static void collapse_sets(ST_Agraph_s rg, ST_Agraph_s g) {
 ENTERING("din4qnipewrwnelaimzvlplft","collapse_sets");
 try {
     int c;
     ST_Agraph_s  subg;
+    
     for (subg = agfstsubg(g); subg!=null; subg = agnxtsubg(subg)) {
 	c = rank_set_class(subg);
 	if (c!=0) {
-	    if ((c == 7) && Z.z().CL_type == 100)
+	    if ((c == CLUSTER) && Z.z().CL_type == LOCAL)
 		collapse_cluster(rg, subg);
 	    else
 		collapse_rankset(rg, subg, c);
 	}
 	else collapse_sets(rg, subg);
+	
+	
+	
     }
 } finally {
 LEAVING("din4qnipewrwnelaimzvlplft","collapse_sets");
@@ -1062,6 +869,8 @@ LEAVING("din4qnipewrwnelaimzvlplft","collapse_sets");
 
 //3 5n9mgh7vlru5mb1j9oienvbvs
 // static void  find_clusters(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="find_clusters", key="5n9mgh7vlru5mb1j9oienvbvs", definition="static void  find_clusters(graph_t * g)")
 public static Object find_clusters(Object... arg) {
 UNSUPPORTED("59dl3yc4jbcy2pb7j1njhlybi"); // static void 
 UNSUPPORTED("cdsgmo50taekqgk95mfn25930"); // find_clusters(graph_t * g)
@@ -1079,16 +888,17 @@ throw new UnsupportedOperationException();
 
 
 
-//3 12fw0esv4unfin6waf9mknc1o
-// static void  set_minmax(graph_t * g) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="set_minmax", key="12fw0esv4unfin6waf9mknc1o", definition="static void  set_minmax(graph_t * g)")
 public static void set_minmax(ST_Agraph_s g) {
 ENTERING("12fw0esv4unfin6waf9mknc1o","set_minmax");
 try {
     int c;
+    
     GD_minrank(g, GD_minrank(g) + ND_rank(GD_leader(g)));
     GD_maxrank(g, GD_maxrank(g) + ND_rank(GD_leader(g)));
     for (c = 1; c <= GD_n_cluster(g); c++)
-	set_minmax((ST_Agraph_s) GD_clust(g).get(c).getPtr());
+	set_minmax(GD_clust(g).get_(c));
 } finally {
 LEAVING("12fw0esv4unfin6waf9mknc1o","set_minmax");
 }
@@ -1096,9 +906,11 @@ LEAVING("12fw0esv4unfin6waf9mknc1o","set_minmax");
 
 
 
-
-//3 3bcr1748gqnu8ogb73jeja7ly
-// static point  minmax_edges(graph_t * g) 
+/* To ensure that min and max rank nodes always have the intended rank
+ * assignment, reverse any incompatible edges.
+ */
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="minmax_edges", key="3bcr1748gqnu8ogb73jeja7ly", definition="static point  minmax_edges(graph_t * g)")
 public static ST_point minmax_edges(ST_Agraph_s g) {
 // WARNING!! STRUCT
 return (ST_point) minmax_edges_w_(g).copy();
@@ -1109,8 +921,8 @@ try {
     ST_Agnode_s n;
     ST_Agedge_s e;
     final ST_point slen = new ST_point();
-    slen.setInt("x", 0);
-    slen.setInt("y", 0);
+    
+    slen.x = slen.y = 0;
     if ((GD_maxset(g) == null) && (GD_minset(g) == null))
 	return slen;
 UNSUPPORTED("d0tnzm7aw9504y1w1oqoesw64"); //     if ((((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minset) != NULL)
@@ -1143,8 +955,8 @@ LEAVING("3bcr1748gqnu8ogb73jeja7ly","minmax_edges");
 
 
 
-//3 1rmlm1wo3t94wyet9rlwrmith
-// static int  minmax_edges2(graph_t * g, point slen) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="minmax_edges2", key="1rmlm1wo3t94wyet9rlwrmith", definition="static int  minmax_edges2(graph_t * g, point slen)")
 public static boolean minmax_edges2(ST_Agraph_s g, final ST_point slen) {
 // WARNING!! STRUCT
 return minmax_edges2_w_(g, (ST_point) slen.copy());
@@ -1179,19 +991,19 @@ LEAVING("1rmlm1wo3t94wyet9rlwrmith","minmax_edges2");
 
 
 
-//3 3vpthwso788idvycelpnqijys
-// void rank1(graph_t * g) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="rank1", key="3vpthwso788idvycelpnqijys", definition="void rank1(graph_t * g)")
 public static void rank1(ST_Agraph_s g) {
 ENTERING("3vpthwso788idvycelpnqijys","rank1");
 try {
     int maxiter = Integer.MAX_VALUE;
     int c;
     CString s;
+    
     if ((s = agget(g, new CString("nslimit1")))!=null)
-UNSUPPORTED("9tp2zk1tsr4ce9rwsr0is9u3o"); // 	maxiter = atof(s) * agnnodes(g);
+    UNSUPPORTED("9tp2zk1tsr4ce9rwsr0is9u3o"); // 	maxiter = atof(s) * agnnodes(g);
     for (c = 0; c < GD_comp(g).size; c++) {
-    	//GD_nlist(g, GD_comp(g).list.get(c));
-    	GD_nlist(g, GD_comp(g).getFromList(c));
+	GD_nlist(g, GD_comp(g).list.get_(c));
 	rank(g, (GD_n_cluster(g) == 0 ? 1 : 0), maxiter);	/* TB balance */
     }
 } finally {
@@ -1202,13 +1014,21 @@ LEAVING("3vpthwso788idvycelpnqijys","rank1");
 
 
 
-//3 cdh8wnb99v90dy6efpbzmrjix
-// static void expand_ranksets(graph_t * g, aspect_t* asp) 
+/* 
+ * Assigns ranks of non-leader nodes.
+ * Expands same, min, max rank sets.
+ * Leaf sets and clusters remain merged.
+ * Sets minrank and maxrank appropriately.
+ */
+@Reviewed(when = "14/11/2020")
+@HasND_Rank
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="expand_ranksets", key="cdh8wnb99v90dy6efpbzmrjix", definition="static void expand_ranksets(graph_t * g, aspect_t* asp)")
 public static void expand_ranksets(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("cdh8wnb99v90dy6efpbzmrjix","expand_ranksets");
 try {
     int c;
     ST_Agnode_s n, leader;
+    
     if ((n = agfstnode(g))!=null) {
 	GD_minrank(g, MAXSHORT);
 	GD_maxrank(g, -1);
@@ -1219,18 +1039,20 @@ try {
 	     * a cluster. */
 	    if (NEQ(leader, n) && (N(asp) || (ND_rank(n) == 0)))
 		ND_rank(n, ND_rank(n) + ND_rank(leader));
+	    
 	    if (GD_maxrank(g) < ND_rank(n))
 		GD_maxrank(g, ND_rank(n));
 	    if (GD_minrank(g) > ND_rank(n))
 		GD_minrank(g, ND_rank(n));
-	    if (ND_ranktype(n)!=0 && (ND_ranktype(n) != 6))
+	    
+	    if (ND_ranktype(n)!=0 && (ND_ranktype(n) != LEAFSET))
 		UF_singleton(n);
 	    n = agnxtnode(g, n);
 	}
 	if (EQ(g, dot_root(g))) {
-	    if (Z.z().CL_type == 100) {
+	    if (Z.z().CL_type == LOCAL) {
 		for (c = 1; c <= GD_n_cluster(g); c++)
-		    set_minmax((ST_Agraph_s) GD_clust(g).get(c).getPtr());
+		    set_minmax(GD_clust(g).get_(c));
 	    } else {
 		find_clusters(g);
 	    }
@@ -1246,34 +1068,41 @@ LEAVING("cdh8wnb99v90dy6efpbzmrjix","expand_ranksets");
 
 
 
-
-//3 2o4rmb4o6f6zh46ak3se91rwr
-// static void dot1_rank(graph_t * g, aspect_t* asp) 
+/* dot1_rank:
+ * asp != NULL => g is root
+ */
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="dot1_rank", key="2o4rmb4o6f6zh46ak3se91rwr", definition="static void dot1_rank(graph_t * g, aspect_t* asp)")
 public static void dot1_rank(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 try {
     final ST_point p = new ST_point();
+    
     edgelabel_ranks(g);
+    
     if (asp!=null) {
-UNSUPPORTED("kh7e20nqwuserrnpf3zpvuyl"); // 	init_UF_size(g);
-UNSUPPORTED("d88j5oswhz0d3yvd4wlvxohmu"); // 	initEdgeTypes(g);
+	UNSUPPORTED("kh7e20nqwuserrnpf3zpvuyl"); // 	init_UF_size(g);
+	UNSUPPORTED("d88j5oswhz0d3yvd4wlvxohmu"); // 	initEdgeTypes(g);
     }
+    
+    
     collapse_sets(g,g);
     /*collapse_leaves(g); */
     class1_(g);
     p.___(minmax_edges(g));
     decompose(g, 0);
     if (asp!=null && ((GD_comp(g).size > 1)||(GD_n_cluster(g) > 0))) {
-UNSUPPORTED("evcjt85irnaa02v8cam07i009"); // 	asp->badGraph = 1;
-UNSUPPORTED("45nxv6kczal9hnytkfcyt2jk8"); // 	asp = NULL;
+	UNSUPPORTED("evcjt85irnaa02v8cam07i009"); // 	asp->badGraph = 1;
+	UNSUPPORTED("45nxv6kczal9hnytkfcyt2jk8"); // 	asp = NULL;
     }
     acyclic_(g);
     if (minmax_edges2(g, p))
-UNSUPPORTED("800vpyk6y4hcx2txwyrr2boxu"); // 	decompose(g, 0);
+    UNSUPPORTED("800vpyk6y4hcx2txwyrr2boxu"); // 	decompose(g, 0);
     if (asp!=null)
 	rank3(g, asp);
     else
 	rank1(g);
+    
     expand_ranksets(g, asp);
     cleanup1(g);
 } finally {
@@ -1284,13 +1113,13 @@ LEAVING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 
 
 
-//3 asyfujgwqa407ffvqn5psbtsc
-// void dot_rank(graph_t * g, aspect_t* asp) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="dot_rank", key="asyfujgwqa407ffvqn5psbtsc", definition="void dot_rank(graph_t * g, aspect_t* asp)")
 public static void dot_rank(ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("asyfujgwqa407ffvqn5psbtsc","dot_rank");
 try {
     if (agget (g, new CString("newrank"))!=null) {
-	GD_flags(g, GD_flags(g) | (1 << 4));
+	GD_flags(g, GD_flags(g) | NEW_RANK);
 	dot2_rank (g, asp);
     }
     else
@@ -1305,8 +1134,8 @@ LEAVING("asyfujgwqa407ffvqn5psbtsc","dot_rank");
 
 
 
-//3 cdncou6d2ng5i48rd1mk2cpnw
-// int is_cluster(graph_t * g) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="is_cluster", key="cdncou6d2ng5i48rd1mk2cpnw", definition="int is_cluster(graph_t * g)")
 public static boolean is_cluster(ST_Agraph_s g) {
 ENTERING("cdncou6d2ng5i48rd1mk2cpnw","is_cluster");
 try {
@@ -1321,6 +1150,8 @@ LEAVING("cdncou6d2ng5i48rd1mk2cpnw","is_cluster");
 
 //3 29qzn29glqnhg14z5cwt9i8ds
 // static void set_parent(graph_t* g, graph_t* p)  
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="set_parent", key="29qzn29glqnhg14z5cwt9i8ds", definition="static void set_parent(graph_t* g, graph_t* p)")
 public static Object set_parent(Object... arg) {
 UNSUPPORTED("blcrnfwfdmb15y0sduplfd1kd"); // static void set_parent(graph_t* g, graph_t* p) 
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1337,6 +1168,8 @@ throw new UnsupportedOperationException();
 
 //3 3qlca4afaxtwu0r2v22ccpfy9
 // static int is_empty(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="is_empty", key="3qlca4afaxtwu0r2v22ccpfy9", definition="static int is_empty(graph_t * g)")
 public static Object is_empty(Object... arg) {
 UNSUPPORTED("1bkrdpgwmb75nr2g9ooqfc79r"); // static int is_empty(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1351,6 +1184,8 @@ throw new UnsupportedOperationException();
 
 //3 sxmrpf4e3wi4vzeiu486heyw
 // static int is_a_strong_cluster(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="is_a_strong_cluster", key="sxmrpf4e3wi4vzeiu486heyw", definition="static int is_a_strong_cluster(graph_t * g)")
 public static Object is_a_strong_cluster(Object... arg) {
 UNSUPPORTED("251zndmdq92kg3zmfr3akrrmn"); // static int is_a_strong_cluster(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1369,6 +1204,8 @@ throw new UnsupportedOperationException();
 
 //3 954bo7mrh993f96ujb8u3e8vt
 // static int rankset_kind(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="rankset_kind", key="954bo7mrh993f96ujb8u3e8vt", definition="static int rankset_kind(graph_t * g)")
 public static Object rankset_kind(Object... arg) {
 UNSUPPORTED("5vyg261oak77cq7e9dmvw2omc"); // static int rankset_kind(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1396,6 +1233,8 @@ throw new UnsupportedOperationException();
 
 //3 ej4vtw2e6g22jzlypo03buuob
 // static int is_nonconstraint(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="is_nonconstraint", key="ej4vtw2e6g22jzlypo03buuob", definition="static int is_nonconstraint(edge_t * e)")
 public static Object is_nonconstraint(Object... arg) {
 UNSUPPORTED("cdj60nbfp2uc9emgj9bb9tuq4"); // static int is_nonconstraint(edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1415,6 +1254,8 @@ throw new UnsupportedOperationException();
 
 //3 8pb7znv8q3ikfulus8sprsrb8
 // static node_t *find(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="", key="8pb7znv8q3ikfulus8sprsrb8", definition="static node_t *find(node_t * n)")
 public static Object find(Object... arg) {
 UNSUPPORTED("420nqb6oiuhh8qfg7ick8eb5j"); // static node_t *find(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1435,6 +1276,8 @@ throw new UnsupportedOperationException();
 
 //3 tgndl91vjf2dvnepj15uye32
 // static node_t *union_one(node_t * leader, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="", key="tgndl91vjf2dvnepj15uye32", definition="static node_t *union_one(node_t * leader, node_t * n)")
 public static Object union_one(Object... arg) {
 UNSUPPORTED("bk1ys5rvc0fqcssw437mw03pk"); // static node_t *union_one(node_t * leader, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1452,6 +1295,8 @@ throw new UnsupportedOperationException();
 
 //3 1ku7zqljp4yk6j8pqxa19ko4u
 // static node_t *union_all(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="", key="1ku7zqljp4yk6j8pqxa19ko4u", definition="static node_t *union_all(graph_t * g)")
 public static Object union_all(Object... arg) {
 UNSUPPORTED("1bddf3dbho07f9di3ae5tdn2z"); // static node_t *union_all(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1473,6 +1318,8 @@ throw new UnsupportedOperationException();
 
 //3 dehfujiq2i24w0y9qcoq88gbd
 // static void compile_samerank(graph_t * ug, graph_t * parent_clust) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="compile_samerank", key="dehfujiq2i24w0y9qcoq88gbd", definition="static void compile_samerank(graph_t * ug, graph_t * parent_clust)")
 public static Object compile_samerank(Object... arg) {
 UNSUPPORTED("52xc1gml0ynibrpu4r03l9cs"); // static void compile_samerank(graph_t * ug, graph_t * parent_clust)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1543,6 +1390,8 @@ throw new UnsupportedOperationException();
 
 //3 6mzsthkzz214du9ljfc7ijlf3
 // static graph_t *dot_lca(graph_t * c0, graph_t * c1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="", key="6mzsthkzz214du9ljfc7ijlf3", definition="static graph_t *dot_lca(graph_t * c0, graph_t * c1)")
 public static Object dot_lca(Object... arg) {
 UNSUPPORTED("egnw42d8jhfdyl5zqlzqffv17"); // static graph_t *dot_lca(graph_t * c0, graph_t * c1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1563,6 +1412,8 @@ throw new UnsupportedOperationException();
 
 //3 7fwe6cym6k60fw6f2gkbftvh8
 // static int is_internal_to_cluster(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="is_internal_to_cluster", key="7fwe6cym6k60fw6f2gkbftvh8", definition="static int is_internal_to_cluster(edge_t * e)")
 public static Object is_internal_to_cluster(Object... arg) {
 UNSUPPORTED("esoedecj682cdsbz3i9026zfo"); // static int is_internal_to_cluster(edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1590,6 +1441,8 @@ throw new UnsupportedOperationException();
 
 //3 6odjfuoywf6x6xpuz14xn1w07
 // static node_t* makeXnode (graph_t* G, char* name) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="makeXnode", key="6odjfuoywf6x6xpuz14xn1w07", definition="static node_t* makeXnode (graph_t* G, char* name)")
 public static Object makeXnode(Object... arg) {
 UNSUPPORTED("bpc5db7ozsqpc73t2xl0qmpnr"); // static node_t* makeXnode (graph_t* G, char* name)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1616,6 +1469,8 @@ throw new UnsupportedOperationException();
 
 //3 cd3kauuz11z03xym1la7ze5e6
 // static void compile_nodes(graph_t * g, graph_t * Xg) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="compile_nodes", key="cd3kauuz11z03xym1la7ze5e6", definition="static void compile_nodes(graph_t * g, graph_t * Xg)")
 public static Object compile_nodes(Object... arg) {
 UNSUPPORTED("12jh8m3jnppgzqcx642zkv20x"); // static void compile_nodes(graph_t * g, graph_t * Xg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1640,6 +1495,8 @@ throw new UnsupportedOperationException();
 
 //3 e1guv5kmb9i30k71e66mdxo3y
 // static void merge(edge_t * e, int minlen, int weight) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="merge", key="e1guv5kmb9i30k71e66mdxo3y", definition="static void merge(edge_t * e, int minlen, int weight)")
 public static Object merge(Object... arg) {
 UNSUPPORTED("1npguevtdh47xfz698yahzrqb"); // static void merge(edge_t * e, int minlen, int weight)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1655,6 +1512,8 @@ throw new UnsupportedOperationException();
 
 //3 59c6dqhr5u2wv75vxz5cgbkui
 // static void strong(graph_t * g, node_t * t, node_t * h, edge_t * orig) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="strong", key="59c6dqhr5u2wv75vxz5cgbkui", definition="static void strong(graph_t * g, node_t * t, node_t * h, edge_t * orig)")
 public static Object strong(Object... arg) {
 UNSUPPORTED("6vzggze9zva4h232s9hd64r27"); // static void strong(graph_t * g, node_t * t, node_t * h, edge_t * orig)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1675,6 +1534,8 @@ throw new UnsupportedOperationException();
 
 //3 a1kjm11iwgfl824pakzcm8kuu
 // static void weak(graph_t * g, node_t * t, node_t * h, edge_t * orig) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="weak", key="a1kjm11iwgfl824pakzcm8kuu", definition="static void weak(graph_t * g, node_t * t, node_t * h, edge_t * orig)")
 public static Object weak(Object... arg) {
 UNSUPPORTED("e0f6tf4pkq822l7f10u2xromd"); // static void weak(graph_t * g, node_t * t, node_t * h, edge_t * orig)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1709,6 +1570,8 @@ throw new UnsupportedOperationException();
 
 //3 68dc7hsp2siu9in566grx5h8l
 // static void compile_edges(graph_t * ug, graph_t * Xg) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="compile_edges", key="68dc7hsp2siu9in566grx5h8l", definition="static void compile_edges(graph_t * ug, graph_t * Xg)")
 public static Object compile_edges(Object... arg) {
 UNSUPPORTED("57s72j3dqfa0fdsi9zu6yqbxe"); // static void compile_edges(graph_t * ug, graph_t * Xg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1754,6 +1617,8 @@ throw new UnsupportedOperationException();
 
 //3 1nzwhja8l48xyfliiyqjsvegu
 // static void compile_clusters(graph_t* g, graph_t* Xg, node_t* top, node_t* bot) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="compile_clusters", key="1nzwhja8l48xyfliiyqjsvegu", definition="static void compile_clusters(graph_t* g, graph_t* Xg, node_t* top, node_t* bot)")
 public static Object compile_clusters(Object... arg) {
 UNSUPPORTED("4w43o1w7rtbr7a1ewf1ai3ynx"); // static void compile_clusters(graph_t* g, graph_t* Xg, node_t* top, node_t* bot)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1791,6 +1656,8 @@ throw new UnsupportedOperationException();
 
 //3 93ycqhupenif7m6n70yj2rptv
 // static void reverse_edge2(graph_t * g, edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="reverse_edge2", key="93ycqhupenif7m6n70yj2rptv", definition="static void reverse_edge2(graph_t * g, edge_t * e)")
 public static Object reverse_edge2(Object... arg) {
 UNSUPPORTED("aa57ihhjujmpk9d1fjnh7uhn2"); // static void reverse_edge2(graph_t * g, edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1810,6 +1677,8 @@ throw new UnsupportedOperationException();
 
 //3 75994nd7ifrh2xjk0eei7kj04
 // static void dfs(graph_t * g, node_t * v) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="dfs", key="75994nd7ifrh2xjk0eei7kj04", definition="static void dfs(graph_t * g, node_t * v)")
 public static Object dfs(Object... arg) {
 UNSUPPORTED("e728nuv7n4wyffryp1y6ny8no"); // static void dfs(graph_t * g, node_t * v)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1840,6 +1709,8 @@ throw new UnsupportedOperationException();
 
 //3 dt90swbhv55qox6i9anmtxctb
 // static void break_cycles(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="break_cycles", key="dt90swbhv55qox6i9anmtxctb", definition="static void break_cycles(graph_t * g)")
 public static Object break_cycles(Object... arg) {
 UNSUPPORTED("d7jjxsr59cimfe921b021ndni"); // static void break_cycles(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1858,6 +1729,8 @@ throw new UnsupportedOperationException();
 
 //3 8wnczo1mkpxdobt1qmszr6m9f
 // static void setMinMax (graph_t* g, int doRoot) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="setMinMax", key="8wnczo1mkpxdobt1qmszr6m9f", definition="static void setMinMax (graph_t* g, int doRoot)")
 public static Object setMinMax(Object... arg) {
 UNSUPPORTED("5hvfkvu5sx7btm870992ll8rq"); // static void setMinMax (graph_t* g, int doRoot)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1891,6 +1764,8 @@ throw new UnsupportedOperationException();
 
 //3 1rsds60zu7vl5g6sqr3ielup6
 // static void readout_levels(graph_t * g, graph_t * Xg, int ncc) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="readout_levels", key="1rsds60zu7vl5g6sqr3ielup6", definition="static void readout_levels(graph_t * g, graph_t * Xg, int ncc)")
 public static Object readout_levels(Object... arg) {
 UNSUPPORTED("5rkflwuoyx87w4zl80k9x22hy"); // static void readout_levels(graph_t * g, graph_t * Xg, int ncc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1953,6 +1828,8 @@ throw new UnsupportedOperationException();
 
 //3 6wyn9t7y4rni0tldyaap4zsg4
 // static void dfscc(graph_t * g, node_t * n, int cc) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="dfscc", key="6wyn9t7y4rni0tldyaap4zsg4", definition="static void dfscc(graph_t * g, node_t * n, int cc)")
 public static Object dfscc(Object... arg) {
 UNSUPPORTED("9rlus4sokq2q7mrelfhcyeq9t"); // static void dfscc(graph_t * g, node_t * n, int cc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1974,6 +1851,8 @@ throw new UnsupportedOperationException();
 
 //3 4n4sn2k04eosjc6v3amau8l89
 // static int connect_components(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="connect_components", key="4n4sn2k04eosjc6v3amau8l89", definition="static int connect_components(graph_t * g)")
 public static Object connect_components(Object... arg) {
 UNSUPPORTED("93546dpzyvd2lgopztw3kyszh"); // static int connect_components(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2005,6 +1884,8 @@ throw new UnsupportedOperationException();
 
 //3 9lj0r4q3ulap7ly9cvvqn3d0t
 // static void add_fast_edges (graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="add_fast_edges", key="9lj0r4q3ulap7ly9cvvqn3d0t", definition="static void add_fast_edges (graph_t * g)")
 public static Object add_fast_edges(Object... arg) {
 UNSUPPORTED("9od2j2a8s9ki669jghjqrkcym"); // static void add_fast_edges (graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2026,6 +1907,8 @@ throw new UnsupportedOperationException();
 
 //3 2xyhunzw903dytfpyy63oznhz
 // static void my_init_graph(Agraph_t *g, Agobj_t *graph, void *arg) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="my_init_graph", key="2xyhunzw903dytfpyy63oznhz", definition="static void my_init_graph(Agraph_t *g, Agobj_t *graph, void *arg)")
 public static Object my_init_graph(Object... arg) {
 UNSUPPORTED("3s5gmr0i7qaf8sa79h9ek2t42"); // static void my_init_graph(Agraph_t *g, Agobj_t *graph, void *arg)
 UNSUPPORTED("12ubgsqsc8d2oeobshclx2e9m"); // { int *sz = arg; agbindrec(graph,"level graph rec",sz[0],NOT(0)); }
@@ -2038,6 +1921,8 @@ throw new UnsupportedOperationException();
 
 //3 1vibj3ycvfkl07m1a2dzr3qf3
 // static void my_init_node(Agraph_t *g, Agobj_t *node, void *arg) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="my_init_node", key="1vibj3ycvfkl07m1a2dzr3qf3", definition="static void my_init_node(Agraph_t *g, Agobj_t *node, void *arg)")
 public static Object my_init_node(Object... arg) {
 UNSUPPORTED("448m4h3oktm1kylrq3iss782r"); // static void my_init_node(Agraph_t *g, Agobj_t *node, void *arg)
 UNSUPPORTED("3mooa3mwczxhc97acdygow0sx"); // { int *sz = arg; agbindrec(node,"level node rec",sz[1],NOT(0)); }
@@ -2050,6 +1935,8 @@ throw new UnsupportedOperationException();
 
 //3 avor9syqevkn2jo4yf8whbg5f
 // static void my_init_edge(Agraph_t *g, Agobj_t *edge, void *arg) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="my_init_edge", key="avor9syqevkn2jo4yf8whbg5f", definition="static void my_init_edge(Agraph_t *g, Agobj_t *edge, void *arg)")
 public static Object my_init_edge(Object... arg) {
 UNSUPPORTED("bo6poh3fcfvu02sod3dyzjhsi"); // static void my_init_edge(Agraph_t *g, Agobj_t *edge, void *arg)
 UNSUPPORTED("4f0jw3wys20zimucjor8qrhzg"); // { int *sz = arg; agbindrec(edge,"level edge rec",sz[2],NOT(0)); }
@@ -2070,6 +1957,8 @@ throw new UnsupportedOperationException();
 
 //3 590k5zi3mrpwbc3lib0w3rmr2
 // void dot2_rank(graph_t * g, aspect_t* asp) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/rank.c", name="dot2_rank", key="590k5zi3mrpwbc3lib0w3rmr2", definition="void dot2_rank(graph_t * g, aspect_t* asp)")
 public static Object dot2_rank(Object... arg) {
 UNSUPPORTED("d8gu9ua6rerpv9vz9ctco1ca2"); // void dot2_rank(graph_t * g, aspect_t* asp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

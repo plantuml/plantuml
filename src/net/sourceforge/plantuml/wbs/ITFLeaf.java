@@ -58,8 +58,6 @@ class ITFLeaf extends AbstractTextBlock implements ITF {
 	private final TextBlock box;
 
 	public ITFLeaf(Style style, ISkinParam skinParam, Display label, IdeaShape shape) {
-		// this.skinParam = skinParam;
-
 		if (shape == IdeaShape.BOX) {
 			this.box = FtileBox.createWbs(style, skinParam, label);
 		} else {

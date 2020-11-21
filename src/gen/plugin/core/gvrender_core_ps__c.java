@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -237,7 +237,7 @@ UNSUPPORTED("83o9dwn4xs47t734kcj652p5p"); //             args[1] = NULL;
 UNSUPPORTED("7miirzhxs42qrp2ovadq92khu"); //             cat_libfile(job, NULL, args);
 UNSUPPORTED("4mhlpjofolwivhm0tl8cxznly"); //         }
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("33xxzmz1g6bggeapvxm1zx9yr"); //     isLatin1 = (GD_charset(obj->u.g) == 1 ? 1 : -1);
+UNSUPPORTED("33xxzmz1g6bggeapvxm1zx9yr"); //     isLatin1 = GD_charset(obj->u.g) == 1 ? 1 : -1;
 UNSUPPORTED("1xv4b98ox7mq8hhp97i19zfor"); //     /* We always setup Latin1. The charset info is always output,
 UNSUPPORTED("1d9yupk35hp3i9e12yycbevaz"); //      * and installing it is cheap. With it installed, we can then
 UNSUPPORTED("m5mzxzrnlpf7h3hy7np9zmd0"); //      * rely on ps_string to convert UTF-8 characters whose encoding

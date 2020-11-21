@@ -157,9 +157,17 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private List<String> getText2() {
 		final List<String> strings = new ArrayList<String>();
+		strings.add(" ");
 		strings.add("<b>It looks like you are running GraphViz 2.44 under Windows.");
 		strings.add("If you have just installed GraphViz, you <i>may</i> have to execute");
 		strings.add("the post-install command <b>dot -c</b> like in the following example:");
+		return strings;
+	}
+
+	private List<String> getText3() {
+		final List<String> strings = new ArrayList<String>();
+		strings.add(" ");
+		strings.add("You may have to have <i>Administrator rights</i> to avoid the following error message:");
 		return strings;
 	}
 
@@ -203,7 +211,13 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 			final UImage dotc = new UImage(new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));
 			result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);
-		}
+
+			final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());
+			result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);
+
+			final UImage dotd = new UImage(new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));
+			result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);
+}
 
 		return result;
 	}

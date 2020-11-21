@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,7 +45,7 @@
  */
 package h;
 
-import smetana.core.MutableDoublePtr;
+import smetana.core.CStar;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -62,28 +62,10 @@ public class ST_inside_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	// "typedef union inside_t",
-	// "{",
-	// "struct",
-	// "{",
-	// "pointf* p",
-	public ST_pointf.Array a_p;
-	public MutableDoublePtr a_r;
-	// "double* r",
-	// "}",
-	// "a",
-	// "struct",
-	// "{",
-	// "node_t* n",
+	public CStar<ST_pointf> a_p;
+	public double a_r[];
 	public ST_Agnode_s s_n;
 	public ST_boxf s_bp;
-
-	// "boxf*    bp",
-	// "}",
-	// "s",
-	// "}",
-	// "inside_t");
-
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -94,14 +76,6 @@ public class ST_inside_t extends UnsupportedStructAndPtr {
 		if (fieldName.equals("s.bp")) {
 			this.s_bp = (ST_boxf) newData;
 			return this.s_bp;
-		}
-		if (fieldName.equals("a.p")) {
-			this.a_p = (ST_pointf.Array) newData;
-			return this.a_p;
-		}
-		if (fieldName.equals("a.r")) {
-			this.a_r = (MutableDoublePtr) newData;
-			return this.a_r;
 		}
 		return super.setPtr(fieldName, newData);
 	}

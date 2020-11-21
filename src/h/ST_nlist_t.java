@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,18 +45,15 @@
  */
 package h;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import smetana.core.CStarStar;
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_nlist_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
-	// public __ptr__ list;
 	public int size;
-	private final List<ST_Agnode_s> data = new ArrayList<ST_Agnode_s>();
+	public CStarStar<ST_Agnode_s> list;
 
 	public ST_nlist_t(StarStruct parent) {
 	}
@@ -65,28 +62,29 @@ public class ST_nlist_t extends UnsupportedStructAndPtr implements HardcodedStru
 		this(null);
 	}
 
-	public void reallocEmpty(int n_nodes) {
-		while (data.size() < n_nodes) {
-			data.add(null);
-		}
-	}
-
-	public void allocEmpty(int n_nodes) {
-		data.clear();
-		reallocEmpty(n_nodes);
-	}
-
-	public void setInList(int idx, ST_Agnode_s value) {
-		data.set(idx, value);
-	}
-
-	public ST_Agnode_s getFromList(int i) {
-		return data.get(i);
-	}
-
-	public void resetList() {
-		data.clear();
-	}
+//	public void reallocEmpty(int n_nodes) {
+//		while (data.size() < n_nodes) {
+//			data.add(null);
+//		}
+//	}
+//
+//	public void allocEmpty(int n_nodes) {
+//		data.clear();
+//		reallocEmpty(n_nodes);
+//	}
+//
+//	public void setInList(int idx, ST_Agnode_s value) {
+//		data.set(idx, value);
+//	}
+//
+//	public ST_Agnode_s getFromList(int i) {
+//		return data.get(i);
+//	}
+//
+//	@Todo(what = "check why GD_comp(g).resetList comes from GD_comp(g).list = NULL")
+//	public void resetList() {
+//		data.clear();
+//	}
 
 	// public static List<String> DEFINITION = Arrays.asList(
 	// "typedef struct nlist_t",

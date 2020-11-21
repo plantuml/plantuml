@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.cdt.dtdisc__c.dtdisc;
 import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
@@ -128,6 +131,8 @@ public class dtopen__c {
 
 //3 34nbfbdgwe34hb4vmfr5p6kbh
 // Dt_t* dtopen(Dtdisc_t* disc, Dtmethod_t* meth)      
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtopen.c", name="dtopen", key="34nbfbdgwe34hb4vmfr5p6kbh", definition="Dt_t* dtopen(Dtdisc_t* disc, Dtmethod_t* meth)")
 public static ST_dt_s dtopen(ST_dtdisc_s disc, ST_dtmethod_s meth) {
 ENTERING("34nbfbdgwe34hb4vmfr5p6kbh","dtopen");
 try {

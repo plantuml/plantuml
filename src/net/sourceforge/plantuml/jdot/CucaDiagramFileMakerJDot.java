@@ -203,25 +203,29 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	public void drawGroup(UGraphic ug, YMirror ymirror, IGroup group, ST_Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
-		final ST_Agraphinfo_t data = (ST_Agraphinfo_t) Macro.AGDATA(gr).castTo(ST_Agraphinfo_t.class);
-		final ST_boxf bb = (ST_boxf) data.bb;
-		final double llx = bb.LL.x;
-		double lly = bb.LL.y;
-		final double urx = bb.UR.x;
-		double ury = bb.UR.y;
-		if (ymirror != null) {
-			final double tmpUry = ury;
-			ury = ymirror.getMirrored(lly);
-			lly = ymirror.getMirrored(tmpUry);
-		}
+		try {
+			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) Macro.AGDATA(gr).castTo(ST_Agraphinfo_t.class);
+			final ST_boxf bb = (ST_boxf) data.bb;
+			final double llx = bb.LL.x;
+			double lly = bb.LL.y;
+			final double urx = bb.UR.x;
+			double ury = bb.UR.y;
+			if (ymirror != null) {
+				final double tmpUry = ury;
+				ury = ymirror.getMirrored(lly);
+				lly = ymirror.getMirrored(tmpUry);
+			}
 
-		final Cluster cluster = dotStringFactory.getBibliotekon().getCluster(group);
-		cluster.setPosition(llx, lly, urx, ury);
-		JUtils.LOG2("cluster=" + cluster);
-		// ug.apply(new UTranslate(llx, lly)).apply(new
-		// UChangeColor(HtmlColorUtils.BLUE))
-		// .draw(new URectangle(urx - llx, ury - lly));
-		cluster.drawU(ug, new UStroke(1.5), diagram.getUmlDiagramType(), diagram.getSkinParam());
+			final Cluster cluster = dotStringFactory.getBibliotekon().getCluster(group);
+			cluster.setPosition(llx, lly, urx, ury);
+			JUtils.LOG2("cluster=" + cluster);
+			// ug.apply(new UTranslate(llx, lly)).apply(new
+			// UChangeColor(HtmlColorUtils.BLUE))
+			// .draw(new URectangle(urx - llx, ury - lly));
+			cluster.drawU(ug, new UStroke(1.5), diagram.getUmlDiagramType(), diagram.getSkinParam());
+		} catch (UnsupportedOperationException e) {
+			System.err.println("CANNOT DRAW GROUP");
+		}
 	}
 
 	private void printGroups(IGroup parent) {
@@ -301,6 +305,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private void exportEntity(ST_Agraph_s g, ILeaf leaf) {
 		final Node node = dotStringFactory.getBibliotekon().getNode(leaf);
+		if (node == null) {
+			System.err.println("CANNOT FIND NODE");
+			return;
+		}
 		// System.err.println("exportEntity " + leaf);
 		final ST_Agnode_s agnode = agnode(g, new CString(node.getUid()), true);
 		agsafeset(agnode, new CString("shape"), new CString("box"), new CString(""));
@@ -541,11 +549,15 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		if (n != null) {
 			return n;
 		}
-		final String id = getBibliotekon().getNodeUid((ILeaf) entity);
-		for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet()) {
-			if (id.equals(getBibliotekon().getNodeUid(ent.getKey()))) {
-				return ent.getValue();
+		try {
+			final String id = getBibliotekon().getNodeUid((ILeaf) entity);
+			for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet()) {
+				if (id.equals(getBibliotekon().getNodeUid(ent.getKey()))) {
+					return ent.getValue();
+				}
 			}
+		} catch (IllegalStateException e) {
+			System.err.println("UNKNOWN ENTITY");
 		}
 		return null;
 
@@ -623,7 +635,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private void printEntityNew(ILeaf ent) {
 		if (ent.isRemoved()) {
-			throw new IllegalStateException();
+			System.err.println("Jdot STRANGE: entity is removed");
+			return;
 		}
 		final IEntityImage image = printEntityInternal(ent);
 		final Node shape = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
@@ -641,7 +654,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		if (ent.getSvekImage() == null) {
 			ISkinParam skinParam = diagram.getSkinParam();
 			if (skinParam.sameClassWidth()) {
-				throw new UnsupportedOperationException();
+				System.err.println("NOT YET IMPLEMENED");
+//				throw new UnsupportedOperationException();
 				// final double width = getMaxWidth();
 				// skinParam = new SkinParamSameClassWidth(dotData.getSkinParam(), width);
 			}

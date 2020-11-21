@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,88 +44,48 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Unused;
 import static gen.lib.cdt.dtrestore__c.dtrestore;
-import static smetana.core.JUtils.NEQ;
+import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.DT_ATTACH;
+import static smetana.core.Macro.DT_CLEAR;
+import static smetana.core.Macro.DT_DELETE;
+import static smetana.core.Macro.DT_DETACH;
+import static smetana.core.Macro.DT_FIRST;
+import static smetana.core.Macro.DT_FLATTEN;
+import static smetana.core.Macro.DT_FOUND;
+import static smetana.core.Macro.DT_INSERT;
+import static smetana.core.Macro.DT_LAST;
+import static smetana.core.Macro.DT_MATCH;
+import static smetana.core.Macro.DT_NEXT;
+import static smetana.core.Macro.DT_OBAG;
+import static smetana.core.Macro.DT_OSET;
+import static smetana.core.Macro.DT_PREV;
+import static smetana.core.Macro.DT_RENEW;
+import static smetana.core.Macro.DT_SEARCH;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.UNSUPPORTED_INT;
-import h.Dtcompar_f;
+import static smetana.core.Macro.llink____warning;
+import static smetana.core.Macro.lrotate;
+import static smetana.core.Macro.rlink____warning;
+import static smetana.core.Macro.rrotate;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
 import h.ST_dthold_s;
 import h.ST_dtlink_s;
-import h.ST_dthold_s;
 import smetana.core.CFunction;
 import smetana.core.CString;
 import smetana.core.__ptr__;
 
 public class dttree__c {
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
 
 
 
@@ -136,8 +96,12 @@ static class do_search extends RuntimeException {}
 static class dt_delete extends RuntimeException {}
 static class dt_insert extends RuntimeException {}
 static class dt_next extends RuntimeException {}
-//3 abqfzg1d1vkzk51225tcdlik5
-//static void* dttree(Dt_t* dt, void* obj, int type)       
+
+
+
+
+@Reviewed(when = "11/11/2020")
+@Original(version="2.38.0", path="lib/cdt/dttree.c", name="dttree", key="abqfzg1d1vkzk51225tcdlik5", definition="static void* dttree(Dt_t* dt, void* obj, int type)")
 public static Object dttree(ST_dt_s dt, __ptr__ obj, int type) {
 ENTERING("abqfzg1d1vkzk51225tcdlik5","dttree");
 try {
@@ -147,28 +111,28 @@ try {
 	final ST_dtlink_s link = new ST_dtlink_s();
 	Object		o, k, key = null;
 	int		n, minp; //, turn[(sizeof(size_t)*8 - 2)];
-	Dtcompar_f	cmpf;
+	CFunction	cmpf;
 	ST_dtdisc_s	disc;
-	if (((dt.data.type) & 010000) !=0) { dtrestore(dt,null); }
-	disc = (ST_dtdisc_s) dt.disc; ky = disc.key;
+	
+	UNFLATTEN(dt);
+	disc = dt.disc; ky = disc.key;
 	sz = disc.size;
 	lk = disc.link;
-	cmpf = (Dtcompar_f) disc.comparf;
-	dt.setInt("type", dt.type&~0100000);
-	root = (ST_dtlink_s) dt.data.here;
+	cmpf = disc.comparf;
+	dt.type &= ~DT_FOUND;
+	
+	root = dt.data.here;
 	if(N(obj))
-	{	if(N(root) || N(type&(0000100|0000200|0000400)) )
+	{	if(N(root) || N(type&(DT_CLEAR|DT_FIRST|DT_LAST)) )
 			return null;
-		if((type&0000100)!=0) /* delete all objects */
+	
+		if((type&DT_CLEAR)!=0) /* delete all objects */
 		{
 			if(disc.freef!=null || disc.link < 0) {
 				do {
-					while((t = (ST_dtlink_s) root._left)!=null ) {
-						root._left = t.right;
-						t.right = root;
-						root = t;
-					}
-					t = (ST_dtlink_s) root.right;
+					while((t = root._left)!=null )
+						{ rrotate(root, t); root = t; }
+					t = root.right;
 					if(disc.freef!=null)
 						throw new UnsupportedOperationException();
 //						(*disc->freef)(dt,(lk < 0 ? ((Dthold_t*)(root))->obj : (void*)((char*)(root) - lk) ),disc);
@@ -176,34 +140,32 @@ try {
 						dt.memoryf.exe(dt, root, null, disc);
 				} while((root = t)!=null );
 			}
-			dt.data.setInt("size", 0);
+			dt.data.size = 0;
 			dt.data.here = null;
 			return null;
 		}
 		else /* computing largest/smallest element */
-		{	if((type&0000400)!=0)
-			{	while((t = (ST_dtlink_s) root.right)!=null ) {
-				root.right = t._left;
-				t._left = root;
+		{	if((type&DT_LAST)!=0)
+			{	while((t = root.right)!=null ) {
+				lrotate(root, t);
 				root = t;
 				}
 			}
 			else /* type&DT_FIRST */
-			{	while((t = (ST_dtlink_s) root._left)!=null ) {
-					root._left = t.right;
-					t.right = root;
+			{	while((t = root._left)!=null ) {
+					rrotate(root, t);
 					root = t;
 				}
 			}
 			dt.data.here = root;
-			return (lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk) );
+			return _DTOBJ(root, lk);
 		}
 	}
 	/* note that link.right is LEFT tree and link.left is RIGHT tree */
 	l = r = link;
 	/* allow apps to delete an object "actually" in the dictionary */
 	try {
-	if(dt.meth.type == 0000010 && ((type&(0000002|0010000))!=0) ) {
+	if(dt.meth.type == DT_OBAG && ((type&(DT_DELETE|DT_DETACH))!=0) ) {
 		throw new UnsupportedOperationException();
 //	{	key = (void*)(sz < 0 ? *((char**)((char*)(obj)+ky)) : ((char*)(obj)+ky));
 //		for(o = (*(((Dt_t*)(dt))->searchf))((dt),(void*)(obj),0000004); o; o = (*(((Dt_t*)(dt))->searchf))((dt),(void*)(o),0000010) )
@@ -219,12 +181,12 @@ try {
 //		}
 	}
 	try {
-	if(((type&(0001000|0000004|0000001|0004000))!=0))
-		{	key = ((type&0001000)!=0) ? obj : (sz < 0 ? ((__ptr__)obj).addVirtualBytes(ky) : ((__ptr__)obj).addVirtualBytes(ky));
+	if(((type&(DT_MATCH|DT_SEARCH|DT_INSERT|DT_ATTACH))!=0))
+		{	key = ((type&DT_MATCH)!=0) ? obj : _DTKEY(obj, ky, sz);
 		if(root!=null)
 			throw new do_search();
 	}
-	else if((type&0000040)!=0) {
+	else if((type&DT_RENEW)!=0) {
 		throw new UnsupportedOperationException();
 //	{	me = (Dtlink_t*)obj;
 //		obj = (lk < 0 ? ((Dthold_t*)(me))->obj : (void*)((char*)(me) - lk) );
@@ -232,14 +194,14 @@ try {
 //		if(root)
 //			goto do_search;
 	}
-	else if(root!=null && (lk < 0 ? (root.castTo_ST_dthold_s().obj!=null): NEQ(root.addVirtualBytes(-lk), obj)))
-	{	key = (sz < 0 ? ((__ptr__)obj).addVirtualBytes(ky) : ((__ptr__)obj).addVirtualBytes(ky));
+	else if(root!=null && EQ(_DTOBJ(root, lk), obj) == false)
+	{	key = _DTKEY(obj, ky, sz);
 		throw new do_search();
 	}
 	} catch (do_search do_search) {
 //		do_search:
-		if(dt.meth.type == 0000004 &&
-		   (minp = dt.data.minp) != 0 && (type&(0001000|0000004))!=0)
+		if(dt.meth.type == DT_OSET &&
+		   (minp = dt.data.minp) != 0 && (type&(DT_MATCH|DT_SEARCH))!=0)
 		{	/* simple search, note that minp should be even */
 //			for(t = root, n = 0; n < minp; ++n)
 //			{	k = (lk < 0 ? ((Dthold_t*)(t))->obj : (void*)((char*)(t) - lk) ); k = (void*)(sz < 0 ? *((char**)((char*)(k)+ky)) : ((char*)(k)+ky));
@@ -282,82 +244,63 @@ try {
 //			}
 			throw new UnsupportedOperationException("do_search1");
 		}
+		
+		
+		
 		while(true) {
-			k = lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk); 
-			k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
-			if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc) : 
-				(sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) == 0)
+			k = _DTOBJ(root, lk); k = _DTKEY((__ptr__) k,ky,sz);
+			if((cmp = _DTCMP(dt, key, k, disc, cmpf, sz)) == 0)
 				break;
 			else if(cmp < 0)
-			{	if((t = (ST_dtlink_s) root._left)!=null )
-				{
-				k = lk < 0 ? t.castTo_ST_dthold_s().obj : t.addVirtualBytes(-lk);
-				k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
-				if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc)
-	 					 : (sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) < 0)
-					{	root._left = t.right;
-						t.right = root;
-						r._left = t;
-						r = t;
-						if(N(root = (ST_dtlink_s) t._left) )
+			{	if((t = root._left)!=null )
+				{ k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k,ky,sz);
+				if((cmp = _DTCMP(dt, key, k, disc, cmpf, sz)) < 0)
+					{	rrotate(root, t);
+						r = rlink____warning(r, t);
+						if(N(root = t._left) )
 							break;
 					}
 					else if(cmp == 0)
-					{	r._left = root;
-						r = root;
+					{	r = rlink____warning(r, root);
 						root = t;
 						break;
 					}
 					else /* if(cmp > 0) */
-					{	l.right = t;
-						l = t;
-						r._left = root;
-						r  = root;
-						if(N(root = (ST_dtlink_s) t.right) )
+					{	l = llink____warning(l, t);
+						r = rlink____warning(r, root);
+						if(N(root = t.right) )
 							break;
 					}
 				}
 				else
-				{
-					r._left = root;
-					r = root;
+				{   r = rlink____warning(r, root);
 					root = null;
 					break;
 				}
 			}
 			else /* if(cmp > 0) */
-			{	if ((t = (ST_dtlink_s) root.right)!=null )
-				{
-					k = (lk < 0 ? t.castTo_ST_dthold_s().obj : t.addVirtualBytes(-lk) ); 
- 					k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
-					if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc) 
- 					 : (sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) > 0)
-					{
-						root.right = t._left;
-						t._left = root;
-						l.right = t;
-						l = t;
-						if(N(root = (ST_dtlink_s) t.right ))
+			{	if ((t = root.right)!=null )
+				{   k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k, ky, sz);
+					if((cmp = _DTCMP(dt, key, k, disc, cmpf, sz)) > 0)
+					{   lrotate(root, t);
+						l = llink____warning(l, t);
+						if(N(root = t.right ))
 							break;
 					}
 					else if(cmp == 0)
-					{	l.right = root;
-						l = root;
+					{	l = llink____warning(l, root);
 						root = t;
 						break;
 					}
 					else /* if(cmp < 0) */
-					{	r._left = t;
-						r = t;
-						l.right = root;
-						l = root;
-						if(N(root = (ST_dtlink_s) t._left ))
+					{	r = rlink____warning(r, t);
+						l = llink____warning(l, root);
+						if(N(root = t._left ))
 							break;
 					}
 				}
 				else
-				{	l.right = root;
-					l = root;
+				{	l = llink____warning(l, root);
 					root = null;
 					break;
 				}
@@ -366,22 +309,22 @@ try {
 	}
 	if(root!=null)
 	{	/* found it, now isolate it */
-		dt.setInt("type", dt.type | 0100000);
+		dt.type |= DT_FOUND;
 		l.right = root._left;
 		r._left = root.right;
-		if((type&(0000004|0001000))!=0)
+		
+		if((type&(DT_SEARCH|DT_MATCH))!=0)
 		{ /*has_root:*/
 		throw new has_root();
 		}
-		else if((type&0000010)!=0)
+		else if((type&DT_NEXT)!=0)
 		{	root._left = link.right;
 			root.right = null;
 			link.right = root;
 		//dt_next:
-			if((root = (ST_dtlink_s) link._left)!=null )	
-			{	while((t = (ST_dtlink_s) root._left)!=null ) {
-					root._left = t.right;
-					t.right = root;
+			if((root = link._left)!=null )	
+			{	while((t = root._left)!=null ) {
+					rrotate(root, t);
 					root = t;
 				}
 				link._left = root.right;
@@ -389,7 +332,7 @@ try {
 			}
 			else	throw new no_root();
 		}
-		else if((type&0000020)!=0) {
+		else if((type&DT_PREV)!=0) {
 		throw new UnsupportedOperationException();
 //		{	root->right = link.hl._left;
 //			root->hl._left = ((Dtlink_t*)0);
@@ -403,7 +346,7 @@ try {
 //			}
 //			else	goto no_root;
 		}
-		else if((type&(0000002|0010000))!=0) {
+		else if((type&(DT_DELETE|DT_DETACH))!=0) {
 		throw new UnsupportedOperationException();
 //		{	/* taking an object out of the dictionary */
 //		dt_delete:
@@ -416,41 +359,41 @@ try {
 //				dt->data->size = -1;
 //			goto no_root;
 		}
-		else if((type&(0000001|0004000))!=0)
-		{	if((dt.meth.type&0000004)!=0)
+		else if((type&(DT_INSERT|DT_ATTACH))!=0)
+		{	if((dt.meth.type&DT_OSET)!=0)
 				throw new has_root();
 			else
-		{
-				root._left = null;
+			{   root._left = null;
 				root.right = link._left;
 				link._left = root;
 				 /*dt_insert: DUPLICATION*/
-				if(disc.makef!=null && (type&0000001)!=0)
+				if(disc.makef!=null && (type&DT_INSERT)!=0)
 					obj = (__ptr__) disc.makef.exe(dt,obj,disc);
 				if(obj!=null)
 				{
 					if(lk >= 0)
-						root = (ST_dtlink_s) ((__ptr__)obj.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
+						root = _DTLNK(obj, lk);
 					else
 					{
 						root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(
 								dt,null,sizeof(ST_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
 						if(root!=null)
-							root.castTo(ST_dthold_s.class).setPtr("obj", obj);
+							root.castTo_ST_dthold_s().obj = obj;
 						else if(disc.makef!=null && disc.freef!=null &&
-							((type&0000001))!=0)
+							((type&DT_INSERT))!=0)
 							UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
 					}
 				}
 				if(root!=null)
 				{	if(dt.data.size >= 0)
-						dt.data.setInt("size", dt.data.size+1 );
+						dt.data.size += 1;
 				throw new has_root();
 				}
 				else	throw new UnsupportedOperationException("goto no_root");
 			}
 		}
-		else if((type&0000040)!=0) /* a duplicate */ {
+		else if((type&DT_RENEW)!=0) /* a duplicate */
+		{
 		throw new UnsupportedOperationException();
 //		{	if(dt->meth->type&0000004)
 //			{	if(disc->freef)
@@ -471,13 +414,13 @@ try {
 	{	/* not found, finish up LEFT and RIGHT trees */
 		r._left = null;
 		l.right = null;
-		if((type&0000010)!=0)
+		
+		if((type&DT_NEXT)!=0)
 		{
 		    //goto dt_next:
-			if((root = (ST_dtlink_s) link._left)!=null )	
-			{	while((t = (ST_dtlink_s) root._left)!=null ) {
-					root._left = t.right;
-					t.right = root;
+			if((root = link._left)!=null )	
+			{	while((t = root._left)!=null ) {
+					rrotate(root, t);
 					root = t;
 				}
 				link._left = root.right;
@@ -486,41 +429,41 @@ try {
 			else	throw new no_root();
 		
 		}
-		else if((type&0000020)!=0)
+		else if((type&DT_PREV)!=0)
 			throw new UnsupportedOperationException("goto dt_prev");
-		else if((type&(0000004|0001000))!=0)
+		else if((type&(DT_SEARCH|DT_MATCH))!=0)
 		{
 			throw new no_root();
 		}
-		else if((type&(0000001|0004000))!=0)
+		else if((type&(DT_INSERT|DT_ATTACH))!=0)
 		{ /*dt_insert: DUPLICATION*/
-			if(disc.makef!=null && (type&0000001)!=0)
+			if(disc.makef!=null && (type&DT_INSERT)!=0)
 				obj = (__ptr__) disc.makef.exe(dt,obj,disc);
 			if(obj!=null)
 			{
 				if(lk >= 0)
-					root = (ST_dtlink_s) ((__ptr__)obj.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
+					root = _DTLNK(obj, lk);
 				else
 				{
 					root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(
-						dt,null,sizeof(ST_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
+						dt, null, sizeof(ST_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
 					if(root!=null)
-						root.castTo(ST_dthold_s.class).setPtr("obj", obj);
+						root.castTo_ST_dthold_s().obj = obj;
 					else if(disc.makef!=null && disc.freef!=null &&
-						((type&0000001))!=0)
+						((type&DT_INSERT))!=0)
 						UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
 				}
 			}
 			if(root!=null)
 			{	if(dt.data.size >= 0)
-					dt.data.setInt("size", dt.data.size+1 );
+					dt.data.size += 1;
 			throw new has_root();
 			}
 			else	throw new UnsupportedOperationException("goto no_root");
 		}
-		else if((type&0000040)!=0)
+		else if((type&DT_RENEW)!=0)
 		{	root = me;
-			dt.data.setInt("size", dt.data.size+1 );
+			dt.data.size += 1;
 			throw new UnsupportedOperationException("goto has_root");
 		}
 		else /*if(type&DT_DELETE)*/
@@ -531,10 +474,9 @@ try {
 	}
 //	return ((void*)0);
 	} catch (has_root has_root) {
-	    root = (ST_dtlink_s) root.castTo(ST_dtlink_s.class);
 		root._left = link.right;
 		root.right = link._left;
-		if((dt.meth.type&0000010)!=0 && (type&(0000004|0001000))!=0 )
+		if((dt.meth.type&DT_OBAG)!=0 && (type&(DT_SEARCH|DT_MATCH))!=0 )
 		{	//key = (lk < 0 ? ((Dthold_t*)(root))->obj : (void*)((char*)(root) - lk) ); key = (void*)(sz < 0 ? *((char**)((char*)(key)+ky)) : ((char*)(key)+ky));
 			throw new UnsupportedOperationException();
 //			while((t = root->hl._left) )
@@ -542,7 +484,7 @@ try {
 //				while((r = t->right) )
 //					(((t)->right = (r)->hl._left, (r)->hl._left = (t)), (t) = (r));
 //				root->hl._left = t;
-//				/* now see if it's in the same group */
+//				/*  */
 //				k = (lk < 0 ? ((Dthold_t*)(t))->obj : (void*)((char*)(t) - lk) ); k = (void*)(sz < 0 ? *((char**)((char*)(k)+ky)) : ((char*)(k)+ky));
 //				if((cmpf ? (*cmpf)(dt,key,k,disc) : (sz <= 0 ? strcmp(key,k) : memcmp(key,k,sz)) ) != 0)
 //					break;
@@ -550,13 +492,13 @@ try {
 //			}
 		}
 		dt.data.here = root;
-		return (lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk));
+		return _DTOBJ(root, lk);
 	} catch (no_root no_root) {
-			while((t = (ST_dtlink_s) r._left)!=null)
+			while((t = r._left)!=null)
 				r = t;
 			r._left = link.right;
 			dt.data.here = link._left;
-			return (type&0000002)!=0 ? obj : null;
+			return (type&DT_DELETE)!=0 ? obj : null;
 	}
 throw new UnsupportedOperationException();
 } finally {
@@ -565,35 +507,31 @@ LEAVING("abqfzg1d1vkzk51225tcdlik5","dttree");
 }
 
 
-//1 9g22bw0wprm2n836sva9a545j
-// static Dtmethod_t	_Dtoset =  
+
+private static ST_dtlink_s _DTLNK(__ptr__ o, int lk) {
+	return (ST_dtlink_s) ((__ptr__)o.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
+}
+
+private static int _DTCMP(ST_dt_s dt, Object k1, Object k2, ST_dtdisc_s dc, CFunction cmpf, int sz) {
+	return cmpf!=null ? (Integer)cmpf.exe(dt, k1, k2, dc) : 
+		(sz <= 0 ? strcmp((CString)k1, (CString)k2) : UNSUPPORTED_INT("memcmp(key,k,sz))") );
+}
 
 
-//1 6lntjtw57dbb52lukeu9qbjm0
-// static Dtmethod_t	_Dtobag =  
+private static Object _DTOBJ(ST_dtlink_s root, int lk) {
+	return lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk);
+}
 
 
-//1 23jnfpje5fw0aejl101d0mofi
-// Dtmethod_t* Dtoset = &_Dtoset
+private static Object _DTKEY(__ptr__ obj, int ky, int sz) {
+	return sz < 0 ? obj.addVirtualBytes(ky) : obj.addVirtualBytes(ky);
+}
 
 
-//1 b8q5rjkvf93u0f27esfu3h9ay
-// Dtmethod_t* Dtobag = &_Dtobag
+private static void UNFLATTEN(ST_dt_s dt) {
+	if ((dt.data.type & DT_FLATTEN) !=0) { dtrestore(dt, null); }
+}
 
 
-//1 5kf1n1yhdy9ojgc0mc3pyowaz
-// Dtmethod_t		_Dttree = 
-/*public static final __struct__<_dtmethod_s> _Dttree = JUtils.from(_dtmethod_s.class);
-static {
-	_Dttree.setPtr("searchf", function(dttree__c.class, "dttree"));
-	_Dttree.setInt("type", 0000004);
-}*/
 
-//1 bvfgwxg0ik8j0au3xhv5ear7h
-// Dtmethod_t* Dtorder = &_Dttree
-
-
-//1 avyrqfvu00yyj95dihtoiwmao
-// Dtmethod_t* Dttree = &_Dttree
-//public static _dtmethod_s Dttree = _Dttree.amp();
 }

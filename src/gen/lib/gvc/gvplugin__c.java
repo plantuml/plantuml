@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -50,13 +50,15 @@ import static smetana.core.JUtils.strncpy;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_GVC_s;
 import h.ST_gvplugin_available_s;
 import h.ST_gvplugin_installed_t;
 import h.api_t;
-import h.gvplugin_api_t;
-import h.gvplugin_library_t;
 import smetana.core.CString;
+import smetana.core.__ptr__;
 
 public class gvplugin__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -167,6 +169,8 @@ public class gvplugin__c {
 
 //3 eevhjwoa4cqgsdjixuro98kl0
 // api_t gvplugin_api(char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="gvplugin_api", key="eevhjwoa4cqgsdjixuro98kl0", definition="api_t gvplugin_api(char *str)")
 public static Object gvplugin_api(Object... arg) {
 UNSUPPORTED("cszu4juqkncv208751dxi10l3"); // api_t gvplugin_api(char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -186,6 +190,8 @@ throw new UnsupportedOperationException();
 
 //3 3vjd9bb625sthhbgjrlrmjw4h
 // char *gvplugin_api_name(api_t api) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="", key="3vjd9bb625sthhbgjrlrmjw4h", definition="char *gvplugin_api_name(api_t api)")
 public static Object gvplugin_api_name(Object... arg) {
 UNSUPPORTED("c2dzua9zqksseurlvndxm1do6"); // char *gvplugin_api_name(api_t api)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -202,6 +208,8 @@ throw new UnsupportedOperationException();
 
 //3 cxx1gbe13gcf3krmmqjiyr7di
 // boolean gvplugin_install(GVC_t * gvc, api_t api, const char *typestr,                          int quality, gvplugin_package_t * package, gvplugin_installed_t * typeptr) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="gvplugin_install", key="cxx1gbe13gcf3krmmqjiyr7di", definition="boolean gvplugin_install(GVC_t * gvc, api_t api, const char *typestr,                          int quality, gvplugin_package_t * package, gvplugin_installed_t * typeptr)")
 public static Object gvplugin_install(Object... arg) {
 UNSUPPORTED("619rhf5ymot3codnbzksouis6"); // boolean gvplugin_install(GVC_t * gvc, api_t api, const char *typestr,
 UNSUPPORTED("cbeivjlgviyvn2o1ob9xcgjgt"); //                          int quality, gvplugin_package_t * package, gvplugin_installed_t * typeptr)
@@ -251,6 +259,8 @@ throw new UnsupportedOperationException();
 
 //3 awv2xvpinps83rbzhxzsrxeli
 // static boolean gvplugin_activate(GVC_t * gvc, api_t api,                                  const char *typestr, char *name, char *path, gvplugin_installed_t * typeptr) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="gvplugin_activate", key="awv2xvpinps83rbzhxzsrxeli", definition="static boolean gvplugin_activate(GVC_t * gvc, api_t api,                                  const char *typestr, char *name, char *path, gvplugin_installed_t * typeptr)")
 public static Object gvplugin_activate(Object... arg) {
 UNSUPPORTED("4rcplnvgpurjnsh6ap3chx2b0"); // static boolean gvplugin_activate(GVC_t * gvc, api_t api,
 UNSUPPORTED("5npameydw0l8cwolyubcubjac"); //                                  const char *typestr, char *name, char *path, gvplugin_installed_t * typeptr)
@@ -279,6 +289,8 @@ throw new UnsupportedOperationException();
 
 //3 c85ouwevp7apj486314dok24
 // gvplugin_library_t *gvplugin_library_load(GVC_t * gvc, char *path) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="", key="c85ouwevp7apj486314dok24", definition="gvplugin_library_t *gvplugin_library_load(GVC_t * gvc, char *path)")
 public static Object gvplugin_library_load(Object... arg) {
 UNSUPPORTED("2pt63mbk45dolii7tkhhsmcqw"); // gvplugin_library_t *gvplugin_library_load(GVC_t * gvc, char *path)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -294,13 +306,15 @@ throw new UnsupportedOperationException();
 
 //3 dh7wri9ra8xvm9ur14gd95xjj
 // gvplugin_available_t *gvplugin_load(GVC_t * gvc, api_t api, const char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="", key="dh7wri9ra8xvm9ur14gd95xjj", definition="gvplugin_available_t *gvplugin_load(GVC_t * gvc, api_t api, const char *str)")
 public static ST_gvplugin_available_s gvplugin_load(ST_GVC_s gvc, int api, CString str) {
 ENTERING("dh7wri9ra8xvm9ur14gd95xjj","gvplugin_load");
 try {
     //gvplugin_available_s **pnext;
     //gvplugin_available_s rv;
-    gvplugin_library_t library;
-    gvplugin_api_t apis;
+    __ptr__ library;
+    __ptr__ apis;
     ST_gvplugin_installed_t types;
     CString reqtyp = new CString(64), typ = new CString(64);
     CString reqdep, dep , reqpkg;
@@ -375,6 +389,8 @@ LEAVING("dh7wri9ra8xvm9ur14gd95xjj","gvplugin_load");
 
 //3 djkxwqwth7ib6sozs5hisbmqn
 // char *gvplugin_list(GVC_t * gvc, api_t api, const char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="", key="djkxwqwth7ib6sozs5hisbmqn", definition="char *gvplugin_list(GVC_t * gvc, api_t api, const char *str)")
 public static Object gvplugin_list(Object... arg) {
 UNSUPPORTED("1v2q9s4cymbg5u04i4iijkj4n"); // char *gvplugin_list(GVC_t * gvc, api_t api, const char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -453,6 +469,8 @@ throw new UnsupportedOperationException();
 
 //3 9rv6x5a14kebbqbr097thlusw
 // char **gvPluginList(GVC_t * gvc, char *kind, int *sz, char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="", key="9rv6x5a14kebbqbr097thlusw", definition="char **gvPluginList(GVC_t * gvc, char *kind, int *sz, char *str)")
 public static Object gvPluginList(Object... arg) {
 UNSUPPORTED("8ubqe7erabaqlpa8x948629d5"); // char **gvPluginList(GVC_t * gvc, char *kind, int *sz, char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -497,6 +515,8 @@ throw new UnsupportedOperationException();
 
 //3 3kbm1klgxj6tigy5o90ir8zg1
 // void gvplugin_write_status(GVC_t * gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="gvplugin_write_status", key="3kbm1klgxj6tigy5o90ir8zg1", definition="void gvplugin_write_status(GVC_t * gvc)")
 public static Object gvplugin_write_status(Object... arg) {
 UNSUPPORTED("j7nfpijl0849ghbgk3ia1jmg"); // void gvplugin_write_status(GVC_t * gvc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -517,6 +537,8 @@ throw new UnsupportedOperationException();
 
 //3 385wh7mf4m0odlw2tyexnt9fe
 // Agraph_t *gvplugin_graph(GVC_t * gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvplugin.c", name="", key="385wh7mf4m0odlw2tyexnt9fe", definition="Agraph_t *gvplugin_graph(GVC_t * gvc)")
 public static Object gvplugin_graph(Object... arg) {
 UNSUPPORTED("6nb21wnge36ef7jtbggj9thf2"); // Agraph_t *gvplugin_graph(GVC_t * gvc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

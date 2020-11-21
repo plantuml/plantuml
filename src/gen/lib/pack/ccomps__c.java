@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pack;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -291,6 +294,8 @@ public class ccomps__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -306,29 +311,14 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
 
 
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -349,6 +339,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -364,29 +356,14 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
 
 
 
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -404,6 +381,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -421,6 +400,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -438,6 +419,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -455,6 +438,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -472,6 +457,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -489,6 +476,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -506,6 +495,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -525,6 +516,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -544,6 +537,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -563,6 +558,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -582,6 +579,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -596,6 +595,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -610,6 +611,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -624,6 +627,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -638,6 +643,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -655,6 +662,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -680,6 +689,8 @@ private static jmp_buf jbuf = new jmp_buf();
 
 //3 ewv0wgzjcdnccieiofn923tzs
 // static void initStk(stk_t* sp, blk_t* bp, Agnode_t** base, void (*actionfn) (Agnode_t *, void *),      int (*markfn) (Agnode_t *, int)) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="initStk", key="ewv0wgzjcdnccieiofn923tzs", definition="static void initStk(stk_t* sp, blk_t* bp, Agnode_t** base, void (*actionfn) (Agnode_t *, void *),      int (*markfn) (Agnode_t *, int))")
 public static Object initStk(Object... arg) {
 UNSUPPORTED("4owkhdzsvdc67eibb0hkce52q"); // static void initStk(stk_t* sp, blk_t* bp, Agnode_t** base, void (*actionfn) (Agnode_t *, void *),
 UNSUPPORTED("2ugi0pnat35n3v5vu8m6wo8c9"); //      int (*markfn) (Agnode_t *, int))
@@ -701,6 +712,8 @@ throw new UnsupportedOperationException();
 
 //3 avbxwaxrnn1f4ijqvx6vxj4v9
 // static void freeBlk (blk_t* bp) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="freeBlk", key="avbxwaxrnn1f4ijqvx6vxj4v9", definition="static void freeBlk (blk_t* bp)")
 public static Object freeBlk(Object... arg) {
 UNSUPPORTED("29r3rvz6nqb5jkizgs6l1gfir"); // static void freeBlk (blk_t* bp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -716,6 +729,8 @@ throw new UnsupportedOperationException();
 
 //3 905gm18k22sxeiqmefouokdo7
 // static void freeStk (stk_t* sp) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="freeStk", key="905gm18k22sxeiqmefouokdo7", definition="static void freeStk (stk_t* sp)")
 public static Object freeStk(Object... arg) {
 UNSUPPORTED("7voev7gkgzy2irm66y8o7lv98"); // static void freeStk (stk_t* sp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -735,6 +750,8 @@ throw new UnsupportedOperationException();
 
 //3 hd5g5m1klfh6fir1b88dxxy0
 // static void push(stk_t* sp, Agnode_t * np) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="push", key="hd5g5m1klfh6fir1b88dxxy0", definition="static void push(stk_t* sp, Agnode_t * np)")
 public static Object push(Object... arg) {
 UNSUPPORTED("4mi4cbphlu8woard9ipkskhxa"); // static void push(stk_t* sp, Agnode_t * np)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -770,6 +787,8 @@ throw new UnsupportedOperationException();
 
 //3 e6guowi184k24c0h3wmo4jgwi
 // static Agnode_t *pop(stk_t* sp) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="", key="e6guowi184k24c0h3wmo4jgwi", definition="static Agnode_t *pop(stk_t* sp)")
 public static Object pop(Object... arg) {
 UNSUPPORTED("f2vfqjdyjli6458h1bzgg94f4"); // static Agnode_t *pop(stk_t* sp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -791,6 +810,8 @@ throw new UnsupportedOperationException();
 
 //3 4qon7xpbucrl2h3x79m1mrhdy
 // static int dfs(Agraph_t * g, Agnode_t * n, void *state, stk_t* stk) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="dfs", key="4qon7xpbucrl2h3x79m1mrhdy", definition="static int dfs(Agraph_t * g, Agnode_t * n, void *state, stk_t* stk)")
 public static Object dfs(Object... arg) {
 UNSUPPORTED("c6pqde78hulcrl0f3eogd7ib3"); // static int dfs(Agraph_t * g, Agnode_t * n, void *state, stk_t* stk)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -819,6 +840,8 @@ throw new UnsupportedOperationException();
 
 //3 174yjh9lnitag5picxfy766ci
 // static int isLegal(char *p) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="isLegal", key="174yjh9lnitag5picxfy766ci", definition="static int isLegal(char *p)")
 public static Object isLegal(Object... arg) {
 UNSUPPORTED("49bgdm1mc1l4egxrugqfcsxft"); // static int isLegal(char *p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -838,6 +861,8 @@ throw new UnsupportedOperationException();
 
 //3 5st5bmswl1esywsmkbn2ncrq8
 // static void insertFn(Agnode_t * n, void *state) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="insertFn", key="5st5bmswl1esywsmkbn2ncrq8", definition="static void insertFn(Agnode_t * n, void *state)")
 public static Object insertFn(Object... arg) {
 UNSUPPORTED("dfx1qatv0ncgh1c0k5xc2mgs"); // static void insertFn(Agnode_t * n, void *state)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -852,6 +877,8 @@ throw new UnsupportedOperationException();
 
 //3 6rise12p1nj7fgxw063r6ta8i
 // static int markFn (Agnode_t* n, int v) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="markFn", key="6rise12p1nj7fgxw063r6ta8i", definition="static int markFn (Agnode_t* n, int v)")
 public static Object markFn(Object... arg) {
 UNSUPPORTED("756hr5llx7m5qrjsd89e43sih"); // static int markFn (Agnode_t* n, int v)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -870,6 +897,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9m4rpn5fxnq9fz0xjsa7cwl
 // static char* setPrefix (char* pfx, int* lenp, char* buf, int buflen) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="setPrefix", key="8l9m4rpn5fxnq9fz0xjsa7cwl", definition="static char* setPrefix (char* pfx, int* lenp, char* buf, int buflen)")
 public static Object setPrefix(Object... arg) {
 UNSUPPORTED("1yranxmu2maol02ulzd1ka1re"); // static char*
 UNSUPPORTED("5vpw3fxc1m9xx0a9kbusu2lu4"); // setPrefix (char* pfx, int* lenp, char* buf, int buflen)
@@ -898,6 +927,8 @@ throw new UnsupportedOperationException();
 
 //3 29iykhzfyaspduditcr7ufri3
 // Agraph_t **pccomps(Agraph_t * g, int *ncc, char *pfx, boolean * pinned) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="", key="29iykhzfyaspduditcr7ufri3", definition="Agraph_t **pccomps(Agraph_t * g, int *ncc, char *pfx, boolean * pinned)")
 public static Object pccomps(Object... arg) {
 UNSUPPORTED("9592a0sohpkfkhnxqgkd1t8xx"); // Agraph_t **pccomps(Agraph_t * g, int *ncc, char *pfx, boolean * pinned)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -985,6 +1016,8 @@ throw new UnsupportedOperationException();
 
 //3 7oum7fisfbl39e0gt9kuc2xyz
 // Agraph_t **ccomps(Agraph_t * g, int *ncc, char *pfx) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="", key="7oum7fisfbl39e0gt9kuc2xyz", definition="Agraph_t **ccomps(Agraph_t * g, int *ncc, char *pfx)")
 public static Object ccomps(Object... arg) {
 UNSUPPORTED("943ghlrqozczbucoafw2tim5n"); // Agraph_t **ccomps(Agraph_t * g, int *ncc, char *pfx)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1046,6 +1079,8 @@ throw new UnsupportedOperationException();
 
 //3 39ot62028rkkd87h9frgwqnn6
 // static void deriveClusters(Agraph_t* dg, Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="deriveClusters", key="39ot62028rkkd87h9frgwqnn6", definition="static void deriveClusters(Agraph_t* dg, Agraph_t * g)")
 public static Object deriveClusters(Object... arg) {
 UNSUPPORTED("868sk3tgejqs7lgdi9hbyqe0a"); // static void deriveClusters(Agraph_t* dg, Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1079,6 +1114,8 @@ throw new UnsupportedOperationException();
 
 //3 5lih4958yg41q8p4zxcfrrvdw
 // static Agraph_t *deriveGraph(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="", key="5lih4958yg41q8p4zxcfrrvdw", definition="static Agraph_t *deriveGraph(Agraph_t * g)")
 public static Object deriveGraph(Object... arg) {
 UNSUPPORTED("4nxhxefmq3j34nvl4eiimpj3h"); // static Agraph_t *deriveGraph(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1121,6 +1158,8 @@ throw new UnsupportedOperationException();
 
 //3 2wkfliv6m1b1405ef7p1b32ft
 // static void unionNodes(Agraph_t * dg, Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="unionNodes", key="2wkfliv6m1b1405ef7p1b32ft", definition="static void unionNodes(Agraph_t * dg, Agraph_t * g)")
 public static Object unionNodes(Object... arg) {
 UNSUPPORTED("8pzls87c97kkx2wk1iptbln6t"); // static void unionNodes(Agraph_t * dg, Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1146,6 +1185,8 @@ throw new UnsupportedOperationException();
 
 //3 5glt6khfafozusksfg5b131p1
 // static int clMarkFn (Agnode_t* n, int v) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="clMarkFn", key="5glt6khfafozusksfg5b131p1", definition="static int clMarkFn (Agnode_t* n, int v)")
 public static Object clMarkFn(Object... arg) {
 UNSUPPORTED("47itxizphm8ofv4u5hj6tqemj"); // static int clMarkFn (Agnode_t* n, int v)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1164,6 +1205,8 @@ throw new UnsupportedOperationException();
 
 //3 8e4t1udts4sc9qid3yeclb95v
 // int node_induce(Agraph_t * g, Agraph_t* eg) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="node_induce", key="8e4t1udts4sc9qid3yeclb95v", definition="int node_induce(Agraph_t * g, Agraph_t* eg)")
 public static Object node_induce(Object... arg) {
 UNSUPPORTED("7p43q9etzpr6fi00r7wawn5fy"); // int node_induce(Agraph_t * g, Agraph_t* eg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1189,6 +1232,8 @@ throw new UnsupportedOperationException();
 
 //3 48loms2wapgbbzoo5tu7zc00a
 // static Agraph_t *projectG(Agraph_t * subg, Agraph_t * g, int inCluster) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="", key="48loms2wapgbbzoo5tu7zc00a", definition="static Agraph_t *projectG(Agraph_t * subg, Agraph_t * g, int inCluster)")
 public static Object projectG(Object... arg) {
 UNSUPPORTED("cp0ewepqetunqupy9nw5l03m9"); // static Agraph_t *projectG(Agraph_t * subg, Agraph_t * g, int inCluster)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1221,6 +1266,8 @@ throw new UnsupportedOperationException();
 
 //3 dyxre2nf3xjqo91parvz2g7vf
 // static void subgInduce(Agraph_t * root, Agraph_t * g, int inCluster) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="subgInduce", key="dyxre2nf3xjqo91parvz2g7vf", definition="static void subgInduce(Agraph_t * root, Agraph_t * g, int inCluster)")
 public static Object subgInduce(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("6m7vdbmbz7x6wjr9k6wlhkg82"); // subgInduce(Agraph_t * root, Agraph_t * g, int inCluster)
@@ -1247,6 +1294,8 @@ throw new UnsupportedOperationException();
 
 //3 5affs0nf6g75npbot8em2x8m7
 // static void subGInduce(Agraph_t* g, Agraph_t * out) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="subGInduce", key="5affs0nf6g75npbot8em2x8m7", definition="static void subGInduce(Agraph_t* g, Agraph_t * out)")
 public static Object subGInduce(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("ajg4dr4fv1s1lknlf0o2gdybq"); // subGInduce(Agraph_t* g, Agraph_t * out)
@@ -1262,6 +1311,8 @@ throw new UnsupportedOperationException();
 
 //3 c05zexiwxzdj93dkl8we8khab
 // Agraph_t **cccomps(Agraph_t * g, int *ncc, char *pfx) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="", key="c05zexiwxzdj93dkl8we8khab", definition="Agraph_t **cccomps(Agraph_t * g, int *ncc, char *pfx)")
 public static Object cccomps(Object... arg) {
 UNSUPPORTED("bh1guslvsmjnntue2v45pives"); // Agraph_t **cccomps(Agraph_t * g, int *ncc, char *pfx)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1331,6 +1382,8 @@ throw new UnsupportedOperationException();
 
 //3 c6h4ladmfc1rtdc8d57592jxj
 // int isConnected(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="isConnected", key="c6h4ladmfc1rtdc8d57592jxj", definition="int isConnected(Agraph_t * g)")
 public static Object isConnected(Object... arg) {
 UNSUPPORTED("964gnb5ub22thb4btdue682kw"); // int isConnected(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1365,6 +1418,8 @@ throw new UnsupportedOperationException();
 
 //3 3qdni7ppm3mp7tf4nbkg8b54c
 // int nodeInduce(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/pack/ccomps.c", name="nodeInduce", key="3qdni7ppm3mp7tf4nbkg8b54c", definition="int nodeInduce(Agraph_t * g)")
 public static Object nodeInduce(Object... arg) {
 UNSUPPORTED("c5we4nfcmmumlgexr5upjrsd3"); // int nodeInduce(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

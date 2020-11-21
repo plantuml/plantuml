@@ -59,6 +59,10 @@ public class LinkRendering {
 		return new LinkRendering(Rainbow.none());
 	}
 
+	public LinkRendering withRainbow(Rainbow rainbow) {
+		return new LinkRendering(rainbow, display);
+	}
+
 	public LinkRendering withDisplay(Display display) {
 		return new LinkRendering(rainbow, display);
 	}
@@ -86,4 +90,5 @@ public class LinkRendering {
 	public String toString() {
 		return super.toString() + " " + display + " " + rainbow;
 	}
+
 }

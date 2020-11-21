@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,14 +45,8 @@
  */
 package h;
 
-import h.ST_pointf.Array;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import smetana.core.UnsupportedArrayOfPtr;
+import smetana.core.CStar;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -71,108 +65,13 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 
 	// "{",
 	// "pointf *list",
-	public ST_pointf.Array list;
+	public CStar<ST_pointf> list;
 
 	public int size;
 	public int sflag, eflag;
 
 	public final ST_pointf sp = new ST_pointf(this), ep = new ST_pointf(this);
 
-	public static class Array2 extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
-
-		private final List<ST_bezier> data;
-		private final int pos;
-
-		public Array2(int size) {
-			this.data = new ArrayList<ST_bezier>();
-			this.pos = 0;
-			for (int i = 0; i < size; i++) {
-				data.add(new ST_bezier());
-			}
-		}
-
-		@Override
-		public ST_bezier getStruct() {
-			return data.get(pos);
-		}
-
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return getStruct().setPtr(fieldName, newData);
-		}
-
-		@Override
-		public void setStruct(String fieldName, __struct__ newData) {
-			getStruct().setStruct(fieldName, newData);
-		}
-
-		@Override
-		public void setInt(String fieldName, int data) {
-			getStruct().setInt(fieldName, data);
-		}
-
-		// public void swap(int i, int j) {
-		// ST_bezier e1 = data.get(i);
-		// ST_bezier e2 = data.get(j);
-		// data.set(i, e2);
-		// data.set(j, e1);
-		// }
-
-		public Array2(List<ST_bezier> data, int pos) {
-			this.data = data;
-			this.pos = pos;
-		}
-
-		public Array2 reallocJ(int newsize) {
-			while (data.size() < newsize) {
-				data.add(new ST_bezier());
-			}
-			return this;
-		}
-
-		@Override
-		public Array2 plus(int delta) {
-			return new Array2(data, pos + delta);
-		}
-		
-		@Override
-		public Array2 asPtr() {
-			return this;
-		}
-
-		@Override
-		public void setPtr(__ptr__ value) {
-			this.data.set(pos, (ST_bezier) value);
-		}
-
-		@Override
-		public ST_bezier getPtr() {
-			return this.data.get(pos);
-		}
-		
-		public ST_bezier get(int i) {
-			return this.plus(i).getPtr();
-		}
-
-		@Override
-		public int comparePointer(__ptr__ other) {
-			final Array2 this2 = (Array2) other;
-			if (this.data != this2.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos - this2.pos;
-		}
-
-		public boolean isSameThan2(Array2 other) {
-			if (this.data != other.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos == other.pos;
-		}
-	}
-
-	// "}",
-	// "bezier");
 
 	@Override
 	public void ___(__struct__ other) {
@@ -222,10 +121,10 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("list")) {
-			this.list = (Array) newData;
-			return this.list;
-		}
+//		if (fieldName.equals("list")) {
+//			this.list = (Array) newData;
+//			return this.list;
+//		}
 		return super.setPtr(fieldName, newData);
 	}
 

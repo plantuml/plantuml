@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtils.memset;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
@@ -55,8 +58,8 @@ import smetana.core.size_t;
 public class memory__c {
 
 
-//3 6hfkgng9qf75cucpojc4r8x6w
-// void *zmalloc(size_t nbytes) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/common/memory.c", name="", key="6hfkgng9qf75cucpojc4r8x6w", definition="void *zmalloc(size_t nbytes)")
 public static __ptr__ zmalloc(size_t nbytes) {
 ENTERING("6hfkgng9qf75cucpojc4r8x6w","zmalloc");
 try {
@@ -76,6 +79,8 @@ LEAVING("6hfkgng9qf75cucpojc4r8x6w","zmalloc");
 
 //3 dn6c3bthm7yuhtrxx3o2je19z
 // void *zrealloc(void *ptr, size_t size, size_t elt, size_t osize) 
+@Unused
+@Original(version="2.38.0", path="lib/common/memory.c", name="", key="dn6c3bthm7yuhtrxx3o2je19z", definition="void *zrealloc(void *ptr, size_t size, size_t elt, size_t osize)")
 public static Object zrealloc(Object... arg) {
 UNSUPPORTED("50do65rl7k8poomk5tdkjw6k2"); // void *zrealloc(void *ptr, size_t size, size_t elt, size_t osize)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -95,11 +100,8 @@ throw new UnsupportedOperationException();
 
 
 
-public static CString gmalloc(int nbytes) {
-return new CString(nbytes);
-}
-//3 4mfikqpmxyxrke46i5xakatmc
-//void *gmalloc(size_t nbytes) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/common/memory.c", name="gmalloc", key="4mfikqpmxyxrke46i5xakatmc", definition="void *gmalloc(size_t nbytes)")
 public static __ptr__ gmalloc(size_t nbytes) {
 ENTERING("4mfikqpmxyxrke46i5xakatmc","gmalloc");
 try {
@@ -108,7 +110,7 @@ try {
 	return null;
     rv = (__ptr__) nbytes.malloc();
     if (rv == null) {
-	System.err.println("out of memory");
+    UNSUPPORTED("out of memory");
     }
     return rv;
 } finally {
@@ -121,6 +123,8 @@ LEAVING("4mfikqpmxyxrke46i5xakatmc","gmalloc");
 
 //3 1ed55yig6d18nhtbyqlf37jik
 // void *grealloc(void *ptr, size_t size) 
+@Unused
+@Original(version="2.38.0", path="lib/common/memory.c", name="", key="1ed55yig6d18nhtbyqlf37jik", definition="void *grealloc(void *ptr, size_t size)")
 public static __ptr__ grealloc(__ptr__ ptr, size_t size) {
 ENTERING("1ed55yig6d18nhtbyqlf37jik","grealloc");
 try {

@@ -110,6 +110,10 @@ public class PSystemVersion extends AbstractPSystem {
 		return getImage("dotc.png");
 	}
 
+	public static BufferedImage getDotd() {
+		return getImage("dotd.png");
+	}
+
 	public static BufferedImage getApple2Image() {
 		return getImageWebp("apple2.png");
 	}

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtils.tolower;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
@@ -52,8 +55,8 @@ import smetana.core.CString;
 public class strcasecmp__c {
 
 
-//3 22n1uekxezky6gx3cn22ansew
-// int strcasecmp(const char *s1, const char *s2) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/strcasecmp.c", name="strcasecmp", key="22n1uekxezky6gx3cn22ansew", definition="int strcasecmp(const char *s1, const char *s2)")
 public static int strcasecmp(CString s1, CString s2) {
 ENTERING("22n1uekxezky6gx3cn22ansew","strcasecmp");
 try {

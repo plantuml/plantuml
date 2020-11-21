@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.gvc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.gvc.gvplugin__c.gvplugin_load;
 import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtilsDebug.ENTERING;
@@ -160,6 +163,8 @@ public class gvtextlayout__c {
 
 //3 f1oiyeonoigwygyq8c88wl8tz
 // int gvtextlayout_select(GVC_t * gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvtextlayout.c", name="gvtextlayout_select", key="f1oiyeonoigwygyq8c88wl8tz", definition="int gvtextlayout_select(GVC_t * gvc)")
 public static int gvtextlayout_select(ST_GVC_s gvc) {
 ENTERING("f1oiyeonoigwygyq8c88wl8tz","gvtextlayout_select");
 try {
@@ -182,6 +187,8 @@ LEAVING("f1oiyeonoigwygyq8c88wl8tz","gvtextlayout_select");
 
 //3 f2jbuh3elz9mya1fc3ga6d3z9
 // boolean gvtextlayout(GVC_t *gvc, textspan_t *span, char **fontpath) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvtextlayout.c", name="gvtextlayout", key="f2jbuh3elz9mya1fc3ga6d3z9", definition="boolean gvtextlayout(GVC_t *gvc, textspan_t *span, char **fontpath)")
 public static Object gvtextlayout(Object... arg) {
 UNSUPPORTED("2jsqpz6hn581464yugh0tou2l"); // boolean gvtextlayout(GVC_t *gvc, textspan_t *span, char **fontpath)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

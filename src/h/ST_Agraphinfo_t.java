@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -46,11 +46,11 @@
 package h;
 
 import smetana.core.CFunction;
+import smetana.core.CStar;
+import smetana.core.CStarStar;
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedArrayOfStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements HardcodedStruct {
@@ -87,10 +87,10 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 	// /* to have subgraphs */
 	public int n_cluster;
 	// graph_t **clust; /* clusters are in clust[1..n_cluster] !!! */
-	public ST_Agraph_s.Array clust;
+	public CStarStar<ST_Agraph_s> clust;
 	public ST_Agraph_s dotroot;
 	public ST_Agnode_s nlist;
-	public ST_rank_t.Array2 rank;
+	public CStar<ST_rank_t> rank;
 	public ST_Agraph_s parent; /* containing cluster (not parent subgraph) */
 	// int level; /* cluster nesting level (not node level!) */
 	// node_t *minrep, *maxrep; /* set leaders for min and max rank */
@@ -116,7 +116,7 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 	// /* for clusters */
 	// node_t *leader, **rankleader;
 	public ST_Agnode_s leader;
-	public ST_Agnode_s.Array rankleader;
+	public CStarStar<ST_Agnode_s> rankleader;
 	public boolean expanded;
 	public int installed;
 	public int set_type;
@@ -133,29 +133,6 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 		this.parent_ = parent;
 	}
 
-	class ArrayOfFour extends UnsupportedArrayOfStruct {
-
-		final private int pos;
-
-		public ArrayOfFour(int pos) {
-			this.pos = pos;
-		}
-
-		public ArrayOfFour plus(int delta) {
-			return new ArrayOfFour(pos + delta);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return border[pos];
-		}
-
-		@Override
-		public void setStruct(__struct__ value) {
-			border[pos].copyDataFrom(value);
-		}
-
-	}
 
 	@Override
 	public __ptr__ castTo(Class dest) {
@@ -184,7 +161,7 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 			return parent;
 		}
 		if (fieldName.equals("clust")) {
-			this.clust = (ST_Agraph_s.Array) newData;
+			this.clust = (CStarStar<ST_Agraph_s>) newData;
 			return clust;
 		}
 		if (fieldName.equals("label")) {
@@ -208,11 +185,11 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 			return leader;
 		}
 		if (fieldName.equals("rankleader")) {
-			this.rankleader = (ST_Agnode_s.Array) newData;
+			this.rankleader = (CStarStar<ST_Agnode_s>) newData;
 			return rankleader;
 		}
 		if (fieldName.equals("rank")) {
-			this.rank = (ST_rank_t.Array2) newData;
+			this.rank = (CStar) newData;
 			return rank;
 		}
 		if (fieldName.equals("ln")) {

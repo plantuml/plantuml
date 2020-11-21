@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -66,9 +66,11 @@ import static smetana.core.JUtils.getenv;
 import static smetana.core.JUtils.strstr;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
-import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.BOTTOM_IX;
+import static smetana.core.Macro.DEFAULT_NODESEP;
+import static smetana.core.Macro.DEFAULT_RANKSEP;
 import static smetana.core.Macro.GD_border;
 import static smetana.core.Macro.GD_charset;
 import static smetana.core.Macro.GD_drawing;
@@ -82,9 +84,31 @@ import static smetana.core.Macro.GD_nodesep;
 import static smetana.core.Macro.GD_rankdir2;
 import static smetana.core.Macro.GD_ranksep;
 import static smetana.core.Macro.GD_showboxes;
+import static smetana.core.Macro.GLOBAL;
+import static smetana.core.Macro.GRAPH_LABEL;
+import static smetana.core.Macro.GVBEGIN;
+import static smetana.core.Macro.LABEL_AT_BOTTOM;
+import static smetana.core.Macro.LABEL_AT_TOP;
+import static smetana.core.Macro.LOCAL;
+import static smetana.core.Macro.LT_HTML;
+import static smetana.core.Macro.LT_NONE;
+import static smetana.core.Macro.MIN_NODESEP;
+import static smetana.core.Macro.MYHUGE;
 import static smetana.core.Macro.N;
-import static smetana.core.Macro.ROUND;
+import static smetana.core.Macro.NOCLUST;
+import static smetana.core.Macro.NODENAME_ESC;
+import static smetana.core.Macro.PAD;
+import static smetana.core.Macro.POINTS;
+import static smetana.core.Macro.RANKDIR_TB;
+import static smetana.core.Macro.TOP_IX;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.agfindedgeattr;
+import static smetana.core.Macro.agfindgraphattr;
+import static smetana.core.Macro.agfindnodeattr;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import h.ST_Agraph_s;
 import h.ST_layout_t;
 import h.ST_pointf;
@@ -93,246 +117,13 @@ import smetana.core.CString;
 import smetana.core.Z;
 
 public class input__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
-
-
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
-
-
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
-
 
 
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -348,29 +139,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -392,6 +166,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -407,29 +183,10 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
-
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -447,6 +204,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -464,6 +223,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -481,6 +242,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -498,6 +261,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -515,6 +280,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -532,6 +299,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -549,6 +318,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -568,6 +339,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -587,6 +360,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -606,6 +381,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -625,6 +402,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -639,6 +418,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -653,6 +434,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -667,6 +450,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -681,6 +466,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -698,6 +485,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -711,50 +500,12 @@ throw new UnsupportedOperationException();
 }
 
 
-//1 1fi3wib3hc7ibek0vfrpx9k3i
-// static char *usageFmt =     
-
-
-//1 cpzagrot2j4620xbm08g3qbaz
-// static char *genericItems = 
-
-
-//1 ej8f5pc6itbjzywbvv9r7pgog
-// static char *neatoFlags =     
-
-
-//1 6zygu4f39vz4q5m4oiz64om5v
-// static char *neatoItems = 
-
-
-//1 a5i7jzdqfacw4bequdriv6cb9
-// static char *fdpFlags =     
-
-
-//1 9hrf5y45qp9kii44glcd4nx6e
-// static char *fdpItems = 
-
-
-//1 bw7swzrd97c859k69vhbo6xui
-// static char *memtestFlags = 
-
-
-//1 dlf2hcbhlyk0xi7y4hhyxdjlg
-// static char *memtestItems = 
-
-
-//1 bfkjkg4j8ncjq3fbcfon7ce1a
-// static char *configFlags = 
-
-
-//1 cwsgle0ax1dh0i4rb6c4n90s8
-// static char *configItems = 
-
-
 
 
 //3 18dk9rr2jwvw2k0pwd01u1rp
 // int dotneato_usage(int exval) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="dotneato_usage", key="18dk9rr2jwvw2k0pwd01u1rp", definition="int dotneato_usage(int exval)")
 public static Object dotneato_usage(Object... arg) {
 UNSUPPORTED("cjfxortgnqo3ho8cb4mse3bjk"); // int dotneato_usage(int exval)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -786,6 +537,8 @@ throw new UnsupportedOperationException();
 
 //3 9s68av3h3ph5gjla9e2d3220t
 // static char *getFlagOpt(int argc, char **argv, int *idx) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="", key="9s68av3h3ph5gjla9e2d3220t", definition="static char *getFlagOpt(int argc, char **argv, int *idx)")
 public static Object getFlagOpt(Object... arg) {
 UNSUPPORTED("7i2co2mk6i4v2e5zed6cohfi0"); // static char *getFlagOpt(int argc, char **argv, int *idx)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -812,6 +565,8 @@ throw new UnsupportedOperationException();
 
 //3 2dx6lb6fkeqxispmv7w0bgsat
 // static char* dotneato_basename (char* path) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="dotneato_basename", key="2dx6lb6fkeqxispmv7w0bgsat", definition="static char* dotneato_basename (char* path)")
 public static Object dotneato_basename(Object... arg) {
 UNSUPPORTED("58z62a4pwz8fb1fqzgemmk2v"); // static char* dotneato_basename (char* path)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -839,6 +594,8 @@ throw new UnsupportedOperationException();
 
 //3 ez0qfar6yuf01ivvqrnev06fv
 // static void use_library(GVC_t *gvc, const char *name) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="use_library", key="ez0qfar6yuf01ivvqrnev06fv", definition="static void use_library(GVC_t *gvc, const char *name)")
 public static Object use_library(Object... arg) {
 UNSUPPORTED("cjicty7s03euuxnpum74nrt6f"); // static void use_library(GVC_t *gvc, const char *name)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -859,6 +616,8 @@ throw new UnsupportedOperationException();
 
 //3 dlfidqx2agrk43ikmxgzw9kgp
 // static void global_def(agxbuf* xb, char *dcl, int kind,          attrsym_t * ((*dclfun) (Agraph_t *, int kind, char *, char *)) ) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="global_def", key="dlfidqx2agrk43ikmxgzw9kgp", definition="static void global_def(agxbuf* xb, char *dcl, int kind,          attrsym_t * ((*dclfun) (Agraph_t *, int kind, char *, char *)) )")
 public static Object global_def(Object... arg) {
 UNSUPPORTED("zydu58d3g8obsevu9l8zo05i"); // static void global_def(agxbuf* xb, char *dcl, int kind,
 UNSUPPORTED("zj9p9fdfpp3hwme7atl3cug3"); //          attrsym_t * ((*dclfun) (Agraph_t *, int kind, char *, char *)) )
@@ -884,6 +643,8 @@ throw new UnsupportedOperationException();
 
 //3 5qvhl3c476hpwnik5r2ee5pin
 // static int gvg_init(GVC_t *gvc, graph_t *g, char *fn, int gidx) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="gvg_init", key="5qvhl3c476hpwnik5r2ee5pin", definition="static int gvg_init(GVC_t *gvc, graph_t *g, char *fn, int gidx)")
 public static Object gvg_init(Object... arg) {
 UNSUPPORTED("69zdfufo90wdjvfvsw59lz5n3"); // static int gvg_init(GVC_t *gvc, graph_t *g, char *fn, int gidx)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -913,6 +674,8 @@ throw new UnsupportedOperationException();
 
 //3 2zkpt5r5hmvqy31vbxai8aoww
 // graph_t *gvPluginsGraph(GVC_t *gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="", key="2zkpt5r5hmvqy31vbxai8aoww", definition="graph_t *gvPluginsGraph(GVC_t *gvc)")
 public static Object gvPluginsGraph(Object... arg) {
 UNSUPPORTED("aq8xsrhhkbt250zdmff189jej"); // graph_t *gvPluginsGraph(GVC_t *gvc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -928,6 +691,8 @@ throw new UnsupportedOperationException();
 
 //3 a4vyp310q1ezn1wiiqbhjazfi
 // int dotneato_args_initialize(GVC_t * gvc, int argc, char **argv) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="dotneato_args_initialize", key="a4vyp310q1ezn1wiiqbhjazfi", definition="int dotneato_args_initialize(GVC_t * gvc, int argc, char **argv)")
 public static Object dotneato_args_initialize(Object... arg) {
 UNSUPPORTED("3an9kpb8l897hglulndwlyhmk"); // int dotneato_args_initialize(GVC_t * gvc, int argc, char **argv)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1139,8 +904,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 72no6ayfvjinlnupyn5jlmayg
-// static boolean getdoubles2ptf(graph_t * g, char *name, pointf * result) 
+/* getdoubles2ptf:
+ * converts a graph attribute in inches to a pointf in points.
+ * If only one number is given, it is used for both x and y.
+ * Returns true if the attribute ends in '!'.
+ */
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/input.c", name="getdoubles2ptf", key="72no6ayfvjinlnupyn5jlmayg", definition="static boolean getdoubles2ptf(graph_t * g, char *name, pointf * result)")
 public static boolean getdoubles2ptf(ST_Agraph_s g, CString name, ST_pointf result) {
 ENTERING("72no6ayfvjinlnupyn5jlmayg","getdoubles2ptf");
 try {
@@ -1177,6 +947,8 @@ LEAVING("72no6ayfvjinlnupyn5jlmayg","getdoubles2ptf");
 
 //3 1xg46gdvtsko1yrtm6mg4tsxy
 // void getdouble(graph_t * g, char *name, double *result) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="getdouble", key="1xg46gdvtsko1yrtm6mg4tsxy", definition="void getdouble(graph_t * g, char *name, double *result)")
 public static Object getdouble(Object... arg) {
 UNSUPPORTED("5gfb0pnjet6us7l51d48x25aq"); // void getdouble(graph_t * g, char *name, double *result)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1196,6 +968,8 @@ throw new UnsupportedOperationException();
 
 //3 7c1tanyo6vwej9cqo0rkiv6sv
 // graph_t *gvNextInputGraph(GVC_t *gvc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="", key="7c1tanyo6vwej9cqo0rkiv6sv", definition="graph_t *gvNextInputGraph(GVC_t *gvc)")
 public static Object gvNextInputGraph(Object... arg) {
 UNSUPPORTED("a6jdteesa5ifdtthxxsohrlh2"); // graph_t *gvNextInputGraph(GVC_t *gvc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1242,8 +1016,8 @@ throw new UnsupportedOperationException();
 
 
 
-//3 9t08dr2ks9qz1pyfz99awla6x
-// static int findCharset (graph_t * g) 
+@Reviewed(when = "11/11/2020")
+@Original(version="2.38.0", path="lib/common/input.c", name="findCharset", key="9t08dr2ks9qz1pyfz99awla6x", definition="static int findCharset (graph_t * g)")
 public static int findCharset(ST_Agraph_s g) {
 ENTERING("9t08dr2ks9qz1pyfz99awla6x","findCharset");
 try {
@@ -1255,9 +1029,11 @@ LEAVING("9t08dr2ks9qz1pyfz99awla6x","findCharset");
 
 
 
-
-//3 3bnmjpvynh1j9oh2p2vi0vh2m
-// static void setRatio(graph_t * g) 
+/* setRatio:
+ * Checks "ratio" attribute, if any, and sets enum type.
+ */
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/input.c", name="setRatio", key="3bnmjpvynh1j9oh2p2vi0vh2m", definition="static void setRatio(graph_t * g)")
 public static void setRatio(ST_Agraph_s g) {
 ENTERING("3bnmjpvynh1j9oh2p2vi0vh2m","setRatio");
 try {
@@ -1301,12 +1077,13 @@ LEAVING("3bnmjpvynh1j9oh2p2vi0vh2m","setRatio");
 
 
 static CString rankname[] = new CString[] { new CString("local"), new CString("global"), new CString("none"), null };
-static int rankcode[] = { 100, 101, 102, 100 };
+static int rankcode[] = { LOCAL, GLOBAL, NOCLUST, LOCAL };
 static CString fontnamenames[] = new CString[] {new CString("gd"),new CString("ps"),new CString("svg"), null};
 static int fontnamecodes[] = {enumAsInt(fontname_kind.class, "NATIVEFONTS"),enumAsInt(fontname_kind.class, "PSFONTS"),
 enumAsInt(fontname_kind.class, "SVGFONTS"),-1};
-//3 8gzdr3oil2d0e2o7m84wsszfg
-//void graph_init(graph_t * g, boolean use_rankdir) 
+
+@Reviewed(when = "11/11/2020")
+@Original(version="2.38.0", path="lib/common/input.c", name="graph_init", key="8gzdr3oil2d0e2o7m84wsszfg", definition="void graph_init(graph_t * g, boolean use_rankdir)")
 public static void graph_init(ST_Agraph_s g, boolean use_rankdir) {
 ENTERING("8gzdr3oil2d0e2o7m84wsszfg","graph_init");
 try {
@@ -1324,14 +1101,12 @@ UNSUPPORTED("d9ej6bo2s49vpstu3pql6tkrx"); // 	strcpy(buf, "GDFONTPATH=");
 UNSUPPORTED("1s2jcd2h3eok7j6pclv20gyi2"); // 	strcat(buf, p);
 UNSUPPORTED("abkxekvux4nramryfw2e8vcru"); // 	putenv(buf);
     }
+    
+    
     GD_charset(g, findCharset (g));
-    /*if (!HTTPServerEnVar) {
-	Gvimagepath = agget (g, "imagepath");
-	if (!Gvimagepath)
-	    Gvimagepath = Gvfilepath;
-    }*/
-    GD_drawing(g).setDouble("quantum",
- 	late_double(g, (agattr(g,AGRAPH,new CString("quantum"),null)), 0.0, 0.0));
+    GD_drawing(g).quantum =
+ 	late_double(g, agfindgraphattr(g, "quantum"), 0.0, 0.0);
+    
     /* setting rankdir=LR is only defined in dot,
      * but having it set causes shape code and others to use it. 
      * The result is confused output, so we turn it off unless requested.
@@ -1339,7 +1114,7 @@ UNSUPPORTED("abkxekvux4nramryfw2e8vcru"); // 	putenv(buf);
      * Sometimes, the code really needs the graph's rankdir, e.g., neato -n
      * with record shapes, so we store the real rankdir in the next 2 bits.
      */
-    rankdir = 0;
+    rankdir = RANKDIR_TB;
     if ((p = agget(g, new CString("rankdir")))!=null) {
 UNSUPPORTED("sp7zcza7w0dn7t66aj8rf4wn"); // 	if ((*(p)==*("LR")&&!strcmp(p,"LR")))
 UNSUPPORTED("bjd2vk1jssqehllmgnqv601qd"); // 	    rankdir = 1;
@@ -1352,121 +1127,152 @@ UNSUPPORTED("7vlda224wrgcdhr0ts3mndh5q"); // 	    rankdir = 3;
 	GD_rankdir2(g, (rankdir << 2) | rankdir);
     else
 	GD_rankdir2(g, (rankdir << 2));
-    xf = late_double(g, (agattr(g,AGRAPH,new CString("nodesep"),null)),
-		0.25, 0.02);
-    GD_nodesep(g, (ROUND((xf)*72)));
-    p = late_string(g, (agattr(g,AGRAPH,new CString("ranksep"),null)), null);
+    
+    xf = late_double(g, agfindgraphattr(g, "nodesep"),
+    	DEFAULT_NODESEP, MIN_NODESEP);
+    GD_nodesep(g, POINTS(xf));
+    
+    
+    p = late_string(g, agfindgraphattr(g, "ranksep"), null);
     if (p!=null) {
 UNSUPPORTED("c3p25g4289dxlei062z4eflss"); // 	if (sscanf(p, "%lf", &xf) == 0)
 UNSUPPORTED("570vljex12zx5dkwi7mqa9knw"); // 	    xf = 0.5;
 UNSUPPORTED("8k75h069sv2k9b6tgz77dscwd"); // 	else {
 UNSUPPORTED("p882lodfwy5v48rwbxvg5s9i"); // 	    if (xf < 0.02)
 UNSUPPORTED("dhhbmqv6n01j1eeyy7fpus1xw"); // 		xf = 0.02;
+
 	if (strstr(p, new CString("equally"))!=null)
 	    GD_exact_ranksep(g, 1);
     } else
-	xf = 0.5;
-    GD_ranksep(g, (ROUND((xf)*72)));
-    GD_showboxes(g, late_int(g, (agattr(g,AGRAPH,new CString("showboxes"),null)), 0, 0));
-    p = late_string(g, (agattr(g,AGRAPH,new CString("fontnames"),null)), null);
+	xf = DEFAULT_RANKSEP;
+    GD_ranksep(g, POINTS(xf));
+    
+    
+    GD_showboxes(g, late_int(g, agfindgraphattr(g, "showboxes"), 0, 0));
+    p = late_string(g, agfindgraphattr(g, "fontnames"), null);
     GD_fontnames(g, maptoken(p, fontnamenames, fontnamecodes));
+    
+    
     setRatio(g);
     GD_drawing(g).filled = 
-	getdoubles2ptf(g, new CString("size"), (ST_pointf) GD_drawing(g).size);
-    getdoubles2ptf(g, new CString("page"), (ST_pointf) GD_drawing(g).page);
+	getdoubles2ptf(g, new CString("size"), GD_drawing(g).size);
+    getdoubles2ptf(g, new CString("page"), GD_drawing(g).page);
+    
+    
     GD_drawing(g).centered = mapbool(agget(g, new CString("center")));
+    
+    
     if ((p = agget(g, new CString("rotate")))!=null)
 	GD_drawing(g).landscape= (atoi(p) == 90);
     else if ((p = agget(g, new CString("orientation")))!=null)
 	GD_drawing(g).landscape= ((p.charAt(0) == 'l') || (p.charAt(0) == 'L'));
     else if ((p = agget(g, new CString("landscape")))!=null)
 	GD_drawing(g).landscape= mapbool(p);
+    
+    
     p = agget(g, new CString("clusterrank"));
     Z.z().CL_type = maptoken(p, rankname, rankcode);
     p = agget(g, new CString("concentrate"));
     Z.z().Concentrate = mapbool(p);
-    Z.z().State = 0;
+    Z.z().State = GVBEGIN;
     Z.z().EdgeLabelsDone = 0;
-    GD_drawing(g).setDouble("dpi", 0.0);
+    
+    
+    GD_drawing(g).dpi = 0.0;
     if (((p = agget(g, new CString("dpi")))!=null && p.charAt(0)!='\0')
 	|| ((p = agget(g, new CString("resolution")))!=null && p.charAt(0)!='\0'))
-	GD_drawing(g).setDouble("dpi", atof(p));
+	GD_drawing(g).dpi = atof(p);
+    
+    
     do_graph_label(g);
-    Z.z().Initial_dist = (1.0e+37);
-    Z.z().G_ordering = (agattr(g,AGRAPH,new CString("ordering"),null));
-    Z.z().G_gradientangle = (agattr(g,AGRAPH,new CString("gradientangle"),null));
-    Z.z().G_margin = (agattr(g,AGRAPH,new CString("margin"),null));
+    
+    
+    Z.z().Initial_dist = MYHUGE;
+    
+    Z.z().G_ordering = agfindgraphattr(g, "ordering");
+    Z.z().G_gradientangle = agfindgraphattr(g,"gradientangle");
+    Z.z().G_margin = agfindgraphattr(g, "margin");
+
     /* initialize nodes */
-    Z.z().N_height = (agattr(g,AGNODE,new CString("height"),null));
-    Z.z().N_width = (agattr(g,AGNODE,new CString("width"),null));
-    Z.z().N_shape = (agattr(g,AGNODE,new CString("shape"),null));
-    Z.z().N_color = (agattr(g,AGNODE,new CString("color"),null));
-    Z.z().N_fillcolor = (agattr(g,AGNODE,new CString("fillcolor"),null));
-    Z.z().N_style = (agattr(g,AGNODE,new CString("style"),null));
-    Z.z().N_fontsize = (agattr(g,AGNODE,new CString("fontsize"),null));
-    Z.z().N_fontname = (agattr(g,AGNODE,new CString("fontname"),null));
-    Z.z().N_fontcolor = (agattr(g,AGNODE,new CString("fontcolor"),null));
-    Z.z().N_label = (agattr(g,AGNODE,new CString("label"),null));
+    Z.z().N_height = agfindnodeattr(g, "height");
+    Z.z().N_width = agfindnodeattr(g, "width");
+    Z.z().N_shape = agfindnodeattr(g, "shape");
+    Z.z().N_color = agfindnodeattr(g, "color");
+    Z.z().N_fillcolor = agfindnodeattr(g, "fillcolor");
+    Z.z().N_style = agfindnodeattr(g, "style");
+    Z.z().N_fontsize = agfindnodeattr(g, "fontsize");
+    Z.z().N_fontname = agfindnodeattr(g, "fontname");
+    Z.z().N_fontcolor = agfindnodeattr(g, "fontcolor");
+    Z.z().N_label = agfindnodeattr(g, "label");
     if (N(Z.z().N_label))
-	Z.z().N_label = agattr(g, AGNODE, new CString("label"), new CString("\\N"));
-    Z.z().N_xlabel = (agattr(g,AGNODE,new CString("xlabel"),null));
-    Z.z().N_showboxes = (agattr(g,AGNODE,new CString("showboxes"),null));
-    Z.z().N_penwidth = (agattr(g,AGNODE,new CString("penwidth"),null));
-    Z.z().N_ordering = (agattr(g,AGNODE,new CString("ordering"),null));
-    Z.z().N_margin = (agattr(g,AGNODE,new CString("margin"),null));
+	Z.z().N_label = agattr(g, AGNODE, new CString("label"), new CString(NODENAME_ESC));
+    Z.z().N_xlabel = agfindnodeattr(g, "xlabel");
+    Z.z().N_showboxes = agfindnodeattr(g, "showboxes");
+    Z.z().N_penwidth = agfindnodeattr(g, "penwidth");
+    Z.z().N_ordering = agfindnodeattr(g, "ordering");
+    Z.z().N_margin = agfindnodeattr(g, "margin");
+    
+    
     /* attribs for polygon shapes */
-    Z.z().N_sides = (agattr(g,AGNODE,new CString("sides"),null));
-    Z.z().N_peripheries = (agattr(g,AGNODE,new CString("peripheries"),null));
-    Z.z().N_skew = (agattr(g,AGNODE,new CString("skew"),null));
-    Z.z().N_orientation = (agattr(g,AGNODE,new CString("orientation"),null));
-    Z.z().N_distortion = (agattr(g,AGNODE,new CString("distortion"),null));
-    Z.z().N_fixed = (agattr(g,AGNODE,new CString("fixedsize"),null));
-    Z.z().N_imagescale = (agattr(g,AGNODE,new CString("imagescale"),null));
-    Z.z().N_nojustify = (agattr(g,AGNODE,new CString("nojustify"),null));
-    Z.z().N_layer = (agattr(g,AGNODE,new CString("layer"),null));
-    Z.z().N_group = (agattr(g,AGNODE,new CString("group"),null));
-    Z.z().N_comment = (agattr(g,AGNODE,new CString("comment"),null));
-    Z.z().N_vertices = (agattr(g,AGNODE,new CString("vertices"),null));
-    Z.z().N_z = (agattr(g,AGNODE,new CString("z"),null));
-    Z.z().N_gradientangle = (agattr(g,AGNODE,new CString("gradientangle"),null));
+    Z.z().N_sides = agfindnodeattr(g, "sides");
+    Z.z().N_peripheries = agfindnodeattr(g, "peripheries");
+    Z.z().N_skew = agfindnodeattr(g, "skew");
+    Z.z().N_orientation = agfindnodeattr(g, "orientation");
+    Z.z().N_distortion = agfindnodeattr(g, "distortion");
+    Z.z().N_fixed = agfindnodeattr(g, "fixedsize");
+    Z.z().N_imagescale = agfindnodeattr(g, "imagescale");
+    Z.z().N_nojustify = agfindnodeattr(g, "nojustify");
+    Z.z().N_layer = agfindnodeattr(g, "layer");
+    Z.z().N_group = agfindnodeattr(g, "group");
+    Z.z().N_comment = agfindnodeattr(g, "comment");
+    Z.z().N_vertices = agfindnodeattr(g, "vertices");
+    Z.z().N_z = agfindnodeattr(g, "z");
+    Z.z().N_gradientangle = agfindnodeattr(g,"gradientangle");
+    
+    
     /* initialize edges */
-    Z.z().E_weight = (agattr(g,AGEDGE,new CString("weight"),null));
-    Z.z().E_color = (agattr(g,AGEDGE,new CString("color"),null));
-    Z.z().E_fillcolor = (agattr(g,AGEDGE,new CString("fillcolor"),null));
-    Z.z().E_fontsize = (agattr(g,AGEDGE,new CString("fontsize"),null));
-    Z.z().E_fontname = (agattr(g,AGEDGE,new CString("fontname"),null));
-    Z.z().E_fontcolor = (agattr(g,AGEDGE,new CString("fontcolor"),null));
-    Z.z().E_label = (agattr(g,AGEDGE,new CString("label"),null));
-    Z.z().E_xlabel = (agattr(g,AGEDGE,new CString("xlabel"),null));
-    Z.z().E_label_float = (agattr(g,AGEDGE,new CString("labelfloat"),null));
+    Z.z().E_weight = agfindedgeattr(g, "weight");
+    Z.z().E_color = agfindedgeattr(g, "color");
+    Z.z().E_fillcolor = agfindedgeattr(g, "fillcolor");
+    Z.z().E_fontsize = agfindedgeattr(g, "fontsize");
+    Z.z().E_fontname = agfindedgeattr(g, "fontname");
+    Z.z().E_fontcolor = agfindedgeattr(g, "fontcolor");
+    Z.z().E_label = agfindedgeattr(g, "label");
+    Z.z().E_xlabel = agfindedgeattr(g, "xlabel");
+    Z.z().E_label_float = agfindedgeattr(g, "labelfloat");
     /* vladimir */
-    Z.z().E_dir = (agattr(g,AGEDGE,new CString("dir"),null));
-    Z.z().E_arrowhead = (agattr(g,AGEDGE,new CString("arrowhead"),null));
-    Z.z().E_arrowtail = (agattr(g,AGEDGE,new CString("arrowtail"),null));
-    Z.z().E_headlabel = (agattr(g,AGEDGE,new CString("headlabel"),null));
-    Z.z().E_taillabel = (agattr(g,AGEDGE,new CString("taillabel"),null));
-    Z.z().E_labelfontsize = (agattr(g,AGEDGE,new CString("labelfontsize"),null));
-    Z.z().E_labelfontname = (agattr(g,AGEDGE,new CString("labelfontname"),null));
-    Z.z().E_labelfontcolor = (agattr(g,AGEDGE,new CString("labelfontcolor"),null));
-    Z.z().E_labeldistance = (agattr(g,AGEDGE,new CString("labeldistance"),null));
-    Z.z().E_labelangle = (agattr(g,AGEDGE,new CString("labelangle"),null));
+    Z.z().E_dir = agfindedgeattr(g, "dir");
+    Z.z().E_arrowhead = agfindedgeattr(g, "arrowhead");
+    Z.z().E_arrowtail = agfindedgeattr(g, "arrowtail");
+    Z.z().E_headlabel = agfindedgeattr(g, "headlabel");
+    Z.z().E_taillabel = agfindedgeattr(g, "taillabel");
+    Z.z().E_labelfontsize = agfindedgeattr(g, "labelfontsize");
+    Z.z().E_labelfontname = agfindedgeattr(g, "labelfontname");
+    Z.z().E_labelfontcolor = agfindedgeattr(g, "labelfontcolor");
+    Z.z().E_labeldistance = agfindedgeattr(g, "labeldistance");
+    Z.z().E_labelangle = agfindedgeattr(g, "labelangle");
     /* end vladimir */
-    Z.z().E_minlen = (agattr(g,AGEDGE,new CString("minlen"),null));
-    Z.z().E_showboxes = (agattr(g,AGEDGE,new CString("showboxes"),null));
-    Z.z().E_style = (agattr(g,AGEDGE,new CString("style"),null));
-    Z.z().E_decorate = (agattr(g,AGEDGE,new CString("decorate"),null));
-    Z.z().E_arrowsz = (agattr(g,AGEDGE,new CString("arrowsize"),null));
-    Z.z().E_constr = (agattr(g,AGEDGE,new CString("constraint"),null));
-    Z.z().E_layer = (agattr(g,AGEDGE,new CString("layer"),null));
-    Z.z().E_comment = (agattr(g,AGEDGE,new CString("comment"),null));
-    Z.z().E_tailclip = (agattr(g,AGEDGE,new CString("tailclip"),null));
-    Z.z().E_headclip = (agattr(g,AGEDGE,new CString("headclip"),null));
-    Z.z().E_penwidth = (agattr(g,AGEDGE,new CString("penwidth"),null));
+    Z.z().E_minlen = agfindedgeattr(g, "minlen");
+    Z.z().E_showboxes = agfindedgeattr(g, "showboxes");
+    Z.z().E_style = agfindedgeattr(g, "style");
+    Z.z().E_decorate = agfindedgeattr(g, "decorate");
+    Z.z().E_arrowsz = agfindedgeattr(g, "arrowsize");
+    Z.z().E_constr = agfindedgeattr(g, "constraint");
+    Z.z().E_layer = agfindedgeattr(g, "layer");
+    Z.z().E_comment = agfindedgeattr(g, "comment");
+    Z.z().E_tailclip = agfindedgeattr(g, "tailclip");
+    Z.z().E_headclip = agfindedgeattr(g, "headclip");
+    Z.z().E_penwidth = agfindedgeattr(g, "penwidth");
+    
+    
     /* background */
-    GD_drawing(g).setPtr("xdots", init_xdot (g));
+    GD_drawing(g).xdots = init_xdot (g);
+    
+    
     /* initialize id, if any */
+    
     if ((p = agget(g, new CString("id")))!=null && p.charAt(0)!='\0')
-	GD_drawing(g).setPtr("id", strdup_and_subst_obj(p, g));
+	GD_drawing(g).id = strdup_and_subst_obj(p, g);
 } finally {
 LEAVING("8gzdr3oil2d0e2o7m84wsszfg","graph_init");
 }
@@ -1475,8 +1281,14 @@ LEAVING("8gzdr3oil2d0e2o7m84wsszfg","graph_init");
 
 
 
+
+
+
+
 //3 46ypwxxdurpwoq7ee0nagnyuw
 // void graph_cleanup(graph_t *g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="graph_cleanup", key="46ypwxxdurpwoq7ee0nagnyuw", definition="void graph_cleanup(graph_t *g)")
 public static Object graph_cleanup(Object... arg) {
 UNSUPPORTED("30nwbe5cpmxhh80h8xa9akr9z"); // void graph_cleanup(graph_t *g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1500,6 +1312,8 @@ throw new UnsupportedOperationException();
 
 //3 7rzv30lub416sffko0du3o6sx
 // char* charsetToStr (int c) 
+@Unused
+@Original(version="2.38.0", path="lib/common/input.c", name="charsetToStr", key="7rzv30lub416sffko0du3o6sx", definition="char* charsetToStr (int c)")
 public static Object charsetToStr(Object... arg) {
 UNSUPPORTED("cqm25rponse4rsi686sbn1lo0"); // char*
 UNSUPPORTED("b1ttom615vlztws5drinv8k4i"); // charsetToStr (int c)
@@ -1529,32 +1343,40 @@ throw new UnsupportedOperationException();
 
 
 
-//3 5vks1zdadu5vjinaivs0j2bkb
-// void do_graph_label(graph_t * sg) 
+/* do_graph_label:
+ * Set characteristics of graph label if it exists.
+ * 
+ */
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/input.c", name="do_graph_label", key="5vks1zdadu5vjinaivs0j2bkb", definition="void do_graph_label(graph_t * sg)")
 public static void do_graph_label(ST_Agraph_s  sg) {
 ENTERING("5vks1zdadu5vjinaivs0j2bkb","do_graph_label");
 try {
     CString str, pos, just;
     int pos_ix;
+    
     /* it would be nice to allow multiple graph labels in the future */
     if ((str = agget(sg, new CString("label")))!=null && (str.charAt(0) != '\0')) {
 	char pos_flag=0;
 	final ST_pointf dimen = new ST_pointf();
-	GD_has_labels(sg.root, GD_has_labels(sg.root) | (1 << 3));
-	GD_label(sg, make_label(sg, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
+	
+	GD_has_labels(sg.root, GD_has_labels(sg.root) | GRAPH_LABEL);
+	
+	GD_label(sg, make_label(sg, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
 	    late_double(sg, (agattr(sg,AGRAPH,new CString("fontsize"),null)),
 			14.0, 1.0),
 	    late_nnstring(sg, (agattr(sg,AGRAPH,new CString("fontname"),null)),
 			new CString("Times-Roman")),
 	    late_nnstring(sg, (agattr(sg,AGRAPH,new CString("fontcolor"),null)),
 			new CString("black"))));
+	
 	/* set label position */
 	pos = agget(sg, new CString("labelloc"));
 	if (NEQ(sg, agroot(sg))) {
 	    if (pos!=null && (pos.charAt(0) == 'b'))
-		pos_flag = 0;
+		pos_flag = LABEL_AT_BOTTOM;
 	    else
-		pos_flag = 1;
+		pos_flag = LABEL_AT_TOP;
 	} else {
 UNSUPPORTED("601b6yrqr391vnfpa74d7fec7"); // 	    if (pos && (pos[0] == 't'))
 UNSUPPORTED("bxai2kktsidvda3696ctyk63c"); // 		pos_flag = 1;
@@ -1569,18 +1391,22 @@ UNSUPPORTED("336to8kpmovx00pexhhenz74b"); // 	    else if (just[0] == 'r')
 UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 	}
 	GD_label_pos(sg, pos_flag);
+	
+	
 	if (EQ(sg, agroot(sg)))
 	    return;
+	
+	
 	/* Set border information for cluster labels to allow space
 	 */
+	
 	dimen.___(GD_label(sg).dimen);
-	dimen.setDouble("x", dimen.x + 4*4);
-	dimen.setDouble("y", dimen.y + 2*4);
+	PAD(dimen);
 	if (N(GD_flip(agroot(sg)))) {
-	    if ((GD_label_pos(sg) & 1)!=0)
-		pos_ix = 2;
+	    if ((GD_label_pos(sg) & LABEL_AT_TOP)!=0)
+		pos_ix = TOP_IX;
 	    else
-		pos_ix = 0;
+		pos_ix = BOTTOM_IX;
 	    GD_border(sg)[pos_ix].___(dimen);
 	} else {
 	    /* when rotated, the labels will be restored to TOP or BOTTOM  */
@@ -1596,6 +1422,9 @@ UNSUPPORTED("8cawl3kik853hkvgm39y34urs"); // 	    (((Agraphinfo_t*)(((Agobj_t*)(
 LEAVING("5vks1zdadu5vjinaivs0j2bkb","do_graph_label");
 }
 }
+
+
+
 
 
 }

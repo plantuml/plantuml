@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,6 +45,7 @@
  */
 package h;
 
+import smetana.core.CStar;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -61,22 +62,11 @@ public class ST_tedge_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	// "typedef struct tedge_t",
-	// "{",
 	public ST_pointnlink_t pnl0p;
 	public ST_pointnlink_t pnl1p;
 
-	public ST_triangle_t.Array lrp;
-	public ST_triangle_t.Array rtp;
-
-	// public StarArrayOfPtr ltp;
-	// public StarArrayOfPtr rtp;
-
-	// "struct triangle_t *ltp",
-	// "struct triangle_t *rtp",
-	// "}",
-	// "tedge_t");
-
+	public CStar<ST_triangle_t> lrp;
+	public CStar<ST_triangle_t> rtp;
 
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
@@ -91,46 +81,6 @@ public class ST_tedge_t extends UnsupportedStructAndPtr {
 		return super.setPtr(fieldName, newData);
 	}
 
-	// class Singleton extends UnsupportedArrayOfPtr implements __array_of_ptr__ {
-	// private final ST_pointnlink_t.Amp data;
-	//
-	// Singleton(ST_pointnlink_t.Amp data) {
-	// this.data = data;
-	// }
-	//
-	// @Override
-	// public __ptr__ getPtr() {
-	// return data;
-	// }
-	//
-	// @Override
-	// public Area getInternal(int idx) {
-	// if (idx == 0) {
-	// return data;
-	// }
-	// System.err.println("idx=" + idx);
-	// return super.getInternal(idx);
-	// }
-	//
-	// @Override
-	// public String toString() {
-	// return super.toString() + " " + data + " " + data.getStruct();
-	// }
-	//
-	// @Override
-	// public int comparePointerInternal(__array_of_ptr__ other) {
-	// System.err.println("other=" + other);
-	// Singleton other2 = (Singleton) other;
-	// System.err.println("other2.data=" + other2.data);
-	// System.err.println("pnl0p=" + pnl0p);
-	// System.err.println("pnl0p=" + foo(pnl0p));
-	// System.err.println("pnl1p=" + pnl1p);
-	// System.err.println("pnl0p=" + foo(pnl1p));
-	// // TODO Auto-generated method stub
-	// return super.comparePointerInternal(other);
-	// }
-	//
-	// }
 
 }
 

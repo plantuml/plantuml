@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,7 +45,6 @@
  */
 package h;
 
-import smetana.core.UnsupportedArrayOfStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -94,54 +93,6 @@ public class ST_SplitQ_t extends UnsupportedStructAndPtr {
 
 	public ST_SplitQ_t(StarStruct parent) {
 		this.parent = parent;
-	}
-
-	class ArrayOfSixtyFive extends UnsupportedArrayOfStruct {
-
-		final private int pos;
-
-		public ArrayOfSixtyFive(int pos) {
-			this.pos = pos;
-		}
-
-		public ArrayOfSixtyFive plus(int delta) {
-			return new ArrayOfSixtyFive(pos + delta);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return BranchBuf[pos];
-		}
-
-		@Override
-		public void setStruct(__struct__ value) {
-			BranchBuf[pos].copyDataFrom(value);
-		}
-
-	}
-
-	class ArrayOfOne extends UnsupportedArrayOfStruct {
-
-		final private int pos;
-
-		public ArrayOfOne(int pos) {
-			this.pos = pos;
-		}
-
-		public ArrayOfOne plus(int delta) {
-			return new ArrayOfOne(pos + delta);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return Partitions[pos];
-		}
-
-		@Override
-		public void setStruct(__struct__ value) {
-			Partitions[pos].copyDataFrom(value);
-		}
-
 	}
 
 	@Override

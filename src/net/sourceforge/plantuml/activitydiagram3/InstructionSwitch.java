@@ -93,7 +93,8 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		}
 		Ftile result = factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
 		// if (getPositionedNotes().size() > 0) {
-		// result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
+		// result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam,
+		// false);
 		// }
 		// final List<WeldingPoint> weldingPoints = new ArrayList<WeldingPoint>();
 		// for (Branch branch : branches) {
@@ -137,7 +138,9 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	public boolean switchCase(Display labelCase, LinkRendering nextLinkRenderer) {
-		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, labelCase, labelCase, null, labelCase);
+		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane,
+				LinkRendering.none().withDisplay(labelCase), labelCase, null,
+				LinkRendering.none().withDisplay(labelCase));
 		this.branches.add(this.current);
 		return true;
 	}

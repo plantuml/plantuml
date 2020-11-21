@@ -45,14 +45,23 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.graphic.QuoteUtils;
+import net.sourceforge.plantuml.version.Version;
 
 public class PicoWebServer implements Runnable {
 
@@ -93,14 +102,10 @@ public class PicoWebServer implements Runnable {
 
 			if (method.equals("GET")) {
 				final String path = parse.nextToken();
-				if (path.startsWith("/plantuml/png/")) {
-					sendDiagram(out, path, "image/png", FileFormat.PNG);
+				if (path.startsWith("/plantuml/png/") && sendDiagram(out, path, "image/png", FileFormat.PNG))
 					return;
-				}
-				if (path.startsWith("/plantuml/svg/")) {
-					sendDiagram(out, path, "image/svg+xml", FileFormat.SVG);
+				if (path.startsWith("/plantuml/svg/") && sendDiagram(out, path, "image/svg+xml", FileFormat.SVG))
 					return;
-				}
 			}
 			write(out, "HTTP/1.1 302 Found");
 			write(out, "Location: /plantuml/png/oqbDJyrBuGh8ISmh2VNrKGZ8JCuFJqqAJYqgIotY0aefG5G00000");
@@ -120,31 +125,54 @@ public class PicoWebServer implements Runnable {
 		}
 	}
 
-	private void sendDiagram(BufferedOutputStream out, String path, final String mime, final FileFormat format)
+	private boolean sendDiagram(BufferedOutputStream out, String path, final String mime, final FileFormat format)
 			throws NoPlantumlCompressionException, IOException {
 		final int x = path.lastIndexOf('/');
 		final String compressed = path.substring(x + 1);
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoderProtected();
 		final String source = transcoder.decode(compressed);
-		final byte[] fileData = getData(source, format);
-		write(out, "HTTP/1.1 200 OK");
-		write(out, "Cache-Control: no-cache");
-		write(out, "Server: PlantUML PicoWebServer");
-		write(out, "Date: " + new Date());
-		write(out, "Content-type: " + mime);
-		write(out, "Content-length: " + fileData.length);
-		write(out, "");
-		out.flush();
-		out.write(fileData);
-		out.flush();
+		final SourceStringReader ssr = new SourceStringReader(source);
+
+		final List<BlockUml> blocks = ssr.getBlocks();
+		if (blocks.size() > 0) {
+			final Diagram system = blocks.get(0).getDiagram();
+			final ByteArrayOutputStream os = new ByteArrayOutputStream();
+			final ImageData imageData = system.exportDiagram(os, 0, new FileFormatOption(format));
+			os.close();
+			final byte[] fileData = os.toByteArray();
+			write(out, "HTTP/1.1 " + httpReturnCode(imageData.getStatus()));
+			write(out, "Cache-Control: no-cache");
+			write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
+			write(out, "Date: " + new Date());
+			write(out, "Content-type: " + mime);
+			write(out, "Content-length: " + fileData.length);
+			write(out, "X-PlantUML-Diagram-Width: " + imageData.getWidth());
+			write(out, "X-PlantUML-Diagram-Height: " + imageData.getHeight());
+			write(out, "X-PlantUML-Diagram-Description: " + system.getDescription().getDescription());
+			if (system instanceof PSystemError) {
+				final PSystemError error = (PSystemError) system;
+				for (ErrorUml err : error.getErrorsUml()) {
+					write(out, "X-PlantUML-Diagram-Error: " + err.getError());
+					write(out, "X-PlantUML-Diagram-Error-Line: " + (1 + err.getLineLocation().getPosition()));
+				}
+			}
+			write(out, "X-Patreon: Support us on https://plantuml.com/patreon");
+			write(out, "X-Donate: https://plantuml.com/paypal");
+			write(out, "X-Quote: " + StringUtils.rot(QuoteUtils.getSomeQuote()));
+			write(out, "");
+			out.flush();
+			out.write(fileData);
+			out.flush();
+			return true;
+		}
+		return false;
 	}
 
-	private byte[] getData(String source, FileFormat format) throws IOException {
-		final SourceStringReader ssr = new SourceStringReader(source);
-		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ssr.outputImage(os, new FileFormatOption(format));
-		os.close();
-		return os.toByteArray();
+	private String httpReturnCode(int status) {
+		if (status == 0 || status == 200) {
+			return "200 OK";
+		}
+		return "" + status + " ERROR";
 	}
 
 	private void write(OutputStream os, String s) throws IOException {

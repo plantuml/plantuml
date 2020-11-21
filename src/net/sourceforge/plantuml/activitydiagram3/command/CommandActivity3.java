@@ -68,7 +68,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 				+ "|" //
 				+ "(?<![/|}\\]])\\]" // About ]
 				+ "|" //
-				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>"  // About >
+				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>" // About >
 				+ "|" //
 				+ "(?<!\\|.{1,999})\\|" // About |
 				+ ")";
@@ -113,12 +113,13 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String stereo = arg.get("STEREO", 0);
+		Stereotype stereotype = null;
 		if (stereo != null) {
-			final Stereotype stereotype = new Stereotype(stereo);
+			stereotype = new Stereotype(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
 		final BoxStyle style = BoxStyle.fromChar(arg.get("STYLE", 0).charAt(0));
-		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), style, url, colors);
+		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), style, url, colors, stereotype);
 		return CommandExecutionResult.ok();
 	}
 

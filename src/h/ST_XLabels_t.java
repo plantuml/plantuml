@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,6 +45,7 @@
  */
 package h;
 
+import smetana.core.CStar;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
@@ -61,17 +62,14 @@ public class ST_XLabels_t extends UnsupportedStructAndPtr {
 		this.parent = parent;
 	}
 
-	// "typedef struct XLabels_s",
-	// "{",
-	public ST_object_t.Array /*ST_object_t*/ objs;
+	public CStar<ST_object_t> objs;
 	public int n_objs;
-	public ST_xlabel_t.Array /*ST_xlabel_t*/ lbls;
+	public CStar<ST_xlabel_t> lbls;
 	public int n_lbls;
-	public ST_label_params_t /*ST_label_params_t*/ params;
+	public ST_label_params_t params;
 	public ST_dt_s hdx;
 	public ST_RTree spdx;
-	// "}",
-	// "XLabels_t");
+
 
 	@Override
 	public void setInt(String fieldName, int data) {

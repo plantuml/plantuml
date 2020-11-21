@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -292,6 +295,8 @@ public class htmltable__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -307,29 +312,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
 
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -351,6 +340,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -366,29 +357,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
 
 
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -406,6 +381,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -423,6 +400,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -440,6 +419,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -457,6 +438,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -474,6 +457,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -491,6 +476,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -508,6 +495,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -527,6 +516,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -546,6 +537,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -565,6 +558,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -584,6 +579,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -598,6 +595,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -612,6 +611,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -626,6 +627,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -640,6 +643,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -657,6 +662,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -682,6 +689,8 @@ throw new UnsupportedOperationException();
 
 //3 4ch470ajf5jjpt0x06pdydd7h
 // static void pushFontInfo(htmlenv_t * env, textfont_t * fp, textfont_t * savp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="pushFontInfo", key="4ch470ajf5jjpt0x06pdydd7h", definition="static void pushFontInfo(htmlenv_t * env, textfont_t * fp, textfont_t * savp)")
 public static Object pushFontInfo(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("ayvhpxjw4xcz87pueo2oq06m6"); // pushFontInfo(htmlenv_t * env, textfont_t * fp, textfont_t * savp)
@@ -717,6 +726,8 @@ throw new UnsupportedOperationException();
 
 //3 eiqsenv0wvs25ylb29oq7hypz
 // static void popFontInfo(htmlenv_t * env, textfont_t * savp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="popFontInfo", key="eiqsenv0wvs25ylb29oq7hypz", definition="static void popFontInfo(htmlenv_t * env, textfont_t * savp)")
 public static Object popFontInfo(Object... arg) {
 UNSUPPORTED("1cgn1czuwy1nx4ugy78281irz"); // static void popFontInfo(htmlenv_t * env, textfont_t * savp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -736,6 +747,8 @@ throw new UnsupportedOperationException();
 
 //3 2fq7cq3v0wodc2zkdz2nrycbr
 // static void emit_htextspans(GVJ_t * job, int nspans, htextspan_t * spans, pointf p, 		double halfwidth_x, textfont_t finfo, boxf b, int simple) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="emit_htextspans", key="2fq7cq3v0wodc2zkdz2nrycbr", definition="static void emit_htextspans(GVJ_t * job, int nspans, htextspan_t * spans, pointf p, 		double halfwidth_x, textfont_t finfo, boxf b, int simple)")
 public static Object emit_htextspans(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("1wdbin7u1ntostduoa76bdjzz"); // emit_htextspans(GVJ_t * job, int nspans, htextspan_t * spans, pointf p,
@@ -818,6 +831,8 @@ throw new UnsupportedOperationException();
 
 //3 dpcnkhm24fk5jwfpzzhm5fgn3
 // static void emit_html_txt(GVJ_t * job, htmltxt_t * tp, htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="emit_html_txt", key="dpcnkhm24fk5jwfpzzhm5fgn3", definition="static void emit_html_txt(GVJ_t * job, htmltxt_t * tp, htmlenv_t * env)")
 public static Object emit_html_txt(Object... arg) {
 UNSUPPORTED("e9atbpbtc2d7k8q5qw64ovfdm"); // static void emit_html_txt(GVJ_t * job, htmltxt_t * tp, htmlenv_t * env)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -841,6 +856,8 @@ throw new UnsupportedOperationException();
 
 //3 8aivux1hsy4ynfzwf908d9425
 // static void doSide(GVJ_t * job, pointf p, double wd, double ht) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="doSide", key="8aivux1hsy4ynfzwf908d9425", definition="static void doSide(GVJ_t * job, pointf p, double wd, double ht)")
 public static Object doSide(Object... arg) {
 UNSUPPORTED("9hbmtms12cm5dzi4mtc03tbex"); // static void doSide(GVJ_t * job, pointf p, double wd, double ht)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -859,6 +876,8 @@ throw new UnsupportedOperationException();
 
 //3 3ae4al308do9z1u91clqx27yk
 // static pointf *mkPts(pointf * AF, boxf b, int border) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="", key="3ae4al308do9z1u91clqx27yk", definition="static pointf *mkPts(pointf * AF, boxf b, int border)")
 public static Object mkPts(Object... arg) {
 UNSUPPORTED("3dw1rz353bav9gjp9j2wnqzwx"); // static pointf *mkPts(pointf * AF, boxf b, int border)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -886,12 +905,14 @@ throw new UnsupportedOperationException();
 
 //3 dce0frvo5rjv19prf2almjrsc
 // static void doBorder(GVJ_t * job, htmldata_t * dp, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="doBorder", key="dce0frvo5rjv19prf2almjrsc", definition="static void doBorder(GVJ_t * job, htmldata_t * dp, boxf b)")
 public static Object doBorder(Object... arg) {
 UNSUPPORTED("52hc3ya0fz8yu9photik0cqpq"); // static void doBorder(GVJ_t * job, htmldata_t * dp, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("bka1u02qeykfmysbaty8fagdo"); //     pointf AF[6];
 UNSUPPORTED("eaoui6hnrqm4zv0hyd8ch71l2"); //     char *sptr[2];
-UNSUPPORTED("bivhiv8d8rddwv3gp5ojwoe17"); //     char *color = (dp->pencolor ? dp->pencolor : "black");
+UNSUPPORTED("bivhiv8d8rddwv3gp5ojwoe17"); //     char *color = dp->pencolor ? dp->pencolor : "black";
 UNSUPPORTED("brrv66ebgw3j8alwdo84y5j91"); //     unsigned short sides;
 UNSUPPORTED("47mxcz4gh3xivg50vcji1zkle"); //     gvrender_set_pencolor(job, color);
 UNSUPPORTED("9gil9x2la7lnb1r6x47w6z1dn"); //     if ((dp->style & ((1 << 8) | (1 << 7)))) {
@@ -980,6 +1001,8 @@ throw new UnsupportedOperationException();
 
 //3 3sn3xxwciwsnysgpxkk25bbu3
 // static int setFill(GVJ_t * job, char *color, int angle, int style, char *clrs[2]) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="setFill", key="3sn3xxwciwsnysgpxkk25bbu3", definition="static int setFill(GVJ_t * job, char *color, int angle, int style, char *clrs[2])")
 public static Object setFill(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("arvrzi4iwxk807sj8rrhzk9hn"); // setFill(GVJ_t * job, char *color, int angle, int style, char *clrs[2])
@@ -1012,6 +1035,8 @@ throw new UnsupportedOperationException();
 
 //3 27rny3qpw3j6r42b1s34uyl25
 // static int initAnchor(GVJ_t * job, htmlenv_t * env, htmldata_t * data, boxf b, 	   htmlmap_data_t * save, int closePrev) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="initAnchor", key="27rny3qpw3j6r42b1s34uyl25", definition="static int initAnchor(GVJ_t * job, htmlenv_t * env, htmldata_t * data, boxf b, 	   htmlmap_data_t * save, int closePrev)")
 public static Object initAnchor(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("8oquq7zad174i5s01j6hzxatt"); // initAnchor(GVJ_t * job, htmlenv_t * env, htmldata_t * data, boxf b,
@@ -1069,6 +1094,8 @@ throw new UnsupportedOperationException();
 
 //3 ah2sn0gm8xfyu3faoljt1whui
 // static void endAnchor(GVJ_t * job, htmlmap_data_t * save, int openPrev) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="endAnchor", key="ah2sn0gm8xfyu3faoljt1whui", definition="static void endAnchor(GVJ_t * job, htmlmap_data_t * save, int openPrev)")
 public static Object endAnchor(Object... arg) {
 UNSUPPORTED("eiujc2cdqb4ubx9bzhrbgkr0d"); // static void endAnchor(GVJ_t * job, htmlmap_data_t * save, int openPrev)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1094,6 +1121,8 @@ throw new UnsupportedOperationException();
 
 //3 75if0l45ti15rgx7p5f0f1xy1
 // static void emit_html_rules(GVJ_t * job, htmlcell_t * cp, htmlenv_t * env, char *color, htmlcell_t* nextc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="emit_html_rules", key="75if0l45ti15rgx7p5f0f1xy1", definition="static void emit_html_rules(GVJ_t * job, htmlcell_t * cp, htmlenv_t * env, char *color, htmlcell_t* nextc)")
 public static Object emit_html_rules(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("7k8576uq5xrhmrpgtayxldmst"); // emit_html_rules(GVJ_t * job, htmlcell_t * cp, htmlenv_t * env, char *color, htmlcell_t* nextc)
@@ -1168,6 +1197,8 @@ throw new UnsupportedOperationException();
 
 //3 26zfaec64xs5h6zhbfqva70tp
 // static void emit_html_tbl(GVJ_t * job, htmltbl_t * tbl, htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="emit_html_tbl", key="26zfaec64xs5h6zhbfqva70tp", definition="static void emit_html_tbl(GVJ_t * job, htmltbl_t * tbl, htmlenv_t * env)")
 public static Object emit_html_tbl(Object... arg) {
 UNSUPPORTED("ni0mji8xwi6vyoc0i92fspkz"); // static void emit_html_tbl(GVJ_t * job, htmltbl_t * tbl, htmlenv_t * env)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1178,7 +1209,7 @@ UNSUPPORTED("7hxwbqi0ato9k2b4nzpp7uw3a"); //     htmlcell_t *cp;
 UNSUPPORTED("c8p7i7oozhr11poil2ax0mjdh"); //     static textfont_t savef;
 UNSUPPORTED("bq5er65wlottydwze8xwtg1h8"); //     htmlmap_data_t saved;
 UNSUPPORTED("9vo2dpf5d55fy577acu1mj2tl"); //     int anchor;			/* if true, we need to undo anchor settings. */
-UNSUPPORTED("a6neawb1l9iwhlxyqeylmtibj"); //     int doAnchor = (tbl->data.href || tbl->data.target);
+UNSUPPORTED("a6neawb1l9iwhlxyqeylmtibj"); //     int doAnchor = tbl->data.href || tbl->data.target;
 UNSUPPORTED("en6q26cyrg17g6yd6el73b3ns"); //     pointf AF[4];
 UNSUPPORTED("acdkiuky8vkjaqqynxn9e052i"); //     if (tbl->font)
 UNSUPPORTED("84z3c9pimg6qaq5qubuumky79"); // 	pushFontInfo(env, tbl->font, &savef);
@@ -1240,6 +1271,8 @@ throw new UnsupportedOperationException();
 
 //3 92q18yuuh3uq9twxcmz0wqvwv
 // static void emit_html_img(GVJ_t * job, htmlimg_t * cp, htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="emit_html_img", key="92q18yuuh3uq9twxcmz0wqvwv", definition="static void emit_html_img(GVJ_t * job, htmlimg_t * cp, htmlenv_t * env)")
 public static Object emit_html_img(Object... arg) {
 UNSUPPORTED("6mdos47goc2mvm0icpzihjr9p"); // static void emit_html_img(GVJ_t * job, htmlimg_t * cp, htmlenv_t * env)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1273,13 +1306,15 @@ throw new UnsupportedOperationException();
 
 //3 2yyg33cwscbca36c9p9ls9gmb
 // static void emit_html_cell(GVJ_t * job, htmlcell_t * cp, htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="emit_html_cell", key="2yyg33cwscbca36c9p9ls9gmb", definition="static void emit_html_cell(GVJ_t * job, htmlcell_t * cp, htmlenv_t * env)")
 public static Object emit_html_cell(Object... arg) {
 UNSUPPORTED("czikvsl8tr4dfiv0ulisikbe7"); // static void emit_html_cell(GVJ_t * job, htmlcell_t * cp, htmlenv_t * env)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("bq5er65wlottydwze8xwtg1h8"); //     htmlmap_data_t saved;
 UNSUPPORTED("96jja5vo8t36z1sflrj0x8vi4"); //     boxf pts = cp->data.box;
 UNSUPPORTED("1inwrhhir5qtddjy60bnbfaft"); //     pointf pos = env->pos;
-UNSUPPORTED("3wt0qjlqdo7dj9y9mkgqmzcl7"); //     int inAnchor, doAnchor = (cp->data.href || cp->data.target);
+UNSUPPORTED("3wt0qjlqdo7dj9y9mkgqmzcl7"); //     int inAnchor, doAnchor = cp->data.href || cp->data.target;
 UNSUPPORTED("en6q26cyrg17g6yd6el73b3ns"); //     pointf AF[4];
 UNSUPPORTED("970xro1x23dmefkex4vsgzo87"); //     pts.LL.x += pos.x;
 UNSUPPORTED("b2fjdw9a9zxpb6bex19mnsi7p"); //     pts.UR.x += pos.x;
@@ -1327,6 +1362,8 @@ throw new UnsupportedOperationException();
 
 //3 4wy0mqtzrkhcvbguv66mv2zrn
 // static void allocObj(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="allocObj", key="4wy0mqtzrkhcvbguv66mv2zrn", definition="static void allocObj(GVJ_t * job)")
 public static Object allocObj(Object... arg) {
 UNSUPPORTED("bn0p5no9j7nwlzitfiys1fijz"); // static void allocObj(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1364,6 +1401,8 @@ throw new UnsupportedOperationException();
 
 //3 3mabixy4ji5v1l1l5q9om0x4y
 // static void freeObj(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="freeObj", key="3mabixy4ji5v1l1l5q9om0x4y", definition="static void freeObj(GVJ_t * job)")
 public static Object freeObj(Object... arg) {
 UNSUPPORTED("9xbg7byr2iikj3spqxioe890s"); // static void freeObj(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1383,6 +1422,8 @@ throw new UnsupportedOperationException();
 
 //3 ddm4xxn8hy635ldbmntgizzkh
 // static double heightOfLbl (htmllabel_t * lp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="heightOfLbl", key="ddm4xxn8hy635ldbmntgizzkh", definition="static double heightOfLbl (htmllabel_t * lp)")
 public static Object heightOfLbl(Object... arg) {
 UNSUPPORTED("lt6cippjix5bbvyhkcpl8g7g"); // static double
 UNSUPPORTED("3cec4m7dvd9a2d7cmauwa0wl3"); // heightOfLbl (htmllabel_t * lp)
@@ -1410,6 +1451,8 @@ throw new UnsupportedOperationException();
 
 //3 9kxusredw550222rw4tuvj6tw
 // void emit_html_label(GVJ_t * job, htmllabel_t * lp, textlabel_t * tp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="emit_html_label", key="9kxusredw550222rw4tuvj6tw", definition="void emit_html_label(GVJ_t * job, htmllabel_t * lp, textlabel_t * tp)")
 public static Object emit_html_label(Object... arg) {
 UNSUPPORTED("827ar9bsah6y44hkc2l0x2yyj"); // void emit_html_label(GVJ_t * job, htmllabel_t * lp, textlabel_t * tp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1463,6 +1506,8 @@ throw new UnsupportedOperationException();
 
 //3 bzoc2l4jkwpjnu8uhijkh7jqn
 // void free_html_data(htmldata_t * dp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="free_html_data", key="bzoc2l4jkwpjnu8uhijkh7jqn", definition="void free_html_data(htmldata_t * dp)")
 public static Object free_html_data(Object... arg) {
 UNSUPPORTED("dqo3q5rjr3xogz5zf2ttohimm"); // void free_html_data(htmldata_t * dp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1483,6 +1528,8 @@ throw new UnsupportedOperationException();
 
 //3 4250mxcggii14uzmucxqskd4h
 // void free_html_text(htmltxt_t * t) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="free_html_text", key="4250mxcggii14uzmucxqskd4h", definition="void free_html_text(htmltxt_t * t)")
 public static Object free_html_text(Object... arg) {
 UNSUPPORTED("a32qj5cyojlxov1ntqwnextyt"); // void free_html_text(htmltxt_t * t)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1516,6 +1563,8 @@ throw new UnsupportedOperationException();
 
 //3 1ag0y1j2z1j2lll9sqzo80ds5
 // void free_html_img(htmlimg_t * ip) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="free_html_img", key="1ag0y1j2z1j2lll9sqzo80ds5", definition="void free_html_img(htmlimg_t * ip)")
 public static Object free_html_img(Object... arg) {
 UNSUPPORTED("ct5oxr3idkvuopfdine5us5pk"); // void free_html_img(htmlimg_t * ip)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1531,6 +1580,8 @@ throw new UnsupportedOperationException();
 
 //3 8zewpo49ed6tnn0j5hunzms6n
 // static void free_html_cell(htmlcell_t * cp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="free_html_cell", key="8zewpo49ed6tnn0j5hunzms6n", definition="static void free_html_cell(htmlcell_t * cp)")
 public static Object free_html_cell(Object... arg) {
 UNSUPPORTED("3lsa1e19d2sb3u7wxcf0q6drn"); // static void free_html_cell(htmlcell_t * cp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1547,6 +1598,8 @@ throw new UnsupportedOperationException();
 
 //3 4ajotfuuo16w4bnu75faio9aw
 // static void free_html_tbl(htmltbl_t * tbl) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="free_html_tbl", key="4ajotfuuo16w4bnu75faio9aw", definition="static void free_html_tbl(htmltbl_t * tbl)")
 public static Object free_html_tbl(Object... arg) {
 UNSUPPORTED("b80jiab9bv3an4keu3a1itd63"); // static void free_html_tbl(htmltbl_t * tbl)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1575,6 +1628,8 @@ throw new UnsupportedOperationException();
 
 //3 4jhvo7ir2kbb8ephhue06iewo
 // void free_html_label(htmllabel_t * lp, int root) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="free_html_label", key="4jhvo7ir2kbb8ephhue06iewo", definition="void free_html_label(htmllabel_t * lp, int root)")
 public static Object free_html_label(Object... arg) {
 UNSUPPORTED("px6brhgrrpzjieaugbuctqyk"); // void free_html_label(htmllabel_t * lp, int root)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1596,6 +1651,8 @@ throw new UnsupportedOperationException();
 
 //3 5c34vls2f3ixvg8t5410ax0db
 // static htmldata_t *portToCell(htmlcell_t * cp, char *id) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="", key="5c34vls2f3ixvg8t5410ax0db", definition="static htmldata_t *portToCell(htmlcell_t * cp, char *id)")
 public static Object portToCell(Object... arg) {
 UNSUPPORTED("9jvs5orxfd5qdafa6ji4ui0xq"); // static htmldata_t *portToCell(htmlcell_t * cp, char *id)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1617,6 +1674,8 @@ throw new UnsupportedOperationException();
 
 //3 6xsutw08hlknw0tpar5xs0i21
 // static htmldata_t *portToTbl(htmltbl_t * tp, char *id) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="", key="6xsutw08hlknw0tpar5xs0i21", definition="static htmldata_t *portToTbl(htmltbl_t * tp, char *id)")
 public static Object portToTbl(Object... arg) {
 UNSUPPORTED("e551f60lz4x2wuvcjjin4gw93"); // static htmldata_t *portToTbl(htmltbl_t * tp, char *id)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1644,6 +1703,8 @@ throw new UnsupportedOperationException();
 
 //3 9uxvepjmnfsmf2vy6czz4hgkq
 // boxf *html_port(node_t * n, char *pname, int *sides) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="", key="9uxvepjmnfsmf2vy6czz4hgkq", definition="boxf *html_port(node_t * n, char *pname, int *sides)")
 public static Object html_port(Object... arg) {
 UNSUPPORTED("b42ganybwd4banjp31wuq2juv"); // boxf *html_port(node_t * n, char *pname, int *sides)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1668,6 +1729,8 @@ throw new UnsupportedOperationException();
 
 //3 73uo7f1blvl7rkz3l1k3z9l6g
 // int html_path(node_t * n, port * p, int side, boxf * rv, int *k) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="html_path", key="73uo7f1blvl7rkz3l1k3z9l6g", definition="int html_path(node_t * n, port * p, int side, boxf * rv, int *k)")
 public static Object html_path(Object... arg) {
 UNSUPPORTED("f3mv81w2m6lobd446eh7pz18h"); // int html_path(node_t * n, port * p, int side, boxf * rv, int *k)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1682,6 +1745,8 @@ throw new UnsupportedOperationException();
 
 //3 9ipfcmt80ki80d60bv5414jkq
 // static int size_html_txt(GVC_t *gvc, htmltxt_t * ftxt, htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="size_html_txt", key="9ipfcmt80ki80d60bv5414jkq", definition="static int size_html_txt(GVC_t *gvc, htmltxt_t * ftxt, htmlenv_t * env)")
 public static Object size_html_txt(Object... arg) {
 UNSUPPORTED("d2km41hnc3ukssi3t1z0xv6mk"); // static int size_html_txt(GVC_t *gvc, htmltxt_t * ftxt, htmlenv_t * env)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1826,6 +1891,8 @@ throw new UnsupportedOperationException();
 
 //3 du4alvh2eyanoeurjmm7ne2s4
 // static int size_html_img(htmlimg_t * img, htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="size_html_img", key="du4alvh2eyanoeurjmm7ne2s4", definition="static int size_html_img(htmlimg_t * img, htmlenv_t * env)")
 public static Object size_html_img(Object... arg) {
 UNSUPPORTED("6r0cp3mjbmapso0uy6kf5q4ec"); // static int size_html_img(htmlimg_t * img, htmlenv_t * env)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1853,6 +1920,8 @@ throw new UnsupportedOperationException();
 
 //3 9orvnos51tdgi1w930vz5ilu1
 // static int size_html_cell(graph_t * g, htmlcell_t * cp, htmltbl_t * parent, 	       htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="size_html_cell", key="9orvnos51tdgi1w930vz5ilu1", definition="static int size_html_cell(graph_t * g, htmlcell_t * cp, htmltbl_t * parent, 	       htmlenv_t * env)")
 public static Object size_html_cell(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("et2mfady8pt9b8i3f4edn6s70"); // size_html_cell(graph_t * g, htmlcell_t * cp, htmltbl_t * parent,
@@ -1915,6 +1984,8 @@ throw new UnsupportedOperationException();
 
 //3 2srxlzkxe960nczu4z5nrauej
 // static int findCol(PointSet * ps, int row, int col, htmlcell_t * cellp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="findCol", key="2srxlzkxe960nczu4z5nrauej", definition="static int findCol(PointSet * ps, int row, int col, htmlcell_t * cellp)")
 public static Object findCol(Object... arg) {
 UNSUPPORTED("vy7n771o40h01dyj8qyye2he"); // static int findCol(PointSet * ps, int row, int col, htmlcell_t * cellp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1949,6 +2020,8 @@ throw new UnsupportedOperationException();
 
 //3 1apchhkdbk0wgxmptldlqordv
 // static int processTbl(graph_t * g, htmltbl_t * tbl, htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="processTbl", key="1apchhkdbk0wgxmptldlqordv", definition="static int processTbl(graph_t * g, htmltbl_t * tbl, htmlenv_t * env)")
 public static Object processTbl(Object... arg) {
 UNSUPPORTED("bcwb87d1whfft3xydpjn96tqy"); // static int processTbl(graph_t * g, htmltbl_t * tbl, htmlenv_t * env)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2021,6 +2094,8 @@ throw new UnsupportedOperationException();
 
 //3 bftk6pbrbqkhwivjh0o2e4xmn
 // void sizeLinearArray(htmltbl_t * tbl) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="sizeLinearArray", key="bftk6pbrbqkhwivjh0o2e4xmn", definition="void sizeLinearArray(htmltbl_t * tbl)")
 public static Object sizeLinearArray(Object... arg) {
 UNSUPPORTED("wzpmfhhszovxq93ydvsztetp"); // void sizeLinearArray(htmltbl_t * tbl)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2066,6 +2141,8 @@ throw new UnsupportedOperationException();
 
 //3 4i4kof2mbmyuy7554t99luv2d
 // char *nToName(int c) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="", key="4i4kof2mbmyuy7554t99luv2d", definition="char *nToName(int c)")
 public static Object nToName(Object... arg) {
 UNSUPPORTED("152ni25tykk6b46aztxh05dt0"); // char *nToName(int c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2084,6 +2161,8 @@ throw new UnsupportedOperationException();
 
 //3 1bmoyklwxydje1kcgu3nwsnvl
 // static void closeGraphs(graph_t * rowg, graph_t * colg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="closeGraphs", key="1bmoyklwxydje1kcgu3nwsnvl", definition="static void closeGraphs(graph_t * rowg, graph_t * colg)")
 public static Object closeGraphs(Object... arg) {
 UNSUPPORTED("5bqv0gm8rycgunk4roh5kfd71"); // static void closeGraphs(graph_t * rowg, graph_t * colg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2104,6 +2183,8 @@ throw new UnsupportedOperationException();
 
 //3 a1pb8vo051kce2vw0blclqlh7
 // static void checkChain(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="checkChain", key="a1pb8vo051kce2vw0blclqlh7", definition="static void checkChain(graph_t * g)")
 public static Object checkChain(Object... arg) {
 UNSUPPORTED("7b9ue77v0ds2jxp1wmflsxiqi"); // static void checkChain(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2131,6 +2212,8 @@ throw new UnsupportedOperationException();
 
 //3 5t5lovn25afcqbdxm2c69199o
 // static void checkEdge (graph_t* g, node_t* t, node_t* h, int sz) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="checkEdge", key="5t5lovn25afcqbdxm2c69199o", definition="static void checkEdge (graph_t* g, node_t* t, node_t* h, int sz)")
 public static Object checkEdge(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("36q9ktek22tbigm7zmxlp9p7l"); // checkEdge (graph_t* g, node_t* t, node_t* h, int sz)
@@ -2156,6 +2239,8 @@ throw new UnsupportedOperationException();
 
 //3 ae7dclkuh27vau8tjkxw8clhl
 // void makeGraphs(htmltbl_t * tbl, graph_t * rowg, graph_t * colg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="makeGraphs", key="ae7dclkuh27vau8tjkxw8clhl", definition="void makeGraphs(htmltbl_t * tbl, graph_t * rowg, graph_t * colg)")
 public static Object makeGraphs(Object... arg) {
 UNSUPPORTED("4cuju09ekofovn0fc2bbo50uw"); // void makeGraphs(htmltbl_t * tbl, graph_t * rowg, graph_t * colg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2213,6 +2298,8 @@ throw new UnsupportedOperationException();
 
 //3 a9vkjdktfvq94s8grq0awt8ub
 // void setSizes(htmltbl_t * tbl, graph_t * rowg, graph_t * colg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="setSizes", key="a9vkjdktfvq94s8grq0awt8ub", definition="void setSizes(htmltbl_t * tbl, graph_t * rowg, graph_t * colg)")
 public static Object setSizes(Object... arg) {
 UNSUPPORTED("bc7wgvmmd3yu8683xxfd3rr22"); // void setSizes(htmltbl_t * tbl, graph_t * rowg, graph_t * colg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2241,6 +2328,8 @@ throw new UnsupportedOperationException();
 
 //3 36o03axw6h4de6jf7hlsg2grd
 // void sizeArray(htmltbl_t * tbl) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="sizeArray", key="36o03axw6h4de6jf7hlsg2grd", definition="void sizeArray(htmltbl_t * tbl)")
 public static Object sizeArray(Object... arg) {
 UNSUPPORTED("6x0xk9xg9vpp8xksw96k56u1"); // void sizeArray(htmltbl_t * tbl)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2274,6 +2363,8 @@ throw new UnsupportedOperationException();
 
 //3 7mf9slzi6j1xx8znqkck81ojd
 // static void pos_html_img(htmlimg_t * cp, boxf pos) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="pos_html_img", key="7mf9slzi6j1xx8znqkck81ojd", definition="static void pos_html_img(htmlimg_t * cp, boxf pos)")
 public static Object pos_html_img(Object... arg) {
 UNSUPPORTED("42a4fvfkhhzdh65t6v4i6n43b"); // static void pos_html_img(htmlimg_t * cp, boxf pos)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2288,6 +2379,8 @@ throw new UnsupportedOperationException();
 
 //3 6dcraeyvk2uoj97sgfptvvusa
 // static void pos_html_txt(htmltxt_t * ftxt, char c) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="pos_html_txt", key="6dcraeyvk2uoj97sgfptvvusa", definition="static void pos_html_txt(htmltxt_t * ftxt, char c)")
 public static Object pos_html_txt(Object... arg) {
 UNSUPPORTED("d7eeur03fxeyzb04yunpr831c"); // static void pos_html_txt(htmltxt_t * ftxt, char c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2306,6 +2399,8 @@ throw new UnsupportedOperationException();
 
 //3 d1yiur9m8nrpdphq90db17c2b
 // static void pos_html_cell(htmlcell_t * cp, boxf pos, int sides) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="pos_html_cell", key="d1yiur9m8nrpdphq90db17c2b", definition="static void pos_html_cell(htmlcell_t * cp, boxf pos, int sides)")
 public static Object pos_html_cell(Object... arg) {
 UNSUPPORTED("cuis36gztoi76fhtvhwcv6uws"); // static void pos_html_cell(htmlcell_t * cp, boxf pos, int sides)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2449,6 +2544,8 @@ throw new UnsupportedOperationException();
 
 //3 56p5uk86725l2wvm0o2ai4e0c
 // static void pos_html_tbl(htmltbl_t * tbl, boxf pos, int sides) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="pos_html_tbl", key="56p5uk86725l2wvm0o2ai4e0c", definition="static void pos_html_tbl(htmltbl_t * tbl, boxf pos, int sides)")
 public static Object pos_html_tbl(Object... arg) {
 UNSUPPORTED("4zsl8ii4walezca0spg3jkpml"); // static void pos_html_tbl(htmltbl_t * tbl, boxf pos, int sides)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2548,6 +2645,8 @@ throw new UnsupportedOperationException();
 
 //3 ja3w9brzk1n88r7xtda60x5j
 // static int size_html_tbl(graph_t * g, htmltbl_t * tbl, htmlcell_t * parent, 	      htmlenv_t * env) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="size_html_tbl", key="ja3w9brzk1n88r7xtda60x5j", definition="static int size_html_tbl(graph_t * g, htmltbl_t * tbl, htmlcell_t * parent, 	      htmlenv_t * env)")
 public static Object size_html_tbl(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("c04xwvrthgk497pc2tqnlr7ox"); // size_html_tbl(graph_t * g, htmltbl_t * tbl, htmlcell_t * parent,
@@ -2602,6 +2701,8 @@ throw new UnsupportedOperationException();
 
 //3 7sxjij9pnf0bhnnb7wl4nofo1
 // static char *nameOf(void *obj, agxbuf * xb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="", key="7sxjij9pnf0bhnnb7wl4nofo1", definition="static char *nameOf(void *obj, agxbuf * xb)")
 public static Object nameOf(Object... arg) {
 UNSUPPORTED("btnlhy87chzxs16mxvfpsif78"); // static char *nameOf(void *obj, agxbuf * xb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2634,6 +2735,8 @@ throw new UnsupportedOperationException();
 
 //3 eu0n8w5rlasw0veo8k5b77529
 // static char *getPenColor(void *obj) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="", key="eu0n8w5rlasw0veo8k5b77529", definition="static char *getPenColor(void *obj)")
 public static Object getPenColor(Object... arg) {
 UNSUPPORTED("cfi7ftrhnkn3lm0wv2x0r18rz"); // static char *getPenColor(void *obj)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2654,6 +2757,8 @@ throw new UnsupportedOperationException();
 
 //3 39z2hrj2uwkezxobreqxpgb10
 // int make_html_label(void *obj, textlabel_t * lp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/htmltable.c", name="make_html_label", key="39z2hrj2uwkezxobreqxpgb10", definition="int make_html_label(void *obj, textlabel_t * lp)")
 public static int make_html_label(__ptr__ obj, ST_textlabel_t lp) {
 ENTERING("39z2hrj2uwkezxobreqxpgb10","make_html_label");
 try {

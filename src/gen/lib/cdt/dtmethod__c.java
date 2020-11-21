@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dtmethod__c {
@@ -115,6 +118,8 @@ public class dtmethod__c {
 
 //3 5y8zard8q0t7wd1fznlyiu0is
 // Dtmethod_t* dtmethod(Dt_t* dt, Dtmethod_t* meth)      
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtmethod.c", name="dtmethod", key="5y8zard8q0t7wd1fznlyiu0is", definition="Dtmethod_t* dtmethod(Dt_t* dt, Dtmethod_t* meth)")
 public static Object dtmethod(Object... arg) {
 UNSUPPORTED("3km1xhxqsi1kc6xhl15kcri1f"); // Dtmethod_t* dtmethod(Dt_t* dt, Dtmethod_t* meth)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

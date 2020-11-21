@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,91 +44,45 @@
  *
  */
 package gen.lib.cdt;
-import static gen.lib.cdt.dtrestore__c.dtrestore;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.function;
-import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.DT_CLEAR;
+import static smetana.core.Macro.DT_DELETE;
+import static smetana.core.Macro.DT_FIRST;
+import static smetana.core.Macro.DT_INSERT;
+import static smetana.core.Macro.DT_LAST;
+import static smetana.core.Macro.DT_MATCH;
+import static smetana.core.Macro.DT_NEXT;
+import static smetana.core.Macro.DT_OBAG;
+import static smetana.core.Macro.DT_OSET;
+import static smetana.core.Macro.DT_PREV;
+import static smetana.core.Macro.DT_RENEW;
+import static smetana.core.Macro.DT_SEARCH;
 import static smetana.core.Macro.N;
+import static smetana.core.Macro.UNFLATTEN;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.UNSUPPORTED_INT;
+import static smetana.core.Macro._DTCMP;
+import static smetana.core.Macro._DTKEY;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
 import h.Dtcompar_f;
 import h.ST_dt_s;
-import smetana.core.CFunction;
-import smetana.core.CString;
 import smetana.core.__ptr__;
 
 public class dtview__c {
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
 
 
 
-
-//3 6spidg45w8teb64726drdswaa
-// static void* dtvsearch(Dt_t* dt, register void* obj, register int type)       
+/*	Set a view path from dict to view.
+**
+**	Written by Kiem-Phong Vo (5/25/96)
+*/
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/cdt/dtview.c", name="dtvsearch", key="6spidg45w8teb64726drdswaa", definition="static void* dtvsearch(Dt_t* dt, register void* obj, register int type)")
 public static __ptr__ dtvsearch(ST_dt_s dt, __ptr__ obj, int type) {
 ENTERING("6spidg45w8teb64726drdswaa","dtvsearch");
 try {
@@ -136,33 +90,43 @@ try {
 	__ptr__		o=null, n, ok, nk;
 	int		cmp, lk, sz, ky;
 	Dtcompar_f	cmpf;
+	
+	
 	/* these operations only happen at the top level */
-	if ((type&(0000001|0000002|0000100|0000040))!=0)
+	if ((type&(DT_INSERT|DT_DELETE|DT_CLEAR|DT_RENEW))!=0)
 		return (__ptr__) dt.meth.searchf.exe(dt, obj, type);
-	if(((type&(0001000|0000004))!=0) || /* order sets first/last done below */
-	   (((type&(0000200|0000400))!=0) && N(dt.meth.type&(0000010|0000004)) ) )
-	{	for(d = dt; d!=null; d = (ST_dt_s) d.view)
+	
+	
+	if(((type&(DT_MATCH|DT_SEARCH))!=0) || /* order sets first/last done below */
+	   (((type&(DT_FIRST|DT_LAST))!=0) && N(dt.meth.type&(DT_OBAG|DT_OSET)) ) )
+	{	for(d = dt; d!=null; d = d.view)
 			if((o = (__ptr__) d.meth.searchf.exe(d,obj,type))!=null )
 				break;
-		dt.setPtr("walk", d);
+		dt.walk = d;
 		return o;
 	}
-	if((dt.meth.type & (0000010|0000004) )!=0)
-	{	if(N(type & (0000200|0000400|0000010|0000020)) )
+	
+	
+	if((dt.meth.type & (DT_OBAG|DT_OSET) )!=0)
+	{	if(N(type & (DT_FIRST|DT_LAST|DT_NEXT|DT_PREV)) )
 			return null;
+	
+	
 		n = nk = null; p = null;
-		for(d = dt; d!=null; d = (ST_dt_s) d.view)
+		for(d = dt; d!=null; d = d.view)
 		{	if(N(o = (__ptr__) d.meth.searchf.exe(d, obj, type) ))
 				continue;
 			ky = d.disc.key;
 			sz = d.disc.size;
 			lk = d.disc.link;
-			cmpf = (Dtcompar_f) d.disc.comparf;
-			ok = (__ptr__) (sz < 0 ? ((__ptr__)o).addVirtualBytes(ky) : ((__ptr__)o).addVirtualBytes(ky));
+			cmpf = d.disc.comparf;
+			ok = _DTKEY(o, ky, sz);
+			
+			
 			if(n!=null) /* get the right one among all dictionaries */
-			{	cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(d,ok,nk,d.disc) : (sz <= 0 ? strcmp((CString)ok,(CString)nk) : UNSUPPORTED_INT("memcmp(ok,nk,sz)")) );
-				if(((type & (0000010|0000200))!=0 && cmp < 0) ||
-				   ((type & (0000020|0000400))!=0 && cmp > 0) )
+			{	cmp = _DTCMP(d, ok, nk, d.disc, cmpf, sz);
+				if(((type & (DT_NEXT|DT_FIRST))!=0 && cmp < 0) ||
+				   ((type & (DT_PREV|DT_LAST))!=0 && cmp > 0) )
 UNSUPPORTED("5o3u9aaanyd9yh74sjfkkofmo"); // 					goto a_dj;
 			}
 			else /* looks good for now */
@@ -171,7 +135,7 @@ UNSUPPORTED("5o3u9aaanyd9yh74sjfkkofmo"); // 					goto a_dj;
 				nk = ok;
 			}
 		}
-		dt.setPtr("walk", p);
+		dt.walk = p;
 		return n;
 	}
 	/* non-ordered methods */
@@ -212,40 +176,53 @@ LEAVING("6spidg45w8teb64726drdswaa","dtvsearch");
 
 
 
-//3 dfryioch2xz35w8nq6lxbk5kh
-// Dt_t* dtview(register Dt_t* dt, register Dt_t* view)      
+
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/cdt/dtview.c", name="dtview", key="dfryioch2xz35w8nq6lxbk5kh", definition="Dt_t* dtview(register Dt_t* dt, register Dt_t* view)")
 public static ST_dt_s dtview(ST_dt_s dt, ST_dt_s view) {
 ENTERING("dfryioch2xz35w8nq6lxbk5kh","dtview");
 try {
 	ST_dt_s	d;
-	if ((dt.data.type&010000)!=0) dtrestore(dt,null);
+	
+	UNFLATTEN(dt);
 	if(view!=null)
-	{	if ((view.data.type&010000)!=0) dtrestore(view,null);
+	{	UNFLATTEN(view);
 		if(NEQ(view.meth, dt.meth)) /* must use the same method */
 			UNSUPPORTED("return null;");
 	}
+	
+	
 	/* make sure there won't be a cycle */
 	for(d = view; d!=null; d = (ST_dt_s)d.view)
 		if(EQ(d, dt))
 			return null;
+	
+	
 	/* no more viewing lower dictionary */
-	if((d = (ST_dt_s)dt.view)!=null )
-		d.setInt("nview", d.nview-1);
-	dt.setPtr("walk", null);
-	dt.setPtr("view", null);
+	if((d = dt.view)!=null )
+		d.nview -= 1;
+	dt.view = dt.walk = null;
+
 	if(N(view))
-	{	dt.setPtr("searchf", dt.meth.searchf);
+	{	dt.searchf = dt.meth.searchf;
 		return d;
 	}
+	
 	/* ok */
-	dt.setPtr("view", view);
-	dt.setPtr("searchf", function(dtview__c.class, "dtvsearch"));
-	view.setInt("nview", view.nview+1 );
+	dt.view = view;
+	dt.searchf = function(dtview__c.class, "dtvsearch");
+	view.nview += 1;
+	
+	
 	return view;
 } finally {
 LEAVING("dfryioch2xz35w8nq6lxbk5kh","dtview");
 }
 }
+
+
+
+
 
 
 }

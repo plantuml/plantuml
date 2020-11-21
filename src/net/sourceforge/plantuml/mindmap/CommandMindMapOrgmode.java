@@ -54,7 +54,7 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMindMapOrgmode.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([*]+)"), //
+				new RegexLeaf("TYPE", "([ \t]*[*]+)"), //
 				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -70,8 +70,16 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 		if (stringColor != null) {
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
 		}
-		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(label),
+		final int level = getLevel(type);
+		return diagram.addIdea(backColor, level, Display.getWithNewlines(label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
+	}
+
+	private int getLevel(String type) {
+		if (type.endsWith("**")) {
+			type = type.replace('\t', ' ').trim();
+		}
+		return type.length() - 1;
 	}
 
 }

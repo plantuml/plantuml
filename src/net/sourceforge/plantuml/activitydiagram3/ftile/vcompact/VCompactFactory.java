@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStop;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateIn;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateOut;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -140,14 +141,8 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileCircleEnd(skinParam(), color, swimlane, style);
 	}
 
-	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors) {
-		// final HtmlColor borderColor = rose.getHtmlColor(skinParam,
-		// ColorParam.activityBorder);
-		// final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam,
-		// ColorParam.activityBackground) :
-		// color;
-		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors, Stereotype stereotype) {
+		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype);
 	}
 
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes) {
@@ -163,14 +158,14 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
-			Display test, Display yes, Display out, Colors colors, LinkRendering backRepeatLinkRendering,
-			Ftile backward, boolean noOut, Display labelBackward) {
+			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
+			LinkRendering incoming1, LinkRendering incoming2) {
 		return repeat;
 	}
 
-	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HColor color, Instruction specialOut, Ftile back, String incoming,
-			String outcoming) {
+	public Ftile createWhile(LinkRendering afterEndwhile, Swimlane swimlane, Ftile whileBlock, Display test,
+			Display yes, HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1,
+			LinkRendering incoming2) {
 		return whileBlock;
 	}
 

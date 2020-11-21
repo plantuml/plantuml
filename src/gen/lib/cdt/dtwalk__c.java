@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dtwalk__c {
@@ -115,6 +118,8 @@ public class dtwalk__c {
 
 //3 8kcykvee64o5kutyoj5s6zlcd
 // int dtwalk(register Dt_t* dt, int (*userf)(Dt_t*, void*, void*), void* data)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtwalk.c", name="dtwalk", key="8kcykvee64o5kutyoj5s6zlcd", definition="int dtwalk(register Dt_t* dt, int (*userf)(Dt_t*, void*, void*), void* data)")
 public static Object dtwalk(Object... arg) {
 UNSUPPORTED("b9srn3cj7cbdmgpkg7efd84gy"); // int dtwalk(register Dt_t* dt, int (*userf)(Dt_t*, void*, void*), void* data)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

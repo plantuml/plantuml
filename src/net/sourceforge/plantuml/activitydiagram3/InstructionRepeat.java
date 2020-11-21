@@ -62,9 +62,9 @@ public class InstructionRepeat implements Instruction {
 	private final BoxStyle boxStyleIn;
 
 	private Display backward = Display.NULL;
-	private Display backwardArrowLabel = Display.NULL;
-	private String incoming;
-	private String outcoming;
+
+	private LinkRendering incoming1 = LinkRendering.none();
+	private LinkRendering incoming2 = LinkRendering.none();
 	private List<PositionedNote> backwardNotes = new ArrayList<PositionedNote>();
 	private Display test = Display.NULL;
 	private Display yes = Display.NULL;
@@ -72,7 +72,7 @@ public class InstructionRepeat implements Instruction {
 	private final Display startLabel;
 	private boolean testCalled = false;
 	private LinkRendering endRepeatLinkRendering = LinkRendering.none();
-	private LinkRendering backRepeatLinkRendering = LinkRendering.none();
+
 	private final Colors colors;
 
 	public boolean containsBreak() {
@@ -100,17 +100,13 @@ public class InstructionRepeat implements Instruction {
 		return false;
 	}
 
-	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, String incoming, String outcoming) {
+	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, LinkRendering incoming1,
+			LinkRendering incoming2) {
 		this.backward = label;
 		this.swimlaneOut = swimlaneOut;
 		this.boxStyle = boxStyle;
-		this.incoming = incoming;
-		this.outcoming = outcoming;
-		this.backwardArrowLabel = Display.getWithNewlines(outcoming);
-	}
-
-	public void setBackwardArrowLabel(Display label) {
-		// this.backwardArrowLabel = label;
+		this.incoming1 = incoming1;
+		this.incoming2 = incoming2;
 	}
 
 	public boolean hasBackward() {
@@ -124,10 +120,8 @@ public class InstructionRepeat implements Instruction {
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = getBackward(factory);
 		final Ftile decorateOut = factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering);
-		final LinkRendering tmp = incoming == null ? backRepeatLinkRendering
-				: backRepeatLinkRendering.withDisplay(Display.create(incoming));
 		final Ftile result = factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
-				colors, tmp, back, isLastOfTheParent(), backwardArrowLabel);
+				colors, back, isLastOfTheParent(), incoming1, incoming2);
 		if (killed) {
 			return new FtileKilled(result);
 		}
@@ -138,7 +132,7 @@ public class InstructionRepeat implements Instruction {
 		if (Display.isNull(backward)) {
 			return null;
 		}
-		Ftile result = factory.activity(backward, swimlane, boxStyle, Colors.empty());
+		Ftile result = factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
 		if (backwardNotes.size() > 0) {
 			result = factory.addNote(result, swimlane, backwardNotes);
 		}
@@ -150,7 +144,7 @@ public class InstructionRepeat implements Instruction {
 	}
 
 	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering,
-			LinkRendering backRepeatLinkRendering, Swimlane swimlaneOut) {
+			LinkRendering back, Swimlane swimlaneOut) {
 		this.swimlaneOut = swimlaneOut;
 		this.test = test;
 		this.yes = yes;
@@ -165,7 +159,8 @@ public class InstructionRepeat implements Instruction {
 			throw new IllegalArgumentException();
 		}
 		this.endRepeatLinkRendering = endRepeatLinkRendering;
-		this.backRepeatLinkRendering = backRepeatLinkRendering;
+		if (back.isNone() == false)
+			this.incoming1 = back;
 		this.testCalled = true;
 	}
 

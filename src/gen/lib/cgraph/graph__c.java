@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,10 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.cdt.dtextract__c.dtextract;
 import static gen.lib.cdt.dtrestore__c.dtrestore;
 import static gen.lib.cdt.dtsize__c.dtsize_;
@@ -86,146 +90,12 @@ import smetana.core.Z;
 import smetana.core.__ptr__;
 
 public class graph__c {
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 ix101dcoysqmkv8bgsxsq8u1
-// Agraph_t *Ag_G_global
-
-
-//1 871mxtg9l6ffpxdl9kniwusf7
-// extern char *AgDataRecName
-
-
-//1 c0o2kmml0tn6hftuwo0u4shwd
-// extern Dtdisc_t Ag_subnode_id_disc
-
-
-//1 8k15pyu256unm2kpd9zf5pf7k
-// extern Dtdisc_t Ag_subnode_seq_disc
-
-
-//1 e3d820y06gpeusn6atgmj8bzd
-// extern Dtdisc_t Ag_mainedge_id_disc
-
-
-//1 cbr0772spix9h1aw7h5v7dv9j
-// extern Dtdisc_t Ag_subedge_id_disc
-
-
-//1 akd0c3v0j7m2npxcb9acit1fa
-// extern Dtdisc_t Ag_mainedge_seq_disc
-
-
-//1 12d8la07351ww7vwfzucjst8m
-// extern Dtdisc_t Ag_subedge_seq_disc
-
-
-//1 29eokk7v88e62g8o6lizmo967
-// extern Dtdisc_t Ag_subgraph_id_disc
-
-
-//1 4xd9cbgy6hk5g6nhjcbpzkx14
-// extern Agcbdisc_t AgAttrdisc
-
-
-//1 ewderv8bx65jlxf61iw8en77s
-// const char AgraphVersion[] = 
-
-
 
 
 //3 bb2bu9iyqx0u6xx44l282vmch
 // static Agclos_t *agclos(Agdisc_t * proto) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="", key="bb2bu9iyqx0u6xx44l282vmch", definition="static Agclos_t *agclos(Agdisc_t * proto)")
 public static ST_Agclos_s agclos(ST_Agdisc_s proto) {
 ENTERING("bb2bu9iyqx0u6xx44l282vmch","agclos");
 try {
@@ -253,6 +123,8 @@ LEAVING("bb2bu9iyqx0u6xx44l282vmch","agclos");
 
 //3 d5yqn56yii8cdoahswt4n6bug
 // Agraph_t *agopen(char *name, Agdesc_t desc, Agdisc_t * arg_disc) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="", key="d5yqn56yii8cdoahswt4n6bug", definition="Agraph_t *agopen(char *name, Agdesc_t desc, Agdisc_t * arg_disc)")
 public static ST_Agraph_s agopen(CString name, final ST_Agdesc_s desc, ST_Agdisc_s arg_disc) {
 // WARNING!! STRUCT
 return agopen_w_(name, (ST_Agdesc_s) desc.copy(), arg_disc);
@@ -287,6 +159,8 @@ LEAVING("d5yqn56yii8cdoahswt4n6bug","agopen");
 
 //3 8jyhwfdfm0a877qfz8cjlb8rk
 // Agraph_t *agopen1(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="", key="8jyhwfdfm0a877qfz8cjlb8rk", definition="Agraph_t *agopen1(Agraph_t * g)")
 public static ST_Agraph_s agopen1(ST_Agraph_s g) {
 ENTERING("8jyhwfdfm0a877qfz8cjlb8rk","agopen1");
 try {
@@ -315,6 +189,8 @@ LEAVING("8jyhwfdfm0a877qfz8cjlb8rk","agopen1");
 
 //3 dmhavsadfjootm2o8lnwizndm
 // int agclose(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agclose", key="dmhavsadfjootm2o8lnwizndm", definition="int agclose(Agraph_t * g)")
 public static Object agclose(Object... arg) {
 UNSUPPORTED("afwvyph6n53ckvxm8d8h7mfb8"); // int agclose(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -379,6 +255,8 @@ throw new UnsupportedOperationException();
 
 //3 axmdmml95l55vlp1vqmh0v5sn
 // unsigned long agnextseq(Agraph_t * g, int objtype) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agnextseq", key="axmdmml95l55vlp1vqmh0v5sn", definition="unsigned long agnextseq(Agraph_t * g, int objtype)")
 public static int agnextseq(ST_Agraph_s g, int objtype) {
 ENTERING("axmdmml95l55vlp1vqmh0v5sn","agnextseq");
 try {
@@ -394,8 +272,8 @@ LEAVING("axmdmml95l55vlp1vqmh0v5sn","agnextseq");
 
 
 
-//3 688euygrkbl10cveflgwalo2n
-// int agnnodes(Agraph_t * g) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agnnodes", key="688euygrkbl10cveflgwalo2n", definition="int agnnodes(Agraph_t * g)")
 public static int agnnodes(ST_Agraph_s g) {
 ENTERING("688euygrkbl10cveflgwalo2n","agnnodes");
 try {
@@ -408,15 +286,16 @@ LEAVING("688euygrkbl10cveflgwalo2n","agnnodes");
 
 
 
-//3 8zjne7uv8rfpmbv5t96zhnr4u
-// int agnedges(Agraph_t * g) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agnedges", key="8zjne7uv8rfpmbv5t96zhnr4u", definition="int agnedges(Agraph_t * g)")
 public static int agnedges(ST_Agraph_s g) {
 ENTERING("8zjne7uv8rfpmbv5t96zhnr4u","agnedges");
 try {
     ST_Agnode_s n;
     int rv = 0;
+    
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
-	rv += agdegree(g, n, (false), (N(0)));	/* must use OUT to get self-arcs */
+	rv += agdegree(g, n, false, true);	/* must use OUT to get self-arcs */
     return rv;
 } finally {
 LEAVING("8zjne7uv8rfpmbv5t96zhnr4u","agnedges");
@@ -428,6 +307,8 @@ LEAVING("8zjne7uv8rfpmbv5t96zhnr4u","agnedges");
 
 //3 e1ndua2eo29tb0z93wrmamm3g
 // int agnsubg(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agnsubg", key="e1ndua2eo29tb0z93wrmamm3g", definition="int agnsubg(Agraph_t * g)")
 public static Object agnsubg(Object... arg) {
 UNSUPPORTED("5auwvgl2zekzvzu6p5413tqd0"); // int agnsubg(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -440,12 +321,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 blvn1w3v0icnucu5m5xvbrba1
-// int agisdirected(Agraph_t * g) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agisdirected", key="blvn1w3v0icnucu5m5xvbrba1", definition="int agisdirected(Agraph_t * g)")
 public static boolean agisdirected(ST_Agraph_s g) {
 ENTERING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 try {
-    return ((ST_Agdesc_s)g.desc).directed!=0;
+    return g.desc.directed!=0;
 } finally {
 LEAVING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 }
@@ -454,12 +335,12 @@ LEAVING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 
 
 
-//3 8thgds4eioot64flko26m8ns0
-// int agisundirected(Agraph_t * g) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agisundirected", key="8thgds4eioot64flko26m8ns0", definition="int agisundirected(Agraph_t * g)")
 public static boolean agisundirected(ST_Agraph_s g) {
 ENTERING("8thgds4eioot64flko26m8ns0","agisundirected");
 try {
-    return (NOT(agisdirected(g)));
+    return NOT(agisdirected(g));
 } finally {
 LEAVING("8thgds4eioot64flko26m8ns0","agisundirected");
 }
@@ -468,12 +349,12 @@ LEAVING("8thgds4eioot64flko26m8ns0","agisundirected");
 
 
 
-//3 9qgdebmdfrcfjm394bg59a7y5
-// int agisstrict(Agraph_t * g) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agisstrict", key="9qgdebmdfrcfjm394bg59a7y5", definition="int agisstrict(Agraph_t * g)")
 public static boolean agisstrict(ST_Agraph_s g) {
 ENTERING("9qgdebmdfrcfjm394bg59a7y5","agisstrict");
 try {
-    return ((ST_Agdesc_s)g.desc).strict!=0;
+    return g.desc.strict!=0;
 } finally {
 LEAVING("9qgdebmdfrcfjm394bg59a7y5","agisstrict");
 }
@@ -484,6 +365,8 @@ LEAVING("9qgdebmdfrcfjm394bg59a7y5","agisstrict");
 
 //3 4zw0onm78e3x5anx7snfpe40m
 // int agissimple(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agissimple", key="4zw0onm78e3x5anx7snfpe40m", definition="int agissimple(Agraph_t * g)")
 public static Object agissimple(Object... arg) {
 UNSUPPORTED("5khld3f380yzb9kztjfa00b7t"); // int agissimple(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -496,8 +379,8 @@ throw new UnsupportedOperationException();
 
 
 
-//3 abaldeo2ie6zi60cazxp7rv47
-// static int cnt(Dict_t * d, Dtlink_t ** set) 
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="cnt", key="abaldeo2ie6zi60cazxp7rv47", definition="static int cnt(Dict_t * d, Dtlink_t ** set)")
 public static int cnt(ST_dt_s d, STARSTAR<ST_dtlink_s> set) {
 ENTERING("abaldeo2ie6zi60cazxp7rv47","cnt");
 try {
@@ -516,6 +399,8 @@ LEAVING("abaldeo2ie6zi60cazxp7rv47","cnt");
 
 //3 crupee5rve7q7m335ngnqsb39
 // int agcountuniqedges(Agraph_t * g, Agnode_t * n, int want_in, int want_out) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agcountuniqedges", key="crupee5rve7q7m335ngnqsb39", definition="int agcountuniqedges(Agraph_t * g, Agnode_t * n, int want_in, int want_out)")
 public static Object agcountuniqedges(Object... arg) {
 UNSUPPORTED("47c9iab9p596xa2xrkcgmepw0"); // int agcountuniqedges(Agraph_t * g, Agnode_t * n, int want_in, int want_out)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -539,35 +424,19 @@ throw new UnsupportedOperationException();
 
 
 
-
-//3 2bz40qf0qo7pd6er1ut25gthp
-// int agdegree(Agraph_t * g, Agnode_t * n, int want_in, int want_out) 
+@Difficult
+@Reviewed(when = "14/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agdegree", key="2bz40qf0qo7pd6er1ut25gthp", definition="int agdegree(Agraph_t * g, Agnode_t * n, int want_in, int want_out)")
 public static int agdegree(ST_Agraph_s g, ST_Agnode_s n, boolean want_in, boolean want_out) {
 ENTERING("2bz40qf0qo7pd6er1ut25gthp","agdegree");
 try {
 	ST_Agsubnode_s sn;
     int rv = 0;
+    
     sn = agsubrep(g, n);
-    final ST_Agsubnode_s sn1 = sn;
     if (sn!=null) {
-    	if (want_out) rv += cnt((ST_dt_s)g.e_seq,
-    			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
-    				public ST_dtlink_s get() {
-    					return (ST_dtlink_s) sn1.out_seq;
-    				}
-    				public void set(ST_dtlink_s obj) {
-    					sn1.setPtr("out_seq", obj);
-    				}})
-    			);
-    	if (want_in) rv += cnt((ST_dt_s)g.e_seq,
-    			STARSTAR.amp(new ACCESS<ST_dtlink_s>() {
-    				public ST_dtlink_s get() {
-    					return (ST_dtlink_s) sn1.in_seq;
-    				}
-    				public void set(ST_dtlink_s obj) {
-    					sn1.setPtr("in_seq", obj);
-    				}})
-    			);
+	if (want_out) rv += cnt(g.e_seq, sn.out_seq__AMP());
+	if (want_in) rv += cnt(g.e_seq, sn.in_seq__AMP());
     }
 	return rv;
 } finally {
@@ -580,6 +449,8 @@ LEAVING("2bz40qf0qo7pd6er1ut25gthp","agdegree");
 
 //3 dhbtfzzp8n5yygqmhmluo9bxl
 // int agraphidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agraphidcmpf", key="dhbtfzzp8n5yygqmhmluo9bxl", definition="int agraphidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)")
 public static int agraphidcmpf(ST_dt_s d, ST_Agraph_s arg0, ST_Agraph_s arg1, ST_dtdisc_s disc) {
 ENTERING("dhbtfzzp8n5yygqmhmluo9bxl","agraphidcmpf");
 try {
@@ -599,6 +470,8 @@ LEAVING("dhbtfzzp8n5yygqmhmluo9bxl","agraphidcmpf");
 
 //3 llkcwaxuse8jc2ri7r9n6t0c
 // int agraphseqcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="agraphseqcmpf", key="llkcwaxuse8jc2ri7r9n6t0c", definition="int agraphseqcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)")
 public static Object agraphseqcmpf(Object... arg) {
 UNSUPPORTED("97lu4ei4gjam66ku5pz8dn7il"); // int agraphseqcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -659,6 +532,8 @@ static {
 
 //3 4rhqd5bl4tiypdakk2hhpsj7s
 // void scndump(Agraph_t *g, char *file) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/graph.c", name="scndump", key="4rhqd5bl4tiypdakk2hhpsj7s", definition="void scndump(Agraph_t *g, char *file)")
 public static Object scndump(Object... arg) {
 UNSUPPORTED("7e937yycgb0eiorckxpq4qqwo"); // void scndump(Agraph_t *g, char *file)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

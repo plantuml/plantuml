@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class tester__c {
@@ -143,6 +146,8 @@ public class tester__c {
 
 //3 bxrg42k0b2ondd8e9hxlvgnya
 // main() 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/tester.c", name="", key="bxrg42k0b2ondd8e9hxlvgnya", definition="main()")
 public static Object main(Object... arg) {
 UNSUPPORTED("dvtfwizbjxjdd2zwzte0922xf"); // main()
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

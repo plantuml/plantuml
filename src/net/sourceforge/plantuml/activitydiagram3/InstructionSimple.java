@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class InstructionSimple extends MonoSwimable implements Instruction {
@@ -52,18 +53,19 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	private final LinkRendering inlinkRendering;
 	private final BoxStyle style;
 	private final Url url;
-	
+	private final Stereotype stereotype;
+
 	public boolean containsBreak() {
 		return false;
 	}
 
-
 	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle style, Url url,
-			Colors colors) {
+			Colors colors, Stereotype stereotype) {
 		super(swimlane);
 		if (colors == null) {
 			throw new IllegalArgumentException();
 		}
+		this.stereotype = stereotype;
 		this.url = url;
 		this.style = style;
 		this.label = label;
@@ -75,7 +77,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		Ftile result = factory.activity(label, getSwimlaneIn(), style, colors);
+		Ftile result = factory.activity(label, getSwimlaneIn(), style, colors, stereotype);
 		if (url != null) {
 			result = factory.addUrl(result, url);
 		}

@@ -36,11 +36,20 @@
 
 package smetana.core;
 
-import smetana.core.debug.Debug;
+import smetana.core.debug.SmetanaDebug;
 
 public class JUtilsDebug {
 
-	private final static Debug debug = null; //new Debug();
+	private final static boolean TRACE = false;
+	public final static boolean VERY_VERBOSE = false;
+
+	private final static SmetanaDebug debug = TRACE ? new SmetanaDebug() : null;
+
+	static public void LOG(String s) {
+		if (debug != null)
+			debug.logline(s);
+
+	}
 
 	static public void ENTERING(String signature, String methodName) {
 		if (debug != null)

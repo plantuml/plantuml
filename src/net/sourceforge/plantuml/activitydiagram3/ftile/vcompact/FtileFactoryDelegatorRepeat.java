@@ -75,8 +75,8 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel,
-			final Ftile repeat, Display test, Display yes, Display out, Colors colors,
-			LinkRendering backRepeatLinkRendering, Ftile backward, boolean noOut, Display labelBackward) {
+			final Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
+			LinkRendering incoming1, LinkRendering incoming2) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
@@ -114,9 +114,9 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 		final Ftile entry = getEntry(swimlane, startLabel, colors, boxStyleIn);
 
-		Ftile result = FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, entry, repeat, test, yes, out,
-				borderColor, diamondColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond,
-				fcArrow, backward, noOut, labelBackward);
+		Ftile result = FtileRepeat.create(swimlane, swimlaneOut, entry, repeat, test, yes, out, borderColor,
+				diamondColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond, fcArrow,
+				backward, noOut, incoming1, incoming2);
 
 		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
@@ -161,6 +161,6 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 			return null;
 		}
 		// final Colors colors = Colors.empty().add(ColorType.BACK, back);
-		return this.activity(startLabel, swimlane, boxStyleIn, colors);
+		return this.activity(startLabel, swimlane, boxStyleIn, colors, null);
 	}
 }

@@ -49,7 +49,18 @@ public class TimeLineSimple implements TimeLine {
 				return e;
 			}
 		}
-		return Long.MAX_VALUE;
+		return TimeLine.MAX_TIME;
+	}
+
+	public long getPrevious(long moment) {
+		long last = -TimeLine.MAX_TIME;
+		for (long e : events) {
+			if (e >= moment) {
+				return last;
+			}
+			last = e;
+		}
+		return last;
 	}
 
 	public void add(long event) {

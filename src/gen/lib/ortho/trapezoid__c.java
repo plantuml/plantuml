@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.ortho;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class trapezoid__c {
@@ -67,6 +70,8 @@ public class trapezoid__c {
 
 //3 ezwgb38ifqfgyqxu3qqar9lpw
 // static int newnode() 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="newnode", key="ezwgb38ifqfgyqxu3qqar9lpw", definition="static int newnode()")
 public static Object newnode(Object... arg) {
 UNSUPPORTED("7foww06xea9wyyn20fapyohtz"); // static int newnode()
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -87,6 +92,8 @@ throw new UnsupportedOperationException();
 
 //3 4lbfds1s3bs19eoap1a3m3e6z
 // static int newtrap(trap_t* tr) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="newtrap", key="4lbfds1s3bs19eoap1a3m3e6z", definition="static int newtrap(trap_t* tr)")
 public static Object newtrap(Object... arg) {
 UNSUPPORTED("5u9cievsb4s3x8zwuu8pspcam"); // static int newtrap(trap_t* tr)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -111,6 +118,8 @@ throw new UnsupportedOperationException();
 
 //3 3vts8knsk95mverrgac2cq3yc
 // static int _max (pointf *yval, pointf *v0, pointf *v1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="_max", key="3vts8knsk95mverrgac2cq3yc", definition="static int _max (pointf *yval, pointf *v0, pointf *v1)")
 public static Object _max(Object... arg) {
 UNSUPPORTED("b70ixswaw70rop2i3a10o3usx"); // static int _max (pointf *yval, pointf *v0, pointf *v1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -136,6 +145,8 @@ throw new UnsupportedOperationException();
 
 //3 5wxt3huxqmnpq4koff0wywqeg
 // static int _min (pointf *yval, pointf *v0, pointf *v1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="_min", key="5wxt3huxqmnpq4koff0wywqeg", definition="static int _min (pointf *yval, pointf *v0, pointf *v1)")
 public static Object _min(Object... arg) {
 UNSUPPORTED("41dy0yxvmnu3g6nomhqjilah6"); // static int _min (pointf *yval, pointf *v0, pointf *v1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -161,6 +172,8 @@ throw new UnsupportedOperationException();
 
 //3 1tgrd4zziresuq6qhk0xfoa92
 // static int _greater_than_equal_to (pointf *v0, pointf *v1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="_greater_than_equal_to", key="1tgrd4zziresuq6qhk0xfoa92", definition="static int _greater_than_equal_to (pointf *v0, pointf *v1)")
 public static Object _greater_than_equal_to(Object... arg) {
 UNSUPPORTED("3x672w6uwysfps5nvhyqmwl95"); // static int _greater_than_equal_to (pointf *v0, pointf *v1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -180,6 +193,8 @@ throw new UnsupportedOperationException();
 
 //3 ckf51i5h4qoeq20aso56vcc5h
 // static int _less_than (pointf *v0, pointf *v1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="_less_than", key="ckf51i5h4qoeq20aso56vcc5h", definition="static int _less_than (pointf *v0, pointf *v1)")
 public static Object _less_than(Object... arg) {
 UNSUPPORTED("8ancjlh02pjhsn49e6a25wl6r"); // static int _less_than (pointf *v0, pointf *v1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -199,6 +214,8 @@ throw new UnsupportedOperationException();
 
 //3 7q4v9wyz2nlemt8xq7v0184fv
 // static int  init_query_structure(int segnum, segment_t* seg, trap_t* tr, qnode_t* qs) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="init_query_structure", key="7q4v9wyz2nlemt8xq7v0184fv", definition="static int  init_query_structure(int segnum, segment_t* seg, trap_t* tr, qnode_t* qs)")
 public static Object init_query_structure(Object... arg) {
 UNSUPPORTED("d9cz56vtrl0ri6hz88cumukuf"); // static int 
 UNSUPPORTED("80esr9k64zjsp5282c35kte4"); // init_query_structure(int segnum, segment_t* seg, trap_t* tr, qnode_t* qs)
@@ -267,6 +284,8 @@ throw new UnsupportedOperationException();
 
 //3 8ewy3ncs31dca68taarb3iw8t
 // static int is_left_of (int segnum, segment_t* seg, pointf *v) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="is_left_of", key="8ewy3ncs31dca68taarb3iw8t", definition="static int is_left_of (int segnum, segment_t* seg, pointf *v)")
 public static Object is_left_of(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("5njshx2lwca6yvst4l5l2kvum"); // is_left_of (int segnum, segment_t* seg, pointf *v)
@@ -325,6 +344,8 @@ throw new UnsupportedOperationException();
 
 //3 ds0k9vbvh7ed069gt2xxgoh8f
 // static int inserted (int segnum, segment_t* seg, int whichpt) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="inserted", key="ds0k9vbvh7ed069gt2xxgoh8f", definition="static int inserted (int segnum, segment_t* seg, int whichpt)")
 public static Object inserted(Object... arg) {
 UNSUPPORTED("1hxgwm2z6apwm18im719wroya"); // static int inserted (int segnum, segment_t* seg, int whichpt)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -342,6 +363,8 @@ throw new UnsupportedOperationException();
 
 //3 3sd5i6hidutg4bza9cb9iqpxj
 // static int  locate_endpoint (pointf *v, pointf *vo, int r, segment_t* seg, qnode_t* qs) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="locate_endpoint", key="3sd5i6hidutg4bza9cb9iqpxj", definition="static int  locate_endpoint (pointf *v, pointf *vo, int r, segment_t* seg, qnode_t* qs)")
 public static Object locate_endpoint(Object... arg) {
 UNSUPPORTED("d9cz56vtrl0ri6hz88cumukuf"); // static int 
 UNSUPPORTED("40jqc5hn9dtw9jy159l2bpv0g"); // locate_endpoint (pointf *v, pointf *vo, int r, segment_t* seg, qnode_t* qs)
@@ -398,6 +421,8 @@ throw new UnsupportedOperationException();
 
 //3 dbmj7tlr6ld9ptryu0lsaq4tc
 // static void merge_trapezoids (int segnum, int tfirst, int tlast, int side, trap_t* tr,     qnode_t* qs) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="merge_trapezoids", key="dbmj7tlr6ld9ptryu0lsaq4tc", definition="static void merge_trapezoids (int segnum, int tfirst, int tlast, int side, trap_t* tr,     qnode_t* qs)")
 public static Object merge_trapezoids(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("d3sy6vv9zv5n4mb41oxk1obz6"); // merge_trapezoids (int segnum, int tfirst, int tlast, int side, trap_t* tr,
@@ -459,6 +484,8 @@ throw new UnsupportedOperationException();
 
 //3 423adx9iu4aqsh6kmh9d6a9be
 // static int  add_segment (int segnum, segment_t* seg, trap_t* tr, qnode_t* qs) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="add_segment", key="423adx9iu4aqsh6kmh9d6a9be", definition="static int  add_segment (int segnum, segment_t* seg, trap_t* tr, qnode_t* qs)")
 public static Object add_segment(Object... arg) {
 UNSUPPORTED("d9cz56vtrl0ri6hz88cumukuf"); // static int 
 UNSUPPORTED("6kdmtyxbba7hab6oumuavm30n"); // add_segment (int segnum, segment_t* seg, trap_t* tr, qnode_t* qs)
@@ -482,7 +509,7 @@ UNSUPPORTED("2re8ujw6s9kgcmuthp39hguph"); //       s.root0 = s.root1;
 UNSUPPORTED("75kknuapl2tfu08nxm6s55sm1"); //       s.root1 = tmp;
 UNSUPPORTED("9eflrb5pudqbmm3wm6qeiwwsz"); //       is_swapped = (!(0));
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("kf5313k7om91mo87n2t6l6mk"); //   else is_swapped = (0);
+UNSUPPORTED("kf5313k7om91mo87n2t6l6mk"); //   else is_swapped = 0;
 UNSUPPORTED("9fmss7ubwydpupsrikix6nafv"); //   if ((is_swapped) ? !inserted(segnum, seg, 2) :
 UNSUPPORTED("6hcg7juc159xaz2xirhecwc5n"); //        !inserted(segnum, seg, 1))     /* insert v0 in the tree */
 UNSUPPORTED("6ld19omy1z68vprfzbhrjqr2z"); //     {
@@ -826,7 +853,7 @@ UNSUPPORTED("aeo0l7hd0tz385ecxm03tsqb1"); // 	  /* int tmpseg = tr[tr[t].d0].rse
 UNSUPPORTED("21dtwfwxm34d3el5rfez2ddio"); // 	  double y0, yt;
 UNSUPPORTED("ds4ikd3wmue9s0ynmtxz1aw74"); // 	  pointf tmppt;
 UNSUPPORTED("ah7kj1y9wo89l5ql0wxxjuqlt"); // 	  int tnext, i_d0, i_d1;
-UNSUPPORTED("9l5ekv5nqwnh36g4gcr1x82aj"); // 	  i_d0 = i_d1 = (0);
+UNSUPPORTED("9l5ekv5nqwnh36g4gcr1x82aj"); // 	  i_d0 = i_d1 = 0;
 UNSUPPORTED("4z75kl9vosft7cj42ce1arxdo"); // 	  if ((fabs(tr[t].lo.y - s.v0.y) <= 1.0e-7))
 UNSUPPORTED("6dbei3uox5ql5a1vaaguh0xzp"); // 	    {
 UNSUPPORTED("c8cramjmaogq40iauxa5mwm71"); // 	      if (tr[t].lo.x > s.v0.x)
@@ -966,6 +993,8 @@ throw new UnsupportedOperationException();
 
 //3 7afsay7ejf6pnu6atsg7glt53
 // static void find_new_roots(int segnum, segment_t* seg, trap_t* tr, qnode_t* qs) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="find_new_roots", key="7afsay7ejf6pnu6atsg7glt53", definition="static void find_new_roots(int segnum, segment_t* seg, trap_t* tr, qnode_t* qs)")
 public static Object find_new_roots(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("hytfu5b4w9vy61qxrhvzemj3"); // find_new_roots(int segnum, segment_t* seg, trap_t* tr, qnode_t* qs)
@@ -986,6 +1015,8 @@ throw new UnsupportedOperationException();
 
 //3 1ftshkxhp22o0xgh3kuc3sile
 // static int math_logstar_n(int n) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="math_logstar_n", key="1ftshkxhp22o0xgh3kuc3sile", definition="static int math_logstar_n(int n)")
 public static Object math_logstar_n(Object... arg) {
 UNSUPPORTED("3a94rmq48cptlea8l9svm2vdf"); // static int math_logstar_n(int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1004,6 +1035,8 @@ throw new UnsupportedOperationException();
 
 //3 20alp7vy21dvsx8ums8pezh3o
 // static int math_N(int n, int h) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="math_N", key="20alp7vy21dvsx8ums8pezh3o", definition="static int math_N(int n, int h)")
 public static Object math_N(Object... arg) {
 UNSUPPORTED("dd4ge3rbi53dw0wh8a3si1jh7"); // static int math_N(int n, int h)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1022,6 +1055,8 @@ throw new UnsupportedOperationException();
 
 //3 9jpwujop3smqitn3gmtcrcixm
 // int construct_trapezoids(int nseg, segment_t* seg, int* permute, int ntraps,   trap_t* tr) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/trapezoid.c", name="construct_trapezoids", key="9jpwujop3smqitn3gmtcrcixm", definition="int construct_trapezoids(int nseg, segment_t* seg, int* permute, int ntraps,   trap_t* tr)")
 public static Object construct_trapezoids(Object... arg) {
 UNSUPPORTED("etrjsq5w49uo9jq5pzifohkqw"); // int
 UNSUPPORTED("cywexw0hiyl2gthuawhdixmym"); // construct_trapezoids(int nseg, segment_t* seg, int* permute, int ntraps,

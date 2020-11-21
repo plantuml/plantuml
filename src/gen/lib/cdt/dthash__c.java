@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dthash__c {
@@ -115,6 +118,8 @@ public class dthash__c {
 
 //3 7akctm4caciv9haxdk4zlrwu2
 // static void dthtab(Dt_t* dt)     
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dthash.c", name="dthtab", key="7akctm4caciv9haxdk4zlrwu2", definition="static void dthtab(Dt_t* dt)")
 public static Object dthtab(Object... arg) {
 UNSUPPORTED("2d2m2vzj4zvzgd4r2zn2s1kqn"); // static void dthtab(Dt_t* dt)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -141,7 +146,7 @@ UNSUPPORTED("932vaq51fbf5l8i420kesqfg0"); // 	else	n = 0;
 UNSUPPORTED("bh1ire4hwludcleecmxv0smag"); // 	/* compute new table size */
 UNSUPPORTED("abhbgzrg4q5z2vkoed72su98y"); // 	if(n <= 0)
 UNSUPPORTED("dab3gyaa9l6c1zsdv75gwesrh"); // 	{	if((n = dt->data->ntab) == 0)
-UNSUPPORTED("4021uenum9y6sgeuboex8d0on"); // 			n = (256);
+UNSUPPORTED("4021uenum9y6sgeuboex8d0on"); // 			n = 256;
 UNSUPPORTED("c1uorlajtkwlvx1a2h6ajr0bp"); // 		while(dt->data->size > ((n) << 1))
 UNSUPPORTED("99wvpps4p28ykwrtq32whiwrd"); // 			n = ((n) << 1);
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
@@ -180,6 +185,8 @@ throw new UnsupportedOperationException();
 
 //3 78zfgu6jzim09d5xvj1qs9bk0
 // static void* dthash(Dt_t* dt, register void* obj, int type)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dthash.c", name="dthash", key="78zfgu6jzim09d5xvj1qs9bk0", definition="static void* dthash(Dt_t* dt, register void* obj, int type)")
 public static Object dthash(Object... arg) {
 UNSUPPORTED("95hr4hrc6nbqqdqdce5tg8l5p"); // static void* dthash(Dt_t* dt, register void* obj, int type)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

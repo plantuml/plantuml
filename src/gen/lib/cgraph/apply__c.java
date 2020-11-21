@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.cgraph.subg__c.agfstsubg;
 import static gen.lib.cgraph.subg__c.agnxtsubg;
 import static smetana.core.JUtils.function;
@@ -198,6 +201,8 @@ public class apply__c {
 
 //3 dups4iqoegzha9tq6pupoim08
 // static Agobj_t *subnode_search(Agraph_t * sub, Agobj_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/apply.c", name="", key="dups4iqoegzha9tq6pupoim08", definition="static Agobj_t *subnode_search(Agraph_t * sub, Agobj_t * n)")
 public static Object subnode_search(Object... arg) {
 UNSUPPORTED("pxacbw8fd49n7yuf74ww3m4o"); // static Agobj_t *subnode_search(Agraph_t * sub, Agobj_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -214,6 +219,8 @@ throw new UnsupportedOperationException();
 
 //3 1qi7zit7howdl3n270k4whbgh
 // static Agobj_t *subedge_search(Agraph_t * sub, Agobj_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/apply.c", name="", key="1qi7zit7howdl3n270k4whbgh", definition="static Agobj_t *subedge_search(Agraph_t * sub, Agobj_t * e)")
 public static Object subedge_search(Object... arg) {
 UNSUPPORTED("4hoc59s32d3n083o2rhe085zx"); // static Agobj_t *subedge_search(Agraph_t * sub, Agobj_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -230,6 +237,8 @@ throw new UnsupportedOperationException();
 
 //3 95y4aknoddh42lieikrb72vxw
 // static Agobj_t *subgraph_search(Agraph_t * sub, Agobj_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/apply.c", name="", key="95y4aknoddh42lieikrb72vxw", definition="static Agobj_t *subgraph_search(Agraph_t * sub, Agobj_t * g)")
 public static ST_Agobj_s subgraph_search(ST_Agraph_s sub, ST_Agobj_s g) {
 ENTERING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 try {
@@ -244,6 +253,8 @@ LEAVING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 
 //3 8s9l15wqucf1glmbeb6fmya8e
 // static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/apply.c", name="rec_apply", key="8s9l15wqucf1glmbeb6fmya8e", definition="static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder)")
 public static void rec_apply(ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, CFunction objsearch, boolean preorder) {
 ENTERING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
 try {
@@ -267,6 +278,8 @@ LEAVING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
 
 //3 9hqql178zpl8iudlf6sgnv7aj
 // int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/apply.c", name="agapply", key="9hqql178zpl8iudlf6sgnv7aj", definition="int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder)")
 public static int agapply(ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, boolean preorder) {
 ENTERING("9hqql178zpl8iudlf6sgnv7aj","agapply");
 try {

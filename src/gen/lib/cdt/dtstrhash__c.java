@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dtstrhash__c {
@@ -115,6 +118,8 @@ public class dtstrhash__c {
 
 //3 ilmfiy3q8awgqo01v4p6sxqo
 // unsigned int dtstrhash(register unsigned int h, void* args, register int n)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtstrhash.c", name="dtstrhash", key="ilmfiy3q8awgqo01v4p6sxqo", definition="unsigned int dtstrhash(register unsigned int h, void* args, register int n)")
 public static Object dtstrhash(Object... arg) {
 UNSUPPORTED("2yykq92jf12qpgr2zziajbyzl"); // unsigned int dtstrhash(register unsigned int h, void* args, register int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

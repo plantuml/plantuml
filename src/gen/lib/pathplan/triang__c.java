@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pathplan;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 import smetana.core.jmp_buf;
 
@@ -64,6 +67,8 @@ private static jmp_buf jbuf = new jmp_buf();
 
 //3 9l5xg5aowmh2yvhbzseo8ws0i
 // static int dpd_ccw(Ppoint_t * p1, Ppoint_t * p2, Ppoint_t * p3) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/triang.c", name="dpd_ccw", key="9l5xg5aowmh2yvhbzseo8ws0i", definition="static int dpd_ccw(Ppoint_t * p1, Ppoint_t * p2, Ppoint_t * p3)")
 public static Object dpd_ccw(Object... arg) {
 UNSUPPORTED("66u8hjpmzz1u1podxvft7tqbr"); // static int dpd_ccw(Ppoint_t * p1, Ppoint_t * p2, Ppoint_t * p3)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -81,6 +86,8 @@ throw new UnsupportedOperationException();
 
 //3 3cpm045bql7do4skuvm0gysbz
 // int Ptriangulate(Ppoly_t * polygon, void (*fn) (void *, Ppoint_t *), 		  void *vc) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/triang.c", name="Ptriangulate", key="3cpm045bql7do4skuvm0gysbz", definition="int Ptriangulate(Ppoly_t * polygon, void (*fn) (void *, Ppoint_t *), 		  void *vc)")
 public static Object Ptriangulate(Object... arg) {
 UNSUPPORTED("9wq0zzi4wsqf1qmh5lisb5tur"); // int Ptriangulate(Ppoly_t * polygon, void (*fn) (void *, Ppoint_t *),
 UNSUPPORTED("aiup6hqt7vuonmdnhtadcpyyg"); // 		  void *vc)
@@ -109,6 +116,8 @@ throw new UnsupportedOperationException();
 
 //3 db1gjkgbhdyik8njcwxidnm06
 // static void triangulate(Ppoint_t ** pointp, int pointn, 	    void (*fn) (void *, Ppoint_t *), void *vc) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/triang.c", name="triangulate", key="db1gjkgbhdyik8njcwxidnm06", definition="static void triangulate(Ppoint_t ** pointp, int pointn, 	    void (*fn) (void *, Ppoint_t *), void *vc)")
 public static Object triangulate(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("cycr5htq0awpt4lysrda94z75"); // triangulate(Ppoint_t ** pointp, int pointn,
@@ -150,6 +159,8 @@ throw new UnsupportedOperationException();
 
 //3 6g3z4d4wjf8de2l784sgpmmol
 // static int dpd_isdiagonal(int i, int ip2, Ppoint_t ** pointp, int pointn) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/triang.c", name="dpd_isdiagonal", key="6g3z4d4wjf8de2l784sgpmmol", definition="static int dpd_isdiagonal(int i, int ip2, Ppoint_t ** pointp, int pointn)")
 public static Object dpd_isdiagonal(Object... arg) {
 UNSUPPORTED("6igaattr8mose3ux86cjxqy8f"); // static int dpd_isdiagonal(int i, int ip2, Ppoint_t ** pointp, int pointn)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -192,6 +203,8 @@ throw new UnsupportedOperationException();
 
 //3 8pjte4rru806nqx2myxn2h8tn
 // static int dpd_intersects(Ppoint_t * pa, Ppoint_t * pb, Ppoint_t * pc, 			  Ppoint_t * pd) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/triang.c", name="dpd_intersects", key="8pjte4rru806nqx2myxn2h8tn", definition="static int dpd_intersects(Ppoint_t * pa, Ppoint_t * pb, Ppoint_t * pc, 			  Ppoint_t * pd)")
 public static Object dpd_intersects(Object... arg) {
 UNSUPPORTED("b7u1jnesjd68hfofduzpr4qf0"); // static int dpd_intersects(Ppoint_t * pa, Ppoint_t * pb, Ppoint_t * pc,
 UNSUPPORTED("def51j09bielz8iq0blza86vg"); // 			  Ppoint_t * pd)
@@ -220,6 +233,8 @@ throw new UnsupportedOperationException();
 
 //3 coo3dmcddl2hcgc5gprzj3xtf
 // static int dpd_between(Ppoint_t * pa, Ppoint_t * pb, Ppoint_t * pc) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/triang.c", name="dpd_between", key="coo3dmcddl2hcgc5gprzj3xtf", definition="static int dpd_between(Ppoint_t * pa, Ppoint_t * pb, Ppoint_t * pc)")
 public static Object dpd_between(Object... arg) {
 UNSUPPORTED("8i6slq3k2lvso1osulneg0qfd"); // static int dpd_between(Ppoint_t * pa, Ppoint_t * pb, Ppoint_t * pc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

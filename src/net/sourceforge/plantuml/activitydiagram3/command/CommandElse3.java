@@ -37,14 +37,16 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 
 public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -55,11 +57,15 @@ public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandElse3.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("else"), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("WHEN", "(?:\\((.*)\\))?") //
-						)), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf("\\("), //
+						new RegexOptional(new RegexOr(//
+								new RegexLeaf("->"), //
+								new RegexLeaf("WHEN_COLOR", CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
+						new RegexLeaf("WHEN", "(.*?)"), //
+						new RegexLeaf("\\)"))), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}
@@ -69,7 +75,8 @@ public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 		// if (getSystem().getLastEntityConsulted() == null) {
 		// return CommandExecutionResult.error("No if for this endif");
 		// }
-		return diagram.else2(Display.getWithNewlines(arg.get("WHEN", 0)));
+		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, "WHEN");
+		return diagram.else2(when);
 	}
 
 }

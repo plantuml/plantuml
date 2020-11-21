@@ -49,9 +49,11 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.LoadPlanable;
+import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.PlanUtils;
-import net.sourceforge.plantuml.project.Solver;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.solver.Solver;
+import net.sourceforge.plantuml.project.solver.SolverImpl;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 
@@ -74,14 +76,14 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.url = url;
 	}
 
-	public TaskImpl(TaskCode code, LoadPlanable defaultPlan, Day calendar) {
+	public TaskImpl(TaskCode code, OpenClose openClose) {
 		super(code);
-		this.defaultPlan = defaultPlan;
-		this.solver = new Solver(this);
-		if (calendar == null) {
+		this.defaultPlan = openClose;
+		this.solver = new SolverImpl(this);
+		if (openClose.getCalendar() == null) {
 			setStart(Day.create(0));
 		} else {
-			setStart(calendar);
+			setStart(openClose.getCalendar());
 		}
 		setLoad(Load.inWinks(1));
 	}

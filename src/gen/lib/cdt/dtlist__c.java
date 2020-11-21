@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dtlist__c {
@@ -115,6 +118,8 @@ public class dtlist__c {
 
 //3 dyc3bu1thij9v7t35zhwd5nsq
 // static void* dtlist(register Dt_t* dt, register void* obj, register int type)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtlist.c", name="dtlist", key="dyc3bu1thij9v7t35zhwd5nsq", definition="static void* dtlist(register Dt_t* dt, register void* obj, register int type)")
 public static Object dtlist(Object... arg) {
 UNSUPPORTED("2zck894ixnu9hdr876kp5kkil"); // static void* dtlist(register Dt_t* dt, register void* obj, register int type)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

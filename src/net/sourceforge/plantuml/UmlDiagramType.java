@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.style.SName;
 
 public enum UmlDiagramType {
 	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM, NWDIAG, MINDMAP, WBS, WIRE,
-	HELP, GANTT, SALT;
+	HELP, GANTT, SALT, JSON;
 
 	public SName getStyleName() {
 		if (this == SEQUENCE) {

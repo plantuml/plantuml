@@ -58,8 +58,8 @@ public class DriverCenteredCharacterSvg implements UDriver<SvgGraphics> {
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
 		final TextLayout t = new TextLayout("" + c, font.getFont(), TextBlockUtils.getFontRenderContext());
-		svg.setStrokeColor(mapper.toRGB(param.getColor()));
-		DriverTextAsPathSvg.drawPathIterator(svg, xpos, ypos, t.getOutline(null).getPathIterator(null));
+		svg.setFillColor(mapper.toRGB(param.getColor()));
+		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
 
 	}
 }

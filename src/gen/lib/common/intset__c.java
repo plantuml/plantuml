@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class intset__c {
@@ -115,6 +118,8 @@ public class intset__c {
 
 //3 8qgr88nich230f7xchwdzz29a
 // static void* mkIntItem(Dt_t* d,intitem* obj,Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/intset.c", name="mkIntItem", key="8qgr88nich230f7xchwdzz29a", definition="static void* mkIntItem(Dt_t* d,intitem* obj,Dtdisc_t* disc)")
 public static Object mkIntItem(Object... arg) {
 UNSUPPORTED("8fbx43f8g4rod2yqfdymsxdnx"); // static void*
 UNSUPPORTED("a10lzkc4r102m2qlk5imsvovv"); // mkIntItem(Dt_t* d,intitem* obj,Dtdisc_t* disc)
@@ -132,6 +137,8 @@ throw new UnsupportedOperationException();
 
 //3 bh6e5ln10dj2wbs1o7bpt00i8
 // static void freeIntItem(Dt_t* d,intitem* obj,Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/intset.c", name="freeIntItem", key="bh6e5ln10dj2wbs1o7bpt00i8", definition="static void freeIntItem(Dt_t* d,intitem* obj,Dtdisc_t* disc)")
 public static Object freeIntItem(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("criv4pqv4650sbunujgt3rbya"); // freeIntItem(Dt_t* d,intitem* obj,Dtdisc_t* disc)
@@ -147,6 +154,8 @@ throw new UnsupportedOperationException();
 
 //3 47m5dtm8t3vpv956ejy5w6th9
 // static int cmpid(Dt_t* d, int* key1, int* key2, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/intset.c", name="cmpid", key="47m5dtm8t3vpv956ejy5w6th9", definition="static int cmpid(Dt_t* d, int* key1, int* key2, Dtdisc_t* disc)")
 public static Object cmpid(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("1si01iycmvt6w5p4npvowvekx"); // cmpid(Dt_t* d, int* key1, int* key2, Dtdisc_t* disc)
@@ -168,6 +177,8 @@ throw new UnsupportedOperationException();
 
 //3 2xsz5eza9h7l039872rv37hsv
 // Dt_t*  openIntSet (void) 
+@Unused
+@Original(version="2.38.0", path="lib/common/intset.c", name="openIntSet", key="2xsz5eza9h7l039872rv37hsv", definition="Dt_t*  openIntSet (void)")
 public static Object openIntSet(Object... arg) {
 UNSUPPORTED("96gezykql110n8xkno0gtdrmq"); // Dt_t* 
 UNSUPPORTED("68yvszwdppo58pmasvi3gqm0a"); // openIntSet (void)
@@ -183,6 +194,8 @@ throw new UnsupportedOperationException();
 
 //3 djjwoeky7tlyxdg2zx3x4pdib
 // void  addIntSet (Dt_t* is, int v) 
+@Unused
+@Original(version="2.38.0", path="lib/common/intset.c", name="addIntSet", key="djjwoeky7tlyxdg2zx3x4pdib", definition="void  addIntSet (Dt_t* is, int v)")
 public static Object addIntSet(Object... arg) {
 UNSUPPORTED("347dderd02mvlozoheqo4ejwo"); // void 
 UNSUPPORTED("uq3ewaypmpqc0nyc6mp0osz6"); // addIntSet (Dt_t* is, int v)
@@ -200,6 +213,8 @@ throw new UnsupportedOperationException();
 
 //3 7w5km9pct0qd0skzhgxezhr2x
 // int  inIntSet (Dt_t* is, int v) 
+@Unused
+@Original(version="2.38.0", path="lib/common/intset.c", name="inIntSet", key="7w5km9pct0qd0skzhgxezhr2x", definition="int  inIntSet (Dt_t* is, int v)")
 public static Object inIntSet(Object... arg) {
 UNSUPPORTED("7zkpme13g8rxxwloxvpvvnbcw"); // int 
 UNSUPPORTED("cg6pm0yggmopx83usksgtt395"); // inIntSet (Dt_t* is, int v)

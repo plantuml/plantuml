@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -46,12 +46,9 @@
 package h;
 
 import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.Area;
-import smetana.core.amiga.AreaInt;
-import smetana.core.amiga.InternalData;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agtag_s extends UnsupportedStructAndPtr implements HardcodedStruct {
@@ -115,67 +112,6 @@ public class ST_Agtag_s extends UnsupportedStructAndPtr implements HardcodedStru
 	@Override
 	public void ___(__struct__ other) {
 		copyDataFrom(other);
-	}
-
-	@Override
-	public Area getArea(String name) {
-		final AreaInt result = new AreaInt();
-		if (name.equals("objtype")) {
-			result.setInternal(objtype);
-			return result;
-		}
-		if (name.equals("mtflock")) {
-			result.setInternal(mtflock);
-			return result;
-		}
-		if (name.equals("attrwf")) {
-			result.setInternal(attrwf);
-			return result;
-		}
-		if (name.equals("seq")) {
-			result.setInternal(seq);
-			return result;
-		}
-		if (name.equals("id")) {
-			result.setInternal(id);
-			return result;
-		}
-		return super.getArea(name);
-	}
-
-	public class MyInternalData extends UnsupportedStarStruct implements InternalData {
-
-		@Override
-		public Area getArea(String name) {
-			final AreaInt result = new AreaInt();
-			if (name.equals("objtype")) {
-				result.setInternal(objtype);
-				return result;
-			}
-			if (name.equals("mtflock")) {
-				result.setInternal(mtflock);
-				return result;
-			}
-			if (name.equals("attrwf")) {
-				result.setInternal(attrwf);
-				return result;
-			}
-			if (name.equals("seq")) {
-				result.setInternal(seq);
-				return result;
-			}
-			if (name.equals("id")) {
-				result.setInternal(id);
-				return result;
-			}
-			return super.getArea(name);
-		}
-
-	}
-
-	@Override
-	public StarStruct getInternalData() {
-		return new MyInternalData();
 	}
 
 	// public static List<String> DEFINITION = Arrays.asList(

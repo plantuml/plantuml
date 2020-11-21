@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.common;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class colxlate__c {
@@ -59,6 +62,8 @@ public class colxlate__c {
 
 //3 7m77ow39f9cx65se44asa35dr
 // static void hsv2rgb(double h, double s, double v, 			double *r, double *g, double *b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="hsv2rgb", key="7m77ow39f9cx65se44asa35dr", definition="static void hsv2rgb(double h, double s, double v, 			double *r, double *g, double *b)")
 public static Object hsv2rgb(Object... arg) {
 UNSUPPORTED("bimj2bwogufgm8nwcyse0gmpq"); // static void hsv2rgb(double h, double s, double v,
 UNSUPPORTED("95mlswcykd5as5wr8jbkfhz4f"); // 			double *r, double *g, double *b)
@@ -121,6 +126,8 @@ throw new UnsupportedOperationException();
 
 //3 dujzfvldmjwflku9wihupdxnv
 // static void rgb2hsv(double r, double g, double b, 		double *h, double *s, double *v) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="rgb2hsv", key="dujzfvldmjwflku9wihupdxnv", definition="static void rgb2hsv(double r, double g, double b, 		double *h, double *s, double *v)")
 public static Object rgb2hsv(Object... arg) {
 UNSUPPORTED("c10593ciqiaa4rupftmpdu18r"); // static void rgb2hsv(double r, double g, double b,
 UNSUPPORTED("e4aaxkxcwspiazmche1j75xdt"); // 		double *h, double *s, double *v)
@@ -159,6 +166,8 @@ throw new UnsupportedOperationException();
 
 //3 9dul807684jurxmxyyg1zyure
 // static void rgb2cmyk(double r, double g, double b, double *c, double *m, 		     double *y, double *k) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="rgb2cmyk", key="9dul807684jurxmxyyg1zyure", definition="static void rgb2cmyk(double r, double g, double b, double *c, double *m, 		     double *y, double *k)")
 public static Object rgb2cmyk(Object... arg) {
 UNSUPPORTED("352h951qbn47q4ctnzbrevu5m"); // static void rgb2cmyk(double r, double g, double b, double *c, double *m,
 UNSUPPORTED("plznbj7ka6vfot5ko2iqa8gb"); // 		     double *y, double *k)
@@ -181,6 +190,8 @@ throw new UnsupportedOperationException();
 
 //3 4yhpwysfqkk00mf4cyx28mzrl
 // static int colorcmpf(const void *p0, const void *p1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="colorcmpf", key="4yhpwysfqkk00mf4cyx28mzrl", definition="static int colorcmpf(const void *p0, const void *p1)")
 public static Object colorcmpf(Object... arg) {
 UNSUPPORTED("vnbeb7jqvgxfst4woiz27q00"); // static int colorcmpf(const void *p0, const void *p1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -195,6 +206,8 @@ throw new UnsupportedOperationException();
 
 //3 ax75qqr4my2r9ct8dbjvvjtx6
 // char *canontoken(char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="", key="ax75qqr4my2r9ct8dbjvvjtx6", definition="char *canontoken(char *str)")
 public static Object canontoken(Object... arg) {
 UNSUPPORTED("1629zjdfy374s0osuesihd243"); // char *canontoken(char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -230,6 +243,8 @@ throw new UnsupportedOperationException();
 
 //3 5vgbyvdcctqnygkqbcvf8gqkn
 // static char* fullColor (char* prefix, char* str) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="fullColor", key="5vgbyvdcctqnygkqbcvf8gqkn", definition="static char* fullColor (char* prefix, char* str)")
 public static Object fullColor(Object... arg) {
 UNSUPPORTED("6jzwle4t7n644wac4w3ptbzmk"); // static char* fullColor (char* prefix, char* str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -252,6 +267,8 @@ throw new UnsupportedOperationException();
 
 //3 7fjoenpad8y11os28cr4ephqh
 // static char* resolveColor (char* str) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="resolveColor", key="7fjoenpad8y11os28cr4ephqh", definition="static char* resolveColor (char* str)")
 public static Object resolveColor(Object... arg) {
 UNSUPPORTED("7m0ujhxnmed6v558yry5p4sic"); // static char* resolveColor (char* str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -289,6 +306,8 @@ throw new UnsupportedOperationException();
 
 //3 2zuzgeyimjdnf5mv3x8t0ki77
 // int colorxlate(char *str, gvcolor_t * color, color_type_t target_type) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="colorxlate", key="2zuzgeyimjdnf5mv3x8t0ki77", definition="int colorxlate(char *str, gvcolor_t * color, color_type_t target_type)")
 public static Object colorxlate(Object... arg) {
 UNSUPPORTED("ehzhqf0ynhngejezvvyifodzu"); // int colorxlate(char *str, gvcolor_t * color, color_type_t target_type)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -520,6 +539,8 @@ throw new UnsupportedOperationException();
 
 //3 6xt07sam57leaegn555zem71x
 // static void rgba_wordToByte (int* rrggbbaa, unsigned char* rgba) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="rgba_wordToByte", key="6xt07sam57leaegn555zem71x", definition="static void rgba_wordToByte (int* rrggbbaa, unsigned char* rgba)")
 public static Object rgba_wordToByte(Object... arg) {
 UNSUPPORTED("bao9ostouhscklw6g4sr9d1ca"); // static void rgba_wordToByte (int* rrggbbaa, unsigned char* rgba)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -537,6 +558,8 @@ throw new UnsupportedOperationException();
 
 //3 6yolsjak65tidlbndbkdir4zi
 // static void rgba_dblToByte (double* RGBA, unsigned char* rgba) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="rgba_dblToByte", key="6yolsjak65tidlbndbkdir4zi", definition="static void rgba_dblToByte (double* RGBA, unsigned char* rgba)")
 public static Object rgba_dblToByte(Object... arg) {
 UNSUPPORTED("44ty1s8y3t609jxlz3dhwo8up"); // static void rgba_dblToByte (double* RGBA, unsigned char* rgba)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -554,6 +577,8 @@ throw new UnsupportedOperationException();
 
 //3 4u0xx0imm7gw6d27a58wt7uhd
 // int colorCvt(gvcolor_t *ocolor, gvcolor_t *ncolor) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="colorCvt", key="4u0xx0imm7gw6d27a58wt7uhd", definition="int colorCvt(gvcolor_t *ocolor, gvcolor_t *ncolor)")
 public static Object colorCvt(Object... arg) {
 UNSUPPORTED("crf94filr3nvamikn2fv9l283"); // int colorCvt(gvcolor_t *ocolor, gvcolor_t *ncolor)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -611,6 +636,8 @@ throw new UnsupportedOperationException();
 
 //3 idov6ir1ql05vewhvosl6zmm
 // void setColorScheme (char* s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/colxlate.c", name="setColorScheme", key="idov6ir1ql05vewhvosl6zmm", definition="void setColorScheme (char* s)")
 public static Object setColorScheme(Object... arg) {
 UNSUPPORTED("aae50vjirjpwewp57f09nxgqi"); // void setColorScheme (char* s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,9 +45,7 @@
  */
 package h;
 
-import smetana.core.UnsupportedArrayOfStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
 
 public class ST_PartitionVars extends UnsupportedStructAndPtr {
@@ -66,31 +64,6 @@ public class ST_PartitionVars extends UnsupportedStructAndPtr {
 	// struct Rect cover[2];
 	// int area[2];
 	
-	class ArrayOfTwo extends UnsupportedArrayOfStruct {
-
-		final private int pos;
-
-		public ArrayOfTwo(int pos) {
-			this.pos = pos;
-		}
-
-		public ArrayOfTwo plus(int delta) {
-			return new ArrayOfTwo(pos + delta);
-		}
-
-		@Override
-		public __struct__ getStruct() {
-			return cover[pos];
-		}
-
-		@Override
-		public void setStruct(__struct__ value) {
-			cover[pos].copyDataFrom(value);
-		}
-
-	}
-
-
 	public ST_PartitionVars() {
 		this(null);
 	}

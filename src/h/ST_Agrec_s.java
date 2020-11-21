@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -109,6 +109,11 @@ public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
 		return super.castTo(dest);
 	}
 	
+	public ST_Agdatadict_s castTo_ST_Agdatadict_s() {
+		return (ST_Agdatadict_s) castTo(ST_Agdatadict_s.class);
+	}
+
+
 	public ST_Agnodeinfo_t castTo_ST_Agnodeinfo_t() {
 		if (getParent() instanceof ST_Agnodeinfo_t) {
 			return (ST_Agnodeinfo_t) getParent();

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.gvc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -154,6 +157,8 @@ public class gvrender__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -169,29 +174,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -212,6 +200,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -227,29 +217,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -267,6 +239,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -284,6 +258,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -301,6 +277,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -318,6 +296,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -335,6 +315,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -352,6 +334,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -369,6 +353,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -388,6 +374,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -407,6 +395,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -426,6 +416,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -445,6 +437,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -459,6 +453,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -473,6 +469,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -487,6 +485,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -501,6 +501,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -518,6 +520,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -543,6 +547,8 @@ throw new UnsupportedOperationException();
 
 //3 9fduxdho8czelodj9h6y89ino
 // int gvrender_select(GVJ_t * job, const char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_select", key="9fduxdho8czelodj9h6y89ino", definition="int gvrender_select(GVJ_t * job, const char *str)")
 public static Object gvrender_select(Object... arg) {
 UNSUPPORTED("8q2hci07ap2ph732vslggau4t"); // int gvrender_select(GVJ_t * job, const char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -595,6 +601,8 @@ throw new UnsupportedOperationException();
 
 //3 8r860ajsh90bfs4d0opfouak
 // int gvrender_features(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_features", key="8r860ajsh90bfs4d0opfouak", definition="int gvrender_features(GVJ_t * job)")
 public static Object gvrender_features(Object... arg) {
 UNSUPPORTED("1szoxv2gwujscwb7rnlygg91m"); // int gvrender_features(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -614,6 +622,8 @@ throw new UnsupportedOperationException();
 
 //3 4h2luwpil87bs6pkf4f7qo2k9
 // int gvrender_begin_job(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_job", key="4h2luwpil87bs6pkf4f7qo2k9", definition="int gvrender_begin_job(GVJ_t * job)")
 public static Object gvrender_begin_job(Object... arg) {
 UNSUPPORTED("6ev0o0og4bywnq3aw32oauko3"); // int gvrender_begin_job(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -635,6 +645,8 @@ throw new UnsupportedOperationException();
 
 //3 3qmxnj1638ltgmhz0csgcpfjk
 // void gvrender_end_job(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_job", key="3qmxnj1638ltgmhz0csgcpfjk", definition="void gvrender_end_job(GVJ_t * job)")
 public static Object gvrender_end_job(Object... arg) {
 UNSUPPORTED("c841pljir2lr5bp3us608ghiq"); // void gvrender_end_job(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -655,6 +667,8 @@ throw new UnsupportedOperationException();
 
 //3 51309lo7u8y4alv899e4yqadk
 // pointf gvrender_ptf(GVJ_t * job, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_ptf", key="51309lo7u8y4alv899e4yqadk", definition="pointf gvrender_ptf(GVJ_t * job, pointf p)")
 public static Object gvrender_ptf(Object... arg) {
 UNSUPPORTED("bvtfrro3td44g1j12ar1rdjpx"); // pointf gvrender_ptf(GVJ_t * job, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -680,6 +694,8 @@ throw new UnsupportedOperationException();
 
 //3 crcyqn21mwz4omhozkd2cp4jc
 // pointf *gvrender_ptf_A(GVJ_t * job, pointf * af, pointf * AF, int n) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="", key="crcyqn21mwz4omhozkd2cp4jc", definition="pointf *gvrender_ptf_A(GVJ_t * job, pointf * af, pointf * AF, int n)")
 public static Object gvrender_ptf_A(Object... arg) {
 UNSUPPORTED("6s7dm40y4hhxw9cl6698x6qld"); // pointf *gvrender_ptf_A(GVJ_t * job, pointf * af, pointf * AF, int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -712,6 +728,8 @@ throw new UnsupportedOperationException();
 
 //3 d0k7jgvawtauln88of22iuy40
 // static int gvrender_comparestr(const void *s1, const void *s2) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_comparestr", key="d0k7jgvawtauln88of22iuy40", definition="static int gvrender_comparestr(const void *s1, const void *s2)")
 public static Object gvrender_comparestr(Object... arg) {
 UNSUPPORTED("b9vqnpfss55985u1jx9mhx1ss"); // static int gvrender_comparestr(const void *s1, const void *s2)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -726,6 +744,8 @@ throw new UnsupportedOperationException();
 
 //3 93cbs4byyecjhyq5vu6p19p57
 // static void gvrender_resolve_color(gvrender_features_t * features, 				   char *name, gvcolor_t * color) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_resolve_color", key="93cbs4byyecjhyq5vu6p19p57", definition="static void gvrender_resolve_color(gvrender_features_t * features, 				   char *name, gvcolor_t * color)")
 public static Object gvrender_resolve_color(Object... arg) {
 UNSUPPORTED("3knci4gywmc6hb9ujch5j3e9a"); // static void gvrender_resolve_color(gvrender_features_t * features,
 UNSUPPORTED("aiwlhbymjioyoqr6cp2hw7ukv"); // 				   char *name, gvcolor_t * color)
@@ -764,6 +784,8 @@ throw new UnsupportedOperationException();
 
 //3 8bz32mh1b67dm7onb98cukhr
 // void gvrender_begin_graph(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_graph", key="8bz32mh1b67dm7onb98cukhr", definition="void gvrender_begin_graph(GVJ_t * job, graph_t * g)")
 public static Object gvrender_begin_graph(Object... arg) {
 UNSUPPORTED("8niigqov4bujqwwvqrq6qkfp"); // void gvrender_begin_graph(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -785,6 +807,8 @@ throw new UnsupportedOperationException();
 
 //3 65xsy2npcrn2bagmq96hoplmc
 // void gvrender_end_graph(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_graph", key="65xsy2npcrn2bagmq96hoplmc", definition="void gvrender_end_graph(GVJ_t * job)")
 public static Object gvrender_end_graph(Object... arg) {
 UNSUPPORTED("e845mtmabap40x91drpi98rgb"); // void gvrender_end_graph(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -804,6 +828,8 @@ throw new UnsupportedOperationException();
 
 //3 4ptkpos0d265xcx36yp5olziv
 // void gvrender_begin_page(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_page", key="4ptkpos0d265xcx36yp5olziv", definition="void gvrender_begin_page(GVJ_t * job)")
 public static Object gvrender_begin_page(Object... arg) {
 UNSUPPORTED("dk9dqgxupw4tns0blo563bw3"); // void gvrender_begin_page(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -822,6 +848,8 @@ throw new UnsupportedOperationException();
 
 //3 2neje7ddfin73he2004jok2oq
 // void gvrender_end_page(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_page", key="2neje7ddfin73he2004jok2oq", definition="void gvrender_end_page(GVJ_t * job)")
 public static Object gvrender_end_page(Object... arg) {
 UNSUPPORTED("60qwktj4d3u2lx6w9ya7x2ll5"); // void gvrender_end_page(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -840,6 +868,8 @@ throw new UnsupportedOperationException();
 
 //3 bjs8uuw252trlu14ei8bzbsvr
 // void gvrender_begin_layer(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_layer", key="bjs8uuw252trlu14ei8bzbsvr", definition="void gvrender_begin_layer(GVJ_t * job)")
 public static Object gvrender_begin_layer(Object... arg) {
 UNSUPPORTED("73q54jv3dls7oji2nnpvn4jkf"); // void gvrender_begin_layer(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -859,6 +889,8 @@ throw new UnsupportedOperationException();
 
 //3 401dx8s3fwrxydg3x6alimmby
 // void gvrender_end_layer(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_layer", key="401dx8s3fwrxydg3x6alimmby", definition="void gvrender_end_layer(GVJ_t * job)")
 public static Object gvrender_end_layer(Object... arg) {
 UNSUPPORTED("9ae3jsve0v8yslvoyx3pnlacr"); // void gvrender_end_layer(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -877,6 +909,8 @@ throw new UnsupportedOperationException();
 
 //3 27poq9moik2l4d2chmxas8rm1
 // void gvrender_begin_cluster(GVJ_t * job, graph_t * sg) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_cluster", key="27poq9moik2l4d2chmxas8rm1", definition="void gvrender_begin_cluster(GVJ_t * job, graph_t * sg)")
 public static Object gvrender_begin_cluster(Object... arg) {
 UNSUPPORTED("r4znhjms3ot7kcrhcixet65f"); // void gvrender_begin_cluster(GVJ_t * job, graph_t * sg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -895,6 +929,8 @@ throw new UnsupportedOperationException();
 
 //3 1eapbz6ecf0g6kdtqu28czes2
 // void gvrender_end_cluster(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_cluster", key="1eapbz6ecf0g6kdtqu28czes2", definition="void gvrender_end_cluster(GVJ_t * job, graph_t * g)")
 public static Object gvrender_end_cluster(Object... arg) {
 UNSUPPORTED("dd5abixfui8mnp71zqvuj59qz"); // void gvrender_end_cluster(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -913,6 +949,8 @@ throw new UnsupportedOperationException();
 
 //3 c19ss30f97hmgqtzuxhn0qwys
 // void gvrender_begin_nodes(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_nodes", key="c19ss30f97hmgqtzuxhn0qwys", definition="void gvrender_begin_nodes(GVJ_t * job)")
 public static Object gvrender_begin_nodes(Object... arg) {
 UNSUPPORTED("97cjt43wnlxgia92a6tk59ud0"); // void gvrender_begin_nodes(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -931,6 +969,8 @@ throw new UnsupportedOperationException();
 
 //3 eyo9qxxkb76cgbq7a8ojrxnic
 // void gvrender_end_nodes(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_nodes", key="eyo9qxxkb76cgbq7a8ojrxnic", definition="void gvrender_end_nodes(GVJ_t * job)")
 public static Object gvrender_end_nodes(Object... arg) {
 UNSUPPORTED("9wdm2tj0803fr2xaj6p5xftvn"); // void gvrender_end_nodes(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -949,6 +989,8 @@ throw new UnsupportedOperationException();
 
 //3 bevetts9ovmaou0v5l9i1aq5
 // void gvrender_begin_edges(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_edges", key="bevetts9ovmaou0v5l9i1aq5", definition="void gvrender_begin_edges(GVJ_t * job)")
 public static Object gvrender_begin_edges(Object... arg) {
 UNSUPPORTED("1alfkafh1xx3y2k9ujca26ii1"); // void gvrender_begin_edges(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -967,6 +1009,8 @@ throw new UnsupportedOperationException();
 
 //3 35426mu8gpbqgoc6qh9q4c1xo
 // void gvrender_end_edges(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_edges", key="35426mu8gpbqgoc6qh9q4c1xo", definition="void gvrender_end_edges(GVJ_t * job)")
 public static Object gvrender_end_edges(Object... arg) {
 UNSUPPORTED("2z8hgdz7ckm5uvm5dk09ytuix"); // void gvrender_end_edges(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -985,6 +1029,8 @@ throw new UnsupportedOperationException();
 
 //3 d5gj3gg608fp9k43jzb4ts4xb
 // void gvrender_begin_node(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_node", key="d5gj3gg608fp9k43jzb4ts4xb", definition="void gvrender_begin_node(GVJ_t * job, node_t * n)")
 public static Object gvrender_begin_node(Object... arg) {
 UNSUPPORTED("cqhiq3ed9f6eu8n3045t48fno"); // void gvrender_begin_node(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1003,6 +1049,8 @@ throw new UnsupportedOperationException();
 
 //3 avfb2baedlecrkfbow9cxrpj8
 // void gvrender_end_node(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_node", key="avfb2baedlecrkfbow9cxrpj8", definition="void gvrender_end_node(GVJ_t * job)")
 public static Object gvrender_end_node(Object... arg) {
 UNSUPPORTED("cx7wx0qonl1fg8sktpbann4v7"); // void gvrender_end_node(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1021,6 +1069,8 @@ throw new UnsupportedOperationException();
 
 //3 e2uj2wkgme6qb2iw67xtnj76
 // void gvrender_begin_edge(GVJ_t * job, edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_edge", key="e2uj2wkgme6qb2iw67xtnj76", definition="void gvrender_begin_edge(GVJ_t * job, edge_t * e)")
 public static Object gvrender_begin_edge(Object... arg) {
 UNSUPPORTED("92wxdxnrq7ym6oxa8ncnte8yx"); // void gvrender_begin_edge(GVJ_t * job, edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1039,6 +1089,8 @@ throw new UnsupportedOperationException();
 
 //3 dmjwy0x5f2ylehrl4asephmu
 // void gvrender_end_edge(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_edge", key="dmjwy0x5f2ylehrl4asephmu", definition="void gvrender_end_edge(GVJ_t * job)")
 public static Object gvrender_end_edge(Object... arg) {
 UNSUPPORTED("503mqi542lcqpbzcar48yjzca"); // void gvrender_end_edge(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1057,6 +1109,8 @@ throw new UnsupportedOperationException();
 
 //3 a3oxjcx4pit0tlwvqrj5pjgla
 // void gvrender_begin_anchor(GVJ_t * job, char *href, char *tooltip, 			   char *target, char *id) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_anchor", key="a3oxjcx4pit0tlwvqrj5pjgla", definition="void gvrender_begin_anchor(GVJ_t * job, char *href, char *tooltip, 			   char *target, char *id)")
 public static Object gvrender_begin_anchor(Object... arg) {
 UNSUPPORTED("t7nw5oeaewb5af8soqhimjf8"); // void gvrender_begin_anchor(GVJ_t * job, char *href, char *tooltip,
 UNSUPPORTED("ca2v6kkbpi770n597h24tagaa"); // 			   char *target, char *id)
@@ -1076,6 +1130,8 @@ throw new UnsupportedOperationException();
 
 //3 939xwaginerexczl0cmv7ihe2
 // void gvrender_end_anchor(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_anchor", key="939xwaginerexczl0cmv7ihe2", definition="void gvrender_end_anchor(GVJ_t * job)")
 public static Object gvrender_end_anchor(Object... arg) {
 UNSUPPORTED("bcd3uehiopd66fbezppgae2dt"); // void gvrender_end_anchor(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1094,6 +1150,8 @@ throw new UnsupportedOperationException();
 
 //3 8hno79twchywwcg8nsufipda9
 // void gvrender_begin_label(GVJ_t * job, label_type type) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_begin_label", key="8hno79twchywwcg8nsufipda9", definition="void gvrender_begin_label(GVJ_t * job, label_type type)")
 public static Object gvrender_begin_label(Object... arg) {
 UNSUPPORTED("4flxiegpywb83nvqdngss5inv"); // void gvrender_begin_label(GVJ_t * job, label_type type)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1112,6 +1170,8 @@ throw new UnsupportedOperationException();
 
 //3 33lmy7dfx78r3jdoiq6vipmbf
 // void gvrender_end_label(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_end_label", key="33lmy7dfx78r3jdoiq6vipmbf", definition="void gvrender_end_label(GVJ_t * job)")
 public static Object gvrender_end_label(Object... arg) {
 UNSUPPORTED("962k3bif0rr2lxaitbmcqqgap"); // void gvrender_end_label(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1130,6 +1190,8 @@ throw new UnsupportedOperationException();
 
 //3 2n07hv6i7ifhafigqmh9hjs41
 // void gvrender_textspan(GVJ_t * job, pointf p, textspan_t * span) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_textspan", key="2n07hv6i7ifhafigqmh9hjs41", definition="void gvrender_textspan(GVJ_t * job, pointf p, textspan_t * span)")
 public static Object gvrender_textspan(Object... arg) {
 UNSUPPORTED("c11fz6lbqdebdh90bo51ypv2b"); // void gvrender_textspan(GVJ_t * job, pointf p, textspan_t * span)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1157,6 +1219,8 @@ throw new UnsupportedOperationException();
 
 //3 3ip6dcdve8gi3behn0lnxf9ii
 // void gvrender_set_pencolor(GVJ_t * job, char *name) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_set_pencolor", key="3ip6dcdve8gi3behn0lnxf9ii", definition="void gvrender_set_pencolor(GVJ_t * job, char *name)")
 public static Object gvrender_set_pencolor(Object... arg) {
 UNSUPPORTED("4ke4p18hmuf4dn24qbbac7tsw"); // void gvrender_set_pencolor(GVJ_t * job, char *name)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1182,6 +1246,8 @@ throw new UnsupportedOperationException();
 
 //3 d1se1bjsc3m7jbhugf98bvdsy
 // void gvrender_set_fillcolor(GVJ_t * job, char *name) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_set_fillcolor", key="d1se1bjsc3m7jbhugf98bvdsy", definition="void gvrender_set_fillcolor(GVJ_t * job, char *name)")
 public static Object gvrender_set_fillcolor(Object... arg) {
 UNSUPPORTED("5r7oj4opkrxunyrvpxbz9eucg"); // void gvrender_set_fillcolor(GVJ_t * job, char *name)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1207,6 +1273,8 @@ throw new UnsupportedOperationException();
 
 //3 bq4b7phujqc961e7ziqipopma
 // void gvrender_set_gradient_vals (GVJ_t * job, char *stopcolor, int angle, float frac) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_set_gradient_vals", key="bq4b7phujqc961e7ziqipopma", definition="void gvrender_set_gradient_vals (GVJ_t * job, char *stopcolor, int angle, float frac)")
 public static Object gvrender_set_gradient_vals(Object... arg) {
 UNSUPPORTED("3y1lob8nc9d6kylff8slmrvt6"); // void gvrender_set_gradient_vals (GVJ_t * job, char *stopcolor, int angle, float frac)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1229,6 +1297,8 @@ throw new UnsupportedOperationException();
 
 //3 2lnvbc2ahvd0talu9x7r9dqgb
 // void gvrender_set_style(GVJ_t * job, char **s) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_set_style", key="2lnvbc2ahvd0talu9x7r9dqgb", definition="void gvrender_set_style(GVJ_t * job, char **s)")
 public static Object gvrender_set_style(Object... arg) {
 UNSUPPORTED("ed6tqrjoo4liy9duowya74n8d"); // void gvrender_set_style(GVJ_t * job, char **s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1276,6 +1346,8 @@ throw new UnsupportedOperationException();
 
 //3 eyxsx2an9nibgyxoozqxipc50
 // void gvrender_ellipse(GVJ_t * job, pointf * pf, int n, int filled) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_ellipse", key="eyxsx2an9nibgyxoozqxipc50", definition="void gvrender_ellipse(GVJ_t * job, pointf * pf, int n, int filled)")
 public static Object gvrender_ellipse(Object... arg) {
 UNSUPPORTED("7id4bcj5ex7dkq7nf2sjxqkxy"); // void gvrender_ellipse(GVJ_t * job, pointf * pf, int n, int filled)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1303,6 +1375,8 @@ throw new UnsupportedOperationException();
 
 //3 yp8iozq6mdutn12n5clinpsw
 // void gvrender_polygon(GVJ_t * job, pointf * af, int n, int filled) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_polygon", key="yp8iozq6mdutn12n5clinpsw", definition="void gvrender_polygon(GVJ_t * job, pointf * af, int n, int filled)")
 public static Object gvrender_polygon(Object... arg) {
 UNSUPPORTED("bv02ljcfrzola6maqr6v7beev"); // void gvrender_polygon(GVJ_t * job, pointf * af, int n, int filled)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1341,6 +1415,8 @@ throw new UnsupportedOperationException();
 
 //3 887zxc7xkpuux75pyddc0t2sm
 // void gvrender_box(GVJ_t * job, boxf B, int filled) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_box", key="887zxc7xkpuux75pyddc0t2sm", definition="void gvrender_box(GVJ_t * job, boxf B, int filled)")
 public static Object gvrender_box(Object... arg) {
 UNSUPPORTED("e0bwh5wg4tq95uckdyef5xzub"); // void gvrender_box(GVJ_t * job, boxf B, int filled)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1362,6 +1438,8 @@ throw new UnsupportedOperationException();
 
 //3 3ob8x7840dyx76jqhumocvdr6
 // void gvrender_beziercurve(GVJ_t * job, pointf * af, int n, 			  int arrow_at_start, int arrow_at_end, 			  boolean filled) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_beziercurve", key="3ob8x7840dyx76jqhumocvdr6", definition="void gvrender_beziercurve(GVJ_t * job, pointf * af, int n, 			  int arrow_at_start, int arrow_at_end, 			  boolean filled)")
 public static Object gvrender_beziercurve(Object... arg) {
 UNSUPPORTED("9vork9t9rxekftwoe2b4co51v"); // void gvrender_beziercurve(GVJ_t * job, pointf * af, int n,
 UNSUPPORTED("3xhx7uex1gp1o3nnsoocvsyif"); // 			  int arrow_at_start, int arrow_at_end,
@@ -1394,6 +1472,8 @@ throw new UnsupportedOperationException();
 
 //3 3b7i3jvz34m0h6yog8k2fvyfd
 // void gvrender_polyline(GVJ_t * job, pointf * af, int n) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_polyline", key="3b7i3jvz34m0h6yog8k2fvyfd", definition="void gvrender_polyline(GVJ_t * job, pointf * af, int n)")
 public static Object gvrender_polyline(Object... arg) {
 UNSUPPORTED("aeof52u6j3ibwxck6m4wrrivp"); // void gvrender_polyline(GVJ_t * job, pointf * af, int n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1422,6 +1502,8 @@ throw new UnsupportedOperationException();
 
 //3 blnfx50nrebk4gjfqqnn4rm7f
 // void gvrender_comment(GVJ_t * job, char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_comment", key="blnfx50nrebk4gjfqqnn4rm7f", definition="void gvrender_comment(GVJ_t * job, char *str)")
 public static Object gvrender_comment(Object... arg) {
 UNSUPPORTED("b17bq37munzsdb5wh62le6aje"); // void gvrender_comment(GVJ_t * job, char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1442,6 +1524,8 @@ throw new UnsupportedOperationException();
 
 //3 93prcj5sag4lfc8a5sb2wmsd
 // static imagescale_t get_imagescale(char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="get_imagescale", key="93prcj5sag4lfc8a5sb2wmsd", definition="static imagescale_t get_imagescale(char *s)")
 public static Object get_imagescale(Object... arg) {
 UNSUPPORTED("1txzuoketj9nchn3z70fng5v3"); // static imagescale_t get_imagescale(char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1466,6 +1550,8 @@ throw new UnsupportedOperationException();
 
 //3 pi86b4slwqam0a1xxdq0xdf0
 // void gvrender_usershape(GVJ_t * job, char *name, pointf * a, int n, 			boolean filled, char *imagescale) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_usershape", key="pi86b4slwqam0a1xxdq0xdf0", definition="void gvrender_usershape(GVJ_t * job, char *name, pointf * a, int n, 			boolean filled, char *imagescale)")
 public static Object gvrender_usershape(Object... arg) {
 UNSUPPORTED("6rpcjgqcfwaiwqvb418x8kokh"); // void gvrender_usershape(GVJ_t * job, char *name, pointf * a, int n,
 UNSUPPORTED("8jff0dyonsdk8syp7l4ev2bet"); // 			boolean filled, char *imagescale)
@@ -1563,6 +1649,8 @@ throw new UnsupportedOperationException();
 
 //3 4u2p88wr82whlushkt6jc2qjm
 // void gvrender_set_penwidth(GVJ_t * job, double penwidth) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvrender.c", name="gvrender_set_penwidth", key="4u2p88wr82whlushkt6jc2qjm", definition="void gvrender_set_penwidth(GVJ_t * job, double penwidth)")
 public static Object gvrender_set_penwidth(Object... arg) {
 UNSUPPORTED("4sxn3kk22l21zki26l63tudc1"); // void gvrender_set_penwidth(GVJ_t * job, double penwidth)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

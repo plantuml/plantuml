@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -48,7 +48,6 @@ package h;
 import smetana.core.CString;
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.Area;
 import smetana.core.amiga.StarStruct;
@@ -58,10 +57,10 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 	public final ST_pointf p = new ST_pointf(this);
 	public double theta;
 	public ST_boxf bp;
-	public int defined;
-	public int constrained;
-	public int clip;
-	public int dyna;
+	public boolean defined;
+	public boolean constrained;
+	public boolean clip;
+	public boolean dyna;
 	public int order;
 	public int side;
 	public CString name;
@@ -145,7 +144,7 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 	@Override
 	public void setInt(String fieldName, int data) {
 		if (fieldName.equals("constrained")) {
-			constrained = data;
+			constrained = data!=0;
 			return;
 		}
 		super.setInt(fieldName, data);

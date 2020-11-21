@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskImpl;
@@ -77,12 +77,15 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private final boolean oddStart;
 	private final boolean oddEnd;
 	private final Collection<Day> paused;
+	private final Collection<GanttConstraint> constraints;
 
 	private final double margin = 2;
 
 	public TaskDrawRegular(TimeScale timeScale, double y, String prettyDisplay, Day start, Day end, boolean oddStart,
-			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw) {
+			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
+			Collection<GanttConstraint> constraints) {
 		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw);
+		this.constraints = constraints;
 		this.end = end;
 		this.oddStart = oddStart;
 		this.oddEnd = oddEnd;
@@ -99,10 +102,32 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	public void drawTitle(UGraphic ug) {
 		final TextBlock title = Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		final double titleHeight = title.calculateDimension(ug.getStringBounder()).getHeight();
-		final double h = (margin + getShapeHeight() - titleHeight) / 2;
-		final double endingPosition = timeScale.getEndingPosition(start);
-		title.drawU(ug.apply(new UTranslate(endingPosition, h)));
+		final Dimension2D dim = title.calculateDimension(ug.getStringBounder());
+		final double h = (margin + getShapeHeight() - dim.getHeight()) / 2;
+		final double pos1 = timeScale.getStartingPosition(start) + 6;
+		final double pos2 = timeScale.getEndingPosition(end) - 6;
+		final double pos;
+		if (pos2 - pos1 > dim.getWidth())
+			pos = pos1;
+		else
+			pos = getOutPosition(pos2);
+		title.drawU(ug.apply(new UTranslate(pos, h)));
+	}
+
+	private double getOutPosition(double pos2) {
+		if (isThereRightArrow()) {
+			return pos2 + 18;
+		}
+		return pos2 + 8;
+	}
+
+	private boolean isThereRightArrow() {
+		for (GanttConstraint constraint : constraints) {
+			if (constraint.isThereRightArrow(getTask())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 //		final UFont font = UFont.serif(11);
@@ -145,7 +170,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private Opale getOpaleNote() {
 		final Style style = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		FontConfiguration fc = new FontConfiguration(style, skinParam, null, FontParam.NOTE);
+		FontConfiguration fc = new FontConfiguration(skinParam, style);
 
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)

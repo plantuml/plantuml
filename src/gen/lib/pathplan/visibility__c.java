@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pathplan;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class visibility__c {
@@ -63,6 +66,8 @@ public class visibility__c {
 
 //3 bsczl8sh39sr9x8mdrdw934gc
 // static array2 allocArray(int V, int extra) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="allocArray", key="bsczl8sh39sr9x8mdrdw934gc", definition="static array2 allocArray(int V, int extra)")
 public static Object allocArray(Object... arg) {
 UNSUPPORTED("2ep0t1ji7dax5248t02u6t7r6"); // static array2 allocArray(int V, int extra)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -88,6 +93,8 @@ throw new UnsupportedOperationException();
 
 //3 dlr6qgzk1zg621iotphi6ibd8
 // COORD area2(Ppoint_t a, Ppoint_t b, Ppoint_t c) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="area2", key="dlr6qgzk1zg621iotphi6ibd8", definition="COORD area2(Ppoint_t a, Ppoint_t b, Ppoint_t c)")
 public static Object area2(Object... arg) {
 UNSUPPORTED("955niwvmnzworzojvwdpapmof"); // COORD area2(Ppoint_t a, Ppoint_t b, Ppoint_t c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -102,6 +109,8 @@ throw new UnsupportedOperationException();
 
 //3 vt0jebecnhaqax0chaict0yw
 // int wind(Ppoint_t a, Ppoint_t b, Ppoint_t c) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="wind", key="vt0jebecnhaqax0chaict0yw", definition="int wind(Ppoint_t a, Ppoint_t b, Ppoint_t c)")
 public static Object wind(Object... arg) {
 UNSUPPORTED("7zwv4pv8g3dirkozmn0fe34z8"); // int wind(Ppoint_t a, Ppoint_t b, Ppoint_t c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -119,6 +128,8 @@ throw new UnsupportedOperationException();
 
 //3 3zfwfpss5ea581xa4wtms7rxv
 // int inBetween(Ppoint_t a, Ppoint_t b, Ppoint_t c) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="inBetween", key="3zfwfpss5ea581xa4wtms7rxv", definition="int inBetween(Ppoint_t a, Ppoint_t b, Ppoint_t c)")
 public static Object inBetween(Object... arg) {
 UNSUPPORTED("dnvtojgefs45udqxtt80ifsxm"); // int inBetween(Ppoint_t a, Ppoint_t b, Ppoint_t c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -138,6 +149,8 @@ throw new UnsupportedOperationException();
 
 //3 79f7jjxrrdgo9l858v24xof7v
 // int intersect(Ppoint_t a, Ppoint_t b, Ppoint_t c, Ppoint_t d) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="intersect", key="79f7jjxrrdgo9l858v24xof7v", definition="int intersect(Ppoint_t a, Ppoint_t b, Ppoint_t c, Ppoint_t d)")
 public static Object intersect(Object... arg) {
 UNSUPPORTED("roqgz6tihjg6s1lbmr0j6phx"); // int intersect(Ppoint_t a, Ppoint_t b, Ppoint_t c, Ppoint_t d)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -169,6 +182,8 @@ throw new UnsupportedOperationException();
 
 //3 897fne6m7yp6g1skatrohstqd
 // static int in_cone(Ppoint_t a0, Ppoint_t a1, Ppoint_t a2, Ppoint_t b) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="in_cone", key="897fne6m7yp6g1skatrohstqd", definition="static int in_cone(Ppoint_t a0, Ppoint_t a1, Ppoint_t a2, Ppoint_t b)")
 public static Object in_cone(Object... arg) {
 UNSUPPORTED("6k9z11o3eut4ihkvof27ionw4"); // static int in_cone(Ppoint_t a0, Ppoint_t a1, Ppoint_t a2, Ppoint_t b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -188,6 +203,8 @@ throw new UnsupportedOperationException();
 
 //3 bo8ti3cpgvbanj1uzsm9c1bhe
 // COORD dist2(Ppoint_t a, Ppoint_t b) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="dist2", key="bo8ti3cpgvbanj1uzsm9c1bhe", definition="COORD dist2(Ppoint_t a, Ppoint_t b)")
 public static Object dist2(Object... arg) {
 UNSUPPORTED("blrxs1tia575ecxgyj1t3xyzr"); // COORD dist2(Ppoint_t a, Ppoint_t b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -204,6 +221,8 @@ throw new UnsupportedOperationException();
 
 //3 e6i8sjhx5klba13ifnde18uay
 // static COORD dist(Ppoint_t a, Ppoint_t b) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="dist", key="e6i8sjhx5klba13ifnde18uay", definition="static COORD dist(Ppoint_t a, Ppoint_t b)")
 public static Object dist(Object... arg) {
 UNSUPPORTED("f3414cvfyz69wnzb7u82byqr6"); // static COORD dist(Ppoint_t a, Ppoint_t b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -218,6 +237,8 @@ throw new UnsupportedOperationException();
 
 //3 bbuqqywhkghz3a4pmrzvnwat3
 // static int inCone(int i, int j, Ppoint_t pts[], int nextPt[], int prevPt[]) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="inCone", key="bbuqqywhkghz3a4pmrzvnwat3", definition="static int inCone(int i, int j, Ppoint_t pts[], int nextPt[], int prevPt[])")
 public static Object inCone(Object... arg) {
 UNSUPPORTED("2m7xwhnvt83bmhre90ibjzp22"); // static int inCone(int i, int j, Ppoint_t pts[], int nextPt[], int prevPt[])
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -232,6 +253,8 @@ throw new UnsupportedOperationException();
 
 //3 9k5g381ss7ta6nb7v37y3oo4x
 // static int clear(Ppoint_t pti, Ppoint_t ptj, 		 int start, int end, 		 int V, Ppoint_t pts[], int nextPt[], int prevPt[]) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="clear", key="9k5g381ss7ta6nb7v37y3oo4x", definition="static int clear(Ppoint_t pti, Ppoint_t ptj, 		 int start, int end, 		 int V, Ppoint_t pts[], int nextPt[], int prevPt[])")
 public static Object clear(Object... arg) {
 UNSUPPORTED("68m9293lem1wya8xmo8rg6biv"); // static int clear(Ppoint_t pti, Ppoint_t ptj,
 UNSUPPORTED("8lrao52hd6uwbjl78v0f7a7ec"); // 		 int start, int end,
@@ -257,6 +280,8 @@ throw new UnsupportedOperationException();
 
 //3 a5f84g6uyajcrmmt06a61ulyi
 // static void compVis(vconfig_t * conf, int start) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="compVis", key="a5f84g6uyajcrmmt06a61ulyi", definition="static void compVis(vconfig_t * conf, int start)")
 public static Object compVis(Object... arg) {
 UNSUPPORTED("izn0i9pb2n1dmy8hrpd016j1"); // static void compVis(vconfig_t * conf, int start)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -302,6 +327,8 @@ throw new UnsupportedOperationException();
 
 //3 afx2tbncgy8wtrk8wrpvt8c7v
 // void visibility(vconfig_t * conf) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="visibility", key="afx2tbncgy8wtrk8wrpvt8c7v", definition="void visibility(vconfig_t * conf)")
 public static Object visibility(Object... arg) {
 UNSUPPORTED("25e0cmz7nmahqmmpcvbvi3kbv"); // void visibility(vconfig_t * conf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -317,6 +344,8 @@ throw new UnsupportedOperationException();
 
 //3 f53btxccmpw07qdajkgza16dq
 // static int polyhit(vconfig_t * conf, Ppoint_t p) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="polyhit", key="f53btxccmpw07qdajkgza16dq", definition="static int polyhit(vconfig_t * conf, Ppoint_t p)")
 public static Object polyhit(Object... arg) {
 UNSUPPORTED("3jhqkjkjkqnmtf4w0yu1vcgkm"); // static int polyhit(vconfig_t * conf, Ppoint_t p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -339,6 +368,8 @@ throw new UnsupportedOperationException();
 
 //3 2yvo05bz8qq8rrhli2rlonyix
 // COORD *ptVis(vconfig_t * conf, int pp, Ppoint_t p) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="", key="2yvo05bz8qq8rrhli2rlonyix", definition="COORD *ptVis(vconfig_t * conf, int pp, Ppoint_t p)")
 public static Object ptVis(Object... arg) {
 UNSUPPORTED("d58fb5rw4i15qcu5i6zi8562u"); // COORD *ptVis(vconfig_t * conf, int pp, Ppoint_t p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -396,6 +427,8 @@ throw new UnsupportedOperationException();
 
 //3 euo3asq18kkzr6xpldh1whj5j
 // int directVis(Ppoint_t p, int pp, Ppoint_t q, int qp, vconfig_t * conf) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/visibility.c", name="directVis", key="euo3asq18kkzr6xpldh1whj5j", definition="int directVis(Ppoint_t p, int pp, Ppoint_t q, int qp, vconfig_t * conf)")
 public static Object directVis(Object... arg) {
 UNSUPPORTED("6vkegkahwe6v9zxmpo9y849de"); // int directVis(Ppoint_t p, int pp, Ppoint_t q, int qp, vconfig_t * conf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

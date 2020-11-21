@@ -42,7 +42,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
-import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -78,18 +77,6 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		}
 	}
 
-	public static Rainbow getInColor(Branch branch, Rainbow arrowColor) {
-		if (branch.isEmpty()) {
-			return branch.getFtile().getOutLinkRendering().getRainbow(arrowColor);
-		}
-		final LinkRendering linkIn = branch.getFtile().getInLinkRendering();
-		final Rainbow color = linkIn == null ? arrowColor : linkIn.getRainbow();
-		if (color.size() == 0) {
-			return arrowColor;
-		}
-		return color;
-	}
-
 	class ConnectionHorizontalThenVertical extends AbstractConnection implements ConnectionTranslatable {
 
 		private final Rainbow color;
@@ -97,9 +84,8 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		public ConnectionHorizontalThenVertical(Ftile tile, Branch branch) {
 			super(diamond1, tile);
-			color = getInColor(branch, arrowColor);
+			color = branch.getInColor(arrowColor);
 			if (color.size() == 0) {
-				getInColor(branch, arrowColor);
 				throw new IllegalArgumentException();
 			}
 			usingArrow = branch.isEmpty() ? null : Arrows.asToDown();
@@ -167,8 +153,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				ug.draw(small);
 				p1 = small.getLast();
 			}
-			final Snake snake = Snake.create(color, usingArrow)
-					.withMerge(MergeStrategy.LIMITED);
+			final Snake snake = Snake.create(color, usingArrow).withMerge(MergeStrategy.LIMITED);
 			snake.addPoint(p1);
 			snake.addPoint(p2.getX(), p1.getY());
 			snake.addPoint(p2);
@@ -257,16 +242,14 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (originalDirection == newDirection) {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Diamond.diamondHalfSize;
 				final Point2D mp2bc = new Point2D.Double(mp2b.getX() + delta, mp2b.getY());
-				final Snake snake = Snake.create(myArrowColor)
-						.withMerge(MergeStrategy.LIMITED);
+				final Snake snake = Snake.create(myArrowColor).withMerge(MergeStrategy.LIMITED);
 				final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 				snake.addPoint(mp1a);
 				snake.addPoint(mp1a.getX(), middle);
 				snake.addPoint(mp2bc.getX(), middle);
 				snake.addPoint(mp2bc);
 				ug.draw(snake);
-				final Snake small = Snake.create(myArrowColor, arrow)
-						.withMerge(MergeStrategy.LIMITED);
+				final Snake small = Snake.create(myArrowColor, arrow).withMerge(MergeStrategy.LIMITED);
 				small.addPoint(mp2bc);
 				small.addPoint(mp2bc.getX(), mp2b.getY());
 				small.addPoint(mp2b);
@@ -275,14 +258,12 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Diamond.diamondHalfSize;
 				final Point2D mp2bb = new Point2D.Double(mp2b.getX() + delta,
 						mp2b.getY() - 1.5 * Diamond.diamondHalfSize);
-				final Snake snake = Snake.create(myArrowColor)
-						.withMerge(MergeStrategy.LIMITED);
+				final Snake snake = Snake.create(myArrowColor).withMerge(MergeStrategy.LIMITED);
 				snake.addPoint(mp1a);
 				snake.addPoint(mp1a.getX(), mp2bb.getY());
 				snake.addPoint(mp2bb);
 				ug.draw(snake);
-				final Snake small = Snake.create(myArrowColor, arrow)
-						.withMerge(MergeStrategy.LIMITED);
+				final Snake small = Snake.create(myArrowColor, arrow).withMerge(MergeStrategy.LIMITED);
 				small.addPoint(mp2bb);
 				small.addPoint(mp2bb.getX(), mp2b.getY());
 				small.addPoint(mp2b);
@@ -489,16 +470,12 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		final boolean hasPointOut2 = tile2.calculateDimension(stringBounder).hasPointOut();
 		if (conditionEndStyle == ConditionEndStyle.DIAMOND) {
 			if (hasPointOut1 && hasPointOut2) {
-				conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getInlinkRenderingColorAndStyle(),
-						branch1.isEmpty()));
-				conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColorAndStyle(),
-						branch2.isEmpty()));
+				conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getOut(), branch1.isEmpty()));
+				conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getOut(), branch2.isEmpty()));
 			} else if (hasPointOut1 && hasPointOut2 == false) {
-				conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
-						branch1.isEmpty()));
+				conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getOut(), branch1.isEmpty()));
 			} else if (hasPointOut1 == false && hasPointOut2) {
-				conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
-						branch2.isEmpty()));
+				conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getOut(), branch2.isEmpty()));
 			}
 		} else if (conditionEndStyle == ConditionEndStyle.HLINE) {
 			if (hasPointOut1 && hasPointOut2) {
@@ -507,12 +484,10 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				conns.add(new ConnectionHline(arrowColor));
 			} else if (hasPointOut1 && hasPointOut2 == false) {
 				// this is called when the "else" has a break statement
-				conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
-						branch1.isEmpty()));
+				conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getOut(), branch1.isEmpty()));
 			} else if (hasPointOut1 == false && hasPointOut2) {
 				// this is called when the "if" has a break statement
-				conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
-						branch2.isEmpty()));
+				conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getOut(), branch2.isEmpty()));
 			}
 		}
 		return FtileUtils.addConnection(this, conns);

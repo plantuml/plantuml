@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,16 +45,8 @@
  */
 package h;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import smetana.core.UnsupportedArrayOfPtr;
-import smetana.core.UnsupportedArrayOfStruct2;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.size_t;
 import smetana.core.amiga.StarStruct;
 
 public class ST_Agnode_s extends UnsupportedStructAndPtr {
@@ -64,158 +56,13 @@ public class ST_Agnode_s extends UnsupportedStructAndPtr {
 	public final ST_Agsubnode_s mainsub = new ST_Agsubnode_s(this);
 
 	private final StarStruct parent;
-
-	public static class ArrayOfStar extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
-
-		private final List<ST_Agnode_s> data;
-		private final int pos;
-
-		public ArrayOfStar(int size) {
-			this.data = new ArrayList<ST_Agnode_s>();
-			this.pos = 0;
-			for (int i = 0; i < size; i++) {
-				data.add(null);
-			}
-		}
-
-		public void swap(int i, int j) {
-			ST_Agnode_s e1 = data.get(i);
-			ST_Agnode_s e2 = data.get(j);
-			data.set(i, e2);
-			data.set(j, e1);
-		}
-
-		public ArrayOfStar(List<ST_Agnode_s> data, int pos) {
-			this.data = data;
-			this.pos = pos;
-		}
-
-		public ArrayOfStar reallocJ(int newsize) {
-			while (data.size() < newsize) {
-				data.add(null);
-			}
-			return this;
-		}
-
-		@Override
-		public ArrayOfStar plus(int delta) {
-			return new ArrayOfStar(data, pos + delta);
-		}
-
-		@Override
-		public ArrayOfStar asPtr() {
-			return this;
-		}
-
-		@Override
-		public void setPtr(__ptr__ value) {
-			this.data.set(pos, (ST_Agnode_s) value);
-		}
-		
-		public ST_Agnode_s get(int i) {
-			return plus(i).getPtr();
-		}
-
-		@Override
-		public ST_Agnode_s getPtr() {
-			return this.data.get(pos);
-		}
-
-		@Override
-		public int comparePointer(__ptr__ other) {
-			final ArrayOfStar this2 = (ArrayOfStar) other;
-			if (this.data != this2.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos - this2.pos;
-		}
-
-		public boolean isSameThan2(ArrayOfStar other) {
-			if (this.data != other.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos == other.pos;
-		}
+	public String NAME;
+	
+	@Override
+	public String toString() {
+		return super.toString()+" "+NAME;
 	}
 
-	public static class Array extends UnsupportedArrayOfStruct2 implements __ptr__, __array_of_ptr__ {
-
-		private final List<ST_Agnode_s> data;
-		private final int pos;
-
-		@Override
-		public void setStruct(__struct__ value) {
-			get(0).___(value);
-		}
-
-		@Override
-		public Array asPtr() {
-			return this;
-		}
-
-		public Array(int size) {
-			this.data = new ArrayList<ST_Agnode_s>();
-			this.pos = 0;
-			for (int i = 0; i < size; i++) {
-				data.add(new ST_Agnode_s());
-			}
-		}
-
-		public Array reallocJ(int newsize) {
-			while (data.size() < newsize) {
-				data.add(new ST_Agnode_s());
-			}
-			return this;
-		}
-
-		public Array plus(int delta) {
-			return plusJ(delta);
-		}
-
-		@Override
-		public void setPtr(__ptr__ value) {
-			this.data.set(pos, (ST_Agnode_s) value);
-		}
-
-		@Override
-		public ST_Agnode_s getPtr() {
-			return this.data.get(pos);
-		}
-
-		private Array(List<ST_Agnode_s> data, int pos) {
-			this.data = data;
-			this.pos = pos;
-		}
-
-		public ST_Agnode_s get(int i) {
-			return this.data.get(pos + i);
-		}
-
-		public Array plusJ(int i) {
-			return new Array(data, pos + i);
-		}
-
-		public int minus(Array other) {
-			if (this.data != other.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos - other.pos;
-		}
-
-		public Array move(int delta) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public void realloc(size_t nb) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-		public int comparePointerInternal(__array_of_ptr__ other) {
-			throw new UnsupportedOperationException(getClass().toString());
-		}
-
-
-	}
 
 	public ST_Agnode_s() {
 		this(null);

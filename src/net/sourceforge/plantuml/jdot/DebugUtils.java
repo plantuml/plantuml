@@ -57,7 +57,7 @@ public class DebugUtils {
 		System.err.println("splines.size=" + splines.size);
 		//System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.LL));
 		//System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.UR));
-		printDebugBezier(splines.list.getPtr());
+		printDebugBezier(splines.list.get__(0));
 
 		ST_textlabel_t label = data.label;
 		if (label != null) {
@@ -80,7 +80,7 @@ public class DebugUtils {
 		System.err.println("bezier.ep=" + pointftoString((ST_pointf) bezier.ep));
 		System.err.println("bezier.list=" + getUID(bezier.list.getPtr()));
 		for (int i = 0; i < bezier.size; i++) {
-			final ST_pointf pt = bezier.list.get(i);
+			final ST_pointf pt = bezier.list.get__(i);
 			System.err.println("pt=" + pointftoString(pt));
 		}
 

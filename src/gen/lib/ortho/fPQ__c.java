@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.ortho;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class fPQ__c {
@@ -167,6 +170,8 @@ public class fPQ__c {
 
 //3 6d62kgw3p14u24ayu546j4r82
 // void PQgen(int sz) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQgen", key="6d62kgw3p14u24ayu546j4r82", definition="void PQgen(int sz)")
 public static Object PQgen(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("mv0qxfr5hxyhgu3l3m6o47cy"); // PQgen(int sz)
@@ -187,6 +192,8 @@ throw new UnsupportedOperationException();
 
 //3 af70676bgfacdrx355e3fm16w
 // void PQfree(void) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQfree", key="af70676bgfacdrx355e3fm16w", definition="void PQfree(void)")
 public static Object PQfree(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("a722afmxpzwjdmlojj7lqbxaj"); // PQfree(void)
@@ -204,6 +211,8 @@ throw new UnsupportedOperationException();
 
 //3 9gva9zqwj67hmfsbnnvelzt5i
 // void PQinit(void) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQinit", key="9gva9zqwj67hmfsbnnvelzt5i", definition="void PQinit(void)")
 public static Object PQinit(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("3p0cdanvp4f13d8omi42lvjl1"); // PQinit(void)
@@ -219,6 +228,8 @@ throw new UnsupportedOperationException();
 
 //3 52wib9gann39qwvmctcw6wxdi
 // void PQcheck (void) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQcheck", key="52wib9gann39qwvmctcw6wxdi", definition="void PQcheck (void)")
 public static Object PQcheck(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("ais4fu8ea90z9l9gc75rtolae"); // PQcheck (void)
@@ -239,6 +250,8 @@ throw new UnsupportedOperationException();
 
 //3 2lbfs6ynzlunyatr57r41uvz7
 // void PQupheap(int k) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQupheap", key="2lbfs6ynzlunyatr57r41uvz7", definition="void PQupheap(int k)")
 public static Object PQupheap(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("5hhoge8azwixhuw1r6f1ae6d"); // PQupheap(int k)
@@ -265,6 +278,8 @@ throw new UnsupportedOperationException();
 
 //3 dpsy3q4qmuyf70antkm0irwus
 // int PQ_insert(snode* np) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQ_insert", key="dpsy3q4qmuyf70antkm0irwus", definition="int PQ_insert(snode* np)")
 public static Object PQ_insert(Object... arg) {
 UNSUPPORTED("etrjsq5w49uo9jq5pzifohkqw"); // int
 UNSUPPORTED("5eeaexrm7pigm7t9d73aqaaht"); // PQ_insert(snode* np)
@@ -288,6 +303,8 @@ throw new UnsupportedOperationException();
 
 //3 ah2uksf5mfgu7r25rg6poansh
 // void PQdownheap (int k) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQdownheap", key="ah2uksf5mfgu7r25rg6poansh", definition="void PQdownheap (int k)")
 public static Object PQdownheap(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("5jo6sukhc9upf5qv4eukh8kop"); // PQdownheap (int k)
@@ -323,6 +340,8 @@ throw new UnsupportedOperationException();
 
 //3 asdsi15xhxgfyxlqv3bbx7vzv
 // snode* PQremove (void) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQremove", key="asdsi15xhxgfyxlqv3bbx7vzv", definition="snode* PQremove (void)")
 public static Object PQremove(Object... arg) {
 UNSUPPORTED("7qyamsdkopruu23xaccl0bcd2"); // snode*
 UNSUPPORTED("7j2q3l5jxp3w7ags9kr29frzn"); // PQremove (void)
@@ -347,6 +366,8 @@ throw new UnsupportedOperationException();
 
 //3 6dvks137inq1ybpgc3p9il60e
 // void PQupdate (snode* n, int d) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQupdate", key="6dvks137inq1ybpgc3p9il60e", definition="void PQupdate (snode* n, int d)")
 public static Object PQupdate(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("b1fi3xtkc0mzuq3pimbrumdj3"); // PQupdate (snode* n, int d)
@@ -364,6 +385,8 @@ throw new UnsupportedOperationException();
 
 //3 9u2i85oe7eva5iz0ousp6k9ze
 // void PQprint (void) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/fPQ.c", name="PQprint", key="9u2i85oe7eva5iz0ousp6k9ze", definition="void PQprint (void)")
 public static Object PQprint(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("837kozmovwrdb83nqf648v9hy"); // PQprint (void)

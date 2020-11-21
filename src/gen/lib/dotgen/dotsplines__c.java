@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -66,17 +66,18 @@ import static gen.lib.common.splines__c.getsplinepoints;
 import static gen.lib.common.splines__c.makeSelfEdge;
 import static gen.lib.common.utils__c.updateBB;
 import static gen.lib.dotgen.cluster__c.mark_lowclusters;
+import static h.ST_pointf.add_pointf;
+import static h.ST_pointf.pointfof;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.function;
-import static smetana.core.JUtils.qsort;
+import static smetana.core.JUtils.qsort1;
 import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ABS;
 import static smetana.core.Macro.AGSEQ;
-import static smetana.core.Macro.ALLOC_allocated_ST_Agedge_s;
 import static smetana.core.Macro.BETWEEN;
 import static smetana.core.Macro.ED_adjacent;
 import static smetana.core.Macro.ED_edge_type;
@@ -87,6 +88,8 @@ import static smetana.core.Macro.ED_tail_port;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.ED_to_virt;
 import static smetana.core.Macro.ED_tree_index;
+import static smetana.core.Macro.ET_LINE;
+import static smetana.core.Macro.ET_SPLINE;
 import static smetana.core.Macro.GD_bb;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
@@ -118,10 +121,14 @@ import static smetana.core.Macro.ND_other;
 import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_rw;
-import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.NOTI;
 import static smetana.core.Macro.ROUND;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_Agedgepair_s;
@@ -137,252 +144,19 @@ import h.ST_port;
 import h.ST_rank_t;
 import h.ST_spline_info_t;
 import h.ST_splines;
-import h.attr_state_t;
+import smetana.core.CStar;
+import smetana.core.CStarStar;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
 
 public class dotsplines__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
-
-
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
-
-
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
-
-
 
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -398,29 +172,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
 
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -438,6 +196,8 @@ throw new UnsupportedOperationException();
 
 //3 1vvsta5i8of59frav6uymguav
 // static inline boxf boxfof(double llx, double lly, double urx, double ury) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="boxfof", key="1vvsta5i8of59frav6uymguav", definition="static inline boxf boxfof(double llx, double lly, double urx, double ury)")
 public static ST_boxf boxfof(double llx, double lly, double urx, double ury) {
 // WARNING!! STRUCT
 return boxfof_w_(llx, lly, urx, ury).copy();
@@ -461,6 +221,8 @@ LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -476,29 +238,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
 
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -516,6 +261,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -533,6 +280,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -550,6 +299,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -567,6 +318,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -584,6 +337,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -601,6 +356,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -618,6 +375,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -637,6 +396,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -656,6 +417,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -675,6 +438,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -694,6 +459,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -708,6 +475,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -722,6 +491,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -736,6 +507,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -750,6 +523,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -767,6 +542,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -788,6 +565,8 @@ throw new UnsupportedOperationException();
 
 //3 dobhmc46zwtvv8rg3ywntl91j
 // static edge_t* getmainedge(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="getmainedge", key="dobhmc46zwtvv8rg3ywntl91j", definition="static edge_t* getmainedge(edge_t * e)")
 public static ST_Agedge_s getmainedge(ST_Agedge_s e) {
 ENTERING("dobhmc46zwtvv8rg3ywntl91j","getmainedge");
 try {
@@ -807,6 +586,8 @@ LEAVING("dobhmc46zwtvv8rg3ywntl91j","getmainedge");
 
 //3 ddeny5ht7w8b16ztj5zt840ld
 // static boolean spline_merge(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="spline_merge", key="ddeny5ht7w8b16ztj5zt840ld", definition="static boolean spline_merge(node_t * n)")
 public static boolean spline_merge(ST_Agnode_s n) {
 ENTERING("ddeny5ht7w8b16ztj5zt840ld","spline_merge");
 try {
@@ -822,6 +603,8 @@ LEAVING("ddeny5ht7w8b16ztj5zt840ld","spline_merge");
 
 //3 36ofw2qfqlh5ci8gc8cfkqgg3
 // static boolean swap_ends_p(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="swap_ends_p", key="36ofw2qfqlh5ci8gc8cfkqgg3", definition="static boolean swap_ends_p(edge_t * e)")
 public static boolean swap_ends_p(ST_Agedge_s e) {
 ENTERING("36ofw2qfqlh5ci8gc8cfkqgg3","swap_ends_p");
 try {
@@ -830,10 +613,10 @@ try {
     if (ND_rank(aghead(e)) > ND_rank(agtail(e)))
 	return false;
     if (ND_rank(aghead(e)) < ND_rank(agtail(e)))
-	return NOT(false);
+	return true;
     if (ND_order(aghead(e)) >= ND_order(agtail(e)))
 	return false;
-    return NOT(false);
+    return true;
 } finally {
 LEAVING("36ofw2qfqlh5ci8gc8cfkqgg3","swap_ends_p");
 }
@@ -853,6 +636,8 @@ static {
 
 //3 3krohso3quojiv4fveh1en7o6
 // int portcmp(port p0, port p1) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="portcmp", key="3krohso3quojiv4fveh1en7o6", definition="int portcmp(port p0, port p1)")
 public static int portcmp(final ST_port p0, final ST_port p1) {
 // WARNING!! STRUCT
 return portcmp_w_(p0.copy(), p1.copy());
@@ -861,9 +646,9 @@ private static int portcmp_w_(final ST_port p0, final ST_port p1) {
 ENTERING("3krohso3quojiv4fveh1en7o6","portcmp");
 try {
     int rv;
-    if (p1.defined == 0)
-	return (p0.defined!=0 ? 1 : 0);
-    if (p0.defined == 0)
+    if (p1.defined == false)
+	return (p0.defined ? 1 : 0);
+    if (p0.defined == false)
 	return -1;
     rv = (int) (p0.p.x - p1.p.x);
     if (rv == 0)
@@ -879,28 +664,34 @@ LEAVING("3krohso3quojiv4fveh1en7o6","portcmp");
 
 //3 10wbtt4gwnxgqutinpj4ymjpk
 // static void swap_bezier(bezier * old, bezier * new) 
-public static void swap_bezier(ST_bezier.Array2 old, ST_bezier.Array2 new_) {
+@Unused
+@Difficult
+@Reviewed(when = "16/11/2020")
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="swap_bezier", key="10wbtt4gwnxgqutinpj4ymjpk", definition="static void swap_bezier(bezier * old, bezier * new)")
+public static void swap_bezier(CStar<ST_bezier> old, CStar<ST_bezier> new_) {
 ENTERING("10wbtt4gwnxgqutinpj4ymjpk","swap_bezier");
 try {
-	ST_pointf.Array list;
-	ST_pointf.Array lp;
-    ST_pointf.Array olp;
+	CStar<ST_pointf> list;
+	CStar<ST_pointf> lp;
+	CStar<ST_pointf> olp;
     int i, sz;
-    sz = old.getStruct().size;
-	list = new ST_pointf.Array(sz);
+    
+    sz = old.get__(0).size;
+	list = CStar.<ST_pointf>ALLOC__(sz, ST_pointf.class);
     lp = list;
-    olp = old.getStruct().list.plus(sz - 1);
+    olp = old.get__(0).list.plus_(sz - 1);
     for (i = 0; i < sz; i++) {	/* reverse list of points */
-	lp.getStruct().___(olp.getStruct());
-	lp=lp.plus(1);
-	olp=olp.plus(-1);
+	lp.get__(0).___(olp.get__(0));
+	lp=lp.plus_(1);
+	olp=olp.plus_(-1);
     }
-    new_.setPtr("list", list);
-    new_.setInt("size", sz);
-    new_.setInt("sflag", old.getStruct().eflag);
-    new_.setInt("eflag", old.getStruct().sflag);
-    new_.setStruct("sp", old.getStruct().ep);
-    new_.setStruct("ep", old.getStruct().sp);
+    
+    new_.get__(0).list = list;
+    new_.get__(0).size = sz;
+    new_.get__(0).sflag = old.get__(0).eflag;
+    new_.get__(0).eflag = old.get__(0).sflag;
+    new_.get__(0).sp.___(old.get__(0).ep);
+    new_.get__(0).ep.___(old.get__(0).sp);
 } finally {
 LEAVING("10wbtt4gwnxgqutinpj4ymjpk","swap_bezier");
 }
@@ -911,27 +702,30 @@ LEAVING("10wbtt4gwnxgqutinpj4ymjpk","swap_bezier");
 
 //3 3256l3e2huarsy29dd97vqj85
 // static void swap_spline(splines * s) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="swap_spline", key="3256l3e2huarsy29dd97vqj85", definition="static void swap_spline(splines * s)")
 public static void swap_spline(ST_splines s) {
 ENTERING("3256l3e2huarsy29dd97vqj85","swap_spline");
 try {
-	ST_bezier.Array2 list;
-	ST_bezier.Array2 lp;
-	ST_bezier.Array2 olp;
+	CStar<ST_bezier> list;
+	CStar<ST_bezier> lp;
+	CStar<ST_bezier> olp;
     int i, sz;
     sz = s.size;
-	list = new ST_bezier.Array2(sz);
+    list = CStar.<ST_bezier>ALLOC__(sz, ST_bezier.class);
+	//list = new CStar<ST_bezier>(sz, ST_bezier.class);
     lp = list;
-    olp = s.list.plus(sz - 1);
+    olp = s.list.plus_(sz - 1);
     for (i = 0; i < sz; i++) {	/* reverse and swap list of beziers */
 	swap_bezier(olp, lp);
-	olp = olp.plus(-1);
-	lp = lp.plus(1);
+	olp = olp.plus_(-1);
+	lp = lp.plus_(1);
     }
     /* free old structures */
     for (i = 0; i < sz; i++)
-	Memory.free(((ST_bezier)s.list.get(i)).getPtr().list);
+	Memory.free(s.list.get__(i).list);
     Memory.free(s.list);
-    s.list = (ST_bezier.Array2) list;
+    s.list = list;
 } finally {
 LEAVING("3256l3e2huarsy29dd97vqj85","swap_spline");
 }
@@ -942,6 +736,8 @@ LEAVING("3256l3e2huarsy29dd97vqj85","swap_spline");
 
 //3 dgkssqjj566ifra0xy7m46qsb
 // static void edge_normalize(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="edge_normalize", key="dgkssqjj566ifra0xy7m46qsb", definition="static void edge_normalize(graph_t * g)")
 public static void edge_normalize(ST_Agraph_s g) {
 ENTERING("dgkssqjj566ifra0xy7m46qsb","edge_normalize");
 try {
@@ -963,6 +759,8 @@ LEAVING("dgkssqjj566ifra0xy7m46qsb","edge_normalize");
 
 //3 bwzdgdea9suuagzueyw8ztx42
 // static void resetRW (graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="resetRW", key="bwzdgdea9suuagzueyw8ztx42", definition="static void resetRW (graph_t * g)")
 public static Object resetRW(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("c4vqsmfolc1meewxoebfkyppx"); // resetRW (graph_t * g)
@@ -985,6 +783,8 @@ throw new UnsupportedOperationException();
 
 //3 9co1bgu5603fx30juwb01faf
 // static void setEdgeLabelPos (graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="setEdgeLabelPos", key="9co1bgu5603fx30juwb01faf", definition="static void setEdgeLabelPos (graph_t * g)")
 public static Object setEdgeLabelPos(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("7y94r9t4hf6d0ltbie4f323al"); // setEdgeLabelPos (graph_t * g)
@@ -1014,6 +814,13 @@ throw new UnsupportedOperationException();
 
 
 
+/* _dot_splines:
+ * Main spline routing code.
+ * The normalize parameter allows this function to be called by the
+ * recursive call in make_flat_edge without normalization occurring,
+ * so that the edge will only be normalized once in the top level call
+ * of dot_splines.
+ */
 //3 6agx6m2qof9lg57co232lwakj
 // static void _dot_splines(graph_t * g, int normalize) 
 static void _dot_splines(ST_Agraph_s g, int normalize)
@@ -1025,7 +832,7 @@ try {
     final ST_Agedgeinfo_t fwdedgeai = new ST_Agedgeinfo_t(), fwdedgebi = new ST_Agedgeinfo_t();
     final ST_Agedgepair_s fwdedgea = new ST_Agedgepair_s(), fwdedgeb = new ST_Agedgepair_s();
     ST_Agedge_s e, e0, e1, ea, eb, le0, le1;
-    ST_Agedge_s.ArrayOfStar edges;
+    CStarStar<ST_Agedge_s> edges;
     ST_path P;
     final ST_spline_info_t sd = new ST_spline_info_t();
     int et = (GD_flags(g) & (7 << 1));
@@ -1050,21 +857,23 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
     /* FlatHeight = 2 * GD_nodesep(g); */
     sd.setInt("Splinesep", GD_nodesep(g) / 4);
     sd.setInt("Multisep", GD_nodesep(g));
-    edges = new ST_Agedge_s.ArrayOfStar(128);
+    edges = CStarStar.<ST_Agedge_s>ALLOC(128, ST_Agedge_s.class);
+    
     /* compute boundaries and list of splines */
     sd.setInt("RightBound", 0);
     sd.setInt("LeftBound", 0);
     n_edges = n_nodes = 0;
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
-	n_nodes += GD_rank(g).get(i).n;
-	if ((n = (ST_Agnode_s) GD_rank(g).get(i).v.get(0))!=null)
+	n_nodes += GD_rank(g).get__(i).n;
+	if ((n = GD_rank(g).get__(i).v.get_(0))!=null)
 	    sd.setInt("LeftBound", (int)MIN(sd.LeftBound, (ND_coord(n).x - ND_lw(n))));
-	if (GD_rank(g).get(i).n!=0 && (n = (ST_Agnode_s) GD_rank(g).get(i).v.plus(GD_rank(g).get(i).n - 1).getPtr())!=null)
+	if (GD_rank(g).get__(i).n!=0 && (n = GD_rank(g).get__(i).v.get_(GD_rank(g).get__(i).n - 1))!=null)
 	    sd.setInt("RightBound", (int)MAX(sd.RightBound, (ND_coord(n).x + ND_rw(n))));
 	sd.setInt("LeftBound", sd.LeftBound - 16);
 	sd.setInt("RightBound", sd.RightBound + 16);
-	for (j = 0; j < GD_rank(g).get(i).n; j++) {
-	    n = (ST_Agnode_s) GD_rank(g).get(i).v.get(j);
+	
+	for (j = 0; j < GD_rank(g).get__(i).n; j++) {
+	    n = (ST_Agnode_s) GD_rank(g).get__(i).v.get_(j);
 		/* if n is the label of a flat edge, copy its position to
 		 * the label.
 		 */
@@ -1077,23 +886,23 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if ((ND_node_type(n) != 0) &&
 		((Boolean)Z.z().sinfo.splineMerge.exe(n) == false))
 		continue;
-	    for (k = 0; (e = (ST_Agedge_s) ND_out(n).getFromList(k))!=null; k++) {
+	    for (k = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(k))!=null; k++) {
 		if ((ED_edge_type(e) == 4)
 		    || (ED_edge_type(e) == 6))
 		    continue;
 		setflags(e, 1, 16, 64);
-		edges.plus(n_edges++).setPtr(e);
+		edges.set_(n_edges++, e);
 		if (n_edges % 128 == 0)
-		    edges = ALLOC_allocated_ST_Agedge_s (edges, n_edges + 128);
+		    edges = CStarStar.<ST_Agedge_s>REALLOC(n_edges + 128, edges, ST_Agedge_s.class);
 	    }
-	    if (ND_flat_out(n).listNotNull())
-		for (k = 0; (e = (ST_Agedge_s) ND_flat_out(n).getFromList(k))!=null; k++) {
+	    if (ND_flat_out(n).list!=null)
+		for (k = 0; (e = (ST_Agedge_s) ND_flat_out(n).list.get_(k))!=null; k++) {
 		    setflags(e, 2, 0, 128);
-			edges.plus(n_edges++).setPtr(e);
+			edges.set_(n_edges++, e);
 		    if (n_edges % 128 == 0)
-			    edges = ALLOC_allocated_ST_Agedge_s (edges, n_edges + 128);
+			    edges = CStarStar.<ST_Agedge_s>REALLOC(n_edges + 128, edges, ST_Agedge_s.class);
 		}
-	    if (ND_other(n).listNotNull()) {
+	    if (ND_other(n).list!=null) {
 		/* In position, each node has its rw stored in mval and,
                  * if a node is part of a loop, rw may be increased to
                  * reflect the loops and associated labels. We restore
@@ -1104,11 +913,11 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		    ND_rw(n, ND_mval(n));
 		    ND_mval(n, tmp);
 		}
-		for (k = 0; (e = (ST_Agedge_s) ND_other(n).getFromList(k))!=null; k++) {
+		for (k = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(k))!=null; k++) {
 		    setflags(e, 0, 0, 128);
-			edges.plus(n_edges++).setPtr(e);
+			edges.set_(n_edges++, e);
 		    if (n_edges % 128 == 0)
-			    edges = ALLOC_allocated_ST_Agedge_s (edges, n_edges + 128);
+			    edges = CStarStar.<ST_Agedge_s>REALLOC(n_edges + 128, edges, ST_Agedge_s.class);
 		}
 	    }
 	}
@@ -1120,7 +929,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
      * routed separately.
      */
     LOG2("_dot_splines::n_edges="+n_edges);
-    qsort(edges,
+    qsort1(edges,
     n_edges,
     function(dotsplines__c.class, "edgecmp"));
     /* FIXME: just how many boxes can there be? */
@@ -1137,9 +946,9 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
     for (i = 0; i < n_edges;) {
  	boolean havePorts;
 	ind = i;
-	le0 = getmainedge((e0 = (ST_Agedge_s) edges.plus(i++).getPtr()));
-	if (ED_tail_port(e0).defined!=0 || ED_head_port(e0).defined!=0) {
-	    havePorts = NOT(false);
+	le0 = getmainedge((e0 = edges.get_(i++)));
+	if (ED_tail_port(e0).defined || ED_head_port(e0).defined) {
+	    havePorts = true;
 	    ea = e0;
 	} else {
 	    havePorts = false;
@@ -1147,13 +956,13 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	}
 	if ((ED_tree_index(ea) & 32)!=0) {
 	    MAKEFWDEDGE(fwdedgea.out, ea);
-	    ea = (ST_Agedge_s) fwdedgea.out;
+	    ea = fwdedgea.out;
 	}
 	for (cnt = 1; i < n_edges; cnt++, i++) {
-	    if (NEQ(le0, (le1 = getmainedge((e1 = (ST_Agedge_s) edges.get(i))))))
+	    if (NEQ(le0, (le1 = getmainedge((e1 = edges.get_(i))))))
 		break;
 	    if (ED_adjacent(e0)!=0) continue; /* all flat adjacent edges at once */
-	    if (ED_tail_port(e1).defined!=0 || ED_head_port(e1).defined!=0) {
+	    if (ED_tail_port(e1).defined || ED_head_port(e1).defined) {
 		if (N(havePorts)) break;
 		else
 		    eb = e1;
@@ -1173,7 +982,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if ((ED_tree_index(e0) & 15) == 2
 		&& NEQ(ED_label(e0), ED_label(e1)))
 		break;
-	    if ((ED_tree_index(edges.get(i)) & 64)!=0)	/* Aha! -C is on */
+	    if ((ED_tree_index(edges.get_(i)) & 64)!=0)	/* Aha! -C is on */
 		break;
 	}
 	if (EQ(agtail(e0), aghead(e0))) {
@@ -1182,21 +991,21 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    r = ND_rank(n);
 	    if (r == GD_maxrank(g)) {
 		if (r > 0)
-		    sizey = (int) (ND_coord(GD_rank(g).get(r-1).v.get(0)).y - ND_coord(n).y);
+		    sizey = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);
 		else
 		    sizey = (int) ND_ht(n);
 	    }
 	    else if (r == GD_minrank(g)) {
-		sizey = (int)(ND_coord(n).y - ND_coord(GD_rank(g).get(r+1).v.get(0)).y);
+		sizey = (int)(ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);
 	    }
 	    else {
-		int upy = (int) (ND_coord(GD_rank(g).get(r-1).v.get(0)).y - ND_coord(n).y);
-		int dwny = (int) (ND_coord(n).y - ND_coord(GD_rank(g).get(r+1).v.get(0)).y);
+		int upy = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);
+		int dwny = (int) (ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);
 		sizey = MIN(upy, dwny);
 	    }
 	    makeSelfEdge(P, edges, ind, cnt, sd.Multisep, sizey/2, Z.z().sinfo);
 	    for (b = 0; b < cnt; b++) {
-		e = (ST_Agedge_s) edges.plus(ind+b).getPtr();
+		e = edges.get_(ind+b);
 		if (ED_label(e)!=null)
 		    updateBB(g, ED_label(e));
 	    }
@@ -1260,6 +1069,8 @@ LEAVING("6agx6m2qof9lg57co232lwakj","_dot_splines");
 
 //3 5n306wbdfjbfnimdo9lg6jjaa
 // void dot_splines(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="dot_splines", key="5n306wbdfjbfnimdo9lg6jjaa", definition="void dot_splines(graph_t * g)")
 public static void dot_splines(ST_Agraph_s g) {
 ENTERING("5n306wbdfjbfnimdo9lg6jjaa","dot_splines");
 try {
@@ -1274,6 +1085,8 @@ LEAVING("5n306wbdfjbfnimdo9lg6jjaa","dot_splines");
 
 //3 8jja9ukzsq8tlb9yy7uzavg91
 // static void  place_vnlabel(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="place_vnlabel", key="8jja9ukzsq8tlb9yy7uzavg91", definition="static void  place_vnlabel(node_t * n)")
 public static void place_vnlabel(ST_Agnode_s n) {
 ENTERING("8jja9ukzsq8tlb9yy7uzavg91","place_vnlabel");
 try {
@@ -1282,12 +1095,12 @@ try {
     ST_Agedge_s e;
     if (ND_in(n).size == 0)
 	return;			/* skip flat edge labels here */
-    for (e = (ST_Agedge_s) ND_out(n).getFromList(0); ED_edge_type(e) != 0;
+    for (e = (ST_Agedge_s) ND_out(n).list.get_(0); ED_edge_type(e) != 0;
 	 e = ED_to_orig(e));
     dimen.___(ED_label(e).dimen);
-    width = GD_flip(agraphof(n))!=0 ? dimen.y : dimen.x;
-    ED_label(e).pos.setDouble("x", ND_coord(n).x + width / 2.0);
-    ED_label(e).pos.setDouble("y", ND_coord(n).y);
+    width = GD_flip(agraphof(n)) ? dimen.y : dimen.x;
+    ED_label(e).pos.x = ND_coord(n).x + width / 2.0;
+    ED_label(e).pos.y = ND_coord(n).y;
     ED_label(e).set= NOTI(false);
 } finally {
 LEAVING("8jja9ukzsq8tlb9yy7uzavg91","place_vnlabel");
@@ -1299,6 +1112,8 @@ LEAVING("8jja9ukzsq8tlb9yy7uzavg91","place_vnlabel");
 
 //3 598jn37hjkm7j0kcg2nmdvlwq
 // static void  setflags(edge_t *e, int hint1, int hint2, int f3) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="setflags", key="598jn37hjkm7j0kcg2nmdvlwq", definition="static void  setflags(edge_t *e, int hint1, int hint2, int f3)")
 public static void setflags(ST_Agedge_s e, int hint1, int hint2, int f3) {
 ENTERING("598jn37hjkm7j0kcg2nmdvlwq","setflags");
 try {
@@ -1307,7 +1122,7 @@ try {
 	f1 = hint1;
     else {
 	if (EQ(agtail(e), aghead(e)))
-	    if (ED_tail_port(e).defined!=0 || ED_head_port(e).defined!=0)
+	    if (ED_tail_port(e).defined || ED_head_port(e).defined)
 		f1 = 4;
 	    else
 		f1 = 8;
@@ -1334,10 +1149,22 @@ LEAVING("598jn37hjkm7j0kcg2nmdvlwq","setflags");
 
 
 
-
+/* edgecmp:
+ * lexicographically order edges by
+ *  - edge type
+ *  - |rank difference of nodes|
+ *  - |x difference of nodes|
+ *  - id of witness edge for equivalence class
+ *  - port comparison
+ *  - graph type
+ *  - labels if flat edges
+ *  - edge id
+ */
 //3 1nf1s6wkn35ptjn884ii56fh
 // static int edgecmp(edge_t** ptr0, edge_t** ptr1) 
-public static int edgecmp(__ptr__ ptr0, __ptr__ ptr1) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="edgecmp", key="1nf1s6wkn35ptjn884ii56fh", definition="static int edgecmp(edge_t** ptr0, edge_t** ptr1)")
+public static int edgecmp(CStarStar<ST_Agedge_s> ptr0, CStarStar<ST_Agedge_s> ptr1) {
 ENTERING("1nf1s6wkn35ptjn884ii56fh","edgecmp");
 try {
     final ST_Agedgeinfo_t fwdedgeai = new ST_Agedgeinfo_t(), fwdedgebi = new ST_Agedgeinfo_t();
@@ -1347,8 +1174,8 @@ try {
     double t0, t1;
     fwdedgea.out.base.setPtr("data", fwdedgeai);
     fwdedgeb.out.base.setPtr("data", fwdedgebi);
-    e0 = (ST_Agedge_s) ptr0.getPtr();
-    e1 = (ST_Agedge_s) ptr1.getPtr();
+    e0 = ptr0.get_(0);
+    e1 = ptr1.get_(0);
     et0 = ED_tree_index(e0) & 15;
     et1 = ED_tree_index(e1) & 15;
     if (et0 != et1)
@@ -1370,12 +1197,12 @@ try {
     /* This provides a cheap test for edges having the same set of endpoints.  */
     if (AGSEQ(le0) != AGSEQ(le1))
 	return (AGSEQ(le0) - AGSEQ(le1));
-    ea = (ED_tail_port(e0).defined!=0 || ED_head_port(e0).defined!=0) ? e0 : le0;
+    ea = (ED_tail_port(e0).defined || ED_head_port(e0).defined) ? e0 : le0;
     if ((ED_tree_index(ea) & 32)!=0) {
 	MAKEFWDEDGE(fwdedgea.out, ea);
 	ea = (ST_Agedge_s) fwdedgea.out;
     }
-    eb = (ED_tail_port(e1).defined!=0 || ED_head_port(e1).defined!=0) ? e1 : le1;
+    eb = (ED_tail_port(e1).defined || ED_head_port(e1).defined) ? e1 : le1;
     if ((ED_tree_index(eb) & 32)!=0) {
 	MAKEFWDEDGE(fwdedgeb.out, eb);
 	eb = (ST_Agedge_s) fwdedgeb.out;
@@ -1401,6 +1228,8 @@ LEAVING("1nf1s6wkn35ptjn884ii56fh","edgecmp");
 
 //3 djq8tev8thshox7bob64vi0tf
 // static void setState (graph_t* auxg, attr_state_t* attr_state) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="setState", key="djq8tev8thshox7bob64vi0tf", definition="static void setState (graph_t* auxg, attr_state_t* attr_state)")
 public static Object setState(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("7ovh16jwyjc9wtu0rfxnlws9r"); // setState (graph_t* auxg, attr_state_t* attr_state)
@@ -1495,6 +1324,8 @@ throw new UnsupportedOperationException();
 
 //3 14hhte1l3zo45pzop5ugwahiv
 // static graph_t* cloneGraph (graph_t* g, attr_state_t* attr_state) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="cloneGraph", key="14hhte1l3zo45pzop5ugwahiv", definition="static graph_t* cloneGraph (graph_t* g, attr_state_t* attr_state)")
 public static Object cloneGraph(Object... arg) {
 UNSUPPORTED("9bkg8lvj5zr49zg08g7iijeg0"); // static graph_t*
 UNSUPPORTED("4uq8e6159vvwjuygnnrtonzjr"); // cloneGraph (graph_t* g, attr_state_t* attr_state)
@@ -1541,6 +1372,8 @@ throw new UnsupportedOperationException();
 
 //3 75bd23hms71i6w46oddi0v7c7
 // static void cleanupCloneGraph (graph_t* g, attr_state_t* attr_state) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="cleanupCloneGraph", key="75bd23hms71i6w46oddi0v7c7", definition="static void cleanupCloneGraph (graph_t* g, attr_state_t* attr_state)")
 public static Object cleanupCloneGraph(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("8l276u9l2gpbol4c2u457ic4o"); // cleanupCloneGraph (graph_t* g, attr_state_t* attr_state)
@@ -1598,6 +1431,8 @@ throw new UnsupportedOperationException();
 
 //3 19tqa2ag8idq1y6l3zslax8e8
 // static node_t* cloneNode (graph_t* g, node_t* orign, int flipped) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="cloneNode", key="19tqa2ag8idq1y6l3zslax8e8", definition="static node_t* cloneNode (graph_t* g, node_t* orign, int flipped)")
 public static Object cloneNode(Object... arg) {
 UNSUPPORTED("b9dd3satxbh59hljdxzcxecc"); // static node_t*
 UNSUPPORTED("o807sh2podu4gxrp6mweyg3p"); // cloneNode (graph_t* g, node_t* orign, int flipped)
@@ -1622,6 +1457,8 @@ throw new UnsupportedOperationException();
 
 //3 eqzwnj9u1k6ij1842mph3kly9
 // static edge_t* cloneEdge (graph_t* g, node_t* tn, node_t* hn, edge_t* orig) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="cloneEdge", key="eqzwnj9u1k6ij1842mph3kly9", definition="static edge_t* cloneEdge (graph_t* g, node_t* tn, node_t* hn, edge_t* orig)")
 public static Object cloneEdge(Object... arg) {
 UNSUPPORTED("adyfsyiyu158mwhrtm33biik2"); // static edge_t*
 UNSUPPORTED("cpg8ogbdq9zzrqiadh2q271ky"); // cloneEdge (graph_t* g, node_t* tn, node_t* hn, edge_t* orig)
@@ -1649,6 +1486,8 @@ throw new UnsupportedOperationException();
 
 //3 3zb2qrqaqzr6n3m7dgxp4pmrp
 // static pointf transformf (pointf p, pointf del, int flip) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="transformf", key="3zb2qrqaqzr6n3m7dgxp4pmrp", definition="static pointf transformf (pointf p, pointf del, int flip)")
 public static Object transformf(Object... arg) {
 UNSUPPORTED("2zzd7mrm2u540dwuyzehozffj"); // static pointf
 UNSUPPORTED("a59oomtgi9wbd42kpsaaref6e"); // transformf (pointf p, pointf del, int flip)
@@ -1669,13 +1508,15 @@ throw new UnsupportedOperationException();
 
 //3 bmsa24i3avg14po4sp17yh89k
 // static int edgelblcmpfn(edge_t** ptr0, edge_t** ptr1) 
-public static int edgelblcmpfn(__ptr__ ptr0, __ptr__ ptr1) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="edgelblcmpfn", key="bmsa24i3avg14po4sp17yh89k", definition="static int edgelblcmpfn(edge_t** ptr0, edge_t** ptr1)")
+public static int edgelblcmpfn(CStarStar<ST_Agedge_s> ptr0, CStarStar<ST_Agedge_s> ptr1) {
 ENTERING("bmsa24i3avg14po4sp17yh89k","edgelblcmpfn");
 try {
     ST_Agedge_s e0, e1;
     final ST_pointf sz0 = new ST_pointf(), sz1 = new ST_pointf();
-    e0 = (ST_Agedge_s) ptr0.getPtr();
-    e1 = (ST_Agedge_s) ptr1.getPtr();
+    e0 = ptr0.get_(0);
+    e1 = ptr1.get_(0);
     if (ED_label(e0)!=null) {
 	if (ED_label(e1)!=null) {
 	    sz0.___(ED_label(e0).dimen);
@@ -1701,124 +1542,139 @@ LEAVING("bmsa24i3avg14po4sp17yh89k","edgelblcmpfn");
 
 
 
-
+/* makeSimpleFlatLabels:
+ * This handles the second simplest case for flat edges between
+ * two adjacent nodes. We still invoke a dot on a rotated problem
+ * to handle edges with ports. This usually works, but fails for
+ * records because of their weird nature.
+ */
 //3 3xmylrnypvoqrj2yrxnomsj5k
 // static void makeSimpleFlatLabels (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et, int n_lbls) 
-public static void makeSimpleFlatLabels(ST_Agnode_s tn, ST_Agnode_s hn, ST_Agedge_s.ArrayOfStar edges, int ind, int cnt, int et, int n_lbls) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="makeSimpleFlatLabels", key="3xmylrnypvoqrj2yrxnomsj5k", definition="static void makeSimpleFlatLabels (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et, int n_lbls)")
+public static void makeSimpleFlatLabels(ST_Agnode_s tn, ST_Agnode_s hn, CStarStar<ST_Agedge_s> edges, int ind, int cnt, int et, int n_lbls) {
 ENTERING("3xmylrnypvoqrj2yrxnomsj5k","makeSimpleFlatLabels");
 try {
-	ST_pointf.Array ps;
+	CStar<ST_pointf> ps;
     final ST_Ppoly_t poly = new ST_Ppoly_t();
     int pn[] = new int[1];
-	ST_Agedge_s e = (ST_Agedge_s) edges.get(ind);
-    final ST_pointf.Array points = new ST_pointf.Array(10);
+	ST_Agedge_s e = edges.get_(ind);
+    final CStar<ST_pointf> points = CStar.<ST_pointf>ALLOC__(10, ST_pointf.class);
     final ST_pointf tp = new ST_pointf(), hp = new ST_pointf();
     int i, pointn;
     double leftend, rightend, ctrx=0, ctry=0, miny, maxy;
     double uminx=0, umaxx=0;
     double lminx=0, lmaxx=0;
-    ST_Agedge_s.ArrayOfStar earray = new ST_Agedge_s.ArrayOfStar(cnt);
+    
+    CStarStar<ST_Agedge_s> earray = CStarStar.<ST_Agedge_s>ALLOC(cnt, ST_Agedge_s.class);
+    
     for (i = 0; i < cnt; i++) {
-	earray.plus(i).setPtr(edges.plus(ind + i).getPtr());
+	earray.set_(i, edges.get_(ind + i));
     }
-    qsort(earray,
+    
+    qsort1(earray,
     cnt,
     function(dotsplines__c.class, "edgelblcmpfn"));
-    tp.___(add_pointf(ND_coord(tn), (ST_pointf) ED_tail_port(e).p));
-    hp.___(add_pointf(ND_coord(hn), (ST_pointf) ED_head_port(e).p));
+    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).p));
+    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).p));
+    
     leftend = tp.x+ND_rw(tn);
     rightend = hp.x-ND_lw(hn);
     ctrx = (leftend + rightend)/2.0;
+    
     /* do first edge */
-    e = (ST_Agedge_s) earray.get(0);
+    e = earray.get_(0);
     pointn = 0;
-    points.plus(pointn++).setStruct(tp);
-    points.plus(pointn++).setStruct(tp);
-    points.plus(pointn++).setStruct(hp);
-    points.plus(pointn++).setStruct(hp);
-    clip_and_install(e, aghead(e), points.asPtr(), pointn, Z.z().sinfo);
-    ED_label(e).pos.setDouble("x", ctrx);
-    ED_label(e).pos.setDouble("y", tp.y + (ED_label(e).dimen.y+6)/2.0);
-    ED_label(e).set= NOTI(false);
+    points.get__(pointn++).___(tp);
+    points.get__(pointn++).___(tp);
+    points.get__(pointn++).___(hp);
+    points.get__(pointn++).___(hp);
+    clip_and_install(e, aghead(e), points, pointn, Z.z().sinfo);
+    ED_label(e).pos.x = ctrx;
+    ED_label(e).pos.y = (tp.y + (ED_label(e).dimen.y+6)/2.0);
+    ED_label(e).set = 1;
+    
     miny = tp.y + 6/2.0;
     maxy = miny + ED_label(e).dimen.y;
     uminx = ctrx - (ED_label(e).dimen.x)/2.0;
     umaxx = ctrx + (ED_label(e).dimen.x)/2.0;
+    
     for (i = 1; i < n_lbls; i++) {
-	e = (ST_Agedge_s) earray.get(i);
+	e = earray.get_(i);
 	if (i%2!=0) {  /* down */
 	    if (i == 1) {
 		lminx = ctrx - (ED_label(e).dimen.x)/2.0;
 		lmaxx = ctrx + (ED_label(e).dimen.x)/2.0;
 		}
 	    miny -= 6 + ED_label(e).dimen.y;
-	    points.plus(0).setStruct(tp);
-	    points.plus(1).setDouble("x", tp.x);
-	    points.plus(1).setDouble("y", miny - 6);
-	    points.plus(2).setDouble("x", hp.x);
-	    points.plus(2).setDouble("y", points.get(1).y);
-	    points.plus(3).setStruct(hp);
-	    points.plus(4).setDouble("x", lmaxx);
-	    points.plus(4).setDouble("y", hp.y);
-	    points.plus(5).setDouble("x", lmaxx);
-	    points.plus(5).setDouble("y", miny);
-	    points.plus(6).setDouble("x", lminx);
-	    points.plus(6).setDouble("y", miny);
-	    points.plus(7).setDouble("x", lminx);
-	    points.plus(7).setDouble("y", tp.y);
+	    points.get__(0).___(tp);
+	    points.get__(1).x = tp.x;
+	    points.get__(1).y = miny - 6;
+	    points.get__(2).x = hp.x;
+	    points.get__(2).y = points.get__(1).y;
+	    points.get__(3).___(hp);
+	    points.get__(4).x = lmaxx;
+	    points.get__(4).y = hp.y;
+	    points.get__(5).x = lmaxx;
+	    points.get__(5).y = miny;
+	    points.get__(6).x = lminx;
+	    points.get__(6).y = miny;
+	    points.get__(7).x = lminx;
+	    points.get__(7).y = tp.y;
 	    ctry = miny + (ED_label(e).dimen.y)/2.0;
 	}
 	else {   /* up */
-UNSUPPORTED("7owdudualx55z2cnm9x3iio0w"); // 	    points[0] = tp;
-UNSUPPORTED("43w0zont6q3y1axlcy96rzm5x"); // 	    points[1].x = uminx;
-UNSUPPORTED("285u4l65puy5nr3pgq6acl4i2"); // 	    points[1].y = tp.y;
-UNSUPPORTED("uctdrwzmec4w6vmirs9on197"); // 	    points[2].x = uminx;
-UNSUPPORTED("d9b8e2upja8koam9memys7nj1"); // 	    points[2].y = maxy;
-UNSUPPORTED("e8a8ucdpq7sgmbi3qyldleb1s"); // 	    points[3].x = umaxx;
-UNSUPPORTED("d7xd9vzbdbezltrxsp9a3byuc"); // 	    points[3].y = maxy;
-UNSUPPORTED("59abeyxxk9ow1g6m45t4ahih7"); // 	    points[4].x = umaxx;
-UNSUPPORTED("2lzgl5468xguophz9d5wyer2x"); // 	    points[4].y = hp.y;
-UNSUPPORTED("41u0uroraw4xanvpgg6l74kyh"); // 	    points[5].x = hp.x;
-UNSUPPORTED("cwkk5bnko3e1udrx4cb720zss"); // 	    points[5].y = hp.y;
-UNSUPPORTED("eev7hf3617k74bnq18uiedyb0"); // 	    points[6].x = hp.x;
-UNSUPPORTED("aqxt1dvgfq5zcptjwgx1b3mmq"); // 	    points[6].y = maxy + 6;
-UNSUPPORTED("5s3o04yf5lzca6ruuygfxngj2"); // 	    points[7].x = tp.x;
-UNSUPPORTED("56zheeat0b8mo4uvlcbvgbu80"); // 	    points[7].y = maxy + 6;
-UNSUPPORTED("ehcig8trxc4ble6pcochubv7z"); // 	    ctry =  maxy + (ED_label(e)->dimen.y)/2.0 + 6;
-UNSUPPORTED("e2zgxycgqefryde9nbv6cqz1u"); // 	    maxy += ED_label(e)->dimen.y + 6;
+	    points.get__(0).___(tp);
+	    points.get__(1).x = uminx;
+	    points.get__(1).y = tp.y;
+	    points.get__(2).x = uminx;
+	    points.get__(2).y = maxy;
+	    points.get__(3).x = umaxx;
+	    points.get__(3).y = maxy;
+	    points.get__(4).x = umaxx;
+	    points.get__(4).y = hp.y;
+	    points.get__(5).x = hp.x;
+	    points.get__(5).y = hp.y;
+	    points.get__(6).x = hp.x;
+	    points.get__(6).y = maxy + 6;
+	    points.get__(7).x = tp.x;
+	    points.get__(7).y = maxy + 6;
+	    ctry =  maxy + (ED_label(e).dimen.y)/2.0 + 6;
+	    maxy += ED_label(e).dimen.y + 6;
 	}
 	poly.pn = 8;
 	poly.ps = points;
 	ps = simpleSplineRoute (tp, hp, poly, pn, et == (3 << 1));
 	if (pn[0] == 0) return;
-	ED_label(e).pos.setDouble("x", ctrx);
-	ED_label(e).pos.setDouble("y", ctry);
+	ED_label(e).pos.x = ctrx;
+	ED_label(e).pos.y = ctry;
 	ED_label(e).set= NOTI(false);
 	clip_and_install(e, aghead(e), ps, pn[0], Z.z().sinfo);
     }
+    
     /* edges with no labels */
     for (; i < cnt; i++) {
-	e = (ST_Agedge_s) earray.get(i);
+	e = earray.get_(i);
 	if (i%2!=0) {  /* down */
 	    if (i == 1) {
 		lminx = (2*leftend + rightend)/3.0;
 		lmaxx = (leftend + 2*rightend)/3.0;
 	    }
 	    miny -= 6;
-	    points.plus(0).setStruct(tp);
-	    points.plus(1).setDouble("x", tp.x);
-	    points.plus(1).setDouble("y", miny - 6);
-	    points.plus(2).setDouble("x", hp.x);
-	    points.plus(2).setDouble("y", points.get(1).y);
-	    points.plus(3).setStruct(hp);
-	    points.plus(4).setDouble("x", lmaxx);
-	    points.plus(4).setDouble("y", hp.y);
-	    points.plus(5).setDouble("x", lmaxx);
-	    points.plus(5).setDouble("y", miny);
-	    points.plus(6).setDouble("x", lminx);
-	    points.plus(6).setDouble("y", miny);
-	    points.plus(7).setDouble("x", lminx);
-	    points.plus(7).setDouble("y", tp.y);
+	    points.get__(0).___(tp);
+	    points.get__(1).x = tp.x;
+	    points.get__(1).y = miny - 6;
+	    points.get__(2).x = hp.x;
+	    points.get__(2).y = points.get__(1).y;
+	    points.get__(3).___(hp);
+	    points.get__(4).x = lmaxx;
+	    points.get__(4).y = hp.y;
+	    points.get__(5).x = lmaxx;
+	    points.get__(5).y = miny;
+	    points.get__(6).x = lminx;
+	    points.get__(6).y = miny;
+	    points.get__(7).x = lminx;
+	    points.get__(7).y = tp.y;
 	}
 	else {   /* up */
 UNSUPPORTED("7owdudualx55z2cnm9x3iio0w"); // 	    points[0] = tp;
@@ -1844,6 +1700,7 @@ UNSUPPORTED("7un2qk34mmmhqi296vl50bacs"); // 	    maxy += + 6;
 	if (pn[0] == 0) return;
 	clip_and_install(e, aghead(e), ps, pn[0], Z.z().sinfo);
     }
+    
     Memory.free (earray);
 } finally {
 LEAVING("3xmylrnypvoqrj2yrxnomsj5k","makeSimpleFlatLabels");
@@ -1853,28 +1710,36 @@ LEAVING("3xmylrnypvoqrj2yrxnomsj5k","makeSimpleFlatLabels");
 
 
 
+/* makeSimpleFlat:
+ */
 //3 8kqyzk43ovc2sq6jegua6ytp
 // static void makeSimpleFlat (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et) 
-public static void makeSimpleFlat(ST_Agnode_s tn, ST_Agnode_s hn, ST_Agedge_s.ArrayOfStar edges, int ind, int cnt, int et) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="makeSimpleFlat", key="8kqyzk43ovc2sq6jegua6ytp", definition="static void makeSimpleFlat (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et)")
+public static void makeSimpleFlat(ST_Agnode_s tn, ST_Agnode_s hn, CStarStar<ST_Agedge_s> edges, int ind, int cnt, int et) {
 ENTERING("8kqyzk43ovc2sq6jegua6ytp","makeSimpleFlat");
 try {
-    ST_Agedge_s e = (ST_Agedge_s) edges.get(ind);
-    final ST_pointf.Array points = new ST_pointf.Array( 10);
+    ST_Agedge_s e = edges.get_(ind);
+    final CStar<ST_pointf> points = CStar.<ST_pointf>ALLOC__(10, ST_pointf.class);
     final ST_pointf tp = new ST_pointf(), hp = new ST_pointf();
     int i, pointn;
     double stepy, dy;
-    tp.___(add_pointf(ND_coord(tn), (ST_pointf) ED_tail_port(e).p));
-    hp.___(add_pointf(ND_coord(hn), (ST_pointf) ED_head_port(e).p));
+
+    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).p));
+    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).p));
+    
     stepy = (cnt > 1) ? ND_ht(tn) / (double)(cnt - 1) : 0.;
     dy = tp.y - ((cnt > 1) ? ND_ht(tn) / 2. : 0.);
+    
     for (i = 0; i < cnt; i++) {
-	e = (ST_Agedge_s) edges.plus(ind + i).getPtr();
+	e = edges.get_(ind + i);
 	pointn = 0;
-	if ((et == (5 << 1)) || (et == (1 << 1))) {
-	    points.plus(pointn++).setStruct(tp);
-	    points.plus(pointn++).setStruct(pointfof((2 * tp.x + hp.x) / 3, dy));
-	    points.plus(pointn++).setStruct(pointfof((2 * hp.x + tp.x) / 3, dy));
-	    points.plus(pointn++).setStruct(hp);
+	
+	if ((et == ET_SPLINE) || (et == ET_LINE)) {
+	    points.get__(pointn++).___(tp);
+	    points.get__(pointn++).___(pointfof((2 * tp.x + hp.x) / 3, dy));
+	    points.get__(pointn++).___(pointfof((2 * hp.x + tp.x) / 3, dy));
+	    points.get__(pointn++).___(hp);
 	}
 	else {   /* ET_PLINE */
 UNSUPPORTED("cai7diqq01v8vb92u4mx1xh38"); // 	    points[pointn++] = tp;
@@ -1889,7 +1754,7 @@ UNSUPPORTED("59cwjy3j5e0igp278migykzi"); // 	    points[pointn++] = hp;
 UNSUPPORTED("59cwjy3j5e0igp278migykzi"); // 	    points[pointn++] = hp;
 	}
 	dy += stepy;
-	clip_and_install(e, aghead(e), points.asPtr(), pointn, Z.z().sinfo);
+	clip_and_install(e, aghead(e), points, pointn, Z.z().sinfo);
     }
 } finally {
 LEAVING("8kqyzk43ovc2sq6jegua6ytp","makeSimpleFlat");
@@ -1901,7 +1766,9 @@ LEAVING("8kqyzk43ovc2sq6jegua6ytp","makeSimpleFlat");
 
 //3 bhnjospwghq4plid12757c928
 // static void make_flat_adj_edges(graph_t* g, path* P, edge_t** edges, int ind, int cnt, edge_t* e0,                     int et) 
-public static void make_flat_adj_edges(ST_Agraph_s g, ST_path P, ST_Agedge_s.ArrayOfStar edges, int ind, int cnt, ST_Agedge_s e0, int et) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="make_flat_adj_edges", key="bhnjospwghq4plid12757c928", definition="static void make_flat_adj_edges(graph_t* g, path* P, edge_t** edges, int ind, int cnt, edge_t* e0,                     int et)")
+public static void make_flat_adj_edges(ST_Agraph_s g, ST_path P, CStarStar<ST_Agedge_s> edges, int ind, int cnt, ST_Agedge_s e0, int et) {
 ENTERING("bhnjospwghq4plid12757c928","make_flat_adj_edges");
 try {
     ST_Agnode_s n;
@@ -1915,12 +1782,12 @@ try {
     int     i, j, midx, midy, leftx, rightx;
     final ST_pointf del = new ST_pointf();
     ST_Agedge_s hvye = null;
-    attr_state_t attrs;
+    __ptr__ attrs;
     tn = agtail(e0); hn = aghead(e0);
     for (i = 0; i < cnt; i++) {
-	e = (ST_Agedge_s) edges.plus(ind + i).getPtr();
+	e = edges.get_(ind + i);
 	if (ED_label(e)!=null) labels++;
-	if (ED_tail_port(e).defined!=0 || ED_head_port(e).defined!=0) ports = 1;
+	if (ED_tail_port(e).defined || ED_head_port(e).defined) ports = 1;
     }
     if (ports == 0) {
 	/* flat edges without ports and labels can go straight left to right */
@@ -2044,6 +1911,8 @@ LEAVING("bhnjospwghq4plid12757c928","make_flat_adj_edges");
 
 //3 fybar4mljnmkh3kure5k1eod
 // static void makeFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e, pathend_t* endp,              boolean isBegin) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="makeFlatEnd", key="fybar4mljnmkh3kure5k1eod", definition="static void makeFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e, pathend_t* endp,              boolean isBegin)")
 public static void makeFlatEnd(ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agnode_s n, ST_Agedge_s e, ST_pathend_t endp, boolean isBegin) {
 ENTERING("fybar4mljnmkh3kure5k1eod","makeFlatEnd");
 try {
@@ -2055,7 +1924,7 @@ try {
     else endpath(P, e, 2, endp, false);
     b.UR.y = endp.boxes[endp.boxn - 1].UR.y;
     b.LL.y = endp.boxes[endp.boxn - 1].LL.y;
-    b.___(makeregularend((ST_boxf) b, (1<<2), ND_coord(n).y + GD_rank(g).get(ND_rank(n)).ht2));
+    b.___(makeregularend((ST_boxf) b, (1<<2), ND_coord(n).y + GD_rank(g).get__(ND_rank(n)).ht2));
     if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 UNSUPPORTED("cmjm4y40vf7wklmgz0ae4k36v"); // 	endp->boxes[endp->boxn++] = b;
 } finally {
@@ -2068,6 +1937,8 @@ LEAVING("fybar4mljnmkh3kure5k1eod","makeFlatEnd");
 
 //3 rfro0b2nsukdjenux3f6osgj
 // static void makeBottomFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e,  	pathend_t* endp, boolean isBegin) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="makeBottomFlatEnd", key="rfro0b2nsukdjenux3f6osgj", definition="static void makeBottomFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e,  	pathend_t* endp, boolean isBegin)")
 public static Object makeBottomFlatEnd(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("8ai1jk8aigoqod7sj7pw1phw3"); // makeBottomFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e, 
@@ -2075,7 +1946,7 @@ UNSUPPORTED("25ij2tn6de7b481tpf1ac644s"); // 	pathend_t* endp, boolean isBegin)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("c57pq0f87j6dnbcvygu7v6k84"); //     boxf b;
 UNSUPPORTED("458vjrt5zjt6am715aiuxdlpo"); //     b = endp->nb = maximal_bbox(g, sp, n, NULL, e);
-UNSUPPORTED("9wzfokn3t7zckgoaxgywy6cbz"); //     endp->sidemask = (1<<0);
+UNSUPPORTED("9wzfokn3t7zckgoaxgywy6cbz"); //     endp->sidemask = 1<<0;
 UNSUPPORTED("c3u0b2z8mb4le2v1g6q8amjt"); //     if (isBegin) beginpath(P, e, 2, endp, 0);
 UNSUPPORTED("1e0zyjb03r85tgqddfnlk9e9"); //     else endpath(P, e, 2, endp, 0);
 UNSUPPORTED("7pwqqvagpkzye4cdmjlbrmt7a"); //     b.UR.y = endp->boxes[endp->boxn - 1].UR.y;
@@ -2093,17 +1964,19 @@ throw new UnsupportedOperationException();
 
 //3 w8ptjibydq995d2lexg85mku
 // static void make_flat_labeled_edge(graph_t* g, spline_info_t* sp, path* P, edge_t* e, int et) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="make_flat_labeled_edge", key="w8ptjibydq995d2lexg85mku", definition="static void make_flat_labeled_edge(graph_t* g, spline_info_t* sp, path* P, edge_t* e, int et)")
 public static void make_flat_labeled_edge(ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agedge_s e, int et) {
 ENTERING("w8ptjibydq995d2lexg85mku","make_flat_labeled_edge");
 try {
     ST_Agnode_s tn, hn, ln;
-    ST_pointf.Array ps = null;
+    CStar<ST_pointf> ps = null;
     final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();
     final ST_boxf lb = new ST_boxf();
     int boxn, i, ydelta;
     int pn[] = new int[1];
     ST_Agedge_s f;
-    final ST_pointf.Array points = new ST_pointf.Array( 7);
+    final CStar<ST_pointf> points = CStar.<ST_pointf>ALLOC__(7, ST_pointf.class);
     tn = agtail(e);
     hn = aghead(e);
     for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
@@ -2126,31 +1999,31 @@ UNSUPPORTED("1uunj4jbr2uhiqxwor6rzmr3j"); // 	pn = 7;
 	lb.LL.x = ND_coord(ln).x - ND_lw(ln);
 	lb.UR.x = ND_coord(ln).x + ND_rw(ln);
 	lb.UR.y = ND_coord(ln).y + ND_ht(ln)/2;
-	ydelta = (int)(ND_coord(ln).y - GD_rank(g).get(ND_rank(tn)).ht1 -
-		ND_coord(tn).y + GD_rank(g).get(ND_rank(tn)).ht2);
+	ydelta = (int)(ND_coord(ln).y - GD_rank(g).get__(ND_rank(tn)).ht1 -
+		ND_coord(tn).y + GD_rank(g).get__(ND_rank(tn)).ht2);
 	ydelta = (int)(ydelta / 6.);
 	lb.LL.y = lb.UR.y - MAX(5.,ydelta); 
 	boxn = 0;
-	makeFlatEnd (g, sp, P, tn, e,  tend, NOT(false));
+	makeFlatEnd (g, sp, P, tn, e,  tend, true);
 	makeFlatEnd (g, sp, P, hn, e,  hend, false);
-	((Z.z().boxes[boxn])).LL.x = (tend).boxes[tend.boxn - 1].LL.x; 
-	((Z.z().boxes[boxn])).LL.y = (tend).boxes[tend.boxn - 1].UR.y; 
-	((Z.z().boxes[boxn])).UR.x = lb.LL.x;
-	((Z.z().boxes[boxn])).UR.y = lb.LL.y;
+	Z.z().boxes[boxn].LL.x = tend.boxes[tend.boxn - 1].LL.x; 
+	Z.z().boxes[boxn].LL.y = tend.boxes[tend.boxn - 1].UR.y; 
+	Z.z().boxes[boxn].UR.x = lb.LL.x;
+	Z.z().boxes[boxn].UR.y = lb.LL.y;
 	boxn++;
-	((Z.z().boxes[boxn])).LL.x = (tend).boxes[tend.boxn - 1].LL.x; 
-	((Z.z().boxes[boxn])).LL.y = lb.LL.y;
-	((Z.z().boxes[boxn])).UR.x = (hend).boxes[hend.boxn - 1].UR.x;
-	((Z.z().boxes[boxn])).UR.y = lb.UR.y;
+	Z.z().boxes[boxn].LL.x = tend.boxes[tend.boxn - 1].LL.x; 
+	Z.z().boxes[boxn].LL.y = lb.LL.y;
+	Z.z().boxes[boxn].UR.x = hend.boxes[hend.boxn - 1].UR.x;
+	Z.z().boxes[boxn].UR.y = lb.UR.y;
 	boxn++;
-	((Z.z().boxes[boxn])).LL.x = lb.UR.x;
-	((Z.z().boxes[boxn])).UR.y = lb.LL.y;
-	((Z.z().boxes[boxn])).LL.y = (hend).boxes[hend.boxn - 1].UR.y; 
-	((Z.z().boxes[boxn])).UR.x = (hend).boxes[hend.boxn - 1].UR.x;
+	Z.z().boxes[boxn].LL.x = lb.UR.x;
+	Z.z().boxes[boxn].UR.y = lb.LL.y;
+	Z.z().boxes[boxn].LL.y = hend.boxes[hend.boxn - 1].UR.y; 
+	Z.z().boxes[boxn].UR.x = hend.boxes[hend.boxn - 1].UR.x;
 	boxn++;
-	for (i = 0; i < tend.boxn; i++) add_box(P, (tend).boxes[i]);
+	for (i = 0; i < tend.boxn; i++) add_box(P, tend.boxes[i]);
 	for (i = 0; i < boxn; i++) add_box(P, Z.z().boxes[i]);
-	for (i = hend.boxn - 1; i >= 0; i--) add_box(P, (hend).boxes[i]);
+	for (i = hend.boxn - 1; i >= 0; i--) add_box(P, hend.boxes[i]);
 	if (et == (5 << 1)) ps = routesplines(P, pn);
 	else ps = routepolylines(P, pn);
 	if (pn[0] == 0) return;
@@ -2166,6 +2039,8 @@ LEAVING("w8ptjibydq995d2lexg85mku","make_flat_labeled_edge");
 
 //3 d97ga7gm34rs6r0jo494nhhuo
 // static void make_flat_bottom_edges(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int  	ind, int cnt, edge_t* e, int splines) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="make_flat_bottom_edges", key="d97ga7gm34rs6r0jo494nhhuo", definition="static void make_flat_bottom_edges(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int  	ind, int cnt, edge_t* e, int splines)")
 public static Object make_flat_bottom_edges(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("bkp39vt080is6iiqobsw59sk9"); // make_flat_bottom_edges(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int 
@@ -2233,9 +2108,20 @@ throw new UnsupportedOperationException();
 
 
 
+/* make_flat_edge:
+ * Construct flat edges edges[ind...ind+cnt-1]
+ * There are 4 main cases:
+ *  - all edges between a and b where a and b are adjacent 
+ *  - one labeled edge
+ *  - all non-labeled edges with identical ports between non-adjacent a and b 
+ *     = connecting bottom to bottom/left/right - route along bottom
+ *     = the rest - route along top
+ */
 //3 6yr3jfkljl5w0z6dv354ryx63
 // static void make_flat_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et) 
-public static void make_flat_edge(ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agedge_s.ArrayOfStar edges, int ind, int cnt, int et) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="make_flat_edge", key="6yr3jfkljl5w0z6dv354ryx63", definition="static void make_flat_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et)")
+public static void make_flat_edge(ST_Agraph_s g, ST_spline_info_t sp, ST_path P, CStarStar<ST_Agedge_s> edges, int ind, int cnt, int et) {
 ENTERING("6yr3jfkljl5w0z6dv354ryx63","make_flat_edge");
 try {
     ST_Agnode_s tn, hn;
@@ -2246,18 +2132,20 @@ try {
     double stepx, stepy, vspace;
     int tside, hside;
     int pn[] = new int[] {0};
-    ST_pointf.Array ps;
+    CStar<ST_pointf> ps;
     final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();
+    
     fwdedge.out.base.setPtr("data", fwdedgei);
+    
     /* Get sample edge; normalize to go from left to right */
-    e = (ST_Agedge_s) edges.get(ind);
+    e = edges.get_(ind);
     isAdjacent = ED_adjacent(e);
     if ((ED_tree_index(e) & 32)!=0) {
 	MAKEFWDEDGE(fwdedge.out, e);
 	e = (ST_Agedge_s) fwdedge.out;
     }
     for (i = 1; i < cnt; i++) {
-	if (ED_adjacent(edges.plus(ind+i).getPtr())!=0) {
+	if (ED_adjacent(edges.get_(ind+i))!=0) {
 	    isAdjacent = 1;
 	    break;
 	}
@@ -2273,10 +2161,12 @@ try {
 	make_flat_labeled_edge (g, sp, P, e, et);
 	return;
     }
+    
     if (et == (1 << 1)) {
 	makeSimpleFlat (agtail(e), aghead(e), edges, ind, cnt, et);
 	return;
     }
+    
     tside = ED_tail_port(e).side;
     hside = ED_head_port(e).side;
     if (((tside == (1<<0)) && (hside != (1<<2))) ||
@@ -2284,17 +2174,17 @@ try {
 	make_flat_bottom_edges (g, sp, P, edges, ind, cnt, e, et == (5 << 1));
 	return;
     }
+    
     tn = agtail(e);
     hn = aghead(e);
     r = ND_rank(tn);
     if (r > 0) {
-    	ST_rank_t.Array2 prevr;
+    	CStar<ST_rank_t> prevr;
 	if ((GD_has_labels(g) & (1 << 0))!=0)
-	    prevr = GD_rank(g).plus(r-2);
+	    prevr = GD_rank(g).plus_(r-2);
 	else
-	    prevr = GD_rank(g).plus(r-1);
-	vspace = ND_coord(prevr.getPtr().v.get(0)).y - prevr.getPtr().ht1
-	   - ND_coord(tn).y - GD_rank(g).get(r).ht2;
+	    prevr = GD_rank(g).plus_(r-1);
+	vspace = ND_coord(prevr.get__(0).v.get_(0)).y - prevr.get__(0).ht1 - ND_coord(tn).y - GD_rank(g).get__(r).ht2;
     }
     else {
 	vspace = GD_ranksep(g);
@@ -2303,31 +2193,32 @@ try {
     stepy = vspace / (cnt+1);
     makeFlatEnd (g, sp, P, tn, e, tend, true);
     makeFlatEnd (g, sp, P, hn, e, hend, false);
+    
     for (i = 0; i < cnt; i++) {
 	int boxn;
 	final ST_boxf b = new ST_boxf();
-	e = (ST_Agedge_s) edges.plus(ind + i).getPtr();
+	e = edges.get_(ind + i);
 	boxn = 0;
-	b.___((tend).boxes[tend.boxn - 1]);
- 	((Z.z().boxes[boxn])).LL.x = b.LL.x; 
-	((Z.z().boxes[boxn])).LL.y = b.UR.y; 
-	((Z.z().boxes[boxn])).UR.x = b.UR.x + (i + 1) * stepx;
-	((Z.z().boxes[boxn])).UR.y = b.UR.y + (i + 1) * stepy;
+	b.___(tend.boxes[tend.boxn - 1]);
+ 	Z.z().boxes[boxn].LL.x = b.LL.x; 
+	Z.z().boxes[boxn].LL.y = b.UR.y; 
+	Z.z().boxes[boxn].UR.x = b.UR.x + (i + 1) * stepx;
+	Z.z().boxes[boxn].UR.y = b.UR.y + (i + 1) * stepy;
 	boxn++;
-	((Z.z().boxes[boxn])).LL.x = ((ST_boxf)((tend).boxes[tend.boxn - 1])).LL.x; 
-	((Z.z().boxes[boxn])).LL.y = (Z.z().boxes[boxn-1]).UR.y;
-	((Z.z().boxes[boxn])).UR.x = ((ST_boxf)((hend).boxes[hend.boxn - 1])).UR.x;
-	((Z.z().boxes[boxn])).UR.y = ((Z.z().boxes[boxn])).LL.y + stepy;
+	Z.z().boxes[boxn].LL.x = (tend.boxes[tend.boxn - 1]).LL.x; 
+	Z.z().boxes[boxn].LL.y = (Z.z().boxes[boxn-1]).UR.y;
+	Z.z().boxes[boxn].UR.x = (hend.boxes[hend.boxn - 1]).UR.x;
+	Z.z().boxes[boxn].UR.y = Z.z().boxes[boxn].LL.y + stepy;
 	boxn++;
-	b.___((hend).boxes[hend.boxn - 1]);
-	((Z.z().boxes[boxn])).UR.x = b.UR.x;
-	((Z.z().boxes[boxn])).LL.y = b.UR.y;
-	((Z.z().boxes[boxn])).LL.x = b.LL.x - (i + 1) * stepx;
-	((Z.z().boxes[boxn])).UR.y = (Z.z().boxes[boxn-1]).LL.y;
+	b.___(hend.boxes[hend.boxn - 1]);
+	Z.z().boxes[boxn].UR.x = b.UR.x;
+	Z.z().boxes[boxn].LL.y = b.UR.y;
+	Z.z().boxes[boxn].LL.x = b.LL.x - (i + 1) * stepx;
+	Z.z().boxes[boxn].UR.y = (Z.z().boxes[boxn-1]).LL.y;
 	boxn++;
-	for (j = 0; j < tend.boxn; j++) add_box(P, (tend).boxes[j]);
+	for (j = 0; j < tend.boxn; j++) add_box(P, tend.boxes[j]);
 	for (j = 0; j < boxn; j++) add_box(P, Z.z().boxes[j]);
-	for (j = hend.boxn - 1; j >= 0; j--) add_box(P, (hend).boxes[j]);
+	for (j = hend.boxn - 1; j >= 0; j--) add_box(P, hend.boxes[j]);
 	if (et == (5 << 1)) ps = routesplines(P, pn);
 	else ps = routepolylines(P, pn);
 	if (pn[0] == 0)
@@ -2345,6 +2236,8 @@ LEAVING("6yr3jfkljl5w0z6dv354ryx63","make_flat_edge");
 
 //3 78oy7e2xm3t4de66du11ej05j
 // static int leftOf (pointf p1, pointf p2, pointf p3) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="leftOf", key="78oy7e2xm3t4de66du11ej05j", definition="static int leftOf (pointf p1, pointf p2, pointf p3)")
 public static Object leftOf(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("iqhj2moads3aafqx5xa8j44g"); // leftOf (pointf p1, pointf p2, pointf p3)
@@ -2363,6 +2256,8 @@ throw new UnsupportedOperationException();
 
 //3 2n9bpvx34fnukqu1f9u4v7v6n
 // static int  makeLineEdge(graph_t* g, edge_t* fe, pointf* points, node_t** hp) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="makeLineEdge", key="2n9bpvx34fnukqu1f9u4v7v6n", definition="static int  makeLineEdge(graph_t* g, edge_t* fe, pointf* points, node_t** hp)")
 public static int makeLineEdge(ST_Agraph_s g, ST_Agedge_s fe, __ptr__ points, __ptr__ hp) {
 ENTERING("2n9bpvx34fnukqu1f9u4v7v6n","makeLineEdge");
 try {
@@ -2440,14 +2335,16 @@ LEAVING("2n9bpvx34fnukqu1f9u4v7v6n","makeLineEdge");
 //private static int numpts2;
 //3 30wfq1dby4t07hft9io52nq6z
 // static void make_regular_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et) 
-public static void make_regular_edge(ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agedge_s.ArrayOfStar edges, int ind, int cnt, int et) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="make_regular_edge", key="30wfq1dby4t07hft9io52nq6z", definition="static void make_regular_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et)")
+public static void make_regular_edge(ST_Agraph_s g, ST_spline_info_t sp, ST_path P, CStarStar<ST_Agedge_s> edges, int ind, int cnt, int et) {
 ENTERING("30wfq1dby4t07hft9io52nq6z","make_regular_edge");
 try {
     ST_Agnode_s tn, hn = null;
     final ST_Agedgeinfo_t fwdedgeai = new ST_Agedgeinfo_t(), fwdedgebi = new ST_Agedgeinfo_t(), fwdedgei = new ST_Agedgeinfo_t();
     final ST_Agedgepair_s fwdedgea = new ST_Agedgepair_s(), fwdedgeb = new ST_Agedgepair_s(), fwdedge = new ST_Agedgepair_s();
     ST_Agedge_s e, fe, le, segfirst;
-    ST_pointf.Array ps = null;
+    CStar<ST_pointf> ps = null;
     final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();
     final ST_boxf b = new ST_boxf();
     int boxn, sl, si, i, j, dx, hackflag, longedge;
@@ -2458,13 +2355,13 @@ try {
     fwdedgeb.out.base.setPtr("data", fwdedgebi);
     fwdedge.out.base.setPtr("data", fwdedgei);
     if (N(Z.z().pointfs)) {
-	Z.z().pointfs = new ST_pointf.Array(2000);
-   	Z.z().pointfs2 = new ST_pointf.Array(2000);
+	Z.z().pointfs = CStar.<ST_pointf>ALLOC__(2000, ST_pointf.class);
+   	Z.z().pointfs2 = CStar.<ST_pointf>ALLOC__(2000, ST_pointf.class);
 	Z.z().numpts = 2000;
 	Z.z().numpts2 = 2000;
     }
     sl = 0;
-    e = (ST_Agedge_s) edges.get(ind);
+    e = edges.get_(ind);
     hackflag = 0;
     if (ABS(ND_rank(agtail(e)) - ND_rank(aghead(e))) > 1) {
 UNSUPPORTED("8f17srpa5iisomehrb4b01h51"); // 	fwdedgeai = *(Agedgeinfo_t*)e->base.data;
@@ -2511,11 +2408,11 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 	tend.nb.___(b);
 	beginpath(P, e, 1, tend, spline_merge(tn));
 	b.UR.y = 
-			(tend).boxes[tend.boxn - 1].UR.y;
+			tend.boxes[tend.boxn - 1].UR.y;
 	b.LL.y = 
-			(tend).boxes[tend.boxn - 1].LL.y;
+			tend.boxes[tend.boxn - 1].LL.y;
 	b.___(makeregularend(b, (1<<0),
-	    	   ND_coord(tn).y - GD_rank(g).get(ND_rank(tn)).ht1));
+	    	   ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));
 	if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 	{
 	    tend.boxes[tend.boxn].___(b);
@@ -2529,25 +2426,25 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 	    if (N(smode)
 	        && ((sl = straight_len(hn)) >=
 	    	((GD_has_labels(g) & (1 << 0))!=0 ? 4 + 1 : 2 + 1))) {
-	        smode = NOT(false);
+	        smode = true;
 	        si = 1; sl -= 2;
 	    }
 	    if (N(smode) || si > 0) {
 	        si--;
-	        Z.z().boxes[boxn++].___(maximal_bbox(g, sp, hn, e, (ST_Agedge_s) ND_out(hn).getFromList(0)));
-	        e = (ST_Agedge_s) ND_out(hn).getFromList(0);
+	        Z.z().boxes[boxn++].___(maximal_bbox(g, sp, hn, e, (ST_Agedge_s) ND_out(hn).list.get_(0)));
+	        e = (ST_Agedge_s) ND_out(hn).list.get_(0);
 	        tn = agtail(e);
 	        hn = aghead(e);
 	        continue;
 	    }
-	    hend.setStruct("nb", maximal_bbox(g, sp, hn, e, (ST_Agedge_s) ND_out(hn).getFromList(0)));
+	    hend.setStruct("nb", maximal_bbox(g, sp, hn, e, (ST_Agedge_s) ND_out(hn).list.get_(0)));
 	    endpath(P, e, 1, hend, spline_merge(aghead(e)));
-	    b.___(makeregularend((hend).boxes[hend.boxn - 1], (1<<2),
-	    	       ND_coord(hn).y + GD_rank(g).get(ND_rank(hn)).ht2));
+	    b.___(makeregularend(hend.boxes[hend.boxn - 1], (1<<2),
+	    	       ND_coord(hn).y + GD_rank(g).get__(ND_rank(hn)).ht2));
 	    if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 UNSUPPORTED("1crhubfzekx1qi2ti9ajqsfoc"); // 	        hend.boxes[hend.boxn++] = b;
-	    P.end.setDouble("theta", M_PI / 2);
-	    P.end.constrained= NOTI(false);
+	    P.end.theta = M_PI / 2;
+	    P.end.constrained= true;
 	    completeregularpath(P, segfirst, e, tend, hend, Z.z().boxes, boxn, 1);
 	    if (splines) ps = routesplines(P, pn);
 	    else {
@@ -2568,32 +2465,32 @@ UNSUPPORTED("k37sqlxbjikqg4xdonnvefo3"); // 		numpts = 2*(pointn+pn);
 UNSUPPORTED("8kbxhk7qirj3tr7hn1ukwar3h"); // 		pointfs = RALLOC(numpts, pointfs, pointf);
 	    }
 	    for (i = 0; i < pn[0]; i++) {
-		Z.z().pointfs.plus(pointn[0]++).setStruct(ps.plus(i).getStruct());
+		Z.z().pointfs.get__(pointn[0]++).___(ps.get__(i));
 	    }
-	    e = straight_path((ST_Agedge_s)ND_out(hn).getFromList(0), sl, Z.z().pointfs, pointn);
+	    e = straight_path((ST_Agedge_s)ND_out(hn).list.get_(0), sl, Z.z().pointfs, pointn);
 	    recover_slack(segfirst, P);
 	    segfirst = e;
 	    tn = agtail(e);
 	    hn = aghead(e);
 	    boxn = 0;
-	    tend.setStruct("nb", maximal_bbox(g, sp, tn, (ST_Agedge_s) ND_in(tn).getFromList(0), e));
+	    tend.setStruct("nb", maximal_bbox(g, sp, tn, (ST_Agedge_s) ND_in(tn).list.get_(0), e));
 	    beginpath(P, e, 1, tend, spline_merge(tn));
-	    b.___(makeregularend((tend).boxes[tend.boxn - 1], (1<<0),
-	    	       ND_coord(tn).y - GD_rank(g).get(ND_rank(tn)).ht1));
+	    b.___(makeregularend(tend.boxes[tend.boxn - 1], (1<<0),
+	    	       ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));
 	    if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 UNSUPPORTED("cjx6tldge3otk1pk6ks1pkn2w"); // 	        tend.boxes[tend.boxn++] = b;
-	    P.start.setDouble("theta", -M_PI / 2);
-	    P.start.constrained= NOTI(false);
+	    P.start.theta = -M_PI / 2;
+	    P.start.constrained= true;
 	    smode = false;
 	}
 	Z.z().boxes[boxn++].___(rank_box(sp, g, ND_rank(tn)));
 	b.___(maximal_bbox(g, sp, hn, e, null));
 	hend.nb.___(b);
 	endpath(P, (ST_Agedge_s) (hackflag!=0 ? fwdedgeb.out : e), 1, hend, spline_merge(aghead(e)));
-	b.UR.y = (hend).boxes[hend.boxn - 1].UR.y;
-	b.LL.y = (hend).boxes[hend.boxn - 1].LL.y;
+	b.UR.y = hend.boxes[hend.boxn - 1].UR.y;
+	b.LL.y = hend.boxes[hend.boxn - 1].LL.y;
 	b.___(makeregularend(b, (1<<2),
-	    	   ND_coord(hn).y + GD_rank(g).get(ND_rank(hn)).ht2));
+	    	   ND_coord(hn).y + GD_rank(g).get__(ND_rank(hn)).ht2));
 	if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 	    {
 	    hend.boxes[hend.boxn].___(b);
@@ -2619,7 +2516,7 @@ UNSUPPORTED("c6ux5effs02grz7xh3k8ernda"); // 	    numpts = 2*(pointn+pn);
 UNSUPPORTED("bedaqcn9h03q6ia6zbezuee1m"); // 	    pointfs = RALLOC(numpts, pointfs, pointf);
 	}
 	for (i = 0; i < pn[0]; i++) {
-	    Z.z().pointfs.plus(pointn[0]).setStruct(ps.plus(i).getStruct());
+	    Z.z().pointfs.get__(pointn[0]).___(ps.get__(i));
 	    pointn[0]++;
 	}
 	recover_slack(segfirst, P);
@@ -2632,24 +2529,24 @@ UNSUPPORTED("bedaqcn9h03q6ia6zbezuee1m"); // 	    pointfs = RALLOC(numpts, point
     }
     dx = sp.Multisep * (cnt - 1) / 2;
     for (i = 1; i < pointn[0] - 1; i++)
-	Z.z().pointfs.plus(i).setDouble("x", Z.z().pointfs.get(i).x - dx);
+	Z.z().pointfs.get__(i).x = Z.z().pointfs.get__(i).x - dx;
     if (Z.z().numpts > Z.z().numpts2) {
 UNSUPPORTED("9ubr4m7bdv5f5ldk2ta6yw3up"); // 	numpts2 = numpts; 
 UNSUPPORTED("8qwp7ddy5ztgam63fzfjmu890"); // 	pointfs2 = RALLOC(numpts2, pointfs2, pointf);
     }
     for (i = 0; i < pointn[0]; i++)
-	Z.z().pointfs2.plus(i).setStruct(Z.z().pointfs.plus(i).getStruct());
+	Z.z().pointfs2.get__(i).___(Z.z().pointfs.get__(i));
     clip_and_install(fe, hn, Z.z().pointfs2, pointn[0], Z.z().sinfo);
     for (j = 1; j < cnt; j++) {
-	e = (ST_Agedge_s) edges.plus(ind + j).getPtr();
+	e = edges.get_(ind + j);
 	if ((ED_tree_index(e) & 32)!=0) {
 	    MAKEFWDEDGE(fwdedge.out, e);
-	    e = (ST_Agedge_s) fwdedge.out;
+	    e = fwdedge.out;
 	}
 	for (i = 1; i < pointn[0] - 1; i++)
-	    Z.z().pointfs.plus(i).setDouble("x", Z.z().pointfs.get(i).x + sp.Multisep);
+	    Z.z().pointfs.get__(i).x = Z.z().pointfs.get__(i).x + sp.Multisep;
 	for (i = 0; i < pointn[0]; i++)
-	    Z.z().pointfs2.plus(i).setStruct(Z.z().pointfs.plus(i).getStruct());
+	    Z.z().pointfs2.get__(i).___(Z.z().pointfs.get__(i));
 	clip_and_install(e, aghead(e), Z.z().pointfs2, pointn[0], Z.z().sinfo);
     }
 } finally {
@@ -2662,40 +2559,43 @@ LEAVING("30wfq1dby4t07hft9io52nq6z","make_regular_edge");
 
 //3 va61hggynvb6z6j34w7otmab
 // static void completeregularpath(path * P, edge_t * first, edge_t * last, 		    pathend_t * tendp, pathend_t * hendp, boxf * boxes, 		    int boxn, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="completeregularpath", key="va61hggynvb6z6j34w7otmab", definition="static void completeregularpath(path * P, edge_t * first, edge_t * last, 		    pathend_t * tendp, pathend_t * hendp, boxf * boxes, 		    int boxn, int flag)")
 public static void completeregularpath(ST_path P, ST_Agedge_s first, ST_Agedge_s last, ST_pathend_t tendp, ST_pathend_t hendp, ST_boxf[] boxes, int boxn, int flag) {
 ENTERING("va61hggynvb6z6j34w7otmab","completeregularpath");
 try {
     ST_Agedge_s uleft, uright, lleft, lright;
     int i, fb, lb;
     ST_splines spl;
-    ST_pointf.Array pp;
+    CStar<ST_pointf> pp;
     int pn;
+    
     fb = lb = -1;
     uleft = uright = null;
     uleft = top_bound(first, -1);
     uright = top_bound(first, 1);
     if (uleft!=null) {
 	if (N(spl = getsplinepoints(uleft))) return;
-	pp = ((ST_bezier)spl.list.get(0).getPtr()).list;
-       	pn = spl.list.get(0).size;
+	pp = spl.list.get__(0).list;
+       	pn = spl.list.get__(0).size;
     }
     if (uright!=null) {
 	if (N(spl = getsplinepoints(uright))) return;
-	pp = ((ST_bezier)spl.list.get(0).getPtr()).list;
-       	pn = spl.list.get(0).size;
+	pp = spl.list.get__(0).list;
+       	pn = spl.list.get__(0).size;
     }
     lleft = lright = null;
     lleft = bot_bound(last, -1);
     lright = bot_bound(last, 1);
     if (lleft!=null) {
 	if (N(spl = getsplinepoints(lleft))) return;
-	pp = ((ST_bezier)spl.list.plus(spl.size - 1).getPtr().getPtr()).list;
-       	pn = spl.list.plus(spl.size - 1).getPtr().size;
+	pp = spl.list.get__(spl.size - 1).list;
+       	pn = spl.list.get__(spl.size - 1).size;
     }
     if (lright!=null) {
 	if (N(spl = getsplinepoints(lright))) return;
-	pp = ((ST_bezier)spl.list.plus(spl.size - 1).getPtr().getPtr()).list;
-       	pn = spl.list.plus(spl.size - 1).getPtr().size;
+	pp = spl.list.get__(spl.size - 1).list;
+       	pn = spl.list.get__(spl.size - 1).size;
     }
     for (i = 0; i < tendp.boxn; i++)
 	add_box(P, (tendp).boxes[i]);
@@ -2716,6 +2616,8 @@ LEAVING("va61hggynvb6z6j34w7otmab","completeregularpath");
 
 //3 3wwhczhpkcnflwr1l9wcga7tq
 // static boxf makeregularend(boxf b, int side, double y) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="makeregularend", key="3wwhczhpkcnflwr1l9wcga7tq", definition="static boxf makeregularend(boxf b, int side, double y)")
 public static ST_boxf makeregularend(final ST_boxf b, int side, double y) {
 // WARNING!! STRUCT
 return makeregularend_w_(b.copy(), side, y).copy();
@@ -2743,6 +2645,8 @@ LEAVING("3wwhczhpkcnflwr1l9wcga7tq","makeregularend");
 
 //3 88xrlzjovkxcnay9b2y5zyiid
 // static void adjustregularpath(path * P, int fb, int lb) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="adjustregularpath", key="88xrlzjovkxcnay9b2y5zyiid", definition="static void adjustregularpath(path * P, int fb, int lb)")
 public static void adjustregularpath(ST_path P, int fb, int lb) {
 ENTERING("88xrlzjovkxcnay9b2y5zyiid","adjustregularpath");
 try {
@@ -2753,14 +2657,14 @@ try {
 	if ((i - fb) % 2 == 0) {
 	    if (bp1.LL.x >= bp1.UR.x) {
 		x = (int)((bp1.LL.x + bp1.UR.x) / 2);
-		bp1.LL.setDouble("x", x - 8);
-		bp1.UR.setDouble("x", x + 8);
+		bp1.LL.x = x - 8;
+		bp1.UR.x = x + 8;
 	    }
 	} else {
 	    if (bp1.LL.x + 16 > bp1.UR.x) {
 		x = (int)((bp1.LL.x + bp1.UR.x) / 2);
-		bp1.LL.setDouble("x", x - 8);
-		bp1.UR.setDouble("x", x + 8);
+		bp1.LL.x = x - 8;
+		bp1.UR.x = x + 8;
 	    }
 	}
     }
@@ -2769,14 +2673,14 @@ try {
 	bp2 = (ST_boxf) P.boxes[i+1];
 	if (i >= fb && i <= lb && (i - fb) % 2 == 0) {
 	    if (bp1.LL.x + 16 > bp2.UR.x)
-		bp2.UR.setDouble("x", bp1.LL.x + 16);
+		bp2.UR.x = bp1.LL.x + 16;
 	    if (bp1.UR.x - 16 < bp2.LL.x)
-		bp2.LL.setDouble("x", bp1.UR.x - 16);
+		bp2.LL.x = bp1.UR.x - 16;
 	} else if (i + 1 >= fb && i < lb && (i + 1 - fb) % 2 == 0) {
 	    if (bp1.LL.x + 16 > bp2.UR.x)
-		bp1.LL.setDouble("x", bp2.UR.x - 16);
+		bp1.LL.x = bp2.UR.x - 16;
 	    if (bp1.UR.x - 16 < bp2.LL.x)
-		bp1.UR.setDouble("x", bp2.LL.x + 16);
+		bp1.UR.x = bp2.LL.x + 16;
 	} 
     }
 } finally {
@@ -2789,6 +2693,8 @@ LEAVING("88xrlzjovkxcnay9b2y5zyiid","adjustregularpath");
 
 //3 bajn5vx0isu427n6dh131b985
 // static boxf rank_box(spline_info_t* sp, graph_t * g, int r) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="rank_box", key="bajn5vx0isu427n6dh131b985", definition="static boxf rank_box(spline_info_t* sp, graph_t * g, int r)")
 public static ST_boxf rank_box(ST_spline_info_t sp, ST_Agraph_s g, int r) {
 // WARNING!! STRUCT
 return rank_box_w_(sp, g, r).copy();
@@ -2800,14 +2706,14 @@ try {
     ST_Agnode_s /* *right0, *right1, */  left0, left1;
     b.___(sp.Rank_box[r]);
     if (b.LL.x == b.UR.x) {
-	left0 = (ST_Agnode_s) GD_rank(g).get(r).v.get(0);
+	left0 = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(0);
 	/* right0 = GD_rank(g)[r].v[GD_rank(g)[r].n - 1]; */
-	left1 = (ST_Agnode_s) GD_rank(g).get(r + 1).v.get(0);
+	left1 = (ST_Agnode_s) GD_rank(g).get__(r + 1).v.get_(0);
 	/* right1 = GD_rank(g)[r + 1].v[GD_rank(g)[r + 1].n - 1]; */
 	b.LL.x = sp.LeftBound;
-	b.LL.y = ND_coord(left1).y + GD_rank(g).get(r + 1).ht2;
+	b.LL.y = ND_coord(left1).y + GD_rank(g).get__(r + 1).ht2;
 	b.UR.x = sp.RightBound;
-	b.UR.y = ND_coord(left0).y - GD_rank(g).get(r).ht1;
+	b.UR.y = ND_coord(left0).y - GD_rank(g).get__(r).ht1;
 	sp.Rank_box[r].setStruct(b);
     }
     return b;
@@ -2821,6 +2727,8 @@ LEAVING("bajn5vx0isu427n6dh131b985","rank_box");
 
 //3 6qwcnugx2ytjrvi5rgxzyzg5i
 // static int straight_len(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="straight_len", key="6qwcnugx2ytjrvi5rgxzyzg5i", definition="static int straight_len(node_t * n)")
 public static int straight_len(ST_Agnode_s n) {
 ENTERING("6qwcnugx2ytjrvi5rgxzyzg5i","straight_len");
 try {
@@ -2828,7 +2736,7 @@ try {
     ST_Agnode_s v;
     v = n;
     while (true) {
-	v = (ST_Agnode_s) aghead(ND_out(v).getFromList(0));
+	v = (ST_Agnode_s) aghead(ND_out(v).list.get_(0));
 	if (ND_node_type(v) != 1)
 	    break;
 	if ((ND_out(v).size != 1) || (ND_in(v).size != 1))
@@ -2848,16 +2756,18 @@ LEAVING("6qwcnugx2ytjrvi5rgxzyzg5i","straight_len");
 
 //3 15pgjjuil2c1rjldu29j07gbz
 // static edge_t *straight_path(edge_t * e, int cnt, pointf * plist, int *np) 
-public static ST_Agedge_s straight_path(ST_Agedge_s e, int cnt, __ptr__ plist, int np[]) {
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="", key="15pgjjuil2c1rjldu29j07gbz", definition="static edge_t *straight_path(edge_t * e, int cnt, pointf * plist, int *np)")
+public static ST_Agedge_s straight_path(ST_Agedge_s e, int cnt, CStar<ST_pointf> plist, int np[]) {
 ENTERING("15pgjjuil2c1rjldu29j07gbz","straight_path");
 try {
     int n = np[0];
     ST_Agedge_s f = e;
     while ((cnt--)!=0)
-	f = (ST_Agedge_s) ND_out(aghead(f)).getFromList(0);
-    plist.plus(np[0]++).setStruct(plist.plus(n - 1).getStruct());
-    plist.plus(np[0]++).setStruct(plist.plus(n - 1).getStruct());
-    plist.plus(np[0]).setStruct(ND_coord(agtail(f)));  /* will be overwritten by next spline */
+	f = (ST_Agedge_s) ND_out(aghead(f)).list.get_(0);
+    plist.get__(np[0]++).___(plist.get__(n - 1));
+    plist.get__(np[0]++).___(plist.get__(n - 1));
+    plist.get__(np[0]).___(ND_coord(agtail(f)));  /* will be overwritten by next spline */
     return f;
 } finally {
 LEAVING("15pgjjuil2c1rjldu29j07gbz","straight_path");
@@ -2869,6 +2779,8 @@ LEAVING("15pgjjuil2c1rjldu29j07gbz","straight_path");
 
 //3 4ilkzqtegd5uffawb4qcjthu1
 // static void recover_slack(edge_t * e, path * p) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="recover_slack", key="4ilkzqtegd5uffawb4qcjthu1", definition="static void recover_slack(edge_t * e, path * p)")
 public static void recover_slack(ST_Agedge_s e, ST_path p) {
 ENTERING("4ilkzqtegd5uffawb4qcjthu1","recover_slack");
 try {
@@ -2877,7 +2789,7 @@ try {
     b = 0;			/* skip first rank box */
     for (vn = aghead(e);
 	 ND_node_type(vn) == 1 && N(((Boolean)Z.z().sinfo.splineMerge.exe(vn)).booleanValue());
-	 vn = aghead(ND_out(vn).getFromList(0))) {
+	 vn = aghead(ND_out(vn).list.get_(0))) {
 	while ((b < p.nbox) && (p.boxes[b].LL.y > ND_coord(vn).y))
 	    b++;
 	if (b >= p.nbox)
@@ -2902,10 +2814,12 @@ LEAVING("4ilkzqtegd5uffawb4qcjthu1","recover_slack");
 
 //3 3vmg1q1r0eb14etvjdk4cukpd
 // static void resize_vn(vn, lx, cx, rx) node_t *vn
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="resize_vn", key="3vmg1q1r0eb14etvjdk4cukpd", definition="static void resize_vn(vn, lx, cx, rx) node_t *vn")
 public static void resize_vn(ST_Agnode_s vn, int lx, int cx, int rx) {
 ENTERING("3vmg1q1r0eb14etvjdk4cukpd","resize_vn");
 try {
-    ND_coord(vn).setDouble("x", cx);
+    ND_coord(vn).x = cx;
     ND_lw(vn, cx - lx);
     ND_rw(vn, rx - cx);
 } finally {
@@ -2918,12 +2832,14 @@ LEAVING("3vmg1q1r0eb14etvjdk4cukpd","resize_vn");
 
 //3 9t0v5wicmjuc3ij9hko6iawle
 // static edge_t *top_bound(edge_t * e, int side) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="", key="9t0v5wicmjuc3ij9hko6iawle", definition="static edge_t *top_bound(edge_t * e, int side)")
 public static ST_Agedge_s top_bound(ST_Agedge_s e, int side) {
 ENTERING("9t0v5wicmjuc3ij9hko6iawle","top_bound");
 try {
     ST_Agedge_s f, ans = null;
     int i;
-    for (i = 0; (f = (ST_Agedge_s) ND_out(agtail(e)).getFromList(i))!=null; i++) {
+    for (i = 0; (f = (ST_Agedge_s) ND_out(agtail(e)).list.get_(i))!=null; i++) {
 	if (side * (ND_order(aghead(f)) - ND_order(aghead(e))) <= 0)
 	    continue;
 	if ((ED_spl(f) == null)
@@ -2944,12 +2860,14 @@ LEAVING("9t0v5wicmjuc3ij9hko6iawle","top_bound");
 
 //3 9fsg0uiyhtrayd4mimmc0i25e
 // static edge_t *bot_bound(edge_t * e, int side) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="", key="9fsg0uiyhtrayd4mimmc0i25e", definition="static edge_t *bot_bound(edge_t * e, int side)")
 public static ST_Agedge_s bot_bound(ST_Agedge_s e, int side) {
 ENTERING("9fsg0uiyhtrayd4mimmc0i25e","bot_bound");
 try {
     ST_Agedge_s f, ans = null;
     int i;
-    for (i = 0; (f = (ST_Agedge_s) ND_in(aghead(e)).getFromList(i))!=null; i++) {
+    for (i = 0; (f = (ST_Agedge_s) ND_in(aghead(e)).list.get_(i))!=null; i++) {
 	if (side * (ND_order(agtail(f)) - ND_order(agtail(e))) <= 0)
 	    continue;
 	if ((ED_spl(f) == null)
@@ -2970,6 +2888,8 @@ LEAVING("9fsg0uiyhtrayd4mimmc0i25e","bot_bound");
 
 //3 65uvkv1mextaah5m997ibe3qs
 // static int cl_vninside(graph_t * cl, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="cl_vninside", key="65uvkv1mextaah5m997ibe3qs", definition="static int cl_vninside(graph_t * cl, node_t * n)")
 public static boolean cl_vninside(ST_Agraph_s cl, ST_Agnode_s n) {
 ENTERING("65uvkv1mextaah5m997ibe3qs","cl_vninside");
 try {
@@ -2985,6 +2905,8 @@ LEAVING("65uvkv1mextaah5m997ibe3qs","cl_vninside");
 
 //3 dzvvmxkya868w5x78lkvchigk
 // static Agraph_t *cl_bound(graph_t* g,  node_t *n, node_t *adj) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="", key="dzvvmxkya868w5x78lkvchigk", definition="static Agraph_t *cl_bound(graph_t* g,  node_t *n, node_t *adj)")
 public static ST_Agraph_s cl_bound(ST_Agraph_s g,  ST_Agnode_s n, ST_Agnode_s adj) {
 ENTERING("dzvvmxkya868w5x78lkvchigk","cl_bound");
 try {
@@ -2994,7 +2916,7 @@ try {
     if (ND_node_type(n) == 0)
 	tcl = hcl = ND_clust(n);
     else {
-	orig = ED_to_orig(ND_out(n).getFromList(0));
+	orig = ED_to_orig(ND_out(n).list.get_(0));
 	tcl = ND_clust(agtail(orig));
 	hcl = ND_clust(aghead(orig));
     }
@@ -3003,7 +2925,7 @@ try {
 	if (cl!=null && NEQ(cl, tcl) && NEQ(cl, hcl))
 	    rv = cl;
     } else {
-	orig = ED_to_orig(ND_out(adj).getFromList(0));
+	orig = ED_to_orig(ND_out(adj).list.get_(0));
 	cl = ( EQ(ND_clust(agtail(orig)), g) ? null:ND_clust(agtail(orig)));
 	if (cl!=null && NEQ(cl, tcl) && NEQ(cl, hcl) && cl_vninside(cl, adj))
 	    rv = cl;
@@ -3024,6 +2946,8 @@ LEAVING("dzvvmxkya868w5x78lkvchigk","cl_bound");
 
 //3 6qwgl36ugfnduc5x59ohuewv1
 // static boxf maximal_bbox(graph_t* g, spline_info_t* sp, node_t* vn, edge_t* ie, edge_t* oe) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="maximal_bbox", key="6qwgl36ugfnduc5x59ohuewv1", definition="static boxf maximal_bbox(graph_t* g, spline_info_t* sp, node_t* vn, edge_t* ie, edge_t* oe)")
 public static ST_boxf maximal_bbox(ST_Agraph_s g, ST_spline_info_t sp, ST_Agnode_s vn, ST_Agedge_s ie, ST_Agedge_s oe) {
 // WARNING!! STRUCT
 return maximal_bbox_w_(g, sp, vn, ie, oe).copy();
@@ -3077,8 +3001,8 @@ try {
 	rv.UR.x = rv.UR.x - ND_rw(vn);
 	if (rv.UR.x < rv.LL.x) rv.UR.x = ND_coord(vn).x;
     }
-    rv.LL.y = ND_coord(vn).y - GD_rank(g).get(ND_rank(vn)).ht1;
-    rv.UR.y = ND_coord(vn).y + GD_rank(g).get(ND_rank(vn)).ht2;
+    rv.LL.y = ND_coord(vn).y - GD_rank(g).get__(ND_rank(vn)).ht1;
+    rv.UR.y = ND_coord(vn).y + GD_rank(g).get__(ND_rank(vn)).ht2;
     return rv;
 } finally {
 LEAVING("6qwgl36ugfnduc5x59ohuewv1","maximal_bbox");
@@ -3090,14 +3014,16 @@ LEAVING("6qwgl36ugfnduc5x59ohuewv1","maximal_bbox");
 
 //3 18pm6r3xcy90f0xi5hpm9jdhk
 // static node_t * neighbor(graph_t* g, node_t *vn, edge_t *ie, edge_t *oe, int dir) 
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="neighbor", key="18pm6r3xcy90f0xi5hpm9jdhk", definition="static node_t * neighbor(graph_t* g, node_t *vn, edge_t *ie, edge_t *oe, int dir)")
 public static ST_Agnode_s neighbor(ST_Agraph_s g, ST_Agnode_s vn, ST_Agedge_s ie, ST_Agedge_s oe, int dir) {
 ENTERING("18pm6r3xcy90f0xi5hpm9jdhk","neighbor");
 try {
     int i;
     ST_Agnode_s n, rv = null;
-    ST_rank_t.Array2 rank = GD_rank(g).plus(ND_rank(vn));
-    for (i = ND_order(vn) + dir; ((i >= 0) && (i < rank.getPtr().n)); i += dir) {
-	n = (ST_Agnode_s) rank.getPtr().v.get(i);
+    CStar<ST_rank_t> rank = GD_rank(g).plus_(ND_rank(vn));
+    for (i = ND_order(vn) + dir; ((i >= 0) && (i < rank.get__(0).n)); i += dir) {
+	n = rank.get__(0).v.get_(i);
 	if ((ND_node_type(n) == 1) && (ND_label(n)!=null)) {
 	    rv = n;
 	    break;
@@ -3122,6 +3048,8 @@ LEAVING("18pm6r3xcy90f0xi5hpm9jdhk","neighbor");
 
 //3 f4q0oqe165s9pl5k0th5noeyv
 // static boolean pathscross(n0, n1, ie1, oe1) node_t *n0, *n1
+@Unused
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="pathscross", key="f4q0oqe165s9pl5k0th5noeyv", definition="static boolean pathscross(n0, n1, ie1, oe1) node_t *n0, *n1")
 public static boolean pathscross(ST_Agnode_s n0, ST_Agnode_s n1, ST_Agedge_s ie1, ST_Agedge_s oe1) {
 ENTERING("f4q0oqe165s9pl5k0th5noeyv","pathscross");
 try {
@@ -3134,34 +3062,34 @@ try {
 	return false;
     e1 = oe1;
     if (ND_out(n0).size == 1 && e1!=null) {
-	e0 = (ST_Agedge_s) ND_out(n0).getFromList(0);
+	e0 = (ST_Agedge_s) ND_out(n0).list.get_(0);
 	for (cnt = 0; cnt < 2; cnt++) {
 	    if (EQ(na = aghead(e0), nb = aghead(e1)))
 		break;
 	    if (order != (ND_order(na) > ND_order(nb)))
-		return NOT(false);
+		return true;
 	    if ((ND_out(na).size != 1) || (ND_node_type(na) == 0))
 		break;
-	    e0 = (ST_Agedge_s) ND_out(na).getFromList(0);
+	    e0 = (ST_Agedge_s) ND_out(na).list.get_(0);
 	    if ((ND_out(nb).size != 1) || (ND_node_type(nb) == 0))
 		break;
-	    e1 = (ST_Agedge_s) ND_out(nb).getFromList(0);
+	    e1 = (ST_Agedge_s) ND_out(nb).list.get_(0);
 	}
     }
     e1 = ie1;
     if (ND_in(n0).size == 1 && e1!=null) {
-	e0 = (ST_Agedge_s) ND_in(n0).getFromList(0);
+	e0 = (ST_Agedge_s) ND_in(n0).list.get_(0);
 	for (cnt = 0; cnt < 2; cnt++) {
 	    if (EQ(na = agtail(e0), nb = agtail(e1)))
 		break;
 	    if (order != (ND_order(na) > ND_order(nb)))
-		return NOT(false);
+		return true;
 	    if ((ND_in(na).size != 1) || (ND_node_type(na) == 0))
 		break;
-	    e0 = (ST_Agedge_s) ND_in(na).getFromList(0);
+	    e0 = (ST_Agedge_s) ND_in(na).list.get_(0);
 	    if ((ND_in(nb).size != 1) || (ND_node_type(nb) == 0))
 		break;
-	    e1 = (ST_Agedge_s) ND_in(nb).getFromList(0);
+	    e1 = (ST_Agedge_s) ND_in(nb).list.get_(0);
 	}
     }
     return false;

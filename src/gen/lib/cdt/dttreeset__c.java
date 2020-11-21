@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class dttreeset__c {
@@ -115,6 +118,8 @@ public class dttreeset__c {
 
 //3 wsyenh3pav82eqg8t6irqmpa
 // static Dtlink_t* treebalance(Dtlink_t* list, int size)      
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dttreeset.c", name="treebalance", key="wsyenh3pav82eqg8t6irqmpa", definition="static Dtlink_t* treebalance(Dtlink_t* list, int size)")
 public static Object treebalance(Object... arg) {
 UNSUPPORTED("9upl561wy34u2kgottk3knhw7"); // static Dtlink_t* treebalance(Dtlink_t* list, int size)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -138,6 +143,8 @@ throw new UnsupportedOperationException();
 
 //3 7iha6xdoo376u861k6wv8c5pr
 // int dttreeset(Dt_t* dt, int minp, int balance)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dttreeset.c", name="dttreeset", key="7iha6xdoo376u861k6wv8c5pr", definition="int dttreeset(Dt_t* dt, int minp, int balance)")
 public static Object dttreeset(Object... arg) {
 UNSUPPORTED("3t7ugtrfg37d90rb22ee962hg"); // int dttreeset(Dt_t* dt, int minp, int balance)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -153,7 +160,7 @@ UNSUPPORTED("7v4oowgea39cogwcgkt7np8iv"); // 		if(minp <= (sizeof(size_t)*8 - 2)
 UNSUPPORTED("aahg7tgohnhh704ric6b2h83i"); // 			minp += 4;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 UNSUPPORTED("80ideyp40y4dgch5lhho631ig"); // 	if((dt->data->minp = minp + (minp%2)) > (sizeof(size_t)*8 - 2))
-UNSUPPORTED("c19ehve53a2rtc95cfpgwc2ua"); // 		dt->data->minp = (sizeof(size_t)*8 - 2);
+UNSUPPORTED("c19ehve53a2rtc95cfpgwc2ua"); // 		dt->data->minp = sizeof(size_t)*8 - 2;
 UNSUPPORTED("s52ssf9x1ga1f1e63jhd0caj"); // 	if(balance)
 UNSUPPORTED("3nozetyxtt4d04pcxdwbatake"); // 		dt->data->here = treebalance(dtflatten(dt), size);
 UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;

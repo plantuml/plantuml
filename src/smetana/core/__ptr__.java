@@ -45,7 +45,6 @@ public interface __ptr__ extends __c__fields {
 	public __ptr__ unsupported();
 	public __ptr__ plus(int pointerMove);
 	public int comparePointer(__ptr__ other);
-	public int minus(__ptr__ other);
 
 	public String getDebug(String fieldName);
 

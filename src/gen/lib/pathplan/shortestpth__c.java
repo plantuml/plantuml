@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.pathplan;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class shortestpth__c {
@@ -67,6 +70,8 @@ public class shortestpth__c {
 
 //3 3vmsnhxv064fhv23juvb3901f
 // int *shortestPath(int root, int target, int V, array2 wadj) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/shortestpth.c", name="", key="3vmsnhxv064fhv23juvb3901f", definition="int *shortestPath(int root, int target, int V, array2 wadj)")
 public static Object shortestPath(Object... arg) {
 UNSUPPORTED("ck9i1aidj3wocmwgkt8103ov9"); // int *shortestPath(int root, int target, int V, array2 wadj)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -124,6 +129,8 @@ throw new UnsupportedOperationException();
 
 //3 eb1kiq1ildiyme0qn3xszjyvk
 // int *makePath(Ppoint_t p, int pp, COORD * pvis, 	      Ppoint_t q, int qp, COORD * qvis, vconfig_t * conf) 
+@Unused
+@Original(version="2.38.0", path="lib/pathplan/shortestpth.c", name="", key="eb1kiq1ildiyme0qn3xszjyvk", definition="int *makePath(Ppoint_t p, int pp, COORD * pvis, 	      Ppoint_t q, int qp, COORD * qvis, vconfig_t * conf)")
 public static Object makePath(Object... arg) {
 UNSUPPORTED("2jth0bos9lrgk2xi5083p5rvp"); // int *makePath(Ppoint_t p, int pp, COORD * pvis,
 UNSUPPORTED("a6dn81zxyfp9ydvajebmx15wt"); // 	      Ppoint_t q, int qp, COORD * qvis, vconfig_t * conf)

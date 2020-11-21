@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.circogen;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -290,6 +293,8 @@ public class blockpath__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -305,29 +310,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -349,6 +337,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -364,29 +354,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
 
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -404,6 +377,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -421,6 +396,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -438,6 +415,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -455,6 +434,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -472,6 +453,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -489,6 +472,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -506,6 +491,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -525,6 +512,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -544,6 +533,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -563,6 +554,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -582,6 +575,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -596,6 +591,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -610,6 +607,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -624,6 +623,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -638,6 +639,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -655,6 +658,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -684,6 +689,8 @@ throw new UnsupportedOperationException();
 
 //3 1xvwimo7h6xxwr3nk7628z91s
 // static Agraph_t *clone_graph(Agraph_t * ing, Agraph_t ** xg) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="1xvwimo7h6xxwr3nk7628z91s", definition="static Agraph_t *clone_graph(Agraph_t * ing, Agraph_t ** xg)")
 public static Object clone_graph(Object... arg) {
 UNSUPPORTED("34rwtfj0jl6bt8tx92beev5es"); // static Agraph_t *clone_graph(Agraph_t * ing, Agraph_t ** xg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -731,6 +738,8 @@ throw new UnsupportedOperationException();
 
 //3 4js7mtzis5vqcin2nnzmzp3z6
 // static deglist_t *getList(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="4js7mtzis5vqcin2nnzmzp3z6", definition="static deglist_t *getList(Agraph_t * g)")
 public static Object getList(Object... arg) {
 UNSUPPORTED("a2dgfuc79lf165ux7e468ykof"); // static deglist_t *getList(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -750,6 +759,8 @@ throw new UnsupportedOperationException();
 
 //3 4ighdv8te0lys3rchzw8aymm0
 // static void find_pair_edges(Agraph_t * g, Agnode_t * n, Agraph_t * outg) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="find_pair_edges", key="4ighdv8te0lys3rchzw8aymm0", definition="static void find_pair_edges(Agraph_t * g, Agnode_t * n, Agraph_t * outg)")
 public static Object find_pair_edges(Object... arg) {
 UNSUPPORTED("xutw9e2nplvs3q4gfvk7xn29"); // static void find_pair_edges(Agraph_t * g, Agnode_t * n, Agraph_t * outg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -849,6 +860,8 @@ throw new UnsupportedOperationException();
 
 //3 5hjb2e85ks2yxpsv09neo671u
 // static Agraph_t *remove_pair_edges(Agraph_t * ing) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="5hjb2e85ks2yxpsv09neo671u", definition="static Agraph_t *remove_pair_edges(Agraph_t * ing)")
 public static Object remove_pair_edges(Object... arg) {
 UNSUPPORTED("8b98j875ieeuxpp3w5kzn2kf8"); // static Agraph_t *remove_pair_edges(Agraph_t * ing)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -895,6 +908,8 @@ throw new UnsupportedOperationException();
 
 //3 f1mdq67yllxhx8tkbelbjdkx9
 // static void measure_distance(Agnode_t * n, Agnode_t * ancestor, int dist, 		 Agnode_t * change) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="measure_distance", key="f1mdq67yllxhx8tkbelbjdkx9", definition="static void measure_distance(Agnode_t * n, Agnode_t * ancestor, int dist, 		 Agnode_t * change)")
 public static Object measure_distance(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("8bbskd8aene9q6w9pz2qp13fw"); // measure_distance(Agnode_t * n, Agnode_t * ancestor, int dist,
@@ -937,6 +952,8 @@ throw new UnsupportedOperationException();
 
 //3 eqsv2jiguz68m8clhpypd2wtj
 // static nodelist_t *find_longest_path(Agraph_t * tree) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="eqsv2jiguz68m8clhpypd2wtj", definition="static nodelist_t *find_longest_path(Agraph_t * tree)")
 public static Object find_longest_path(Object... arg) {
 UNSUPPORTED("cvtvy1400pesjx53tcmkjoh24"); // static nodelist_t *find_longest_path(Agraph_t * tree)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -996,6 +1013,8 @@ throw new UnsupportedOperationException();
 
 //3 7mnudtov3ojyhnxn1jmz3zhy7
 // static void dfs(Agraph_t * g, Agnode_t * n, Agraph_t * tree) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="dfs", key="7mnudtov3ojyhnxn1jmz3zhy7", definition="static void dfs(Agraph_t * g, Agnode_t * n, Agraph_t * tree)")
 public static Object dfs(Object... arg) {
 UNSUPPORTED("131fnq97ij23iofee00tmleze"); // static void dfs(Agraph_t * g, Agnode_t * n, Agraph_t * tree)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1023,6 +1042,8 @@ throw new UnsupportedOperationException();
 
 //3 8m28w7pi7rv4oxv0akl2s4az4
 // static Agraph_t *spanning_tree(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="8m28w7pi7rv4oxv0akl2s4az4", definition="static Agraph_t *spanning_tree(Agraph_t * g)")
 public static Object spanning_tree(Object... arg) {
 UNSUPPORTED("49a0lsjfstrgxkgmha9h4b27r"); // static Agraph_t *spanning_tree(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1056,6 +1077,8 @@ throw new UnsupportedOperationException();
 
 //3 c94mjtmn1vruvrupmwtvtj4j4
 // static void block_graph(Agraph_t * g, block_t * sn) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="block_graph", key="c94mjtmn1vruvrupmwtvtj4j4", definition="static void block_graph(Agraph_t * g, block_t * sn)")
 public static Object block_graph(Object... arg) {
 UNSUPPORTED("2qk0mibp8cprk47gh0021zl53"); // static void block_graph(Agraph_t * g, block_t * sn)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1078,6 +1101,8 @@ throw new UnsupportedOperationException();
 
 //3 1e0vzs6lzgjx91tory442op41
 // static int count_all_crossings(nodelist_t * list, Agraph_t * subg) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="count_all_crossings", key="1e0vzs6lzgjx91tory442op41", definition="static int count_all_crossings(nodelist_t * list, Agraph_t * subg)")
 public static Object count_all_crossings(Object... arg) {
 UNSUPPORTED("airx5so2nky74856ss97mvrrt"); // static int count_all_crossings(nodelist_t * list, Agraph_t * subg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1130,6 +1155,8 @@ throw new UnsupportedOperationException();
 
 //3 8czdf1x63rnqxr498fl5mu2ii
 // static nodelist_t *reduce(nodelist_t * list, Agraph_t * subg, int *cnt) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="8czdf1x63rnqxr498fl5mu2ii", definition="static nodelist_t *reduce(nodelist_t * list, Agraph_t * subg, int *cnt)")
 public static Object reduce(Object... arg) {
 UNSUPPORTED("cwpahrifd5wwpp1k3y6amf8q3"); // static nodelist_t *reduce(nodelist_t * list, Agraph_t * subg, int *cnt)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1177,6 +1204,8 @@ throw new UnsupportedOperationException();
 
 //3 9pjrmh6pnvpbc5tpxbuxkfy2r
 // static nodelist_t *reduce_edge_crossings(nodelist_t * list, 					 Agraph_t * subg) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="9pjrmh6pnvpbc5tpxbuxkfy2r", definition="static nodelist_t *reduce_edge_crossings(nodelist_t * list, 					 Agraph_t * subg)")
 public static Object reduce_edge_crossings(Object... arg) {
 UNSUPPORTED("4eoehi8akkxbp2fncwis0hbk9"); // static nodelist_t *reduce_edge_crossings(nodelist_t * list,
 UNSUPPORTED("a935m1m335lnnl5kbpomckdgf"); // 					 Agraph_t * subg)
@@ -1203,6 +1232,8 @@ throw new UnsupportedOperationException();
 
 //3 bq29c0uv67b29jesxdkwou7vq
 // static double largest_nodesize(nodelist_t * list) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="largest_nodesize", key="bq29c0uv67b29jesxdkwou7vq", definition="static double largest_nodesize(nodelist_t * list)")
 public static Object largest_nodesize(Object... arg) {
 UNSUPPORTED("5nov6rgtb1xfsmsmb95ao36jk"); // static double largest_nodesize(nodelist_t * list)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1227,6 +1258,8 @@ throw new UnsupportedOperationException();
 
 //3 atxva7f7s47kevximw8nohn83
 // static void place_node(Agraph_t * g, Agnode_t * n, nodelist_t * list) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="place_node", key="atxva7f7s47kevximw8nohn83", definition="static void place_node(Agraph_t * g, Agnode_t * n, nodelist_t * list)")
 public static Object place_node(Object... arg) {
 UNSUPPORTED("dhsmb0fpwrhqfh202b2ya1gwh"); // static void place_node(Agraph_t * g, Agnode_t * n, nodelist_t * list)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1281,6 +1314,8 @@ throw new UnsupportedOperationException();
 
 //3 cawey01ormyor7v954u5hzfey
 // static void place_residual_nodes(Agraph_t * g, nodelist_t * list) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="place_residual_nodes", key="cawey01ormyor7v954u5hzfey", definition="static void place_residual_nodes(Agraph_t * g, nodelist_t * list)")
 public static Object place_residual_nodes(Object... arg) {
 UNSUPPORTED("en0wlzq4qk95xb32n6ux616st"); // static void place_residual_nodes(Agraph_t * g, nodelist_t * list)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1299,6 +1334,8 @@ throw new UnsupportedOperationException();
 
 //3 aaehk4efk1kdkult25czfr4ly
 // nodelist_t *layout_block(Agraph_t * g, block_t * sn, double min_dist) 
+@Unused
+@Original(version="2.38.0", path="lib/circogen/blockpath.c", name="", key="aaehk4efk1kdkult25czfr4ly", definition="nodelist_t *layout_block(Agraph_t * g, block_t * sn, double min_dist)")
 public static Object layout_block(Object... arg) {
 UNSUPPORTED("96wogy71y5hq6ao91l2959nwg"); // nodelist_t *layout_block(Agraph_t * g, block_t * sn, double min_dist)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -52,7 +52,7 @@ import smetana.core.__ptr__;
 public class ST_gvplugin_active_layout_t extends UnsupportedStructAndPtr {
 
 	public ST_gvlayout_engine_s engine;
-	private int id;
+	public int id;
 	public ST_gvlayout_features_t features;
 	public CString type;
 

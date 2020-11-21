@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.ortho;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class sgraph__c {
@@ -151,6 +154,8 @@ public class sgraph__c {
 
 //3 do1p8q9fgspbwjclhfas1e31i
 // void gsave (sgraph* G) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="gsave", key="do1p8q9fgspbwjclhfas1e31i", definition="void gsave (sgraph* G)")
 public static Object gsave(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("53tz1kawkoq5faz7kymp6ptpo"); // gsave (sgraph* G)
@@ -170,6 +175,8 @@ throw new UnsupportedOperationException();
 
 //3 4bd3mhrsaxr0us4mbdlnz3fva
 // void  reset(sgraph* G) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="reset", key="4bd3mhrsaxr0us4mbdlnz3fva", definition="void  reset(sgraph* G)")
 public static Object reset(Object... arg) {
 UNSUPPORTED("347dderd02mvlozoheqo4ejwo"); // void 
 UNSUPPORTED("o6ryffoh62mg3jqikb1bcvcn"); // reset(sgraph* G)
@@ -191,6 +198,8 @@ throw new UnsupportedOperationException();
 
 //3 2uooy3bnw1kc4mm4ns09blzvd
 // void initSEdges (sgraph* g, int maxdeg) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="initSEdges", key="2uooy3bnw1kc4mm4ns09blzvd", definition="void initSEdges (sgraph* g, int maxdeg)")
 public static Object initSEdges(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("3t8ixyxav6ee8tjumnj6c4on7"); // initSEdges (sgraph* g, int maxdeg)
@@ -216,6 +225,8 @@ throw new UnsupportedOperationException();
 
 //3 4lws7mi89ekzzcc99wuw9r7l8
 // sgraph* createSGraph (int nnodes) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="createSGraph", key="4lws7mi89ekzzcc99wuw9r7l8", definition="sgraph* createSGraph (int nnodes)")
 public static Object createSGraph(Object... arg) {
 UNSUPPORTED("9xadge294rqhy06asmqycka8m"); // sgraph*
 UNSUPPORTED("eqjwxhjyhqmefxsvpknl1bnfx"); // createSGraph (int nnodes)
@@ -235,6 +246,8 @@ throw new UnsupportedOperationException();
 
 //3 4jwt9radjtehigwninuxfni66
 // snode* createSNode (sgraph* g) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="createSNode", key="4jwt9radjtehigwninuxfni66", definition="snode* createSNode (sgraph* g)")
 public static Object createSNode(Object... arg) {
 UNSUPPORTED("7qyamsdkopruu23xaccl0bcd2"); // snode*
 UNSUPPORTED("753vtsohiclqv7nl3y14twf19"); // createSNode (sgraph* g)
@@ -253,6 +266,8 @@ throw new UnsupportedOperationException();
 
 //3 49zscu3ughv1sfoes00tmvzew
 // static void addEdgeToNode (snode* np, sedge* e, int idx) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="addEdgeToNode", key="49zscu3ughv1sfoes00tmvzew", definition="static void addEdgeToNode (snode* np, sedge* e, int idx)")
 public static Object addEdgeToNode(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("dpg266aklzv95plhgmmdgdl2h"); // addEdgeToNode (snode* np, sedge* e, int idx)
@@ -269,6 +284,8 @@ throw new UnsupportedOperationException();
 
 //3 25bbgi67jwpg5nrx87bctkn5s
 // sedge* createSEdge (sgraph* g, snode* v1, snode* v2, double wt) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="createSEdge", key="25bbgi67jwpg5nrx87bctkn5s", definition="sedge* createSEdge (sgraph* g, snode* v1, snode* v2, double wt)")
 public static Object createSEdge(Object... arg) {
 UNSUPPORTED("de30fcx2rpq95h8prggzz38de"); // sedge*
 UNSUPPORTED("e67qstzz1cjy6tm1gp72tqiy9"); // createSEdge (sgraph* g, snode* v1, snode* v2, double wt)
@@ -293,6 +310,8 @@ throw new UnsupportedOperationException();
 
 //3 cmavbm512p00aze5hpa7ewqnf
 // void freeSGraph (sgraph* g) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="freeSGraph", key="cmavbm512p00aze5hpa7ewqnf", definition="void freeSGraph (sgraph* g)")
 public static Object freeSGraph(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("9hthkvnsrcbkqzxbng2mlgcr"); // freeSGraph (sgraph* g)
@@ -311,6 +330,8 @@ throw new UnsupportedOperationException();
 
 //3 1rcimcpgyvapk639i1ln4ubi5
 // static snode* adjacentNode(sgraph* g, sedge* e, snode* n) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="adjacentNode", key="1rcimcpgyvapk639i1ln4ubi5", definition="static snode* adjacentNode(sgraph* g, sedge* e, snode* n)")
 public static Object adjacentNode(Object... arg) {
 UNSUPPORTED("1mqfssg5cquehb5bdk2189gy2"); // static snode*
 UNSUPPORTED("d7hrrud3osvm08rbt95y6nc7v"); // adjacentNode(sgraph* g, sedge* e, snode* n)
@@ -329,6 +350,8 @@ throw new UnsupportedOperationException();
 
 //3 9giqtyb1anron57zz1mdcuwr0
 // int shortPath (sgraph* g, snode* from, snode* to) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/sgraph.c", name="shortPath", key="9giqtyb1anron57zz1mdcuwr0", definition="int shortPath (sgraph* g, snode* from, snode* to)")
 public static Object shortPath(Object... arg) {
 UNSUPPORTED("etrjsq5w49uo9jq5pzifohkqw"); // int
 UNSUPPORTED("2d7cnx1fuelcu110onyrglta1"); // shortPath (sgraph* g, snode* from, snode* to)

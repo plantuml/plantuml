@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class io__c {
@@ -183,6 +186,8 @@ public class io__c {
 
 //3 b0a8zjzqjkvaiqw5i1y82wmzl
 // static int iofread(void *chan, char *buf, int bufsize) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/io.c", name="iofread", key="b0a8zjzqjkvaiqw5i1y82wmzl", definition="static int iofread(void *chan, char *buf, int bufsize)")
 public static Object iofread(Object... arg) {
 UNSUPPORTED("bmcd2lihkoyncyz2t8p1ilwhr"); // static int iofread(void *chan, char *buf, int bufsize)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -202,6 +207,8 @@ throw new UnsupportedOperationException();
 
 //3 91y9tcvbxti1ic9nine083re2
 // static int ioputstr(void *chan, const char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/io.c", name="ioputstr", key="91y9tcvbxti1ic9nine083re2", definition="static int ioputstr(void *chan, const char *str)")
 public static Object ioputstr(Object... arg) {
 UNSUPPORTED("2inl53c1xtplxmq6bmhva91ld"); // static int ioputstr(void *chan, const char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -216,6 +223,8 @@ throw new UnsupportedOperationException();
 
 //3 atp6gxqi8j9nz39ry13puhwck
 // static int ioflush(void *chan) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/io.c", name="ioflush", key="atp6gxqi8j9nz39ry13puhwck", definition="static int ioflush(void *chan)")
 public static Object ioflush(Object... arg) {
 UNSUPPORTED("elxcueeu6temiev9ncf78kvoq"); // static int ioflush(void *chan)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -234,6 +243,8 @@ throw new UnsupportedOperationException();
 
 //3 b6znej4isyhxv8vcdyjnnhlpu
 // static int memiofread(void *chan, char *buf, int bufsize) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/io.c", name="memiofread", key="b6znej4isyhxv8vcdyjnnhlpu", definition="static int memiofread(void *chan, char *buf, int bufsize)")
 public static Object memiofread(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("cvqc79yfz9kp49vi5uimqh4jl"); // memiofread(void *chan, char *buf, int bufsize)
@@ -276,6 +287,8 @@ throw new UnsupportedOperationException();
 
 //3 7hpggznawe61je0f77vzdulun
 // Agraph_t *agmemread(const char *cp) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/io.c", name="", key="7hpggznawe61je0f77vzdulun", definition="Agraph_t *agmemread(const char *cp)")
 public static Object agmemread(Object... arg) {
 UNSUPPORTED("8gnhy5r408vxior7h2ddxp3ea"); // Agraph_t *agmemread(const char *cp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

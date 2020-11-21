@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -51,254 +51,24 @@ import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import h.ST_Agraph_s;
 import h.ST_boxf;
 import h.ST_pointf;
-import h.xdot;
+import smetana.core.CStar;
 import smetana.core.CString;
 import smetana.core.__ptr__;
 
 public class emit__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
-
-
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
-
-
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
-
-
 
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -314,29 +84,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -358,6 +111,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -373,29 +128,10 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
-
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -413,6 +149,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -430,6 +168,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -447,6 +187,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -464,6 +206,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -481,6 +225,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -498,6 +244,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -515,6 +263,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -534,6 +284,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -553,6 +305,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -572,6 +326,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -591,6 +347,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -605,6 +363,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -619,6 +379,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -633,6 +395,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -647,6 +411,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -664,6 +430,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -678,14 +446,13 @@ throw new UnsupportedOperationException();
 
 
 
-
-//3 7udip7yo3ddkp9ocjftokpm9y
-// void* init_xdot (Agraph_t* g) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_xdot", key="7udip7yo3ddkp9ocjftokpm9y", definition="void* init_xdot (Agraph_t* g)")
 public static __ptr__ init_xdot(ST_Agraph_s g) {
 ENTERING("7udip7yo3ddkp9ocjftokpm9y","init_xdot");
 try {
     CString p;
-    xdot xd = null;
+    __ptr__ xd = null;
     if (N((p = agget(g, new CString("_background")))!=null && p.charAt(0)!='\0')) {
 	if (N((p = agget(g, new CString("_draw_")))!=null  && p.charAt(0)!='\0')) {
 	    return null;
@@ -714,6 +481,8 @@ LEAVING("7udip7yo3ddkp9ocjftokpm9y","init_xdot");
 
 //3 7d00uua41zvsvxe77gttfnmy
 // obj_state_t* push_obj_state(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="push_obj_state", key="7d00uua41zvsvxe77gttfnmy", definition="obj_state_t* push_obj_state(GVJ_t *job)")
 public static Object push_obj_state(Object... arg) {
 UNSUPPORTED("epyu2q1m9hozws9k2sjri40sa"); // obj_state_t* push_obj_state(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -749,6 +518,8 @@ throw new UnsupportedOperationException();
 
 //3 fky2di67il17v6esshx73u77
 // void pop_obj_state(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="pop_obj_state", key="fky2di67il17v6esshx73u77", definition="void pop_obj_state(GVJ_t *job)")
 public static Object pop_obj_state(Object... arg) {
 UNSUPPORTED("b5pcmjz1yx45rkkn6ihfese3y"); // void pop_obj_state(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -782,6 +553,8 @@ throw new UnsupportedOperationException();
 
 //3 z4e7tnt40d3c4kv5u7cyhl9x
 // int initMapData (GVJ_t* job, char* lbl, char* url, char* tooltip, char* target, char *id,   void* gobj) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="initMapData", key="z4e7tnt40d3c4kv5u7cyhl9x", definition="int initMapData (GVJ_t* job, char* lbl, char* url, char* tooltip, char* target, char *id,   void* gobj)")
 public static Object initMapData(Object... arg) {
 UNSUPPORTED("etrjsq5w49uo9jq5pzifohkqw"); // int
 UNSUPPORTED("1r7179s3ntgv42pdh8lf7ri6p"); // initMapData (GVJ_t* job, char* lbl, char* url, char* tooltip, char* target, char *id,
@@ -825,6 +598,8 @@ throw new UnsupportedOperationException();
 
 //3 d74beympg4wulmk8p6lh8daql
 // static void layerPagePrefix (GVJ_t* job, agxbuf* xb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="layerPagePrefix", key="d74beympg4wulmk8p6lh8daql", definition="static void layerPagePrefix (GVJ_t* job, agxbuf* xb)")
 public static Object layerPagePrefix(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("6djudoziuh8bcxd8oxm1qch58"); // layerPagePrefix (GVJ_t* job, agxbuf* xb)
@@ -848,6 +623,8 @@ throw new UnsupportedOperationException();
 
 //3 3uk5ht4qhgq91m46lw7xtdx8q
 // char* getObjId (GVJ_t* job, void* obj, agxbuf* xb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="getObjId", key="3uk5ht4qhgq91m46lw7xtdx8q", definition="char* getObjId (GVJ_t* job, void* obj, agxbuf* xb)")
 public static Object getObjId(Object... arg) {
 UNSUPPORTED("cqm25rponse4rsi686sbn1lo0"); // char*
 UNSUPPORTED("cxy7pg7aplrpxxilr17uxmir1"); // getObjId (GVJ_t* job, void* obj, agxbuf* xb)
@@ -899,6 +676,8 @@ throw new UnsupportedOperationException();
 
 //3 dcom8r4kkrsi0tbps20sjm7rl
 // static void initObjMapData (GVJ_t* job, textlabel_t *lab, void* gobj) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="initObjMapData", key="dcom8r4kkrsi0tbps20sjm7rl", definition="static void initObjMapData (GVJ_t* job, textlabel_t *lab, void* gobj)")
 public static Object initObjMapData(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("ezkgjtfltwmwf154o793aps7z"); // initObjMapData (GVJ_t* job, textlabel_t *lab, void* gobj)
@@ -928,6 +707,8 @@ throw new UnsupportedOperationException();
 
 //3 hjkaeebrodvjebhg1hpg9z5e
 // static void map_point(GVJ_t *job, pointf pf) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="map_point", key="hjkaeebrodvjebhg1hpg9z5e", definition="static void map_point(GVJ_t *job, pointf pf)")
 public static Object map_point(Object... arg) {
 UNSUPPORTED("8blzxhihaqxozyztu9fj7nshg"); // static void map_point(GVJ_t *job, pointf pf)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -961,6 +742,8 @@ throw new UnsupportedOperationException();
 
 //3 dlyzfsrfmu4fl7l50uzdvu3mc
 // static char **checkClusterStyle(graph_t* sg, int *flagp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="", key="dlyzfsrfmu4fl7l50uzdvu3mc", definition="static char **checkClusterStyle(graph_t* sg, int *flagp)")
 public static Object checkClusterStyle(Object... arg) {
 UNSUPPORTED("4fe1xtiblsit7upcg8o8vn11n"); // static char **checkClusterStyle(graph_t* sg, int *flagp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1012,6 +795,8 @@ throw new UnsupportedOperationException();
 
 //3 9iqjkcr5mukm81hrbwh0ea6fl
 // static void freeSegs (colorsegs_t* segs) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="freeSegs", key="9iqjkcr5mukm81hrbwh0ea6fl", definition="static void freeSegs (colorsegs_t* segs)")
 public static Object freeSegs(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("464xlb3ygxv6p9mg54yjog4xx"); // freeSegs (colorsegs_t* segs)
@@ -1029,6 +814,8 @@ throw new UnsupportedOperationException();
 
 //3 97btw75unjbstma95wtq0zatf
 // static double getSegLen (char* s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="getSegLen", key="97btw75unjbstma95wtq0zatf", definition="static double getSegLen (char* s)")
 public static Object getSegLen(Object... arg) {
 UNSUPPORTED("9xupxgb2zpj09jpcf9avjwewg"); // static double getSegLen (char* s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1055,6 +842,8 @@ throw new UnsupportedOperationException();
 
 //3 8zfj6ri8h66qg7vjb6r0gtwl5
 // static int parseSegs (char* clrs, int nseg, colorsegs_t** psegs) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="parseSegs", key="8zfj6ri8h66qg7vjb6r0gtwl5", definition="static int parseSegs (char* clrs, int nseg, colorsegs_t** psegs)")
 public static Object parseSegs(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("apdtd2ytdipe6mbcrtuzg8me3"); // parseSegs (char* clrs, int nseg, colorsegs_t** psegs)
@@ -1144,6 +933,8 @@ throw new UnsupportedOperationException();
 
 //3 5mu8biu5ww33wd5ieraclh88z
 // int  wedgedEllipse (GVJ_t* job, pointf * pf, char* clrs) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="wedgedEllipse", key="5mu8biu5ww33wd5ieraclh88z", definition="int  wedgedEllipse (GVJ_t* job, pointf * pf, char* clrs)")
 public static Object wedgedEllipse(Object... arg) {
 UNSUPPORTED("7zkpme13g8rxxwloxvpvvnbcw"); // int 
 UNSUPPORTED("aa0ojv015bm44zwcwqav8hg79"); // wedgedEllipse (GVJ_t* job, pointf * pf, char* clrs)
@@ -1190,6 +981,8 @@ throw new UnsupportedOperationException();
 
 //3 1lx9cef1wqmf2k66twye6mf9g
 // int stripedBox (GVJ_t * job, pointf* AF, char* clrs, int rotate) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="stripedBox", key="1lx9cef1wqmf2k66twye6mf9g", definition="int stripedBox (GVJ_t * job, pointf* AF, char* clrs, int rotate)")
 public static Object stripedBox(Object... arg) {
 UNSUPPORTED("etrjsq5w49uo9jq5pzifohkqw"); // int
 UNSUPPORTED("ekv2bika3f3ammx903i7szf5x"); // stripedBox (GVJ_t * job, pointf* AF, char* clrs, int rotate)
@@ -1215,7 +1008,7 @@ UNSUPPORTED("dsj2jtc38wd64ffe18qloaybe"); // 	pts[2] = AF[2];
 UNSUPPORTED("w8lcp07u15ugb9pbyz628ux6"); // 	pts[3] = AF[3];
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
 UNSUPPORTED("8cka942q7qvwsisxeamy9xfgs"); //     lastx = pts[1].x;
-UNSUPPORTED("el6wjonhvfaekmhry0o1xncfi"); //     xdelta = (pts[1].x - pts[0].x);
+UNSUPPORTED("el6wjonhvfaekmhry0o1xncfi"); //     xdelta = pts[1].x - pts[0].x;
 UNSUPPORTED("m16l42bmexhmji8xy54ow3ac"); //     pts[1].x = pts[2].x = pts[0].x;
 UNSUPPORTED("2qlp0rgdgbozdtvtuwqp37pa4"); //     if (save_penwidth > 0.5)
 UNSUPPORTED("hmdk2acbhhzqbukut4pqgz2q"); // 	gvrender_set_penwidth(job, 0.5);
@@ -1244,6 +1037,8 @@ throw new UnsupportedOperationException();
 
 //3 a4ze3nkth5n070iajraile73b
 // void emit_map_rect(GVJ_t *job, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_map_rect", key="a4ze3nkth5n070iajraile73b", definition="void emit_map_rect(GVJ_t *job, boxf b)")
 public static Object emit_map_rect(Object... arg) {
 UNSUPPORTED("co9kbfer4pfzrsg32xzdxnu2u"); // void emit_map_rect(GVJ_t *job, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1278,6 +1073,8 @@ throw new UnsupportedOperationException();
 
 //3 3ai5lu5hhd5fuikmo022v1jm0
 // static void map_label(GVJ_t *job, textlabel_t *lab) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="map_label", key="3ai5lu5hhd5fuikmo022v1jm0", definition="static void map_label(GVJ_t *job, textlabel_t *lab)")
 public static Object map_label(Object... arg) {
 UNSUPPORTED("c4rnzzthoq9f8agcrqudi4mz"); // static void map_label(GVJ_t *job, textlabel_t *lab)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1311,6 +1108,8 @@ throw new UnsupportedOperationException();
 
 //3 9hfoy16yb9l36g778lx6o4loa
 // static boolean isRect(polygon_t * p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="isRect", key="9hfoy16yb9l36g778lx6o4loa", definition="static boolean isRect(polygon_t * p)")
 public static Object isRect(Object... arg) {
 UNSUPPORTED("9boj1p1495tsl7kbb9os62euc"); // static boolean isRect(polygon_t * p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1326,6 +1125,8 @@ throw new UnsupportedOperationException();
 
 //3 drf7d6idpinqx579kloyv3tjf
 // static int ifFilled(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="ifFilled", key="drf7d6idpinqx579kloyv3tjf", definition="static int ifFilled(node_t * n)")
 public static Object ifFilled(Object... arg) {
 UNSUPPORTED("576n3ll5ycnzfrne5a0vg4kmb"); // static int ifFilled(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1351,6 +1152,8 @@ throw new UnsupportedOperationException();
 
 //3 3sh9756i5zm4vgebijiohr21q
 // static pointf *pEllipse(double a, double b, int np) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="", key="3sh9756i5zm4vgebijiohr21q", definition="static pointf *pEllipse(double a, double b, int np)")
 public static Object pEllipse(Object... arg) {
 UNSUPPORTED("81ja3n1hoznf26wc2vhvhl9fj"); // static pointf *pEllipse(double a, double b, int np)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1373,13 +1176,21 @@ throw new UnsupportedOperationException();
 
 
 
+/* check_control_points:
+ * check_control_points function checks the size of quadrilateral
+ * formed by four control points
+ * returns 1 if four points are in line (or close to line)
+ * else return 0
+ */
 //3 7nqmdkcnal35ollpstkk707t8
 // static int check_control_points(pointf *cp) 
-public static boolean check_control_points(__ptr__ cp) {
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="check_control_points", key="7nqmdkcnal35ollpstkk707t8", definition="static int check_control_points(pointf *cp)")
+public static boolean check_control_points(CStar<ST_pointf> cp) {
 ENTERING("7nqmdkcnal35ollpstkk707t8","check_control_points");
 try {
-    double dis1 = ptToLine2 ((ST_pointf)cp.plus(0).getStruct(), (ST_pointf)cp.plus(3).getStruct(), (ST_pointf)cp.plus(1).getStruct());
-    double dis2 = ptToLine2 ((ST_pointf)cp.plus(0).getStruct(), (ST_pointf)cp.plus(3).getStruct(), (ST_pointf)cp.plus(2).getStruct());
+    double dis1 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(1));
+    double dis2 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(2));
     if (dis1 < 2.0*2.0 && dis2 < 2.0*2.0)
         return true;
     else
@@ -1392,39 +1203,43 @@ LEAVING("7nqmdkcnal35ollpstkk707t8","check_control_points");
 
 
 
+/* update bounding box to contain a bezier segment */
 //3 5wldemr88fdxl6101ugewclw9
 // void update_bb_bz(boxf *bb, pointf *cp) 
-public static void update_bb_bz(ST_boxf bb, ST_pointf.Array cp) {
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="update_bb_bz", key="5wldemr88fdxl6101ugewclw9", definition="void update_bb_bz(boxf *bb, pointf *cp)")
+public static void update_bb_bz(ST_boxf bb, CStar<ST_pointf> cp) {
 ENTERING("5wldemr88fdxl6101ugewclw9","update_bb_bz");
 try {
     /* if any control point of the segment is outside the bounding box */
-    if (cp.get(0).x > bb.UR.x || cp.get(0).x < bb.LL.x ||
-        cp.get(0).y > bb.UR.y || cp.get(0).y < bb.LL.y ||
-        cp.get(1).x > bb.UR.x || cp.get(1).x < bb.LL.x ||
-        cp.get(1).y > bb.UR.y || cp.get(1).y < bb.LL.y ||
-        cp.get(2).x > bb.UR.x || cp.get(2).x < bb.LL.x ||
-        cp.get(2).y > bb.UR.y || cp.get(2).y < bb.LL.y ||
-        cp.get(3).x > bb.UR.x || cp.get(3).x < bb.LL.x ||
-        cp.get(3).y > bb.UR.y || cp.get(3).y < bb.LL.y) {
+    if (cp.get__(0).x > bb.UR.x || cp.get__(0).x < bb.LL.x ||
+        cp.get__(0).y > bb.UR.y || cp.get__(0).y < bb.LL.y ||
+        cp.get__(1).x > bb.UR.x || cp.get__(1).x < bb.LL.x ||
+        cp.get__(1).y > bb.UR.y || cp.get__(1).y < bb.LL.y ||
+        cp.get__(2).x > bb.UR.x || cp.get__(2).x < bb.LL.x ||
+        cp.get__(2).y > bb.UR.y || cp.get__(2).y < bb.LL.y ||
+        cp.get__(3).x > bb.UR.x || cp.get__(3).x < bb.LL.x ||
+        cp.get__(3).y > bb.UR.y || cp.get__(3).y < bb.LL.y) {
+    	
         /* if the segment is sufficiently refined */
-        if (check_control_points(cp.asPtr())) {        
+        if (check_control_points(cp)) {        
             int i;
             /* expand the bounding box */
             for (i = 0; i < 4; i++) {
-                if (cp.get(i).x > bb.UR.x)
-                    bb.UR.setDouble("x", cp.get(i).x);
-                else if (cp.get(i).x < bb.LL.x)
-                    bb.LL.setDouble("x", cp.get(i).x);
-                if (cp.get(i).y > bb.UR.y)
-                    bb.UR.setDouble("y", cp.get(i).y);
-                else if (cp.get(i).y < bb.LL.y)
-                    bb.LL.setDouble("y", cp.get(i).y);
+                if (cp.get__(i).x > bb.UR.x)
+                    bb.UR.x = cp.get__(i).x;
+                else if (cp.get__(i).x < bb.LL.x)
+                    bb.LL.x = cp.get__(i).x;
+                if (cp.get__(i).y > bb.UR.y)
+                    bb.UR.y = cp.get__(i).y;
+                else if (cp.get__(i).y < bb.LL.y)
+                    bb.LL.y = cp.get__(i).y;
             }
         }
         else { /* else refine the segment */
-		    final ST_pointf.Array left = new ST_pointf.Array( 4);
-		    final ST_pointf.Array right = new ST_pointf.Array( 4);
-            Bezier (cp, 3, 0.5, left.asPtr(), right.asPtr());
+		    final CStar<ST_pointf> left = CStar.<ST_pointf>ALLOC__(4, ST_pointf.class);
+		    final CStar<ST_pointf> right = CStar.<ST_pointf>ALLOC__(4, ST_pointf.class);
+            Bezier (cp, 3, 0.5, left, right);
             update_bb_bz(bb, left);
             update_bb_bz(bb, right);
         }
@@ -1439,6 +1254,8 @@ LEAVING("5wldemr88fdxl6101ugewclw9","update_bb_bz");
 
 //3 5inp24tkswwr4gef832cfsh04
 // static segitem_t* appendSeg (pointf p, segitem_t* lp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="appendSeg", key="5inp24tkswwr4gef832cfsh04", definition="static segitem_t* appendSeg (pointf p, segitem_t* lp)")
 public static Object appendSeg(Object... arg) {
 UNSUPPORTED("9ox1lgfkkrjj3l9g1jpe0gs04"); // static segitem_t* appendSeg (pointf p, segitem_t* lp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1456,6 +1273,8 @@ throw new UnsupportedOperationException();
 
 //3 4n0kvrpdwpl0e1imvz963aa1o
 // static void map_bspline_poly(pointf **pbs_p, int **pbs_n, int *pbs_poly_n, int n, pointf* p1, pointf* p2) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="map_bspline_poly", key="4n0kvrpdwpl0e1imvz963aa1o", definition="static void map_bspline_poly(pointf **pbs_p, int **pbs_n, int *pbs_poly_n, int n, pointf* p1, pointf* p2)")
 public static Object map_bspline_poly(Object... arg) {
 UNSUPPORTED("1r3l20vlipm0x1r2dprvygc9i"); // static void map_bspline_poly(pointf **pbs_p, int **pbs_n, int *pbs_poly_n, int n, pointf* p1, pointf* p2)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1480,6 +1299,8 @@ throw new UnsupportedOperationException();
 
 //3 7vktvjafa2lmwlaxsy0nbulut
 // static segitem_t* approx_bezier (pointf *cp, segitem_t* lp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="approx_bezier", key="7vktvjafa2lmwlaxsy0nbulut", definition="static segitem_t* approx_bezier (pointf *cp, segitem_t* lp)")
 public static Object approx_bezier(Object... arg) {
 UNSUPPORTED("al673209lz1hskkt7drx6qaib"); // static segitem_t* approx_bezier (pointf *cp, segitem_t* lp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1504,6 +1325,8 @@ throw new UnsupportedOperationException();
 
 //3 3nlf0dmvl0qwc88vhsi69eo85
 // static double bisect (pointf pp, pointf cp, pointf np) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="bisect", key="3nlf0dmvl0qwc88vhsi69eo85", definition="static double bisect (pointf pp, pointf cp, pointf np)")
 public static Object bisect(Object... arg) {
 UNSUPPORTED("8h36arb302hy4bmfyuq5lvq4d"); // static double bisect (pointf pp, pointf cp, pointf np)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1523,6 +1346,8 @@ throw new UnsupportedOperationException();
 
 //3 45zvw50w2tfskogjqa2wzlmhg
 // static void mkSegPts (segitem_t* prv, segitem_t* cur, segitem_t* nxt,         pointf* p1, pointf* p2, double w2) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="mkSegPts", key="45zvw50w2tfskogjqa2wzlmhg", definition="static void mkSegPts (segitem_t* prv, segitem_t* cur, segitem_t* nxt,         pointf* p1, pointf* p2, double w2)")
 public static Object mkSegPts(Object... arg) {
 UNSUPPORTED("5hv5nomfe90vtds8hxhox7yej"); // static void mkSegPts (segitem_t* prv, segitem_t* cur, segitem_t* nxt,
 UNSUPPORTED("78rchge0ctod4mkpq2fslrh0s"); //         pointf* p1, pointf* p2, double w2)
@@ -1568,6 +1393,8 @@ throw new UnsupportedOperationException();
 
 //3 3xmhrtq5g7trpp4u40xr0b8y2
 // static void map_output_bspline (pointf **pbs, int **pbs_n, int *pbs_poly_n, bezier* bp, double w2) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="map_output_bspline", key="3xmhrtq5g7trpp4u40xr0b8y2", definition="static void map_output_bspline (pointf **pbs, int **pbs_n, int *pbs_poly_n, bezier* bp, double w2)")
 public static Object map_output_bspline(Object... arg) {
 UNSUPPORTED("6lvrwl802yfwlo7kfixgg5nez"); // static void map_output_bspline (pointf **pbs, int **pbs_n, int *pbs_poly_n, bezier* bp, double w2)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1617,6 +1444,8 @@ throw new UnsupportedOperationException();
 
 //3 9xju3of8zy5f2mk0f6vd6kxoi
 // static boolean is_natural_number(char *sstr) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="is_natural_number", key="9xju3of8zy5f2mk0f6vd6kxoi", definition="static boolean is_natural_number(char *sstr)")
 public static Object is_natural_number(Object... arg) {
 UNSUPPORTED("9rhheqjcnai59q1k0d8y9jynt"); // static boolean is_natural_number(char *sstr)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1635,6 +1464,8 @@ throw new UnsupportedOperationException();
 
 //3 4udru8pf61208dtuf22zzmmqd
 // static int layer_index(GVC_t *gvc, char *str, int all) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="layer_index", key="4udru8pf61208dtuf22zzmmqd", definition="static int layer_index(GVC_t *gvc, char *str, int all)")
 public static Object layer_index(Object... arg) {
 UNSUPPORTED("3lxm6mluhtqpfsa9nzkd3apqi"); // static int layer_index(GVC_t *gvc, char *str, int all)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1659,6 +1490,8 @@ throw new UnsupportedOperationException();
 
 //3 a8rdk6dogn52h5grbbxfoq34z
 // static boolean selectedLayer(GVC_t *gvc, int layerNum, int numLayers, char *spec) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="selectedLayer", key="a8rdk6dogn52h5grbbxfoq34z", definition="static boolean selectedLayer(GVC_t *gvc, int layerNum, int numLayers, char *spec)")
 public static Object selectedLayer(Object... arg) {
 UNSUPPORTED("eri18s9ivcrynir2bpx4jnw8g"); // static boolean selectedLayer(GVC_t *gvc, int layerNum, int numLayers, char *spec)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1682,7 +1515,7 @@ UNSUPPORTED("1y7jah5hullcu9snkfa1oy1f2"); // 	    rval = 0;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("2o83im06dulx11wjpy469gkoa"); // 	case 1:
 UNSUPPORTED("1jygz6h6idqhtvh7bqd78fhy2"); // 	    n0 = layer_index(gvc, w0, layerNum);
-UNSUPPORTED("c8zzp13vx1yth31xuqj1661c8"); // 	    rval = (n0 == layerNum);
+UNSUPPORTED("c8zzp13vx1yth31xuqj1661c8"); // 	    rval = n0 == layerNum;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("b8vgbvwzllfs4lrqmmqyr1spk"); // 	case 2:
 UNSUPPORTED("9y7cribaclzkutrf9lusdgb73"); // 	    n0 = layer_index(gvc, w0, 0);
@@ -1711,6 +1544,8 @@ throw new UnsupportedOperationException();
 
 //3 2zlzcril6uiesf8z9zo8bvfyz
 // static boolean selectedlayer(GVJ_t *job, char *spec) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="selectedlayer", key="2zlzcril6uiesf8z9zo8bvfyz", definition="static boolean selectedlayer(GVJ_t *job, char *spec)")
 public static Object selectedlayer(Object... arg) {
 UNSUPPORTED("3nzphmy08w2y4a3yntr24xw0p"); // static boolean selectedlayer(GVJ_t *job, char *spec)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1725,6 +1560,8 @@ throw new UnsupportedOperationException();
 
 //3 8elt2ktgbiurz9gdlvgjpr8mp
 // static int* parse_layerselect(GVC_t *gvc, graph_t * g, char *p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="parse_layerselect", key="8elt2ktgbiurz9gdlvgjpr8mp", definition="static int* parse_layerselect(GVC_t *gvc, graph_t * g, char *p)")
 public static Object parse_layerselect(Object... arg) {
 UNSUPPORTED("6lvivuwtc6e4wjgguepfq8nud"); // static int* parse_layerselect(GVC_t *gvc, graph_t * g, char *p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1756,6 +1593,8 @@ throw new UnsupportedOperationException();
 
 //3 4kiahfclenuf921uyxg4lzlbs
 // static int parse_layers(GVC_t *gvc, graph_t * g, char *p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="parse_layers", key="4kiahfclenuf921uyxg4lzlbs", definition="static int parse_layers(GVC_t *gvc, graph_t * g, char *p)")
 public static Object parse_layers(Object... arg) {
 UNSUPPORTED("1spuppzfx1me4g279wfftgu5n"); // static int parse_layers(GVC_t *gvc, graph_t * g, char *p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1800,6 +1639,8 @@ throw new UnsupportedOperationException();
 
 //3 4gyjzihgl8che7plolivfm89h
 // static int chkOrder(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="chkOrder", key="4gyjzihgl8che7plolivfm89h", definition="static int chkOrder(graph_t * g)")
 public static Object chkOrder(Object... arg) {
 UNSUPPORTED("9jzoupo86al5szoppdb9ug4jm"); // static int chkOrder(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1822,6 +1663,8 @@ throw new UnsupportedOperationException();
 
 //3 33hjwrwudmjobd5yhbvu86jxz
 // static void init_layering(GVC_t * gvc, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_layering", key="33hjwrwudmjobd5yhbvu86jxz", definition="static void init_layering(GVC_t * gvc, graph_t * g)")
 public static Object init_layering(Object... arg) {
 UNSUPPORTED("7iqktnxyjnxn51eeuuy0oh1uz"); // static void init_layering(GVC_t * gvc, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1858,6 +1701,8 @@ throw new UnsupportedOperationException();
 
 //3 3edoapk4bnc3rsmt3huwoqf9g
 // static int numPhysicalLayers (GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="numPhysicalLayers", key="3edoapk4bnc3rsmt3huwoqf9g", definition="static int numPhysicalLayers (GVJ_t *job)")
 public static Object numPhysicalLayers(Object... arg) {
 UNSUPPORTED("5zoarmqyf1m3t67nl5xahrslu"); // static int numPhysicalLayers (GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1876,6 +1721,8 @@ throw new UnsupportedOperationException();
 
 //3 cpiumi39pczm8e5154f9udcco
 // static void firstlayer(GVJ_t *job, int** listp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="firstlayer", key="cpiumi39pczm8e5154f9udcco", definition="static void firstlayer(GVJ_t *job, int** listp)")
 public static Object firstlayer(Object... arg) {
 UNSUPPORTED("5e25vrbqvnj3q41zkb05shjgt"); // static void firstlayer(GVJ_t *job, int** listp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1911,6 +1758,8 @@ throw new UnsupportedOperationException();
 
 //3 b445mlh9alsqmydjwlh3lzsnz
 // static boolean validlayer(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="validlayer", key="b445mlh9alsqmydjwlh3lzsnz", definition="static boolean validlayer(GVJ_t *job)")
 public static Object validlayer(Object... arg) {
 UNSUPPORTED("bfi9hniz5k2qe0dadeqq4ki5b"); // static boolean validlayer(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1925,6 +1774,8 @@ throw new UnsupportedOperationException();
 
 //3 3y21gcvzhj6vn9gl9g6gag119
 // static void nextlayer(GVJ_t *job, int** listp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="nextlayer", key="3y21gcvzhj6vn9gl9g6gag119", definition="static void nextlayer(GVJ_t *job, int** listp)")
 public static Object nextlayer(Object... arg) {
 UNSUPPORTED("28yugcvd6qow68yasmq967pbn"); // static void nextlayer(GVJ_t *job, int** listp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1945,6 +1796,8 @@ throw new UnsupportedOperationException();
 
 //3 dpqjdl72ma03lvh522bej00pf
 // static point pagecode(GVJ_t *job, char c) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="pagecode", key="dpqjdl72ma03lvh522bej00pf", definition="static point pagecode(GVJ_t *job, char c)")
 public static Object pagecode(Object... arg) {
 UNSUPPORTED("858jif62sg7t8bfj0q5dgi77b"); // static point pagecode(GVJ_t *job, char c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1977,6 +1830,8 @@ throw new UnsupportedOperationException();
 
 //3 4wn2yfi2l0bfzlw5fyeeunug7
 // static void init_job_pagination(GVJ_t * job, graph_t *g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_job_pagination", key="4wn2yfi2l0bfzlw5fyeeunug7", definition="static void init_job_pagination(GVJ_t * job, graph_t *g)")
 public static Object init_job_pagination(Object... arg) {
 UNSUPPORTED("3i2vk6s34y6kty29dnciiqr2i"); // static void init_job_pagination(GVJ_t * job, graph_t *g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2091,6 +1946,8 @@ throw new UnsupportedOperationException();
 
 //3 18839plafofp0mij32iifl4kw
 // static void firstpage(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="firstpage", key="18839plafofp0mij32iifl4kw", definition="static void firstpage(GVJ_t *job)")
 public static Object firstpage(Object... arg) {
 UNSUPPORTED("54ikst765kaurqs5qbxgw62pi"); // static void firstpage(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2105,6 +1962,8 @@ throw new UnsupportedOperationException();
 
 //3 1oosdfui4w6wrmjyrea5q0q5j
 // static boolean validpage(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="validpage", key="1oosdfui4w6wrmjyrea5q0q5j", definition="static boolean validpage(GVJ_t *job)")
 public static Object validpage(Object... arg) {
 UNSUPPORTED("5hdqj8s4dsinb9hoj6ra36f9w"); // static boolean validpage(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2122,6 +1981,8 @@ throw new UnsupportedOperationException();
 
 //3 9xha5eg5k3mbziq2ptbw1gyyk
 // static void nextpage(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="nextpage", key="9xha5eg5k3mbziq2ptbw1gyyk", definition="static void nextpage(GVJ_t *job)")
 public static Object nextpage(Object... arg) {
 UNSUPPORTED("3zzzr5yvj7mho7ylmluju8zzv"); // static void nextpage(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2143,6 +2004,8 @@ throw new UnsupportedOperationException();
 
 //3 a7du41byqeco4ri9ytgrmrv91
 // static boolean write_edge_test(Agraph_t * g, Agedge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="write_edge_test", key="a7du41byqeco4ri9ytgrmrv91", definition="static boolean write_edge_test(Agraph_t * g, Agedge_t * e)")
 public static Object write_edge_test(Object... arg) {
 UNSUPPORTED("9rfens9tggchdklhfwa4kaqlu"); // static boolean write_edge_test(Agraph_t * g, Agedge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2164,6 +2027,8 @@ throw new UnsupportedOperationException();
 
 //3 blr202hbxs2lw3k393qohaw2i
 // static boolean write_node_test(Agraph_t * g, Agnode_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="write_node_test", key="blr202hbxs2lw3k393qohaw2i", definition="static boolean write_node_test(Agraph_t * g, Agnode_t * n)")
 public static Object write_node_test(Object... arg) {
 UNSUPPORTED("9xuxw9sbimnioecqbuwnav0qp"); // static boolean write_node_test(Agraph_t * g, Agnode_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2185,6 +2050,8 @@ throw new UnsupportedOperationException();
 
 //3 3w1wzp6uh4yl5o7brxcuf9ip6
 // static pointf* copyPts (pointf* pts, int* ptsize, xdot_point* inpts, int numpts) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="copyPts", key="3w1wzp6uh4yl5o7brxcuf9ip6", definition="static pointf* copyPts (pointf* pts, int* ptsize, xdot_point* inpts, int numpts)")
 public static Object copyPts(Object... arg) {
 UNSUPPORTED("1wmmoe7m5528rl69n3zrnxhrg"); // static pointf*
 UNSUPPORTED("7bm15tetrusr4tjv45g1l12mm"); // copyPts (pointf* pts, int* ptsize, xdot_point* inpts, int numpts)
@@ -2210,6 +2077,8 @@ throw new UnsupportedOperationException();
 
 //3 2ho96kyoz7afiqvpkgzje2q17
 // static void emit_xdot (GVJ_t * job, xdot* xd) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_xdot", key="2ho96kyoz7afiqvpkgzje2q17", definition="static void emit_xdot (GVJ_t * job, xdot* xd)")
 public static Object emit_xdot(Object... arg) {
 UNSUPPORTED("dx3xx20717wqwhmrxmr2vve4w"); // static void emit_xdot (GVJ_t * job, xdot* xd)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2333,6 +2202,8 @@ throw new UnsupportedOperationException();
 
 //3 3adhe426gweys0vj89xk7l5qs
 // static void emit_background(GVJ_t * job, graph_t *g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_background", key="3adhe426gweys0vj89xk7l5qs", definition="static void emit_background(GVJ_t * job, graph_t *g)")
 public static Object emit_background(Object... arg) {
 UNSUPPORTED("4gpum3t892n8i9y337zhppgqh"); // static void emit_background(GVJ_t * job, graph_t *g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2390,6 +2261,8 @@ throw new UnsupportedOperationException();
 
 //3 500xb8otehz86mqouvbmd0ri4
 // static void setup_page(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="setup_page", key="500xb8otehz86mqouvbmd0ri4", definition="static void setup_page(GVJ_t * job, graph_t * g)")
 public static Object setup_page(Object... arg) {
 UNSUPPORTED("eie6fiea6odhb16j5p69i17ps"); // static void setup_page(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2447,6 +2320,8 @@ throw new UnsupportedOperationException();
 
 //3 as589o2efx45izm3wp7enyaht
 // static boolean node_in_layer(GVJ_t *job, graph_t * g, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="node_in_layer", key="as589o2efx45izm3wp7enyaht", definition="static boolean node_in_layer(GVJ_t *job, graph_t * g, node_t * n)")
 public static Object node_in_layer(Object... arg) {
 UNSUPPORTED("9qfpqdz7l9i14k8tt5niso9hr"); // static boolean node_in_layer(GVJ_t *job, graph_t * g, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2477,6 +2352,8 @@ throw new UnsupportedOperationException();
 
 //3 1u0s2ppd3ul08n4e2gdaryyy8
 // static boolean edge_in_layer(GVJ_t *job, graph_t * g, edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="edge_in_layer", key="1u0s2ppd3ul08n4e2gdaryyy8", definition="static boolean edge_in_layer(GVJ_t *job, graph_t * g, edge_t * e)")
 public static Object edge_in_layer(Object... arg) {
 UNSUPPORTED("313onxwqkhkgi36hzjkauyb42"); // static boolean edge_in_layer(GVJ_t *job, graph_t * g, edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2505,6 +2382,8 @@ throw new UnsupportedOperationException();
 
 //3 dyo8zdve7djszp87cuf0xuoet
 // static boolean clust_in_layer(GVJ_t *job, graph_t * sg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="clust_in_layer", key="dyo8zdve7djszp87cuf0xuoet", definition="static boolean clust_in_layer(GVJ_t *job, graph_t * sg)")
 public static Object clust_in_layer(Object... arg) {
 UNSUPPORTED("4e36i94sm4m9tfa4ajm22cim8"); // static boolean clust_in_layer(GVJ_t *job, graph_t * sg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2531,6 +2410,8 @@ throw new UnsupportedOperationException();
 
 //3 75k6tn88w31u4ppw3q70g1jsk
 // static boolean node_in_box(node_t *n, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="node_in_box", key="75k6tn88w31u4ppw3q70g1jsk", definition="static boolean node_in_box(node_t *n, boxf b)")
 public static Object node_in_box(Object... arg) {
 UNSUPPORTED("211j77g7ql3frkbpciwlnn9zy"); // static boolean node_in_box(node_t *n, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2545,6 +2426,8 @@ throw new UnsupportedOperationException();
 
 //3 7j4u56kqr6m677iq36g2aih28
 // static void emit_begin_node(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_begin_node", key="7j4u56kqr6m677iq36g2aih28", definition="static void emit_begin_node(GVJ_t * job, node_t * n)")
 public static Object emit_begin_node(Object... arg) {
 UNSUPPORTED("6oh0hqc0y111peee2y6h3dyp0"); // static void emit_begin_node(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2689,6 +2572,8 @@ throw new UnsupportedOperationException();
 
 //3 d9mzxl9say77sxvq7p8x64arq
 // static void emit_end_node(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_end_node", key="d9mzxl9say77sxvq7p8x64arq", definition="static void emit_end_node(GVJ_t * job)")
 public static Object emit_end_node(Object... arg) {
 UNSUPPORTED("2l9v7jqkrub7vxobkquy7asiq"); // static void emit_end_node(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2704,6 +2589,8 @@ throw new UnsupportedOperationException();
 
 //3 do63wzhzr0kzmjcdc6gjwjnj1
 // static void emit_node(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_node", key="do63wzhzr0kzmjcdc6gjwjnj1", definition="static void emit_node(GVJ_t * job, node_t * n)")
 public static Object emit_node(Object... arg) {
 UNSUPPORTED("a610z8g79rvtm3401gis6ckc8"); // static void emit_node(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2747,6 +2634,8 @@ throw new UnsupportedOperationException();
 
 //3 1690phewavvug1dfq83cwep5d
 // static pointf computeoffset_p(pointf p, pointf q, double d) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="computeoffset_p", key="1690phewavvug1dfq83cwep5d", definition="static pointf computeoffset_p(pointf p, pointf q, double d)")
 public static Object computeoffset_p(Object... arg) {
 UNSUPPORTED("63wh9kozu453znl0upnphf9mi"); // static pointf computeoffset_p(pointf p, pointf q, double d)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2767,6 +2656,8 @@ throw new UnsupportedOperationException();
 
 //3 dly15js1s0j0q9xlzznflvp5o
 // static pointf computeoffset_qr(pointf p, pointf q, pointf r, pointf s, 			       double d) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="computeoffset_qr", key="dly15js1s0j0q9xlzznflvp5o", definition="static pointf computeoffset_qr(pointf p, pointf q, pointf r, pointf s, 			       double d)")
 public static Object computeoffset_qr(Object... arg) {
 UNSUPPORTED("8sdovg67zcg8hbc8uxomazvo7"); // static pointf computeoffset_qr(pointf p, pointf q, pointf r, pointf s,
 UNSUPPORTED("cw59rrix8ii9c4gpgc087wzod"); // 			       double d)
@@ -2796,6 +2687,8 @@ throw new UnsupportedOperationException();
 
 //3 9jbox5ffqmnuiqxjmiewkjd7v
 // static void emit_attachment(GVJ_t * job, textlabel_t * lp, splines * spl) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_attachment", key="9jbox5ffqmnuiqxjmiewkjd7v", definition="static void emit_attachment(GVJ_t * job, textlabel_t * lp, splines * spl)")
 public static Object emit_attachment(Object... arg) {
 UNSUPPORTED("cqsl6q4bc0by6b7m5fjbaz0ff"); // static void emit_attachment(GVJ_t * job, textlabel_t * lp, splines * spl)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2829,6 +2722,8 @@ throw new UnsupportedOperationException();
 
 //3 4g1n8pxbh06t81obycv6rqtxv
 // static char* default_pencolor(char *pencolor, char *deflt) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="default_pencolor", key="4g1n8pxbh06t81obycv6rqtxv", definition="static char* default_pencolor(char *pencolor, char *deflt)")
 public static Object default_pencolor(Object... arg) {
 UNSUPPORTED("4wukcoxynojzor25ps1rby9yw"); // static char* default_pencolor(char *pencolor, char *deflt)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2862,6 +2757,8 @@ throw new UnsupportedOperationException();
 
 //3 4idfslavgy1wy953xlflg5ws6
 // static double approxLen (pointf* pts) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="approxLen", key="4idfslavgy1wy953xlflg5ws6", definition="static double approxLen (pointf* pts)")
 public static Object approxLen(Object... arg) {
 UNSUPPORTED("6tz6ed7moergtlszt1ajl0p9v"); // static double approxLen (pointf* pts)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2879,6 +2776,8 @@ throw new UnsupportedOperationException();
 
 //3 c24egok0eodx1gogrwwnimllw
 // static void splitBSpline (bezier* bz, float t, bezier* left, bezier* right) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="splitBSpline", key="c24egok0eodx1gogrwwnimllw", definition="static void splitBSpline (bezier* bz, float t, bezier* left, bezier* right)")
 public static Object splitBSpline(Object... arg) {
 UNSUPPORTED("bzosun8763baoenilgqapqo0v"); // static void splitBSpline (bezier* bz, float t, bezier* left, bezier* right)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2933,6 +2832,8 @@ throw new UnsupportedOperationException();
 
 //3 emsbbp4kdnhrbf2gca7ikthj5
 // static int multicolor (GVJ_t * job, edge_t * e, char** styles, char* colors, int num, double arrowsize, double penwidth) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="multicolor", key="emsbbp4kdnhrbf2gca7ikthj5", definition="static int multicolor (GVJ_t * job, edge_t * e, char** styles, char* colors, int num, double arrowsize, double penwidth)")
 public static Object multicolor(Object... arg) {
 UNSUPPORTED("dvqr9ynn0c9bn4xfcpie8zyez"); // static int multicolor (GVJ_t * job, edge_t * e, char** styles, char* colors, int num, double arrowsize, double penwidth)
 UNSUPPORTED("yo7buicdiu29rv5vxhas0v3s"); // { 
@@ -3014,6 +2915,8 @@ throw new UnsupportedOperationException();
 
 //3 13jatehy3n1t03488fq3ek8st
 // static void free_stroke (stroke_t* sp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="free_stroke", key="13jatehy3n1t03488fq3ek8st", definition="static void free_stroke (stroke_t* sp)")
 public static Object free_stroke(Object... arg) {
 UNSUPPORTED("ahnzha1pnhrfmdhm9uwi8iuao"); // static void free_stroke (stroke_t* sp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3031,6 +2934,8 @@ throw new UnsupportedOperationException();
 
 //3 5b9ltl2mduk3ua0x8235o922t
 // static double forfunc (double curlen, double totallen, double initwid) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="forfunc", key="5b9ltl2mduk3ua0x8235o922t", definition="static double forfunc (double curlen, double totallen, double initwid)")
 public static Object forfunc(Object... arg) {
 UNSUPPORTED("3t80v9xj410ss5j0pqnc1zrjp"); // static double forfunc (double curlen, double totallen, double initwid)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3045,6 +2950,8 @@ throw new UnsupportedOperationException();
 
 //3 dsgrrv9hsyak20n1h9x5jvp3f
 // static double revfunc (double curlen, double totallen, double initwid) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="revfunc", key="dsgrrv9hsyak20n1h9x5jvp3f", definition="static double revfunc (double curlen, double totallen, double initwid)")
 public static Object revfunc(Object... arg) {
 UNSUPPORTED("bld5nqyhkdbuxeay2ll473qr6"); // static double revfunc (double curlen, double totallen, double initwid)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3059,6 +2966,8 @@ throw new UnsupportedOperationException();
 
 //3 3evv2ec1hr5uijikij2h26w3t
 // static double nonefunc (double curlen, double totallen, double initwid) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="nonefunc", key="3evv2ec1hr5uijikij2h26w3t", definition="static double nonefunc (double curlen, double totallen, double initwid)")
 public static Object nonefunc(Object... arg) {
 UNSUPPORTED("e8e1fgr1nlozsj7m2ijaws2gd"); // static double nonefunc (double curlen, double totallen, double initwid)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3073,6 +2982,8 @@ throw new UnsupportedOperationException();
 
 //3 333yk8u7vrjjv2pfad3z273ra
 // static double bothfunc (double curlen, double totallen, double initwid) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="bothfunc", key="333yk8u7vrjjv2pfad3z273ra", definition="static double bothfunc (double curlen, double totallen, double initwid)")
 public static Object bothfunc(Object... arg) {
 UNSUPPORTED("au7dp9qva7eo751dhmuu29nq9"); // static double bothfunc (double curlen, double totallen, double initwid)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3089,6 +3000,8 @@ throw new UnsupportedOperationException();
 
 //3 256panf42dptclohlg3aolfqv
 // static radfunc_t  taperfun (edge_t* e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="taperfun", key="256panf42dptclohlg3aolfqv", definition="static radfunc_t  taperfun (edge_t* e)")
 public static Object taperfun(Object... arg) {
 UNSUPPORTED("ygkpgli37inuq18f0rtbwcs1"); // static radfunc_t 
 UNSUPPORTED("6r0vilajj0np6wokfkwjl7ykm"); // taperfun (edge_t* e)
@@ -3111,6 +3024,8 @@ throw new UnsupportedOperationException();
 
 //3 7u6cnonl0chpkjro9quo09fyr
 // static void emit_edge_graphics(GVJ_t * job, edge_t * e, char** styles) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_edge_graphics", key="7u6cnonl0chpkjro9quo09fyr", definition="static void emit_edge_graphics(GVJ_t * job, edge_t * e, char** styles)")
 public static Object emit_edge_graphics(Object... arg) {
 UNSUPPORTED("44vrfcbqr2d1szhfncg37jn9c"); // static void emit_edge_graphics(GVJ_t * job, edge_t * e, char** styles)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3337,6 +3252,8 @@ throw new UnsupportedOperationException();
 
 //3 8clgbd8hcgw564ispajc9fzmg
 // static boolean edge_in_box(edge_t *e, boxf b) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="edge_in_box", key="8clgbd8hcgw564ispajc9fzmg", definition="static boolean edge_in_box(edge_t *e, boxf b)")
 public static Object edge_in_box(Object... arg) {
 UNSUPPORTED("4ocf4su3fqdqvh06u5f0hltsn"); // static boolean edge_in_box(edge_t *e, boxf b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3362,6 +3279,8 @@ throw new UnsupportedOperationException();
 
 //3 cbl8pryorx02zjsmvgy70ve3p
 // static void emit_begin_edge(GVJ_t * job, edge_t * e, char** styles) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_begin_edge", key="cbl8pryorx02zjsmvgy70ve3p", definition="static void emit_begin_edge(GVJ_t * job, edge_t * e, char** styles)")
 public static Object emit_begin_edge(Object... arg) {
 UNSUPPORTED("2ig8s73qzrztk38xr6ky7zb11"); // static void emit_begin_edge(GVJ_t * job, edge_t * e, char** styles)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3528,6 +3447,8 @@ throw new UnsupportedOperationException();
 
 //3 29djyajtv7sgp9x7yjc7qzabo
 // static void emit_edge_label(GVJ_t* job, textlabel_t* lbl, emit_state_t lkind, int explicit,     char* url, char* tooltip, char* target, char *id, splines* spl) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_edge_label", key="29djyajtv7sgp9x7yjc7qzabo", definition="static void emit_edge_label(GVJ_t* job, textlabel_t* lbl, emit_state_t lkind, int explicit,     char* url, char* tooltip, char* target, char *id, splines* spl)")
 public static Object emit_edge_label(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("35xyp233i430kqmc9ujvqett4"); // emit_edge_label(GVJ_t* job, textlabel_t* lbl, emit_state_t lkind, int explicit,
@@ -3585,6 +3506,8 @@ throw new UnsupportedOperationException();
 
 //3 awxicbypnp5lexym1y3ymowey
 // static void nodeIntersect (GVJ_t * job, pointf p,      boolean explicit_iurl, char* iurl,     boolean explicit_itooltip, char* itooltip,     boolean explicit_itarget, char* itarget) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="nodeIntersect", key="awxicbypnp5lexym1y3ymowey", definition="static void nodeIntersect (GVJ_t * job, pointf p,      boolean explicit_iurl, char* iurl,     boolean explicit_itooltip, char* itooltip,     boolean explicit_itarget, char* itarget)")
 public static Object nodeIntersect(Object... arg) {
 UNSUPPORTED("cmhcypje3hntq13rzpbnk7ors"); // static void nodeIntersect (GVJ_t * job, pointf p, 
 UNSUPPORTED("3oh5ubi4nhyilnxnj6o43m9jg"); //     boolean explicit_iurl, char* iurl,
@@ -3629,6 +3552,8 @@ throw new UnsupportedOperationException();
 
 //3 ywemz3ws8gm7t2jkezm9zl44
 // static void emit_end_edge(GVJ_t * job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_end_edge", key="ywemz3ws8gm7t2jkezm9zl44", definition="static void emit_end_edge(GVJ_t * job)")
 public static Object emit_end_edge(Object... arg) {
 UNSUPPORTED("1dduzu2v1v5eoimgn6wl3pq1s"); // static void emit_end_edge(GVJ_t * job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3701,6 +3626,8 @@ throw new UnsupportedOperationException();
 
 //3 e552br6jk0jigqmq1c9d2x0fy
 // static void emit_edge(GVJ_t * job, edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_edge", key="e552br6jk0jigqmq1c9d2x0fy", definition="static void emit_edge(GVJ_t * job, edge_t * e)")
 public static Object emit_edge(Object... arg) {
 UNSUPPORTED("701wlpnv3kz0k3hxn7zqrhbqx"); // static void emit_edge(GVJ_t * job, edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3752,6 +3679,8 @@ throw new UnsupportedOperationException();
 
 //3 crlphx0gbhlhrn2w2jq92mgxq
 // static void expandBB (boxf* bb, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="expandBB", key="crlphx0gbhlhrn2w2jq92mgxq", definition="static void expandBB (boxf* bb, pointf p)")
 public static Object expandBB(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("3lpbo3h0n97pkcx19mleg4zy3"); // expandBB (boxf* bb, pointf p)
@@ -3774,6 +3703,8 @@ throw new UnsupportedOperationException();
 
 //3 9fdfpbfftpegojteq4f4zkh3t
 // static boxf ptsBB (xdot_point* inpts, int numpts, boxf* bb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="ptsBB", key="9fdfpbfftpegojteq4f4zkh3t", definition="static boxf ptsBB (xdot_point* inpts, int numpts, boxf* bb)")
 public static Object ptsBB(Object... arg) {
 UNSUPPORTED("d5qt6s97burjfu5qe0oxyyrmr"); // static boxf
 UNSUPPORTED("6t79m8rz3g0dlgf125e80z567"); // ptsBB (xdot_point* inpts, int numpts, boxf* bb)
@@ -3806,6 +3737,8 @@ throw new UnsupportedOperationException();
 
 //3 9pymyll8xo6gubyh1lffjkfam
 // static boxf textBB (double x, double y, textspan_t* span) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="textBB", key="9pymyll8xo6gubyh1lffjkfam", definition="static boxf textBB (double x, double y, textspan_t* span)")
 public static Object textBB(Object... arg) {
 UNSUPPORTED("d5qt6s97burjfu5qe0oxyyrmr"); // static boxf
 UNSUPPORTED("ay5ce8utx9ld287zwnwbctqjj"); // textBB (double x, double y, textspan_t* span)
@@ -3839,6 +3772,8 @@ throw new UnsupportedOperationException();
 
 //3 54ihxujpi40cvxm21zvc4yygl
 // static void freePara (exdot_op* op) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="freePara", key="54ihxujpi40cvxm21zvc4yygl", definition="static void freePara (exdot_op* op)")
 public static Object freePara(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("6j7qjd9yj32q85k9t0i4xidev"); // freePara (exdot_op* op)
@@ -3855,6 +3790,8 @@ throw new UnsupportedOperationException();
 
 //3 bna6lkyh9mx61k76gw3t0uflo
 // boxf xdotBB (Agraph_t* g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="xdotBB", key="bna6lkyh9mx61k76gw3t0uflo", definition="boxf xdotBB (Agraph_t* g)")
 public static Object xdotBB(Object... arg) {
 UNSUPPORTED("8wvskez9r3noz1urymuwc4hvt"); // boxf xdotBB (Agraph_t* g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3940,6 +3877,8 @@ throw new UnsupportedOperationException();
 
 //3 85uk85yiir9od6zij92agheo3
 // static void init_gvc(GVC_t * gvc, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_gvc", key="85uk85yiir9od6zij92agheo3", definition="static void init_gvc(GVC_t * gvc, graph_t * g)")
 public static Object init_gvc(Object... arg) {
 UNSUPPORTED("67101m7ilw6rq5kq50kqyv4jn"); // static void init_gvc(GVC_t * gvc, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4006,6 +3945,8 @@ throw new UnsupportedOperationException();
 
 //3 9pyz8u3udm2aoyugcsto0kix5
 // static void init_job_pad(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_job_pad", key="9pyz8u3udm2aoyugcsto0kix5", definition="static void init_job_pad(GVJ_t *job)")
 public static Object init_job_pad(Object... arg) {
 UNSUPPORTED("agxhh3hamzm2l90mq5ojrmfkv"); // static void init_job_pad(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4033,6 +3974,8 @@ throw new UnsupportedOperationException();
 
 //3 f2syfb4rj7trco59aj1v5jm7b
 // static void init_job_margin(GVJ_t *job) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_job_margin", key="f2syfb4rj7trco59aj1v5jm7b", definition="static void init_job_margin(GVJ_t *job)")
 public static Object init_job_margin(Object... arg) {
 UNSUPPORTED("a2o4lfoc2z821pg69j2xraq5h"); // static void init_job_margin(GVJ_t *job)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4064,6 +4007,8 @@ throw new UnsupportedOperationException();
 
 //3 8g64hepne35gexv6ju81tbqc3
 // static void init_job_dpi(GVJ_t *job, graph_t *g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_job_dpi", key="8g64hepne35gexv6ju81tbqc3", definition="static void init_job_dpi(GVJ_t *job, graph_t *g)")
 public static Object init_job_dpi(Object... arg) {
 UNSUPPORTED("2p6nt5vob0ei8v7773p5tdecd"); // static void init_job_dpi(GVJ_t *job, graph_t *g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4095,6 +4040,8 @@ throw new UnsupportedOperationException();
 
 //3 4q75k0eh9opws0n4g4hucx21k
 // static void init_job_viewport(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_job_viewport", key="4q75k0eh9opws0n4g4hucx21k", definition="static void init_job_viewport(GVJ_t * job, graph_t * g)")
 public static Object init_job_viewport(Object... arg) {
 UNSUPPORTED("624efhjg4wk3vw59b77itfyvo"); // static void init_job_viewport(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4180,6 +4127,8 @@ throw new UnsupportedOperationException();
 
 //3 cixyhqk69srhxgi3264xh8v68
 // static void emit_cluster_colors(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_cluster_colors", key="cixyhqk69srhxgi3264xh8v68", definition="static void emit_cluster_colors(GVJ_t * job, graph_t * g)")
 public static Object emit_cluster_colors(Object... arg) {
 UNSUPPORTED("4do3kncw83okg157mdqb1rtct"); // static void emit_cluster_colors(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4210,6 +4159,8 @@ throw new UnsupportedOperationException();
 
 //3 6z2ta8nxn4szbpjidikrdzjd2
 // static void emit_colors(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_colors", key="6z2ta8nxn4szbpjidikrdzjd2", definition="static void emit_colors(GVJ_t * job, graph_t * g)")
 public static Object emit_colors(Object... arg) {
 UNSUPPORTED("60y3484rmpjm7xlt67j7mdl4"); // static void emit_colors(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4272,6 +4223,8 @@ throw new UnsupportedOperationException();
 
 //3 dlue7nzn2pfskq2p54b34b488
 // static void emit_view(GVJ_t * job, graph_t * g, int flags) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_view", key="dlue7nzn2pfskq2p54b34b488", definition="static void emit_view(GVJ_t * job, graph_t * g, int flags)")
 public static Object emit_view(Object... arg) {
 UNSUPPORTED("5imanth4uju8cetckpnvqvzub"); // static void emit_view(GVJ_t * job, graph_t * g, int flags)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4342,6 +4295,8 @@ throw new UnsupportedOperationException();
 
 //3 dk8gj6u142q8vgup6ar9ruysc
 // static void emit_begin_graph(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_begin_graph", key="dk8gj6u142q8vgup6ar9ruysc", definition="static void emit_begin_graph(GVJ_t * job, graph_t * g)")
 public static Object emit_begin_graph(Object... arg) {
 UNSUPPORTED("5njsnfg1w96wtvkzxnnx79oze"); // static void emit_begin_graph(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4362,6 +4317,8 @@ throw new UnsupportedOperationException();
 
 //3 3nhn5596nwxutoyrm6tsxwvbd
 // static void emit_end_graph(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_end_graph", key="3nhn5596nwxutoyrm6tsxwvbd", definition="static void emit_end_graph(GVJ_t * job, graph_t * g)")
 public static Object emit_end_graph(Object... arg) {
 UNSUPPORTED("e5oluojkvyfuqdu97u95cqg3w"); // static void emit_end_graph(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4377,6 +4334,8 @@ throw new UnsupportedOperationException();
 
 //3 9to165vrtas68afpbjdprx2vd
 // static void emit_page(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_page", key="9to165vrtas68afpbjdprx2vd", definition="static void emit_page(GVJ_t * job, graph_t * g)")
 public static Object emit_page(Object... arg) {
 UNSUPPORTED("di1dvfa15xs9rx182756djgqg"); // static void emit_page(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4459,6 +4418,8 @@ throw new UnsupportedOperationException();
 
 //3 87nutd480deekxln7o14or4vo
 // void emit_graph(GVJ_t * job, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_graph", key="87nutd480deekxln7o14or4vo", definition="void emit_graph(GVJ_t * job, graph_t * g)")
 public static Object emit_graph(Object... arg) {
 UNSUPPORTED("3bmd2hvgnq1fcmgpxtam9hsx0"); // void emit_graph(GVJ_t * job, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4512,6 +4473,8 @@ throw new UnsupportedOperationException();
 
 //3 8drr2f8zs3soqc2sosnio8pzh
 // static void free_string_entry(Dict_t * dict, char *key, Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="free_string_entry", key="8drr2f8zs3soqc2sosnio8pzh", definition="static void free_string_entry(Dict_t * dict, char *key, Dtdisc_t * disc)")
 public static Object free_string_entry(Object... arg) {
 UNSUPPORTED("5fw7dopfefym7l730mi9nupmb"); // static void free_string_entry(Dict_t * dict, char *key, Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4534,6 +4497,8 @@ throw new UnsupportedOperationException();
 
 //3 2akcqhxfjsryfaxqftz8ogp65
 // int emit_once(char *str) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_once", key="2akcqhxfjsryfaxqftz8ogp65", definition="int emit_once(char *str)")
 public static Object emit_once(Object... arg) {
 UNSUPPORTED("av9vowc3noulfodcy4y75cigq"); // int emit_once(char *str)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4554,6 +4519,8 @@ throw new UnsupportedOperationException();
 
 //3 13d7ot7fdy4wdgkjwthvwzm4e
 // void emit_once_reset(void) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_once_reset", key="13d7ot7fdy4wdgkjwthvwzm4e", definition="void emit_once_reset(void)")
 public static Object emit_once_reset(Object... arg) {
 UNSUPPORTED("7ssgqzgkp5093mqxhkhuxum69"); // void emit_once_reset(void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4571,6 +4538,8 @@ throw new UnsupportedOperationException();
 
 //3 elzykz6y67nj4wkw8ujszlav6
 // static void emit_begin_cluster(GVJ_t * job, Agraph_t * sg) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_begin_cluster", key="elzykz6y67nj4wkw8ujszlav6", definition="static void emit_begin_cluster(GVJ_t * job, Agraph_t * sg)")
 public static Object emit_begin_cluster(Object... arg) {
 UNSUPPORTED("5hucwlu4giv8cmas625we7f9h"); // static void emit_begin_cluster(GVJ_t * job, Agraph_t * sg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4591,6 +4560,8 @@ throw new UnsupportedOperationException();
 
 //3 djiumpyzkrvkc510ygwc0qw82
 // static void emit_end_cluster(GVJ_t * job, Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_end_cluster", key="djiumpyzkrvkc510ygwc0qw82", definition="static void emit_end_cluster(GVJ_t * job, Agraph_t * g)")
 public static Object emit_end_cluster(Object... arg) {
 UNSUPPORTED("9dxd1b11ibgf7uvh7mf5mvzye"); // static void emit_end_cluster(GVJ_t * job, Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4606,6 +4577,8 @@ throw new UnsupportedOperationException();
 
 //3 560z6epwa1xr2jys0av7hf7e5
 // void emit_clusters(GVJ_t * job, Agraph_t * g, int flags) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="emit_clusters", key="560z6epwa1xr2jys0av7hf7e5", definition="void emit_clusters(GVJ_t * job, Agraph_t * g, int flags)")
 public static Object emit_clusters(Object... arg) {
 UNSUPPORTED("9xh1f0u1yb9m8ypftvkh8ix4c"); // void emit_clusters(GVJ_t * job, Agraph_t * g, int flags)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4629,7 +4602,7 @@ UNSUPPORTED("7pfc87mgoy8xnsdd8w3r44gt4"); // 	if (flags & (1<<2))
 UNSUPPORTED("8zezqxx7s7218o1z84t9283i1"); // 	    emit_clusters(job, sg, flags);
 UNSUPPORTED("4griuzh66dk49to2z4vg4n58t"); // 	emit_begin_cluster(job, sg);
 UNSUPPORTED("4afw3f56zovkl91einsaznlr1"); // 	obj = job->obj;
-UNSUPPORTED("8njvdvq4f4flv48y83eoo9guh"); // 	doAnchor = (obj->url || obj->explicit_tooltip);
+UNSUPPORTED("8njvdvq4f4flv48y83eoo9guh"); // 	doAnchor = obj->url || obj->explicit_tooltip;
 UNSUPPORTED("88mnm1u4w0ntiz5kynm02mfri"); // 	setColorScheme (agget (sg, "colorscheme"));
 UNSUPPORTED("eazs637wvmi4mg6rzyohl77bn"); // 	if (doAnchor && !(flags & (1<<2))) {
 UNSUPPORTED("4brof5tmiwuq5x63jh8whfeo0"); // 	    emit_map_rect(job, GD_bb(sg));
@@ -4777,6 +4750,8 @@ throw new UnsupportedOperationException();
 
 //3 c4mtnyvuir2cais09r4vk4xwa
 // static boolean is_style_delim(int c) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="is_style_delim", key="c4mtnyvuir2cais09r4vk4xwa", definition="static boolean is_style_delim(int c)")
 public static Object is_style_delim(Object... arg) {
 UNSUPPORTED("8mez49lbay1n6ghwk9q96arp5"); // static boolean is_style_delim(int c)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4799,6 +4774,8 @@ throw new UnsupportedOperationException();
 
 //3 ciz01t6xlpxu9dny1f4zwb45n
 // static int style_token(char **s, agxbuf * xb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="style_token", key="ciz01t6xlpxu9dny1f4zwb45n", definition="static int style_token(char **s, agxbuf * xb)")
 public static Object style_token(Object... arg) {
 UNSUPPORTED("28oqkocgew358xzz1ws4vsuz4"); // static int style_token(char **s, agxbuf * xb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4842,6 +4819,8 @@ throw new UnsupportedOperationException();
 
 //3 31nqh76a91ewgfgc421tjgnxd
 // char **parse_style(char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="", key="31nqh76a91ewgfgc421tjgnxd", definition="char **parse_style(char *s)")
 public static Object parse_style(Object... arg) {
 UNSUPPORTED("e5cy7r0xn364flrgake76xt8i"); // char **parse_style(char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4914,6 +4893,8 @@ throw new UnsupportedOperationException();
 
 //3 ck3omsgy3q0zlazix8r2dmufz
 // static boxf bezier_bb(bezier bz) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="bezier_bb", key="ck3omsgy3q0zlazix8r2dmufz", definition="static boxf bezier_bb(bezier bz)")
 public static Object bezier_bb(Object... arg) {
 UNSUPPORTED("4x8to7ipsnszk7hvp8b6us95m"); // static boxf bezier_bb(bezier bz)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4947,6 +4928,8 @@ throw new UnsupportedOperationException();
 
 //3 mmp96ytye8ub6txmw93m4vel
 // static void init_splines_bb(splines *spl) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_splines_bb", key="mmp96ytye8ub6txmw93m4vel", definition="static void init_splines_bb(splines *spl)")
 public static Object init_splines_bb(Object... arg) {
 UNSUPPORTED("c3y3jo1ro3rw4jxe8wllr42wd"); // static void init_splines_bb(splines *spl)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4982,6 +4965,8 @@ throw new UnsupportedOperationException();
 
 //3 56w9yqsde88lk1salsdo9zhek
 // static void init_bb_edge(edge_t *e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_bb_edge", key="56w9yqsde88lk1salsdo9zhek", definition="static void init_bb_edge(edge_t *e)")
 public static Object init_bb_edge(Object... arg) {
 UNSUPPORTED("czoe4mrvfnlkgkf9dd5gswdun"); // static void init_bb_edge(edge_t *e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -5002,6 +4987,8 @@ throw new UnsupportedOperationException();
 
 //3 ciznhkb6ca1q6pevo943ekme0
 // static void init_bb_node(graph_t *g, node_t *n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_bb_node", key="ciznhkb6ca1q6pevo943ekme0", definition="static void init_bb_node(graph_t *g, node_t *n)")
 public static Object init_bb_node(Object... arg) {
 UNSUPPORTED("9eic9chg3e24i3qt1eqh1kglr"); // static void init_bb_node(graph_t *g, node_t *n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -5029,6 +5016,8 @@ throw new UnsupportedOperationException();
 
 //3 rpxf4np5e0zbdxhp8wqxwjru
 // static void init_bb(graph_t *g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="init_bb", key="rpxf4np5e0zbdxhp8wqxwjru", definition="static void init_bb(graph_t *g)")
 public static Object init_bb(Object... arg) {
 UNSUPPORTED("4c9b9a1jd95zvo8rew7l4rdw2"); // static void init_bb(graph_t *g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -5055,8 +5044,8 @@ throw new UnsupportedOperationException();
 
 
 
-//3 31vgctm6ydke1b6e0s06x85og
-// void gv_fixLocale (int set) 
+@Reviewed(when = "11/11/2020")
+@Original(version="2.38.0", path="lib/common/emit.c", name="gv_fixLocale", key="31vgctm6ydke1b6e0s06x85og", definition="void gv_fixLocale (int set)")
 public static void gv_fixLocale(int set) {
 ENTERING("31vgctm6ydke1b6e0s06x85og","gv_fixLocale");
 try {
@@ -5071,6 +5060,8 @@ LEAVING("31vgctm6ydke1b6e0s06x85og","gv_fixLocale");
 
 //3 9elgfx2mwaal8mp8yu4i8x55g
 // int gvRenderJobs (GVC_t * gvc, graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="gvRenderJobs", key="9elgfx2mwaal8mp8yu4i8x55g", definition="int gvRenderJobs (GVC_t * gvc, graph_t * g)")
 public static Object gvRenderJobs(Object... arg) {
 UNSUPPORTED("al6r85bl2757m64h0be99kb2v"); // int gvRenderJobs (GVC_t * gvc, graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -5178,6 +5169,8 @@ throw new UnsupportedOperationException();
 
 //3 a3vxhyyu69l0qyuv5lmbs3mhh
 // boolean findStopColor (char* colorlist, char* clrs[2], float* frac) 
+@Unused
+@Original(version="2.38.0", path="lib/common/emit.c", name="findStopColor", key="a3vxhyyu69l0qyuv5lmbs3mhh", definition="boolean findStopColor (char* colorlist, char* clrs[2], float* frac)")
 public static Object findStopColor(Object... arg) {
 UNSUPPORTED("4an2je0tp9mryy4qaly9pg51w"); // boolean findStopColor (char* colorlist, char* clrs[2], float* frac)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGEDGE;
@@ -55,142 +58,13 @@ import h.ST_dt_s;
 import smetana.core.CString;
 
 public class imap__c {
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 6ayavpu39aihwyojkx093pcy3
-// extern Agraph_t *Ag_G_global
-
-
-//1 871mxtg9l6ffpxdl9kniwusf7
-// extern char *AgDataRecName
-
-
-//1 c0o2kmml0tn6hftuwo0u4shwd
-// extern Dtdisc_t Ag_subnode_id_disc
-
-
-//1 8k15pyu256unm2kpd9zf5pf7k
-// extern Dtdisc_t Ag_subnode_seq_disc
-
-
-//1 e3d820y06gpeusn6atgmj8bzd
-// extern Dtdisc_t Ag_mainedge_id_disc
-
-
-//1 cbr0772spix9h1aw7h5v7dv9j
-// extern Dtdisc_t Ag_subedge_id_disc
-
-
-//1 akd0c3v0j7m2npxcb9acit1fa
-// extern Dtdisc_t Ag_mainedge_seq_disc
-
-
-//1 12d8la07351ww7vwfzucjst8m
-// extern Dtdisc_t Ag_subedge_seq_disc
-
-
-//1 29eokk7v88e62g8o6lizmo967
-// extern Dtdisc_t Ag_subgraph_id_disc
-
-
-//1 4xd9cbgy6hk5g6nhjcbpzkx14
-// extern Agcbdisc_t AgAttrdisc
-
 
 
 
 //3 79n6elfqk1vw36hmv7bxlrb0v
 // static int idcmpf(Dict_t * d, void *arg_p0, void *arg_p1, Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="idcmpf", key="79n6elfqk1vw36hmv7bxlrb0v", definition="static int idcmpf(Dict_t * d, void *arg_p0, void *arg_p1, Dtdisc_t * disc)")
 public static Object idcmpf(Object... arg) {
 UNSUPPORTED("1r7psgafk53qtogr4ft1z3lze"); // static int idcmpf(Dict_t * d, void *arg_p0, void *arg_p1, Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -210,6 +84,8 @@ throw new UnsupportedOperationException();
 
 //3 aadw62b6y0d22xf4720pzdiyz
 // static int namecmpf(Dict_t * d, void *arg_p0, void *arg_p1, 		    Dtdisc_t * disc) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="namecmpf", key="aadw62b6y0d22xf4720pzdiyz", definition="static int namecmpf(Dict_t * d, void *arg_p0, void *arg_p1, 		    Dtdisc_t * disc)")
 public static Object namecmpf(Object... arg) {
 UNSUPPORTED("7ouzah61jyng2a8u8dfdxeekw"); // static int namecmpf(Dict_t * d, void *arg_p0, void *arg_p1,
 UNSUPPORTED("3hfqv3wxw19wel6xzpj1kbshb"); // 		    Dtdisc_t * disc)
@@ -238,6 +114,8 @@ throw new UnsupportedOperationException();
 
 //3 mx2krtbgfhcihopw9rw8kcv3
 // int aginternalmaplookup(Agraph_t * g, int objtype, char *str, 			unsigned long *result) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="aginternalmaplookup", key="mx2krtbgfhcihopw9rw8kcv3", definition="int aginternalmaplookup(Agraph_t * g, int objtype, char *str, 			unsigned long *result)")
 public static int aginternalmaplookup(ST_Agraph_s g, int objtype, CString str, int result[]) {
 ENTERING("mx2krtbgfhcihopw9rw8kcv3","aginternalmaplookup");
 try {
@@ -273,6 +151,8 @@ LEAVING("mx2krtbgfhcihopw9rw8kcv3","aginternalmaplookup");
 
 //3 ce8fo5gya95enhgssezqs3vav
 // void aginternalmapinsert(Agraph_t * g, int objtype, char *str, 			 unsigned long id) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="aginternalmapinsert", key="ce8fo5gya95enhgssezqs3vav", definition="void aginternalmapinsert(Agraph_t * g, int objtype, char *str, 			 unsigned long id)")
 public static Object aginternalmapinsert(Object... arg) {
 UNSUPPORTED("bk4ucrzua03gr9lak6zfm3orp"); // void aginternalmapinsert(Agraph_t * g, int objtype, char *str,
 UNSUPPORTED("18mfx819yhg1vg5xkrfjr96x2"); // 			 unsigned long id)
@@ -300,8 +180,8 @@ throw new UnsupportedOperationException();
 
 
 
-//3 3r16pkjiksv8i7o961ltxyge6
-// static IMapEntry_t *find_isym(Agraph_t * g, int objtype, unsigned long id) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="", key="3r16pkjiksv8i7o961ltxyge6", definition="static IMapEntry_t *find_isym(Agraph_t * g, int objtype, unsigned long id)")
 public static ST_IMapEntry_t find_isym(ST_Agraph_s g, int objtype, int id) {
 ENTERING("3r16pkjiksv8i7o961ltxyge6","find_isym");
 try {
@@ -310,7 +190,7 @@ try {
     if (objtype == AGINEDGE)
 	objtype = AGEDGE;
     if ((d = g.clos.lookup_by_id[objtype])!=null) {
-	itemplate.setInt("id", id);
+    UNSUPPORTED("itemplate.id = id;");
 	isym = (ST_IMapEntry_t) UNSUPPORTED("(IMapEntry_t *) (*(((Dt_t*)(d))->searchf))((d),(void*)(&itemplate),0000004)");
     } else
 	isym = null;
@@ -323,8 +203,8 @@ LEAVING("3r16pkjiksv8i7o961ltxyge6","find_isym");
 
 
 
-//3 foe6bvtujfevsc0f3m8aqln8
-// char *aginternalmapprint(Agraph_t * g, int objtype, unsigned long id) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="", key="foe6bvtujfevsc0f3m8aqln8", definition="char *aginternalmapprint(Agraph_t * g, int objtype, unsigned long id)")
 public static CString aginternalmapprint(ST_Agraph_s g, int objtype, int id) {
 ENTERING("foe6bvtujfevsc0f3m8aqln8","aginternalmapprint");
 try {
@@ -342,6 +222,8 @@ LEAVING("foe6bvtujfevsc0f3m8aqln8","aginternalmapprint");
 
 //3 5tlg05avf32knqysibbic9jou
 // int aginternalmapdelete(Agraph_t * g, int objtype, unsigned long id) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="aginternalmapdelete", key="5tlg05avf32knqysibbic9jou", definition="int aginternalmapdelete(Agraph_t * g, int objtype, unsigned long id)")
 public static Object aginternalmapdelete(Object... arg) {
 UNSUPPORTED("19jjvbvuhgwuct5d89a9klzdn"); // int aginternalmapdelete(Agraph_t * g, int objtype, unsigned long id)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -366,6 +248,8 @@ throw new UnsupportedOperationException();
 
 //3 2wanqmzppni4zd3mlb6pkou1k
 // void aginternalmapclearlocalnames(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="aginternalmapclearlocalnames", key="2wanqmzppni4zd3mlb6pkou1k", definition="void aginternalmapclearlocalnames(Agraph_t * g)")
 public static Object aginternalmapclearlocalnames(Object... arg) {
 UNSUPPORTED("bkfxi88xlzuzwi4a9iqo8pn28"); // void aginternalmapclearlocalnames(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -395,6 +279,8 @@ throw new UnsupportedOperationException();
 
 //3 exx9lnei1gnd60cuddc52z7i9
 // static void closeit(Dict_t ** d) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="closeit", key="exx9lnei1gnd60cuddc52z7i9", definition="static void closeit(Dict_t ** d)")
 public static Object closeit(Object... arg) {
 UNSUPPORTED("dg5p1tjrd085naw1mo4ichi6q"); // static void closeit(Dict_t ** d)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -415,6 +301,8 @@ throw new UnsupportedOperationException();
 
 //3 5dw1m5wgietdxy22txx0l20ph
 // void aginternalmapclose(Agraph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/imap.c", name="aginternalmapclose", key="5dw1m5wgietdxy22txx0l20ph", definition="void aginternalmapclose(Agraph_t * g)")
 public static Object aginternalmapclose(Object... arg) {
 UNSUPPORTED("bdxp6h1xs4z2wt83fv2a3w0y2"); // void aginternalmapclose(Agraph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

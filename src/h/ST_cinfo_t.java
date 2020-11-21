@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,6 +45,7 @@
  */
 package h;
 
+import smetana.core.CStar;
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
@@ -53,7 +54,7 @@ import smetana.core.amiga.StarStruct;
 public class ST_cinfo_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
 	public final ST_boxf bb = new ST_boxf(this);
-	public ST_object_t.Array objp;
+	public CStar<ST_object_t> objp;
 
 	public ST_cinfo_t(StarStruct parent) {
 	}

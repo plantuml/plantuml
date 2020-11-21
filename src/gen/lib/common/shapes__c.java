@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -47,11 +47,14 @@ package gen.lib.common;
 import static gen.lib.cgraph.attr__c.agget;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.common.geom__c.ccwrotatepf;
+import static gen.lib.common.geom__c.cwrotatepf;
+import static gen.lib.common.labels__c.make_label;
 import static gen.lib.common.utils__c.late_double;
 import static gen.lib.common.utils__c.late_int;
 import static gen.lib.common.utils__c.late_string;
 import static gen.lib.common.utils__c.mapbool;
 import static gen.lib.common.utils__c.safefile;
+import static h.ST_pointf.pointfof;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.abs;
 import static smetana.core.JUtils.atan2;
@@ -60,14 +63,25 @@ import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtils.sin;
 import static smetana.core.JUtils.sqrt;
 import static smetana.core.JUtils.strcmp;
+import static smetana.core.JUtils.strlen;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.BETWEEN;
+import static smetana.core.Macro.BOTTOM;
+import static smetana.core.Macro.DIST2;
+import static smetana.core.Macro.FIXEDSHAPE;
+import static smetana.core.Macro.GD_drawing;
 import static smetana.core.Macro.GD_flip;
 import static smetana.core.Macro.GD_rankdir;
+import static smetana.core.Macro.GD_realflip;
 import static smetana.core.Macro.INSIDE;
+import static smetana.core.Macro.LEFT;
+import static smetana.core.Macro.LT_HTML;
+import static smetana.core.Macro.LT_NONE;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.M_PI;
 import static smetana.core.Macro.N;
+import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_has_port;
 import static smetana.core.Macro.ND_height;
 import static smetana.core.Macro.ND_ht;
@@ -78,271 +92,52 @@ import static smetana.core.Macro.ND_shape;
 import static smetana.core.Macro.ND_shape_info;
 import static smetana.core.Macro.ND_width;
 import static smetana.core.Macro.NOT;
+import static smetana.core.Macro.PAD;
+import static smetana.core.Macro.PF2P;
+import static smetana.core.Macro.POINTS;
+import static smetana.core.Macro.PS2INCH;
 import static smetana.core.Macro.RADIANS;
+import static smetana.core.Macro.RIGHT;
 import static smetana.core.Macro.ROUND;
 import static smetana.core.Macro.SQR;
 import static smetana.core.Macro.SQRT2;
+import static smetana.core.Macro.TOP;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.fabs;
 import static smetana.core.Macro.hypot;
+
+import gen.annotation.Difficult;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import h.ST_Agnode_s;
-import h.ST_Agnodeinfo_t;
-import h.ST_Agobj_s;
-import h.ST_Agraphinfo_t;
 import h.ST_boxf;
+import h.ST_field_t;
 import h.ST_inside_t;
 import h.ST_point;
 import h.ST_pointf;
 import h.ST_polygon_t;
 import h.ST_port;
 import h.ST_shape_desc;
+import h.ST_textlabel_t;
 import h.shape_kind;
+import smetana.core.ACCESS;
 import smetana.core.CFunctionImpl;
+import smetana.core.CStar;
+import smetana.core.CStarStar;
 import smetana.core.CString;
+import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
+import smetana.core.__struct__;
 
 public class shapes__c {
-//1 2digov3edok6d5srhgtlmrycs
-// extern lt_symlist_t lt_preloaded_symbols[]
-
-
-//1 baedz5i9est5csw3epz3cv7z
-// typedef Ppoly_t Ppolyline_t
-
-
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
-
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 8dfqgf3u1v830qzcjqh9o8ha7
-// extern Agmemdisc_t AgMemDisc
-
-
-//1 18k2oh2t6llfsdc5x0wlcnby8
-// extern Agiddisc_t AgIdDisc
-
-
-//1 a4r7hi80gdxtsv4hdoqpyiivn
-// extern Agiodisc_t AgIoDisc
-
-
-//1 bnzt5syjb7mgeru19114vd6xx
-// extern Agdisc_t AgDefaultDisc
-
-
-//1 35y2gbegsdjilegaribes00mg
-// extern Agdesc_t Agdirected, Agstrictdirected, Agundirected,     Agstrictundirected
-
-
-//1 c2rygslq6bcuka3awmvy2b3ow
-// typedef Agsubnode_t	Agnoderef_t
-
-
-//1 xam6yv0dcsx57dtg44igpbzn
-// typedef Dtlink_t	Agedgeref_t
-
-
-//1 nye6dsi1twkbddwo9iffca1j
-// extern char *Version
-
-
-//1 65mu6k7h7lb7bx14jpiw7iyxr
-// extern char **Files
-
-
-//1 2rpjdzsdyrvomf00zcs3u3dyn
-// extern const char **Lib
-
-
-//1 6d2f111lntd2rsdt4gswh5909
-// extern char *CmdName
-
-
-//1 a0ltq04fpeg83soa05a2fkwb2
-// extern char *specificFlags
-
-
-//1 1uv30qeqq2jh6uznlr4dziv0y
-// extern char *specificItems
-
-
-//1 7i4hkvngxe3x7lmg5h6b3t9g3
-// extern char *Gvfilepath
-
-
-//1 9jp96pa73kseya3w6sulxzok6
-// extern char *Gvimagepath
-
-
-//1 40ylumfu7mrvawwf4v2asvtwk
-// extern unsigned char Verbose
-
-
-//1 93st8awjy1z0h07n28qycbaka
-// extern unsigned char Reduce
-
-
-//1 f2vs67ts992erf8onwfglurzp
-// extern int MemTest
-
-
-//1 c6f8whijgjwwagjigmxlwz3gb
-// extern char *HTTPServerEnVar
-
-
-//1 cp4hzj7p87m7arw776d3bt7aj
-// extern char *Output_file_name
-
-
-//1 a3rqagofsgraie6mx0krzkgsy
-// extern int graphviz_errors
-
-
-//1 5up05203r4kxvjn1m4njcgq5x
-// extern int Nop
-
-
-//1 umig46cco431x14b3kosde2t
-// extern double PSinputscale
-
-
-//1 52bj6v8fqz39khasobljfukk9
-// extern int Syntax_errors
-
-
-//1 9ekf2ina8fsjj6y6i0an6somj
-// extern int Show_cnt
-
-
-//1 38di5qi3nkxkq65onyvconk3r
-// extern char** Show_boxes
-
-
-//1 6ri6iu712m8mpc7t2670etpcw
-// extern int CL_type
-
-
-//1 bomxiw3gy0cgd1ydqtek7fpxr
-// extern unsigned char Concentrate
-
-
-//1 cqy3gqgcq8empdrbnrhn84058
-// extern double Epsilon
-
-
-//1 64slegfoouqeg0rmbyjrm8wgr
-// extern int MaxIter
-
-
-//1 88wdinpnmfs4mab4aw62yb0bg
-// extern int Ndim
-
-
-//1 8bbad3ogcelqnnvo5br5s05gq
-// extern int State
-
-
-//1 17rnd8q45zclfn68qqst2vxxn
-// extern int EdgeLabelsDone
-
-
-//1 ymx1z4s8cznjifl2d9f9m8jr
-// extern double Initial_dist
-
-
-//1 a33bgl0c3uqb3trx419qulj1x
-// extern double Damping
-
-
-//1 d9lvrpjg1r0ojv40pod1xwk8n
-// extern int Y_invert
-
-
-//1 71efkfs77q5tq9ex6y0f4kanh
-// extern int GvExitOnUsage
-
-
-//1 4xy2dkdkv0acs2ue9eca8hh2e
-// extern Agsym_t 	*G_activepencolor, *G_activefillcolor, 	*G_selectedpencolor, *G_selectedfillcolor, 	*G_visitedpencolor, *G_visitedfillcolor, 	*G_deletedpencolor, *G_deletedfillcolor, 	*G_ordering, *G_peripheries, *G_penwidth, 	*G_gradientangle, *G_margin
-
-
-//1 9js5gxgzr74eakgtfhnbws3t9
-// extern Agsym_t 	*N_height, *N_width, *N_shape, *N_color, *N_fillcolor, 	*N_activepencolor, *N_activefillcolor, 	*N_selectedpencolor, *N_selectedfillcolor, 	*N_visitedpencolor, *N_visitedfillcolor, 	*N_deletedpencolor, *N_deletedfillcolor, 	*N_fontsize, *N_fontname, *N_fontcolor, *N_margin, 	*N_label, *N_xlabel, *N_nojustify, *N_style, *N_showboxes, 	*N_sides, *N_peripheries, *N_ordering, *N_orientation, 	*N_skew, *N_distortion, *N_fixed, *N_imagescale, *N_layer, 	*N_group, *N_comment, *N_vertices, *N_z, 	*N_penwidth, *N_gradientangle
-
-
-//1 anqllp9sj7wo45w6bm11j8trn
-// extern Agsym_t 	*E_weight, *E_minlen, *E_color, *E_fillcolor, 	*E_activepencolor, *E_activefillcolor, 	*E_selectedpencolor, *E_selectedfillcolor, 	*E_visitedpencolor, *E_visitedfillcolor, 	*E_deletedpencolor, *E_deletedfillcolor, 	*E_fontsize, *E_fontname, *E_fontcolor, 	*E_label, *E_xlabel, *E_dir, *E_style, *E_decorate, 	*E_showboxes, *E_arrowsz, *E_constr, *E_layer, 	*E_comment, *E_label_float, 	*E_samehead, *E_sametail, 	*E_arrowhead, *E_arrowtail, 	*E_headlabel, *E_taillabel, 	*E_labelfontsize, *E_labelfontname, *E_labelfontcolor, 	*E_labeldistance, *E_labelangle, 	*E_tailclip, *E_headclip, 	*E_penwidth
-
-
-//1 bh0z9puipqw7gymjd5h5b8s6i
-// extern struct fdpParms_s* fdp_parms
-
-
 
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -358,29 +153,14 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
 
 
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -401,6 +181,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -416,29 +198,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -456,6 +220,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -473,6 +239,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -490,6 +258,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -507,6 +277,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -524,6 +296,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -541,6 +315,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -558,6 +334,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -577,6 +355,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -596,6 +376,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -615,6 +397,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -634,6 +418,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -648,6 +434,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -662,6 +450,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -676,6 +466,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -690,6 +482,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -707,6 +501,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -724,8 +520,8 @@ throw new UnsupportedOperationException();
 // static port Center = 
 /*private final static __struct__<port> Center = JUtils.from(port.class);
 static {
-Center.p.setDouble("x", 0);
-Center.p.setDouble("y", 0);
+Center.p.x = 0;
+Center.p.y = 0;
 Center.setDouble("theta", -1);
 Center.setPtr("bp", null);
 Center.setInt("defined", 0);
@@ -1015,6 +811,8 @@ private static shape_desc __Shapes__(String s, shape_functions shape_functions, 
 
 //3 a7copj498to9ai2kxtg728mex
 // static void unrecognized(node_t * n, char *p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="unrecognized", key="a7copj498to9ai2kxtg728mex", definition="static void unrecognized(node_t * n, char *p)")
 public static Object unrecognized(Object... arg) {
 UNSUPPORTED("b1ov3x4b2q0ypsqw7wt22050l"); // static void unrecognized(node_t * n, char *p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1029,6 +827,8 @@ throw new UnsupportedOperationException();
 
 //3 1nifps8w2xj8fe3s0e934h9oo
 // static double quant(double val, double q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="quant", key="1nifps8w2xj8fe3s0e934h9oo", definition="static double quant(double val, double q)")
 public static Object quant(Object... arg) {
 UNSUPPORTED("d05378246jv81jc6hotxpmh7r"); // static double quant(double val, double q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1047,6 +847,8 @@ throw new UnsupportedOperationException();
 
 //3 eb4jyrh981apg1fy13fczexdl
 // static int same_side(pointf p0, pointf p1, pointf L0, pointf L1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="same_side", key="eb4jyrh981apg1fy13fczexdl", definition="static int same_side(pointf p0, pointf p1, pointf L0, pointf L1)")
 public static boolean same_side(final ST_pointf p0, final ST_pointf p1, final ST_pointf L0, final ST_pointf L1) {
 // WARNING!! STRUCT
 return same_side_w_(p0.copy(), p1.copy(), L0.copy(), L1.copy());
@@ -1058,10 +860,10 @@ try {
     double a, b, c;
     /* a x + b y = c */
     a = -(L1.y - L0.y);
-    b = (L1.x - L0.x);
+    b = L1.x - L0.x;
     c = a * L0.x + b * L0.y;
-    s0 = (a * p0.x + b * p0.y - c >= 0);
-    s1 = (a * p1.x + b * p1.y - c >= 0);
+    s0 = a * p0.x + b * p0.y - c >= 0;
+    s1 = a * p1.x + b * p1.y - c >= 0;
     return (s0 == s1);
 } finally {
 LEAVING("eb4jyrh981apg1fy13fczexdl","same_side");
@@ -1073,6 +875,8 @@ LEAVING("eb4jyrh981apg1fy13fczexdl","same_side");
 
 //3 52h7f4vpu1pj6fqh78wme87uk
 // static char* penColor(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="penColor", key="52h7f4vpu1pj6fqh78wme87uk", definition="static char* penColor(GVJ_t * job, node_t * n)")
 public static Object penColor(Object... arg) {
 UNSUPPORTED("9y7ivrr4l5s7wx7hbbkjpd2fr"); // static
 UNSUPPORTED("eghunof84ahzb2mfw01ut6dd0"); // char* penColor(GVJ_t * job, node_t * n)
@@ -1093,6 +897,8 @@ throw new UnsupportedOperationException();
 
 //3 7nofo7jo7hj6ehl6tswgfwzif
 // static char *findFillDflt(node_t * n, char *dflt) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="7nofo7jo7hj6ehl6tswgfwzif", definition="static char *findFillDflt(node_t * n, char *dflt)")
 public static Object findFillDflt(Object... arg) {
 UNSUPPORTED("9y7ivrr4l5s7wx7hbbkjpd2fr"); // static
 UNSUPPORTED("1nwxf9hr4zzdjisa91w1o50qu"); // char *findFillDflt(node_t * n, char *dflt)
@@ -1117,6 +923,8 @@ throw new UnsupportedOperationException();
 
 //3 dkh0fr3loytegfs1lz9qi1sd6
 // static char *findFill(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="dkh0fr3loytegfs1lz9qi1sd6", definition="static char *findFill(node_t * n)")
 public static Object findFill(Object... arg) {
 UNSUPPORTED("9y7ivrr4l5s7wx7hbbkjpd2fr"); // static
 UNSUPPORTED("999wldpj7kbc3jf5qrtjs3kac"); // char *findFill(node_t * n)
@@ -1132,6 +940,8 @@ throw new UnsupportedOperationException();
 
 //3 b6vz4rofh7tr27tzdul6mqinz
 // char *findAttrColor(void *obj, attrsym_t *colorattr, char *dflt)
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="b6vz4rofh7tr27tzdul6mqinz", definition="char *findAttrColor(void *obj, attrsym_t *colorattr, char *dflt)")
 public static Object findAttrColor(Object... arg) {
 UNSUPPORTED("5v9kutabxqrex87ezkjge03mz"); // char *findAttrColor(void *obj, attrsym_t *colorattr, char *dflt){
 UNSUPPORTED("5zltq70xm6o2q24ddyqe6noyn"); //     char *color;
@@ -1152,6 +962,8 @@ throw new UnsupportedOperationException();
 
 //3 arypshfdif4tg03g6bv68e74s
 // static int isBox (node_t* n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="isBox", key="arypshfdif4tg03g6bv68e74s", definition="static int isBox (node_t* n)")
 public static Object isBox(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("1fh5whcpicn37jal4or4fzmhe"); // isBox (node_t* n)
@@ -1172,6 +984,8 @@ throw new UnsupportedOperationException();
 
 //3 ddsagt9m8yt7n8h3nk19jnk2p
 // static int isEllipse(node_t* n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="isEllipse", key="ddsagt9m8yt7n8h3nk19jnk2p", definition="static int isEllipse(node_t* n)")
 public static Object isEllipse(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("dj5on95sulam3ulc2tw8duoeq"); // isEllipse(node_t* n)
@@ -1192,6 +1006,8 @@ throw new UnsupportedOperationException();
 
 //3 e6hjh17xf1s408w7nmf95mnvn
 // static char **checkStyle(node_t * n, int *flagp) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="e6hjh17xf1s408w7nmf95mnvn", definition="static char **checkStyle(node_t * n, int *flagp)")
 public static Object checkStyle(Object... arg) {
 UNSUPPORTED("ez47sxvuvz2y431fczf0ih52b"); // static char **checkStyle(node_t * n, int *flagp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1265,6 +1081,8 @@ throw new UnsupportedOperationException();
 
 //3 cmfha87baduerx07enpoxpl0i
 // static int stylenode(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="stylenode", key="cmfha87baduerx07enpoxpl0i", definition="static int stylenode(GVJ_t * job, node_t * n)")
 public static Object stylenode(Object... arg) {
 UNSUPPORTED("2zooek35a9pjrcqa212ed7d4d"); // static int stylenode(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1288,6 +1106,8 @@ throw new UnsupportedOperationException();
 
 //3 484y5dade0mh0rhmlpq9sbgyj
 // static void Mcircle_hack(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="Mcircle_hack", key="484y5dade0mh0rhmlpq9sbgyj", definition="static void Mcircle_hack(GVJ_t * job, node_t * n)")
 public static Object Mcircle_hack(Object... arg) {
 UNSUPPORTED("14yetc0y5dql9a1m4hjimwery"); // static void Mcircle_hack(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1314,6 +1134,8 @@ throw new UnsupportedOperationException();
 
 //3 ei77gihju88eavrphjd4217d0
 // void round_corners(GVJ_t * job, pointf * AF, int sides, int style, int filled) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="round_corners", key="ei77gihju88eavrphjd4217d0", definition="void round_corners(GVJ_t * job, pointf * AF, int sides, int style, int filled)")
 public static Object round_corners(Object... arg) {
 UNSUPPORTED("4zly0db3w4vfht908qlfjvgr1"); // void round_corners(GVJ_t * job, pointf * AF, int sides, int style, int filled)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1323,11 +1145,11 @@ UNSUPPORTED("b9m8kb2lfopred94uilevubat"); //     int i, seg, mode, shape;
 UNSUPPORTED("48n1zwofayobr58hhiz0y5wfp"); //     pointf* pts;
 UNSUPPORTED("erycpwhkizj18xsodfbapugg"); //     shape = style & (127 << 24);
 UNSUPPORTED("17t8enyxf5yj5x4qmggz27rpj"); //     if (style & (1 << 3))
-UNSUPPORTED("209ali7eb7s6xpcplnxc1n105"); // 	mode = (1 << 3);
+UNSUPPORTED("209ali7eb7s6xpcplnxc1n105"); // 	mode = 1 << 3;
 UNSUPPORTED("2jjd9xuwi3k89b2qz48p9qiij"); //     else if (style & (127 << 24))
 UNSUPPORTED("69pqj1vo4pr13r0r02kyk8rtq"); // 	mode = shape;
 UNSUPPORTED("div10atae09n36x269sl208r1"); //     else
-UNSUPPORTED("b3q1yyf621vvgphjqrr5ryare"); // 	mode = (1 << 2);
+UNSUPPORTED("b3q1yyf621vvgphjqrr5ryare"); // 	mode = 1 << 2;
 UNSUPPORTED("6ssyjdjxo2ulqor8iwagn9d2f"); //     B = (pointf*)zmalloc((4 * sides + 4)*sizeof(pointf));
 UNSUPPORTED("9z3er49pc4h2rxja5r9grdo0h"); //     i = 0;
 UNSUPPORTED("8r6c7fd8ovc5djxlr8ewm50r2"); //     /* rbconst is distance offset from a corner of the polygon.
@@ -2480,6 +2302,8 @@ throw new UnsupportedOperationException();
 
 //3 acyez4b7guim63q8crmnyi18
 // static double userSize(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="userSize", key="acyez4b7guim63q8crmnyi18", definition="static double userSize(node_t * n)")
 public static Object userSize(Object... arg) {
 UNSUPPORTED("8yl20lmgb1f7rteptp4jmmd4w"); // static double userSize(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2495,20 +2319,21 @@ throw new UnsupportedOperationException();
 
 
 
-//3 5gahokttzv65lspm84ao1le37
-// shape_kind shapeOf(node_t * n) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/shapes.c", name="shapeOf", key="5gahokttzv65lspm84ao1le37", definition="shape_kind shapeOf(node_t * n)")
 public static int shapeOf(ST_Agnode_s n) {
 ENTERING("5gahokttzv65lspm84ao1le37","shapeOf");
 try {
 	ST_shape_desc sh = (ST_shape_desc) ND_shape(n);
     CFunctionImpl ifn; //void (*ifn) (node_t *);
+    
     if (N(sh))
 	return enumAsInt(shape_kind.class, "SH_UNSET");
     ifn = (CFunctionImpl) ND_shape(n).fns.initfn;
     if (ifn.getName().equals("poly_init"))
 	return enumAsInt(shape_kind.class, "SH_POLY");
-UNSUPPORTED("251a710sgr57bnrs3uh7ppfpi"); //     else if (ifn == record_init)
-UNSUPPORTED("uubga3e6j1jsmn61hfok2zwk"); // 	return SH_RECORD;
+    if (ifn.getName().equals("record_init"))
+	return enumAsInt(shape_kind.class, "SH_RECORD");
 UNSUPPORTED("cpzx2lwu889clk2f1d0k4c9jd"); //     else if (ifn == point_init)
 UNSUPPORTED("f4x4vap21dff1trk1lrzzb8u5"); // 	return SH_POINT;
 UNSUPPORTED("alkskrmw3fjn82qi1t2kyi6uh"); //     else if (ifn == epsf_init)
@@ -2528,6 +2353,8 @@ LEAVING("5gahokttzv65lspm84ao1le37","shapeOf");
 
 //3 e8riwo21j5t1g1tewsbo39z48
 // boolean isPolygon(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="isPolygon", key="e8riwo21j5t1g1tewsbo39z48", definition="boolean isPolygon(node_t * n)")
 public static Object isPolygon(Object... arg) {
 UNSUPPORTED("6tth154tjxb21b1rr8m3w5lbj"); // boolean isPolygon(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2539,16 +2366,16 @@ throw new UnsupportedOperationException();
 
 
 
-
-//3 a11xv6duihbr3d6gkgo2ye2j5
-// static void poly_init(node_t * n) 
+@Reviewed(when = "13/11/2020")
+@Difficult
+@Original(version="2.38.0", path="lib/common/shapes.c", name="poly_init", key="a11xv6duihbr3d6gkgo2ye2j5", definition="static void poly_init(node_t * n)")
 public static void poly_init(ST_Agnode_s n) {
 ENTERING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 try {
     final ST_pointf dimen = new ST_pointf(), min_bb = new ST_pointf(), bb = new ST_pointf();
     final ST_point imagesize = new ST_point();
     final ST_pointf P = new ST_pointf(), Q = new ST_pointf(), R = new ST_pointf();
-    ST_pointf.Array vertices = null;
+    CStar<ST_pointf> vertices = null;
     CString p, sfile, fxd;
     double temp, alpha, beta, gamma;
     double orientation, distortion, skew;
@@ -2558,14 +2385,18 @@ try {
     boolean regular; int peripheries, sides;
     boolean isBox; int i, j, outp;
     ST_polygon_t poly = new ST_polygon_t();
-    regular = ND_shape(n).polygon.regular!=0;
+    
+    
+    regular = ND_shape(n).polygon.regular;
     peripheries = ND_shape(n).polygon.peripheries;
     sides = ND_shape(n).polygon.sides;
     orientation = ND_shape(n).polygon.orientation;
     skew = ND_shape(n).polygon.skew;
     distortion = ND_shape(n).polygon.distortion;
     regular |= mapbool(agget(n, new CString("regular")));
+    
     /* all calculations in floating point POINTS */
+
     /* make x and y dimensions equal if node is regular
      *   If the user has specified either width or height, use the max.
      *   Else use minimum default value.
@@ -2581,9 +2412,11 @@ UNSUPPORTED("l2a1m5p66005ftc6gdbosugj"); // 	    height = (((Agnodeinfo_t*)(((Ag
 UNSUPPORTED("61qxt5l8ums7d9os9ungn3rao"); // 	    width = height = ((((((width)<(height)?(width):(height)))*72>=0)?(int)((((width)<(height)?(width):(height)))*72 + .5):(int)((((width)<(height)?(width):(height)))*72 - .5)));
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     } else {
-	width = (ROUND((ND_width(n))*72));
-	height = (ROUND((ND_height(n))*72));
+	width = POINTS(ND_width(n));
+	height = POINTS(ND_height(n));
     }
+    
+    
     peripheries = late_int(n, Z.z().N_peripheries, peripheries, 0);
     orientation += late_double(n, Z.z().N_orientation, 0.0, -360.0);
     if (sides == 0) {		/* not for builtins */
@@ -2591,8 +2424,12 @@ UNSUPPORTED("dd178b113cb8130tl6q70lcp3"); // 	skew = late_double(n, N_skew, 0.0,
 UNSUPPORTED("cp83hdn3dp0a7rp9bauc3bgki"); // 	sides = late_int(n, N_sides, 4, 0);
 UNSUPPORTED("abmuc3vqirf3i48480fj0k14g"); // 	distortion = late_double(n, N_distortion, 0.0, -100.0);
     }
+    
+    
     /* get label dimensions */
     dimen.___(ND_label(n).dimen);
+    
+    
     /* minimal whitespace around label */
     if (ROUND(abs(dimen.x))!=0 || ROUND(abs(dimen.y))!=0) {
     	/* padding */
@@ -2612,20 +2449,20 @@ UNSUPPORTED("8bwwxn4jop0urcsfnygjofg9s"); // 		    dimen.y += 2 * ((((marginx)*7
 UNSUPPORTED("afk9bpom7x393euamnvwwkx6b"); // 	    } else
 UNSUPPORTED("87bdwkkwbzyswxnepdd9bj8mb"); // 		{((dimen).x += 4*4); ((dimen).y += 2*4);};
 	} else
-	    {
-		((ST_pointf) dimen).x = dimen.x + 4*4;
-		((ST_pointf) dimen).y = dimen.y + 2*4;
-	    };
+	    PAD(dimen);
     }
     spacex = dimen.x - ND_label(n).dimen.x;
+    
+    
     /* quantization */
-    if ((temp = ((ST_Agraphinfo_t)agraphof(n).castTo_ST_Agobj_s().data.castTo(ST_Agraphinfo_t.class)).drawing.quantum) > 0.0) {
+    if ((temp = GD_drawing(agraphof(n)).quantum) > 0.0) {
 UNSUPPORTED("3nqb0s5rkwj3igt71vooj8asd"); // 	temp = ((((temp)*72>=0)?(int)((temp)*72 + .5):(int)((temp)*72 - .5)));
 UNSUPPORTED("5fxtqwy8liyvnx1yvsou5hb4o"); // 	dimen.x = quant(dimen.x, temp);
 UNSUPPORTED("et885f1jcqpske6ip856arouv"); // 	dimen.y = quant(dimen.y, temp);
     }
-    imagesize.setInt("x", 0);
-    imagesize.setInt("y", 0);
+    
+    
+    imagesize.x = imagesize.y = 0;
     if (ND_shape(n).usershape) {
 	/* custom requires a shapefile
 	 * not custom is an adaptable user shape such as a postscript
@@ -2658,25 +2495,34 @@ UNSUPPORTED("286u48muwmjkomlzqufoqm5cw"); // 	    imagesize.x += 2;	/* some fixe
 UNSUPPORTED("1x57knvrmlciu7odfroo3paso"); // 	    imagesize.y += 2;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
+    
+    
     /* initialize node bb to labelsize */
-    ((ST_pointf) bb).x = ((dimen.x)>(imagesize.x)?(dimen.x):(imagesize.x));
-    ((ST_pointf) bb).y = ((dimen.y)>(imagesize.y)?(dimen.y):(imagesize.y));
+    bb.x = MAX(dimen.x, imagesize.x);
+    bb.y = MAX(dimen.y, imagesize.y);
+    
+    
     /* I don't know how to distort or skew ellipses in postscript */
     /* Convert request to a polygon with a large number of sides */
     if ((sides <= 2) && ((distortion != 0.) || (skew != 0.))) {
 	sides = 120;
     }
+    
+    
     /* extra sizing depends on if label is centered vertically */
     p = agget(n, new CString("labelloc"));
     if (p!=null && (p.charAt(0) == 't' || p.charAt(0) == 'b'))
-    n.castTo_ST_Agobj_s().data.castTo_ST_Agnodeinfo_t().label.setInt("valign", p.charAt(0));
+    ND_label(n).valign = p.charAt(0);
     else
-    n.castTo_ST_Agobj_s().data.castTo_ST_Agnodeinfo_t().label.setInt("valign", 'c');
-    isBox = (sides == 4 && (((orientation>=0)?(int)(orientation + .5):(int)(orientation - .5)) % 90) == 0
+    ND_label(n).valign = 'c';
+    
+    
+    
+    isBox = (sides == 4 && (ROUND(orientation) % 90) == 0
 	     && distortion == 0. && skew == 0.);
     if (isBox) {
 	/* for regular boxes the fit should be exact */
-    } else if (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).shape.polygon.vertices!=null) {
+    } else if (ND_shape(n).polygon.vertices!=null) {
 UNSUPPORTED("4adqsyjwqwzs50ggjp57ok6u7"); // 	poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->shape)->polygon->vertices;
 UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     } else {
@@ -2684,88 +2530,96 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	 * containing bb centered on the origin, and then pad for that.
 	 * We assume the ellipse is defined by a scaling up of bb.
 	 */
-	temp = bb.y * 1.41421356237309504880;
-	if (height > temp && (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).label.valign == 'c')) {
+	temp = bb.y * SQRT2;
+	if (height > temp && ND_label(n).valign == 'c') {
 	    /* if there is height to spare
 	     * and the label is centered vertically
 	     * then just pad x in proportion to the spare height */
-	    bb.setDouble("x", bb.x * sqrt(1. / (1. - ((bb.y / height) * (bb.y / height)))));
+	    bb.x *= sqrt(1. / (1. - SQR(bb.y / height)));
 	} else {
-	    bb.setDouble("x", bb.x * 1.41421356237309504880);
-	    bb.setDouble("y", temp);
+	    bb.x *= SQRT2;
+	    bb.y = temp;
 	}
 	if (sides > 2) {
-	    temp = cos(3.14159265358979323846 / sides);
-	    bb.setDouble("x", bb.x / temp);
-	    bb.setDouble("y", bb.y / temp);
+	    temp = cos(M_PI / sides);
+	    bb.x /= temp;
+	    bb.y /= temp;
 	    /* FIXME - for odd-sided polygons, e.g. triangles, there
 	       would be a better fit with some vertical adjustment of the shape */
 	}
     }
+    
+    
+    
     /* at this point, bb is the minimum size of node that can hold the label */
     min_bb.___(bb);
+    
+    
     /* increase node size to width/height if needed */
     fxd = late_string(n, Z.z().N_fixed, new CString("false"));
     if ((fxd.charAt(0) == 's') && (N(strcmp(fxd,new CString("shape"))))) {
-	bb.setDouble("x", width);
-	bb.setDouble("y", height);
-	poly.setInt("option", poly.option | (1 << 11));
+	bb.x = width;
+	bb.y = height;
+	poly.option |= FIXEDSHAPE;
     } else if (mapbool(fxd)) {
 	/* check only label, as images we can scale to fit */
-	if ((width < (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).label.dimen.x) 
-		|| (height < (((ST_Agnodeinfo_t)n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class)).label.dimen.y))))
+	if ((width < ND_label(n).dimen.x) || (height < ND_label(n).dimen.y))
 	    System.err.println(
 		  "node '%s', graph '%s' size too small for label\n");
 		  //agnameof(n), agnameof(agraphof(n)));
-	bb.setDouble("x",  width);
-	bb.setDouble("y", height);
+	bb.x = width;
+	bb.y = height;
     } else {
-	width = MAX(width, bb.x);
-	((ST_pointf) bb).x = width;
-	height = MAX(height, bb.y);
-	((ST_pointf) bb).y = height;
+	bb.x = width = MAX(width, bb.x);
+	bb.y = height = MAX(height, bb.y);
     }
+    
+    
     /* If regular, make dimensions the same.
      * Need this to guarantee final node size is regular.
      */
     if (regular) {
-    width = MAX(bb.x, bb.y);
-    height = width;
-    ((ST_pointf) bb).x = width;
-    ((ST_pointf) bb).y = width;
+	width = height = bb.x = bb.y = MAX(bb.x, bb.y);
     }
+    
+    
     /* Compute space available for label.  Provides the justification borders */
     if (N(mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))))) {
 	if (isBox) {
-		((ST_pointf) ND_label(n).space).x = MAX(dimen.x,bb.x) - spacex;
+	    ND_label(n).space.x = MAX(dimen.x,bb.x) - spacex;
 	}
 	else if (dimen.y < bb.y) {
 	    temp = bb.x * sqrt(1.0 - SQR(dimen.y) / SQR(bb.y));
-	    ND_label(n).space.setDouble("x", MAX(dimen.x,temp) - spacex);
+	    ND_label(n).space.x = MAX(dimen.x,temp) - spacex;
         }
 	else
-	    ND_label(n).space.setDouble("x", dimen.x - spacex);
+	    ND_label(n).space.x = dimen.x - spacex;
     } else {
-	    ND_label(n).space.setDouble("x", dimen.x - spacex);
+	ND_label(n).space.x = dimen.x - spacex;
     }
-    if ((poly.option & (1 << 11)) == 0) {
+    
+    
+    if ((poly.option & FIXEDSHAPE) == 0) {
 	temp = bb.y - min_bb.y;
 	if (dimen.y < imagesize.y)
 	    temp += imagesize.y - dimen.y;
-	((ST_pointf) ND_label(n).space).y = dimen.y + temp;
+	ND_label(n).space.y = dimen.y + temp;
     }
+    
+    
     outp = peripheries;
     if (peripheries < 1)
 	outp = 1;
     if (sides < 3) {		/* ellipses */
 	sides = 2;
-	vertices = new ST_pointf.Array(outp * sides);
-	P.setDouble("x", bb.x / 2.);
-	P.setDouble("y", bb.y / 2.);
-	vertices.setDouble("x", -P.x);
-	vertices.setDouble("y", -P.y);
-	vertices.plus(1).setDouble("x", P.x);
-	vertices.plus(1).setDouble("y", P.y);
+	vertices = CStar.<ST_pointf> ALLOC__(outp * sides, ST_pointf.class);
+	P.x = bb.x / 2.;
+	P.y = bb.y / 2.;
+	vertices.get__(0).x = -P.x;
+	vertices.get__(0).y = -P.y;
+	vertices.get__(1).___(P);
+//	vertices.plus(1).x = P.x;
+//	vertices.plus(1).y = P.y;
 	if (peripheries > 1) {
 UNSUPPORTED("4ofenmfgj7cgyf624qmugcx77"); // 	    for (j = 1, i = 2; j < peripheries; j++) {
 UNSUPPORTED("458w3r6n3nidn2j2b154phpzt"); // 		P.x += 4;
@@ -2793,8 +2647,8 @@ UNSUPPORTED("b5z0hw4dacenv33xsaex70g8d"); // 	    bb.y = 2. * P.y;
  *   It needs to find the point where the two lines, parallel to
  *   the current segments, and outside by GAP distance, intersect.   
  */
-	vertices = new ST_pointf.Array(outp * sides);
-	if (((ST_polygon_t)ND_shape(n).polygon).vertices!=null) {
+	vertices = CStar.<ST_pointf>ALLOC__(outp * sides, ST_pointf.class);
+	if (ND_shape(n).polygon.vertices!=null) {
 UNSUPPORTED("3ghle84ieryaenfnlbzrfv7bw"); // 	    poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->shape)->polygon->vertices;
 UNSUPPORTED("227lpcg9dt83m2bm8yshb4djf"); // 	    pd->vertex_gen (vertices, &bb);
 UNSUPPORTED("cc3jvnwvbhjhro4adeet363yd"); // 	    xmax = bb.x/2;
@@ -2807,57 +2661,75 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	    gskew = skew / 2.;
 	    angle = (sectorangle - M_PI) / 2.;
 	    sinx = sin(angle); cosx = cos(angle);
-	    ((ST_pointf) R).x = .5 * cosx;
-	    ((ST_pointf) R).y = .5 * sinx;
+	    R.x = .5 * cosx;
+	    R.y = .5 * sinx;
 	    xmax = ymax = 0.;
 	    angle += (M_PI - sectorangle) / 2.;
+	    
+	    
+	    
 	    for (i = 0; i < sides; i++) {
+	    	
 	    /*next regular vertex */
 		angle += sectorangle;
 	    sinx = sin(angle); cosx = cos(angle);
-	    ((ST_pointf) R).x = R.x + sidelength * cosx;
-	    ((ST_pointf) R).y = R.y + sidelength * sinx;
+		R.x += sidelength * cosx;
+		R.y += sidelength * sinx;
+	    
+	    
 	    /*distort and skew */
-	    ((ST_pointf) P).x = R.x * (skewdist + R.y * gdistortion) + R.y * gskew;
-	    ((ST_pointf) P).y = R.y;
+		P.x = R.x * (skewdist + R.y * gdistortion) + R.y * gskew;
+		P.y = R.y;
+	    
+	    
 	    /*orient P.x,P.y */
 		alpha = RADIANS(orientation) + atan2(P.y, P.x);
 	    sinx = sin(alpha); cosx = cos(alpha);
-	    ((ST_pointf) P).y = hypot(P.x, P.y);
-	    ((ST_pointf) P).x = P.y;
-	    ((ST_pointf) P).x = P.x * cosx;
-	    ((ST_pointf) P).y = P.y * sinx;
+		P.x = P.y = hypot(P.x, P.y);
+		P.x *= cosx;
+		P.y *= sinx;
+	    
+	    
 	    /*scale for label */
-	    ((ST_pointf) P).x = P.x * bb.x;
-	    ((ST_pointf) P).y = P.y * bb.y;
+		P.x *= bb.x;
+		P.y *= bb.y;
+	    
+	    
 	    /*find max for bounding box */
 		xmax = MAX(fabs(P.x), xmax);
 		ymax = MAX(fabs(P.y), ymax);
+		
+		
 	    /* store result in array of points */
-		vertices.plus(i).setStruct(P);
+		vertices.get__(i).____(P);
 		if (isBox) { /* enforce exact symmetry of box */
-			vertices.get(1).x = -P.x;
-			vertices.get(1).y = P.y;
-			vertices.get(2).x = -P.x;
-			vertices.get(2).y = -P.y;
-			vertices.get(3).x = P.x;
-			vertices.get(3).y = -P.y;
+			vertices.get__(1).x = -P.x;
+			vertices.get__(1).y = P.y;
+			vertices.get__(2).x = -P.x;
+			vertices.get__(2).y = -P.y;
+			vertices.get__(3).x = P.x;
+			vertices.get__(3).y = -P.y;
 		    break;
 		}
 	    }
 	}
+	
+	
+	
 	/* apply minimum dimensions */
 	xmax *= 2.;
 	ymax *= 2.;
-	((ST_pointf) bb).x = MAX(width, xmax);
-	((ST_pointf) bb).y = MAX(height, ymax);
+	bb.x = MAX(width, xmax);
+	bb.y = MAX(height, ymax);
 	scalex = bb.x / xmax;
 	scaley = bb.y / ymax;
+	
+	
 	for (i = 0; i < sides; i++) {
-	    P.____(vertices.plus(i));
-	    ((ST_pointf) P).x = P.x * scalex;
-	    ((ST_pointf) P).y = P.y * scaley;
-	    vertices.plus(i).setStruct(P);
+	    P.____(vertices.get__(i));
+	    P.x *= scalex;
+	    P.y *= scaley;
+	    vertices.get__(i).____(P);
 	}
 	if (peripheries > 1) {
 UNSUPPORTED("3x6t3unoi91ezbh3iz168cm2t"); // 	    Q = vertices[(sides - 1)];
@@ -2893,22 +2765,24 @@ UNSUPPORTED("lklvdmn7xiqbxhpgdeufcvjj"); // 		bb.y = ((2. * fabs(P.y))>(bb.y)?(2
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 	}
     }
-    poly.setInt("regular", regular?1:0);
-    poly.setInt("peripheries", peripheries);
-    poly.setInt("sides", sides);
-    poly.setDouble("orientation", orientation);
-    poly.setDouble("skew", skew);
-    poly.setDouble("distortion", distortion);
+    poly.regular = regular;
+    poly.peripheries = peripheries;
+    poly.sides = sides;
+    poly.orientation = orientation;
+    poly.skew = skew;
+    poly.distortion = distortion;
     poly.vertices = vertices;
-    if ((poly.option & (1 << 11))!=0) {
+    
+    
+    if ((poly.option & FIXEDSHAPE)!=0) {
 	/* set width and height to reflect label and shape */
 UNSUPPORTED("7kk8oru3b3copylmq3gssx6qx"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->width) = ((((dimen.x)>(bb.x)?(dimen.x):(bb.x)))/(double)72);
 UNSUPPORTED("8oouzms2x039fhfcfxm7yc4su"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->height) = ((((dimen.y)>(bb.y)?(dimen.y):(bb.y)))/(double)72);
     } else {
-    n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class).setDouble("width", ((bb.x)/(double)72));
-    n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class).setDouble("height", ((bb.y)/(double)72));
+	ND_width(n, PS2INCH(bb.x));
+	ND_height(n, PS2INCH(bb.y));
     }
-    n.castTo_ST_Agobj_s().data.castTo(ST_Agnodeinfo_t.class).setPtr("shape_info", poly);
+    ND_shape_info(n, poly);
 } finally {
 LEAVING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 }
@@ -2919,6 +2793,8 @@ LEAVING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 
 //3 63sj12avbdw6e27zf3sedls1r
 // static void poly_free(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="poly_free", key="63sj12avbdw6e27zf3sedls1r", definition="static void poly_free(node_t * n)")
 public static Object poly_free(Object... arg) {
 UNSUPPORTED("cfl0ro4734avs9rtdlar7nbg8"); // static void poly_free(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2943,6 +2819,8 @@ throw new UnsupportedOperationException();
 //static double xsize, ysize, scalex, scaley, box_URx, box_URy;
 //3 570t4xovyyfqipaikkf63crmk
 //static boolean poly_inside(inside_t * inside_context, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="poly_inside", key="570t4xovyyfqipaikkf63crmk", definition="tatic boolean poly_inside(inside_t * inside_context, pointf p)")
 public static boolean poly_inside(ST_inside_t inside_context, ST_pointf p) {
 // WARNING!! STRUCT
 return poly_inside_w_(inside_context, p.copy());
@@ -2981,7 +2859,7 @@ UNSUPPORTED("5xao1mdiugxzaq03na34mbl5w"); // 		ysize = n_height;
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 	} else {
 	    /* get point and node size adjusted for rankdir=LR */
-	    if (GD_flip(agraphof(n))!=0) {
+	    if (GD_flip(agraphof(n))) {
 UNSUPPORTED("dapvd4c0ggliaqcj08jvao221"); // 		ysize = ND_lw(n) + ND_rw(n);
 UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	    } else {
@@ -3007,23 +2885,24 @@ UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	Z.z().lastn = (ST_Agnode_s) n;
     }
     /* scale */
-    P.setDouble("x", P.x * Z.z().scalex);
-    P.setDouble("y", P.y * Z.z().scaley);
+    P.x = (P.x * Z.z().scalex);
+    P.y = (P.y * Z.z().scaley);
     /* inside bounding box? */
     if ((fabs(P.x) > Z.z().box_URx) || (fabs(P.y) > Z.z().box_URy))
 	return false;
     /* ellipses */
     if (Z.z().sides <= 2)
 	return (hypot(P.x / Z.z().box_URx, P.y / Z.z().box_URy) < 1.);
+    
     /* use fast test in case we are converging on a segment */
     i = Z.z().last % Z.z().sides;		/* in case last left over from larger polygon */
     i1 = (i + 1) % Z.z().sides;
-    Q.___(Z.z().vertex.plus(i + Z.z().outp).getStruct());
-    R.___(Z.z().vertex.plus(i1 + Z.z().outp).getStruct());
-    if (N(same_side(P, (ST_pointf)Z.z().O, Q, R)))   /* false if outside the segment's face */
+    Q.___(Z.z().vertex.get__(i + Z.z().outp));
+    R.___(Z.z().vertex.get__(i1 + Z.z().outp));
+    if (N(same_side(P, Z.z().O, Q, R)))   /* false if outside the segment's face */
 	return false;
     /* else inside the segment face... */
-    if ((s = same_side(P, Q, R, (ST_pointf)Z.z().O)) && (same_side(P, R, (ST_pointf)Z.z().O, Q))) /* true if between the segment's sides */
+    if ((s = same_side(P, Q, R, Z.z().O)) && (same_side(P, R, Z.z().O, Q))) /* true if between the segment's sides */
 	return NOT(0);
     /* else maybe in another segment */
     for (j = 1; j < Z.z().sides; j++) { /* iterate over remaining segments */
@@ -3034,7 +2913,7 @@ UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	    i1 = i;
 	    i = (i + Z.z().sides - 1) % Z.z().sides;
 	}
-	if (N(same_side(P, (ST_pointf)Z.z().O, (ST_pointf)Z.z().vertex.plus(i + Z.z().outp).getStruct(), (ST_pointf)Z.z().vertex.plus(i1 + Z.z().outp).getStruct()))) { /* false if outside any other segment's face */
+	if (N(same_side(P, Z.z().O, Z.z().vertex.get__(i + Z.z().outp), Z.z().vertex.get__(i1 + Z.z().outp)))) { /* false if outside any other segment's face */
 	    Z.z().last = i;
 	    return false;
 	}
@@ -3052,6 +2931,8 @@ LEAVING("570t4xovyyfqipaikkf63crmk","poly_inside");
 
 //3 5mmuhvq40xadw0g9mzlauyztq
 // static int poly_path(node_t * n, port * p, int side, boxf rv[], int *kptr) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="poly_path", key="5mmuhvq40xadw0g9mzlauyztq", definition="static int poly_path(node_t * n, port * p, int side, boxf rv[], int *kptr)")
 public static int poly_path(ST_Agnode_s n, ST_port p, int side, Object rv, Object kptr) {
 ENTERING("5mmuhvq40xadw0g9mzlauyztq","poly_path");
 try {
@@ -3070,61 +2951,58 @@ LEAVING("5mmuhvq40xadw0g9mzlauyztq","poly_path");
 
 //3 857i3hwbu9mbq4nwur2q7e7er
 // static int invflip_side(int side, int rankdir) 
-public static Object invflip_side(Object... arg) {
-UNSUPPORTED("acksa1hz632l0v9ucpm5gmqzk"); // static int invflip_side(int side, int rankdir)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7gnjhunyvxphjgrfh8byey4ch"); //     switch (rankdir) {
-UNSUPPORTED("70xjc0sbkjvexfar5luzibcgf"); //     case 0:
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("4u5xz2u3urj13y0aw30fdyup5"); //     case 2:
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="invflip_side", key="857i3hwbu9mbq4nwur2q7e7er", definition="static int invflip_side(int side, int rankdir)")
+public static int invflip_side(int side, int rankdir) {
+    switch (rankdir) {
+    case 0:
+	break;
+    case 2:
 UNSUPPORTED("o4wjkq58uh9dgs94m2vxettc"); // 	switch (side) {
 UNSUPPORTED("a0zo28ne6fq7qm9hko3jwrsie"); // 	case (1<<2):
-UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = (1<<0);
+UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = 1<<0;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("5uxczmgv9jelovrky9lyqmqxn"); // 	case (1<<0):
-UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = (1<<2);
+UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = 1<<2;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("1drv0xz8hp34qnf72b4jpprg2"); // 	default:
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("d0gk15gzj4wz8nv54zbr285hm"); //     case 1:
+    case 1:
 UNSUPPORTED("o4wjkq58uh9dgs94m2vxettc"); // 	switch (side) {
 UNSUPPORTED("a0zo28ne6fq7qm9hko3jwrsie"); // 	case (1<<2):
-UNSUPPORTED("csyxlzh6yvg14dkwm5h0q8l4e"); // 	    side = (1<<1);
+UNSUPPORTED("csyxlzh6yvg14dkwm5h0q8l4e"); // 	    side = 1<<1;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("5uxczmgv9jelovrky9lyqmqxn"); // 	case (1<<0):
-UNSUPPORTED("6ob9sb98jfamphtvv99f9nny7"); // 	    side = (1<<3);
+UNSUPPORTED("6ob9sb98jfamphtvv99f9nny7"); // 	    side = 1<<3;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("3vvicpwbia6xzcxsn2qnkbzq8"); // 	case (1<<3):
-UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = (1<<2);
+UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = 1<<2;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("ad90yo3mu0ffjurb9egult4pi"); // 	case (1<<1):
-UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = (1<<0);
+UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = 1<<0;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("33l7a58zp8vj6fuliwdkk2nkn"); //     case 3:
+    case 3:
 UNSUPPORTED("o4wjkq58uh9dgs94m2vxettc"); // 	switch (side) {
 UNSUPPORTED("a0zo28ne6fq7qm9hko3jwrsie"); // 	case (1<<2):
-UNSUPPORTED("csyxlzh6yvg14dkwm5h0q8l4e"); // 	    side = (1<<1);
+UNSUPPORTED("csyxlzh6yvg14dkwm5h0q8l4e"); // 	    side = 1<<1;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("5uxczmgv9jelovrky9lyqmqxn"); // 	case (1<<0):
-UNSUPPORTED("6ob9sb98jfamphtvv99f9nny7"); // 	    side = (1<<3);
+UNSUPPORTED("6ob9sb98jfamphtvv99f9nny7"); // 	    side = 1<<3;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("3vvicpwbia6xzcxsn2qnkbzq8"); // 	case (1<<3):
-UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = (1<<0);
+UNSUPPORTED("asl0z4i3qt99vpfphpr7hpk5"); // 	    side = 1<<0;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("ad90yo3mu0ffjurb9egult4pi"); // 	case (1<<1):
-UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = (1<<2);
+UNSUPPORTED("aj9jgzaslnfuc2iy41yo6577i"); // 	    side = 1<<2;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("2nk83e61yc1xqh0sxx13m5l1j"); //     return side;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    }
+    return side;
 }
 
 
@@ -3132,19 +3010,19 @@ throw new UnsupportedOperationException();
 
 //3 72pzdmirzds0yer4ks1ooxvic
 // static double invflip_angle(double angle, int rankdir) 
-public static Object invflip_angle(Object... arg) {
-UNSUPPORTED("1klgft1h7fhevbm1j1guzv58"); // static double invflip_angle(double angle, int rankdir)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7gnjhunyvxphjgrfh8byey4ch"); //     switch (rankdir) {
-UNSUPPORTED("70xjc0sbkjvexfar5luzibcgf"); //     case 0:
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("4u5xz2u3urj13y0aw30fdyup5"); //     case 2:
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="invflip_angle", key="72pzdmirzds0yer4ks1ooxvic", definition="static double invflip_angle(double angle, int rankdir)")
+public static double invflip_angle(double angle, int rankdir) {
+    switch (rankdir) {
+    case 0:
+	break;
+    case 2:
 UNSUPPORTED("e7qgsf2gzf7fv8r5lpdfqp2gp"); // 	angle *= -1;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("d0gk15gzj4wz8nv54zbr285hm"); //     case 1:
+    case 1:
 UNSUPPORTED("b5wrpw5rvhjh7999v3sqqlbo3"); // 	angle -= M_PI * 0.5;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("33l7a58zp8vj6fuliwdkk2nkn"); //     case 3:
+    case 3:
 UNSUPPORTED("536aocvem6ko7h9t50pllxla0"); // 	if (angle == M_PI)
 UNSUPPORTED("kxow9q31jmisg5yv60fj9z3g"); // 	    angle = -0.5 * M_PI;
 UNSUPPORTED("3hy3z7oxc494l61va60rwh9k3"); // 	else if (angle == M_PI * 0.75)
@@ -3166,11 +3044,8 @@ UNSUPPORTED("2waz5md3krpirny5m7gagynkc"); // 	else if (angle == M_PI * -0.75)
 UNSUPPORTED("76g7hlyzy67q9n7p5l89y4gxw"); // 	    angle = angle;
 UNSUPPORTED("e5xwyhh2l2jm6g9w2ofnktaf6"); //  */
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("62ygf2gmqakbkjtv70bqh5q3i"); //     return angle;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    }
+    return angle;
 }
 
 
@@ -3178,6 +3053,8 @@ throw new UnsupportedOperationException();
 
 //3 54t5x4hsq6ie4hn83dix0fi3g
 // static pointf compassPoint(inside_t * ictxt, double y, double x) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="compassPoint", key="54t5x4hsq6ie4hn83dix0fi3g", definition="static pointf compassPoint(inside_t * ictxt, double y, double x)")
 public static Object compassPoint(Object... arg) {
 UNSUPPORTED("1owp098dshhw9x2d86x61ho3n"); // static pointf compassPoint(inside_t * ictxt, double y, double x)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3207,26 +3084,24 @@ throw new UnsupportedOperationException();
 
 //3 4oj0c3dwqqjei7u5u2ik9yyw1
 // static int compassPort(node_t * n, boxf * bp, port * pp, char *compass, int sides, 	    inside_t * ictxt) 
-public static Object compassPort(Object... arg) {
-UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
-UNSUPPORTED("axo7c40w8kmff5juyfulc507z"); // compassPort(node_t * n, boxf * bp, port * pp, char *compass, int sides,
-UNSUPPORTED("8wsp6kb4b5k1nk99rjf8cd50s"); // 	    inside_t * ictxt)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c57pq0f87j6dnbcvygu7v6k84"); //     boxf b;
-UNSUPPORTED("4t6cefa2mlqz8cen3hr5w5o2"); //     pointf p, ctr;
-UNSUPPORTED("en7ch189nkys76f42mlo1s5zz"); //     int rv = 0;
-UNSUPPORTED("39lrh4yp65e7bz2yxmw4eykrf"); //     double theta = 0.0;
-UNSUPPORTED("1whpo0vj6bc0o4y50ozcd6pib"); //     boolean constrain = 0;
-UNSUPPORTED("39rwowaomcdh9hhpbv5vzxqtg"); //     boolean dyna = 0;
-UNSUPPORTED("ekt4uw7awxhup7bp69cd0de32"); //     int side = 0;
-UNSUPPORTED("26uc2ctav83esiworswb0yyqw"); //     boolean clip = NOT(0);
-UNSUPPORTED("8p9hhcu69i2810srbetaxiscj"); //     boolean defined;
-UNSUPPORTED("dw42q4y6we417p9qhmaei6d3f"); //     double maxv;  /* sufficiently large value outside of range of node */
-UNSUPPORTED("8ix20ei8mhm5e1r57koylhxmw"); //     if (bp) {
-UNSUPPORTED("ddqw44b5basd7iv78obd8twlq"); // 	b = *bp;
-UNSUPPORTED("bdd8asje3pa2bu5sxtn1lp6vh"); // 	p = pointfof((b.LL.x + b.UR.x) / 2, (b.LL.y + b.UR.y) / 2);
-UNSUPPORTED("ap5anvaqlfe3mcudjsohthesw"); // 	defined = NOT(0);
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="compassPort", key="4oj0c3dwqqjei7u5u2ik9yyw1", definition="static int compassPort(node_t * n, boxf * bp, port * pp, char *compass, int sides, 	    inside_t * ictxt)")
+public static boolean compassPort(ST_Agnode_s n, ST_boxf bp, ST_port pp, CString compass, int sides, ST_inside_t ictxt) {
+    final ST_boxf b = new ST_boxf();
+    final ST_pointf p = new ST_pointf(), ctr = new ST_pointf();
+    int rv = 0;
+    double theta = 0.0;
+    boolean constrain = false;
+    boolean dyna = false;
+    int side = 0;
+    boolean clip = NOT(0);
+    boolean defined = false;
+    double maxv;  /* sufficiently large value outside of range of node */
+    if (bp!=null) {
+	b.___(bp);
+	p.___(pointfof((b.LL.x + b.UR.x) / 2, (b.LL.y + b.UR.y) / 2));
+	defined = NOT(0);
+    } else {
 UNSUPPORTED("dza301uiuu792cezaz0eoyzsr"); // 	p.x = p.y = 0.;
 UNSUPPORTED("ek9a7u2yx8w4r9x5k7somxuup"); // 	if (GD_flip(agraphof(n))) {
 UNSUPPORTED("e21k9f24vr25zdbgo37m5er48"); // 	    b.UR.x = ND_ht(n) / 2.;
@@ -3240,42 +3115,44 @@ UNSUPPORTED("59beisnsabbp6eavnuxrqch2d"); // 	    b.UR.x = ND_lw(n);
 UNSUPPORTED("1i4y4dgrig36gh0dq2jn8kde"); // 	    b.LL.x = -b.UR.x;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 UNSUPPORTED("1e1jhd4j2f4wri70ymrc2k0pg"); // 	defined = 0;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("w2aiqm3p7bifxbzx4tx4mipl"); //     maxv = MAX(b.UR.x,b.UR.y);
-UNSUPPORTED("b8awq55ll3vhs3fjdyqay8kms"); //     maxv *= 4.0;
-UNSUPPORTED("cm85kba38i3sc3kntnc0a8070"); //     ctr = p;
-UNSUPPORTED("e7z3qfzj5jj1f70il8lep0oyu"); //     if (compass && *compass) {
-UNSUPPORTED("72tyr9kgl0hmhdft6u5nwswi3"); // 	switch (*compass++) {
-UNSUPPORTED("2fzjr952o6hmcz3ad5arl2n8d"); // 	case 'e':
-UNSUPPORTED("caapivv2sv3cdu0rt3fnciovd"); // 	    if (*compass)
+    }
+    maxv = MAX(b.UR.x,b.UR.y);
+    maxv *= 4.0;
+    ctr.___(p);
+    if (compass!=null && compass.charAt(0)!=0) {
+	final char TMP =compass.charAt(0);
+	compass = compass.plus(1);
+    switch (TMP) {
+	case 'e':
+	    if (compass.charAt(0)!=0)
 UNSUPPORTED("en0rarvkx5srsxnlqpf6ja1us"); // 		rv = 1;
-UNSUPPORTED("6q044im7742qhglc4553noina"); // 	    else {
-UNSUPPORTED("3s6xpfbxpp44ou5loxsjfgzqp"); //                 if (ictxt)
+	    else {
+                if (ictxt!=null)
 UNSUPPORTED("8whok6jl4olniblvibxhrbbre"); //                     p = compassPoint(ictxt, ctr.y, maxv);
-UNSUPPORTED("c0op0grmjt3kp22s10twqy66r"); //                 else
-UNSUPPORTED("5f4jye7znkk6hbv6lv0l9l0hs"); // 		    p.x = b.UR.x;
-UNSUPPORTED("8u0aqa3sxpk302o1oqxok6u47"); // 		theta = 0.0;
-UNSUPPORTED("8cz8xetupjr38r0y1sfojc387"); // 		constrain = NOT(0);
-UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
-UNSUPPORTED("9ni9ftlf9oep71byodeubp1sr"); // 		clip = 0;
-UNSUPPORTED("4sdfaevi5d5qk596bdiw1t1t5"); // 		side = sides & (1<<1);
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("b4quboi30n0afnbpgm9chdttx"); // 	case 's':
-UNSUPPORTED("c2y7pxvutf20cxm0z3nfgoc3k"); // 	    p.y = b.LL.y;
-UNSUPPORTED("b4ce4svfzxg7z2fd1fquu4qmu"); // 	    constrain = NOT(0);
-UNSUPPORTED("c3sati4oun39vfql5zx4ru6z"); // 	    clip = 0;
-UNSUPPORTED("bzgzeuh7ihvw4c4eysc3dgpzd"); // 	    switch (*compass) {
-UNSUPPORTED("6qkxsufvygbc44eq3d6xorgsx"); // 	    case '\0':
-UNSUPPORTED("9ca4neaxnf1dd0hyuuubj4egq"); // 		theta = -M_PI * 0.5;
-UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
-UNSUPPORTED("3s6xpfbxpp44ou5loxsjfgzqp"); //                 if (ictxt)
+                else
+		    p.x = b.UR.x;
+		theta = 0.0;
+		constrain = NOT(0);
+		defined = NOT(0);
+		clip = false;
+		side = sides & RIGHT;
+	    }
+	    break;
+	case 's':
+	    p.y = b.LL.y;
+	    constrain = NOT(0);
+	    clip = false;
+	    switch (compass.charAt(0)) {
+	    case '\0':
+		theta = -M_PI * 0.5;
+		defined = NOT(0);
+                if (ictxt!=null)
 UNSUPPORTED("2iohu3tvlkzx2emq04ycxkhta"); //                     p = compassPoint(ictxt, -maxv, ctr.x);
-UNSUPPORTED("c0op0grmjt3kp22s10twqy66r"); //                 else
-UNSUPPORTED("3ly2ywet0m7qfki5yj2nz9t87"); //                     p.x = ctr.x;
-UNSUPPORTED("yc8wdhrrn5mzbqwxidxp3i2y"); // 		side = sides & (1<<0);
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("mnoev43mr2cyh3zj9yiupqzy"); // 	    case 'e':
+                else
+                    p.x = ctr.x;
+		side = sides & BOTTOM;
+		break;
+	    case 'e':
 UNSUPPORTED("avfplp4wadl774qo2yrqn2btg"); // 		theta = -M_PI * 0.25;
 UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
 UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
@@ -3284,7 +3161,7 @@ UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
 UNSUPPORTED("5f4jye7znkk6hbv6lv0l9l0hs"); // 		    p.x = b.UR.x;
 UNSUPPORTED("b0weojc8y88qjfkoujifnu9ag"); // 		side = sides & ((1<<0) | (1<<1));
 UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("xzkwmazk8r4ms7xbr46l9xyq"); // 	    case 'w':
+	    case 'w':
 UNSUPPORTED("a6j042vifpt4pgkwczny2dy24"); // 		theta = -M_PI * 0.75;
 UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
 UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
@@ -3299,9 +3176,9 @@ UNSUPPORTED("30qndpdx39k6rmlgid0k16w53"); // 		constrain = 0;
 UNSUPPORTED("2uxoapmd0p84jvg4utlai18nj"); // 		clip = NOT(0);
 UNSUPPORTED("en0rarvkx5srsxnlqpf6ja1us"); // 		rv = 1;
 UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("6f2jab2h8wmbwxojrav1mbs6l"); // 	case 'w':
+	    }
+	    break;
+	case 'w':
 UNSUPPORTED("caapivv2sv3cdu0rt3fnciovd"); // 	    if (*compass)
 UNSUPPORTED("en0rarvkx5srsxnlqpf6ja1us"); // 		rv = 1;
 UNSUPPORTED("6q044im7742qhglc4553noina"); // 	    else {
@@ -3316,21 +3193,21 @@ UNSUPPORTED("9ni9ftlf9oep71byodeubp1sr"); // 		clip = 0;
 UNSUPPORTED("3vss3xpo7q52fe0nwev7hyiyj"); // 		side = sides & (1<<3);
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("f187wptsr73liavtlyoyfovp3"); // 	case 'n':
-UNSUPPORTED("7gucyzlkpil4bfg1hpst17k3d"); // 	    p.y = b.UR.y;
-UNSUPPORTED("b4ce4svfzxg7z2fd1fquu4qmu"); // 	    constrain = NOT(0);
-UNSUPPORTED("c3sati4oun39vfql5zx4ru6z"); // 	    clip = 0;
-UNSUPPORTED("bzgzeuh7ihvw4c4eysc3dgpzd"); // 	    switch (*compass) {
-UNSUPPORTED("6qkxsufvygbc44eq3d6xorgsx"); // 	    case '\0':
-UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
-UNSUPPORTED("5w6ijz1qm65stfcc659o09osm"); // 		theta = M_PI * 0.5;
-UNSUPPORTED("3s6xpfbxpp44ou5loxsjfgzqp"); //                 if (ictxt)
+	case 'n':
+	    p.y = b.UR.y;
+	    constrain = NOT(0);
+	    clip = false;
+	    switch (compass.charAt(0)) {
+	    case '\0':
+		defined = NOT(0);
+		theta = M_PI * 0.5;
+                if (ictxt!=null)
 UNSUPPORTED("6l60lhko2eg8jry5mf4wpknho"); //                     p = compassPoint(ictxt, maxv, ctr.x);
-UNSUPPORTED("c0op0grmjt3kp22s10twqy66r"); //                 else
-UNSUPPORTED("3ly2ywet0m7qfki5yj2nz9t87"); //                     p.x = ctr.x;
-UNSUPPORTED("8cnew4tzzej0j68sucbir8orn"); // 		side = sides & (1<<2);
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("mnoev43mr2cyh3zj9yiupqzy"); // 	    case 'e':
+                else
+                    p.x = ctr.x;
+		side = sides & TOP;
+		break;
+	    case 'e':
 UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
 UNSUPPORTED("dpfvfzmxj8yxv0s9b2jrvy1dt"); // 		theta = M_PI * 0.25;
 UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
@@ -3339,7 +3216,7 @@ UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
 UNSUPPORTED("5f4jye7znkk6hbv6lv0l9l0hs"); // 		    p.x = b.UR.x;
 UNSUPPORTED("7eo9yj1faco0zq3n56ljnckjl"); // 		side = sides & ((1<<2) | (1<<1));
 UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("xzkwmazk8r4ms7xbr46l9xyq"); // 	    case 'w':
+	    case 'w':
 UNSUPPORTED("bfouf47misaa32ulv25melpbm"); // 		defined = NOT(0);
 UNSUPPORTED("b4rydjq1y842ljagzj3esvilf"); // 		theta = M_PI * 0.75;
 UNSUPPORTED("e1jqt6v7gkr0w7anohkdvwzuz"); // 		if (ictxt)
@@ -3348,57 +3225,54 @@ UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
 UNSUPPORTED("e2vcgqbz5sfyjwfyadlmm3s7n"); // 		    p.x = b.LL.x;
 UNSUPPORTED("46gsms8looi57wty5vza2s5el"); // 		side = sides & ((1<<2) | (1<<3));
 UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("bt2g0yhsy3c7keqyftf3c98ut"); // 	    default:
+	    default:
 UNSUPPORTED("c8if0ggdrakzyxyn4fwlc8z2j"); // 		p.y = ctr.y;
 UNSUPPORTED("30qndpdx39k6rmlgid0k16w53"); // 		constrain = 0;
 UNSUPPORTED("2uxoapmd0p84jvg4utlai18nj"); // 		clip = NOT(0);
 UNSUPPORTED("en0rarvkx5srsxnlqpf6ja1us"); // 		rv = 1;
 UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
+	    }
+	    break;
+	case '_':
+	    dyna = NOT(0);
+	    side = sides;
+	    break;
+	case 'c':
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("8yhowesoplp2da595z8jyojxi"); // 	case '_':
-UNSUPPORTED("f5fa3usseyo7pci5g560azmea"); // 	    dyna = NOT(0);
-UNSUPPORTED("czfzlng8hat0mzzbxb59g5eix"); // 	    side = sides;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("f3lyz2cejs6yn5fyckhn7ba1"); // 	case 'c':
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("1drv0xz8hp34qnf72b4jpprg2"); // 	default:
+	default:
 UNSUPPORTED("eldwzm3uyfs9zu1roub5a2uqi"); // 	    rv = 1;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("3y0o9dwc6l3w452ce3a06atj4"); //     p = cwrotatepf(p, 90 * GD_rankdir(agraphof(n)));
-UNSUPPORTED("bg899fz3cixwumeyw39ytk9ky"); //     if (dyna)
-UNSUPPORTED("c3yy1egy8x5xhv1n80wf30bsp"); // 	pp->side = side;
-UNSUPPORTED("div10atae09n36x269sl208r1"); //     else
-UNSUPPORTED("fbhfdhcz7hf8d057jq31086q"); // 	pp->side = invflip_side(side, GD_rankdir(agraphof(n)));
-UNSUPPORTED("cx3gmg51rc8so3a5bx6cltryq"); //     pp->bp = bp;
-UNSUPPORTED("epsoufavu8hg3cbvo2ejmmrx0"); //     PF2P(p, pp->p);
-UNSUPPORTED("ami97j8il2yf1ggrixwlm2sga"); //     pp->theta = invflip_angle(theta, GD_rankdir(agraphof(n)));
-UNSUPPORTED("12w9ecxxght79o36ovi8zwdz5"); //     if ((p.x == 0) && (p.y == 0))
-UNSUPPORTED("ckgevzxmtfz2xxsz34wg7zura"); // 	pp->order = 256 / 2;
-UNSUPPORTED("1nyzbeonram6636b1w955bypn"); //     else {
-UNSUPPORTED("eq22ufb5r5rfpsjxc3gie6aon"); // 	/* compute angle with 0 at north pole, increasing CCW */
-UNSUPPORTED("aqoi5i20orce7l827lbn5rpfs"); // 	double angle = atan2(p.y, p.x) + 1.5 * M_PI;
-UNSUPPORTED("dfb9u6ghdbpwnspizdx8mrdz3"); // 	if (angle >= 2 * M_PI)
-UNSUPPORTED("jxrmr2dbqvl6zf1pboxh2hbn"); // 	    angle -= 2 * M_PI;
-UNSUPPORTED("7wk803jipbaan1qcm89gw97t0"); // 	pp->order = (int) ((256 * angle) / (2 * M_PI));
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("956p2hx4hma7on3bk77kr5mjg"); //     pp->constrained = constrain;
-UNSUPPORTED("docrlijfgalt2ubkbd5x1aj0g"); //     pp->defined = defined;
-UNSUPPORTED("bmz5fuwc9jp1t2yghe0gppn11"); //     pp->clip = clip;
-UNSUPPORTED("2vslebofw1l11qjpgy2bu0q0g"); //     pp->dyna = dyna;
-UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+	}
+    }
+    p.___(cwrotatepf(p, 90 * GD_rankdir(agraphof(n))));
+    if (dyna)
+	pp.side = side;
+    else
+	pp.side = invflip_side(side, GD_rankdir(agraphof(n)));
+    pp.bp = bp;
+    PF2P(p, pp.p);
+    pp.theta = invflip_angle(theta, GD_rankdir(agraphof(n)));
+    if ((p.x == 0) && (p.y == 0))
+	pp.order = 256 / 2;
+    else {
+	/* compute angle with 0 at north pole, increasing CCW */
+	double angle = atan2(p.y, p.x) + 1.5 * M_PI;
+	if (angle >= 2 * M_PI)
+	    angle -= 2 * M_PI;
+	pp.order = (int) ((256 * angle) / (2 * M_PI));
+    }
+    pp.constrained = constrain;
+    pp.defined = defined;
+    pp.clip = clip;
+    pp.dyna = dyna;
+    return rv != 0;
 }
 
 
 
 
-//3 5k2b9gfpwm2tj3zmzniuz9azt
-// static port poly_port(node_t * n, char *portname, char *compass) 
+@Reviewed(when = "13/11/2020")
+@Original(version="2.38.0", path="lib/common/shapes.c", name="poly_port", key="5k2b9gfpwm2tj3zmzniuz9azt", definition="static port poly_port(node_t * n, char *portname, char *compass)")
 public static ST_port poly_port(ST_Agnode_s n, CString portname, CString compass) {
 // WARNING!! STRUCT
 return poly_port_w_(n, portname, compass).copy();
@@ -3409,8 +3283,10 @@ try {
     final ST_port rv= new ST_port();
     ST_boxf bp;
     int sides;			/* bitmap of which sides the port lies along */
+    
     if (portname.charAt(0) == '\0')
-	return Z.z().Center.copy();
+	return Z.z().Center;
+    
 UNSUPPORTED("cm99rhftfe8nq2suzac5fwbgp"); //     if (compass == NULL)
 UNSUPPORTED("238a13tlawcw3bixwliz859y5"); // 	compass = "_";
 UNSUPPORTED("ci2ge3idao9rokpvacvcspaxl"); //     sides = (1<<0) | (1<<1) | (1<<2) | (1<<3);
@@ -3447,6 +3323,8 @@ LEAVING("5k2b9gfpwm2tj3zmzniuz9azt","poly_port");
 
 //3 1tks71z165dy9pzfshnjejpx3
 // static void poly_gencode(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="poly_gencode", key="1tks71z165dy9pzfshnjejpx3", definition="static void poly_gencode(GVJ_t * job, node_t * n)")
 public static Object poly_gencode(Object... arg) {
 UNSUPPORTED("p0x21cs921921juch0sv0bun"); // static void poly_gencode(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3461,7 +3339,7 @@ UNSUPPORTED("e26zsspincyfi747lhus7h41b"); //     boolean filled;
 UNSUPPORTED("343gvjl2hbvjb2nrrtcqqetep"); //     boolean usershape_p;
 UNSUPPORTED("55zxkmqgt42k3bgw1g1del41"); //     boolean pfilled;		/* true if fill not handled by user shape */
 UNSUPPORTED("b80uijjl4g1zjdox5s5vdh8s5"); //     char *color, *name;
-UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = (obj->url || obj->explicit_tooltip);
+UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = obj->url || obj->explicit_tooltip;
 UNSUPPORTED("7421ua6zgvtho3nwdlh9ypytf"); //     char* fillcolor=NULL;
 UNSUPPORTED("39txqf5jgyh1q10jekeaemag6"); //     char* pencolor=NULL;
 UNSUPPORTED("bhtcyodd9jiazat6sqhp9pm4x"); //     char* clrs[2];
@@ -3654,6 +3532,8 @@ throw new UnsupportedOperationException();
 
 //3 4jw571mqhnyucuj7xrwi1h9o5
 // static void point_init(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="point_init", key="4jw571mqhnyucuj7xrwi1h9o5", definition="static void point_init(node_t * n)")
 public static Object point_init(Object... arg) {
 UNSUPPORTED("9teib8zo1wrsipfc5j66cuyuy"); // static void point_init(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3726,6 +3606,8 @@ throw new UnsupportedOperationException();
 
 //3 34yxvhscic4iigcqveaac58ue
 // static boolean point_inside(inside_t * inside_context, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="point_inside", key="34yxvhscic4iigcqveaac58ue", definition="static boolean point_inside(inside_t * inside_context, pointf p)")
 public static Object point_inside(Object... arg) {
 UNSUPPORTED("96ogc5j6ek5rdyjpr6kp1yocz"); // static boolean point_inside(inside_t * inside_context, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3758,6 +3640,8 @@ throw new UnsupportedOperationException();
 
 //3 9nmafjnpqf5021bgj7xic6bcv
 // static void point_gencode(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="point_gencode", key="9nmafjnpqf5021bgj7xic6bcv", definition="static void point_gencode(GVJ_t * job, node_t * n)")
 public static Object point_gencode(Object... arg) {
 UNSUPPORTED("c8zl3q8hj4ggg44eavpqwpcz6"); // static void point_gencode(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3769,7 +3653,7 @@ UNSUPPORTED("behdcj4jfqh2lxeud7bvr9dxx"); //     static pointf *AF;
 UNSUPPORTED("922k2c5xjbw7vuw4vfhavkll9"); //     static int A_size;
 UNSUPPORTED("e26zsspincyfi747lhus7h41b"); //     boolean filled;
 UNSUPPORTED("5zltq70xm6o2q24ddyqe6noyn"); //     char *color;
-UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = (obj->url || obj->explicit_tooltip);
+UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = obj->url || obj->explicit_tooltip;
 UNSUPPORTED("7pfkga2nn8ltabo2ycvjgma6o"); //     if (doMap && !(job->flags & (1<<2)))
 UNSUPPORTED("6e7g66eeo7n8h8mq556pt3xxy"); // 	gvrender_begin_anchor(job,
 UNSUPPORTED("8g7o4dsbwgp9ggtiktgt2m41t"); // 			      obj->url, obj->tooltip, obj->target,
@@ -3858,6 +3742,8 @@ throw new UnsupportedOperationException();
 
 //3 1dflsvfaih0mcg1gg4n23v1rg
 // static void free_field(field_t * f) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="free_field", key="1dflsvfaih0mcg1gg4n23v1rg", definition="static void free_field(field_t * f)")
 public static Object free_field(Object... arg) {
 UNSUPPORTED("1w8vqjgpmm3wzxdg86sst9sna"); // static void free_field(field_t * f)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3879,6 +3765,8 @@ throw new UnsupportedOperationException();
 
 //3 e9v6g9o3uouhdvy68a5uiisw9
 // static field_t *parse_error(field_t * rv, char *port) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="e9v6g9o3uouhdvy68a5uiisw9", definition="static field_t *parse_error(field_t * rv, char *port)")
 public static Object parse_error(Object... arg) {
 UNSUPPORTED("9bgvna5r61dzeu3tfs4uvakqi"); // static field_t *parse_error(field_t * rv, char *port)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -3896,111 +3784,121 @@ throw new UnsupportedOperationException();
 
 //3 7zxlp1fmrq3zt4fprrtesdbg3
 // static field_t *parse_reclbl(node_t * n, int LR, int flag, char *text) 
-public static Object parse_reclbl(Object... arg) {
-UNSUPPORTED("9v20mrghfq60f2qgsfdn1xxdw"); // static field_t *parse_reclbl(node_t * n, int LR, int flag, char *text)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7ws2qs7cm9wlnskmpn5zahpwz"); //     field_t *fp, *rv = (field_t*)zmalloc(sizeof(field_t));
-UNSUPPORTED("ebck8ts2eioqv6lvicwad9mj8"); //     char *tsp, *psp=NULL, *hstsp, *hspsp=NULL, *sp;
-UNSUPPORTED("1tf7pz3w8sq5wk926zvu829ep"); //     char *tmpport = NULL;
-UNSUPPORTED("e7a8l4oon3q1mu7hlgf4clu1b"); //     int maxf, cnt, mode, wflag, ishardspace, fi;
-UNSUPPORTED("3jmp83p22dny4oi3sy4awqg1d"); //     textlabel_t *lbl = ND_label(n);
-UNSUPPORTED("9igz1d93visyobl4po13vtvkx"); //     fp = NULL;
-UNSUPPORTED("2amh1z5unfmpprayylcu5gr96"); //     for (maxf = 1, cnt = 0, sp = reclblp; *sp; sp++) {
-UNSUPPORTED("awjvysmspiqruxxa3ttkp4hto"); // 	if (*sp == '\\') {
-UNSUPPORTED("c6ujjd37nlex68cg5oii0ds8q"); // 	    sp++;
-UNSUPPORTED("22vdzj6ye8zw196h8o51k5ol3"); // 	    if (*sp
-UNSUPPORTED("84ppu6pbdmw18lsn0ryv4v2si"); // 		&& (*sp == '{' || *sp == '}' || *sp == '|' || *sp == '\\'))
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="7zxlp1fmrq3zt4fprrtesdbg3", definition="static field_t *parse_reclbl(node_t * n, int LR, int flag, char *text)")
+public static ST_field_t parse_reclbl(ST_Agnode_s n, boolean LR, boolean flag, CString text) {
+ENTERING("7zxlp1fmrq3zt4fprrtesdbg3","parse_reclbl");
+try {
+    ST_field_t fp;
+    ST_field_t rv = new ST_field_t();
+    CString tsp, psp=null, hstsp, hspsp=null, sp;
+    CString tmpport = null;
+    int maxf, cnt, mode, fi;
+    boolean wflag, ishardspace;
+    ST_textlabel_t lbl = ND_label(n);
+    fp = null;
+    for (maxf = 1, cnt = 0, sp = Z.z().reclblp; sp.charAt(0)!=0; sp = sp.plus(1)) {
+ 	if (sp.charAt(0) == '\\') {
+	    sp = sp.plus(1);
+	    if (sp.charAt(0)!=0
+		&& (sp.charAt(0) == '{' || sp.charAt(0) == '}' || sp.charAt(0) == '|' || sp.charAt(0) == '\\'))
 UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dacur0fb8e1qtm4h9105hx3rs"); // 	if (*sp == '{')
-UNSUPPORTED("7hl03wjg5yryhvbe4ar0i0b8g"); // 	    cnt++;
-UNSUPPORTED("yro6chknoj2gs3h8b14wg99v"); // 	else if (*sp == '}')
-UNSUPPORTED("4vzj6cjceqbghqhehc5ucl97m"); // 	    cnt--;
-UNSUPPORTED("e69f7pkphb1u2seq6xkr4kaho"); // 	else if (*sp == '|' && cnt == 0)
-UNSUPPORTED("8t45h7yg233z39lxb621fptcg"); // 	    maxf++;
-UNSUPPORTED("2edcod5le4rwdf79wg0b9o14q"); // 	if (cnt < 0)
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("4ris3hlhijr2gnuhvu238vyni"); //     rv->fld = (field_t **)zmalloc((maxf)*sizeof(field_t *));
-UNSUPPORTED("avl5mval8jm4w6du3hw9sxc1e"); //     rv->LR = LR;
-UNSUPPORTED("565ypt38g1szuouqlmu74ejq9"); //     mode = 0;
-UNSUPPORTED("8ub4c1i56h9jmytputkewow9k"); //     fi = 0;
-UNSUPPORTED("85ilec7k1i6sdrpb5u8ncfru7"); //     hstsp = tsp = text;
-UNSUPPORTED("1x6ue04deldh5y980p3gm7er1"); //     wflag = NOT(0);
-UNSUPPORTED("58z9686vengy8z9jzrj1jxa13"); //     ishardspace = 0;
-UNSUPPORTED("4edx4759azcbmezyrc5h0tmw"); //     while (wflag) {
-UNSUPPORTED("23je92fa88f4sesva9mh3fk5k"); // 	if ((*reclblp < ' ') && *reclblp) {    /* Ignore non-0 control characters */
-UNSUPPORTED("8m8ph0munfeo3anrkr9n5c0o8"); // 	    reclblp++;
-UNSUPPORTED("6hqli9m8yickz1ox1qfgtdbnd"); // 	    continue;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("cxp5sujfti7s3yzy5w1hqq6xz"); // 	switch (*reclblp) {
-UNSUPPORTED("cfap8yeec19z0ucbudqen8t02"); // 	case '<':
-UNSUPPORTED("bb8zo5knwust0d4cwoa87msmw"); // 	    if (mode & (4 | 2))
+ 	}
+ 	if (sp.charAt(0) == '{')
+ 	    cnt++;
+ 	else if (sp.charAt(0) == '}')
+ 	    cnt--;
+ 	else if (sp.charAt(0) == '|' && cnt == 0)
+ 	    maxf++;
+ 	if (cnt < 0)
+ 	    break;
+    }
+	//     rv->fld = (field_t **)zmalloc((maxf)*sizeof(field_t *));
+	rv.fld = CStarStar.<ST_field_t>ALLOC(maxf, ST_field_t.class);
+    rv.LR = LR;
+    mode = 0;
+    fi = 0;
+    hstsp = tsp = text;
+    wflag = NOT(0);
+    ishardspace = false;
+    while (wflag) {
+	if ((Z.z().reclblp.charAt(0) < ' ') && Z.z().reclblp.charAt(0)!=0) {    /* Ignore non-0 control characters */
+		Z.z().reclblp = Z.z().reclblp.plus(1);
+	    continue;
+	}
+ 	switch (Z.z().reclblp.charAt(0)) {
+ 	case '<':
+	    if ((mode & (4 | 2))!=0)
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-UNSUPPORTED("2lft1znt6um5sewf4ta8eigdi"); // 	    if (lbl->html)
+	    if (lbl.html)
 UNSUPPORTED("75bwqdnezjvhazmryfatc4819"); // 		goto dotext;
-UNSUPPORTED("5z8248k3ca5miryedahc2wb60"); // 	    mode |= (2 | 16);
-UNSUPPORTED("8m8ph0munfeo3anrkr9n5c0o8"); // 	    reclblp++;
-UNSUPPORTED("d1omi22iukq2z2ih6p6w2zy5q"); // 	    hspsp = psp = text;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("5suo7424ml3937pmao1lly7tj"); // 	case '>':
-UNSUPPORTED("2lft1znt6um5sewf4ta8eigdi"); // 	    if (lbl->html)
+	    mode |= (2 | 16);
+	    Z.z().reclblp = Z.z().reclblp.plus(1);
+	    hspsp = psp = text;
+	    break;
+ 	case '>':
+	    if (lbl.html)
 UNSUPPORTED("75bwqdnezjvhazmryfatc4819"); // 		goto dotext;
-UNSUPPORTED("e7t4hd1jo3rbmnlsnt7tbyso7"); // 	    if (!(mode & 16))
+	    if (N(mode & 16))
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-UNSUPPORTED("5mkkaq04kcnssm3nv93a82w58"); // 	    if (psp > text + 1 && psp - 1 != hspsp && *(psp - 1) == ' ')
+ // 	    if (psp > text + 1 && psp - 1 != hspsp && *(psp - 1) == ' ')
+	    if (psp.comparePointer(text.plus(1)) > 0 && psp.plus(-1).comparePointer(hspsp) != 0 && psp.charAt(-1) == ' ')
 UNSUPPORTED("7v2hf4x5nsnlq1l025dplo0vo"); // 		psp--;
-UNSUPPORTED("8qt2jpqdy5xvffbwdbwoz25od"); // 	    *psp = '\000';
-UNSUPPORTED("jt6w0csqwc7g51zgiaulvv1y"); // 	    tmpport = strdup(text);
-UNSUPPORTED("v0n557cij70vu46xrnalpnkf"); // 	    mode &= ~16;
-UNSUPPORTED("8m8ph0munfeo3anrkr9n5c0o8"); // 	    reclblp++;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("e1d1tlv81emdkqrj3h7vwega1"); // 	case '{':
-UNSUPPORTED("8m8ph0munfeo3anrkr9n5c0o8"); // 	    reclblp++;
-UNSUPPORTED("171fk0fom3xhcmehn269b68k0"); // 	    if (mode != 0 || !*reclblp)
+	    psp.setCharAt(0, '\000');
+	    tmpport = text.strdup();
+	    mode &= ~16;
+	    Z.z().reclblp = Z.z().reclblp.plus(1);
+	    break;
+ 	case '{':
+	    Z.z().reclblp = Z.z().reclblp.plus(1);
+	    if (mode != 0 || N(Z.z().reclblp.charAt(0)))
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-UNSUPPORTED("4f6lpwau75tu63tu957laxmhg"); // 	    mode = 4;
-UNSUPPORTED("4uchlyreqn6xrcbdv514yikv5"); // 	    if (!(rv->fld[fi++] = parse_reclbl(n, NOT(LR), 0, text)))
+	    mode = 4;
+	    rv.fld.set_(fi, parse_reclbl(n, NOT(LR), false, text));
+	    if (N(rv.fld.get_(fi++)))
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("5yyz13ef8dtnlysqshj0o345v"); // 	case '}':
-UNSUPPORTED("2miq185bwgdi03xsbuf2yo7jg"); // 	case '|':
-UNSUPPORTED("dnmucnqmv1b1788zqbo1ra28z"); // 	case '\000':
-UNSUPPORTED("9hqo6gl1ko0z6pxo2slbietya"); // 	    if ((!*reclblp && !flag) || (mode & 16))
+	    break;
+ 	case '}':
+	case '|':
+	case '\000':
+	    if ((N(Z.z().reclblp.charAt(0)) && !flag) || (mode & 16)!=0)
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-UNSUPPORTED("190gti87w167l9bzbbuqdaao4"); // 	    if (!(mode & 4))
-UNSUPPORTED("l9mhl6lmaxqj7lr1vpp59qcx"); // 		fp = rv->fld[fi++] = (field_t*)zmalloc(sizeof(field_t));
-UNSUPPORTED("6vtiuvpbccho5bvog9tbt6zt7"); // 	    if (tmpport) {
-UNSUPPORTED("vx76i8n34hlrd473lur8wdmg"); // 		fp->id = tmpport;
-UNSUPPORTED("f4uqf89q045ls6scq11ld6jzl"); // 		tmpport = NULL;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("6ogkowbov04jvech8rbmf5h71"); // 	    if (!(mode & (1 | 4)))
+	    if (N(mode & 4))
+	    {
+	    	fp = new ST_field_t();
+	    	rv.fld.set_(fi++, fp);
+	    }
+	    if (tmpport!=null) {
+		fp.id = tmpport;
+		tmpport = null;
+	    }
+	    if (N(mode & (1 | 4)))
 UNSUPPORTED("eiatbbffa47bl558pxd0v9w1g"); // 		mode |= 1, *tsp++ = ' ';
-UNSUPPORTED("3r0hwquezbtg597n0ud6pg0v2"); // 	    if (mode & 1) {
-UNSUPPORTED("eciju51pa83rngg58rdfhhwlh"); // 		if (tsp > text + 1 &&
-UNSUPPORTED("144ggmb5thn6bqdp5qsh5q542"); // 		    tsp - 1 != hstsp && *(tsp - 1) == ' ')
-UNSUPPORTED("4rman9clm35ayjpnaekp2pa4c"); // 		    tsp--;
-UNSUPPORTED("abhck6fmj383j2xczaz9n0hyc"); // 		*tsp = '\000';
-UNSUPPORTED("b6zzmy9m0a71wiwkokxbmshtj"); // 		fp->lp =
-UNSUPPORTED("281g7dyja9pt1j00mw40mvk8h"); // 		    make_label((void *) n, strdup(text),
-UNSUPPORTED("dwtk6llg07gqdeogzt9phcutg"); // 			       (lbl->html ? (1 << 1) : (0 << 1)),
-UNSUPPORTED("4c25jiasa72rqemdd9q0fkqfr"); // 			       lbl->fontsize, lbl->fontname,
-UNSUPPORTED("esi7yfxq7b1t44gjijlfmefkx"); // 			       lbl->fontcolor);
-UNSUPPORTED("13033k8vmyxsz6v6ehqkz1pjy"); // 		fp->LR = NOT(0);
-UNSUPPORTED("3wxuyqcnsxu1lolpwdvh532ta"); // 		hstsp = tsp = text;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("49kjrnlxdycco3jlkx7a6uhfe"); // 	    if (*reclblp) {
-UNSUPPORTED("bxo1ji3i5yxlcsgif616qyf9y"); // 		if (*reclblp == '}') {
-UNSUPPORTED("dcc90zmv0256yuz6jtriktl8s"); // 		    reclblp++;
-UNSUPPORTED("emd51x6hgxuinh9oga7wnkrqk"); // 		    rv->n_flds = fi;
-UNSUPPORTED("7nukzdmlh4mklsedpm903o4cj"); // 		    return rv;
-UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
-UNSUPPORTED("7dcvo4gc0ng3ctuwhrcjfrb41"); // 		mode = 0;
-UNSUPPORTED("be6gxzbdtfezsd8u46xrj6xw4"); // 		reclblp++;
-UNSUPPORTED("afk9bpom7x393euamnvwwkx6b"); // 	    } else
-UNSUPPORTED("5iumhr0xqqhxv0zr03nxwhm7o"); // 		wflag = 0;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("a4kmq96jzs4d007vvibjcu25v"); // 	case '\\':
+	    if ((mode & 1)!=0) {
+		if (tsp.comparePointer(text.plus(1))  > 0 &&
+		    tsp.plus(-1).comparePointer(hstsp) != 0 && tsp.charAt(-1) == ' ')
+		    tsp = tsp.plus(-1);
+		tsp.setCharAt(0, '\000');
+		fp.lp =
+				make_label(n, text.strdup(),
+						(lbl.html ? LT_HTML : LT_NONE),
+						lbl.fontsize, lbl.fontname,
+						lbl.fontcolor);
+		fp.LR = NOT(0);
+		hstsp = tsp = text;
+	    }
+	    if (Z.z().reclblp.charAt(0)!=0) {
+		if (Z.z().reclblp.charAt(0) == '}') {
+		    Z.z().reclblp = Z.z().reclblp.plus(1);
+		    rv.n_flds = fi;
+		    return rv;
+		}
+		mode = 0;
+		Z.z().reclblp = Z.z().reclblp.plus(1);
+	    } else
+		wflag = false;
+	    break;
+	case '\\':
 UNSUPPORTED("3vnixbvvmty9ydvf0l1929gle"); // 	    if (*(reclblp + 1)) {
 UNSUPPORTED("bjtxv6n9c9aqzdkik1c6cqbvy"); // 		if (((*(reclblp + 1)) == '{' || (*(reclblp + 1)) == '}' || (*(reclblp + 1)) == '|' || (*(reclblp + 1)) == '<' || (*(reclblp + 1)) == '>'))
 UNSUPPORTED("dcc90zmv0256yuz6jtriktl8s"); // 		    reclblp++;
@@ -4013,37 +3911,44 @@ UNSUPPORTED("dcc90zmv0256yuz6jtriktl8s"); // 		    reclblp++;
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("dg5yg97t3vto8m73vvwj8jnb2"); // 	    /* falling through ... */
-UNSUPPORTED("1drv0xz8hp34qnf72b4jpprg2"); // 	default:
-UNSUPPORTED("2d4vmvpowhgj7h9539m0qrxsy"); // 	  dotext:
-UNSUPPORTED("5jto4v3wquxhnfa1ubq7jhn9e"); // 	    if ((mode & 4) && *reclblp != ' ')
+ 	default:
+//UNSUPPORTED("2d4vmvpowhgj7h9539m0qrxsy"); // 	  dotext:
+	    if ((mode & 4)!=0 && Z.z().reclblp.charAt(0) != ' ')
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-UNSUPPORTED("f5g7ycr0n6dxs6l70ws5qbyha"); // 	    if (!(mode & (8 | 16)) && *reclblp != ' ')
-UNSUPPORTED("49k9f66mkv4qjn84gy5oo6mfz"); // 		mode |= (8 | 1);
-UNSUPPORTED("4ehnscdbdyu6b96qrct40t547"); // 	    if (mode & 8) {
-UNSUPPORTED("eoigvu52glsps928r04np5k12"); // 		if (!
-UNSUPPORTED("9zalai2d852m4eoy15f6bpxgu"); // 		    (*reclblp == ' ' && !ishardspace && *(tsp - 1) == ' '
-UNSUPPORTED("ahr3j94flu719g0gxu2i46zwn"); // 		     && !lbl->html))
-UNSUPPORTED("c8qpd7i4393s9xlwk5waq8sk3"); // 		    *tsp++ = *reclblp;
-UNSUPPORTED("c2bifaubj01ag8b39d60p9cbk"); // 		if (ishardspace)
+	    if (N(mode & (8 | 16)) && Z.z().reclblp.charAt(0) != ' ')
+		mode |= (8 | 1);
+	    if ((mode & 8)!=0) {
+		if (N
+		    (Z.z().reclblp.charAt(0) == ' ' && !ishardspace && tsp.charAt(-1) == ' '
+		     && N(lbl.html)))
+		{
+			tsp.setCharAt(0, Z.z().reclblp.charAt(0));
+			tsp = tsp.plus(1);
+		}
+		if (ishardspace)
 UNSUPPORTED("atuokfvkmomvi6gvwvpbxggoz"); // 		    hstsp = tsp - 1;
-UNSUPPORTED("blopjrsgbbips57lefdw6bg8b"); // 	    } else if (mode & 16) {
-UNSUPPORTED("1eoe6a3jwmhnj7vdpgz9q6vsn"); // 		if (!(*reclblp == ' ' && !ishardspace &&
-UNSUPPORTED("7i865uqx5v3rutzyppio4oztc"); // 		      (psp == text || *(psp - 1) == ' ')))
-UNSUPPORTED("ccywxarqbhmcmnh8re3pv8j45"); // 		    *psp++ = *reclblp;
-UNSUPPORTED("c2bifaubj01ag8b39d60p9cbk"); // 		if (ishardspace)
+	    } else if ((mode & 16)!=0) {
+		if (!(Z.z().reclblp.charAt(0) == ' ' && !ishardspace &&
+		      (psp == text || psp.charAt(-1) == ' ')))
+		{
+			psp.setCharAt(0, Z.z().reclblp.charAt(0));
+			psp = psp.plus(1);
+		}
+		if (ishardspace)
 UNSUPPORTED("5u5h7cb6egued2g1q7w8yhb1n"); // 		    hspsp = psp - 1;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("8m8ph0munfeo3anrkr9n5c0o8"); // 	    reclblp++;
-UNSUPPORTED("eikj8pnam53jenwbu8enjrw4r"); // 	    while (*reclblp & 128)
+	    }
+	    Z.z().reclblp = Z.z().reclblp.plus(1);
+	    while ((Z.z().reclblp.charAt(0) & 128)!=0)
 UNSUPPORTED("86nc3qdu6nuyt7u67d0kblb9w"); // 		*tsp++ = *reclblp++;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("csdg0jacrzxz21ls0053286t"); //     rv->n_flds = fi;
-UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+	    break;
+ 	}
+    }
+    rv.n_flds = fi;
+    return rv;
+//UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
+} finally {
+LEAVING("7zxlp1fmrq3zt4fprrtesdbg3","poly_init");
+}
 }
 
 
@@ -4051,20 +3956,26 @@ throw new UnsupportedOperationException();
 
 //3 dwk0rh74bwfd7mky5hg9t1epj
 // static pointf size_reclbl(node_t * n, field_t * f) 
-public static Object size_reclbl(Object... arg) {
-UNSUPPORTED("406fn16lbi8yxgg92lsuaglae"); // static pointf size_reclbl(node_t * n, field_t * f)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("b17di9c7wgtqm51bvsyxz6e2f"); //     int i;
-UNSUPPORTED("aexhdud6z2wbwwi73yppp0ynl"); //     char *p;
-UNSUPPORTED("mt3ya9zh07mi1ttjb64zhd7m"); //     double marginx, marginy;
-UNSUPPORTED("6ub135100vcy57x6o36uz14be"); //     pointf d, d0;
-UNSUPPORTED("bgjjpl6jaaa122twwwd0vif6x"); //     pointf dimen;
-UNSUPPORTED("cofpjibrqirnx1jqt3qoptoa8"); //     if (f->lp) {
-UNSUPPORTED("96sfr72s46epnfb44t03vqqu2"); // 	dimen = f->lp->dimen;
-UNSUPPORTED("bqi7vwb2jmnrrqcdzo1mntnvb"); // 	/* minimal whitespace around label */
-UNSUPPORTED("dhtf2vwrnsx779x9mday279x5"); // 	if ((dimen.x > 0.0) || (dimen.y > 0.0)) {
-UNSUPPORTED("2yzf5uec82v14ygrfjcq6ktxp"); // 	    /* padding */
-UNSUPPORTED("b8i1qxc1gtg61p1c1szkj2osr"); // 	    if ((p = agget(n, "margin"))) {
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="size_reclbl", key="dwk0rh74bwfd7mky5hg9t1epj", definition="static pointf size_reclbl(node_t * n, field_t * f)")
+public static ST_pointf size_reclbl(ST_Agnode_s n, ST_field_t f) {
+	// WARNING!! STRUCT
+	return size_reclbl_(n, f).copy();
+}
+private static ST_pointf size_reclbl_(ST_Agnode_s n, ST_field_t f) {
+	ENTERING("dwk0rh74bwfd7mky5hg9t1epj","size_reclbl_");
+	try {
+    int i;
+    CString p;
+    double marginx, marginy;
+    final ST_pointf d = new ST_pointf(), d0 = new ST_pointf();
+    final ST_pointf dimen = new ST_pointf();
+    if (f.lp != null) {
+	dimen.___(f.lp.dimen);
+	/* minimal whitespace around label */
+	if ((dimen.x > 0.0) || (dimen.y > 0.0)) {
+	    /* padding */
+	    if ((p = agget(n, new CString("margin")))!=null) {
 UNSUPPORTED("bfyy3iw4z9ebf4m89x69tn1eb"); // 		i = sscanf(p, "%lf,%lf", &marginx, &marginy);
 UNSUPPORTED("ebo7omz8ev8wu69ub10b4o890"); // 		if (i > 0) {
 UNSUPPORTED("efcgckeemzkbxh32pc2qcdv0d"); // 		    dimen.x += 2 * (ROUND((marginx)*72));
@@ -4074,28 +3985,28 @@ UNSUPPORTED("9acag2yacl63g8rg6r1alu62x"); // 		    else
 UNSUPPORTED("2az12nq89f7txcsfmqdj8tly1"); // 			dimen.y += 2 * (ROUND((marginy)*72));
 UNSUPPORTED("738mi6h8ef0itznt34ngxe25o"); // 		} else
 UNSUPPORTED("b12tl2a8tebl71ewuz3jms9jv"); // 		    {((dimen).x += 4*4); ((dimen).y += 2*4);};
-UNSUPPORTED("afk9bpom7x393euamnvwwkx6b"); // 	    } else
-UNSUPPORTED("87bdwkkwbzyswxnepdd9bj8mb"); // 		{((dimen).x += 4*4); ((dimen).y += 2*4);};
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("2ig0j65v03nhlp8gta21y7upj"); // 	d = dimen;
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
-UNSUPPORTED("3h1vugg28z5an28yxqksy73a1"); // 	d.x = d.y = 0;
-UNSUPPORTED("9cjjlq42o712cit9tby1b7l6a"); // 	for (i = 0; i < f->n_flds; i++) {
-UNSUPPORTED("1dovx3mi47z2lap7bct0utmvv"); // 	    d0 = size_reclbl(n, f->fld[i]);
-UNSUPPORTED("xwrnxfxcwmxuxvjpfw1sb7lt"); // 	    if (f->LR) {
-UNSUPPORTED("2s4lr8xqoy2s4fcc3dy43z546"); // 		d.x += d0.x;
-UNSUPPORTED("da9p29dgwktuisirb2i22mw4p"); // 		d.y = MAX(d.y, d0.y);
-UNSUPPORTED("175pyfe8j8mbhdwvrbx3gmew9"); // 	    } else {
-UNSUPPORTED("eey7x226uokoejjsvtccwizqn"); // 		d.y += d0.y;
-UNSUPPORTED("cvznbvji1rgs4g8avqaznhmtl"); // 		d.x = MAX(d.x, d0.x);
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("58mlt8qk1oe73v2mcc1mgl8k1"); //     f->size = d;
-UNSUPPORTED("3r3o80n61nmy2jv0ezi9xg2xp"); //     return d;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+	    } else
+		{dimen.x += 4*4; dimen.y += 2*4;};
+	}
+	d.___(dimen);
+    } else {
+	d.x = d.y = 0;
+	for (i = 0; i < f.n_flds; i++) {
+	    d0.___(size_reclbl(n, f.fld.get_(i)));
+	    if (f.LR) {
+		d.x += d0.x;
+		d.y = MAX(d.y, d0.y);
+	    } else {
+		d.y += d0.y;
+		d.x = MAX(d.x, d0.x);
+	    }
+	}
+    }
+    f.size.___(d);
+    return d;
+} finally {
+LEAVING("dwk0rh74bwfd7mky5hg9t1epj","size_reclbl");
+}
 }
 
 
@@ -4103,42 +4014,48 @@ throw new UnsupportedOperationException();
 
 //3 blo8etwhtlcsld8ox0vryznfw
 // static void resize_reclbl(field_t * f, pointf sz, int nojustify_p) 
-public static Object resize_reclbl(Object... arg) {
-UNSUPPORTED("aye44rj1356dmxgwk9gx7pwh2"); // static void resize_reclbl(field_t * f, pointf sz, int nojustify_p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("71jvj7ehg7fq26a2s80qyw5pl"); //     int i, amt;
-UNSUPPORTED("9rbb4p3tnymgkgm61ids5opx5"); //     double inc;
-UNSUPPORTED("4vbedk7s9t1o5o9sll2mj3m4d"); //     pointf d;
-UNSUPPORTED("azi9wyi9dsgwzm61ggr9st546"); //     pointf newsz;
-UNSUPPORTED("1zy316mu1h3i1dwl59s1v5gtd"); //     field_t *sf;
-UNSUPPORTED("4od0ewvxs3wubgnizxmaw95m6"); //     /* adjust field */
-UNSUPPORTED("2sbunv882wuaeiivap21n2bqb"); //     d.x = sz.x - f->size.x;
-UNSUPPORTED("57mh8iamjlos1vfnth2m4qmgb"); //     d.y = sz.y - f->size.y;
-UNSUPPORTED("b6m22nmidg72njh0uo1z8sndv"); //     f->size = sz;
-UNSUPPORTED("9agycbghiz3e1xpj2702hn30z"); //     /* adjust text area */
-UNSUPPORTED("c5jen7s7dn54yuakfb7yncb47"); //     if (f->lp && !nojustify_p) {
-UNSUPPORTED("65j1bcx86bkt4yhiu9enb30sv"); // 	f->lp->space.x += d.x;
-UNSUPPORTED("2hh4ho34pe678h62y8yhzq6ek"); // 	f->lp->space.y += d.y;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("esogsiw5n6l1sk5umv7ky4yi"); //     /* adjust children */
-UNSUPPORTED("9mofgi5b5ggg6ugo378omtt93"); //     if (f->n_flds) {
-UNSUPPORTED("99h71dz46rnni7lfrxm1wzs87"); // 	if (f->LR)
-UNSUPPORTED("3idlilzzcmmfphl3ogxoi0gz"); // 	    inc = d.x / f->n_flds;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("gsh4tsmu1upaadj6oebffxe4"); // 	    inc = d.y / f->n_flds;
-UNSUPPORTED("9cjjlq42o712cit9tby1b7l6a"); // 	for (i = 0; i < f->n_flds; i++) {
-UNSUPPORTED("abiqjigzcxzn37q0cla73adcd"); // 	    sf = f->fld[i];
-UNSUPPORTED("cnehjao25jc5jjv5vfumb0qmk"); // 	    amt = ((int) ((i + 1) * inc)) - ((int) (i * inc));
-UNSUPPORTED("e5eeg49by0lz43uois7f6e5xt"); // 	    if (f->LR)
-UNSUPPORTED("bhtvr8j5ek5tt7xm6c9z7hu5r"); // 		newsz = pointfof(sf->size.x + amt, sz.y);
-UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
-UNSUPPORTED("cajand0txpij2kirrkxtjn1ps"); // 		newsz = pointfof(sz.x, sf->size.y + amt);
-UNSUPPORTED("aq6om414jdhfaf5204q5mmln4"); // 	    resize_reclbl(sf, newsz, nojustify_p);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="resize_reclbl", key="blo8etwhtlcsld8ox0vryznfw", definition="static void resize_reclbl(field_t * f, pointf sz, int nojustify_p)")
+public static void resize_reclbl(ST_field_t f, final ST_pointf sz, boolean nojustify_p) {
+	// WARNING!! STRUCT
+	resize_reclbl_(f, sz.copy(), nojustify_p);
+}
+private static void resize_reclbl_(ST_field_t f, final ST_pointf sz, boolean nojustify_p) {
+ENTERING("blo8etwhtlcsld8ox0vryznfw","resize_reclbl");
+try {
+    int i, amt;
+    double inc = 0;
+    final ST_pointf d = new ST_pointf();
+    final ST_pointf newsz = new ST_pointf();
+    ST_field_t sf;
+    /* adjust field */
+    d.x = sz.x - f.size.x;
+    d.y = sz.y - f.size.y;
+    f.size.___(sz);
+    /* adjust text area */
+    if (f.lp!=null && !nojustify_p) {
+	f.lp.space.x += d.x;
+	f.lp.space.y += d.y;
+    }
+    /* adjust children */
+    if (f.n_flds!=0) {
+	if (f.LR)
+	    inc = d.x / f.n_flds;
+	else
+	    inc = d.y / f.n_flds;
+	for (i = 0; i < f.n_flds; i++) {
+	    sf = f.fld.get_(i);
+	    amt = ((int) ((i + 1) * inc)) - ((int) (i * inc));
+	    if (f.LR)
+		newsz.___(pointfof(sf.size.x + amt, sz.y));
+	    else
+		newsz.___(pointfof(sz.x, sf.size.y + amt));
+	    resize_reclbl(sf, newsz, nojustify_p);
+	}
+    }
+	} finally {
+		LEAVING("blo8etwhtlcsld8ox0vryznfw","resize_reclbl");
+	}
 }
 
 
@@ -4146,101 +4063,104 @@ throw new UnsupportedOperationException();
 
 //3 ds4v2i9xw0hm4y53ggbt8z2yk
 // static void pos_reclbl(field_t * f, pointf ul, int sides) 
-public static Object pos_reclbl(Object... arg) {
-UNSUPPORTED("57l93w5nat2i71wn6e82nj4x9"); // static void pos_reclbl(field_t * f, pointf ul, int sides)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("2f3a6lf3ce1tznglhu95xoda0"); //     int i, last, mask;
-UNSUPPORTED("74djpee6zz6hk95hdvulbbjkb"); //     f->sides = sides;
-UNSUPPORTED("2mtubjx0wssvmgcmhx716lypo"); //     f->b.LL = pointfof(ul.x, ul.y - f->size.y);
-UNSUPPORTED("26ciar9flz0wc6r1zk7krxrg1"); //     f->b.UR = pointfof(ul.x + f->size.x, ul.y);
-UNSUPPORTED("6f9cc8k5z3tih73jcgvyqzdy5"); //     last = f->n_flds - 1;
-UNSUPPORTED("d5c2y0xbpfqkrfiwsb6b2q6qr"); //     for (i = 0; i <= last; i++) {
-UNSUPPORTED("6s6izyatmponzopy22eomuw6h"); // 	if (sides) {
-UNSUPPORTED("xwrnxfxcwmxuxvjpfw1sb7lt"); // 	    if (f->LR) {
-UNSUPPORTED("by48lavhlctvmymlkz9qkjvi0"); // 		if (i == 0) {
-UNSUPPORTED("4r4jabt98z99ira0e4bpyyktj"); // 		    if (i == last)
-UNSUPPORTED("rvq6ubzk0rezd88243ailv84"); // 			mask = (1<<2) | (1<<0) | (1<<1) | (1<<3);
-UNSUPPORTED("9acag2yacl63g8rg6r1alu62x"); // 		    else
-UNSUPPORTED("6tzvg9fxvr7v7qt2yh73xn94n"); // 			mask = (1<<2) | (1<<0) | (1<<3);
-UNSUPPORTED("9xksdopde69ktgm9z90l55he9"); // 		} else if (i == last)
-UNSUPPORTED("eas1815ent5z97kozcm2qwglp"); // 		    mask = (1<<2) | (1<<0) | (1<<1);
-UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
-UNSUPPORTED("evm1s2keksyeukfcgn64wt7k6"); // 		    mask = (1<<2) | (1<<0);
-UNSUPPORTED("175pyfe8j8mbhdwvrbx3gmew9"); // 	    } else {
-UNSUPPORTED("by48lavhlctvmymlkz9qkjvi0"); // 		if (i == 0) {
-UNSUPPORTED("4r4jabt98z99ira0e4bpyyktj"); // 		    if (i == last)
-UNSUPPORTED("rvq6ubzk0rezd88243ailv84"); // 			mask = (1<<2) | (1<<0) | (1<<1) | (1<<3);
-UNSUPPORTED("9acag2yacl63g8rg6r1alu62x"); // 		    else
-UNSUPPORTED("2wutifbakw4oqtj4lrjidlytt"); // 			mask = (1<<2) | (1<<1) | (1<<3);
-UNSUPPORTED("9xksdopde69ktgm9z90l55he9"); // 		} else if (i == last)
-UNSUPPORTED("84g4in93npbh6zty66dclzf8a"); // 		    mask = (1<<3) | (1<<0) | (1<<1);
-UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
-UNSUPPORTED("ojlsh8buk0hgqhg1p1o1ogxy"); // 		    mask = (1<<3) | (1<<1);
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("6to1esmb8qfrhzgtr7jdqleja"); // 	} else
-UNSUPPORTED("cbvih14pp0igaj8ytp83216z6"); // 	    mask = 0;
-UNSUPPORTED("c310n6zcvshjtf3nn15m858xd"); // 	pos_reclbl(f->fld[i], ul, sides & mask);
-UNSUPPORTED("99h71dz46rnni7lfrxm1wzs87"); // 	if (f->LR)
-UNSUPPORTED("6o8kbyjjm2bi8zipsgi5lr8ww"); // 	    ul.x = ul.x + f->fld[i]->size.x;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("90vovw2s5lzb6up513xqh9u43"); // 	    ul.y = ul.y - f->fld[i]->size.y;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="pos_reclbl", key="ds4v2i9xw0hm4y53ggbt8z2yk", definition="static void pos_reclbl(field_t * f, pointf ul, int sides)")
+public static void pos_reclbl(ST_field_t f, final ST_pointf ul, int sides) {
+	// WARNING!! STRUCT
+	pos_reclbl_(f, ul.copy(), sides);
 }
-
+private static void pos_reclbl_(ST_field_t f, final ST_pointf ul, int sides) {
+    int i, last, mask=0;
+    f.sides = sides;
+    f.b.LL.___(pointfof(ul.x, ul.y - f.size.y));
+    f.b.UR.___(pointfof(ul.x + f.size.x, ul.y));
+    last = f.n_flds - 1;
+    for (i = 0; i <= last; i++) {
+	if (sides!=0) {
+	    if (f.LR) {
+		if (i == 0) {
+		    if (i == last)
+			mask = TOP | BOTTOM | RIGHT | LEFT;
+		    else
+			mask = TOP | BOTTOM | LEFT;
+		} else if (i == last)
+		    mask = TOP | BOTTOM | RIGHT;
+		else
+		    mask = TOP | BOTTOM;
+	    } else {
+		if (i == 0) {
+		    if (i == last)
+UNSUPPORTED("rvq6ubzk0rezd88243ailv84"); // 			mask = TOP | BOTTOM | RIGHT | LEFT;
+		    else
+			mask = TOP | RIGHT | LEFT;
+		} else if (i == last)
+		    mask = LEFT | BOTTOM | RIGHT;
+		else
+		    mask = LEFT | RIGHT;
+	    }
+	} else
+	    mask = 0;
+	pos_reclbl(f.fld.get_(i), ul, sides & mask);
+	if (f.LR)
+	    ul.x = ul.x + f.fld.get_(i).size.x;
+	else
+	    ul.y = ul.y - f.fld.get_(i).size.y;
+    }
+}
 
 
 
 //3 h2lcuthzwljbcjwdeidw1jiv
 // static void record_init(node_t * n) 
-public static Object record_init(Object... arg) {
-UNSUPPORTED("8bn5tg52zfoyvwdnvqbw04l70"); // static void record_init(node_t * n)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("86oi3nfc6x87w7aj799p0ypzn"); //     field_t *info;
-UNSUPPORTED("6rttlsij6gno16sto3oqsqa40"); //     pointf ul, sz;
-UNSUPPORTED("9fmah1vlmqynhowqu4v9q2zu0"); //     int flip, len;
-UNSUPPORTED("4ly7xwlmpjgyokyzpns8fjvi0"); //     char *textbuf;		/* temp buffer for storing labels */
-UNSUPPORTED("1klslcqyc6484ub7o51jznyqf"); //     int sides = (1<<0) | (1<<1) | (1<<2) | (1<<3);
-UNSUPPORTED("6jo9tl9gx62fi9j5u1nn0dfzw"); //     /* Always use rankdir to determine how records are laid out */
-UNSUPPORTED("ez37gg27m14oqygf9tny4whd9"); //     flip = NOT(GD_realflip(agraphof(n)));
-UNSUPPORTED("831ssvyd2gs7q5d7r83p0tckc"); //     reclblp = ND_label(n)->text;
-UNSUPPORTED("b61x6z42kkk6b66dyi8rykpvw"); //     len = strlen(reclblp);
-UNSUPPORTED("17kft1nompfgymd2cpz9p06we"); //     /* For some forgotten reason, an empty label is parsed into a space, so
-UNSUPPORTED("13t238hjobkason0chns2coag"); //      * we need at least two bytes in textbuf.
-UNSUPPORTED("795vpnc8yojryr8b46aidsu69"); //      */
-UNSUPPORTED("6k99spqggna26l34pfzpjeotk"); //     len = MAX(len, 1);
-UNSUPPORTED("ey612n2e72vl1gbnw3arjznb5"); //     textbuf = (char*)zmalloc((len + 1)*sizeof(char));
-UNSUPPORTED("7uzna6j5b36j6wvueakqwtauo"); //     if (!(info = parse_reclbl(n, flip, NOT(0), textbuf))) {
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="record_init", key="h2lcuthzwljbcjwdeidw1jiv", definition="static void record_init(node_t * n)")
+public static void record_init(ST_Agnode_s n) {
+ENTERING("h2lcuthzwljbcjwdeidw1jiv","poly_init");
+try {
+	ST_field_t info;
+	final ST_pointf ul = new ST_pointf(), sz = new ST_pointf();
+    boolean flip;
+    int len;
+    CString textbuf;		/* temp buffer for storing labels */
+	int sides = BOTTOM | RIGHT | TOP | LEFT;
+	/* Always use rankdir to determine how records are laid out */
+	flip = NOT(GD_realflip(agraphof(n)));
+	Z.z().reclblp = ND_label(n).text;
+    len = strlen(Z.z().reclblp);
+    /* For some forgotten reason, an empty label is parsed into a space, so
+     * we need at least two bytes in textbuf.
+     */
+     len = MAX(len, 1);
+     textbuf = CString.gmalloc(len + 1);
+    if (N(info = parse_reclbl(n, flip, NOT(0), textbuf))) {
 UNSUPPORTED("7iezaksu9hyxhmv3r4cp4o529"); // 	agerr(AGERR, "bad label format %s\n", ND_label(n)->text);
 UNSUPPORTED("8f1id7rqm71svssnxbjo0uwcu"); // 	reclblp = "\\N";
 UNSUPPORTED("2wv3zfqhq53941rwk4vu9p9th"); // 	info = parse_reclbl(n, flip, NOT(0), textbuf);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("9upwq9jn3fup3nwwae3y0vv0q"); //     free(textbuf);
-UNSUPPORTED("31sxwdtqr63gtnpp86jz8pdac"); //     size_reclbl(n, info);
-UNSUPPORTED("434l8ab1hff80o0xz22d91u00"); //     sz.x = (ROUND((ND_width(n))*72));
-UNSUPPORTED("7qr0k3gmk24mj6toqadcqky22"); //     sz.y = (ROUND((ND_height(n))*72));
-UNSUPPORTED("6qf3p8rzhkupjmocuje9q4p2q"); //     if (mapbool(late_string(n, N_fixed, "false"))) {
+    }
+    Memory.free(textbuf);
+    size_reclbl(n, info);
+    sz.x = (ROUND((ND_width(n))*72));
+    sz.y = (ROUND((ND_height(n))*72));
+    if (mapbool(late_string(n, Z.z().N_fixed, new CString("false")))) {
 UNSUPPORTED("8iu51xbtntpdf5sc00g91djym"); // 	if ((sz.x < info->size.x) || (sz.y < info->size.y)) {
 UNSUPPORTED("4vs5u30jzsrn6fpjd327xjf7r"); // /* should check that the record really won't fit, e.g., there may be no text.
 UNSUPPORTED("7k6yytek9nu1ihxix2880667g"); // 			agerr(AGWARN, "node '%s' size may be too small\n", agnameof(n));
 UNSUPPORTED("bnetqzovnscxile7ao44kc0qd"); // */
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
-UNSUPPORTED("9vx9i9jopcbh8v928ih57vgj7"); // 	sz.x = MAX(info->size.x, sz.x);
-UNSUPPORTED("evseq8gqlm6aqw269kwgi57xh"); // 	sz.y = MAX(info->size.y, sz.y);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c0urxnxgjlnro89b6209kl0zf"); //     resize_reclbl(info, sz, mapbool(late_string(n, N_nojustify, "false")));
-UNSUPPORTED("2qhtglqv4czw1wzgy8h9w4o3v"); //     ul = pointfof(-sz.x / 2., sz.y / 2.);	/* FIXME - is this still true:    suspected to introduce ronding error - see Kluge below */
-UNSUPPORTED("816kf840erjhpdg9bin63xyig"); //     pos_reclbl(info, ul, sides);
-UNSUPPORTED("7rjoo40zh2fd13jllh0j2n1w1"); //     ND_width(n) = ((info->size.x)/(double)72);
-UNSUPPORTED("x5gpmbn3zd3hac5yz2s7trtx"); //     ND_height(n) = ((info->size.y + 1)/(double)72);	/* Kluge!!  +1 to fix rounding diff between layout and rendering 
-UNSUPPORTED("edky8r362p1bpruc2jcs2hyft"); // 						   otherwise we can get -1 coords in output */
-UNSUPPORTED("40bol1suut41tvh0xudcyhgpi"); //     ND_shape_info(n) = (void *) info;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    } else {
+	sz.x = MAX(info.size.x, sz.x);
+	sz.y = MAX(info.size.y, sz.y);
+    }
+    resize_reclbl(info, sz, mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))));
+    ul.___(pointfof(-sz.x / 2., sz.y / 2.));	/* FIXME - is this still true:    suspected to introduce ronding error - see Kluge below */
+    pos_reclbl(info, ul, sides);
+    ND_width(n, ((info.size.x)/(double)72));
+    ND_height(n, ((info.size.y + 1)/(double)72));	/* Kluge!!  +1 to fix rounding diff between layout and rendering 
+						   otherwise we can get -1 coords in output */
+    ND_shape_info(n, info);
+} finally {
+LEAVING("h2lcuthzwljbcjwdeidw1jiv","poly_init");
+}
 }
 
 
@@ -4248,6 +4168,8 @@ throw new UnsupportedOperationException();
 
 //3 1lq2tksbz3nzqw9c3xqfs4ymf
 // static void record_free(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="record_free", key="1lq2tksbz3nzqw9c3xqfs4ymf", definition="static void record_free(node_t * n)")
 public static Object record_free(Object... arg) {
 UNSUPPORTED("8anx9p03jsmcuhguyzf7q6qe3"); // static void record_free(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4263,23 +4185,20 @@ throw new UnsupportedOperationException();
 
 //3 a005gfg4ujp2d29bpdrtowla0
 // static field_t *map_rec_port(field_t * f, char *str) 
-public static Object map_rec_port(Object... arg) {
-UNSUPPORTED("7m0itp0yyimj2qrw4m7gkucwe"); // static field_t *map_rec_port(field_t * f, char *str)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("8vkza1jahjxmu3aujqqwejvh4"); //     field_t *rv;
-UNSUPPORTED("bg1s70jnrhf3ei0qo60unqlly"); //     int sub;
-UNSUPPORTED("2wb1wig5yijs1gwl6gsqsfypb"); //     if (f->id && ((*(f->id)==*(str)&&!strcmp(f->id,str))))
-UNSUPPORTED("c6qw5ghrclqer15nnzk3dcf9o"); // 	rv = f;
-UNSUPPORTED("1nyzbeonram6636b1w955bypn"); //     else {
-UNSUPPORTED("52b2tnzwipbuygdvyeyxg1lij"); // 	rv = NULL;
-UNSUPPORTED("2z6jes522cxoquqcehqxkfezp"); // 	for (sub = 0; sub < f->n_flds; sub++)
-UNSUPPORTED("2nwfsthm8r2bsdqcq3cs6mwi7"); // 	    if ((rv = map_rec_port(f->fld[sub], str)))
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="a005gfg4ujp2d29bpdrtowla0", definition="static field_t *map_rec_port(field_t * f, char *str)")
+public static ST_field_t map_rec_port(ST_field_t f, CString str) {
+	ST_field_t rv = null;
+    int sub;
+    if (f.id!=null && f.id.isSame(str))
+	rv = f;
+    else {
+	rv = null;
+	for (sub = 0; sub < f.n_flds; sub++)
+	    if ((rv = map_rec_port(f.fld.get_(sub), str))!=null)
+		break;
+    }
+    return rv;
 }
 
 
@@ -4287,32 +4206,29 @@ throw new UnsupportedOperationException();
 
 //3 chsi0jlfodruvkjj5dlrv5ur3
 // static port record_port(node_t * n, char *portname, char *compass) 
-public static Object record_port(Object... arg) {
-UNSUPPORTED("108iil8l4qbk7n5zy99yzuhna"); // static port record_port(node_t * n, char *portname, char *compass)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("30fmp9xlabtd67je318axlfiy"); //     field_t *f;
-UNSUPPORTED("9nozntsyybg1oi5e3jpibarmk"); //     field_t *subf;
-UNSUPPORTED("9ricxd1wv1am78xxjvd40ki5e"); //     port rv;
-UNSUPPORTED("dezxih515uk47gnmutkm1zuno"); //     int sides;			/* bitmap of which sides the port lies along */
-UNSUPPORTED("8531pl39rpqki88wilp72dh12"); //     if (portname[0] == '\0')
-UNSUPPORTED("ct95magnbje1vlax6sewfa40f"); // 	return Center;
-UNSUPPORTED("ci2ge3idao9rokpvacvcspaxl"); //     sides = (1<<0) | (1<<1) | (1<<2) | (1<<3);
-UNSUPPORTED("cm99rhftfe8nq2suzac5fwbgp"); //     if (compass == NULL)
-UNSUPPORTED("238a13tlawcw3bixwliz859y5"); // 	compass = "_";
-UNSUPPORTED("9xovezi85vdgw8han4h0wr87s"); //     f = (field_t *) ND_shape_info(n);
-UNSUPPORTED("9ihnypp6vu95to95ydtnntq0l"); //     if ((subf = map_rec_port(f, portname))) {
-UNSUPPORTED("6fvm5el2zlrng001datkwt7cc"); // 	if (compassPort(n, &subf->b, &rv, compass, subf->sides, NULL)) {
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="record_port", key="chsi0jlfodruvkjj5dlrv5ur3", definition="static port record_port(node_t * n, char *portname, char *compass)")
+public static ST_port record_port(ST_Agnode_s n, CString portname, CString compass) {
+    ST_field_t f;
+    ST_field_t subf;
+    final ST_port rv = new ST_port();
+    int sides;			/* bitmap of which sides the port lies along */
+    if (portname.charAt(0) == '\0')
+	return Z.z().Center;
+    sides = BOTTOM | RIGHT | TOP | LEFT;
+    if (compass == null)
+	compass = new CString("_");
+    f = (ST_field_t) ND_shape_info(n);
+    if ((subf = map_rec_port(f, portname))!=null) {
+	if (compassPort(n, subf.b, rv, compass, subf.sides, null)) {
 UNSUPPORTED("cw5grwj6gbj94jcztvnp2ooyj"); // 	    agerr(AGWARN,
 UNSUPPORTED("en2xpqtprfng8gmc77dzq7klv"); // 		  "node %s, port %s, unrecognized compass point '%s' - ignored\n",
 UNSUPPORTED("cmo03yl2q1wgn0c1r45y1ay5e"); // 		  agnameof(n), portname, compass);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("3pocnlftms62i7fn2yjeglilc"); //     } else if (compassPort(n, &f->b, &rv, portname, sides, NULL)) {
+	}
+    } else if (compassPort(n, f.b, rv, portname, sides, null)) {
 UNSUPPORTED("98h27uayj9wzp3psyqb5feymg"); // 	unrecognized(n, portname);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    }
+    return rv;
 }
 
 
@@ -4320,24 +4236,30 @@ throw new UnsupportedOperationException();
 
 //3 1f7b6eq3csywqv96raw75jqxr
 // static boolean record_inside(inside_t * inside_context, pointf p) 
-public static Object record_inside(Object... arg) {
-UNSUPPORTED("86kzi0ldxu2wp8jrcz52g23br"); // static boolean record_inside(inside_t * inside_context, pointf p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("awt4go86uiz8hw73uxp1kk1pd"); //     field_t *fld0;
-UNSUPPORTED("4rtja2mn137n7wcxryrmo12ko"); //     boxf *bp = inside_context->s.bp;
-UNSUPPORTED("d8oppi8gt9b4eaonkdgb7a54l"); //     node_t *n = inside_context->s.n;
-UNSUPPORTED("dhrqm3z9pldopj98epb4nfoi4"); //     boxf bbox;
-UNSUPPORTED("5a3hmefcpaol32pvsn6wgwi4p"); //     /* convert point to node coordinate system */
-UNSUPPORTED("7htr4npyn53khcc3o9gi9eew4"); //     p = ccwrotatepf(p, 90 * GD_rankdir(agraphof(n)));
-UNSUPPORTED("57ly3awriopiy2hf7v62cw7ny"); //     if (bp == NULL) {
-UNSUPPORTED("6f802g721m0ev4mztwuama272"); // 	fld0 = (field_t *) ND_shape_info(n);
-UNSUPPORTED("blfb7lv2fmwy1z0sax8wmxz17"); // 	bbox = fld0->b;
-UNSUPPORTED("2lkbqgh2h6urnppaik3zo7ywi"); //     } else
-UNSUPPORTED("2punkrny8rmrqvqgluved9xjm"); // 	bbox = *bp;
-UNSUPPORTED("ca4t2zns3zehe95rbrig7evej"); //     return INSIDE(p, bbox);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="record_inside", key="1f7b6eq3csywqv96raw75jqxr", definition="static boolean record_inside(inside_t * inside_context, pointf p)")
+public static boolean record_inside(ST_inside_t inside_context, ST_pointf p) {
+	// WARNING!! STRUCT
+	return record_inside_(inside_context, p.copy());
+}
+private static boolean record_inside_(ST_inside_t inside_context, final ST_pointf p) {
+ENTERING("1f7b6eq3csywqv96raw75jqxr","record_inside_");
+try {
+    ST_field_t fld0;
+    ST_boxf bp = inside_context.s_bp;
+    ST_Agnode_s n = inside_context.s_n;
+    final ST_boxf bbox = new ST_boxf();
+    /* convert point to node coordinate system */
+    p.___(ccwrotatepf(p, 90 * GD_rankdir(agraphof(n))));
+    if (bp == null) {
+	fld0 = (ST_field_t) ND_shape_info(n).castTo(ST_field_t.class);
+	bbox.___(fld0.b);
+    } else
+	bbox.___(bp);
+    return INSIDE(p, bbox);
+} finally {
+LEAVING("1f7b6eq3csywqv96raw75jqxr","record_inside_");
+}
 }
 
 
@@ -4345,43 +4267,39 @@ throw new UnsupportedOperationException();
 
 //3 3p54k8x2kyueort8kj41qvkty
 // static int record_path(node_t * n, port * prt, int side, boxf rv[], 		       int *kptr) 
-public static Object record_path(Object... arg) {
-UNSUPPORTED("98cjokh407kmiyj3ne6z8tugr"); // static int record_path(node_t * n, port * prt, int side, boxf rv[],
-UNSUPPORTED("5j2zss62xcus5zenfk516rmmp"); // 		       int *kptr)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("bxj1nynia6lfoufq42q6fbw81"); //     int i, ls, rs;
-UNSUPPORTED("2bghyit203pd6xw2ihhenzyn8"); //     pointf p;
-UNSUPPORTED("86oi3nfc6x87w7aj799p0ypzn"); //     field_t *info;
-UNSUPPORTED("41x42ivkcydor03dmtntfcr2c"); //     if (!prt->defined)
-UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
-UNSUPPORTED("2q24y4tztoqnjrae3pyz4xos1"); //     p = prt->p;
-UNSUPPORTED("qqnxp10edgu1p0nyl4uq7t2m"); //     info = (field_t *) ND_shape_info(n);
-UNSUPPORTED("2ocjia9onk38jkynynvvsx6wy"); //     for (i = 0; i < info->n_flds; i++) {
-UNSUPPORTED("6hin33h1bfc9sf9lszjmqgyev"); // 	if (!GD_flip(agraphof(n))) {
-UNSUPPORTED("72j4jh7zoqcwbpm47gdgozled"); // 	    ls = info->fld[i]->b.LL.x;
-UNSUPPORTED("86sxinhjfgtxnim78cjm8ptup"); // 	    rs = info->fld[i]->b.UR.x;
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="record_path", key="3p54k8x2kyueort8kj41qvkty", definition="static int record_path(node_t * n, port * prt, int side, boxf rv[], 		       int *kptr)")
+public static int record_path(ST_Agnode_s n, ST_port prt, int side, ST_boxf rv, ACCESS<Integer> kptr) {
+    int i, ls=0, rs=0;
+    final ST_pointf p = new ST_pointf();
+    ST_field_t info;
+    if (N(prt.defined))
+	return 0;
+    p.___(prt.p);
+    info = (ST_field_t) ND_shape_info(n);
+    for (i = 0; i < info.n_flds; i++) {
+	if (N(GD_flip(agraphof(n)))) {
+	    ls = (int) info.fld.get_(i).b.LL.x;
+	    rs = (int) info.fld.get_(i).b.UR.x;
+	} else {
 UNSUPPORTED("dm9w81fxfdqc5bhtaimpbisvl"); // 	    ls = info->fld[i]->b.LL.y;
 UNSUPPORTED("3sqtp996aa7m19wv9gwkrvav1"); // 	    rs = info->fld[i]->b.UR.y;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("cc82ixosqyaz38wkysyxdbus1"); // 	if (BETWEEN(ls, p.x, rs)) {
-UNSUPPORTED("cmdehzhkvreoa7ge2cf6l81ux"); // 	    /* FIXME: I don't understand this code */
-UNSUPPORTED("75jifr4aucrxp2hvnsrcfunej"); // 	    if (GD_flip(agraphof(n))) {
+	}
+	if (BETWEEN(ls, p.x, rs)) {
+	    /* FIXME: I don't understand this code */
+	    if (GD_flip(agraphof(n))) {
 UNSUPPORTED("8p9z8b0nypgkzi1b3k7sx0fyz"); // 		rv[0] = flip_rec_boxf(info->fld[i]->b, ND_coord(n));
-UNSUPPORTED("175pyfe8j8mbhdwvrbx3gmew9"); // 	    } else {
-UNSUPPORTED("b2c88nitm58fxzi8rh5vergvc"); // 		rv[0].LL.x = ND_coord(n).x + ls;
-UNSUPPORTED("4ivcuhn3xc40qws7sdw4ai8s5"); // 		rv[0].LL.y = ND_coord(n).y - (ND_ht(n) / 2);
-UNSUPPORTED("39yu1w8ymm77xe0plqbb1tlsu"); // 		rv[0].UR.x = ND_coord(n).x + rs;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("78963top1lc1j91gvr130yzlg"); // 	    rv[0].UR.y = ND_coord(n).y + (ND_ht(n) / 2);
-UNSUPPORTED("9jd15eqfyfmga3uhuzmoiobm4"); // 	    *kptr = 1;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("2nk83e61yc1xqh0sxx13m5l1j"); //     return side;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+	    } else {
+		rv.LL.x = ND_coord(n).x + ls;
+		rv.LL.y = ND_coord(n).y - (ND_ht(n) / 2);
+		rv.UR.x = ND_coord(n).x + rs;
+	    }
+	    rv.UR.y = ND_coord(n).y + (ND_ht(n) / 2);
+	    kptr.set(1);
+	    break;
+	}
+    }
+    return side;
 }
 
 
@@ -4389,6 +4307,8 @@ throw new UnsupportedOperationException();
 
 //3 exqpf0bds3z9eae52fqnqdv4f
 // static void gen_fields(GVJ_t * job, node_t * n, field_t * f) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="gen_fields", key="exqpf0bds3z9eae52fqnqdv4f", definition="static void gen_fields(GVJ_t * job, node_t * n, field_t * f)")
 public static Object gen_fields(Object... arg) {
 UNSUPPORTED("alxnwxfpkfjmexy2v4wj8txsk"); // static void gen_fields(GVJ_t * job, node_t * n, field_t * f)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4427,6 +4347,8 @@ throw new UnsupportedOperationException();
 
 //3 3bum3y2gmowozskwp7e492wm7
 // static void record_gencode(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="record_gencode", key="3bum3y2gmowozskwp7e492wm7", definition="static void record_gencode(GVJ_t * job, node_t * n)")
 public static Object record_gencode(Object... arg) {
 UNSUPPORTED("cpq4ylwlb0lwi7ibim51gndor"); // static void record_gencode(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4435,7 +4357,7 @@ UNSUPPORTED("bzz7vodjegzgwxp8jzgkq3uti"); //     boxf BF;
 UNSUPPORTED("en6q26cyrg17g6yd6el73b3ns"); //     pointf AF[4];
 UNSUPPORTED("b89hspuulkkzgmrj59tfy2fus"); //     int style;
 UNSUPPORTED("30fmp9xlabtd67je318axlfiy"); //     field_t *f;
-UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = (obj->url || obj->explicit_tooltip);
+UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = obj->url || obj->explicit_tooltip;
 UNSUPPORTED("3ml0gugucwlbwt5mbcdlymm8b"); //     int filled;
 UNSUPPORTED("bhtcyodd9jiazat6sqhp9pm4x"); //     char* clrs[2];
 UNSUPPORTED("9xovezi85vdgw8han4h0wr87s"); //     f = (field_t *) ND_shape_info(n);
@@ -4511,6 +4433,8 @@ throw new UnsupportedOperationException();
 
 //3 35sn43hohjmtc7uvkjrx6u7jt
 // shape_desc *find_user_shape(const char *name) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="35sn43hohjmtc7uvkjrx6u7jt", definition="shape_desc *find_user_shape(const char *name)")
 public static Object find_user_shape(Object... arg) {
 UNSUPPORTED("dn82ttgu4gvl5nnzl8cu29o63"); // shape_desc *find_user_shape(const char *name)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4532,6 +4456,8 @@ throw new UnsupportedOperationException();
 
 //3 2eqlcx6fsiu46csoml6irvkib
 // static shape_desc *user_shape(char *name) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="2eqlcx6fsiu46csoml6irvkib", definition="static shape_desc *user_shape(char *name)")
 public static Object user_shape(Object... arg) {
 UNSUPPORTED("7omo61zea17p3tb29vnkd0g5k"); // static shape_desc *user_shape(char *name)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4560,13 +4486,14 @@ throw new UnsupportedOperationException();
 
 
 
-//3 bmt148wdf0a7gslm7hmp043jy
-// shape_desc *bind_shape(char *name, node_t * np) 
+@Reviewed(when = "12/11/2020")
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="bmt148wdf0a7gslm7hmp043jy", definition="shape_desc *bind_shape(char *name, node_t * np)")
 public static ST_shape_desc bind_shape(CString name, ST_Agnode_s np) {
 ENTERING("bmt148wdf0a7gslm7hmp043jy","bind_shape");
 try {
 	ST_shape_desc rv = null;
     CString str;
+    
     str = safefile(agget(np, new CString("shapefile")));
     /* If shapefile is defined and not epsf, set shape = custom */
     if (str!=null && UNSUPPORTED("!(*(name)==*(\"epsf\")&&!strcmp(name,\"epsf\"))")!=null)
@@ -4592,6 +4519,8 @@ LEAVING("bmt148wdf0a7gslm7hmp043jy","bind_shape");
 
 //3 9n2zfdpzi6zgvnhcb3kz7nw1u
 // static boolean epsf_inside(inside_t * inside_context, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="epsf_inside", key="9n2zfdpzi6zgvnhcb3kz7nw1u", definition="static boolean epsf_inside(inside_t * inside_context, pointf p)")
 public static Object epsf_inside(Object... arg) {
 UNSUPPORTED("cq9kgtgzrb9sazy7y2fpt859x"); // static boolean epsf_inside(inside_t * inside_context, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4612,12 +4541,14 @@ throw new UnsupportedOperationException();
 
 //3 6xv85fky6n2v03mt0dbvpz05e
 // static void epsf_gencode(GVJ_t * job, node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="epsf_gencode", key="6xv85fky6n2v03mt0dbvpz05e", definition="static void epsf_gencode(GVJ_t * job, node_t * n)")
 public static Object epsf_gencode(Object... arg) {
 UNSUPPORTED("4mtkoc5bwv0wkraw1xv9ptjlo"); // static void epsf_gencode(GVJ_t * job, node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("84llcpxtvxaggx841n2t03850"); //     obj_state_t *obj = job->obj;
 UNSUPPORTED("31b47kcwg6z2ds4cugdfq5hft"); //     epsf_t *desc;
-UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = (obj->url || obj->explicit_tooltip);
+UNSUPPORTED("6ciz320nm1jdjxir808cycx3t"); //     int doMap = obj->url || obj->explicit_tooltip;
 UNSUPPORTED("7wygkmvhwjn2l2fmpw5bj1o6g"); //     desc = (epsf_t *) (ND_shape_info(n));
 UNSUPPORTED("c98tv4jn3ode5so0mefrwcut7"); //     if (!desc)
 UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
@@ -4649,6 +4580,8 @@ throw new UnsupportedOperationException();
 
 //3 d0jsei60yky7c36q8bja8q58d
 // static pointf star_size (pointf sz0) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="star_size", key="d0jsei60yky7c36q8bja8q58d", definition="static pointf star_size (pointf sz0)")
 public static Object star_size(Object... arg) {
 UNSUPPORTED("6bl2ntfn97yev6qvlwplor61o"); // static pointf star_size (pointf sz0)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4671,13 +4604,15 @@ throw new UnsupportedOperationException();
 
 //3 a7r80ro5nb15ttgfpqwayycmf
 // static void star_vertices (pointf* vertices, pointf* bb) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="star_vertices", key="a7r80ro5nb15ttgfpqwayycmf", definition="static void star_vertices (pointf* vertices, pointf* bb)")
 public static Object star_vertices(Object... arg) {
 UNSUPPORTED("8p40gvc5ocryzfeoybiuc0tzd"); // static void star_vertices (pointf* vertices, pointf* bb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("b17di9c7wgtqm51bvsyxz6e2f"); //     int i;
 UNSUPPORTED("6ebg0h9irk3pcisrj710o7d79"); //     pointf sz = *bb;
 UNSUPPORTED("daheewjo1ertfvnwnfdg2fcxr"); //     double offset, a, aspect = (1 + sin((3*(M_PI/10.0))))/(2*cos((M_PI/10.0)));
-UNSUPPORTED("6ir3jujwrh6dpiqug6p2v3ttj"); //     double r, r0, theta = (M_PI/10.0);
+UNSUPPORTED("6ir3jujwrh6dpiqug6p2v3ttj"); //     double r, r0, theta = M_PI/10.0;
 UNSUPPORTED("3dcxsdbybxzvk7jsod9d2ubvm"); //     /* Scale up width or height to required aspect ratio */
 UNSUPPORTED("o422759cptua4yuo9guk3367"); //     a = sz.y/sz.x;
 UNSUPPORTED("4czf228z5owjh6ew3vh3ugvdv"); //     if (a > aspect) {
@@ -4710,6 +4645,8 @@ throw new UnsupportedOperationException();
 
 //3 5sbhhjvptmhgl2v2zc12aemgv
 // static boolean star_inside(inside_t * inside_context, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="star_inside", key="5sbhhjvptmhgl2v2zc12aemgv", definition="static boolean star_inside(inside_t * inside_context, pointf p)")
 public static Object star_inside(Object... arg) {
 UNSUPPORTED("2s46vczrfqrysl35qtk55j8dq"); // static boolean star_inside(inside_t * inside_context, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -4757,40 +4694,40 @@ throw new UnsupportedOperationException();
 
 
 //1 7nso0aprwwsa0je3az7h9nlue
-// static char *side_port[] = 
+static private CString side_port[] = { new CString("s"), new CString("e"), new CString("n"), new CString("w") };
 
 
 
 
 //3 8hx6dn19tost35djnvvnzh92y
 // static point cvtPt(pointf p, int rankdir) 
-public static Object cvtPt(Object... arg) {
-UNSUPPORTED("eid0v5e8f2edm1ehyq1d0zgow"); // static point cvtPt(pointf p, int rankdir)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("6nl26joj7b7zxkfry5bt8z27d"); //     pointf q = { 0, 0 };
-UNSUPPORTED("6em4lvgp5tqcu7z93czp75mqr"); //     point Q;
-UNSUPPORTED("7gnjhunyvxphjgrfh8byey4ch"); //     switch (rankdir) {
-UNSUPPORTED("70xjc0sbkjvexfar5luzibcgf"); //     case 0:
-UNSUPPORTED("a3bxar1i984lfbgqyiie54sqq"); // 	q = p;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("4u5xz2u3urj13y0aw30fdyup5"); //     case 2:
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="cvtPt", key="8hx6dn19tost35djnvvnzh92y", definition="static point cvtPt(pointf p, int rankdir)")
+public static ST_point cvtPt(final ST_pointf p, int rankdir) {
+	return (ST_point) cvtPt_(p.copy(), rankdir).copy();
+}
+private static ST_point cvtPt_(final ST_pointf p, int rankdir) {
+    final ST_pointf q = new ST_pointf(); // { 0, 0 };
+    final ST_point Q = new ST_point();
+    switch (rankdir) {
+    case 0:
+	q.___(p);
+	break;
+    case 2:
 UNSUPPORTED("drh1t5heo8w8z199n0vydnon7"); // 	q.x = p.x;
 UNSUPPORTED("1sp6xbp6wduyl3r6q3ki03lj"); // 	q.y = -p.y;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("d0gk15gzj4wz8nv54zbr285hm"); //     case 1:
+    case 1:
 UNSUPPORTED("aqxuqmimmi2id7ukk2b64x1in"); // 	q.y = p.x;
 UNSUPPORTED("djyedvti0u3rb22lyp3mp7i8n"); // 	q.x = -p.y;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("33l7a58zp8vj6fuliwdkk2nkn"); //     case 3:
+    case 3:
 UNSUPPORTED("aqxuqmimmi2id7ukk2b64x1in"); // 	q.y = p.x;
 UNSUPPORTED("7d33c84ojx2qc6awisfs88pf5"); // 	q.x = p.y;
 UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("5da6w8o8qgq5rx9tk3asaefvi"); //     PF2P(q, Q);
-UNSUPPORTED("11g52me0fwkpxm5crnv4uqfgr"); //     return Q;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    }
+    PF2P(q, Q);
+    return Q;
 }
 
 
@@ -4798,22 +4735,22 @@ throw new UnsupportedOperationException();
 
 //3 cmt4wr13jgcd9ihg14t972aam
 // static char *closestSide(node_t * n, node_t * other, port * oldport) 
-public static Object closestSide(Object... arg) {
-UNSUPPORTED("7nx8rmo64f0qpalnfdir13szh"); // static char *closestSide(node_t * n, node_t * other, port * oldport)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c57pq0f87j6dnbcvygu7v6k84"); //     boxf b;
-UNSUPPORTED("6yudcsapgh1wsfc2gfszyhv9j"); //     int rkd = GD_rankdir(agraphof(n)->root);
-UNSUPPORTED("7f1eg16y5dgh2o3bgeyia19n3"); //     point p = { 0, 0 };
-UNSUPPORTED("dc41k2vc95rcs2d9fsi2z8wem"); //     point pt = cvtPt(ND_coord(n), rkd);
-UNSUPPORTED("bk9nxen9ygr1a03ygu4cdx4rj"); //     point opt = cvtPt(ND_coord(other), rkd);
-UNSUPPORTED("4oio8elmu3g3k7i9rcsme7msk"); //     int sides = oldport->side;
-UNSUPPORTED("2lc32htm5f42afmf30kcuxspa"); //     char *rv = NULL;
-UNSUPPORTED("5myu0a4ngtwkfxidkfff5h3ci"); //     int i, d, mind = 0;
-UNSUPPORTED("42bedbxabt6b225h992k8rfpa"); //     if ((sides == 0) || (sides == ((1<<2) | (1<<0) | (1<<3) | (1<<1))))
-UNSUPPORTED("85378rh1rr2g6iscv3ocyh4ky"); // 	return rv;		/* use center */
-UNSUPPORTED("9qqot69wqtq8rkizbwz0f4vu"); //     if (oldport->bp) {
-UNSUPPORTED("ckp5i3rvsjcc5f9xk025kpv81"); // 	b = *oldport->bp;
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="", key="cmt4wr13jgcd9ihg14t972aam", definition="static char *closestSide(node_t * n, node_t * other, port * oldport)")
+public static CString closestSide(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
+    final ST_boxf b = new ST_boxf();
+    int rkd = GD_rankdir(agraphof(n).root);
+    final ST_point p = new ST_point(); // { 0, 0 };
+    final ST_point pt = cvtPt(ND_coord(n), rkd);
+    final ST_point opt = cvtPt(ND_coord(other), rkd);
+    int sides = oldport.side;
+    CString rv = null;
+    int i, d, mind = 0;
+    if ((sides == 0) || (sides == (TOP | BOTTOM | LEFT | RIGHT)))
+	return rv;		/* use center */
+    if (oldport.bp != null) {
+	b.___(oldport.bp);
+    } else {
 UNSUPPORTED("ek9a7u2yx8w4r9x5k7somxuup"); // 	if (GD_flip(agraphof(n))) {
 UNSUPPORTED("5m0qxjiybs5ei0xyt8rztghk5"); // 	    b.UR.x = ND_ht(n) / 2;
 UNSUPPORTED("1i4y4dgrig36gh0dq2jn8kde"); // 	    b.LL.x = -b.UR.x;
@@ -4825,40 +4762,37 @@ UNSUPPORTED("922vazdrkwhoxxy4yw5axu6i7"); // 	    b.LL.y = -b.UR.y;
 UNSUPPORTED("59beisnsabbp6eavnuxrqch2d"); // 	    b.UR.x = ND_lw(n);
 UNSUPPORTED("1i4y4dgrig36gh0dq2jn8kde"); // 	    b.LL.x = -b.UR.x;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("a2n8aqfq0cqpx8elstmfn9oq6"); //     for (i = 0; i < 4; i++) {
-UNSUPPORTED("bs33qxg9liuq4cqnxgjcpo2pp"); // 	if ((sides & (1 << i)) == 0)
-UNSUPPORTED("6hqli9m8yickz1ox1qfgtdbnd"); // 	    continue;
-UNSUPPORTED("9bo1itj979wxduxtvlcn8uetb"); // 	switch (i) {
-UNSUPPORTED("46lzlkypfilrge90rkaiveuyb"); // 	case 0:
-UNSUPPORTED("c2y7pxvutf20cxm0z3nfgoc3k"); // 	    p.y = b.LL.y;
-UNSUPPORTED("2vekwappcfvbfvrjvig9oqlmp"); // 	    p.x = (b.LL.x + b.UR.x) / 2;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("2o83im06dulx11wjpy469gkoa"); // 	case 1:
-UNSUPPORTED("6ertkjhcjyaq08zsm3g294l4b"); // 	    p.x = b.UR.x;
-UNSUPPORTED("3jxafko9fvkftv1vxjstl9gr5"); // 	    p.y = (b.LL.y + b.UR.y) / 2;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("b8vgbvwzllfs4lrqmmqyr1spk"); // 	case 2:
-UNSUPPORTED("7gucyzlkpil4bfg1hpst17k3d"); // 	    p.y = b.UR.y;
-UNSUPPORTED("2vekwappcfvbfvrjvig9oqlmp"); // 	    p.x = (b.LL.x + b.UR.x) / 2;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("1640m8as34e90xhvvtl877cmo"); // 	case 3:
-UNSUPPORTED("3hd28hpejkfur36krdelc2enk"); // 	    p.x = b.LL.x;
-UNSUPPORTED("3jxafko9fvkftv1vxjstl9gr5"); // 	    p.y = (b.LL.y + b.UR.y) / 2;
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("7lafbtu79v445pj4z8m4brkmm"); // 	p.x += pt.x;
-UNSUPPORTED("ef9oyp0p6aqlpy8atlw8pjnj2"); // 	p.y += pt.y;
-UNSUPPORTED("q27stk74ksja0hoiobb8mpfg"); // 	d = DIST2(p, opt);
-UNSUPPORTED("77inwlax2kjikvjehyh67g2v1"); // 	if (!rv || (d < mind)) {
-UNSUPPORTED("e4k01qtlw2t5jf3hpn1bmxivu"); // 	    mind = d;
-UNSUPPORTED("cghq7r095a9g9ix9m1bfx0niw"); // 	    rv = side_port[i];
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    }
+    for (i = 0; i < 4; i++) {
+	if ((sides & (1 << i)) == 0)
+	    continue;
+	switch (i) {
+	case 0:
+	    p.y = (int) b.LL.y;
+	    p.x = (int) (b.LL.x + b.UR.x) / 2;
+	    break;
+	case 1:
+	    p.x = (int) b.UR.x;
+	    p.y = (int) (b.LL.y + b.UR.y) / 2;
+	    break;
+	case 2:
+	    p.y = (int) b.UR.y;
+	    p.x = (int) (b.LL.x + b.UR.x) / 2;
+	    break;
+	case 3:
+	    p.x = (int) b.LL.x;
+	    p.y = (int) (b.LL.y + b.UR.y) / 2;
+	    break;
+	}
+	p.x += pt.x;
+	p.y += pt.y;
+	d = (int) DIST2(p, opt);
+	if (N(rv) || (d < mind)) {
+	    mind = d;
+	    rv = side_port[i];
+	}
+    }
+    return rv;
 }
 
 
@@ -4866,6 +4800,8 @@ throw new UnsupportedOperationException();
 
 //3 ckbg1dyu9jzx7g0c9dbriez7r
 // port resolvePort(node_t * n, node_t * other, port * oldport) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="resolvePort", key="ckbg1dyu9jzx7g0c9dbriez7r", definition="port resolvePort(node_t * n, node_t * other, port * oldport)")
 public static ST_port resolvePort(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
 // WARNING!! STRUCT
 return resolvePort_w_(n, other, oldport).copy();
@@ -4873,17 +4809,12 @@ return resolvePort_w_(n, other, oldport).copy();
 private static ST_port resolvePort_w_(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
 ENTERING("ckbg1dyu9jzx7g0c9dbriez7r","resolvePort");
 try {
- UNSUPPORTED("1aa44pvk8su341rug2x5h5h9o"); // port resolvePort(node_t * n, node_t * other, port * oldport)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9ricxd1wv1am78xxjvd40ki5e"); //     port rv;
-UNSUPPORTED("jdbaecwphvo5avabk6l4xiy3"); //     char *compass = closestSide(n, other, oldport);
-UNSUPPORTED("afwu4bhodfj1avn0vvvmp2j5n"); //     /* transfer name pointer; all other necessary fields will be regenerated */
-UNSUPPORTED("102hdormt85y9xfjr5sy321jr"); //     rv.name = oldport->name;
-UNSUPPORTED("f4v5e5pyzu6udom6g40aku41y"); //     compassPort(n, oldport->bp, &rv, compass, oldport->side, NULL);
-UNSUPPORTED("v7vqc9l7ge2bfdwnw11z7rzi"); //     return rv;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    final ST_port rv = new ST_port();
+    CString compass = closestSide(n, other, oldport);
+    /* transfer name pointer; all other necessary fields will be regenerated */
+    rv.name = oldport.name;
+    compassPort(n, oldport.bp, rv, compass, oldport.side, null);
+    return rv;
 } finally {
 LEAVING("ckbg1dyu9jzx7g0c9dbriez7r","resolvePort");
 }
@@ -4894,6 +4825,8 @@ LEAVING("ckbg1dyu9jzx7g0c9dbriez7r","resolvePort");
 
 //3 9ttd9vkih0mogy1ps3khfjum6
 // void resolvePorts(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/common/shapes.c", name="resolvePorts", key="9ttd9vkih0mogy1ps3khfjum6", definition="void resolvePorts(edge_t * e)")
 public static Object resolvePorts(Object... arg) {
 UNSUPPORTED("ceen1bdr2y10gl9g3stj9dq13"); // void resolvePorts(edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

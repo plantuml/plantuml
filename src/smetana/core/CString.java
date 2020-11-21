@@ -36,11 +36,10 @@
 
 package smetana.core;
 
-import h.ST_refstr_t;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import h.ST_refstr_t;
 import smetana.core.amiga.Area;
 
 public class CString extends UnsupportedC implements __ptr__, Area {
@@ -90,6 +89,11 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 	public CString strdup() {
 		return duplicate();
 	}
+	
+	public static CString gmalloc(int nbytes) {
+		return new CString(nbytes);
+		}
+
 
 	public CString(int size) {
 		this(new ArrayList<Character>(), 0);
@@ -153,6 +157,17 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 	public CString plus(int pointerMove) {
 		return new CString(data2, currentStart + pointerMove);
 	}
+	
+	@Override
+	public int comparePointer(__ptr__ other) {
+		final CString this2 = (CString) other;
+		if (this.data2 != this2.data2) {
+			throw new IllegalArgumentException();
+		}
+		return this.currentStart - this2.currentStart;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -185,9 +200,12 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 
 	public char charAt(int i) {
 		if (i >= getData().size()) {
-			return '\0';
+			throw new UnsupportedOperationException();
+			// return '\0';
 		}
-		return getData().get(i);
+		return data2.get(currentStart + i);
+		// when i<0
+		// return data2.subList(currentStart, data2.size()).get(i);
 	}
 
 	public char setCharAt(int i, char c) {
@@ -206,7 +224,7 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 		throw new IllegalStateException();
 	}
 
-	public int compareTo(CString other) {
+	public int strcmp(CString other) {
 		for (int i = 0; i < data2.size() - currentStart; i++) {
 			final int diff = this.charAt(i) - other.charAt(i);
 			if (this.charAt(i) == '\0' || diff != 0) {
@@ -216,7 +234,7 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 		throw new IllegalStateException();
 	}
 
-	public int compareTo(CString other, int num) {
+	public int strcmp(CString other, int num) {
 		for (int i = 0; i < data2.size() - currentStart && i < num; i++) {
 			final int diff = this.charAt(i) - other.charAt(i);
 			if (this.charAt(i) == '\0' || diff != 0) {

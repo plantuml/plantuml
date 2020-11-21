@@ -146,7 +146,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		}
 		if (type == BpmElementType.DOCKED_EVENT) {
 			final UFont font = UFont.serif(14);
-			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN);
+			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN, null);
 		}
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.RED, HColorUtils.RED, false);

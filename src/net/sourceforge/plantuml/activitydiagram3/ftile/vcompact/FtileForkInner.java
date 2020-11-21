@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -61,6 +62,12 @@ class FtileForkInner extends AbstractFtile {
 			this.forks.add(ftile);
 		}
 	}
+	
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.unmodifiableCollection(forks);
+	}
+
 
 	public Swimlane getSwimlaneIn() {
 		return forks.get(0).getSwimlaneIn();

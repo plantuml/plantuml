@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.ortho;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class rawgraph__c {
@@ -115,6 +118,8 @@ public class rawgraph__c {
 
 //3 b9uhij2qxmaueiwxbfjbx7j7c
 // rawgraph* make_graph(int n) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="make_graph", key="b9uhij2qxmaueiwxbfjbx7j7c", definition="rawgraph* make_graph(int n)")
 public static Object make_graph(Object... arg) {
 UNSUPPORTED("dcc13k9x44a7gckftbejv58dc"); // rawgraph*
 UNSUPPORTED("2zmrv5ohq7e29e3qiy4b3r2kf"); // make_graph(int n)
@@ -138,6 +143,8 @@ throw new UnsupportedOperationException();
 
 //3 5qv1mxxuhkzua2w2dqem19lny
 // void free_graph(rawgraph* g) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="free_graph", key="5qv1mxxuhkzua2w2dqem19lny", definition="void free_graph(rawgraph* g)")
 public static Object free_graph(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("6cqftcuhpqak3hl5c518hyr4e"); // free_graph(rawgraph* g)
@@ -157,6 +164,8 @@ throw new UnsupportedOperationException();
 
 //3 186nbf92ja5ttnrgvj422eqf5
 // void  insert_edge(rawgraph* g, int v1, int v2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="insert_edge", key="186nbf92ja5ttnrgvj422eqf5", definition="void  insert_edge(rawgraph* g, int v1, int v2)")
 public static Object insert_edge(Object... arg) {
 UNSUPPORTED("347dderd02mvlozoheqo4ejwo"); // void 
 UNSUPPORTED("jldraubzdwc00et6agtk6726"); // insert_edge(rawgraph* g, int v1, int v2)
@@ -174,6 +183,8 @@ throw new UnsupportedOperationException();
 
 //3 1r1ufpzdilo5438zjdky0uy2w
 // void remove_redge(rawgraph* g, int v1, int v2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="remove_redge", key="1r1ufpzdilo5438zjdky0uy2w", definition="void remove_redge(rawgraph* g, int v1, int v2)")
 public static Object remove_redge(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("a9gk586ljggidricdp6evpxau"); // remove_redge(rawgraph* g, int v1, int v2)
@@ -193,6 +204,8 @@ throw new UnsupportedOperationException();
 
 //3 3ff6zoop8jhts0qsvj91k9dfk
 // int edge_exists(rawgraph* g, int v1, int v2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="edge_exists", key="3ff6zoop8jhts0qsvj91k9dfk", definition="int edge_exists(rawgraph* g, int v1, int v2)")
 public static Object edge_exists(Object... arg) {
 UNSUPPORTED("etrjsq5w49uo9jq5pzifohkqw"); // int
 UNSUPPORTED("4urd9z39jr49sen0w7s573505"); // edge_exists(rawgraph* g, int v1, int v2)
@@ -208,6 +221,8 @@ throw new UnsupportedOperationException();
 
 //3 1zivcgw1xwk6pq169yqc75oh1
 // static stack* mkStack (int i) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="mkStack", key="1zivcgw1xwk6pq169yqc75oh1", definition="static stack* mkStack (int i)")
 public static Object mkStack(Object... arg) {
 UNSUPPORTED("9cla0obmp67i5rjsjxiqdeimj"); // static stack*
 UNSUPPORTED("ci2xjox5enk1600klp4wnc4d0"); // mkStack (int i)
@@ -226,6 +241,8 @@ throw new UnsupportedOperationException();
 
 //3 56jaryc2ndgkphreacgutgkko
 // static void freeStack (stack* s) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="freeStack", key="56jaryc2ndgkphreacgutgkko", definition="static void freeStack (stack* s)")
 public static Object freeStack(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("1tmwfqmwfffw7layx1b9l774l"); // freeStack (stack* s)
@@ -242,6 +259,8 @@ throw new UnsupportedOperationException();
 
 //3 40jmhsu64yd114q5sxnbwirxh
 // static void pushStack (stack* s, int i) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="pushStack", key="40jmhsu64yd114q5sxnbwirxh", definition="static void pushStack (stack* s, int i)")
 public static Object pushStack(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("efz1du2gap9f44f5qfs4oa0ga"); // pushStack (stack* s, int i)
@@ -258,6 +277,8 @@ throw new UnsupportedOperationException();
 
 //3 4oxcr6qfkyvzxsr9y5oo4ok34
 // static int popStack (stack* s) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="popStack", key="4oxcr6qfkyvzxsr9y5oo4ok34", definition="static int popStack (stack* s)")
 public static Object popStack(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("9blpzh0xe07qxynad8t5mqz8x"); // popStack (stack* s)
@@ -277,6 +298,8 @@ throw new UnsupportedOperationException();
 
 //3 2jkcimgyhf4lzdolm41833uv1
 // static int DFS_visit(rawgraph* g, int v, int time, stack* sp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="DFS_visit", key="2jkcimgyhf4lzdolm41833uv1", definition="static int DFS_visit(rawgraph* g, int v, int time, stack* sp)")
 public static Object DFS_visit(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("9tjvxtubftvfbyn9yg9s2ukk5"); // DFS_visit(rawgraph* g, int v, int time, stack* sp)
@@ -309,6 +332,8 @@ throw new UnsupportedOperationException();
 
 //3 9r0jqlhxs5buqs5hsdqnbj84j
 // void top_sort(rawgraph* g) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/rawgraph.c", name="top_sort", key="9r0jqlhxs5buqs5hsdqnbj84j", definition="void top_sort(rawgraph* g)")
 public static Object top_sort(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("4yot0xeux4j9xntlfs27gwtcf"); // top_sort(rawgraph* g)

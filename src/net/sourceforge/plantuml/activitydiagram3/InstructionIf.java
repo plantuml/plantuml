@@ -67,7 +67,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 	private Branch current;
 	private final LinkRendering topInlinkRendering;
-	private LinkRendering afterEndwhile = LinkRendering.none();
+	private LinkRendering outColor = LinkRendering.none();
 
 	private final Swimlane swimlane;
 
@@ -83,7 +83,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		return false;
 	}
 
-	public InstructionIf(Swimlane swimlane, Instruction parent, Display labelTest, Display whenThen,
+	public InstructionIf(Swimlane swimlane, Instruction parent, Display labelTest, LinkRendering whenThen,
 			LinkRendering inlinkRendering, HColor color, ISkinParam skinParam, Url url) {
 		this.url = url;
 		this.parent = parent;
@@ -94,7 +94,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		}
 		this.swimlane = swimlane;
 		this.thens.add(new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, labelTest, color,
-				Display.NULL));
+				LinkRendering.none()));
 		this.current = this.thens.get(0);
 	}
 
@@ -107,11 +107,11 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			branch.updateFtile(factory);
 		}
 		if (elseBranch == null) {
-			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, Display.NULL, Display.NULL,
-					null, Display.NULL);
+			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),
+					Display.NULL, null, LinkRendering.none());
 		}
 		elseBranch.updateFtile(factory);
-		Ftile result = factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url);
+		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url);
 		if (getPositionedNotes().size() > 0) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
@@ -130,18 +130,18 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		return parent;
 	}
 
-	public boolean swithToElse2(Display whenElse, LinkRendering nextLinkRenderer) {
+	public boolean swithToElse2(LinkRendering whenElse, LinkRendering nextLinkRenderer) {
 		if (elseBranch != null) {
 			return false;
 		}
 		this.current.setInlinkRendering(nextLinkRenderer);
 		this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenElse, Display.NULL, null,
-				Display.NULL);
+				LinkRendering.none());
 		this.current = elseBranch;
 		return true;
 	}
 
-	public boolean elseIf(Display inlabel, Display test, Display whenThen, LinkRendering nextLinkRenderer,
+	public boolean elseIf(LinkRendering inlabel, Display test, LinkRendering whenThen, LinkRendering nextLinkRenderer,
 			HColor color) {
 		if (elseBranch != null) {
 			return false;
@@ -157,8 +157,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	public void endif(LinkRendering nextLinkRenderer) {
 		endifCalled = true;
 		if (elseBranch == null) {
-			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, Display.NULL, Display.NULL,
-					null, Display.NULL);
+			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),
+					Display.NULL, null, LinkRendering.none());
 		}
 		this.elseBranch.setSpecial(nextLinkRenderer);
 		this.current.setInlinkRendering(nextLinkRenderer);
@@ -221,8 +221,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		return elseBranch.getLast();
 	}
 
-	public void afterEndwhile(LinkRendering linkRenderer) {
-		this.afterEndwhile = linkRenderer;
+	public void outColor(LinkRendering outColor) {
+		this.outColor = outColor;
 	}
 
 }

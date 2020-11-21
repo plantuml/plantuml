@@ -53,13 +53,13 @@ class Fork extends WBSTextBlock {
 	private final List<ITF> right = new ArrayList<ITF>();
 
 	public Fork(ISkinParam skinParam, WElement idea) {
-		super(skinParam, idea.getStyleBuilder(), idea.getLevel());
+		super(idea.withBackColor(skinParam), idea.getStyleBuilder(), idea.getLevel());
 		if (idea.getLevel() != 0) {
 			throw new IllegalArgumentException();
 		}
 		this.main = buildMain(idea);
 		for (WElement child : idea.getChildren(Direction.RIGHT)) {
-			this.right.add(ITFComposed.build2(skinParam, child));
+			this.right.add(ITFComposed.build2(child.withBackColor(skinParam), child));
 		}
 	}
 

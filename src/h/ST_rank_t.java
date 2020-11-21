@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -45,12 +45,8 @@
  */
 package h;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import smetana.core.UnsupportedArrayOfPtr;
+import smetana.core.CStarStar;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.amiga.StarStruct;
@@ -68,12 +64,9 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 	}
 
 	public int n;
-
-	// "node_t **v",
-	public ST_Agnode_s.ArrayOfStar v;
+	public CStarStar<ST_Agnode_s> v;
 	public int an;
-	// "node_t **av",
-	public ST_Agnode_s.ArrayOfStar av;
+	public CStarStar<ST_Agnode_s> av;
 
 	public double ht1, ht2;
 	public double pht1, pht2;
@@ -83,99 +76,10 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 	public int cache_nc;
 	public ST_adjmatrix_t flat;
 
-	// "}",
-	// "rank_t");
-	
-	
-	public static class Array2 extends UnsupportedArrayOfPtr implements __ptr__, __array_of_ptr__ {
 
-		private final List<ST_rank_t> data;
-		private final int pos;
-
-		public Array2(int size) {
-			this.data = new ArrayList<ST_rank_t>();
-			this.pos = 0;
-			for (int i = 0; i < size; i++) {
-				data.add(new ST_rank_t());
-			}
-		}
-		
-		@Override
-		public void setInt(String fieldName, int data) {
-			getPtr().setInt(fieldName, data);
-		}
-		
-		@Override
-		public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-			return getPtr().setPtr(fieldName, newData);
-		}
-		
-		@Override
-		public void setDouble(String fieldName, double data) {
-			getPtr().setDouble(fieldName, data);
-		}
-		
-		public ST_rank_t get(int i) {
-			return plus(i).getPtr();
-		}
-		
-		public void swap(int i, int j) {
-			ST_rank_t e1 = data.get(i);
-			ST_rank_t e2 = data.get(j);
-			data.set(i, e2);
-			data.set(j, e1);
-		}
-
-		public Array2(List<ST_rank_t> data, int pos) {
-			this.data = data;
-			this.pos = pos;
-		}
-		
-		public Array2 reallocJ(int newsize) {
-			while (data.size() < newsize) {
-				data.add(new ST_rank_t());
-			}
-			return this;
-		}
-
-		@Override
-		public Array2 plus(int delta) {
-			return new Array2(data, pos + delta);
-		}
-		
-		@Override
-		public Array2 asPtr() {
-			return this;
-		}
-
-		@Override
-		public void setPtr(__ptr__ value) {
-//			if (value instanceof Amp) {
-//				value = value.getPtr();
-//			}
-			this.data.set(pos, (ST_rank_t) value);
-		}
-		
-		@Override
-		public ST_rank_t getPtr() {
-			return this.data.get(pos);
-		}
-
-		@Override
-		public int comparePointer(__ptr__ other) {
-			final Array2 this2 = (Array2) other;
-			if (this.data != this2.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos - this2.pos;
-		}
-
-		public boolean isSameThan2(Array2 other) {
-			if (this.data != other.data) {
-				throw new IllegalArgumentException();
-			}
-			return this.pos == other.pos;
-		}
+	@Override
+	public void ___(__struct__ other) {
+		setStruct(other);
 	}
 
 
@@ -195,7 +99,6 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 		this.cache_nc = this2.cache_nc;
 		this.flat = this2.flat;
 	}
-
 
 	@Override
 	public void setInt(String fieldName, int data) {
@@ -247,11 +150,11 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 	@Override
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
 		if (fieldName.equals("v")) {
-			this.v = (ST_Agnode_s.ArrayOfStar) newData;
+			this.v = (CStarStar<ST_Agnode_s>) newData;
 			return v;
 		}
 		if (fieldName.equals("av")) {
-			this.av = (ST_Agnode_s.ArrayOfStar) newData;
+			this.av = (CStarStar<ST_Agnode_s>) newData;
 			return av;
 		}
 		if (fieldName.equals("flat")) {
@@ -296,3 +199,4 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 // int cache_nc; /* caches number of crossings */
 // adjmatrix_t *flat;
 // } rank_t;
+

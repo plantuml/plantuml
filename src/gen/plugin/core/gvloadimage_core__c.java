@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -154,8 +154,8 @@ public class gvloadimage_core__c {
 public static Object core_loadimage_svg(Object... arg) {
 UNSUPPORTED("6nk88j61lq1suxn7ouneycpcp"); // static void core_loadimage_svg(GVJ_t * job, usershape_t *us, boxf b, boolean filled)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("dvlg6flv7gt7lh0gcin0uy3l9"); //     double width = (b.UR.x-b.LL.x);
-UNSUPPORTED("9wz3r0c7kyzar3i72jllttzwb"); //     double height = (b.UR.y-b.LL.y);
+UNSUPPORTED("dvlg6flv7gt7lh0gcin0uy3l9"); //     double width = b.UR.x-b.LL.x;
+UNSUPPORTED("9wz3r0c7kyzar3i72jllttzwb"); //     double height = b.UR.y-b.LL.y;
 UNSUPPORTED("372q395e12m69cssk3g0ukwxy"); //     double originx = (b.UR.x+b.LL.x - width)/2;
 UNSUPPORTED("e0lvri5s3y6isyvxbzp7653yf"); //     double originy = (b.UR.y+b.LL.y + height)/2;
 UNSUPPORTED("1nk5slg1h855ktp6d9uxli7u3"); //     assert(job);

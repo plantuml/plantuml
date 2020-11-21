@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.ortho;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -159,6 +162,8 @@ public class ortho__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -174,29 +179,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -217,6 +205,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -232,29 +222,11 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
-
-
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -272,6 +244,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -289,6 +263,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -306,6 +282,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -323,6 +301,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -340,6 +320,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -357,6 +339,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -374,6 +358,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -393,6 +379,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -412,6 +400,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -431,6 +421,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -450,6 +442,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -464,6 +458,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -478,6 +474,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -492,6 +490,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -506,6 +506,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -523,6 +525,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -692,6 +696,8 @@ private static jmp_buf jbuf = new jmp_buf();
 
 //3 1fgp1w41g6nj3rcw29phstsaj
 // static cell* cellOf (snode* p, snode* q) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="cellOf", key="1fgp1w41g6nj3rcw29phstsaj", definition="static cell* cellOf (snode* p, snode* q)")
 public static Object cellOf(Object... arg) {
 UNSUPPORTED("earoc9gw4gdp2iwqsdlz5babo"); // static cell*
 UNSUPPORTED("a81f9eexacyqhjwx31312aaij"); // cellOf (snode* p, snode* q)
@@ -709,6 +715,8 @@ throw new UnsupportedOperationException();
 
 //3 d9bq37gvmpmw51z5hep2ibevp
 // static pointf midPt (cell* cp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="midPt", key="d9bq37gvmpmw51z5hep2ibevp", definition="static pointf midPt (cell* cp)")
 public static Object midPt(Object... arg) {
 UNSUPPORTED("2zzd7mrm2u540dwuyzehozffj"); // static pointf
 UNSUPPORTED("5m9iv8q1cwqhqjdweoca9fxwp"); // midPt (cell* cp)
@@ -727,6 +735,8 @@ throw new UnsupportedOperationException();
 
 //3 3fs08z3b3bgjahvaa5l6b4zo0
 // static pointf sidePt (snode* ptr, cell* cp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="sidePt", key="3fs08z3b3bgjahvaa5l6b4zo0", definition="static pointf sidePt (snode* ptr, cell* cp)")
 public static Object sidePt(Object... arg) {
 UNSUPPORTED("2zzd7mrm2u540dwuyzehozffj"); // static pointf
 UNSUPPORTED("a38yr0nzj0vkqomj9uks960c1"); // sidePt (snode* ptr, cell* cp)
@@ -763,6 +773,8 @@ throw new UnsupportedOperationException();
 
 //3 7emnes5443mx9i54qiv085z3c
 // static void setSeg (segment* sp, int dir, double fix, double b1, double b2, int l1, int l2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="setSeg", key="7emnes5443mx9i54qiv085z3c", definition="static void setSeg (segment* sp, int dir, double fix, double b1, double b2, int l1, int l2)")
 public static Object setSeg(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("czy1oo8vy1jomzgzissjz1pa8"); // setSeg (segment* sp, int dir, double fix, double b1, double b2, int l1, int l2)
@@ -793,6 +805,8 @@ throw new UnsupportedOperationException();
 
 //3 ejdbblkeiy6k5qhpj8qsj0z8y
 // static route convertSPtoRoute (sgraph* g, snode* fst, snode* lst) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="convertSPtoRoute", key="ejdbblkeiy6k5qhpj8qsj0z8y", definition="static route convertSPtoRoute (sgraph* g, snode* fst, snode* lst)")
 public static Object convertSPtoRoute(Object... arg) {
 UNSUPPORTED("8fb3yibi0votqqanq3fr6x8pj"); // static route
 UNSUPPORTED("wyj8sug7d8lkktfaafr8tnj7"); // convertSPtoRoute (sgraph* g, snode* fst, snode* lst)
@@ -903,6 +917,8 @@ throw new UnsupportedOperationException();
 
 //3 aqw2pcwz2wbv0f1rw9usmyqgf
 // static void freeChannel (Dt_t* d, channel* cp, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="freeChannel", key="aqw2pcwz2wbv0f1rw9usmyqgf", definition="static void freeChannel (Dt_t* d, channel* cp, Dtdisc_t* disc)")
 public static Object freeChannel(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("c9euy7p3sclc7ckkp1bzs1jx"); // freeChannel (Dt_t* d, channel* cp, Dtdisc_t* disc)
@@ -920,6 +936,8 @@ throw new UnsupportedOperationException();
 
 //3 czg5smuwmyt5ciilshur9hm5e
 // static void freeChanItem (Dt_t* d, chanItem* cp, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="freeChanItem", key="czg5smuwmyt5ciilshur9hm5e", definition="static void freeChanItem (Dt_t* d, chanItem* cp, Dtdisc_t* disc)")
 public static Object freeChanItem(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("3shy48lfkzdtnmko723ebxmhv"); // freeChanItem (Dt_t* d, chanItem* cp, Dtdisc_t* disc)
@@ -936,6 +954,8 @@ throw new UnsupportedOperationException();
 
 //3 cbapcnadrscvk8m1ip2223p3e
 // static int chancmpid(Dt_t* d, paird* key1, paird* key2, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="chancmpid", key="cbapcnadrscvk8m1ip2223p3e", definition="static int chancmpid(Dt_t* d, paird* key1, paird* key2, Dtdisc_t* disc)")
 public static Object chancmpid(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("c3dmj421aezge5a3ggj2xi34t"); // chancmpid(Dt_t* d, paird* key1, paird* key2, Dtdisc_t* disc)
@@ -959,6 +979,8 @@ throw new UnsupportedOperationException();
 
 //3 659jucoqq7j1ud5wehj42ik2d
 // static int dcmpid(Dt_t* d, double* key1, double* key2, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="dcmpid", key="659jucoqq7j1ud5wehj42ik2d", definition="static int dcmpid(Dt_t* d, double* key1, double* key2, Dtdisc_t* disc)")
 public static Object dcmpid(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("6vxm1h1q3grwa81zaivfch1re"); // dcmpid(Dt_t* d, double* key1, double* key2, Dtdisc_t* disc)
@@ -984,6 +1006,8 @@ throw new UnsupportedOperationException();
 
 //3 1yykle604b3x2mutto2rk7k0q
 // static void addChan (Dt_t* chdict, channel* cp, double j) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="addChan", key="1yykle604b3x2mutto2rk7k0q", definition="static void addChan (Dt_t* chdict, channel* cp, double j)")
 public static Object addChan(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("5y1j3qnhsbg3b86o7hpanej1s"); // addChan (Dt_t* chdict, channel* cp, double j)
@@ -1006,6 +1030,8 @@ throw new UnsupportedOperationException();
 
 //3 870j0jbluhoffx3ke1eog9a0e
 // static Dt_t* extractHChans (maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="extractHChans", key="870j0jbluhoffx3ke1eog9a0e", definition="static Dt_t* extractHChans (maze* mp)")
 public static Object extractHChans(Object... arg) {
 UNSUPPORTED("2xt7ub3z01qt6i7l0luh5zpbd"); // static Dt_t*
 UNSUPPORTED("6h6avfk40i1d436sls3sjaic3"); // extractHChans (maze* mp)
@@ -1047,6 +1073,8 @@ throw new UnsupportedOperationException();
 
 //3 7s43hm0mz2wo1mdduca26ojr5
 // static Dt_t* extractVChans (maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="extractVChans", key="7s43hm0mz2wo1mdduca26ojr5", definition="static Dt_t* extractVChans (maze* mp)")
 public static Object extractVChans(Object... arg) {
 UNSUPPORTED("2xt7ub3z01qt6i7l0luh5zpbd"); // static Dt_t*
 UNSUPPORTED("c36zuoh2qlc3lrap5d8f3y8lk"); // extractVChans (maze* mp)
@@ -1088,6 +1116,8 @@ throw new UnsupportedOperationException();
 
 //3 3fx0dtmoubptoy863qaohsyiv
 // static void insertChan (channel* chan, segment* seg) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="insertChan", key="3fx0dtmoubptoy863qaohsyiv", definition="static void insertChan (channel* chan, segment* seg)")
 public static Object insertChan(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("9wvfovtdcnhpa9y21q29xb2xs"); // insertChan (channel* chan, segment* seg)
@@ -1105,6 +1135,8 @@ throw new UnsupportedOperationException();
 
 //3 2k7dmuexcawtry3q8ifzylkb9
 // static channel* chanSearch (Dt_t* chans, segment* seg) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="chanSearch", key="2k7dmuexcawtry3q8ifzylkb9", definition="static channel* chanSearch (Dt_t* chans, segment* seg)")
 public static Object chanSearch(Object... arg) {
 UNSUPPORTED("9qh7gtx6joh26yrtekarlkx5k"); // static channel*
 UNSUPPORTED("6iggv78oc0ydb9b7w5c37fcdb"); // chanSearch (Dt_t* chans, segment* seg)
@@ -1125,6 +1157,8 @@ throw new UnsupportedOperationException();
 
 //3 e8ecrel25ykgpfve8c2pg90bt
 // static void assignSegs (int nrtes, route* route_list, maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="assignSegs", key="e8ecrel25ykgpfve8c2pg90bt", definition="static void assignSegs (int nrtes, route* route_list, maze* mp)")
 public static Object assignSegs(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("9gbzlbbthoblu6f8211e9rp46"); // assignSegs (int nrtes, route* route_list, maze* mp)
@@ -1152,6 +1186,8 @@ throw new UnsupportedOperationException();
 
 //3 4648ghx1zvrhmfvw1szjx5en
 // static void addLoop (sgraph* sg, cell* cp, snode* dp, snode* sp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="addLoop", key="4648ghx1zvrhmfvw1szjx5en", definition="static void addLoop (sgraph* sg, cell* cp, snode* dp, snode* sp)")
 public static Object addLoop(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("a3tsmcxhg7iyjoceb1tpll3mb"); // addLoop (sgraph* sg, cell* cp, snode* dp, snode* sp)
@@ -1191,6 +1227,8 @@ throw new UnsupportedOperationException();
 
 //3 89iyhk6f9rhg0e8rz0hlwkesx
 // static void addNodeEdges (sgraph* sg, cell* cp, snode* np) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="addNodeEdges", key="89iyhk6f9rhg0e8rz0hlwkesx", definition="static void addNodeEdges (sgraph* sg, cell* cp, snode* np)")
 public static Object addNodeEdges(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("3s08k325s6c0dzl8xxm0e71pf"); // addNodeEdges (sgraph* sg, cell* cp, snode* np)
@@ -1222,6 +1260,8 @@ throw new UnsupportedOperationException();
 
 //3 7yrubx0zxon9c2uglsfqdw6wb
 // static char* bendToStr (bend b) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="bendToStr", key="7yrubx0zxon9c2uglsfqdw6wb", definition="static char* bendToStr (bend b)")
 public static Object bendToStr(Object... arg) {
 UNSUPPORTED("aso9sesbnmywhnboxv863whri"); // static char* bendToStr (bend b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1254,6 +1294,8 @@ throw new UnsupportedOperationException();
 
 //3 90xcxnm75ks9geu9fenh3dm1y
 // static void putSeg (FILE* fp, segment* seg) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="putSeg", key="90xcxnm75ks9geu9fenh3dm1y", definition="static void putSeg (FILE* fp, segment* seg)")
 public static Object putSeg(Object... arg) {
 UNSUPPORTED("ezdh139xemkeu6ueshufvm7w2"); // static void putSeg (FILE* fp, segment* seg)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1273,6 +1315,8 @@ throw new UnsupportedOperationException();
 
 //3 2fdwckbttldonqwo3v1bwb0tx
 // static void dumpChanG (channel* cp, int v) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="dumpChanG", key="2fdwckbttldonqwo3v1bwb0tx", definition="static void dumpChanG (channel* cp, int v)")
 public static Object dumpChanG(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("1jiwdzplvv49bv58z35y6cdxe"); // dumpChanG (channel* cp, int v)
@@ -1303,6 +1347,8 @@ throw new UnsupportedOperationException();
 
 //3 d0tqkl09dlk95z7uv7a0esz2h
 // static void assignTrackNo (Dt_t* chans) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="assignTrackNo", key="d0tqkl09dlk95z7uv7a0esz2h", definition="static void assignTrackNo (Dt_t* chans)")
 public static Object assignTrackNo(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("32zdrf69xvfxhlj0l5jffzppy"); // assignTrackNo (Dt_t* chans)
@@ -1334,6 +1380,8 @@ throw new UnsupportedOperationException();
 
 //3 4cvz30tum1j5kh2mr4tikagu7
 // static void create_graphs(Dt_t* chans) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="create_graphs", key="4cvz30tum1j5kh2mr4tikagu7", definition="static void create_graphs(Dt_t* chans)")
 public static Object create_graphs(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("bhabfg4ovu9hg3f74xotdq8w2"); // create_graphs(Dt_t* chans)
@@ -1359,6 +1407,8 @@ throw new UnsupportedOperationException();
 
 //3 bzybz2vhse04djha8f0fquflw
 // static int eqEndSeg (bend S1l2, bend S2l2, bend T1, bend T2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="eqEndSeg", key="bzybz2vhse04djha8f0fquflw", definition="static int eqEndSeg (bend S1l2, bend S2l2, bend T1, bend T2)")
 public static Object eqEndSeg(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("85zkrfkxr894bmai11bwpink8"); // eqEndSeg (bend S1l2, bend S2l2, bend T1, bend T2)
@@ -1378,6 +1428,8 @@ throw new UnsupportedOperationException();
 
 //3 eb1uhz6fkbngny6t6auaxxt9b
 // static int overlapSeg (segment* S1, segment* S2, bend T1, bend T2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="overlapSeg", key="eb1uhz6fkbngny6t6auaxxt9b", definition="static int overlapSeg (segment* S1, segment* S2, bend T1, bend T2)")
 public static Object overlapSeg(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("ezv23yz3jqikw7nzsie354dxc"); // overlapSeg (segment* S1, segment* S2, bend T1, bend T2)
@@ -1406,6 +1458,8 @@ throw new UnsupportedOperationException();
 
 //3 916xnvutvt73y05azmf2m6y6t
 // static int ellSeg (bend S1l1, bend S1l2, bend T) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="ellSeg", key="916xnvutvt73y05azmf2m6y6t", definition="static int ellSeg (bend S1l1, bend S1l2, bend T)")
 public static Object ellSeg(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("akzolart54jjjeeqmyxqrnmuc"); // ellSeg (bend S1l1, bend S1l2, bend T)
@@ -1425,6 +1479,8 @@ throw new UnsupportedOperationException();
 
 //3 3set1dgc7lhl9wfckj4voync3
 // static int segCmp (segment* S1, segment* S2, bend T1, bend T2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="segCmp", key="3set1dgc7lhl9wfckj4voync3", definition="static int segCmp (segment* S1, segment* S2, bend T1, bend T2)")
 public static Object segCmp(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("5so0u4o583yem7g066n6h5h8v"); // segCmp (segment* S1, segment* S2, bend T1, bend T2)
@@ -1506,6 +1562,8 @@ throw new UnsupportedOperationException();
 
 //3 2why0kxj0qrlrn435c0twfblb
 // static int seg_cmp(segment* S1, segment* S2)		 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="seg_cmp", key="2why0kxj0qrlrn435c0twfblb", definition="static int seg_cmp(segment* S1, segment* S2)")
 public static Object seg_cmp(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("5ucj9rj7ohyk0eh1h5jzk9qhh"); // seg_cmp(segment* S1, segment* S2)		
@@ -1528,6 +1586,8 @@ throw new UnsupportedOperationException();
 
 //3 7ycppm4b8xqpa85ov0gpp4r1w
 // static void  add_edges_in_G(channel* cp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="add_edges_in_G", key="7ycppm4b8xqpa85ov0gpp4r1w", definition="static void  add_edges_in_G(channel* cp)")
 public static Object add_edges_in_G(Object... arg) {
 UNSUPPORTED("59dl3yc4jbcy2pb7j1njhlybi"); // static void 
 UNSUPPORTED("e7prlxhst1riecg8sy2dq7ho3"); // add_edges_in_G(channel* cp)
@@ -1560,6 +1620,8 @@ throw new UnsupportedOperationException();
 
 //3 d5ycixr4ake5beje9bmkeg5p0
 // static void add_np_edges (Dt_t* chans) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="add_np_edges", key="d5ycixr4ake5beje9bmkeg5p0", definition="static void add_np_edges (Dt_t* chans)")
 public static Object add_np_edges(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("4pvanrmfcrnmuei62le54kcbt"); // add_np_edges (Dt_t* chans)
@@ -1586,6 +1648,8 @@ throw new UnsupportedOperationException();
 
 //3 emn5p2pij0zdp2hl3dyjefe36
 // static segment* next_seg(segment* seg, int dir) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="next_seg", key="emn5p2pij0zdp2hl3dyjefe36", definition="static segment* next_seg(segment* seg, int dir)")
 public static Object next_seg(Object... arg) {
 UNSUPPORTED("5hl6i4lkcopw8a7eywmfv5qyv"); // static segment*
 UNSUPPORTED("6ov8c8zpwswdr0pj1gzchtfwx"); // next_seg(segment* seg, int dir)
@@ -1605,6 +1669,8 @@ throw new UnsupportedOperationException();
 
 //3 cs3u9dks2e2tzv2xu98p77w90
 // static int propagate_prec(segment* seg, int prec, int hops, int dir) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="propagate_prec", key="cs3u9dks2e2tzv2xu98p77w90", definition="static int propagate_prec(segment* seg, int prec, int hops, int dir)")
 public static Object propagate_prec(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("tr6cv9djjf64a8yuh6q95jsp"); // propagate_prec(segment* seg, int prec, int hops, int dir)
@@ -1645,6 +1711,8 @@ throw new UnsupportedOperationException();
 
 //3 bp53nx2ri4vm9anrojt7u7c2u
 // static int is_parallel(segment* s1, segment* s2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="is_parallel", key="bp53nx2ri4vm9anrojt7u7c2u", definition="static int is_parallel(segment* s1, segment* s2)")
 public static Object is_parallel(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("ddygyr541ybi2kvxacd9n2m9j"); // is_parallel(segment* s1, segment* s2)
@@ -1664,6 +1732,8 @@ throw new UnsupportedOperationException();
 
 //3 5cy5xm5pageww1ken6y8teea4
 // static pair  decide_point(segment* si, segment* sj, int dir1, int dir2) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="decide_point", key="5cy5xm5pageww1ken6y8teea4", definition="static pair  decide_point(segment* si, segment* sj, int dir1, int dir2)")
 public static Object decide_point(Object... arg) {
 UNSUPPORTED("f1byl3savsjxfld9h2fobwfo3"); // static pair 
 UNSUPPORTED("7l2qer0l7u4rucnbo5kqj4vgc"); // decide_point(segment* si, segment* sj, int dir1, int dir2)
@@ -1699,6 +1769,8 @@ throw new UnsupportedOperationException();
 
 //3 9lqaqtqdkw9rqhmyltdrzs6xy
 // static void set_parallel_edges (segment* seg1, segment* seg2, int dir1, int dir2, int hops,     maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="set_parallel_edges", key="9lqaqtqdkw9rqhmyltdrzs6xy", definition="static void set_parallel_edges (segment* seg1, segment* seg2, int dir1, int dir2, int hops,     maze* mp)")
 public static Object set_parallel_edges(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("3p9s2fmb4u10tilwejs0l9pp1"); // set_parallel_edges (segment* seg1, segment* seg2, int dir1, int dir2, int hops,
@@ -1793,6 +1865,8 @@ throw new UnsupportedOperationException();
 
 //3 38cpeb1o8uvzyjd93p234ds9f
 // static void removeEdge(segment* seg1, segment* seg2, int dir, maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="removeEdge", key="38cpeb1o8uvzyjd93p234ds9f", definition="static void removeEdge(segment* seg1, segment* seg2, int dir, maze* mp)")
 public static Object removeEdge(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("6sgltkpz58p9krap0y1sbvj6k"); // removeEdge(segment* seg1, segment* seg2, int dir, maze* mp)
@@ -1821,6 +1895,8 @@ throw new UnsupportedOperationException();
 
 //3 eiig50kmclab4ei88pq4soo34
 // static void addPEdges (channel* cp, maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="addPEdges", key="eiig50kmclab4ei88pq4soo34", definition="static void addPEdges (channel* cp, maze* mp)")
 public static Object addPEdges(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("68fs5heyk95e6jn74c6cgq01t"); // addPEdges (channel* cp, maze* mp)
@@ -1909,6 +1985,8 @@ throw new UnsupportedOperationException();
 
 //3 98d1c54yaxchy0ms0e99lst7s
 // static void  add_p_edges (Dt_t* chans, maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="add_p_edges", key="98d1c54yaxchy0ms0e99lst7s", definition="static void  add_p_edges (Dt_t* chans, maze* mp)")
 public static Object add_p_edges(Object... arg) {
 UNSUPPORTED("59dl3yc4jbcy2pb7j1njhlybi"); // static void 
 UNSUPPORTED("5ebboq5zrhtd0rfaeawkl5s2f"); // add_p_edges (Dt_t* chans, maze* mp)
@@ -1932,6 +2010,8 @@ throw new UnsupportedOperationException();
 
 //3 bxsh28469kd6r9fen9l7v8f2w
 // static void assignTracks (int nrtes, route* route_list, maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="assignTracks", key="bxsh28469kd6r9fen9l7v8f2w", definition="static void assignTracks (int nrtes, route* route_list, maze* mp)")
 public static Object assignTracks(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("e80kmdu0n8gwftxrcchppqznf"); // assignTracks (int nrtes, route* route_list, maze* mp)
@@ -1958,6 +2038,8 @@ throw new UnsupportedOperationException();
 
 //3 udi38qq74cw0pvrqn6g1yle5
 // static double vtrack (segment* seg, maze* m) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="vtrack", key="udi38qq74cw0pvrqn6g1yle5", definition="static double vtrack (segment* seg, maze* m)")
 public static Object vtrack(Object... arg) {
 UNSUPPORTED("lt6cippjix5bbvyhkcpl8g7g"); // static double
 UNSUPPORTED("19x5ivyvkfhintu5d2rpflcvo"); // vtrack (segment* seg, maze* m)
@@ -1977,6 +2059,8 @@ throw new UnsupportedOperationException();
 
 //3 3cqaxjb6pietkwiyugn6h26kd
 // static int htrack (segment* seg, maze* m) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="htrack", key="3cqaxjb6pietkwiyugn6h26kd", definition="static int htrack (segment* seg, maze* m)")
 public static Object htrack(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("a2hs7lm69vuj9mt0513f8z4oz"); // htrack (segment* seg, maze* m)
@@ -1996,6 +2080,8 @@ throw new UnsupportedOperationException();
 
 //3 83e5ejcqta67f2p2asgbtfaoi
 // static pointf addPoints(pointf p0, pointf p1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="addPoints", key="83e5ejcqta67f2p2asgbtfaoi", definition="static pointf addPoints(pointf p0, pointf p1)")
 public static Object addPoints(Object... arg) {
 UNSUPPORTED("2zzd7mrm2u540dwuyzehozffj"); // static pointf
 UNSUPPORTED("682qkd4mibtnxpxyv5orrsjtx"); // addPoints(pointf p0, pointf p1)
@@ -2013,6 +2099,8 @@ throw new UnsupportedOperationException();
 
 //3 a0iuxsb2zu9l7k8a3v4ixv00e
 // static void attachOrthoEdges (Agraph_t* g, maze* mp, int n_edges, route* route_list, splineInfo *sinfo, epair_t es[], int doLbls) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="attachOrthoEdges", key="a0iuxsb2zu9l7k8a3v4ixv00e", definition="static void attachOrthoEdges (Agraph_t* g, maze* mp, int n_edges, route* route_list, splineInfo *sinfo, epair_t es[], int doLbls)")
 public static Object attachOrthoEdges(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("cspgusupjxy5utjicgxrmrq7w"); // attachOrthoEdges (Agraph_t* g, maze* mp, int n_edges, route* route_list, splineInfo *sinfo, epair_t es[], int doLbls)
@@ -2083,6 +2171,8 @@ throw new UnsupportedOperationException();
 
 //3 e71zkztxzapvl1mgiq8p5gzzs
 // static int edgeLen (Agedge_t* e) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="edgeLen", key="e71zkztxzapvl1mgiq8p5gzzs", definition="static int edgeLen (Agedge_t* e)")
 public static Object edgeLen(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("4eh66xikxzh6l4lhjcmvtv8cn"); // edgeLen (Agedge_t* e)
@@ -2100,6 +2190,8 @@ throw new UnsupportedOperationException();
 
 //3 7afj2qnluiytxt8hvcnhreb2
 // static int edgecmp(epair_t* e0, epair_t* e1) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="edgecmp", key="7afj2qnluiytxt8hvcnhreb2", definition="static int edgecmp(epair_t* e0, epair_t* e1)")
 public static Object edgecmp(Object... arg) {
 UNSUPPORTED("4biy4n19ul16vp6vcv9xmui1i"); // static int edgecmp(epair_t* e0, epair_t* e1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2114,6 +2206,8 @@ throw new UnsupportedOperationException();
 
 //3 v4bpabyggw2gk3qw5qiapig9
 // static boolean spline_merge(node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="spline_merge", key="v4bpabyggw2gk3qw5qiapig9", definition="static boolean spline_merge(node_t * n)")
 public static Object spline_merge(Object... arg) {
 UNSUPPORTED("676qpx3n8ouo1wjyumn6zmyxp"); // static boolean spline_merge(node_t * n)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2128,6 +2222,8 @@ throw new UnsupportedOperationException();
 
 //3 90yjqn8lf9ig968uma0q5sh34
 // static boolean swap_ends_p(edge_t * e) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="swap_ends_p", key="90yjqn8lf9ig968uma0q5sh34", definition="static boolean swap_ends_p(edge_t * e)")
 public static Object swap_ends_p(Object... arg) {
 UNSUPPORTED("3fjj0uj2p25pitmluszw94p02"); // static boolean swap_ends_p(edge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -2146,6 +2242,8 @@ throw new UnsupportedOperationException();
 
 //3 9rb5k3o906weqm31n2i8lv5so
 // void orthoEdges (Agraph_t* g, int doLbls) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="orthoEdges", key="9rb5k3o906weqm31n2i8lv5so", definition="void orthoEdges (Agraph_t* g, int doLbls)")
 public static Object orthoEdges(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("9ttq9irkfbqsx0q7wcnetzy74"); // orthoEdges (Agraph_t* g, int doLbls)
@@ -2281,6 +2379,8 @@ throw new UnsupportedOperationException();
 
 //3 dx1s3vj94skvk7pmrz4s875l9
 // static point coordOf (cell* cp, snode* np) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="coordOf", key="dx1s3vj94skvk7pmrz4s875l9", definition="static point coordOf (cell* cp, snode* np)")
 public static Object coordOf(Object... arg) {
 UNSUPPORTED("5ji3k3tukj2uxmd2ympfpwtml"); // static point
 UNSUPPORTED("dd9sjhv4zfl34767d8g79k27"); // coordOf (cell* cp, snode* np)
@@ -2313,6 +2413,8 @@ throw new UnsupportedOperationException();
 
 //3 88q5zadn0aehrwxgxwm2qrbrk
 // static boxf emitEdge (FILE* fp, Agedge_t* e, route rte, maze* m, int ix, boxf bb) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="emitEdge", key="88q5zadn0aehrwxgxwm2qrbrk", definition="static boxf emitEdge (FILE* fp, Agedge_t* e, route rte, maze* m, int ix, boxf bb)")
 public static Object emitEdge(Object... arg) {
 UNSUPPORTED("d5qt6s97burjfu5qe0oxyyrmr"); // static boxf
 UNSUPPORTED("dnxab88k0n0c2bl3z0wgvml6i"); // emitEdge (FILE* fp, Agedge_t* e, route rte, maze* m, int ix, boxf bb)
@@ -2372,6 +2474,8 @@ throw new UnsupportedOperationException();
 
 //3 26m9b9nmqeqz2egz17qjrsmi6
 // static void emitSearchGraph (FILE* fp, sgraph* sg) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="emitSearchGraph", key="26m9b9nmqeqz2egz17qjrsmi6", definition="static void emitSearchGraph (FILE* fp, sgraph* sg)")
 public static Object emitSearchGraph(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("3afa3kd81chzz47ecdq46zrer"); // emitSearchGraph (FILE* fp, sgraph* sg)
@@ -2412,6 +2516,8 @@ throw new UnsupportedOperationException();
 
 //3 7qavznbkl6bvpmm9axulwfdbe
 // static void emitGraph (FILE* fp, maze* mp, int n_edges, route* route_list, epair_t es[]) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/ortho.c", name="emitGraph", key="7qavznbkl6bvpmm9axulwfdbe", definition="static void emitGraph (FILE* fp, maze* mp, int n_edges, route* route_list, epair_t es[])")
 public static Object emitGraph(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("bkcsiggpetlvefiz01q93uej4"); // emitGraph (FILE* fp, maze* mp, int n_edges, route* route_list, epair_t es[])

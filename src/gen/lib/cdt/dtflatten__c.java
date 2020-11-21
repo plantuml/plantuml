@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.ST_dt_s;
 import h.ST_dtlink_s;
@@ -117,6 +120,8 @@ public class dtflatten__c {
 
 //3 5zkzkycgp4e90pajuq4tczdbu
 // Dtlink_t* dtflatten(Dt_t* dt)     
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtflatten.c", name="dtflatten", key="5zkzkycgp4e90pajuq4tczdbu", definition="Dtlink_t* dtflatten(Dt_t* dt)")
 public static ST_dtlink_s dtflatten(ST_dt_s dt) {
 UNSUPPORTED("1u9gaaespn5nsfpluy23yon7s"); // Dtlink_t* dtflatten(Dt_t* dt)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

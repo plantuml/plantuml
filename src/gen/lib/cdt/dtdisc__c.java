@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cdt;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.cdt.dtflatten__c.dtflatten;
 import static gen.lib.cdt.dtrestore__c.dtrestore;
 import static smetana.core.JUtils.function;
@@ -128,6 +131,8 @@ public class dtdisc__c {
 
 //3 507t9jcy6v9twvl30rs9i2nwi
 // static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)        
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtdisc.c", name="dtmemory", key="507t9jcy6v9twvl30rs9i2nwi", definition="static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)")
 public static Object dtmemory(ST_dt_s dt, Object addr, size_t size, ST_dtdisc_s disc) {
 ENTERING("507t9jcy6v9twvl30rs9i2nwi","dtmemory");
 try {
@@ -150,6 +155,8 @@ LEAVING("507t9jcy6v9twvl30rs9i2nwi","dtmemory");
 
 //3 axpvuswclmi9bx3qtlh4quyah
 // Dtdisc_t* dtdisc(Dt_t* dt, Dtdisc_t* disc, int type)       
+@Unused
+@Original(version="2.38.0", path="lib/cdt/dtdisc.c", name="dtdisc", key="axpvuswclmi9bx3qtlh4quyah", definition="Dtdisc_t* dtdisc(Dt_t* dt, Dtdisc_t* disc, int type)")
 public static ST_dtdisc_s dtdisc(ST_dt_s dt, ST_dtdisc_s disc, int type) {
 ENTERING("axpvuswclmi9bx3qtlh4quyah","dtdisc");
 try {

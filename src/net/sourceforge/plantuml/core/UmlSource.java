@@ -172,6 +172,15 @@ final public class UmlSource {
 		return sb.toString();
 	}
 
+	public String getInnerContent() {
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 1; i < source.size() - 1; i++) {
+			sb.append(source.get(i).getString());
+			sb.append(BackSlash.CHAR_NEWLINE);
+		}
+		return sb.toString();
+	}
+
 	public long seed() {
 		long h = 1125899906842597L; // prime
 		final String string = getPlainString();

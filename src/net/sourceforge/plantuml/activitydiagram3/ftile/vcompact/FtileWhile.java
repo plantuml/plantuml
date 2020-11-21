@@ -113,63 +113,57 @@ class FtileWhile extends AbstractFtile {
 		this.backward = backward;
 	}
 
-	public static Ftile create(Swimlane swimlane, Ftile whileBlock, Display test, HColor borderColor, HColor backColor,
-			Rainbow arrowColor, Display yes, Display out2, Rainbow endInlinkColor, LinkRendering afterEndwhile,
-			FontConfiguration fontArrow, FtileFactory ftileFactory, ConditionStyle conditionStyle,
-			FontConfiguration fcTest, Instruction specialOut, Ftile backward, String incoming, String outcoming) {
+	public static Ftile create(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test,
+			HColor borderColor, HColor backColor, Rainbow arrowColor, Display yes, FontConfiguration fontArrow,
+			FtileFactory ftileFactory, ConditionStyle conditionStyle, FontConfiguration fcTest, Instruction specialOut,
+			Ftile backward, LinkRendering incoming1, LinkRendering incoming2) {
 
 		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 		final TextBlock testTb = test.isWhite() ? TextBlockUtils.empty(0, 0)
 				: test.create(fcTest, whileBlock.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
 						ftileFactory.skinParam());
-		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+		final TextBlock outTb = outColor.getDisplay().create(fontArrow, HorizontalAlignment.LEFT,
+				ftileFactory.skinParam());
 
 		final Ftile diamond1;
 		if (conditionStyle == ConditionStyle.INSIDE) {
 			diamond1 = new FtileDiamondInside(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
-					.withNorth(yesTb).withWest(out);
+					.withNorth(yesTb).withWest(outTb);
 		} else if (conditionStyle == ConditionStyle.FOO1) {
 			diamond1 = new FtileDiamondFoo1(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
-					.withNorth(yesTb).withWest(out);
+					.withNorth(yesTb).withWest(outTb);
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
 			diamond1 = new FtileDiamond(whileBlock.skinParam(), backColor, borderColor, swimlane).withNorth(testTb)
-					.withSouth(yesTb).withWest(out);
+					.withSouth(yesTb).withWest(outTb);
 		} else {
 			throw new IllegalStateException();
 		}
 
 		final Ftile special = specialOut == null ? null : specialOut.createFtile(ftileFactory);
-
 		final FtileWhile result = new FtileWhile(whileBlock, diamond1, special, backward);
-		Rainbow afterEndwhileColor = arrowColor;
-		if (afterEndwhile != null && afterEndwhile.getRainbow() != null && afterEndwhile.getRainbow().size() != 0) {
-			afterEndwhileColor = afterEndwhile.getRainbow();
-		}
 
 		final Dimension2D dim = whileBlock.calculateDimension(ftileFactory.getStringBounder());
-		final TextBlock back = whileBlock.getOutLinkRendering().getDisplay().create(fontArrow, HorizontalAlignment.LEFT,
+		final TextBlock back1 = incoming1.getDisplay().create(fontArrow, HorizontalAlignment.LEFT,
 				ftileFactory.skinParam());
 
 		final List<Connection> conns = new ArrayList<Connection>();
 		if (dim.getWidth() == 0 || dim.getHeight() == 0) {
-			conns.add(result.new ConnectionBackEmpty(endInlinkColor));
+			conns.add(result.new ConnectionBackEmpty(incoming1.getRainbow()));
 		} else {
 			conns.add(result.new ConnectionIn(whileBlock.getInLinkRendering().getRainbow(arrowColor)));
 			if (backward == null) {
-				conns.add(result.new ConnectionBackSimple(endInlinkColor, back));
+				conns.add(result.new ConnectionBackSimple(incoming1.getRainbow(), back1));
 			} else {
-				final TextBlock back1 = Display.getWithNewlines(incoming).create(fontArrow, HorizontalAlignment.LEFT,
+				final TextBlock back2 = incoming2.getDisplay().create(fontArrow, HorizontalAlignment.LEFT,
 						ftileFactory.skinParam());
-				final TextBlock back2 = Display.getWithNewlines(outcoming).create(fontArrow, HorizontalAlignment.LEFT,
-						ftileFactory.skinParam());
-				conns.add(result.new ConnectionBackBackward1(endInlinkColor, back1));
-				conns.add(result.new ConnectionBackBackward2(endInlinkColor, back2));
+				conns.add(result.new ConnectionBackBackward1(incoming1.getRainbow(), back1));
+				conns.add(result.new ConnectionBackBackward2(incoming2.getRainbow(), back2));
 			}
 		}
 		if (specialOut == null) {
-			conns.add(result.new ConnectionOut(afterEndwhileColor));
+			conns.add(result.new ConnectionOut(outColor.getRainbow()));
 		} else {
-			conns.add(result.new ConnectionOutSpecial(afterEndwhileColor));
+			conns.add(result.new ConnectionOutSpecial(outColor.getRainbow()));
 		}
 		return FtileUtils.addConnection(result, conns);
 	}

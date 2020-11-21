@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.gvc;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class gvbuffstderr__c {
@@ -51,6 +54,8 @@ public class gvbuffstderr__c {
 
 //3 8e1sa6f5ejc0r49gfiuv32aul
 // void *buffstderr(void) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvbuffstderr.c", name="", key="8e1sa6f5ejc0r49gfiuv32aul", definition="void *buffstderr(void)")
 public static Object buffstderr(Object... arg) {
 UNSUPPORTED("bel1uzbdqhzbiuqj5bt2lxzqq"); // void *buffstderr(void)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -74,6 +79,8 @@ throw new UnsupportedOperationException();
 
 //3 c9716hxgrfzvnokv7hw8islwa
 // char *unbuffstderr(struct buff_s *b) 
+@Unused
+@Original(version="2.38.0", path="lib/gvc/gvbuffstderr.c", name="", key="c9716hxgrfzvnokv7hw8islwa", definition="char *unbuffstderr(struct buff_s *b)")
 public static Object unbuffstderr(Object... arg) {
 UNSUPPORTED("evux4jdjx4b2zi15ma1m76h5d"); // char *unbuffstderr(struct buff_s *b)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

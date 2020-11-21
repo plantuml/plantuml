@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class main__c {
@@ -51,6 +54,8 @@ public class main__c {
 
 //3 6odliptr9wa623cqopkvk2jli
 // static void my_ins(Agraph_t * g, Agobj_t * obj, void *context) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/main.c", name="my_ins", key="6odliptr9wa623cqopkvk2jli", definition="static void my_ins(Agraph_t * g, Agobj_t * obj, void *context)")
 public static Object my_ins(Object... arg) {
 UNSUPPORTED("c7iv5iry7vbk7hni09hhaowd5"); // static void my_ins(Agraph_t * g, Agobj_t * obj, void *context)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -74,6 +79,8 @@ throw new UnsupportedOperationException();
 
 //3 bvktrg27hkm4awzgaxie82v5n
 // main(int argc, char **argv) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/main.c", name="", key="bvktrg27hkm4awzgaxie82v5n", definition="main(int argc, char **argv)")
 public static Object main(Object... arg) {
 UNSUPPORTED("2vxu1fvoegqfch6u8yop5e3yd"); // main(int argc, char **argv)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -104,6 +111,8 @@ throw new UnsupportedOperationException();
 
 //3 bhswp7qq6w162hh6ho3csmea3
 // static void prstats(Agraph_t * g, int verbose) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/main.c", name="prstats", key="bhswp7qq6w162hh6ho3csmea3", definition="static void prstats(Agraph_t * g, int verbose)")
 public static Object prstats(Object... arg) {
 UNSUPPORTED("5szlwllz47f72n6dum53fsuvt"); // static void prstats(Agraph_t * g, int verbose)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -117,6 +126,8 @@ throw new UnsupportedOperationException();
 
 //3 5aj3p757f0uumfpssnoqimpjp
 // static void do_it(Agraph_t * g, int dostat) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/main.c", name="do_it", key="5aj3p757f0uumfpssnoqimpjp", definition="static void do_it(Agraph_t * g, int dostat)")
 public static Object do_it(Object... arg) {
 UNSUPPORTED("cq0p9fgngzp1ynr7fuablhs5i"); // static void do_it(Agraph_t * g, int dostat)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

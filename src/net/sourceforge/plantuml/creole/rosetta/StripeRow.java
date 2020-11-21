@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.creole.Stripe;
 import net.sourceforge.plantuml.creole.atom.Atom;
+import net.sourceforge.plantuml.creole.legacy.AtomTextUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 
@@ -96,7 +97,7 @@ public class StripeRow implements Stripe {
 				continue;
 			}
 			if (tmp.length() > 0) {
-				result.add(AtomText22.create(tmp.toString(), fontConfiguration));
+				result.add(AtomTextUtils.create(tmp.toString(), fontConfiguration));
 				tmp.setLength(0);
 			}
 			final Matcher matcher = cmd.matcher(line);
@@ -120,7 +121,7 @@ public class StripeRow implements Stripe {
 		}
 		assert line.length() == 0;
 		if (tmp.length() > 0) {
-			result.add(AtomText22.create(tmp.toString(), fontConfiguration));
+			result.add(AtomTextUtils.create(tmp.toString(), fontConfiguration));
 		}
 		return result;
 	}

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.ortho;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class maze__c {
@@ -163,6 +166,8 @@ public class maze__c {
 
 //3 9g9xjc2r9n65rkl84jjslos81
 // static void psdump (cell* gcells, int n_gcells, boxf BB, boxf* rects, int nrect) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="psdump", key="9g9xjc2r9n65rkl84jjslos81", definition="static void psdump (cell* gcells, int n_gcells, boxf BB, boxf* rects, int nrect)")
 public static Object psdump(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("1zp0gx8erzkytols6s6anek61"); // psdump (cell* gcells, int n_gcells, boxf BB, boxf* rects, int nrect)
@@ -200,6 +205,8 @@ throw new UnsupportedOperationException();
 
 //3 5uuci5ymtq0q51j1getlj2uzd
 // static int vcmpid(Dt_t* d, pointf* key1, pointf* key2, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="vcmpid", key="5uuci5ymtq0q51j1getlj2uzd", definition="static int vcmpid(Dt_t* d, pointf* key1, pointf* key2, Dtdisc_t* disc)")
 public static Object vcmpid(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("3u88ycwd14efwsvwyy7780jbr"); // vcmpid(Dt_t* d, pointf* key1, pointf* key2, Dtdisc_t* disc)
@@ -219,6 +226,8 @@ throw new UnsupportedOperationException();
 
 //3 cl7ra88xdu22d00wqr6z5p1p3
 // static int hcmpid(Dt_t* d, pointf* key1, pointf* key2, Dtdisc_t* disc) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="hcmpid", key="cl7ra88xdu22d00wqr6z5p1p3", definition="static int hcmpid(Dt_t* d, pointf* key1, pointf* key2, Dtdisc_t* disc)")
 public static Object hcmpid(Object... arg) {
 UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
 UNSUPPORTED("3xjitmu9hfwuxfgr0qi1r04qg"); // hcmpid(Dt_t* d, pointf* key1, pointf* key2, Dtdisc_t* disc)
@@ -246,6 +255,8 @@ throw new UnsupportedOperationException();
 
 //3 p4176ft97w736bpghxhghz3d
 // static void updateWt (cell* cp, sedge* ep, int sz) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="updateWt", key="p4176ft97w736bpghxhghz3d", definition="static void updateWt (cell* cp, sedge* ep, int sz)")
 public static Object updateWt(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("7q4w394vp6o5d2mqannru219n"); // updateWt (cell* cp, sedge* ep, int sz)
@@ -265,6 +276,8 @@ throw new UnsupportedOperationException();
 
 //3 blhjst7f42nyvd6sy299gtm3d
 // void updateWts (sgraph* g, cell* cp, sedge* ep) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="updateWts", key="blhjst7f42nyvd6sy299gtm3d", definition="void updateWts (sgraph* g, cell* cp, sedge* ep)")
 public static Object updateWts(Object... arg) {
 UNSUPPORTED("c01vxogao855zs8fe94tpim9g"); // void
 UNSUPPORTED("bdbwgs1ph76plmvxczfpeo0fd"); // updateWts (sgraph* g, cell* cp, sedge* ep)
@@ -295,6 +308,8 @@ throw new UnsupportedOperationException();
 
 //3 9kapnv38d6faiuxqp4bzksdz1
 // static void markSmall (cell* cp, sgraph* g) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="markSmall", key="9kapnv38d6faiuxqp4bzksdz1", definition="static void markSmall (cell* cp, sgraph* g)")
 public static Object markSmall(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("3tdwg2zpiin5w6zoim60p04th"); // markSmall (cell* cp, sgraph* g)
@@ -356,6 +371,8 @@ throw new UnsupportedOperationException();
 
 //3 3l3sbpuetdu8ntcpo8pz13k3e
 // static void createSEdges (cell* cp, sgraph* g) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="createSEdges", key="3l3sbpuetdu8ntcpo8pz13k3e", definition="static void createSEdges (cell* cp, sgraph* g)")
 public static Object createSEdges(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("eiufnofet665j4i0xks3yggav"); // createSEdges (cell* cp, sgraph* g)
@@ -397,6 +414,8 @@ throw new UnsupportedOperationException();
 
 //3 758etn7f0xldup69utj5juffr
 // static snode* findSVert (sgraph* g, Dt_t* cdt, pointf p, snodeitem* ditems, boolean isVert) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="findSVert", key="758etn7f0xldup69utj5juffr", definition="static snode* findSVert (sgraph* g, Dt_t* cdt, pointf p, snodeitem* ditems, boolean isVert)")
 public static Object findSVert(Object... arg) {
 UNSUPPORTED("1mqfssg5cquehb5bdk2189gy2"); // static snode*
 UNSUPPORTED("cga4obs9816altnwz6esmme8m"); // findSVert (sgraph* g, Dt_t* cdt, pointf p, snodeitem* ditems, boolean isVert)
@@ -422,6 +441,8 @@ throw new UnsupportedOperationException();
 
 //3 ju0zs4s4k058zbq8y43apnp2
 // static void chkSgraph (sgraph* g) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="chkSgraph", key="ju0zs4s4k058zbq8y43apnp2", definition="static void chkSgraph (sgraph* g)")
 public static Object chkSgraph(Object... arg) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("8ywrcod5zukths1uhqhrx6vxw"); // chkSgraph (sgraph* g)
@@ -445,6 +466,8 @@ throw new UnsupportedOperationException();
 
 //3 85o629p94h5u46pgb4a0x1fto
 // static sgraph* mkMazeGraph (maze* mp, boxf bb) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="mkMazeGraph", key="85o629p94h5u46pgb4a0x1fto", definition="static sgraph* mkMazeGraph (maze* mp, boxf bb)")
 public static Object mkMazeGraph(Object... arg) {
 UNSUPPORTED("4a0ckv6kz4gak54lxsr6w9ioy"); // static sgraph*
 UNSUPPORTED("3409ksucyvqu8i3qex5l9ogv1"); // mkMazeGraph (maze* mp, boxf bb)
@@ -572,6 +595,8 @@ throw new UnsupportedOperationException();
 
 //3 47ee79k49zgxrbvcwk6qo1a91
 // maze* mkMaze (graph_t* g, int doLbls) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="mkMaze", key="47ee79k49zgxrbvcwk6qo1a91", definition="maze* mkMaze (graph_t* g, int doLbls)")
 public static Object mkMaze(Object... arg) {
 UNSUPPORTED("8ftsypi54d22742r6wjoy5v25"); // maze*
 UNSUPPORTED("chjzymjdqshexf6h9lqtpflg6"); // mkMaze (graph_t* g, int doLbls)
@@ -631,6 +656,8 @@ throw new UnsupportedOperationException();
 
 //3 babqclyzdgzlc9rs6vagsa3a9
 // void freeMaze (maze* mp) 
+@Unused
+@Original(version="2.38.0", path="lib/ortho/maze.c", name="freeMaze", key="babqclyzdgzlc9rs6vagsa3a9", definition="void freeMaze (maze* mp)")
 public static Object freeMaze(Object... arg) {
 UNSUPPORTED("ixanx2vs8hc7piq3w1asfrq5"); // void freeMaze (maze* mp)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

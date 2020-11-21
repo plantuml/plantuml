@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.label;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static gen.lib.label.rectangle__c.CombineRect;
 import static gen.lib.label.rectangle__c.InitRect;
 import static gen.lib.label.rectangle__c.RectArea;
@@ -61,6 +64,8 @@ public class node__c {
 
 //3 9uj7ni1m6q6drtoh56w82d6m4
 // Node_t *RTreeNewNode(RTree_t * rtp) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="", key="9uj7ni1m6q6drtoh56w82d6m4", definition="Node_t *RTreeNewNode(RTree_t * rtp)")
 public static ST_Node_t___ RTreeNewNode(ST_RTree rtp) {
 ENTERING("9uj7ni1m6q6drtoh56w82d6m4","RTreeNewNode");
 try {
@@ -79,6 +84,8 @@ LEAVING("9uj7ni1m6q6drtoh56w82d6m4","RTreeNewNode");
 
 //3 65wa5vy8i5k40218lbhdibrjx
 // void RTreeFreeNode(RTree_t * rtp, Node_t * p) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="RTreeFreeNode", key="65wa5vy8i5k40218lbhdibrjx", definition="void RTreeFreeNode(RTree_t * rtp, Node_t * p)")
 public static Object RTreeFreeNode(Object... arg) {
 UNSUPPORTED("e9yu9bfc7a1ihpoc5axpyg4eg"); // void RTreeFreeNode(RTree_t * rtp, Node_t * p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -98,6 +105,8 @@ throw new UnsupportedOperationException();
 
 //3 4qk9wkm05q2pwf20ud6g2tufg
 // void InitNode(Node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="InitNode", key="4qk9wkm05q2pwf20ud6g2tufg", definition="void InitNode(Node_t * n)")
 public static void InitNode(ST_Node_t___ n) {
 ENTERING("4qk9wkm05q2pwf20ud6g2tufg","InitNode");
 try {
@@ -117,6 +126,8 @@ LEAVING("4qk9wkm05q2pwf20ud6g2tufg","InitNode");
 
 //3 ruhxixxei7au9z1iaj0zggwo
 // void InitBranch(Branch_t * b) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="InitBranch", key="ruhxixxei7au9z1iaj0zggwo", definition="void InitBranch(Branch_t * b)")
 public static void InitBranch(ST_Branch_t b) {
 ENTERING("ruhxixxei7au9z1iaj0zggwo","InitBranch");
 try {
@@ -132,6 +143,8 @@ LEAVING("ruhxixxei7au9z1iaj0zggwo","InitBranch");
 
 //3 42vjqe8n5yeq2jjby00xzrotk
 // Rect_t NodeCover(Node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="NodeCover", key="42vjqe8n5yeq2jjby00xzrotk", definition="Rect_t NodeCover(Node_t * n)")
 public static ST_Rect_t NodeCover(ST_Node_t___ n) {
 ENTERING("42vjqe8n5yeq2jjby00xzrotk","NodeCover");
 try {
@@ -159,6 +172,8 @@ LEAVING("42vjqe8n5yeq2jjby00xzrotk","NodeCover");
 
 //3 bek56v2skz6jfvw4uggy2h5w3
 // int PickBranch(Rect_t * r, Node_t * n) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="PickBranch", key="bek56v2skz6jfvw4uggy2h5w3", definition="int PickBranch(Rect_t * r, Node_t * n)")
 public static int PickBranch(ST_Rect_t r, ST_Node_t___ n) {
 	ENTERING("bek56v2skz6jfvw4uggy2h5w3","PickBranch");
 	try {
@@ -197,6 +212,8 @@ LEAVING("bek56v2skz6jfvw4uggy2h5w3","PickBranch");
 
 //3 2njctcrpeff95ysmv9ji34x4s
 // int AddBranch(RTree_t * rtp, Branch_t * b, Node_t * n, Node_t ** new) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="AddBranch", key="2njctcrpeff95ysmv9ji34x4s", definition="int AddBranch(RTree_t * rtp, Branch_t * b, Node_t * n, Node_t ** new)")
 public static int AddBranch(ST_RTree rtp, ST_Branch_t b, ST_Node_t___ n, ST_Node_t___ new_[]) {
 ENTERING("2njctcrpeff95ysmv9ji34x4s","AddBranch");
 try {
@@ -238,6 +255,8 @@ LEAVING("2njctcrpeff95ysmv9ji34x4s","AddBranch");
 
 //3 eqzamflj58f43cflwns9cemnk
 // void DisconBranch(Node_t * n, int i) 
+@Unused
+@Original(version="2.38.0", path="lib/label/node.c", name="DisconBranch", key="eqzamflj58f43cflwns9cemnk", definition="void DisconBranch(Node_t * n, int i)")
 public static void DisconBranch(ST_Node_t___ n, int i) {
 ENTERING("eqzamflj58f43cflwns9cemnk","DisconBranch");
 try {

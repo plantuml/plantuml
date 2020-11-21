@@ -71,8 +71,8 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 
 		final String colorString = arg.get("COLOR", 0);
 		if (colorString != null) {
-			Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam()
-					.colorArrowSeparationSpace());
+			final Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString,
+					diagram.getSkinParam().colorArrowSeparationSpace());
 			diagram.setColorNextArrow(rainbow);
 		}
 		final String label = arg.get("LABEL", 0);

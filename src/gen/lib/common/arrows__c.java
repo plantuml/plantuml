@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -55,16 +55,18 @@ import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DIST2;
 import static smetana.core.Macro.ED_conc_opp_flag;
-import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_arrowdir_t;
 import h.ST_arrowname_t;
 import h.ST_bezier;
 import h.ST_inside_t;
 import h.ST_pointf;
+import smetana.core.CStar;
 import smetana.core.CString;
-import smetana.core.MutableDouble;
 import smetana.core.Z;
 
 public class arrows__c {
@@ -308,6 +310,8 @@ public class arrows__c {
 
 //3 ciez0pfggxdljedzsbklq49f0
 // static inline point pointof(int x, int y) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
 public static Object pointof(Object... arg) {
 UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -323,29 +327,12 @@ throw new UnsupportedOperationException();
 
 
 
-//3 c1s4k85p1cdfn176o3uryeros
-// static inline pointf pointfof(double x, double y) 
-public static ST_pointf pointfof(double x, double y) {
-// WARNING!! STRUCT
-return pointfof_w_(x, y).copy();
-}
-private static ST_pointf pointfof_w_(double x, double y) {
-ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", x);
-    r.setDouble("y", y);
-    return r;
-} finally {
-LEAVING("c1s4k85p1cdfn176o3uryeros","pointfof");
-}
-}
-
-
 
 
 //3 7cufnfitrh935ew093mw0i4b7
 // static inline box boxof(int llx, int lly, int urx, int ury) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
 public static Object boxof(Object... arg) {
 UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -367,6 +354,8 @@ throw new UnsupportedOperationException();
 
 //3 1n5xl70wxuabyf97mclvilsm6
 // static inline point add_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
 public static Object add_point(Object... arg) {
 UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -382,29 +371,13 @@ throw new UnsupportedOperationException();
 
 
 
-//3 arrsbik9b5tnfcbzsm8gr2chx
-// static inline pointf add_pointf(pointf p, pointf q) 
-public static ST_pointf add_pointf(final ST_pointf p, final ST_pointf q) {
-// WARNING!! STRUCT
-return add_pointf_w_(p.copy(), q.copy()).copy();
-}
-private static ST_pointf add_pointf_w_(final ST_pointf p, final ST_pointf q) {
-ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-try {
-    final ST_pointf r = new ST_pointf();
-    r.setDouble("x", p.x + q.x);
-    r.setDouble("y", p.y + q.y);
-    return r;
-} finally {
-LEAVING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
-}
-}
-
 
 
 
 //3 ai2dprak5y6obdsflguh5qbd7
 // static inline point sub_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
 public static Object sub_point(Object... arg) {
 UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -422,6 +395,8 @@ throw new UnsupportedOperationException();
 
 //3 16f6pyogcv3j7n2p0n8giqqgh
 // static inline pointf sub_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
 public static Object sub_pointf(Object... arg) {
 UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -439,6 +414,8 @@ throw new UnsupportedOperationException();
 
 //3 9k50jgrhc4f9824vf8ony74rw
 // static inline point mid_point(point p, point q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
 public static Object mid_point(Object... arg) {
 UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -456,6 +433,8 @@ throw new UnsupportedOperationException();
 
 //3 59c4f7im0ftyowhnzzq2v9o1x
 // static inline pointf mid_pointf(pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
 public static Object mid_pointf(Object... arg) {
 UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -473,6 +452,8 @@ throw new UnsupportedOperationException();
 
 //3 5r18p38gisvcx3zsvbb9saixx
 // static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
 public static Object interpolate_pointf(Object... arg) {
 UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -490,6 +471,8 @@ throw new UnsupportedOperationException();
 
 //3 bxzrv2ghq04qk5cbyy68s4mol
 // static inline point exch_xy(point p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
 public static Object exch_xy(Object... arg) {
 UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -507,6 +490,8 @@ throw new UnsupportedOperationException();
 
 //3 9lt3e03tac6h6sydljrcws8fd
 // static inline pointf exch_xyf(pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
 public static Object exch_xyf(Object... arg) {
 UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -524,6 +509,8 @@ throw new UnsupportedOperationException();
 
 //3 8l9qhieokthntzdorlu5zn29b
 // static inline box box_bb(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
 public static Object box_bb(Object... arg) {
 UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -543,6 +530,8 @@ throw new UnsupportedOperationException();
 
 //3 clws9h3bbjm0lw3hexf8nl4c4
 // static inline boxf boxf_bb(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
 public static Object boxf_bb(Object... arg) {
 UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -562,6 +551,8 @@ throw new UnsupportedOperationException();
 
 //3 bit6ycxo1iqd2al92y8gkzlvb
 // static inline box box_intersect(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
 public static Object box_intersect(Object... arg) {
 UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -581,6 +572,8 @@ throw new UnsupportedOperationException();
 
 //3 8gfybie7k6pgb3o1a6llgpwng
 // static inline boxf boxf_intersect(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
 public static Object boxf_intersect(Object... arg) {
 UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -600,6 +593,8 @@ throw new UnsupportedOperationException();
 
 //3 7z8j2quq65govaaejrz7b4cvb
 // static inline int box_overlap(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
 public static Object box_overlap(Object... arg) {
 UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -614,6 +609,8 @@ throw new UnsupportedOperationException();
 
 //3 4z0suuut2acsay5m8mg9dqjdu
 // static inline int boxf_overlap(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
 public static Object boxf_overlap(Object... arg) {
 UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -628,6 +625,8 @@ throw new UnsupportedOperationException();
 
 //3 dd34swz5rmdgu3a2np2a4h1dy
 // static inline int box_contains(box b0, box b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
 public static Object box_contains(Object... arg) {
 UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -642,6 +641,8 @@ throw new UnsupportedOperationException();
 
 //3 8laj1bspbu2i1cjd9upr7xt32
 // static inline int boxf_contains(boxf b0, boxf b1) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
 public static Object boxf_contains(Object... arg) {
 UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -656,6 +657,8 @@ throw new UnsupportedOperationException();
 
 //3 4wf5swkz24xx51ja2dynbycu1
 // static inline pointf perp (pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
 public static Object perp(Object... arg) {
 UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -673,6 +676,8 @@ throw new UnsupportedOperationException();
 
 //3 6dtlpzv4mvgzb9o0b252yweuv
 // static inline pointf scale (double c, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
 public static Object scale(Object... arg) {
 UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -743,6 +748,8 @@ private final static __struct__ createArrowtypes(int type, double lenfact, CFunc
 
 //3 3apnay8wumntfkvud64ov7fcf
 // static char *arrow_match_name_frag(char *name, arrowname_t * arrownames, int *flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="", key="3apnay8wumntfkvud64ov7fcf", definition="static char *arrow_match_name_frag(char *name, arrowname_t * arrownames, int *flag)")
 public static CString arrow_match_name_frag(CString name, ST_arrowname_t[] arrowsynonyms, int flag[]) {
 ENTERING("3apnay8wumntfkvud64ov7fcf","arrow_match_name_frag");
 try {
@@ -773,6 +780,8 @@ LEAVING("3apnay8wumntfkvud64ov7fcf","arrow_match_name_frag");
 
 //3 b669zec8aznq4obnil98j5lby
 // static char *arrow_match_shape(char *name, int *flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="", key="b669zec8aznq4obnil98j5lby", definition="static char *arrow_match_shape(char *name, int *flag)")
 public static CString arrow_match_shape(CString name, int flag[]) {
 ENTERING("b669zec8aznq4obnil98j5lby","arrow_match_shape");
 try {
@@ -803,6 +812,8 @@ LEAVING("b669zec8aznq4obnil98j5lby","arrow_match_shape");
 
 //3 2pveqb5qcgfxcqp410ub942eg
 // static void arrow_match_name(char *name, int *flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_match_name", key="2pveqb5qcgfxcqp410ub942eg", definition="static void arrow_match_name(char *name, int *flag)")
 public static void arrow_match_name(CString name, int flag[]) {
 ENTERING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
 try {
@@ -821,12 +832,14 @@ LEAVING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
 
 //3 2szgwtfieaw58pea2ohjyu8ea
 // void arrow_flags(Agedge_t * e, int *sflag, int *eflag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_flags", key="2szgwtfieaw58pea2ohjyu8ea", definition="void arrow_flags(Agedge_t * e, int *sflag, int *eflag)")
 public static void arrow_flags(ST_Agedge_s e, int sflag[], int eflag[]) {
 ENTERING("2szgwtfieaw58pea2ohjyu8ea","arrow_flags");
 try {
     CString attr;
     ST_arrowdir_t arrowdir;
-    sflag[0] = (0);
+    sflag[0] = 0;
     eflag[0] = agisdirected(agraphof(e)) ? 1 : (0);
     if (Z.z().E_dir!=null && ((attr = agxget(e, Z.z().E_dir))).charAt(0)!='\0') {
 UNSUPPORTED("em7x45v09orjeey5u06gf9b4s"); // 	for (arrowdir = Arrowdirs; arrowdir->dir; arrowdir++) {
@@ -860,6 +873,8 @@ LEAVING("2szgwtfieaw58pea2ohjyu8ea","arrow_flags");
 
 //3 1yk5wl46i7rlzcern0tefd24s
 // double arrow_length(edge_t * e, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_length", key="1yk5wl46i7rlzcern0tefd24s", definition="double arrow_length(edge_t * e, int flag)")
 public static double arrow_length(ST_Agedge_s e, int flag) {
 ENTERING("1yk5wl46i7rlzcern0tefd24s","arrow_length");
 try {
@@ -888,6 +903,8 @@ LEAVING("1yk5wl46i7rlzcern0tefd24s","arrow_length");
 
 //3 7ymcsnwqkr1crisrga0kezh1f
 // static boolean inside(inside_t * inside_context, pointf p) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="inside", key="7ymcsnwqkr1crisrga0kezh1f", definition="static boolean inside(inside_t * inside_context, pointf p)")
 public static boolean inside(ST_inside_t inside_context, final ST_pointf p) {
 // WARNING!! STRUCT
 return inside_w_(inside_context, p.copy());
@@ -895,7 +912,7 @@ return inside_w_(inside_context, p.copy());
 private static boolean inside_w_(ST_inside_t inside_context, final ST_pointf p) {
 ENTERING("7ymcsnwqkr1crisrga0kezh1f","inside");
 try {
-    return DIST2(p, inside_context.a_p.get(0)) <= inside_context.a_r.getDouble();
+    return DIST2(p, inside_context.a_p.get__(0)) <= inside_context.a_r[0];
 } finally {
 LEAVING("7ymcsnwqkr1crisrga0kezh1f","inside");
 }
@@ -906,32 +923,36 @@ LEAVING("7ymcsnwqkr1crisrga0kezh1f","inside");
 
 //3 9eellwhg4gsa2pdszpeqihs2d
 // int arrowEndClip(edge_t* e, pointf * ps, int startp, 		 int endp, bezier * spl, int eflag) 
-public static int arrowEndClip(ST_Agedge_s e, ST_pointf.Array ps, int startp, int endp, ST_bezier spl, int eflag) {
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrowEndClip", key="9eellwhg4gsa2pdszpeqihs2d", definition="int arrowEndClip(edge_t* e, pointf * ps, int startp, 		 int endp, bezier * spl, int eflag)")
+public static int arrowEndClip(ST_Agedge_s e, CStar<ST_pointf> ps, int startp, int endp, ST_bezier spl, int eflag) {
 ENTERING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 try {
     final ST_inside_t inside_context = new ST_inside_t();
-    final ST_pointf.Array sp = new ST_pointf.Array( 4);
+    final CStar<ST_pointf> sp = CStar.<ST_pointf>ALLOC__(4, ST_pointf.class);
     double elen;
-    MutableDouble elen2 = new MutableDouble(0);
+    final double elen2[] = new double[] {0};
+    
     elen = arrow_length(e, eflag);
-    elen2.setValue(elen * elen);
-    spl.setInt("eflag", eflag);
-    spl.setStruct("ep", ps.plus(endp + 3).getStruct());
-    if (endp > startp && DIST2(ps.get(endp), ps.get(endp + 3)) < elen2.getValue()) {
+    elen2[0] =elen * elen;
+    spl.eflag = eflag;
+    spl.ep.___(ps.get__(endp + 3));
+    if (endp > startp && DIST2(ps.get__(endp), ps.get__(endp + 3)) < elen2[0]) {
 	endp -= 3;
     }
-    sp.plus(3).setStruct(ps.plus(endp).getStruct());
-    sp.plus(2).setStruct(ps.plus(endp+1).getStruct());
-    sp.plus(1).setStruct(ps.plus(endp+2).getStruct());
-    sp.plus(0).setStruct(spl.ep);
-    /* ensure endpoint starts inside */
-    inside_context.setPtr("a.p", sp.plus(0).asPtr());
-    inside_context.setPtr("a.r", elen2.amp());
-    bezier_clip(inside_context, function(arrows__c.class, "inside"), sp, NOT(false));
-    ps.plus(endp).setStruct(sp.plus(3).getStruct());
-    ps.plus(endp+1).setStruct(sp.plus(2).getStruct());
-    ps.plus(endp+2).setStruct(sp.plus(1).getStruct());
-    ps.plus(endp+3).setStruct(sp.plus(0).getStruct());
+    sp.get__(3).___(ps.get__(endp));
+    sp.get__(2).___(ps.get__(endp+1));
+    sp.get__(1).___(ps.get__(endp+2));
+    sp.get__(0).___(spl.ep); /* ensure endpoint starts inside */
+    
+    inside_context.a_p = sp;
+    inside_context.a_r = elen2;
+    bezier_clip(inside_context, function(arrows__c.class, "inside"), sp, true);
+    
+    ps.get__(endp).___(sp.get__(3));
+    ps.get__(endp+1).___(sp.get__(2));
+    ps.get__(endp+2).___(sp.get__(1));
+    ps.get__(endp+3).___(sp.get__(0));
     return endp;
 } finally {
 LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
@@ -943,32 +964,36 @@ LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 
 //3 q7y4oxn0paexbgynmtg2zmiv
 // int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag) 
-public static int arrowStartClip(ST_Agedge_s e, ST_pointf.Array ps, int startp, int endp, ST_bezier spl, int sflag) {
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrowStartClip", key="q7y4oxn0paexbgynmtg2zmiv", definition="int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag)")
+public static int arrowStartClip(ST_Agedge_s e, CStar<ST_pointf> ps, int startp, int endp, ST_bezier spl, int sflag) {
 ENTERING("q7y4oxn0paexbgynmtg2zmiv","arrowStartClip");
 try {
     final ST_inside_t inside_context = new ST_inside_t();
-    final ST_pointf.Array sp = new ST_pointf.Array( 4);
+    final CStar<ST_pointf> sp = CStar.<ST_pointf>ALLOC__(4, ST_pointf.class);
     double slen;
-    MutableDouble slen2 = new MutableDouble(0);
+    
+    final double[] slen2 = new double[] {0};
     slen = arrow_length(e, sflag);
-    slen2.setValue(slen * slen);
+    slen2[0] = slen * slen;
     spl.setInt("sflag", sflag);
     spl.setStruct("sp", ps.plus(startp).getStruct());
-    if (endp > startp && DIST2(ps.get(startp), ps.get(startp + 3)) < slen2.getValue()) {
+    if (endp > startp && DIST2(ps.get__(startp), ps.get__(startp + 3)) < slen2[0]) {
     	startp += 3;
     }
-    sp.plus(0).setStruct(ps.plus(startp+3).getStruct());
-    sp.plus(1).setStruct(ps.plus(startp+2).getStruct());
-    sp.plus(2).setStruct(ps.plus(startp+1).getStruct());
-    sp.plus(3).setStruct(spl.sp);
-    /* ensure endpoint starts inside */
-    inside_context.setPtr("a.p", sp.plus(3).asPtr());
-    inside_context.setPtr("a.r", slen2.amp());
+    sp.get__(0).___(ps.get__(startp+3));
+    sp.get__(1).___(ps.get__(startp+2));
+    sp.get__(2).___(ps.get__(startp+1));
+    sp.get__(3).___(spl.sp);    /* ensure endpoint starts inside */
+    
+    inside_context.a_p = sp.plus_(3);
+    inside_context.a_r = slen2;
     bezier_clip(inside_context, function(arrows__c.class, "inside"), sp, false);
-    ps.plus(startp).setStruct(sp.plus(3).getStruct());
-    ps.plus(startp+1).setStruct(sp.plus(2).getStruct());
-    ps.plus(startp+2).setStruct(sp.plus(1).getStruct());
-    ps.plus(startp+3).setStruct(sp.plus(0).getStruct());
+    
+    ps.get__(startp).___(sp.get__(3));
+    ps.get__(startp+1).___(sp.get__(2));
+    ps.get__(startp+2).___(sp.get__(1));
+    ps.get__(startp+3).___(sp.get__(0));
     return startp;
 } finally {
 LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
@@ -980,6 +1005,8 @@ LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 
 //3 5i0vg914q5v5dzz5vo7rg9omc
 // void arrowOrthoClip(edge_t* e, pointf* ps, int startp, int endp, bezier* spl, int sflag, int eflag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrowOrthoClip", key="5i0vg914q5v5dzz5vo7rg9omc", definition="void arrowOrthoClip(edge_t* e, pointf* ps, int startp, int endp, bezier* spl, int sflag, int eflag)")
 public static Object arrowOrthoClip(Object... arg) {
 UNSUPPORTED("5cmga0193q90gs5y2r0l9ekgq"); // void arrowOrthoClip(edge_t* e, pointf* ps, int startp, int endp, bezier* spl, int sflag, int eflag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1080,6 +1107,8 @@ throw new UnsupportedOperationException();
 
 //3 b7nm38od2nxotpyzxg0ychqdb
 // static void arrow_type_normal(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_normal", key="b7nm38od2nxotpyzxg0ychqdb", definition="static void arrow_type_normal(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_normal(Object... arg) {
 UNSUPPORTED("bk3aihjbdtkitpdvvtmzbt2zu"); // static void arrow_type_normal(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1123,6 +1152,8 @@ throw new UnsupportedOperationException();
 
 //3 b6y46a44yguy7zuhgxukxnq79
 // static void arrow_type_crow(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_crow", key="b6y46a44yguy7zuhgxukxnq79", definition="static void arrow_type_crow(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_crow(Object... arg) {
 UNSUPPORTED("6rtaogz992ixfhc4qfzpl9pw8"); // static void arrow_type_crow(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1189,6 +1220,8 @@ throw new UnsupportedOperationException();
 
 //3 e8w54seijyii7km6zl3sivjpu
 // static void arrow_type_gap(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_gap", key="e8w54seijyii7km6zl3sivjpu", definition="static void arrow_type_gap(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_gap(Object... arg) {
 UNSUPPORTED("anlswsxb36i1znu2805bu47t2"); // static void arrow_type_gap(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1208,6 +1241,8 @@ throw new UnsupportedOperationException();
 
 //3 eg7sgk8umcqfthbo1t0plohbt
 // static void arrow_type_tee(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_tee", key="eg7sgk8umcqfthbo1t0plohbt", definition="static void arrow_type_tee(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_tee(Object... arg) {
 UNSUPPORTED("9u6pwrzl9t5i0kfvnwn7uufrp"); // static void arrow_type_tee(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1249,6 +1284,8 @@ throw new UnsupportedOperationException();
 
 //3 3hdgy0baje1akb7fjw9yovjwz
 // static void arrow_type_box(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_box", key="3hdgy0baje1akb7fjw9yovjwz", definition="static void arrow_type_box(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_box(Object... arg) {
 UNSUPPORTED("4u7yj9rhqxdonlyd5taprxs28"); // static void arrow_type_box(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1288,6 +1325,8 @@ throw new UnsupportedOperationException();
 
 //3 equc1q4r6wcoe2pwwnk2u01og
 // static void arrow_type_diamond(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_diamond", key="equc1q4r6wcoe2pwwnk2u01og", definition="static void arrow_type_diamond(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_diamond(Object... arg) {
 UNSUPPORTED("4wg2b1eyit9ve72uqrds41jk2"); // static void arrow_type_diamond(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1320,6 +1359,8 @@ throw new UnsupportedOperationException();
 
 //3 dxl50r7ooipvtkyjb0sleittd
 // static void arrow_type_dot(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_dot", key="dxl50r7ooipvtkyjb0sleittd", definition="static void arrow_type_dot(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_dot(Object... arg) {
 UNSUPPORTED("bsrxktb5cvoy4qewxrb3z3ht"); // static void arrow_type_dot(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1341,6 +1382,8 @@ throw new UnsupportedOperationException();
 
 //3 5oioemwdl3g1maj3ikzleo0nm
 // static void arrow_type_curve(GVJ_t* job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_type_curve", key="5oioemwdl3g1maj3ikzleo0nm", definition="static void arrow_type_curve(GVJ_t* job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_type_curve(Object... arg) {
 UNSUPPORTED("2rt93fe18qb092yomrw5l6mko"); // static void arrow_type_curve(GVJ_t* job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1379,6 +1422,8 @@ throw new UnsupportedOperationException();
 
 //3 ruebmb0rzoin79tmkp4o357x
 // static pointf arrow_gen_type(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_gen_type", key="ruebmb0rzoin79tmkp4o357x", definition="static pointf arrow_gen_type(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_gen_type(Object... arg) {
 UNSUPPORTED("6eekmrou08qiz0zielzyhyn4g"); // static pointf arrow_gen_type(GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1406,6 +1451,8 @@ throw new UnsupportedOperationException();
 
 //3 2u4vcl57jl62dmf8fy80ioppm
 // boxf arrow_bb(pointf p, pointf u, double arrowsize, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_bb", key="2u4vcl57jl62dmf8fy80ioppm", definition="boxf arrow_bb(pointf p, pointf u, double arrowsize, int flag)")
 public static Object arrow_bb(Object... arg) {
 UNSUPPORTED("67tfc7x1j056na7s6itymoeol"); // boxf arrow_bb(pointf p, pointf u, double arrowsize, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -1449,6 +1496,8 @@ throw new UnsupportedOperationException();
 
 //3 8ss8m9a0p5v0yx2oqggh0rx57
 // void arrow_gen(GVJ_t * job, emit_state_t emit_state, pointf p, pointf u, double arrowsize, double penwidth, int flag) 
+@Unused
+@Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_gen", key="8ss8m9a0p5v0yx2oqggh0rx57", definition="void arrow_gen(GVJ_t * job, emit_state_t emit_state, pointf p, pointf u, double arrowsize, double penwidth, int flag)")
 public static Object arrow_gen(Object... arg) {
 UNSUPPORTED("ag73i6wbc5lb0d46ul40euyur"); // void arrow_gen(GVJ_t * job, emit_state_t emit_state, pointf p, pointf u, double arrowsize, double penwidth, int flag)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

@@ -12,7 +12,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2022, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program:
  * 
@@ -44,6 +44,9 @@
  *
  */
 package gen.lib.cgraph;
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
 
 public class agxbuf__c {
@@ -51,6 +54,8 @@ public class agxbuf__c {
 
 //3 688cb39nv214oqldmhd8roirz
 // void agxbinit(agxbuf * xb, unsigned int hint, unsigned char *init) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agxbuf.c", name="agxbinit", key="688cb39nv214oqldmhd8roirz", definition="void agxbinit(agxbuf * xb, unsigned int hint, unsigned char *init)")
 public static Object agxbinit(Object... arg) {
 UNSUPPORTED("4l5fskgdbcbqssdclb6lwckwe"); // void agxbinit(agxbuf * xb, unsigned int hint, unsigned char *init)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -76,6 +81,8 @@ throw new UnsupportedOperationException();
 
 //3 lu77u8ojbx0os3eapudi7k0e
 // int agxbmore(agxbuf * xb, unsigned int ssz) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agxbuf.c", name="agxbmore", key="lu77u8ojbx0os3eapudi7k0e", definition="int agxbmore(agxbuf * xb, unsigned int ssz)")
 public static Object agxbmore(Object... arg) {
 UNSUPPORTED("1zbuuoy42nrbwgmz0kzwxatml"); // int agxbmore(agxbuf * xb, unsigned int ssz)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -109,6 +116,8 @@ throw new UnsupportedOperationException();
 
 //3 7q04bdt3el30gta4bdtl0cr8s
 // int agxbput_n(agxbuf * xb, const char *s, unsigned int ssz) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agxbuf.c", name="agxbput_n", key="7q04bdt3el30gta4bdtl0cr8s", definition="int agxbput_n(agxbuf * xb, const char *s, unsigned int ssz)")
 public static Object agxbput_n(Object... arg) {
 UNSUPPORTED("xj5zv8tlevqufi7kllkj6uu1"); // int agxbput_n(agxbuf * xb, const char *s, unsigned int ssz)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -127,6 +136,8 @@ throw new UnsupportedOperationException();
 
 //3 12y895mwxr60srt40guuma6j5
 // int agxbput(agxbuf * xb, const char *s) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agxbuf.c", name="agxbput", key="12y895mwxr60srt40guuma6j5", definition="int agxbput(agxbuf * xb, const char *s)")
 public static Object agxbput(Object... arg) {
 UNSUPPORTED("3oqw629wj8yulgtvwwlxn8iyi"); // int agxbput(agxbuf * xb, const char *s)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -142,6 +153,8 @@ throw new UnsupportedOperationException();
 
 //3 2zlar00xk0a2nnqcmjb587kvc
 // void agxbfree(agxbuf * xb) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agxbuf.c", name="agxbfree", key="2zlar00xk0a2nnqcmjb587kvc", definition="void agxbfree(agxbuf * xb)")
 public static Object agxbfree(Object... arg) {
 UNSUPPORTED("3zwjoplc2wp6x7lb2b5g59pl8"); // void agxbfree(agxbuf * xb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -157,6 +170,8 @@ throw new UnsupportedOperationException();
 
 //3 cn9iiltxtts5ijjpixwt2uziu
 // int agxbpop(agxbuf * xb) 
+@Unused
+@Original(version="2.38.0", path="lib/cgraph/agxbuf.c", name="agxbpop", key="cn9iiltxtts5ijjpixwt2uziu", definition="int agxbpop(agxbuf * xb)")
 public static Object agxbpop(Object... arg) {
 UNSUPPORTED("1hje4ns6ul7cj52y9n9wlgkkc"); // int agxbpop(agxbuf * xb)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
