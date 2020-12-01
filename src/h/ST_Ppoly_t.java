@@ -45,24 +45,15 @@
  */
 package h;
 
-import smetana.core.CStar;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.CArray;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.Area;
-import smetana.core.amiga.StarStruct;
 
-public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_Ppoly_t extends UnsupportedStarStruct {
 
-	public CStar<ST_pointf> ps;
+	public CArray<ST_pointf> ps;
 	public int pn;
 
-	public ST_Ppoly_t() {
-		this(null);
-	}
-
-	public ST_Ppoly_t(StarStruct parent) {
-	}
 
 	@Override
 	public __struct__ copy() {
@@ -72,29 +63,7 @@ public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStru
 		return result;
 	}
 
-	@Override
-	public void memcopyFrom(Area source) {
-		ST_Ppoly_t source2 = (ST_Ppoly_t) source;
-		this.ps = source2.ps;
-		this.pn = source2.pn;
-	}
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("pn")) {
-			this.pn = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct Ppoly_t",
-	// "{",
-	// "Ppoint_t *ps",
-	// "int pn",
-	// "}",
-	// "Ppoly_t");
 }
 
 // typedef struct Ppoly_t {

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -90,7 +91,7 @@ public class PSystemCute extends AbstractPSystem {
 			throws IOException {
 		final int margin1;
 		final int margin2;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			margin1 = SkinParam.zeroMargin(10);
 			margin2 = SkinParam.zeroMargin(10);
 		} else {

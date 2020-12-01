@@ -53,12 +53,19 @@ import gen.annotation.Reviewed;
 import gen.annotation.Unused;
 import h.ST_Agdisc_s;
 import h.ST_Agraph_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
 import smetana.core.__ptr__;
 import smetana.core.size_t;
 
 public class mem__c {
 
-
+public static CFunction memopen = new CFunctionAbstract("memopen") {
+	
+	public Object exe(Object... args) {
+		return memopen((ST_Agdisc_s)args[0]);
+	}};
+	
 @Original(version="2.38.0", path="lib/cgraph/mem.c", name="memopen", key="akq0jgwdspf75ypeatgcnfn8w", definition="static void *memopen(Agdisc_t* disc)")
 public static Object memopen(ST_Agdisc_s disc) {
 ENTERING("akq0jgwdspf75ypeatgcnfn8w","memopen");
@@ -71,7 +78,12 @@ LEAVING("akq0jgwdspf75ypeatgcnfn8w","memopen");
 
 
 
-
+public static CFunction memalloc = new CFunctionAbstract("memalloc") {
+	
+	public Object exe(Object... args) {
+		return memalloc((__ptr__)args[0], (size_t)args[1]);
+	}};
+	
 @Reviewed(when = "11/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/mem.c", name="memalloc", key="9mtjrx0vjzwuecjwpxylr9tag", definition="static void *memalloc(void *heap, size_t request)")
 public static __ptr__ memalloc(__ptr__ heap, size_t request) {
@@ -87,7 +99,12 @@ LEAVING("9mtjrx0vjzwuecjwpxylr9tag","memalloc");
 
 
 
-
+public static CFunction memresize = new CFunctionAbstract("memresize") {
+	
+	public Object exe(Object... args) {
+		return memresize((__ptr__)args[0], (__ptr__)args[1], (size_t)args[2], (size_t)args[3]);
+	}};
+	
 @Original(version="2.38.0", path="lib/cgraph/mem.c", name="memresize", key="18v2hhjculhnb3b7fc4tx3yjw", definition="static void *memresize(void *heap, void *ptr, size_t oldsize, 		       size_t request)")
 public static __ptr__ memresize(__ptr__ heap, __ptr__ ptr, size_t oldsize, size_t request) {
 ENTERING("18v2hhjculhnb3b7fc4tx3yjw","memresize");
@@ -101,16 +118,16 @@ LEAVING("18v2hhjculhnb3b7fc4tx3yjw","memresize");
 
 
 
-
+public static CFunction memfree = new CFunctionAbstract("memfree") {
+	
+	public Object exe(Object... args) {
+		return memfree(args);
+	}};
+	
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/mem.c", name="memfree", key="c320bstcg5nctel3onh2pserl", definition="static void memfree(void *heap, void *ptr)")
-public static Object memfree(Object... arg) {
+public static Object memfree(Object... arg_) {
 UNSUPPORTED("5yxdf2sc5xnic9d5j24m0a7yf"); // static void memfree(void *heap, void *ptr)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("74rq74mh7lnfr9i3qmwsbx2hd"); //     (void) heap;
-UNSUPPORTED("f0evk2zajcoprskea22bm18e8"); //     free(ptr);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
 throw new UnsupportedOperationException();
 }
 
@@ -130,46 +147,6 @@ try {
 } finally {
 LEAVING("7newv1hmzvt4vtttc9cxdxfpn","agalloc");
 }
-}
-
-
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/mem.c", name="agrealloc", key="55lm0cse6lsgqblx6puxpjs3j", definition="void *agrealloc(Agraph_t * g, void *ptr, size_t oldsize, size_t size)")
-public static Object agrealloc(Object... arg) {
-UNSUPPORTED("910gd4otiivsz2zpsiwlsy00v"); // void *agrealloc(Agraph_t * g, void *ptr, size_t oldsize, size_t size)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("11l1m9u5ne2xf2nff6278od59"); //     void *mem;
-UNSUPPORTED("b9ag6d7eml860kbycrkuz14b7"); //     if (size > 0) {
-UNSUPPORTED("zjrd9sttelcubi228vbizqq0"); // 	if (ptr == 0)
-UNSUPPORTED("vr97hnk6c4k8muqake3c3c46"); // 	    mem = agalloc(g, size);
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("2n0yfzx569kr1oinsronhmsus"); // 	    mem =
-UNSUPPORTED("agphdu4vmb8hu0s57ry4i4axp"); // 		((g)->clos->disc.mem)->resize(((g)->clos->state.mem), ptr, oldsize, size);
-UNSUPPORTED("60qvwgrubred6pojjs425ctzr"); // 	if (mem == ((void *)0))
-UNSUPPORTED("9vomh5w83j5mf3src00h8g8g0"); // 	     agerr(AGERR,"memory re-allocation failure");
-UNSUPPORTED("2lkbqgh2h6urnppaik3zo7ywi"); //     } else
-UNSUPPORTED("6jbj3fx0j7m0vyvwn0za7bxle"); // 	mem = ((void *)0);
-UNSUPPORTED("a5guhlttwqpai3dhdhdx6shnu"); //     return mem;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/mem.c", name="5cy6dl95ayyuzq0m35179g1a1", key="5cy6dl95ayyuzq0m35179g1a1", definition="void agfree(Agraph_t * g, void *ptr)")
-public static Object agfree(Object... arg) {
-UNSUPPORTED("4i7lm2j8h5unocyz6c4isbh2f"); // void agfree(Agraph_t * g, void *ptr)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("72fdcloikkmdo51qrcdovcy5v"); //     if (ptr)
-UNSUPPORTED("efvuftmcvfsswtq39k8vdrgmd"); // 	(((g)->clos->disc.mem)->free) (((g)->clos->state.mem), ptr);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
 }
 
 

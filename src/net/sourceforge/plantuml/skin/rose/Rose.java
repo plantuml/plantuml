@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.PaddingParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -328,7 +328,7 @@ public class Rose {
 		HorizontalAlignment messageHorizontalAlignment;
 		final HorizontalAlignment textHorizontalAlignment;
 		final ArrowDirection arrowDirection = config.getArrowDirection();
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final StyleSignature signature = StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram,
 					SName.arrow);
 			final Style textStyle = signature.getMergedStyle(param.getCurrentStyleBuilder());

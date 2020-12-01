@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -146,7 +146,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		}
 		double roundCorner = symbol.getSkinParameter().getRoundCorner(diagram.getSkinParam(), stereotype);
 
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style stylePartition = getDefaultStyleDefinitionPartition().getMergedStyle(
 					diagram.getSkinParam().getCurrentStyleBuilder());
 			borderColor = stylePartition.value(PName.LineColor).asColor(diagram.getSkinParam().getIHtmlColorSet());

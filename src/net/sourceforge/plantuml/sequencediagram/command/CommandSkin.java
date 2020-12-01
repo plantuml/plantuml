@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandSkin extends SingleLineCommand2<UmlDiagram> {
+public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
 
 	public CommandSkin() {
 		super(getRegexConcat());
@@ -60,7 +60,7 @@ public class CommandSkin extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
 		try {
 			return diagram.loadSkin(arg.get("SKIN", 0));
 		} catch (IOException e) {

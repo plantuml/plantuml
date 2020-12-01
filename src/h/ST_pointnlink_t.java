@@ -45,63 +45,24 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_pointnlink_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_pointnlink_t extends UnsupportedStarStruct {
 
 	public ST_pointf pp;
 	public ST_pointnlink_t link;
 
-	public ST_pointnlink_t() {
-		this(null);
-	}
 
-	public ST_pointnlink_t(StarStruct parent) {
-	}
 
 	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_pointnlink_t other2 = (ST_pointnlink_t) other;
 		return this == other2;
 	}
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("pp")) {
-			System.err.println("newData1=" + newData.getClass());
-			pp = (ST_pointf) newData;
-			return pp;
-		}
-		if (fieldName.equals("link")) {
-			if (newData == null) {
-				link = null;
-				return link;
-			}
-			if (newData instanceof ST_pointnlink_t) {
-				ST_pointnlink_t tmp = (ST_pointnlink_t) newData;
-				link = tmp;
-				return link;
-			}
-			System.err.println("newData2A=" + newData.getClass());
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
-	@Override
-	public ST_pointnlink_t getStruct() {
-		return this;
-	}
 
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct pointnlink_t",
-	// "{",
-	// "Ppoint_t *pp",
-	// "struct pointnlink_t *link",
-	// "}",
-	// "pointnlink_t");
 }
 
 // typedef struct pointnlink_t {

@@ -45,11 +45,10 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
+import smetana.core.__ptr__;
 
-public class ST_subtree_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_subtree_t extends UnsupportedStarStruct {
 
 	public ST_Agnode_s rep;		/* some node in the tree */
 	public int size; 			/* total tight tree size */
@@ -58,7 +57,7 @@ public class ST_subtree_t extends UnsupportedStructAndPtr implements HardcodedSt
 	
 	
 	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_subtree_t other2 = (ST_subtree_t) other;
 		return this == other2;
 	}

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -85,7 +86,7 @@ public class ListSpriteDiagram extends UmlDiagram {
 
 		final int margin1;
 		final int margin2;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			margin1 = SkinParam.zeroMargin(10);
 			margin2 = SkinParam.zeroMargin(10);
 		} else {

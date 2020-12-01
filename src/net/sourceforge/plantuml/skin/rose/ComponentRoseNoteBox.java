@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -59,7 +59,7 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	public ComponentRoseNoteBox(Style style, SymbolContext symbolContext, FontConfiguration font, Display strings,
 			ISkinSimple spriteContainer, double roundCorner, HorizontalAlignment alignment) {
 		super(style, spriteContainer.wrapWidth(), strings, font, alignment, 4, 4, 4, spriteContainer, false, null, null);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
 			this.roundCorner = style.value(PName.RoundCorner).asInt();
 		} else {

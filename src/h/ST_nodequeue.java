@@ -45,54 +45,18 @@
  */
 package h;
 
-import smetana.core.CStarStar;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.CArrayOfStar;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_nodequeue extends UnsupportedStructAndPtr {
+final public class ST_nodequeue extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_nodequeue() {
-		this(null);
-	}
+	public CArrayOfStar<ST_Agnode_s> store;
+	public CArrayOfStar<ST_Agnode_s> tail;
+	public CArrayOfStar<ST_Agnode_s> head;
+	public CArrayOfStar<ST_Agnode_s> limit;
 
-	public ST_nodequeue(StarStruct parent) {
-		this.parent = parent;
-	}
 
-	// "typedef struct nodequeue",
-	// "{",
-	// "node_t **store, **limit, **head, **tail",
-	public CStarStar<ST_Agnode_s> store;
-	public CStarStar<ST_Agnode_s> tail;
-	public CStarStar<ST_Agnode_s> head;
-	public CStarStar<ST_Agnode_s> limit;
-
-	// "}",
-	// "nodequeue");
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("store")) {
-			this.store = (CStarStar<ST_Agnode_s>) newData;
-			return this.store;
-		}
-		if (fieldName.equals("tail")) {
-			this.tail = (CStarStar<ST_Agnode_s>) newData;
-			return this.tail;
-		}
-		if (fieldName.equals("head")) {
-			this.head = (CStarStar<ST_Agnode_s>) newData;
-			return this.head;
-		}
-		if (fieldName.equals("limit")) {
-			this.limit = (CStarStar<ST_Agnode_s>) newData;
-			return this.limit;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 }
 

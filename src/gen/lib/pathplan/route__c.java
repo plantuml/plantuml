@@ -59,9 +59,8 @@ import h.ST_Pedge_t;
 import h.ST_Ppoly_t;
 import h.ST_pointf;
 import h.ST_tna_t;
-import smetana.core.CStar;
+import smetana.core.CArray;
 import smetana.core.Z;
-import smetana.core.__ptr__;
 import smetana.core.jmp_buf;
 
 public class route__c {
@@ -92,14 +91,14 @@ private static jmp_buf jbuf = new jmp_buf();
 // int Proutespline(Pedge_t * edges, int edgen, Ppolyline_t input, 		 Ppoint_t * evs, Ppolyline_t * output) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="Proutespline", key="9stmrdqlmufyk2wutp3totr5j", definition="int Proutespline(Pedge_t * edges, int edgen, Ppolyline_t input, 		 Ppoint_t * evs, Ppolyline_t * output)")
-public static int Proutespline(CStar<ST_Pedge_t> edges, int edgen, ST_Ppoly_t input, CStar<ST_pointf> evs, ST_Ppoly_t output) {
+public static int Proutespline(CArray<ST_Pedge_t> edges, int edgen, ST_Ppoly_t input, CArray<ST_pointf> evs, ST_Ppoly_t output) {
 // WARNING!! STRUCT
 return Proutespline_w_(edges, edgen, (ST_Ppoly_t) input.copy(), evs, output);
 }
-private static int Proutespline_w_(CStar<ST_Pedge_t> edges, int edgen, final ST_Ppoly_t input, CStar<ST_pointf> evs, ST_Ppoly_t output) {
+private static int Proutespline_w_(CArray<ST_Pedge_t> edges, int edgen, final ST_Ppoly_t input, CArray<ST_pointf> evs, ST_Ppoly_t output) {
 ENTERING("9stmrdqlmufyk2wutp3totr5j","Proutespline");
 try {
-	CStar<ST_pointf> inps;
+	CArray<ST_pointf> inps;
     int inpn;
     /* unpack into previous format rather than modify legacy code */
     inps = input.ps;
@@ -115,7 +114,7 @@ UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     Z.z().opl++;
     if (reallyroutespline(edges, edgen, inps, inpn, evs.get__(0), evs.get__(1)) == -1)
 	return -1;
-    output.setInt("pn", Z.z().opl);
+    output.pn = Z.z().opl;
     output.ps = Z.z().ops_route;
     return 0;
 } finally {
@@ -132,11 +131,11 @@ LEAVING("9stmrdqlmufyk2wutp3totr5j","Proutespline");
 //private static int tnan;
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="", key="", definition="")
-public static int reallyroutespline(CStar<ST_Pedge_t> edges, int edgen, CStar<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
+public static int reallyroutespline(CArray<ST_Pedge_t> edges, int edgen, CArray<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
 // WARNING!! STRUCT
 return reallyroutespline_w_(edges, edgen, inps, inpn, ev0.copy(), ev1.copy());
 }
-private static int reallyroutespline_w_(CStar<ST_Pedge_t> edges, int edgen, CStar<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
+private static int reallyroutespline_w_(CArray<ST_Pedge_t> edges, int edgen, CArray<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
 ENTERING("13dxqzbgtpl4ubnnvw6ehzzi9","reallyroutespline");
 try {
     final ST_pointf p1 = new ST_pointf(), p2 = new ST_pointf(), cp1 = new ST_pointf(), cp2 = new ST_pointf(), p = new ST_pointf();
@@ -145,10 +144,10 @@ try {
     int maxi, i, spliti;
     if (Z.z().tnan < inpn) {
 	if (N(Z.z().tnas)) {
-	    if (N(Z.z().tnas = CStar.<ST_tna_t>ALLOC__(inpn, ST_tna_t.class)))
+	    if (N(Z.z().tnas = CArray.<ST_tna_t>ALLOC__(inpn, ST_tna_t.class)))
 		return -1;
 	} else {
-	    if (N(Z.z().tnas = CStar.<ST_tna_t>REALLOC__(inpn, Z.z().tnas, ST_tna_t.class)))
+	    if (N(Z.z().tnas = CArray.<ST_tna_t>REALLOC__(inpn, Z.z().tnas, ST_tna_t.class)))
 		return -1;
 	}
 	Z.z().tnan = inpn;
@@ -159,8 +158,8 @@ try {
     for (i = 1; i < inpn; i++)
 	Z.z().tnas.get__(i).t = (Z.z().tnas.get__(i).t / Z.z().tnas.get__(inpn - 1).t);
     for (i = 0; i < inpn; i++) {
-	Z.z().tnas.get__(i).a[0].____(scale(ev0, B1(Z.z().tnas.get__(i).t)));
-	Z.z().tnas.get__(i).a[1].____(scale(ev1, B2(Z.z().tnas.get__(i).t)));
+	Z.z().tnas.get__(i).a[0].___(scale(ev0, B1(Z.z().tnas.get__(i).t)));
+	Z.z().tnas.get__(i).a[1].___(scale(ev1, B2(Z.z().tnas.get__(i).t)));
     }
     if (mkspline(inps, inpn, Z.z().tnas, ev0, ev1, p1, v1, p2, v2) == -1)
 	return -1;
@@ -195,11 +194,11 @@ LEAVING("13dxqzbgtpl4ubnnvw6ehzzi9","reallyroutespline");
 // static int mkspline(Ppoint_t * inps, int inpn, tna_t * tnas, Ppoint_t ev0, 		    Ppoint_t ev1, Ppoint_t * sp0, Ppoint_t * sv0, 		    Ppoint_t * sp1, Ppoint_t * sv1) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="mkspline", key="29sok6jkfyobf83q130snkhmh", definition="static int mkspline(Ppoint_t * inps, int inpn, tna_t * tnas, Ppoint_t ev0, 		    Ppoint_t ev1, Ppoint_t * sp0, Ppoint_t * sv0, 		    Ppoint_t * sp1, Ppoint_t * sv1)")
-public static int mkspline(CStar<ST_pointf> inps, int inpn, CStar<ST_tna_t> tnas, final ST_pointf ev0, final ST_pointf ev1, __ptr__ sp0, __ptr__ sv0, __ptr__ sp1, __ptr__ sv1) {
+public static int mkspline(CArray<ST_pointf> inps, int inpn, CArray<ST_tna_t> tnas, final ST_pointf ev0, final ST_pointf ev1, ST_pointf sp0, ST_pointf sv0, ST_pointf sp1, ST_pointf sv1) {
 // WARNING!! STRUCT
 return mkspline_w_(inps, inpn, tnas, ev0.copy(), ev1.copy(), sp0, sv0, sp1, sv1);
 }
-private static int mkspline_w_(CStar<ST_pointf> inps, int inpn, CStar<ST_tna_t> tnas, final ST_pointf ev0, final ST_pointf ev1, __ptr__ sp0, __ptr__ sv0, __ptr__ sp1, __ptr__ sv1) {
+private static int mkspline_w_(CArray<ST_pointf> inps, int inpn, CArray<ST_tna_t> tnas, final ST_pointf ev0, final ST_pointf ev1, ST_pointf sp0, ST_pointf sv0, ST_pointf sp1, ST_pointf sv1) {
 ENTERING("29sok6jkfyobf83q130snkhmh","mkspline");
 try {
     final ST_pointf tmp = new ST_pointf();
@@ -233,10 +232,10 @@ try {
 	scale0 = d01;
 	scale3 = d01;
     }
-    sp0.setStruct(inps.get__(0));
-    sv0.setStruct(scale(ev0, scale0));
-    sp1.setStruct(inps.get__(inpn - 1));
-    sv1.setStruct(scale(ev1, scale3));
+    sp0.___(inps.get__(0));
+    sv0.___(scale(ev0, scale0));
+    sp1.___(inps.get__(inpn - 1));
+    sv1.___(scale(ev1, scale3));
     return 0;
 } finally {
 LEAVING("29sok6jkfyobf83q130snkhmh","mkspline");
@@ -250,7 +249,7 @@ LEAVING("29sok6jkfyobf83q130snkhmh","mkspline");
 // static double dist_n(Ppoint_t * p, int n) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="dist_n", key="ea6jsc0rwfyjtmmuxax6r5ngk", definition="static double dist_n(Ppoint_t * p, int n)")
-public static double dist_n(CStar<ST_pointf> p, int n) {
+public static double dist_n(CArray<ST_pointf> p, int n) {
 ENTERING("ea6jsc0rwfyjtmmuxax6r5ngk","dist_n");
 try {
     int i;
@@ -274,14 +273,14 @@ LEAVING("ea6jsc0rwfyjtmmuxax6r5ngk","dist_n");
 // static int splinefits(Pedge_t * edges, int edgen, Ppoint_t pa, 		      Pvector_t va, Ppoint_t pb, Pvector_t vb, 		      Ppoint_t * inps, int inpn) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="splinefits", key="987ednrgu5qo9dzhpiox47mhb", definition="static int splinefits(Pedge_t * edges, int edgen, Ppoint_t pa, 		      Pvector_t va, Ppoint_t pb, Pvector_t vb, 		      Ppoint_t * inps, int inpn)")
-public static int splinefits(CStar<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CStar<ST_pointf> inps, int inpn) {
+public static int splinefits(CArray<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray<ST_pointf> inps, int inpn) {
 // WARNING!! STRUCT
 return splinefits_w_(edges, edgen, pa.copy(), va.copy(), pb.copy(), vb.copy(), inps, inpn);
 }
-private static int splinefits_w_(CStar<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CStar<ST_pointf> inps, int inpn) {
+private static int splinefits_w_(CArray<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray<ST_pointf> inps, int inpn) {
 ENTERING("987ednrgu5qo9dzhpiox47mhb","splinefits");
 try {
-    final CStar<ST_pointf> sps = CStar.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    final CArray<ST_pointf> sps = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
     double a, b;
     int pi;
     int forceflag;
@@ -355,13 +354,13 @@ LEAVING("987ednrgu5qo9dzhpiox47mhb","splinefits");
 // static int splineisinside(Pedge_t * edges, int edgen, Ppoint_t * sps) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="splineisinside", key="b6eghkeu16aum3l778ig52ht1", definition="static int splineisinside(Pedge_t * edges, int edgen, Ppoint_t * sps)")
-public static boolean splineisinside(CStar<ST_Pedge_t> edges, int edgen, CStar<ST_pointf> sps) {
+public static boolean splineisinside(CArray<ST_Pedge_t> edges, int edgen, CArray<ST_pointf> sps) {
 ENTERING("b6eghkeu16aum3l778ig52ht1","splineisinside");
 try {
     final double roots[] = new double[4];
     int rooti, rootn;
     int ei;
-    final CStar<ST_pointf> lps = CStar.<ST_pointf>ALLOC__(2, ST_pointf.class);
+    final CArray<ST_pointf> lps = CArray.<ST_pointf>ALLOC__(2, ST_pointf.class);
     final ST_pointf ip = new ST_pointf();
     
     double t, ta, tb, tc, td;
@@ -403,7 +402,7 @@ LEAVING("b6eghkeu16aum3l778ig52ht1","splineisinside");
 // static int splineintersectsline(Ppoint_t * sps, Ppoint_t * lps, 				double *roots) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="splineintersectsline", key="32nc8itszi77u36la8npt2870", definition="static int splineintersectsline(Ppoint_t * sps, Ppoint_t * lps, 				double *roots)")
-public static int splineintersectsline(CStar<ST_pointf> sps, CStar<ST_pointf> lps, double roots[]) {
+public static int splineintersectsline(CArray<ST_pointf> sps, CArray<ST_pointf> lps, double roots[]) {
 ENTERING("32nc8itszi77u36la8npt2870","splineintersectsline");
 try {
     final double scoeff[] = new double[4];
@@ -569,12 +568,12 @@ try {
     if (newopn <= Z.z().opn_route)
 	return;
     if (N(Z.z().ops_route)) {
-	if (N(Z.z().ops_route = CStar.<ST_pointf>ALLOC__(newopn, ST_pointf.class))) {
+	if (N(Z.z().ops_route = CArray.<ST_pointf>ALLOC__(newopn, ST_pointf.class))) {
 UNSUPPORTED("413an1hqgkb4ezaec6qdsdplx"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\route.c", 32, ("cannot malloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z.z().ops_route = CStar.<ST_pointf>REALLOC__(newopn, Z.z().ops_route, ST_pointf.class))) {
+	if (N(Z.z().ops_route = CArray.<ST_pointf>REALLOC__(newopn, Z.z().ops_route, ST_pointf.class))) {
 UNSUPPORTED("8u0qgahxvk5pplf90thmhwxhl"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\route.c", 32, ("cannot realloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}

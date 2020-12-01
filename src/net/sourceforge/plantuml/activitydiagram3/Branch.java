@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
@@ -93,7 +93,7 @@ public class Branch {
 		if (inlabel == null) {
 			throw new IllegalArgumentException();
 		}
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(styleBuilder);
 			this.color = color == null
 					? style.value(PName.BackGroundColor).asColor(styleBuilder.getSkinParam().getIHtmlColorSet())

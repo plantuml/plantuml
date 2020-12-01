@@ -45,15 +45,14 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_LeafList_t extends UnsupportedStructAndPtr {
+final public class ST_LeafList_t extends UnsupportedStarStruct {
 
 	public ST_LeafList_t next;
+	// WARNING
 	public ST_Branch_t /* ST_Leaf_t */leaf;
 
-	public ST_LeafList_t() {
-	}
 
 
 	// typedef struct LeafList {

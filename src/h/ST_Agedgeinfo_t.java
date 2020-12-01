@@ -45,27 +45,12 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_Agedgeinfo_t extends UnsupportedStructAndPtr {
-
-	private final StarStruct parent;
-
-	public ST_Agedgeinfo_t() {
-		this(null);
-	}
-
-	public ST_Agedgeinfo_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public final ST_Agrec_s hdr = new ST_Agrec_s(this);
+final public class ST_Agedgeinfo_t extends ST_Agrec_s {
 
 	public ST_splines spl;
-	public final ST_port tail_port = new ST_port(this), head_port = new ST_port(this);
+	public final ST_port tail_port = new ST_port(), head_port = new ST_port();
 	public ST_textlabel_t label, head_label, tail_label, xlabel;
 	public int edge_type;
 	public int adjacent;
@@ -86,13 +71,15 @@ public class ST_Agedgeinfo_t extends UnsupportedStructAndPtr {
 
 	public ST_Agedge_s to_virt;
 
+
 	@Override
-	public void copyDataFrom(__struct__ other) {
+	public void ___(__struct__ other) {
 		ST_Agedgeinfo_t this2 = (ST_Agedgeinfo_t) other;
-		this.hdr.copyDataFrom((__struct__) this2.hdr);
+		this.name = this2.name;
+		this.next = this2.next;
 		this.spl = this2.spl;
-		this.tail_port.copyDataFrom((__struct__) this2.tail_port);
-		this.head_port.copyDataFrom((__struct__) this2.head_port);
+		this.tail_port.___((__struct__) this2.tail_port);
+		this.head_port.___((__struct__) this2.head_port);
 		this.label = this2.label;
 		this.head_label = this2.head_label;
 		this.tail_label = this2.tail_label;
@@ -111,115 +98,6 @@ public class ST_Agedgeinfo_t extends UnsupportedStructAndPtr {
 		this.count = this2.count;
 		this.minlen = this2.minlen;
 		this.to_virt = this2.to_virt;
-	}
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Agrec_s.class) {
-			return hdr;
-		}
-		if (dest == ST_Agedgeinfo_t.class) {
-			return this;
-		}
-		return super.castTo(dest);
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("tail_port")) {
-			this.tail_port.copyDataFrom(newData);
-			return;
-		}
-		if (fieldName.equals("head_port")) {
-			this.head_port.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("dist")) {
-			this.dist = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("minlen")) {
-			this.minlen = data;
-			return;
-		}
-		if (fieldName.equals("weight")) {
-			this.weight = data;
-			return;
-		}
-		if (fieldName.equals("cutvalue")) {
-			this.cutvalue = data;
-			return;
-		}
-		if (fieldName.equals("tree_index")) {
-			this.tree_index = data;
-			return;
-		}
-		if (fieldName.equals("count")) {
-			this.count = data;
-			return;
-		}
-		if (fieldName.equals("xpenalty")) {
-			this.xpenalty = data;
-			return;
-		}
-		if (fieldName.equals("showboxes")) {
-			this.showboxes = data;
-			return;
-		}
-		if (fieldName.equals("edge_type")) {
-			this.edge_type = data;
-			return;
-		}
-		if (fieldName.equals("adjacent")) {
-			this.adjacent = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("to_virt")) {
-				this.to_virt = (ST_Agedge_s) newData;
-			return this.to_virt;
-		}
-		if (fieldName.equals("to_orig")) {
-				this.to_orig = (ST_Agedge_s) newData;
-			return this.to_orig;
-		}
-		if (fieldName.equals("spl")) {
-			this.spl = (ST_splines) newData;
-			return this.spl;
-		}
-		if (fieldName.equals("label")) {
-			this.label = (ST_textlabel_t) newData;
-			return this.label;
-		}
-		if (fieldName.equals("head_label")) {
-			this.head_label = (ST_textlabel_t) newData;
-			return this.head_label;
-		}
-		if (fieldName.equals("tail_label")) {
-			this.tail_label = (ST_textlabel_t) newData;
-			return this.tail_label;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __struct__ getStruct() {
-		return this;
 	}
 
 }

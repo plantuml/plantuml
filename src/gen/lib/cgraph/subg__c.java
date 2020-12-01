@@ -54,8 +54,6 @@ import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGRAPH;
-import static smetana.core.Macro.N;
-import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.dtfirst;
 import static smetana.core.Macro.dtnext;
 
@@ -66,8 +64,8 @@ import h.ST_Agdesc_s;
 import h.ST_Agraph_s;
 import h.ST_dt_s;
 import smetana.core.CString;
+import smetana.core.JUtilsDebug;
 import smetana.core.Z;
-import smetana.core.__ptr__;
 
 public class subg__c {
 
@@ -102,36 +100,16 @@ try {
     if (subg!=null)
 	return subg;
     subg = (ST_Agraph_s) agalloc(g, sizeof(ST_Agraph_s.class));
-    subg.setPtr("clos", g.clos);
-    subg.setStruct("desc", g.desc);
+    subg.clos = g.clos;
+    subg.desc.___(g.desc);
     ((ST_Agdesc_s)subg.desc).maingraph = 0;
-    subg.setPtr("parent", g);
-    subg.setPtr("root", g.root);
+    subg.parent = g;
+    subg.root = g.root;
     AGID(subg, id);
     return agopen1(subg);
 } finally {
 LEAVING("44saycxbfbr9lou0itlyewkb4","localsubg");
 }
-}
-
-
-
-
-//3 6wqxmivgp34bobzqacmsj7lcv
-// Agraph_t *agidsubg(Agraph_t * g, unsigned long id, int cflag) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/subg.c", name="", key="6wqxmivgp34bobzqacmsj7lcv", definition="Agraph_t *agidsubg(Agraph_t * g, unsigned long id, int cflag)")
-public static Object agidsubg(Object... arg) {
-UNSUPPORTED("9vhen1flll6k35g72uuroky0z"); // Agraph_t *agidsubg(Agraph_t * g, unsigned long id, int cflag)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c3tourf5k7groqyh71yjd5xec"); //     Agraph_t *subg;
-UNSUPPORTED("elpselocwvpfk3o27nejqo6dl"); //     subg = agfindsubg_by_id(g, id);
-UNSUPPORTED("cf9t4fxh9z5rmv58441ne0ysa"); //     if ((subg == ((Agraph_t*)0)) && cflag && agallocid(g, AGRAPH, id))
-UNSUPPORTED("ecrqdk8b7debftn6d8bbmh0s4"); // 	subg = localsubg(g, id);
-UNSUPPORTED("17jmp11l2jzc1v9qpaqkzkauj"); //     return subg;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
 }
 
 
@@ -144,18 +122,23 @@ throw new UnsupportedOperationException();
 public static ST_Agraph_s agsubg(ST_Agraph_s g, CString name, boolean cflag) {
 ENTERING("a24jd4r2sdyb4lb2hyababrda","agsubg");
 try {
-    int id[] = new int[]{0};
+    final int id[] = new int[]{0};
+    JUtilsDebug.LOG("agsubg g=" + g + " name=" + name);
     ST_Agraph_s subg;
     if (name!=null && agmapnametoid(g, AGRAPH, name, id, false)!=0) {
+    JUtilsDebug.LOG("might already exist");
 	/* might already exist */
-	if ((subg = agfindsubg_by_id(g, id[0]))!=null)
-	    return subg;
+	if ((subg = agfindsubg_by_id(g, id[0]))!=null) {
+	    JUtilsDebug.LOG("yes returning "+subg);
+	    return subg;}
     }
     if (cflag && agmapnametoid(g, AGRAPH, name, id, true)!=0) {	/* reserve id */
 	subg = localsubg(g, id[0]);
 	agregister(g, AGRAPH, subg);
+	JUtilsDebug.LOG("reserve id "+subg);
 	return subg;
     }
+    JUtilsDebug.LOG("return null");
     return null;
 } finally {
 LEAVING("a24jd4r2sdyb4lb2hyababrda","agsubg");
@@ -207,21 +190,6 @@ LEAVING("7kbp6j03hd7u6nnlivi0vt3ja","agparent");
 }
 }
 
-
-
-
-//3 37trxrsv69a3pl08f5awwj3tq
-// long agdelsubg(Agraph_t * g, Agraph_t * subg) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/subg.c", name="agdelsubg", key="37trxrsv69a3pl08f5awwj3tq", definition="long agdelsubg(Agraph_t * g, Agraph_t * subg)")
-public static Object agdelsubg(Object... arg) {
-UNSUPPORTED("bjcimcpi0qag1hc37no67mct5"); // long agdelsubg(Agraph_t * g, Agraph_t * subg)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("dugmh24ptzgxuj3204p7n39m4"); //     return (long) (*(((Dt_t*)(g->g_dict))->searchf))((g->g_dict),(void*)(subg),0000002);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 }

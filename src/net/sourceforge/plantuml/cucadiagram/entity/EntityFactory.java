@@ -48,7 +48,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierImpl;
@@ -126,7 +126,7 @@ public final class EntityFactory {
 		if (g.getUrl99() != null) {
 			folder.addUrl(g.getUrl99());
 		}
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			// System.err.println("Backcolor ?");
 		} else {
 			if (g.getColors(skinParam).getColor(ColorType.BACK) == null) {

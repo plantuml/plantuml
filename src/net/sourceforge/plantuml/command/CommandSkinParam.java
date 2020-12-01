@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
 
 public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 
@@ -59,9 +60,14 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
-		// arg.get(0).endsWith("locked");
-		diagram.setParam(arg.get("NAME", 0), arg.get("VALUE", 0));
-		return CommandExecutionResult.ok();
+		try {
+			diagram.setParam(arg.get("NAME", 0), arg.get("VALUE", 0));
+			return CommandExecutionResult.ok();
+		} catch (NoStyleAvailableException e) {
+			// e.printStackTrace();
+			return CommandExecutionResult.error("General failure: no style available.");
+		}
+
 	}
 
 }

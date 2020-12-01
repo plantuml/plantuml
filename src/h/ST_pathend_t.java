@@ -45,69 +45,22 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_pathend_t extends UnsupportedStructAndPtr {
+final public class ST_pathend_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_pathend_t() {
-		this(null);
-	}
-
-	public ST_pathend_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "typedef struct pathend_t",
-	// "{",
-	public final ST_boxf nb = new ST_boxf(this);
-	public final ST_pointf np = new ST_pointf(this);
+	public final ST_boxf nb = new ST_boxf();
+	public final ST_pointf np = new ST_pointf();
 	public int sidemask;
-	public int boxn;
+	public int boxn[] = new int[1];
 
 	public final ST_boxf boxes[] = new ST_boxf[] { new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(),
 			new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(),
 			new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(), new ST_boxf(),
 			new ST_boxf(), new ST_boxf() };
 
-	// "boxf boxes[20]",
-	// "}",
-	// "pathend_t");
 
-	@Override
-	public __ptr__ getPtr() {
-		return this;
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("np")) {
-			this.np.___(newData);
-			return;
-		}
-		if (fieldName.equals("nb")) {
-			this.nb.___(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("boxn")) {
-			this.boxn = data;
-			return;
-		}
-		if (fieldName.equals("sidemask")) {
-			this.sidemask = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
 }
 

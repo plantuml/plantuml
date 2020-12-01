@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.style;
 
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -64,15 +64,20 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 	}
 
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
-		SkinParam.setBetaStyle(true);
-		if (SkinParam.USE_STYLES() == false) {
+		UseStyle.setBetaStyle(true);
+		if (UseStyle.useBetaStyle() == false) {
 			return CommandExecutionResult.ok();
 		}
-		final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-		for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines.subExtract(1, 1), styleBuilder)) {
-			diagram.getSkinParam().muteStyle(modifiedStyle);
+		try {
+			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
+			for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines.subExtract(1, 1), styleBuilder)) {
+				diagram.getSkinParam().muteStyle(modifiedStyle);
+			}
+			return CommandExecutionResult.ok();
+		} catch (NoStyleAvailableException e) {
+			// e.printStackTrace();
+			return CommandExecutionResult.error("General failure: no style available.");
 		}
-		return CommandExecutionResult.ok();
 	}
 
 }

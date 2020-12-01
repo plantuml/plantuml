@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.PathIterator;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.svg.SvgGraphics;

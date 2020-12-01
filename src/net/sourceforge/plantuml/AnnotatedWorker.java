@@ -169,7 +169,7 @@ public class AnnotatedWorker {
 		if (caption.isNull()) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.caption)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
@@ -185,7 +185,7 @@ public class AnnotatedWorker {
 		}
 
 		final TextBlock block;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.title)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);

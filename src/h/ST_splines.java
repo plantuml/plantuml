@@ -45,40 +45,15 @@
  */
 package h;
 
-import smetana.core.CStar;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.CArray;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_splines extends UnsupportedStructAndPtr {
+final public class ST_splines extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_splines() {
-		this(null);
-	}
-
-	public ST_splines(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "typedef struct splines",
-	// "{",
-// 	bezier *list;
-	public CStar<ST_bezier> list;
+	public CArray<ST_bezier> list;
 	public int size;
 
-	// "boxf bb",
-	// "}",
-	// "splines");
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("size")) {
-			this.size = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
 }
 

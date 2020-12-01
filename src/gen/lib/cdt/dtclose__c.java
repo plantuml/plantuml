@@ -44,14 +44,14 @@
  *
  */
 package gen.lib.cdt;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static gen.lib.cdt.dtsize__c.dtsize_;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
 import smetana.core.Memory;

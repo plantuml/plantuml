@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
 
 public class SkinLoader {
 
@@ -78,31 +79,37 @@ public class SkinLoader {
 			this.push(group1);
 		}
 
-		lines = lines.subExtract(1, 1);
-		lines = lines.trim().removeEmptyLines();
+		try {
 
-		for (StringLocated s : lines) {
-			assert s.getString().length() > 0;
+			lines = lines.subExtract(1, 1);
+			lines = lines.trim().removeEmptyLines();
 
-			if (s.getString().equals("}")) {
-				this.pop();
-				continue;
+			for (StringLocated s : lines) {
+				assert s.getString().length() > 0;
+
+				if (s.getString().equals("}")) {
+					this.pop();
+					continue;
+				}
+				final Matcher2 m = p1.matcher(s.getString());
+				if (m.find() == false) {
+					throw new IllegalStateException();
+				}
+				if (m.group(2) != null) {
+					this.push(m.group(1));
+				} else if (m.group(3) != null) {
+					final String key = this.getFullParam() + m.group(1);
+					diagram.setParam(key, m.group(3));
+				} else {
+					throw new IllegalStateException("." + s.getString() + ".");
+				}
 			}
-			final Matcher2 m = p1.matcher(s.getString());
-			if (m.find() == false) {
-				throw new IllegalStateException();
-			}
-			if (m.group(2) != null) {
-				this.push(m.group(1));
-			} else if (m.group(3) != null) {
-				final String key = this.getFullParam() + m.group(1);
-				diagram.setParam(key, m.group(3));
-			} else {
-				throw new IllegalStateException("." + s.getString() + ".");
-			}
+			return CommandExecutionResult.ok();
+		} catch (NoStyleAvailableException e) {
+			// e.printStackTrace();
+			return CommandExecutionResult.error("General failure: no style available.");
 		}
 
-		return CommandExecutionResult.ok();
 	}
 
 }

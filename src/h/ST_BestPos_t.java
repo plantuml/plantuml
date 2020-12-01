@@ -45,32 +45,21 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_BestPos_t extends UnsupportedStructAndPtr {
-
-	private final StarStruct parent;
+final public class ST_BestPos_t extends UnsupportedStarStruct {
 
 	public int n;
 	public double area;
-	public final ST_pointf pos = new ST_pointf(this);
-
-	public ST_BestPos_t() {
-		this(null);
-	}
-
-	public ST_BestPos_t(StarStruct parent) {
-		this.parent = parent;
-	}
+	public final ST_pointf pos = new ST_pointf();
 
 	@Override
 	public __struct__ copy() {
 		final ST_BestPos_t result = new ST_BestPos_t();
 		result.n = this.n;
 		result.area = this.area;
-		result.pos.copyDataFrom((__struct__) this.pos);
+		result.pos.___((__struct__) this.pos);
 		return result;
 	}
 	
@@ -78,36 +67,11 @@ public class ST_BestPos_t extends UnsupportedStructAndPtr {
 		ST_BestPos_t this2 = (ST_BestPos_t) other;
 		this.n = this2.n;
 		this.area = this2.area;
-		this.pos.copyDataFrom((__struct__) this2.pos);
+		this.pos.___((__struct__) this2.pos);
 	}
 
 
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("pos")) {
-			pos.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("n")) {
-			this.n = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("area")) {
-			this.area = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
 
 	// typedef struct best_p_s {
 	// int n;

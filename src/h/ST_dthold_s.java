@@ -45,51 +45,13 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_dthold_s extends UnsupportedStructAndPtr {
+final public class ST_dthold_s extends ST_dtlink_s {
 
-	private final StarStruct parent;
-
-	public ST_dthold_s() {
-		this(null);
-	}
-
-	public ST_dthold_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "struct _dthold_s",
-	// "{",
-	// "Dtlink_t hdr",
-	// "void*  obj",
-	public final ST_dtlink_s hdr = new ST_dtlink_s(this);
+	public final ST_dtlink_s hdr = this;
 	public __ptr__ obj;
 
-	// "}");
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_dthold_s.class) {
-			return this;
-		}
-		if (dest == ST_dtlink_s.class) {
-			return hdr;
-		}
-		return super.castTo(dest);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("obj")) {
-			this.obj = newData;
-			return this.obj;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-	
 }
 
 // struct _dthold_s

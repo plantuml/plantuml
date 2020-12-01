@@ -34,25 +34,12 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
-import static gen.lib.cgraph.attr__c.agsafeset;
-import static gen.lib.cgraph.edge__c.agedge;
-import static gen.lib.cgraph.graph__c.agopen;
-import static gen.lib.cgraph.node__c.agnode;
-import static gen.lib.gvc.gvc__c.gvContext;
-import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
-
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
-import h.ST_Agedge_s;
-import h.ST_Agnode_s;
-import h.ST_Agnodeinfo_t;
-import h.ST_Agraph_s;
-import h.ST_GVC_s;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
@@ -60,32 +47,34 @@ import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonObject.Member;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import smetana.core.CString;
-import smetana.core.JUtilsDebug;
-import smetana.core.Macro;
-import smetana.core.Z;
 
 public class JsonDiagram extends UmlDiagram {
-	
-	private final JsonObject root;
 
-	public JsonDiagram(JsonObject json) {
+	private final JsonValue root;
+	private final List<String> highlighted;
+
+	public JsonDiagram(JsonValue json, List<String> highlighted) {
 		this.root = json;
+		this.highlighted = highlighted;
 	}
 
 	public DiagramDescription getDescription() {
@@ -106,12 +95,12 @@ public class JsonDiagram extends UmlDiagram {
 		final ISkinParam skinParam = getSkinParam();
 		final int margin1;
 		final int margin2;
-		if (SkinParam.USE_STYLES()) {
-			margin1 = SkinParam.zeroMargin(0);
-			margin2 = SkinParam.zeroMargin(0);
+		if (UseStyle.useBetaStyle()) {
+			margin1 = SkinParam.zeroMargin(10);
+			margin2 = SkinParam.zeroMargin(10);
 		} else {
-			margin1 = 0;
-			margin2 = 0;
+			margin1 = 10;
+			margin2 = 10;
 		}
 		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
 				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, "", "", dpiFactor, null);
@@ -122,22 +111,23 @@ public class JsonDiagram extends UmlDiagram {
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, 0, os);
 	}
 
+	private void drawInternal(UGraphic ug) {
+		if (root == null) {
+			final Display display = Display.getWithNewlines("Your data does not sound like JSON data");
+			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));
+			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());
+			result = TextBlockUtils.withMargin(result, 5, 2);
+			result.drawU(ug);
+		} else {
+			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);
+		}
+	}
+
 	private TextBlockBackcolored getTextBlock() {
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
-				final Map<String, String> map = new LinkedHashMap<String, String>();
-				for (Member member : root) {
-					final String name = member.getName();
-					final JsonValue value = member.getValue();
-					map.put(name, value.toString());
-				}
-				TextBlock tb = new TextBlockJson(getSkinParam(), map);
-				tb.drawU(ug);
-				// ug.draw(new URectangle(100, 10));
-
-				// See TextBlockMap
-
+				drawInternal(ug);
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {

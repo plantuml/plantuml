@@ -46,19 +46,18 @@
 package h;
 
 import smetana.core.OFFSET;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_dtlink_s extends UnsupportedStructAndPtr implements WithParent {
+public class ST_dtlink_s extends UnsupportedStarStruct {
 
 	public ST_dtlink_s right;
 	public ST_dtlink_s _left;
-	private final StarStruct parent;
+	private final __ptr__ container;
 
 	@Override
-	public void copyDataFrom(__struct__ other) {
+	public void ___(__struct__ other) {
 		ST_dtlink_s this2 = (ST_dtlink_s) other;
 		this.right = this2.right;
 		this._left = this2._left;
@@ -68,37 +67,20 @@ public class ST_dtlink_s extends UnsupportedStructAndPtr implements WithParent {
 		this(null);
 	}
 
-	public ST_dtlink_s(StarStruct parent) {
-		this.parent = parent;
+	public ST_dtlink_s(__ptr__ parent) {
+		this.container = parent;
 	}
 
-	public StarStruct getParent() {
-		return parent;
+	public __ptr__ getParent() {
+		return container;
 	}
-
-	// @Override
-	// public __ptr__ castTo(Class dest) {
-	// if (dest == ST_dtlink_s.class) {
-	// // return amp();
-	// return this;
-	// }
-	// if (dest == _dthold_s.class) {
-	// return new LinkTo_dthold_s();
-	// }
-	// return super.castTo(dest);
-	// }
 
 	@Override
 	public __ptr__ castTo(Class dest) {
 		if (dest == ST_dtlink_s.class) {
 			return this;
 		}
-		// if (dest == refstr_t.class && getParent() instanceof ST_refstr_t) {
-		// return (ST_refstr_t) getParent();
-		// }
 		if (dest == ST_dthold_s.class && getParent() instanceof ST_dthold_s) {
-			// System.err.println("ITSME");
-			// System.err.println("getParent()=" + getParent());
 			return (ST_dthold_s) getParent();
 
 		}
@@ -106,96 +88,41 @@ public class ST_dtlink_s extends UnsupportedStructAndPtr implements WithParent {
 		return super.castTo(dest);
 	}
 
-	public ST_dthold_s castTo_ST_dthold_s() {
-		if (getParent() instanceof ST_dthold_s) {
-			return (ST_dthold_s) getParent();
-		}
-		throw new UnsupportedOperationException();
-	}
 
-	class LinkTo_dthold_s extends UnsupportedStructAndPtr {
-
-	}
-
-	class LinkTo_Obj extends UnsupportedStructAndPtr {
-
-	}
 
 	@Override
-	public Object addVirtualBytes(int virtualBytes) {
-		if (virtualBytes == 0) {
+	public Object getTheField(OFFSET offset) {
+		if (offset == null || offset.getSign() == 0) {
 			return this;
 		}
-		if (virtualBytes < 0) {
-			final OFFSET offset = OFFSET.fromInt(-virtualBytes);
-			if (offset.toString().equals("h.ST_Agsubnode_s::id_link")) {
-				return ((ST_Agsubnode_s) parent).from_id_link(ST_dtlink_s.this);
-			}
-			if (offset.toString().equals("h.ST_Agsubnode_s::seq_link")) {
-				return ((ST_Agsubnode_s) parent).from_seq_link(ST_dtlink_s.this);
-			}
-			if (offset.toString().equals("h.ST_Agsym_s::link")) {
-				return ((ST_Agsym_s) parent).from_link(ST_dtlink_s.this);
-			}
-			if (offset.toString().equals("h.ST_Agedge_s::seq_link")) {
-				return ((ST_Agedge_s) parent).from_seq_link(ST_dtlink_s.this);
-			}
-			if (offset.toString().equals("h.ST_Agedge_s::id_link")) {
-				return ((ST_Agedge_s) parent).from_id_link(ST_dtlink_s.this);
-			}
-			if (offset.toString().equals("h.ST_Agraph_s::link")) {
-				return ((ST_Agraph_s) parent).from_link(ST_dtlink_s.this);
-			}
-			System.err.println("virtualBytes=" + virtualBytes);
-			System.err.println("offset=" + offset);
-			return super.addVirtualBytes(virtualBytes);
-		}
-		final OFFSET offset = OFFSET.fromInt(virtualBytes);
-		if (offset.toString().equals("h.ST_refstr_t::s") && parent instanceof ST_refstr_t) {
-			return ((ST_refstr_t) parent).to_s(ST_dtlink_s.this);
+		if (offset.getField().equals("s") && container instanceof ST_refstr_t) {
+			return ((ST_refstr_t) container).s;
 
 		}
-		System.err.println("virtualBytes=" + virtualBytes);
-		System.err.println("offset=" + offset);
-		return super.addVirtualBytes(virtualBytes);
+		// Negative because we go back to the parent
+		offset = offset.negative();
+
+		return container;
+//		if (offset.getKey().equals("h.ST_Agsubnode_s::id_link")) {
+//			return ((ST_Agsubnode_s) parent);
+//		}
+//		if (offset.getKey().equals("h.ST_Agsubnode_s::seq_link")) {
+//			return ((ST_Agsubnode_s) parent);
+//		}
+//		if (offset.getKey().equals("h.ST_Agsym_s::link")) {
+//			return ((ST_Agsym_s) parent);
+//		}
+//		if (offset.getKey().equals("h.ST_Agedge_s::seq_link")) {
+//			return ((ST_Agedge_s) parent);
+//		}
+//		if (offset.getKey().equals("h.ST_Agedge_s::id_link")) {
+//			return ((ST_Agedge_s) parent);
+//		}
+//		if (offset.getKey().equals("h.ST_Agraph_s::link")) {
+//			return ((ST_Agraph_s) parent);
+//		}
 	}
 
-	// @Override
-	// public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-	// if (fieldName.equals("hl._left")) {
-	// this._left = (ST_dtlink_s) newData;
-	// return _left;
-	// }
-	// if (fieldName.equals("right")) {
-	// this.right = (ST_dtlink_s) newData;
-	// return right;
-	// }
-	// return super.setPtr(fieldName, newData);
-	// }
-
-	// @Override
-	// public __ptr__ getPtr(String fieldName) {
-	// // if (fieldName.equals("hl._left")) {
-	// // return _left;
-	// // }
-	// if (fieldName.equals("right")) {
-	// return right;
-	// }
-	// return super.getPtr(fieldName);
-	// }
-
-	// public interface ST_dtlink_s extends __ptr__ {
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct _dtlink_s",
-	// "{",
-	// "Dtlink_t* right",
-	// "union",
-	// "{",
-	// "unsigned int _hash",
-	// "Dtlink_t* _left",
-	// "}",
-	// "hl",
-	// "}");
 }
 
 // struct _dtlink_s

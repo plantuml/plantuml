@@ -46,22 +46,11 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
 // UNUSED ?
-public class ST_textspan_t extends UnsupportedStructAndPtr {
+final public class ST_textspan_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_textspan_t() {
-		this(null);
-	}
-
-	public ST_textspan_t(StarStruct parent) {
-		this.parent = parent;
-	}
 
 	public CString str;
 
@@ -69,28 +58,11 @@ public class ST_textspan_t extends UnsupportedStructAndPtr {
 	// "void *layout",
 	// "void (*free_layout) (void *layout)",
 	// "double yoffset_layout, yoffset_centerline",
-	public final ST_pointf size = new ST_pointf(this);
+	public final ST_pointf size = new ST_pointf();
 	public int just;
 
 
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("just")) {
-			this.just = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("str")) {
-			this.str = (CString) newData;
-			return str;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 }
 

@@ -50,8 +50,6 @@ import static gen.lib.common.emit__c.gv_fixLocale;
 import static gen.lib.common.input__c.graph_init;
 import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.enumAsInt;
-import static smetana.core.JUtils.function;
 import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
@@ -65,14 +63,13 @@ import static smetana.core.Macro.UNSUPPORTED;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
-import gen.annotation.Unused;
+import h.EN_layout_type;
 import h.ST_Agraph_s;
 import h.ST_Agraphinfo_t;
 import h.ST_GVC_s;
 import h.ST_gvlayout_engine_s;
 import h.ST_gvlayout_features_t;
 import h.ST_gvplugin_installed_t;
-import h.layout_type;
 import smetana.core.CString;
 
 public class gvlayout__c {
@@ -82,8 +79,8 @@ private final static ST_gvlayout_features_t dotgen_features = new ST_gvlayout_fe
 private final static ST_gvlayout_engine_s dotgen_engine = new ST_gvlayout_engine_s();
 static {
 	dotgen_features.flags = LAYOUT_USES_RANKDIR;
-	dotgen_engine.layout = function(gen.lib.dotgen.dotinit__c.class, "dot_layout");
-	dotgen_engine.cleanup = function(gen.lib.dotgen.dotinit__c.class, "dot_cleanup");
+	dotgen_engine.layout = gen.lib.dotgen.dotinit__c.dot_layout;
+	dotgen_engine.cleanup = gen.lib.dotgen.dotinit__c.dot_cleanup;
 }
 
 
@@ -94,7 +91,7 @@ public static int gvlayout_select(ST_GVC_s gvc, CString layout) {
 ENTERING("2g20jitdi8afuoei8p1mcfg9l","gvlayout_select");
 try {
 	ST_gvplugin_installed_t gvlayout_dot_layout = new ST_gvplugin_installed_t();
-	gvlayout_dot_layout.id = enumAsInt(layout_type.class, "LAYOUT_DOT");
+	gvlayout_dot_layout.id = EN_layout_type.LAYOUT_DOT;
 	gvlayout_dot_layout.type = new CString("dot");
 	gvlayout_dot_layout.quality = 0;
 	gvlayout_dot_layout.engine = dotgen_engine;
@@ -160,7 +157,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	if (gvle.cleanup!=null)
 		if (GD_cleanup(g)==null) 
 		LOG2("WARNING WE CHEAT GD_cleanup(g) is NULL"); else
-	    GD_cleanup(g).setPtr(gvle.cleanup);
+	    GD_cleanup(g, gvle.cleanup);
     }
     gv_fixLocale (0);
     return 0;
@@ -171,27 +168,6 @@ LEAVING("991b7t7n0x8ifkp49zotjs78x","gvLayoutJobs");
 
 
 
-
-@Unused
-@Original(version="2.38.0", path="lib/gvc/gvlayout.c", name="gvFreeLayout", key="3c99zdwpmvsunk8fuj6my9c14", definition="int gvFreeLayout(GVC_t * gvc, Agraph_t * g)")
-public static Object gvFreeLayout(Object... arg) {
-UNSUPPORTED("miztaqpyzsrx0tzflsbk18df"); // int gvFreeLayout(GVC_t * gvc, Agraph_t * g)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("an78d0x2t0pcnm5p7x0nsyl8o"); //     /* skip if no Agraphinfo_t yet */
-UNSUPPORTED("y9n04abevv5wkts4l75cl1au"); //     if (! agbindrec(g, "Agraphinfo_t", 0, NOT(0)))
-UNSUPPORTED("6f1138i13x0xz1bf1thxgjgka"); // 	    return 0;
-UNSUPPORTED("3tq49gfbuixakj7ae5tf9mzxz"); //     if (GD_cleanup(g)) {
-UNSUPPORTED("66fe8hcy8mktqozsl94u84wy4"); // 	(GD_cleanup(g))(g);
-UNSUPPORTED("9otfc4inu4hywb5uzke8hroh8"); // 	GD_cleanup(g) = NULL;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("6o4u7hjlds1wsu4tuaotw2xvr"); //     if (GD_drawing(g)) {
-UNSUPPORTED("614pp135h9hyyoa6quv172ent"); // 	graph_cleanup(g);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("5oxhd3fvp0gfmrmz12vndnjt"); //     return 0;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 }

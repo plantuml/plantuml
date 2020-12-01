@@ -44,18 +44,17 @@
  *
  */
 package gen.lib.gvc;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static gen.lib.gvc.gvplugin__c.gvplugin_load;
-import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
+import h.EN_api_t;
 import h.ST_GVC_s;
 import h.ST_gvplugin_available_s;
 import h.ST_gvplugin_installed_t;
-import h.api_t;
 import smetana.core.CString;
 
 public class gvtextlayout__c {
@@ -170,7 +169,7 @@ ENTERING("f1oiyeonoigwygyq8c88wl8tz","gvtextlayout_select");
 try {
 	ST_gvplugin_available_s plugin;
     ST_gvplugin_installed_t typeptr;
-    plugin = gvplugin_load(gvc, enumAsInt(api_t.class, "API_textlayout"), new CString("textlayout"));
+    plugin = gvplugin_load(gvc, EN_api_t.API_textlayout, new CString("textlayout"));
     if (plugin!=null) {
 UNSUPPORTED("8cnmkxanogd09zc24faarugvo"); // 	typeptr = plugin->typeptr;
 UNSUPPORTED("cihmstdaldbultct48d4klpzn"); // 	gvc->textlayout.engine = (gvtextlayout_engine_t *) (typeptr->engine);
@@ -183,23 +182,6 @@ LEAVING("f1oiyeonoigwygyq8c88wl8tz","gvtextlayout_select");
 }
 
 
-
-
-//3 f2jbuh3elz9mya1fc3ga6d3z9
-// boolean gvtextlayout(GVC_t *gvc, textspan_t *span, char **fontpath) 
-@Unused
-@Original(version="2.38.0", path="lib/gvc/gvtextlayout.c", name="gvtextlayout", key="f2jbuh3elz9mya1fc3ga6d3z9", definition="boolean gvtextlayout(GVC_t *gvc, textspan_t *span, char **fontpath)")
-public static Object gvtextlayout(Object... arg) {
-UNSUPPORTED("2jsqpz6hn581464yugh0tou2l"); // boolean gvtextlayout(GVC_t *gvc, textspan_t *span, char **fontpath)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("6lss2n766usro8etj7wmu49lz"); //     gvtextlayout_engine_t *gvte = gvc->textlayout.engine;
-UNSUPPORTED("8kfw5uy3hnla57n731fnzv3rh"); //     if (gvte && gvte->textlayout)
-UNSUPPORTED("1vzb5q1afwigxljf6njahgd70"); // 	return gvte->textlayout(span, fontpath);
-UNSUPPORTED("5oxhd3fvp0gfmrmz12vndnjt"); //     return 0;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 }

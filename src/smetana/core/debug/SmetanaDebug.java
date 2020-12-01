@@ -59,6 +59,7 @@ public class SmetanaDebug {
 
 	public SmetanaDebug() {
 		try {
+			out2.getParentFile().mkdirs();
 			pw2 = new PrintWriter(out2);
 			System.err.println("CREATING " + out2.getAbsolutePath());
 		} catch (FileNotFoundException e) {

@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -101,7 +101,7 @@ public class FtileGroup extends AbstractFtile {
 		this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
 
 		final FontConfiguration fc;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			fc = style.getFontConfiguration(getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();

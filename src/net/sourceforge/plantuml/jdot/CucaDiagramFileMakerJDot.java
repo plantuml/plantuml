@@ -60,15 +60,16 @@ import h.ST_Agnode_s;
 import h.ST_Agnodeinfo_t;
 import h.ST_Agraph_s;
 import h.ST_Agraphinfo_t;
+import h.ST_Agrec_s;
 import h.ST_GVC_s;
 import h.ST_boxf;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -173,7 +174,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		}
 
 		private Point2D getCorner(ST_Agnode_s n) {
-			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n).castTo(ST_Agnodeinfo_t.class);
+			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n);
 			final double width = data.width * 72;
 			final double height = data.height * 72;
 			final double x = data.coord.x;
@@ -204,7 +205,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 	public void drawGroup(UGraphic ug, YMirror ymirror, IGroup group, ST_Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
 		try {
-			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) Macro.AGDATA(gr).castTo(ST_Agraphinfo_t.class);
+			final ST_Agrec_s tmp1 = Macro.AGDATA(gr);
+			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) tmp1;
 			final ST_boxf bb = (ST_boxf) data.bb;
 			final double llx = bb.LL.x;
 			double lly = bb.LL.y;
@@ -223,7 +225,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			// UChangeColor(HtmlColorUtils.BLUE))
 			// .draw(new URectangle(urx - llx, ury - lly));
 			cluster.drawU(ug, new UStroke(1.5), diagram.getUmlDiagramType(), diagram.getSkinParam());
-		} catch (UnsupportedOperationException e) {
+		} catch (Exception e) {
 			System.err.println("CANNOT DRAW GROUP");
 		}
 	}
@@ -262,7 +264,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-						g.getStereotype(), null, SName.stateDiagram);
+						g.getStereotype(), null, getStyle(FontParam.STATE_ATTRIBUTE));
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
@@ -283,6 +285,11 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		printGroups(g);
 
 		dotStringFactory.closeCluster();
+	}
+
+	private Style getStyle(FontParam fontParam) {
+		return fontParam.getStyleDefinition(SName.stateDiagram)
+				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private void printEntities(Collection<ILeaf> entities2) {
@@ -449,7 +456,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			final double scale = 1;
 
 			final ClockwiseTopRightBottomLeft margins;
-			if (SkinParam.USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final Style style = StyleSignature.of(SName.root, SName.document)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				margins = style.getMargin();

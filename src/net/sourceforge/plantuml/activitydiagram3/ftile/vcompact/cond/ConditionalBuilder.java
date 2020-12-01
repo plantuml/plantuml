@@ -39,8 +39,8 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -105,7 +105,7 @@ public class ConditionalBuilder {
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle,
 			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration fontArrow, FontConfiguration fontTest, Url url) {
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style styleArrow = getDefaultStyleDefinitionArrow()
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final Style styleDiamond = getDefaultStyleDefinitionDiamond()

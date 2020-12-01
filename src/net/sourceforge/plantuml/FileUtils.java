@@ -96,14 +96,16 @@ public class FileUtils {
 		return f;
 	}
 
-	private static void copyInternal(final InputStream fis, final OutputStream fos) throws IOException {
+	static public void copyInternal(final InputStream fis, final OutputStream fos, boolean close) throws IOException {
 		final byte[] buf = new byte[10240];
 		int len;
 		while ((len = fis.read(buf)) > 0) {
 			fos.write(buf, 0, len);
 		}
-		fos.close();
-		fis.close();
+		if (close) {
+			fos.close();
+			fis.close();
+		}
 	}
 
 	static public void copyToFile(SFile src, SFile dest) throws IOException {
@@ -115,7 +117,7 @@ public class FileUtils {
 			throw new FileNotFoundException();
 		}
 		final OutputStream fos = dest.createBufferedOutputStream();
-		copyInternal(fis, fos);
+		copyInternal(fis, fos, true);
 	}
 
 	static public void copyToStream(SFile src, OutputStream os) throws IOException {
@@ -124,19 +126,19 @@ public class FileUtils {
 			throw new FileNotFoundException();
 		}
 		final OutputStream fos = new BufferedOutputStream(os);
-		copyInternal(fis, fos);
+		copyInternal(fis, fos, true);
 	}
 
 	static public void copyToStream(File src, OutputStream os) throws IOException {
 		final InputStream fis = new BufferedInputStream(new FileInputStream(src));
 		final OutputStream fos = new BufferedOutputStream(os);
-		copyInternal(fis, fos);
+		copyInternal(fis, fos, true);
 	}
 
 	static public void copyToStream(InputStream is, OutputStream os) throws IOException {
 		final InputStream fis = new BufferedInputStream(is);
 		final OutputStream fos = new BufferedOutputStream(os);
-		copyInternal(fis, fos);
+		copyInternal(fis, fos, true);
 	}
 
 	static public void copyToFile(byte[] src, SFile dest) throws IOException {

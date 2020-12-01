@@ -106,7 +106,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 			this.fields = new TextBlockLineBefore(new TextBlockEmpty(10, 16));
 		} else {
 			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, showFields,
-					entity.getStereotype());
+					entity.getStereotype(), null);
 		}
 		this.url = entity.getUrl99();
 

@@ -44,7 +44,6 @@
  *
  */
 package gen.lib.cdt;
-import gen.annotation.Unused;
 import static gen.lib.cdt.dtrestore__c.dtrestore;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.sizeof;
@@ -69,7 +68,6 @@ import static smetana.core.Macro.DT_RENEW;
 import static smetana.core.Macro.DT_SEARCH;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.UNSUPPORTED_INT;
 import static smetana.core.Macro.llink____warning;
 import static smetana.core.Macro.lrotate;
 import static smetana.core.Macro.rlink____warning;
@@ -82,7 +80,9 @@ import h.ST_dtdisc_s;
 import h.ST_dthold_s;
 import h.ST_dtlink_s;
 import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
+import smetana.core.OFFSET;
 import smetana.core.__ptr__;
 
 public class dttree__c {
@@ -99,6 +99,11 @@ static class dt_next extends RuntimeException {}
 
 
 
+public static CFunction dttree = new CFunctionAbstract("dttree") {
+	
+	public Object exe(Object... args) {
+		return dttree((ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);
+	}};
 
 @Reviewed(when = "11/11/2020")
 @Original(version="2.38.0", path="lib/cdt/dttree.c", name="dttree", key="abqfzg1d1vkzk51225tcdlik5", definition="static void* dttree(Dt_t* dt, void* obj, int type)")
@@ -106,7 +111,7 @@ public static Object dttree(ST_dt_s dt, __ptr__ obj, int type) {
 ENTERING("abqfzg1d1vkzk51225tcdlik5","dttree");
 try {
 	ST_dtlink_s	root, t;
-	int		cmp, lk, sz, ky;
+	int		cmp, sz; OFFSET lk, ky;
 	ST_dtlink_s	l, r, me=null;
 	final ST_dtlink_s link = new ST_dtlink_s();
 	Object		o, k, key = null;
@@ -128,7 +133,7 @@ try {
 	
 		if((type&DT_CLEAR)!=0) /* delete all objects */
 		{
-			if(disc.freef!=null || disc.link < 0) {
+			if(disc.freef!=null || disc.link.getSign() < 0) {
 				do {
 					while((t = root._left)!=null )
 						{ rrotate(root, t); root = t; }
@@ -136,7 +141,7 @@ try {
 					if(disc.freef!=null)
 						throw new UnsupportedOperationException();
 //						(*disc->freef)(dt,(lk < 0 ? ((Dthold_t*)(root))->obj : (void*)((char*)(root) - lk) ),disc);
-					if(disc.link < 0)
+					if(disc.link.getSign() < 0)
 						dt.memoryf.exe(dt, root, null, disc);
 				} while((root = t)!=null );
 			}
@@ -182,7 +187,7 @@ try {
 	}
 	try {
 	if(((type&(DT_MATCH|DT_SEARCH|DT_INSERT|DT_ATTACH))!=0))
-		{	key = ((type&DT_MATCH)!=0) ? obj : _DTKEY(obj, ky, sz);
+		{	key = ((type&DT_MATCH)!=0) ? obj : _DTKEY(obj, ky);
 		if(root!=null)
 			throw new do_search();
 	}
@@ -195,7 +200,7 @@ try {
 //			goto do_search;
 	}
 	else if(root!=null && EQ(_DTOBJ(root, lk), obj) == false)
-	{	key = _DTKEY(obj, ky, sz);
+	{	key = _DTKEY(obj, ky);
 		throw new do_search();
 	}
 	} catch (do_search do_search) {
@@ -248,12 +253,12 @@ try {
 		
 		
 		while(true) {
-			k = _DTOBJ(root, lk); k = _DTKEY((__ptr__) k,ky,sz);
+			k = _DTOBJ(root, lk); k = _DTKEY((__ptr__) k,ky);
 			if((cmp = _DTCMP(dt, key, k, disc, cmpf, sz)) == 0)
 				break;
 			else if(cmp < 0)
 			{	if((t = root._left)!=null )
-				{ k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k,ky,sz);
+				{ k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k,ky);
 				if((cmp = _DTCMP(dt, key, k, disc, cmpf, sz)) < 0)
 					{	rrotate(root, t);
 						r = rlink____warning(r, t);
@@ -280,7 +285,7 @@ try {
 			}
 			else /* if(cmp > 0) */
 			{	if ((t = root.right)!=null )
-				{   k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k, ky, sz);
+				{   k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k, ky);
 					if((cmp = _DTCMP(dt, key, k, disc, cmpf, sz)) > 0)
 					{   lrotate(root, t);
 						l = llink____warning(l, t);
@@ -371,14 +376,14 @@ try {
 					obj = (__ptr__) disc.makef.exe(dt,obj,disc);
 				if(obj!=null)
 				{
-					if(lk >= 0)
+					if(lk.getSign() >= 0)
 						root = _DTLNK(obj, lk);
 					else
 					{
 						root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(
 								dt,null,sizeof(ST_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
 						if(root!=null)
-							root.castTo_ST_dthold_s().obj = obj;
+							((ST_dthold_s)root).obj = obj;
 						else if(disc.makef!=null && disc.freef!=null &&
 							((type&DT_INSERT))!=0)
 							UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
@@ -441,14 +446,14 @@ try {
 				obj = (__ptr__) disc.makef.exe(dt,obj,disc);
 			if(obj!=null)
 			{
-				if(lk >= 0)
+				if(lk.getSign() >= 0)
 					root = _DTLNK(obj, lk);
 				else
 				{
 					root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(
 						dt, null, sizeof(ST_dthold_s.class),disc)).castTo(ST_dtlink_s.class));
 					if(root!=null)
-						root.castTo_ST_dthold_s().obj = obj;
+						((ST_dthold_s)root).obj = obj;
 					else if(disc.makef!=null && disc.freef!=null &&
 						((type&DT_INSERT))!=0)
 						UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
@@ -507,24 +512,45 @@ LEAVING("abqfzg1d1vkzk51225tcdlik5","dttree");
 }
 
 
+///* internal functions for translating among holder, object and key */
+//#define _DT(dt)		((Dt_t*)(dt))
+//#define _DTDSC(dc,ky,sz,lk,cmpf) \
+//			(ky = dc->key, sz = dc->size, lk = dc->link, cmpf = dc->comparf)
+//#define _DTKEY(o,ky,sz)	(Void_t*)(sz < 0 ? *((char**)((char*)(o)+ky)) : ((char*)(o)+ky))
 
-private static ST_dtlink_s _DTLNK(__ptr__ o, int lk) {
-	return (ST_dtlink_s) ((__ptr__)o.addVirtualBytes(lk)).castTo(ST_dtlink_s.class);
-}
 
+//#define _DTLNK(o,lk)	((Dtlink_t*)((char*)(o) + lk) )
+private static ST_dtlink_s _DTLNK(__ptr__ o, OFFSET lk) {
+		final __ptr__ tmp1 = (__ptr__) o.getTheField(lk);
+		final __ptr__ tmp2 = tmp1.castTo(ST_dtlink_s.class);
+		return (ST_dtlink_s) tmp2;
+	}
+
+//#define _DTCMP(dt,k1,k2,dc,cmpf,sz) \
+//(cmpf ? (*cmpf)(dt,k1,k2,dc) : \
+// (sz <= 0 ? strcmp(k1,k2) : memcmp(k1,k2,sz)) )
 private static int _DTCMP(ST_dt_s dt, Object k1, Object k2, ST_dtdisc_s dc, CFunction cmpf, int sz) {
-	return cmpf!=null ? (Integer)cmpf.exe(dt, k1, k2, dc) : 
-		(sz <= 0 ? strcmp((CString)k1, (CString)k2) : UNSUPPORTED_INT("memcmp(key,k,sz))") );
+		if (cmpf == null) {
+			if (sz <= 0) {
+				return strcmp((CString) k1, (CString) k2);
+			}
+			throw new UnsupportedOperationException("memcmp(key,k,sz))");
+		}
+		return (Integer) cmpf.exe(dt, k1, k2, dc);
+	}
+
+
+//#define _DTOBJ(e,lk)	(lk < 0 ? ((Dthold_t*)(e))->obj : (Void_t*)((char*)(e) - lk) )
+private static Object _DTOBJ(ST_dtlink_s root, OFFSET lk) {
+	if (lk.getSign() < 0) {
+		return ((ST_dthold_s)root).obj;
+	}
+	return root.getTheField(lk.negative());
 }
 
 
-private static Object _DTOBJ(ST_dtlink_s root, int lk) {
-	return lk < 0 ? root.castTo_ST_dthold_s().obj : root.addVirtualBytes(-lk);
-}
-
-
-private static Object _DTKEY(__ptr__ obj, int ky, int sz) {
-	return sz < 0 ? obj.addVirtualBytes(ky) : obj.addVirtualBytes(ky);
+private static Object _DTKEY(__ptr__ obj, OFFSET ky) {
+	return obj.getTheField(ky);
 }
 
 

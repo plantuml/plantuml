@@ -44,13 +44,13 @@
  *
  */
 package gen.lib.label;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_Rect_t;
 
 public class rectangle__c {
@@ -278,33 +278,6 @@ LEAVING("9glce34jzknoqj98agg96k03o","Overlap");
 
 
 
-
-//3 b2epj09d2wxyndbn4bgdsxr2q
-// int Contained(Rect_t * r, Rect_t * s) 
-@Unused
-@Original(version="2.38.0", path="lib/label/rectangle.c", name="Contained", key="b2epj09d2wxyndbn4bgdsxr2q", definition="int Contained(Rect_t * r, Rect_t * s)")
-public static Object Contained(Object... arg) {
-UNSUPPORTED("733zc41b58sdh3p9oeu9fj9l4"); // int Contained(Rect_t * r, Rect_t * s)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9awzjr4cb2zjgf6gos90frckl"); //     register int i, j, result;
-UNSUPPORTED("3ilt6jfw7dcaebocva6xawiui"); //     assert(r && s);
-UNSUPPORTED("ef38prhqw1mt7m82qf23llthz"); //     /* undefined rect is contained in any other */
-UNSUPPORTED("61el74qdlszr9b7htgajgnncw"); //     if (((r)->boundary[0] > (r)->boundary[2]))
-UNSUPPORTED("3adr32h5e1fehu4g7j2u24asz"); // 	return (!(0));
-UNSUPPORTED("97iyq13885wpg4001abrkjhuk"); //     /* no rect (except an undefined one) is contained in an undef rect */
-UNSUPPORTED("ex7jjwy9foumvka1ks3pzhm6u"); //     if (((s)->boundary[0] > (s)->boundary[2]))
-UNSUPPORTED("e6i1m837bi402fjvy87uxgyf"); // 	return (0);
-UNSUPPORTED("41048mrirr0adiwxs12neylq8"); //     result = (!(0));
-UNSUPPORTED("6xp61z8h2baoxnlm757q289e3"); //     for (i = 0; i < 2; i++) {
-UNSUPPORTED("71gqfx1xze9ccjzy9ids9x8cj"); // 	j = i + 2;	/* index for high sides */
-UNSUPPORTED("59et7tzqav7nffmkllv6u1kbt"); // 	result = result && r->boundary[i] >= s->boundary[i]
-UNSUPPORTED("4tdt6ca6zi1rw9kklpgicedap"); // 	    && r->boundary[j] <= s->boundary[j];
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("e73y2609z2557xahrcvzmcb8e"); //     return result;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 }

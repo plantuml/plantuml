@@ -68,6 +68,9 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
 		final String value = arg.get("VALUE", 0);
 		system.getPragma().define(name, value);
+		if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("smetana")) {
+			system.setUseJDot(true);
+		}
 		if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot")) {
 			system.setUseJDot(true);
 		}

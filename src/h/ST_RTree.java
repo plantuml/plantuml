@@ -45,27 +45,14 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_RTree extends UnsupportedStructAndPtr {
+final public class ST_RTree extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_RTree() {
-		this(null);
-	}
-
-	public ST_RTree(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "struct RTree",
-	// "{",
 	public ST_Node_t___ root;
 	// "Node_t *root",
-	public final ST_SplitQ_t split = new ST_SplitQ_t(this);
+	public final ST_SplitQ_t split = new ST_SplitQ_t();
 	public int MinFill;
 	// "long ElapsedTime",
 	// "float UserTime, SystemTime",
@@ -88,47 +75,8 @@ public class ST_RTree extends UnsupportedStructAndPtr {
 	public int LeafCount, NonLeafCount;
 
 	public int EntryCount;
-	// "int SearchCount",
-	// "int HitCount",
-	// "}");
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("root")) {
-			this.root = (ST_Node_t___) newData;
-			return root;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("NodeCount")) {
-			this.NodeCount = data;
-			return;
-		}
-		if (fieldName.equals("LeafCount")) {
-			this.LeafCount = data;
-			return;
-		}
-		if (fieldName.equals("RectCount")) {
-			this.RectCount = data;
-			return;
-		}
-		if (fieldName.equals("EntryCount")) {
-			this.EntryCount = data;
-			return;
-		}
-		if (fieldName.equals("SeTouchCount")) {
-			this.SeTouchCount = data;
-			return;
-		}
-		if (fieldName.equals("NonLeafCount")) {
-			this.NonLeafCount = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
 }
 

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Pragma;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.InstructionList;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -228,7 +228,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private TextBlock getTitle(Swimlane swimlane) {
 		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
 		FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.SWIMLANE_TITLE, null);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			fontConfiguration = getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
 		}
 		LineBreakStrategy wrap = getWrap();
@@ -302,7 +302,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	private void drawTitlesBackground(UGraphic ug) {
 		HColor color = skinParam.getHtmlColor(ColorParam.swimlaneTitleBackground, null, false);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		}
 		if (color != null) {

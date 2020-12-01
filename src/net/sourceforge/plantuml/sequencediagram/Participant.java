@@ -39,17 +39,16 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -77,7 +76,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public Style[] getUsedStyles() {
-		if (SkinParam.USE_STYLES() == false) {
+		if (UseStyle.useBetaStyle() == false) {
 			return null;
 		}
 		final StyleSignature signature = getDefaultStyleDefinition().with(stereotype);
@@ -107,7 +106,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		this.code = code;
 		this.type = type;
 		this.display = display;
-		// if (SkinParam.USE_STYLES()) {
+		// if (UseStyle.USE_STYLES()) {
 		// this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
 		// }
 	}
@@ -147,7 +146,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		this.stereotype = stereotype;
 		this.stereotypePositionTop = stereotypePositionTop;
 
-		// if (SkinParam.USE_STYLES()) {
+		// if (UseStyle.USE_STYLES()) {
 		// for (Style style : stereotype.getStyles(styleBuilder)) {
 		// this.style = this.style.mergeWith(style);
 		// }

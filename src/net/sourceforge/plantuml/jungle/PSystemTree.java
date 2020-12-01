@@ -42,6 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -69,7 +70,7 @@ public class PSystemTree extends AbstractPSystem {
 			throws IOException {
 		final int margin1;
 		final int margin2;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			margin1 = SkinParam.zeroMargin(5);
 			margin2 = SkinParam.zeroMargin(5);
 		} else {

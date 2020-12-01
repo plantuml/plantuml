@@ -40,6 +40,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.Style;
 
 public interface Bodier {
 
@@ -52,7 +53,7 @@ public interface Bodier {
 	public void addFieldOrMethod(String s);
 
 	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype);
+			Stereotype stereotype, Style style);
 
 	public List<String> getRawBody();
 

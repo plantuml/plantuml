@@ -154,20 +154,20 @@ public class EmbeddedDiagram implements CharSequence {
 		}
 
 		private String getImageSvg() throws IOException, InterruptedException {
-			final boolean sav = SkinParam.USE_STYLES();
+			final boolean sav = UseStyle.useBetaStyle();
 			final Diagram system = getSystem();
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
 			system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
 			os.close();
-			SkinParam.setBetaStyle(sav);
+			UseStyle.setBetaStyle(sav);
 			return new String(os.toByteArray());
 		}
 
 		private BufferedImage getImage() throws IOException, InterruptedException {
 			if (image == null) {
-				final boolean sav = SkinParam.USE_STYLES();
+				final boolean sav = UseStyle.useBetaStyle();
 				image = getImageSlow();
-				SkinParam.setBetaStyle(sav);
+				UseStyle.setBetaStyle(sav);
 			}
 			return image;
 		}

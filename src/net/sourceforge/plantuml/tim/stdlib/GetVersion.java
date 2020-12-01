@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.version.Version;
 public class GetVersion extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%version", 1);
+		return new TFunctionSignature("%version", 0);
 	}
 
 	public boolean canCover(int nbArg, Set<String> namedArgument) {

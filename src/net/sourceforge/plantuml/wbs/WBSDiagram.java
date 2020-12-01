@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -60,6 +61,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -86,7 +88,7 @@ public class WBSDiagram extends UmlDiagram {
 		final ISkinParam skinParam = getSkinParam();
 		final double margin1;
 		final double margin2;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			margin1 = SkinParam.zeroMargin(10);
 			margin2 = SkinParam.zeroMargin(10);
 		} else {
@@ -145,20 +147,25 @@ public class WBSDiagram extends UmlDiagram {
 
 	public CommandExecutionResult addIdea(HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {
-		final Matcher2 m = patternStereotype.matcher(label);
-		String stereotype = null;
-		if (m.matches()) {
-			label = m.group(1);
-			stereotype = m.group(2);
-		}
-		if (level == 0) {
-			if (root != null) {
-				return CommandExecutionResult.error("Error 44");
+		try {
+			final Matcher2 m = patternStereotype.matcher(label);
+			String stereotype = null;
+			if (m.matches()) {
+				label = m.group(1);
+				stereotype = m.group(2);
 			}
-			initRoot(backColor, label, stereotype);
-			return CommandExecutionResult.ok();
+			if (level == 0) {
+				if (root != null) {
+					return CommandExecutionResult.error("Error 44");
+				}
+				initRoot(backColor, label, stereotype);
+				return CommandExecutionResult.ok();
+			}
+			return add(backColor, level, label, stereotype, direction, shape);
+		} catch (NoStyleAvailableException e) {
+			// e.printStackTrace();
+			return CommandExecutionResult.error("General failure: no style available.");
 		}
-		return add(backColor, level, label, stereotype, direction, shape);
 	}
 
 	private WElement root;
@@ -180,21 +187,26 @@ public class WBSDiagram extends UmlDiagram {
 
 	private CommandExecutionResult add(HColor backColor, int level, String label, String stereotype,
 			Direction direction, IdeaShape shape) {
-		if (level == last.getLevel() + 1) {
-			final WElement newIdea = last.createElement(backColor, level, Display.getWithNewlines(label), stereotype,
-					direction, shape, getSkinParam().getCurrentStyleBuilder());
-			last = newIdea;
-			return CommandExecutionResult.ok();
+		try {
+			if (level == last.getLevel() + 1) {
+				final WElement newIdea = last.createElement(backColor, level, Display.getWithNewlines(label),
+						stereotype, direction, shape, getSkinParam().getCurrentStyleBuilder());
+				last = newIdea;
+				return CommandExecutionResult.ok();
+			}
+			if (level <= last.getLevel()) {
+				final int diff = last.getLevel() - level + 1;
+				final WElement newIdea = getParentOfLast(diff).createElement(backColor, level,
+						Display.getWithNewlines(label), stereotype, direction, shape,
+						getSkinParam().getCurrentStyleBuilder());
+				last = newIdea;
+				return CommandExecutionResult.ok();
+			}
+			return CommandExecutionResult.error("error42L");
+		} catch (NoStyleAvailableException e) {
+			// e.printStackTrace();
+			return CommandExecutionResult.error("General failure: no style available.");
 		}
-		if (level <= last.getLevel()) {
-			final int diff = last.getLevel() - level + 1;
-			final WElement newIdea = getParentOfLast(diff).createElement(backColor, level,
-					Display.getWithNewlines(label), stereotype, direction, shape,
-					getSkinParam().getCurrentStyleBuilder());
-			last = newIdea;
-			return CommandExecutionResult.ok();
-		}
-		return CommandExecutionResult.error("error42L");
 	}
 
 }

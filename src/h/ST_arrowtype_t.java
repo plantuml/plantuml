@@ -46,10 +46,10 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
 
-public class ST_arrowtype_t extends UnsupportedStructAndPtr {
+final public class ST_arrowtype_t extends UnsupportedStarStruct {
 
 	public int type;
 	public double lenfact;
@@ -62,39 +62,8 @@ public class ST_arrowtype_t extends UnsupportedStructAndPtr {
 		lenfact = other2.lenfact;
 		gen = other2.gen;
 	}
-	
-//	@Override
-//	public int getInt(String fieldName) {
-//		if (fieldName.equals("type")) {
-//			return type;
-//		}
-//		return super.getInt(fieldName);
-//	}
-//	
-//	@Override
-//	public double getDouble(String fieldName) {
-//		if (fieldName.equals("lenfact")) {
-//			return lenfact;
-//		}
-//		return super.getDouble(fieldName);
-//	}
-//	
-//	@Override
-//	public __ptr__ getPtr(String fieldName) {
-//		if (fieldName.equals("gen")) {
-//			return gen;
-//		}
-//		return super.getPtr(fieldName);
-//	}
 
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct arrowtype_t",
-	// "{",
-	// "int type",
-	// "double lenfact",
-	// "void (*gen) (GVJ_t * job, pointf p, pointf u, double arrowsize, double penwidth, int flag)",
-	// "}",
-	// "arrowtype_t");
+
 }
 
 // typedef struct arrowtype_t {

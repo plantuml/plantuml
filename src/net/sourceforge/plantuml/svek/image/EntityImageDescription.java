@@ -44,9 +44,9 @@ import java.util.Set;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -127,9 +127,15 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final double diagonalCorner;
 		final double deltaShadow;
 		final UStroke stroke;
-		if (SkinParam.USE_STYLES()) {
-			final Style style = StyleSignature
-					.of(SName.root, SName.element, styleName, symbol.getSkinParameter().getStyleName())
+		final FontConfiguration fcTitle;
+		final FontConfiguration fcStereo;
+
+		Style style = null;
+		if (UseStyle.useBetaStyle()) {
+			final StyleSignature tmp = StyleSignature.of(SName.root, SName.element, styleName,
+					symbol.getSkinParameter().getStyleName());
+			style = tmp.with(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			final Style styleStereo = tmp.withStereotype(stereotype)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			forecolor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			if (backcolor == null) {
@@ -139,6 +145,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 			deltaShadow = style.value(PName.Shadowing).asDouble();
 			stroke = style.getStroke();
+			fcTitle = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+			fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		} else {
 			forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());
 			if (backcolor == null) {
@@ -152,6 +160,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 			} else {
 				stroke = forceStroke;
 			}
+			fcTitle = new FontConfiguration(getSkinParam(), symbol.getFontParam(), stereotype);
+			fcStereo = new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype);
 		}
 
 		assert getStereo() == stereotype;
@@ -164,15 +174,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 				|| entity.getDisplay().isWhite()) {
 			desc = TextBlockUtils.empty(getSkinParam().minClassWidth(), 0);
 		} else {
-			final FontConfiguration titleConfig = new FontConfiguration(getSkinParam(), symbol.getFontParam(),
-					stereotype);
 
 			desc = new BodyEnhanced2(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
-					getSkinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), titleConfig,
+					getSkinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), fcTitle,
 					getSkinParam().wrapWidth(), getSkinParam().minClassWidth());
-//			desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
-//					HorizontalAlignment.LEFT, stereotype, symbol.manageHorizontalLine(), false, entity,
-//					skinParam.minClassWidth(), SName.componentDiagram);
 		}
 
 		stereo = TextBlockUtils.empty(0, 0);
@@ -182,13 +187,12 @@ public class EntityImageDescription extends AbstractEntityImage {
 			stereo = stereotype.getSprite(getSkinParam());
 		} else if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
-			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
-					new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
+			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(fcStereo,
 					HorizontalAlignment.CENTER, getSkinParam());
 		}
 
 		name = new BodyEnhanced(codeDisplay, symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, entity, SName.componentDiagram);
+				stereotype, symbol.manageHorizontalLine(), false, entity, style);
 
 		if (hideText) {
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
@@ -290,11 +294,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 			final Dimension2D dimSmall = asSmall.calculateDimension(ug.getStringBounder());
 			final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;
-			
+
 			UGraphic ugDesc = ug.apply(new UTranslate(posx1, space + dimSmall.getHeight()));
 			ugDesc = UGraphicStencil.create(ugDesc, dimDesc);
 			desc.drawU(ugDesc);
-			
+
 			final Dimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());
 			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;
 			stereo.drawU(ug.apply(new UTranslate(posx2, -space - dimStereo.getHeight())));

@@ -45,15 +45,12 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Agclos_s extends UnsupportedStructAndPtr {
-	private final StarStruct parent;
+final public class ST_Agclos_s extends UnsupportedStarStruct {
 
-	public final ST_Agdisc_s disc = new ST_Agdisc_s(this); /* resource discipline functions */
-	public final ST_Agdstate_s state = new ST_Agdstate_s(this); /* resource closures */
+	public final ST_Agdisc_s disc = new ST_Agdisc_s(); /* resource discipline functions */
+	public final ST_Agdstate_s state = new ST_Agdstate_s(); /* resource closures */
 	public ST_dt_s strdict;
 	public final int[] seq = new int[3];
 	// "unsigned long seq[3]",
@@ -64,41 +61,7 @@ public class ST_Agclos_s extends UnsupportedStructAndPtr {
 	// "Dict_t *lookup_by_id[3]",
 	public final ST_dt_s[] lookup_by_id = new ST_dt_s[3];
 
-	public ST_Agclos_s() {
-		this(null);
-	}
 
-	public ST_Agclos_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
-
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("strdict")) {
-			this.strdict = (ST_dt_s) newData;
-			return strdict;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	// public interface ST_Agclos_s extends __ptr__ {
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agclos_s",
-	// "{",
-	// "Agdisc_t disc",
-	// "Agdstate_t state",
-	// "Dict_t *strdict",
-	// "unsigned long seq[3]",
-	// "Agcbstack_t *cb",
-	// "unsigned char callbacks_enabled",
-	// "Dict_t *lookup_by_name[3]",
-	// "Dict_t *lookup_by_id[3]",
-	// "}");
 }
 
 // struct Agclos_s {

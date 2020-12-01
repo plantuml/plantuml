@@ -36,29 +36,15 @@
 
 package smetana.core;
 
+public interface __ptr__  {
 
-
-public interface __ptr__ extends __c__fields {
+	public boolean isSameThan(__ptr__ other);
 
 	public __ptr__ castTo(Class dest);
-	public Object addVirtualBytes(int bytes);
-	public __ptr__ unsupported();
-	public __ptr__ plus(int pointerMove);
-	public int comparePointer(__ptr__ other);
-
-	public String getDebug(String fieldName);
-
-	public void copyDataFrom(__ptr__ other);
-	public void copyDataFrom(__struct__ other);
 	
-	public int getInt();
-	public void setInt(int value);
-	public double getDouble();
-	public void setDouble(double value);
-	public __ptr__ getPtr();
-	public void setPtr(__ptr__ value);
-	public __struct__ getStruct();
-	public void setStruct(__struct__ value);
+	public Object getTheField(OFFSET bytes);
+	
+	public __ptr__ unsupported();
 	
 
 }

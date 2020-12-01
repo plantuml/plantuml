@@ -44,15 +44,15 @@
  *
  */
 package gen.lib.pathplan;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static smetana.core.JUtils.atan2;
 import static smetana.core.JUtils.cos;
 import static smetana.core.JUtils.pow;
 import static smetana.core.JUtils.sqrt;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 
 public class solvers__c {
 

@@ -45,23 +45,18 @@
  */
 package h;
 
-import smetana.core.CStarStar;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.CArrayOfStar;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_blk_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_blk_t extends UnsupportedStarStruct {
 	
-	public CStarStar<ST_Agnode_s> data;
-	public CStarStar<ST_Agnode_s> endp;
+	public CArrayOfStar<ST_Agnode_s> data;
+	public CArrayOfStar<ST_Agnode_s> endp;
 	public ST_blk_t prev;
 	public ST_blk_t next;
 
-//typedef struct blk_t {
-//    Agnode_t **data;
-//    Agnode_t **endp;
-//    struct blk_t *prev;
-//    struct blk_t *next;
-//} blk_t;
+
+
 	
 }
 

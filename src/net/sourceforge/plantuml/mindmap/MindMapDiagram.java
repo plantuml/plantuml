@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -207,19 +208,27 @@ public class MindMapDiagram extends UmlDiagram {
 
 	private CommandExecutionResult addIdeaInternal(String stereotype, HColor backColor, int level, Display label,
 			IdeaShape shape, Direction direction) {
-		if (level == 0) {
-			if (this.right.root != null) {
-				return CommandExecutionResult.error(
-						"I don't know how to draw multi-root diagram. You should suggest an image so that the PlantUML team implements it :-)");
+		try {
+			if (left.root == null && right.root == null) {
+				level = 0;
 			}
-			right.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
-			left.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
-			return CommandExecutionResult.ok();
+			if (level == 0) {
+				if (this.right.root != null) {
+					return CommandExecutionResult.error(
+							"I don't know how to draw multi-root diagram. You should suggest an image so that the PlantUML team implements it :-)");
+				}
+				right.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
+				left.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
+				return CommandExecutionResult.ok();
+			}
+			if (direction == Direction.LEFT) {
+				return left.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
+			}
+			return right.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
+		} catch (NoStyleAvailableException e) {
+			// e.printStackTrace();
+			return CommandExecutionResult.error("General failure: no style available.");
 		}
-		if (direction == Direction.LEFT) {
-			return left.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
-		}
-		return right.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
 	}
 
 	static class Branch {

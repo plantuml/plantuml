@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -85,7 +85,7 @@ class USymbolNode extends USymbol {
 		
 		ug.apply(UTranslate.dy(10)).draw(ULine.hline(width - 10));
 		ug.apply(new UTranslate(width - 10, 10)).draw(ULine.vline(height - 10));
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			ug.apply(new UTranslate(0, height)).draw(new UEmpty(10, 10));
 		}
 

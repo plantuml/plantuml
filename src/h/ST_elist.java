@@ -45,35 +45,21 @@
  */
 package h;
 
-import smetana.core.CStarStar;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.CArrayOfStar;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_elist extends UnsupportedStructAndPtr implements HardcodedStruct {
+//typedef struct elist {
+//edge_t **list;
+//int size;
+//} elist;
+
+final public class ST_elist extends UnsupportedStarStruct {
 
 	public int size;
-	public CStarStar<ST_Agedge_s> list;
+	public CArrayOfStar<ST_Agedge_s> list;
 
-	public ST_elist() {
-		this(null);
-	}
 
-	public ST_elist(StarStruct parent) {
-	}
-
-	@Override
-	public void copyDataFrom(__struct__ other) {
-		ST_elist other2 = (ST_elist) other;
-		this.size = other2.size;
-		this.list = other2.list;
-	}
-
-	@Override
-	public void setStruct(__struct__ value) {
-		copyDataFrom(value);
-	}
 
 	@Override
 	public void ___(__struct__ other) {
@@ -91,20 +77,5 @@ public class ST_elist extends UnsupportedStructAndPtr implements HardcodedStruct
 	}
 
 
-//	public void free() {
-//		list = null;
-//	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct elist",
-	// "{",
-	// "edge_t **list",
-	// "int size",
-	// "}",
-	// "elist");
 }
 
-// typedef struct elist {
-// edge_t **list;
-// int size;
-// } elist;

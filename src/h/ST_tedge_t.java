@@ -45,41 +45,20 @@
  */
 package h;
 
-import smetana.core.CStar;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.CArray;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_tedge_t extends UnsupportedStructAndPtr {
+final public class ST_tedge_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_tedge_t() {
-		this(null);
-	}
-
-	public ST_tedge_t(StarStruct parent) {
-		this.parent = parent;
-	}
 
 	public ST_pointnlink_t pnl0p;
 	public ST_pointnlink_t pnl1p;
 
-	public CStar<ST_triangle_t> lrp;
-	public CStar<ST_triangle_t> rtp;
+	public CArray<ST_triangle_t> lrp;
+	public CArray<ST_triangle_t> rtp;
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("pnl0p")) {
-			this.pnl0p = ((ST_pointnlink_t) newData);
-			return this.pnl0p;
-		}
-		if (fieldName.equals("pnl1p")) {
-			this.pnl1p = ((ST_pointnlink_t) newData);
-			return this.pnl1p;
-		}
-		return super.setPtr(fieldName, newData);
-	}
+
+
 
 
 }

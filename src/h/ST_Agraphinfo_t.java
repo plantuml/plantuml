@@ -45,21 +45,82 @@
  */
 package h;
 
+import smetana.core.CArray;
+import smetana.core.CArrayOfStar;
 import smetana.core.CFunction;
-import smetana.core.CStar;
-import smetana.core.CStarStar;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements HardcodedStruct {
 
-	public final ST_Agrec_s hdr = new ST_Agrec_s(this);
+//typedef struct Agraphinfo_t {
+//Agrec_t hdr;
+///* to generate code */
+//layout_t *drawing;
+//textlabel_t *label; /* if the cluster has a title */
+//boxf bb; /* bounding box */
+//pointf border[4]; /* sizes of margins for graph labels */
+//unsigned char gui_state; /* Graph state for GUI ops */
+//unsigned char has_labels;
+//boolean has_images;
+//unsigned char charset; /* input character set */
+//int rankdir;
+//double ht1, ht2; /* below and above extremal ranks */
+//unsigned short flags;
+//void *alg;
+//GVC_t *gvc; /* context for "globals" over multiple graphs */
+//void (*cleanup) (graph_t * g); /* function to deallocate layout-specific data */
+//
+//
+///* to place nodes */
+//node_t **neato_nlist;
+//int move;
+//double **dist, **spring, **sum_t, ***t;
+//unsigned short ndim;
+//unsigned short odim;
+//
+//
+///* to have subgraphs */
+//int n_cluster;
+//graph_t **clust; /* clusters are in clust[1..n_cluster] !!! */
+//graph_t *dotroot;
+//node_t *nlist;
+//rank_t *rank;
+//graph_t *parent; /* containing cluster (not parent subgraph) */
+//int level; /* cluster nesting level (not node level!) */
+//node_t *minrep, *maxrep; /* set leaders for min and max rank */
+//
+///* fast graph node list */
+//nlist_t comp;
+///* connected components */
+//node_t *minset, *maxset; /* set leaders */
+//long n_nodes;
+///* includes virtual */
+//short minrank, maxrank;
+//
+///* various flags */
+//boolean has_flat_edges;
+//boolean has_sourcerank;
+//boolean has_sinkrank;
+//unsigned char showboxes;
+//fontname_kind fontnames; /* to override mangling in SVG */
+//
+//int nodesep, ranksep;
+//node_t *ln, *rn; /* left, right nodes of bounding box */
+//
+///* for clusters */
+//node_t *leader, **rankleader;
+//boolean expanded;
+//char installed;
+//char set_type;
+//char label_pos;
+//boolean exact_ranksep;
+//
+//
+//} Agraphinfo_t;
+final public class ST_Agraphinfo_t extends ST_Agrec_s {
+
 	// /* to generate code */
 	public ST_layout_t drawing;
 	public ST_textlabel_t label; /* if the cluster has a title */
-	public final ST_boxf bb = new ST_boxf(this); /* bounding box */
+	public final ST_boxf bb = new ST_boxf(); /* bounding box */
 	// pointf border[4]; /* sizes of margins for graph labels */
 	public final ST_pointf border[] = new ST_pointf[] { new ST_pointf(), new ST_pointf(), new ST_pointf(),
 			new ST_pointf() };
@@ -87,16 +148,16 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 	// /* to have subgraphs */
 	public int n_cluster;
 	// graph_t **clust; /* clusters are in clust[1..n_cluster] !!! */
-	public CStarStar<ST_Agraph_s> clust;
+	public CArrayOfStar<ST_Agraph_s> clust;
 	public ST_Agraph_s dotroot;
 	public ST_Agnode_s nlist;
-	public CStar<ST_rank_t> rank;
+	public CArray<ST_rank_t> rank;
 	public ST_Agraph_s parent; /* containing cluster (not parent subgraph) */
 	// int level; /* cluster nesting level (not node level!) */
 	// node_t *minrep, *maxrep; /* set leaders for min and max rank */
 	//
 	// /* fast graph node list */
-	public final ST_nlist_t comp = new ST_nlist_t(this);
+	public final ST_nlist_t comp = new ST_nlist_t();
 	// /* connected components */
 	public ST_Agnode_s minset, maxset; /* set leaders */
 	public int n_nodes;
@@ -116,282 +177,12 @@ public class ST_Agraphinfo_t extends UnsupportedStructAndPtr implements Hardcode
 	// /* for clusters */
 	// node_t *leader, **rankleader;
 	public ST_Agnode_s leader;
-	public CStarStar<ST_Agnode_s> rankleader;
+	public CArrayOfStar<ST_Agnode_s> rankleader;
 	public boolean expanded;
 	public int installed;
 	public int set_type;
 	public int label_pos;
 	public int exact_ranksep;
 
-	private final StarStruct parent_;
-
-	public ST_Agraphinfo_t() {
-		this(null);
-	}
-
-	public ST_Agraphinfo_t(StarStruct parent) {
-		this.parent_ = parent;
-	}
-
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Agrec_s.class) {
-			return hdr;
-		}
-		return super.castTo(dest);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("gvc")) {
-			this.gvc = (ST_GVC_s) newData;
-			return gvc;
-		}
-		if (fieldName.equals("drawing")) {
-			this.drawing = (ST_layout_t) newData;
-			return drawing;
-		}
-		if (fieldName.equals("dotroot")) {
-			this.dotroot = (ST_Agraph_s) newData;
-			return dotroot;
-		}
-		if (fieldName.equals("parent")) {
-			this.parent = (ST_Agraph_s) newData;
-			return parent;
-		}
-		if (fieldName.equals("clust")) {
-			this.clust = (CStarStar<ST_Agraph_s>) newData;
-			return clust;
-		}
-		if (fieldName.equals("label")) {
-			this.label = (ST_textlabel_t) newData;
-			return label;
-		}
-		if (fieldName.equals("maxset")) {
-			this.maxset = (ST_Agnode_s) newData;
-			return maxset;
-		}
-		if (fieldName.equals("minset")) {
-			this.minset = (ST_Agnode_s) newData;
-			return minset;
-		}
-		if (fieldName.equals("nlist")) {
-			this.nlist = (ST_Agnode_s) newData;
-			return nlist;
-		}
-		if (fieldName.equals("leader")) {
-			this.leader = (ST_Agnode_s) newData;
-			return leader;
-		}
-		if (fieldName.equals("rankleader")) {
-			this.rankleader = (CStarStar<ST_Agnode_s>) newData;
-			return rankleader;
-		}
-		if (fieldName.equals("rank")) {
-			this.rank = (CStar) newData;
-			return rank;
-		}
-		if (fieldName.equals("ln")) {
-			this.ln = (ST_Agnode_s) newData;
-			return ln;
-		}
-		if (fieldName.equals("rn")) {
-			this.rn = (ST_Agnode_s) newData;
-			return rn;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("charset")) {
-			this.charset = data;
-			return;
-		}
-		if (fieldName.equals("rankdir")) {
-			this.rankdir = data;
-			return;
-		}
-		if (fieldName.equals("nodesep")) {
-			this.nodesep = data;
-			return;
-		}
-		if (fieldName.equals("ranksep")) {
-			this.ranksep = data;
-			return;
-		}
-		if (fieldName.equals("showboxes")) {
-			this.showboxes = data;
-			return;
-		}
-		if (fieldName.equals("fontnames")) {
-			this.fontnames = data;
-			return;
-		}
-		if (fieldName.equals("flags")) {
-			this.flags = data;
-			return;
-		}
-		if (fieldName.equals("has_labels")) {
-			this.has_labels = data;
-			return;
-		}
-		if (fieldName.equals("n_cluster")) {
-			this.n_cluster = data;
-			return;
-		}
-		if (fieldName.equals("label_pos")) {
-			this.label_pos = data;
-			return;
-		}
-		if (fieldName.equals("n_nodes")) {
-			this.n_nodes = data;
-			return;
-		}
-		if (fieldName.equals("maxrank")) {
-			this.maxrank = data;
-			return;
-		}
-		if (fieldName.equals("minrank")) {
-			this.minrank = data;
-			return;
-		}
-		if (fieldName.equals("installed")) {
-			this.installed = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("ht1")) {
-			this.ht1 = data;
-			return;
-		}
-		if (fieldName.equals("ht2")) {
-			this.ht2 = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct Agraphinfo_t",
-	// "{",
-	// "Agrec_t hdr",
-	// "layout_t *drawing",
-	// "textlabel_t *label",
-	// "boxf bb",
-	// "pointf border[4]",
-	// "unsigned char gui_state",
-	// "unsigned char has_labels",
-	// "boolean has_images",
-	// "unsigned char charset",
-	// "int rankdir",
-	// "double ht1, ht2",
-	// "unsigned short flags",
-	// "void *alg",
-	// "GVC_t *gvc",
-	// "void (*cleanup) (graph_t * g)",
-	// "node_t **neato_nlist",
-	// "int move",
-	// "double **dist, **spring, **sum_t, ***t",
-	// "unsigned short ndim",
-	// "unsigned short odim",
-	// "int n_cluster",
-	// "graph_t **clust",
-	// "graph_t *dotroot",
-	// "node_t *nlist",
-	// "rank_t *rank",
-	// "graph_t *parent",
-	// "int level",
-	// "node_t *minrep, *maxrep",
-	// "nlist_t comp",
-	// "node_t *minset, *maxset",
-	// "long n_nodes",
-	// "short minrank, maxrank",
-	// "boolean has_flat_edges",
-	// "boolean has_sourcerank",
-	// "boolean has_sinkrank",
-	// "unsigned char showboxes",
-	// "fontname_kind fontnames",
-	// "int nodesep, ranksep",
-	// "node_t *ln, *rn",
-	// "node_t *leader, **rankleader",
-	// "boolean expanded",
-	// "char installed",
-	// "char set_type",
-	// "char label_pos",
-	// "boolean exact_ranksep",
-	// "}",
-	// "Agraphinfo_t");
 }
 
-// typedef struct Agraphinfo_t {
-// Agrec_t hdr;
-// /* to generate code */
-// layout_t *drawing;
-// textlabel_t *label; /* if the cluster has a title */
-// boxf bb; /* bounding box */
-// pointf border[4]; /* sizes of margins for graph labels */
-// unsigned char gui_state; /* Graph state for GUI ops */
-// unsigned char has_labels;
-// boolean has_images;
-// unsigned char charset; /* input character set */
-// int rankdir;
-// double ht1, ht2; /* below and above extremal ranks */
-// unsigned short flags;
-// void *alg;
-// GVC_t *gvc; /* context for "globals" over multiple graphs */
-// void (*cleanup) (graph_t * g); /* function to deallocate layout-specific data */
-//
-//
-// /* to place nodes */
-// node_t **neato_nlist;
-// int move;
-// double **dist, **spring, **sum_t, ***t;
-// unsigned short ndim;
-// unsigned short odim;
-//
-//
-// /* to have subgraphs */
-// int n_cluster;
-// graph_t **clust; /* clusters are in clust[1..n_cluster] !!! */
-// graph_t *dotroot;
-// node_t *nlist;
-// rank_t *rank;
-// graph_t *parent; /* containing cluster (not parent subgraph) */
-// int level; /* cluster nesting level (not node level!) */
-// node_t *minrep, *maxrep; /* set leaders for min and max rank */
-//
-// /* fast graph node list */
-// nlist_t comp;
-// /* connected components */
-// node_t *minset, *maxset; /* set leaders */
-// long n_nodes;
-// /* includes virtual */
-// short minrank, maxrank;
-//
-// /* various flags */
-// boolean has_flat_edges;
-// boolean has_sourcerank;
-// boolean has_sinkrank;
-// unsigned char showboxes;
-// fontname_kind fontnames; /* to override mangling in SVG */
-//
-// int nodesep, ranksep;
-// node_t *ln, *rn; /* left, right nodes of bounding box */
-//
-// /* for clusters */
-// node_t *leader, **rankleader;
-// boolean expanded;
-// char installed;
-// char set_type;
-// char label_pos;
-// boolean exact_ranksep;
-//
-//
-// } Agraphinfo_t;

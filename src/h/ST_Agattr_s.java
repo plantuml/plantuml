@@ -48,46 +48,12 @@ package h;
 import java.util.List;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_Agattr_s extends UnsupportedStructAndPtr {
+final public class ST_Agattr_s extends ST_Agrec_s {
 
-	private final ST_Agrec_s h = new ST_Agrec_s(this); /* common data header */
 	public ST_dt_s dict; /* shared dict to interpret attr field */
 	public List<CString> str; /* the attribute string values */
 
-	private final StarStruct parent;
-
-	public ST_Agattr_s() {
-		this(null);
-	}
-
-	public ST_Agattr_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Agrec_s.class) {
-			return h;
-			// return h.amp();
-		}
-		return super.castTo(dest);
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agattr_s",
-	// "{",
-	// "Agrec_t h",
-	// "Dict_t *dict",
-	// "char **str",
-	// "}");
 }
 
 // struct Agattr_s { /* dynamic string attributes */

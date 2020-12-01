@@ -39,7 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -76,7 +76,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		super(styleHeader, LineBreakStrategy.NONE, strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1,
 				spriteContainer, null, null);
 
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.roundCorner = style.value(PName.RoundCorner).asInt();
 			this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 			this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
@@ -155,7 +155,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		final int textWidth = (int) getTextWidth(stringBounder);
 		final int textHeight = (int) getTextHeight(stringBounder);
 
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			symbolContextCorner.apply(ug).draw(getCorner(textWidth, textHeight));
 		} else {
 			symbolContextCorner.applyColors(ug).draw(getCorner(textWidth, textHeight));

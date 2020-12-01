@@ -41,8 +41,8 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -79,7 +79,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		}
 
 		HColor color = rose.getHtmlColor(dotData.getSkinParam(), null, getArrowColorParam());
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition()
 					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
@@ -128,7 +128,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.document)
 					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());

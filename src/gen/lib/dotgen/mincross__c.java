@@ -71,7 +71,6 @@ import static gen.lib.dotgen.fastgr__c.new_virtual_edge;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atof;
-import static smetana.core.JUtils.function;
 import static smetana.core.JUtils.qsort1;
 import static smetana.core.JUtils.qsort2;
 import static smetana.core.JUtilsDebug.ENTERING;
@@ -140,12 +139,13 @@ import h.ST_adjmatrix_t;
 import h.ST_elist;
 import h.ST_nodequeue;
 import h.ST_rank_t;
-import smetana.core.CStar;
-import smetana.core.CStarStar;
+import smetana.core.CArray;
+import smetana.core.CArrayOfStar;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
-import smetana.core.__ptr__;
 
 /* 
  * dot_mincross(g) takes a ranked graphs, and finds an ordering
@@ -155,436 +155,6 @@ import smetana.core.__ptr__;
  */
 public class mincross__c {
 
-//3 ciez0pfggxdljedzsbklq49f0
-// static inline point pointof(int x, int y) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="pointof", key="ciez0pfggxdljedzsbklq49f0", definition="static inline point pointof(int x, int y)")
-public static Object pointof(Object... arg) {
-UNSUPPORTED("8e4tj258yvfq5uhsdpk37n5eq"); // static inline point pointof(int x, int y)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c0j3k9xv06332q98k2pgpacto"); //     point r;
-UNSUPPORTED("12jimkrzqxavaie0cpapbx18c"); //     r.x = x;
-UNSUPPORTED("7ivmviysahgsc5nn9gtp7q2if"); //     r.y = y;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-
-
-//3 7cufnfitrh935ew093mw0i4b7
-// static inline box boxof(int llx, int lly, int urx, int ury) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="boxof", key="7cufnfitrh935ew093mw0i4b7", definition="static inline box boxof(int llx, int lly, int urx, int ury)")
-public static Object boxof(Object... arg) {
-UNSUPPORTED("3lzesfdd337h31jrlib1czocm"); // static inline box boxof(int llx, int lly, int urx, int ury)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("52u27kayecy1i1e8bbo8f7s9r"); //     box b;
-UNSUPPORTED("cylhjlutoc0sc0uy7g98m9fb8"); //     b.LL.x = llx, b.LL.y = lly;
-UNSUPPORTED("242of6revxzx8hpe7yerrchz6"); //     b.UR.x = urx, b.UR.y = ury;
-UNSUPPORTED("2vmm1j57brhn455f8f3iyw6mo"); //     return b;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-
-
-
-//3 1n5xl70wxuabyf97mclvilsm6
-// static inline point add_point(point p, point q) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="add_point", key="1n5xl70wxuabyf97mclvilsm6", definition="static inline point add_point(point p, point q)")
-public static Object add_point(Object... arg) {
-UNSUPPORTED("6iamka1fx8fk1rohzzse8phte"); // static inline point add_point(point p, point q)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c0j3k9xv06332q98k2pgpacto"); //     point r;
-UNSUPPORTED("3n2sizjd0civbzm6iq7su1s2p"); //     r.x = p.x + q.x;
-UNSUPPORTED("65ygdo31w09i5i6bd2f7azcd3"); //     r.y = p.y + q.y;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-
-//3 ai2dprak5y6obdsflguh5qbd7
-// static inline point sub_point(point p, point q) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="sub_point", key="ai2dprak5y6obdsflguh5qbd7", definition="static inline point sub_point(point p, point q)")
-public static Object sub_point(Object... arg) {
-UNSUPPORTED("cd602849h0bce8lu9xegka0ia"); // static inline point sub_point(point p, point q)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c0j3k9xv06332q98k2pgpacto"); //     point r;
-UNSUPPORTED("4q4q9dveah93si8ajfv59gz27"); //     r.x = p.x - q.x;
-UNSUPPORTED("9f90ik0o2yqhanzntpy3d2ydy"); //     r.y = p.y - q.y;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 16f6pyogcv3j7n2p0n8giqqgh
-// static inline pointf sub_pointf(pointf p, pointf q) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="sub_pointf", key="16f6pyogcv3j7n2p0n8giqqgh", definition="static inline pointf sub_pointf(pointf p, pointf q)")
-public static Object sub_pointf(Object... arg) {
-UNSUPPORTED("dmufj44lddsnj0wjyxsg2fcso"); // static inline pointf sub_pointf(pointf p, pointf q)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("cvexv13y9fq49v0j4d5t4cm9f"); //     pointf r;
-UNSUPPORTED("4q4q9dveah93si8ajfv59gz27"); //     r.x = p.x - q.x;
-UNSUPPORTED("9f90ik0o2yqhanzntpy3d2ydy"); //     r.y = p.y - q.y;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 9k50jgrhc4f9824vf8ony74rw
-// static inline point mid_point(point p, point q) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="mid_point", key="9k50jgrhc4f9824vf8ony74rw", definition="static inline point mid_point(point p, point q)")
-public static Object mid_point(Object... arg) {
-UNSUPPORTED("evy44tdsmu3erff9dp2x835u2"); // static inline point mid_point(point p, point q)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c0j3k9xv06332q98k2pgpacto"); //     point r;
-UNSUPPORTED("1a6p6fm57o0wt5ze2btsx06c7"); //     r.x = (p.x + q.x) / 2;
-UNSUPPORTED("1kbj5tgdmfi6kf4jgg6skhr6e"); //     r.y = (p.y + q.y) / 2;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 59c4f7im0ftyowhnzzq2v9o1x
-// static inline pointf mid_pointf(pointf p, pointf q) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="mid_pointf", key="59c4f7im0ftyowhnzzq2v9o1x", definition="static inline pointf mid_pointf(pointf p, pointf q)")
-public static Object mid_pointf(Object... arg) {
-UNSUPPORTED("381o63o9kb04d7gzg65v0r3q"); // static inline pointf mid_pointf(pointf p, pointf q)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("cvexv13y9fq49v0j4d5t4cm9f"); //     pointf r;
-UNSUPPORTED("c5vboetlr3mf43wns7iik6m1w"); //     r.x = (p.x + q.x) / 2.;
-UNSUPPORTED("bcdf562ldr3bjn78hcay5xd63"); //     r.y = (p.y + q.y) / 2.;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 5r18p38gisvcx3zsvbb9saixx
-// static inline pointf interpolate_pointf(double t, pointf p, pointf q) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="interpolate_pointf", key="5r18p38gisvcx3zsvbb9saixx", definition="static inline pointf interpolate_pointf(double t, pointf p, pointf q)")
-public static Object interpolate_pointf(Object... arg) {
-UNSUPPORTED("894yimn33kmtm454llwdaotu8"); // static inline pointf interpolate_pointf(double t, pointf p, pointf q)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("ef2acl8wa2ooqcb5vz3098maz"); //     pointf r; 
-UNSUPPORTED("5tpwuyf5iidesy80v8o4nwkmk"); //     r.x = p.x + t * (q.x - p.x);
-UNSUPPORTED("ewnrc5uloj3w5jbmsjcn3wja0"); //     r.y = p.y + t * (q.y - p.y);
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 bxzrv2ghq04qk5cbyy68s4mol
-// static inline point exch_xy(point p) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="exch_xy", key="bxzrv2ghq04qk5cbyy68s4mol", definition="static inline point exch_xy(point p)")
-public static Object exch_xy(Object... arg) {
-UNSUPPORTED("2vxya0v2fzlv5e0vjaa8d414"); // static inline point exch_xy(point p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c0j3k9xv06332q98k2pgpacto"); //     point r;
-UNSUPPORTED("60cojdwc2h7f0m51s9jdwvup7"); //     r.x = p.y;
-UNSUPPORTED("evp2x66oa4s1tlnc0ytxq2qbq"); //     r.y = p.x;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 9lt3e03tac6h6sydljrcws8fd
-// static inline pointf exch_xyf(pointf p) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="exch_xyf", key="9lt3e03tac6h6sydljrcws8fd", definition="static inline pointf exch_xyf(pointf p)")
-public static Object exch_xyf(Object... arg) {
-UNSUPPORTED("8qamrobrqi8jsvvfrxkimrsnw"); // static inline pointf exch_xyf(pointf p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("cvexv13y9fq49v0j4d5t4cm9f"); //     pointf r;
-UNSUPPORTED("60cojdwc2h7f0m51s9jdwvup7"); //     r.x = p.y;
-UNSUPPORTED("evp2x66oa4s1tlnc0ytxq2qbq"); //     r.y = p.x;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 8l9qhieokthntzdorlu5zn29b
-// static inline box box_bb(box b0, box b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="box_bb", key="8l9qhieokthntzdorlu5zn29b", definition="static inline box box_bb(box b0, box b1)")
-public static Object box_bb(Object... arg) {
-UNSUPPORTED("36et5gmnjrby6o7bq9sgh1hx6"); // static inline box box_bb(box b0, box b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("52u27kayecy1i1e8bbo8f7s9r"); //     box b;
-UNSUPPORTED("8mr2c9xitsqi8z1plbp7ox1hu"); //     b.LL.x = MIN(b0.LL.x, b1.LL.x);
-UNSUPPORTED("2egu55ef4u1i03nwz01k7kcrl"); //     b.LL.y = MIN(b0.LL.y, b1.LL.y);
-UNSUPPORTED("9n6ei3odbgefwfxvql9whcpe"); //     b.UR.x = MAX(b0.UR.x, b1.UR.x);
-UNSUPPORTED("19ocysbuh4pxyft2bqhyhigr1"); //     b.UR.y = MAX(b0.UR.y, b1.UR.y);
-UNSUPPORTED("2vmm1j57brhn455f8f3iyw6mo"); //     return b;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 clws9h3bbjm0lw3hexf8nl4c4
-// static inline boxf boxf_bb(boxf b0, boxf b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="boxf_bb", key="clws9h3bbjm0lw3hexf8nl4c4", definition="static inline boxf boxf_bb(boxf b0, boxf b1)")
-public static Object boxf_bb(Object... arg) {
-UNSUPPORTED("dyrqu4ww9osr9c86gqgmifcp6"); // static inline boxf boxf_bb(boxf b0, boxf b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c57pq0f87j6dnbcvygu7v6k84"); //     boxf b;
-UNSUPPORTED("8mr2c9xitsqi8z1plbp7ox1hu"); //     b.LL.x = MIN(b0.LL.x, b1.LL.x);
-UNSUPPORTED("2egu55ef4u1i03nwz01k7kcrl"); //     b.LL.y = MIN(b0.LL.y, b1.LL.y);
-UNSUPPORTED("9n6ei3odbgefwfxvql9whcpe"); //     b.UR.x = MAX(b0.UR.x, b1.UR.x);
-UNSUPPORTED("19ocysbuh4pxyft2bqhyhigr1"); //     b.UR.y = MAX(b0.UR.y, b1.UR.y);
-UNSUPPORTED("2vmm1j57brhn455f8f3iyw6mo"); //     return b;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 bit6ycxo1iqd2al92y8gkzlvb
-// static inline box box_intersect(box b0, box b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="box_intersect", key="bit6ycxo1iqd2al92y8gkzlvb", definition="static inline box box_intersect(box b0, box b1)")
-public static Object box_intersect(Object... arg) {
-UNSUPPORTED("34gv28cldst09bl71itjgviue"); // static inline box box_intersect(box b0, box b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("52u27kayecy1i1e8bbo8f7s9r"); //     box b;
-UNSUPPORTED("9slu7bixuymxttjic76ha2nl2"); //     b.LL.x = MAX(b0.LL.x, b1.LL.x);
-UNSUPPORTED("3uv943c2f82yuif249pf5azob"); //     b.LL.y = MAX(b0.LL.y, b1.LL.y);
-UNSUPPORTED("74tf5h16bc9zabq3s3dyny543"); //     b.UR.x = MIN(b0.UR.x, b1.UR.x);
-UNSUPPORTED("d99gcv3i7xes7y7rqf8ii20ux"); //     b.UR.y = MIN(b0.UR.y, b1.UR.y);
-UNSUPPORTED("2vmm1j57brhn455f8f3iyw6mo"); //     return b;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 8gfybie7k6pgb3o1a6llgpwng
-// static inline boxf boxf_intersect(boxf b0, boxf b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="boxf_intersect", key="8gfybie7k6pgb3o1a6llgpwng", definition="static inline boxf boxf_intersect(boxf b0, boxf b1)")
-public static Object boxf_intersect(Object... arg) {
-UNSUPPORTED("ape22b8z6jfg17gvo42hok9eb"); // static inline boxf boxf_intersect(boxf b0, boxf b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("c57pq0f87j6dnbcvygu7v6k84"); //     boxf b;
-UNSUPPORTED("9slu7bixuymxttjic76ha2nl2"); //     b.LL.x = MAX(b0.LL.x, b1.LL.x);
-UNSUPPORTED("3uv943c2f82yuif249pf5azob"); //     b.LL.y = MAX(b0.LL.y, b1.LL.y);
-UNSUPPORTED("74tf5h16bc9zabq3s3dyny543"); //     b.UR.x = MIN(b0.UR.x, b1.UR.x);
-UNSUPPORTED("d99gcv3i7xes7y7rqf8ii20ux"); //     b.UR.y = MIN(b0.UR.y, b1.UR.y);
-UNSUPPORTED("2vmm1j57brhn455f8f3iyw6mo"); //     return b;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 7z8j2quq65govaaejrz7b4cvb
-// static inline int box_overlap(box b0, box b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="box_overlap", key="7z8j2quq65govaaejrz7b4cvb", definition="static inline int box_overlap(box b0, box b1)")
-public static Object box_overlap(Object... arg) {
-UNSUPPORTED("1e9k599x7ygct7r4cfdxlk9u9"); // static inline int box_overlap(box b0, box b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7a9wwpu7dhdphd08y1ecw54w5"); //     return OVERLAP(b0, b1);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 4z0suuut2acsay5m8mg9dqjdu
-// static inline int boxf_overlap(boxf b0, boxf b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="boxf_overlap", key="4z0suuut2acsay5m8mg9dqjdu", definition="static inline int boxf_overlap(boxf b0, boxf b1)")
-public static Object boxf_overlap(Object... arg) {
-UNSUPPORTED("905nejsewihwhhc3bhnrz9nwo"); // static inline int boxf_overlap(boxf b0, boxf b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7a9wwpu7dhdphd08y1ecw54w5"); //     return OVERLAP(b0, b1);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 dd34swz5rmdgu3a2np2a4h1dy
-// static inline int box_contains(box b0, box b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="box_contains", key="dd34swz5rmdgu3a2np2a4h1dy", definition="static inline int box_contains(box b0, box b1)")
-public static Object box_contains(Object... arg) {
-UNSUPPORTED("aputfc30fjkvy6jx4otljaczq"); // static inline int box_contains(box b0, box b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("87ap80vrh2a4gpprbxr33lrg3"); //     return CONTAINS(b0, b1);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 8laj1bspbu2i1cjd9upr7xt32
-// static inline int boxf_contains(boxf b0, boxf b1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="boxf_contains", key="8laj1bspbu2i1cjd9upr7xt32", definition="static inline int boxf_contains(boxf b0, boxf b1)")
-public static Object boxf_contains(Object... arg) {
-UNSUPPORTED("7ccnttkiwt834yfyw0evcm18v"); // static inline int boxf_contains(boxf b0, boxf b1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("87ap80vrh2a4gpprbxr33lrg3"); //     return CONTAINS(b0, b1);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 4wf5swkz24xx51ja2dynbycu1
-// static inline pointf perp (pointf p) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="perp", key="4wf5swkz24xx51ja2dynbycu1", definition="static inline pointf perp (pointf p)")
-public static Object perp(Object... arg) {
-UNSUPPORTED("567wpqlg9rv63ynyvxd9sgkww"); // static inline pointf perp (pointf p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("cvexv13y9fq49v0j4d5t4cm9f"); //     pointf r;
-UNSUPPORTED("2fyydy6t6yifjsczccsb9szeg"); //     r.x = -p.y;
-UNSUPPORTED("evp2x66oa4s1tlnc0ytxq2qbq"); //     r.y = p.x;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 6dtlpzv4mvgzb9o0b252yweuv
-// static inline pointf scale (double c, pointf p) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="scale", key="6dtlpzv4mvgzb9o0b252yweuv", definition="static inline pointf scale (double c, pointf p)")
-public static Object scale(Object... arg) {
-UNSUPPORTED("c1ngytew34bmkdb7vps5h3dh8"); // static inline pointf scale (double c, pointf p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("cvexv13y9fq49v0j4d5t4cm9f"); //     pointf r;
-UNSUPPORTED("dznf7nac14snww4usquyd6r3r"); //     r.x = c * p.x;
-UNSUPPORTED("33kk73m8vjcux5tnjl8co2pe6"); //     r.y = c * p.y;
-UNSUPPORTED("a2hk6w52njqjx48nq3nnn2e5i"); //     return r;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 7ye0tsa8kll1jntdcqzsgjp0q
-// static int gd_minrank(Agraph_t *g) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="gd_minrank", key="7ye0tsa8kll1jntdcqzsgjp0q", definition="static int gd_minrank(Agraph_t *g)")
-public static Object gd_minrank(Object... arg) {
-UNSUPPORTED("7wnr5wvv8mw2d3mfdyvdz5kz9"); // static int gd_minrank(Agraph_t *g) {return GD_minrank(g);}
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 c7dhattawtph3qv1eeoafltk0
-// static int gd_maxrank(Agraph_t *g) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="gd_maxrank", key="c7dhattawtph3qv1eeoafltk0", definition="static int gd_maxrank(Agraph_t *g)")
-public static Object gd_maxrank(Object... arg) {
-UNSUPPORTED("b89n5iyqsgra9z559023bf23e"); // static int gd_maxrank(Agraph_t *g) {return GD_maxrank(g);}
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 8g2can1ih1668s30s6d7wny5b
-// static rank_t *gd_rank(Agraph_t *g, int r) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="", key="8g2can1ih1668s30s6d7wny5b", definition="static rank_t *gd_rank(Agraph_t *g, int r)")
-public static Object gd_rank(Object... arg) {
-UNSUPPORTED("bxd4rm18v4y2x6fo30vh9pauo"); // static rank_t *gd_rank(Agraph_t *g, int r) {return &GD_rank(g)[r];}
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 8pjrnrvidhpqcubvkk5lsfp6
-// static int nd_order(Agnode_t *v) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="nd_order", key="8pjrnrvidhpqcubvkk5lsfp6", definition="static int nd_order(Agnode_t *v)")
-public static Object nd_order(Object... arg) {
-UNSUPPORTED("f4zvlmxyp6gei8iiu33hpz4oe"); // static int nd_order(Agnode_t *v) { return ND_order(v); }
-
-throw new UnsupportedOperationException();
-}
 
 
 /* dot_mincross:
@@ -685,123 +255,6 @@ try {
 } finally {
 LEAVING("49vw7fkn99wbojtfksugvuruh","init_mccomp");
 }
-}
-
-
-
-
-//3 72v5zs502m1of3vsofyfo15ap
-// static int betweenclust(edge_t * e) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="betweenclust", key="72v5zs502m1of3vsofyfo15ap", definition="static int betweenclust(edge_t * e)")
-public static Object betweenclust(Object... arg) {
-UNSUPPORTED("6k6r73j7gctt4ntepjubrlfze"); // static int betweenclust(edge_t * e)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1z9f8ptfggp4qlwv5cdd55i3j"); //     while (ED_to_orig(e))
-UNSUPPORTED("bdmai1d040qmubf08ds339v9x"); // 	e = ED_to_orig(e);
-UNSUPPORTED("eq2o4v9qo3xx42in97ssadek"); //     return (ND_clust(agtail(e)) != ND_clust(aghead(e)));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 760bwoz4twwy2jr1b32r6zefi
-// static void do_ordering_node (graph_t * g, node_t* n, int outflag) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="do_ordering_node", key="760bwoz4twwy2jr1b32r6zefi", definition="static void do_ordering_node (graph_t * g, node_t* n, int outflag)")
-public static Object do_ordering_node(Object... arg) {
-UNSUPPORTED("ajn55zvrzf8njqkshll3kaz88"); // static void do_ordering_node (graph_t * g, node_t* n, int outflag)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("bp5tdulayknsvyv8a2j2tinh"); //     int i, ne;
-UNSUPPORTED("5yrhx4blosxo5xnc1nh1kzhfs"); //     node_t *u, *v;
-UNSUPPORTED("9cbk3ly04nbzqoxmmjwptqq9a"); //     edge_t *e, *f, *fe;
-UNSUPPORTED("5ol5beitdgh7axwpk35pc9trm"); //     edge_t **sortlist = TE_list;
-UNSUPPORTED("aeria2or5qpnnrr9wm15k588l"); //     if (ND_clust(n))
-UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
-UNSUPPORTED("442hvc4h32o6e3cvzm5y5y3oq"); //     if (outflag) {
-UNSUPPORTED("7xi4jdz18dyv740agfh5uwtxv"); // 	for (i = ne = 0; (e = ND_out(n).list[i]); i++)
-UNSUPPORTED("24smn55xhvkklh2do2cfcmy98"); // 	    if (!betweenclust(e))
-UNSUPPORTED("ouas2w3lk54dwigzgglm3w7r"); // 		sortlist[ne++] = e;
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
-UNSUPPORTED("6dgl0skwzmsi69ugcewc5vwaf"); // 	for (i = ne = 0; (e = ND_in(n).list[i]); i++)
-UNSUPPORTED("24smn55xhvkklh2do2cfcmy98"); // 	    if (!betweenclust(e))
-UNSUPPORTED("ouas2w3lk54dwigzgglm3w7r"); // 		sortlist[ne++] = e;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("hdnqvw2crdbzt2uenqso4l7k"); //     if (ne <= 1)
-UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
-UNSUPPORTED("4zkjvsomlyhcl06ummf4gz0d2"); //     /* write null terminator at end of list.
-UNSUPPORTED("2zx16rdu8hp86z3z36natgy8t"); //        requires +1 in TE_list alloccation */
-UNSUPPORTED("6dp57feioscwstrfmhqhrz1jx"); //     sortlist[ne] = 0;
-UNSUPPORTED("4wqnlh6z9lr2xvmjp95nozn84"); //     qsort(sortlist, ne, sizeof(sortlist[0]), (qsort_cmpf) edgeidcmpf);
-UNSUPPORTED("d6aia9q03brt8otnyu5m3tlxj"); //     for (ne = 1; (f = sortlist[ne]); ne++) {
-UNSUPPORTED("1b9ylnvr8zscovbyrxoe9ypax"); // 	e = sortlist[ne - 1];
-UNSUPPORTED("4nbrepm0pmohxxml0csb9j5xc"); // 	if (outflag) {
-UNSUPPORTED("2rcn453iomwvou108kjr2rboc"); // 	    u = aghead(e);
-UNSUPPORTED("96i3kysq5lfoyukhe65vpiah2"); // 	    v = aghead(f);
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
-UNSUPPORTED("96jttvtco2oqt3y3qr5fbhu1j"); // 	    u = agtail(e);
-UNSUPPORTED("8g5mzwux62x43bjzeslylyi0g"); // 	    v = agtail(f);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("a7mygw39shaa9w4l8fdlgqr0i"); // 	if (find_flat_edge(u, v))
-UNSUPPORTED("6cprbghvenu9ldc0ez1ifc63q"); // 	    return;
-UNSUPPORTED("aoa2embk8eaij29q6nbl4e5tk"); // 	fe = new_virtual_edge(u, v, NULL);
-UNSUPPORTED("67t5g8eu9tdqbnwj4s4g6ah6u"); // 	ED_edge_type(fe) = 4;
-UNSUPPORTED("b32n066t1nkgj646wvo7vuwlq"); // 	flat_edge(g, fe);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 815nmj2gcomtex4yfclqde12j
-// static void do_ordering(graph_t * g, int outflag) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="do_ordering", key="815nmj2gcomtex4yfclqde12j", definition="static void do_ordering(graph_t * g, int outflag)")
-public static Object do_ordering(Object... arg) {
-UNSUPPORTED("9v68euuxlii02rb5mhlyd8alp"); // static void do_ordering(graph_t * g, int outflag)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("5y5mm5obhrqt745c4fx4o0r56"); //     /* Order all nodes in graph */
-UNSUPPORTED("cjx5v6hayed3q8eeub1cggqca"); //     node_t *n;
-UNSUPPORTED("44thr6ep72jsj3fksjiwdx3yr"); //     for (n = agfstnode(g); n; n = agnxtnode(g, n)) {
-UNSUPPORTED("bicm0b87pp2rusaezmk6qigjq"); // 	do_ordering_node (g, n, outflag);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 svq3i3c6yw3cbfwaeip5dfuy
-// static void do_ordering_for_nodes(graph_t * g) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="do_ordering_for_nodes", key="svq3i3c6yw3cbfwaeip5dfuy", definition="static void do_ordering_for_nodes(graph_t * g)")
-public static Object do_ordering_for_nodes(Object... arg) {
-UNSUPPORTED("7yd9vingwgdcdtrx0p38jti00"); // static void do_ordering_for_nodes(graph_t * g)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("887aairlqk73reuayo3hz67v3"); //     /* Order nodes which have the "ordered" attribute */
-UNSUPPORTED("cjx5v6hayed3q8eeub1cggqca"); //     node_t *n;
-UNSUPPORTED("cbbfhy5qk3dailijtedj1czut"); //     const char *ordering;
-UNSUPPORTED("44thr6ep72jsj3fksjiwdx3yr"); //     for (n = agfstnode(g); n; n = agnxtnode(g, n)) {
-UNSUPPORTED("ekvbu44bbrdwkw71yd21dbns9"); // 	if ((ordering = late_string(n, N_ordering, NULL))) {
-UNSUPPORTED("7jueg5punlemj6mfbpgltb5u8"); // 	    if ((*(ordering)==*("out")&&!strcmp(ordering,"out")))
-UNSUPPORTED("302oz5j9wva90otn6jq513bme"); // 		do_ordering_node(g, n, NOT(0));
-UNSUPPORTED("1dt1hft3eak5ytycs6dh7yk0"); // 	    else if ((*(ordering)==*("in")&&!strcmp(ordering,"in")))
-UNSUPPORTED("dnig45so0x904azp9fhxymqjn"); // 		do_ordering_node(g, n, 0);
-UNSUPPORTED("2rxgmu8cktngvqtsex2rlbjed"); // 	    else if (ordering[0])
-UNSUPPORTED("axk3fxl1bh09n475kmcx42kdu"); // 		agerr(AGERR, "ordering '%s' not recognized for node '%s'.\n", ordering, agnameof(n));
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
 }
 
 
@@ -930,12 +383,12 @@ LEAVING("657v773m21j5w3g3v94o7464t","left2right");
 public static int in_cross(ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("daknncpjy7g5peiicolbmh55i","in_cross");
 try {
-    CStarStar<ST_Agedge_s> e2_ = ND_in(w).list;
+    CArrayOfStar<ST_Agedge_s> e2_ = ND_in(w).list;
     int inv, cross = 0, t;
     for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {
 	int cnt = ED_xpenalty(e2_.get_(ie2));		
 	inv = ND_order((agtail(e2_.get_(ie2))));
-    CStarStar<ST_Agedge_s> e1_ = ND_in(v).list;
+    CArrayOfStar<ST_Agedge_s> e1_ = ND_in(v).list;
 	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {
 	    t = ND_order(agtail(e1_.get_(ie1))) - inv;
 	    if ((t > 0)
@@ -960,12 +413,12 @@ LEAVING("daknncpjy7g5peiicolbmh55i","in_cross");
 public static int out_cross(ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("b7mf74np8ewrgzwd5u0o8fqod","out_cross");
 try {
- 	CStarStar<ST_Agedge_s> e2_ = ND_out(w).list;
+ 	CArrayOfStar<ST_Agedge_s> e2_ = ND_out(w).list;
     int inv, cross = 0, t;
     for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {
 	int cnt = ED_xpenalty(e2_.get_(ie2));
 	inv = ND_order(aghead(e2_.get_(ie2)));
-    CStarStar<ST_Agedge_s> e1_ = ND_out(v).list;
+    CArrayOfStar<ST_Agedge_s> e1_ = ND_out(v).list;
 	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {
 	    t = ND_order(aghead(e1_.get_(ie1))) - inv;
 	    if ((t > 0)
@@ -1007,98 +460,12 @@ LEAVING("ba4tbr57wips1dzpgxzx3b6ja","exchange");
 
 
 
-//3 dzkv88lq5zv0g3yo7bf90qgr7
-// static void balanceNodes(graph_t * g, int r, node_t * v, node_t * w) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="balanceNodes", key="dzkv88lq5zv0g3yo7bf90qgr7", definition="static void balanceNodes(graph_t * g, int r, node_t * v, node_t * w)")
-public static Object balanceNodes(Object... arg) {
-UNSUPPORTED("504qsj6detmzllj50pno6sdx4"); // static void balanceNodes(graph_t * g, int r, node_t * v, node_t * w)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("dor7xumwnqvymg7xdesa6pxqn"); //     node_t *s;			/* separator node */
-UNSUPPORTED("c6s55weiu8hc4voeunxf2utru"); //     int sepIndex;
-UNSUPPORTED("6gqdkaiir2naiawry8cnlpf4a"); //     int nullType;		/* type of null nodes */
-UNSUPPORTED("2dqxr1ujg381s9ugf0367iici"); //     int cntDummy = 0, cntOri = 0;
-UNSUPPORTED("7yj94w2zpwdubyzymyljw490a"); //     int k = 0, m = 0, k1 = 0, m1 = 0, i = 0;
-UNSUPPORTED("6mq7c2z232o8kvpp371lfmewh"); //     /* we only consider v and w of different types */
-UNSUPPORTED("53kjkk6c0h35zpbikj9y2q6b4"); //     if (ND_node_type(v) == ND_node_type(w))
-UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
-UNSUPPORTED("5ylcsv8rwps97qz7sdftpwrka"); //     /* count the number of dummy and original nodes */
-UNSUPPORTED("5025o4uc5dkbxf3smi3kmfoit"); //     for (i = 0; i < GD_rank(g)[r].n; i++) {
-UNSUPPORTED("d87qjwxc2qjvh6hb9fmi9y9vq"); // 	if (ND_node_type(GD_rank(g)[r].v[i]) == 0)
-UNSUPPORTED("dcny4syjny1sh20jyjjl7jj62"); // 	    cntOri++;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("bbpsgrsgquajs3xxqzeqvgv6n"); // 	    cntDummy++;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("2qx27p3loyln3i09ycwf5p1dh"); //     if (cntOri < cntDummy) {
-UNSUPPORTED("ex9drrxqg8zalagzrnvrulrlb"); // 	if (ND_node_type(v) == 0)
-UNSUPPORTED("jtm789r1sqidxc39d09n9det"); // 	    s = v;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("c31t0vnbzvj9zml7p91syjzep"); // 	    s = w;
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
-UNSUPPORTED("ex9drrxqg8zalagzrnvrulrlb"); // 	if (ND_node_type(v) == 0)
-UNSUPPORTED("c31t0vnbzvj9zml7p91syjzep"); // 	    s = w;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("jtm789r1sqidxc39d09n9det"); // 	    s = v;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("ejbeaepbxwawm7mvtusyi2x57"); //     /* get the separator node index */
-UNSUPPORTED("5025o4uc5dkbxf3smi3kmfoit"); //     for (i = 0; i < GD_rank(g)[r].n; i++) {
-UNSUPPORTED("afetrkwabtn6v07evr5japsk5"); // 	if (GD_rank(g)[r].v[i] == s)
-UNSUPPORTED("bvwqg08b9hn6rfdx11sjq0hgc"); // 	    sepIndex = i;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("ecis6irl9vire6ejfrshttjk4"); //     nullType = (ND_node_type(s) == 0) ? 1 : 0;
-UNSUPPORTED("1i78b3w9omzkba0pmafwfunbj"); //     /* count the number of null nodes to the left and 
-UNSUPPORTED("1f2jn45p7wv1ud964k43lgdss"); //      * right of the separator node 
-UNSUPPORTED("795vpnc8yojryr8b46aidsu69"); //      */
-UNSUPPORTED("5l8w7t0ta6p6hnfp72l7lbqey"); //     for (i = sepIndex - 1; i >= 0; i--) {
-UNSUPPORTED("49j09cv8f8ien7kqoguzywjmw"); // 	if (ND_node_type(GD_rank(g)[r].v[i]) == nullType)
-UNSUPPORTED("borg3y7rgdooetc6ckrsrg9fc"); // 	    k++;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("cuj70hyout6yv30drqkjiwllo"); //     for (i = sepIndex + 1; i < GD_rank(g)[r].n; i++) {
-UNSUPPORTED("49j09cv8f8ien7kqoguzywjmw"); // 	if (ND_node_type(GD_rank(g)[r].v[i]) == nullType)
-UNSUPPORTED("d35zlcj7podjjns9eg2ttocr7"); // 	    m++;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("9r0b42aqwdlx2cg7aqsxgle1o"); //     /* now exchange v,w and calculate the same counts */
-UNSUPPORTED("cvktng9nwm6futhlv28bqbqy"); //     exchange(v, w);
-UNSUPPORTED("ejbeaepbxwawm7mvtusyi2x57"); //     /* get the separator node index */
-UNSUPPORTED("5025o4uc5dkbxf3smi3kmfoit"); //     for (i = 0; i < GD_rank(g)[r].n; i++) {
-UNSUPPORTED("afetrkwabtn6v07evr5japsk5"); // 	if (GD_rank(g)[r].v[i] == s)
-UNSUPPORTED("bvwqg08b9hn6rfdx11sjq0hgc"); // 	    sepIndex = i;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("1i78b3w9omzkba0pmafwfunbj"); //     /* count the number of null nodes to the left and 
-UNSUPPORTED("1f2jn45p7wv1ud964k43lgdss"); //      * right of the separator node 
-UNSUPPORTED("795vpnc8yojryr8b46aidsu69"); //      */
-UNSUPPORTED("5l8w7t0ta6p6hnfp72l7lbqey"); //     for (i = sepIndex - 1; i >= 0; i--) {
-UNSUPPORTED("49j09cv8f8ien7kqoguzywjmw"); // 	if (ND_node_type(GD_rank(g)[r].v[i]) == nullType)
-UNSUPPORTED("eer25fyjj3njh33v709xj07lk"); // 	    k1++;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("cuj70hyout6yv30drqkjiwllo"); //     for (i = sepIndex + 1; i < GD_rank(g)[r].n; i++) {
-UNSUPPORTED("49j09cv8f8ien7kqoguzywjmw"); // 	if (ND_node_type(GD_rank(g)[r].v[i]) == nullType)
-UNSUPPORTED("80ptwhmp1gyks2xfkcjub24o9"); // 	    m1++;
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("6yjcl5tugkib89c3p3beoi0cs"); //     if (abs(k1 - m1) > abs(k - m)) {
-UNSUPPORTED("4hhzcihijbcjb2mo6eop9g855"); // 	exchange(v, w);		//revert to the original ordering
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
 
 //3 72rj5xs4qh00oh2yi1h5qaadu
 // static int balance(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="balance", key="72rj5xs4qh00oh2yi1h5qaadu", definition="static int balance(graph_t * g)")
-public static Object balance(Object... arg) {
+public static Object balance(Object... arg_) {
 UNSUPPORTED("4223t6rekw3qd8eksvz9kjcqh"); // static int balance(graph_t * g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("970giwpms1ljmt0px5djlqs0z"); //     int i, c0, c1, rv;
@@ -1301,7 +668,7 @@ try {
 	GD_rank(Z.z().Root).get__(r).valid= 0;
     qsort1(GD_rank(g).get__(r).v,
     	    GD_rank(g).get__(r).n,
-    	    function(mincross__c.class, "nodeposcmpf"));
+    	    mincross__c.nodeposcmpf);
     }
 } finally {
 LEAVING("520049zkz9mafaeklgvm6s8e5","restore_best");
@@ -1699,7 +1066,7 @@ try {
     /* also, the +1 avoids attempts to alloc 0 sizes, something
        that efence complains about */
     size = agnedges(dot_root(g)) + 1;
-    Z.z().TE_list = CStarStar.<ST_Agedge_s>ALLOC(size, ST_Agedge_s.class);
+    Z.z().TE_list = CArrayOfStar.<ST_Agedge_s>ALLOC(size, ST_Agedge_s.class);
     Z.z().TI_list = new int[size];
     mincross_options(g);
     if ((GD_flags(g) & NEW_RANK)!=0)
@@ -1873,11 +1240,11 @@ try {
 			cn[r]++;
 	}
     }
-    GD_rank(g, CStar.<ST_rank_t>ALLOC__(GD_maxrank(g) + 2, ST_rank_t.class));
+    GD_rank(g, CArray.<ST_rank_t>ALLOC__(GD_maxrank(g) + 2, ST_rank_t.class));
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	GD_rank(g).get__(r).n = cn[r];
 	GD_rank(g).get__(r).an = cn[r];
-	CStarStar<ST_Agnode_s> tmp = CStarStar.<ST_Agnode_s>ALLOC(cn[r] + 1, ST_Agnode_s.class);
+	CArrayOfStar<ST_Agnode_s> tmp = CArrayOfStar.<ST_Agnode_s>ALLOC(cn[r] + 1, ST_Agnode_s.class);
 	GD_rank(g).get__(r).v = tmp;
 	GD_rank(g).get__(r).av = tmp;
     }
@@ -1946,7 +1313,7 @@ ENTERING("7t49bz6lfcbd9v63ds2x3518z","build_ranks");
 try {
     int i, j;
     ST_Agnode_s n, n0 = null;
-    CStarStar<ST_Agedge_s> otheredges;
+    CArrayOfStar<ST_Agedge_s> otheredges;
     ST_nodequeue q;
     
     q = new_queue(GD_n_nodes(g));
@@ -1979,7 +1346,7 @@ try {
 	GD_rank(Z.z().Root).get__(i).valid = 0;
 	if (GD_flip(g) && (GD_rank(g).get__(i).n > 0)) {
 	    int nn, ndiv2;
-	    CStarStar<ST_Agnode_s> vlist = GD_rank(g).get__(i).v;
+	    CArrayOfStar<ST_Agnode_s> vlist = GD_rank(g).get__(i).v;
 	    nn = GD_rank(g).get__(i).n - 1;
 	    ndiv2 = nn / 2;
 	    for (j = 0; j <= ndiv2; j++)
@@ -2054,7 +1421,7 @@ LEAVING("c8nqj0v20api63pikohsbx92u","constraining_flat_edge");
 */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="postorder", key="46to0pkk188af2dlkik2ab7e3", definition="static int postorder(graph_t * g, node_t * v, node_t ** list, int r)")
-public static int postorder(ST_Agraph_s g, ST_Agnode_s v, CStarStar<ST_Agnode_s> list, int r) {
+public static int postorder(ST_Agraph_s g, ST_Agnode_s v, CArrayOfStar<ST_Agnode_s> list, int r) {
 ENTERING("46to0pkk188af2dlkik2ab7e3","postorder");
 try {
     ST_Agedge_s e;
@@ -2087,8 +1454,8 @@ ENTERING("zuxoswju917kyl08a5f0gtp6","flat_reorder");
 try {
     int i, j, r, pos, n_search, local_in_cnt, local_out_cnt, base_order;
     ST_Agnode_s v, t;
-    CStarStar<ST_Agnode_s> left, right;
-    CStarStar<ST_Agnode_s> temprank = null;
+    CArrayOfStar<ST_Agnode_s> left, right;
+    CArrayOfStar<ST_Agnode_s> temprank = null;
     ST_Agedge_s flat_e, e;
     
     if (GD_has_flat_edges(g) == 0)
@@ -2098,7 +1465,7 @@ try {
 	base_order = ND_order(GD_rank(g).get__(r).v.get_(0));
 	for (i = 0; i < GD_rank(g).get__(r).n; i++)
 	    ND_mark(GD_rank(g).get__(r).v.get_(i), 0);
-	temprank = CStarStar.<ST_Agnode_s>REALLOC(i + 1, temprank, ST_Agnode_s.class);
+	temprank = CArrayOfStar.<ST_Agnode_s>REALLOC(i + 1, temprank, ST_Agnode_s.class);
 	pos = 0;
 	
 	/* construct reverse topological sort order in temprank */
@@ -2182,8 +1549,8 @@ try {
     boolean changed = false;
     int nelt;
     boolean muststay, sawclust;
-    CStarStar<ST_Agnode_s> vlist = GD_rank(g).get__(r).v;
-    CStarStar<ST_Agnode_s> lp, rp=null, ep = vlist.plus_(GD_rank(g).get__(r).n);
+    CArrayOfStar<ST_Agnode_s> vlist = GD_rank(g).get__(r).v;
+    CArrayOfStar<ST_Agnode_s> lp, rp=null, ep = vlist.plus_(GD_rank(g).get__(r).n);
     
     for (nelt = GD_rank(g).get__(r).n - 1; nelt >= 0; nelt--) {
 	lp = vlist;
@@ -2335,7 +1702,7 @@ ENTERING("bk5nklhfqgg0uwkv7tv6dn8r2","rcross");
 try {
     int top, bot, cross, max, i, k;
     ST_Agnode_s v;
-    CStarStar<ST_Agnode_s> rtop;
+    CArrayOfStar<ST_Agnode_s> rtop;
     
     cross = 0;
     max = 0;
@@ -2411,8 +1778,12 @@ LEAVING("dbjmz2tnii2pn9sxg26ap6w5r","ncross");
 
 
 
-//3 8wrsq8a2vooekcm3cdtv5x3ke
-// static int ordercmpf(int *i0, int *i1) 
+public static CFunction ordercmpf = new CFunctionAbstract("ordercmpf") {
+	
+	public Object exe(Object... args) {
+		return ordercmpf((Integer)args[0], (Integer)args[1]);
+	}};
+
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="ordercmpf", key="8wrsq8a2vooekcm3cdtv5x3ke", definition="static int ordercmpf(int *i0, int *i1)")
 public static int ordercmpf(Integer i0, Integer i1) {
@@ -2436,7 +1807,7 @@ ENTERING("7397kynkpqf2m1jkpmi8pgf0n","flat_mval");
 try {
     int i;
     ST_Agedge_s e;
-    CStarStar<ST_Agedge_s> fl;
+    CArrayOfStar<ST_Agedge_s> fl;
     ST_Agnode_s nn;
     if (ND_flat_in(n).size > 0) {
 	fl = ND_flat_in(n).list;
@@ -2478,7 +1849,7 @@ try {
     int i, j, j0, lm, rm, lspan, rspan;
     int[] list;
     ST_Agnode_s n;
-    CStarStar<ST_Agnode_s> v;
+    CArrayOfStar<ST_Agnode_s> v;
     ST_Agedge_s e;
     boolean hasfixed = false;
     list = Z.z().TI_list;
@@ -2508,7 +1879,7 @@ try {
 	default:
 	    qsort2(list,
 	    	    j,
-	    	    function(mincross__c.class, "ordercmpf"));
+	    	    mincross__c.ordercmpf);
 	    if (j % 2!=0)
 		ND_mval(n, list[j / 2]);
 	    else {
@@ -2540,11 +1911,15 @@ LEAVING("azvdpixwwxspl31wp7f4k4fmh","medians");
 
 
 
-//3 2vdhpcykq508ma83aif8sxcbd
-// static int nodeposcmpf(node_t ** n0, node_t ** n1) 
+public static CFunction nodeposcmpf = new CFunctionAbstract("nodeposcmpf") {
+	
+	public Object exe(Object... args) {
+		return nodeposcmpf((CArrayOfStar<ST_Agnode_s>)args[0], (CArrayOfStar<ST_Agnode_s>)args[1]);
+	}};
+
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="nodeposcmpf", key="2vdhpcykq508ma83aif8sxcbd", definition="static int nodeposcmpf(node_t ** n0, node_t ** n1)")
-public static Object nodeposcmpf(CStarStar<ST_Agnode_s> n0, CStarStar<ST_Agnode_s> n1) {
+public static Object nodeposcmpf(CArrayOfStar<ST_Agnode_s> n0, CArrayOfStar<ST_Agnode_s> n1) {
 ENTERING("2vdhpcykq508ma83aif8sxcbd","nodeposcmpf");
 try {
     return (ND_order(n0.get_(0)) - ND_order(n1.get_(0)));
@@ -2553,21 +1928,6 @@ LEAVING("2vdhpcykq508ma83aif8sxcbd","nodeposcmpf");
 }
 }
 
-
-
-
-//3 87c98ld9c4hv87ekcxdyojx8l
-// static int edgeidcmpf(edge_t ** e0, edge_t ** e1) 
-@Unused
-@Original(version="2.38.0", path="lib/dotgen/mincross.c", name="edgeidcmpf", key="87c98ld9c4hv87ekcxdyojx8l", definition="static int edgeidcmpf(edge_t ** e0, edge_t ** e1)")
-public static Object edgeidcmpf(Object... arg) {
-UNSUPPORTED("apvyql25ya1p7w7i7396gucdg"); // static int edgeidcmpf(edge_t ** e0, edge_t ** e1)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9gjc2rit3ezq4il0t5aymk1z"); //     return (AGSEQ(*e0) - AGSEQ(*e1));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 //1 40as9opn4mzq4gp4nkmp4dj8w

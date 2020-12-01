@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -110,7 +110,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 		final HColor noteBackgroundColor;
 		final HColor borderColor;
 		final double shadowing;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 			borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());

@@ -44,9 +44,6 @@
  *
  */
 package gen.lib.label;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static gen.lib.label.rectangle__c.CombineRect;
 import static gen.lib.label.rectangle__c.InitRect;
 import static gen.lib.label.rectangle__c.RectArea;
@@ -54,6 +51,9 @@ import static gen.lib.label.split_q__c.SplitNode;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_Branch_t;
 import h.ST_Node_t___;
 import h.ST_RTree;
@@ -70,7 +70,7 @@ public static ST_Node_t___ RTreeNewNode(ST_RTree rtp) {
 ENTERING("9uj7ni1m6q6drtoh56w82d6m4","RTreeNewNode");
 try {
 	ST_Node_t___ n;
-	rtp.setInt("NodeCount", rtp.NodeCount + 1);
+	rtp.NodeCount = rtp.NodeCount + 1;
 	n = new ST_Node_t___();
      InitNode(n);
      return n;
@@ -79,26 +79,6 @@ LEAVING("9uj7ni1m6q6drtoh56w82d6m4","RTreeNewNode");
 }
 }
 
-
-
-
-//3 65wa5vy8i5k40218lbhdibrjx
-// void RTreeFreeNode(RTree_t * rtp, Node_t * p) 
-@Unused
-@Original(version="2.38.0", path="lib/label/node.c", name="RTreeFreeNode", key="65wa5vy8i5k40218lbhdibrjx", definition="void RTreeFreeNode(RTree_t * rtp, Node_t * p)")
-public static Object RTreeFreeNode(Object... arg) {
-UNSUPPORTED("e9yu9bfc7a1ihpoc5axpyg4eg"); // void RTreeFreeNode(RTree_t * rtp, Node_t * p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("2jtyh6hx1w2fcx2gjs8ksbkuh"); //     rtp->NodeCount--;
-UNSUPPORTED("ed5n0l2c9xevohsgtsmv822gw"); //     if (p->level == 0)
-UNSUPPORTED("8pbkap1jra9u3gvgio7ou7y1n"); // 	rtp->LeafCount--;
-UNSUPPORTED("div10atae09n36x269sl208r1"); //     else
-UNSUPPORTED("357domcrb707wvdox73ayvdj1"); // 	rtp->NonLeafCount--;
-UNSUPPORTED("bo0y3vz195pcz24vm46pixpb2"); //     free(p);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 
@@ -111,8 +91,8 @@ public static void InitNode(ST_Node_t___ n) {
 ENTERING("4qk9wkm05q2pwf20ud6g2tufg","InitNode");
 try {
      int i;
-     n.setInt("count", 0);
-     n.setInt("level", -1);
+     n.count = 0;
+     n.level = -1;
      for (i = 0; i < 64; i++)
     	 InitBranch(n.branch[i]);
      // InitBranch(&(n->branch[i]));
@@ -223,8 +203,8 @@ try {
      if (n.count < 64) {	/* split won't be necessary */
  	for (i = 0; i < 64; i++) {	/* find empty branch */
  	    if (n.branch[i].child == null) {
- 		n.branch[i].___(b.getStruct());
- 		n.setInt("count", n.count+1);
+ 		n.branch[i].___(b);
+ 		n.count = n.count+1;
  		break;
  	    }
 }
@@ -240,7 +220,7 @@ UNSUPPORTED("2u8wpa4w1q7rg14t07bny6p8i"); // 		rtp->InTouchCount++;
 // 	assert(new);
  	SplitNode(rtp, n, b, new_);
  	if (n.level == 0)
- 		rtp.setInt("LeafCount", rtp.LeafCount+1);
+ 		rtp.LeafCount = rtp.LeafCount+1;
  	else
 UNSUPPORTED("6tkfiebspy7ecivrzb3l5y7jd"); // 	    rtp->NonLeafCount++;
  	return 1;
@@ -263,7 +243,7 @@ try {
 //     assert(n && i >= 0 && i < 64);
 //     assert(n->branch[i].child);
      InitBranch(n.branch[i]);
-     n.setInt("count", n.count-1);
+     n.count = n.count-1;
 } finally {
 LEAVING("eqzamflj58f43cflwns9cemnk","DisconBranch");
 }

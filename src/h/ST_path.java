@@ -45,43 +45,18 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_path extends UnsupportedStructAndPtr {
+final public class ST_path extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_path() {
-		this(null);
-	}
-
-	public ST_path(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "typedef struct path",
-	// "{",
-	final public ST_port start = new ST_port(this), end = new ST_port(this);
+	final public ST_port start = new ST_port(), end = new ST_port();
 	public int nbox;
-	// "boxf *boxes",
 	public ST_boxf boxes[];
 
 	public ST_Agedge_s data;
 
-	// "void *data",
-	// "}",
-	// "path");
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("data")) {
-			this.data = (ST_Agedge_s) newData;
-			return this.data;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 }
 

@@ -45,38 +45,13 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_tna_t extends UnsupportedStructAndPtr {
-
-	private final StarStruct parent;
-
-	public ST_tna_t() {
-		this(null);
-	}
-
-	public ST_tna_t(StarStruct parent) {
-		this.parent = parent;
-	}
+final public class ST_tna_t extends UnsupportedStarStruct {
 
 	public double t;
 	public final ST_pointf a[] = new ST_pointf[] { new ST_pointf(), new ST_pointf() };
 	
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("t")) {
-			this.t = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
-
-	@Override
-	public __struct__ getStruct() {
-		return this;
-	}
 
 }
 

@@ -45,54 +45,15 @@
  */
 package h;
 
-import smetana.core.CStarStar;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.CArrayOfStar;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_nlist_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_nlist_t extends UnsupportedStarStruct {
 
+	public CArrayOfStar<ST_Agnode_s> list;
 	public int size;
-	public CStarStar<ST_Agnode_s> list;
 
-	public ST_nlist_t(StarStruct parent) {
-	}
 
-	public ST_nlist_t() {
-		this(null);
-	}
-
-//	public void reallocEmpty(int n_nodes) {
-//		while (data.size() < n_nodes) {
-//			data.add(null);
-//		}
-//	}
-//
-//	public void allocEmpty(int n_nodes) {
-//		data.clear();
-//		reallocEmpty(n_nodes);
-//	}
-//
-//	public void setInList(int idx, ST_Agnode_s value) {
-//		data.set(idx, value);
-//	}
-//
-//	public ST_Agnode_s getFromList(int i) {
-//		return data.get(i);
-//	}
-//
-//	@Todo(what = "check why GD_comp(g).resetList comes from GD_comp(g).list = NULL")
-//	public void resetList() {
-//		data.clear();
-//	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct nlist_t",
-	// "{",
-	// "node_t **list",
-	// "int size",
-	// "}",
-	// "nlist_t");
 }
 
 // typedef struct nlist_t {

@@ -45,9 +45,9 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -144,7 +144,7 @@ public class FtileBox extends AbstractFtile {
 			Stereotype stereotype) {
 		Style style = null;
 		Style styleArrow = null;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			style = getDefaultStyleDefinitionActivity().with(stereotype)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
@@ -156,7 +156,7 @@ public class FtileBox extends AbstractFtile {
 			StyleSignature styleDefinition) {
 		Style style = null;
 		Style styleArrow = null;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			style = styleDefinition.getMergedStyle(styleBuilder);
 			styleArrow = style;
 		}
@@ -165,7 +165,7 @@ public class FtileBox extends AbstractFtile {
 
 	public static FtileBox createWbs(Style style, ISkinParam skinParam, Display label) {
 		Style styleArrow = null;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			styleArrow = style;
 		}
 		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
@@ -186,7 +186,7 @@ public class FtileBox extends AbstractFtile {
 		this.swimlane = swimlane;
 		final FontConfiguration fc;
 		final LineBreakStrategy wrapWidth;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.inRendering = new LinkRendering(Rainbow.build(styleArrow, getIHtmlColorSet()));
 			Colors specBack = null;
 			if (skinParam instanceof SkinParamColors) {
@@ -238,7 +238,7 @@ public class FtileBox extends AbstractFtile {
 		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
 
 		final UStroke thickness;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			thickness = style.getStroke();
 		} else {
 			thickness = getThickness();

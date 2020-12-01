@@ -46,51 +46,18 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_shape_desc extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_shape_desc extends UnsupportedStarStruct {
 
-	public ST_shape_desc(StarStruct parent) {
-	}
-
-	public ST_shape_desc() {
-		this(null);
-	}
 
 	public CString name;
 	public ST_shape_functions fns;
 	public ST_polygon_t polygon;
 	public boolean usershape;
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("name")) {
-			this.name = (CString) newData;
-			return newData;
-		}
-		if (fieldName.equals("fns")) {
-			this.fns = (ST_shape_functions) newData;
-			return newData;
-		}
-		if (fieldName.equals("polygon")) {
-			this.polygon = (ST_polygon_t) newData;
-			return newData;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct shape_desc",
-	// "{",
-	// "char *name",
-	// "shape_functions *fns",
-	// "polygon_t *polygon",
-	// "boolean usershape",
-	// "}",
-	// "shape_desc");
+
 }
 
 // typedef struct shape_desc { /* read-only shape descriptor */

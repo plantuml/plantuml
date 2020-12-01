@@ -39,7 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -71,7 +71,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 			ISkinSimple spriteContainer, HColor background) {
 		super(style, LineBreakStrategy.NONE, stringsToDisplay.subList(1, stringsToDisplay.size()), font,
 				HorizontalAlignment.LEFT, 4, 4, 4, spriteContainer, false, null, null);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());
 			this.symbolContextBody = style.getSymbolContext(getIHtmlColorSet());
 			fcHeader = styleHeader.getFontConfiguration(getIHtmlColorSet());

@@ -40,7 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedCentered;
@@ -135,7 +135,7 @@ public abstract class AbstractParallelFtilesBuilder {
 			return null;
 		}
 		final FontConfiguration fontConfiguration;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 		} else {

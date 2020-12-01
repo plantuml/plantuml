@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -115,7 +115,7 @@ public class FtileWithNotes extends AbstractFtile {
 			final FontConfiguration fc;
 			final double shadowing;
 
-			if (SkinParam.USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
 						.eventuallyOverride(note.getColors());
 				noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());

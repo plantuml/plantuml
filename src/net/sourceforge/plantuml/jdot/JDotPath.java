@@ -229,7 +229,7 @@ public class JDotPath implements UDrawable {
 
 	private UTranslate getLabelRectangleTranslate(String fieldName) {
 		// final String fieldName = "label";
-		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge).castTo(ST_Agedgeinfo_t.class);
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge);
 		ST_textlabel_t label = null;
 		if (fieldName.equals("label")) {
 			label = data.label;
@@ -261,7 +261,7 @@ public class JDotPath implements UDrawable {
 	}
 
 	private ST_splines getSplines(ST_Agedge_s e) {
-		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e);
 		final ST_splines splines = (ST_splines) data.spl;
 		return splines;
 	}

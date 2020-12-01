@@ -79,14 +79,14 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.REQUIREMENT, skinParam,
-				HorizontalAlignment.CENTER, stereotype, true, false, entity, SName.componentDiagram);
+				HorizontalAlignment.CENTER, stereotype, true, false, entity, null);
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.desc = tmp;
 		} else {
-			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet()))
-					.create(new FontConfiguration(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),
-							HorizontalAlignment.CENTER, skinParam);
+			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
+					new FontConfiguration(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),
+					HorizontalAlignment.CENTER, skinParam);
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}
 		this.url = entity.getUrl99();

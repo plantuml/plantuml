@@ -101,6 +101,9 @@ public class EaterFunctionCall extends Eater {
 			if (ch == ')') {
 				break;
 			}
+			if (unquoted) {
+				throw EaterException.located("unquoted function/procedure cannot use expression.");
+			}
 			throw EaterException.located("call001");
 		}
 	}

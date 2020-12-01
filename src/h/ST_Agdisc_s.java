@@ -45,55 +45,14 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Agdisc_s extends UnsupportedStructAndPtr {
+final public class ST_Agdisc_s extends UnsupportedStarStruct {
 
 	public ST_Agmemdisc_s mem;
 	public ST_Agiddisc_s id;
 	public ST_Agiodisc_s io;
 
-	private final StarStruct parent;
-
-	public ST_Agdisc_s() {
-		this(null);
-	}
-
-	public ST_Agdisc_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("mem")) {
-			this.mem = (ST_Agmemdisc_s) newData;
-			return mem;
-		}
-		if (fieldName.equals("id")) {
-			this.id = (ST_Agiddisc_s) newData;
-			return id;
-		}
-		// if (fieldName.equals("io")) {
-		// this.io = (ST_Agiodisc_s.Amp) newData;
-		// return io;
-		// }
-		return super.setPtr(fieldName, newData);
-	}
-
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agdisc_s",
-	// "{",
-	// "Agmemdisc_t *mem",
-	// "Agiddisc_t *id",
-	// "Agiodisc_t *io",
-	// "}");
 }
 
 // struct Agdisc_s { /* user's discipline */

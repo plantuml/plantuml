@@ -36,13 +36,11 @@
 
 package smetana.core;
 
-import h.Dtcompar_f;
-import h.Dtmemory_f;
-import h.Dtsearch_f;
-
-public interface CFunction extends __ptr__, Dtmemory_f, Dtcompar_f, Dtsearch_f {
+public interface CFunction extends __ptr__ {
 	
 	public Object exe(Object... args);
+
+	public String getName();
 
 
 }

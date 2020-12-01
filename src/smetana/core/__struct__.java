@@ -36,19 +36,10 @@
 
 package smetana.core;
 
-import smetana.core.amiga.Area;
-import smetana.core.amiga.StarStruct;
-
-public interface __struct__<C extends __ptr__> extends __c__fields, Area {
+public interface __struct__<C extends __ptr__> {
 
 	public __struct__<C> copy();
 
 	public void ___(__struct__<C> other);
-
-	public void ____(__ptr__ other);
-
-	public StarStruct amp();
-
-	public StarStruct getInternalData();
 
 }

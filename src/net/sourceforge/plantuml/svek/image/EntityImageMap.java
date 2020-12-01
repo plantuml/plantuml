@@ -104,7 +104,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		}
 
 		this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
-				entity.getStereotype());
+				entity.getStereotype(), null);
 		this.url = entity.getUrl99();
 
 	}

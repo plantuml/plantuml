@@ -38,52 +38,7 @@ package smetana.core;
 
 public class UnsupportedC implements __ptr__ {
 
-	public int getInt() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setInt(int value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-	
-
-	public double getDouble() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setDouble(double value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __ptr__ getPtr() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setPtr(__ptr__ value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __struct__ getStruct() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setStruct(__struct__ value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __ptr__ setPtr(String fieldName, __ptr__ data) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setStruct(String fieldName, __struct__ data) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setInt(String fieldName, int data) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setDouble(String fieldName, double data) {
+	public boolean isSameThan(__ptr__ other) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
@@ -91,32 +46,11 @@ public class UnsupportedC implements __ptr__ {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-
-	public Object addVirtualBytes(int bytes) {
+	public Object getTheField(OFFSET bytes) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
 	final public __ptr__ unsupported() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __ptr__ plus(int pointerMove) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public int comparePointer(__ptr__ other) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public String getDebug(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void copyDataFrom(__ptr__ other) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void copyDataFrom(__struct__ other) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

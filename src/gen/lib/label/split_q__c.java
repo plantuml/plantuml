@@ -100,8 +100,8 @@ UNSUPPORTED("2cjo6wz1rmxfm5k7u7rw5dqpj"); // 	    rtp->InSplitCount++;
 UNSUPPORTED("z7xk6s3hzi3qcoiq2exj9hpv"); // 	rtp->SplitMeritSum += (float) rtp->split.CoverSplitArea / area;
      /* put branches from buffer into 2 nodes according to chosen partition */
      nn[0] = RTreeNewNode(rtp);
-     n.setInt("level", level);
-     nn[0].setInt("level", level);
+     n.level = level;
+     nn[0].level = level;
      LoadNodes(rtp, n, nn[0], p);
 //     assert(n->count + (*nn)->count == 64 + 1);
 } finally {
@@ -131,11 +131,11 @@ try {
      /* calculate rect containing all in the set */
      rtp.split.CoverSplit.___(rtp.split.BranchBuf[0].rect);
      for (i = 1; i < 64 + 1; i++) {
-    	 rtp.split.setStruct("CoverSplit",
+    	 rtp.split.CoverSplit.___(
     	 CombineRect((ST_Rect_t)rtp.split.CoverSplit,
-    			 (ST_Rect_t)rtp.split.BranchBuf[i].castTo(ST_Rect_t.class)));
+    			 (ST_Rect_t)rtp.split.BranchBuf[i].rect));
      }
-     rtp.split.setInt("CoverSplitArea", RectArea((ST_Rect_t)rtp.split.CoverSplit));
+     rtp.split.CoverSplitArea = RectArea((ST_Rect_t)rtp.split.CoverSplit);
      InitNode(n);
 } finally {
 LEAVING("al7lyin008m7kvrvuxhcuvn61","GetBranches");
@@ -166,7 +166,7 @@ try {
  	for (i = 0; i < 64 + 1; i++) {
  	    if (N(rtp.split.Partitions[0].taken[i])) {
  		final ST_Rect_t rect = new ST_Rect_t();
- 		r = (ST_Rect_t) rtp.split.BranchBuf[i].castTo(ST_Rect_t.class);
+ 		r = (ST_Rect_t) rtp.split.BranchBuf[i].rect;
  		/* growth0 = RectArea(&CombineRect(r,
  		   &rtp->split.Partitions[0].cover[0])) -
  		   rtp->split.Partitions[0].area[0];

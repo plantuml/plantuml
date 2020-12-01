@@ -46,59 +46,19 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_gvplugin_installed_t extends UnsupportedStructAndPtr {
+final public class ST_gvplugin_installed_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_gvplugin_installed_t() {
-		this(null);
-	}
-
-	public ST_gvplugin_installed_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public int id;
+	public EN_layout_type id;
 	public CString type;
 	public int quality;
 
 	public ST_gvlayout_engine_s engine;
 	public ST_gvlayout_features_t features;
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("id")) {
-			this.id = data;
-			return;
-		}
-		if (fieldName.equals("quality")) {
-			this.quality = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("type")) {
-			this.type = (CString) newData;
-			return newData;
-		}
-		if (fieldName.equals("engine")) {
-			this.engine = (ST_gvlayout_engine_s) newData;
-			return newData;
-		}
-		if (fieldName.equals("features")) {
-			this.features = (ST_gvlayout_features_t) newData;
-			return newData;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 }
 

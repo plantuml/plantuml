@@ -46,111 +46,21 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_Agrec_s extends UnsupportedStructAndPtr implements WithParent {
+public class ST_Agrec_s extends UnsupportedStarStruct {
 
 	public CString name;
 	public ST_Agrec_s next;
-
-	private final StarStruct parent;
-
-	@Override
-	public void copyDataFrom(__struct__ other) {
-		if (other instanceof ST_Agedgeinfo_t && parent instanceof ST_Agedgeinfo_t) {
-			parent.copyDataFrom(other);
-			return;
-		}
-		ST_Agrec_s this2 = (ST_Agrec_s) other;
-		this.name = this2.name;
-		this.next = this2.next;
-	}
-
-	public ST_Agrec_s() {
-		this(null);
-	}
-
-	public ST_Agrec_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
+	/* following this would be any programmer-defined data */
 
 	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_Agrec_s other2 = (ST_Agrec_s) other;
 		return this == other2;
 	}
 
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Agdatadict_s.class && getParent() instanceof ST_Agdatadict_s) {
-			return (ST_Agdatadict_s) getParent();
-		}
-		if (dest == ST_Agattr_s.class && getParent() instanceof ST_Agattr_s) {
-			return (ST_Agattr_s) getParent();
-		}
-		if (dest == ST_Agraphinfo_t.class && getParent() instanceof ST_Agraphinfo_t) {
-			return (ST_Agraphinfo_t) getParent();
-		}
-		if (dest == ST_Agnodeinfo_t.class && getParent() instanceof ST_Agnodeinfo_t) {
-			return (ST_Agnodeinfo_t) getParent();
-		}
-		if (dest == ST_Agedgeinfo_t.class && getParent() instanceof ST_Agedgeinfo_t) {
-			return (ST_Agedgeinfo_t) getParent();
-		}
-		System.err.println("dest=" + dest);
-		System.err.println("getParent=" + getParent().getClass());
-		return super.castTo(dest);
-	}
-	
-	public ST_Agdatadict_s castTo_ST_Agdatadict_s() {
-		return (ST_Agdatadict_s) castTo(ST_Agdatadict_s.class);
-	}
-
-
-	public ST_Agnodeinfo_t castTo_ST_Agnodeinfo_t() {
-		if (getParent() instanceof ST_Agnodeinfo_t) {
-			return (ST_Agnodeinfo_t) getParent();
-		}
-		throw new UnsupportedOperationException();
-	}
-
-
-
-	public ST_Agraphinfo_t castTo_ST_Agraphinfo_t() {
-		if (getParent() instanceof ST_Agraphinfo_t) {
-			return (ST_Agraphinfo_t) getParent();
-		}
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("name")) {
-			this.name = (CString) newData;
-			return name;
-		}
-		if (fieldName.equals("next")) {
-			if (newData instanceof ST_Agrec_s) {
-				this.next = (ST_Agrec_s) newData;
-			}
-			return next;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agrec_s",
-	// "{",
-	// "char *name",
-	// "Agrec_t *next",
-	// "}");
 }
 
 // struct Agrec_s {

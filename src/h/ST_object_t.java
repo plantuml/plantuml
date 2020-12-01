@@ -45,69 +45,21 @@
  */
 package h;
 
-import smetana.core.CStar;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.CArray;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_object_t extends UnsupportedStructAndPtr implements ST_Node_t___or_object_t {
+final public class ST_object_t extends UnsupportedStarStruct implements ST_Node_t___or_object_t {
 
-	private final StarStruct parent;
+	public final ST_pointf pos = new ST_pointf();
+	public final ST_pointf sz = new ST_pointf();
+	public CArray<ST_xlabel_t> lbl;
 
-	public ST_object_t() {
-		this(null);
-	}
-
-	public ST_object_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-
-	public final ST_pointf pos = new ST_pointf(this);
-	public final ST_pointf sz = new ST_pointf(this);
-	public CStar<ST_xlabel_t> lbl;
 
 	@Override
-	public ST_object_t getStruct() {
-		return this;
-	}
-
-	@Override
-	public ST_object_t getPtr() {
-		return this;
-	}
-
-	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_object_t other2 = (ST_object_t) other;
 		return this == other2;
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("pos")) {
-			this.pos.copyDataFrom(newData);
-			return newData;
-		}
-		if (fieldName.equals("lbl")) {
-			this.lbl = (CStar<ST_xlabel_t>) newData;
-			return this.lbl;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("pos")) {
-			this.pos.copyDataFrom(newData);
-			return;
-		}
-		if (fieldName.equals("sz")) {
-			this.sz.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
 	}
 
 }

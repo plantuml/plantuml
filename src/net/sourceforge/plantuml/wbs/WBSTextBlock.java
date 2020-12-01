@@ -40,7 +40,7 @@ import java.awt.geom.Point2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -73,7 +73,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 
 	final protected void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
 		final ULine line = new ULine(p1, p2);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet())
 					.draw(line);
 		} else {

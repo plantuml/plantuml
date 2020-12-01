@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -85,7 +86,7 @@ public class BpmDiagram extends UmlDiagram {
 		final double dpiFactor = 1;
 		final int margin1;
 		final int margin2;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			margin1 = SkinParam.zeroMargin(10);
 			margin2 = SkinParam.zeroMargin(10);
 		} else {

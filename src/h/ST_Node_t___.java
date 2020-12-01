@@ -45,12 +45,10 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Node_t___ extends UnsupportedStructAndPtr implements ST_Node_t___or_object_t {
+final public class ST_Node_t___ extends UnsupportedStarStruct implements ST_Node_t___or_object_t {
 
-	private final StarStruct parent;
 	public int count;
 	public int level;
 	// Sorry guys :-)
@@ -69,35 +67,6 @@ public class ST_Node_t___ extends UnsupportedStructAndPtr implements ST_Node_t__
 			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
 			new ST_Branch_t() };
 
-	public ST_Node_t___() {
-		this(null);
-	}
-
-	public ST_Node_t___(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("count")) {
-			this.count = data;
-			return;
-		}
-		if (fieldName.equals("level")) {
-			this.level = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-
-	// "typedef struct Node",
-	// "{",
-	// "int count",
-	// "int level",
-	// "struct Branch branch[64]",
-	// "}",
-	// "Node_t");
 }
 
 // typedef struct Node {

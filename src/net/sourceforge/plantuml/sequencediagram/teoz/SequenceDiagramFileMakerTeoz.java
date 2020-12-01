@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -152,7 +152,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
 		final ClockwiseTopRightBottomLeft margins;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.document)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			margins = style.getMargin();
@@ -238,7 +238,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 			return new ComponentAdapter(null);
 		}
 		final TextBlock compTitle;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.title)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(),
@@ -270,7 +270,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final int fontSize = getSkinParam().getFont(null, false, param).getSize();
 		Style style = null;
 		final ISkinParam skinParam = diagram.getSkinParam();
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final StyleSignature def = param.getStyleDefinition(null);
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
@@ -296,7 +296,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		ug = goDown(ug, header);
 
 		HorizontalAlignment titleAlignment = HorizontalAlignment.CENTER;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final StyleSignature def = FontParam.TITLE.getStyleDefinition(null);
 			titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())
 					.getHorizontalAlignment();

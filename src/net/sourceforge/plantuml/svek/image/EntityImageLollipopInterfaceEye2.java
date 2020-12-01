@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
@@ -57,6 +58,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -84,7 +86,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		}
 
 		this.desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, entity, SName.componentDiagram);
+				stereotype, symbol.manageHorizontalLine(), false, entity, getStyle(symbol.getFontParam()));
 
 		this.url = entity.getUrl99();
 
@@ -106,6 +108,11 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 			stereo = TextBlockUtils.empty(0, 0);
 		}
 
+	}
+
+	private Style getStyle(FontParam fontParam) {
+		return fontParam.getStyleDefinition(SName.componentDiagram)
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

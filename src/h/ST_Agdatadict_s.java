@@ -45,66 +45,12 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+final public class ST_Agdatadict_s extends ST_Agrec_s {
 
-public class ST_Agdatadict_s extends UnsupportedStructAndPtr {
-
-	private final ST_Agrec_s h = new ST_Agrec_s(this); /* installed in list of graph recs */
 	public ST_dt_s dict_n;
 	public ST_dt_s dict_e;
 	public ST_dt_s dict_g;
 
-	private final StarStruct parent;
-
-	public ST_Agdatadict_s() {
-		this(null);
-	}
-
-	public ST_Agdatadict_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("dict.n")) {
-			this.dict_n = (ST_dt_s) newData;
-			return dict_n;
-		}
-		if (fieldName.equals("dict.e")) {
-			this.dict_e = (ST_dt_s) newData;
-			return dict_e;
-		}
-		if (fieldName.equals("dict.g")) {
-			this.dict_g = (ST_dt_s) newData;
-			return dict_g;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Agrec_s.class) {
-			return h;
-		}
-		return super.castTo(dest);
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agdatadict_s",
-	// "{",
-	// "Agrec_t h",
-	// "struct",
-	// "{",
-	// "Dict_t *n, *e, *g",
-	// "}",
-	// "dict",
-	// "}");
 }
 
 // struct Agdatadict_s { /* set of dictionaries per graph */

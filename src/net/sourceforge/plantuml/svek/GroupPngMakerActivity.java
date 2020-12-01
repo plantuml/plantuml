@@ -43,7 +43,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
@@ -141,7 +141,7 @@ public final class GroupPngMakerActivity {
 					? getColor(ColorParam.background, stereo)
 					: group.getColors(skinParam).getColor(ColorType.BACK);
 			final double shadowing;
-			if (SkinParam.USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinitionGroup().getMergedStyle(skinParam.getCurrentStyleBuilder());
 				shadowing = style.value(PName.Shadowing).asDouble();
 			} else {

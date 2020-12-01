@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -65,7 +65,7 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
 			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
-			if (SkinParam.USE_STYLES() && align == null) {
+			if (UseStyle.useBetaStyle() && align == null) {
 				ha = FontParam.FOOTER.getStyleDefinition(null)
 						.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
 						.getHorizontalAlignment();

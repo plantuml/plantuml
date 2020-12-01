@@ -93,7 +93,7 @@ public class DisplaySection {
 		if (Display.isNull(display) || display.size() == 0) {
 			return null;
 		}
-		// if (SkinParam.USE_STYLES()) {
+		// if (UseStyle.USE_STYLES()) {
 		// throw new UnsupportedOperationException();
 		// }
 		return display.create(fontConfiguration, getHorizontalAlignment(), spriteContainer);

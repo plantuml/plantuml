@@ -45,14 +45,11 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_dtdata_s extends UnsupportedStructAndPtr {
+final public class ST_dtdata_s extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-	
 	public int type; /* type of dictionary */
 	public ST_dtlink_s here; /* finger to last search element */
 	public __ptr__ _htab; /* hash table */
@@ -65,60 +62,6 @@ public class ST_dtdata_s extends UnsupportedStructAndPtr {
 	public int minp; /* min path before splay, always even */
 
 
-	public ST_dtdata_s() {
-		this(null);
-	}
-
-	public ST_dtdata_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("type")) {
-			this.type = data;
-			return;
-		}
-		if (fieldName.equals("ntab")) {
-			this.ntab = data;
-			return;
-		}
-		if (fieldName.equals("size")) {
-			this.size = data;
-			return;
-		}
-		if (fieldName.equals("loop")) {
-			this.loop = data;
-			return;
-		}
-		if (fieldName.equals("minp")) {
-			this.minp = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	// public interface ST_dtdata_s extends __ptr__ {
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct _dtdata_s",
-	// "{",
-	// "int  type",
-	// "Dtlink_t* here",
-	// "union",
-	// "{",
-	// "Dtlink_t** _htab",
-	// "Dtlink_t* _head",
-	// "}",
-	// "hh",
-	// "int  ntab",
-	// "int  size",
-	// "int  loop",
-	// "int  minp",
-	// "}");
 }
 
 // struct _dtdata_s

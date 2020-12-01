@@ -44,14 +44,14 @@
  *
  */
 package gen.lib.cdt;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static gen.lib.cdt.dtdisc__c.dtdisc;
 import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_dt_s;
 import h.ST_dtdata_s;
 import h.ST_dtdisc_s;
@@ -145,15 +145,15 @@ try {
 	if(N(dt = new ST_dt_s()))
 		return null;
 //	/* initialize all absolutely private data */
-	dt.setPtr("searchf", null);
-	dt.setPtr("meth", null);
-	dt.setPtr("disc", null);
+	dt.searchf = null;
+	dt.meth = null;
+	dt.disc = null;
 	dtdisc(dt,disc,0);
-	dt.setInt("type", 0);
-	dt.setInt("nview", 0);
-	dt.setPtr("view", null);
-	dt.setPtr("walk", null);
-	dt.setPtr("user", null);
+	dt.type = 0;
+	dt.nview = 0;
+	dt.view = null;
+	dt.walk = null;
+	dt.user = null;
 	if(disc.eventf!=null)
 	{	/* if shared/persistent dictionary, get existing data */
 		throw new UnsupportedOperationException();

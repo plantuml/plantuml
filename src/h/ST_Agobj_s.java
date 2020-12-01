@@ -45,93 +45,13 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Agobj_s extends UnsupportedStructAndPtr implements WithParent, HardcodedStruct {
+public class ST_Agobj_s extends UnsupportedStarStruct {
 
-	public final ST_Agtag_s tag = new ST_Agtag_s(this);
+	public final ST_Agtag_s tag = new ST_Agtag_s();
 	public ST_Agrec_s data;
 
-	@Override
-	public void copyDataFrom(__struct__ other) {
-		ST_Agobj_s this2 = (ST_Agobj_s) other;
-		this.tag.copyDataFrom((__struct__) this2.tag);
-		this.data = this2.data;
-
-	}
-
-	private final StarStruct parent;
-
-	public ST_Agobj_s() {
-		this(null);
-	}
-
-	public ST_Agobj_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Agobj_s.class) {
-			return this;
-		}
-		if (dest == ST_Agraph_s.class && parent instanceof ST_Agraph_s) {
-			return (ST_Agraph_s) parent;
-		}
-		if (dest == ST_Agnode_s.class && parent instanceof ST_Agnode_s) {
-			return (ST_Agnode_s) parent;
-		}
-		if (dest == ST_Agedge_s.class && parent instanceof ST_Agedge_s) {
-			return (ST_Agedge_s) parent;
-		}
-		return super.castTo(dest);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("data")) {
-			if (newData instanceof ST_Agnodeinfo_t) {
-				ST_Agnodeinfo_t info = (ST_Agnodeinfo_t) newData;
-				newData = (ST_Agrec_s) info.castTo(ST_Agrec_s.class);
-			} else if (newData instanceof ST_Agedgeinfo_t) {
-				ST_Agedgeinfo_t info = (ST_Agedgeinfo_t) newData;
-				newData = (ST_Agrec_s) info.castTo(ST_Agrec_s.class);
-			} else if (newData instanceof ST_Agedgeinfo_t) {
-				ST_Agedgeinfo_t info = (ST_Agedgeinfo_t) newData;
-				newData = (ST_Agrec_s) info.castTo(ST_Agrec_s.class);
-			}
-			if (newData instanceof ST_Agrec_s) {
-				this.data = (ST_Agrec_s) newData;
-			}
-			return data;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("tag")) {
-			this.tag.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
-
-	// public interface ST_Agobj_s extends __ptr__ {
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agobj_s",
-	// "{",
-	// "Agtag_t tag",
-	// "Agrec_t *data",
-	// "}");
 }
 
 // struct Agobj_s {

@@ -40,8 +40,8 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Pragma;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -81,7 +81,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ARROW;
 		final FontConfiguration fcArrow;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(
 					skinParam().getCurrentStyleBuilder());
 			final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(

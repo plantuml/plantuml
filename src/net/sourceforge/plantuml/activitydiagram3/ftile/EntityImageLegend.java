@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -56,7 +56,7 @@ public class EntityImageLegend {
 
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature
 					.of(SName.root, skinParam.getUmlDiagramType().getStyleName(), SName.legend)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());

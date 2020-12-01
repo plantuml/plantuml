@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -86,7 +87,7 @@ public class WireDiagram extends UmlDiagram {
 
 		final int margin1;
 		final int margin2;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			margin1 = SkinParam.zeroMargin(10);
 			margin2 = SkinParam.zeroMargin(10);
 		} else {

@@ -42,8 +42,8 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
@@ -101,7 +101,7 @@ public class VCompactFactory implements FtileFactory {
 	public Ftile start(Swimlane swimlane) {
 		final HColor color;
 		Style style = null;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		} else {
@@ -113,7 +113,7 @@ public class VCompactFactory implements FtileFactory {
 	public Ftile stop(Swimlane swimlane) {
 		final HColor color;
 		Style style = null;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		} else {
@@ -132,7 +132,7 @@ public class VCompactFactory implements FtileFactory {
 	public Ftile end(Swimlane swimlane) {
 		final HColor color;
 		Style style = null;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		} else {

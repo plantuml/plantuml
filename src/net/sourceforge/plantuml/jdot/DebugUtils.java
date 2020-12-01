@@ -43,17 +43,16 @@ import h.ST_pointf;
 import h.ST_splines;
 import h.ST_textlabel_t;
 import smetana.core.Macro;
-import smetana.core.amiga.StarStruct;
 
 public class DebugUtils {
 
 	public static void printDebugEdge(ST_Agedge_s e) {
-		System.err.println("*********** PRINT EDGE ********** " + getUID(e));
+		// System.err.println("*********** PRINT EDGE ********** " + getUID(e));
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
 		final ST_splines splines = (ST_splines) data.spl;
 		//ST_boxf bb = (ST_boxf) splines.bb;
 		// final bezier list = (bezier) splines.getPtr("list");
-		System.err.println("splines.UID=" + ((StarStruct) splines).getUID36());
+		// System.err.println("splines.UID=" + ((StarStruct) splines).getUID36());
 		System.err.println("splines.size=" + splines.size);
 		//System.err.println("bb.LL=" + pointftoString((ST_pointf) bb.LL));
 		//System.err.println("bb.UR=" + pointftoString((ST_pointf) bb.UR));
@@ -68,9 +67,9 @@ public class DebugUtils {
 
 	}
 
-	public static String getUID(Object o) {
-		return ((StarStruct) o).getUID36();
-	}
+//	public static String getUID(Object o) {
+//		return ((StarStruct) o).getUID36();
+//	}
 
 	public static void printDebugBezier(ST_bezier bezier) {
 		System.err.println("bezier.size=" + bezier.size);
@@ -78,7 +77,7 @@ public class DebugUtils {
 		System.err.println("splines.eflag=" + bezier.eflag);
 		System.err.println("bezier.sp=" + pointftoString((ST_pointf) bezier.sp));
 		System.err.println("bezier.ep=" + pointftoString((ST_pointf) bezier.ep));
-		System.err.println("bezier.list=" + getUID(bezier.list.getPtr()));
+		// System.err.println("bezier.list=" + getUID(bezier.list.getPtr()));
 		for (int i = 0; i < bezier.size; i++) {
 			final ST_pointf pt = bezier.list.get__(i);
 			System.err.println("pt=" + pointftoString(pt));

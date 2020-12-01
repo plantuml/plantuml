@@ -98,8 +98,10 @@ import h.ST_Agtag_s;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
 import h.ST_dtlink_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.CStarStar;
 import smetana.core.CString;
-import smetana.core.STARSTAR;
 import smetana.core.Z;
 import smetana.core.__ptr__;
 
@@ -282,27 +284,6 @@ LEAVING("c175o6j61jqmfnl4o1g1h1mie","agfindedge_by_key");
 
 
 
-
-//3 7ph1egysh0yp1kxmrerg5v40e
-// static Agedge_t *agfindedge_by_id(Agraph_t * g, Agnode_t * t, Agnode_t * h, 				  unsigned long id) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="7ph1egysh0yp1kxmrerg5v40e", definition="static Agedge_t *agfindedge_by_id(Agraph_t * g, Agnode_t * t, Agnode_t * h, 				  unsigned long id)")
-public static Object agfindedge_by_id(Object... arg) {
-UNSUPPORTED("ec9zslg8lac601i0b25y7zwto"); // static Agedge_t *agfindedge_by_id(Agraph_t * g, Agnode_t * t, Agnode_t * h,
-UNSUPPORTED("3aq1nzyk7buuizn5in1tizrxw"); // 				  unsigned long id)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("e1mtghvcaueacf53mmdm4tfy0"); //     Agtag_t tag;
-UNSUPPORTED("9sao87j2usq1a87o75iju8s5b"); //     tag = Tag;
-UNSUPPORTED("8ftb0g8ykm4jkjpro0pcai75y"); //     tag.objtype = AGEDGE;
-UNSUPPORTED("4dwsgoqnwiy82putqjt97dagp"); //     tag.id = id;
-UNSUPPORTED("57t26f9vd4vltjvoz5m7lo5lf"); //     return agfindedge_by_key(g, t, h, tag);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="agsubrep", key="b32ssm6ex1pdz1b3nt4fwlhul", definition="Agsubnode_t *agsubrep(Agraph_t * g, Agnode_t * n)")
 public static ST_Agsubnode_s agsubrep(ST_Agraph_s g, ST_Agnode_s n) {
@@ -325,36 +306,18 @@ LEAVING("b32ssm6ex1pdz1b3nt4fwlhul","agsubrep");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="ins", key="6u0niow33w9gva780waluva4n", definition="static void ins(Dict_t * d, Dtlink_t ** set, Agedge_t * e)")
-public static void ins(ST_dt_s d, STARSTAR<ST_dtlink_s> set, ST_Agedge_s e) {
+public static void ins(ST_dt_s d, CStarStar<ST_dtlink_s> set, ST_Agedge_s e) {
 ENTERING("6u0niow33w9gva780waluva4n","ins");
 try {
-    dtrestore(d, set.getMe());
+    dtrestore(d, set.star());
     dtinsert(d, e);
-    set.setMe(dtextract(d));
+    set.star(dtextract(d));
 } finally {
 LEAVING("6u0niow33w9gva780waluva4n","ins");
 }
 }
 
 
-
-
-//3 2h2dtr49b6fcn440sc4xrseg3
-// static void del(Dict_t * d, Dtlink_t ** set, Agedge_t * e) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/edge.c", name="del", key="2h2dtr49b6fcn440sc4xrseg3", definition="static void del(Dict_t * d, Dtlink_t ** set, Agedge_t * e)")
-public static Object del(Object... arg) {
-UNSUPPORTED("5lvsvkq5t8c8pj03debt0mwal"); // static void del(Dict_t * d, Dtlink_t ** set, Agedge_t * e)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("atawgqln44t2lhf2j4q1dsw80"); //     void *x;
-UNSUPPORTED("c1wraxzkcgmquqsiuypvr56tj"); //     dtrestore(d, *set);
-UNSUPPORTED("9e6qtst4eze5ps8ukq79d6zf8"); //     x = (*(((Dt_t*)(d))->searchf))((d),(void*)(e),0000002);
-UNSUPPORTED("5i0sddp616zsw63jk38od62l4"); //     ;
-UNSUPPORTED("dgfo5c0o8ftxxwmcq8kxe7ht8"); //     *set = dtextract(d);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 
@@ -375,11 +338,11 @@ try {
     while (g!=null) {
 	if (agfindedge_by_key(g, t, h, AGTAG(e))!=null) break;
 	sn = agsubrep(g, t);
-	ins(g.e_seq, sn.out_seq__AMP(), out);
-	ins(g.e_id, sn.out_id__AMP(), out);
+	ins(g.e_seq, sn.out_seq_AMP(), out);
+	ins(g.e_id, sn.out_id_AMP(), out);
 	sn = agsubrep(g, h); 
-	ins(g.e_seq, sn.in_seq__AMP(), in);
-	ins(g.e_id, sn.in_id__AMP(), in);
+	ins(g.e_seq, sn.in_seq_AMP(), in);
+	ins(g.e_id, sn.in_id_AMP(), in);
 	g = agparent(g);
     }
 } finally {
@@ -394,7 +357,7 @@ LEAVING("8kizmg7gziussfgx8zs3qvkfw","installedge");
 // static void subedge(Agraph_t * g, Agedge_t * e) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="subedge", key="2vtt6zb0n3oru23okvw4pxasg", definition="static void subedge(Agraph_t * g, Agedge_t * e)")
-public static Object subedge(Object... arg) {
+public static Object subedge(Object... arg_) {
 UNSUPPORTED("1qslen16fp6w3yse2y311vtsf"); // static void subedge(Agraph_t * g, Agedge_t * e)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("3rvuc9rdxdwmvq3dtwv2hqwjo"); //     installedge(g, e);
@@ -429,8 +392,8 @@ try {
     AGID(in, id);
     AGSEQ(in, seq);
     AGSEQ(out, seq);
-    in.setPtr("node", t);
-    out.setPtr("node", h);
+    in.node = t;
+    out.node = h;
     installedge(g, out);
     if (((ST_Agdesc_s)g.desc).has_attrs!=0) {
 	  agbindrec(out, AgDataRecName, sizeof(ST_Agattr_s.class), false);
@@ -459,7 +422,7 @@ try {
 	if (g.desc.no_loop!=0 && (EQ(t, h))) /* simple graphs */
 	    return false;
 	key.___(Z.z().Tag);
-	key.setInt("objtype", 0);	/* wild card */
+	key.objtype = 0;	/* wild card */
 	if (agfindedge_by_key(g, t, h, key)!=null)
 	    return false;
     }
@@ -469,37 +432,6 @@ LEAVING("1ufxhg5xnmll1pe5339477823","ok_to_make_edge");
 }
 }
 
-
-
-
-//3 75ua3fc3lvhnwftacueslv8e5
-// Agedge_t *agidedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, 		   unsigned long id, int cflag) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="75ua3fc3lvhnwftacueslv8e5", definition="Agedge_t *agidedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, 		   unsigned long id, int cflag)")
-public static Object agidedge(Object... arg) {
-UNSUPPORTED("5pslnv27wv1h507npa2zxh90y"); // Agedge_t *agidedge(Agraph_t * g, Agnode_t * t, Agnode_t * h,
-UNSUPPORTED("e28xnrj58aci1fn3kunzmqxbv"); // 		   unsigned long id, int cflag)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("2hs0004nnparj6tt7elslt4zj"); //     Agraph_t *root;
-UNSUPPORTED("36vshotvjkc5iodgg7nq6qa2r"); //     Agedge_t *e;
-UNSUPPORTED("1v1wyp9m83obk7jvlhzzmbwqb"); //     e = agfindedge_by_id(g, t, h, id);
-UNSUPPORTED("1gxwr1hr3zd8rrmnl1zq34xju"); //     if ((e == ((Agedge_t*)0)) && agisundirected(g))
-UNSUPPORTED("7jnnbxt6l29uby71ap2ioa94q"); // 	e = agfindedge_by_id(g, h, t, id);
-UNSUPPORTED("2m5yl6487z3nh60gz8x9otg16"); //     if ((e == ((Agedge_t*)0)) && cflag && ok_to_make_edge(g, t, h)) {
-UNSUPPORTED("7zol2448bccu90sqoxkvnbuif"); // 	root = agroot(g);
-UNSUPPORTED("e9viv3tnfxask57of0bhahbev"); // 	if ((g != root) && ((e = agfindedge_by_id(root, t, h, id)))) {
-UNSUPPORTED("7u9o1s6uopqwva82fgnfbgr03"); // 	    subedge(g, e);	/* old */
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
-UNSUPPORTED("3nwzv8q6jwjadczk10hhrt14f"); // 	    if (agallocid(g, AGEDGE, id)) {
-UNSUPPORTED("2zklsds1y3vegvq9xgmx9ayyn"); // 		e = newedge(g, t, h, id);	/* new */
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("2bswif6w6ot01ynlvkimntfly"); //     return e;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 
@@ -558,71 +490,6 @@ LEAVING("4361pvzr3ozft2ov0fgx6t8bo","agedge");
 
 
 
-//3 bbzly9og4lr1fza64fjk04djp
-// void agdeledgeimage(Agraph_t * g, Agedge_t * e, void *ignored) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/edge.c", name="agdeledgeimage", key="bbzly9og4lr1fza64fjk04djp", definition="void agdeledgeimage(Agraph_t * g, Agedge_t * e, void *ignored)")
-public static Object agdeledgeimage(Object... arg) {
-UNSUPPORTED("7gzvhvwj0z152fzg3h94s4wa3"); // void agdeledgeimage(Agraph_t * g, Agedge_t * e, void *ignored)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("50fokbemxzgivcd3b6k3miqqn"); //     Agedge_t *in, *out;
-UNSUPPORTED("4ybt6tm56tubmbuve8lp6rxhh"); //     Agnode_t *t, *h;
-UNSUPPORTED("2llbfi4jrmre7cyhu90pgcm72"); //     Agsubnode_t *sn;
-UNSUPPORTED("4pgl4pn1cad2whf242bntmjre"); //     (void) ignored;
-UNSUPPORTED("65tqa3if9hwq2yshaaiw31i7p"); //     if (AGTYPE(e) == AGINEDGE) {
-UNSUPPORTED("7awcpvsw7kw84dndmnqoe7jml"); // 	in = e;
-UNSUPPORTED("d4vc8t57wygctu4vl9tau8a6a"); // 	out = AGIN2OUT(e);
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
-UNSUPPORTED("54k8hnomk4mrwatjixro9a1yr"); // 	out = e;
-UNSUPPORTED("7qnm0e5czl4a8gcj7f5vo98h"); // 	in = AGOUT2IN(e);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("uc5fexr8h438pt7usvlh0ul3"); //     t = in->node;
-UNSUPPORTED("9a1uo5zmwfnuphv9st2w2b7hh"); //     h = out->node;
-UNSUPPORTED("dpshsqc8cs6ucoq4t0hnuxws6"); //     sn = agsubrep(g, t);
-UNSUPPORTED("a1kpx292l61dmu7eqdcm7fd51"); //     del(g->e_seq, &sn->out_seq, out);
-UNSUPPORTED("3xx2m5a0qzz8zcz61qn8mw44q"); //     del(g->e_id, &sn->out_id, out);
-UNSUPPORTED("e1vy7p3xj8dfi23jli55il082"); //     sn = agsubrep(g, h);
-UNSUPPORTED("dtt5k4axitnc0rvaop78flltt"); //     del(g->e_seq, &sn->in_seq, in);
-UNSUPPORTED("3w1dtrerdp5ojxgix55ysgcd3"); //     del(g->e_id, &sn->in_id, in);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 5l2v1bqchqfkinhpae4ip3yvz
-// int agdeledge(Agraph_t * g, Agedge_t * e) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/edge.c", name="agdeledge", key="5l2v1bqchqfkinhpae4ip3yvz", definition="int agdeledge(Agraph_t * g, Agedge_t * e)")
-public static Object agdeledge(Object... arg) {
-UNSUPPORTED("a87xum130tyatez3ic2nbxnna"); // int agdeledge(Agraph_t * g, Agedge_t * e)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9tj8yk1m099w6420vq9obwqv6"); //     e = AGMKOUT(e);
-UNSUPPORTED("58hfnwh2g7pubdk6wexuvksuo"); //     if (agfindedge_by_key(g, agtail(e), aghead(e), AGTAG(e)) == ((Agedge_t*)0))
-UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
-UNSUPPORTED("ackx3cor82a94trjk4owh3083"); //     if (g == agroot(g)) {
-UNSUPPORTED("5247bml3o0pwzg9fc9q1xhhnc"); // 	if (g->desc.has_attrs)
-UNSUPPORTED("4lf7sorcdbqef4eadxah45x08"); // 	    agedgeattr_delete(e);
-UNSUPPORTED("dpp3uqwrwe9geok1zmxonosd3"); // 	agmethod_delete(g, e);
-UNSUPPORTED("6kvbonl2aylsja52uh6deu14c"); // 	agrecclose((Agobj_t *) e);
-UNSUPPORTED("dnmywe26u2d1rmgozlfonjw94"); // 	agfreeid(g, AGEDGE, AGID(e));
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("6ox33bv05arfuz70cp795jqlg"); //     if (agapply (g, (Agobj_t *) e, (agobjfn_t) agdeledgeimage, ((Agedge_t*)0), (0)) == 0) {
-UNSUPPORTED("6tlwlx478gb1clm2fykihi2zk"); // 	if (g == agroot(g))
-UNSUPPORTED("ebin71xd0muor7ysk74hizhw3"); // 		agfree(g, e);
-UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
-UNSUPPORTED("2lkbqgh2h6urnppaik3zo7ywi"); //     } else
-UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="30v8z3tlda81fbqbkzx6m9fkn", definition="Agedge_t *agsubedge(Agraph_t * g, Agedge_t * e, int cflag)")
 public static ST_Agedge_s agsubedge(ST_Agraph_s g, ST_Agedge_s e, boolean cflag) {
@@ -650,7 +517,12 @@ LEAVING("30v8z3tlda81fbqbkzx6m9fkn","agsubedge");
 }
 
 
-
+public static CFunction agedgeidcmpf = new CFunctionAbstract("agedgeidcmpf") {
+	
+	public Object exe(Object... args) {
+		return agedgeidcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
+	}};
+	
 
 /* edge comparison.  OBJTYPE(e) == 0 means ID is a wildcard. */
 @Reviewed(when = "13/11/2020")
@@ -676,7 +548,12 @@ LEAVING("avk47eh26r45qk2dtoipwiqvz","agedgeidcmpf");
 }
 
 
-
+public static CFunction agedgeseqcmpf = new CFunctionAbstract("agedgeseqcmpf") {
+	
+	public Object exe(Object... args) {
+		return agedgeseqcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
+	}};
+	
 
 /* edge comparison.  for ordered traversal. */
 @Reviewed(when = "13/11/2020")

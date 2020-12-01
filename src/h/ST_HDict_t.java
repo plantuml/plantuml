@@ -46,65 +46,26 @@
 package h;
 
 import smetana.core.OFFSET;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_HDict_t extends UnsupportedStructAndPtr {
-
-	private final StarStruct parent;
+final public class ST_HDict_t extends UnsupportedStarStruct {
 
 	public final ST_dtlink_s link = new ST_dtlink_s(this);
 	public int key;
 	public final ST_Branch_t d = new ST_Branch_t(); /* Should be ST_Leaf_t */
 	
-	public ST_HDict_t() {
-		this(null);
-	}
-
-	public ST_HDict_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
 	@Override
-	public Object addVirtualBytes(int virtualBytes) {
-		if (virtualBytes == 0) {
+	public Object getTheField(OFFSET offset) {
+		if (offset == null || offset.getSign()==0) {
 			return this;
 		}
-		OFFSET offset = OFFSET.fromInt(virtualBytes);
-		if (offset.toString().equals("h.ST_HDict_t::key")) {
+		if (offset.getField().equals("key")) {
 			return key;
 		}
-		System.err.println("offset="+offset);
-
-		// TODO Auto-generated method stub
-		return super.addVirtualBytes(virtualBytes);
+		throw new UnsupportedOperationException();
 	}
 
-//	@Override
-//	public __ptr__ getPtr(String fieldName) {
-//		if (fieldName.equals("d")) {
-//			return this.d;
-//		}
-//		return super.getPtr(fieldName);
-//	}
-	
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("key")) {
-			this.key = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-	
-	
-	// "typedef struct obyh",
-	// "{",
-	// "Dtlink_t link",
-	// "int key",
-	// "Leaf_t d",
-	// "}",
-	// "HDict_t");
+
 }
 
 // typedef struct obyh {

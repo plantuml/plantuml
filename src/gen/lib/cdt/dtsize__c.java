@@ -55,7 +55,6 @@ import static smetana.core.Macro.UNFLATTEN;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import h.ST_dt_s;
 import h.ST_dtlink_s;
 

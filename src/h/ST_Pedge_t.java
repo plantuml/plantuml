@@ -45,38 +45,13 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Pedge_t extends UnsupportedStructAndPtr {
-
-	private final StarStruct parent;
-
-	public ST_Pedge_t() {
-		this(null);
-	}
-
-	public ST_Pedge_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public final ST_pointf a = new ST_pointf(this);
-	public final ST_pointf b = new ST_pointf(this);
+final public class ST_Pedge_t extends UnsupportedStarStruct {
 
 
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("a")) {
-			this.a.copyDataFrom(newData);
-			return;
-		}
-		if (fieldName.equals("b")) {
-			this.b.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
+	public final ST_pointf a = new ST_pointf();
+	public final ST_pointf b = new ST_pointf();
 
 
 }

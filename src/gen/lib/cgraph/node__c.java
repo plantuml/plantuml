@@ -81,6 +81,8 @@ import h.ST_Agraph_s;
 import h.ST_Agsubnode_s;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
 import smetana.core.Z;
 import smetana.core.__ptr__;
@@ -104,26 +106,6 @@ try {
 } finally {
 LEAVING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 }
-}
-
-
-
-
-//3 1ibow5tsw9y9hfbt65y10nw0r
-// Agnode_t *agfindnode_by_name(Agraph_t * g, char *name) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="1ibow5tsw9y9hfbt65y10nw0r", definition="Agnode_t *agfindnode_by_name(Agraph_t * g, char *name)")
-public static Object agfindnode_by_name(Object... arg) {
-UNSUPPORTED("jjckyz5rvj2kpvd0vw02o8yj"); // Agnode_t *agfindnode_by_name(Agraph_t * g, char *name)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("5v0qr6wzw47z083l6jupv94gw"); //     unsigned long id;
-UNSUPPORTED("7xzjyxv5eprg0vhj8q61h9d84"); //     if (agmapnametoid(g, AGNODE, name, &id, (0)))
-UNSUPPORTED("5rhbsviec1b9h1qedfo3hrgt0"); // 	return agfindnode_by_id(g, id);
-UNSUPPORTED("div10atae09n36x269sl208r1"); //     else
-UNSUPPORTED("afujljwagn2n2w7aqkq94dyud"); // 	return ((Agnode_t*)0);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
 }
 
 
@@ -162,43 +144,6 @@ LEAVING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
 
 
 
-//3 17tu6ipvtgbjfrggkvyz3nasf
-// Agnode_t *aglstnode(Agraph_t * g) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="17tu6ipvtgbjfrggkvyz3nasf", definition="Agnode_t *aglstnode(Agraph_t * g)")
-public static Object aglstnode(Object... arg) {
-UNSUPPORTED("4lnse8d2e11zapjwbkulyywtz"); // Agnode_t *aglstnode(Agraph_t * g)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("2llbfi4jrmre7cyhu90pgcm72"); //     Agsubnode_t *sn;
-UNSUPPORTED("37449tqynatc8j0u8sohjqujf"); //     sn = (Agsubnode_t *) (*(((Dt_t*)(g->n_seq))->searchf))((g->n_seq),(void*)(0),0000400);
-UNSUPPORTED("b550764xq8bvu8hoqv0fe2noi"); //     return sn ? sn->node : ((Agnode_t*)0);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 3qloij26jbl7m0ftyb0ouesq4
-// Agnode_t *agprvnode(Agraph_t * g, Agnode_t * n) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="3qloij26jbl7m0ftyb0ouesq4", definition="Agnode_t *agprvnode(Agraph_t * g, Agnode_t * n)")
-public static Object agprvnode(Object... arg) {
-UNSUPPORTED("8ichcmu1fmaap5w9hqfiohi13"); // Agnode_t *agprvnode(Agraph_t * g, Agnode_t * n)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("2llbfi4jrmre7cyhu90pgcm72"); //     Agsubnode_t *sn;
-UNSUPPORTED("b0wzl2qtz6anq1dhlxtmvwvgn"); //     sn = agsubrep(g, n);
-UNSUPPORTED("8efe1mjxltxjuin6v0msyzwfb"); //     if (sn) sn = ((Agsubnode_t *) (*(((Dt_t*)(g->n_seq))->searchf))((g->n_seq),(void*)(sn),0000020));
-UNSUPPORTED("b550764xq8bvu8hoqv0fe2noi"); //     return sn ? sn->node : ((Agnode_t*)0);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
 //3 dzb7m0p5xsngvtyr8zs912og4
 // static Agnode_t *newnode(Agraph_t * g, unsigned long id, unsigned long seq) 
 @Unused
@@ -207,11 +152,11 @@ public static ST_Agnode_s newnode(ST_Agraph_s g, int id, int seq) {
 ENTERING("dzb7m0p5xsngvtyr8zs912og4","newnode");
 try {
     ST_Agnode_s n;
-    n = (ST_Agnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agnode_s.class))).castTo(ST_Agnode_s.class);
+    n = (ST_Agnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agnode_s.class)));
     AGTYPE(n, AGNODE);
     AGID(n, id);
     AGSEQ(n, seq);
-    n.setPtr("root", agroot(g));
+    n.root = agroot(g);
     if (((ST_Agdesc_s)agroot(g).desc).has_attrs!=0)
 	  agbindrec(n, AgDataRecName, sizeof(ST_Agattr_s.class), false);
     /* nodeattr_init and method_init will be called later, from the
@@ -238,7 +183,7 @@ try {
     osize = dtsize_((ST_dt_s)g.n_id);
     if (EQ(g, agroot(g))) sn = (ST_Agsubnode_s) n.mainsub;
     else sn = (ST_Agsubnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agsubnode_s.class))).castTo(ST_Agsubnode_s.class);
-    sn.setPtr("node", n);
+    sn.node = n;
     g.n_id.searchf.exe(g.n_id,sn,0000001);
     g.n_seq.searchf.exe(g.n_seq,sn,0000001);
 } finally {
@@ -355,126 +300,6 @@ LEAVING("4yh1h1cwoitzb1t8869b79e3g","agnode");
 
 
 
-
-//3 acahmq5kvzn3o31mluqgw7q9p
-// void agdelnodeimage(Agraph_t * g, Agnode_t * n, void *ignored) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/node.c", name="agdelnodeimage", key="acahmq5kvzn3o31mluqgw7q9p", definition="void agdelnodeimage(Agraph_t * g, Agnode_t * n, void *ignored)")
-public static Object agdelnodeimage(Object... arg) {
-UNSUPPORTED("elm2o1y1nn2deregqtwfd0fm"); // void agdelnodeimage(Agraph_t * g, Agnode_t * n, void *ignored)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("109gqpvjmuv5lwcih97x4uwqa"); //     Agedge_t *e, *f;
-UNSUPPORTED("2v9cpnwjfya0wz9qq2q8rqx02"); //     static Agsubnode_t template;
-UNSUPPORTED("8cy87pxkco1cies0ck9zpn66"); //     template.node = n;
-UNSUPPORTED("4pgl4pn1cad2whf242bntmjre"); //     (void) ignored;
-UNSUPPORTED("8dskgcobu9u3m4ejmwjq00r5m"); //     for (e = agfstedge(g, n); e; e = f) {
-UNSUPPORTED("8tmx79zo3pcrz4238v132mjqg"); // 	f = agnxtedge(g, e, n);
-UNSUPPORTED("ezikicsrlgi4g2anmg80iyxy5"); // 	agdeledgeimage(g, e, 0);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("5x2emh00yohuaush1f65cqnx3"); //     /* If the following lines are switched, switch the discpline using
-UNSUPPORTED("35l6nf11aakz6sn2g7wfh60xr"); //      * free_subnode below.
-UNSUPPORTED("5xkmfp82pyue09k1egerh5ezz"); //      */ 
-UNSUPPORTED("a3umom4df7zkjo9g37dn0xnnl"); //     (*(((Dt_t*)(g->n_id))->searchf))((g->n_id),(void*)(&template),0000002);
-UNSUPPORTED("enu2k7akluqzw4eos6263usdr"); //     (*(((Dt_t*)(g->n_seq))->searchf))((g->n_seq),(void*)(&template),0000002);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 d7hac3hpizqk8mmx6oxiv6d3q
-// int agdelnode(Agraph_t * g, Agnode_t * n) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/node.c", name="agdelnode", key="d7hac3hpizqk8mmx6oxiv6d3q", definition="int agdelnode(Agraph_t * g, Agnode_t * n)")
-public static Object agdelnode(Object... arg) {
-UNSUPPORTED("5vrhjcls5tltlk3dn4ssxzusq"); // int agdelnode(Agraph_t * g, Agnode_t * n)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("109gqpvjmuv5lwcih97x4uwqa"); //     Agedge_t *e, *f;
-UNSUPPORTED("3ly27irmwairjdexym3up87uk"); //     if (!agfindnode_by_id(g, AGID(n)))
-UNSUPPORTED("a1gf07w8a7uwaryezfqx6en21"); // 	return -1;		/* bad arg */
-UNSUPPORTED("ackx3cor82a94trjk4owh3083"); //     if (g == agroot(g)) {
-UNSUPPORTED("7n4rwpvryjg5anpy2d43bthxh"); // 	for (e = agfstedge(g, n); e; e = f) {
-UNSUPPORTED("98oagw83x0w96uuzccetdi9ws"); // 	    f = agnxtedge(g, e, n);
-UNSUPPORTED("7m6mvhicrmgkuyrwkvblruld0"); // 	    agdeledge(g, e);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("5247bml3o0pwzg9fc9q1xhhnc"); // 	if (g->desc.has_attrs)
-UNSUPPORTED("d4mqrcccn3toqvhii6rjrrwwu"); // 	    agnodeattr_delete(n);
-UNSUPPORTED("7zcf3kp28b1wgy3i2on67h98u"); // 	agmethod_delete(g, n);
-UNSUPPORTED("eqkdptzmrk2vxj9fe3y4eb24l"); // 	agrecclose((Agobj_t *) n);
-UNSUPPORTED("d6jhz9spbq2ywt2efhyikkcdi"); // 	agfreeid(g, AGNODE, AGID(n));
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("86yxjnabv1fuv7zhtuhgex4gx"); //     if (agapply (g, (Agobj_t *) n, (agobjfn_t) agdelnodeimage, ((Agnode_t*)0), (0)) == 0) {
-UNSUPPORTED("6tlwlx478gb1clm2fykihi2zk"); // 	if (g == agroot(g))
-UNSUPPORTED("d4sehv0200tcylmbpt9pqc7h1"); // 	    agfree(g, n);
-UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
-UNSUPPORTED("2lkbqgh2h6urnppaik3zo7ywi"); //     } else
-UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 dytehp1u14cb4j9zsmlesojkq
-// static void dict_relabel(Agnode_t * n, void *arg) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/node.c", name="dict_relabel", key="dytehp1u14cb4j9zsmlesojkq", definition="static void dict_relabel(Agnode_t * n, void *arg)")
-public static Object dict_relabel(Object... arg) {
-UNSUPPORTED("44mem1e9kck28s208xgn5g04k"); // static void dict_relabel(Agnode_t * n, void *arg)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1dbyk58q3r4fyfxxo7ovemkpu"); //     Agraph_t *g;
-UNSUPPORTED("8hr8p3jy96bfcwujkauwdvd92"); //     unsigned long new_id;
-UNSUPPORTED("38tgkes5dhr4oloxpg73baq10"); //     g = agraphof(n);
-UNSUPPORTED("5jv37sfftjuyu9m95lz2avmjk"); //     new_id = *(unsigned long *) arg;
-UNSUPPORTED("90u0hwihh4q8uosu25ewbzhox"); //     (*(((Dt_t*)(g->n_id))->searchf))((g->n_id),(void*)(n),0000002);	/* wrong, should be subrep */
-UNSUPPORTED("9d38am0gg0kj6jhq5tri5ac34"); //     AGID(n) = new_id;
-UNSUPPORTED("3qkq6d6yv4tvsurangttsbn0z"); //     (*(((Dt_t*)(g->n_id))->searchf))((g->n_id),(void*)(n),0000001);	/* also wrong */
-UNSUPPORTED("dwcdffxfxvt11kvrq2e8l9dg9"); //     /* because all the subgraphs share the same node now, this
-UNSUPPORTED("8sf7kiafqj2eexpzvr30nmsle"); //        now requires a separate deletion and insertion phase */
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 a29io0pb5tx5bwevwjtr1hg1r
-// int agrelabel_node(Agnode_t * n, char *newname) 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/node.c", name="agrelabel_node", key="a29io0pb5tx5bwevwjtr1hg1r", definition="int agrelabel_node(Agnode_t * n, char *newname)")
-public static Object agrelabel_node(Object... arg) {
-UNSUPPORTED("838qr3zz1vpfb75cfio36192j"); // int agrelabel_node(Agnode_t * n, char *newname)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1dbyk58q3r4fyfxxo7ovemkpu"); //     Agraph_t *g;
-UNSUPPORTED("8hr8p3jy96bfcwujkauwdvd92"); //     unsigned long new_id;
-UNSUPPORTED("5c0nzsud433f31yaxkbl4z4gs"); //     g = agroot(agraphof(n));
-UNSUPPORTED("1vy801jhp4mbvo2tujvg565wz"); //     if (agfindnode_by_name(g, newname))
-UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
-UNSUPPORTED("3swbd27n6ds70cn294m0ef8f5"); //     if (agmapnametoid(g, AGNODE, newname, &new_id, (!(0)))) {
-UNSUPPORTED("5xgainykf6klfsmk4014aw0e2"); // 	if (agfindnode_by_id(agroot(g), new_id) == ((Agnode_t*)0)) {
-UNSUPPORTED("5rjwy8imxqiwj9ia955vyoh9l"); // 	    agfreeid(g, AGNODE, AGID(n));
-UNSUPPORTED("asbts6liah2fjm74ps7do0e1m"); // 	    agapply(g, (Agobj_t *) n, (agobjfn_t) dict_relabel,
-UNSUPPORTED("9trirys0q5ojk3sb1jgw8tmdf"); // 		    (void *) &new_id, (0));
-UNSUPPORTED("6f1138i13x0xz1bf1thxgjgka"); // 	    return 0;
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
-UNSUPPORTED("7w7v3j2z1voanzyg3oghk1o2t"); // 	    agfreeid(g, AGNODE, new_id);	/* couldn't use it after all */
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("eaoz5g3p9152utcqjz5d2fgdf"); //         /* obj* is unchanged, so no need to re agregister() */
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("8azkpi8o0wzdufa90lw8hpt6q"); //     return -1;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
 /* lookup or insert <n> in <g> */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="d5farp22buvesyi4pydjam4g2", definition="Agnode_t *agsubnode(Agraph_t * g, Agnode_t * n0, int cflag)")
@@ -503,7 +328,11 @@ LEAVING("d5farp22buvesyi4pydjam4g2","agsubnode");
 }
 
 
-
+public static CFunction agsubnodeidcmpf = new CFunctionAbstract("agsubnodeidcmpf") {
+	
+	public Object exe(Object... args) {
+		return agsubnodeidcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);
+	}};
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="agsubnodeidcmpf", key="awwiazixy9c76hvyxlkvvb3vo", definition="int agsubnodeidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)")
@@ -523,7 +352,12 @@ LEAVING("awwiazixy9c76hvyxlkvvb3vo","agsubnodeidcmpf");
 
 
 
-
+public static CFunction agsubnodeseqcmpf = new CFunctionAbstract("agsubnodeseqcmpf") {
+	
+	public Object exe(Object... args) {
+		return agsubnodeseqcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);
+	}};
+	
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="agsubnodeseqcmpf", key="41fjseux0nxzpr0aq7igym9ux", definition="int agsubnodeseqcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)")
 public static int agsubnodeseqcmpf(ST_dt_s d, __ptr__ arg0, __ptr__ arg1, ST_dtdisc_s disc) {
@@ -543,11 +377,14 @@ LEAVING("41fjseux0nxzpr0aq7igym9ux","agsubnodeseqcmpf");
 
 
 
-//3 a7tb3b1kvq6ykrxzhbaduvg9r
-// static void free_subnode (Dt_t* d, Agsubnode_t* sn, Dtdisc_t * disc) 
+public static CFunction free_subnode = new CFunctionAbstract("free_subnode") {
+	
+	public Object exe(Object... args) {
+		return free_subnode(args);
+	}};
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="free_subnode", key="a7tb3b1kvq6ykrxzhbaduvg9r", definition="static void free_subnode (Dt_t* d, Agsubnode_t* sn, Dtdisc_t * disc)")
-public static Object free_subnode(Object... arg) {
+public static Object free_subnode(Object... arg_) {
 UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
 UNSUPPORTED("9e4h6d4hxsvsnaiuubzlmccsm"); // free_subnode (Dt_t* d, Agsubnode_t* sn, Dtdisc_t * disc)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
@@ -559,34 +396,5 @@ throw new UnsupportedOperationException();
 }
 
 
-//1 us7d1n3fefkf0qyr6thv1sai
-// Dtdisc_t Ag_subnode_id_disc = 
-/*public static final __struct__<_dtdisc_s> Ag_subnode_id_disc = JUtils.from(_dtdisc_s.class);
-static {
-	Ag_subnode_id_disc.setInt("key", 0);
-	Ag_subnode_id_disc.setInt("size", 0);
-	Ag_subnode_id_disc.setInt("link", OFFSET.create(Agsubnode_s.class, "id_link").toInt()); // id_link is the second field in Agsubnode_t
-	Ag_subnode_id_disc.setPtr("makef", null);
-	Ag_subnode_id_disc.setPtr("freef", null);
-	Ag_subnode_id_disc.setPtr("comparf", function(node__c.class, "agsubnodeidcmpf"));
-	Ag_subnode_id_disc.setPtr("hashf", null);
-	Ag_subnode_id_disc.setPtr("memoryf", function(utils__c.class, "agdictobjmem"));
-	Ag_subnode_id_disc.setPtr("eventf", null);
-}*/
-
-//1 3gqjvodjfsv6wz1tk75zy19p9
-// Dtdisc_t Ag_subnode_seq_disc = 
-/*public static final __struct__<_dtdisc_s> Ag_subnode_seq_disc = JUtils.from(_dtdisc_s.class);
-static {
-	Ag_subnode_seq_disc.setInt("key", 0);
-	Ag_subnode_seq_disc.setInt("size", 0);
-	Ag_subnode_seq_disc.setInt("link", OFFSET.create(Agsubnode_s.class, "seq_link").toInt()); // link is the first field in Agsubnode_t
-	Ag_subnode_seq_disc.setPtr("makef", null);
-	Ag_subnode_seq_disc.setPtr("freef", function(node__c.class, "free_subnode"));
-	Ag_subnode_seq_disc.setPtr("comparf", function(node__c.class, "agsubnodeseqcmpf"));
-	Ag_subnode_seq_disc.setPtr("hashf", null);
-	Ag_subnode_seq_disc.setPtr("memoryf", function(utils__c.class, "agdictobjmem"));
-	Ag_subnode_seq_disc.setPtr("eventf", null);
-}*/
 
 }

@@ -43,9 +43,9 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -88,7 +88,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.USECASE, skinParam,
-				HorizontalAlignment.CENTER, stereotype, true, false, entity, SName.componentDiagram);
+				HorizontalAlignment.CENTER, stereotype, true, false, entity, getStyle());
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
@@ -109,8 +109,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private UStroke getStroke() {
-		if (SkinParam.USE_STYLES()) {
-			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getStyle();
 			return style.getStroke();
 		}
 		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
@@ -185,14 +185,18 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	private HColor getBackColor() {
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			if (SkinParam.USE_STYLES()) {
-				final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			if (UseStyle.useBetaStyle()) {
+				final Style style = getStyle();
 				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 			} else {
 				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBackground);
 			}
 		}
 		return backcolor;
+	}
+
+	private Style getStyle() {
+		return getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private StyleSignature getDefaultStyleDefinition() {
@@ -202,8 +206,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	private HColor getLineColor() {
 		HColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (linecolor == null) {
-			if (SkinParam.USE_STYLES()) {
-				final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			if (UseStyle.useBetaStyle()) {
+				final Style style = getStyle();
 				linecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 			} else {
 				linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBorder);

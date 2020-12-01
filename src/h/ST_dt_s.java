@@ -46,12 +46,10 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_dt_s extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_dt_s extends UnsupportedStarStruct {
 
 	public CFunction searchf;/* search function */
 
@@ -66,83 +64,15 @@ public class ST_dt_s extends UnsupportedStructAndPtr implements HardcodedStruct 
 	public ST_dt_s walk; /* dictionary being walked */
 	public __ptr__ user; /* for user's usage */
 
-	public ST_dt_s() {
-		this(null);
-	}
 
-	public ST_dt_s(StarStruct parent) {
-	}
 
 	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("searchf")) {
-			this.searchf = (CFunction) newData;
-			return searchf;
-		}
-		if (fieldName.equals("meth")) {
-			this.meth = (ST_dtmethod_s) newData;
-			return meth;
-		}
-		if (fieldName.equals("disc")) {
-			this.disc = (ST_dtdisc_s) newData;
-			return disc;
-		}
-		if (fieldName.equals("memoryf")) {
-			this.memoryf = (CFunction) newData;
-			return memoryf;
-		}
-		if (fieldName.equals("view")) {
-			this.view = (ST_dt_s) newData;
-			return view;
-		}
-		if (fieldName.equals("walk")) {
-			this.walk = (ST_dt_s) newData;
-			return walk;
-		}
-		if (fieldName.equals("user")) {
-			this.user = newData;
-			return user;
-		}
-		if (fieldName.equals("data")) {
-			this.data = (ST_dtdata_s) newData;
-			return data;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("type")) {
-			this.type = data;
-			return;
-		}
-		if (fieldName.equals("nview")) {
-			this.nview = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_dt_s other2 = (ST_dt_s) other;
 		return this == other2;
 	}
 
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct _dt_s",
-	// "{",
-	// "Dtsearch_f searchf",
-	// "Dtdisc_t* disc",
-	// "Dtdata_t* data",
-	// "Dtmemory_f memoryf",
-	// "Dtmethod_t* meth",
-	// "int  type",
-	// "int  nview",
-	// "Dt_t*  view",
-	// "Dt_t*  walk",
-	// "void*  user",
-	// "}");
+
 }
 
 // struct _dt_s

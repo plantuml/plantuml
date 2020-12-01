@@ -40,35 +40,42 @@ import smetana.core.debug.SmetanaDebug;
 
 public class JUtilsDebug {
 
-	private final static boolean TRACE = false;
-	public final static boolean VERY_VERBOSE = false;
+	public static boolean TRACE = false;
+	public static boolean TRACE_FINAL_CALL = false;
+	public static boolean VERY_VERBOSE = false;
 
-	private final static SmetanaDebug debug = TRACE ? new SmetanaDebug() : null;
+	private static SmetanaDebug debug;
+
+	private static SmetanaDebug debug() {
+		if (debug == null)
+			debug = new SmetanaDebug();
+		return debug;
+	}
 
 	static public void LOG(String s) {
-		if (debug != null)
-			debug.logline(s);
+		if (TRACE)
+			debug().logline(s);
 
 	}
 
 	static public void ENTERING(String signature, String methodName) {
-		if (debug != null)
-			debug.entering(signature, methodName);
+		if (TRACE)
+			debug().entering(signature, methodName);
 	}
 
 	static public void LEAVING(String signature, String methodName) {
-		if (debug != null)
-			debug.leaving(signature, methodName);
+		if (TRACE)
+			debug().leaving(signature, methodName);
 	}
 
 	public static void reset() {
-		if (debug != null)
-			debug.reset();
+		if (TRACE)
+			debug().reset();
 	}
 
 	public static void printMe() {
-		if (debug != null)
-			debug.printMe();
+		if (TRACE && TRACE_FINAL_CALL)
+			debug().printMe();
 	}
 
 }

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -74,7 +74,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 			double padding) {
 		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
 				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.roundCorner = style.value(PName.RoundCorner).asInt();
 			this.diagonalCorner = style.value(PName.DiagonalCorner).asInt();
 			biColor = style.getSymbolContext(getIHtmlColorSet());

@@ -45,79 +45,40 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
+import static smetana.core.Macro.ND_order;
+import static smetana.core.Macro.ND_rank;
+
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.__struct__;
 
-public class ST_Agnode_s extends UnsupportedStructAndPtr {
+final public class ST_Agnode_s extends ST_Agobj_s {
 
-	public final ST_Agobj_s base = new ST_Agobj_s(this);
+	public final ST_Agobj_s base = this;
 	public ST_Agraph_s root;
-	public final ST_Agsubnode_s mainsub = new ST_Agsubnode_s(this);
+	public final ST_Agsubnode_s mainsub = new ST_Agsubnode_s();
 
-	private final StarStruct parent;
 	public String NAME;
-	
+
 	@Override
 	public String toString() {
-		return super.toString()+" "+NAME;
-	}
-
-
-	public ST_Agnode_s() {
-		this(null);
-	}
-
-	public ST_Agnode_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
+		try {
+			return NAME + " rank=" + ND_rank(this) + " order=" + ND_order(this);
+		} catch (Exception e) {
+			return NAME;
+		}
 	}
 
 	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Agnode_s.class) {
-			return this;
-		}
-		if (dest == ST_Agobj_s.class) {
-			return base;
-		}
-		return super.castTo(dest);
-	}
-	
-	public ST_Agobj_s castTo_ST_Agobj_s() {
-		return base;
+	public void ___(__struct__ arg) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_Agnode_s other2 = (ST_Agnode_s) other;
 		return this == other2;
 	}
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("root")) {
-			this.root = (ST_Agraph_s) newData;
-			return root;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public ST_Agnode_s getStruct() {
-		return this;
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agnode_s",
-	// "{",
-	// "Agobj_t base",
-	// "Agraph_t *root",
-	// "Agsubnode_t mainsub",
-	// "}");
 }
 
 // struct Agnode_s {

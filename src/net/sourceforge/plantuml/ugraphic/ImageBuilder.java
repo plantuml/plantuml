@@ -47,7 +47,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.Semaphore;
 
 import javax.swing.ImageIcon;
 

@@ -36,63 +36,46 @@
 
 package smetana.core;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 public class OFFSET {
 
-	private static int CPT = 10000;
-	private static Map<Integer, OFFSET> byID = new HashMap<Integer, OFFSET>();
-	private static Map<Object, OFFSET> primaryKey = new HashMap<Object, OFFSET>();
-
-	private final Class cl;
 	private final String field;
-	private final int id;
+	private final int sign;
 
-	private OFFSET(Class cl, String field) {
-		this.cl = cl;
+	public int getSign() {
+		return sign;
+	}
+
+	public OFFSET(String field) {
 		this.field = field;
-		this.id = CPT++;
-		JUtils.LOG("REAL CREATING OF " + this);
+		this.sign = 1;
+	}
+
+	private OFFSET(int sign) {
+		this.field = null;
+		this.sign = sign;
 	}
 
 	@Override
 	public String toString() {
-		return cl.getName() + "::" + field;
+		if (field == null)
+			return "[" + sign + "]";
+		return "[" + field + "]";
 	}
 
-	public static OFFSET create(Class cl, String field) {
-		final Object key = Arrays.asList(cl, field);
-		JUtils.LOG("getting OFFSET " + key);
-		OFFSET result = primaryKey.get(key);
-		if (result != null) {
-			JUtils.LOG("FOUND!");
-			return result;
-		}
-		result = new OFFSET(cl, field);
-		byID.put(result.id, result);
-		primaryKey.put(key, result);
-		return result;
+	public static OFFSET externalHolder() {
+		return new OFFSET(-1);
 	}
 
-	public int toInt() {
-		return id;
+	public static OFFSET zero() {
+		return new OFFSET(0);
 	}
 
-	public static OFFSET fromInt(int value) {
-		final OFFSET result = byID.get(value);
-		if (result == null) {
-			throw new IllegalArgumentException("value=" + value);
-		}
-		return result;
+	public OFFSET negative() {
+		// Just to know when we go negative
+		return this;
 	}
 
-	public final Class getTheClass() {
-		return cl;
-	}
-
-	public final String getField() {
+	public String getField() {
 		return field;
 	}
 

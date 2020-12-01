@@ -37,13 +37,12 @@ package net.sourceforge.plantuml.jsondiagram;
 
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -51,31 +50,150 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonObject.Member;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 //See TextBlockMap
-public class TextBlockJson extends AbstractTextBlock {
+public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcolored {
 
-	private final Map<TextBlock, TextBlock> blocksMap = new LinkedHashMap<TextBlock, TextBlock>();
-	private final List<String> keys = new ArrayList<String>();
+	private final List<Line> lines = new ArrayList<Line>();
+
 	private final ISkinParam skinParam;
 	private double totalWidth;
+	private final JsonValue root;
 
-	public TextBlockJson(ISkinParam skinParam, Map<String, String> map) {
-		this.skinParam = skinParam;
-		for (Map.Entry<String, String> ent : map.entrySet()) {
-			final String key = ent.getKey();
-			this.keys.add(key);
-			final String value = ent.getValue();
-			final TextBlock block1 = getTextBlock(key);
-			final TextBlock block2 = getTextBlock(value);
-			this.blocksMap.put(block1, block2);
+	static class Line {
+		final TextBlock b1;
+		final TextBlock b2;
+		final boolean highlighted;
+
+		Line(TextBlock b1, TextBlock b2, boolean highlighted) {
+			this.b1 = b1;
+			this.b2 = b2;
+			this.highlighted = highlighted;
 		}
+
+		Line(TextBlock b1, boolean highlighted) {
+			this(b1, null, highlighted);
+		}
+
+		double getHeightOfRow(StringBounder stringBounder) {
+			final double height = b1.calculateDimension(stringBounder).getHeight();
+			if (b2 == null) {
+				return height;
+			}
+			return Math.max(height, b2.calculateDimension(stringBounder).getHeight());
+		}
+
+	}
+
+	public TextBlockJson(ISkinParam skinParam, JsonValue root, List<String> highlighted) {
+		this.skinParam = skinParam;
+		this.root = root;
+		if (root instanceof JsonObject)
+			for (Member member : (JsonObject) root) {
+				final String key = member.getName();
+				final String value = getShortString(member.getValue());
+
+				final TextBlock block1 = getTextBlock(key);
+				final TextBlock block2 = getTextBlock(value);
+				this.lines.add(new Line(block1, block2, isHighlighted(key, highlighted)));
+			}
+		if (root instanceof JsonArray) {
+			int i = 0;
+			for (JsonValue value : (JsonArray) root) {
+				final TextBlock block2 = getTextBlock(getShortString(value));
+				this.lines.add(new Line(block2, isHighlighted("" + i, highlighted)));
+				i++;
+			}
+		}
+	}
+
+	private boolean isHighlighted(String key, List<String> highlighted) {
+		for (String tmp : highlighted) {
+			if (tmp.trim().equals("\"" + key + "\"")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int size() {
+		int size = 0;
+		if (root instanceof JsonObject) {
+			for (Member member : (JsonObject) root)
+				size++;
+		}
+		if (root instanceof JsonArray) {
+			for (JsonValue value : (JsonArray) root)
+				size++;
+		}
+		return size;
+
+	}
+
+	private String getShortString(JsonValue value) {
+		if (value.isString()) {
+			return value.asString();
+		}
+		if (value.isNumber() || value.isBoolean()) {
+			return value.toString();
+		}
+		return "   ";
+	}
+
+	public List<JsonValue> children() {
+		final List<JsonValue> result = new ArrayList<JsonValue>();
+		if (root instanceof JsonObject) {
+			for (Member member : (JsonObject) root) {
+				final JsonValue value = member.getValue();
+				if (value instanceof JsonObject || value instanceof JsonArray) {
+					result.add(value);
+				} else {
+					result.add(null);
+				}
+			}
+		}
+		if (root instanceof JsonArray) {
+			for (JsonValue value : (JsonArray) root) {
+				if (value instanceof JsonObject || value instanceof JsonArray) {
+					result.add(value);
+				} else {
+					result.add(null);
+				}
+			}
+		}
+		return Collections.unmodifiableList(result);
+	}
+
+	public List<String> keys() {
+		final List<String> result = new ArrayList<String>();
+		if (root instanceof JsonObject) {
+			for (Member member : (JsonObject) root) {
+				final String key = member.getName();
+				result.add(key);
+			}
+		}
+		if (root instanceof JsonArray) {
+			int i = 0;
+			for (JsonValue value : (JsonArray) root) {
+				result.add("" + i);
+				i++;
+			}
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -84,17 +202,19 @@ public class TextBlockJson extends AbstractTextBlock {
 	}
 
 	private double getWidthColA(StringBounder stringBounder) {
-		return getMaxWidth(stringBounder, blocksMap.keySet());
+		double width = 0;
+		for (Line line : lines) {
+			width = Math.max(width, line.b1.calculateDimension(stringBounder).getWidth());
+		}
+		return width;
 	}
 
 	private double getWidthColB(StringBounder stringBounder) {
-		return getMaxWidth(stringBounder, blocksMap.values());
-	}
-
-	private double getMaxWidth(StringBounder stringBounder, Collection<TextBlock> blocks) {
 		double width = 0;
-		for (TextBlock block : blocks) {
-			width = Math.max(width, block.calculateDimension(stringBounder).getWidth());
+		for (Line line : lines) {
+			if (line.b2 != null) {
+				width = Math.max(width, line.b2.calculateDimension(stringBounder).getWidth());
+			}
 		}
 		return width;
 	}
@@ -102,50 +222,57 @@ public class TextBlockJson extends AbstractTextBlock {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-//		getStyle().
 		final Dimension2D fullDim = calculateDimension(stringBounder);
-		final double trueWidth = Math.max(fullDim.getWidth(), totalWidth);
+		double trueWidth = Math.max(fullDim.getWidth(), totalWidth);
 		final double widthColA = getWidthColA(stringBounder);
-		final double widthColB = getWidthColB(stringBounder);
+
 		double y = 0;
 		ug = getStyle().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
-		for (Map.Entry<TextBlock, TextBlock> ent : blocksMap.entrySet()) {
-			final TextBlock key = ent.getKey();
-			final TextBlock value = ent.getValue();
+		for (Line line : lines) {
 			final UGraphic ugline = ug.apply(UTranslate.dy(y));
-			ugline.draw(ULine.hline(trueWidth));
-			final double heightOfRow = getHeightOfRow(stringBounder, key, value);
+			final double heightOfRow = line.getHeightOfRow(stringBounder);
+			if (line.highlighted) {
+				final URectangle back = new URectangle(trueWidth - 2, heightOfRow).rounded(4);
+				final HColor yellow = skinParam.getIHtmlColorSet().getColorIfValid("#ccff02");
+				ugline.apply(yellow).apply(yellow.bg()).apply(new UTranslate(1.5, 0)).draw(back);
+			}
 
-			final double posColA = (widthColA - key.calculateDimension(stringBounder).getWidth()) / 2;
-			key.drawU(ugline.apply(UTranslate.dx(posColA)));
-			value.drawU(ugline.apply(UTranslate.dx(widthColA)));
-			ugline.apply(UTranslate.dx(widthColA)).draw(ULine.vline(heightOfRow));
+			if (y > 0)
+				ugline.draw(ULine.hline(trueWidth));
+
+			final double posColA = (widthColA - line.b1.calculateDimension(stringBounder).getWidth()) / 2;
+			line.b1.drawU(ugline.apply(UTranslate.dx(posColA)));
+
+			if (line.b2 != null) {
+				line.b2.drawU(ugline.apply(UTranslate.dx(widthColA)));
+				ugline.apply(UTranslate.dx(widthColA)).draw(ULine.vline(heightOfRow));
+			}
 
 			y += heightOfRow;
 		}
+
+		if (y == 0)
+			y = 15;
+		if (trueWidth == 0)
+			trueWidth = 30;
+
+		final URectangle full = new URectangle(trueWidth, y).rounded(10);
+		ug.apply(new UStroke(1.5)).draw(full);
 	}
 
 	private double getTotalHeight(StringBounder stringBounder) {
 		double height = 0;
-		for (Map.Entry<TextBlock, TextBlock> ent : blocksMap.entrySet()) {
-			final TextBlock key = ent.getKey();
-			final TextBlock value = ent.getValue();
-			height += getHeightOfRow(stringBounder, key, value);
+		for (Line line : lines) {
+			height += line.getHeightOfRow(stringBounder);
 		}
 		return height;
 	}
 
-	private double getHeightOfRow(StringBounder stringBounder, TextBlock key, TextBlock value) {
-		return Math.max(key.calculateDimension(stringBounder).getHeight(),
-				value.calculateDimension(stringBounder).getHeight());
-	}
-
 	private TextBlock getTextBlock(String key) {
 		final Display display = Display.getWithNewlines(key);
-		// final FontConfiguration fontConfiguration = new FontConfiguration(skinParam,
-		// getStyle());
 		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
-		TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+		TextBlock result = display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam,
+				CreoleMode.NO_CREOLE);
 		result = TextBlockUtils.withMargin(result, 5, 2);
 		return result;
 	}
@@ -157,6 +284,10 @@ public class TextBlockJson extends AbstractTextBlock {
 
 	public void setTotalWidth(double totalWidth) {
 		this.totalWidth = totalWidth;
+	}
+
+	public HColor getBackcolor() {
+		return null;
 	}
 
 }

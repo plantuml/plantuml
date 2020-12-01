@@ -45,16 +45,11 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_SplitQ_t extends UnsupportedStructAndPtr {
+final public class ST_SplitQ_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	// typedef struct split_q_s {
-	// struct Branch BranchBuf[64 + 1];
 	// Sorry guys :-)
 	public final ST_Branch_t BranchBuf[] = new ST_Branch_t[] { new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
 			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
@@ -71,17 +66,12 @@ public class ST_SplitQ_t extends UnsupportedStructAndPtr {
 			new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(), new ST_Branch_t(),
 			new ST_Branch_t(), new ST_Branch_t() };
 
-	public final ST_Rect_t CoverSplit = new ST_Rect_t(this);
+	public final ST_Rect_t CoverSplit = new ST_Rect_t();
 	public int CoverSplitArea;
 
 	public final ST_PartitionVars Partitions[] = new ST_PartitionVars[] { new ST_PartitionVars() };
 
-	// struct PartitionVars Partitions[1];
-	// } SplitQ_t;
 
-	public ST_SplitQ_t() {
-		this(null);
-	}
 
 	@Override
 	public ST_Rect_t castTo(Class dest) {
@@ -91,27 +81,7 @@ public class ST_SplitQ_t extends UnsupportedStructAndPtr {
 		throw new UnsupportedOperationException();
 	}
 
-	public ST_SplitQ_t(StarStruct parent) {
-		this.parent = parent;
-	}
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("CoverSplitArea")) {
-			this.CoverSplitArea = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("CoverSplit")) {
-			this.CoverSplit.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
 
 	// typedef struct split_q_s {
 	// struct Branch BranchBuf[64 + 1];

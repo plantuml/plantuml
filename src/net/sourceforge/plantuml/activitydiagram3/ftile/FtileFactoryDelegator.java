@@ -40,8 +40,8 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
@@ -85,7 +85,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		Rainbow color;
 		final LinkRendering linkRendering = tile.getInLinkRendering();
 		if (linkRendering == null) {
-			if (SkinParam.USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinitionArrow()
 						.getMergedStyle(skinParam().getCurrentStyleBuilder());
 				return Rainbow.build(style, skinParam().getIHtmlColorSet());
@@ -96,7 +96,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 			color = linkRendering.getRainbow();
 		}
 		if (color.size() == 0) {
-			if (SkinParam.USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinitionArrow()
 						.getMergedStyle(skinParam().getCurrentStyleBuilder());
 				return Rainbow.build(style, skinParam().getIHtmlColorSet());
@@ -113,7 +113,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 			return null;
 		}
 		final FontConfiguration fontConfiguration;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 		} else {

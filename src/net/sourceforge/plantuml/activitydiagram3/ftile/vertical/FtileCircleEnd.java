@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -73,7 +73,7 @@ public class FtileCircleEnd extends AbstractFtile {
 		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
 			if (skinParam().shadowing(null)) {

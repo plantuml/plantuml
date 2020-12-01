@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -157,7 +157,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		if (Display.isNull(page.getTitle())) {
 			compTitle = null;
 		} else {
-			if (SkinParam.USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final Style style = StyleSignature.of(SName.root, SName.title)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
@@ -178,7 +178,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		if (diagram.getLegend().isNull()) {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
-			if (SkinParam.USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final Style style = StyleSignature.of(SName.root, SName.legend)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
@@ -199,7 +199,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
 		final ClockwiseTopRightBottomLeft margins;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.sequenceDiagram, SName.document)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			// margins = style.getMargin();
@@ -302,7 +302,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final int fontSize = skinParam.getFont(null, false, fontParam).getSize();
 		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
 		Style style = null;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final StyleSignature def = fontParam.getStyleDefinition(null);
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}

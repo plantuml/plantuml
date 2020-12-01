@@ -45,38 +45,14 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_label_params_t extends UnsupportedStructAndPtr {
+final public class ST_label_params_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_label_params_t() {
-		this(null);
-	}
-
-	public ST_label_params_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "typedef struct",
-	// "{",
-	public final ST_boxf bb = new ST_boxf(this);
+	public final ST_boxf bb = new ST_boxf();
 	public boolean force;
 
-	// "}",
-	// "label_params_t");
 
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("bb")) {
-			this.bb.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
 	
 }
 

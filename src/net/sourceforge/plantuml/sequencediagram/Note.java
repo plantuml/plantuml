@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.sequencediagram;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -102,13 +102,13 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		this.styleBuilder = styleBuilder;
 		this.position = position;
 		this.strings = strings;
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
 		}
 	}
 
 	public void setStereotype(Stereotype stereotype) {
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final List<Style> others = stereotype.getStyles(styleBuilder);
 			this.style = getDefaultStyleDefinition().mergeWith(others).getMergedStyle(styleBuilder);
 		}

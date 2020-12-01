@@ -44,10 +44,10 @@
  *
  */
 package gen.lib.cdt;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_dt_s;
 import h.ST_dtlink_s;
 

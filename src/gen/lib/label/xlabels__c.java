@@ -44,9 +44,6 @@
  *
  */
 package gen.lib.label;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static gen.lib.cdt.dtclose__c.dtclose;
 import static gen.lib.cdt.dtopen__c.dtopen;
 import static gen.lib.label.index__c.RTreeClose;
@@ -59,6 +56,9 @@ import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_BestPos_t;
 import h.ST_HDict_t;
 import h.ST_LeafList_t;
@@ -73,85 +73,21 @@ import h.ST_object_t;
 import h.ST_point;
 import h.ST_pointf;
 import h.ST_xlabel_t;
-import smetana.core.CStar;
+import smetana.core.CArray;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
 import smetana.core.Memory;
 import smetana.core.Z;
-import smetana.core.__ptr__;
+
+
 public class xlabels__c {
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
 
-
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-//1 1lrfssuxf2e1e5pvk6j7qrff6
-// extern int Verbose
-
-
-//1 17dmpzc4uhvmrcx0x00aw2gbc
-// Dtdisc_t Hdisc = 
-
-
-
-
+public static CFunction icompare = new CFunctionAbstract("icompare") {
+	
+	public Object exe(Object... args) {
+		return icompare((ST_dt_s)args[0], (Object)args[1], (Object)args[2], (ST_dtdisc_s)args[3]);
+	}};
+	
 //3 5p3ac8qk4gnne5hj1dc21ysi
 // static int icompare(Dt_t * dt, void * v1, void * v2, Dtdisc_t * disc) 
 @Unused
@@ -174,29 +110,29 @@ LEAVING("5p3ac8qk4gnne5hj1dc21ysi","icompare");
 // static XLabels_t *xlnew(object_t * objs, int n_objs, 			xlabel_t * lbls, int n_lbls, 			label_params_t * params) 
 @Unused
 @Original(version="2.38.0", path="lib/label/xlabels.c", name="", key="88mbfm305igsr7cew5qx6yldp", definition="static XLabels_t *xlnew(object_t * objs, int n_objs, 			xlabel_t * lbls, int n_lbls, 			label_params_t * params)")
-public static ST_XLabels_t xlnew(CStar<ST_object_t> objs, int n_objs, CStar<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
+public static ST_XLabels_t xlnew(CArray<ST_object_t> objs, int n_objs, CArray<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
 ENTERING("88mbfm305igsr7cew5qx6yldp","xlnew");
 try {
 ST_XLabels_t xlp;
 xlp = new ST_XLabels_t();
 /* used to load the rtree in hilbert space filling curve order */
-xlp.setPtr("hdx", dtopen(Z.z().Hdisc, Z.z().Dtobag));
+xlp.hdx = dtopen(Z.z().Hdisc, Z.z().Dtobag);
 if (N(xlp.hdx)) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
 }
 /* for querying intersection candidates */
-xlp.setPtr("spdx", RTreeOpen());
+xlp.spdx = RTreeOpen();
 if (N(xlp.spdx)) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
      }
 /* save arg pointers in the handle */
 xlp.objs = objs;
-xlp.setInt("n_objs", n_objs);
+xlp.n_objs = n_objs;
 xlp.lbls = lbls;
-xlp.setInt("n_lbls", n_lbls);
-xlp.setPtr("params", params);
+xlp.n_lbls = n_lbls;
+xlp.params = params;
 return (ST_XLabels_t) xlp;
 } finally {
 LEAVING("88mbfm305igsr7cew5qx6yldp","xlnew");
@@ -361,7 +297,7 @@ LEAVING("bpkzwylrchx5wta1qhytfgbtr","aabbaabb");
 public static boolean lblenclosing(ST_object_t objp, ST_object_t objp1) {
 ENTERING("2g71cq6f8w5jbmbnn2x9y5qfq","lblenclosing");
 try {
-	CStar<ST_xlabel_t> xlp = objp.lbl;
+	CArray<ST_xlabel_t> xlp = objp.lbl;
 //   assert(objp1->sz.x == 0 && objp1->sz.y == 0);
    if(N(xlp)) return false;
       return objp1.pos.x > xlp.get__(0).pos.x &&
@@ -408,7 +344,7 @@ LEAVING("dq1wkb4oxshdggv6cwtgas6m","objp2rect");
 public static void objplp2rect(ST_object_t objp, ST_Rect_t r) {
 ENTERING("71b5ttp3xs7lo9fqgb7ypyqgx","objplp2rect");
 try {
-	CStar<ST_xlabel_t> lp = objp.lbl;
+	CArray<ST_xlabel_t> lp = objp.lbl;
     r.boundary[0]=((int)lp.get__(0).pos.x);
     r.boundary[1]=((int)lp.get__(0).pos.y);
     r.boundary[2]=((int)(lp.get__(0).pos.x+lp.get__(0).sz.x));
@@ -457,7 +393,7 @@ public static int getintrsxi(ST_XLabels_t xlp, ST_object_t  op, ST_object_t cp) 
 ENTERING("calnhom3s9dqvvi6crrz3h2wp","getintrsxi");
 try {
      int i = -1;
-     CStar<ST_xlabel_t> lp = op.lbl, clp = cp.lbl;
+     CArray<ST_xlabel_t> lp = op.lbl, clp = cp.lbl;
      assert(lp != clp);
      if (lp.get__(0).set == 0 || clp.get__(0).set == 0)
  	return i;
@@ -606,7 +542,7 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
     	       if (EQ(objp, xlp.objs.get__(i))) continue;
        if(xlp.objs.get__(i).sz.x > 0 && xlp.objs.get__(i).sz.y > 0) continue;
        if(lblenclosing(objp, xlp.objs.get__(i))) {
-    	 	  bp.setInt("n", bp.n+1);
+    	 	  bp.n = bp.n+1;
        }
      }
      
@@ -665,7 +601,7 @@ LEAVING("8rxvucqsqnqej6h8p1osfnk4b","xladjust");
 }
 }
 private static ST_BestPos_t xladjust_(ST_XLabels_t xlp, ST_object_t objp) {
-	CStar<ST_xlabel_t> lp = objp.lbl; // ST_xlabel_t
+	CArray<ST_xlabel_t> lp = objp.lbl; // ST_xlabel_t
     double xincr = ((2 * lp.get__(0).sz.x + objp.sz.x)) / 8;
     double yincr = ((2 * lp.get__(0).sz.y + objp.sz.y)) / 2;
     ST_object_t intrsx[] = new ST_object_t[9];
@@ -880,7 +816,7 @@ try {
 		RTreeInsert((ST_RTree) xlp.spdx, (ST_Rect_t)op.d.rect,
      			op.d.child,
      			tmp, 0);
-		xlp.spdx.setPtr("root", tmp[0]);
+		xlp.spdx.root = tmp[0];
      }
      return 0;
 } finally {
@@ -917,7 +853,7 @@ LEAVING("6d3fqrllm55toeo3wscwvv4ty","xlinitialize");
 // int placeLabels(object_t * objs, int n_objs, 	    xlabel_t * lbls, int n_lbls, label_params_t * params) 
 @Unused
 @Original(version="2.38.0", path="lib/label/xlabels.c", name="placeLabels", key="brqgbskh3z4ah8infjompibvu", definition="int placeLabels(object_t * objs, int n_objs, 	    xlabel_t * lbls, int n_lbls, label_params_t * params)")
-public static int placeLabels(CStar<ST_object_t> objs, int n_objs, CStar<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
+public static int placeLabels(CArray<ST_object_t> objs, int n_objs, CArray<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
 ENTERING("brqgbskh3z4ah8infjompibvu","placeLabels");
 try {
 int r, i;

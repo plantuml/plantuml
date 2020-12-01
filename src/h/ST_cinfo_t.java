@@ -45,44 +45,30 @@
  */
 package h;
 
-import smetana.core.CStar;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.CArray;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_cinfo_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_cinfo_t extends UnsupportedStarStruct {
 
-	public final ST_boxf bb = new ST_boxf(this);
-	public CStar<ST_object_t> objp;
+	public final ST_boxf bb = new ST_boxf();
+	public CArray<ST_object_t> objp;
 
-	public ST_cinfo_t(StarStruct parent) {
-	}
 
-	public ST_cinfo_t() {
-	}
+
 	
 	@Override
 	public void ___(__struct__ value) {
 		final ST_cinfo_t other = (ST_cinfo_t) value;
-		this.bb.setStruct(other.bb);
+		this.bb.___(other.bb);
 		this.objp = other.objp;
 	}
 
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("bb")) {
-			this.bb.setStruct(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-	
-	
+
 	@Override
 	public ST_cinfo_t copy() {
 		final ST_cinfo_t result = new ST_cinfo_t();
-		result.bb.copyDataFrom((__struct__) this.bb);
+		result.bb.___((__struct__) this.bb);
 		result.objp = this.objp;
 		return result;
 	}

@@ -95,6 +95,7 @@ import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeProcedure;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
+import net.sourceforge.plantuml.tim.stdlib.Newline;
 import net.sourceforge.plantuml.tim.stdlib.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.StringFunction;
@@ -148,6 +149,7 @@ public class TContext {
 		functionsSet.addFunction(new Upper());
 		functionsSet.addFunction(new Lower());
 		functionsSet.addFunction(new StringFunction());
+		functionsSet.addFunction(new Newline());
 		// !exit
 		// !log
 		// %min
@@ -329,18 +331,20 @@ public class TContext {
 	}
 
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
-		StringLocated tmp = applyFunctionsAndVariablesInternal(memory, s);
+		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);
 		if (tmp != null) {
 			if (pendingAdd != null) {
-				tmp = new StringLocated(pendingAdd + tmp.getString(), tmp.getLocation());
+				tmp[0] = new StringLocated(pendingAdd + tmp[0].getString(), tmp[0].getLocation());
 				pendingAdd = null;
 			}
-			resultList.add(tmp);
+			for (StringLocated line : tmp) {
+				resultList.add(line);
+			}
 		}
 	}
 
 	private void simulatePlain(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
-		final StringLocated ignored = applyFunctionsAndVariablesInternal(memory, s);
+		final StringLocated ignored[] = applyFunctionsAndVariablesInternal(memory, s);
 	}
 
 	private void executeAffectationDefine(TMemory memory, StringLocated s)
@@ -363,16 +367,22 @@ public class TContext {
 		undef.analyze(this, memory);
 	}
 
-	private StringLocated applyFunctionsAndVariablesInternal(TMemory memory, StringLocated located)
+	private StringLocated[] applyFunctionsAndVariablesInternal(TMemory memory, StringLocated located)
 			throws EaterException, EaterExceptionLocated {
 		if (memory.isEmpty() && functionsSet.size() == 0) {
-			return located;
+			return new StringLocated[] { located };
 		}
 		final String result = applyFunctionsAndVariables(memory, located.getLocation(), located.getString());
 		if (result == null) {
 			return null;
 		}
-		return new StringLocated(result, located.getLocation());
+		final String[] splited = result.split("\n");
+		final StringLocated[] tab = new StringLocated[splited.length];
+		for (int i = 0; i < splited.length; i++) {
+			tab[i] = new StringLocated(splited[i], located.getLocation());
+		}
+
+		return tab;
 	}
 
 	private String pendingAdd = null;

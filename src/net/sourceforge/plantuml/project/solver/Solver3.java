@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.project.core3.Histogram;
 import net.sourceforge.plantuml.project.core3.HistogramSimple;
 import net.sourceforge.plantuml.project.core3.TaskLoad;
 import net.sourceforge.plantuml.project.core3.TaskLoadImpl;
-import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.Instant;
 
 public class Solver3 extends AbstractSolver {

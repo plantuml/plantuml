@@ -45,12 +45,10 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_Agdesc_s extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_Agdesc_s extends UnsupportedStarStruct {
 	public int directed; /* if edges are asymmetric */
 	public int strict; /* if multi-edges forbidden */
 	public int no_loop; /* if no loops */
@@ -60,11 +58,17 @@ public class ST_Agdesc_s extends UnsupportedStructAndPtr implements HardcodedStr
 	public int has_attrs; /* if string attr tables should be initialized */
 	public int has_cmpnd; /* if may contain collapsed nodes */
 
-	public ST_Agdesc_s() {
-		this(null);
-	}
-
-	public ST_Agdesc_s(StarStruct parent) {
+	@Override
+	public void ___(__struct__ other) {
+		ST_Agdesc_s other2 = (ST_Agdesc_s) other;
+		directed = other2.directed;
+		strict = other2.strict;
+		no_loop = other2.no_loop;
+		maingraph = other2.maingraph;
+		flatlock = other2.flatlock;
+		no_write = other2.no_write;
+		has_attrs = other2.has_attrs;
+		has_cmpnd = other2.has_cmpnd;
 	}
 
 	@Override
@@ -81,19 +85,6 @@ public class ST_Agdesc_s extends UnsupportedStructAndPtr implements HardcodedStr
 		return result;
 	}
 	
-	@Override
-	public void copyDataFrom(__struct__ other) {
-		ST_Agdesc_s other2 = (ST_Agdesc_s) other;
-		directed = other2.directed;
-		strict = other2.strict;
-		no_loop = other2.no_loop;
-		maingraph = other2.maingraph;
-		flatlock = other2.flatlock;
-		no_write = other2.no_write;
-		has_attrs = other2.has_attrs;
-		has_cmpnd = other2.has_cmpnd;
-	}
-
 
 }
 

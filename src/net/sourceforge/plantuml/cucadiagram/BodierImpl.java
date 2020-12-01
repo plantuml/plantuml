@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
 
 public class BodierImpl implements Bodier {
 
@@ -191,12 +191,12 @@ public class BodierImpl implements Bodier {
 		return result;
 	}
 
-	public TextBlock getBody(final FontParam fontParam, final ISkinParam skinParam, final boolean showMethods,
-			final boolean showFields, Stereotype stereotype) {
+	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
+			Stereotype stereotype, Style style) {
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
 				return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf,
-						SName.classDiagram);
+						style);
 			}
 			return null;
 		}
@@ -204,20 +204,19 @@ public class BodierImpl implements Bodier {
 			throw new IllegalStateException();
 		}
 		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
-				stereotype, leaf, SName.classDiagram);
+				stereotype, leaf, style);
 		if (type == LeafType.OBJECT) {
 			if (showFields == false) {
 				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
 			}
-			// return fields.asBlockMemberImpl();
 			return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf,
-					SName.objectDiagram);
+					style);
 		}
 		if (type.isLikeClass() == false) {
 			throw new UnsupportedOperationException();
 		}
 		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
-				stereotype, leaf, SName.classDiagram);
+				stereotype, leaf, style);
 		if (showFields && showMethods == false) {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {

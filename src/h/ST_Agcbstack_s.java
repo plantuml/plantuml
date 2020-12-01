@@ -45,32 +45,10 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Agcbstack_s extends UnsupportedStructAndPtr {
+final public class ST_Agcbstack_s extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_Agcbstack_s() {
-		this(null);
-	}
-
-	public ST_Agcbstack_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public StarStruct getParent() {
-		return parent;
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agcbstack_s",
-	// "{",
-	// "Agcbdisc_t *f",
-	// "void *state",
-	// "Agcbstack_t *prev",
-	// "}");
 }
 
 // struct Agcbstack_s { /* object event callbacks */

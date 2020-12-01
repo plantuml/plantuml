@@ -45,15 +45,13 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_GVC_s extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_GVC_s extends UnsupportedStarStruct {
 
 	// "struct GVC_s",
 	// "{",
-	public final ST_GVCOMMON_t common = new ST_GVCOMMON_t(this);
+	public final ST_GVCOMMON_t common = new ST_GVCOMMON_t();
 	// "char *config_path",
 	public int config_found;
 	// "char **input_filenames",
@@ -92,25 +90,6 @@ public class ST_GVC_s extends UnsupportedStructAndPtr implements HardcodedStruct
 	// "gvcolor_t bgcolor",
 	// "int fontrenaming",
 	// "}");
-
-	private final StarStruct parent;
-
-	public ST_GVC_s() {
-		this(null);
-	}
-
-	public ST_GVC_s(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("config_found")) {
-			this.config_found = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
 }
 

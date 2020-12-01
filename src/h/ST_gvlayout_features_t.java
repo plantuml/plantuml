@@ -45,25 +45,12 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_gvlayout_features_t extends UnsupportedStructAndPtr {
+final public class ST_gvlayout_features_t extends UnsupportedStarStruct {
 
-	// "typedef struct",
-	// "{",
 	public int flags;
 
-	// "}",
-	// "gvlayout_features_t");
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("flags")) {
-			this.flags = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
 
 }

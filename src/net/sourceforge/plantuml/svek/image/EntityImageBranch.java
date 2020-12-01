@@ -40,8 +40,8 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
@@ -85,7 +85,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 		HColor back = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityDiamondBackground,
 				ColorParam.activityBackground);
 		UStroke stroke = new UStroke(1.5);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 			back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());

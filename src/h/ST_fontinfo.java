@@ -46,50 +46,15 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_fontinfo extends UnsupportedStructAndPtr {
+final public class ST_fontinfo extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_fontinfo() {
-		this(null);
-	}
-
-	public ST_fontinfo(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "struct fontinfo",
-	// "{",
 	public double fontsize;
 	public CString fontname;
 	public CString fontcolor;
 
-	// "}");
-
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("fontsize")) {
-			this.fontsize = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
-
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("fontname")) {
-			return this.fontname;
-		}
-		if (fieldName.equals("fontcolor")) {
-			return this.fontcolor;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 }
 

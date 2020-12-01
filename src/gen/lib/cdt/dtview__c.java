@@ -46,7 +46,6 @@
 package gen.lib.cdt;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.function;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DT_CLEAR;
@@ -69,13 +68,19 @@ import static smetana.core.Macro._DTKEY;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
-import h.Dtcompar_f;
 import h.ST_dt_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
+import smetana.core.OFFSET;
 import smetana.core.__ptr__;
 
 public class dtview__c {
 
-
+public static CFunction dtvsearch = new CFunctionAbstract("dtvsearch") {
+	
+	public Object exe(Object... args) {
+		return dtvsearch((ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);
+	}};
 
 /*	Set a view path from dict to view.
 **
@@ -88,8 +93,8 @@ ENTERING("6spidg45w8teb64726drdswaa","dtvsearch");
 try {
 	ST_dt_s		d, p;
 	__ptr__		o=null, n, ok, nk;
-	int		cmp, lk, sz, ky;
-	Dtcompar_f	cmpf;
+	int		cmp, sz; OFFSET lk, ky;
+	CFunction	cmpf;
 	
 	
 	/* these operations only happen at the top level */
@@ -210,7 +215,7 @@ try {
 	
 	/* ok */
 	dt.view = view;
-	dt.searchf = function(dtview__c.class, "dtvsearch");
+	dt.searchf = dtview__c.dtvsearch;
 	view.nview += 1;
 	
 	

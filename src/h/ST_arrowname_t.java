@@ -46,10 +46,10 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
 
-public class ST_arrowname_t extends UnsupportedStructAndPtr {
+final public class ST_arrowname_t extends UnsupportedStarStruct {
 
 	public CString name;
 	public int type;
@@ -60,13 +60,8 @@ public class ST_arrowname_t extends UnsupportedStructAndPtr {
 		this.name = other2.name == null ? null : other2.name.duplicate();
 		this.type = other2.type;
 	}
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct arrowname_t",
-	// "{",
-	// "char *name",
-	// "int type",
-	// "}",
-	// "arrowname_t");
+
+
 }
 
 // typedef struct arrowname_t {

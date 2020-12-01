@@ -45,28 +45,29 @@
  */
 package h;
 
-import smetana.core.CStarStar;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
+import smetana.core.CArrayOfStar;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_rank_t extends UnsupportedStructAndPtr {
+//typedef struct rank_t {
+//int n; /* number of nodes in this rank */
+//node_t **v; /* ordered list of nodes in rank */
+//int an; /* globally allocated number of nodes */
+//node_t **av; /* allocated list of nodes in rank */
+//double ht1, ht2; /* height below/above centerline */
+//double pht1, pht2; /* as above, but only primitive nodes */
+//boolean candidate; /* for transpose () */
+//boolean valid;
+//int cache_nc; /* caches number of crossings */
+//adjmatrix_t *flat;
+//} rank_t;
 
-	private final StarStruct parent;
-
-	public ST_rank_t() {
-		this(null);
-	}
-
-	public ST_rank_t(StarStruct parent) {
-		this.parent = parent;
-	}
+final public class ST_rank_t extends UnsupportedStarStruct {
 
 	public int n;
-	public CStarStar<ST_Agnode_s> v;
+	public CArrayOfStar<ST_Agnode_s> v;
 	public int an;
-	public CStarStar<ST_Agnode_s> av;
+	public CArrayOfStar<ST_Agnode_s> av;
 
 	public double ht1, ht2;
 	public double pht1, pht2;
@@ -76,16 +77,14 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 	public int cache_nc;
 	public ST_adjmatrix_t flat;
 
+	@Override
+	public String toString() {
+		return "RANK n=" + n + " v=" + v + " an=" + an + " av=" + av;
+	}
 
 	@Override
 	public void ___(__struct__ other) {
-		setStruct(other);
-	}
-
-
-	@Override
-	public void setStruct(__struct__ value) {
-		ST_rank_t this2 = (ST_rank_t) value;
+		ST_rank_t this2 = (ST_rank_t) other;
 		this.n = this2.n;
 		this.v = this2.v;
 		this.an = this2.an;
@@ -100,103 +99,4 @@ public class ST_rank_t extends UnsupportedStructAndPtr {
 		this.flat = this2.flat;
 	}
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("n")) {
-			this.n = data;
-			return;
-		}
-		if (fieldName.equals("an")) {
-			this.an = data;
-			return;
-		}
-		if (fieldName.equals("valid")) {
-			this.valid = data;
-			return;
-		}
-		if (fieldName.equals("cache_nc")) {
-			this.cache_nc = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("pht1")) {
-			this.pht1 = data;
-			return;
-		}
-		if (fieldName.equals("pht2")) {
-			this.pht2 = data;
-			return;
-		}
-		if (fieldName.equals("ht1")) {
-			this.ht1 = data;
-			return;
-		}
-		if (fieldName.equals("ht2")) {
-			this.ht2 = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
-
-	@Override
-	public __struct__ getStruct() {
-		return this;
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("v")) {
-			this.v = (CStarStar<ST_Agnode_s>) newData;
-			return v;
-		}
-		if (fieldName.equals("av")) {
-			this.av = (CStarStar<ST_Agnode_s>) newData;
-			return av;
-		}
-		if (fieldName.equals("flat")) {
-			this.flat = (ST_adjmatrix_t) newData;
-			return flat;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-//	public static size_t sizeof(final int nb) {
-//		return new UnsupportedSize_t(nb) {
-//			@Override
-//			public Array2 malloc() {
-//				return new Array2(nb);
-//			}
-//
-//			@Override
-//			public int getInternalNb() {
-//				return nb;
-//			}
-//
-//			@Override
-//			public Array2 realloc(Object old) {
-//				Array2 old2 = (Array2) old;
-//				old2.reallocJ(nb);
-//				return old2;
-//			}
-//		};
-//	}
-
 }
-
-// typedef struct rank_t {
-// int n; /* number of nodes in this rank */
-// node_t **v; /* ordered list of nodes in rank */
-// int an; /* globally allocated number of nodes */
-// node_t **av; /* allocated list of nodes in rank */
-// double ht1, ht2; /* height below/above centerline */
-// double pht1, pht2; /* as above, but only primitive nodes */
-// boolean candidate; /* for transpose () */
-// boolean valid;
-// int cache_nc; /* caches number of crossings */
-// adjmatrix_t *flat;
-// } rank_t;
-

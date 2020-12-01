@@ -49,37 +49,20 @@ import static gen.lib.cgraph.utils__c.agdtopen;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
-import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.dtinsert;
 import static smetana.core.Macro.dtsearch;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import h.ST_Agraph_s;
 import h.ST_dt_s;
 import h.ST_refstr_t;
 import smetana.core.ACCESS;
+import smetana.core.CStarStar;
 import smetana.core.CString;
-import smetana.core.STARSTAR;
 import smetana.core.Z;
 
 public class refstr__c {
-//1 boyxdmkhstn4i64pqf6sv1mi7
-// static Dtdisc_t Refstrdisc = 
-/*static public final __struct__<_dtdisc_s> Refstrdisc = JUtils.from(_dtdisc_s.class);
-static {
-	Refstrdisc.setInt("key", OFFSET.create(refstr_t.class, "s").toInt()); // *s is the third field in refstr_t
-	Refstrdisc.setInt("size", -1);
-	Refstrdisc.setInt("link", 0);
-	Refstrdisc.setPtr("makef", null);
-	Refstrdisc.setPtr("freef", function(utils__c.class, "agdictobjfree"));
-	Refstrdisc.setPtr("comparf", null);
-	Refstrdisc.setPtr("hashf", null);
-	Refstrdisc.setPtr("memoryf", function(utils__c.class, "agdictobjmem"));
-	Refstrdisc.setPtr("eventf", null);
-}*/
-
 
 
 
@@ -88,9 +71,9 @@ static {
 private static ST_dt_s refdict(final ST_Agraph_s g) {
 ENTERING("f1nwss2xoaub1hyord232ugoj","refdict");
 try {
-		STARSTAR<ST_dt_s> dictref;
+		final CStarStar<ST_dt_s> dictref;
 		if (g != null)
-			dictref = STARSTAR.amp(new ACCESS<ST_dt_s>() {
+			dictref = CStarStar.<ST_dt_s> BUILD(new ACCESS<ST_dt_s>() {
 				public ST_dt_s get() {
 					return (ST_dt_s) g.clos.strdict;
 				}
@@ -99,7 +82,7 @@ try {
 				}
 			});
 		else
-			dictref = STARSTAR.amp(new ACCESS<ST_dt_s>() {
+			dictref = CStarStar.<ST_dt_s> BUILD(new ACCESS<ST_dt_s>() {
 				public ST_dt_s get() {
 					return Z.z().Refdict_default;
 				}
@@ -107,30 +90,17 @@ try {
 					Z.z().Refdict_default = obj;
 				}
 			});
-    if (dictref.getMe() == null) {
-	dictref.setMe(agdtopen(g, Z.z().Refstrdisc, Z.z().Dttree));
+    if (dictref.star() == null) {
+	dictref.star(agdtopen(g, Z.z().Refstrdisc, Z.z().Dttree));
 	Z.z().HTML_BIT = 1 << 31;
 	Z.z().CNT_BITS = ~Z.z().HTML_BIT;
 	}
-    return dictref.getMe();
+    return dictref.star();
 } finally {
 LEAVING("f1nwss2xoaub1hyord232ugoj","refdict");
 }
 }
 
-
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/refstr.c", name="agstrclose", key="9aajykl8nuymg60zukycquawa", definition = "int agstrclose(Agraph_t * g)")
-public static Object agstrclose(Object... arg) {
-UNSUPPORTED("c2l353zz5jt7jlmbhjbbt3m7v"); // int agstrclose(Agraph_t * g)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("208rcf0f70q2wxwsa6po42oqq"); //     return agdtclose(g, refdict(g));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 
@@ -143,7 +113,7 @@ ENTERING("9ts4wqhw2xafdv3tlcilneewq","refsymbind");
 try {
     final ST_refstr_t key = new ST_refstr_t();
     ST_refstr_t r;
-    // key.setPtr("s", s.duplicate());
+    // key.s = s.duplicate());
     key.setString(s);
     r = (ST_refstr_t) dtsearch(strdict, key);
     return r;
@@ -222,41 +192,6 @@ LEAVING("86oznromwhn9qeym0k7pih73q","agstrdup");
 
 
 
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/refstr.c", name="agstrdup_html", key="1ovgpnv6r8ru6iz51ic91zzal", definition = "char *agstrdup_html(Agraph_t * g, char *s)")
-public static Object agstrdup_html(Object... arg) {
-UNSUPPORTED("6679vrn0j0vkzernsn2rlottw"); // char *agstrdup_html(Agraph_t * g, char *s)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1uvxutp09oluiacpgn0f76bgu"); //     refstr_t *r;
-UNSUPPORTED("czgqod5ni1s5av81qa3n0ghgr"); //     Dict_t *strdict;
-UNSUPPORTED("55x2wgzchv0157f4g74693oaq"); //     size_t sz;
-UNSUPPORTED("a5abfeqtsa4i5x739edpwuxin"); //     if (s == ((char *)0))
-UNSUPPORTED("xp8okoaicybpovkenntpd857"); // 	 return ((char *)0);
-UNSUPPORTED("bo3fdoot7ldevx250qweitj6z"); //     strdict = refdict(g);
-UNSUPPORTED("12vt0u4w3q0jht9f9vsaybntn"); //     r = refsymbind(strdict, s);
-UNSUPPORTED("67y4tszu7dmeves31gr9ydmpi"); //     if (r)
-UNSUPPORTED("5gybhadmtbc77f5wf9adyemj7"); // 	r->refcnt++;
-UNSUPPORTED("1nyzbeonram6636b1w955bypn"); //     else {
-UNSUPPORTED("9llv1u64vbj6q8loctnrowtm5"); // 	sz = sizeof(refstr_t) + strlen(s);
-UNSUPPORTED("7tmc6a514rv2k24wg5o8qpvyp"); // 	if (g)
-UNSUPPORTED("asjj8bj1b02f70rfr41ayipxy"); // 	    r = (refstr_t *) agalloc(g, sz);
-UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
-UNSUPPORTED("bp5rr6mkh94826cbgdwglvpk9"); // 	    r = (refstr_t *) malloc(sz);
-UNSUPPORTED("6sl9ejza97inawt8uprd120h6"); // 	r->refcnt = 1 | HTML_BIT;
-UNSUPPORTED("dadamob0ot3fpofdm1ey34srj"); // 	strcpy(r->store, s);
-UNSUPPORTED("1cyhds1lm0ee8rtp7k7h5cqfw"); // 	r->s = r->store;
-UNSUPPORTED("b2zaf5uj8gofpyc40hl0ziymh"); // 	(*(((Dt_t*)(strdict))->searchf))((strdict),(void*)(r),0000001);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("lxjgfic7zk869xczsgazw3sx"); //     return r->s;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
 @Original(version="2.38.0", path="lib/cgraph/refstr.c", name="agstrfree", key="enhn1ajfo86a19dgm4b8lduz7", definition = "int agstrfree(Agraph_t * g, char *s)")
 public static int agstrfree(ST_Agraph_s g, CString s) {
 ENTERING("enhn1ajfo86a19dgm4b8lduz7","agstrfree");
@@ -302,23 +237,6 @@ LEAVING("3em4wzjnpajd5d3igb90l3rml","aghtmlstr");
 }
 }
 
-
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/refstr.c", name="agmarkhtmlstr", key="ap2ebebypq6vmwle0hicv6tmj", definition = "void agmarkhtmlstr(char *s)")
-public static Object agmarkhtmlstr(Object... arg) {
-UNSUPPORTED("8oc24oz62ej815sjwuwuj9bmt"); // void agmarkhtmlstr(char *s)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("164ww6fcxh6v2wmxj0v8aqviy"); //     refstr_t *key;
-UNSUPPORTED("8quozj18vjguewxdpv9w14yjn"); //     if (s == NULL)
-UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
-UNSUPPORTED("9cmt4vbkm95fqftevdqyfvslr"); //     key = (refstr_t *) (s - ((int)(&(((refstr_t*)0)->store[0]))));
-UNSUPPORTED("68mcf5kr6xw538zkdk8b50aeb"); //     key->refcnt |= HTML_BIT;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 }

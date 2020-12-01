@@ -45,34 +45,23 @@
  */
 package h;
 
-import smetana.core.CStar;
+import smetana.core.CArray;
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_textlabel_t extends UnsupportedStructAndPtr {
+final public class ST_textlabel_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_textlabel_t() {
-		this(null);
-	}
-
-	public ST_textlabel_t(StarStruct parent) {
-		this.parent = parent;
-	}
 
 	public CString text, fontname, fontcolor;
 	public int charset;
 	public double fontsize;
 
-	public final ST_pointf dimen = new ST_pointf(this);
-	public final ST_pointf space = new ST_pointf(this);
-	public final ST_pointf pos = new ST_pointf(this);
+	public final ST_pointf dimen = new ST_pointf();
+	public final ST_pointf space = new ST_pointf();
+	public final ST_pointf pos = new ST_pointf();
 
-	public CStar<ST_textspan_t> span;
+	public CArray<ST_textspan_t> span;
 	public int nspans;
 
 	public final __ptr__ html__ = null;
@@ -82,72 +71,13 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 
 	public boolean html;
 
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("space")) {
-			space.copyDataFrom(newData);
-			return;
-		}
-		if (fieldName.equals("pos")) {
-			pos.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
+
+
+
+
 
 	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("text")) {
-			this.text = (CString) newData;
-			return text;
-		}
-		if (fieldName.equals("fontname")) {
-			this.fontname = (CString) newData;
-			return fontname;
-		}
-		if (fieldName.equals("fontcolor")) {
-			this.fontcolor = (CString) newData;
-			return fontcolor;
-		}
-		if (fieldName.equals("u.txt.span")) {
-			this.span = (CStar<ST_textspan_t>) newData;
-			return span;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("fontsize")) {
-			this.fontsize = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("charset")) {
-			this.charset = data;
-			return;
-		}
-		if (fieldName.equals("valign")) {
-			this.valign = data;
-			return;
-		}
-		if (fieldName.equals("u.txt.nspans")) {
-			this.nspans = data;
-			return;
-		}
-		if (fieldName.equals("set")) {
-			this.set = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_textlabel_t other2 = (ST_textlabel_t) other;
 		return this == other2;
 	}

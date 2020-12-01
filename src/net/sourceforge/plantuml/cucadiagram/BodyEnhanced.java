@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockVertical2;
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -80,11 +80,11 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	private final ILeaf entity;
 	private final boolean inEllipse;
 	private final double minClassWidth;
-	private final SName diagramType;
+	private final Style style;
 
 	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
-			Stereotype stereotype, ILeaf entity, SName diagramType) {
-		this.diagramType = diagramType;
+			Stereotype stereotype, ILeaf entity, Style style) {
+		this.style = style;
 		this.rawBody = new ArrayList<CharSequence>(rawBody);
 		this.stereotype = stereotype;
 		this.fontParam = fontParam;
@@ -101,16 +101,15 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	}
 
 	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
-			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity,
-			SName diagramType) {
+			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity, Style style) {
 		this(display, fontParam, skinParam, align, stereotype, manageHorizontalLine, manageHorizontalLine, entity, 0,
-				diagramType);
+				style);
 	}
 
-	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
+	private BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
 			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity,
-			double minClassWidth, SName diagramType) {
-		this.diagramType = diagramType;
+			double minClassWidth, Style style) {
+		this.style = style;
 		this.minClassWidth = minClassWidth;
 		this.entity = entity;
 		this.stereotype = stereotype;
@@ -118,7 +117,11 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
 
-		this.titleConfig = new FontConfiguration(skinParam, fontParam, stereotype);
+		if (style == null) {
+			this.titleConfig = new FontConfiguration(skinParam, fontParam, stereotype);
+		} else {
+			this.titleConfig = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		}
 		this.lineFirst = false;
 		this.align = skinParam.getDefaultTextAlignment(align);
 		this.manageHorizontalLine = manageHorizontalLine;
@@ -165,8 +168,9 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			final CharSequence s2 = it.next();
 			if (s2 instanceof EmbeddedDiagram) {
 				if (members.size() > 0 || separator != 0) {
-					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
-							stereotype, entity, diagramType), separator, title));
+					blocks.add(decorate(stringBounder,
+							new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity, style),
+							separator, title));
 					separator = 0;
 					title = null;
 					members = new ArrayList<Member>();
@@ -175,15 +179,16 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			} else {
 				final String s = s2.toString();
 				if (manageHorizontalLine && isBlockSeparator(s)) {
-					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
-							stereotype, entity, diagramType), separator, title));
+					blocks.add(decorate(stringBounder,
+							new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity, style),
+							separator, title));
 					separator = s.charAt(0);
 					title = getTitle(s, skinParam);
 					members = new ArrayList<Member>();
 				} else if (Parser.isTreeStart(s)) {
 					if (members.size() > 0) {
 						blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
-								stereotype, entity, diagramType), separator, title));
+								stereotype, entity, style), separator, title));
 					}
 					separator = 0;
 					title = null;
@@ -205,8 +210,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			members.add(new Member("", false, false));
 		}
 		blocks.add(decorate(stringBounder,
-				new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity, diagramType),
-				separator, title));
+				new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity, style), separator,
+				title));
 
 		if (blocks.size() == 1) {
 			this.area = blocks.get(0);

@@ -46,15 +46,12 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.Area;
-import smetana.core.amiga.StarStruct;
 
-public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_port extends UnsupportedStarStruct {
 
-	public final ST_pointf p = new ST_pointf(this);
+	public final ST_pointf p = new ST_pointf();
 	public double theta;
 	public ST_boxf bp;
 	public boolean defined;
@@ -65,44 +62,11 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 	public int side;
 	public CString name;
 
-	public ST_port(StarStruct parent) {
-	}
 
-	public ST_port() {
-	}
+
 
 	@Override
 	public void ___(__struct__ other) {
-		ST_port other2 = (ST_port) other;
-		this.p.___(other2.p);
-		this.theta = other2.theta;
-		this.bp = other2.bp;
-		this.defined = other2.defined;
-		this.constrained = other2.constrained;
-		this.clip = other2.clip;
-		this.dyna = other2.dyna;
-		this.order = other2.order;
-		this.side = other2.side;
-		this.name = other2.name;
-	}
-
-	@Override
-	public void copyDataFrom(__struct__ other) {
-		ST_port other2 = (ST_port) other;
-		this.p.___(other2.p);
-		this.theta = other2.theta;
-		this.bp = other2.bp;
-		this.defined = other2.defined;
-		this.constrained = other2.constrained;
-		this.clip = other2.clip;
-		this.dyna = other2.dyna;
-		this.order = other2.order;
-		this.side = other2.side;
-		this.name = other2.name;
-	}
-
-	@Override
-	public void memcopyFrom(Area other) {
 		ST_port other2 = (ST_port) other;
 		this.p.___(other2.p);
 		this.theta = other2.theta;
@@ -132,48 +96,8 @@ public class ST_port extends UnsupportedStructAndPtr implements HardcodedStruct 
 		return result;
 	}
 
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("p")) {
-			p.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("constrained")) {
-			constrained = data!=0;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
 
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("theta")) {
-			this.theta = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
-
-	// "typedef struct port",
-	// "{",
-	// "pointf p",
-	// "double theta",
-	// "boxf *bp",
-	// "boolean defined",
-	// "boolean constrained",
-	// "boolean clip",
-	// "boolean dyna",
-	// "unsigned char order",
-	// "unsigned char side",
-	// "char *name",
-	// "}",
-	// "port");
 }
 
 // typedef struct port { /* internal edge endpoint specification */

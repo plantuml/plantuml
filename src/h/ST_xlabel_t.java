@@ -45,64 +45,17 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_xlabel_t extends UnsupportedStructAndPtr {
+final public class ST_xlabel_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_xlabel_t() {
-		this(null);
-	}
-
-	public ST_xlabel_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	final public ST_pointf sz = new ST_pointf(this);
-	final public ST_pointf pos = new ST_pointf(this);
+	final public ST_pointf sz = new ST_pointf();
+	final public ST_pointf pos = new ST_pointf();
 
 	public ST_textlabel_t lbl;
 	public int set;
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("set")) {
-			this.set = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("lbl")) {
-			this.lbl = (ST_textlabel_t) newData;
-			return this.lbl;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public ST_xlabel_t getStruct() {
-		return this;
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("sz")) {
-			this.sz.copyDataFrom(newData);
-			return;
-		}
-		if (fieldName.equals("pos")) {
-			this.pos.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
 
 }
 

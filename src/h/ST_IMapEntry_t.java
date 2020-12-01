@@ -46,31 +46,13 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_IMapEntry_t extends UnsupportedStructAndPtr {
+final public class ST_IMapEntry_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-	
 	public final CString str = null;
 
-	public ST_IMapEntry_t() {
-		this(null);
-	}
 
-	public ST_IMapEntry_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "typedef struct IMapEntry_s",
-	// "{",
-	// "Dtlink_t namedict_link",
-	// "Dtlink_t iddict_link",
-	// "unsigned long id",
-	// "char *str",
-	// "}",
-	// "IMapEntry_t");
 }
 
 // typedef struct IMapEntry_s {

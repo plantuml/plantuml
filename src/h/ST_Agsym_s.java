@@ -46,17 +46,14 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.HardcodedStruct;
 import smetana.core.OFFSET;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
 //2 38c2s12koxcpi2c7vwl72qrsp
 
-public class ST_Agsym_s extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_Agsym_s extends UnsupportedStarStruct {
 	public final ST_dtlink_s link = new ST_dtlink_s(this);
-
 	public CString name; /* attribute's name */
 	public CString defval; /* its default value for initialization */
 
@@ -65,81 +62,35 @@ public class ST_Agsym_s extends UnsupportedStructAndPtr implements HardcodedStru
 	public int fixed; /* immutable value */
 	public int print; /* always print */
 
-	public ST_Agsym_s(StarStruct parent) {
+	public static OFFSET createOFFSET(String field) {
+		return new OFFSET(field);
 	}
 
 	@Override
-	public Object addVirtualBytes(int virtualBytes) {
-		if (virtualBytes == 0) {
+	public Object getTheField(OFFSET offset) {
+		if (offset == null || offset.getSign()==0) {
 			return this;
 		}
-		final OFFSET offset = OFFSET.fromInt(virtualBytes);
-		if (offset.toString().equals("h.ST_Agsym_s::name")) {
+		if (offset.getField().equals("name")) {
 			return name;
 		}
-		if (offset.toString().equals("h.ST_Agsym_s::link")) {
+		if (offset.getField().equals("link")) {
 			return link;
 		}
-		System.err.println("virtualBytes=" + virtualBytes);
-		System.err.println("offset=" + offset);
-		return super.addVirtualBytes(virtualBytes);
+		throw new UnsupportedOperationException();
 	}
 
-	public ST_Agsym_s() {
-		this(null);
-	}
 	
 	@Override
-	public boolean isSameThan(StarStruct other) {
+	public boolean isSameThan(__ptr__ other) {
 		ST_Agsym_s other2 = (ST_Agsym_s) other;
 		return this == other2;
 	}
 
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("name")) {
-			this.name = (CString) newData;
-			return name;
-		}
-		if (fieldName.equals("defval")) {
-			this.defval = (CString) newData;
-			return defval;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("kind")) {
-			this.kind = data;
-			return;
-		}
-		if (fieldName.equals("id")) {
-			this.id = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
-	public StarStruct from_link(ST_dtlink_s from) {
-		if (from == link) {
-			return this;
-		}
-		throw new IllegalArgumentException();
-	}
 
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agsym_s",
-	// "{",
-	// "Dtlink_t link",
-	// "char *name",
-	// "char *defval",
-	// "int id",
-	// "unsigned char kind",
-	// "unsigned char fixed",
-	// "unsigned char print",
-	// "}");
 }
 
 // struct Agsym_s { /* symbol in one of the above dictionaries */

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.skin.rose;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -65,7 +65,7 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 			HorizontalAlignment textHorizontalAlignment, LineBreakStrategy maxMessageSize) {
 		super(style, maxMessageSize, stringsToDisplay, font, textHorizontalAlignment, 7, 7, 1, spriteContainer, false,
 				null, null);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 			final UStroke stroke = style.getStroke();
 			this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());

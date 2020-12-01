@@ -45,63 +45,22 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
 
-public class ST_Branch_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_Branch_t extends UnsupportedStarStruct {
 
 	// Warning : could be a "ST_Leaf_t" from C Version
-	public final ST_Rect_t rect = new ST_Rect_t(this);
+	public final ST_Rect_t rect = new ST_Rect_t();
 	public ST_Node_t___or_object_t child; // "data" : ST_object_t
 
-	public ST_Branch_t() {
-	}
 
-	@Override
-	public void copyDataFrom(__struct__ other) {
-		ST_Branch_t this2 = (ST_Branch_t) other;
-		this.rect.copyDataFrom((__struct__) this2.rect);
-		this.child = this2.child;
-	}
-
-	@Override
-	public __ptr__ castTo(Class dest) {
-		if (dest == ST_Branch_t.class) {
-			return ST_Branch_t.this;
-		}
-		if (dest == ST_Rect_t.class) {
-			return rect;
-		}
-		return super.castTo(dest);
-	}
-
-	public __struct__ getStruct() {
-		return this;
-	}
 
 	@Override
 	public void ___(__struct__ other) {
-		this.copyDataFrom(other);
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("rect")) {
-			this.rect.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public ST_Node_t___or_object_t setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("child")) {
-			this.child = (ST_Node_t___or_object_t) newData;
-			return this.child;
-		}
-		throw new UnsupportedOperationException();
+		ST_Branch_t this2 = (ST_Branch_t) other;
+		this.rect.___((__struct__) this2.rect);
+		this.child = this2.child;
 	}
 
 	// typedef struct Branch {

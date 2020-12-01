@@ -40,8 +40,8 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
@@ -82,7 +82,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 			shadowing = 3;
 		}
 		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), param);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(
 					getSkinParam().getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());

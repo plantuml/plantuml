@@ -56,9 +56,9 @@ import static smetana.core.Macro.UNSUPPORTED;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
-import h.Dtsearch_f;
 import h.ST_dt_s;
 import h.ST_dtlink_s;
+import smetana.core.CFunction;
 
 public class dtrestore__c {
 
@@ -76,7 +76,7 @@ try {
 	ST_dtlink_s	t;
 	//Dtlink_t	**s, **ends;
 	int		type;
-	Dtsearch_f	searchf = dt.meth.searchf;
+	CFunction	searchf = dt.meth.searchf;
 	
 	
 	type = dt.data.type&DT_FLATTEN;

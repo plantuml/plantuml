@@ -45,40 +45,16 @@
  */
 package h;
 
-import smetana.core.CStar;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.CArray;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_inside_t extends UnsupportedStructAndPtr {
+final public class ST_inside_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_inside_t() {
-		this(null);
-	}
-
-	public ST_inside_t(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	public CStar<ST_pointf> a_p;
+	public CArray<ST_pointf> a_p;
 	public double a_r[];
 	public ST_Agnode_s s_n;
 	public ST_boxf s_bp;
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("s.n")) {
-			this.s_n = (ST_Agnode_s) newData;
-			return this.s_n;
-		}
-		if (fieldName.equals("s.bp")) {
-			this.s_bp = (ST_boxf) newData;
-			return this.s_bp;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 
 }

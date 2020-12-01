@@ -35,6 +35,12 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -42,6 +48,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.json.ParseException;
 
 public class JsonDiagramFactory extends PSystemAbstractFactory {
 
@@ -50,8 +57,32 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	public Diagram createSystem(UmlSource source) {
-		final JsonValue json = Json.parse(source.getInnerContent());
-		return new JsonDiagram((JsonObject) json);
+		final List<String> highlighted = new ArrayList<String>();
+		JsonValue json;
+		try {
+			final StringBuilder sb = new StringBuilder();
+			final Iterator<StringLocated> it = source.iterator2();
+			it.next();
+			while (true) {
+				final String line = it.next().getString();
+				if (it.hasNext() == false) {
+					break;
+				}
+				if (line.startsWith("#")) {
+					if (line.startsWith("#highlight ")) {
+						highlighted.add(line.substring("#highlight ".length()).trim());
+						continue;
+					}
+				} else {
+					sb.append(line);
+					sb.append(BackSlash.CHAR_NEWLINE);
+				}
+			}
+			json = Json.parse(sb.toString());
+		} catch (ParseException e) {
+			json = null;
+		}
+		return new JsonDiagram(json, highlighted);
 	}
 
 }

@@ -229,7 +229,7 @@ public class SvgGraphics {
 			elt.setAttribute("cy", format(y));
 			elt.setAttribute("rx", format(xRadius));
 			elt.setAttribute("ry", format(yRadius));
-			elt.setAttribute("fill", fill);
+			fillMe(elt);
 			elt.setAttribute("style", getStyle());
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
@@ -243,7 +243,7 @@ public class SvgGraphics {
 					+ format(x2) + " " + format(y2);
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", path);
-			elt.setAttribute("fill", fill);
+			fillMe(elt);
 			elt.setAttribute("style", getStyle());
 			getG().appendChild(elt);
 		}
@@ -351,8 +351,8 @@ public class SvgGraphics {
 		elt.setAttribute("y", format(y));
 		elt.setAttribute("width", format(width));
 		elt.setAttribute("height", format(height));
-		elt.setAttribute("fill", fill);
-		elt.setAttribute("style", getStyle());
+		fillMe(elt);
+		elt.setAttribute("style", getStyleSpecial());
 		return elt;
 	}
 
@@ -373,13 +373,28 @@ public class SvgGraphics {
 	}
 
 	private String getStyle() {
-		return getStyleInternal(stroke, strokeWidth, strokeDasharray);
+		final StringBuilder style = new StringBuilder();
+		style.append("stroke:" + stroke + ";");
+		style.append("stroke-width:" + strokeWidth + ";");
+		if (fill.equals("#00000000")) {
+			style.append("fill:none;");
+		}
+		if (strokeDasharray != null) {
+			style.append("stroke-dasharray:" + strokeDasharray + ";");
+		}
+		return style.toString();
 	}
 
-	private static String getStyleInternal(String color, String strokeWidth, String strokeDasharray) {
-		final StringBuilder style = new StringBuilder("stroke: " + color + "; stroke-width: " + strokeWidth + ";");
+	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
+	private String getStyleSpecial() {
+		final StringBuilder style = new StringBuilder();
+		style.append("stroke:" + stroke + ";");
+		style.append("stroke-width:" + strokeWidth + ";");
+		if (fill.equals("#00000000")) {
+			style.append("fill:none;");
+		}
 		if (strokeDasharray != null) {
-			style.append(" stroke-dasharray: " + strokeDasharray + ";");
+			style.append("stroke-dasharray:" + strokeDasharray + ";");
 		}
 		return style.toString();
 	}
@@ -397,8 +412,8 @@ public class SvgGraphics {
 				sb.append(format(coord));
 			}
 			elt.setAttribute("points", sb.toString());
-			elt.setAttribute("fill", fill);
-			elt.setAttribute("style", getStyle());
+			fillMe(elt);
+			elt.setAttribute("style", getStyleSpecial());
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -418,7 +433,7 @@ public class SvgGraphics {
 			// elt.setAttribute("text-rendering", "geometricPrecision");
 			elt.setAttribute("x", format(x));
 			elt.setAttribute("y", format(y));
-			elt.setAttribute("fill", fill);
+			fillMe(elt);
 			elt.setAttribute("font-size", format(fontSize));
 			// elt.setAttribute("text-anchor", "middle");
 			elt.setAttribute("lengthAdjust", "spacingAndGlyphs");
@@ -626,7 +641,7 @@ public class SvgGraphics {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
-			elt.setAttribute("fill", fill);
+			fillMe(elt);
 			final String id = path.getComment();
 			if (id != null) {
 				elt.setAttribute("id", id);
@@ -637,6 +652,12 @@ public class SvgGraphics {
 			}
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
+		}
+	}
+
+	private void fillMe(Element elt) {
+		if (fill.equals("#00000000") == false) {
+			elt.setAttribute("fill", fill);
 		}
 	}
 
@@ -695,14 +716,14 @@ public class SvgGraphics {
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
-			elt.setAttribute("fill", fill);
+			fillMe(elt);
 			// elt elt.setAttribute("style", getStyle());
 			getG().appendChild(elt);
 		}
 		currentPath = null;
 
 	}
-	
+
 	public void drawPathIterator(double x, double y, PathIterator path) {
 
 		this.newpath();
@@ -729,8 +750,6 @@ public class SvgGraphics {
 		this.fill(path.getWindingRule());
 
 	}
-
-
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
 		if (hidden == false) {

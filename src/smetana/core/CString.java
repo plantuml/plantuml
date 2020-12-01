@@ -40,9 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import h.ST_refstr_t;
-import smetana.core.amiga.Area;
 
-public class CString extends UnsupportedC implements __ptr__, Area {
+public class CString extends UnsupportedC implements __ptr__ {
 
 	private static int UID = 100;
 
@@ -58,12 +57,6 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 		}
 		return this.currentStart == other.currentStart;
 
-	}
-
-	public void memcopyFrom(Area source) {
-		final CString other = (CString) source;
-		this.data2.clear();
-		this.data2.addAll(other.data2);
 	}
 
 	public CString(String string) {
@@ -110,27 +103,9 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 		creation.fillInStackTrace();
 	}
 
-	public __ptr__ addVirtualBytes(int bytes) {
+	public __ptr__ getTheField(OFFSET bytes) {
 		JUtils.LOG("CString::addVirtualBytes " + bytes);
 		JUtils.LOG("AM " + this);
-		// if (bytes < 0) {
-		// OFFSET offset = OFFSET.fromInt(-bytes);
-		// JUtils.LOG("offset=" + offset);
-		// for (__ptr__ f : fathers) {
-		// JUtils.LOG("f=" + f);
-		// if (f instanceof StarStruct && ((StarStruct) f).getRealClass() == offset.getTheClass()) {
-		// JUtils.LOG("FOUND1!!");
-		// if (f.getPtr(offset.getField()).equals(this)) {
-		// JUtils.LOG("FOUND2!!");
-		// return f;
-		// }
-		// }
-		// }
-		// } else {
-		// JUtils.LOG("father=" + fathers);
-		// JUtils.LOG("CString created on the following place:");
-		// creation.printStackTrace();
-		// }
 		throw new UnsupportedOperationException();
 	}
 
@@ -153,12 +128,10 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 		this.parent = struct;
 	}
 
-	@Override
-	public CString plus(int pointerMove) {
+	public CString plus_(int pointerMove) {
 		return new CString(data2, currentStart + pointerMove);
 	}
 	
-	@Override
 	public int comparePointer(__ptr__ other) {
 		final CString this2 = (CString) other;
 		if (this.data2 != this2.data2) {

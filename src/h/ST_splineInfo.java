@@ -46,47 +46,18 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_splineInfo extends UnsupportedStructAndPtr {
+final public class ST_splineInfo extends UnsupportedStarStruct {
 
 	public CFunction swapEnds;
 	public CFunction splineMerge;
 	public boolean ignoreSwap;
 	public boolean isOrtho;
 
-	public ST_splineInfo() {
-		this(null);
-	}
 
-	public ST_splineInfo(StarStruct parent) {
-	}
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("swapEnds")) {
-			this.swapEnds = (CFunction) newData;
-			return swapEnds;
-		}
-		if (fieldName.equals("splineMerge")) {
-			this.splineMerge = (CFunction) newData;
-			return splineMerge;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
-	// public interface ST_splineInfo extends __ptr__ {
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct",
-	// "{",
-	// "boolean(*swapEnds) (edge_t * e)",
-	// "boolean(*splineMerge) (node_t * n)",
-	// "boolean ignoreSwap",
-	// "boolean isOrtho",
-	// "}",
-	// "splineInfo");
 }
 
 // typedef struct {

@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 

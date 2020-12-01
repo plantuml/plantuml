@@ -44,9 +44,6 @@
  *
  */
 package gen.lib.label;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static gen.lib.label.node__c.AddBranch;
 import static gen.lib.label.node__c.DisconBranch;
 import static gen.lib.label.node__c.NodeCover;
@@ -58,6 +55,9 @@ import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_Branch_t;
 import h.ST_LeafList_t;
 import h.ST_Node_t___;
@@ -167,13 +167,13 @@ LEAVING("6zraor7x44vrnm19d2igkvow2","RTreeLeafListFree");
 //RTree_t *RTreeOpen()
 @Unused
 @Original(version="2.38.0", path="lib/label/index.c", name="", key="aa29m7d7qc06m8id896e60lkg", definition="Tree_t *RTreeOpen()")
-public static __ptr__ RTreeOpen() {
+public static ST_RTree RTreeOpen() {
 ENTERING("aa29m7d7qc06m8id896e60lkg","RTreeOpen");
 try {
 	ST_RTree rtp;
     rtp = new ST_RTree();
     if (rtp!=null)
-    	rtp.setPtr("root", RTreeNewIndex(rtp));
+    	rtp.root = RTreeNewIndex(rtp);
     return rtp;
 } finally {
 LEAVING("aa29m7d7qc06m8id896e60lkg","RTreeOpen");
@@ -190,8 +190,8 @@ ENTERING("aa39m7d7qc06m8id896e60lkg","RTreeNewIndex");
 try {
 	ST_Node_t___ x;
 	x = RTreeNewNode(rtp);
-	x.setInt("level", 0); /* leaf */
-	rtp.setInt("LeafCount", rtp.LeafCount+1);
+	x.level = 0; /* leaf */
+	rtp.LeafCount = rtp.LeafCount+1;
 	return x;
 } finally {
 LEAVING("aa39m7d7qc06m8id896e60lkg","RTreeNewIndex");
@@ -214,9 +214,9 @@ try {
 	    if (N(RTreeClose2(rtp, (ST_Node_t___) n.branch[i].child))) {
 		Memory.free(n.branch[i].child);
 		DisconBranch(n, i);
-	    rtp.setInt("EntryCount", rtp.EntryCount-1);
+	    rtp.EntryCount = rtp.EntryCount-1;
 		if (rtp.StatFlag!=0)
-		    rtp.setInt("ElimCount", rtp.ElimCount+1);
+		    rtp.ElimCount = rtp.ElimCount+1;
 	    }
 	}
     } else {
@@ -225,9 +225,9 @@ try {
 		continue;
 	    // free(n->branch[i].child);
 	    DisconBranch(n, i);
-	    rtp.setInt("EntryCount", rtp.EntryCount-1);
+	    rtp.EntryCount = rtp.EntryCount-1;
 	    if (rtp.StatFlag!=0)
-		    rtp.setInt("ElimCount", rtp.ElimCount+1);
+		    rtp.ElimCount = rtp.ElimCount+1;
 	}
 	//free(n);
     }
@@ -273,7 +273,7 @@ try {
 //    assert(n->level >= 0);
 //    assert(r);
 
-    rtp.setInt("SeTouchCount", rtp.SeTouchCount+1);
+    rtp.SeTouchCount = rtp.SeTouchCount+1;
 
     if (n.level > 0) {		/* this is an internal node in the tree */
 	for (i = 0; i < 64; i++)
@@ -339,7 +339,7 @@ UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
 UNSUPPORTED("3kxquse3qg2crme5dzybg9jxe"); // 	    rtp->InsertCount++;
 }
      if (N(rtp.Deleting))
- 	rtp.setInt("RectCount", rtp.RectCount+1);
+ 	rtp.RectCount = rtp.RectCount+1;
      if (RTreeInsert2(rtp, r, data, n[0], newnode, level)!=0) {	/* root was split */
  	if (rtp.StatFlag!=0) {
 UNSUPPORTED("2y8kv6b3ysrr61q7tqn76rhhc"); // 	    if (rtp->Deleting)
@@ -348,17 +348,17 @@ UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
 UNSUPPORTED("2u8wpa4w1q7rg14t07bny6p8i"); // 		rtp->InTouchCount++;
  	}
  	newroot = RTreeNewNode(rtp);	/* grow a new root, make tree taller */
- 	rtp.setInt("NonLeafCount", rtp.NonLeafCount+1);
- 	newroot.setInt("level", n[0].level + 1);
- 	b.setStruct("rect", NodeCover(n[0]));
+ 	rtp.NonLeafCount = rtp.NonLeafCount+1;
+ 	newroot.level = n[0].level + 1;
+ 	b.rect.___(NodeCover(n[0]));
  	b.child = n[0];
  	AddBranch(rtp, b, newroot, null);
- 	b.setStruct("rect", NodeCover(newnode[0]));
+ 	b.rect.___(NodeCover(newnode[0]));
  	b.child = newnode[0];
  	AddBranch(rtp, b, newroot, null);
  	n[0] = newroot;
  	// rtp->root = newroot;
- 	rtp.setInt("EntryCount", rtp.EntryCount + 2);
+ 	rtp.EntryCount = rtp.EntryCount + 2;
  	result = 1;
      }
      return result;
@@ -398,15 +398,15 @@ UNSUPPORTED("1um729vqiy3529kbsrzyl9u3y"); // 	    rtp->InTouchCount++;
  	i = PickBranch(r, n);
  	if (N(RTreeInsert2(rtp, r, data, (ST_Node_t___) n.branch[i].child, n2, level))) {
 /* recurse: child was not split */
- 	    n.branch[i].setStruct("rect",
+ 	    n.branch[i].rect.___(
  	    		CombineRect((ST_Rect_t)r, (ST_Rect_t) n.branch[i].rect));
  	    return 0;
  	} else {		/* child was split */
- 	    n.branch[i].setStruct("rect",
+ 	    n.branch[i].rect.___(
  	    		NodeCover((ST_Node_t___)n.branch[i].child));
  	    b.child = n2[0];
  	    b.rect.___(NodeCover(n2[0]));
- 		rtp.setInt("EntryCount", rtp.EntryCount+1);
+ 		rtp.EntryCount = rtp.EntryCount+1;
  	 	return AddBranch(rtp, b, n, new_);
  	}
      } else if (n.level == level) {	/* at level for insertion. */
@@ -414,7 +414,7 @@ UNSUPPORTED("1um729vqiy3529kbsrzyl9u3y"); // 	    rtp->InTouchCount++;
  	b.rect.___(r);
  	b.child = /*(Node_t *)*/(ST_Node_t___or_object_t) data; // THIS CAST IS A BIG ISSUE
 // UNSUPPORTED("7w1b5nw2bj3zmo70m9bczwwov"); // 	b.child = (Node_t *) data;
- 	rtp.setInt("EntryCount", rtp.EntryCount+1);
+ 	rtp.EntryCount = rtp.EntryCount+1;
  	return AddBranch(rtp, b, n, new_);
      } else {			/* Not supposed to happen */
 UNSUPPORTED("22oqraxnqrjall7fj6pooexmi"); // 	assert((0));
@@ -427,138 +427,6 @@ LEAVING("bsc9m7d7qc06m8id896e60lkg","RTreeInsert2");
 }
 
 
-
-
-//3 eybi74pqddw71yno71n1dxch1
-// static void FreeListNode(register struct ListNode *p) 
-@Unused
-@Original(version="2.38.0", path="lib/label/index.c", name="FreeListNode", key="eybi74pqddw71yno71n1dxch1", definition="static void FreeListNode(register struct ListNode *p)")
-public static Object FreeListNode(Object... arg) {
-UNSUPPORTED("enkn7pc4meks3igihpafaoxnl"); // static void FreeListNode(register struct ListNode *p)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("bo0y3vz195pcz24vm46pixpb2"); //     free(p);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 a4tq9skwvzdutka9ei6pbydrk
-// int RTreeDelete(RTree_t * rtp, Rect_t * r, void *data, Node_t ** nn) 
-@Unused
-@Original(version="2.38.0", path="lib/label/index.c", name="RTreeDelete", key="a4tq9skwvzdutka9ei6pbydrk", definition="int RTreeDelete(RTree_t * rtp, Rect_t * r, void *data, Node_t ** nn)")
-public static Object RTreeDelete(Object... arg) {
-UNSUPPORTED("dxan13j7zc5tysdskndrhp0jy"); // int RTreeDelete(RTree_t * rtp, Rect_t * r, void *data, Node_t ** nn)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("a12nb5dbhoiu403g443fctkns"); //     /* int */
-UNSUPPORTED("db7nkyc7g4zod4pcosw0eosmi"); //     /* RTreeDelete(RTree_t*rtp, Rect_t*r, int data, Node_t**nn) { */
-UNSUPPORTED("pp6gyv6pecd6kik4hoguluwp"); //     register int i;
-UNSUPPORTED("ben8zsxtpzeiqo8eli2l8uwl0"); //     register Node_t *t;
-UNSUPPORTED("5pdj91y3888dsu9aiv163adqi"); //     struct ListNode *reInsertList = (void *)0;
-UNSUPPORTED("ej513ottpyeoq8nr5ek3cqnyu"); //     register struct ListNode *e;
-UNSUPPORTED("9fgs287rhe40d3q36tlijajk3"); //     assert(r && nn);
-UNSUPPORTED("djo1drf8zqgd4dlmtnp8268ma"); //     assert(*nn);
-UNSUPPORTED("aickurv6sbkajrl6u32h8s7n0"); //     assert(data >= 0);
-UNSUPPORTED("d7p6had3bhs1yux0acgomhxcq"); //     rtp->Deleting = (!(0));
-UNSUPPORTED("607lavmustb15rxzq2849utq7"); //     if (!RTreeDelete2(rtp, r, data, *nn, &reInsertList)) {
-UNSUPPORTED("78928a78vetdygse25vd6qw33"); // 	/* found and deleted a data item */
-UNSUPPORTED("bi6ay2t4s62zfticozlr791yq"); // 	if (rtp->StatFlag)
-UNSUPPORTED("aiqjtlu1lbfame9tsdduxksph"); // 	    rtp->DeleteCount++;
-UNSUPPORTED("337cl2y5ymgyje4han1uiddia"); // 	rtp->RectCount--;
-UNSUPPORTED("dm3fsqsr312twcwr7ejz72sd5"); // 	/* reinsert any branches from eliminated nodes */
-UNSUPPORTED("3miqozg3j3sz0440ya0edtkn1"); // 	while (reInsertList) {
-UNSUPPORTED("8bi7drdkfhozlzpnr9a8beo9r"); // 	    t = reInsertList->node;
-UNSUPPORTED("ehzcswv2o675ah20nlk8ll73b"); // 	    for (i = 0; i < 64; i++) {
-UNSUPPORTED("16k4a0oof3m3shq22rp10sufm"); // 		if (t->branch[i].child) {
-UNSUPPORTED("4pmqw3ejoeiktbmgw5li4osuk"); // 		    RTreeInsert(rtp, &(t->branch[i].rect),
-UNSUPPORTED("jn668g7qkg8vdom23tf6xyua"); // 				/* (int)t->branch[i].child, nn, t->level); */
-UNSUPPORTED("cr2tz58k73uenuatj8dllr5e"); // 				t->branch[i].child, nn, t->level);
-UNSUPPORTED("3ll931j526x4h3iq2n8lb8npl"); // 		    rtp->EntryCount--;
-UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("a0driook10zxazzgo71kxwf5t"); // 	    e = reInsertList;
-UNSUPPORTED("3ycjjmywhr2h58szv9f0c3r67"); // 	    reInsertList = reInsertList->next;
-UNSUPPORTED("2l03pg61762f3m81wcifv6o2t"); // 	    RTreeFreeNode(rtp, e->node);
-UNSUPPORTED("2nfqlmqqiafmfh2uxj5r72e5z"); // 	    FreeListNode(e);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("3uomzgqvjm03fwau1petngub8"); // 	/* check for redundant root (not leaf, 1 child) and eliminate */
-UNSUPPORTED("crynploao8fgrtf7envjtfdaz"); // 	if ((*nn)->count == 1 && (*nn)->level > 0) {
-UNSUPPORTED("a588ej7tdnabye2dhwn96zbay"); // 	    if (rtp->StatFlag)
-UNSUPPORTED("4bzchhtuz1r199e9mi0bp1ece"); // 		rtp->ElimCount++;
-UNSUPPORTED("6u2n1qlqovrhoecwygc6fuq2c"); // 	    rtp->EntryCount--;
-UNSUPPORTED("ehzcswv2o675ah20nlk8ll73b"); // 	    for (i = 0; i < 64; i++) {
-UNSUPPORTED("jk2oyzi48hf05v99gu6wc2o2"); // 		if ((t = (*nn)->branch[i].child))
-UNSUPPORTED("czyohktf9bkx4udfqhx42f4lu"); // 		    break;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("5ba1w7saym0g246ykbjnn0qrf"); // 	    RTreeFreeNode(rtp, *nn);
-UNSUPPORTED("dnoogjer2v3hmfm7qtw2p4qrv"); // 	    *nn = t;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("cpwomgmpysmof2uglfr37v494"); // 	rtp->Deleting = 0;
-UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
-UNSUPPORTED("c07up7zvrnu2vhzy6d7zcu94g"); //     } else {
-UNSUPPORTED("cpwomgmpysmof2uglfr37v494"); // 	rtp->Deleting = 0;
-UNSUPPORTED("eleqpc2p2r3hvma6tipoy7tr"); // 	return 1;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-//3 bax12o5n6n8s94wnn7cxgn99
-// static int RTreeDelete2(RTree_t * rtp, Rect_t * r, void *data, Node_t * n, 	     ListNode_t ** ee) 
-@Unused
-@Original(version="2.38.0", path="lib/label/index.c", name="RTreeDelete2", key="bax12o5n6n8s94wnn7cxgn99", definition="static int RTreeDelete2(RTree_t * rtp, Rect_t * r, void *data, Node_t * n, 	     ListNode_t ** ee)")
-public static Object RTreeDelete2(Object... arg) {
-UNSUPPORTED("eyp5xkiyummcoc88ul2b6tkeg"); // static int
-UNSUPPORTED("dl163ikex89epdeiymlnlhkkt"); // RTreeDelete2(RTree_t * rtp, Rect_t * r, void *data, Node_t * n,
-UNSUPPORTED("7cv8lwqbi5i6si9trbnke7zl9"); // 	     ListNode_t ** ee)
-UNSUPPORTED("8suowst9wgd6gxhgbdi3h24b7"); // /* static int */
-UNSUPPORTED("ap2yhjmvw1l4wh1rujus8t8ef"); // /* RTreeDelete2(RTree_t*rtp, Rect_t*r, int data, Node_t*n, ListNode_t**ee) */
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("pp6gyv6pecd6kik4hoguluwp"); //     register int i;
-UNSUPPORTED("9yzorirytkswjf0omka5g4c20"); //     assert(r && n && ee);
-UNSUPPORTED("aickurv6sbkajrl6u32h8s7n0"); //     assert(data >= 0);
-UNSUPPORTED("btdpzkb56pz41hfftabazxn4s"); //     assert(n->level >= 0);
-UNSUPPORTED("c435v08qyezw1xnbv2zrqr3te"); //     if (rtp->StatFlag)
-UNSUPPORTED("9qx61yt5qzelxylomit9cn4rv"); // 	rtp->DeTouchCount++;
-UNSUPPORTED("5zjfl81difxhf334pznet7o8z"); //     if (n->level > 0) {		/* not a leaf node */
-UNSUPPORTED("r6wug9hvutzrx2jp04v9slbe"); // 	for (i = 0; i < 64; i++) {
-UNSUPPORTED("9cxgoq0fd8kxz4eymv34vt66k"); // 	    if (n->branch[i].child && Overlap(r, &(n->branch[i].rect))) {
-UNSUPPORTED("9c2dxowbn34szo9si1s67zn1d"); // 		if (!RTreeDelete2(rtp, r, data, n->branch[i].child, ee)) {	/*recurse */
-UNSUPPORTED("1p8d3xzz5d8g7ach93r5dkfpy"); // 		    if (n->branch[i].child->count >= rtp->MinFill)
-UNSUPPORTED("8qc1vxcpq7d0q3d4pt56sagi6"); // 			n->branch[i].rect = NodeCover(n->branch[i].child);
-UNSUPPORTED("1pj51sbe7du437gcgun1tdp0c"); // 		    else {	/* not enough entries in child, eliminate child node */
-UNSUPPORTED("1mqsg2rc7oaykxyne9jioil3j"); // 			RTreeReInsert(rtp, n->branch[i].child, ee);
-UNSUPPORTED("36htmotk6j7fq59vwfp4lanaj"); // 			DisconBranch(n, i);
-UNSUPPORTED("614qavwsv6dpxdog4wxkb2op0"); // 			rtp->EntryCount--;
-UNSUPPORTED("ad48i843uruoaahfmd2nxb4qv"); // 			if (rtp->StatFlag)
-UNSUPPORTED("jk9sg727bbh6mlccfj53sg1m"); // 			    rtp->ElimCount++;
-UNSUPPORTED("dkxvw03k2gg9anv4dbze06axd"); // 		    }
-UNSUPPORTED("y2l9mpq5754ggnklm39b7wg"); // 		    return 0;
-UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("eleqpc2p2r3hvma6tipoy7tr"); // 	return 1;
-UNSUPPORTED("dppt1v5lkz1rfqbwx4n4xwltd"); //     } else {			/* a leaf node */
-UNSUPPORTED("r6wug9hvutzrx2jp04v9slbe"); // 	for (i = 0; i < 64; i++) {
-UNSUPPORTED("5g2zznotye25yuclpeyzatgrf"); // 	    if (n->branch[i].child
-UNSUPPORTED("dx5d5kpda621ehao92qybpo7n"); // 		&& n->branch[i].child == (Node_t *) data) {
-UNSUPPORTED("3nnhyf15i3s8j44ptc0zjxkof"); // 		DisconBranch(n, i);
-UNSUPPORTED("cazijll74xx4uxev9qe61vl0h"); // 		rtp->EntryCount--;
-UNSUPPORTED("5izxoao5ryte71964f8yjfd5y"); // 		return 0;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("eleqpc2p2r3hvma6tipoy7tr"); // 	return 1;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 }

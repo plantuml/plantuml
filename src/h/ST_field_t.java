@@ -45,33 +45,26 @@
  */
 package h;
 
-import smetana.core.CStarStar;
+import smetana.core.CArrayOfStar;
 import smetana.core.CString;
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_field_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_field_t extends UnsupportedStarStruct implements SHAPE_INFO {
 
-	public final ST_pointf size = new ST_pointf(this);		/* its dimension */
-	public final ST_boxf b = new ST_boxf(this);			/* its placement in node's coordinates */
+	public final ST_pointf size = new ST_pointf();		/* its dimension */
+	public final ST_boxf b = new ST_boxf();			/* its placement in node's coordinates */
 	public int n_flds;
 	public ST_textlabel_t lp;	/* n_flds == 0 */
 	// struct field_t **fld;	/* n_flds > 0 */
-	public CStarStar<ST_field_t> fld;
+	public CArrayOfStar<ST_field_t> fld;
 	public CString id;	/* user's identifier */
 	public boolean LR;	/* if box list is horizontal (left to right) */
 	public int sides;    /* sides of node exposed to field */
 
-	public ST_field_t() {
-		this(null);
-	}
 
-	public ST_field_t(StarStruct parent) {
-	}
-	
+
 	@Override
 	public __ptr__ castTo(Class dest) {
 		if (dest == ST_field_t.class) {

@@ -44,93 +44,32 @@
  *
  */
 package gen.lib.cdt;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static gen.lib.cdt.dtflatten__c.dtflatten;
 import static gen.lib.cdt.dtrestore__c.dtrestore;
-import static smetana.core.JUtils.function;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
-import h.Dtsearch_f;
+
+import gen.annotation.Original;
+import gen.annotation.Unused;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
 import h.ST_dtlink_s;
+import smetana.core.CFunction;
+import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.size_t;
 
 public class dtdisc__c {
-//1 9k44uhd5foylaeoekf3llonjq
-// extern Dtmethod_t* 	Dtset
 
+public static CFunction dtmemory = new CFunctionAbstract("dtmemory") {
+	
+	public Object exe(Object... args) {
+		return dtmemory((ST_dt_s)args[0], (Object)args[1], (size_t)args[2], (ST_dtdisc_s)args[3]);
+	}};
 
-//1 1ahfywsmzcpcig2oxm7pt9ihj
-// extern Dtmethod_t* 	Dtbag
-
-
-//1 anhghfj3k7dmkudy2n7rvt31v
-// extern Dtmethod_t* 	Dtoset
-
-
-//1 5l6oj1ux946zjwvir94ykejbc
-// extern Dtmethod_t* 	Dtobag
-
-
-//1 2wtf222ak6cui8cfjnw6w377z
-// extern Dtmethod_t*	Dtlist
-
-
-//1 d1s1s6ibtcsmst88e3057u9r7
-// extern Dtmethod_t*	Dtstack
-
-
-//1 axa7mflo824p6fspjn1rdk0mt
-// extern Dtmethod_t*	Dtqueue
-
-
-//1 ega812utobm4xx9oa9w9ayij6
-// extern Dtmethod_t*	Dtdeque
-
-
-//1 cyfr996ur43045jv1tjbelzmj
-// extern Dtmethod_t*	Dtorder
-
-
-//1 wlofoiftbjgrrabzb2brkycg
-// extern Dtmethod_t*	Dttree
-
-
-//1 12bds94t7voj7ulwpcvgf6agr
-// extern Dtmethod_t*	Dthash
-
-
-//1 9lqknzty480cy7zsubmabkk8h
-// extern Dtmethod_t	_Dttree
-
-
-//1 bvn6zkbcp8vjdhkccqo1xrkrb
-// extern Dtmethod_t	_Dthash
-
-
-//1 9lidhtd6nsmmv3e7vjv9e10gw
-// extern Dtmethod_t	_Dtlist
-
-
-//1 34ujfamjxo7xn89u90oh2k6f8
-// extern Dtmethod_t	_Dtqueue
-
-
-//1 3jy4aceckzkdv950h89p4wjc8
-// extern Dtmethod_t	_Dtstack
-
-
-
-
-//3 507t9jcy6v9twvl30rs9i2nwi
-// static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)        
 @Unused
 @Original(version="2.38.0", path="lib/cdt/dtdisc.c", name="dtmemory", key="507t9jcy6v9twvl30rs9i2nwi", definition="static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)")
 public static Object dtmemory(ST_dt_s dt, Object addr, size_t size, ST_dtdisc_s disc) {
@@ -160,25 +99,25 @@ LEAVING("507t9jcy6v9twvl30rs9i2nwi","dtmemory");
 public static ST_dtdisc_s dtdisc(ST_dt_s dt, ST_dtdisc_s disc, int type) {
 ENTERING("axpvuswclmi9bx3qtlh4quyah","dtdisc");
 try {
-	Dtsearch_f	searchf;
+	CFunction	searchf;
 	ST_dtlink_s	r, t;
 	CString	k;
 	ST_dtdisc_s	old;
 	if(N(old = (ST_dtdisc_s) dt.disc) )	/* initialization call from dtopen() */
-	{	dt.setPtr("disc", disc);
-		if(N(dt.setPtr("memoryf", disc.memoryf )))
-			dt.setPtr("memoryf", function(dtdisc__c.class, "dtmemory"));
+	{	dt.disc = disc;
+		if(N(dt.memoryf = disc.memoryf ))
+			dt.memoryf = dtdisc__c.dtmemory;
 		return disc;
 	}
 	if(N(disc))	/* only want to know current discipline */
 		return old;
- 	searchf = (Dtsearch_f) dt.meth.searchf;
+ 	searchf = dt.meth.searchf;
  	if((dt.data.type&010000)!=0) dtrestore(dt,null);
  	if(old.eventf!=null && ((Integer)old.eventf.exe(dt,3, disc,old)) < 0)
  		return null;
- 	dt.setPtr("disc", disc);
- 	if(N(dt.setPtr("memoryf", disc.memoryf)))
- 		dt.setPtr("memoryf", function(dtdisc__c.class, "dtmemory"));
+ 	dt.disc = disc;
+ 	if(N(dt.memoryf = disc.memoryf))
+ 		dt.memoryf = dtdisc__c.dtmemory;
  	if((dt.data.type&(0000040|0000100|0000020))!=0)
 UNSUPPORTED("e2tzh95k1lvjl6wbtpwizam8q"); // 		goto done;
  	else if((dt.data.type&0000002)!=0) {

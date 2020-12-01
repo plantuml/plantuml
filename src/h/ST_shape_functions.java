@@ -46,11 +46,9 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_shape_functions extends UnsupportedStructAndPtr {
+final public class ST_shape_functions extends UnsupportedStarStruct {
 
 	public CFunction initfn;
 	public CFunction freefn;
@@ -59,53 +57,8 @@ public class ST_shape_functions extends UnsupportedStructAndPtr {
 	public CFunction pboxfn;
 	public CFunction codefn;
 
-	public ST_shape_functions() {
-		this(null);
-	}
 
-	public ST_shape_functions(StarStruct parent) {
-	}
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("initfn")) {
-			this.initfn = (CFunction) newData;
-			return newData;
-		}
-		if (fieldName.equals("freefn")) {
-			this.freefn = (CFunction) newData;
-			return newData;
-		}
-		if (fieldName.equals("portfn")) {
-			this.portfn = (CFunction) newData;
-			return newData;
-		}
-		if (fieldName.equals("insidefn")) {
-			this.insidefn = (CFunction) newData;
-			return newData;
-		}
-		if (fieldName.equals("pboxfn")) {
-			this.pboxfn = (CFunction) newData;
-			return newData;
-		}
-		if (fieldName.equals("codefn")) {
-			this.codefn = (CFunction) newData;
-			return newData;
-		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct shape_functions",
-	// "{",
-	// "void (*initfn) (node_t *)",
-	// "void (*freefn) (node_t *)",
-	// "port(*portfn) (node_t *, char *, char *)",
-	// "boolean(*insidefn) (inside_t * inside_context, pointf)",
-	// "int (*pboxfn)(node_t* n, port* p, int side, boxf rv[], int *kptr)",
-	// "void (*codefn) (GVJ_t * job, node_t * n)",
-	// "}",
-	// "shape_functions");
 }
 
 // typedef struct shape_functions { /* read-only shape functions */

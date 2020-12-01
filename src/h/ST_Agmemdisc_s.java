@@ -46,9 +46,9 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Agmemdisc_s extends UnsupportedStructAndPtr {
+final public class ST_Agmemdisc_s extends UnsupportedStarStruct {
 
 	public CFunction open;
 	public CFunction alloc;
@@ -56,15 +56,7 @@ public class ST_Agmemdisc_s extends UnsupportedStructAndPtr {
 	public CFunction free;
 	public CFunction close;
 
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agmemdisc_s",
-	// "{",
-	// "void *(*open) (Agdisc_t*)",
-	// "void *(*alloc) (void *state, size_t req)",
-	// "void *(*resize) (void *state, void *ptr, size_t old, size_t req)",
-	// "void (*free) (void *state, void *ptr)",
-	// "void (*close) (void *state)",
-	// "}");
+
 }
 
 // struct Agmemdisc_s { /* memory allocator */

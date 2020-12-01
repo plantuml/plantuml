@@ -46,19 +46,14 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_dtmethod_s extends UnsupportedStructAndPtr {
+final public class ST_dtmethod_s extends UnsupportedStarStruct {
 
 	public CFunction searchf;
 	public int type;
 
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct _dtmethod_s",
-	// "{",
-	// "Dtsearch_f searchf",
-	// "int  type",
-	// "}");
+
 	@Override
 	public ST_dtmethod_s copy() {
 		final ST_dtmethod_s result = new ST_dtmethod_s();
@@ -66,5 +61,10 @@ public class ST_dtmethod_s extends UnsupportedStructAndPtr {
 		result.type = this.type;
 		return result;
 	}
-
 }
+// public static List<String> DEFINITION = Arrays.asList(
+// "struct _dtmethod_s",
+// "{",
+// "Dtsearch_f searchf",
+// "int  type",
+// "}");

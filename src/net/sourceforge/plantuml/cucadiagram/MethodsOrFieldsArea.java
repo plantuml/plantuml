@@ -85,16 +85,16 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 	private final HorizontalAlignment align;
 	private final Stereotype stereotype;
 	private final ILeaf leaf;
-	private final SName diagramType;
+	private final Style style;
 
 	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam, Stereotype stereotype,
-			ILeaf leaf, SName diagramType) {
-		this(members, fontParam, skinParam, HorizontalAlignment.LEFT, stereotype, leaf, diagramType);
+			ILeaf leaf, Style style) {
+		this(members, fontParam, skinParam, HorizontalAlignment.LEFT, stereotype, leaf, style);
 	}
 
 	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam,
-			HorizontalAlignment align, Stereotype stereotype, ILeaf leaf, SName diagramType) {
-		this.diagramType = diagramType;
+			HorizontalAlignment align, Stereotype stereotype, ILeaf leaf, Style style) {
+		this.style = style;
 		this.leaf = leaf;
 		this.stereotype = stereotype;
 		this.align = align;
@@ -159,11 +159,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			s = CharHidder.addTileAtBegin(s);
 		}
 		FontConfiguration config;
-		if (SkinParam.USE_STYLES()) {
-//			final Style style = StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.component)
-//			.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			final Style style = fontParam.getStyleDefinition(diagramType)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		if (style != null) {
 			config = new FontConfiguration(skinParam, style);
 		} else {
 			config = new FontConfiguration(skinParam, fontParam, stereotype);

@@ -87,11 +87,16 @@ public class StyleLoader {
 			}
 		}
 		if (internalIs == null) {
-			return null;
+			Log.error("No .skin file seems to be available");
+			throw new NoStyleAvailableException();
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
 		loadSkinInternal(lines2);
-		return styleBuilder;
+		if (this.styleBuilder == null) {
+			Log.error("No .skin file seems to be available");
+			throw new NoStyleAvailableException();
+		}
+		return this.styleBuilder;
 	}
 
 	private void loadSkinInternal(final BlocLines lines) {

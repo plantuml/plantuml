@@ -46,68 +46,31 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_layout_t extends UnsupportedStructAndPtr {
-
-	private final StarStruct parent;
-
-	public ST_layout_t() {
-		this(null);
-	}
-
-	public ST_layout_t(StarStruct parent) {
-		this.parent = parent;
-	}
+final public class ST_layout_t extends UnsupportedStarStruct {
 
 	public double quantum;
 	public double scale;
 	public double ratio;
 	public double dpi;
 
-	public ST_pointf margin = new ST_pointf(this);
-	public ST_pointf page = new ST_pointf(this);
-	public ST_pointf size = new ST_pointf(this);
+	public ST_pointf margin = new ST_pointf();
+	public ST_pointf page = new ST_pointf();
+	public ST_pointf size = new ST_pointf();
 
 	public boolean filled;
 	public boolean landscape;
 	public boolean centered;
 
 	// "ratio_t ratio_kind",
-	public int ratio_kind;
+	public EN_ratio_t ratio_kind = EN_ratio_t.R_NONE;
 	public __ptr__ xdots; // Always null
 	public CString id; // Not used
 
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("xdots") && newData == null) {
-			return null;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
-	@Override
-	public void setDouble(String fieldName, double data) {
-		if (fieldName.equals("quantum")) {
-			this.quantum = data;
-			return;
-		}
-		if (fieldName.equals("scale")) {
-			this.scale = data;
-			return;
-		}
-		if (fieldName.equals("ratio")) {
-			this.ratio = data;
-			return;
-		}
-		if (fieldName.equals("dpi")) {
-			this.dpi = data;
-			return;
-		}
-		super.setDouble(fieldName, data);
-	}
+
 	
 }
 

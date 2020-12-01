@@ -45,32 +45,19 @@
  */
 package h;
 
-import smetana.core.CStar;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
+import smetana.core.CArray;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_bezier extends UnsupportedStructAndPtr {
+final public class ST_bezier extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
 
-	public ST_bezier() {
-		this(null);
-	}
-
-	public ST_bezier(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "{",
-	// "pointf *list",
-	public CStar<ST_pointf> list;
+	public CArray<ST_pointf> list;
 
 	public int size;
 	public int sflag, eflag;
 
-	public final ST_pointf sp = new ST_pointf(this), ep = new ST_pointf(this);
+	public final ST_pointf sp = new ST_pointf(), ep = new ST_pointf();
 
 
 	@Override
@@ -80,63 +67,10 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 		this.size = this2.size;
 		this.sflag = this2.sflag;
 		this.eflag = this2.eflag;
-		this.sp.copyDataFrom((__struct__) this2.sp);
-		this.ep.copyDataFrom((__struct__) this2.ep);
+		this.sp.___((__struct__) this2.sp);
+		this.ep.___((__struct__) this2.ep);
 	}
 
-	@Override
-	public void ____(__ptr__ other) {
-		___(((ST_bezier) other).getStruct());
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("sp")) {
-			this.sp.copyDataFrom(newData);
-			return;
-		}
-		if (fieldName.equals("ep")) {
-			this.ep.copyDataFrom(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("size")) {
-			this.size = data;
-			return;
-		}
-		if (fieldName.equals("sflag")) {
-			this.sflag = data;
-			return;
-		}
-		if (fieldName.equals("eflag")) {
-			this.eflag = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-//		if (fieldName.equals("list")) {
-//			this.list = (Array) newData;
-//			return this.list;
-//		}
-		return super.setPtr(fieldName, newData);
-	}
-
-	@Override
-	public ST_bezier getStruct() {
-		return this;
-	}
-
-	@Override
-	public ST_bezier getPtr() {
-		return this;
-	}
 
 }
 

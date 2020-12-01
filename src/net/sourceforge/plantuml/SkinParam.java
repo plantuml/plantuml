@@ -89,21 +89,23 @@ public class SkinParam implements ISkinParam {
 	// private String skin = "debug.skin";
 
 	private String skin = "plantuml.skin";
+	private StyleBuilder styleBuilder;
+
 
 	private SkinParam(UmlDiagramType type) {
-		USE_STYLE2.set(false);
+		UseStyle.setBetaStyle(false);
 		this.type = type;
 		if (type == UmlDiagramType.MINDMAP) {
-			USE_STYLE2.set(true);
+			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.WBS) {
-			USE_STYLE2.set(true);
+			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.GANTT) {
-			USE_STYLE2.set(true);
+			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.JSON) {
-			USE_STYLE2.set(true);
+			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.SEQUENCE) {
 			// skin = "debug.skin";
@@ -115,10 +117,8 @@ public class SkinParam implements ISkinParam {
 		// }
 	}
 
-	private StyleBuilder styleBuilder;
-
 	public StyleBuilder getCurrentStyleBuilder() {
-		if (styleBuilder == null && SkinParam.USE_STYLES()) {
+		if (styleBuilder == null && UseStyle.useBetaStyle()) {
 			try {
 				this.styleBuilder = getCurrentStyleBuilderInternal();
 			} catch (IOException e) {
@@ -129,7 +129,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public void muteStyle(Style modifiedStyle) {
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyle);
 		}
 	}
@@ -150,20 +150,6 @@ public class SkinParam implements ISkinParam {
 		}
 
 		return result;
-	}
-
-	private static ThreadLocal<Boolean> USE_STYLE2 = new ThreadLocal<Boolean>();
-
-	static public boolean USE_STYLES() {
-		final Boolean result = USE_STYLE2.get();
-		if (result == null) {
-			return false;
-		}
-		return result;
-	}
-
-	static public void setBetaStyle(boolean betastyle) {
-		USE_STYLE2.set(betastyle);
 	}
 
 	public static int zeroMargin(int defaultValue) {
@@ -191,9 +177,9 @@ public class SkinParam implements ISkinParam {
 			params.put(key2, StringUtils.trin(value));
 			if (key2.startsWith("usebetastyle")) {
 				final boolean betastyle = "true".equalsIgnoreCase(value);
-				setBetaStyle(betastyle);
+				UseStyle.setBetaStyle(betastyle);
 			}
-			if (USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2, value, getCurrentStyleBuilder());
 				for (Style style : convertor.getStyles()) {
 					muteStyle(style);
@@ -201,7 +187,7 @@ public class SkinParam implements ISkinParam {
 			}
 		}
 		if ("style".equalsIgnoreCase(key) && "strictuml".equalsIgnoreCase(value)) {
-			if (USE_STYLES()) {
+			if (UseStyle.useBetaStyle()) {
 				final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/strictuml.skin");
 				final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 				try {
@@ -1247,7 +1233,7 @@ public class SkinParam implements ISkinParam {
 		if ("awesome".equalsIgnoreCase(value)) {
 			return ActorStyle.AWESOME;
 		}
-		if("hollow".equalsIgnoreCase(value)) {
+		if ("hollow".equalsIgnoreCase(value)) {
 			return ActorStyle.HOLLOW;
 		}
 		return ActorStyle.STICKMAN;

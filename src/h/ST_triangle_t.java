@@ -45,33 +45,15 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_triangle_t extends UnsupportedStructAndPtr {
-
-	private final StarStruct parent;
-
-	public ST_triangle_t() {
-		this(null);
-	}
-
-	public ST_triangle_t(StarStruct parent) {
-		this.parent = parent;
-	}
+final public class ST_triangle_t extends UnsupportedStarStruct {
 
 	public int mark;
 
 	public final ST_tedge_t e[] = new ST_tedge_t[] { new ST_tedge_t(), new ST_tedge_t(), new ST_tedge_t() };
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("mark")) {
-			this.mark = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
+
 
 }
 

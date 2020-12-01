@@ -46,15 +46,14 @@
 package h;
 
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
+import smetana.core.OFFSET;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_dtdisc_s extends UnsupportedStructAndPtr {
+final public class ST_dtdisc_s extends UnsupportedStarStruct {
 
-	public int key; /* where the key begins in an object */
+	public OFFSET key; /* where the key begins in an object */
 	public int size; /* key size and type */
-	public int link; /* offset to Dtlink_t field */
+	public OFFSET link; /* offset to Dtlink_t field */
 	public CFunction makef; /* object constructor */
 	public CFunction freef; /* object destructor */
 	public CFunction comparf;/* to compare two objects */
@@ -62,21 +61,6 @@ public class ST_dtdisc_s extends UnsupportedStructAndPtr {
 	public CFunction memoryf;/* to allocate/free memory */
 	public CFunction eventf; /* to process events */
 
-	public ST_dtdisc_s(StarStruct parent) {
-	}
-
-	public ST_dtdisc_s() {
-		this(null);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("memoryf")) {
-			memoryf = (CFunction) newData;
-			return newData;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 
 
 }

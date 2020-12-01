@@ -73,7 +73,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		super(style, foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer,
 				textHorizontalAlignment, maxMessageSize);
 		// Done in Rose::createComponentArrow
-		// if (SkinParam.USE_STYLES()) {
+		// if (UseStyle.USE_STYLES()) {
 		// messagePosition = style.getHorizontalAlignment();
 		// }
 		this.messagePosition = messagePosition;

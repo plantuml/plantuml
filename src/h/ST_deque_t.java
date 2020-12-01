@@ -45,14 +45,13 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_deque_t extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_deque_t extends UnsupportedStarStruct {
 
 	// ---------------
 	public ST_pointnlink_t pnlps[];
+	public int pnlpn, fpnlpi, lpnlpi, apex;
 
 	public boolean malloc(int newdqn) {
 		this.pnlps = new ST_pointnlink_t[newdqn];
@@ -72,80 +71,11 @@ public class ST_deque_t extends UnsupportedStructAndPtr implements HardcodedStru
 	}
 	// ---------------
 
-	
-	// "pointnlink_t **pnlps",
-//	public __ptr__ pnlps;
-	public int pnlpn, fpnlpi, lpnlpi, apex;
 
-	public ST_deque_t() {
-		this(null);
-	}
 
-	public ST_deque_t(StarStruct parent) {
-	}
 
-//	@Override
-//	public __ptr__ getPtr(String fieldName) {
-//		if (fieldName.equals("pnlps")) {
-//			return pnlps;
-//		}
-//		return super.getPtr(fieldName);
-//	}
-//
-//	@Override
-//	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-//		if (fieldName.equals("pnlps")) {
-//			pnlps = newData;
-//			return pnlps;
-//		}
-//		return super.setPtr(fieldName, newData);
-//	}
 
-//	@Override
-//	public int getInt(String fieldName) {
-//		if (fieldName.equals("pnlpn")) {
-//			return pnlpn;
-//		}
-//		if (fieldName.equals("fpnlpi")) {
-//			return fpnlpi;
-//		}
-//		if (fieldName.equals("lpnlpi")) {
-//			return lpnlpi;
-//		}
-//		if (fieldName.equals("apex")) {
-//			return apex;
-//		}
-//		return super.getInt(fieldName);
-//	}
 
-//	@Override
-//	public void setInt(String fieldName, int data) {
-//		if (fieldName.equals("pnlpn")) {
-//			pnlpn = data;
-//			return;
-//		}
-//		if (fieldName.equals("fpnlpi")) {
-//			fpnlpi = data;
-//			return;
-//		}
-//		if (fieldName.equals("lpnlpi")) {
-//			lpnlpi = data;
-//			return;
-//		}
-//		if (fieldName.equals("apex")) {
-//			apex = data;
-//			return;
-//		}
-//		super.setInt(fieldName, data);
-//	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct deque_t",
-	// "{",
-	// "pointnlink_t **pnlps",
-	// "int pnlpn, fpnlpi, lpnlpi, apex",
-	// "}",
-	// "deque_t");
 }
 
 // typedef struct deque_t {

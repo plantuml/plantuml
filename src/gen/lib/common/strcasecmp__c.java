@@ -44,12 +44,12 @@
  *
  */
 package gen.lib.common;
-import gen.annotation.Original;
-import gen.annotation.Reviewed;
-import gen.annotation.Unused;
 import static smetana.core.JUtils.tolower;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+
+import gen.annotation.Original;
+import gen.annotation.Reviewed;
 import smetana.core.CString;
 
 public class strcasecmp__c {
@@ -63,8 +63,8 @@ try {
     while ((s1.charAt(0) != '\0')
 	   && (tolower(s1.charAt(0)) ==
 	       tolower(s2.charAt(0)))) {
-	s1=s1.plus(1);
-	s2=s2.plus(1);
+	s1=s1.plus_(1);
+	s2=s2.plus_(1);
     }
     return tolower(s1.charAt(0)) - tolower(s2.charAt(0));
 } finally {

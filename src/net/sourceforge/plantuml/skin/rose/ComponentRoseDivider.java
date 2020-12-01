@@ -39,7 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -70,7 +70,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 			ISkinSimple spriteContainer, boolean withShadow, UStroke stroke, HColor borderColor) {
 		super(style, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4,
 				spriteContainer, false, null, null);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 			this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 			this.stroke = style.getStroke();

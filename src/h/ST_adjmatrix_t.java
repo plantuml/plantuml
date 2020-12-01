@@ -45,20 +45,10 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.amiga.StarStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_adjmatrix_t extends UnsupportedStructAndPtr {
+final public class ST_adjmatrix_t extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_adjmatrix_t() {
-		this(null);
-	}
-
-	public ST_adjmatrix_t(StarStruct parent) {
-		this.parent = parent;
-	}
 
 	// "typedef struct adjmatrix_t",
 	// "{",
@@ -67,21 +57,6 @@ public class ST_adjmatrix_t extends UnsupportedStructAndPtr {
 	// "char *data",
 	public int[][] data;
 
-	// "}",
-	// "adjmatrix_t");
-
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("ncols")) {
-			this.ncols = data;
-			return;
-		}
-		if (fieldName.equals("nrows")) {
-			this.nrows = data;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
 
 }
 

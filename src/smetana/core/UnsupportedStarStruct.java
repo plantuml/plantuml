@@ -36,10 +36,7 @@
 
 package smetana.core;
 
-import smetana.core.amiga.Area;
-import smetana.core.amiga.StarStruct;
-
-public class UnsupportedStarStruct implements StarStruct {
+public class UnsupportedStarStruct  implements __struct__, __ptr__ {
 
 	private static int CPT = 0;
 	public final int UID;
@@ -52,100 +49,25 @@ public class UnsupportedStarStruct implements StarStruct {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public int comparePointer(__ptr__ other) {
+	public boolean isSameThan(__ptr__ other) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public int getInt() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setInt(int value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public double getDouble() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setDouble(double value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __ptr__ getPtr() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setPtr(__ptr__ value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public boolean isSameThan(StarStruct other) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public Class getRealClass() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public __struct__ getStruct() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public Area getArea(String name) {
-		throw new UnsupportedOperationException(name + " " + getClass().toString());
-	}
-
-	public String getUID36() {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public String getDebug(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setInt(String fieldName, int data) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public void setDouble(String fieldName, double data) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public __ptr__ plus(int pointerMove) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setStruct(String fieldName, __struct__ newData) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
-	}
-
-	public void memcopyFrom(Area source) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void copyDataFrom(__struct__ other) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void setStruct(__struct__ value) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
-	public void copyDataFrom(__ptr__ arg) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
 
 	public __ptr__ castTo(Class dest) {
 		System.err.println("I am " + toString() + " " + UID);
 		throw new UnsupportedOperationException(dest + " " + getClass().toString());
 	}
 
-	public Object addVirtualBytes(int virtualBytes) {
+	public Object getTheField(OFFSET virtualBytes) {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
+
+	public __struct__ copy() {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
+
+	public void ___(__struct__ other) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

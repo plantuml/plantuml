@@ -39,8 +39,8 @@ import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -71,7 +71,7 @@ public class PngTitler {
 		this.set = set;
 		this.spriteContainer = spriteContainer;
 
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			textColor = style.value(PName.FontColor).asColor(set);
 			fontSize = style.value(PName.FontSize).asInt();
 			fontFamily = style.value(PName.FontName).asString();
@@ -95,7 +95,7 @@ public class PngTitler {
 	}
 
 	public TextBlock getRibbonBlock() {
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Display display = text.getDisplay();
 			if (display == null) {
 				return null;

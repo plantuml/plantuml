@@ -45,29 +45,19 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.Area;
-import smetana.core.amiga.StarStruct;
 
-public class ST_Agtag_s extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_Agtag_s extends UnsupportedStarStruct {
 	public int objtype;
 	public int mtflock;
 	public int attrwf;
 	public int seq;
 	public int id;
 
-	public ST_Agtag_s(StarStruct parent) {
-	}
-
-	public ST_Agtag_s() {
-		this(null);
-	}
-
 	@Override
-	public Class getRealClass() {
-		return ST_Agtag_s.class;
+	public String toString() {
+		return "id=" + id + " " + super.toString();
 	}
 
 	@Override
@@ -82,47 +72,15 @@ public class ST_Agtag_s extends UnsupportedStructAndPtr implements HardcodedStru
 	}
 
 	@Override
-	public void copyDataFrom(__struct__ other) {
-		// if (other instanceof ST_Agtag_s) {
+	public void ___(__struct__ other) {
 		final ST_Agtag_s other2 = (ST_Agtag_s) other;
 		objtype = other2.objtype;
 		mtflock = other2.mtflock;
 		attrwf = other2.attrwf;
 		seq = other2.seq;
 		id = other2.id;
-		// } else {
-		// objtype = other.getInt("objtype");
-		// mtflock = other.getInt("mtflock");
-		// attrwf = other.getInt("attrwf");
-		// seq = other.getInt("seq");
-		// id = other.getInt("id");
-		// }
 	}
 
-	@Override
-	public void memcopyFrom(Area source) {
-		final ST_Agtag_s other2 = (ST_Agtag_s) source;
-		objtype = other2.objtype;
-		mtflock = other2.mtflock;
-		attrwf = other2.attrwf;
-		seq = other2.seq;
-		id = other2.id;
-	}
-
-	@Override
-	public void ___(__struct__ other) {
-		copyDataFrom(other);
-	}
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agtag_s",
-	// "{",
-	// "unsigned objtype:2",
-	// "unsigned mtflock:1",
-	// "unsigned attrwf:1",
-	// "unsigned seq:(sizeof(unsigned) * 8 - 4)",
-	// "unsigned long id",
-	// "}");
 }
 
 // struct Agtag_s {

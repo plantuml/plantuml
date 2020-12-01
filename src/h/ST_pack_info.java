@@ -45,76 +45,23 @@
  */
 package h;
 
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_pack_info extends UnsupportedStructAndPtr {
+final public class ST_pack_info extends UnsupportedStarStruct {
 
-	private final StarStruct parent;
-
-	public ST_pack_info() {
-		this(null);
-	}
-
-	public ST_pack_info(StarStruct parent) {
-		this.parent = parent;
-	}
-
-	// "typedef struct",
-	// "{",
-	// "float aspect",
 	public int sz;
 	public int margin;
 	public int doSplines;
 	// "pack_mode mode",
-	public int mode;
+	public EN_pack_mode mode;
 	public __ptr__ fixed;
 	// "boolean *fixed",
 	// "packval_t* vals",
 	public __ptr__ vals;
 	public int flags;
 
-	// "}",
-	// "pack_info");
 
-	@Override
-	public void setInt(String fieldName, int data) {
-		if (fieldName.equals("flags")) {
-			this.flags = data;
-			return;
-		}
-		if (fieldName.equals("mode")) {
-			this.mode = data;
-			return;
-		}
-		if (fieldName.equals("sz")) {
-			this.sz = data;
-			return;
-		}
-		if (fieldName.equals("margin")) {
-			this.margin = data;
-			return;
-		}
-		if (fieldName.equals("doSplines")) {
-			this.doSplines = data;
-			return;
-		}
-		if (fieldName.equals("fixed") && data == 0) {
-			this.fixed = null;
-			return;
-		}
-		super.setInt(fieldName, data);
-	}
-
-	@Override
-	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		if (fieldName.equals("vals") && newData == null) {
-			this.vals = newData;
-			return vals;
-		}
-		return super.setPtr(fieldName, newData);
-	}
 }
 
 // typedef struct {

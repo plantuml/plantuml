@@ -65,6 +65,7 @@ import gen.annotation.Unused;
 import h.ST_Agcbstack_s;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
+import h.ST_Agobj_s;
 import h.ST_Agraph_s;
 import h.ST_Agsym_s;
 import smetana.core.__ptr__;
@@ -73,72 +74,12 @@ public class obj__c {
 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/obj.c", name="agdelete", key="6wm1l0y857iajfoa6ywpotkld", definition = "int agdelete(Agraph_t * g, void *obj)")
-public static Object agdelete(Object... arg) {
+public static Object agdelete(Object... arg_) {
 UNSUPPORTED("26js2ch8px4mwz3gqvjehanq1"); // int agdelete(Agraph_t * g, void *obj)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9w2ooy12wluvhcufehln1sob3"); //     if ((AGTYPE((Agobj_t *) obj) == AGRAPH) && (g != agparent(obj))) {
-UNSUPPORTED("8iap36ny5lwbj2qog193slebp"); // 	agerr(AGERR, "agdelete on wrong graph");
-UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("bldax4f6o5yyujcnonbszc0kv"); //     switch (AGTYPE((Agobj_t *) obj)) {
-UNSUPPORTED("6x7ztvlgv763oeop84udp1egg"); //     case AGNODE:
-UNSUPPORTED("4fefei0lku9f461nifc1j9d6j"); // 	return agdelnode(g, obj);
-UNSUPPORTED("c9o8hr6x8n5dty1y3eej1fept"); //     case AGINEDGE:
-UNSUPPORTED("a6ls4lkgjoheqwo2e7yqt9zz8"); //     case AGOUTEDGE:
-UNSUPPORTED("5g9ficurorxyixy3ipj7d410l"); // 	return agdeledge(g, obj);
-UNSUPPORTED("eyna33dobiebmtd0nihpgura4"); //     case AGRAPH:
-UNSUPPORTED("bbhf83j2cbqobo0q3vhbqmjnt"); // 	return agclose(obj);
-UNSUPPORTED("8l3rwj6ctswoa4gvh2j4poq70"); //     default:
-UNSUPPORTED("23wxcrpaiuw9ahrx92r6h8z42"); // 	agerr(AGERR, "agdelete on bad object");
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("6z6pjcdqmwle9axtu8m7zzsbc"); //     return 0;		/* not reached */
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
 throw new UnsupportedOperationException();
 }
 
 
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/obj.c", name="agrename", key="beny4i1ucvryk03o1m3x4mo1o", definition = "int agrename(Agobj_t * obj, char *newname)")
-public static Object agrename(Object... arg) {
-UNSUPPORTED("7b62oxoln2q7p4wdewli878zt"); // int agrename(Agobj_t * obj, char *newname)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1dbyk58q3r4fyfxxo7ovemkpu"); //     Agraph_t *g;
-UNSUPPORTED("cjioztm3ayr9deoc1btg630su"); //     unsigned long old_id, new_id;
-UNSUPPORTED("3kwdmn4ezymvab9oercol2gfj"); //     switch (AGTYPE(obj)) {
-UNSUPPORTED("eyna33dobiebmtd0nihpgura4"); //     case AGRAPH:
-UNSUPPORTED("6bhsf6u3syvq4i1b3afpo0tcl"); // 	old_id = AGID(obj);
-UNSUPPORTED("46q8c52lbrpze2lfwf32dvmxs"); // 	g = agraphof(obj);
-UNSUPPORTED("erenne373dge3axb6rjm1fe2n"); // 	/* can we reserve the id corresponding to newname? */
-UNSUPPORTED("daa8h6fs7x6psvrayyh4ajdxx"); // 	if (agmapnametoid(agroot(g), AGTYPE(obj), newname,
-UNSUPPORTED("6eajcdkt2sqkuzinzzpg892gl"); // 			  &new_id, (0)) == 0)
-UNSUPPORTED("aivfd7ajlfz8o8oi68d4u5s5z"); // 	    return -1;
-UNSUPPORTED("d0w95irsvkkzxory1vu3oibja"); // 	if (new_id == old_id)
-UNSUPPORTED("6f1138i13x0xz1bf1thxgjgka"); // 	    return 0;
-UNSUPPORTED("daa8h6fs7x6psvrayyh4ajdxx"); // 	if (agmapnametoid(agroot(g), AGTYPE(obj), newname,
-UNSUPPORTED("4nvglmcaimqliy54ir51j81yx"); // 			  &new_id, (!(0))) == 0)
-UNSUPPORTED("aivfd7ajlfz8o8oi68d4u5s5z"); // 	    return -1;
-UNSUPPORTED("eaoz5g3p9152utcqjz5d2fgdf"); //         /* obj* is unchanged, so no need to re agregister() */
-UNSUPPORTED("6vyma7idxllhf3a3xbklkk7kv"); // 	if (agparent(g) && agidsubg(agparent(g), new_id, 0))
-UNSUPPORTED("aivfd7ajlfz8o8oi68d4u5s5z"); // 	    return -1;
-UNSUPPORTED("192p8yjash0gcaukx3zukgl4h"); // 	agfreeid(g, AGRAPH, old_id);
-UNSUPPORTED("beefe1mg4aug53iqxfnua8enw"); // 	AGID(g) = new_id;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("6x7ztvlgv763oeop84udp1egg"); //     case AGNODE:
-UNSUPPORTED("73cww6u88cevoi6i0y8rfti15"); // 	return agrelabel_node((Agnode_t *) obj, newname);
-UNSUPPORTED("bh5gwywn5664iko5vqzvd45x4"); // 	agrename(obj, newname);
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("c9o8hr6x8n5dty1y3eej1fept"); //     case AGINEDGE:
-UNSUPPORTED("a6ls4lkgjoheqwo2e7yqt9zz8"); //     case AGOUTEDGE:
-UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("5oxhd3fvp0gfmrmz12vndnjt"); //     return 0;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
 
 
 
@@ -240,67 +181,20 @@ LEAVING("8t9rkcpdvmxph6krjvfmz3s51","agupdcb");
 
 
 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/obj.c", name="agmethod_delete", key="ejz0zke1kl32wjhs6y52llib0", definition="void agmethod_delete(Agraph_t * g, void *obj)")
-public static Object agmethod_delete(Object... arg) {
-UNSUPPORTED("6y7r2ytsjwcyj4if496cwdjjp"); // void agmethod_delete(Agraph_t * g, void *obj)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("4rvy8xnzxoccnwfcit2isk96h"); //     if (g->clos->callbacks_enabled)
-UNSUPPORTED("ado8gbbdmkf8owwnknnthuzq0"); // 	agdelcb(g, obj, g->clos->cb);
-UNSUPPORTED("div10atae09n36x269sl208r1"); //     else
-UNSUPPORTED("do5egp79i4bb6mod85t9nr77i"); // 	agrecord_callback(g, obj, 102, ((Agsym_t*)0));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/obj.c", name="agdelcb", key="78ludy47c4yx2luf78lkk42z8", definition="void agdelcb(Agraph_t * g, void *obj, Agcbstack_t * cbstack)")
-public static Object agdelcb(Object... arg) {
-UNSUPPORTED("1r4i928dlzzl0gpzpersr9rt7"); // void agdelcb(Agraph_t * g, void *obj, Agcbstack_t * cbstack)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("f58pg7odheiwpqukdszo4ojxe"); //     agobjfn_t fn;
-UNSUPPORTED("evtudqllt7mv38ny577gwtz4q"); //     if (cbstack == ((Agcbstack_t *)0))
-UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
-UNSUPPORTED("49guj1vkw5luz54hl17unr7cg"); //     agdelcb(g, obj, cbstack->prev);
-UNSUPPORTED("ugu810574xlbrchajuiqvlbj"); //     fn = ((agobjfn_t)0);
-UNSUPPORTED("3kwdmn4ezymvab9oercol2gfj"); //     switch (AGTYPE(obj)) {
-UNSUPPORTED("eyna33dobiebmtd0nihpgura4"); //     case AGRAPH:
-UNSUPPORTED("dmw30r6pv5ptb6ffpgbo1hom8"); // 	fn = cbstack->f->graph.del;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("6x7ztvlgv763oeop84udp1egg"); //     case AGNODE:
-UNSUPPORTED("c7rd727688cteu7m0deevr0c1"); // 	fn = cbstack->f->node.del;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("2dqikmmb6ag0anvbzo5tybf1r"); //     case AGEDGE:
-UNSUPPORTED("ht500g7ljjhniqaq4c7hp6zm"); // 	fn = cbstack->f->edge.del;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("b9a2u7luojz68ys0qfhdssxc5"); //     if (fn)
-UNSUPPORTED("d6swsvu9o2h2ajgawq3fidg54"); // 	fn(g, obj, cbstack->state);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
 
 @Reviewed(when = "11/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/obj.c", name="agroot", key="53858x47ifwq7ldf9ukvpdc5r", definition = "Agraph_t *agroot(void* obj)")
-public static ST_Agraph_s agroot(__ptr__ obj) {
+public static ST_Agraph_s agroot(ST_Agobj_s obj) {
 ENTERING("53858x47ifwq7ldf9ukvpdc5r","agroot");
 try {
     switch (AGTYPE(obj)) {
     case AGINEDGE:
     case AGOUTEDGE:
-	return (ST_Agraph_s) ((ST_Agedge_s)obj.castTo(ST_Agedge_s.class)).node.root;
+	return (ST_Agraph_s) ((ST_Agedge_s)obj).node.root;
     case AGNODE:
-	return (ST_Agraph_s) ((ST_Agnode_s)obj.castTo(ST_Agnode_s.class)).root;
+	return (ST_Agraph_s) ((ST_Agnode_s)obj).root;
     case AGRAPH:
-	return (ST_Agraph_s) ((ST_Agraph_s)obj.castTo(ST_Agraph_s.class)).root;
+	return (ST_Agraph_s) ((ST_Agraph_s)obj).root;
     default:			/* actually can't occur if only 2 bit tags */
 	throw new UnsupportedOperationException("agroot of a bad object");
     }
@@ -314,17 +208,17 @@ LEAVING("53858x47ifwq7ldf9ukvpdc5r","agroot");
 
 @Original(version="2.38.0", path="lib/cgraph/obj.c", name="agraphof", key="brxx6qho8cw09dg7o27lc7c6z", definition = "Agraph_t *agraphof(void *obj)")
 @Reviewed(when = "10/11/2020")
-public static ST_Agraph_s agraphof(__ptr__ obj) {
+public static ST_Agraph_s agraphof(ST_Agobj_s obj) {
 ENTERING("brxx6qho8cw09dg7o27lc7c6z","agraphof");
 try {
     switch (AGTYPE(obj)) {
     case AGINEDGE:
     case AGOUTEDGE:
-    return (ST_Agraph_s) ((ST_Agedge_s)obj.castTo(ST_Agedge_s.class)).node.root;
+    return (ST_Agraph_s) ((ST_Agedge_s)obj).node.root;
     case AGNODE:
-    return (ST_Agraph_s) ((ST_Agnode_s)obj.castTo(ST_Agnode_s.class)).root;
+    return (ST_Agraph_s) ((ST_Agnode_s)obj).root;
     case AGRAPH:
-	return (ST_Agraph_s) obj.castTo(ST_Agraph_s.class);
+	return (ST_Agraph_s) obj;
     default:			/* actually can't occur if only 2 bit tags */
 	System.err.println("agraphof a bad object");
 	return null;
@@ -337,76 +231,9 @@ LEAVING("brxx6qho8cw09dg7o27lc7c6z","agraphof");
 
 
 
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/obj.c", name="agpushdisc", key="69nqqbr1rod9mgh62okni1oad", definition = "void agpushdisc(Agraph_t * g, Agcbdisc_t * cbd, void *state)")
-public static Object agpushdisc(Object... arg) {
-UNSUPPORTED("cjczq9f29j6pc2upzc84528li"); // void agpushdisc(Agraph_t * g, Agcbdisc_t * cbd, void *state)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1zz0va4dgarmwtr54f41ny6ep"); //     Agcbstack_t *stack_ent;
-UNSUPPORTED("e78wtj8j0f1j2pj8qkxr6rmah"); //     stack_ent = ((Agcbstack_t*)(agalloc(g,sizeof(Agcbstack_t))));
-UNSUPPORTED("l45frjjz3xaewezkndogwwdl"); //     stack_ent->f = cbd;
-UNSUPPORTED("a7fydebz14wgtgsdgcbk47xbh"); //     stack_ent->state = state;
-UNSUPPORTED("3m8erap924ma44o2eehvy06g9"); //     stack_ent->prev = g->clos->cb;
-UNSUPPORTED("5y8aaijkgasby7ijmcat25ch7"); //     g->clos->cb = stack_ent;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/obj.c", name="agpopdisc", key="2v86foeia3dqpw9r50vioh1g1", definition = "int agpopdisc(Agraph_t * g, Agcbdisc_t * cbd)")
-public static Object agpopdisc(Object... arg) {
-UNSUPPORTED("779wduvcdcw9g5ldu82jdwlr0"); // int agpopdisc(Agraph_t * g, Agcbdisc_t * cbd)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1zz0va4dgarmwtr54f41ny6ep"); //     Agcbstack_t *stack_ent;
-UNSUPPORTED("3ytu4cno18uw06z7dh1w52rxb"); //     stack_ent = g->clos->cb;
-UNSUPPORTED("811oimiu4ldzfuv78w6eictam"); //     if (stack_ent) {
-UNSUPPORTED("csgw4fukha77kldy7blppfigk"); // 	if (stack_ent->f == cbd)
-UNSUPPORTED("9ijeaaarq6dcl8wjmum8mpkdl"); // 	    g->clos->cb = stack_ent->prev;
-UNSUPPORTED("8k75h069sv2k9b6tgz77dscwd"); // 	else {
-UNSUPPORTED("36abb5zemj483qnasuoyx3cm8"); // 	    while (stack_ent && (stack_ent->prev->f != cbd))
-UNSUPPORTED("d88q78r1snlry24g7fv6r1s6l"); // 		stack_ent = stack_ent->prev;
-UNSUPPORTED("2fiyg59a40jxjgiy8ukb4pl8q"); // 	    if (stack_ent && stack_ent->prev)
-UNSUPPORTED("eyr2q7dj98xk08fwf7mna4oab"); // 		stack_ent->prev = stack_ent->prev->prev;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("b04xm15d95y51ybg4xjc6ldgb"); // 	if (stack_ent) {
-UNSUPPORTED("8fbzjhtu9d5u96240285dcdh5"); // 	    agfree(g, stack_ent);
-UNSUPPORTED("6f1138i13x0xz1bf1thxgjgka"); // 	    return 0;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("8azkpi8o0wzdufa90lw8hpt6q"); //     return -1;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
-@Unused
-@Original(version="2.38.0", path="lib/cgraph/obj.c", name="aggetuserptr", key="a6xpy2adrht1nhb4hi85ex02s", definition = "void *aggetuserptr(Agraph_t * g, Agcbdisc_t * cbd)")
-public static Object aggetuserptr(Object... arg) {
-UNSUPPORTED("73eofxl7fdezesezfrckc4bgx"); // void *aggetuserptr(Agraph_t * g, Agcbdisc_t * cbd)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("1zz0va4dgarmwtr54f41ny6ep"); //     Agcbstack_t *stack_ent;
-UNSUPPORTED("2yjmkfk0h1wnw98ga8d0tz93x"); //     for (stack_ent = g->clos->cb; stack_ent; stack_ent = stack_ent->prev)
-UNSUPPORTED("csgw4fukha77kldy7blppfigk"); // 	if (stack_ent->f == cbd)
-UNSUPPORTED("6cih8jl2vq8k0dbeiwp44mpgs"); // 	    return stack_ent->state;
-UNSUPPORTED("3fyiqswglr6w96ojb2huillz0"); //     return ((void *)0);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
-}
-
-
-
-
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/obj.c", name="agcontains", key="91ej8cxcc0kzgkg2yk3pdiifs", definition = "int agcontains(Agraph_t* g, void* obj)")
-public static boolean agcontains(ST_Agraph_s g, __ptr__ obj) {
+public static boolean agcontains(ST_Agraph_s g, ST_Agobj_s obj) {
 ENTERING("91ej8cxcc0kzgkg2yk3pdiifs","agcontains");
 try {
     ST_Agraph_s subg;
@@ -432,7 +259,7 @@ LEAVING("91ej8cxcc0kzgkg2yk3pdiifs","agcontains");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/obj.c", name="agobjkind", key="bbe1e9wqmcr8dz9pswpxff0fr", definition = "int agobjkind(void *arg)")
-public static int agobjkind(__ptr__ arg) {
+public static int agobjkind(ST_Agobj_s arg) {
 ENTERING("bbe1e9wqmcr8dz9pswpxff0fr","agobjkind");
 try {
 	return AGTYPE(arg);

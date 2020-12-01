@@ -42,7 +42,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -110,7 +110,7 @@ public class FtileDiamondInside extends AbstractFtile implements Styleable {
 	private FtileDiamondInside(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
 			TextBlock label, TextBlock north, TextBlock south, TextBlock west, TextBlock east) {
 		super(skinParam);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 			this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());

@@ -45,28 +45,15 @@
  */
 package h;
 
-import smetana.core.HardcodedStruct;
-import smetana.core.UnsupportedStructAndPtr;
+import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
-import smetana.core.amiga.StarStruct;
 
-public class ST_boxf extends UnsupportedStructAndPtr implements HardcodedStruct {
+final public class ST_boxf extends UnsupportedStarStruct {
 
-	public final ST_pointf LL = new ST_pointf(this);
-	public final ST_pointf UR = new ST_pointf(this);
+	public final ST_pointf LL = new ST_pointf();
+	public final ST_pointf UR = new ST_pointf();
 
-	public ST_boxf(StarStruct parent) {
-	}
 
-	public ST_boxf() {
-	}
-
-	// @Override
-	// public void setStruct(__struct__ value) {
-	// final ST_boxf other = (ST_boxf) value;
-	// this.LL.setStruct(other.LL);
-	// this.UR.setStruct(other.UR);
-	// }
 
 	public static ST_boxf[] malloc(int nb) {
 		final ST_boxf result[] = new ST_boxf[nb];
@@ -77,69 +64,22 @@ public class ST_boxf extends UnsupportedStructAndPtr implements HardcodedStruct 
 	}
 
 	@Override
-	public __struct__ getStruct() {
-		return this;
-	}
-
-	@Override
-	public void setStruct(__struct__ value) {
-		copyDataFrom(value);
-	}
-
-	public __struct__ getStructInternal(String fieldName) {
-		if (fieldName.equals("LL")) {
-			return LL;
-		}
-		if (fieldName.equals("UR")) {
-			return UR;
-		}
-		throw new IllegalArgumentException();
-	}
-
-	@Override
-	public void setStruct(String fieldName, __struct__ newData) {
-		if (fieldName.equals("LL")) {
-			this.LL.setStruct(newData);
-			return;
-		}
-		if (fieldName.equals("UR")) {
-			this.UR.setStruct(newData);
-			return;
-		}
-		super.setStruct(fieldName, newData);
-	}
-
-	@Override
 	public ST_boxf copy() {
 		final ST_boxf result = new ST_boxf();
-		result.LL.copyDataFrom((__struct__) this.LL);
-		result.UR.copyDataFrom((__struct__) this.UR);
+		result.LL.___((__struct__) this.LL);
+		result.UR.___((__struct__) this.UR);
 		return result;
-	}
-
-	@Override
-	public void copyDataFrom(__struct__ value) {
-		final ST_boxf other = (ST_boxf) value;
-		this.LL.setStruct(other.LL);
-		this.UR.setStruct(other.UR);
 	}
 
 	@Override
 	public void ___(__struct__ value) {
 		final ST_boxf other = (ST_boxf) value;
-		this.LL.setStruct(other.LL);
-		this.UR.setStruct(other.UR);
+		this.LL.___(other.LL);
+		this.UR.___(other.UR);
 	}
 
 
 
-	// public interface ST_boxf extends __ptr__ {
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "typedef struct",
-	// "{",
-	// "pointf LL, UR",
-	// "}",
-	// "boxf");
 }
 
 // typedef struct { pointf LL, UR; } boxf;

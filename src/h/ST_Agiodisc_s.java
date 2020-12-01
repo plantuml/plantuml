@@ -45,23 +45,15 @@
  */
 package h;
 import smetana.core.CFunction;
-import smetana.core.UnsupportedStruct;
+import smetana.core.UnsupportedStarStruct;
 
-public class ST_Agiodisc_s extends UnsupportedStruct {
+final public class ST_Agiodisc_s extends UnsupportedStarStruct {
 	
 	public CFunction afread;
 	public CFunction putstr;
 	public CFunction flush;
 
 
-
-	// public static List<String> DEFINITION = Arrays.asList(
-	// "struct Agiodisc_s",
-	// "{",
-	// "int (*afread) (void *chan, char *buf, int bufsize)",
-	// "int (*putstr) (void *chan, const char *str)",
-	// "int (*flush) (void *chan)",
-	// "}");
 }
 
 // struct Agiodisc_s {

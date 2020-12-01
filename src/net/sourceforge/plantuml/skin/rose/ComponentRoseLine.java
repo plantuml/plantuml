@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -59,7 +59,7 @@ public class ComponentRoseLine extends AbstractComponent {
 
 	public ComponentRoseLine(Style style, HColor color, boolean continueLine, UStroke stroke, HColorSet set) {
 		super(style);
-		if (SkinParam.USE_STYLES()) {
+		if (UseStyle.useBetaStyle()) {
 			this.color = style.value(PName.LineColor).asColor(set);
 		} else {
 			this.color = color;
