@@ -53,8 +53,6 @@ import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strlen;
 import static smetana.core.JUtils.strncmp;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ARR_TYPE_GAP;
 import static smetana.core.Macro.ARR_TYPE_NONE;
 import static smetana.core.Macro.ARR_TYPE_NORM;
@@ -64,8 +62,12 @@ import static smetana.core.Macro.DIST2;
 import static smetana.core.Macro.ED_conc_opp_flag;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
+import gen.annotation.Doc;
 import gen.annotation.Original;
+import gen.annotation.Todo;
 import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_arrowdir_t;
@@ -77,8 +79,8 @@ import smetana.core.CArray;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
-import smetana.core.JUtilsDebug;
 import smetana.core.Z;
+import smetana.core.debug.SmetanaDebug;
 
 public class arrows__c {
 
@@ -144,6 +146,8 @@ private static final int NUMB_OF_ARROW_HEADS = 4;
 //3 2pveqb5qcgfxcqp410ub942eg
 // static void arrow_match_name(char *name, int *flag) 
 @Unused
+@Doc("update flags for arrow. Warning: implementation changed in Java")
+@Todo(what = "Check why C is strange")
 @Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_match_name", key="2pveqb5qcgfxcqp410ub942eg", definition="static void arrow_match_name(char *name, int *flag)")
 public static void arrow_match_name(CString name, int flag[]) {
 ENTERING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
@@ -167,7 +171,6 @@ try {
 	if (f[0] != ARR_TYPE_NONE)
 	    flag[0] |= (f[0]);
         // flag[0] |= (f[0] << (i++ * BITS_PER_ARROW));
-	JUtilsDebug.LOG("WARNING: strange code");
     }
 } finally {
 LEAVING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
@@ -180,6 +183,8 @@ LEAVING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
 //3 2szgwtfieaw58pea2ohjyu8ea
 // void arrow_flags(Agedge_t * e, int *sflag, int *eflag) 
 @Unused
+@Doc("update flags for arrow. Warning: implementation changed in Java")
+@Todo(what = "Check why C is strange")
 @Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_flags", key="2szgwtfieaw58pea2ohjyu8ea", definition="void arrow_flags(Agedge_t * e, int *sflag, int *eflag)")
 public static void arrow_flags(ST_Agedge_s e, int sflag[], int eflag[]) {
 ENTERING("2szgwtfieaw58pea2ohjyu8ea","arrow_flags");
@@ -188,7 +193,7 @@ try {
     ST_arrowdir_t arrowdir;
     sflag[0] = ARR_TYPE_NONE;
     eflag[0] = agisdirected(agraphof(e)) ? ARR_TYPE_NORM : ARR_TYPE_NONE;
-    JUtilsDebug.LOG("WARNING: strange code");
+
     sflag[0] = ARR_TYPE_NORM;
     eflag[0] = ARR_TYPE_NORM;
 

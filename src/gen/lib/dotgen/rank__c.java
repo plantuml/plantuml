@@ -70,8 +70,6 @@ import static gen.lib.dotgen.dotinit__c.dot_root;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strncmp;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.EDGE_LABEL;
 import static smetana.core.Macro.ED_minlen;
@@ -111,6 +109,8 @@ import static smetana.core.Macro.SAMERANK;
 import static smetana.core.Macro.SINKRANK;
 import static smetana.core.Macro.SOURCERANK;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;

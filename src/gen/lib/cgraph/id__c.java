@@ -50,8 +50,6 @@ import static gen.lib.cgraph.imap__c.aginternalmapprint;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.cgraph.refstr__c.agstrbind;
 import static gen.lib.cgraph.refstr__c.agstrdup;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGCLOS_id;
 import static smetana.core.Macro.AGDISC_id;
 import static smetana.core.Macro.AGEDGE;
@@ -60,6 +58,8 @@ import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.ASINT;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;

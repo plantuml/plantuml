@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -60,6 +61,8 @@ import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
@@ -214,8 +217,11 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			margin1 = 0;
 			margin2 = 0;
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(),
-				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, null, null, 1);
+		ISkinParam skinParam = getSkinParam();
+		final HColor backcolor = skinParam.getBackgroundColor(false);
+		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
+		final ImageParameter imageParameter = new ImageParameter(skinParam, null, 1.0, null, null, margins, backcolor);
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(fullLayout);
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
 	}

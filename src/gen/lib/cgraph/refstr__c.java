@@ -47,10 +47,10 @@ package gen.lib.cgraph;
 import static gen.lib.cgraph.utils__c.agdtdelete;
 import static gen.lib.cgraph.utils__c.agdtopen;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.dtinsert;
 import static smetana.core.Macro.dtsearch;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

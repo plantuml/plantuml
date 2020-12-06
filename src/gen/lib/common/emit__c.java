@@ -47,10 +47,10 @@ package gen.lib.common;
 import static gen.lib.cgraph.attr__c.agget;
 import static gen.lib.common.geom__c.ptToLine2;
 import static gen.lib.common.utils__c.Bezier;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

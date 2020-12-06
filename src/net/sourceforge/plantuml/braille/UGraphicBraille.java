@@ -42,10 +42,12 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
@@ -57,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 // https://www.branah.com/braille-translator
@@ -80,16 +83,19 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 		register();
 	}
 
-	// public UGraphicBraille(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale, String
+	// public UGraphicBraille(ColorMapper colorMapper, String backcolor, boolean
+	// textAsPath, double scale, String
 	// linkTarget) {
 	// this(colorMapper, new SvgGraphics(backcolor, scale), textAsPath, linkTarget);
 	// }
 	//
-	// public UGraphicBraille(ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget) {
+	// public UGraphicBraille(ColorMapper colorMapper, boolean textAsPath, double
+	// scale, String linkTarget) {
 	// this(colorMapper, new SvgGraphics(scale), textAsPath, linkTarget);
 	// }
 	//
-	// public UGraphicBraille(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale, String
+	// public UGraphicBraille(ColorMapper mapper, HtmlColorGradient gr, boolean
+	// textAsPath, double scale, String
 	// linkTarget) {
 	// this(mapper, new SvgGraphics(scale), textAsPath, linkTarget);
 	//
@@ -121,8 +127,10 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
-				false, null, metadata, null, 1.0, HColorUtils.WHITE);
+		HColor backcolor = HColorUtils.WHITE;
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, metadata,
+				null, ClockwiseTopRightBottomLeft.none(), backcolor);
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(new BrailleDrawer(getGraphicObject()));
 
 		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, os);

@@ -78,7 +78,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final HColor backColor;
 		final Rainbow arrowColor;
 		final FontConfiguration fcTest;
-		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
+		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE_HEXAGON ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ARROW;
 		final FontConfiguration fcArrow;
 		if (UseStyle.useBetaStyle()) {

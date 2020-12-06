@@ -50,8 +50,6 @@ import static gen.lib.cgraph.refstr__c.agstrdup;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strcmp;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGDATA;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGNODE;
@@ -61,6 +59,8 @@ import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.ASINT;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.NOT;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

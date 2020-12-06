@@ -80,7 +80,7 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		final FontConfiguration fontArrow;
 		final FontConfiguration fcTest;
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
-		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
+		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE_HEXAGON ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ARROW;
 		if (UseStyle.useBetaStyle()) {
 			final Style styleArrow = getDefaultStyleDefinitionArrow()

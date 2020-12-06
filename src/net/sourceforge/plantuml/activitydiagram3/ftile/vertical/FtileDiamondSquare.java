@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class FtileDiamondFoo1 extends AbstractFtile {
+public class FtileDiamondSquare extends AbstractFtile {
 
 	private final HColor backColor;
 	private final HColor borderColor;
@@ -62,32 +62,36 @@ public class FtileDiamondFoo1 extends AbstractFtile {
 	private final TextBlock west;
 	private final TextBlock east;
 	private final TextBlock north;
+	private final TextBlock south;
 
-	public FtileDiamondFoo1(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
+	public FtileDiamondSquare(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
 			TextBlock label) {
-		this(skinParam, backColor, borderColor, swimlane, label, TextBlockUtils.empty(0, 0),
+		this(skinParam, backColor, borderColor, swimlane, label, TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
 				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));
 	}
 
-	public FtileDiamondFoo1 withNorth(TextBlock north) {
-		return new FtileDiamondFoo1(skinParam(), backColor, borderColor, swimlane, label, north, west, east);
+	public FtileDiamondSquare withNorth(TextBlock north) {
+		return new FtileDiamondSquare(skinParam(), backColor, borderColor, swimlane, label, north, west, east, south);
 	}
 
-	public FtileDiamondFoo1 withWest(TextBlock west) {
-		return new FtileDiamondFoo1(skinParam(), backColor, borderColor, swimlane, label, north, west, east);
+	public FtileDiamondSquare withWest(TextBlock west) {
+		return new FtileDiamondSquare(skinParam(), backColor, borderColor, swimlane, label, north, west, east, south);
 	}
 
-	public FtileDiamondFoo1 withEast(TextBlock east) {
-		return new FtileDiamondFoo1(skinParam(), backColor, borderColor, swimlane, label, north, west, east);
+	public FtileDiamondSquare withEast(TextBlock east) {
+		return new FtileDiamondSquare(skinParam(), backColor, borderColor, swimlane, label, north, west, east, south);
 	}
-	
+
+	public FtileDiamondSquare withSouth(TextBlock south) {
+		return new FtileDiamondSquare(skinParam(), backColor, borderColor, swimlane, label, north, west, east, south);
+	}
+
 	public Ftile withWestAndEast(TextBlock tb1, TextBlock tb2) {
 		return withWest(tb1).withEast(tb2);
 	}
 
-
-	private FtileDiamondFoo1(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
-			TextBlock label, TextBlock north, TextBlock west, TextBlock east) {
+	private FtileDiamondSquare(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
+			TextBlock label, TextBlock north, TextBlock west, TextBlock east, TextBlock south) {
 		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;
@@ -96,6 +100,7 @@ public class FtileDiamondFoo1 extends AbstractFtile {
 		this.west = west;
 		this.east = east;
 		this.north = north;
+		this.south = south;
 	}
 
 	public Set<Swimlane> getSwimlanes() {
@@ -118,9 +123,11 @@ public class FtileDiamondFoo1 extends AbstractFtile {
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());
-		ug.draw(Diamond.asPolygonFoo1(skinParam().shadowing(null), dimTotal.getWidth(), dimTotal.getHeight()));
+		ug.draw(Diamond.asPolygonSquare(skinParam().shadowing(null), dimTotal.getWidth(), dimTotal.getHeight()));
 
+		// Fix why north and south are the same
 		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
+		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
 
 		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;

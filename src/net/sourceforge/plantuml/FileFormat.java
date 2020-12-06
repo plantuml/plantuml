@@ -97,14 +97,34 @@ public enum FileFormat {
 	}
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion) {
+		return getDefaultStringBounder(tikzFontDistortion, SvgCharSizeHack.NO_HACK);
+	}
+
+	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
 		if (this == LATEX || this == LATEX_NO_PREAMBLE) {
 			return getTikzStringBounder(tikzFontDistortion);
 		}
 		if (this == BRAILLE_PNG) {
 			return getBrailleStringBounder();
-
+		}
+		if (this == SVG) {
+			return getSvgStringBounder(charSizeHack);
 		}
 		return getNormalStringBounder();
+	}
+
+	private StringBounder getSvgStringBounder(final SvgCharSizeHack charSizeHack) {
+		return new StringBounder() {
+			public String toString() {
+				return "FileFormat::getSvgStringBounder";
+			}
+
+			public Dimension2D calculateDimension(UFont font, String text) {
+				text = charSizeHack.transformStringForSizeHack(text);
+				return getJavaDimension(font, text);
+			}
+
+		};
 	}
 
 	private StringBounder getNormalStringBounder() {
@@ -121,7 +141,7 @@ public enum FileFormat {
 		};
 	}
 
-	private Dimension2DDouble getJavaDimension(UFont font, String text) {
+	static private Dimension2DDouble getJavaDimension(UFont font, String text) {
 		final Font javaFont = font.getFont();
 		final FontMetrics fm = gg.getFontMetrics(javaFont);
 		final Rectangle2D rect = fm.getStringBounds(text, gg);

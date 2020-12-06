@@ -45,6 +45,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -91,7 +92,6 @@ public class SkinParam implements ISkinParam {
 	private String skin = "plantuml.skin";
 	private StyleBuilder styleBuilder;
 
-
 	private SkinParam(UmlDiagramType type) {
 		UseStyle.setBetaStyle(false);
 		this.type = type;
@@ -105,6 +105,9 @@ public class SkinParam implements ISkinParam {
 			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.JSON) {
+			UseStyle.setBetaStyle(true);
+		}
+		if (type == UmlDiagramType.GIT) {
 			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.SEQUENCE) {
@@ -160,6 +163,7 @@ public class SkinParam implements ISkinParam {
 	private static final Pattern2 stereoPattern = MyPattern.cmpile(stereoPatternString);
 
 	private final Map<String, String> params = new HashMap<String, String>();
+	private final Map<String, String> svgCharSizes = new HashMap<String, String>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
 	private final UmlDiagramType type;
 	private boolean useVizJs;
@@ -970,7 +974,7 @@ public class SkinParam implements ISkinParam {
 		final String value = getValue("conditionStyle");
 		final ConditionStyle p = ConditionStyle.fromString(value);
 		if (p == null) {
-			return ConditionStyle.INSIDE;
+			return ConditionStyle.INSIDE_HEXAGON;
 		}
 		return p;
 	}
@@ -1237,6 +1241,18 @@ public class SkinParam implements ISkinParam {
 			return ActorStyle.HOLLOW;
 		}
 		return ActorStyle.STICKMAN;
+	}
+
+	public void setSvgSize(String origin, String sizeToUse) {
+		svgCharSizes.put(StringUtils.manageUnicodeNotationUplus(origin),
+				StringUtils.manageUnicodeNotationUplus(sizeToUse));
+	}
+
+	public String transformStringForSizeHack(String s) {
+		for (Entry<String, String> ent : svgCharSizes.entrySet()) {
+			s = s.replace(ent.getKey(), ent.getValue());
+		}
+		return s;
 	}
 
 }

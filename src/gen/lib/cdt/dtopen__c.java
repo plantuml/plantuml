@@ -46,9 +46,9 @@
 package gen.lib.cdt;
 import static gen.lib.cdt.dtdisc__c.dtdisc;
 import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Unused;

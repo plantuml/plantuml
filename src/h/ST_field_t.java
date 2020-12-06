@@ -48,31 +48,32 @@ package h;
 import smetana.core.CArrayOfStar;
 import smetana.core.CString;
 import smetana.core.UnsupportedStarStruct;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
 final public class ST_field_t extends UnsupportedStarStruct implements SHAPE_INFO {
 
-	public final ST_pointf size = new ST_pointf();		/* its dimension */
-	public final ST_boxf b = new ST_boxf();			/* its placement in node's coordinates */
+	public final ST_pointf size = new ST_pointf(); /* its dimension */
+	public final ST_boxf b = new ST_boxf(); /* its placement in node's coordinates */
 	public int n_flds;
-	public ST_textlabel_t lp;	/* n_flds == 0 */
-	// struct field_t **fld;	/* n_flds > 0 */
+	public ST_textlabel_t lp; /* n_flds == 0 */
+	// struct field_t **fld; /* n_flds > 0 */
 	public CArrayOfStar<ST_field_t> fld;
-	public CString id;	/* user's identifier */
-	public boolean LR;	/* if box list is horizontal (left to right) */
-	public int sides;    /* sides of node exposed to field */
-
-
+	public CString id; /* user's identifier */
+	public boolean LR; /* if box list is horizontal (left to right) */
+	public int sides; /* sides of node exposed to field */
 
 	@Override
-	public __ptr__ castTo(Class dest) {
+	public String toString() {
+		return id + " sides=" + sides + " n_flds=" + n_flds + " lp=" + lp + " fld=" + fld;
+	}
+
+	@Override
+	public ST_field_t castTo(Class dest) {
 		if (dest == ST_field_t.class) {
 			return this;
 		}
-		return super.castTo(dest);
+		return (ST_field_t) super.castTo(dest);
 	}
-
 
 	@Override
 	public void ___(__struct__ other) {
@@ -86,8 +87,6 @@ final public class ST_field_t extends UnsupportedStarStruct implements SHAPE_INF
 		this.LR = other2.LR;
 		this.sides = other2.sides;
 	}
-
-
 
 }
 // typedef struct field_t {

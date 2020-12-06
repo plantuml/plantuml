@@ -54,6 +54,7 @@ import h.ST_dthold_s;
 import h.ST_path;
 import h.ST_pointf;
 import h.ST_splines;
+import smetana.core.debug.SmetanaDebug;
 
 // http://docs.oracle.com/javase/specs/jls/se5.0/html/expressions.html#15.7.4
 // http://www.jbox.dk/sanos/source/lib/string.c.html
@@ -213,6 +214,7 @@ public class JUtils {
 	}
 
 	public static void qsort1(CArrayOfStar array, int nb, CFunction compare) {
+		SmetanaDebug.LOG("qsort1 "+nb);
 		boolean change;
 		do {
 			change = false;
@@ -226,10 +228,12 @@ public class JUtils {
 				}
 			}
 		} while (change);
+		SmetanaDebug.LOG("qsort1 ok");
 
 	}
 
 	public static void qsort2(int array[], int nb, CFunction compare) {
+		SmetanaDebug.LOG("qsort2 "+nb);
 		boolean change;
 		do {
 			change = false;
@@ -245,6 +249,7 @@ public class JUtils {
 				}
 			}
 		} while (change);
+		SmetanaDebug.LOG("qsort2 ok");
 
 	}
 

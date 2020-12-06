@@ -98,4 +98,8 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 		return 0;
 	}
 
+	public String transformStringForSizeHack(String s) {
+		return s;
+	}
+
 }

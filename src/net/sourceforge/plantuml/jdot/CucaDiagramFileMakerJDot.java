@@ -108,15 +108,16 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Node;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import smetana.core.CString;
 import smetana.core.JUtils;
-import smetana.core.JUtilsDebug;
 import smetana.core.Macro;
 import smetana.core.Z;
+import smetana.core.debug.SmetanaDebug;
 
 public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
@@ -445,9 +446,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			}
 
 			final ST_GVC_s gvc = gvContext();
-			JUtilsDebug.reset();
+			SmetanaDebug.reset();
 			gvLayoutJobs(gvc, g);
-			JUtilsDebug.printMe();
+			SmetanaDebug.printMe();
 
 			// for (Agedge_s e : edges.values()) {
 			// DebugUtils.printDebugEdge(e);
@@ -463,23 +464,26 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			} else {
 				margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
 			}
+			ISkinParam skinParam = diagram.getSkinParam();
+			final HColor backcolor = skinParam.getBackgroundColor(false);
+			final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
+			final ImageParameter imageParameter = new ImageParameter(skinParam, diagram.getAnimation(), scale, metadata,
+					null, margins, backcolor);
 
-			final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), margins,
-					diagram.getAnimation(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null,
-					scale);
+			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 			imageBuilder.setUDrawable(new Drawing(null, null));
 			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);
 
 			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, diagram.getSkinParam(),
-					fileFormatOption.getDefaultStringBounder());
+					fileFormatOption.getDefaultStringBounder(diagram.getSkinParam()));
 
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(dim.getHeight()), dim)));
 
 			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 		} catch (Throwable e) {
-			JUtilsDebug.printMe();
+			SmetanaDebug.printMe();
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
 					diagram.getFlashData(), getFailureText3(e));
 			return ImageDataSimple.error();

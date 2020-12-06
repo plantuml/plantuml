@@ -64,8 +64,6 @@ import static gen.lib.cgraph.subg__c.agparent;
 import static gen.lib.cgraph.utils__c.agdtopen;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGNODE;
@@ -76,6 +74,8 @@ import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.dtinsert;
 import static smetana.core.Macro.dtsearch;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import java.util.ArrayList;
 

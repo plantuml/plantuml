@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
+import java.awt.geom.Point2D;
+
 public class Mirror {
 
 	private final double max;
@@ -48,6 +50,18 @@ public class Mirror {
 			System.err.println("BAD VALUE IN Mirror");
 		}
 		return max - v;
+	}
+
+	public Point2D invAndXYSwitch(Point2D pt) {
+		final double x = inv(pt.getY());
+		final double y = pt.getX();
+		return new Point2D.Double(x, y);
+	}
+
+	public Point2D invGit(Point2D pt) {
+		final double x = pt.getX();
+		final double y = inv(pt.getY());
+		return new Point2D.Double(x, y);
 	}
 
 }

@@ -40,11 +40,20 @@ import java.util.EnumSet;
 
 public enum ConditionStyle {
 
-	DIAMOND, INSIDE, FOO1;
+	EMPTY_DIAMOND, INSIDE_HEXAGON, INSIDE_DIAMOND;
 
 	public static ConditionStyle fromString(String value) {
 		if ("InsideDiamond".equalsIgnoreCase(value)) {
-			return FOO1;
+			return INSIDE_DIAMOND;
+		}
+		if ("Foo1".equalsIgnoreCase(value)) {
+			return INSIDE_DIAMOND;
+		}
+		if ("Diamond".equalsIgnoreCase(value)) {
+			return EMPTY_DIAMOND;
+		}
+		if ("Inside".equalsIgnoreCase(value)) {
+			return INSIDE_HEXAGON;
 		}
 		for (ConditionStyle p : EnumSet.allOf(ConditionStyle.class)) {
 			if (p.toString().equalsIgnoreCase(value)) {

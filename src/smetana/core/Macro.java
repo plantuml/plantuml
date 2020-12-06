@@ -74,6 +74,7 @@ import h.ST_shape_desc;
 import h.ST_splines;
 import h.ST_subtree_t;
 import h.ST_textlabel_t;
+import smetana.core.debug.SmetanaDebug;
 
 public class Macro {
 
@@ -935,14 +936,11 @@ public class Macro {
 	// #define ND_rank(n) (((Agnodeinfo_t*)AGDATA(n))->rank)
 	public static int ND_rank(ST_Agnode_s n) {
 		final int result = ((ST_Agnodeinfo_t) AGDATA(n)).rank;
-		// JUtilsDebug.LOG("ND_rank get "+result);
 		return result;
 	}
 
 	public static void ND_rank(ST_Agnode_s n, int v) {
 		((ST_Agnodeinfo_t) AGDATA(n)).rank = v;
-		JUtilsDebug.LOG("ND_rank set for " + n.NAME + " v=" + v);
-		int a = 0;
 	}
 
 	// #define ND_ranktype(n) (((Agnodeinfo_t*)AGDATA(n))->ranktype)
@@ -1384,7 +1382,7 @@ public class Macro {
 	// ED_to_orig(newp) = old; \
 
 	public static void MAKEFWDEDGE(ST_Agedge_s new_, ST_Agedge_s old) {
-		JUtilsDebug.LOG("MAKEFWDEDGE");
+		SmetanaDebug.LOG("MAKEFWDEDGE");
 		ST_Agedge_s newp;
 		ST_Agedgeinfo_t info;
 		newp = new_;
@@ -1636,6 +1634,10 @@ public class Macro {
 
 	public static Object dtnext(ST_dt_s d, Object o) {
 		return d.searchf.exe(d, o, DT_NEXT);
+	}
+
+	public static Object dtdelete(ST_dt_s d, Object o) {
+		return d.searchf.exe(d, o, DT_DELETE);
 	}
 
 //	#define dtlink(d,e)	(((Dtlink_t*)(e))->right)

@@ -47,13 +47,14 @@ package gen.lib.pathplan;
 import static gen.lib.pathplan.solvers__c.solve3;
 import static smetana.core.JUtils.setjmp;
 import static smetana.core.JUtils.sqrt;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DISTSQ;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
+import gen.annotation.Reviewed;
 import gen.annotation.Unused;
 import h.ST_Pedge_t;
 import h.ST_Ppoly_t;
@@ -513,8 +514,7 @@ LEAVING("9011b45d42bhwfxzhgxqnlfhp","points2coeff");
 
 
 //3 6ldk438jjflh0huxkg4cs8kwu
-// static void addroot(double root, double *roots, int *rootnp) 
-@Unused
+@Reviewed(when = "01/12/2020")
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="addroot", key="6ldk438jjflh0huxkg4cs8kwu", definition="static void addroot(double root, double *roots, int *rootnp)")
 public static void addroot(double root, double roots[], int rootnp[]) {
 ENTERING("6ldk438jjflh0huxkg4cs8kwu","addroot");

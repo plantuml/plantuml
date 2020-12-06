@@ -61,7 +61,7 @@ final public class ST_Agtag_s extends UnsupportedStarStruct {
 	}
 
 	@Override
-	public __struct__ copy() {
+	public ST_Agtag_s copy() {
 		final ST_Agtag_s result = new ST_Agtag_s();
 		result.objtype = objtype;
 		result.mtflock = mtflock;

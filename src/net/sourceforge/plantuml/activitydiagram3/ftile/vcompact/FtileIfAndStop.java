@@ -138,10 +138,10 @@ class FtileIfAndStop extends AbstractFtile {
 				tileNonStop.getThickness());
 
 		final Ftile diamond1;
-		if (conditionStyle == ConditionStyle.INSIDE) {
+		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {
 			diamond1 = new FtileDiamondInside(tileNonStop.skinParam(), backColor, borderColor, swimlane, tbTest);
 			// .withWest(tb1).withEast(tb2);
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
+		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {
 			diamond1 = new FtileDiamond(tileNonStop.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest);
 			// .withWest(tb1).withEast(tb2).withNorth(tbTest);
 		} else {

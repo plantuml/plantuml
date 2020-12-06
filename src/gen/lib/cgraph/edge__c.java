@@ -62,8 +62,6 @@ import static gen.lib.cgraph.subg__c.agparent;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGHEAD;
 import static smetana.core.Macro.AGID;
@@ -83,6 +81,8 @@ import static smetana.core.Macro.dtfirst;
 import static smetana.core.Macro.dtinsert;
 import static smetana.core.Macro.dtnext;
 import static smetana.core.Macro.dtsearch;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -256,7 +256,7 @@ LEAVING("8zy2u6gsi2xzv2ffv8o4v4uvf","agnxtedge");
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="c175o6j61jqmfnl4o1g1h1mie", definition="static Agedge_t *agfindedge_by_key(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			    Agtag_t key)")
 public static ST_Agedge_s agfindedge_by_key(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
 // WARNING!! STRUCT
-return agfindedge_by_key_w_(g, t, h, (ST_Agtag_s) key.copy());
+return agfindedge_by_key_w_(g, t, h, key.copy());
 }
 private static ST_Agedge_s agfindedge_by_key_w_(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
 ENTERING("c175o6j61jqmfnl4o1g1h1mie","agfindedge_by_key");

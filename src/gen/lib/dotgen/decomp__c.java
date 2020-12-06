@@ -50,8 +50,6 @@ import static gen.lib.cgraph.node__c.agfstnode;
 import static gen.lib.cgraph.node__c.agnxtnode;
 import static gen.lib.common.utils__c.UF_find;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.GD_comp;
 import static smetana.core.Macro.GD_n_nodes;
 import static smetana.core.Macro.GD_nlist;
@@ -65,6 +63,8 @@ import static smetana.core.Macro.ND_next;
 import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.ND_prev;
 import static smetana.core.Macro.ND_rank;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;

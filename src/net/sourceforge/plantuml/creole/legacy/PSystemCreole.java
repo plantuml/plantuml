@@ -54,7 +54,9 @@ import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
@@ -82,8 +84,10 @@ public class PSystemCreole extends AbstractPSystem {
 		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT,
 				SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL).createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, null,
+				null, ClockwiseTopRightBottomLeft.none(), null);
 
-		final ImageBuilder builder = ImageBuilder.buildA(new ColorMapperIdentity(), false, null, null, null, 1.0, null);
+		final ImageBuilder builder = ImageBuilder.build(imageParameter);
 		builder.setUDrawable(sheetBlock);
 		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 

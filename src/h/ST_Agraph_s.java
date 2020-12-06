@@ -45,10 +45,10 @@
  */
 package h;
 
-import smetana.core.JUtilsDebug;
 import smetana.core.OFFSET;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
+import smetana.core.debug.SmetanaDebug;
 
 final public class ST_Agraph_s extends ST_Agobj_s {
 
@@ -76,7 +76,7 @@ final public class ST_Agraph_s extends ST_Agobj_s {
 	public ST_Agraph_s() {
 		this.NAME = "G" + CPT;
 		CPT++;
-		JUtilsDebug.LOG("creation " + this);
+		SmetanaDebug.LOG("creation " + this);
 	}
 
 

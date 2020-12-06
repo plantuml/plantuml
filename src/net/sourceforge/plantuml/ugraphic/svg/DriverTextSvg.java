@@ -118,7 +118,7 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 			}
 		}
 
-		svg.setFillColor(mapper.toRGB(fontConfiguration.getColor()));
+		svg.setFillColor(mapper.toSvg(fontConfiguration.getColor()));
 		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
 				width, fontConfiguration.getAttributes(), backColor);
 	}

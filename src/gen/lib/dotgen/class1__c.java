@@ -60,8 +60,6 @@ import static gen.lib.dotgen.fastgr__c.virtual_edge;
 import static gen.lib.dotgen.fastgr__c.virtual_node;
 import static gen.lib.dotgen.position__c.make_aux_edge;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ED_minlen;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.ED_to_virt;
@@ -70,6 +68,8 @@ import static smetana.core.Macro.GD_leader;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_node_type;
 import static smetana.core.Macro.ND_rank;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

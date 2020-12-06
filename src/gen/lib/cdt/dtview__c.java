@@ -46,8 +46,6 @@
 package gen.lib.cdt;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DT_CLEAR;
 import static smetana.core.Macro.DT_DELETE;
 import static smetana.core.Macro.DT_FIRST;
@@ -65,6 +63,8 @@ import static smetana.core.Macro.UNFLATTEN;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro._DTCMP;
 import static smetana.core.Macro._DTKEY;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

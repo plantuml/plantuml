@@ -93,6 +93,7 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -178,11 +179,15 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			margin2 = 0;
 		}
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
-		final ImageBuilder imageBuilder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
-				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, getMetadata(), "", dpiFactor, null);
+		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, dpiFactor,
+				getMetadata(), "", margins, null);
 
-		TextBlock result = getTextBlock(fileFormatOption.getDefaultStringBounder());
-		result = new AnnotatedWorker(this, getSkinParam(), fileFormatOption.getDefaultStringBounder()).addAdd(result);
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
+
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
+		TextBlock result = getTextBlock(stringBounder);
+		result = new AnnotatedWorker(this, getSkinParam(), stringBounder).addAdd(result);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);

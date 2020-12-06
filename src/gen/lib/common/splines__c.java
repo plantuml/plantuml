@@ -57,8 +57,6 @@ import static gen.lib.common.utils__c.dotneato_closest;
 import static h.ST_pointf.add_pointf;
 import static h.ST_pointf.pointfof;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ABS;
 import static smetana.core.Macro.APPROXEQPT;
 import static smetana.core.Macro.BOTTOM;
@@ -88,10 +86,16 @@ import static smetana.core.Macro.NORMAL;
 import static smetana.core.Macro.NOTI;
 import static smetana.core.Macro.REGULAREDGE;
 import static smetana.core.Macro.RIGHT;
+import static smetana.core.Macro.SELFEDGE;
 import static smetana.core.Macro.TOP;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
+import gen.annotation.Comment;
 import gen.annotation.Original;
+import gen.annotation.Reviewed;
+import gen.annotation.Todo;
 import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
@@ -248,13 +252,16 @@ try {
     int i;
     double save_real_size;
     final CArray<ST_pointf> c = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    
     save_real_size = ND_rw(n);
     for (i = 0; i < 4; i++) {
 	c.get__(i).x = curve.get__(i).x - ND_coord(n).x;
 	c.get__(i).y = curve.get__(i).y - ND_coord(n).y;
     }
+    
     bezier_clip(inside_context, ND_shape(n).fns.insidefn, c,
 		left_inside);
+    
     for (i = 0; i < 4; i++) {
 	curve.get__(i).x = c.get__(i).x + ND_coord(n).x;
 	curve.get__(i).y = c.get__(i).y + ND_coord(n).y;
@@ -300,6 +307,12 @@ LEAVING("bdirexg1qdtophlh0ofjvsmj7","new_spline");
 
 
 
+/* clip_and_install:
+ * Given a raw spline (pn control points in ps), representing
+ * a path from edge agtail(fe) ending in node hn, clip the ends to
+ * the node boundaries and attach the resulting spline to the
+ * edge.
+ */
 //3 duednxyuvf6xrff752uuv620f
 // void clip_and_install(edge_t * fe, node_t * hn, pointf * ps, int pn, 		 splineInfo * info) 
 @Unused
@@ -318,10 +331,13 @@ try {
     ST_Agedge_s orig;
     ST_boxf tbox=null, hbox=null;
     final ST_inside_t inside_context = new ST_inside_t();
+    
     tn = agtail(fe);
     g = agraphof(tn);
     newspl = new_spline(fe, pn);
-    for (orig = fe; ED_edge_type(orig) != 0; orig = ED_to_orig(orig));
+    
+    for (orig = fe; ED_edge_type(orig) != NORMAL; orig = ED_to_orig(orig));
+
     /* may be a reversed flat edge */
     if (N(info.ignoreSwap) && (ND_rank(tn) == ND_rank(hn)) && (ND_order(tn) > ND_order(hn))) {
 	ST_Agnode_s tmp;
@@ -341,6 +357,7 @@ try {
  	hbox = ED_tail_port(orig).bp;
  	tbox = ED_head_port(orig).bp;
     }
+    
     /* spline may be interior to node */
     if(clipTail && ND_shape(tn)!=null && ND_shape(tn).fns.insidefn!=null) {
 	inside_context.s_n = tn;
@@ -373,9 +390,14 @@ try {
 	if (N(APPROXEQPT(ps.get__(end[0]), ps.get__(end[0] + 3), MILLIPOINT)))
 	    break;
    arrow_clip(fe, hn, ps, start, end, newspl, info);
+
     for (i = start[0]; i < end[0] + 4; ) {
 	final CArray<ST_pointf> cp = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+//	if (UnsupportedStarStruct.SPY_ME!=null)
+//		System.err.println("TOTO 41 =" + UnsupportedStarStruct.SPY_ME + " " +ps.get__(i).UID);
 	newspl.list.get__(i - start[0]).___(ps.get__(i));
+//	if (UnsupportedStarStruct.SPY_ME!=null)
+//		System.err.println("TOTO 42 =" + UnsupportedStarStruct.SPY_ME + " " +ps.get__(i).UID);
 	cp.get__(0).___(ps.get__(i));
 	i++;
 	if ( i >= end[0] + 4)
@@ -492,6 +514,9 @@ LEAVING("egq4f4tmy1dhyj6jpj92r7xhu","add_box");
  */
 
 @Unused
+@Todo(what = "bug72?")
+@Reviewed(when = "02/12/2020")
+@Comment(comment = "Side choice?")
 @Original(version="2.38.0", path="lib/common/splines.c", name="beginpath", key="7pc43ifcw5g56449d101qf590", definition="void beginpath(path * P, edge_t * e, int et, pathend_t * endp, boolean merge)")
 public static void beginpath(ST_path P, ST_Agedge_s e, int et, final ST_pathend_t endp, boolean merge) {
 ENTERING("7pc43ifcw5g56449d101qf590","beginpath");
@@ -566,12 +591,12 @@ UNSUPPORTED("4v7mmisc358r5tpq14qp4dx0f"); // 	    endp->boxn = 2;
 	}
 	else if ((side & LEFT)!=0) {
 	    endp.sidemask = LEFT;
-	    b.UR.x = P.end.p.x;
-	    b.UR.y = ND_coord(n).y + HT2(n);
-	    b.LL.y = P.end.p.y;
+	    b.UR.x = P.start.p.x;
+	    b.LL.y = ND_coord(n).y - HT2(n);
+	    b.UR.y = P.start.p.y;
 	    endp.boxes[0].___(b);
 	    endp.boxn[0] = 1;
-	    P.end.p.x -= 1;
+	    P.start.p.x -= 1;
 	}
 	else {
 	    endp.sidemask = RIGHT;
@@ -665,7 +690,7 @@ UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     endp.boxes[0].___(endp.nb);
 	endp.boxn[0] = 1;
 	switch (et) {
-	case 8:
+	case SELFEDGE:
 	/* moving the box UR.y by + 1 avoids colinearity between
 	   port point and box that confuses Proutespline().  it's
 	   a bug in Proutespline() but this is the easiest fix. */
@@ -673,16 +698,16 @@ UNSUPPORTED("9rnob8jdqqdjwzanv53yxc47u"); // 	    assert(0);  /* at present, we 
 UNSUPPORTED("46vb5zg9vm9n0q21g53nj66v3"); // 	    endp->boxes[0].UR.y = P->start.p.y - 1;
 UNSUPPORTED("auefgwb39x5hzqqc9b1zgl239"); // 	    endp->sidemask = 1<<0;
 	    break;
-	case 2:
-	    if (endp.sidemask == (1<<2))
+	case FLATEDGE:
+	    if (endp.sidemask == TOP)
 		endp.boxes[0].LL.y = P.start.p.y;
 	    else
 	    	endp.boxes[0].UR.y = P.start.p.y;
 	    break;
-	case 1:
+	case REGULAREDGE:
 	    endp.boxes[0].UR.y = P.start.p.y;
-	    endp.sidemask = (1<<0);
-	    P.start.p.y = P.start.p.y - 1;
+	    endp.sidemask = BOTTOM;
+	    P.start.p.y -= 1;
 	    break;
 	}    
     }    
@@ -704,6 +729,7 @@ private static double HT2(ST_Agnode_s n) {
 //3 79dr5om55xs3n5lgai1sf58vu
 // void endpath(path * P, edge_t * e, int et, pathend_t * endp, boolean merge) 
 @Unused
+@Reviewed(when = "02/12/2020")
 @Original(version="2.38.0", path="lib/common/splines.c", name="endpath", key="79dr5om55xs3n5lgai1sf58vu", definition="void endpath(path * P, edge_t * e, int et, pathend_t * endp, boolean merge)")
 public static void endpath(ST_path P, ST_Agedge_s e, int et, final ST_pathend_t endp, boolean merge) {
 ENTERING("79dr5om55xs3n5lgai1sf58vu","endpath");
@@ -711,7 +737,9 @@ try {
     int side, mask;
     ST_Agnode_s n;
     CFunction pboxfn;
+    
     n = aghead(e);
+    
     if (ED_head_port(e).dyna) 
 	ED_head_port(e, resolvePort(aghead(e), agtail(e), ED_head_port(e)));
     if (ND_shape(n)!=null)
@@ -732,17 +760,17 @@ UNSUPPORTED("2w0c22i5xgcch77xd9jg104nw"); // 	P->end.constrained = NOT(0);
 	    P.end.constrained = false;
     }
     endp.np.___(P.end.p);
-    if ((et == 1) && (ND_node_type(n) == 0) && ((side = ED_head_port(e).side)!=0)) {
+    if ((et == REGULAREDGE) && (ND_node_type(n) == NORMAL) && ((side = ED_head_port(e).side)!=0)) {
 	ST_Agedge_s orig;
 	final ST_boxf b0 = new ST_boxf(), b = endp.nb.copy();
-	if ((side & (1<<2))!=0) {
-	    endp.sidemask = 1<<2;
+	if ((side & TOP)!=0) {
+	    endp.sidemask = TOP;
 	    b.LL.y = MIN(b.LL.y,P.end.p.y);
 	    endp.boxes[0].___(b);
 	    endp.boxn[0] = 1;
 	    P.end.p.y += 1;
 	}
-	else if ((side & (1<<0))!=0) {
+	else if ((side & BOTTOM)!=0) {
 UNSUPPORTED("auefgwb39x5hzqqc9b1zgl239"); // 	    endp->sidemask = 1<<0;
 UNSUPPORTED("4tlqpclu7x0szo1rszndqau0d"); // 	    if (P->end.p.x < ND_coord(n).x) { /* go left */
 UNSUPPORTED("80ypgtfgfrgq8j7whkaueouh5"); // 		b0.LL.x = b.LL.x-1;
@@ -773,7 +801,7 @@ UNSUPPORTED("196ta4n5nsqizd83y6oo7z8a2"); // 	    }
 UNSUPPORTED("4v7mmisc358r5tpq14qp4dx0f"); // 	    endp->boxn = 2;
 UNSUPPORTED("6kjd8mut2dn2xv1k1zr63qp0s"); // 	    P->end.p.y -= 1;
 	}
-	else if ((side & (1<<3))!=0) {
+	else if ((side & LEFT)!=0) {
 UNSUPPORTED("2lmjkw07sr4x9a3xxrcb3yj07"); // 	    endp->sidemask = 1<<3;
 UNSUPPORTED("4e2bsroer72trfy5dl5k8f5s8"); // 	    b.UR.x = P->end.p.x;
 UNSUPPORTED("3rsswd4vcybmrbhoqt0aldqds"); // 	    b.UR.y = ND_coord(n).y + (ND_ht(n)/2);
@@ -783,15 +811,15 @@ UNSUPPORTED("3hptqfzzuz4dlsc8ejk1ynxt9"); // 	    endp->boxn = 1;
 UNSUPPORTED("5j92wv3nt0b7hnlf3ktengoom"); // 	    P->end.p.x -= 1;
 	}
 	else {
-	    endp.sidemask = 1<<1;
+	    endp.sidemask = RIGHT;
 	    b.LL.x = P.end.p.x;
-	    b.UR.y = ND_coord(n).y + (ND_ht(n)/2);
+	    b.UR.y = ND_coord(n).y + HT2(n);
 	    b.LL.y = P.end.p.y;
 	    endp.boxes[0].___(b);
 	    endp.boxn[0] = 1;
 	    P.end.p.x += 1;
 	}
-	for (orig = e; ED_edge_type(orig) != 0; orig = ED_to_orig(orig));
+	for (orig = e; ED_edge_type(orig) != NORMAL; orig = ED_to_orig(orig));
 	if (EQ(n, aghead(orig)))
 	    ED_head_port(orig).clip = false;
 	else
@@ -799,7 +827,7 @@ UNSUPPORTED("dk49xvmby8949ngdmft4sgrox"); // 	    ED_tail_port(orig).clip = 0;
 	endp.sidemask = side;
 	return;
     }
-    if ((et == 2) && ((side = ED_head_port(e).side)!=0)) {
+    if ((et == FLATEDGE) && ((side = ED_head_port(e).side)!=0)) {
 UNSUPPORTED("ew7nyfe712nsiphifeztwxfop"); // 	boxf b0, b = endp->nb;
 UNSUPPORTED("a7lrhlfwr0y475aqjk6abhb3b"); // 	edge_t* orig;
 UNSUPPORTED("ait3wtnnvt134z2k87lvhq4ek"); // 	if (side & (1<<2)) {
@@ -865,7 +893,8 @@ UNSUPPORTED("dk49xvmby8949ngdmft4sgrox"); // 	    ED_tail_port(orig).clip = 0;
 UNSUPPORTED("8jqn3kj2hrrlcifbw3x9sf6qu"); // 	endp->sidemask = side;
 UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     }
-    if (et == 1) side = 1<<2;
+    
+    if (et == REGULAREDGE) side = TOP;
     else side = endp.sidemask;  /* for flat edges */
     if (pboxfn!=null
 	&& (mask = (Integer) pboxfn.exe(n, ED_head_port(e), side, endp.boxes[0], endp.boxn))!=0)
@@ -873,8 +902,9 @@ UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     else {
     	endp.boxes[0].___(endp.nb);
 	endp.boxn[0] = 1;
+	
 	switch (et) {
-	case 8:
+	case SELFEDGE:
 	    /* offset of -1 is symmetric w.r.t. beginpath() 
 	     * FIXME: is any of this right?  what if self-edge 
 	     * doesn't connect from BOTTOM to TOP??? */
@@ -882,16 +912,16 @@ UNSUPPORTED("bhkhf4i9pvxtxyka4sobszg33"); // 	    assert(0);  /* at present, we 
 UNSUPPORTED("db6vmvnse8bawy8qwct7l24u8"); // 	    endp->boxes[0].LL.y = P->end.p.y + 1;
 UNSUPPORTED("1r4lctdj9z1ivlz3uqpcj1yzf"); // 	    endp->sidemask = 1<<2;
 UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
-	case 2:
-	    if (endp.sidemask == (1<<2))
+	case FLATEDGE:
+	    if (endp.sidemask == TOP)
 	    	endp.boxes[0].LL.y = P.end.p.y;
 	    else
 	    	endp.boxes[0].UR.y = P.end.p.y;
 	    break;
-	case 1:
+	case REGULAREDGE:
 		endp.boxes[0].LL.y = P.end.p.y;
-	    endp.sidemask = (1<<2);
-	    P.end.p.y = P.end.p.y +1;
+	    endp.sidemask = TOP;
+	    P.end.p.y += 1;
 	    break;
 	}
     }

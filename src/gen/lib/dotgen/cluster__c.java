@@ -78,8 +78,6 @@ import static gen.lib.dotgen.mincross__c.install_in_rank;
 import static gen.lib.dotgen.position__c.ports_eq;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGMKOUT;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.CL_CROSS;
@@ -112,6 +110,8 @@ import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.NORMAL;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.VIRTUAL;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.HasND_Rank;
 import gen.annotation.Original;

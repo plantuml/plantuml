@@ -50,14 +50,14 @@ import static gen.lib.dotgen.fastgr__c.delete_fast_edge;
 import static gen.lib.dotgen.fastgr__c.find_fast_edge;
 import static gen.lib.dotgen.fastgr__c.merge_oneway;
 import static gen.lib.dotgen.fastgr__c.virtual_edge;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.GD_comp;
 import static smetana.core.Macro.GD_nlist;
 import static smetana.core.Macro.ND_mark;
 import static smetana.core.Macro.ND_next;
 import static smetana.core.Macro.ND_onstack;
 import static smetana.core.Macro.ND_out;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

@@ -54,7 +54,6 @@ import h.ST_Agraph_s;
 import h.ST_GVC_s;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -67,8 +66,13 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import smetana.core.CString;
 import smetana.core.Macro;
 import smetana.core.Z;
+import smetana.core.debug.SmetanaDebug;
 
 public class SmetanaForJson {
+
+	private static int NUM = 0;
+	private final static boolean printFirst = false;
+	private final static boolean exitAfterFirst = false;
 
 	private final UGraphic ug;
 	private final ISkinParam skinParam;
@@ -112,7 +116,8 @@ public class SmetanaForJson {
 
 	private ST_Agnode_s manageOneNode(JsonValue current, List<String> highlighted) {
 		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted);
-		final ST_Agnode_s node1 = createNode(block.calculateDimension(stringBounder), block.size());
+		final ST_Agnode_s node1 = createNode(block.calculateDimension(stringBounder), block.size(), current.isArray(),
+				(int) block.getWidthColA(stringBounder), (int) block.getWidthColB(stringBounder));
 		nodes.add(new Node(block, node1));
 		final List<JsonValue> children = block.children();
 		final List<String> keys = block.keys();
@@ -144,34 +149,46 @@ public class SmetanaForJson {
 	}
 
 	public void drawMe(JsonValue root, List<String> highlighted) {
+		initGraph(root, highlighted);
+		double max = 0;
+		for (Node node : nodes) {
+			max = Math.max(max, node.getMaxX());
+		}
+		xMirror = new Mirror(max);
 
+		for (Node node : nodes) {
+			node.block.drawU(ug.apply(getPosition(node.node)));
+		}
+		final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+
+		for (ST_Agedge_s edge : edges) {
+			final JsonCurve curve = getCurve(edge, 13);
+			curve.drawCurve(color, ug.apply(new UStroke(3, 3, 1)));
+			curve.drawSpot(ug.apply(color.bg()));
+		}
+	}
+
+	private void initGraph(JsonValue root, List<String> highlighted) {
+		if (g != null) {
+			return;
+		}
 		Z.open();
 		try {
+
 			g = agopen(new CString("g"), Z.z().Agdirected, null);
 			manageOneNode(root, highlighted);
 
 			final ST_GVC_s gvc = gvContext();
 			gvLayoutJobs(gvc, g);
-
-			double max = 0;
-			for (Node node : nodes) {
-				max = Math.max(max, node.getMaxX());
-			}
-			xMirror = new Mirror(max);
-
-			for (Node node : nodes) {
-				node.block.drawU(ug.apply(getPosition(node.node)));
-			}
-
-			final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-
-			for (ST_Agedge_s edge : edges) {
-				final Curve curve = getCurve(edge, 13);
-				curve.drawCurve(color, ug.apply(new UStroke(3, 3, 1)));
-				curve.drawSpot(ug.apply(color.bg()));
-			}
 		} finally {
 			Z.close();
+			NUM++;
+		}
+		if (exitAfterFirst) {
+			System.err.println("-----------------------------------");
+			SmetanaDebug.printMe();
+			System.err.println("-----------------------------------");
+			System.exit(0);
 		}
 	}
 
@@ -184,48 +201,69 @@ public class SmetanaForJson {
 		return new UTranslate(x - width / 2, xMirror.inv(y + height / 2)).sym();
 	}
 
-	private Curve getCurve(ST_Agedge_s e, double veryFirstLine) {
+	private JsonCurve getCurve(ST_Agedge_s e, double veryFirstLine) {
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e);
-		return new Curve(data, xMirror, veryFirstLine);
+		return new JsonCurve(data, xMirror, veryFirstLine);
 	}
 
 	private ST_Agedge_s createEdge(ST_Agnode_s a0, ST_Agnode_s a1, int num) {
 		final ST_Agedge_s edge = agedge(g, a0, a1, null, true);
+		edge.NAME = a0.NAME + "-" + a1.NAME;
 
 		agsafeset(edge, new CString("arrowsize"), new CString(".75"), new CString(""));
 		agsafeset(edge, new CString("arrowtail"), new CString("none"), new CString(""));
 		agsafeset(edge, new CString("arrowhead"), new CString("normal"), new CString(""));
 		agsafeset(edge, new CString("tailport"), new CString("P" + num), new CString(""));
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("N" + a0.UID + " -> N" + a1.UID + " [tailport=\"P" + num + "\", arrowsize=.75]");
+		if (NUM == 0 && printFirst)
+			System.err.println(sb);
+
 		return edge;
 	}
 
-	private ST_Agnode_s createNode(Dimension2D dim, int size) {
+	private ST_Agnode_s createNode(Dimension2D dim, int size, boolean isArray, int colAwidth, int colBwidth) {
 		final String width = "" + (dim.getWidth() / 72);
 		final String height = "" + (dim.getHeight() / 72);
 
 		final ST_Agnode_s node = agnode(g, new CString("N" + num), true);
+		node.NAME = "N " + num;
 		num++;
 
 		agsafeset(node, new CString("shape"), new CString("record"), new CString(""));
 		agsafeset(node, new CString("height"), new CString("" + width), new CString(""));
 		agsafeset(node, new CString("width"), new CString("" + height), new CString(""));
 
+		final String dotLabel = getDotLabel(size, isArray, colAwidth - 8, colBwidth - 8);
 		if (size > 0) {
-			agsafeset(node, new CString("label"), new CString(getDotLabel(size)), new CString(""));
+			agsafeset(node, new CString("label"), new CString(dotLabel), new CString(""));
 		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("N" + node.UID + " [");
+		sb.append("shape=record, height=" + width + ", width=" + height + ", label=\"" + dotLabel.replace('x', '.')
+				+ "\"]");
+		if (NUM == 0 && printFirst)
+			System.err.println(sb);
 
 		return node;
 	}
 
-	private String getDotLabel(int size) {
+	private String getDotLabel(int size, boolean isArray, int widthA, int widthB) {
 		final StringBuilder sb = new StringBuilder("");
+		if (isArray == false) {
+			sb.append("{_dim_0_" + widthA + "_|{");
+		}
 		for (int i = 0; i < size; i++) {
 			sb.append("<P" + i + ">");
-			sb.append("x");
+			sb.append("_dim_0_" + widthB + "_");
 			if (i < size - 1)
 				sb.append("|");
 		}
-		sb.append("");
+		if (isArray == false) {
+			sb.append("}}");
+		}
 
 		return sb.toString();
 	}

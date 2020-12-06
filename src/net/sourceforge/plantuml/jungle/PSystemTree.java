@@ -42,6 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.SvgCharSizeHack;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -51,8 +52,10 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UDrawableUtils;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PSystemTree extends AbstractPSystem {
@@ -77,11 +80,17 @@ public class PSystemTree extends AbstractPSystem {
 			margin1 = 5;
 			margin2 = 5;
 		}
-		final ImageBuilder builder = ImageBuilder.buildB(new ColorMapperIdentity(), false,
-				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null, null, null, 1.0, HColorUtils.WHITE);
+		HColor backcolor = HColorUtils.WHITE;
+
+		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, null,
+				null, margins, backcolor);
+		final ImageBuilder builder = ImageBuilder.build(imageParameter);
+
 		if (rendering == Rendering.NEEDLE) {
 			final UDrawable tmp = Needle.getNeedle(root, 200, 0, 60);
-			final LimitFinder limitFinder = new LimitFinder(fileFormat.getDefaultStringBounder(), true);
+			final LimitFinder limitFinder = new LimitFinder(fileFormat.getDefaultStringBounder(SvgCharSizeHack.NO_HACK),
+					true);
 			tmp.drawU(limitFinder);
 			final double minY = limitFinder.getMinY();
 			builder.setUDrawable(UDrawableUtils.move(tmp, 0, -minY));

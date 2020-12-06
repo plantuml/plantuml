@@ -59,8 +59,6 @@ import static gen.lib.cgraph.subg__c.agparent;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGSEQ;
@@ -70,6 +68,8 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.dtfirst;
 import static smetana.core.Macro.dtnext;
 import static smetana.core.Macro.dtsearch;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

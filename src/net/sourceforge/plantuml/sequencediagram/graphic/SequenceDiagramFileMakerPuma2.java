@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -84,19 +85,18 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private double scale;
 
-	public SequenceDiagramFileMakerPuma2(SequenceDiagram sequenceDiagram, Rose skin,
-			FileFormatOption fileFormatOption) {
-		this.diagram = sequenceDiagram;
-		this.stringBounder = fileFormatOption.getDefaultStringBounder();
+	public SequenceDiagramFileMakerPuma2(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption) {
+		this.diagram = diagram;
+		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
 		this.fileFormatOption = fileFormatOption;
-		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, sequenceDiagram.getSkinParam(),
-				sequenceDiagram.isShowFootbox(), sequenceDiagram.getAutonewpage());
+		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),
+				diagram.isShowFootbox(), diagram.getAutonewpage());
 
-		for (Participant p : sequenceDiagram.participants()) {
-			initializer.addParticipant(p, sequenceDiagram.getEnglober(p));
+		for (Participant p : diagram.participants()) {
+			initializer.addParticipant(p, diagram.getEnglober(p));
 		}
 
-		for (Event ev : sequenceDiagram.events()) {
+		for (Event ev : diagram.events()) {
 			initializer.addEvent(ev);
 			// if (ev instanceof Message) {
 			// // TODO mieux faire
@@ -123,8 +123,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		for (Newpage n : newpages) {
 			positions.put(n, initializer.getYposition(stringBounder, n));
 		}
-		pages = create(drawableSet, positions, sequenceDiagram.isShowFootbox(), sequenceDiagram.getTitle().getDisplay())
-				.getPages();
+		pages = create(drawableSet, positions, diagram.isShowFootbox(), diagram.getTitle().getDisplay()).getPages();
 	}
 
 	public int getNbPages() {
@@ -207,8 +206,12 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		} else {
 			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(diagram.getSkinParam(), margins, diagram.getAnimation(),
-				metadata, null, oneOf(scale, dpiFactor));
+		ISkinParam skinParam = diagram.getSkinParam();
+		final HColor backcolor = skinParam.getBackgroundColor(false);
+		final double factor = oneOf(scale, dpiFactor);
+		final ImageParameter imageParameter = new ImageParameter(skinParam, diagram.getAnimation(), factor, metadata,
+				null, margins, backcolor);
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {

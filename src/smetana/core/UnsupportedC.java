@@ -36,7 +36,16 @@
 
 package smetana.core;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class UnsupportedC implements __ptr__ {
+	
+	public final static AtomicInteger CPT = new AtomicInteger();
+	public final int UID;
+	
+	public UnsupportedC() {
+		this.UID = CPT.decrementAndGet();
+	}
 
 	public boolean isSameThan(__ptr__ other) {
 		throw new UnsupportedOperationException(getClass().toString());

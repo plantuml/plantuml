@@ -105,7 +105,7 @@ public class Diamond {
 		};
 	}
 
-	public static UPolygon asPolygonFoo1(boolean shadowing, double width, double height) {
+	public static UPolygon asPolygonSquare(boolean shadowing, double width, double height) {
 		final UPolygon diams = new UPolygon();
 
 		diams.addPoint(width / 2, 0);

@@ -50,12 +50,12 @@ import static gen.lib.cgraph.id__c.agregister;
 import static gen.lib.cgraph.mem__c.agalloc;
 import static gen.lib.cgraph.utils__c.agdtdisc;
 import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.dtfirst;
 import static smetana.core.Macro.dtnext;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -64,8 +64,8 @@ import h.ST_Agdesc_s;
 import h.ST_Agraph_s;
 import h.ST_dt_s;
 import smetana.core.CString;
-import smetana.core.JUtilsDebug;
 import smetana.core.Z;
+import smetana.core.debug.SmetanaDebug;
 
 public class subg__c {
 
@@ -123,22 +123,22 @@ public static ST_Agraph_s agsubg(ST_Agraph_s g, CString name, boolean cflag) {
 ENTERING("a24jd4r2sdyb4lb2hyababrda","agsubg");
 try {
     final int id[] = new int[]{0};
-    JUtilsDebug.LOG("agsubg g=" + g + " name=" + name);
+    SmetanaDebug.LOG("agsubg g=" + g + " name=" + name);
     ST_Agraph_s subg;
     if (name!=null && agmapnametoid(g, AGRAPH, name, id, false)!=0) {
-    JUtilsDebug.LOG("might already exist");
+    SmetanaDebug.LOG("might already exist");
 	/* might already exist */
 	if ((subg = agfindsubg_by_id(g, id[0]))!=null) {
-	    JUtilsDebug.LOG("yes returning "+subg);
+	    SmetanaDebug.LOG("yes returning "+subg);
 	    return subg;}
     }
     if (cflag && agmapnametoid(g, AGRAPH, name, id, true)!=0) {	/* reserve id */
 	subg = localsubg(g, id[0]);
 	agregister(g, AGRAPH, subg);
-	JUtilsDebug.LOG("reserve id "+subg);
+	SmetanaDebug.LOG("reserve id "+subg);
 	return subg;
     }
-    JUtilsDebug.LOG("return null");
+    SmetanaDebug.LOG("return null");
     return null;
 } finally {
 LEAVING("a24jd4r2sdyb4lb2hyababrda","agsubg");

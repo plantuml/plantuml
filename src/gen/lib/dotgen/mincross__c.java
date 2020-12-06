@@ -73,8 +73,6 @@ import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atof;
 import static smetana.core.JUtils.qsort1;
 import static smetana.core.JUtils.qsort2;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ALLOC_INT;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.ED_edge_type;
@@ -127,6 +125,8 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.VIRTUAL;
 import static smetana.core.Macro.elist_append;
 import static smetana.core.Macro.flatindex;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;
@@ -1651,8 +1651,7 @@ LEAVING("14t80owwvm7io4ou6czb9ba9","mincross_step");
 
 
 //3 aq18oa4k4grixvfjx7r2qnl6r
-// static int local_cross(elist l, int dir) 
-@Unused
+@Reviewed(when = "01/12/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="local_cross", key="aq18oa4k4grixvfjx7r2qnl6r", definition="static int local_cross(elist l, int dir)")
 public static int local_cross(final ST_elist l, int dir) {
 // WARNING!! STRUCT
@@ -1666,7 +1665,7 @@ try {
     int cross = 0;
     ST_Agedge_s e, f;
     if (dir > 0)
-	is_out = NOT(0);
+	is_out = true;
     else
 	is_out = false;
     for (i = 0; (e = l.list.get_(i))!=null; i++) {

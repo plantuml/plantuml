@@ -322,6 +322,11 @@ public class Z {
 	
 	public CString reclblp;
 
+	public int isz;
+	public CArray<ST_pointf> ispline;
+
+	
+	
 	public static Z z() {
 		return instances2.get().peekFirst();
 	}
@@ -542,6 +547,9 @@ public class Z {
 
 		sinfo.swapEnds = dotsplines__c.swap_ends_p;
 		sinfo.splineMerge = dotsplines__c.spline_merge;
+		
+		ispline = null;
+		isz = 0;
 
 	}
 

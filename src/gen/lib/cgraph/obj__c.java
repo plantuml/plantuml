@@ -48,8 +48,6 @@ import static gen.lib.cgraph.edge__c.agsubedge;
 import static gen.lib.cgraph.node__c.agidnode;
 import static gen.lib.cgraph.pend__c.agrecord_callback;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGNODE;
@@ -58,6 +56,8 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.CB_UPDATE;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

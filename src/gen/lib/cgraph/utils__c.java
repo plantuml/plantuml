@@ -47,9 +47,10 @@ package gen.lib.cgraph;
 import static gen.lib.cdt.dtdisc__c.dtdisc;
 import static gen.lib.cdt.dtopen__c.dtopen;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.dtdelete;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -149,13 +150,14 @@ LEAVING("48ox0bg1qmasrer8np51uwsyk","agdtopen");
 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/utils.c", name="agdtdelete", key="6pbz2fsmebq8iy7if4way3ct2", definition="long agdtdelete(Agraph_t * g, Dict_t * dict, void *obj)")
-public static int agdtdelete(ST_Agraph_s g, ST_dt_s disc, __ptr__ obj) {
-UNSUPPORTED("216ju3s3n4ltlcsntcuo0fg5p"); // long agdtdelete(Agraph_t * g, Dict_t * dict, void *obj)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("id2cse8d1e37coxkbocjgjt4"); //     Ag_dictop_G = g;
-UNSUPPORTED("1ii7n9w3quq15wnwynuuwg395"); //     return (long) (*(((Dt_t*)(dict))->searchf))((dict),(void*)(obj),0000002);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-throw new UnsupportedOperationException();
+public static __ptr__ agdtdelete(ST_Agraph_s g, ST_dt_s dict, __ptr__ obj) {
+ENTERING("6pbz2fsmebq8iy7if4way3ct2","agdtdelete");
+try {
+	Z.z().Ag_dictop_G = g;
+	return (__ptr__) dtdelete(dict, obj);
+} finally {
+LEAVING("6pbz2fsmebq8iy7if4way3ct2","agdtdelete");
+}
 }
 
 

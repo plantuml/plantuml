@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.CArray;
 import smetana.core.UnsupportedStarStruct;
-import smetana.core.__struct__;
 
 final public class ST_Ppoly_t extends UnsupportedStarStruct {
 
@@ -56,7 +55,7 @@ final public class ST_Ppoly_t extends UnsupportedStarStruct {
 
 
 	@Override
-	public __struct__ copy() {
+	public ST_Ppoly_t copy() {
 		ST_Ppoly_t result = new ST_Ppoly_t();
 		result.ps = this.ps;
 		result.pn = this.pn;

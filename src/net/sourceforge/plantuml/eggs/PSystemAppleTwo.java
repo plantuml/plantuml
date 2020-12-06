@@ -47,9 +47,12 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemAppleTwo extends AbstractPSystem {
@@ -68,8 +71,10 @@ public class PSystemAppleTwo extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
-		final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
-				false, null, getMetadata(), null, 1.0, result.getBackcolor());
+		HColor backcolor = result.getBackcolor();
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0,
+				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
@@ -77,7 +82,8 @@ public class PSystemAppleTwo extends AbstractPSystem {
 	private TextBlockBackcolored getGraphicStrings() throws IOException {
 		// final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
 		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image, GraphicPosition.BOTTOM);
-		// final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
+		// final GraphicStrings result = new GraphicStrings(strings, font,
+		// HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
 		// image, GraphicPosition.BOTTOM);
 		// result.setMinWidth(200);
 		return result;

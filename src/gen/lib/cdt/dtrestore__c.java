@@ -44,8 +44,6 @@
  *
  */
 package gen.lib.cdt;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DT_BAG;
 import static smetana.core.Macro.DT_FLATTEN;
 import static smetana.core.Macro.DT_OBAG;
@@ -53,6 +51,8 @@ import static smetana.core.Macro.DT_OSET;
 import static smetana.core.Macro.DT_SET;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

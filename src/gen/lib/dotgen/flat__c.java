@@ -52,8 +52,6 @@ import static gen.lib.dotgen.fastgr__c.virtual_node;
 import static gen.lib.dotgen.mincross__c.rec_reset_vlists;
 import static gen.lib.dotgen.mincross__c.rec_save_vlists;
 import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ED_adjacent;
 import static smetana.core.Macro.ED_dist;
 import static smetana.core.Macro.ED_edge_type;
@@ -88,6 +86,8 @@ import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.NORMAL;
 import static smetana.core.Macro.VIRTUAL;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;
@@ -101,7 +101,7 @@ import h.ST_pointf;
 import h.ST_rank_t;
 import smetana.core.CArray;
 import smetana.core.CArrayOfStar;
-import smetana.core.JUtilsDebug;
+import smetana.core.debug.SmetanaDebug;
 
 public class flat__c {
 
@@ -240,7 +240,7 @@ try {
     
     r = ND_rank(agtail(e)) - 1;
     if (r<0) {
-    	JUtilsDebug.LOG("flat_limits r="+r); // Set xt07
+    	SmetanaDebug.LOG("flat_limits r="+r); // Set xt07
     }
     rank = GD_rank(g).get__(r).v;
     lnode = 0;
@@ -288,7 +288,7 @@ try {
     ST_Agedge_s ve;
     final ST_pointf dimen = new ST_pointf();
     
-    JUtilsDebug.LOG("Flat node for "+e.NAME);
+    SmetanaDebug.LOG("Flat node for "+e.NAME);
     if (ED_label(e) == null)
 	return;
     g = dot_root(agtail(e));
@@ -384,7 +384,7 @@ LEAVING("1lopavodoru6ee52snd5l6swd","abomination");
 public static void checkFlatAdjacent(ST_Agedge_s e) {
 ENTERING("ctujx6e8k3rzv08h6gswdcaqs","checkFlatAdjacent");
 try {
-	JUtilsDebug.LOG("checkFlatAdjacent "+e.NAME);
+	SmetanaDebug.LOG("checkFlatAdjacent "+e.NAME);
     ST_Agnode_s tn = agtail(e);
     ST_Agnode_s hn = aghead(e);
     int i, lo, hi;
@@ -448,10 +448,6 @@ try {
     boolean found = false;
     
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-        JUtilsDebug.LOG("flat_edges "+n);
-        JUtilsDebug.LOG("out= "+ND_flat_out(n).list);
-        JUtilsDebug.LOG("other= "+ND_other(n).list);
-        JUtilsDebug.LOG("");
 	if (ND_flat_out(n).list!=null) {
 	    for (j = 0; (e = ND_flat_out(n).list.get_(j))!=null; j++) {
 		checkFlatAdjacent (e);
@@ -484,13 +480,13 @@ try {
 	if (ND_flat_out(n).list!=null) {
 	    for (i = 0; (e = ND_flat_out(n).list.get_(i))!=null; i++) {
 		if (ED_label(e)!=null) {
-			JUtilsDebug.LOG("Aie1 for "+e.NAME+" "+ED_adjacent(e));
+			SmetanaDebug.LOG("Aie1 for "+e.NAME+" "+ED_adjacent(e));
 		    if (ED_adjacent(e)!=0) {
 			if (GD_flip(g)) ED_dist(e, ED_label(e).dimen.y);
 			else ED_dist(e, ED_label(e).dimen.x); 
 		    }
 		    else {
-		    	JUtilsDebug.LOG("reset1 true");
+		    	SmetanaDebug.LOG("reset1 true");
 			reset = true;
 			flat_node(e);
 		    }
@@ -500,16 +496,16 @@ try {
 	    for (j = 0; j < ND_other(n).size; j++) {
 		ST_Agedge_s le;
 		e = ND_other(n).list.get_(j);
-		JUtilsDebug.LOG("e="+e.NAME);
+		SmetanaDebug.LOG("e="+e.NAME);
 		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;
 		if (EQ(agtail(e), aghead(e))) continue; /* skip loops */
 		le = e;
 		while (ED_to_virt(le)!=null) le = ED_to_virt(le);
 		ED_adjacent(e, ED_adjacent(le)); 
 		if (ED_label(e)!=null) {
-			JUtilsDebug.LOG("Aie2 for "+e.NAME+" "+ED_adjacent(e));
-			JUtilsDebug.LOG("e2="+le.NAME);
-			JUtilsDebug.LOG("le2="+le.NAME);
+			SmetanaDebug.LOG("Aie2 for "+e.NAME+" "+ED_adjacent(e));
+			SmetanaDebug.LOG("e2="+le.NAME);
+			SmetanaDebug.LOG("le2="+le.NAME);
 		    if (ED_adjacent(e)!=0) {
 			double lw;
 			if (GD_flip(g)) lw = ED_label(e).dimen.y;
@@ -517,7 +513,7 @@ try {
 			ED_dist(le, MAX(lw,ED_dist(le)));
 		    }
 		    else {
-		    	JUtilsDebug.LOG("reset2 true");
+		    	SmetanaDebug.LOG("reset2 true");
 			reset = true;
 			flat_node(e);
 		    }

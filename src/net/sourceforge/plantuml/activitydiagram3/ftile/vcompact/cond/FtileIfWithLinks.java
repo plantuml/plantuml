@@ -416,50 +416,120 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			super(null, null);
 			this.arrowColor = arrowColor;
 		}
-
+		
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Dimension2D totalDim = calculateDimensionInternal(stringBounder);
 
-			final Swimlane intoSw;
+			final List<Ftile> allTiles = new ArrayList<Ftile>();
+			allTiles.add(tile1);
+			allTiles.add(tile2);
+
+			final double[] minmax;
 			if (ug instanceof UGraphicInterceptorOneSwimlane) {
-				intoSw = ((UGraphicInterceptorOneSwimlane) ug).getSwimlane();
+				final UGraphicInterceptorOneSwimlane interceptor = (UGraphicInterceptorOneSwimlane) ug;
+				final List<Swimlane> allSwimlanes = interceptor.getOrderedListOfAllSwimlanes();
+				minmax = getMinmax(stringBounder, totalDim.getWidth(), allTiles, interceptor.getSwimlane(),
+						allSwimlanes);
 			} else {
-				intoSw = null;
+				minmax = getMinmaxSimple(stringBounder, totalDim.getWidth(), allTiles);
 			}
 
-			final List<Ftile> all = new ArrayList<Ftile>();
-			all.add(tile1);
-			all.add(tile2);
-			double minX = totalDim.getWidth() / 2;
-			double maxX = totalDim.getWidth() / 2;
-			boolean atLeastOne = false;
-			for (Ftile tmp : all) {
+			final double minX = minmax[0];
+			final double maxX = minmax[1];
+			if (Double.isNaN(minX) || Double.isNaN(maxX)) {
+				return;
+			}
+
+			final Snake s = Snake.create(arrowColor).withMerge(MergeStrategy.NONE);
+			s.addPoint(minX, totalDim.getHeight());
+			s.addPoint(maxX, totalDim.getHeight());
+			ug.draw(s);
+		}
+		
+		private double[] getMinmax(StringBounder stringBounder, double width, List<Ftile> allTiles, Swimlane intoSw,
+				List<Swimlane> allSwimlanes) {
+			final int current = allSwimlanes.indexOf(intoSw);
+//			final Double leftOut = getLeftOut(stringBounder);
+//			if (leftOut == null)
+//				return new double[] { Double.NaN, Double.NaN };
+
+			if (current == -1) {
+				throw new IllegalStateException();
+			}
+			final int first = getFirstSwimlane(stringBounder, allTiles, allSwimlanes);
+			final int last = getLastSwimlane(stringBounder, allTiles, allSwimlanes);
+			if (current < first || current > last)
+				return new double[] { Double.NaN, Double.NaN };
+			double minX = current != first ? 0 : width;
+			double maxX = current != last ? width : 0;
+//			minX = Math.min(minX, leftOut);
+//			maxX = Math.max(maxX, leftOut);
+			for (Ftile tmp : allTiles) {
 				if (tmp.calculateDimension(stringBounder).hasPointOut() == false) {
 					continue;
 				}
-				if (intoSw != null && tmp.getSwimlanes().contains(intoSw) == false) {
+				if (ftileDoesOutcomeInThatSwimlane(tmp, intoSw) == false) {
 					continue;
 				}
-				if (intoSw != null && tmp.getSwimlaneOut() != intoSw) {
-					continue;
-				}
-				atLeastOne = true;
 				final UTranslate ut = getTranslateFor(tmp, stringBounder);
 				final double out = tmp.calculateDimension(stringBounder).translate(ut).getLeft();
 				minX = Math.min(minX, out);
 				maxX = Math.max(maxX, out);
 			}
-			if (atLeastOne == false) {
-				return;
-			}
-
-			final Snake s = Snake.create(arrowColor).withMerge(MergeStrategy.NONE);
-			final double height = totalDim.getHeight();
-			s.addPoint(minX, height);
-			s.addPoint(maxX, height);
-			ug.draw(s);
+			return new double[] { minX, maxX };
 		}
+
+		private double[] getMinmaxSimple(StringBounder stringBounder, double width, List<Ftile> allTiles) {
+//			final Double leftOut = getLeftOut(stringBounder);
+//			if (leftOut == null)
+//				return new double[] { Double.NaN, Double.NaN };
+			double minX = width / 2;
+			double maxX = width / 2;
+//			minX = Math.min(minX, leftOut);
+//			maxX = Math.max(maxX, leftOut);
+			for (Ftile tmp : allTiles) {
+				if (tmp.calculateDimension(stringBounder).hasPointOut() == false) {
+					continue;
+				}
+				final UTranslate ut = getTranslateFor(tmp, stringBounder);
+				final double out = tmp.calculateDimension(stringBounder).translate(ut).getLeft();
+				minX = Math.min(minX, out);
+				maxX = Math.max(maxX, out);
+			}
+			return new double[] { minX, maxX };
+		}
+		
+		private int getFirstSwimlane(StringBounder stringBounder, List<Ftile> allTiles, List<Swimlane> allSwimlanes) {
+			for (int i = 0; i < allSwimlanes.size(); i++) {
+				if (atLeastOne(stringBounder, allSwimlanes.get(i), allTiles)) {
+					return i;
+				}
+			}
+			throw new IllegalStateException();
+		}
+
+		private int getLastSwimlane(StringBounder stringBounder, List<Ftile> allTiles, List<Swimlane> allSwimlanes) {
+			for (int i = allSwimlanes.size() - 1; i >= 0; i--) {
+				if (atLeastOne(stringBounder, allSwimlanes.get(i), allTiles)) {
+					return i;
+				}
+			}
+			throw new IllegalStateException();
+		}
+
+		private boolean atLeastOne(StringBounder stringBounder, Swimlane intoSw, List<Ftile> allTiles) {
+			for (Ftile tmp : allTiles)
+				if (tmp.calculateDimension(stringBounder).hasPointOut() && ftileDoesOutcomeInThatSwimlane(tmp, intoSw))
+					return true;
+			return false;
+		}
+
+		private boolean ftileDoesOutcomeInThatSwimlane(Ftile ftile, Swimlane swimlane) {
+			return ftile.getSwimlaneOut() == swimlane && ftile.getSwimlanes().contains(swimlane);
+		}
+
+
 	}
 
 	public Ftile addLinks(Branch branch1, Branch branch2, StringBounder stringBounder) {

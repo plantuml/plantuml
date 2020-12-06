@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 
 public enum DiagramType {
 	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, 
-	DEFINITION, GANTT, NW, MINDMAP, WBS, WIRE, JSON,
+	DEFINITION, GANTT, NW, MINDMAP, WBS, WIRE, JSON, GIT,
 	UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
@@ -106,6 +106,9 @@ public enum DiagramType {
 		}
 		if (StartUtils.startsWithSymbolAnd("startjson", s)) {
 			return JSON;
+		}
+		if (StartUtils.startsWithSymbolAnd("startgit", s)) {
+			return GIT;
 		}
 		return UNKNOWN;
 	}

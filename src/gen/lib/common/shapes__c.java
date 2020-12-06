@@ -65,8 +65,6 @@ import static smetana.core.JUtils.sin;
 import static smetana.core.JUtils.sqrt;
 import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtils.strlen;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.BETWEEN;
 import static smetana.core.Macro.BOTTOM;
 import static smetana.core.Macro.DIST2;
@@ -106,8 +104,11 @@ import static smetana.core.Macro.TOP;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.fabs;
 import static smetana.core.Macro.hypot;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
+import gen.annotation.Doc;
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
 import gen.annotation.Unused;
@@ -1617,6 +1618,7 @@ LEAVING("7zxlp1fmrq3zt4fprrtesdbg3","poly_init");
 //3 dwk0rh74bwfd7mky5hg9t1epj
 // static pointf size_reclbl(node_t * n, field_t * f) 
 @Unused
+@Doc("?")
 @Original(version="2.38.0", path="lib/common/shapes.c", name="size_reclbl", key="dwk0rh74bwfd7mky5hg9t1epj", definition="static pointf size_reclbl(node_t * n, field_t * f)")
 public static ST_pointf size_reclbl(ST_Agnode_s n, ST_field_t f) {
 	// WARNING!! STRUCT
@@ -1778,15 +1780,18 @@ public static CFunction record_init = new CFunctionAbstract("record_init") {
 	}};
 	
 @Unused
+@Doc("Init 'record' node")
+@Reviewed(when = "02/12/2020")
 @Original(version="2.38.0", path="lib/common/shapes.c", name="record_init", key="h2lcuthzwljbcjwdeidw1jiv", definition="static void record_init(node_t * n)")
 public static void record_init(ST_Agnode_s n) {
-ENTERING("h2lcuthzwljbcjwdeidw1jiv","poly_init");
+ENTERING("h2lcuthzwljbcjwdeidw1jiv","record_init");
 try {
 	ST_field_t info;
 	final ST_pointf ul = new ST_pointf(), sz = new ST_pointf();
     boolean flip;
     int len;
     CString textbuf;		/* temp buffer for storing labels */
+    
 	int sides = BOTTOM | RIGHT | TOP | LEFT;
 	/* Always use rankdir to determine how records are laid out */
 	flip = NOT(GD_realflip(agraphof(n)));
@@ -1804,8 +1809,8 @@ UNSUPPORTED("2wv3zfqhq53941rwk4vu9p9th"); // 	info = parse_reclbl(n, flip, NOT(0
     }
     Memory.free(textbuf);
     size_reclbl(n, info);
-    sz.x = (ROUND((ND_width(n))*72));
-    sz.y = (ROUND((ND_height(n))*72));
+    sz.x = POINTS(ND_width(n));;
+    sz.y = POINTS(ND_height(n));
     if (mapbool(late_string(n, Z.z().N_fixed, new CString("false")))) {
 UNSUPPORTED("8iu51xbtntpdf5sc00g91djym"); // 	if ((sz.x < info->size.x) || (sz.y < info->size.y)) {
 UNSUPPORTED("4vs5u30jzsrn6fpjd327xjf7r"); // /* should check that the record really won't fit, e.g., there may be no text.
@@ -1819,8 +1824,8 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     resize_reclbl(info, sz, mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))));
     ul.___(pointfof(-sz.x / 2., sz.y / 2.));	/* FIXME - is this still true:    suspected to introduce ronding error - see Kluge below */
     pos_reclbl(info, ul, sides);
-    ND_width(n, ((info.size.x)/(double)72));
-    ND_height(n, ((info.size.y + 1)/(double)72));	/* Kluge!!  +1 to fix rounding diff between layout and rendering 
+    ND_width(n, PS2INCH(info.size.x));
+    ND_height(n, PS2INCH(info.size.y + 1));	/* Kluge!!  +1 to fix rounding diff between layout and rendering 
 						   otherwise we can get -1 coords in output */
     ND_shape_info(n, info);
 } finally {
@@ -2410,6 +2415,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 //3 ckbg1dyu9jzx7g0c9dbriez7r
 // port resolvePort(node_t * n, node_t * other, port * oldport) 
 @Unused
+@Doc("Choose closestSide of a node")
 @Original(version="2.38.0", path="lib/common/shapes.c", name="resolvePort", key="ckbg1dyu9jzx7g0c9dbriez7r", definition="port resolvePort(node_t * n, node_t * other, port * oldport)")
 public static ST_port resolvePort(ST_Agnode_s n, ST_Agnode_s other, ST_port oldport) {
 // WARNING!! STRUCT

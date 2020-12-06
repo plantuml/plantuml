@@ -48,8 +48,6 @@ import static gen.lib.cdt.dtrestore__c.dtrestore;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtils.strcmp;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DT_ATTACH;
 import static smetana.core.Macro.DT_CLEAR;
 import static smetana.core.Macro.DT_DELETE;
@@ -72,6 +70,8 @@ import static smetana.core.Macro.llink____warning;
 import static smetana.core.Macro.lrotate;
 import static smetana.core.Macro.rlink____warning;
 import static smetana.core.Macro.rrotate;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -352,17 +352,16 @@ try {
 //			else	goto no_root;
 		}
 		else if((type&(DT_DELETE|DT_DETACH))!=0) {
-		throw new UnsupportedOperationException();
 //		{	/* taking an object out of the dictionary */
 //		dt_delete:
-//			obj = (lk < 0 ? ((Dthold_t*)(root))->obj : (void*)((char*)(root) - lk) );
-//			if(disc->freef && (type&0000002))
-//				(*disc->freef)(dt,obj,disc);
-//			if(disc->link < 0)
-//				(*dt->memoryf)(dt,(void*)root,0,disc);
-//			if((dt->data->size -= 1) < 0)
-//				dt->data->size = -1;
-//			goto no_root;
+			obj = (__ptr__) _DTOBJ(root,lk);
+			//if(disc.freef!=null && (type&DT_DELETE)!=0)
+			//UNSUPPORTED("(*disc->freef)(dt,obj,disc);");
+			//if(disc.link.getSign() < 0);
+			//dt.memoryf.exe(dt, root, null, disc);
+			if((dt.data.size -= 1) < 0)
+			UNSUPPORTED("//				dt->data->size = -1;");
+			throw new no_root();
 		}
 		else if((type&(DT_INSERT|DT_ATTACH))!=0)
 		{	if((dt.meth.type&DT_OSET)!=0)

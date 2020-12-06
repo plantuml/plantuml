@@ -62,8 +62,6 @@ import static smetana.core.JUtils.strchr;
 import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtils.strtod;
 import static smetana.core.JUtils.strtol;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DEFAULT_FONTSIZE;
 import static smetana.core.Macro.DEFAULT_NODEHEIGHT;
 import static smetana.core.Macro.DEFAULT_NODESHAPE;
@@ -109,7 +107,10 @@ import static smetana.core.Macro.TAIL_ID;
 import static smetana.core.Macro.TAIL_LABEL;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.fabs;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
+import gen.annotation.Doc;
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
 import gen.annotation.Unused;
@@ -1110,6 +1111,7 @@ LEAVING("13cpqbf2ztcjdfz4a6v7nv00u","setEdgeType");
 
 
 @Reviewed(when = "13/11/2020")
+@Doc("Store size of a node from inch")
 @Original(version="2.38.0", path="lib/common/utils.c", name="gv_nodesize", key="80q488y0eqojtsm7osnfydmo5", definition="void gv_nodesize(node_t * n, boolean flip)")
 public static void gv_nodesize(ST_Agnode_s n, boolean flip) {
 ENTERING("80q488y0eqojtsm7osnfydmo5","gv_nodesize");

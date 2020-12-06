@@ -65,10 +65,12 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class MindMapDiagram extends UmlDiagram {
 
@@ -97,20 +99,28 @@ public class MindMapDiagram extends UmlDiagram {
 
 		final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final int margin1;
-		final int margin2;
-		final HColor backgroundColor;
-		margin1 = SkinParam.zeroMargin(10);
-		margin2 = SkinParam.zeroMargin(10);
+		final int margin1 = SkinParam.zeroMargin(10);
+		final int margin2 = SkinParam.zeroMargin(10);
 		final Style style = StyleSignature.of(SName.root, SName.document, SName.mindmapDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-		final ImageBuilder imageBuilder = ImageBuilder.buildBB(skinParam.getColorMapper(), skinParam.handwritten(),
-				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null,
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, "", dpiFactor, backgroundColor);
+
+		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		if (backgroundColor == null) {
+			backgroundColor = HColorUtils.transparent();
+		}
+
+		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
+		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
+
+		final ImageParameter imageParameter = new ImageParameter(skinParam.getColorMapper(), skinParam.handwritten(),
+				null, dpiFactor, metadata, "", margins, backgroundColor);
+
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
+
 		TextBlock result = getTextBlock();
 
-		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
+		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))
+				.addAdd(result);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);

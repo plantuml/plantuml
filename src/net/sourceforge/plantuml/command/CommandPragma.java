@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.StringTokenizer;
+
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -67,15 +69,22 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
 		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
 		final String value = arg.get("VALUE", 0);
-		system.getPragma().define(name, value);
-		if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("smetana")) {
-			system.setUseJDot(true);
-		}
-		if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot")) {
-			system.setUseJDot(true);
-		}
-		if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase(GraphvizUtils.VIZJS)) {
-			system.getSkinParam().setUseVizJs(true);
+		if (name.equalsIgnoreCase("svgsize")) {
+			if (value.contains(" ")) {
+				final StringTokenizer st = new StringTokenizer(value);
+				system.getSkinParam().setSvgSize(st.nextToken(), st.nextToken());
+			}
+		} else {
+			system.getPragma().define(name, value);
+			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("smetana")) {
+				system.setUseJDot(true);
+			}
+			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot")) {
+				system.setUseJDot(true);
+			}
+			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase(GraphvizUtils.VIZJS)) {
+				system.getSkinParam().setUseVizJs(true);
+			}
 		}
 		return CommandExecutionResult.ok();
 	}

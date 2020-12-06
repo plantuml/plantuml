@@ -54,8 +54,6 @@ import static gen.lib.common.htmltable__c.make_html_label;
 import static gen.lib.common.utils__c.htmlEntityUTF8;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strlen;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGRAPH;
@@ -73,8 +71,11 @@ import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_label;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.hackInitDimensionFromLabel;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
+import gen.annotation.Doc;
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
 import gen.annotation.Unused;
@@ -92,6 +93,7 @@ import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
+import smetana.core.debug.SmetanaDebug;
 
 public class labels__c {
 
@@ -100,6 +102,7 @@ public class labels__c {
 
 @Reviewed(when = "13/11/2020")
 @Difficult
+@Doc("Compute size of a string and store size")
 @Original(version="2.38.0", path="lib/common/labels.c", name="storeline", key="4wkeqik2dt7ecr64ej6ltbnvb", definition="static void storeline(GVC_t *gvc, textlabel_t *lp, char *line, char terminator)")
 public static void storeline(ST_GVC_s gvc, ST_textlabel_t lp, CString line, char terminator) {
 ENTERING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
@@ -119,6 +122,7 @@ try {
 	size.x = 0.0;
 	size.y = (int)(lp.fontsize * 1.20);
 	hackInitDimensionFromLabel(size, line.getContent());
+    SmetanaDebug.LOG("storeline line.getContent()="+line.getContent()+" size="+size);
 	span.size.y = (int)size.y;
 
     lp.nspans++;
@@ -126,6 +130,7 @@ try {
     lp.dimen.x = MAX(lp.dimen.x, size.x);
     /* accumulate height */
     lp.dimen.y = lp.dimen.y + size.y;
+    SmetanaDebug.LOG("storeline "+lp);
 } finally {
 LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 }
@@ -135,6 +140,7 @@ LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 
 
 @Reviewed(when = "12/11/2020")
+@Doc("Parse simple label")
 @Original(version="2.38.0", path="lib/common/labels.c", name="make_simple_label", key="22ar72ye93a8ntj8pagnt5b5k", definition="void make_simple_label(GVC_t * gvc, textlabel_t * lp)")
 public static void make_simple_label(ST_GVC_s gvc, ST_textlabel_t lp) {
 ENTERING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");

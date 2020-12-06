@@ -66,8 +66,6 @@ import static gen.lib.dotgen.mincross__c.virtual_weight;
 import static gen.lib.dotgen.position__c.ports_eq;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.CLUSTER_EDGE;
 import static smetana.core.Macro.ED_conc_opp_flag;
@@ -99,6 +97,8 @@ import static smetana.core.Macro.ND_ranktype;
 import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.ND_weight_class;
 import static smetana.core.Macro.agfindedge;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;
@@ -111,8 +111,8 @@ import h.ST_Agnode_s;
 import h.ST_Agraph_s;
 import h.ST_pointf;
 import smetana.core.CArrayOfStar;
-import smetana.core.JUtilsDebug;
 import smetana.core.Z;
+import smetana.core.debug.SmetanaDebug;
 
 /* classify edges for mincross/nodepos/splines, using given ranks */
 public class class2__c {
@@ -378,14 +378,13 @@ try {
 	}
     
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
-    	JUtilsDebug.LOG("n="+n.NAME);
+
 	if ((ND_clust(n) == null) && (EQ(n, UF_find(n)))) {
 	    fast_node(g, n);
 	    GD_n_nodes(g, GD_n_nodes(g) + 1);
 	}
 	prev = null;
 	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
-		JUtilsDebug.LOG("e="+e.NAME);
 		
 	    /* already processed */
 	    if (ED_to_virt(e)!=null) {
@@ -485,9 +484,8 @@ try {
 		prev = e;
 	    }
 	}
-	JUtilsDebug.LOG("OUT1");
+
     }
-    JUtilsDebug.LOG("OUT2");
     /* since decompose() is not called on subgraphs */
     if (NEQ(g, dot_root(g))) {
     GD_comp(g).list = CArrayOfStar.<ST_Agnode_s>REALLOC(1, GD_comp(g).list, ST_Agnode_s.class);

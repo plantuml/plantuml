@@ -44,11 +44,12 @@
  *
  */
 package gen.lib.common;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
+import gen.annotation.Reviewed;
 import gen.annotation.Unused;
 import h.ST_pointf;
 
@@ -92,8 +93,7 @@ LEAVING("3aiyj7urv33rvps5ds204tciu","rotatepf");
 
 
 //3 5q8h2tm3jifiasn423wrm0y60
-// pointf cwrotatepf(pointf p, int cwrot) 
-@Unused
+@Reviewed(when = "01/12/2020")
 @Original(version="2.38.0", path="lib/common/geom.c", name="cwrotatepf", key="5q8h2tm3jifiasn423wrm0y60", definition="pointf cwrotatepf(pointf p, int cwrot)")
 public static ST_pointf cwrotatepf(final ST_pointf p, int cwrot) {
 // WARNING!! STRUCT

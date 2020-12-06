@@ -75,9 +75,12 @@ import net.sourceforge.plantuml.ImageSelection;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 class ImageWindow2 extends JFrame {
@@ -313,13 +316,13 @@ class ImageWindow2 extends JFrame {
 			image = ImageIO.read(new SFile(png.getAbsolutePath()));
 			if (sizeMode == SizeMode.ZOOM_FIT) {
 				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
-				final Dimension newImgDim = ImageHelper
-						.getScaledDimension(imageDim, scrollPane.getViewport().getSize());
+				final Dimension newImgDim = ImageHelper.getScaledDimension(imageDim,
+						scrollPane.getViewport().getSize());
 				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), true);
 			} else if (sizeMode == SizeMode.WIDTH_FIT) {
 				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
-				final Dimension newImgDim = ImageHelper.getScaledDimensionWidthFit(imageDim, scrollPane.getViewport()
-						.getSize());
+				final Dimension newImgDim = ImageHelper.getScaledDimensionWidthFit(imageDim,
+						scrollPane.getViewport().getSize());
 				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), false);
 			} else if (zoomFactor != 0) {
 				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
@@ -329,8 +332,10 @@ class ImageWindow2 extends JFrame {
 		} catch (IOException ex) {
 			final String msg = "Error reading file: " + ex.toString();
 			final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList(msg), false);
-			final ImageBuilder imageBuilder = ImageBuilder.buildA(new ColorMapperIdentity(),
-					false, null, null, null, 1.0, error.getBackcolor());
+			HColor backcolor = error.getBackcolor();
+			final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, null,
+					null, ClockwiseTopRightBottomLeft.none(), backcolor);
+			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 			imageBuilder.setUDrawable(error);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {

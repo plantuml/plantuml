@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockRecentred;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -65,6 +66,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionXorYBuilder;
@@ -207,17 +209,18 @@ public class ActivityDiagram3 extends UmlDiagram {
 			throws IOException {
 		// BUG42
 		// COMPRESSION
-		swinlanes.computeSize(fileFormatOption.getDefaultStringBounder());
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
+		swinlanes.computeSize(stringBounder);
 		TextBlock result = swinlanes;
 
-		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, fileFormatOption.getDefaultStringBounder());
-		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, fileFormatOption.getDefaultStringBounder());
+		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, stringBounder);
+		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);
 
 		result = new TextBlockRecentred(result);
 		final ISkinParam skinParam = getSkinParam();
-		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
+		result = new AnnotatedWorker(this, skinParam, stringBounder).addAdd(result);
 
-		final Dimension2D dim = result.getMinMax(fileFormatOption.getDefaultStringBounder()).getDimension();
+		final Dimension2D dim = result.getMinMax(stringBounder).getDimension();
 		final ClockwiseTopRightBottomLeft margins;
 		if (UseStyle.useBetaStyle()) {
 			margins = ClockwiseTopRightBottomLeft.marginForDocument(skinParam.getCurrentStyleBuilder());
@@ -228,8 +231,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final double dpiFactor = getDpiFactor(fileFormatOption,
 				Dimension2DDouble.delta(dim, margins.getLeft() + margins.getRight(), 0));
 
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(), margins, getAnimation(),
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), dpiFactor);
+		final HColor backcolor = skinParam.getBackgroundColor(false);
+		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
+		final ImageParameter imageParameter = new ImageParameter(skinParam, getAnimation(), dpiFactor, metadata,
+				getWarningOrError(), margins, backcolor);
+
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);

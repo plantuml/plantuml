@@ -65,8 +65,6 @@ import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.USHRT_MAX;
 import static smetana.core.JUtils.atof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGOUTEDGE;
 import static smetana.core.Macro.AGTYPE;
@@ -133,6 +131,8 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.UNSURE_ABOUT;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.Macro.free_list;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;

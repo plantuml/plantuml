@@ -48,9 +48,9 @@ import static gen.lib.label.rectangle__c.CombineRect;
 import static gen.lib.label.rectangle__c.InitRect;
 import static gen.lib.label.rectangle__c.RectArea;
 import static gen.lib.label.split_q__c.SplitNode;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Unused;

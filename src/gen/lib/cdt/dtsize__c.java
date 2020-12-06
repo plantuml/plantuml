@@ -44,14 +44,14 @@
  *
  */
 package gen.lib.cdt;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.DT_LIST;
 import static smetana.core.Macro.DT_OBAG;
 import static smetana.core.Macro.DT_OSET;
 import static smetana.core.Macro.DT_QUEUE;
 import static smetana.core.Macro.DT_STACK;
 import static smetana.core.Macro.UNFLATTEN;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

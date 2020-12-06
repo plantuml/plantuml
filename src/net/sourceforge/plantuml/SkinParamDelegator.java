@@ -364,4 +364,12 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.actorStyle();
 	}
 
+	public void setSvgSize(String origin, String sizeToUse) {
+		skinParam.setSvgSize(origin, sizeToUse);
+	}
+
+	public String transformStringForSizeHack(String s) {
+		return skinParam.transformStringForSizeHack(s);
+	}
+
 }

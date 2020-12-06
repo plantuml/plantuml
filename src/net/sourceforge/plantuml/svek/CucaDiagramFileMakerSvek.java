@@ -44,6 +44,7 @@ import java.util.List;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.NamedOutputStream;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -61,6 +62,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
@@ -94,15 +96,15 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
 		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			new CucaDiagramSimplifierActivity(diagram, dotStrings, fileFormatOption.getDefaultStringBounder());
+			new CucaDiagramSimplifierActivity(diagram, dotStrings, stringBounder);
 		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
-			new CucaDiagramSimplifierState(diagram, dotStrings, fileFormatOption.getDefaultStringBounder());
+			new CucaDiagramSimplifierState(diagram, dotStrings, stringBounder);
 		}
 
 		// System.err.println("FOO11 type=" + os.getClass());
-		GeneralImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL,
-				fileFormatOption.getDefaultStringBounder());
+		GeneralImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL, stringBounder);
 		BaseFile basefile = null;
 		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream) {
 			basefile = ((NamedOutputStream) os).getBasefile();
@@ -111,20 +113,18 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 		TextBlockBackcolored result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		if (result instanceof GraphvizCrash) {
-			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT_AND_XLABEL,
-					fileFormatOption.getDefaultStringBounder());
+			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT_AND_XLABEL, stringBounder);
 			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		}
 		final boolean isGraphvizCrash = result instanceof GraphvizCrash;
-		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), fileFormatOption.getDefaultStringBounder())
-				.addAdd(result);
+		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder).addAdd(result);
 
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
 		String warningOrError = null;
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
 			warningOrError = svek2.getWarningOrError(Integer.parseInt(widthwarning));
 		}
-		final Dimension2D dim = result.calculateDimension(fileFormatOption.getDefaultStringBounder());
+		final Dimension2D dim = result.calculateDimension(stringBounder);
 		final double scale = getScale(fileFormatOption, dim);
 
 		final HColor backcolor = result.getBackcolor();
@@ -136,8 +136,13 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		} else {
 			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildC(diagram.getSkinParam(), margins, diagram.getAnimation(),
-				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError, scale, backcolor);
+		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
+
+		final ISkinParam skinParam = diagram.getSkinParam();
+		final ImageParameter imageParameter = new ImageParameter(skinParam, diagram.getAnimation(), scale, metadata,
+				warningOrError, margins, backcolor);
+
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
 		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 		if (isGraphvizCrash) {

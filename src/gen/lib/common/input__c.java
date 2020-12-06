@@ -63,8 +63,6 @@ import static smetana.core.JUtils.atof;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.getenv;
 import static smetana.core.JUtils.strstr;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.BOTTOM_IX;
@@ -104,6 +102,8 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.agfindedgeattr;
 import static smetana.core.Macro.agfindgraphattr;
 import static smetana.core.Macro.agfindnodeattr;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -277,13 +277,11 @@ UNSUPPORTED("7vlda224wrgcdhr0ts3mndh5q"); // 	    rankdir = 3;
     
     p = late_string(g, agfindgraphattr(g, "ranksep"), null);
     if (p!=null) {
-UNSUPPORTED("c3p25g4289dxlei062z4eflss"); // 	if (sscanf(p, "%lf", &xf) == 0)
-UNSUPPORTED("570vljex12zx5dkwi7mqa9knw"); // 	    xf = 0.5;
-UNSUPPORTED("8k75h069sv2k9b6tgz77dscwd"); // 	else {
-UNSUPPORTED("p882lodfwy5v48rwbxvg5s9i"); // 	    if (xf < 0.02)
-UNSUPPORTED("dhhbmqv6n01j1eeyy7fpus1xw"); // 		xf = 0.02;
+    	xf = atof(p);
+    	if (xf < 0.02)
+    		xf = 0.02;
 
-	if (strstr(p, new CString("equally"))!=null)
+	if (p.isSame(new CString("equally")))
 	    GD_exact_ranksep(g, 1);
     } else
 	xf = DEFAULT_RANKSEP;

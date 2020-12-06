@@ -90,6 +90,8 @@ public class LanguageDescriptor {
 		keyword.add("@enddot");
 		keyword.add("@startsalt");
 		keyword.add("@endsalt");
+		keyword.add("@startjson");
+		keyword.add("@endjson");
 		keyword.add("as");
 		keyword.add("also");
 		keyword.add("autonumber");

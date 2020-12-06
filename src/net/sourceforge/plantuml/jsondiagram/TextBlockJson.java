@@ -201,7 +201,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 				getTotalHeight(stringBounder));
 	}
 
-	private double getWidthColA(StringBounder stringBounder) {
+	public double getWidthColA(StringBounder stringBounder) {
 		double width = 0;
 		for (Line line : lines) {
 			width = Math.max(width, line.b1.calculateDimension(stringBounder).getWidth());
@@ -209,7 +209,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 		return width;
 	}
 
-	private double getWidthColB(StringBounder stringBounder) {
+	public double getWidthColB(StringBounder stringBounder) {
 		double width = 0;
 		for (Line line : lines) {
 			if (line.b2 != null) {

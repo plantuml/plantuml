@@ -92,8 +92,8 @@ public final class FileFormatOption implements Serializable {
 		}
 	}
 
-	public StringBounder getDefaultStringBounder() {
-		return fileFormat.getDefaultStringBounder(tikzFontDistortion);
+	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
+		return fileFormat.getDefaultStringBounder(tikzFontDistortion, charSizeHack);
 	}
 
 	public String getSvgLinkTarget() {

@@ -52,8 +52,6 @@ import static gen.lib.pathplan.util__c.make_polyline;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.cos;
 import static smetana.core.JUtils.sin;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ABS;
 import static smetana.core.Macro.ED_edge_type;
 import static smetana.core.Macro.ED_to_orig;
@@ -62,6 +60,8 @@ import static smetana.core.Macro.INT_MIN;
 import static smetana.core.Macro.MIN;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Unused;
@@ -396,7 +396,7 @@ UNSUPPORTED("11hwqop4xebvtcskop4uhpp01"); // 	return NULL;
     
     
     if (polyline!=0) {
-UNSUPPORTED("48veztc3k9dfw8tqolu7jsktk"); // 	make_polyline (pl, &spl);
+	make_polyline (pl, spl);
     }
     else {
 	if (poly.pn > Z.z().edgen) {
@@ -507,12 +507,7 @@ LEAVING("axqoytp2rpr8crajhkuvns6q9","routesplines");
 public static CArray<ST_pointf> routepolylines(ST_path pp, int npoints[]) {
 ENTERING("2v22s41xitwnnsljk9n01nrcy","routepolylines");
 try {
- UNSUPPORTED("1kjkc6bl8zpf8zjcwgbyni9p3"); // pointf *routepolylines(path * pp, int *npoints)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("6wf7p4npeom96y0l1v39essmx"); //     return _routesplines (pp, npoints, 1);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    return _routesplines (pp, npoints, 1);
 } finally {
 LEAVING("2v22s41xitwnnsljk9n01nrcy","routepolylines");
 }

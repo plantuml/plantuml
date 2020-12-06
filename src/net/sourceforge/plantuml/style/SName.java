@@ -76,6 +76,7 @@ public enum SName {
 	header, //
 	interface_, //
 	jsonDiagram, //
+	gitDiagram, //
 	leafNode, //
 	legend, //
 	lifeLine, //

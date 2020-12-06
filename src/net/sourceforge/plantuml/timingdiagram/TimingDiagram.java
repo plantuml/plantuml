@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -112,13 +113,18 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 			margin1 = 10;
 			margin2 = 10;
 		}
-		final ImageBuilder imageBuilder = ImageBuilder.buildD(getSkinParam(),
-				ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), getAnimation(),
-				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), dpiFactor);
+		ISkinParam skinParam1 = getSkinParam();
+		final HColor backcolor = skinParam1.getBackgroundColor(false);
+		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
+		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
+		final ImageParameter imageParameter = new ImageParameter(skinParam1, getAnimation(), dpiFactor, metadata,
+				getWarningOrError(), margins, backcolor);
+		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		TextBlock result = getTextBlock();
 		final ISkinParam skinParam = getSkinParam();
-		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder()).addAdd(result);
+		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))
+				.addAdd(result);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);

@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondFoo1;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondSquare;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -126,13 +126,13 @@ class FtileWhile extends AbstractFtile {
 				ftileFactory.skinParam());
 
 		final Ftile diamond1;
-		if (conditionStyle == ConditionStyle.INSIDE) {
+		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {
 			diamond1 = new FtileDiamondInside(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
 					.withNorth(yesTb).withWest(outTb);
-		} else if (conditionStyle == ConditionStyle.FOO1) {
-			diamond1 = new FtileDiamondFoo1(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
+		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {
+			diamond1 = new FtileDiamondSquare(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
 					.withNorth(yesTb).withWest(outTb);
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
+		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {
 			diamond1 = new FtileDiamond(whileBlock.skinParam(), backColor, borderColor, swimlane).withNorth(testTb)
 					.withSouth(yesTb).withWest(outTb);
 		} else {

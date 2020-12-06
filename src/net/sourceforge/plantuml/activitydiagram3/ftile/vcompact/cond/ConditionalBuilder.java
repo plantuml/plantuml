@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileWithUrl;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileIfDown;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondFoo1;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondSquare;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
@@ -243,7 +243,7 @@ public class ConditionalBuilder {
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tile1.getThickness());
 
 		final Ftile diamond1;
-		if (conditionStyle == ConditionStyle.INSIDE) {
+		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {
 			if (eastWest) {
 				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
 						.withWestAndEast(tb1, tb2);
@@ -251,7 +251,7 @@ public class ConditionalBuilder {
 				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
 						.withSouth(tb1).withEast(tb2);
 			}
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
+		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {
 			if (eastWest) {
 				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
 						.withWestAndEast(tb1, tb2);
@@ -259,13 +259,13 @@ public class ConditionalBuilder {
 				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
 						.withSouth(tb1).withEast(tb2);
 			}
-		} else if (conditionStyle == ConditionStyle.FOO1) {
+		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {
 			if (eastWest) {
-				diamond1 = new FtileDiamondFoo1(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+				diamond1 = new FtileDiamondSquare(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
 						.withWestAndEast(tb1, tb2);
 			} else {
-				diamond1 = new FtileDiamondFoo1(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
-						/* .withSouth(tb1) */.withEast(tb2);
+				diamond1 = new FtileDiamondSquare(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+						.withSouth(tb1).withEast(tb2);
 			}
 		} else {
 			throw new IllegalStateException();

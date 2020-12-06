@@ -48,8 +48,8 @@ import static smetana.core.JUtils.atan2;
 import static smetana.core.JUtils.cos;
 import static smetana.core.JUtils.pow;
 import static smetana.core.JUtils.sqrt;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Unused;

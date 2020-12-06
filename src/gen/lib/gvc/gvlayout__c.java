@@ -51,8 +51,6 @@ import static gen.lib.common.input__c.graph_init;
 import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.GD_cleanup;
 import static smetana.core.Macro.GD_drawing;
 import static smetana.core.Macro.GD_gvc;
@@ -60,6 +58,8 @@ import static smetana.core.Macro.GVRENDER_PLUGIN;
 import static smetana.core.Macro.LAYOUT_USES_RANKDIR;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;

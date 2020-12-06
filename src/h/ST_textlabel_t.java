@@ -52,7 +52,6 @@ import smetana.core.__ptr__;
 
 final public class ST_textlabel_t extends UnsupportedStarStruct {
 
-
 	public CString text, fontname, fontcolor;
 	public int charset;
 	public double fontsize;
@@ -71,17 +70,16 @@ final public class ST_textlabel_t extends UnsupportedStarStruct {
 
 	public boolean html;
 
-
-
-
-
+	@Override
+	public String toString() {
+		return text + " " + dimen;
+	}
 
 	@Override
 	public boolean isSameThan(__ptr__ other) {
 		ST_textlabel_t other2 = (ST_textlabel_t) other;
 		return this == other2;
 	}
-
 
 }
 

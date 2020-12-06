@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.SvgCharSizeHack;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
@@ -87,7 +88,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
 		final UGraphicSvg ug = new UGraphicSvg(true, new Dimension2DDouble(0, 0), new ColorMapperIdentity(),
-				(String) null, false, 1.0, null, null, 0, "none");
+				(String) null, false, 1.0, null, null, 0, "none", SvgCharSizeHack.NO_HACK);
 		drawInternal(ug);
 		ug.createXml(os, null);
 		return ImageDataSimple.ok();
@@ -102,7 +103,8 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImagePng(OutputStream os) throws IOException {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight, Color.WHITE);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,
+				Color.WHITE);
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
@@ -138,8 +140,8 @@ public class GraphicsSudoku {
 				if (num > 0) {
 					final TextBlock text = Display.create("" + num).create(FontConfiguration.blackBlueTrue(numberFont),
 							HorizontalAlignment.CENTER, new SpriteContainerEmpty());
-					text.drawU(ug.apply(new UTranslate((numberxOffset + x * cellWidth),
-							(numberyOffset + y * cellHeight))));
+					text.drawU(ug
+							.apply(new UTranslate((numberxOffset + x * cellWidth), (numberyOffset + y * cellHeight))));
 				}
 			}
 		}

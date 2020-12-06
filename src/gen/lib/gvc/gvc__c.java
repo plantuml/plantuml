@@ -48,10 +48,10 @@ import static gen.lib.cgraph.attr__c.agattr;
 import static gen.lib.common.textspan__c.textfont_dict_open;
 import static gen.lib.gvc.gvcontext__c.gvNEWcontext;
 import static gen.lib.gvc.gvtextlayout__c.gvtextlayout_select;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.NOT;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Original;
 import gen.annotation.Unused;

@@ -649,7 +649,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		entityFactory.buildSuperGroups();
 
 		final CucaDiagramFileMaker maker = this.isUseJDot()
-				? new CucaDiagramFileMakerJDot(this, fileFormatOption.getDefaultStringBounder())
+				? new CucaDiagramFileMakerJDot(this, fileFormatOption.getDefaultStringBounder(getSkinParam()))
 				: new CucaDiagramFileMakerSvek(this);
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
 

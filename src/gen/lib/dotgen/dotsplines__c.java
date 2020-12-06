@@ -51,7 +51,6 @@ import static gen.lib.cgraph.edge__c.agtail;
 import static gen.lib.cgraph.node__c.agfstnode;
 import static gen.lib.cgraph.node__c.agnxtnode;
 import static gen.lib.cgraph.obj__c.agraphof;
-import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.routespl__c.makeStraightEdge;
 import static gen.lib.common.routespl__c.routepolylines;
 import static gen.lib.common.routespl__c.routesplines;
@@ -72,12 +71,12 @@ import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.qsort1;
-import static smetana.core.JUtils.sizeof;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.ABS;
 import static smetana.core.Macro.AGSEQ;
 import static smetana.core.Macro.BETWEEN;
+import static smetana.core.Macro.BOTTOM;
+import static smetana.core.Macro.EDGETYPEMASK;
+import static smetana.core.Macro.EDGE_LABEL;
 import static smetana.core.Macro.ED_adjacent;
 import static smetana.core.Macro.ED_edge_type;
 import static smetana.core.Macro.ED_head_port;
@@ -87,8 +86,12 @@ import static smetana.core.Macro.ED_tail_port;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.ED_to_virt;
 import static smetana.core.Macro.ED_tree_index;
+import static smetana.core.Macro.ET_CURVED;
 import static smetana.core.Macro.ET_LINE;
+import static smetana.core.Macro.ET_NONE;
 import static smetana.core.Macro.ET_SPLINE;
+import static smetana.core.Macro.FLATEDGE;
+import static smetana.core.Macro.FLATORDER;
 import static smetana.core.Macro.GD_bb;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
@@ -99,6 +102,8 @@ import static smetana.core.Macro.GD_nlist;
 import static smetana.core.Macro.GD_nodesep;
 import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.GD_ranksep;
+import static smetana.core.Macro.GVSPLINES;
+import static smetana.core.Macro.IGNORED;
 import static smetana.core.Macro.MAKEFWDEDGE;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.MIN;
@@ -120,9 +125,14 @@ import static smetana.core.Macro.ND_other;
 import static smetana.core.Macro.ND_out;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_rw;
+import static smetana.core.Macro.NORMAL;
 import static smetana.core.Macro.NOTI;
+import static smetana.core.Macro.REGULAREDGE;
 import static smetana.core.Macro.ROUND;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.VIRTUAL;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;
@@ -396,6 +406,19 @@ throw new UnsupportedOperationException();
 
 
 
+private final static int NSUB = 9;
+private final static int CHUNK = 128;
+
+private final static int MINW = 16;
+private final static int HALFMINW = 8;
+
+private final static int FWDEDGE = 16;
+private final static int BWDEDGE = 32;
+
+private final static int MAINGRAPH = 64;
+private final static int AUXGRAPH = 128;
+
+
 /* _dot_splines:
  * Main spline routing code.
  * The normalize parameter allows this function to be called by the
@@ -405,6 +428,7 @@ throw new UnsupportedOperationException();
  */
 //3 6agx6m2qof9lg57co232lwakj
 // static void _dot_splines(graph_t * g, int normalize) 
+@Original(version="2.38.0", path="lib/dotgen/dotsplines.c", name="_dot_splines", key="6agx6m2qof9lg57co232lwakj", definition="static void _dot_splines(graph_t * g, int normalize)")
 static void _dot_splines(ST_Agraph_s g, int normalize)
 {
 ENTERING("6agx6m2qof9lg57co232lwakj","_dot_splines");
@@ -420,10 +444,12 @@ try {
     int et = (GD_flags(g) & (7 << 1));
     fwdedgea.out.base.data = fwdedgeai;
     fwdedgeb.out.base.data = fwdedgebi;
-    if (et == (0 << 1)) return; 
-    if (et == (2 << 1)) {
+    
+    if (et == ET_NONE) return; 
+
+    if (et == ET_CURVED) {
 	resetRW (g);
-	if ((GD_has_labels(g) & (1 << 0))!=0) {
+	if ((GD_has_labels(g) & EDGE_LABEL)!=0) {
 UNSUPPORTED("4k888z8ymdp2b653twxc1ugbu"); // 	    agerr (AGWARN, "edge labels with splines=curved not supported in dot - use xlabels\n");
 	}
 	for (n = agfstnode (g); n!=null; n = agnxtnode(g, n)) {
@@ -433,13 +459,15 @@ UNSUPPORTED("4k888z8ymdp2b653twxc1ugbu"); // 	    agerr (AGWARN, "edge labels wi
 	}
 UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
     } 
+    
+    
     mark_lowclusters(g);
     if (routesplinesinit()!=0) return;
-    P = (ST_path) zmalloc(sizeof(ST_path.class));
+    P = new ST_path();
     /* FlatHeight = 2 * GD_nodesep(g); */
     sd.Splinesep = GD_nodesep(g) / 4;
     sd.Multisep = GD_nodesep(g);
-    edges = CArrayOfStar.<ST_Agedge_s>ALLOC(128, ST_Agedge_s.class);
+    edges = CArrayOfStar.<ST_Agedge_s>ALLOC(CHUNK, ST_Agedge_s.class);
     
     /* compute boundaries and list of splines */
     sd.RightBound = 0;
@@ -451,11 +479,11 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    sd.LeftBound = (int)MIN(sd.LeftBound, (ND_coord(n).x - ND_lw(n)));
 	if (GD_rank(g).get__(i).n!=0 && (n = GD_rank(g).get__(i).v.get_(GD_rank(g).get__(i).n - 1))!=null)
 	    sd.RightBound = (int)MAX(sd.RightBound, (ND_coord(n).x + ND_rw(n)));
-	sd.LeftBound = sd.LeftBound - 16;
-	sd.RightBound = sd.RightBound + 16;
+	sd.LeftBound -= MINW;
+	sd.RightBound += MINW;
 	
 	for (j = 0; j < GD_rank(g).get__(i).n; j++) {
-	    n = (ST_Agnode_s) GD_rank(g).get__(i).v.get_(j);
+	    n = GD_rank(g).get__(i).v.get_(j);
 		/* if n is the label of a flat edge, copy its position to
 		 * the label.
 		 */
@@ -465,24 +493,24 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		ED_label(fe).pos.___(ND_coord(n));
 		ED_label(fe).set= NOTI(false);
 	    }
-	    if ((ND_node_type(n) != 0) &&
+	    if ((ND_node_type(n) != NORMAL) &&
 		((Boolean)Z.z().sinfo.splineMerge.exe(n) == false))
 		continue;
-	    for (k = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(k))!=null; k++) {
-		if ((ED_edge_type(e) == 4)
-		    || (ED_edge_type(e) == 6))
+	    for (k = 0; (e = ND_out(n).list.get_(k))!=null; k++) {
+		if ((ED_edge_type(e) == FLATORDER)
+		    || (ED_edge_type(e) == IGNORED))
 		    continue;
-		setflags(e, 1, 16, 64);
+		setflags(e, REGULAREDGE, FWDEDGE, MAINGRAPH);
 		edges.set_(n_edges++, e);
-		if (n_edges % 128 == 0)
-		    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + 128, edges, ST_Agedge_s.class);
+		if (n_edges % CHUNK == 0)
+		    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ST_Agedge_s.class);
 	    }
 	    if (ND_flat_out(n).list!=null)
-		for (k = 0; (e = (ST_Agedge_s) ND_flat_out(n).list.get_(k))!=null; k++) {
-		    setflags(e, 2, 0, 128);
+		for (k = 0; (e = ND_flat_out(n).list.get_(k))!=null; k++) {
+		    setflags(e, FLATEDGE, 0, AUXGRAPH);
 			edges.set_(n_edges++, e);
-		    if (n_edges % 128 == 0)
-			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + 128, edges, ST_Agedge_s.class);
+		    if (n_edges % CHUNK == 0)
+			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ST_Agedge_s.class);
 		}
 	    if (ND_other(n).list!=null) {
 		/* In position, each node has its rw stored in mval and,
@@ -490,16 +518,16 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
                  * reflect the loops and associated labels. We restore
                  * the original value here. 
                  */
-		if (ND_node_type(n) == 0) {
+		if (ND_node_type(n) == NORMAL) {
 		    double tmp = ND_rw(n);
 		    ND_rw(n, ND_mval(n));
 		    ND_mval(n, tmp);
 		}
-		for (k = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(k))!=null; k++) {
-		    setflags(e, 0, 0, 128);
+		for (k = 0; (e = ND_other(n).list.get_(k))!=null; k++) {
+		    setflags(e, 0, 0, AUXGRAPH);
 			edges.set_(n_edges++, e);
-		    if (n_edges % 128 == 0)
-			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + 128, edges, ST_Agedge_s.class);
+		    if (n_edges % CHUNK == 0)
+			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ST_Agedge_s.class);
 		}
 	    }
 	}
@@ -511,20 +539,23 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
      * routed separately.
      */
     LOG2("_dot_splines::n_edges="+n_edges);
-    qsort1(edges,
-    n_edges,
+    qsort1(edges, n_edges,
     dotsplines__c.edgecmp);
+    
+
     /* FIXME: just how many boxes can there be? */
-    P.boxes = ST_boxf.malloc(n_nodes + 20 * 2 * 9);
+    P.boxes = ST_boxf.malloc(n_nodes + 20 * 2 * NSUB);
     sd.Rank_box = ST_boxf.malloc(i);
-    if (et == (1 << 1)) {
+    
+    if (et == ET_LINE) {
     /* place regular edge labels */
 	for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	    if ((ND_node_type(n) == 1) && (ND_label(n)!=null)) {
+	    if ((ND_node_type(n) == VIRTUAL) && (ND_label(n)!=null)) {
 		place_vnlabel(n);
 	    }
 	}
     }
+    
     for (i = 0; i < n_edges;) {
  	boolean havePorts;
 	ind = i;
@@ -536,10 +567,11 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    havePorts = false;
 	    ea =  le0;
 	}
-	if ((ED_tree_index(ea) & 32)!=0) {
+	if ((ED_tree_index(ea) & BWDEDGE)!=0) {
 	    MAKEFWDEDGE(fwdedgea.out, ea);
 	    ea = fwdedgea.out;
 	}
+
 	for (cnt = 1; i < n_edges; cnt++, i++) {
 	    if (NEQ(le0, (le1 = getmainedge((e1 = edges.get_(i))))))
 		break;
@@ -553,20 +585,21 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		else
 		    eb = le1;
 	    }
-	    if ((ED_tree_index(eb) & 32)!=0) {
+	    if ((ED_tree_index(eb) & BWDEDGE)!=0) {
 		MAKEFWDEDGE(fwdedgeb.out, eb);
-		eb = (ST_Agedge_s) fwdedgeb.out;
+		eb = fwdedgeb.out;
 	    }
 	    if (portcmp(ED_tail_port(ea), ED_tail_port(eb))!=0)
 		break;
 	    if (portcmp(ED_head_port(ea), ED_head_port(eb))!=0)
 		break;
-	    if ((ED_tree_index(e0) & 15) == 2
+	    if ((ED_tree_index(e0) & EDGETYPEMASK) == FLATEDGE
 		&& NEQ(ED_label(e0), ED_label(e1)))
 		break;
-	    if ((ED_tree_index(edges.get_(i)) & 64)!=0)	/* Aha! -C is on */
+	    if ((ED_tree_index(edges.get_(i)) & MAINGRAPH)!=0)	/* Aha! -C is on */
 		break;
 	}
+	
 	if (EQ(agtail(e0), aghead(e0))) {
 	    int b, sizey, r;
 	    n = agtail(e0);
@@ -600,11 +633,12 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
     }
     /* place regular edge labels */
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	if ((ND_node_type(n) == 1) && (ND_label(n))!=null) {
+	if ((ND_node_type(n) == VIRTUAL) && (ND_label(n))!=null) {
 	    place_vnlabel(n);
 	    updateBB(g, ND_label(n));
 	}
     }
+
     /* normalize splines so they always go from tail to head */
     /* place_portlabel relies on this being done first */
     if (normalize!=0)
@@ -632,14 +666,14 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
     /* end vladimir */
-    if (et != (2 << 1)) {
+    if (et != ET_CURVED) {
 	Memory.free(edges);
 	Memory.free(P.boxes);
 	Memory.free(P);
 	Memory.free(sd.Rank_box);
 	routesplinesterm();
     } 
-    Z.z().State = 1;
+    Z.z().State = GVSPLINES;
     Z.z().EdgeLabelsDone = 1;
 } finally {
 LEAVING("6agx6m2qof9lg57co232lwakj","_dot_splines");
@@ -1589,6 +1623,7 @@ LEAVING("2n9bpvx34fnukqu1f9u4v7v6n","makeLineEdge");
 }
 
 
+private static final int NUMPTS = 2000;
 
 //3 30wfq1dby4t07hft9io52nq6z
 // static void make_regular_edge(graph_t* g, spline_info_t* sp, path * P, edge_t ** edges, int ind, int cnt, int et) 
@@ -1608,14 +1643,16 @@ try {
     boolean smode;
     int pn[] = new int[] {0};
     int pointn[] = new int[] {0};
+   
     fwdedgea.out.base.data = fwdedgeai;
     fwdedgeb.out.base.data = fwdedgebi;
     fwdedge.out.base.data = fwdedgei;
+    
     if (N(Z.z().pointfs)) {
-	Z.z().pointfs = CArray.<ST_pointf>ALLOC__(2000, ST_pointf.class);
-   	Z.z().pointfs2 = CArray.<ST_pointf>ALLOC__(2000, ST_pointf.class);
-	Z.z().numpts = 2000;
-	Z.z().numpts2 = 2000;
+	Z.z().pointfs = CArray.<ST_pointf>ALLOC__(NUMPTS, ST_pointf.class);
+   	Z.z().pointfs2 = CArray.<ST_pointf>ALLOC__(NUMPTS, ST_pointf.class);
+	Z.z().numpts = NUMPTS;
+	Z.z().numpts2 = NUMPTS;
     }
     sl = 0;
     e = edges.get_(ind);
@@ -1645,17 +1682,19 @@ UNSUPPORTED("8kdma1vi9aibo7isrge0lunrh"); // 	ED_to_orig(&fwdedgea.out) = e;
 UNSUPPORTED("eih8eaai768x1un5mixrtgstp"); // 	e = &fwdedgea.out;
 UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
     } else {
-	if ((ED_tree_index(e) & 32)!=0) {
+	if ((ED_tree_index(e) & BWDEDGE)!=0) {
 	    MAKEFWDEDGE(fwdedgea.out, e);
 	    e = fwdedgea.out;
 	}
     }
     fe = e;
+    
     /* compute the spline points for the edge */
-    if ((et == (1 << 1)) && (pointn[0] = makeLineEdge (g, fe, Z.z().pointfs, hn.unsupported()))!=0) {
+    
+    if ((et == ET_LINE) && (pointn[0] = makeLineEdge (g, fe, Z.z().pointfs, hn.unsupported()))!=0) {
     }
     else {
-	boolean splines = (et == (5 << 1));
+	boolean splines = (et == ET_SPLINE);
 	boxn = 0;
 	pointn[0] = 0;
 	segfirst = e;
@@ -1663,26 +1702,21 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 	hn = aghead(e);
 	b.___(maximal_bbox(g, sp, tn, null, e));
 	tend.nb.___(b);
-	beginpath(P, e, 1, tend, spline_merge(tn));
-	b.UR.y = 
-			tend.boxes[tend.boxn[0] - 1].UR.y;
-	b.LL.y = 
-			tend.boxes[tend.boxn[0] - 1].LL.y;
-	b.___(makeregularend(b, (1<<0),
+	beginpath(P, e, REGULAREDGE, tend, spline_merge(tn));
+	b.UR.y = tend.boxes[tend.boxn[0] - 1].UR.y;
+	b.LL.y = tend.boxes[tend.boxn[0] - 1].LL.y;
+	b.___(makeregularend(b, BOTTOM,
 	    	   ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));
 	if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
-	{
-	    tend.boxes[tend.boxn[0]].___(b);
-	    tend.boxn[0] = tend.boxn[0] + 1;
-	}
+	    tend.boxes[tend.boxn[0]++].___(b);
 	longedge = 0;
 	smode = false; si = -1;
-	while (ND_node_type(hn) == 1 && N(((Boolean)Z.z().sinfo.splineMerge.exe(hn)).booleanValue())) {
+	while (ND_node_type(hn) == VIRTUAL && N(((Boolean)Z.z().sinfo.splineMerge.exe(hn)).booleanValue())) {
 	    longedge = 1;
 	    Z.z().boxes[boxn++].___(rank_box(sp, g, ND_rank(tn)));
 	    if (N(smode)
 	        && ((sl = straight_len(hn)) >=
-	    	((GD_has_labels(g) & (1 << 0))!=0 ? 4 + 1 : 2 + 1))) {
+	    	((GD_has_labels(g) & EDGE_LABEL)!=0 ? 4 + 1 : 2 + 1))) {
 	        smode = true;
 	        si = 1; sl -= 2;
 	    }
@@ -1757,7 +1791,7 @@ UNSUPPORTED("cjx6tldge3otk1pk6ks1pkn2w"); // 	        tend.boxes[tend.boxn++] = 
 	    		longedge);
 	if (splines) ps = routesplines(P, pn);
 	else ps = routepolylines (P, pn);
-	if ((et == (1 << 1)) && (pn[0] > 4)) {
+	if ((et == ET_LINE) && (pn[0] > 4)) {
 	    /* Here we have used the polyline case to handle
 	     * an edge between two nodes on adjacent ranks. If the
 	     * results really is a polyline, straighten it.
@@ -2199,7 +2233,7 @@ LEAVING("dzvvmxkya868w5x78lkvchigk","cl_bound");
 }
 
 
-
+private final static int FUDGE = 4;
 
 //3 6qwgl36ugfnduc5x59ohuewv1
 // static boxf maximal_bbox(graph_t* g, spline_info_t* sp, node_t* vn, edge_t* ie, edge_t* oe) 
@@ -2216,15 +2250,17 @@ try {
     ST_Agraph_s left_cl, right_cl;
     ST_Agnode_s left, right;
     final ST_boxf rv = new ST_boxf();
+    
     left_cl = right_cl = null;
+    
     /* give this node all the available space up to its neighbors */
-    b = (double)(ND_coord(vn).x - ND_lw(vn) - 4);
+    b = (double)(ND_coord(vn).x - ND_lw(vn) - FUDGE);
     if ((left = neighbor(g, vn, ie, oe, -1))!=null) {
 	if ((left_cl = cl_bound(g, vn, left))!=null)
 	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);
 	else {
 	    nb = (double)(ND_coord(left).x + ND_mval(left));
-	    if (ND_node_type(left) == 0)
+	    if (ND_node_type(left) == NORMAL)
 		nb += GD_nodesep(g) / 2.;
 	    else
 		nb += (double)(sp.Splinesep);
@@ -2234,17 +2270,18 @@ try {
 	rv.LL.x = ROUND(b);
     } else
 	rv.LL.x = MIN(ROUND(b), sp.LeftBound);
+    
     /* we have to leave room for our own label! */
-    if ((ND_node_type(vn) == 1) && (ND_label(vn)!=null))
+    if ((ND_node_type(vn) == VIRTUAL) && (ND_label(vn)!=null))
 	b = (double)(ND_coord(vn).x + 10);
     else
-	b = (double)(ND_coord(vn).x + ND_rw(vn) + 4);
+	b = (double)(ND_coord(vn).x + ND_rw(vn) + FUDGE);
     if ((right = neighbor(g, vn, ie, oe, 1))!=null) {
 	if ((right_cl = cl_bound(g, vn, right))!=null)
 	    nb = GD_bb(right_cl).LL.x - (double)(sp.Splinesep);
 	else {
 	    nb = ND_coord(right).x - ND_lw(right);
-	    if (ND_node_type(right) == 0)
+	    if (ND_node_type(right) == NORMAL)
 		nb -= GD_nodesep(g) / 2.;
 	    else
 		nb -= (double)(sp.Splinesep);
@@ -2254,10 +2291,12 @@ try {
 	rv.UR.x = ROUND(b);
     } else
 	rv.UR.x = MAX(ROUND(b), sp.RightBound);
-    if ((ND_node_type(vn) == 1) && (ND_label(vn)!=null)) {
+    
+    if ((ND_node_type(vn) == VIRTUAL) && (ND_label(vn)!=null)) {
 	rv.UR.x = rv.UR.x - ND_rw(vn);
 	if (rv.UR.x < rv.LL.x) rv.UR.x = ND_coord(vn).x;
     }
+    
     rv.LL.y = ND_coord(vn).y - GD_rank(g).get__(ND_rank(vn)).ht1;
     rv.UR.y = ND_coord(vn).y + GD_rank(g).get__(ND_rank(vn)).ht2;
     return rv;

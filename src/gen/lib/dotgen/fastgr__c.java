@@ -50,8 +50,6 @@ import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.dotgen.dotinit__c.dot_root;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtilsDebug.ENTERING;
-import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGOUTEDGE;
@@ -88,6 +86,8 @@ import static smetana.core.Macro.UNSURE_ABOUT;
 import static smetana.core.Macro.VIRTUAL;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.Macro.elist_append;
+import static smetana.core.debug.SmetanaDebug.ENTERING;
+import static smetana.core.debug.SmetanaDebug.LEAVING;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;

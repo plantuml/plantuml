@@ -53,7 +53,10 @@ final public class ST_boxf extends UnsupportedStarStruct {
 	public final ST_pointf LL = new ST_pointf();
 	public final ST_pointf UR = new ST_pointf();
 
-
+	@Override
+	public String toString() {
+		return "LL=" + LL + " UR=" + UR;
+	}
 
 	public static ST_boxf[] malloc(int nb) {
 		final ST_boxf result[] = new ST_boxf[nb];
@@ -77,8 +80,6 @@ final public class ST_boxf extends UnsupportedStarStruct {
 		this.LL.___(other.LL);
 		this.UR.___(other.UR);
 	}
-
-
 
 }
 
