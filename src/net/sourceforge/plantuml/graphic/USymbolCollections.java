@@ -139,9 +139,4 @@ class USymbolCollections extends USymbol {
 		};
 	}
 
-	@Override
-	public boolean manageHorizontalLine() {
-		return true;
-	}
-
 }

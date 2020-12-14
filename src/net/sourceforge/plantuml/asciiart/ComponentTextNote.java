@@ -78,7 +78,11 @@ public class ComponentTextNote extends AbstractComponentText {
 				charArea.drawBoxSimple(2, 0, width - 2, height);
 			}
 		}
-		charArea.drawStringsLR(stringsToDisplay.as(), 3, 1);
+		if (fileFormat == FileFormat.UTXT) {
+			charArea.drawStringsLRUnicode(stringsToDisplay.as(), 3, 1);
+		} else {
+			charArea.drawStringsLRSimple(stringsToDisplay.as(), 3, 1);
+		}
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

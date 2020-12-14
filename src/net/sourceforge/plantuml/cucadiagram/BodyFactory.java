@@ -36,28 +36,46 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.Style;
 
-public interface Bodier {
+public class BodyFactory {
 
-	public void setLeaf(ILeaf leaf);
+	public final static boolean BODY3 = false;
 
-	public Display getFieldsToDisplay();
+	public static Bodier createLeaf(LeafType type, Set<VisibilityModifier> hides) {
+		if (type.isLikeClass() || type == LeafType.OBJECT) {
+			return new BodierLikeClassOrObject(type, hides);
+		}
+		return new BodierSimple();
+	}
 
-	public Display getMethodsToDisplay();
+	public static Bodier createGroup(Set<VisibilityModifier> hides) {
+		return new BodierSimple();
+	}
 
-	public void addFieldOrMethod(String s);
+	public static TextBlock create1(List<CharSequence> rawBody, FontParam fontParam, ISkinParam skinParam,
+			Stereotype stereotype, ILeaf entity, Style style) {
+		return new BodyEnhanced1(rawBody, fontParam, skinParam, stereotype, entity, style);
+	}
 
-	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype, Style style);
+	public static TextBlock create2(Display display, FontParam fontParam, ISkinParam skinParam,
+			HorizontalAlignment align, Stereotype stereotype, ILeaf entity, Style style) {
+		return new BodyEnhanced1(display, fontParam, skinParam, align, stereotype, entity, style);
+	}
 
-	public List<CharSequence> getRawBody();
+	public static TextBlock create3(Display rawBody, FontParam fontParam, ISkinSimple skinParam,
+			HorizontalAlignment align, FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy) {
+		return new BodyEnhanced2(rawBody, fontParam, skinParam, align, titleConfig, lineBreakStrategy);
+	}
 
-	public void muteClassToObject();
-
-	public boolean hasUrl();
 }

@@ -183,10 +183,6 @@ class USymbolNode extends USymbol {
 		};
 	}
 
-	public boolean manageHorizontalLine() {
-		return true;
-	}
-
 	@Override
 	public int suppHeightBecauseOfShape() {
 		return 5;

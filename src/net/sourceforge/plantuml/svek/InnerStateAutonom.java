@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -53,7 +52,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 
 	private final IEntityImage im;
 	private final TextBlock title;
-	private final TextBlockWidth attribute;
+	private final TextBlock attribute;
 	private final HColor borderColor;
 	private final HColor backColor;
 	private final boolean shadowing;
@@ -61,8 +60,8 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 	private final boolean withSymbol;
 	private final UStroke stroke;
 
-	public InnerStateAutonom(final IEntityImage im, final TextBlock title, TextBlockWidth attribute,
-			HColor borderColor, HColor backColor, boolean shadowing, Url url, boolean withSymbol, UStroke stroke) {
+	public InnerStateAutonom(final IEntityImage im, final TextBlock title, TextBlock attribute, HColor borderColor,
+			HColor backColor, boolean shadowing, Url url, boolean withSymbol, UStroke stroke) {
 		this.im = im;
 		this.withSymbol = withSymbol;
 		this.title = title;
@@ -90,9 +89,8 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 
 		r.drawU(ug, shadowing);
 		title.drawU(ug.apply(new UTranslate((total.getWidth() - text.getWidth()) / 2, IEntityImage.MARGIN)));
-		attribute.asTextBlock(total.getWidth()).drawU(
-				ug.apply(new UTranslate(0 + IEntityImage.MARGIN, IEntityImage.MARGIN + text.getHeight()
-								+ IEntityImage.MARGIN)));
+		attribute.drawU(ug.apply(
+				new UTranslate(0 + IEntityImage.MARGIN, IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN)));
 
 		final double spaceYforURL = getSpaceYforURL(ug.getStringBounder());
 		im.drawU(ug.apply(new UTranslate(IEntityImage.MARGIN, spaceYforURL)));
@@ -128,8 +126,8 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		final Dimension2D dim = Dimension2DDouble.mergeTB(text, attr, img);
 		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
-		final Dimension2D result = Dimension2DDouble.delta(dim, IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE
-				+ marginForFields);
+		final Dimension2D result = Dimension2DDouble.delta(dim,
+				IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE + marginForFields);
 
 		return result;
 	}
@@ -145,10 +143,9 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 	public boolean isHidden() {
 		return im.isHidden();
 	}
-	
+
 	public double getOverscanX(StringBounder stringBounder) {
 		return 0;
 	}
-
 
 }

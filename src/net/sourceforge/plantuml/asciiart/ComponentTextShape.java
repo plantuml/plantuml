@@ -67,10 +67,10 @@ public class ComponentTextShape extends AbstractComponentText {
 
 		final int xman = width / 2 - shape.getWidth() / 2 + 1;
 		if (type.name().endsWith("_HEAD")) {
-			charArea.drawStringsLR(stringsToDisplay.as(), 1, getHeight());
+			charArea.drawStringsLRSimple(stringsToDisplay.as(), 1, getHeight());
 			charArea.drawShape(shape, xman, 0);
 		} else {
-			charArea.drawStringsLR(stringsToDisplay.as(), 1, 0);
+			charArea.drawStringsLRSimple(stringsToDisplay.as(), 1, 0);
 			charArea.drawShape(shape, xman, 1);
 		}
 	}

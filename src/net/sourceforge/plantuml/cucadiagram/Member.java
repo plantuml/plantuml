@@ -45,9 +45,10 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class Member {
+public class Member implements CharSequence {
 
 	private final String display;
+	private final CharSequence raw;
 	private final boolean staticModifier;
 	private final boolean abstractModifier;
 	private final Url url;
@@ -57,11 +58,40 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + display;
+		return raw.toString();
 	}
 
-	public Member(String tmpDisplay, boolean isMethod, boolean manageModifier) {
-		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)\\}\\s*", "");
+	public char charAt(int index) {
+		return raw.charAt(index);
+	}
+
+	public int length() {
+		return raw.length();
+	}
+
+	public CharSequence subSequence(int start, int end) {
+		return raw.subSequence(start, end);
+	}
+
+	public static Member method(CharSequence tmpDisplay) {
+		return new Member(true, tmpDisplay, true);
+	}
+
+	public static Member field(CharSequence tmpDisplay) {
+		return new Member(true, tmpDisplay, false);
+	}
+
+	public static Member method(CharSequence tmpDisplay, boolean manageModifier) {
+		return new Member(manageModifier, tmpDisplay, true);
+	}
+
+	public static Member field(CharSequence tmpDisplay, boolean manageModifier) {
+		return new Member(manageModifier, tmpDisplay, false);
+	}
+
+	private Member(boolean manageModifier, CharSequence tmpDisplay, boolean isMethod) {
+		this.raw = tmpDisplay;
+		tmpDisplay = tmpDisplay.toString().replaceAll("(?i)\\{(method|field)\\}\\s*", "");
 		if (manageModifier) {
 			final Pattern2 finalUrl = MyPattern.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
 			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);
@@ -79,12 +109,13 @@ public class Member {
 			this.url = null;
 		}
 		this.hasUrl = this.url != null;
-		final String lower = StringUtils.goLowerCase(tmpDisplay);
+		final String lower = StringUtils.goLowerCase(tmpDisplay.toString());
 
 		if (manageModifier) {
 			this.staticModifier = lower.contains("{static}") || lower.contains("{classifier}");
 			this.abstractModifier = lower.contains("{abstract}");
-			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "").trim();
+			String displayClean = tmpDisplay.toString().replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "")
+					.trim();
 			if (displayClean.length() == 0) {
 				displayClean = " ";
 			}
@@ -100,9 +131,9 @@ public class Member {
 			this.staticModifier = false;
 			this.visibilityModifier = null;
 			this.abstractModifier = false;
-			tmpDisplay = StringUtils.trin(tmpDisplay);
+			tmpDisplay = StringUtils.trin(tmpDisplay.toString());
 			this.display = tmpDisplay.length() == 0 ? " "
-					: Guillemet.GUILLEMET.manageGuillemet(StringUtils.trin(tmpDisplay));
+					: Guillemet.GUILLEMET.manageGuillemet(StringUtils.trin(tmpDisplay.toString()));
 		}
 	}
 
@@ -114,8 +145,6 @@ public class Member {
 	}
 
 	private String getDisplayWithoutVisibilityChar() {
-		// assert display.length() == 0 ||
-		// VisibilityModifier.isVisibilityCharacter(display.charAt(0)) == false;
 		return display;
 	}
 
@@ -193,14 +222,6 @@ public class Member {
 		return hasUrl;
 	}
 
-	public static boolean isMethod(String s) {
-		final String purged = s.replaceAll(UrlBuilder.getRegexp(), "");
-		if (purged.contains("{method}")) {
-			return true;
-		}
-		if (purged.contains("{field}")) {
-			return false;
-		}
-		return purged.contains("(") || purged.contains(")");
-	}
+
+
 }

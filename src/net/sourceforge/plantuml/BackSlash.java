@@ -42,13 +42,12 @@ import java.util.List;
 
 public class BackSlash {
 
-	private static final char PRIVATE_BLOCK = '\uE000';
 	public static final String BS_BS_N = "\\n";
 	public static final String NEWLINE = "\n";
 	public static final char CHAR_NEWLINE = '\n';
 
 	public static char hiddenNewLine() {
-		return PRIVATE_BLOCK + BackSlash.CHAR_NEWLINE;
+		return StringUtils.PRIVATE_BLOCK + BackSlash.CHAR_NEWLINE;
 	}
 
 	public static String convertHiddenNewLine(String s) {
@@ -126,8 +125,8 @@ public class BackSlash {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
-			if (c > PRIVATE_BLOCK && c < '\uE07F') {
-				c = (char) (c - PRIVATE_BLOCK);
+			if (c > StringUtils.PRIVATE_BLOCK && c < '\uE07F') {
+				c = (char) (c - StringUtils.PRIVATE_BLOCK);
 			}
 			result.append(c);
 		}
@@ -138,7 +137,7 @@ public class BackSlash {
 		if (c > 128) {
 			throw new IllegalArgumentException();
 		}
-		return (char) (PRIVATE_BLOCK + c);
+		return (char) (StringUtils.PRIVATE_BLOCK + c);
 	}
 
 }

@@ -166,10 +166,6 @@ class USymbolDatabase extends USymbol {
 		};
 	}
 
-	public boolean manageHorizontalLine() {
-		return true;
-	}
-
 	@Override
 	public int suppHeightBecauseOfShape() {
 		return 15;

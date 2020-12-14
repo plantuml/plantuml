@@ -48,8 +48,8 @@ public class MessageNumber implements CharSequence {
 		this.representation = s;
 	}
 
-	public String getNumber() {
-		return representation;
+	public String getNumberRaw() {
+		return representation.replaceAll("\\</?b\\>", "");
 	}
 
 	public char charAt(int arg0) {

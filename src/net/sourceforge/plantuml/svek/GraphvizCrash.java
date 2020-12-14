@@ -44,6 +44,7 @@ import java.util.List;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
@@ -72,12 +73,12 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	private final String text;
 	private final boolean graphviz244onWindows;
 
-	public GraphvizCrash(String text, boolean graphviz244onWindows) {
+	public GraphvizCrash(String text, boolean graphviz244onWindows, Throwable rootCause) {
 		this.text = text;
 		this.graphviz244onWindows = graphviz244onWindows;
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		this.flashCode = utils.exportFlashcode(text, Color.BLACK, Color.WHITE);
-		this.text1 = GraphicStrings.createBlackOnWhite(init(), IconLoader.getRandom(),
+		this.text1 = GraphicStrings.createBlackOnWhite(init(rootCause), IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 	}
 
@@ -132,9 +133,15 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		strings.add(" - a problem in GraphViz");
 	}
 
-	private List<String> init() {
+	private List<String> init(Throwable rootCause) {
 		final List<String> strings = anErrorHasOccured(null, text);
 		strings.add("For some reason, dot/GraphViz has crashed.");
+		strings.add("");
+		strings.add("RootCause " + rootCause);
+		if (rootCause != null) {
+			strings.addAll(CommandExecutionResult.getStackTrace(rootCause));
+		}
+		strings.add("");
 		strings.add("This has been generated with PlantUML (" + Version.versionString() + ").");
 		checkOldVersionWarning(strings);
 		strings.add(" ");
@@ -217,7 +224,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 			final UImage dotd = new UImage(new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));
 			result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);
-}
+		}
 
 		return result;
 	}

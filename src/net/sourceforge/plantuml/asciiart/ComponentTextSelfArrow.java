@@ -57,8 +57,8 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 	private final FileFormat fileFormat;
 	private final ArrowConfiguration config;
 
-	public ComponentTextSelfArrow(ComponentType type, ArrowConfiguration config,
-			Display stringsToDisplay, FileFormat fileFormat) {
+	public ComponentTextSelfArrow(ComponentType type, ArrowConfiguration config, Display stringsToDisplay,
+			FileFormat fileFormat) {
 		this.type = type;
 		this.stringsToDisplay = stringsToDisplay;
 		this.fileFormat = fileFormat;
@@ -96,7 +96,11 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 			charArea.drawStringLR("<---'", 0, 2);
 		}
 
-		charArea.drawStringsLR(stringsToDisplay.as(), 6, 1);
+		if (fileFormat == FileFormat.UTXT) {
+			charArea.drawStringsLRUnicode(stringsToDisplay.as(), 6, 1);
+		} else {
+			charArea.drawStringsLRSimple(stringsToDisplay.as(), 6, 1);
+		}
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
@@ -114,7 +118,7 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
 		return new Point2D.Double(0, 0);
 	}
-	
+
 	public double getPaddingY() {
 		throw new UnsupportedOperationException();
 	}

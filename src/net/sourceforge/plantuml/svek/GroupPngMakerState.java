@@ -60,9 +60,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockEmpty;
-import net.sourceforge.plantuml.graphic.TextBlockWidth;
-import net.sourceforge.plantuml.graphic.TextBlockWidthAdapter;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
@@ -158,7 +155,7 @@ public final class GroupPngMakerState {
 		final HColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null
 				? getColor(ColorParam.stateBackground, stereo)
 				: group.getColors(skinParam).getColor(ColorType.BACK);
-		final TextBlockWidth attribute = getAttributes(skinParam);
+		final TextBlock attribute = GeneralImageBuilder.stateHeader((IEntity) group, null, skinParam);
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
@@ -172,27 +169,6 @@ public final class GroupPngMakerState {
 		}
 		return new InnerStateAutonom(image, title, attribute, borderColor, backColor,
 				skinParam.shadowing(group.getStereotype()), group.getUrl99(), withSymbol, stroke);
-
-	}
-
-	private TextBlockWidth getAttributes(final ISkinParam skinParam) {
-		final List<String> details = ((IEntity) group).getBodier().getRawBody();
-
-		if (details.size() == 0) {
-			return new TextBlockEmpty();
-		}
-		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE, null);
-		Display display = null;
-		for (String s : details) {
-			if (display == null) {
-				display = Display.getWithNewlines(s);
-			} else {
-				display = display.addAll(Display.getWithNewlines(s));
-			}
-		}
-
-		final TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
-		return new TextBlockWidthAdapter(result, 0);
 
 	}
 

@@ -104,9 +104,4 @@ class USymbolComponent1 extends USymbol {
 				stereoAlignment);
 	}
 
-	@Override
-	public boolean manageHorizontalLine() {
-		return true;
-	}
-
 }

@@ -218,7 +218,7 @@ public abstract class PSystemError extends AbstractPSystem {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();
-			area.drawStringsLR(getPureAsciiFormatted(), 0, 0);
+			area.drawStringsLRSimple(getPureAsciiFormatted(), 0, 0);
 			area.print(SecurityUtils.createPrintStream(os));
 			return new ImageDataSimple(1, 1);
 

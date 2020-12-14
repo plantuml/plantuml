@@ -148,8 +148,19 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 		if (value.isString()) {
 			return value.asString();
 		}
-		if (value.isNumber() || value.isBoolean()) {
+		if (value.isNull()) {
+			return "<U+2400>";
+			// return "<U+2205> null";
+		}
+		if (value.isNumber()) {
 			return value.toString();
+		}
+		if (value.isBoolean()) {
+			if (value.isTrue()) {
+				return "<U+2611> true";
+			} else {
+				return "<U+2610> false";
+			}
 		}
 		return "   ";
 	}

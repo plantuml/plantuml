@@ -80,6 +80,9 @@ public class EmbeddedDiagram implements CharSequence {
 		if (s.equals("{{gantt")) {
 			return "gantt";
 		}
+		if (s.equals("{{json")) {
+			return "json";
+		}
 		return null;
 	}
 

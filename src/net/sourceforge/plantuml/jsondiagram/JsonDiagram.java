@@ -75,7 +75,7 @@ public class JsonDiagram extends UmlDiagram {
 	private final List<String> highlighted;
 
 	public JsonDiagram(JsonValue json, List<String> highlighted) {
-		if (json.isString() || json.isBoolean() || json.isNumber()) {
+		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);
 		} else {
@@ -110,8 +110,9 @@ public class JsonDiagram extends UmlDiagram {
 			margin2 = 10;
 		}
 		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, dpiFactor, "",
-				"", margins, null);
+		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, dpiFactor,
+				metadata, "", margins, null);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))

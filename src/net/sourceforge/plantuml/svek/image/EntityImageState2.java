@@ -42,10 +42,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
-import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -75,10 +73,11 @@ public class EntityImageState2 extends AbstractEntityImage {
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
 
-		Display list = Display.empty();
-		for (Member att : entity.getBodier().getFieldsToDisplay()) {
-			list = list.addAll(Display.getWithNewlines(att.getDisplay(true)));
-		}
+//		Display list = Display.empty();
+//		for (Member att : entity.getBodier().getFieldsToDisplay()) {
+//			list = list.addAll(Display.getWithNewlines(att.getDisplay(true)));
+//		}
+		// final Display list = Display.create(entity.getBodier().getRawBody());
 
 		final USymbol symbol = USymbol.FRAME;
 
@@ -95,9 +94,8 @@ public class EntityImageState2 extends AbstractEntityImage {
 		this.url = entity.getUrl99();
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
-		final TextBlock desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam,
-				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, entity,
-				getStyle(symbol.getFontParam()));
+		final TextBlock desc = BodyFactory.create2(entity.getDisplay(), symbol.getFontParam(), skinParam,
+				HorizontalAlignment.CENTER, stereotype, entity, getStyle(symbol.getFontParam()));
 
 		asSmall = symbol.asSmall(null, desc, stereo, ctx, skinParam.getStereotypeAlignment());
 

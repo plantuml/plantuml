@@ -100,7 +100,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.style.PName;
@@ -172,7 +171,7 @@ public final class GeneralImageBuilder {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
 				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
 			}
-			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
+			if (isHideEmptyDescriptionForState && leaf.getBodier().getRawBody().size() == 0) {
 				return new EntityImageStateEmptyDescription(leaf, skinParam);
 			}
 			if (leaf.getStereotype() != null
@@ -463,10 +462,11 @@ public final class GeneralImageBuilder {
 		try {
 			svg = dotStringFactory.getSvg(basefile, dotStrings);
 		} catch (IOException e) {
-			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows());
+			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows(), e);
 		}
 		if (svg.length() == 0) {
-			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows());
+			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows(),
+					new EmptySvgException());
 		}
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
@@ -629,15 +629,8 @@ public final class GeneralImageBuilder {
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
-			final TextBlockWidth attribute;
-			if (members.size() == 0) {
-				attribute = new TextBlockEmpty();
-			} else {
-				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(),
-						g.getStereotype(), null, getStyle(FontParam.STATE_ATTRIBUTE));
-			}
-			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
+			final Dimension2D dimAttribute = stateHeader((IEntity) g, getStyle(FontParam.STATE_ATTRIBUTE),
+					dotData.getSkinParam()).calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
 			final double attributeWidth = dimAttribute.getWidth();
 			final double marginForFields = attributeHeight > 0 ? IEntityImage.MARGIN : 0;
@@ -656,6 +649,31 @@ public final class GeneralImageBuilder {
 		printGroups(dotStringFactory, g);
 
 		dotStringFactory.closeCluster();
+	}
+
+	public static TextBlock stateHeader(IEntity group, Style style, ISkinParam skinParam) {
+		final List<CharSequence> details = group.getBodier().getRawBody();
+
+		if (details.size() == 0) {
+			return new TextBlockEmpty();
+		}
+		final FontConfiguration fontConfiguration;
+		if (style == null) {
+			fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE, null);
+		} else {
+			fontConfiguration = new FontConfiguration(skinParam, style);
+		}
+		Display display = null;
+		for (CharSequence s : details) {
+			if (display == null) {
+				display = Display.getWithNewlines(s.toString());
+			} else {
+				display = display.addAll(Display.getWithNewlines(s.toString()));
+			}
+		}
+
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+
 	}
 
 	private Style getStyle(FontParam fontParam) {

@@ -37,6 +37,9 @@ package net.sourceforge.plantuml.asciiart;
 
 import java.util.Collection;
 
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.sequencediagram.MessageNumber;
+
 public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 
 	public void drawBoxSimple(int x, int y, int width, int height) {
@@ -69,16 +72,32 @@ public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 		shape.draw(this, x, y);
 	}
 
-	public void drawStringsLR(Collection<? extends CharSequence> strings, int x, int y) {
+	public void drawStringsLRSimple(Collection<? extends CharSequence> strings, int x, int y) {
 		int i = 0;
 		if (x < 0) {
 			x = 0;
 		}
 		for (CharSequence s : strings) {
+			if (s instanceof MessageNumber) {
+				s = ((MessageNumber) s).getNumberRaw();
+			}
 			this.drawStringLR(s.toString(), x, y + i);
 			i++;
 		}
+	}
 
+	public void drawStringsLRUnicode(Collection<? extends CharSequence> strings, int x, int y) {
+		int i = 0;
+		if (x < 0) {
+			x = 0;
+		}
+		for (CharSequence s : strings) {
+			if (s instanceof MessageNumber) {
+				s = StringUtils.toInternalBoldNumber((((MessageNumber) s).getNumberRaw()));
+			}
+			this.drawStringLR(s.toString(), x, y + i);
+			i++;
+		}
 	}
 
 	public void drawNoteSimple(int x, int y, int width, int height) {

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
@@ -42,22 +44,48 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
 
-public interface Bodier {
+public class BodierSimple implements Bodier {
 
-	public void setLeaf(ILeaf leaf);
+	private final List<CharSequence> rawBody = new ArrayList<CharSequence>();
+	private ILeaf leaf;
 
-	public Display getFieldsToDisplay();
+	public void muteClassToObject() {
+		throw new UnsupportedOperationException();
+	}
 
-	public Display getMethodsToDisplay();
+	BodierSimple() {
+	}
 
-	public void addFieldOrMethod(String s);
+	public void setLeaf(ILeaf leaf) {
+		if (leaf == null) {
+			throw new IllegalArgumentException();
+		}
+		this.leaf = leaf;
+	}
+
+	public void addFieldOrMethod(String s) {
+		rawBody.add(s);
+	}
+
+	public Display getMethodsToDisplay() {
+		throw new UnsupportedOperationException();
+	}
+
+	public Display getFieldsToDisplay() {
+		throw new UnsupportedOperationException();
+	}
+
+	public boolean hasUrl() {
+		throw new UnsupportedOperationException();
+	}
+
+	public List<CharSequence> getRawBody() {
+		return Collections.unmodifiableList(rawBody);
+	}
 
 	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype, Style style);
+			Stereotype stereotype, Style style) {
+		return BodyFactory.create1(rawBody, fontParam, skinParam, stereotype, leaf, style);
+	}
 
-	public List<CharSequence> getRawBody();
-
-	public void muteClassToObject();
-
-	public boolean hasUrl();
 }

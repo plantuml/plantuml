@@ -42,8 +42,9 @@ public enum LeafType {
 
 	EMPTY_PACKAGE,
 
-	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP_FULL, LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, ASSOCIATION, ENUM, CIRCLE,
-	
+	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP_FULL, LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, ASSOCIATION,
+	ENUM, CIRCLE,
+
 	USECASE, USECASE_BUSINESS,
 
 	DESCRIPTION,
@@ -55,9 +56,9 @@ public enum LeafType {
 	STATE, STATE_CONCURRENT, PSEUDO_STATE, DEEP_HISTORY, STATE_CHOICE, STATE_FORK_JOIN,
 
 	BLOCK, ENTITY,
-	
+
 	DOMAIN, REQUIREMENT,
-	
+
 	PORT, PORTIN, PORTOUT,
 
 	STILL_UNKNOWN;
@@ -83,11 +84,11 @@ public enum LeafType {
 		return StringUtils.capitalize(html);
 	}
 
-	public boolean manageModifier() {
-		if (this == ANNOTATION || this == ABSTRACT_CLASS || this == CLASS || this == INTERFACE || this == ENUM
-				|| this == OBJECT || this == ENTITY) {
-			return true;
-		}
-		return false;
-	}
+//	public boolean manageModifier() {
+//		if (this == ANNOTATION || this == ABSTRACT_CLASS || this == CLASS || this == INTERFACE || this == ENUM
+//				|| this == OBJECT || this == ENTITY) {
+//			return true;
+//		}
+//		return false;
+//	}
 }

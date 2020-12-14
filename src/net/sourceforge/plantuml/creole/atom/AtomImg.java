@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 public class AtomImg extends AbstractAtom implements Atom {
 
 	private static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
+	private static final String DATA_IMAGE_SVG_BASE64 = "data:image/svg+xml;base64,";
 	private final BufferedImage image;
 	private final double scale;
 	private final Url url;
@@ -102,8 +103,19 @@ public class AtomImg extends AbstractAtom implements Atom {
 			} catch (Exception e) {
 				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
 			}
-
 		}
+
+		if (src.startsWith(DATA_IMAGE_SVG_BASE64)) {
+			final String data = src.substring(DATA_IMAGE_SVG_BASE64.length(), src.length());
+			try {
+				final byte bytes[] = Base64Coder.decode(data);
+				final String tmp = new String(bytes);
+				return new AtomImgSvg(new TileImageSvg(tmp));
+			} catch (Exception e) {
+				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
+			}
+		}
+
 		try {
 			// Check if valid URL
 			if (src.startsWith("http:") || src.startsWith("https:")) {

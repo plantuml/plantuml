@@ -119,7 +119,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		if (title.isWhite() == false) {
 			final int widthTitle = StringUtils.getWcWidth(title);
 			final UmlCharArea charArea = ug.getCharArea();
-			charArea.drawStringsLR(title.as(), (int) ((fullDimension.getWidth() - widthTitle) / 2), 0);
+			charArea.drawStringsLRSimple(title.as(), (int) ((fullDimension.getWidth() - widthTitle) / 2), 0);
 		}
 
 	}

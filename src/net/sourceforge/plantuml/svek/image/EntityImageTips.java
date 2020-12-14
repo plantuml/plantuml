@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.command.Position;
-import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -163,11 +163,9 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private Opale getOpale(final Display display) {
-		// final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
-		// final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
-		final TextBlock textBlock = new BodyEnhanced2(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
-				new FontConfiguration(skinParam, FontParam.NOTE, null), LineBreakStrategy.NONE,
-				skinParam.minClassWidth());
+		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+		final TextBlock textBlock = BodyFactory.create3(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
+				fc, LineBreakStrategy.NONE);
 		final double shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
 		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
 		return opale;

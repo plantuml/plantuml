@@ -88,11 +88,6 @@ class USymbolArtifact extends USymbol {
 	private Margin getMargin() {
 		return new Margin(10, 10 + 10, 10 + 3, 10);
 	}
-
-	public boolean manageHorizontalLine() {
-		return true;
-	}
-
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {

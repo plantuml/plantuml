@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.Stencil;
-import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -125,9 +125,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else {
-			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, getSkinParam(), HorizontalAlignment.LEFT,
-					new FontConfiguration(getSkinParam(), FontParam.NOTE, null), getSkinParam().wrapWidth(),
-					getSkinParam().minClassWidth());
+			final FontConfiguration fc = new FontConfiguration(getSkinParam(), FontParam.NOTE, null);
+			textBlock = BodyFactory.create3(strings, FontParam.NOTE, getSkinParam(), HorizontalAlignment.LEFT, fc,
+					getSkinParam().wrapWidth());
 		}
 	}
 

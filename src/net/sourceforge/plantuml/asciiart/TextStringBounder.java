@@ -44,7 +44,10 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class TextStringBounder implements StringBounder {
 
 	public Dimension2D calculateDimension(UFont font, String text) {
-		return new Dimension2DDouble(text.length(), 1);
+		final int length1 = text.codePointCount(0, text.length());
+		final int length2 = text.length();
+		final int length3 = Wcwidth.length(text);
+		return new Dimension2DDouble(length2, 1);
 	}
 
 }

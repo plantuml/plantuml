@@ -40,6 +40,7 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -54,26 +55,31 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public enum VisibilityModifier {
-	PRIVATE_FIELD(ColorParam.iconPrivate, null), PROTECTED_FIELD(ColorParam.iconProtected, null),
-	PACKAGE_PRIVATE_FIELD(ColorParam.iconPackage, null), PUBLIC_FIELD(ColorParam.iconPublic, null),
+	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),
+	PROTECTED_FIELD(StringUtils.PROTECTED_FIELD, ColorParam.iconProtected, null),
+	PACKAGE_PRIVATE_FIELD(StringUtils.PACKAGE_PRIVATE_FIELD, ColorParam.iconPackage, null),
+	PUBLIC_FIELD(StringUtils.PUBLIC_FIELD, ColorParam.iconPublic, null),
 
-	PRIVATE_METHOD(ColorParam.iconPrivate, ColorParam.iconPrivateBackground),
-	PROTECTED_METHOD(ColorParam.iconProtected, ColorParam.iconProtectedBackground),
-	PACKAGE_PRIVATE_METHOD(ColorParam.iconPackage, ColorParam.iconPackageBackground),
-	PUBLIC_METHOD(ColorParam.iconPublic, ColorParam.iconPublicBackground),
+	PRIVATE_METHOD(StringUtils.PRIVATE_METHOD, ColorParam.iconPrivate, ColorParam.iconPrivateBackground),
+	PROTECTED_METHOD(StringUtils.PROTECTED_METHOD, ColorParam.iconProtected, ColorParam.iconProtectedBackground),
+	PACKAGE_PRIVATE_METHOD(StringUtils.PACKAGE_PRIVATE_METHOD, ColorParam.iconPackage,
+			ColorParam.iconPackageBackground),
+	PUBLIC_METHOD(StringUtils.PUBLIC_METHOD, ColorParam.iconPublic, ColorParam.iconPublicBackground),
 
-	IE_MANDATORY(ColorParam.iconIEMandatory, ColorParam.iconIEMandatory);
+	IE_MANDATORY(StringUtils.IE_MANDATORY, ColorParam.iconIEMandatory, ColorParam.iconIEMandatory);
 
 	private final ColorParam foregroundParam;
 	private final ColorParam backgroundParam;
+	private final char unicode;
 
 	public static String regexForVisibilityCharacterInClassName() {
 		return "[-#+~]";
 	}
 
-	private VisibilityModifier(ColorParam foreground, ColorParam background) {
+	private VisibilityModifier(char unicode, ColorParam foreground, ColorParam background) {
 		this.foregroundParam = foreground;
 		this.backgroundParam = background;
+		this.unicode = unicode;
 	}
 
 	public UDrawable getUDrawable(final int size, final HColor foregroundColor, final HColor backgoundColor) {
@@ -216,6 +222,23 @@ public enum VisibilityModifier {
 			return true;
 		}
 		return false;
+	}
+
+	public static VisibilityModifier getByUnicode(char c) {
+		for (VisibilityModifier modifier : VisibilityModifier.values()) {
+			if (modifier.unicode == c) {
+				return modifier;
+			}
+		}
+		return null;
+	}
+
+	public static String replaceVisibilityModifierByUnicodeChar(String s, boolean isField) {
+		final VisibilityModifier modifier = getVisibilityModifier(s, isField);
+		if (modifier == null) {
+			return s;
+		}
+		return "" + modifier.unicode + s.substring(1);
 	}
 
 	public static VisibilityModifier getVisibilityModifier(CharSequence s, boolean isField) {

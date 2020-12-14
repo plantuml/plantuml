@@ -225,7 +225,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private Ident buildLeafIdentSpecialUnused(String id) {
 //		if (namespaceSeparator != null) {
 //			if (id.contains(namespaceSeparator)) {
-				return Ident.empty().add(id, ".");
+		return Ident.empty().add(id, ".");
 //			}
 //		}
 //		return getLastID().add(id, namespaceSeparator);
@@ -597,8 +597,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 				result.add(s);
 			}
 		}
-		final String aspect = getPragma().getValue("aspect");
+		String aspect = getPragma().getValue("aspect");
 		if (aspect != null) {
+			aspect = aspect.replace(',', '.');
 			result.add("aspect=" + aspect + ";");
 		}
 		final String ratio = getPragma().getValue("ratio");

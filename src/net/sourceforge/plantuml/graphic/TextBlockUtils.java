@@ -107,6 +107,9 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
+		if (marginX == 0 && marginY == 0) {
+			return textBlock;
+		}
 		return new TextBlockMarged(textBlock, marginY, marginX, marginY, marginX);
 	}
 

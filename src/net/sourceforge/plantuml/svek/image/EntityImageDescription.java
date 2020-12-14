@@ -47,8 +47,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
-import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
-import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -175,9 +174,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 			desc = TextBlockUtils.empty(getSkinParam().minClassWidth(), 0);
 		} else {
 
-			desc = new BodyEnhanced2(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
+			desc = BodyFactory.create3(entity.getDisplay(), symbol.getFontParam(), getSkinParam(),
 					getSkinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), fcTitle,
-					getSkinParam().wrapWidth(), getSkinParam().minClassWidth());
+					getSkinParam().wrapWidth());
 		}
 
 		stereo = TextBlockUtils.empty(0, 0);
@@ -191,8 +190,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 					HorizontalAlignment.CENTER, getSkinParam());
 		}
 
-		name = new BodyEnhanced(codeDisplay, symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, entity, style);
+		name = BodyFactory.create2(codeDisplay, symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER,
+				stereotype, entity, style);
 
 		if (hideText) {
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),

@@ -215,28 +215,28 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 		final Element feature = document.createElement("UML:Classifier.feature");
 		cla.appendChild(feature);
 
-		for (Member m : entity.getBodier().getFieldsToDisplay()) {
-			// <UML:Attribute xmi.id="UMLAttribute.6" name="Attribute1"
-			// visibility="public" isSpecification="false"
-			// ownerScope="instance" changeability="changeable"
-			// targetScope="instance" type="" owner="UMLClass.5"/>
-			final Element attribute = document.createElement("UML:Attribute");
-			attribute.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
-			attribute.setAttribute("name", m.getDisplay(false));
-			feature.appendChild(attribute);
-		}
-
-		for (Member m : entity.getBodier().getMethodsToDisplay()) {
-			// <UML:Operation xmi.id="UMLOperation.7" name="Operation1"
-			// visibility="public" isSpecification="false"
-			// ownerScope="instance" isQuery="false" concurrency="sequential"
-			// isRoot="false" isLeaf="false"
-			// isAbstract="false" specification="" owner="UMLClass.5"/>
-			final Element operation = document.createElement("UML:Operation");
-			operation.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
-			operation.setAttribute("name", m.getDisplay(false));
-			feature.appendChild(operation);
-		}
+//		for (Member m : entity.getBodier().getFieldsToDisplay()) {
+//			// <UML:Attribute xmi.id="UMLAttribute.6" name="Attribute1"
+//			// visibility="public" isSpecification="false"
+//			// ownerScope="instance" changeability="changeable"
+//			// targetScope="instance" type="" owner="UMLClass.5"/>
+//			final Element attribute = document.createElement("UML:Attribute");
+//			attribute.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
+//			attribute.setAttribute("name", m.getDisplay(false));
+//			feature.appendChild(attribute);
+//		}
+//
+//		for (Member m : entity.getBodier().getMethodsToDisplay()) {
+//			// <UML:Operation xmi.id="UMLOperation.7" name="Operation1"
+//			// visibility="public" isSpecification="false"
+//			// ownerScope="instance" isQuery="false" concurrency="sequential"
+//			// isRoot="false" isLeaf="false"
+//			// isAbstract="false" specification="" owner="UMLClass.5"/>
+//			final Element operation = document.createElement("UML:Operation");
+//			operation.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
+//			operation.setAttribute("name", m.getDisplay(false));
+//			feature.appendChild(operation);
+//		}
 		return cla;
 	}
 

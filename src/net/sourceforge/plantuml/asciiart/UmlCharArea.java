@@ -49,6 +49,8 @@ public interface UmlCharArea extends BasicCharArea {
 
 	void drawShape(AsciiShape shape, int x, int y);
 
-	void drawStringsLR(Collection<? extends CharSequence> strings, int x, int y);
+	void drawStringsLRSimple(Collection<? extends CharSequence> strings, int x, int y);
+
+	void drawStringsLRUnicode(Collection<? extends CharSequence> strings, int x, int y);
 
 }

@@ -41,6 +41,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -242,7 +243,7 @@ public class Display implements Iterable<CharSequence> {
 				final List<CharSequence> other = new ArrayList<CharSequence>();
 				other.add("@start" + type);
 				while (it.hasNext()) {
-					CharSequence s2 = it.next();
+					final CharSequence s2 = it.next();
 					if (s2 != null && StringUtils.trin(s2.toString()).equals("}}")) {
 						break;
 					}
@@ -398,8 +399,8 @@ public class Display implements Iterable<CharSequence> {
 		return displayData.get(i);
 	}
 
-	public Iterator<CharSequence> iterator() {
-		return Collections.unmodifiableList(displayData).iterator();
+	public ListIterator<CharSequence> iterator() {
+		return Collections.unmodifiableList(displayData).listIterator();
 	}
 
 	public Display subList(int i, int size) {

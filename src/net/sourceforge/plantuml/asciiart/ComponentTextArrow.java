@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.asciiart;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
@@ -62,14 +64,14 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 
 	public ComponentTextArrow(ComponentType type, ArrowConfiguration config, Display stringsToDisplay,
 			FileFormat fileFormat, int maxAsciiMessageLength) {
+		this.fileFormat = fileFormat;
 		this.maxAsciiMessageLength = maxAsciiMessageLength;
 		this.type = type;
 		this.config = config;
 		this.stringsToDisplay = clean(stringsToDisplay);
-		this.fileFormat = fileFormat;
 	}
 
-	private static Display clean(Display orig) {
+	private Display clean(Display orig) {
 		if (orig.size() == 0 || orig.get(0) instanceof MessageNumber == false) {
 			return orig;
 		}
@@ -86,7 +88,19 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		return result;
 	}
 
-	private static String removeTag(String s) {
+	private String removeTag(String s) {
+		if (fileFormat == FileFormat.UTXT) {
+			final Pattern pattern = Pattern.compile("\\<b\\>([0-9]+)\\</b\\>");
+			final Matcher matcher = pattern.matcher(s);
+			final StringBuffer result = new StringBuffer();
+			while (matcher.find()) {
+				final String num = matcher.group(1);
+				final String replace = StringUtils.toInternalBoldNumber(num);
+				matcher.appendReplacement(result, Matcher.quoteReplacement(replace));
+			}
+			matcher.appendTail(result);
+			s = result.toString();
+		}
 		return s.replaceAll("\\<[^<>]+\\>", "");
 	}
 
@@ -119,7 +133,12 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 			throw new UnsupportedOperationException();
 		}
 		// final int position = Math.max(0, (width - textWidth) / 2);
-		charArea.drawStringsLR(stringsToDisplay.as(), (width - textWidth) / 2, 0);
+
+		if (fileFormat == FileFormat.UTXT) {
+			charArea.drawStringsLRUnicode(stringsToDisplay.as(), (width - textWidth) / 2, 0);
+		} else {
+			charArea.drawStringsLRSimple(stringsToDisplay.as(), (width - textWidth) / 2, 0);
+		}
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

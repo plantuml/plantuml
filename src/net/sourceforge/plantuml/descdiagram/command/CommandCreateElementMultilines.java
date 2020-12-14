@@ -82,7 +82,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			return "(?i)^(.*)[%g]$";
 		}
 		if (type == 1) {
-			return "(?i)^(.*)\\]$";
+			return "(?i)^([^\\[\\]]*)\\]$";
 		}
 		throw new IllegalArgumentException();
 	}

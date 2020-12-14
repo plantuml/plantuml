@@ -210,19 +210,19 @@ public class XmiDescriptionDiagram implements IXmiClassDiagram {
 		final Element feature = document.createElement("UML:Classifier.feature");
 		cla.appendChild(feature);
 
-		for (Member m : entity.getBodier().getFieldsToDisplay()) {
-			final Element attribute = document.createElement("UML:Attribute");
-			attribute.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
-			attribute.setAttribute("name", m.getDisplay(false));
-			feature.appendChild(attribute);
-		}
-
-		for (Member m : entity.getBodier().getMethodsToDisplay()) {
-			final Element operation = document.createElement("UML:Operation");
-			operation.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
-			operation.setAttribute("name", m.getDisplay(false));
-			feature.appendChild(operation);
-		}
+//		for (Member m : entity.getBodier().getFieldsToDisplay()) {
+//			final Element attribute = document.createElement("UML:Attribute");
+//			attribute.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
+//			attribute.setAttribute("name", m.getDisplay(false));
+//			feature.appendChild(attribute);
+//		}
+//
+//		for (Member m : entity.getBodier().getMethodsToDisplay()) {
+//			final Element operation = document.createElement("UML:Operation");
+//			operation.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
+//			operation.setAttribute("name", m.getDisplay(false));
+//			feature.appendChild(operation);
+//		}
 		return cla;
 	}
 

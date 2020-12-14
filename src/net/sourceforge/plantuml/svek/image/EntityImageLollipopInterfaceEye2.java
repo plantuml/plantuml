@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -85,8 +85,8 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 			throw new IllegalArgumentException();
 		}
 
-		this.desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, entity, getStyle(symbol.getFontParam()));
+		this.desc = BodyFactory.create2(entity.getDisplay(), symbol.getFontParam(), skinParam,
+				HorizontalAlignment.CENTER, stereotype, entity, getStyle(symbol.getFontParam()));
 
 		this.url = entity.getUrl99();
 

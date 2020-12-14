@@ -104,7 +104,7 @@ public class CreoleParser implements SheetBuilder {
 				.createStripe(context);
 	}
 
-	private static boolean isTableLine(String line) {
+	public static boolean isTableLine(String line) {
 		return line.matches("^(\\<#\\w+(,#?\\w+)?\\>)?\\|(\\=)?.*\\|$");
 	}
 

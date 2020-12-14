@@ -36,23 +36,26 @@
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
-class GraphvizWindows extends AbstractGraphviz {
+class GraphvizWindowsOld extends AbstractGraphviz {
 
 	static private File specificDotExe;
 
 	@Override
-	protected File searchDotExe() {
-		return specificDotExe();
-	}
-
-	@Override
 	protected File specificDotExe() {
-		synchronized (GraphvizWindows.class) {
+		synchronized (GraphvizWindowsOld.class) {
+			if (specificDotExe == null) {
+				specificDotExe = specificDotExeSlow();
+			}
 			if (specificDotExe == null)
 				try {
 					specificDotExe = new WindowsDotArchive().getWindowsExeLite();
@@ -65,10 +68,63 @@ class GraphvizWindows extends AbstractGraphviz {
 	}
 
 	public boolean graphviz244onWindows() {
-		return false;
+		try {
+			return GraphvizUtils.getDotVersion() == 244;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-	GraphvizWindows(ISkinParam skinParam, String dotString, String... type) {
+	private File specificDotExeSlow() {
+		for (File tmp : new File("c:/").listFiles(new FileFilter() {
+			public boolean accept(java.io.File pathname) {
+				return pathname.isDirectory() && pathname.canRead();
+			}
+		})) {
+			final File result = searchInDir(tmp);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	private static File searchInDir(final File dir) {
+		if (dir.exists() == false || dir.isDirectory() == false) {
+			return null;
+		}
+		final List<File> dots = new ArrayList<File>();
+		final File[] files = dir.listFiles(new FileFilter() {
+			public boolean accept(java.io.File pathname) {
+				return pathname.isDirectory() && StringUtils.goLowerCase(pathname.getName()).startsWith("graphviz");
+			}
+		});
+		if (files == null) {
+			return null;
+		}
+		for (File f : files) {
+			final File result = new File(new File(f, "bin"), "dot.exe");
+			if (result.exists() && result.canRead()) {
+				dots.add(result.getAbsoluteFile());
+			}
+			final File result2 = new File(new File(f, "release/bin"), "dot.exe");
+			if (result2.exists() && result2.canRead()) {
+				dots.add(result2.getAbsoluteFile());
+			}
+		}
+		return higherVersion(dots);
+	}
+
+	static File higherVersion(List<File> dots) {
+		if (dots.size() == 0) {
+			return null;
+		}
+		Collections.sort(dots, Collections.reverseOrder());
+		return dots.get(0);
+	}
+
+	GraphvizWindowsOld(ISkinParam skinParam, String dotString, String... type) {
 		super(skinParam, dotString, type);
 	}
 

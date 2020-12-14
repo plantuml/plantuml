@@ -62,15 +62,11 @@ import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.Member;
-import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockEmpty;
-import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -481,7 +477,8 @@ public class Cluster implements Moveable {
 			stateBack = getColor(skinParam2, ColorParam.stateBackground, group.getStereotype());
 		}
 		final HColor background = getColor(skinParam2, ColorParam.background, null);
-		final TextBlockWidth attribute = getTextBlockAttribute(skinParam2);
+		final Style style = getStyle(FontParam.STATE_ATTRIBUTE, skinParam2);
+		final TextBlock attribute = GeneralImageBuilder.stateHeader(group, style, skinParam2);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
 		if (total.getWidth() == 0) {
 			System.err.println("Cluster::drawUState issue");
@@ -497,7 +494,7 @@ public class Cluster implements Moveable {
 		}
 
 		if (attributeHeight > 0) {
-			attribute.asTextBlock(total.getWidth()).drawU(
+			attribute.drawU(
 					ug.apply(new UTranslate(minX + IEntityImage.MARGIN, minY + suppY + IEntityImage.MARGIN / 2.0)));
 		}
 
@@ -507,18 +504,6 @@ public class Cluster implements Moveable {
 			EntityImageState.drawSymbol(ug.apply(borderColor), maxX, maxY);
 		}
 
-	}
-
-	private TextBlockWidth getTextBlockAttribute(ISkinParam skinParam) {
-		final TextBlockWidth attribute;
-		final List<Member> members = group.getBodier().getFieldsToDisplay();
-		if (members.size() == 0) {
-			attribute = new TextBlockEmpty();
-		} else {
-			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, skinParam, group.getStereotype(),
-					null, getStyle(FontParam.STATE_ATTRIBUTE, skinParam));
-		}
-		return attribute;
 	}
 
 	public void setPosition(double minX, double minY, double maxX, double maxY) {

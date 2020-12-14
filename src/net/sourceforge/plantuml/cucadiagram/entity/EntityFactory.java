@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
-import net.sourceforge.plantuml.cucadiagram.BodierImpl;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -224,7 +224,7 @@ public final class EntityFactory {
 		if (entityType == null) {
 			throw new IllegalArgumentException();
 		}
-		final Bodier bodier = entityType == LeafType.MAP ? new BodierMap() : new BodierImpl(entityType, hides);
+		final Bodier bodier = entityType == LeafType.MAP ? new BodierMap() : BodyFactory.createLeaf(entityType, hides);
 		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, entityType,
 				namespaceSeparator, rawLayout);
 		bodier.setLeaf(result);
@@ -242,7 +242,7 @@ public final class EntityFactory {
 				return ent.getValue();
 			}
 		}
-		final Bodier bodier = new BodierImpl(null, hides);
+		final Bodier bodier = BodyFactory.createGroup(hides);
 		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, groupType, namespace,
 				namespaceSeparator, rawLayout);
 		if (Display.isNull(display) == false) {

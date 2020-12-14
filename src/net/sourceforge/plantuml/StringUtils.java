@@ -51,6 +51,59 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 // Do not move
 public class StringUtils {
 
+	public static final char USER_NEWLINE = '\uEE00';
+	public static final char USER_TAB = '\uEE01';
+
+	public static final char HR_SIMPLE = '\uEEFF';
+	public static final char HR_DOUBLE = '\uEEFE';
+	public static final char HR_DOTTED = '\uEEFD';
+	public static final char HR_BOLD = '\uEEFC';
+
+	public static final char PRIVATE_FIELD = '\uEEFB';
+	public static final char PROTECTED_FIELD = '\uEEFA';
+	public static final char PACKAGE_PRIVATE_FIELD = '\uEEF9';
+	public static final char PUBLIC_FIELD = '\uEEF8';
+	public static final char PRIVATE_METHOD = '\uEEF7';
+	public static final char PROTECTED_METHOD = '\uEEF6';
+	public static final char PACKAGE_PRIVATE_METHOD = '\uEEF5';
+	public static final char PUBLIC_METHOD = '\uEEF4';
+	public static final char IE_MANDATORY = '\uEEF3';
+
+	// Used in BackSlash
+	public static final char PRIVATE_BLOCK = '\uE000';
+
+	public static final char INTERNAL_BOLD = '\uE100';
+
+	public static String toInternalBoldNumber(String s) {
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c >= '0' && c <= '9') {
+				sb.append(Character.toChars('\uE100' + c - '0'));
+			} else {
+				sb.append(c);
+			}
+
+		}
+		return sb.toString();
+	}
+
+	public static void appendInternalToRealBoldNumber(StringBuilder sb, char c) {
+		if (c >= '\uE100' && c <= ('\uE100' + 9)) {
+			sb.append(Character.toChars(0x1d7ce + c - '\uE100'));
+		} else {
+			sb.append(c);
+		}
+	}
+
+	public static void appendInternalToPlainNumber(StringBuilder sb, char c) {
+		if (c >= '\uE100' && c <= ('\uE100' + 9)) {
+			sb.append(Character.toChars('0' + c - '\uE100'));
+		} else {
+			sb.append(c);
+		}
+	}
+
 	final static public List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false) {
