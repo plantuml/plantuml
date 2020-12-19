@@ -31,52 +31,24 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.wire;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DiagGroup {
+public class WCursor {
 
-	private final String name;
-	private final Network network;
-	private final Set<String> elements = new HashSet<String>();
-	private HColor color;
+	private UTranslate position = new UTranslate();
 
-	@Override
-	public String toString() {
-		return name + " " + network + " " + elements;
+	public Point2D getPosition() {
+		return position.getPosition();
 	}
 
-	public DiagGroup(String name, Network network) {
-		this.name = name;
-		this.network = network;
-	}
-
-	public final String getName() {
-		return name;
-	}
-
-	public void addElement(String name) {
-		this.elements.add(name);
-	}
-
-	public boolean matches(LinkedElement tested) {
-		if (network != null && network != tested.getNetwork()) {
-			return false;
-		}
-		return elements.contains(tested.getElement().getName());
-	}
-
-	public final HColor getColor() {
-		return color;
-	}
-
-	public final void setColor(HColor color) {
-		this.color = color;
+	public void move(double dx, double dy) {
+		position = position.compose(new UTranslate(dx, dy));
 	}
 
 }

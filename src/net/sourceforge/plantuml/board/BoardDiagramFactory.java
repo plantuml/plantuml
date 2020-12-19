@@ -30,43 +30,43 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.board;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CommandProperty extends SingleLineCommand2<NwDiagram> {
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-	public CommandProperty() {
-		super(getRegexConcat());
-	}
+public class BoardDiagramFactory extends PSystemCommandFactory {
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME", "(address|color|width|description)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("="), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\"?"), //
-				new RegexLeaf("VALUE", "([^\"]*)"), //
-				new RegexLeaf("\"?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(";?"), //
-				RegexLeaf.end());
+	public BoardDiagramFactory() {
+		super(DiagramType.BOARD);
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.setProperty(arg.get("NAME", 0), arg.get("VALUE", 0));
+	protected List<Command> createCommands() {
+
+		final List<Command> cmds = new ArrayList<Command>();
+		addCommonCommands1(cmds);
+		cmds.add(new CommandBoardPlus());
+		// cmds.add(new CommandMindMapTabulation());
+//		cmds.add(new CommandMindMapOrgmode());
+//		cmds.add(new CommandMindMapOrgmodeMultiline());
+//		cmds.add(new CommandMindMapRoot());
+//		cmds.add(new CommandMindMapPlus());
+//		cmds.add(new CommandMindMapDirection());
+
+		return cmds;
+	}
+
+	@Override
+	public BoardDiagram createEmptyDiagram() {
+		return new BoardDiagram();
 	}
 
 }

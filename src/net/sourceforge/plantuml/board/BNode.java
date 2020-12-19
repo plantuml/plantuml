@@ -33,39 +33,74 @@
  *
  *
  */
-package net.sourceforge.plantuml.wire;
+package net.sourceforge.plantuml.board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.core.DiagramType;
+public class BNode {
 
-public class WireDiagramFactory extends PSystemCommandFactory {
+	private final String name;
+	private final int stage;
+	private int x = -1;
+	private BNode parent;
+	private final List<BNode> children = new ArrayList<BNode>();
 
-	public WireDiagramFactory() {
-		super(DiagramType.WIRE);
+	public BNode(int stage, String name) {
+		this.name = name;
+		this.stage = stage;
+	}
+
+	public void addChild(BNode child) {
+		if (child.stage <= this.stage) {
+			throw new IllegalArgumentException();
+		}
+		this.children.add(child);
+		if (child.parent != null) {
+			throw new IllegalArgumentException();
+		}
+		child.parent = this;
+	}
+
+	public final String getName() {
+		return name;
+	}
+
+	public final int getStage() {
+		return stage;
+	}
+
+	public final BNode getParent() {
+		return parent;
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<Command>();
-		addCommonCommands1(cmds);
-		cmds.add(new CommandComponent());
-		cmds.add(new CommandSpot());
-		cmds.add(new CommandGoto());
-		cmds.add(new CommandMove());
-		cmds.add(new CommandWLink());
-		cmds.add(new CommandNewColumn());
-
-		return cmds;
+	public String toString() {
+		return name + "(" + stage + ") [" + x + "]";
 	}
 
-	@Override
-	public WireDiagram createEmptyDiagram() {
-		return new WireDiagram();
+	public void computeX(AtomicInteger count) {
+		this.x = count.intValue();
+		for (int i = 0; i < children.size(); i++) {
+			final BNode child = children.get(i);
+			if (i > 0) {
+				count.addAndGet(1);
+			}
+			child.computeX(count);
+		}
+	}
+
+	public void initBarray(BArray array) {
+		array.put(this);
+		for (BNode child : children) {
+			child.initBarray(array);
+		}
+
+	}
+
+	public final int getX() {
+		return x;
 	}
 
 }

@@ -76,7 +76,7 @@ public class BodierSimple implements Bodier {
 	}
 
 	public boolean hasUrl() {
-		throw new UnsupportedOperationException();
+		return false;
 	}
 
 	public List<CharSequence> getRawBody() {

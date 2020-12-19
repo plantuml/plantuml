@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.nwdiag;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -53,7 +54,7 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class DiagElement {
+public class Square {
 
 	private USymbol shape = USymbol.RECTANGLE;
 	private final String name;
@@ -67,7 +68,7 @@ public class DiagElement {
 		return name;
 	}
 
-	public DiagElement(String name, Network network, ISkinSimple spriteContainer) {
+	public Square(String name, Network network, ISkinSimple spriteContainer) {
 		this.description = name;
 		this.mainNetwork = network;
 		this.name = name;
@@ -90,7 +91,7 @@ public class DiagElement {
 		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
-	public LinkedElement asTextBlock(Map<Network, String> conns, Network next) {
+	public LinkedElement asTextBlock(Map<Network, String> conns, List<Network> networks) {
 		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
 		for (Entry<Network, String> ent : conns.entrySet()) {
 			conns2.put(ent.getKey(), toTextBlock(ent.getValue()));
@@ -100,7 +101,7 @@ public class DiagElement {
 		final TextBlock desc = toTextBlock(description);
 		final TextBlock box = shape.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0), symbolContext,
 				HorizontalAlignment.CENTER);
-		return new LinkedElement(this, box, mainNetwork, next, conns2);
+		return new LinkedElement(this, box, conns2, networks);
 	}
 
 	public String getDescription() {

@@ -35,26 +35,93 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.SvgString;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.SignatureUtils;
 
 public class UImageSvg implements UShape {
 
-	private final SvgString svg;
+	private final String svg;
+	private final double scale;
 
-	public UImageSvg(SvgString tmp) {
-		this.svg = tmp;
+	public UImageSvg(String svg, double scale) {
+		if (svg == null) {
+			throw new IllegalArgumentException();
+		}
+		this.svg = svg;
+		this.scale = scale;
 	}
 
-	public final SvgString getSvg() {
-		return svg;
+	public String getMD5Hex() {
+		return SignatureUtils.getMD5Hex(svg);
 	}
 
+	public String getSvg(boolean raw) {
+		String result = svg;
+		if (raw) {
+			return result;
+		}
+		if (result.startsWith("<?xml")) {
+			final int idx = result.indexOf("<svg");
+			result = result.substring(idx);
+		}
+		if (result.startsWith("<svg")) {
+			final int idx = result.indexOf(">");
+			result = "<svg>" + result.substring(idx + 1);
+		}
+		final String style = extractSvgStyle();
+		if (style != null) {
+			final String background = extractBackground(style);
+			if (background != null) {
+				result = result.replaceFirst("<g>", "<g><rect fill=\"" + background + "\" style=\"" + style + "\" /> ");
+			}
+		}
+		if (result.startsWith("<svg>") == false) {
+			throw new IllegalArgumentException();
+		}
+		return result;
+	}
+
+	private String extractBackground(String style) {
+		final Pattern p = Pattern.compile("background:([^;]+)");
+		final Matcher m = p.matcher(style);
+		if (m.find()) {
+			return m.group(1);
+		}
+		return null;
+	}
+
+	private String extractSvgStyle() {
+		final Pattern p = Pattern.compile("(?i)\\<svg[^>]+style=\"([^\">]+)\"");
+		final Matcher m = p.matcher(svg);
+		if (m.find()) {
+			return m.group(1);
+		}
+		return null;
+	}
+
+	public int getData(String name) {
+		final Pattern p = Pattern.compile("(?i)" + name + "\\W+(\\d+)");
+		final Matcher m = p.matcher(svg);
+		if (m.find()) {
+			final String s = m.group(1);
+			return Integer.parseInt(s);
+		}
+		throw new IllegalStateException("Cannot find " + name);
+	}
+	
 	public int getHeight() {
-		return svg.getData("height");
+		return this.getData("height");
 	}
 
 	public int getWidth() {
-		return svg.getData("width");
+		return this.getData("width");
+	}
+
+
+	public double getScale() {
+		return scale;
 	}
 
 }

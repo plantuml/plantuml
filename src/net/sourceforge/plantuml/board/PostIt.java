@@ -30,43 +30,38 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.sprite;
+package net.sourceforge.plantuml.board;
 
-import java.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImageSvg;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class SpriteSvg implements Sprite {
+public class PostIt {
 
-//	private final UImageSvg img;
-	private final String svg;
+	private final BNode node;
+	private final ISkinParam skinParam;
 
-	public SpriteSvg(String svg) {
-		this.svg = svg;
-//		this.img = new UImageSvg(new SvgString(svg, 1));
+	public PostIt(ISkinParam skinParam, BNode node) {
+		this.node = node;
+		this.skinParam = skinParam;
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale) {
-		final UImageSvg img = new UImageSvg(svg, scale);
-		return new AbstractTextBlock() {
+	public static double getHeight() {
+		return 90;
+	}
+	
+	public static double getWidth() {
+		return 170;
+	}
 
-			public void drawU(UGraphic ug) {
-				ug.draw(img);
-			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(img.getWidth() * scale, img.getHeight() * scale);
-			}
-		};
+
+	public TextBlock getCard() {
+		return new CardBox(Display.create(node.getName()), skinParam);
+
 	}
 
 }

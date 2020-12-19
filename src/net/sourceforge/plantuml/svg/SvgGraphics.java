@@ -66,11 +66,11 @@ import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SignatureUtils;
-import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
@@ -768,7 +768,7 @@ public class SvgGraphics {
 
 	private final Map<String, String> images = new HashMap<String, String>();
 
-	public void svgImage(SvgString image, double x, double y) {
+	public void svgImage(UImageSvg image, double x, double y) {
 		if (hidden == false) {
 			String svg = manageScale(image);
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
@@ -782,14 +782,22 @@ public class SvgGraphics {
 		ensureVisible(x + image.getData("width"), y + image.getData("height"));
 	}
 
-	private String manageScale(SvgString svg) {
-		final double svgScale = svg.getScale();
+	private String manageScale(UImageSvg svgImage) {
+		final double svgScale = svgImage.getScale();
+		String svg = svgImage.getSvg(false);
 		if (svgScale * scale == 1) {
-			return svg.getSvg(false);
+			return svg;
 		}
+		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');
+		if (svg2.contains("<g ") == false && svg2.contains("<g>") == false) {
+			svg = svg.replaceFirst("\\<svg\\>", "<svg><g>");
+			svg = svg.replaceFirst("\\</svg\\>", "</g></svg>");
+		}
+		final String factor = format(svgScale);
 		final String s1 = "\\<g\\b";
-		final String s2 = "<g transform=\"scale(" + format(svgScale) + "," + format(svgScale) + ")\" ";
-		return svg.getSvg(false).replaceFirst(s1, s2);
+		final String s2 = "<g transform=\"scale(" + factor + "," + factor + ")\" ";
+		svg = svg.replaceFirst(s1, s2);
+		return svg;
 	}
 
 	private String toBase64(BufferedImage image) throws IOException {

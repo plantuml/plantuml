@@ -30,40 +30,45 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.wire;
+package net.sourceforge.plantuml.nwdiag;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+public class Footprint {
 
-public class CommandContainer extends SingleLineCommand2<WireDiagram> {
+	private final int min;
+	private final int max;
 
-	public CommandContainer() {
-		super(false, getRegexConcat());
-	}
-
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandContainer.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TYPE", "component"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([\\w]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\\{"), //
-				RegexLeaf.end());
+	public Footprint(int min, int max) {
+		if (max < min) {
+			throw new IllegalArgumentException();
+		}
+		assert max >= min;
+		this.min = min;
+		this.max = max;
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
-		final String name = arg.get("NAME", 0);
-		return diagram.addStartContainer(name);
+	public String toString() {
+		return "" + min + " -> " + max;
+	}
+
+	public Footprint intersection(Footprint other) {
+		if (this.max < other.min) {
+			return null;
+		}
+		if (this.min > other.max) {
+			return null;
+		}
+		return new Footprint(Math.max(this.min, other.min), Math.min(this.max, other.max));
+	}
+
+	public final int getMin() {
+		return min;
+	}
+
+	public final int getMax() {
+		return max;
 	}
 
 }

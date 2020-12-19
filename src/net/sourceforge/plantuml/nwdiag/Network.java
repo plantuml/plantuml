@@ -42,39 +42,41 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class Network {
 
 	private final String name;
-	private final Map<DiagElement, String> localElements = new LinkedHashMap<DiagElement, String>();
+	private final Map<Square, String> localSquare = new LinkedHashMap<Square, String>();
 	private HColor color;
 	private boolean visible = true;
 	private String ownAdress;
 	private boolean fullWidth;
+	private final int stage;
 
 	@Override
 	public String toString() {
-		return name;
+		return name + "(" + stage + ")";
 	}
 
-	public Network(String name) {
+	public Network(String name, int stage) {
 		this.name = name;
+		this.stage = stage;
 	}
 
-	public String getAdress(DiagElement element) {
-		return localElements.get(element);
+	public String getAdress(Square element) {
+		return localSquare.get(element);
 	}
 
-	public void addElement(DiagElement element, Map<String, String> props) {
+	public void addSquare(Square square, Map<String, String> props) {
 		String address = props.get("address");
 		if (address == null) {
 			address = "";
 		}
-		if (address.length() == 0 && localElements.containsKey(element)) {
+		if (address.length() == 0 && localSquare.containsKey(square)) {
 			return;
 		}
-		localElements.put(element, address);
+		localSquare.put(square, address);
 	}
 
 	public boolean constainsLocally(String name) {
-		for (DiagElement element : localElements.keySet()) {
-			if (element.getName().equals(name)) {
+		for (Square square : localSquare.keySet()) {
+			if (square.getName().equals(name)) {
 				return true;
 			}
 		}
@@ -115,6 +117,36 @@ public class Network {
 
 	public final boolean isFullWidth() {
 		return fullWidth;
+	}
+
+	public final int getStage() {
+		return stage;
+	}
+
+	private double xmin;
+	private double xmax;
+	private double y;
+
+	public void setMinMax(double xmin, double xmax) {
+		this.xmin = xmin;
+		this.xmax = xmax;
+
+	}
+
+	public final double getXmin() {
+		return xmin;
+	}
+
+	public final double getXmax() {
+		return xmax;
+	}
+
+	public final double getY() {
+		return y;
+	}
+
+	public final void setY(double y) {
+		this.y = y;
 	}
 
 }

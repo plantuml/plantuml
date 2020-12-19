@@ -46,7 +46,6 @@ import java.util.Arrays;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsGraphics;
@@ -59,6 +58,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
 public class ScientificEquationSafe {
@@ -93,9 +93,9 @@ public class ScientificEquationSafe {
 
 	private ImageData dimSvg;
 
-	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) {
+	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor) {
 		try {
-			final SvgString svg = equation.getSvg(scale, foregroundColor, backgroundColor);
+			final UImageSvg svg = equation.getSvg(scale, foregroundColor, backgroundColor);
 			dimSvg = new ImageDataSimple(equation.getDimension());
 			return svg;
 		} catch (Exception e) {
@@ -107,7 +107,7 @@ public class ScientificEquationSafe {
 			} catch (IOException e1) {
 				return null;
 			}
-			return new SvgString(new String(baos.toByteArray()), scale);
+			return new UImageSvg(new String(baos.toByteArray()), scale);
 		}
 	}
 

@@ -80,7 +80,6 @@ import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
 import smetana.core.Z;
-import smetana.core.debug.SmetanaDebug;
 
 public class arrows__c {
 

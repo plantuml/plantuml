@@ -30,43 +30,33 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.sprite;
+package net.sourceforge.plantuml.wire;
 
-import java.awt.geom.Dimension2D;
+public enum WLinkType {
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImageSvg;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+	NORMAL, BUS;
 
-public class SpriteSvg implements Sprite {
-
-//	private final UImageSvg img;
-	private final String svg;
-
-	public SpriteSvg(String svg) {
-		this.svg = svg;
-//		this.img = new UImageSvg(new SvgString(svg, 1));
+	static public WLinkType from(String arg) {
+		if (arg.equals("-")) {
+			return WLinkType.NORMAL;
+		}
+		if (arg.equals("=")) {
+			return WLinkType.BUS;
+		}
+		throw new IllegalArgumentException();
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale) {
-		final UImageSvg img = new UImageSvg(svg, scale);
-		return new AbstractTextBlock() {
-
-			public void drawU(UGraphic ug) {
-				ug.draw(img);
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(img.getWidth() * scale, img.getHeight() * scale);
-			}
-		};
+	public double ySpaceForNext() {
+		switch (this) {
+		case NORMAL:
+			return 15;
+		case BUS:
+			return 25;
+		}
+		throw new IllegalArgumentException();
 	}
 
 }

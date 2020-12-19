@@ -30,35 +30,41 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.wire;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class CommandContainerEnd extends SingleLineCommand2<WireDiagram> {
+public class Spot {
 
-	public CommandContainerEnd() {
-		super(false, getRegexConcat());
+	private final WBlock block;
+	private final HColor color;
+	private final String x;
+	private final String y;
+
+	public Spot(WBlock block, HColor color, String x, String y) {
+		this.block = block;
+		this.color = color == null ? HColorUtils.RED : color;
+		this.x = x == null ? "0" : x;
+		this.y = y == null ? "0" : y;
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandContainerEnd.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\\}"), //
-				RegexLeaf.end());
-	}
+	public void drawMe(UGraphic ug) {
 
-	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.componentEnd();
+		final UTranslate pos = block.getAbsolutePosition(x, y);
+		final UTranslate tr = pos.compose(new UTranslate(-2, -2));
+		final UShape circle = new UEllipse(5, 5);
+
+		ug = ug.apply(color).apply(color.bg());
+		ug.apply(tr).draw(circle);
+
 	}
 
 }

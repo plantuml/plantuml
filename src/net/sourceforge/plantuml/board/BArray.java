@@ -30,38 +30,51 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.wire;
+package net.sourceforge.plantuml.board;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-public class CommandVspace extends SingleLineCommand2<WireDiagram> {
+public class BArray implements Iterable<BNode> {
 
-	public CommandVspace() {
-		super(false, getRegexConcat());
+	private final Map<String, BNode> data = new HashMap<String, BNode>();
+	private int maxX;
+	private int maxY;
+
+	public void put(BNode node) {
+		final String key = getKey(node.getX(), node.getStage());
+		if (data.containsKey(key)) {
+			throw new IllegalArgumentException();
+		}
+		data.put(key, node);
+		this.maxX = Math.max(this.maxX, node.getX());
+		this.maxY = Math.max(this.maxY, node.getStage());
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandVspace.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TYPE", "vspace"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("HEIGHT", "([\\d]+)"), //
-				RegexLeaf.end());
+	public BNode getCell(int x, int y) {
+		final String key = getKey(x, y);
+		return data.get(key);
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
-		final String height = arg.get("HEIGHT", 0);
-		return diagram.vspace(Integer.parseInt(height));
+	private String getKey(int x, int y) {
+		return "" + x + ";" + y;
+	}
+
+	public Iterator<BNode> iterator() {
+		return Collections.unmodifiableCollection(data.values()).iterator();
+	}
+
+	public final int getMaxX() {
+		return maxX;
+	}
+
+	public final int getMaxY() {
+		return maxY;
 	}
 
 }

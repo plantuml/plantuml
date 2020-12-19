@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.wire;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -43,30 +43,36 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandProperty extends SingleLineCommand2<NwDiagram> {
+public class CommandMove extends SingleLineCommand2<WireDiagram> {
 
-	public CommandProperty() {
-		super(getRegexConcat());
+	public CommandMove() {
+		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandMove.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf("move"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME", "(address|color|width|description)"), //
+				new RegexLeaf("\\("), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("="), //
+				new RegexLeaf("X", "(-?\\d+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\"?"), //
-				new RegexLeaf("VALUE", "([^\"]*)"), //
-				new RegexLeaf("\"?"), //
+				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(";?"), //
+				new RegexLeaf("Y", "(-?\\d+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.setProperty(arg.get("NAME", 0), arg.get("VALUE", 0));
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
+		final String indent = arg.get("INDENT", 0);
+		final double x = Double.parseDouble(arg.get("X", 0));
+		final double y = Double.parseDouble(arg.get("Y", 0));
+		return diagram.wmove(indent, x, y);
 	}
 
 }

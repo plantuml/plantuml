@@ -45,6 +45,6 @@ public class DriverImageSvgSvg implements UDriver<SvgGraphics> {
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UImageSvg image = (UImageSvg) ushape;
-		svg.svgImage(image.getSvg(), x, y);
+		svg.svgImage(image, x, y);
 	}
 }

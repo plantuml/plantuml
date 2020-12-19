@@ -6,9 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.security.ImageIO;
-
 import ext.plantuml.com.ctreber.acearth.renderer.RenderTarget;
+import net.sourceforge.plantuml.security.ImageIO;
 
 /**
  * <p>

@@ -44,8 +44,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
-import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class LatexBuilder implements ScientificEquation {
 
@@ -67,14 +67,14 @@ public class LatexBuilder implements ScientificEquation {
 		return new TeXIconBuilder(tex, foregroundColor).getIcon();
 	}
 
-	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor)
+	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor)
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, IOException {
 		final Icon icon = buildIcon(foregroundColor);
 		final ConverterSvg converterSvg = new ConverterSvg(icon);
 		final String svg = converterSvg.getSvg(scale, true, backgroundColor);
 		dimension = converterSvg.getDimension();
-		return new SvgString(svg, scale);
+		return new UImageSvg(svg, scale);
 	}
 
 	public MutableImage getImage(Color foregroundColor, Color backgroundColor)

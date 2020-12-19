@@ -110,6 +110,9 @@ public class SkinParam implements ISkinParam {
 		if (type == UmlDiagramType.GIT) {
 			UseStyle.setBetaStyle(true);
 		}
+		if (type == UmlDiagramType.BOARD) {
+			UseStyle.setBetaStyle(true);
+		}
 		if (type == UmlDiagramType.SEQUENCE) {
 			// skin = "debug.skin";
 			// USE_STYLE2.set(true);

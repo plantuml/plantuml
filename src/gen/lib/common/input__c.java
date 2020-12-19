@@ -62,7 +62,6 @@ import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atof;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.getenv;
-import static smetana.core.JUtils.strstr;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.BOTTOM_IX;

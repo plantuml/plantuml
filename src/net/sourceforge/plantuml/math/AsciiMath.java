@@ -48,8 +48,8 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class AsciiMath implements ScientificEquation {
 
@@ -94,7 +94,7 @@ public class AsciiMath implements ScientificEquation {
 		return builder.getDimension();
 	}
 
-	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor)
+	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor)
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, IOException {
 		return builder.getSvg(scale, foregroundColor, backgroundColor);

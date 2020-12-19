@@ -141,8 +141,8 @@ public class EmbeddedDiagram implements CharSequence {
 				final boolean isSvg = ug.matchesProperty("SVG");
 				if (isSvg) {
 					final String imageSvg = getImageSvg();
-					final SvgString svg = new SvgString(imageSvg, 1);
-					ug.draw(new UImageSvg(svg));
+					final UImageSvg svg = new UImageSvg(imageSvg, 1);
+					ug.draw(svg);
 					return;
 				}
 				final BufferedImage im = getImage();

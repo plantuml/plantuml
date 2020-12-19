@@ -41,31 +41,38 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandPinSpace extends SingleLineCommand2<WireDiagram> {
+public class CommandGoto extends SingleLineCommand2<WireDiagram> {
 
-	public CommandPinSpace() {
+	public CommandGoto() {
 		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPinSpace.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandGoto.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf("goto"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOr("POSITION", //
-						new RegexLeaf("top"), //
-						new RegexLeaf("bottom"), //
-						new RegexLeaf("left"), //
-						new RegexLeaf("right")), //
-				new RegexLeaf(" "), //
-				new RegexLeaf(".*"), //
+				new RegexLeaf("\\("), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("X", "(\\d+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf(","), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("Y", "(\\d+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
-		return CommandExecutionResult.ok();
+		final String indent = arg.get("INDENT", 0);
+		final double x = Double.parseDouble(arg.get("X", 0));
+		final double y = Double.parseDouble(arg.get("Y", 0));
+		return diagram.wgoto(indent, x, y);
 	}
 
 }

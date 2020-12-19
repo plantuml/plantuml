@@ -52,10 +52,8 @@ public class CommandComponent extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandComponent.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TYPE", "component"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([\\w]+)"), //
+				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf("NAME", "\\$([\\w]+)"), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("\\["), //
@@ -64,19 +62,25 @@ public class CommandComponent extends SingleLineCommand2<WireDiagram> {
 						new RegexLeaf("HEIGHT", "([\\d]+)"), //
 						new RegexLeaf("\\]")) //
 				), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
+		final String indent = arg.get("INDENT", 0);
 		final String name = arg.get("NAME", 0);
-		final String width = arg.get("WIDTH", 0);
-		final String height = arg.get("HEIGHT", 0);
-		if (width != null) {
-			return diagram.addComponent(name, Integer.parseInt(width), Integer.parseInt(height));
-		} else {
-			return diagram.addComponent(name);
+
+		int width = 0;
+		int height = 0;
+		final String widthString = arg.get("WIDTH", 0);
+		final String heightString = arg.get("HEIGHT", 0);
+		if (widthString != null) {
+			width = Integer.parseInt(widthString);
+			height = Integer.parseInt(heightString);
 		}
+
+		return diagram.addComponent(indent, name, width, height);
 	}
 
 }

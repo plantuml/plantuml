@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
-import net.sourceforge.plantuml.ComponentStyle;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;

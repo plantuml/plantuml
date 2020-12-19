@@ -30,43 +30,62 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
 package net.sourceforge.plantuml.nwdiag;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+public class NwArray {
 
-public class CommandProperty extends SingleLineCommand2<NwDiagram> {
+	private final LinkedElement data[][];
 
-	public CommandProperty() {
-		super(getRegexConcat());
+	public NwArray(int lines, int cols) {
+		this.data = new LinkedElement[lines][cols];
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME", "(address|color|width|description)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("="), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\"?"), //
-				new RegexLeaf("VALUE", "([^\"]*)"), //
-				new RegexLeaf("\"?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(";?"), //
-				RegexLeaf.end());
+	public int getNbLines() {
+		return data.length;
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.setProperty(arg.get("NAME", 0), arg.get("VALUE", 0));
+	public int getNbCols() {
+		return data[0].length;
+	}
+
+	public LinkedElement get(int i, int j) {
+		return data[i][j];
+	}
+
+	public LinkedElement[] getLine(int i) {
+		return data[i];
+	}
+
+	public void set(int i, int j, LinkedElement value) {
+		data[i][j] = value;
+	}
+
+	public void swapCols(int col1, int col2) {
+		if (col1 == col2) {
+			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < getNbLines(); i++) {
+			final LinkedElement tmp = data[i][col1];
+			data[i][col1] = data[i][col2];
+			data[i][col2] = tmp;
+		}
+
+	}
+
+	public Footprint getFootprint(NwGroup group) {
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < getNbLines(); i++) {
+			for (int j = 0; j < getNbCols(); j++) {
+				if (data[i][j] != null && group.matches(data[i][j])) {
+					min = Math.min(min, j);
+					max = Math.max(max, j);
+				}
+			}
+		}
+		return new Footprint(min, max);
 	}
 
 }

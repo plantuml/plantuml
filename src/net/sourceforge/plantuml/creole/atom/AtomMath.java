@@ -40,7 +40,6 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -93,8 +92,8 @@ public class AtomMath extends AbstractAtom implements Atom {
 		final Color fore = getColor(foreground, Color.BLACK);
 		// final double dpiFactor = ug.dpiFactor();
 		if (isSvg) {
-			final SvgString svg = math.getSvg(1, fore, back);
-			ug.draw(new UImageSvg(svg));
+			final UImageSvg svg = math.getSvg(1, fore, back);
+			ug.draw(svg);
 		} else {
 			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getFormula());
 			ug.draw(image);

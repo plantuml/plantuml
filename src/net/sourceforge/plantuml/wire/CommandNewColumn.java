@@ -51,14 +51,16 @@ public class CommandNewColumn extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNewColumn.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
 				new RegexLeaf("-+"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.newColumn();
+		final String indent = arg.get("INDENT", 0);
+		return diagram.newColumn(indent);
 	}
 
 }

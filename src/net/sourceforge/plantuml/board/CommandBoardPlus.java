@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.board;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -43,30 +43,24 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandProperty extends SingleLineCommand2<NwDiagram> {
+public class CommandBoardPlus extends SingleLineCommand2<BoardDiagram> {
 
-	public CommandProperty() {
-		super(getRegexConcat());
+	public CommandBoardPlus() {
+		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandBoardPlus.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("PLUS", "([+]*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME", "(address|color|width|description)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("="), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\"?"), //
-				new RegexLeaf("VALUE", "([^\"]*)"), //
-				new RegexLeaf("\"?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(";?"), //
-				RegexLeaf.end());
+				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.setProperty(arg.get("NAME", 0), arg.get("VALUE", 0));
+	protected CommandExecutionResult executeArg(BoardDiagram diagram, LineLocation location, RegexResult arg) {
+		final String plus = arg.get("PLUS", 0);
+		final String label = arg.get("LABEL", 0);
+		return diagram.addLine(plus, label);
 	}
 
 }

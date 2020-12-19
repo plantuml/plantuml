@@ -112,7 +112,6 @@ import h.ST_Agraph_s;
 import h.ST_pointf;
 import smetana.core.CArrayOfStar;
 import smetana.core.Z;
-import smetana.core.debug.SmetanaDebug;
 
 /* classify edges for mincross/nodepos/splines, using given ranks */
 public class class2__c {

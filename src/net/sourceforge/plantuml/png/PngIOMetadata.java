@@ -35,16 +35,20 @@
  */
 package net.sourceforge.plantuml.png;
 
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
 
 import javax.imageio.IIOImage;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOInvalidTreeException;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
-
-import com.sun.imageio.plugins.png.PNGMetadata;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.security.ImageIO;
@@ -56,60 +60,44 @@ public class PngIOMetadata {
 	public static void writeWithMetadata(RenderedImage image, OutputStream os, String metadata, int dpi,
 			String debugData) throws IOException {
 
-		// Create & populate metadata
-		PNGMetadata pngMetadata = null;
-		try {
-			pngMetadata = new PNGMetadata();
-		} catch (Throwable e) {
-			Log.info("Cannot create com.sun.imageio.plugins.png.PNGMetadata");
-			PngIO.forceImageIO = true;
-			ImageIO.write(image, "png", os);
-			return;
-		}
-		writeInternal(image, os, metadata, dpi, debugData, pngMetadata);
+//		Log.info("Cannot create com.sun.imageio.plugins.png.PNGMetadata");
+//		PngIO.forceImageIO = true;
+//		ImageIO.write(image, "png", os);
+
+		writeInternal(image, os, metadata, dpi, debugData);
 	}
 
-	private static void writeInternal(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData,
-			final PNGMetadata pngMetadata) throws IOException {
+	private static void writeInternal(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData)
+			throws IOException {
+
+		final ImageWriter writer = javax.imageio.ImageIO.getImageWritersByFormatName("png").next();
+		final ImageWriteParam writeParam = writer.getDefaultWriteParam();
+		final ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier
+				.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
+
+		final IIOMetadata meta = writer.getDefaultImageMetadata(typeSpecifier, writeParam);
+
 		if (dpi != 96) {
-			pngMetadata.pHYs_present = true;
-			pngMetadata.pHYs_unitSpecifier = PNGMetadata.PHYS_UNIT_METER;
-			pngMetadata.pHYs_pixelsPerUnitXAxis = (int) Math.round(dpi / .0254 + 0.5);
-			pngMetadata.pHYs_pixelsPerUnitYAxis = pngMetadata.pHYs_pixelsPerUnitXAxis;
-		}
-
-		if (metadata != null) {
-			// pngMetadata.zTXt_keyword.add("plantuml");
-			// pngMetadata.zTXt_compressionMethod.add(new Integer(0));
-			// pngMetadata.zTXt_text.add(metadata);
-
-			pngMetadata.iTXt_compressionFlag.add(new Boolean(true));
-			pngMetadata.iTXt_compressionMethod.add(new Integer(0));
-			pngMetadata.iTXt_keyword.add("plantuml");
-			pngMetadata.iTXt_languageTag.add("");
-			pngMetadata.iTXt_text.add(metadata);
-			pngMetadata.iTXt_translatedKeyword.add("");
-
+			addDpi(meta, dpi);
 		}
 
 		if (debugData != null) {
-			pngMetadata.tEXt_keyword.add("debug");
-			pngMetadata.tEXt_text.add(debugData);
+			addText(meta, "debug", debugData);
 		}
+		addText(meta, "copyleft", copyleft);
+		addiText(meta, "plantuml", metadata);
 
-		pngMetadata.tEXt_keyword.add("copyleft");
-		pngMetadata.tEXt_text.add(copyleft);
-
-		Log.debug("PngIOMetadata pngMetadata=" + pngMetadata);
+		Log.debug("PngIOMetadata pngMetadata=" + meta);
 
 		// Render the PNG to file
-		final IIOImage iioImage = new IIOImage(image, null, pngMetadata);
+		final IIOImage iioImage = new IIOImage(image, null, meta);
 		Log.debug("PngIOMetadata iioImage=" + iioImage);
 		// Attach the metadata
 		final ImageWriter imagewriter = getImageWriter();
 		Log.debug("PngIOMetadata imagewriter=" + imagewriter);
 
-		// See http://plantuml.sourceforge.net/qa/?qa=4367/sometimes-missing-response-headers-for-broken-png-images
+		// See
+		// http://plantuml.sourceforge.net/qa/?qa=4367/sometimes-missing-response-headers-for-broken-png-images
 		// Code provided by Michael Griffel
 		synchronized (imagewriter) {
 			final ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(os);
@@ -129,6 +117,56 @@ public class PngIOMetadata {
 				// Log.debug("PngIOMetadata finally 5");
 			}
 		}
+	}
+
+	private static void addDpi(IIOMetadata meta, double dpi) throws IIOInvalidTreeException {
+		final IIOMetadataNode dimension = new IIOMetadataNode("Dimension");
+
+		final IIOMetadataNode horizontalPixelSize = new IIOMetadataNode("HorizontalPixelSize");
+		final double value = dpi / 0.0254 / 1000;
+		horizontalPixelSize.setAttribute("value", Double.toString(value));
+		dimension.appendChild(horizontalPixelSize);
+
+		final IIOMetadataNode verticalPixelSize = new IIOMetadataNode("VerticalPixelSize");
+		verticalPixelSize.setAttribute("value", Double.toString(value));
+		dimension.appendChild(verticalPixelSize);
+
+		final IIOMetadataNode root = new IIOMetadataNode("javax_imageio_1.0");
+		root.appendChild(dimension);
+		
+		meta.mergeTree("javax_imageio_1.0", root);
+
+	}
+
+	private static void addiText(IIOMetadata meta, String key, String value) throws IIOInvalidTreeException {
+		final IIOMetadataNode text = new IIOMetadataNode("iTXt");
+		final IIOMetadataNode entry = new IIOMetadataNode("iTXtEntry");
+		entry.setAttribute("keyword", key);
+		entry.setAttribute("compressionFlag", "true");
+		entry.setAttribute("compressionMethod", "0");
+		entry.setAttribute("languageTag", "");
+		entry.setAttribute("translatedKeyword", "");
+		entry.setAttribute("text", value);
+
+		text.appendChild(entry);
+		final IIOMetadataNode root = new IIOMetadataNode("javax_imageio_png_1.0");
+		root.appendChild(text);
+		
+		meta.mergeTree("javax_imageio_png_1.0", root);
+
+	}
+
+	private static void addText(IIOMetadata meta, String key, String value) throws IIOInvalidTreeException {
+		final IIOMetadataNode text = new IIOMetadataNode("tEXt");
+		final IIOMetadataNode entry = new IIOMetadataNode("tEXtEntry");
+		entry.setAttribute("keyword", key);
+		entry.setAttribute("value", value);
+
+		text.appendChild(entry);
+		final IIOMetadataNode root = new IIOMetadataNode("javax_imageio_png_1.0");
+		root.appendChild(text);
+		
+		meta.mergeTree("javax_imageio_png_1.0", root);
 	}
 
 	private static ImageWriter getImageWriter() {

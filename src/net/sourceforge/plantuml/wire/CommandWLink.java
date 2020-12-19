@@ -37,43 +37,63 @@ package net.sourceforge.plantuml.wire;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
-public class CommandPin extends SingleLineCommand2<WireDiagram> {
+public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 
-	public CommandPin() {
+	public CommandWLink() {
 		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPin.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandWLink.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("NAME1", "\\$([\\w][.\\w]*)"), //
+				new RegexOptional(new RegexConcat(//
+						new RegexLeaf("\\("), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("X1", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf(","), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("Y1", "(-?\\d+(%|%[-+]\\d+)?)"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("\\)") //
+				)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOr("POSITION", //
-						new RegexLeaf("top"), //
-						new RegexLeaf("bottom"), //
-						new RegexLeaf("left"), //
-						new RegexLeaf("right")), //
-				new RegexLeaf(":"), //
-				new RegexLeaf("PINS", "(.*)"), //
+				new RegexLeaf("STYLE", "([-=])\\>"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("NAME2", "\\$([\\w][.\\w]*)"), //
+				new RegexOptional(new RegexConcat( //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("COLOR", "(#\\w+)?"))), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
-		final Position position = Position.fromString(arg.get("POSITION", 0));
-		final String pins = arg.get("PINS", 0);
 
-		for (String s : pins.split(",")) {
-			diagram.addPin(position, s.trim());
+		final String name1 = arg.get("NAME1", 0);
+		final String x1 = arg.get("X1", 0);
+		final String y1 = arg.get("Y1", 0);
+		
+		final String name2 = arg.get("NAME2", 0);
+		final WLinkType type = WLinkType.from(arg.get("STYLE", 0));
+
+		final String stringColor = arg.get("COLOR", 0);
+		HColor color = null;
+		if (stringColor != null) {
+			color = HColorSet.instance().getColorIfValid(stringColor);
 		}
 
-		return CommandExecutionResult.ok();
+		return diagram.link(name1, x1, y1, name2, type, color);
 	}
 
 }

@@ -30,43 +30,53 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.sprite;
+package net.sourceforge.plantuml.board;
 
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImageSvg;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class SpriteSvg implements Sprite {
+public class CardBox extends AbstractTextBlock {
 
-//	private final UImageSvg img;
-	private final String svg;
+	private final Display label;
+	private final ISkinParam skinParam;
 
-	public SpriteSvg(String svg) {
-		this.svg = svg;
-//		this.img = new UImageSvg(new SvgString(svg, 1));
+	public CardBox(Display label, ISkinParam skinParam) {
+		this.label = label;
+		this.skinParam = skinParam;
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale) {
-		final UImageSvg img = new UImageSvg(svg, scale);
-		return new AbstractTextBlock() {
+//	private StyleSignature getDefaultStyleDefinitionNode() {
+//		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node);
+//	}
 
-			public void drawU(UGraphic ug) {
-				ug.draw(img);
-			}
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		return new Dimension2DDouble(150, 70);
+	}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(img.getWidth() * scale, img.getHeight() * scale);
-			}
-		};
+	public void drawU(UGraphic ug) {
+		final URectangle rect = new URectangle(calculateDimension(ug.getStringBounder()));
+		rect.setDeltaShadow(1);
+
+		ug.apply(HColorUtils.BLACK).apply(HColorUtils.LIGHT_GRAY.bg()).draw(rect);
+
+		label.create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)), HorizontalAlignment.LEFT, skinParam)
+				.drawU(ug.apply(new UTranslate(3, 3)));
+
 	}
 
 }

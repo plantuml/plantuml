@@ -39,10 +39,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
-import net.sourceforge.plantuml.tim.EaterFunctionCall;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -66,22 +64,19 @@ public class InvokeProcedure implements TFunction {
 
 	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
 			throws EaterException, EaterExceptionLocated {
-		final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(s, location), false, isUnquoted());
-		call.analyze((TContext) context, memory);
-		final List<TValue> values = call.getValues();
-		final String fname = values.get(0).toString();
-		final List<TValue> args = values.subList(1, values.size());
-		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());
+		throw new UnsupportedOperationException();
+	}
+
+	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args, Map<String, TValue> named)
+			throws EaterException, EaterExceptionLocated {
+		final String fname = args.get(0).toString();
+		final List<TValue> sublist = args.subList(1, args.size());
+		final TFunctionSignature signature = new TFunctionSignature(fname, sublist.size());
 		final TFunction func = context.getFunctionSmart(signature);
 		if (func == null) {
 			throw EaterException.located("Cannot find void function " + fname);
 		}
-		func.executeProcedureInternal(context, memory, args, call.getNamedArguments());
-	}
-
-	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args,
-			Map<String, TValue> named) {
-		throw new UnsupportedOperationException();
+		func.executeProcedureInternal(context, memory, sublist, named);
 	}
 
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,

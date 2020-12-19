@@ -387,7 +387,7 @@ public class TContext {
 
 	private String pendingAdd = null;
 
-	public String applyFunctionsAndVariables(TMemory memory, LineLocation location, String str)
+	public String applyFunctionsAndVariables(TMemory memory, LineLocation location, final String str)
 			throws EaterException, EaterExceptionLocated {
 		// https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
 		// https://stackoverflow.com/questions/1326682/java-replacing-multiple-different-substring-in-a-string-at-once-or-in-the-most
@@ -414,12 +414,17 @@ public class TContext {
 				}
 				if (function.getFunctionType() == TFunctionType.PROCEDURE) {
 					this.pendingAdd = result.toString();
-					executeVoid3(location, memory, sub, function);
+					executeVoid3(location, memory, sub, function, call);
+					i += call.getCurrentPosition();
+					final String remaining = str.substring(i);
+					if (remaining.length() > 0) {
+						appendToLastResult(remaining);
+					}
 					return null;
 				}
 				if (function.getFunctionType() == TFunctionType.LEGACY_DEFINELONG) {
 					this.pendingAdd = str.substring(0, i);
-					executeVoid3(location, memory, sub, function);
+					executeVoid3(location, memory, sub, function, call);
 					return null;
 				}
 				assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION
@@ -437,9 +442,16 @@ public class TContext {
 		return result.toString();
 	}
 
-	private void executeVoid3(LineLocation location, TMemory memory, String s, TFunction function)
-			throws EaterException, EaterExceptionLocated {
-		function.executeProcedure(this, memory, location, s);
+	private void appendToLastResult(String remaining) {
+		final StringLocated last = this.resultList.get(this.resultList.size() - 1);
+		this.resultList.set(this.resultList.size() - 1, last.append(remaining));
+	}
+
+	private void executeVoid3(LineLocation location, TMemory memory, String s, TFunction function,
+			EaterFunctionCall call) throws EaterException, EaterExceptionLocated {
+		function.executeProcedureInternal(this, memory, call.getValues(), call.getNamedArguments());
+		// function.executeProcedure(this, memory, location, s, call.getValues(),
+		// call.getNamedArguments());
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
@@ -47,7 +46,7 @@ public class TileImageSvg extends AbstractTextBlock implements TextBlock {
 	private final UImageSvg svg;
 
 	public TileImageSvg(String svg) {
-		this.svg = new UImageSvg(new SvgString(svg, 1));
+		this.svg = new UImageSvg(svg, 1);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
