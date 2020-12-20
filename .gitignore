@@ -6,7 +6,6 @@
 .idea
 *.iml
 out
-gen
 
 # Ant result file
 plantuml.jar
