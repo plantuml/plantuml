@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.jdot;
+package net.sourceforge.plantuml.sdot;
 
 import java.awt.geom.Point2D;
 
@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import smetana.core.Macro;
 
-public class JDotPath implements UDrawable {
+public class SmetanaPath implements UDrawable {
 
 	private final Link link;
 	private final ST_Agedge_s edge;
@@ -76,7 +76,7 @@ public class JDotPath implements UDrawable {
 	private final TextBlock tailLabel;
 	private final Rose rose = new Rose();
 
-	public JDotPath(Link link, ST_Agedge_s edge, YMirror ymirror, CucaDiagram diagram, TextBlock label,
+	public SmetanaPath(Link link, ST_Agedge_s edge, YMirror ymirror, CucaDiagram diagram, TextBlock label,
 			TextBlock tailLabel, TextBlock headLabel) {
 		this.link = link;
 		this.edge = edge;
@@ -104,6 +104,10 @@ public class JDotPath implements UDrawable {
 
 	public void drawU(UGraphic ug) {
 
+		if (link.isHidden()) {
+			return;
+		}
+		
 		HColor color = rose.getHtmlColor(diagram.getSkinParam(), null, getArrowColorParam());
 
 		if (this.link.getColors() != null) {

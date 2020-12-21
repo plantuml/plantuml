@@ -30,51 +30,49 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.cucadiagram.dot;
+package net.sourceforge.plantuml.sdot;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.geom.CubicCurve2D;
+import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
+import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class GraphvizWindows extends AbstractGraphviz {
+public class YMirror {
 
-	static private File specificDotExe;
+	private final double max;
 
-	@Override
-	protected File searchDotExe() {
-		return specificDotExe();
+	public YMirror(double max) {
+		this.max = max;
 	}
 
-	@Override
-	protected File specificDotExe() {
-		synchronized (GraphvizWindows.class) {
-			if (specificDotExe == null)
-				try {
-					specificDotExe = new WindowsDotArchive().getWindowsExeLite();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			return specificDotExe;
+	public double getMirrored(double v) {
+		if (v < 0 || v > max) {
+			System.err.println("BAD VALUE IN YMirror");
 		}
+		return max - v;
 	}
 
-	public boolean graphviz244onWindows() {
-		return false;
+	public Point2D getMirrored(Point2D pt) {
+		// return pt;
+		return new Point2D.Double(pt.getX(), max - pt.getY());
 	}
 
-	GraphvizWindows(ISkinParam skinParam, String dotString, String... type) {
-		super(skinParam, dotString, type);
+	public DotPath getMirrored(DotPath path) {
+		DotPath result = new DotPath();
+		for (CubicCurve2D.Double bez : path.getBeziers()) {
+			result = result.addCurve(getMirrored(bez.getP1()), getMirrored(bez.getCtrlP1()),
+					getMirrored(bez.getCtrlP2()), getMirrored(bez.getP2()));
+		}
+		return result;
 	}
 
-	@Override
-	protected String getExeName() {
-		return "dot.exe";
+	public UTranslate getMirrored(UTranslate tr) {
+		return new UTranslate(tr.getDx(), max - tr.getDy());
+		// return tr;
 	}
 
 }

@@ -32,7 +32,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sourceforge.plantuml.jdot;
+package net.sourceforge.plantuml.sdot;
 
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;

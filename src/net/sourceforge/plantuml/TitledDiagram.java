@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
-	public static final boolean FORCE_JDOT = false;
+	public static final boolean FORCE_SMETANA = false;
 
 	private DisplayPositionned title = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 
@@ -189,16 +189,16 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return mainFrame;
 	}
 
-	private boolean useJDot;
+	private boolean useSmetana;
 
-	public void setUseJDot(boolean useJDot) {
-		this.useJDot = useJDot;
+	public void setUseSmetana(boolean useSmetana) {
+		this.useSmetana = useSmetana;
 	}
 
-	public boolean isUseJDot() {
-		if (FORCE_JDOT)
+	public boolean isUseSmetana() {
+		if (FORCE_SMETANA)
 			return true;
-		return useJDot;
+		return useSmetana;
 	}
 
 	public final double getScaleCoef(FileFormatOption fileFormatOption) {

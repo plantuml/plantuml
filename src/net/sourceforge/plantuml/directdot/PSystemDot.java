@@ -70,11 +70,11 @@ public class PSystemDot extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final Graphviz graphviz = GraphvizUtils.create(null, data,
+		final Graphviz graphviz = GraphvizUtils.createForSystemDot(null, data,
 				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
 		if (graphviz.getExeState() != ExeState.OK) {
-			final TextBlock result = GraphicStrings.createForError(
-					Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
+			final TextBlock result = GraphicStrings
+					.createForError(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
 			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HColorUtils.WHITE,
 					result);
 			return ImageDataSimple.error();

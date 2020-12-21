@@ -35,7 +35,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>1.2020.25-SNAPSHOT</version>
+    <version>1.2020.27-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -106,6 +106,7 @@
                     <include>sprites/archimate/*.png</include>
                     <include>net/sourceforge/plantuml/dedication/*.png</include>
                     <include>net/sourceforge/plantuml/math/*.js</include>
+                    <include>net/sourceforge/plantuml/windowsdot/*.dat</include>
                 </includes>
             </resource>
             <resource>

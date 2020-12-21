@@ -77,27 +77,27 @@ public class PSystemDonors extends AbstractPSystem {
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;
 
-	public static final String DONORS = "6wCC0AmFkBap0wp4H6CjU-RENbb-8cPf4i7oFA4uiOZJNK3y0UwT7lSRwI-YAxltJJEYrckJSWPHVH3q"
+	public static final String DONORS = "6wyC0AmFkBap0wp4H6CjU-RENbb-8cPf4i7oFA4uiOZJNK3y0UwT7lSRwI-YAxltJJEYrckJSWPHVH3q"
 			+ "W7UtXVQXzBy-27EYV0Z-tGWU80D4ITH6ZIpt9Djjcof3Il3lEr_v9UWTth51ehbAgiMHwq-_8GFlEsFp"
-			+ "x3I-UFLeWZO2FmRsrQ4rLzSG2yNoF54A9IqJsjIaONRtQP2UJ-3_u5cxQ4k_PeqqL6171HxxoYzdEnzs"
-			+ "JLR525Eai5iX1RRUcC6TazxBPACF2h_K3w7DvWfBMSu4ucX3FRg-NXlUDcBu6ecF0HWX5cGyC0TIZfb5"
-			+ "575kkb5WYC31EOlPM7t9aIUJ4Cn32tdpXtfIuf7opEbmKM1w10ZOdaO1ajR8hGbdymy3qaMoHTWILvqp"
-			+ "Rio-SLYUaesauTF4Wic2Me0QWlmFkg3JOesF9cUx6cn9FKroxzQ2-lE0XxWsA_eAIvE4-LfxQJOKLv-o"
-			+ "HAgnZS_HNlC8mDrIAqTy6NrqSWJrVlCgnEf72yYFG0_LX2Nvi-m72v4GrJRiG-ywsquUimW7PCWqiGxU"
-			+ "nPRNP2zqSJjBIx82BABtYQzpck21BNJ5vM7W2IrTBkjy0fEMLkyNFHhMxXEkqOdTg-IUw5gmbFxxLHzc"
-			+ "1iK1cYun2xhJm22CfbMes404TWlT7t1J85T2kRiknUxZ8dta9m3UXFIWAsm6ue5uVf5oqo54DAHhUueL"
-			+ "mFXJIbqKM1POC6aJT3MgjDFBQhN7wMgPlcoCkq_Qu7cjmHYAOpfIVM6-UrMuXQ5EDPfbcxLtCQVW4ZuE"
-			+ "yghtpCjL09SMtdaVNFEF38WplJ8YKc-w-hOD_yZShC8mIslEpQfqL_M3cuVs7RYBHGtCA9E7J0gDEuce"
-			+ "gLy9Vbeo_Cs3hDHVRIZlO7Mw3WrXPiI2sqkJ2sfoH85XEikXia70h5gyuXHFkAPW3QkLp1OsHUGPg_iX"
-			+ "Gtu7V1AMQcQXSMFNS1VW6P57WJoSzyYgPVNQXCu5PCvcWhQqOAgbK96-5iY0iIOzzTQ8xKyBBA1BUuoE"
-			+ "nGw5BvjehNA365F0T1F2Bnn4egWXKg8NEKa4y3z_xb9FDDU17zyPmoVZGBA790HK8UuEFL5wYjMZsp3M"
-			+ "Q_JzUYat7y6VV-tH9YUFtVFJ1A9ra2Z-9o00HpaIFNWQ-6loYSYx6TPa1UCYmvMBbHuB92pempkxgFEM"
-			+ "6T4xCLckA1Uj8Z-KxhUu5YucXjYGug8TLBHOKjBBpMfGyMplUzVX8WU2VuagMP5Srieo6GasWLcSksDV"
-			+ "RHZgjk86U50TbGbQk-ktqontZJbV8Qbfk138zrlaLD8Yj61DJKrz8T0cnlxUfFsKfyL_Cg8VJslPSLKF"
-			+ "xeCSNN8NqV1DYO5sJ4zYk8Yp8O1yUSu92znyqqHUL0jAmzAw6NRqO8NyqY_XXOGzjl41IPPNQLQv8GVP"
-			+ "GlPqDL0VK5GJB921HREkIImevNX0YgJ0dBDbH1Of1st0Spq3u1G5zlVt6eIJ9PfVqAozFQEGp4MPc_4C"
-			+ "8ZQSdq729bCs5t9WNvYvRFMAt70jqc47lXtVSRx-4NNr809n80gJu0LSfCEDMMPfs1JFRogvZqj5tao-"
-			+ "calHLYe3ssKckm4s0qeyEGvYbaQ5ujU1d_q3MyxlbN_lD-3vQG00";
+			+ "x3I-UFLeWZO2FmRsrVcVQ_NQ7kb2GV9veXHAkanefoODi_-N3j9O0j_0itRHbhPsqaY72koem6DV-ULh"
+			+ "vyEZoQeOMOeKGIka8D0RCmHoqdk3RFH1uPVw8RJPN64fovb076seHzVNQnFRHWpVAF61m0sn81E1EP1o"
+			+ "p2oYo7FJZG9N10w-MSp6MagEF9c4O1vQo9i_r9CIZvHdJeUB0iyZG23mD0gGj4O1JJXRSXYGEP8j4fQu"
+			+ "wi9nOmwFm_AKUYGDdoOMF1RK0jGGv7_G1PqMQtmqETlLO4lgQP9xjqxKdn6FSsrMz5MN9WdpjVRIR2Ak"
+			+ "CMM9L6CRdwEzvX60kwLMZlWo-XZa2EhzvbM8rOyMa1-17ge9I_9dsGyMeY2gRTY7tdLsdpnc4Gx8a6bY"
+			+ "7RoBBQ-fN-WITLQGP0LOvE_ChmkRu84jT2NaOU09BNCkwtm2avPMxnSz6jRk4wunYzshuvxeQ5XA__sg"
+			+ "3pE3uW0jb9W5tMbWK4RJAbvi80AxXHuFk2cGAw7SNPTYzt6HFl8J06zIUj0LDaY24CylIcuwX8Y6TEr9"
+			+ "iGAOU4gfYmBV0WjsROAkHfL-UbcjzZXTBTENZGdtIHiyhpKOGt5CHwalp7Ul2hSmDAj6itgpzYxc55p9"
+			+ "nq5UzPx5kGhWqiAxueDh_f41UQPNHaGQJLVVjk4VcPjL66QXvzoiIdTLFxXvwF21krZKnOmoUSXKq7YG"
+			+ "Y9hwbU2d9SFVOiYg_DMDyWvMf-km46P6FBYzDBcW9aSKkAQp71OR1CognIjEYONh2TQmw6Isi2aYprZT"
+			+ "3ndoE-2Ji5Gp2qq0kuQx0C_8FGhauRn7LYshroPqBY17DXFqfGLJBOMAzBL01emrwUcqHcn_Mc01MzfZ"
+			+ "TAnmA7pPH6kL6nIO0gQRa7xX81Bb3T4IlQX98e3_-NENUlAv3kBupXW-6GUIFIGXe0f5TzY9qbEw7js6"
+			+ "iLwZxzTBkVa8_lnhZpOv1UsUdoOGhOFayS-401pbAFJWQU2loISdxrvOanMSYmnNBbPwF92mO1ZlxA8k"
+			+ "NcR4xiHakPfSj8hyKERVubguc1nYGugBVb3HOab9BpUhGIMsVVXTXuiSAFubgfH4SbchpcGa-0HcSUwE"
+			+ "VRLXgDig6X11TLGce7VNRwTPxXfpla9Iqt0PaE-toAcaHMZ1cfhQ-qAWMupzlIdxAK-B_sH4Fx7MwkEg"
+			+ "7W87ERhSBgBXcn58EwOdCLmat110lppdX0TklkaXBwe5fM5ftGmxJh12VeMNy4B27jluW2BBgpIht923"
+			+ "RY5xeHge3oYg2Hx8mA93roGMb78y84LIOCxPCZABb8CsuBcU0N2A0llxUmt2gHFDBsZMtfvHIEPYpCru"
+			+ "1X4VpiyWOPCfcnyvi2_BNBPwHMwY5kcm0z-ExpXV_uYwUX218X1bIV2YBjBXndopD6mgvZTrtCUbDcyc"
+			+ "ty2bQEkKWUqoazq0cm4bdWH0xA2WGiKhylDyOCivYVnxlp4LDcl2KsOyim00";
 
 	/*
 	 * Special thanks to our sponsors and donors:
@@ -111,7 +111,7 @@ public class PSystemDonors extends AbstractPSystem {
 		final UDrawable result = getGraphicStrings();
 		HColor backcolor = HColorUtils.WHITE;
 		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0,
-		getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
+				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);

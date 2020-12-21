@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.jdot;
+package net.sourceforge.plantuml.sdot;
 
 import static gen.lib.cgraph.attr__c.agsafeset;
 import static gen.lib.cgraph.edge__c.agedge;
@@ -115,7 +115,7 @@ import smetana.core.Macro;
 import smetana.core.Z;
 import smetana.core.debug.SmetanaDebug;
 
-public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
+public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 
@@ -158,7 +158,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 					continue;
 				}
 				final ST_Agedge_s edge = ent.getValue();
-				new JDotPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2))
+				new SmetanaPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2))
 						.drawU(ug);
 			}
 		}
@@ -189,7 +189,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	}
 
-	public CucaDiagramFileMakerJDot(CucaDiagram diagram, StringBounder stringBounder) {
+	public CucaDiagramFileMakerSmetana(CucaDiagram diagram, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
