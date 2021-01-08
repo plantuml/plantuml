@@ -91,6 +91,10 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
@@ -288,8 +292,23 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			if (printStart != null && constraint.isHidden(min, max)) {
 				continue;
 			}
-			constraint.getUDrawable(timeScale, linksColor, this).drawU(ug);
+
+			// If the linksColor is the default color, we should try to get the arrow color (default is RED_DARK)
+			if (linksColor == HColorUtils.RED_DARK) {
+				constraint.getUDrawable(timeScale, getLinkColor(), this).drawU(ug);
+			} else {
+				constraint.getUDrawable(timeScale, linksColor, this).drawU(ug);
+			}
 		}
+	}
+
+	private HColor getLinkColor() {
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(getCurrentStyleBuilder());
+		return styleArrow.value(PName.LineColor).asColor(colorSet);
+	}
+
+	public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
 	}
 
 	private void drawTasksTitle(final UGraphic ug1) {
@@ -405,12 +424,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			first = first.getTrueRow();
 		}
 		for (TaskDraw td : draws.values()) {
-			if (td == first)
+			if (td == first) {
 				skipping = false;
-			if (skipping)
+			}
+			if (skipping) {
 				continue;
+			}
 			td.pushMe(deltaY + 1);
-
 		}
 
 	}
