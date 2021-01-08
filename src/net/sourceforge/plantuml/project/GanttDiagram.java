@@ -118,6 +118,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private final Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
 	private final Map<Day, HColor> colorDays = new HashMap<Day, HColor>();
+	private final Map<DayOfWeek, HColor> colorDaysOfWeek = new HashMap<DayOfWeek, HColor>();
 	private final Map<Day, String> nameDays = new HashMap<Day, String>();
 
 	private PrintScale printScale = PrintScale.DAILY;
@@ -260,12 +261,12 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (openClose.getCalendar() == null) {
 			return new TimeHeaderSimple(min, max);
 		} else if (printScale == PrintScale.WEEKLY) {
-			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, nameDays);
+			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, nameDays);
 		} else if (printScale == PrintScale.MONTHLY) {
-			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, nameDays);
+			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, nameDays);
 		} else {
-			return new TimeHeaderDaily(openClose.getCalendar(), min, max, openClose, colorDays, nameDays, printStart,
-					printEnd);
+			return new TimeHeaderDaily(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, nameDays, 
+					printStart, printEnd);
 		}
 	}
 
@@ -673,6 +674,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		colorDays.put(day, color);
 	}
 
+	public void colorDay(DayOfWeek day, HColor color) {
+		colorDaysOfWeek.put(day, color);
+	}
+	
 	public void nameDay(Day day, String name) {
 		nameDays.put(day, name);
 	}

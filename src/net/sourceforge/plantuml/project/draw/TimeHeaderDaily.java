@@ -40,6 +40,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -61,13 +62,15 @@ public class TimeHeaderDaily extends TimeHeader {
 
 	private final LoadPlanable defaultPlan;
 	private final Map<Day, HColor> colorDays;
+	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
 	private final Map<Day, String> nameDays;
 
 	public TimeHeaderDaily(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<Day, String> nameDays, Day printStart, Day printEnd) {
+			Map<DayOfWeek, HColor> colorDaysOfWeek, Map<Day, String> nameDays, Day printStart, Day printEnd) {
 		super(min, max, new TimeScaleDaily(calendar, printStart));
 		this.defaultPlan = defaultPlan;
 		this.colorDays = colorDays;
+		this.colorDaysOfWeek = colorDaysOfWeek;
 		this.nameDays = nameDays;
 	}
 
@@ -99,6 +102,11 @@ public class TimeHeaderDaily extends TimeHeader {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = colorDays.get(wink);
+			// Day of week should be stronger than period of time (back color).
+			HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
+			if (backDoW != null) {
+				back = backDoW;
+			}
 			if (back == null && defaultPlan.getLoadAt(wink) == 0) {
 				back = veryLightGray;
 			}
