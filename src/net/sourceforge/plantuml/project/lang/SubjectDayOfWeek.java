@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SubjectDayOfWeek implements Subject {
 
@@ -58,7 +59,7 @@ public class SubjectDayOfWeek implements Subject {
 	}
 
 	public Collection<? extends SentenceSimple> getSentences() {
-		return Arrays.asList(new AreClose());
+		return Arrays.asList(new AreClose(), new InColor());
 	}
 
 	class AreClose extends SentenceSimple {
@@ -71,6 +72,23 @@ public class SubjectDayOfWeek implements Subject {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final DayOfWeek day = (DayOfWeek) subject;
 			project.closeDayOfWeek(day);
+			return CommandExecutionResult.ok();
+		}
+
+	}
+
+	class InColor extends SentenceSimple {
+
+		public InColor() {
+			super(SubjectDayOfWeek.this, Verbs.isOrAre(), new ComplementInColors2());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final HColor color = ((CenterBorderColor) complement).getCenter();
+			final DayOfWeek day = (DayOfWeek) subject;
+			project.colorDay(day, color);
+
 			return CommandExecutionResult.ok();
 		}
 

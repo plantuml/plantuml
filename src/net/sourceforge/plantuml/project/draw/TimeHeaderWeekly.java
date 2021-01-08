@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 public class TimeHeaderWeekly extends TimeHeader {
 
 	private final LoadPlanable defaultPlan;
+	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
 	private final Map<Day, HColor> colorDays;
 
 	protected double getTimeHeaderHeight() {
@@ -64,10 +65,11 @@ public class TimeHeaderWeekly extends TimeHeader {
 	}
 
 	public TimeHeaderWeekly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<Day, String> nameDays) {
+		Map<DayOfWeek, HColor> colorDaysOfWeek, Map<Day, String> nameDays) {
 		super(min, max, new TimeScaleCompressed(calendar, PrintScale.WEEKLY.getCompress()));
 		this.defaultPlan = defaultPlan;
 		this.colorDays = colorDays;
+		this.colorDaysOfWeek = colorDaysOfWeek;
 	}
 
 	@Override
@@ -98,8 +100,13 @@ public class TimeHeaderWeekly extends TimeHeader {
 		HColor lastColor = null;
 
 		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
-
 			HColor back = colorDays.get(wink);
+			// Day of week should be stronger than period of time (back color).
+			HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
+			if (backDoW != null) {
+				back = backDoW;
+			}
+
 			if (back == null && defaultPlan.getLoadAt(wink) == 0) {
 				back = veryLightGray;
 			}

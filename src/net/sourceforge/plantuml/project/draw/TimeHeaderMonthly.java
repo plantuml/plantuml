@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -60,7 +61,7 @@ public class TimeHeaderMonthly extends TimeHeader {
 	}
 
 	public TimeHeaderMonthly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<Day, String> nameDays) {
+			Map<DayOfWeek, HColor> colorDaysOfWeek, Map<Day, String> nameDays) {
 		super(min, max, new TimeScaleCompressed(calendar, PrintScale.MONTHLY.getCompress()));
 	}
 
