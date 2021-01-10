@@ -118,8 +118,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return ident;
 	}
 
-	public CucaDiagram(ISkinSimple orig) {
-		super(orig);
+	public CucaDiagram(UmlDiagramType type, ISkinSimple orig) {
+		super(type, orig);
 		this.stacks2.add(Ident.empty());
 	}
 

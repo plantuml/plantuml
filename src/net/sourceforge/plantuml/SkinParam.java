@@ -73,6 +73,7 @@ import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
+import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -111,6 +112,9 @@ public class SkinParam implements ISkinParam {
 			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.BOARD) {
+			UseStyle.setBetaStyle(true);
+		}
+		if (type == UmlDiagramType.YAML) {
 			UseStyle.setBetaStyle(true);
 		}
 		if (type == UmlDiagramType.SEQUENCE) {
@@ -1256,6 +1260,20 @@ public class SkinParam implements ISkinParam {
 			s = s.replace(ent.getKey(), ent.getValue());
 		}
 		return s;
+	}
+
+	public LengthAdjust getlengthAdjust() {
+		final String value = getValue("lengthAdjust");
+		if ("spacingAndGlyphs".equalsIgnoreCase(value)) {
+			return LengthAdjust.SPACING_AND_GLYPHS;
+		}
+		if ("spacing".equalsIgnoreCase(value)) {
+			return LengthAdjust.SPACING;
+		}
+		if ("none".equalsIgnoreCase(value)) {
+			return LengthAdjust.NONE;
+		}
+		return LengthAdjust.defaultValue();
 	}
 
 }

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 public class CompositeDiagram extends AbstractEntityDiagram {
 
 	public CompositeDiagram(ISkinSimple skinParam) {
-		super(skinParam);
+		super(UmlDiagramType.COMPOSITE, skinParam);
 	}
 
 	@Override
@@ -61,11 +61,6 @@ public class CompositeDiagram extends AbstractEntityDiagram {
 			return getOrCreateLeafDefault(ident, code, LeafType.BLOCK, symbol);
 		}
 		return getOrCreateLeafDefault(ident, code, type, symbol);
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.COMPOSITE;
 	}
 
 }

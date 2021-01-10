@@ -61,7 +61,7 @@ public class ActivityDiagram extends CucaDiagram {
 	private ConditionalContext currentContext;
 
 	public ActivityDiagram(ISkinSimple skinParam) {
-		super(skinParam);
+		super(UmlDiagramType.ACTIVITY, skinParam);
 		setNamespaceSeparator(null);
 	}
 
@@ -161,11 +161,6 @@ public class ActivityDiagram extends CucaDiagram {
 	@Deprecated
 	public IEntity getLastEntityBrancheConsulted() {
 		return lastEntityBrancheConsulted;
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.ACTIVITY;
 	}
 
 	public final ConditionalContext getCurrentContext() {

@@ -46,8 +46,8 @@ class GraphvizWindowsLite extends AbstractGraphviz {
 	static private File specificDotExe;
 
 	@Override
-	protected File searchDotExe() {
-		return specificDotExe();
+	protected boolean findExecutableOnPath() {
+		return false;
 	}
 
 	@Override

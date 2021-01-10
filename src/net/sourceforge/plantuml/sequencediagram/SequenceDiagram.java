@@ -81,7 +81,7 @@ public class SequenceDiagram extends UmlDiagram {
 	private final Rose skin2 = new Rose();
 
 	public SequenceDiagram(ISkinSimple skinParam) {
-		super(skinParam);
+		super(UmlDiagramType.SEQUENCE, skinParam);
 	}
 
 	@Deprecated
@@ -386,11 +386,6 @@ public class SequenceDiagram extends UmlDiagram {
 	public void setShowFootbox(boolean footbox) {
 		this.showFootbox = footbox;
 
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.SEQUENCE;
 	}
 
 	private ParticipantEnglober participantEnglober;

@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
@@ -283,7 +284,8 @@ public class ImageBuilder {
 					option.getWatermark());
 		case SVG:
 			return createUGraphicSVG(colorMapper, param.getDpiFactor(), dim, param.getBackcolor(),
-					option.getSvgLinkTarget(), option.getHoverColor(), seed, option.getPreserveAspectRatio());
+					option.getSvgLinkTarget(), option.getHoverColor(), seed, option.getPreserveAspectRatio(),
+					param.getlengthAdjust());
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -307,7 +309,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, final HColor suggested,
-			String svgLinkTarget, String hover, long seed, String preserveAspectRatio) {
+			String svgLinkTarget, String hover, long seed, String preserveAspectRatio, LengthAdjust lengthAdjust) {
 		HColor backColor = HColorUtils.WHITE;
 		if (suggested instanceof HColorSimple) {
 			backColor = suggested;
@@ -316,14 +318,15 @@ public class ImageBuilder {
 		final UGraphicSvg ug;
 		if (suggested instanceof HColorGradient) {
 			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, (HColorGradient) suggested, false, scale,
-					svgLinkTarget, hover, seed, preserveAspectRatio, param.getSvgCharSizeHack());
+					svgLinkTarget, hover, seed, preserveAspectRatio, param.getSvgCharSizeHack(),
+					param.getlengthAdjust());
 		} else if (backColor == null || colorMapper.toColor(backColor).equals(Color.WHITE)) {
 			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed,
-					preserveAspectRatio, param.getSvgCharSizeHack());
+					preserveAspectRatio, param.getSvgCharSizeHack(), param.getlengthAdjust());
 		} else {
 			final String tmp = colorMapper.toSvg(backColor);
 			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, tmp, false, scale, svgLinkTarget, hover, seed,
-					preserveAspectRatio, param.getSvgCharSizeHack());
+					preserveAspectRatio, param.getSvgCharSizeHack(), param.getlengthAdjust());
 		}
 		return ug;
 

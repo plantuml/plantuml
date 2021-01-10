@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
@@ -54,7 +55,7 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandWLink.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("NAME1", "\\$([\\w][.\\w]*)"), //
+				new RegexLeaf("NAME1", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf("\\("), //
 						RegexLeaf.spaceZeroOrMore(), //
@@ -67,12 +68,14 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 						new RegexLeaf("\\)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STYLE", "([-=])\\>"), //
+				new RegexLeaf("STYLE", "(\\<?[-=]{1,2}\\>|\\<?[-=]{1,2})"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME2", "\\$([\\w][.\\w]*)"), //
+				new RegexLeaf("NAME2", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("COLOR", "(#\\w+)?"))), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
@@ -83,9 +86,12 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 		final String name1 = arg.get("NAME1", 0);
 		final String x1 = arg.get("X1", 0);
 		final String y1 = arg.get("Y1", 0);
-		
+
 		final String name2 = arg.get("NAME2", 0);
-		final WLinkType type = WLinkType.from(arg.get("STYLE", 0));
+		final String style = arg.get("STYLE", 0);
+		final WLinkType type = WLinkType.from(style);
+		final WArrowDirection direction = WArrowDirection.from(style);
+		final WOrientation orientation = WOrientation.from(style);
 
 		final String stringColor = arg.get("COLOR", 0);
 		HColor color = null;
@@ -93,7 +99,18 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 			color = HColorSet.instance().getColorIfValid(stringColor);
 		}
 
-		return diagram.link(name1, x1, y1, name2, type, color);
+		final Display label;
+		if (arg.get("MESSAGE", 0) == null) {
+			label = Display.NULL;
+		} else {
+			final String message = arg.get("MESSAGE", 0);
+			label = Display.getWithNewlines(message);
+		}
+
+		if (orientation == WOrientation.VERTICAL) {
+			return diagram.vlink(name1, x1, y1, name2, type, direction, color, label);
+		}
+		return diagram.hlink(name1, x1, y1, name2, type, direction, color, label);
 	}
 
 }

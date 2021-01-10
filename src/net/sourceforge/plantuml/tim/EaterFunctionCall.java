@@ -74,20 +74,34 @@ public class EaterFunctionCall extends Eater {
 				final TValue result = TValue.fromString(value);
 				values.add(result);
 			} else if (unquoted) {
-				final String read = eatAndGetOptionalQuotedString();
-				if (TokenStack.isSpecialAffectationWhenFunctionCall(read)) {
-					updateNamedArguments(read, context, memory);
+				if (matchAffectation()) {
+					final String varname = eatAndGetVarname();
+					skipSpaces();
+					checkAndEatChar('=');
+					skipSpaces();
+					final String read = eatAndGetOptionalQuotedString();
+					final String value = context.applyFunctionsAndVariables(memory, getLineLocation(), read);
+					final TValue result = TValue.fromString(value);
+					namedArguments.put(varname, result);
 				} else {
+					final String read = eatAndGetOptionalQuotedString();
 					final String value = context.applyFunctionsAndVariables(memory, getLineLocation(), read);
 					final TValue result = TValue.fromString(value);
 					values.add(result);
 				}
+//				}
 			} else {
-				final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
-				if (tokens.isSpecialAffectationWhenFunctionCall()) {
-					final String special = tokens.tokenIterator().nextToken().getSurface();
-					updateNamedArguments(special, context, memory);
+				if (matchAffectation()) {
+					final String varname = eatAndGetVarname();
+					skipSpaces();
+					checkAndEatChar('=');
+					skipSpaces();
+					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
+					tokens.guessFunctions();
+					final TValue result = tokens.getResult(getLineLocation(), context, memory);
+					namedArguments.put(varname, result);
 				} else {
+					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
 					tokens.guessFunctions();
 					final TValue result = tokens.getResult(getLineLocation(), context, memory);
 					values.add(result);
@@ -106,16 +120,6 @@ public class EaterFunctionCall extends Eater {
 			}
 			throw EaterException.located("call001");
 		}
-	}
-
-	private void updateNamedArguments(String special, TContext context, TMemory memory)
-			throws EaterException, EaterExceptionLocated {
-		assert special.contains("=");
-		final StringEater stringEater = new StringEater(special);
-		final String varname = stringEater.eatAndGetVarname();
-		stringEater.checkAndEatChar('=');
-		final TValue expr = stringEater.eatExpression(context, memory);
-		namedArguments.put(varname, expr);
 	}
 
 	public final List<TValue> getValues() {

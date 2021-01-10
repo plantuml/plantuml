@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.creole.command.CommandCreoleSizeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSpace;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSprite;
 import net.sourceforge.plantuml.creole.command.CommandCreoleStyle;
+import net.sourceforge.plantuml.creole.command.CommandCreoleStyle2;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSvgAttributeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleUrl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -113,6 +114,8 @@ public class StripeSimple implements Stripe {
 		return header;
 	}
 
+	public final static boolean TSPAN = false;
+
 	public StripeSimple(FontConfiguration fontConfiguration, StripeStyle style, CreoleContext context,
 			ISkinSimple skinParam, CreoleMode modeSimpleLine) {
 		this.fontConfiguration = fontConfiguration;
@@ -120,9 +123,16 @@ public class StripeSimple implements Stripe {
 		this.skinParam = skinParam;
 
 		// class Splitter
-		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.BOLD));
-		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.BOLD));
-		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.BOLD));
+		if (TSPAN) {
+			this.commands.add(CommandCreoleStyle2.createCreole(FontStyle.BOLD));
+			this.commands.add(CommandCreoleStyle2.createLegacy(FontStyle.BOLD));
+			this.commands.add(CommandCreoleStyle2.createLegacyEol(FontStyle.BOLD));
+		} else {
+			this.commands.add(CommandCreoleStyle.createCreole(FontStyle.BOLD));
+			this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.BOLD));
+			this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.BOLD));
+		}
+
 		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.ITALIC));
 		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.ITALIC));
 		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.ITALIC));

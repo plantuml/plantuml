@@ -262,6 +262,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		cmds.add(new CommandMultilinesCaption());
 		cmds.add(new CommandMultilinesTitle());
 		cmds.add(new CommandMultilinesLegend());
+		cmds.add(new CommandLegend());
 
 		cmds.add(new CommandFooter());
 		cmds.add(new CommandMultilinesFooter());

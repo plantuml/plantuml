@@ -40,16 +40,16 @@ public enum WLinkType {
 	NORMAL, BUS;
 
 	static public WLinkType from(String arg) {
-		if (arg.equals("-")) {
+		if (arg.contains("-")) {
 			return WLinkType.NORMAL;
 		}
-		if (arg.equals("=")) {
+		if (arg.contains("=")) {
 			return WLinkType.BUS;
 		}
 		throw new IllegalArgumentException();
 	}
 
-	public double ySpaceForNext() {
+	public double spaceForNext() {
 		switch (this) {
 		case NORMAL:
 			return 15;

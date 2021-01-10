@@ -41,30 +41,41 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class WBlock {
 
+	private final static int STARTING_Y = 10;
+
 	private final String name;
 	private final double forcedWidth;
 	private final double forcedHeight;
+	private final HColor color;
 
 	private final List<WBlock> children = new ArrayList<WBlock>();
-	private UTranslate position = new UTranslate();
+	private final UTranslate position;
 	private WBlock parent;
 
-	private UTranslate futureGoto;
-	private UTranslate futureMove = new UTranslate(0, 20);
+	private UTranslate cursor = new UTranslate(10, STARTING_Y);
+	private WBlock addedToCursor = null;
+
+	private UTranslate futureOutHorizontal;
+	private UTranslate futureOutVertical;
+
+	private final List<WPrint> prints = new ArrayList<WPrint>();
 
 	public UTranslate getAbsolutePosition(String supx, String supy) {
 		if (parent == null) {
@@ -113,10 +124,12 @@ public class WBlock {
 		return name + " " + position;
 	}
 
-	public WBlock(String name, double width, double height) {
+	public WBlock(String name, UTranslate position, double width, double height, HColor color) {
 		this.name = name;
 		this.forcedWidth = width;
 		this.forcedHeight = height;
+		this.color = color;
+		this.position = position;
 	}
 
 	private WBlock getChildByName(String name) {
@@ -147,8 +160,8 @@ public class WBlock {
 	public CommandExecutionResult newColumn(int level) {
 		if (level == 0) {
 			final Dimension2D max = getNaturalDimension();
-			futureGoto = new UTranslate(max.getWidth() + 10, 20);
-			futureMove = new UTranslate();
+			this.cursor = new UTranslate(max.getWidth() + 10, STARTING_Y);
+			this.addedToCursor = null;
 			return CommandExecutionResult.ok();
 		}
 		return getLastChild().newColumn(level - 1);
@@ -156,8 +169,8 @@ public class WBlock {
 
 	public CommandExecutionResult wgoto(int level, double x, double y) {
 		if (level == 0) {
-			futureGoto = new UTranslate(x, y);
-			futureMove = new UTranslate();
+			this.cursor = new UTranslate(x, y);
+			this.addedToCursor = null;
 			return CommandExecutionResult.ok();
 		}
 		return getLastChild().wgoto(level - 1, x, y);
@@ -165,13 +178,24 @@ public class WBlock {
 
 	public CommandExecutionResult wmove(int level, double x, double y) {
 		if (level == 0) {
-			futureMove = futureMove.compose(new UTranslate(x, y));
+			this.cursor = this.cursor.compose(new UTranslate(x, y));
 			return CommandExecutionResult.ok();
 		}
 		return getLastChild().wmove(level - 1, x, y);
 	}
 
-	public CommandExecutionResult addComponent(int level, String name, double width, double height) {
+	public CommandExecutionResult print(StringBounder stringBounder, ISkinParam skinParam, int level, String text) {
+		if (level == 0) {
+			final WPrint print = new WPrint(skinParam, getNextPosition(), null, Display.getWithNewlines(text));
+			this.prints.add(print);
+			this.cursor = this.cursor.compose(UTranslate.dy(print.getHeight(stringBounder)));
+
+			return CommandExecutionResult.ok();
+		}
+		return getLastChild().print(stringBounder, skinParam, level - 1, text);
+	}
+
+	public CommandExecutionResult addBlock(int level, String name, double width, double height, HColor color) {
 		if (name.contains(".")) {
 			throw new IllegalArgumentException();
 		}
@@ -179,8 +203,10 @@ public class WBlock {
 			return CommandExecutionResult.error("Component exists already");
 		}
 		if (level == 0) {
-			final WBlock newBlock = new WBlock(name, width, height);
-			newBlock.position = getNextPosition();
+			this.cursor = this.cursor.compose(UTranslate.dy(10));
+			final WBlock newBlock = new WBlock(name, getNextPosition(), width, height, color);
+			this.cursor = this.cursor.compose(UTranslate.dy(10));
+			this.addedToCursor = newBlock;
 
 			children.add(newBlock);
 			newBlock.parent = this;
@@ -188,25 +214,16 @@ public class WBlock {
 		}
 
 		final WBlock last = getLastChild();
-		return last.addComponent(level - 1, name, width, height);
+		return last.addBlock(level - 1, name, width, height, color);
 	}
 
 	private UTranslate getNextPosition() {
-		final UTranslate result;
-		if (futureGoto != null) {
-			result = futureGoto.compose(futureMove);
-		} else {
-			final WBlock last = getLastChild();
-			if (last == null) {
-				result = futureMove.compose(UTranslate.dx(10));
-			} else {
-				final Dimension2D dim = last.getMaxDimension();
-				result = last.position.compose(UTranslate.dy(dim.getHeight())).compose(futureMove);
-			}
+		if (this.addedToCursor != null) {
+			final Dimension2D dim = this.addedToCursor.getMaxDimension();
+			this.cursor = this.cursor.compose(UTranslate.dy(dim.getHeight()));
 		}
-		futureGoto = null;
-		futureMove = new UTranslate(0, 20);
-		return result;
+		this.addedToCursor = null;
+		return this.cursor;
 	}
 
 	private WBlock getLastChild() {
@@ -230,10 +247,17 @@ public class WBlock {
 		ug = ug.apply(HColorUtils.BLACK);
 		if (name.length() > 0) {
 			final URectangle rect = new URectangle(getMaxDimension());
-			ug.draw(rect);
+			UGraphic ugRect = ug;
+			if (color != null) {
+				ugRect = ugRect.apply(color.bg());
+			}
+			ugRect.draw(rect);
 		}
 		for (WBlock child : children) {
 			child.drawMe(ug.apply(child.position));
+		}
+		for (WPrint print : prints) {
+			print.drawMe(ug.apply(print.getPosition()));
 		}
 	}
 
@@ -260,20 +284,29 @@ public class WBlock {
 		return new Dimension2DDouble(x, y);
 	}
 
-	private UTranslate futureOut;
-
-	public UTranslate getNextOut(String x1, String y1, WLinkType type) {
+	public UTranslate getNextOutHorizontal(String x, String y, WLinkType type) {
 		final UTranslate result;
-		if (x1 != null && y1 != null) {
-			result = getAbsolutePosition(x1, y1);
-		} else if (futureOut == null) {
+		if (x != null && y != null) {
+			result = getAbsolutePosition(x, y);
+		} else if (futureOutHorizontal == null) {
 			result = getAbsolutePosition("100%", "5");
 		} else {
-			result = futureOut;
+			result = futureOutHorizontal;
 		}
+		futureOutHorizontal = result.compose(UTranslate.dy(type.spaceForNext()));
+		return result;
+	}
 
-		futureOut = result.compose(UTranslate.dy(type.ySpaceForNext()));
-
+	public UTranslate getNextOutVertical(String x, String y, WLinkType type) {
+		final UTranslate result;
+		if (x != null && y != null) {
+			result = getAbsolutePosition(x, y);
+		} else if (futureOutVertical == null) {
+			result = getAbsolutePosition("5", "100%");
+		} else {
+			result = futureOutVertical;
+		}
+		futureOutVertical = result.compose(UTranslate.dx(type.spaceForNext()));
 		return result;
 	}
 

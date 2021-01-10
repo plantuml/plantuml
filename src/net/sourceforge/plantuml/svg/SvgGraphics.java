@@ -118,6 +118,7 @@ public class SvgGraphics {
 	private final String shadowId;
 	private final String gradientId;
 	private final boolean svgDimensionStyle;
+	private final LengthAdjust lengthAdjust;
 
 	final protected void ensureVisible(double x, double y) {
 		if (x > maxX) {
@@ -129,13 +130,14 @@ public class SvgGraphics {
 	}
 
 	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover, long seed,
-			String preserveAspectRatio) {
-		this(svgDimensionStyle, minDim, null, scale, hover, seed, preserveAspectRatio);
+			String preserveAspectRatio, LengthAdjust lengthAdjust) {
+		this(svgDimensionStyle, minDim, null, scale, hover, seed, preserveAspectRatio, lengthAdjust);
 	}
 
 	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, String backcolor, double scale, String hover,
-			long seed, String preserveAspectRatio) {
+			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust) {
 		try {
+			this.lengthAdjust = lengthAdjust;
 			this.svgDimensionStyle = svgDimensionStyle;
 			this.scale = scale;
 			this.document = getDocument();
@@ -436,8 +438,15 @@ public class SvgGraphics {
 			fillMe(elt);
 			elt.setAttribute("font-size", format(fontSize));
 			// elt.setAttribute("text-anchor", "middle");
-			elt.setAttribute("lengthAdjust", "spacingAndGlyphs");
-			elt.setAttribute("textLength", format(textLength));
+
+			if (lengthAdjust == LengthAdjust.SPACING) {
+				elt.setAttribute("lengthAdjust", "spacing");
+				elt.setAttribute("textLength", format(textLength));
+			} else if (lengthAdjust == LengthAdjust.SPACING_AND_GLYPHS) {
+				elt.setAttribute("lengthAdjust", "spacingAndGlyphs");
+				elt.setAttribute("textLength", format(textLength));
+			}
+
 			if (fontWeight != null) {
 				elt.setAttribute("font-weight", fontWeight);
 			}

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.png.PngIO;
+import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -88,7 +89,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
 		final UGraphicSvg ug = new UGraphicSvg(true, new Dimension2DDouble(0, 0), new ColorMapperIdentity(),
-				(String) null, false, 1.0, null, null, 0, "none", SvgCharSizeHack.NO_HACK);
+				(String) null, false, 1.0, null, null, 0, "none", SvgCharSizeHack.NO_HACK, LengthAdjust.defaultValue());
 		drawInternal(ug);
 		ug.createXml(os, null);
 		return ImageDataSimple.ok();

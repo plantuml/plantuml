@@ -78,9 +78,8 @@ public class BpmDiagram extends UmlDiagram {
 		return new DiagramDescription("(Bpm Diagram)");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.BPM;
+	public BpmDiagram() {
+		super(UmlDiagramType.BPM);
 	}
 
 	@Override

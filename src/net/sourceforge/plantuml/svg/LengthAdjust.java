@@ -33,55 +33,12 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.svg;
 
-import java.awt.font.LineMetrics;
+public enum LengthAdjust {
+	NONE, SPACING, SPACING_AND_GLYPHS;
 
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-
-public class UText implements UShape {
-
-	private final String text;
-	private final FontConfiguration font;
-	private final int orientation;
-
-	@Override
-	public String toString() {
-		return "UText[" + text + "]";
+	public static LengthAdjust defaultValue() {
+		return SPACING;
 	}
-
-	private UText(String text, FontConfiguration font, int orientation) {
-		assert text.indexOf('\t') == -1;
-		this.text = text;
-		this.font = font;
-		this.orientation = orientation;
-	}
-
-	public UText(String text, FontConfiguration font) {
-		this(text, font, 0);
-	}
-
-	public UText withOrientation(int orientation) {
-		return new UText(text, font, orientation);
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public FontConfiguration getFontConfiguration() {
-		return font;
-	}
-
-	public double getDescent() {
-		final LineMetrics fm = TextBlockUtils.getLineMetrics(font.getFont(), text);
-		final double descent = fm.getDescent();
-		return descent;
-	}
-
-	public final int getOrientation() {
-		return orientation;
-	}
-
 }

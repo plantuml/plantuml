@@ -33,47 +33,46 @@
  * 
  *
  */
-package net.sourceforge.plantuml.mindmap;
+package net.sourceforge.plantuml.wire;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
+public class CommandPrint extends SingleLineCommand2<WireDiagram> {
 
-	public CommandMindMapPlus() {
+	public CommandPrint() {
 		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandMindMapPlus.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([+-]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
+		return RegexConcat.build(CommandPrint.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("INDENT", "([\\s\\t]*)"), //
+				new RegexLeaf("print"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\("), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("[%g]"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TEXT", "(.*)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("[%g]"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
-		final String type = arg.get("TYPE", 0);
-		final String label = arg.get("LABEL", 0);
-		final String stringColor = arg.get("BACKCOLOR", 0);
-		HColor backColor = null;
-		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
-		}
-		final Direction direction = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
-		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(label),
-				IdeaShape.fromDesc(arg.get("SHAPE", 0)), direction);
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
+		final String indent = arg.get("INDENT", 0);
+		final String text = arg.get("TEXT", 0);
+		return diagram.print(indent, text);
+
 	}
 
 }

@@ -98,12 +98,12 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	private Animation animation;
 
-	public UmlDiagram() {
-		super();
+	public UmlDiagram(UmlDiagramType type) {
+		super(type);
 	}
 
-	public UmlDiagram(ISkinSimple orig) {
-		super(orig);
+	public UmlDiagram(UmlDiagramType type, ISkinSimple orig) {
+		super(type, orig);
 	}
 
 	final public int getMinwidth() {

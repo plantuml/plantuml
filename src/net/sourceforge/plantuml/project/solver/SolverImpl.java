@@ -52,9 +52,14 @@ public class SolverImpl extends AbstractSolver implements Solver {
 	protected Day computeEnd() {
 		Day current = (Day) values.get(TaskAttribute.START);
 		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
+		int cpt = 0;
 		while (fullLoad > 0) {
 			fullLoad -= loadPlanable.getLoadAt(current);
 			current = current.increment();
+			cpt++;
+			if (cpt > 100000) {
+				throw new IllegalStateException();
+			}
 		}
 		return current.decrement();
 	}
@@ -63,11 +68,16 @@ public class SolverImpl extends AbstractSolver implements Solver {
 	protected Day computeStart() {
 		Day current = (Day) values.get(TaskAttribute.END);
 		int fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getFullLoad();
+		int cpt = 0;
 		while (fullLoad > 0) {
 			fullLoad -= loadPlanable.getLoadAt(current);
 			current = current.decrement();
 			if (current.getMillis() <= 0) {
 				return current;
+			}
+			cpt++;
+			if (cpt > 100000) {
+				throw new IllegalStateException();
 			}
 		}
 		return current.increment();

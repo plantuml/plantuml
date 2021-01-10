@@ -35,57 +35,49 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class WLink {
+public class WPrint {
 
-	private final UTranslate pos1;
-	private final double pos2x;
-	private final WLinkType type;
+	private final UTranslate position;
 	private final HColor color;
+	private final Display label;
+	private final ISkinParam skinParam;
 
-	public WLink(WBlock block1, String x1, String y1, WBlock block2, WLinkType type, HColor color) {
-		pos1 = block1.getNextOut(x1, y1, type);
-		pos2x = block2.getAbsolutePosition("0", "0").getDx();
-		this.type = type;
+	public WPrint(ISkinParam skinParam, UTranslate position, HColor color, Display label) {
+		this.position = position;
+		this.skinParam = skinParam;
+		this.label = label;
 		this.color = color == null ? HColorUtils.BLACK : color;
 	}
 
+	private TextBlock getTextBlock() {
+		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.sansSerif(10))
+				.changeColor(color);
+		return label.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+	}
+
+	public UChange getPosition() {
+		return position;
+	}
+
 	public void drawMe(UGraphic ug) {
+		getTextBlock().drawU(ug);
+	}
 
-		final double dx = pos2x - pos1.getDx() - 2;
-
-		ug = ug.apply(color).apply(color.bg());
-
-		if (type == WLinkType.NORMAL) {
-			final UPath path = new UPath();
-			path.moveTo(0, 0);
-			path.lineTo(-5, -5);
-			path.lineTo(-5, 5);
-			path.lineTo(0, 0);
-			path.closePath();
-			ug.apply(pos1.compose(UTranslate.dx(dx))).draw(path);
-			ug.apply(pos1.compose(UTranslate.dx(1))).draw(ULine.hline(dx));
-
-		} else if (type == WLinkType.BUS) {
-			final UPath path = new UPath();
-			path.moveTo(0, 0);
-			path.lineTo(dx - 15, 0);
-			path.lineTo(dx - 15, -5);
-			path.lineTo(dx, 5);
-			path.lineTo(dx - 15, 15);
-			path.lineTo(dx - 15, 10);
-			path.lineTo(0, 10);
-			path.lineTo(0, 0);
-			path.closePath();
-			ug.apply(pos1.compose(UTranslate.dx(1))).draw(path);
-		}
-
+	public double getHeight(StringBounder stringBounder) {
+		return getTextBlock().calculateDimension(stringBounder).getHeight();
 	}
 
 }

@@ -66,9 +66,8 @@ public class Help extends UmlDiagram {
 		return new DiagramDescription("(Help)");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.HELP;
+	public Help() {
+		super(UmlDiagramType.HELP);
 	}
 
 	@Override

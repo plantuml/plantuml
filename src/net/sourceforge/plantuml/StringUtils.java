@@ -68,6 +68,9 @@ public class StringUtils {
 	public static final char PACKAGE_PRIVATE_METHOD = '\uEEF5';
 	public static final char PUBLIC_METHOD = '\uEEF4';
 	public static final char IE_MANDATORY = '\uEEF3';
+	
+	public static final char BOLD_START = '\uEEF2';
+	public static final char BOLD_END = '\uEEF1';
 
 	// Used in BackSlash
 	public static final char PRIVATE_BLOCK = '\uE000';

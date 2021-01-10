@@ -35,52 +35,39 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
+public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandHeader() {
+	public CommandLegend() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandHeader.class.getName(), RegexLeaf.start(), //
-				new RegexOptional(new RegexLeaf("POSITION", "(left|right|center)")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("header"), //
-				new RegexOr( //
-						new RegexConcat( //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf(":"), //
-								RegexLeaf.spaceZeroOrMore()), //
-						RegexLeaf.spaceOneOrMore()), //
+		return RegexConcat.build(CommandLegend.class.getName(), //
+				RegexLeaf.start(), //
+				new RegexLeaf("legend"), //
+				new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
 				new RegexOr(//
-						new RegexLeaf("LABEL1", "[%g](.*)[%g]"), //
-						new RegexLeaf("LABEL2", "(.*[\\p{L}0-9_.].*)")), //
+						new RegexLeaf("LEGEND1", "[%g](.*)[%g]"), //
+						new RegexLeaf("LEGEND2", "(.*[\\p{L}0-9_.].*)")), //
 				RegexLeaf.end()); //
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
-		final String align = arg.get("POSITION", 0);
-		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);
-		if (UseStyle.useBetaStyle() && align == null) {
-			ha = FontParam.HEADER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())
-					.getHorizontalAlignment();
-		}
-		final Display s = Display.getWithNewlines(arg.getLazzy("LABEL", 0));
-		diagram.getHeader().putDisplay(s, ha);
+		final Display s = Display.getWithNewlines(arg.getLazzy("LEGEND", 0));
+		diagram.setLegend(DisplayPositionned.single(s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
 		return CommandExecutionResult.ok();
 	}
 }

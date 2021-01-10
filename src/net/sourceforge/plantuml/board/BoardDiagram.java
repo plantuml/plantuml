@@ -80,9 +80,8 @@ public class BoardDiagram extends UmlDiagram {
 		return new DiagramDescription("Board");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.BOARD;
+	public BoardDiagram() {
+		super(UmlDiagramType.BOARD);
 	}
 
 	@Override

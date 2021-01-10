@@ -43,16 +43,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -62,21 +65,22 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class WireDiagram extends UmlDiagram {
 
-	private final WBlock root = new WBlock("", 0, 0);
+	private final WBlock root = new WBlock("", new UTranslate(), 0, 0, null);
 	private final List<Spot> spots = new ArrayList<Spot>();
-	private final List<WLink> links = new ArrayList<WLink>();
+	private final List<WLinkHorizontal> hlinks = new ArrayList<WLinkHorizontal>();
+	private final List<WLinkVertical> vlinks = new ArrayList<WLinkVertical>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Wire Diagram");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.WIRE;
+	public WireDiagram() {
+		super(UmlDiagramType.WIRE);
 	}
 
 	@Override
@@ -145,19 +149,22 @@ public class WireDiagram extends UmlDiagram {
 		for (Spot spot : spots) {
 			spot.drawMe(ug);
 		}
-		for (WLink link : links) {
+		for (WLinkHorizontal link : hlinks) {
+			link.drawMe(ug);
+		}
+		for (WLinkVertical link : vlinks) {
 			link.drawMe(ug);
 		}
 
 	}
 
-	public CommandExecutionResult addComponent(String indent, String name, int width, int height) {
-		final int level = indent.replace("    ", "\t").length();
-		return this.root.addComponent(level, name, width, height);
+	public CommandExecutionResult addComponent(String indent, String name, int width, int height, HColor color) {
+		final int level = computeIndentationLevel(indent);
+		return this.root.addBlock(level, name, width, height, color);
 	}
 
 	public CommandExecutionResult newColumn(String indent) {
-		final int level = indent.replace("    ", "\t").length();
+		final int level = computeIndentationLevel(indent);
 		return this.root.newColumn(level);
 	}
 
@@ -172,16 +179,29 @@ public class WireDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult wgoto(String indent, double x, double y) {
-		final int level = indent.replace("    ", "\t").length();
+		final int level = computeIndentationLevel(indent);
 		return this.root.wgoto(level, x, y);
 	}
 
 	public CommandExecutionResult wmove(String indent, double x, double y) {
-		final int level = indent.replace("    ", "\t").length();
+		final int level = computeIndentationLevel(indent);
 		return this.root.wmove(level, x, y);
 	}
 
-	public CommandExecutionResult link(String name1, String x1, String y1, String name2, WLinkType type, HColor color) {
+	public CommandExecutionResult print(String indent, String text) {
+		final int level = computeIndentationLevel(indent);
+
+		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
+		return this.root.print(stringBounder, getSkinParam(), level, text);
+	}
+
+	private int computeIndentationLevel(String indent) {
+		final int level = indent.replace("    ", "\t").length();
+		return level;
+	}
+
+	public CommandExecutionResult vlink(String name1, String x1, String y1, String name2, WLinkType type,
+			WArrowDirection direction, HColor color, Display label) {
 		final WBlock block1 = this.root.getBlock(name1);
 		if (block1 == null) {
 			return CommandExecutionResult.error("No such element " + name1);
@@ -190,8 +210,30 @@ public class WireDiagram extends UmlDiagram {
 		if (block2 == null) {
 			return CommandExecutionResult.error("No such element " + name2);
 		}
-		final WLink link = new WLink(block1, x1, y1, block2, type, color);
-		this.links.add(link);
+
+		final UTranslate start = block1.getNextOutVertical(x1, y1, type);
+		final double destination = block2.getAbsolutePosition("0", "0").getDy();
+
+		this.vlinks.add(new WLinkVertical(getSkinParam(), start, destination, type, direction, color, label));
+
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult hlink(String name1, String x1, String y1, String name2, WLinkType type,
+			WArrowDirection direction, HColor color, Display label) {
+		final WBlock block1 = this.root.getBlock(name1);
+		if (block1 == null) {
+			return CommandExecutionResult.error("No such element " + name1);
+		}
+		final WBlock block2 = this.root.getBlock(name2);
+		if (block2 == null) {
+			return CommandExecutionResult.error("No such element " + name2);
+		}
+
+		final UTranslate start = block1.getNextOutHorizontal(x1, y1, type);
+		final double destination = block2.getAbsolutePosition("0", "0").getDx();
+
+		this.hlinks.add(new WLinkHorizontal(getSkinParam(), start, destination, type, direction, color, label));
 
 		return CommandExecutionResult.ok();
 	}

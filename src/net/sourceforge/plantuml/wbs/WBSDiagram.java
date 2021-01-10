@@ -75,9 +75,8 @@ public class WBSDiagram extends UmlDiagram {
 		return new DiagramDescription("Work Breakdown Structure");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.WBS;
+	public WBSDiagram() {
+		super(UmlDiagramType.WBS);
 	}
 
 	@Override

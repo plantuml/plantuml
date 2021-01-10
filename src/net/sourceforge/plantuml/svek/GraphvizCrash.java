@@ -110,8 +110,9 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	public static void checkOldVersionWarning(List<String> strings) {
 		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;
 		if (days >= 90) {
-			strings.add("This version of PlantUML is " + days + " days old, so you should");
-			strings.add("  consider upgrading from https://plantuml.com/download");
+			strings.add(" ");
+			strings.add("<b>This version of PlantUML is " + days + " days old, so you should");
+			strings.add("<b>consider upgrading from https://plantuml.com/download");
 		}
 	}
 

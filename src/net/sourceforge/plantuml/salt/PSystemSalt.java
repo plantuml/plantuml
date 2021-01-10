@@ -104,6 +104,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	@Deprecated
 	public PSystemSalt(List<String> data) {
+		super(UmlDiagramType.SALT);
 		this.data = data;
 	}
 
@@ -278,11 +279,6 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	public void setIamSalt(boolean iamSalt) {
 		this.iamSalt = true;
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.SALT;
 	}
 
 	public final boolean isIamSalt() {

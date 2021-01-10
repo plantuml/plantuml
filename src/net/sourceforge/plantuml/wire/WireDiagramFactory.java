@@ -59,6 +59,7 @@ public class WireDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandMove());
 		cmds.add(new CommandWLink());
 		cmds.add(new CommandNewColumn());
+		cmds.add(new CommandPrint());
 
 		return cmds;
 	}

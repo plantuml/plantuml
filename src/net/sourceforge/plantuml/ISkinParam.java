@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
+import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -189,5 +190,8 @@ public interface ISkinParam extends ISkinSimple {
 	public ActorStyle actorStyle();
 
 	public void setSvgSize(String origin, String sizeToUse);
+	
+	public LengthAdjust getlengthAdjust();
+
 
 }

@@ -65,9 +65,8 @@ public class PostItDiagram extends UmlDiagram {
 
 	private final Map<String, PostIt> postIts = new HashMap<String, PostIt>();
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
+	public PostItDiagram() {
+		super(UmlDiagramType.TIMING);
 	}
 
 	@Override

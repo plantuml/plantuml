@@ -74,7 +74,8 @@ public class JsonDiagram extends UmlDiagram {
 	private final JsonValue root;
 	private final List<String> highlighted;
 
-	public JsonDiagram(JsonValue json, List<String> highlighted) {
+	public JsonDiagram(UmlDiagramType type, JsonValue json, List<String> highlighted) {
+		super(UmlDiagramType.JSON);
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);
@@ -85,12 +86,10 @@ public class JsonDiagram extends UmlDiagram {
 	}
 
 	public DiagramDescription getDescription() {
+		if (getUmlDiagramType() == UmlDiagramType.YAML) {
+			return new DiagramDescription("(Yaml)");
+		}
 		return new DiagramDescription("(Json)");
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.JSON;
 	}
 
 	@Override
@@ -124,7 +123,8 @@ public class JsonDiagram extends UmlDiagram {
 
 	private void drawInternal(UGraphic ug) {
 		if (root == null) {
-			final Display display = Display.getWithNewlines("Your data does not sound like JSON data");
+			final Display display = Display
+					.getWithNewlines("Your data does not sound like " + getUmlDiagramType() + " data");
 			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));
 			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());
 			result = TextBlockUtils.withMargin(result, 5, 2);

@@ -56,7 +56,7 @@ public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 		return RegexConcat.build(CommandSpot.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("spot"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "\\$([\\w][.\\w]*)"), //
+				new RegexLeaf("NAME", "([\\w][.\\w]*)"), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf("\\("), //
 						RegexLeaf.spaceZeroOrMore(), //

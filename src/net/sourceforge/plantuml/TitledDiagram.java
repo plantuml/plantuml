@@ -58,6 +58,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	private final DisplaySection header = DisplaySection.none();
 	private final DisplaySection footer = DisplaySection.none();
 	private Display mainFrame;
+	private final UmlDiagramType type;
 
 	private final SkinParam skinParam;
 
@@ -67,22 +68,25 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return pragma;
 	}
 
-	public TitledDiagram() {
-		this.skinParam = SkinParam.create(getUmlDiagramType());
+	public TitledDiagram(UmlDiagramType type) {
+		this.type = type;
+		this.skinParam = SkinParam.create(type);
 	}
 
 	public final StyleBuilder getCurrentStyleBuilder() {
 		return skinParam.getCurrentStyleBuilder();
 	}
 
-	public TitledDiagram(ISkinSimple orig) {
-		this();
+	public TitledDiagram(UmlDiagramType type, ISkinSimple orig) {
+		this(type);
 		if (orig != null) {
 			this.skinParam.copyAllFrom(orig);
 		}
 	}
 
-	abstract public UmlDiagramType getUmlDiagramType();
+	final public UmlDiagramType getUmlDiagramType() {
+		return type;
+	}
 
 	public final ISkinParam getSkinParam() {
 		return skinParam;

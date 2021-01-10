@@ -77,16 +77,11 @@ public class StdlibDiagram extends UmlDiagram {
 	private String name;
 
 	public StdlibDiagram(ISkinSimple skinParam) {
-		super(skinParam);
+		super(UmlDiagramType.HELP, skinParam);
 	}
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Sprites)");
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.HELP;
 	}
 
 	@Override

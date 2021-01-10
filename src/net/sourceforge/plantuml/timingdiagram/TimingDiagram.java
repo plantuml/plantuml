@@ -95,9 +95,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return new DiagramDescription("(Timing Diagram)");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.TIMING;
+	public TimingDiagram() {
+		super(UmlDiagramType.TIMING);
 	}
 
 	@Override

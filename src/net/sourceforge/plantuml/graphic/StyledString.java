@@ -30,50 +30,63 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.classdiagram;
+package net.sourceforge.plantuml.graphic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.StringUtils;
 
-public abstract class AbstractEntityDiagram extends CucaDiagram {
+public class StyledString {
 
-	public AbstractEntityDiagram(UmlDiagramType type, ISkinSimple orig) {
-		super(type, orig);
+	private final String text;
+	private final FontStyle style;
+
+	private StyledString(String text, FontStyle style) {
+		this.text = text;
+		this.style = style;
 	}
 
-	final protected List<String> getDotStrings() {
-		final List<String> def = Arrays.asList("nodesep=.35;", "ranksep=0.8;", "edge [fontsize=11,labelfontsize=11];",
-				"node [fontsize=11,height=.35,width=.55];");
-		if (getPragma().isDefine("graphattributes") == false) {
-			return def;
-		}
-		final String attribute = getPragma().getValue("graphattributes");
-		final List<String> result = new ArrayList<String>(def);
-		result.add(attribute);
-		return Collections.unmodifiableList(result);
+	@Override
+	public String toString() {
+		return style + "[" + text + "]";
 	}
 
-	final public DiagramDescription getDescription() {
-		final StringBuilder result = new StringBuilder("(" + getLeafssize() + " entities");
-		if (getSource() != null) {
-			final String id = getSource().getId();
-			if (id != null) {
-				result.append(", ");
-				result.append(id);
+	public final String getText() {
+		return text;
+	}
+
+	public final FontStyle getStyle() {
+		return style;
+	}
+
+	public static List<StyledString> build(String s) {
+		final List<StyledString> result = new ArrayList<StyledString>();
+		while (s.length() > 0) {
+			final int i1 = s.indexOf(StringUtils.BOLD_START);
+			if (i1 == -1) {
+				result.add(new StyledString(s, FontStyle.PLAIN));
+				s = "";
+				break;
+			}
+			final int i2 = s.indexOf(StringUtils.BOLD_END);
+			if (i1 > 0)
+				result.add(new StyledString(s.substring(0, i1), FontStyle.PLAIN));
+
+			if (i2 == -1) {
+				result.add(new StyledString(s.substring(i1 + 1), FontStyle.BOLD));
+				s = "";
+			} else {
+				result.add(new StyledString(s.substring(i1 + 1, i2), FontStyle.BOLD));
+				s = s.substring(i2 + 1);
 			}
 		}
-		result.append(")");
-		return new DiagramDescription(result.toString());
+		return Collections.unmodifiableList(result);
+
 	}
 
 }

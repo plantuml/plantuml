@@ -87,9 +87,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		return new DiagramDescription("Flow Diagram");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.FLOW;
+	public FlowDiagram() {
+		super(UmlDiagramType.FLOW);
 	}
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {

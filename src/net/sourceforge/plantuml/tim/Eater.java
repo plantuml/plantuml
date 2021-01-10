@@ -218,6 +218,12 @@ public abstract class Eater {
 		return s.charAt(i);
 	}
 
+	final public boolean matchAffectation() {
+		final String tmp = s.substring(i);
+		final boolean result = tmp.matches("^\\$?[_\\p{L}][_\\p{L}0-9]*\\s*=.*");
+		return result;
+	}
+
 	final public char peekCharN2() {
 		if (i + 1 >= s.length()) {
 			return 0;

@@ -46,7 +46,9 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.braille.BrailleCharFactory;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
+import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.StyledString;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -142,10 +144,20 @@ public enum FileFormat {
 	}
 
 	static private Dimension2DDouble getJavaDimension(UFont font, String text) {
-		final Font javaFont = font.getFont();
-		final FontMetrics fm = gg.getFontMetrics(javaFont);
-		final Rectangle2D rect = fm.getStringBounds(text, gg);
-		return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
+		double width = 0;
+		double height = 0;
+		for (StyledString styledString : StyledString.build(text)) {
+			final Font javaFont;
+			if (styledString.getStyle() == FontStyle.BOLD)
+				javaFont = font.bold().getFont();
+			else
+				javaFont = font.getFont();
+			final FontMetrics fm = gg.getFontMetrics(javaFont);
+			final Rectangle2D rect = fm.getStringBounds(styledString.getText(), gg);
+			width += rect.getWidth();
+			height = Math.max(height, rect.getHeight());
+		}
+		return new Dimension2DDouble(width, height);
 	}
 
 	private StringBounder getBrailleStringBounder() {

@@ -30,50 +30,50 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.classdiagram;
+package net.sourceforge.plantuml.yaml;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.command.PSystemAbstractFactory;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 
-public abstract class AbstractEntityDiagram extends CucaDiagram {
+public class YamlDiagramFactory extends PSystemAbstractFactory {
 
-	public AbstractEntityDiagram(UmlDiagramType type, ISkinSimple orig) {
-		super(type, orig);
+	public YamlDiagramFactory() {
+		super(DiagramType.YAML);
 	}
 
-	final protected List<String> getDotStrings() {
-		final List<String> def = Arrays.asList("nodesep=.35;", "ranksep=0.8;", "edge [fontsize=11,labelfontsize=11];",
-				"node [fontsize=11,height=.35,width=.55];");
-		if (getPragma().isDefine("graphattributes") == false) {
-			return def;
-		}
-		final String attribute = getPragma().getValue("graphattributes");
-		final List<String> result = new ArrayList<String>(def);
-		result.add(attribute);
-		return Collections.unmodifiableList(result);
-	}
-
-	final public DiagramDescription getDescription() {
-		final StringBuilder result = new StringBuilder("(" + getLeafssize() + " entities");
-		if (getSource() != null) {
-			final String id = getSource().getId();
-			if (id != null) {
-				result.append(", ");
-				result.append(id);
+	public Diagram createSystem(UmlSource source) {
+		JsonObject yaml = null;
+		try {
+			final List<String> list = new ArrayList<String>();
+			final Iterator<StringLocated> it = source.iterator2();
+			it.next();
+			while (true) {
+				final String line = it.next().getString();
+				if (it.hasNext() == false) {
+					break;
+				}
+				list.add(line);
 			}
+			yaml = new SimpleYamlParser().parse(list);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		result.append(")");
-		return new DiagramDescription(result.toString());
+		final JsonDiagram result = new JsonDiagram(UmlDiagramType.YAML, yaml, new ArrayList<String>());
+		result.setSource(source);
+		return result;
 	}
 
 }

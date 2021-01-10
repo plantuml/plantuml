@@ -103,7 +103,7 @@ public class TimeHeaderDaily extends TimeHeader {
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = colorDays.get(wink);
 			// Day of week should be stronger than period of time (back color).
-			HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
+			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 			if (backDoW != null) {
 				back = backDoW;
 			}

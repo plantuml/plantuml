@@ -92,9 +92,8 @@ public class NwDiagram extends UmlDiagram {
 		return new DiagramDescription("(Nwdiag)");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.NWDIAG;
+	public NwDiagram() {
+		super(UmlDiagramType.NWDIAG);
 	}
 
 	public void init() {

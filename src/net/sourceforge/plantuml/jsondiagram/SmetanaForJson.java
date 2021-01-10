@@ -80,16 +80,16 @@ public class SmetanaForJson {
 	private ST_Agraph_s g;
 	private StringBounder stringBounder;
 
-	private final List<Node> nodes = new ArrayList<Node>();
+	private final List<InternalNode> nodes = new ArrayList<InternalNode>();
 	private final List<ST_Agedge_s> edges = new ArrayList<ST_Agedge_s>();
 	private Mirror xMirror;
 
-	static class Node {
+	static class InternalNode {
 
 		private final TextBlockJson block;
 		private final ST_Agnode_s node;
 
-		public Node(TextBlockJson block, ST_Agnode_s node) {
+		public InternalNode(TextBlockJson block, ST_Agnode_s node) {
 			this.block = block;
 			this.node = node;
 		}
@@ -118,7 +118,7 @@ public class SmetanaForJson {
 		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted);
 		final ST_Agnode_s node1 = createNode(block.calculateDimension(stringBounder), block.size(), current.isArray(),
 				(int) block.getWidthColA(stringBounder), (int) block.getWidthColB(stringBounder));
-		nodes.add(new Node(block, node1));
+		nodes.add(new InternalNode(block, node1));
 		final List<JsonValue> children = block.children();
 		final List<String> keys = block.keys();
 		for (int i = 0; i < children.size(); i++) {
@@ -151,12 +151,12 @@ public class SmetanaForJson {
 	public void drawMe(JsonValue root, List<String> highlighted) {
 		initGraph(root, highlighted);
 		double max = 0;
-		for (Node node : nodes) {
+		for (InternalNode node : nodes) {
 			max = Math.max(max, node.getMaxX());
 		}
 		xMirror = new Mirror(max);
 
-		for (Node node : nodes) {
+		for (InternalNode node : nodes) {
 			node.block.drawU(ug.apply(getPosition(node.node)));
 		}
 		final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());

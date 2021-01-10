@@ -63,7 +63,10 @@ public class SubjectTask implements Subject {
 			for (final StringTokenizer st = new StringTokenizer(resource, "{}"); st.hasMoreTokens();) {
 				final String part = st.nextToken().trim();
 				if (part.length() > 0) {
-					project.affectResource(result, part);
+					final boolean ok = project.affectResource(result, part);
+					if (ok == false) {
+						return Failable.error("Bad argument for resource");
+					}
 				}
 			}
 

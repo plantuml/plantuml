@@ -102,7 +102,7 @@ public class TimeHeaderWeekly extends TimeHeader {
 		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
 			HColor back = colorDays.get(wink);
 			// Day of week should be stronger than period of time (back color).
-			HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
+			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 			if (backDoW != null) {
 				back = backDoW;
 			}

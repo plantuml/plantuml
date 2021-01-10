@@ -87,9 +87,8 @@ public class MindMapDiagram extends UmlDiagram {
 		return new DiagramDescription("MindMap");
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.MINDMAP;
+	public MindMapDiagram() {
+		super(UmlDiagramType.MINDMAP);
 	}
 
 	@Override

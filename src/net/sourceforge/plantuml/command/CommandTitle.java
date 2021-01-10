@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
@@ -57,13 +58,16 @@ public class CommandTitle extends SingleLineCommand2<TitledDiagram> {
 				RegexLeaf.start(), //
 				new RegexLeaf("title"), //
 				new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
-				new RegexLeaf("TITLE", "(.*[\\p{L}0-9_.].*)"), RegexLeaf.end()); //
+				new RegexOr(//
+						new RegexLeaf("TITLE1", "[%g](.*)[%g]"), //
+						new RegexLeaf("TITLE2", "(.*[\\p{L}0-9_.].*)")), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
-		diagram.setTitle(DisplayPositionned.single(Display.getWithNewlines(arg.get("TITLE", 0)),
-				HorizontalAlignment.CENTER, VerticalAlignment.TOP));
+		final Display s = Display.getWithNewlines(arg.getLazzy("TITLE", 0));
+		diagram.setTitle(DisplayPositionned.single(s, HorizontalAlignment.CENTER, VerticalAlignment.TOP));
 		return CommandExecutionResult.ok();
 	}
 }

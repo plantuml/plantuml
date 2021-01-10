@@ -35,48 +35,34 @@
  */
 package net.sourceforge.plantuml.creole.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
-import net.sourceforge.plantuml.graphic.AddStyle;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class CommandCreoleStyle implements Command {
+public class CommandCreoleStyle2 implements Command {
 
 	private final Pattern2 p;
 	private final FontStyle style;
-	private final boolean tryExtendedColor;
 
 	public static Command createCreole(FontStyle style) {
-		return new CommandCreoleStyle("^(" + style.getCreoleSyntax() + "(.+?)" + style.getCreoleSyntax() + ")", style,
-				false);
+		return new CommandCreoleStyle2("^(" + style.getCreoleSyntax() + "(.+?)" + style.getCreoleSyntax() + ")", style);
 	}
 
 	public static Command createLegacy(FontStyle style) {
-		return new CommandCreoleStyle(
-				"^((" + style.getActivationPattern() + ")(.+?)" + style.getDeactivationPattern() + ")", style,
-				style.canHaveExtendedColor());
+		return new CommandCreoleStyle2(
+				"^((" + style.getActivationPattern() + ")(.+?)" + style.getDeactivationPattern() + ")", style);
 	}
 
 	public static Command createLegacyEol(FontStyle style) {
-		return new CommandCreoleStyle("^((" + style.getActivationPattern() + ")(.+))$", style,
-				style.canHaveExtendedColor());
+		return new CommandCreoleStyle2("^((" + style.getActivationPattern() + ")(.+))$", style);
 	}
 
-	private CommandCreoleStyle(String p, FontStyle style, boolean tryExtendedColor) {
+	private CommandCreoleStyle2(String p, FontStyle style) {
 		this.p = MyPattern.cmpile(p);
 		this.style = style;
-		this.tryExtendedColor = tryExtendedColor;
-	}
-
-	private HColor getExtendedColor(Matcher2 m) {
-		if (tryExtendedColor) {
-			return style.getExtendedColor(m.group(2));
-		}
-		return null;
 	}
 
 	public String executeAndGetRemaining(final String line, StripeSimple stripe) {
@@ -84,13 +70,12 @@ public class CommandCreoleStyle implements Command {
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}
-		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
-		final FontConfiguration fc2 = new AddStyle(style, getExtendedColor(m)).apply(fc1);
-		stripe.setActualFontConfiguration(fc2);
+
 		final int groupCount = m.groupCount();
-		stripe.analyzeAndAdd(m.group(groupCount));
-		stripe.setActualFontConfiguration(fc1);
-		return line.substring(m.group(1).length());
+		final String part1 = m.group(groupCount);
+		final String part2 = line.substring(m.group(1).length());
+		return StringUtils.BOLD_START + part1 + StringUtils.BOLD_END + part2;
+
 	}
 
 	public int matchingSize(String line) {

@@ -97,6 +97,7 @@ import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.wire.WireDiagramFactory;
+import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 public class PSystemBuilder {
 
@@ -217,6 +218,7 @@ public class PSystemBuilder {
 		factories.add(new JsonDiagramFactory());
 		factories.add(new GitDiagramFactory());
 		factories.add(new BoardDiagramFactory());
+		factories.add(new YamlDiagramFactory());
 		return factories;
 	}
 
