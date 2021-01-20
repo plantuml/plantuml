@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class ExtremityCircleConnect extends Extremity {
 
@@ -51,21 +51,23 @@ class ExtremityCircleConnect extends Extremity {
 	private final double radius = 6;
 	private final double radius2 = 10;
 	private final double ortho;
+	private final HColor backgroundColor;
 
 	@Override
 	public Point2D somePoint() {
 		return dest;
 	}
 
-	public ExtremityCircleConnect(Point2D p1, double ortho) {
+	public ExtremityCircleConnect(Point2D p1, double ortho, HColor backgroundColor) {
 		this.px = p1.getX() - radius;
 		this.py = p1.getY() - radius;
 		this.dest = new Point2D.Double(p1.getX(), p1.getY());
 		this.ortho = ortho;
+		this.backgroundColor = backgroundColor;
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UStroke(1.5)).apply(HColorUtils.WHITE.bg());
+		ug = ug.apply(new UStroke(1.5)).apply(backgroundColor.bg());
 		ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
 		
 		final double deg = -ortho * 180 / Math.PI + 90 - 45;

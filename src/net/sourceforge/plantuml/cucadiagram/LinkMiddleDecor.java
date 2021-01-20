@@ -45,18 +45,18 @@ public enum LinkMiddleDecor {
 
 	NONE, CIRCLE, CIRCLE_CIRCLED, CIRCLE_CIRCLED1, CIRCLE_CIRCLED2;
 
-	public MiddleFactory getMiddleFactory(HColor backColor) {
+	public MiddleFactory getMiddleFactory(HColor backColor, HColor diagramBackColor) {
 		if (this == CIRCLE) {
 			return new MiddleFactoryCircle(backColor);
 		}
 		if (this == CIRCLE_CIRCLED) {
-			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.BOTH, backColor);
+			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.BOTH, backColor, diagramBackColor);
 		}
 		if (this == CIRCLE_CIRCLED1) {
-			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE1, backColor);
+			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE1, backColor, diagramBackColor);
 		}
 		if (this == CIRCLE_CIRCLED2) {
-			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE2, backColor);
+			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE2, backColor, diagramBackColor);
 		}
 		throw new UnsupportedOperationException();
 	}

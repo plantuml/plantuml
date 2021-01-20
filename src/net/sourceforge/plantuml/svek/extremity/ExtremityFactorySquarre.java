@@ -40,17 +40,24 @@ import java.awt.geom.Point2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ExtremityFactorySquarre extends AbstractExtremityFactory implements ExtremityFactory {
 
+	private final HColor backgroundColor;
+
+	public ExtremityFactorySquarre(HColor backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
 	@Override
 	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
-		return new ExtremitySquarre(p0);
+		return new ExtremitySquarre(p0, backgroundColor);
 		}
 
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
 		// final double ortho = atan2(p0, p2);
-		return new ExtremitySquarre(p1);
+		return new ExtremitySquarre(p1, backgroundColor);
 	}
 
 }

@@ -111,7 +111,7 @@ public enum LinkDecor {
 	public ExtremityFactory getExtremityFactory(HColor backgroundColor) {
 		switch (this) {
 		case PLUS:
-			return new ExtremityFactoryPlus();
+			return new ExtremityFactoryPlus(backgroundColor);
 		case REDEFINES:
 			return new ExtremityFactoryExtendsLike(backgroundColor, false);
 		case DEFINEDBY:
@@ -131,11 +131,11 @@ public enum LinkDecor {
 		case DOUBLE_LINE:
 			return new ExtremityFactoryDoubleLine();
 		case CIRCLE_CROSS:
-			return new ExtremityFactoryCircleCross();
+			return new ExtremityFactoryCircleCross(backgroundColor);
 		case ARROW:
 			return new ExtremityFactoryArrow();
 		case ARROW_AND_CIRCLE:
-			return new ExtremityFactoryArrowAndCircle();
+			return new ExtremityFactoryArrowAndCircle(backgroundColor);
 		case NOT_NAVIGABLE:
 			return new ExtremityFactoryNotNavigable();
 		case AGREGATION:
@@ -143,15 +143,15 @@ public enum LinkDecor {
 		case COMPOSITION:
 			return new ExtremityFactoryDiamond(true, backgroundColor);
 		case CIRCLE:
-			return new ExtremityFactoryCircle(false);
+			return new ExtremityFactoryCircle(false, backgroundColor);
 		case CIRCLE_FILL:
-			return new ExtremityFactoryCircle(true);
+			return new ExtremityFactoryCircle(true, backgroundColor);
 		case SQUARE:
-			return new ExtremityFactorySquarre();
+			return new ExtremityFactorySquarre(backgroundColor);
 		case PARENTHESIS:
 			return new ExtremityFactoryParenthesis();
 		case CIRCLE_CONNECT:
-			return new ExtremityFactoryCircleConnect();
+			return new ExtremityFactoryCircleConnect(backgroundColor);
 		default:
 			return null;
 		}

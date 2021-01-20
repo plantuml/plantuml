@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class ExtremityCircleCross extends Extremity {
 
@@ -50,20 +50,22 @@ class ExtremityCircleCross extends Extremity {
 	private final double py;
 	private final Point2D dest;
 	private final double radius = 7;
+	private final HColor backgroundColor;
 
 	@Override
 	public Point2D somePoint() {
 		return dest;
 	}
 
-	public ExtremityCircleCross(Point2D p1) {
+	public ExtremityCircleCross(Point2D p1, HColor backgroundColor) {
 		this.px = p1.getX() - radius;
 		this.py = p1.getY() - radius;
 		this.dest = new Point2D.Double(p1.getX(), p1.getY());
+		this.backgroundColor = backgroundColor;
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(HColorUtils.WHITE.bg());
+		ug = ug.apply(backgroundColor.bg());
 		ug.apply(new UStroke(1.5)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
 		drawLine(ug, 0, 0, getPointOnCircle(Math.PI / 4), getPointOnCircle(Math.PI + Math.PI / 4));
 		drawLine(ug, 0, 0, getPointOnCircle(-Math.PI / 4), getPointOnCircle(Math.PI - Math.PI / 4));
