@@ -40,12 +40,19 @@ import java.awt.geom.Point2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ExtremityFactoryCircleCross extends AbstractExtremityFactory implements ExtremityFactory {
 
+	private final HColor backgroundColor;
+
+	public ExtremityFactoryCircleCross(HColor backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
 		// final double ortho = atan2(p0, p2);
-		return new ExtremityCircleCross(p1);
+		return new ExtremityCircleCross(p1, backgroundColor);
 	}
 
 }

@@ -721,7 +721,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 			final PointAndAngle middle = dotPath.getMiddle();
 			final double angleRad = middle.getAngle();
 			final double angleDeg = -angleRad * 180.0 / Math.PI;
-			final UDrawable mi = linkType.getMiddleDecor().getMiddleFactory(arrowLollipopColor)
+			final UDrawable mi = linkType.getMiddleDecor().getMiddleFactory(arrowLollipopColor, backgroundColor)
 					.createUDrawable(angleDeg - 45);
 			mi.drawU(ug.apply(new UTranslate(x + middle.getX(), y + middle.getY())));
 		}

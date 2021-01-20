@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class ExtremityPlus extends Extremity {
 
@@ -51,12 +51,14 @@ class ExtremityPlus extends Extremity {
 	private final double py;
 	private static final double radius = 8;
 	private final double angle;
+	private final HColor backgroundColor;
 
-	private ExtremityPlus(double x, double y, double angle) {
+	private ExtremityPlus(double x, double y, double angle, HColor backgroundColor) {
 		this.angle = angle;
 		this.circle = new UEllipse(2 * radius, 2 * radius);
 		this.px = x;
 		this.py = y;
+		this.backgroundColor = backgroundColor;
 	}
 	
 	@Override
@@ -65,14 +67,14 @@ class ExtremityPlus extends Extremity {
 	}
 
 
-	public static UDrawable create(Point2D p1, double angle) {
+	public static UDrawable create(Point2D p1, double angle, HColor backgroundColor) {
 		final double x = p1.getX() - radius + radius * Math.sin(angle);
 		final double y = p1.getY() - radius - radius * Math.cos(angle);
-		return new ExtremityPlus(x, y, angle);
+		return new ExtremityPlus(x, y, angle, backgroundColor);
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(HColorUtils.WHITE.bg()).apply(new UTranslate(px + 0, py + 0)).draw(circle);
+		ug.apply(backgroundColor.bg()).apply(new UTranslate(px + 0, py + 0)).draw(circle);
 		drawLine(ug, 0, 0, getPointOnCircle(angle - Math.PI / 2), getPointOnCircle(angle + Math.PI / 2));
 		drawLine(ug, 0, 0, getPointOnCircle(angle), getPointOnCircle(angle + Math.PI));
 	}
