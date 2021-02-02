@@ -41,12 +41,13 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public abstract class SingleLineCommand2<S extends Diagram> implements Command<S> {
 
 	private final IRegex pattern;
 	private final boolean doTrim;
-	
+
 	public SingleLineCommand2(IRegex pattern) {
 		this(true, pattern);
 	}
@@ -146,13 +147,18 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		}
 		// System.err.println("lines="+lines);
 		// System.err.println("pattern="+pattern.getPattern());
-		return executeArg(system, first.getLocation(), arg);
+		try {
+			return executeArg(system, first.getLocation(), arg);
+		} catch (NoSuchColorException e) {
+			return CommandExecutionResult.badColor();
+		}
 	}
 
 	protected boolean isForbidden(CharSequence line) {
 		return false;
 	}
 
-	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg);
+	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg)
+			throws NoSuchColorException;
 
 }

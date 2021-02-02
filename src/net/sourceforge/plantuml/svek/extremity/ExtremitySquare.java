@@ -30,11 +30,37 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.ugraphic.color;
+package net.sourceforge.plantuml.svek.extremity;
 
-public class HColorUserDef extends HColorAbstract implements HColor {
+import java.awt.geom.Point2D;
+
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+
+class ExtremitySquare extends Extremity {
+
+	private final HColor backgroundColor;
+	private final Point2D dest;
+	private final double radius = 5;
+
+	@Override
+	public Point2D somePoint() {
+		return dest;
+	}
+
+	public ExtremitySquare(Point2D p1, HColor backgroundColor) {
+		this.dest = new Point2D.Double(p1.getX(), p1.getY());
+		this.backgroundColor = backgroundColor;
+	}
+
+	public void drawU(UGraphic ug) {
+		ug.apply(new UStroke(1.5)).apply(backgroundColor.bg()).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new URectangle(radius * 2, radius * 2));
+	}
 
 }

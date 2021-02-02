@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> {
 	public static final String DISPLAY_WITH_GENERIC = "[%g](.+?)(?:\\<(" + GenericRegexProducer.PATTERN + ")\\>)?[%g]";
@@ -83,7 +84,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		String type = arg.get("TYPE", 0);
 		String display = arg.getLazzy("DISPLAY", 0);
 		String codeString = arg.getLazzy("CODE", 0);
@@ -91,7 +92,8 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 			codeString = display;
 		}
 		// final String genericOption = arg.getLazzy("DISPLAY", 1);
-		// final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
+		// final String generic = genericOption != null ? genericOption :
+		// arg.get("GENERIC", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
 
@@ -109,25 +111,27 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		IEntity entity;
 		if (group != null) {
 			final IGroup currentGroup = diagram.getCurrentGroup();
-			diagram.gotoGroup(ident, code, d, type.equalsIgnoreCase("domain") ? GroupType.DOMAIN
-					: GroupType.REQUIREMENT, currentGroup, NamespaceStrategy.SINGLE);
+			diagram.gotoGroup(ident, code, d,
+					type.equalsIgnoreCase("domain") ? GroupType.DOMAIN : GroupType.REQUIREMENT, currentGroup,
+					NamespaceStrategy.SINGLE);
 			entity = diagram.getCurrentGroup();
 		} else {
-			entity = diagram.createLeaf(ident, code, d, type.equalsIgnoreCase("domain") ? LeafType.DOMAIN
-					: LeafType.REQUIREMENT, null);
+			entity = diagram.createLeaf(ident, code, d,
+					type.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT, null);
 		}
 		if (stereotype != null) {
-			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
-					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
-					.getIHtmlColorSet()));
+			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
+					diagram.getSkinParam().getIHtmlColorSet()));
 		}
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);
 			entity.addUrl(url);
 		}
+		final String s = arg.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		if (type.equalsIgnoreCase("domain")) {
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Machine>>")) {
 				type = "machine";

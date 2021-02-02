@@ -145,7 +145,8 @@ public class NwDiagram extends UmlDiagram {
 			if (already != null) {
 				currentNetwork().addSquare(already, toSet(null));
 			}
-			addSquare(null, name2, toSet(null));
+			final Square added = addSquare(null, name2, toSet(null));
+			added.sameColThan(already);
 			return CommandExecutionResult.ok();
 		}
 	}
@@ -353,7 +354,13 @@ public class NwDiagram extends UmlDiagram {
 				final Square square = ent.getValue();
 				if (square.getMainNetwork() == current) {
 					final Map<Network, String> conns = getLinks(square);
-					grid.add(i, j, square.asTextBlock(conns, networks));
+					final Square sameCol = square.getSameCol();
+					if (sameCol != null) {
+						square.setNumCol(sameCol.getNumCol());
+					} else {
+						square.setNumCol(j);
+					}
+					grid.add(i, square.getNumCol(), square.asTextBlock(conns, networks));
 				}
 				if (square.hasItsOwnColumn()) {
 					j++;
@@ -377,7 +384,7 @@ public class NwDiagram extends UmlDiagram {
 			currentNetwork().setFullWidth("full".equalsIgnoreCase(value));
 		}
 		if ("color".equalsIgnoreCase(property)) {
-			final HColor color = NwGroup.colors.getColorIfValid(value);
+			final HColor color = value == null ? null : NwGroup.colors.getColorOrWhite(value);
 			if (currentGroup != null) {
 				currentGroup.setColor(color);
 			} else if (currentNetwork() != null) {

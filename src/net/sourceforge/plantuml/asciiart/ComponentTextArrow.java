@@ -68,10 +68,10 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		this.maxAsciiMessageLength = maxAsciiMessageLength;
 		this.type = type;
 		this.config = config;
-		this.stringsToDisplay = clean(stringsToDisplay);
+		this.stringsToDisplay = cleanAndManageBoldNumber(stringsToDisplay, fileFormat);
 	}
 
-	private Display clean(Display orig) {
+	public static Display cleanAndManageBoldNumber(Display orig, FileFormat fileFormat) {
 		if (orig.size() == 0 || orig.get(0) instanceof MessageNumber == false) {
 			return orig;
 		}
@@ -79,7 +79,7 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		for (int i = 0; i < orig.size(); i++) {
 			CharSequence element = orig.get(i);
 			if (i == 1) {
-				element = removeTag(orig.get(0).toString()) + " " + element;
+				element = removeTagAndManageBoldNumber(orig.get(0).toString(), fileFormat) + " " + element;
 			}
 			if (i != 0) {
 				result = result.add(element);
@@ -88,7 +88,7 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		return result;
 	}
 
-	private String removeTag(String s) {
+	private static String removeTagAndManageBoldNumber(String s, FileFormat fileFormat) {
 		if (fileFormat == FileFormat.UTXT) {
 			final Pattern pattern = Pattern.compile("\\<b\\>([0-9]+)\\</b\\>");
 			final Matcher matcher = pattern.matcher(s);

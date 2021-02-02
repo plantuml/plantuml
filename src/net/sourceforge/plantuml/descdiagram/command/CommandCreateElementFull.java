@@ -66,10 +66,11 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "artifact|actor/|actor|folder|card|file|package|rectangle|label|node|frame|cloud|database|queue|stack|storage|agent|usecase/|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout";
+	public static final String ALL_TYPES = "artifact|actor/|actor|folder|card|file|package|rectangle|hexagon|label|node|frame|cloud|database|queue|stack|storage|agent|usecase/|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
@@ -154,7 +155,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		String codeRaw = arg.getLazzy("CODE", 0);
 		String displayRaw = arg.getLazzy("DISPLAY", 0);
 		final char codeChar = getCharEncoding(codeRaw);
@@ -261,8 +262,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		}
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1));
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		if (lineColor != null) {
 			colors = colors.add(ColorType.LINE, lineColor);
 		}

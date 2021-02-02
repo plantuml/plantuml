@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandSwimlane extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -64,8 +65,9 @@ public class CommandSwimlane extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
-		final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+		final String s = arg.get("COLOR", 0);
+		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final String name = arg.get("SWIMLANE", 0);
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
 		return diagram.swimlane(name, color, label);

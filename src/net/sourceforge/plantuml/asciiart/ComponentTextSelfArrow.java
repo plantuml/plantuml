@@ -60,7 +60,7 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 	public ComponentTextSelfArrow(ComponentType type, ArrowConfiguration config, Display stringsToDisplay,
 			FileFormat fileFormat) {
 		this.type = type;
-		this.stringsToDisplay = stringsToDisplay;
+		this.stringsToDisplay = ComponentTextArrow.cleanAndManageBoldNumber(stringsToDisplay, fileFormat);
 		this.fileFormat = fileFormat;
 		this.config = config;
 	}

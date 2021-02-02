@@ -147,7 +147,7 @@ public abstract class WithLinkType {
 			} else if (s.startsWith("thickness=")) {
 				this.goThickness(Double.parseDouble(s.substring("thickness=".length())));
 			} else {
-				final HColor tmp = HColorSet.instance().getColorIfValid(s);
+				final HColor tmp = HColorSet.instance().getColorOrWhite(s);
 				setSpecificColor(tmp, i);
 			}
 		}

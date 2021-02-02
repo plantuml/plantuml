@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.Player;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandChangeStateByTime extends CommandChangeState {
 
@@ -74,7 +75,7 @@ public class CommandChangeStateByTime extends CommandChangeState {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final Player player = diagram.getLastPlayer();
 		if (player == null) {
 			return CommandExecutionResult.error("Missing @ line before this");

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class NewpagedDiagram extends AbstractPSystem {
 
@@ -74,22 +75,26 @@ public class NewpagedDiagram extends AbstractPSystem {
 
 	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines) {
 		final int nb = diagrams.size();
-		final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines);
-		if (tmp.getNewDiagram() instanceof NewpagedDiagram) {
-			final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();
-			// System.err.println("this=" + this);
-			// System.err.println("new1=" + new1);
-			if (new1.size() != 2) {
-				throw new IllegalStateException();
-			}
-			if (new1.diagrams.get(0) != this.diagrams.get(nb - 1)) {
-				throw new IllegalStateException();
-			}
-			this.diagrams.add(new1.diagrams.get(1));
-			return tmp.withDiagram(this);
+		try {
+			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines);
+			if (tmp.getNewDiagram() instanceof NewpagedDiagram) {
+				final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();
+				// System.err.println("this=" + this);
+				// System.err.println("new1=" + new1);
+				if (new1.size() != 2) {
+					throw new IllegalStateException();
+				}
+				if (new1.diagrams.get(0) != this.diagrams.get(nb - 1)) {
+					throw new IllegalStateException();
+				}
+				this.diagrams.add(new1.diagrams.get(1));
+				return tmp.withDiagram(this);
 
+			}
+			return tmp;
+		} catch (NoSuchColorException e) {
+			return CommandExecutionResult.badColor();
 		}
-		return tmp;
 	}
 
 	private int size() {

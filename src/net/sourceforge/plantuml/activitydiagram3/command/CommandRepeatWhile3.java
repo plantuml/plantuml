@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -100,7 +101,7 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final Display test = Display.getWithNewlines(arg.getLazzy("TEST", 0));
 		final Display yes = Display.getWithNewlines(arg.getLazzy("WHEN", 0));
 		final Display out = Display.getWithNewlines(arg.getLazzy("OUT", 0));

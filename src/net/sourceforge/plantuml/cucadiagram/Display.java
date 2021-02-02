@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
+import net.sourceforge.plantuml.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -78,6 +79,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -150,12 +152,14 @@ public class Display implements Iterable<CharSequence> {
 		return create(Arrays.asList(s));
 	}
 
-	public static Display createFoo(List<StringLocated> data) {
+	public static Display createFoo(List<StringLocated> data) throws NoSuchColorException {
 		final List<CharSequence> tmp = new ArrayList<CharSequence>();
 		for (StringLocated s : data) {
 			tmp.add(s.getString());
 		}
-		return create(tmp);
+		final Display result = create(tmp);
+		CreoleParser.checkColor(result);
+		return result;
 	}
 
 	public static Display create(Collection<? extends CharSequence> other) {
@@ -164,6 +168,12 @@ public class Display implements Iterable<CharSequence> {
 
 	public static Display getWithNewlines(Code s) {
 		return getWithNewlines(s.getName());
+	}
+
+	public static Display getWithNewlines2(String s) throws NoSuchColorException {
+		final Display result = getWithNewlines(s);
+		CreoleParser.checkColor(result);
+		return result;
 	}
 
 	public static Display getWithNewlines(String s) {

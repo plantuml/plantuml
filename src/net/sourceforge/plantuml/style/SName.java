@@ -59,7 +59,6 @@ public enum SName {
 	componentDiagram, //
 	control, //
 	database, //
-	databse, //
 	delay, //
 	destroy, //
 	diamond, //
@@ -77,6 +76,7 @@ public enum SName {
 	interface_, //
 	jsonDiagram, //
 	gitDiagram, //
+	label, //
 	leafNode, //
 	legend, //
 	lifeLine, //

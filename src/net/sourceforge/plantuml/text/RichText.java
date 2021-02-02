@@ -33,34 +33,20 @@
  *
  * 
  */
-package net.sourceforge.plantuml.svek.extremity;
+package net.sourceforge.plantuml.text;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.StringUtils;
 
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+public class RichText {
 
-class ExtremitySquarre extends Extremity {
-
-	private final HColor backgroundColor;
-	private final Point2D dest;
-	private final double radius = 5;
-
-	@Override
-	public Point2D somePoint() {
-		return dest;
-	}
-
-	public ExtremitySquarre(Point2D p1, HColor backgroundColor) {
-		this.dest = new Point2D.Double(p1.getX(), p1.getY());
-		this.backgroundColor = backgroundColor;
-	}
-
-	public void drawU(UGraphic ug) {
-		ug.apply(new UStroke(1.5)).apply(backgroundColor.bg()).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new URectangle(radius * 2, radius * 2));
+	public static boolean isRich(String text) {
+		if (text.indexOf(StringUtils.BOLD_START) != -1) {
+			return true;
+		}
+		if (text.indexOf(StringUtils.BOLD_END) != -1) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public interface ISkinParam extends ISkinSimple {
 
@@ -68,7 +69,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable);
 
-	public Colors getColors(ColorParam param, Stereotype stereotype);
+	public Colors getColors(ColorParam param, Stereotype stereotype) throws NoSuchColorException;
 
 	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param);
 

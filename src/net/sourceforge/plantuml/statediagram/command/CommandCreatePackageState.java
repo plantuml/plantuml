@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> {
 
@@ -68,8 +69,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandCreatePackageState.class.getName(),
-				RegexLeaf.start(), //
+		return RegexConcat.build(CommandCreatePackageState.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("state"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
@@ -83,7 +83,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 								new RegexOptional(new RegexConcat( //
 										new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]"), RegexLeaf.spaceOneOrMore(), //
 										new RegexLeaf("as"), RegexLeaf.spaceOneOrMore() //
-										)), //
+								)), //
 								new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
@@ -108,7 +108,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");
 		final Ident idNewLong = diagram.buildLeafIdentSpecial(idShort);
@@ -132,8 +132,9 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		}
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1));
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		if (lineColor != null) {
 			colors = colors.add(ColorType.LINE, lineColor);
 		}
@@ -143,9 +144,11 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		p.setColors(colors);
 
 		// p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
+		// 0)));
 		// p.setSpecificColorTOBEREMOVED(ColorType.LINE,
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR",
+		// 1)));
 		// p.applyStroke(arg.get("LINECOLOR", 0));
 		return CommandExecutionResult.ok();
 	}

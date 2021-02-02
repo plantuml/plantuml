@@ -106,7 +106,7 @@ public class DotStringFactory implements Moveable {
 		this.current = root;
 	}
 
-	public void addNode(Node node) {
+	public void addNode(SvekNode node) {
 		current.addNode(node);
 	}
 
@@ -363,7 +363,7 @@ public class DotStringFactory implements Moveable {
 
 		final Point2DFunction move = new YDelta(fullHeight);
 		final SvgResult svgResult = new SvgResult(svg, move);
-		for (Node node : bibliotekon.allNodes()) {
+		for (SvekNode node : bibliotekon.allNodes()) {
 			int idx = svg.indexOf("<title>" + node.getUid() + "</title>");
 			if (node.getType() == ShapeType.RECTANGLE || node.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
 					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER
@@ -392,7 +392,7 @@ public class DotStringFactory implements Moveable {
 				final double minY = SvekUtils.getMinY(points);
 //				corner1.manage(minX, minY);
 				node.moveSvek(minX, minY);
-			} else if (node.getType() == ShapeType.OCTAGON) {
+			} else if (node.getType() == ShapeType.OCTAGON || node.getType() == ShapeType.HEXAGON) {
 				idx = svg.indexOf("points=\"", idx + 1);
 				final int starting = idx;
 				final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
@@ -400,7 +400,7 @@ public class DotStringFactory implements Moveable {
 				final double minY = SvekUtils.getMinY(points);
 				// corner1.manage(minX, minY);
 				node.moveSvek(minX, minY);
-				node.setOctagon(minX, minY, points);
+				node.setPolygon(minX, minY, points);
 			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.CIRCLE_IN_RECT
 					|| node.getType() == ShapeType.OVAL) {
 				final double cx = SvekUtils.getValue(svg, idx, "cx");
@@ -490,7 +490,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {
-		for (Node sh : bibliotekon.allNodes()) {
+		for (SvekNode sh : bibliotekon.allNodes()) {
 			sh.moveSvek(deltaX, deltaY);
 		}
 		for (Line line : bibliotekon.allLines()) {

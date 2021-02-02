@@ -53,14 +53,14 @@ public class Bibliotekon {
 
 	private final List<Cluster> allCluster = new ArrayList<Cluster>();
 
-	private final Map<ILeaf, Node> nodeMap = new LinkedHashMap<ILeaf, Node>();;
+	private final Map<ILeaf, SvekNode> nodeMap = new LinkedHashMap<ILeaf, SvekNode>();;
 
 	private final List<Line> lines0 = new ArrayList<Line>();
 	private final List<Line> lines1 = new ArrayList<Line>();
 	private final List<Line> allLines = new ArrayList<Line>();
 
-	public Node createNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
-		final Node node = new Node(ent, image, colorSequence, stringBounder);
+	public SvekNode createNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
+		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);
 		nodeMap.put(ent, node);
 		return node;
 	}
@@ -107,12 +107,12 @@ public class Bibliotekon {
 		allCluster.add(current);
 	}
 
-	public Node getNode(IEntity ent) {
+	public SvekNode getNode(IEntity ent) {
 		return nodeMap.get(ent);
 	}
 
 	public String getNodeUid(ILeaf ent) {
-		final Node result = getNode(ent);
+		final SvekNode result = getNode(ent);
 		if (result != null) {
 			String uid = result.getUid();
 			if (result.isShielded()) {
@@ -134,8 +134,8 @@ public class Bibliotekon {
 
 	public String getWarningOrError(int warningOrError) {
 		final StringBuilder sb = new StringBuilder();
-		for (Map.Entry<ILeaf, Node> ent : nodeMap.entrySet()) {
-			final Node sh = ent.getValue();
+		for (Map.Entry<ILeaf, SvekNode> ent : nodeMap.entrySet()) {
+			final SvekNode sh = ent.getValue();
 			final double maxX = sh.getMinX() + sh.getWidth();
 			if (maxX > warningOrError) {
 				final IEntity entity = ent.getKey();
@@ -149,8 +149,8 @@ public class Bibliotekon {
 
 	public Map<String, Double> getMaxX() {
 		final Map<String, Double> result = new HashMap<String, Double>();
-		for (Map.Entry<ILeaf, Node> ent : nodeMap.entrySet()) {
-			final Node sh = ent.getValue();
+		for (Map.Entry<ILeaf, SvekNode> ent : nodeMap.entrySet()) {
+			final SvekNode sh = ent.getValue();
 			final double maxX = sh.getMinX() + sh.getWidth();
 			final IEntity entity = ent.getKey();
 			result.put(entity.getCodeGetName(), maxX);
@@ -174,7 +174,7 @@ public class Bibliotekon {
 		return Collections.unmodifiableList(allCluster);
 	}
 
-	public Collection<Node> allNodes() {
+	public Collection<SvekNode> allNodes() {
 		return Collections.unmodifiableCollection(nodeMap.values());
 	}
 
@@ -207,8 +207,8 @@ public class Bibliotekon {
 		return null;
 	}
 
-	public ILeaf getLeaf(Node node) {
-		for (Map.Entry<ILeaf, Node> ent : nodeMap.entrySet()) {
+	public ILeaf getLeaf(SvekNode node) {
+		for (Map.Entry<ILeaf, SvekNode> ent : nodeMap.entrySet()) {
 			if (ent.getValue() == node) {
 				return ent.getKey();
 			}

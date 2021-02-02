@@ -99,6 +99,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -201,7 +202,7 @@ public final class GeneralImageBuilder {
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE) {
 			return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
-					null);
+					null, bibliotekon);
 		}
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
@@ -214,7 +215,7 @@ public final class GeneralImageBuilder {
 						? getForcedStroke(leaf.getStereotype(), skinParam)
 						: null;
 				return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
-						forced);
+						forced, bibliotekon);
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE) {
@@ -250,7 +251,8 @@ public final class GeneralImageBuilder {
 				final HColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
 						leaf.getUSymbol().getColorParamBorder());
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
-						links, umlDiagramType.getStyleName(), getForcedStroke(leaf.getStereotype(), skinParam));
+						links, umlDiagramType.getStyleName(), getForcedStroke(leaf.getStereotype(), skinParam),
+						bibliotekon);
 			}
 			return new EntityImageEmptyPackage(leaf, skinParam, portionShower, umlDiagramType.getStyleName());
 		}
@@ -395,7 +397,7 @@ public final class GeneralImageBuilder {
 		if (dotData.isDegeneratedWithFewEntities(1) && dotData.getUmlDiagramType() != UmlDiagramType.STATE) {
 			final ILeaf single = dotData.getLeafs().iterator().next();
 			final IGroup group = single.getParentContainer();
-			if (group instanceof GroupRoot) {
+			if (group instanceof GroupRoot && single.getUSymbol() instanceof USymbolHexagon == false) {
 				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single, dotData.getSkinParam(),
 						dotData.isHideEmptyDescriptionForState(), dotData, null, null, dotData.getUmlDiagramType(),
 						dotData.getLinks());
@@ -429,15 +431,15 @@ public final class GeneralImageBuilder {
 				dotStringFactory.getBibliotekon().addLine(line);
 
 				if (isOpalisable(link.getEntity1())) {
-					final Node node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
-					final Node other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
 					if (other != null) {
 						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
 						line.setOpale(true);
 					}
 				} else if (isOpalisable(link.getEntity2())) {
-					final Node node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
-					final Node other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
 					if (other != null) {
 						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
 						line.setOpale(true);
@@ -542,7 +544,7 @@ public final class GeneralImageBuilder {
 			throw new IllegalStateException();
 		}
 		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
-		final Node node = dotStringFactory.getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
+		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
 				stringBounder);
 		dotStringFactory.addNode(node);
 	}

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
-public class Node implements Positionable, IShapePseudo, Hideable {
+public class SvekNode implements Positionable, IShapePseudo, Hideable {
 
 	private final ShapeType type;
 	private final double width;
@@ -94,7 +94,7 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 	private final ILeaf leaf;
 	private final IGroup group;
 
-	Node(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
+	SvekNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		this.entityPosition = ent.getEntityPosition();
 		this.image = image;
@@ -258,6 +258,8 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 			throw new UnsupportedOperationException();
 		} else if (type == ShapeType.OCTAGON) {
 			sb.append("shape=octagon");
+		} else if (type == ShapeType.HEXAGON) {
+			sb.append("shape=hexagon");
 		} else if (type == ShapeType.DIAMOND) {
 			sb.append("shape=diamond");
 		} else if (type == ShapeType.CIRCLE) {
@@ -331,14 +333,14 @@ public class Node implements Positionable, IShapePseudo, Hideable {
 		return image.isHidden();
 	}
 
-	private Shadowable octagon;
+	private Shadowable polygon;
 
-	public void setOctagon(double minX, double minY, List<Point2D.Double> points) {
-		this.octagon = new UPolygon(points).translate(-minX, -minY);
+	public void setPolygon(double minX, double minY, List<Point2D.Double> points) {
+		this.polygon = new UPolygon(points).translate(-minX, -minY);
 	}
 
-	public Shadowable getOctagon() {
-		return octagon;
+	public Shadowable getPolygon() {
+		return polygon;
 	}
 
 	public Point2D getPoint2D(double x, double y) {

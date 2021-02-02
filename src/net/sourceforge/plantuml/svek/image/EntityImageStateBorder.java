@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
-import net.sourceforge.plantuml.svek.Node;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -62,7 +62,7 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
 	private boolean upPosition() {
 		final Point2D clusterCenter = parent.getClusterPosition().getPointCenter();
-		final Node node = bibliotekon.getNode(getEntity());
+		final SvekNode node = bibliotekon.getNode(getEntity());
 		return node.getMinY() < clusterCenter.getY();
 	}
 

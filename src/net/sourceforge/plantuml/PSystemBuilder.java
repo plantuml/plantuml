@@ -118,7 +118,7 @@ public class PSystemBuilder {
 					// Dead code : should not append
 					assert false;
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
-					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), /* cpt */
+					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), 0,
 							s.getLocation());
 					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source);
 				}

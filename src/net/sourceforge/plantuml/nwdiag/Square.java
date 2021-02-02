@@ -62,6 +62,7 @@ public class Square {
 	private final Network mainNetwork;
 	private final ISkinSimple spriteContainer;
 	private boolean hasItsOwnColumn = true;
+	private Square sameCol;
 
 	@Override
 	public String toString() {
@@ -134,6 +135,24 @@ public class Square {
 
 	public final boolean hasItsOwnColumn() {
 		return hasItsOwnColumn;
+	}
+
+	public void sameColThan(Square sameCol) {
+		this.sameCol = sameCol;
+	}
+
+	public final Square getSameCol() {
+		return sameCol;
+	}
+
+	private int numCol = -1;
+
+	public void setNumCol(int j) {
+		this.numCol = j;
+	}
+
+	public final int getNumCol() {
+		return numCol;
 	}
 
 }

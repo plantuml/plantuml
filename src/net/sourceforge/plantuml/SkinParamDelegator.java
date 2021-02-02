@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class SkinParamDelegator implements ISkinParam {
 
@@ -245,7 +246,7 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getMonospacedFamily();
 	}
 
-	public Colors getColors(ColorParam param, Stereotype stereotype) {
+	public Colors getColors(ColorParam param, Stereotype stereotype) throws NoSuchColorException {
 		return skinParam.getColors(param, stereotype);
 	}
 

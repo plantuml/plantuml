@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public final class CommandConstraintOnLinks extends SingleLineCommand2<CucaDiagram> {
 
@@ -76,7 +77,7 @@ public final class CommandConstraintOnLinks extends SingleLineCommand2<CucaDiagr
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final List<Link> links = diagram.getTwoLastLinks();
 		if (links == null) {
 			return CommandExecutionResult.error("Cannot put constraint on two last links");

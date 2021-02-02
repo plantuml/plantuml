@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<AbstractEntityDiagram> {
 
@@ -123,7 +124,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));

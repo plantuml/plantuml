@@ -81,40 +81,40 @@ public class HColorUtils {
 
 		final HColorSet set = HColorSet.instance();
 
-		BLACK = set.getColorIfValid("black");
-		WHITE = set.getColorIfValid("white");
-		RED_LIGHT = set.getColorIfValid("#FEF6F3");
-		RED_DARK = set.getColorIfValid("#CD0A0A");
-		RED = set.getColorIfValid("#FF0000");
-		GREEN = set.getColorIfValid("#00FF00");
-		BLUE = set.getColorIfValid("#0000FF");
-		GRAY = set.getColorIfValid("#808080");
-		LIGHT_GRAY = set.getColorIfValid("#C0C0C0");
-		MY_YELLOW = set.getColorIfValid("#FEFECE");
-		MY_RED = set.getColorIfValid("#A80036");
-		MY_GREEN = set.getColorIfValid("#33FF02");
+		BLACK = set.getColorOrWhite("black");
+		WHITE = set.getColorOrWhite("white");
+		RED_LIGHT = set.getColorOrWhite("#FEF6F3");
+		RED_DARK = set.getColorOrWhite("#CD0A0A");
+		RED = set.getColorOrWhite("#FF0000");
+		GREEN = set.getColorOrWhite("#00FF00");
+		BLUE = set.getColorOrWhite("#0000FF");
+		GRAY = set.getColorOrWhite("#808080");
+		LIGHT_GRAY = set.getColorOrWhite("#C0C0C0");
+		MY_YELLOW = set.getColorOrWhite("#FEFECE");
+		MY_RED = set.getColorOrWhite("#A80036");
+		MY_GREEN = set.getColorOrWhite("#33FF02");
 
-		COL_C82930 = set.getColorIfValid("#C82930");
-		COL_F24D5C = set.getColorIfValid("#F24D5C");
-		COL_1963A0 = set.getColorIfValid("#1963A0");
-		COL_4177AF = set.getColorIfValid("#4177AF");
-		COL_B38D22 = set.getColorIfValid("#B38D22");
-		COL_FFFF44 = set.getColorIfValid("#FFFF44");
-		COL_038048 = set.getColorIfValid("#038048");
-		COL_84BE84 = set.getColorIfValid("#84BE84");
-		COL_DDDDDD = set.getColorIfValid("#DDDDDD");
-		COL_EEEEEE = set.getColorIfValid("#EEEEEE");
-		COL_FBFB77 = set.getColorIfValid("#FBFB77");
-		COL_ADD1B2 = set.getColorIfValid("#ADD1B2");
-		COL_A9DCDF = set.getColorIfValid("#A9DCDF");
-		COL_E3664A = set.getColorIfValid("#E3664A");
-		COL_EB937F = set.getColorIfValid("#EB937F");
-		COL_B4A7E5 = set.getColorIfValid("#B4A7E5");
-		COL_527BC6 = set.getColorIfValid("#527BC6");
-		COL_D1DBEF = set.getColorIfValid("#D1DBEF");
-		COL_D7E0F2 = set.getColorIfValid("#D7E0F2");
-		COL_989898 = set.getColorIfValid("#989898");
-		COL_BBBBBB = set.getColorIfValid("#BBBBBB");
+		COL_C82930 = set.getColorOrWhite("#C82930");
+		COL_F24D5C = set.getColorOrWhite("#F24D5C");
+		COL_1963A0 = set.getColorOrWhite("#1963A0");
+		COL_4177AF = set.getColorOrWhite("#4177AF");
+		COL_B38D22 = set.getColorOrWhite("#B38D22");
+		COL_FFFF44 = set.getColorOrWhite("#FFFF44");
+		COL_038048 = set.getColorOrWhite("#038048");
+		COL_84BE84 = set.getColorOrWhite("#84BE84");
+		COL_DDDDDD = set.getColorOrWhite("#DDDDDD");
+		COL_EEEEEE = set.getColorOrWhite("#EEEEEE");
+		COL_FBFB77 = set.getColorOrWhite("#FBFB77");
+		COL_ADD1B2 = set.getColorOrWhite("#ADD1B2");
+		COL_A9DCDF = set.getColorOrWhite("#A9DCDF");
+		COL_E3664A = set.getColorOrWhite("#E3664A");
+		COL_EB937F = set.getColorOrWhite("#EB937F");
+		COL_B4A7E5 = set.getColorOrWhite("#B4A7E5");
+		COL_527BC6 = set.getColorOrWhite("#527BC6");
+		COL_D1DBEF = set.getColorOrWhite("#D1DBEF");
+		COL_D7E0F2 = set.getColorOrWhite("#D7E0F2");
+		COL_989898 = set.getColorOrWhite("#989898");
+		COL_BBBBBB = set.getColorOrWhite("#BBBBBB");
 
 	}
 

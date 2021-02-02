@@ -98,7 +98,7 @@ public class Cluster implements Moveable {
 
 	private final Cluster parentCluster;
 	private final IGroup group;
-	private final List<Node> nodes = new ArrayList<Node>();
+	private final List<SvekNode> nodes = new ArrayList<SvekNode>();
 	private final List<Cluster> children = new ArrayList<Cluster>();
 	private final int color;
 	private final int colorTitle;
@@ -129,7 +129,7 @@ public class Cluster implements Moveable {
 
 	private Set<EntityPosition> entityPositionsExceptNormal() {
 		final Set<EntityPosition> result = EnumSet.<EntityPosition>noneOf(EntityPosition.class);
-		for (Node sh : nodes) {
+		for (SvekNode sh : nodes) {
 			if (sh.getEntityPosition() != EntityPosition.NORMAL) {
 				result.add(sh.getEntityPosition());
 			}
@@ -166,7 +166,7 @@ public class Cluster implements Moveable {
 		return parentCluster;
 	}
 
-	public void addNode(Node node) {
+	public void addNode(SvekNode node) {
 		if (node == null) {
 			throw new IllegalArgumentException();
 		}
@@ -174,17 +174,17 @@ public class Cluster implements Moveable {
 		node.setCluster(this);
 	}
 
-	public final List<Node> getNodes() {
+	public final List<SvekNode> getNodes() {
 		return Collections.unmodifiableList(nodes);
 	}
 
-	private List<Node> getNodesOrderedTop(Collection<Line> lines) {
-		final List<Node> firsts = new ArrayList<Node>();
+	private List<SvekNode> getNodesOrderedTop(Collection<Line> lines) {
+		final List<SvekNode> firsts = new ArrayList<SvekNode>();
 		final Set<String> tops = new HashSet<String>();
-		final Map<String, Node> shs = new HashMap<String, Node>();
+		final Map<String, SvekNode> shs = new HashMap<String, SvekNode>();
 
-		for (final Iterator<Node> it = nodes.iterator(); it.hasNext();) {
-			final Node node = it.next();
+		for (final Iterator<SvekNode> it = nodes.iterator(); it.hasNext();) {
+			final SvekNode node = it.next();
 			shs.put(node.getUid(), node);
 			if (node.isTop() && node.getEntityPosition() == EntityPosition.NORMAL) {
 				firsts.add(node);
@@ -194,14 +194,14 @@ public class Cluster implements Moveable {
 
 		for (Line l : lines) {
 			if (tops.contains(l.getStartUidPrefix())) {
-				final Node sh = shs.get(l.getEndUidPrefix());
+				final SvekNode sh = shs.get(l.getEndUidPrefix());
 				if (sh != null && sh.getEntityPosition() == EntityPosition.NORMAL) {
 					firsts.add(0, sh);
 				}
 			}
 
 			if (l.isInverted()) {
-				final Node sh = shs.get(l.getStartUidPrefix());
+				final SvekNode sh = shs.get(l.getStartUidPrefix());
 				if (sh != null && sh.getEntityPosition() == EntityPosition.NORMAL) {
 					firsts.add(0, sh);
 				}
@@ -211,13 +211,13 @@ public class Cluster implements Moveable {
 		return firsts;
 	}
 
-	private List<Node> getNodesOrderedWithoutTop(Collection<Line> lines) {
-		final List<Node> all = new ArrayList<Node>(nodes);
+	private List<SvekNode> getNodesOrderedWithoutTop(Collection<Line> lines) {
+		final List<SvekNode> all = new ArrayList<SvekNode>(nodes);
 		final Set<String> tops = new HashSet<String>();
-		final Map<String, Node> shs = new HashMap<String, Node>();
+		final Map<String, SvekNode> shs = new HashMap<String, SvekNode>();
 
-		for (final Iterator<Node> it = all.iterator(); it.hasNext();) {
-			final Node sh = it.next();
+		for (final Iterator<SvekNode> it = all.iterator(); it.hasNext();) {
+			final SvekNode sh = it.next();
 			if (sh.getEntityPosition() != EntityPosition.NORMAL) {
 				it.remove();
 				continue;
@@ -231,14 +231,14 @@ public class Cluster implements Moveable {
 
 		for (Line l : lines) {
 			if (tops.contains(l.getStartUidPrefix())) {
-				final Node sh = shs.get(l.getEndUidPrefix());
+				final SvekNode sh = shs.get(l.getEndUidPrefix());
 				if (sh != null) {
 					all.remove(sh);
 				}
 			}
 
 			if (l.isInverted()) {
-				final Node sh = shs.get(l.getStartUidPrefix());
+				final SvekNode sh = shs.get(l.getStartUidPrefix());
 				if (sh != null) {
 					all.remove(sh);
 				}
@@ -421,7 +421,7 @@ public class Cluster implements Moveable {
 	public void manageEntryExitPoint(StringBounder stringBounder) {
 		final Collection<ClusterPosition> insides = new ArrayList<ClusterPosition>();
 		final List<Point2D> points = new ArrayList<Point2D>();
-		for (Node sh : nodes) {
+		for (SvekNode sh : nodes) {
 			if (sh.getEntityPosition() == EntityPosition.NORMAL) {
 				insides.add(sh.getClusterPosition());
 			} else {
@@ -527,7 +527,7 @@ public class Cluster implements Moveable {
 	}
 
 	public void printCluster1(StringBuilder sb, Collection<Line> lines, StringBounder stringBounder) {
-		for (Node node : getNodesOrderedTop(lines)) {
+		for (SvekNode node : getNodesOrderedTop(lines)) {
 			node.appendShape(sb, stringBounder);
 		}
 	}
@@ -592,7 +592,7 @@ public class Cluster implements Moveable {
 
 	private List<? extends IShapePseudo> withPositionProtected(StringBounder stringBounder,
 			Set<EntityPosition> targets) {
-		final List<Node> result = withPosition(targets);
+		final List<SvekNode> result = withPosition(targets);
 		final double maxWith = getMaxWidthFromLabelForEntryExit(result, stringBounder);
 		final double naturalSpace = 70;
 		if (maxWith > naturalSpace) {
@@ -601,10 +601,10 @@ public class Cluster implements Moveable {
 		return result;
 	}
 
-	private List<Node> withPosition(Set<EntityPosition> positions) {
-		final List<Node> result = new ArrayList<Node>();
-		for (final Iterator<Node> it = nodes.iterator(); it.hasNext();) {
-			final Node sh = it.next();
+	private List<SvekNode> withPosition(Set<EntityPosition> positions) {
+		final List<SvekNode> result = new ArrayList<SvekNode>();
+		for (final Iterator<SvekNode> it = nodes.iterator(); it.hasNext();) {
+			final SvekNode sh = it.next();
 			if (positions.contains(sh.getEntityPosition())) {
 				result.add(sh);
 			}
@@ -618,11 +618,11 @@ public class Cluster implements Moveable {
 		printRanks(RANK_SINK, withPositionProtected(stringBounder, EntityPosition.getOutputs()), sb, stringBounder);
 	}
 
-	public Node printCluster2(StringBuilder sb, Collection<Line> lines, StringBounder stringBounder, DotMode dotMode,
+	public SvekNode printCluster2(StringBuilder sb, Collection<Line> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
 
-		Node added = null;
-		for (Node node : getNodesOrderedWithoutTop(lines)) {
+		SvekNode added = null;
+		for (SvekNode node : getNodesOrderedWithoutTop(lines)) {
 			node.appendShape(sb, stringBounder);
 			added = node;
 		}
@@ -665,7 +665,7 @@ public class Cluster implements Moveable {
 	}
 
 	public void fillRankMin(Set<String> rankMin) {
-		for (Node sh : getNodes()) {
+		for (SvekNode sh : getNodes()) {
 			if (sh.isTop()) {
 				rankMin.add(sh.getUid());
 			}
@@ -677,7 +677,7 @@ public class Cluster implements Moveable {
 	}
 
 	private boolean isInCluster(String uid) {
-		for (Node node : nodes) {
+		for (SvekNode node : nodes) {
 			if (node.getUid().equals(uid)) {
 				return true;
 			}
@@ -827,7 +827,7 @@ public class Cluster implements Moveable {
 		SvekUtils.println(sb);
 		printCluster1(sb, lines, stringBounder);
 
-		final Node added = printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+		final SvekNode added = printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 		if (entityPositionsExceptNormal.size() > 0) {
 			if (hasPort()) {
 				sb.append(empty() + " [shape=rect,width=.01,height=.01,label=");

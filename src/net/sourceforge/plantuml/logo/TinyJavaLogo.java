@@ -54,7 +54,7 @@ public class TinyJavaLogo {
 	}
 
 	private void message(String messageText) {
-		//turtleGraphicsPane.message(messageText);
+		// turtleGraphicsPane.message(messageText);
 	}
 
 	private void error(String messageText) {
@@ -191,7 +191,8 @@ public class TinyJavaLogo {
 
 			case LogoToken.SETPC:
 				token = scanner.getToken();
-				final HColor newPenColor = HColorSet.instance().getColorIfValid(token.lexeme);
+				String s = token.lexeme;
+				final HColor newPenColor = s == null ? null : HColorSet.instance().getColorOrWhite(s);
 				if (newPenColor == null) {
 					error("Unrecognized color name");
 					return;

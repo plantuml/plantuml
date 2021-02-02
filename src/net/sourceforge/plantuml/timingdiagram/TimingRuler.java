@@ -68,7 +68,7 @@ public class TimingRuler {
 
 	static UGraphic applyForVLines(UGraphic ug) {
 		final UStroke stroke = new UStroke(3, 5, 0.5);
-		final HColor color = HColorSet.instance().getColorIfValid("#AAA");
+		final HColor color = HColorSet.instance().getColorOrWhite("#AAA");
 		return ug.apply(stroke).apply(color);
 	}
 

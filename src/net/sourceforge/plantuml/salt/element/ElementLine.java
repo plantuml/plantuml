@@ -61,7 +61,7 @@ public class ElementLine extends AbstractElement {
 		if (zIndex != 0) {
 			return;
 		}
-		ug = ug.apply(HColorSet.instance().getColorIfValid("#AAAAAA"));
+		ug = ug.apply(HColorSet.instance().getColorOrWhite("#AAAAAA"));
 		double y2 = dimToUse.getHeight() / 2;
 		if (separator == '=') {
 			y2 = y2 - 1;

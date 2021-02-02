@@ -54,7 +54,7 @@ public class ComplementWithColorLink implements Something {
 		final String style0 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color1 = arg.get("COMPLEMENT" + suffix, 1);
 		final String style2 = arg.get("COMPLEMENT" + suffix, 2);
-		final HColor col1 = system.getIHtmlColorSet().getColorIfValid(color1);
+		final HColor col1 = color1 == null ? null : system.getIHtmlColorSet().getColorOrWhite(color1);
 		final String style = style0 == null ? style2 : style0;
 		return Failable.ok(new CenterBorderColor(col1, col1, style));
 	}

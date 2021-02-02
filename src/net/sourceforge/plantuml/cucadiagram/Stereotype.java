@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class Stereotype implements CharSequence {
 	private final static RegexComposed circleChar = new RegexConcat( //
@@ -108,7 +109,7 @@ public class Stereotype implements CharSequence {
 	private String spriteName;
 	private double spriteScale;
 
-	public Stereotype(String label, double radius, UFont circledFont, HColorSet htmlColorSet) {
+	public Stereotype(String label, double radius, UFont circledFont, HColorSet htmlColorSet) throws NoSuchColorException {
 		this(label, radius, circledFont, true, htmlColorSet);
 	}
 
@@ -129,7 +130,7 @@ public class Stereotype implements CharSequence {
 	}
 
 	public Stereotype(String label, double radius, UFont circledFont, boolean automaticPackageStyle,
-			HColorSet htmlColorSet) {
+			HColorSet htmlColorSet) throws NoSuchColorException {
 		if (label == null) {
 			throw new IllegalArgumentException();
 		}
@@ -153,7 +154,7 @@ public class Stereotype implements CharSequence {
 					local = null;
 				}
 				final String colName = mCircleSprite.get("COLOR", 0);
-				final HColor col = htmlColorSet.getColorIfValid(colName);
+				final HColor col = colName == null ? null : htmlColorSet.getColor(colName);
 				this.htmlColor = col == null ? HColorUtils.BLACK : col;
 				this.spriteName = mCircleSprite.get("NAME", 0);
 				this.character = '\0';
@@ -165,7 +166,7 @@ public class Stereotype implements CharSequence {
 					local = null;
 				}
 				final String colName = mCircleChar.get("COLOR", 0);
-				this.htmlColor = htmlColorSet.getColorIfValid(colName);
+				this.htmlColor = colName == null ? null : htmlColorSet.getColor(colName);
 				this.character = mCircleChar.get("CHAR", 0).charAt(0);
 				this.spriteName = null;
 			}

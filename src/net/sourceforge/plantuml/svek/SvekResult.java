@@ -86,7 +86,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		}
 		color = HColorUtils.noGradient(color);
 
-		for (Node node : dotStringFactory.getBibliotekon().allNodes()) {
+		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes()) {
 			final double minX = node.getMinX();
 			final double minY = node.getMinY();
 			final UGraphic ug2 = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;

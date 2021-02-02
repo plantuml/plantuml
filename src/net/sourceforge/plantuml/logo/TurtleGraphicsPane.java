@@ -119,8 +119,8 @@ class TurtleGraphicsPane {
 		poly.rotate(angle);
 		// ug.setAntiAliasing(false);
 		final HColorSet htmlColorSet = HColorSet.instance();
-		final HColor turtleColor1 = htmlColorSet.getColorIfValid("OliveDrab");
-		final HColor turtleColor2 = htmlColorSet.getColorIfValid("MediumSpringGreen");
+		final HColor turtleColor1 = htmlColorSet.getColorOrWhite("OliveDrab");
+		final HColor turtleColor2 = htmlColorSet.getColorOrWhite("MediumSpringGreen");
 
 		ug.apply(turtleColor1).apply(turtleColor2.bg()).apply(new UTranslate(x, -y))
 				.draw(poly);

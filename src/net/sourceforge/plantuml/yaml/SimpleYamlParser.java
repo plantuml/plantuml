@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 
 public class SimpleYamlParser {
 
-	private static final String KEY = "([_0-9\\w][- _0-9\\w]*)";
+	private static final String KEY = "([_0-9\\w][- _0-9\\w./]*)";
 
 	private JsonObject result;
 	private final List<Integer> pendingIndents = new ArrayList<Integer>();

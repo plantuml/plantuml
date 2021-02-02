@@ -62,8 +62,8 @@ public abstract class TimeHeader {
 		return 28;
 	}
 
-	protected final HColor veryLightGray = HColorSet.instance().getColorIfValid("#E0E8E8");
-	protected final HColor lightGray = HColorSet.instance().getColorIfValid("#909898");
+	protected final HColor veryLightGray = HColorSet.instance().getColorOrWhite("#E0E8E8");
+	protected final HColor lightGray = HColorSet.instance().getColorOrWhite("#909898");
 
 	private final TimeScale timeScale;
 	protected final Day min;

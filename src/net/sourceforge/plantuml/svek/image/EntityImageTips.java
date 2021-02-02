@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.Node;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -120,8 +120,8 @@ public class EntityImageTips extends AbstractEntityImage {
 
 		final IEntity other = bibliotekon.getOnlyOther(getEntity());
 
-		final Node nodeMe = bibliotekon.getNode(getEntity());
-		final Node nodeOther = bibliotekon.getNode(other);
+		final SvekNode nodeMe = bibliotekon.getNode(getEntity());
+		final SvekNode nodeOther = bibliotekon.getNode(other);
 		final Point2D positionMe = nodeMe.getPosition();
 		if (nodeOther == null) {
 			System.err.println("Error in EntityImageTips");

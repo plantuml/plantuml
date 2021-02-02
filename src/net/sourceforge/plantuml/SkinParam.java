@@ -85,6 +85,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class SkinParam implements ISkinParam {
 
@@ -316,8 +317,8 @@ public class SkinParam implements ISkinParam {
 			checkStereotype(stereotype);
 			for (String s : stereotype.getMultipleLabels()) {
 				final String value2 = getValue(param.name() + "color" + "<<" + s + ">>");
-				if (value2 != null && getIHtmlColorSet().getColorIfValid(value2) != null) {
-					return getIHtmlColorSet().getColorIfValid(value2);
+				if (value2 != null && getIHtmlColorSet().getColorOrWhite(value2) != null) {
+					return getIHtmlColorSet().getColorOrWhite(value2);
 				}
 			}
 		}
@@ -330,12 +331,12 @@ public class SkinParam implements ISkinParam {
 			return HColorUtils.transparent();
 		}
 		if (param == ColorParam.background) {
-			return getIHtmlColorSet().getColorIfValid(value);
+			return getIHtmlColorSet().getColorOrWhite(value);
 		}
 		assert param != ColorParam.background;
 //		final boolean acceptTransparent = param == ColorParam.background
 //				|| param == ColorParam.sequenceGroupBodyBackground || param == ColorParam.sequenceBoxBackground;
-		return getIHtmlColorSet().getColorIfValid(value, getBackgroundColor(false));
+		return getIHtmlColorSet().getColorOrWhite(value, getBackgroundColor(false));
 	}
 
 	public char getCircledCharacter(Stereotype stereotype) {
@@ -349,11 +350,11 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
-	public Colors getColors(ColorParam param, Stereotype stereotype) {
+	public Colors getColors(ColorParam param, Stereotype stereotype) throws NoSuchColorException {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 			final String value2 = getValue(param.name() + "color" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
-			if (value2 != null && getIHtmlColorSet().getColorIfValid(value2) != null) {
+			if (value2 != null) {
 				return new Colors(value2, getIHtmlColorSet(), param.getColorType());
 			}
 		}
@@ -430,16 +431,19 @@ public class SkinParam implements ISkinParam {
 			value = getFirstValueNonNullWithSuffix("fontcolor" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),
 					param);
 		}
-		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
+		if (value == null) {
 			value = getFirstValueNonNullWithSuffix("fontcolor", param);
 		}
-		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
+		if (value == null) {
 			value = getValue("defaultfontcolor");
 		}
-		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
+		if (value == null) {
 			value = param[0].getDefaultColor();
 		}
-		return getIHtmlColorSet().getColorIfValid(value);
+		if (value == null) {
+			return null;
+		}
+		return getIHtmlColorSet().getColorOrWhite(value);
 	}
 
 	private String getFirstValueNonNullWithSuffix(String suffix, FontParam... param) {
@@ -1130,8 +1134,9 @@ public class SkinParam implements ISkinParam {
 			margin = Integer.parseInt(marginString);
 		}
 
-		return new SplitParam(getIHtmlColorSet().getColorIfValid(border), getIHtmlColorSet().getColorIfValid(external),
-				margin);
+		final HColor borderColor = border == null ? null : getIHtmlColorSet().getColorOrWhite(border);
+		final HColor externalColor = external == null ? null : getIHtmlColorSet().getColorOrWhite(external);
+		return new SplitParam(borderColor, externalColor, margin);
 	}
 
 	public int swimlaneWidth() {
@@ -1154,7 +1159,7 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return null;
 		}
-		return getIHtmlColorSet().getColorIfValid(value, null);
+		return getIHtmlColorSet().getColorOrWhite(value, null);
 	}
 
 	public double getPadding() {
@@ -1232,8 +1237,8 @@ public class SkinParam implements ISkinParam {
 		if (padding == 0 && margin == 0 && borderColor == null && backgroundColor == null) {
 			return Padder.NONE;
 		}
-		final HColor border = getIHtmlColorSet().getColorIfValid(borderColor);
-		final HColor background = getIHtmlColorSet().getColorIfValid(backgroundColor);
+		final HColor border = borderColor == null ? null : getIHtmlColorSet().getColorOrWhite(borderColor);
+		final HColor background = backgroundColor == null ? null : getIHtmlColorSet().getColorOrWhite(backgroundColor);
 		final double roundCorner = getRoundCorner(CornerParam.DEFAULT, null);
 		return Padder.NONE.withMargin(margin).withPadding(padding).withBackgroundColor(background)
 				.withBorderColor(border).withRoundCorner(roundCorner);

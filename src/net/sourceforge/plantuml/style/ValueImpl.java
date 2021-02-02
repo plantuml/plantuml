@@ -48,6 +48,9 @@ public class ValueImpl implements Value {
 	private final int priority;
 
 	public ValueImpl(String value, AutomaticCounter counter) {
+		if (value == null) {
+			throw new IllegalArgumentException();
+		}
 		this.value = value;
 		this.priority = counter.getNextInt();
 	}
@@ -68,7 +71,10 @@ public class ValueImpl implements Value {
 		if ("transparent".equalsIgnoreCase(value)) {
 			return HColorUtils.transparent();
 		}
-		return set.getColorIfValid(value);
+		if (value == null) {
+			return null;
+		}
+		return set.getColorOrWhite(value);
 	}
 
 	public boolean asBoolean() {

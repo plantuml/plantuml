@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandActivate2 extends SingleLineCommand2<SequenceDiagram> {
 
@@ -58,15 +59,17 @@ public class CommandActivate2 extends SingleLineCommand2<SequenceDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TYPE", "(\\+\\+|--)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("COLOR", "(#\\w+)?"), RegexLeaf.end()); //
+				new RegexLeaf("COLOR", "(#\\w+)?"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final LifeEventType type = arg.get("TYPE", 0).equals("++") ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;
 		final Participant p = diagram.getOrCreateParticipant(arg.get("NAME", 0));
+		final String s = arg.get("COLOR", 0);
 		final String error = diagram.activate(p, type,
-				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		if (error == null) {
 			return CommandExecutionResult.ok();
 		}

@@ -92,9 +92,9 @@ public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 			x = 0;
 		}
 		for (CharSequence s : strings) {
-			if (s instanceof MessageNumber) {
-				s = StringUtils.toInternalBoldNumber((((MessageNumber) s).getNumberRaw()));
-			}
+//			if (s instanceof MessageNumber) {
+//				s = StringUtils.toInternalBoldNumber((((MessageNumber) s).getNumberRaw()));
+//			}
 			this.drawStringLR(s.toString(), x, y + i);
 			i++;
 		}

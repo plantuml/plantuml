@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 
@@ -80,7 +81,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Ident idNewLong = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? idNewLong : diagram.buildCode(idShort);
@@ -103,7 +104,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
 			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
 		}
 		diagram.endGroup();
 		return CommandExecutionResult.ok();

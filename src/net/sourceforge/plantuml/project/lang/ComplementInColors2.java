@@ -51,8 +51,8 @@ public class ComplementInColors2 implements Something {
 	public Failable<CenterBorderColor> getMe(GanttDiagram system, RegexResult arg, String suffix) {
 		final String color1 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color2 = arg.get("COMPLEMENT" + suffix, 1);
-		final HColor col1 = system.getIHtmlColorSet().getColorIfValid(color1);
-		final HColor col2 = system.getIHtmlColorSet().getColorIfValid(color2);
+		final HColor col1 = color1 == null ? null : system.getIHtmlColorSet().getColorOrWhite(color1);
+		final HColor col2 = color2 == null ? null : system.getIHtmlColorSet().getColorOrWhite(color2);
 		return Failable.ok(new CenterBorderColor(col1, col2));
 	}
 

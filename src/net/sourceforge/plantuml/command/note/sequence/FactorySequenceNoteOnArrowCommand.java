@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
@@ -106,7 +107,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location,
-					RegexResult arg) {
+					RegexResult arg) throws NoSuchColorException {
 				return executeInternal(system, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
 			}
 
@@ -122,7 +123,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				return "(?i)^[%s]*end[%s]?note$";
 			}
 
-			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
@@ -132,7 +133,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines) {
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines) throws NoSuchColorException {
 		final EventWithDeactivate m = diagram.getLastEventWithDeactivate();
 		if (m instanceof AbstractMessage || m instanceof GroupingLeaf) {
 			final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get("POSITION", 0)));
@@ -145,7 +146,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
 			final Display display = diagram.manageVariable(lines.toDisplay());
 			final String backcolor0 = line0.get("COLOR", 0);
-			Colors colors = Colors.empty().add(ColorType.BACK, HColorSet.instance().getColorIfValid(backcolor0));
+			Colors colors = Colors.empty().add(ColorType.BACK,
+					backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));
 			final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());
 			final String stereotypeString = line0.get("STEREO", 0);
 			if (stereotypeString != null) {

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.Player;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandChangeStateByPlayerCode extends CommandChangeState {
 
@@ -73,7 +74,7 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String code = arg.get("CODE", 0);
 		final Player player = diagram.getPlayer(code);
 		if (player == null) {

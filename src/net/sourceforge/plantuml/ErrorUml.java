@@ -35,20 +35,25 @@
  */
 package net.sourceforge.plantuml;
 
-
 public class ErrorUml {
 
 	private final String error;
 	private final ErrorUmlType type;
 	private final LineLocation lineLocation;
+	private final int score;
 
-	public ErrorUml(ErrorUmlType type, String error, LineLocation lineLocation) {
+	public ErrorUml(ErrorUmlType type, String error, int score, LineLocation lineLocation) {
 		if (error == null || type == null) {
 			throw new IllegalArgumentException();
 		}
+		this.score = score;
 		this.error = error;
 		this.type = type;
 		this.lineLocation = lineLocation;
+	}
+
+	public int score() {
+		return score;
 	}
 
 	@Override

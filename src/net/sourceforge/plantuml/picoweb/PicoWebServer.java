@@ -102,7 +102,11 @@ public class PicoWebServer implements Runnable {
 
 			if (method.equals("GET")) {
 				final String path = parse.nextToken();
+				if (path.startsWith("/png/") && sendDiagram(out, path, "image/png", FileFormat.PNG))
+					return;
 				if (path.startsWith("/plantuml/png/") && sendDiagram(out, path, "image/png", FileFormat.PNG))
+					return;
+				if (path.startsWith("/svg/") && sendDiagram(out, path, "image/svg+xml", FileFormat.SVG))
 					return;
 				if (path.startsWith("/plantuml/svg/") && sendDiagram(out, path, "image/svg+xml", FileFormat.SVG))
 					return;

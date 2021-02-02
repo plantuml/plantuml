@@ -102,15 +102,30 @@ public class UImageSvg implements UShape {
 	}
 
 	public int getData(String name) {
-		final Pattern p = Pattern.compile("(?i)" + name + "\\W+(\\d+)");
+		final Pattern p = Pattern.compile("(?i)<svg[^>]+" + name + "\\W+(\\d+)");
 		final Matcher m = p.matcher(svg);
 		if (m.find()) {
 			final String s = m.group(1);
 			return Integer.parseInt(s);
 		}
+		final Pattern p2 = Pattern.compile("viewBox[= \"\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)");
+		final Matcher m2 = p2.matcher(svg);
+		if (m2.find()) {
+			if ("width".equals(name)) {
+				final String s = m2.group(3);
+				final int width = (int) Double.parseDouble(s);
+				return width;
+			}
+			if ("height".equals(name)) {
+				final String s = m2.group(4);
+				final int result = (int) Double.parseDouble(s);
+				return result;
+			}
+		}
+
 		throw new IllegalStateException("Cannot find " + name);
 	}
-	
+
 	public int getHeight() {
 		return this.getData("height");
 	}
@@ -118,7 +133,6 @@ public class UImageSvg implements UShape {
 	public int getWidth() {
 		return this.getData("width");
 	}
-
 
 	public double getScale() {
 		return scale;

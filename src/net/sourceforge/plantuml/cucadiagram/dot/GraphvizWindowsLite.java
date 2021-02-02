@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.io.File;
-import java.io.IOException;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
@@ -54,11 +53,7 @@ class GraphvizWindowsLite extends AbstractGraphviz {
 	protected File specificDotExe() {
 		synchronized (GraphvizWindowsLite.class) {
 			if (specificDotExe == null)
-				try {
-					specificDotExe = new WindowsDotArchive().getWindowsExeLite();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				specificDotExe = WindowsDotArchive.getInstance().getWindowsExeLite();
 
 			return specificDotExe;
 		}

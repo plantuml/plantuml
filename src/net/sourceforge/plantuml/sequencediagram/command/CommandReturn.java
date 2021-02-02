@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 
@@ -75,7 +76,7 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 
 		AbstractMessage message1 = diagram.getActivatingMessage();
 		boolean doDeactivation = true;
@@ -91,15 +92,15 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			arrow = arrow.withColor(HColorSet.instance().getColorIfValid(color));
+			arrow = arrow.withColor(HColorSet.instance().getColor(color));
 		}
 
 		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));
 		final AbstractMessage message2;
 		if (message1 instanceof MessageExo) {
 			final MessageExo exo1 = (MessageExo) message1;
-			message2 = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), exo1.getParticipant(), exo1
-					.getType().reverse(), display, arrow, diagram.getNextMessageNumber(), false);
+			message2 = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), exo1.getParticipant(),
+					exo1.getType().reverse(), display, arrow, diagram.getNextMessageNumber(), false);
 		} else {
 			message2 = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), message1.getParticipant2(),
 					message1.getParticipant1(), display, arrow, diagram.getNextMessageNumber());

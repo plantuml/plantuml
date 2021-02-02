@@ -106,17 +106,12 @@ public class CommunicationTileSelf extends AbstractTile implements TileWithUpdat
 
 		if (message.isActivate()) {
 			livingSpace1.addStepForLivebox(getEvent(), y + p2.getY());
-			Log.info("CommunicationTileSelf::updateStairs activate y=" + (y + p2.getY()) + " " + message);
 		} else if (message.isDeactivate()) {
 			livingSpace1.addStepForLivebox(getEvent(), y + p1.getY());
-			Log.info("CommunicationTileSelf::updateStairs deactivate y=" + (y + p1.getY()) + " " + message);
+		} else if (message.isDestroy()) {
+			livingSpace1.addStepForLivebox(getEvent(), y + p2.getY());
 		}
 
-		// livingSpace1.addStep(y + arrowY, level1);
-		// livingSpace1.addStep(y + dim.getHeight(), level1);
-		// final int level2 = livingSpace2.getLevelAt(this);
-		// livingSpace2.addStep(y + arrowY, level2);
-		// livingSpace2.addStep(y + dim.getHeight(), level2);
 	}
 
 	public void drawU(UGraphic ug) {

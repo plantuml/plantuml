@@ -278,7 +278,19 @@ public class QuoteUtils {
 			"Ab bar'f gnyxvat nobhg yrnivat gur fvatyr znexrg", "...rnfvrfg oht gb svk va uhzna uvfgbel",
 			"Arire nggevohgr gb znyvpr jung pna or rkcynvarq ol fghcvqvgl", "Guvf oht nssrpgf iveghnyyl abobql",
 			"Qba'g rire hfr gur jbeq fzneg jvgu zr", "Gur Ertrareba vf ernyyl xvpxvat va guvf zbeavat",
-			"V'ir frra fbsgjner fb onq gung rira vgf ohtf unq ohtf");
+			"V'ir frra fbsgjner fb onq gung rira vgf ohtf unq ohtf", "Nera'g jr fhccbfrq gb ubyq nyy gur pneqf ?",
+			"Lbh'er abg yvxr, fbzrbar'f penml hapyr jub pna whfg pbqr jungrire",
+			"Gurer ner bayl 1300 Ulcbgurezvn qrnguf va gur HF cre lrne. Fgbc jrnevat pbngf!",
+			"Jryy, gurfr Trezna pne znahsnpgheref ner ernyyl gnxvat gurve fjrrg gvzr",
+			"Ibhf z'nirm ih, znvf ibhf ar z'nirm cnf ertneqr",
+			"Obevf whfg fraq hf na bira-ernql oht svk nobhg guvf bar!", "Crefba. Jbzna. Zna. Pnzren. GI. Oht.",
+			"Whfg svavfuvat hc gur frpbaq pbng abj, Ze. Ovqra", "Yn senzobvfr rfg cbapghryyr - Rg yr pvgeba, cerffr",
+			"Gunax lbh, lbh'ir znqr lbhe cbvag pyrne gung lbh oryvrir vg vf n qrongnoyr cbvag",
+			"Gur obng vf fnsre jura va cbeg, ohg gung vf abg jung obngf jrer ohvyg sbe.",
+			"Vg'f abg gernfba. Vg'f nygreangvir yblnygl",
+			"Gur zna jub zbirf n zbhagnva ortvaf ol pneelvat njnl fznyy fgbarf"
+
+	);
 
 	private QuoteUtils() {
 	}

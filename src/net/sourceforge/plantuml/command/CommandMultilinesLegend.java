@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
@@ -73,7 +74,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String align = line0.get("ALIGN", 0);

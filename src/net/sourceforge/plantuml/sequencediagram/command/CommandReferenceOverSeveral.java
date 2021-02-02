@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiagram> {
 
@@ -76,8 +77,9 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
-		final HColor backColorElement = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("REF", 0));
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+		String s1 = arg.get("REF", 0);
+		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);
 		// final HtmlColor backColorGeneral = HtmlColorSetSimple.instance().getColorIfValid(arg.get("REF").get(1));
 
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));

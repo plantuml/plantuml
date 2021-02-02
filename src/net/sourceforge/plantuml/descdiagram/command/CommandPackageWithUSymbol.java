@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntityDiagram> {
@@ -74,7 +75,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPackageWithUSymbol.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("SYMBOL",
-						"(package|rectangle|node|artifact|folder|file|frame|cloud|database|storage|component|card|together|queue|stack)"), //
+						"(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|database|storage|component|card|together|queue|stack)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat( //
@@ -133,7 +134,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
 		final String displayRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
 		final String display;

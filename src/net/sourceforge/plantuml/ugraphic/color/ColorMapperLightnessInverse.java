@@ -46,10 +46,6 @@ public class ColorMapperLightnessInverse extends AbstractColorMapper implements 
 		if (color instanceof HColorBackground) {
 			throw new UnsupportedOperationException();
 		}
-		if (color instanceof HColorUserDef) {
-			// Impact on JCCKIT
-			return Color.WHITE;
-		}
 		if (color instanceof HColorGradient) {
 			return toColor(((HColorGradient) color).getColor1());
 		}

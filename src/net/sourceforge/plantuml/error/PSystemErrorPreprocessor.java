@@ -48,12 +48,9 @@ public class PSystemErrorPreprocessor extends PSystemError {
 		final DiagramType type = DiagramType.getTypeFromArobaseStart(input.get(0).getString());
 		this.setSource(new UmlSource(input, type == DiagramType.UML));
 		this.trace = trace;
-		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), getLastLine()
-				.getLocation());
+		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), 0,
+				getLastLine().getLocation());
 
 	}
-
-
-
 
 }

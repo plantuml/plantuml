@@ -76,7 +76,7 @@ public class CommandCreoleOpenIcon implements Command {
 		final String colorName = Parser.getColor(m.group(3));
 		HColor color = null;
 		if (colorName != null) {
-			color = colorSet.getColorIfValid(colorName);
+			color = colorSet.getColorOrWhite(colorName);
 		}
 		stripe.addOpenIcon(src, scale, color);
 		return line.substring(m.group(1).length());

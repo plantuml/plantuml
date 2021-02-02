@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
-import net.sourceforge.plantuml.svek.Node;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
@@ -147,7 +147,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				final ST_Agnode_s agnode = ent.getValue();
 				final Point2D corner = getCorner(agnode);
 
-				final Node node = dotStringFactory.getBibliotekon().getNode(leaf);
+				final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
 				final IEntityImage image = node.getImage();
 				image.drawU(ug.apply(new UTranslate(corner)));
 			}
@@ -303,7 +303,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	private void exportEntity(ST_Agraph_s g, ILeaf leaf) {
-		final Node node = dotStringFactory.getBibliotekon().getNode(leaf);
+		final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
 		if (node == null) {
 			System.err.println("CANNOT FIND NODE");
 			return;
@@ -324,7 +324,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			throw new IllegalStateException();
 		}
 		final IEntityImage image = printEntityInternal(ent);
-		final Node node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
+		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
 		dotStringFactory.addNode(node);
 	}
 
@@ -373,7 +373,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	private void printCluster(ST_Agraph_s g, Cluster cluster) {
-		for (Node node : cluster.getNodes()) {
+		for (SvekNode node : cluster.getNodes()) {
 			final ST_Agnode_s agnode = agnode(g, new CString(node.getUid()), true);
 			agsafeset(agnode, new CString("shape"), new CString("box"), new CString(""));
 			final String width = "" + (node.getWidth() / 72);
@@ -641,7 +641,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			return;
 		}
 		final IEntityImage image = printEntityInternal(ent);
-		final Node shape = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
+		final SvekNode shape = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
 		// dotStringFactory.addShape(shape);
 	}
 

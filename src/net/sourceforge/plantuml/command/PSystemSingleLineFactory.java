@@ -80,7 +80,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		}
 		final AbstractPSystem sys = executeLine(s.getString());
 		if (sys == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", s.getLocation());
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation());
 			// return PSystemErrorUtils.buildV1(source, err, null);
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}

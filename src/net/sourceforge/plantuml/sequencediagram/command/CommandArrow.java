@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
@@ -156,7 +157,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 
 		Participant p1;
 		Participant p2;
@@ -269,9 +270,10 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (error != null) {
 			return CommandExecutionResult.error(error);
 		}
+		final String s = arg.get("LIFECOLOR", 0);
 
-		final HColor activationColor = diagram.getSkinParam().getIHtmlColorSet()
-				.getColorIfValid(arg.get("LIFECOLOR", 0));
+		final HColor activationColor = s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
 		if (activationSpec != null) {
 			switch (activationSpec.charAt(0)) {
@@ -311,7 +313,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		return sa.length() + sb.length();
 	}
 
-	public static ArrowConfiguration applyStyle(String arrowStyle, ArrowConfiguration config) {
+	public static ArrowConfiguration applyStyle(String arrowStyle, ArrowConfiguration config) throws NoSuchColorException {
 		if (arrowStyle == null) {
 			return config;
 		}
@@ -330,7 +332,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				config = config.withBody(ArrowBody.HIDDEN);
 				// link.goHidden();
 			} else {
-				config = config.withColor(HColorSet.instance().getColorIfValid(s));
+				config = config.withColor(HColorSet.instance().getColor(s));
 			}
 		}
 		return config;

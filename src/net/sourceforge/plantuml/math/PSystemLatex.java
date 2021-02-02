@@ -109,7 +109,7 @@ public class PSystemLatex extends AbstractPSystem {
 	}
 
 	private Color getColor(final String col) {
-		final HColor col2 = HColorSet.instance().getColorIfValid(col);
+		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);
 		final Color col3 = new ColorMapperIdentity().toColor(col2);
 		return col3;
 	}

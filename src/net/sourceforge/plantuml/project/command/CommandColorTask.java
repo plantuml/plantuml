@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 
@@ -62,7 +63,7 @@ public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 
 		final String code = arg.get("CODE", 0);
 		final Task task = diagram.getExistingTask(code);
@@ -72,8 +73,8 @@ public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 
 		final String color1 = arg.get("COLORS", 0);
 		final String color2 = arg.get("COLORS", 1);
-		final HColor col1 = diagram.getIHtmlColorSet().getColorIfValid(color1);
-		final HColor col2 = diagram.getIHtmlColorSet().getColorIfValid(color2);
+		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColor(color1);
+		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColor(color2);
 		task.setColors(new CenterBorderColor(col1, col2));
 
 		return CommandExecutionResult.ok();

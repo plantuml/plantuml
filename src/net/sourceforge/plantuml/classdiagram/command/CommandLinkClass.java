@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.descdiagram.command.Labels;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
@@ -132,7 +133,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
-			RegexResult arg) {
+			RegexResult arg) throws NoSuchColorException {
 
 		final String ent1String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final String ent2String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
@@ -331,7 +332,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 	}
 
-	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg) throws NoSuchColorException {
 		final String ent1String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final String ent2String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
 		final IEntity cl1 = diagram.V1972() ? diagram.getGroupVerySmart(diagram.buildLeafIdent(ent1String))

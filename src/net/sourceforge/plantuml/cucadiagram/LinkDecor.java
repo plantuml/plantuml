@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryLineCrowfoot;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryNotNavigable;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryParenthesis;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryPlus;
-import net.sourceforge.plantuml.svek.extremity.ExtremityFactorySquarre;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactorySquare;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -73,7 +73,7 @@ public enum LinkDecor {
 	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5),
 	PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), SQUARE(0, false, 0.5),
 
-	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW(0, false, 1.5), SQUARRE_toberemoved(30, false, 0);
+	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW(0, false, 1.5), SQUARE_toberemoved(30, false, 0);
 
 	private final double arrowSize;
 	private final int margin;
@@ -147,7 +147,7 @@ public enum LinkDecor {
 		case CIRCLE_FILL:
 			return new ExtremityFactoryCircle(true, backgroundColor);
 		case SQUARE:
-			return new ExtremityFactorySquarre(backgroundColor);
+			return new ExtremityFactorySquare(backgroundColor);
 		case PARENTHESIS:
 			return new ExtremityFactoryParenthesis();
 		case CIRCLE_CONNECT:

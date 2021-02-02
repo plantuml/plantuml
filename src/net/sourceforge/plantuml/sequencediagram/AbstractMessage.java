@@ -154,8 +154,12 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 		return lifeEventsType.contains(LifeEventType.DEACTIVATE);
 	}
 
+	public boolean isDestroy() {
+		return lifeEventsType.contains(LifeEventType.DESTROY);
+	}
+
 	private boolean isDeactivateOrDestroy() {
-		return lifeEventsType.contains(LifeEventType.DEACTIVATE) || lifeEventsType.contains(LifeEventType.DESTROY);
+		return isDeactivate() || isDestroy();
 	}
 
 	public final boolean isActivateAndDeactive() {

@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.FontParam;
@@ -76,7 +78,6 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 			ILeaf entity, Style style) {
 		super(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				new FontConfiguration(skinParam, fontParam, stereotype));
-
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
 		this.stereotype = stereotype;
@@ -118,6 +119,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	}
 
 	private static boolean isTreeOrTable(String s) {
+		s = StringUtils.trinNoTrace(s);
 		return Parser.isTreeStart(s) || CreoleParser.isTableLine(s);
 	}
 
@@ -199,11 +201,17 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	private static List<CharSequence> buildTreeOrTable(String init, ListIterator<CharSequence> it) {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
-		result.add(init);
+		final Pattern p = Pattern.compile("^(\\s+)");
+		final Matcher m = p.matcher(init);
+		String start = "";
+		if (m.find()) {
+			start = m.group(1);
+		}
+		result.add(purge(init, start));
 		while (it.hasNext()) {
-			final CharSequence s = it.next();
-			if (isTreeOrTable(StringUtils.trinNoTrace(s))) {
-				result.add(s);
+			String s = it.next().toString();
+			if (isTreeOrTable(s)) {
+				result.add(purge(s, start));
 			} else {
 				it.previous();
 				return result;
@@ -211,6 +219,13 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 		}
 		return result;
+	}
+
+	private static String purge(String s, String start) {
+		if (s.startsWith(start)) {
+			return s.substring(start.length());
+		}
+		return s;
 	}
 
 	public Ports getPorts(StringBounder stringBounder) {

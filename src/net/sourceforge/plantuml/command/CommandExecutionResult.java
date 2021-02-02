@@ -45,15 +45,18 @@ public class CommandExecutionResult {
 	private final String error;
 	private final AbstractPSystem newDiagram;
 	private final List<String> debugLines;
+	private final int score;
 
-	private CommandExecutionResult(String error, AbstractPSystem newDiagram, List<String> debugLines) {
+	private CommandExecutionResult(AbstractPSystem newDiagram, String error, int score, List<String> debugLines) {
 		this.error = error;
 		this.newDiagram = newDiagram;
 		this.debugLines = debugLines;
+		this.score = score;
+
 	}
 
 	public CommandExecutionResult withDiagram(AbstractPSystem newDiagram) {
-		return new CommandExecutionResult(error, newDiagram, null);
+		return new CommandExecutionResult(newDiagram, error, 0, null);
 	}
 
 	@Override
@@ -62,19 +65,23 @@ public class CommandExecutionResult {
 	}
 
 	public static CommandExecutionResult newDiagram(AbstractPSystem result) {
-		return new CommandExecutionResult(null, result, null);
+		return new CommandExecutionResult(result, null, 0, null);
 	}
 
 	public static CommandExecutionResult ok() {
-		return new CommandExecutionResult(null, null, null);
+		return new CommandExecutionResult(null, null, 0, null);
+	}
+
+	public static CommandExecutionResult badColor() {
+		return new CommandExecutionResult(null, "No such color", 1, null);
 	}
 
 	public static CommandExecutionResult error(String error) {
-		return new CommandExecutionResult(error, null, null);
+		return new CommandExecutionResult(null, error, 0, null);
 	}
 
 	public static CommandExecutionResult error(String error, Throwable t) {
-		return new CommandExecutionResult(error, null, getStackTrace(t));
+		return new CommandExecutionResult(null, error, 0, getStackTrace(t));
 	}
 
 	public static List<String> getStackTrace(Throwable exception) {
@@ -104,6 +111,10 @@ public class CommandExecutionResult {
 			throw new IllegalStateException();
 		}
 		return error;
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 	public AbstractPSystem getNewDiagram() {

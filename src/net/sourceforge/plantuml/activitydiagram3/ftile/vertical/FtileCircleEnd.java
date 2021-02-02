@@ -59,8 +59,8 @@ public class FtileCircleEnd extends AbstractFtile {
 
 	private static final int SIZE = 20;
 
-	private final HColor backColor;
 	private final HColor borderColor;
+	private final HColor backColor;
 	private final Swimlane swimlane;
 	private double shadowing;
 
@@ -71,8 +71,8 @@ public class FtileCircleEnd extends AbstractFtile {
 
 	public FtileCircleEnd(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane, Style style) {
 		super(skinParam);
-		this.backColor = backColor;
 		this.borderColor = borderColor;
+		this.backColor = backColor;
 		this.swimlane = swimlane;
 		if (UseStyle.useBetaStyle()) {
 			this.shadowing = style.value(PName.Shadowing).asDouble();
@@ -108,8 +108,8 @@ public class FtileCircleEnd extends AbstractFtile {
 		circle.setDeltaShadow(shadowing);
 		ug = ug.apply(borderColor);
 		final double thickness = 2.5;
-		ug.apply(backColor.bg()).apply(new UStroke(1.5))
-				.apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);
+		ug.apply(backColor.bg()).apply(new UStroke(1.5)).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition))
+				.draw(circle);
 
 		final double size2 = (SIZE - thickness) / Math.sqrt(2);
 		final double delta = (SIZE - size2) / 2;

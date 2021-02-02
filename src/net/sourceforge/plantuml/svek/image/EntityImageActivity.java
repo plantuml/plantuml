@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.Node;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -120,8 +120,8 @@ public class EntityImageActivity extends AbstractEntityImage {
 	}
 
 	private UGraphic drawOctagon(UGraphic ug) {
-		final Node node = bibliotekon.getNode(getEntity());
-		final Shadowable octagon = node.getOctagon();
+		final SvekNode node = bibliotekon.getNode(getEntity());
+		final Shadowable octagon = node.getPolygon();
 		if (octagon == null) {
 			return drawNormal(ug);
 		}

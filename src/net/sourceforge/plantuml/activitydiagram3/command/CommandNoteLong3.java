@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -67,7 +68,7 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
 		// final List<? extends CharSequence> in = StringUtils.removeEmptyColumns2(lines.subList(1, lines.size() - 1));
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);

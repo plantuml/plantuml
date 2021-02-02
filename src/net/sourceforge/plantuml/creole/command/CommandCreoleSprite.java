@@ -76,7 +76,7 @@ public class CommandCreoleSprite implements Command {
 		final String colorName = Parser.getColor(m.group(3));
 		HColor color = null;
 		if (colorName != null) {
-			color = colorSet.getColorIfValid(colorName);
+			color = colorSet.getColorOrWhite(colorName);
 		}
 		stripe.addSprite(src, scale, color);
 		return line.substring(m.group(1).length());

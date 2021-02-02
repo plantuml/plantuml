@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandCreateEntityObjectMultilines extends CommandMultilines2<AbstractClassOrObjectDiagram> {
 
@@ -85,7 +86,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final IEntity entity = executeArg0(diagram, line0);
@@ -103,7 +104,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		return CommandExecutionResult.ok();
 	}
 
-	private IEntity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) {
+	private IEntity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 		final Ident ident = diagram.buildLeafIdent(name);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(name);
@@ -115,12 +116,13 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		}
 		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.OBJECT, null);
 		if (stereotype != null) {
-			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
-					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
-					.getIHtmlColorSet()));
+			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
+					diagram.getSkinParam().getIHtmlColorSet()));
 		}
+		final String s = line0.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return entity;
 	}
 

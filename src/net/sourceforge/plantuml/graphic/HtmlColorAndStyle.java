@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class HtmlColorAndStyle {
 
@@ -85,7 +86,7 @@ public class HtmlColorAndStyle {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
-	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) {
+	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {
 		HColor arrowColor;
 		HColor arrowHeadColor = null;
 		if (UseStyle.useBetaStyle()) {
@@ -103,7 +104,7 @@ public class HtmlColorAndStyle {
 				style = tmpStyle;
 				continue;
 			}
-			final HColor tmpColor = set.getColorIfValid(s);
+			final HColor tmpColor = s == null ? null : set.getColor(s);
 			if (tmpColor != null) {
 				arrowColor = tmpColor;
 			}

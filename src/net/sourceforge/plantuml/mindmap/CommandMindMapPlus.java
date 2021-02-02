@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 
@@ -63,13 +64,13 @@ public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 		}
 		final Direction direction = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
 		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(label),

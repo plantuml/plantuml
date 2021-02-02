@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class SkinParameter {
 
-	public static final SkinParameter DATABASE = new SkinParameter(SName.databse, "DATABASE",
+	public static final SkinParameter DATABASE = new SkinParameter(SName.database, "DATABASE",
 			ColorParam.databaseBackground, ColorParam.databaseBorder, FontParam.DATABASE,
 			FontParam.DATABASE_STEREOTYPE);
 
@@ -100,11 +100,18 @@ public class SkinParameter {
 			ColorParam.rectangleBackground, ColorParam.rectangleBorder, FontParam.RECTANGLE,
 			FontParam.RECTANGLE_STEREOTYPE, LineParam.rectangleBorder, CornerParam.rectangle);
 
+	public static final SkinParameter LABEL = new SkinParameter(SName.label, "LABEL", ColorParam.rectangleBackground,
+			ColorParam.rectangleBorder, FontParam.LABEL, FontParam.LABEL_STEREOTYPE);
+
+	public static final SkinParameter HEXAGON = new SkinParameter(SName.rectangle, "HEXAGON",
+			ColorParam.hexagonBackground, ColorParam.hexagonBorder, FontParam.HEXAGON, FontParam.HEXAGON_STEREOTYPE,
+			LineParam.hexagonBorder, CornerParam.hexagon);
+
 	public static final SkinParameter ARCHIMATE = new SkinParameter(SName.archimate, "ARCHIMATE",
 			ColorParam.archimateBackground, ColorParam.archimateBorder, FontParam.ARCHIMATE,
 			FontParam.ARCHIMATE_STEREOTYPE, LineParam.archimateBorder, CornerParam.archimate);
 
-	public static final SkinParameter COLLECTIONS = new SkinParameter(SName.collection, "COLLECTIONS",
+	public static final SkinParameter COLLECTIONS = new SkinParameter(SName.collections, "COLLECTIONS",
 			ColorParam.collectionsBackground, ColorParam.collectionsBorder, FontParam.RECTANGLE,
 			FontParam.RECTANGLE_STEREOTYPE);
 
@@ -140,7 +147,7 @@ public class SkinParameter {
 	private final LineParam lineParam;
 	private final CornerParam roundParam;
 	private final SName styleName;
-	
+
 	@Override
 	public String toString() {
 		return name;

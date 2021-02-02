@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 public class FontChecker {
 
 	final private UFont font;
-	private static final Set<String> SQUARRE = new HashSet<String>(
+	private static final Set<String> SQUARE = new HashSet<String>(
 			Arrays.asList("MI=I=XM=I=IX", "MI=I=XM=I=IXMI=I=XM=I=IX"));
 
 	public FontChecker(UFont font) {
@@ -76,7 +76,7 @@ public class FontChecker {
 	}
 
 	public boolean isCharOk(char c) {
-		return SQUARRE.contains(getCharDesc(c)) == false;
+		return SQUARE.contains(getCharDesc(c)) == false;
 	}
 
 	static private String getType(int type, double oldX, double oldY, double x, double y) {

@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandWBSTabulation extends SingleLineCommand2<WBSDiagram> {
 
@@ -63,14 +64,14 @@ public class CommandWBSTabulation extends SingleLineCommand2<WBSDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
 		final Direction dir = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 		}
 		return diagram.addIdea(backColor, type.length() - 1, label, dir, IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}

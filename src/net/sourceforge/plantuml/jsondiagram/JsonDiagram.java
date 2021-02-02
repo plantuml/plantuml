@@ -75,7 +75,7 @@ public class JsonDiagram extends UmlDiagram {
 	private final List<String> highlighted;
 
 	public JsonDiagram(UmlDiagramType type, JsonValue json, List<String> highlighted) {
-		super(UmlDiagramType.JSON);
+		super(type);
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);

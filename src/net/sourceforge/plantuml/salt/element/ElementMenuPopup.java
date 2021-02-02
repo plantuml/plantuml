@@ -79,7 +79,7 @@ public class ElementMenuPopup extends AbstractElement {
 		if (zIndex != 1) {
 			return;
 		}
-		ug.apply(HColorSet.instance().getColorIfValid("#DDDDDD").bg()).draw(
+		ug.apply(HColorSet.instance().getColorOrWhite("#DDDDDD").bg()).draw(
 				new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 
 		double y1 = 0;

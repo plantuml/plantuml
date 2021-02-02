@@ -105,7 +105,7 @@ public class ElementMenuBar extends AbstractElement {
 
 		double x1 = 0;
 		if (zIndex == 0) {
-			ug.apply(HColorSet.instance().getColorIfValid("#DDDDDD").bg()).draw(
+			ug.apply(HColorSet.instance().getColorOrWhite("#DDDDDD").bg()).draw(
 					new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 			for (ElementMenuEntry entry : entries) {
 				entry.drawU(ug.apply(UTranslate.dx(x1)), zIndex, dimToUse);
@@ -118,7 +118,7 @@ public class ElementMenuBar extends AbstractElement {
 
 		if (zIndex == 1) {
 			for (ElementMenuEntry entry : popups.keySet()) {
-				entry.setBackground(HColorSet.instance().getColorIfValid("#BBBBBB"));
+				entry.setBackground(HColorSet.instance().getColorOrWhite("#BBBBBB"));
 			}
 
 			final double y1 = preferred.getHeight();

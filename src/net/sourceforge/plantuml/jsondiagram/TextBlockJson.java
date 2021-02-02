@@ -244,7 +244,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 			final double heightOfRow = line.getHeightOfRow(stringBounder);
 			if (line.highlighted) {
 				final URectangle back = new URectangle(trueWidth - 2, heightOfRow).rounded(4);
-				final HColor yellow = skinParam.getIHtmlColorSet().getColorIfValid("#ccff02");
+				final HColor yellow = skinParam.getIHtmlColorSet().getColorOrWhite("#ccff02");
 				ugline.apply(yellow).apply(yellow.bg()).apply(new UTranslate(1.5, 0)).draw(back);
 			}
 

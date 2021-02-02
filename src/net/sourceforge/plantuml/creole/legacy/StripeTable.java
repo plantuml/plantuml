@@ -106,7 +106,8 @@ public class StripeTable implements Stripe {
 			}
 			final String[] color = line.substring(idx1, idx2).split(",");
 			if (idx < color.length) {
-				return skinParam.getIHtmlColorSet().getColorIfValid(color[idx]);
+				final String s = color[idx];
+				return s == null ? null : skinParam.getIHtmlColorSet().getColorOrWhite(s);
 			}
 		}
 		return null;

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 
@@ -77,13 +78,13 @@ public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
 
 		final String stringColor = arg.get("COLOR", 0);
 		HColor color = null;
 		if (stringColor != null) {
-			color = HColorSet.instance().getColorIfValid(stringColor);
+			color = HColorSet.instance().getColor(stringColor);
 		}
 
 		final String x = arg.get("X", 0);

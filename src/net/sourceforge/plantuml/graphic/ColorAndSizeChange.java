@@ -53,7 +53,8 @@ class ColorAndSizeChange implements FontChange {
 	ColorAndSizeChange(String s) {
 		final Matcher2 matcherColor = colorPattern.matcher(s);
 		if (matcherColor.find()) {
-			color = HColorSet.instance().getColorIfValid(matcherColor.group(1));
+			final String s1 = matcherColor.group(1);
+			color = HColorSet.instance().getColorOrWhite(s1);
 		} else {
 			color = null;
 		}

@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
@@ -64,7 +65,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String body = arg.getLazzy("ARROW_BODYA", 0) + arg.getLazzy("ARROW_BODYB", 0);
 		final String dressing = arg.getLazzy("ARROW_DRESSING", 0);
 		final Participant p = diagram.getOrCreateParticipant(
@@ -150,9 +151,10 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		if (error != null) {
 			return CommandExecutionResult.error(error);
 		}
+		final String s = arg.get("LIFECOLOR", 0);
 
-		final HColor activationColor = diagram.getSkinParam().getIHtmlColorSet()
-				.getColorIfValid(arg.get("LIFECOLOR", 0));
+		final HColor activationColor = s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
 		if (activationSpec != null) {
 			switch (activationSpec.charAt(0)) {

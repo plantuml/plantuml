@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 public enum License {
 
@@ -520,6 +521,15 @@ public enum License {
 			text.add("This version of PlantUML records general local statistics about usage.");
 			text.add("(more info on https://plantuml.com/statistics-report)");
 		}
+		text.add(" ");
+		if (WindowsDotArchive.getInstance().isThereArchive()) {
+			text.add("This distribution bundles a minimal set of GraphViz files and may install them");
+			text.add(" if needed in the local temporary directory.");
+		} else {
+			text.add("This is the IGY distribution (Install GraphViz by Yourself).");
+			text.add("You have to install GraphViz and to setup the GRAPHVIZ_DOT environment variable");			
+		}
+		text.add("(see https://plantuml.com/graphviz-dot )");
 		text.add(" ");
 		text.add("Icons provided by OpenIconic :  https://useiconic.com/open");
 		text.add("Archimate sprites provided by Archi :  http://www.archimatetool.com");

@@ -110,7 +110,7 @@ public class NwGroup {
 		}
 		HColor color = getColor();
 		if (color == null) {
-			color = colors.getColorIfValid("#AAA");
+			color = colors.getColorOrWhite("#AAA");
 		}
 		size.draw(ug, color);
 

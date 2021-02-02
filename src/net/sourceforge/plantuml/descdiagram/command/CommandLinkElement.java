@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
@@ -226,7 +227,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String ent1String = arg.get("ENT1", 0);
 		final String ent2String = arg.get("ENT2", 0);
 		final Ident ident1 = diagram.buildFullyQualified(ent1String);

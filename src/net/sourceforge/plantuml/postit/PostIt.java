@@ -110,15 +110,15 @@ public class PostIt {
 	}
 
 	private Component getComponent() {
-		final HColor noteBackgroundColor = HColorSet.instance().getColorIfValid("#FBFB77");
+		final HColor noteBackgroundColor = HColorSet.instance().getColorOrWhite("#FBFB77");
 		final HColor borderColor = HColorUtils.MY_RED;
 
 		final SkinParam param = SkinParam.noShadowing(null);
 		final UFont fontNote = param.getFont(null, false, FontParam.NOTE);
 		final FontConfiguration font2 = fontNote.toFont2(HColorUtils.BLACK, true, HColorUtils.BLUE, 8);
-		final ComponentRoseNote note = new ComponentRoseNote(
-				null, new SymbolContext(noteBackgroundColor, borderColor).withStroke(new UStroke()), font2, text, 0,
-				0, new SpriteContainerEmpty(), 0, HorizontalAlignment.LEFT);
+		final ComponentRoseNote note = new ComponentRoseNote(null,
+				new SymbolContext(noteBackgroundColor, borderColor).withStroke(new UStroke()), font2, text, 0, 0,
+				new SpriteContainerEmpty(), 0, HorizontalAlignment.LEFT);
 		return note;
 	}
 }

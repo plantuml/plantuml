@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandHighlight extends SingleLineCommand2<TimingDiagram> {
 
@@ -83,7 +84,7 @@ public class CommandHighlight extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final TimeTick tickFrom = TimeTickBuilder.parseTimeTick("FROM", arg, diagram);
 		final TimeTick tickTo = TimeTickBuilder.parseTimeTick("TO", arg, diagram);
 		final Display display = Display.getWithNewlines(arg.get("CAPTION", 0));

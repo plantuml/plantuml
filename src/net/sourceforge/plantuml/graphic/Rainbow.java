@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class Rainbow {
 
@@ -105,7 +106,7 @@ public class Rainbow {
 		return result;
 	}
 
-	public static Rainbow build(ISkinParam skinParam, String colorString, int colorArrowSeparationSpace) {
+	public static Rainbow build(ISkinParam skinParam, String colorString, int colorArrowSeparationSpace) throws NoSuchColorException {
 		if (colorString == null) {
 			return Rainbow.none();
 		}

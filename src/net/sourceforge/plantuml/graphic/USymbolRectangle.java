@@ -44,11 +44,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class USymbolRect extends USymbol {
+class USymbolRectangle extends USymbol {
 
 	private final SkinParameter skinParameter;
 
-	public USymbolRect(SkinParameter skinParameter) {
+	public USymbolRectangle(SkinParameter skinParameter) {
 		this.skinParameter = skinParameter;
 	}
 

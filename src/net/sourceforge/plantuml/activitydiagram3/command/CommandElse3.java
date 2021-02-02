@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -71,7 +72,7 @@ public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		// if (getSystem().getLastEntityConsulted() == null) {
 		// return CommandExecutionResult.error("No if for this endif");
 		// }

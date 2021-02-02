@@ -227,33 +227,104 @@ public class HColorSet {
 		names.add(s);
 	}
 
-	public HColor getColorIfValid(String s) {
-		return getColorIfValid(s, null);
+	class Gradient {
+		private final String s1;
+		private final char sep;
+		private final String s2;
+
+		Gradient(String s1, char sep, String s2) {
+			this.s1 = s1;
+			this.sep = sep;
+			this.s2 = s2;
+		}
+
+		boolean isGradientValid() {
+			return isColorValid(s1) && isColorValid(s2);
+		}
+
+		HColorGradient buildGradient(HColor background) {
+			return new HColorGradient(build(s1, background), build(s2, background), sep);
+		}
+
 	}
 
-	public HColor getColorIfValid(String s, HColor background) {
-		if (s == null) {
-			return null;
-		}
-		final boolean acceptTransparent = background != null;
-		if (acceptTransparent && background == null) {
-			throw new IllegalArgumentException();
-		}
+	private Gradient fromString(String s) {
 		final Matcher2 m = MyPattern.cmpile("[-\\\\|/]").matcher(s);
 		if (m.find()) {
 			final char sep = m.group(0).charAt(0);
 			final int idx = s.indexOf(sep);
 			final String s1 = s.substring(0, idx);
 			final String s2 = s.substring(idx + 1);
-			if (isValid(s1, false) == false || isValid(s2, false) == false) {
-				return null;
-			}
-			return new HColorGradient(build(s1, background), build(s2, background), sep);
+			return new Gradient(s1, sep, s2);
 		}
-		if (isValid(s, acceptTransparent) == false) {
-			return new HColorUserDef();
+		return null;
+	}
+
+	public HColor getColorOrWhite(String s) {
+		return getColorOrWhite(s, null);
+	}
+
+	public HColor getColorOrWhite(String s, HColor background) {
+		if (s == null) {
+			throw new IllegalArgumentException();
 		}
+		if (isColorValid(s) == false) {
+			return HColorUtils.WHITE;
+		}
+		try {
+			return getColor(s, background);
+		} catch (NoSuchColorException e) {
+			assert false;
+			return HColorUtils.WHITE;
+		}
+	}
+
+	public HColor getColor(String s) throws NoSuchColorException {
+		return getColor(s, null);
+	}
+
+	public HColor getColor(String s, HColor background) throws NoSuchColorException {
+		if (s == null) {
+			throw new IllegalArgumentException();
+		}
+		if (isColorValid(s) == false) {
+			throw new NoSuchColorException();
+		}
+		final Gradient gradient = fromString(s);
+		if (gradient != null) {
+			return gradient.buildGradient(background);
+		}
+		if (background == null && (s.equalsIgnoreCase("#transparent") || s.equalsIgnoreCase("transparent")))
+			s = "#00000000";
 		return build(s, background);
+	}
+
+	private boolean isColorValid(String s) {
+		s = removeFirstDieseAndgoLowerCase(s);
+		final Gradient gradient = fromString(s);
+		if (gradient != null) {
+			return gradient.isGradientValid();
+		}
+		if (s.matches("[0-9A-Fa-f]{3}")) {
+			return true;
+		}
+		if (s.matches("[0-9A-Fa-f]{6}")) {
+			return true;
+		}
+		if (s.matches("[0-9A-Fa-f]{8}")) {
+			return true;
+		}
+		if (s.equalsIgnoreCase("automatic")) {
+			return true;
+		}
+		if (s.equalsIgnoreCase("transparent")) {
+			return true;
+		}
+		if (htmlNames.containsKey(s)) {
+			return true;
+		}
+		return false;
+
 	}
 
 	private HColor build(String s, HColor background) {
@@ -290,30 +361,6 @@ public class HColorSet {
 		final int blue = Integer.parseInt(s.substring(4, 6), 16);
 		final int alpha = Integer.parseInt(s.substring(6, 8), 16);
 		return new Color(red, green, blue, alpha);
-	}
-
-	private boolean isValid(String s, boolean acceptTransparent) {
-		s = removeFirstDieseAndgoLowerCase(s);
-		if (s.matches("[0-9A-Fa-f]{3}")) {
-			return true;
-		}
-		if (s.matches("[0-9A-Fa-f]{6}")) {
-			return true;
-		}
-		if (s.matches("[0-9A-Fa-f]{8}")) {
-			return true;
-		}
-		if (s.equalsIgnoreCase("automatic")) {
-			return true;
-		}
-		if (acceptTransparent && s.equalsIgnoreCase("transparent")) {
-			return true;
-		}
-		if (htmlNames.containsKey(s)) {
-			return true;
-		}
-		return false;
-
 	}
 
 	private String removeFirstDieseAndgoLowerCase(String s) {

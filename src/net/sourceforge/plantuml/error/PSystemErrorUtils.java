@@ -82,7 +82,7 @@ public class PSystemErrorUtils {
 	private static PSystemErrorV2 mergeV2(List<PSystemErrorV2> errorsV2) {
 		PSystemErrorV2 result = null;
 		for (PSystemErrorV2 err : errorsV2) {
-			if (result == null || result.size() < err.size()) {
+			if (result == null || result.score() < err.score()) {
 				result = err;
 			}
 		}

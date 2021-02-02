@@ -43,6 +43,8 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorRuntimeException;
 
 public class CommandCreoleColorChange implements Command {
 
@@ -69,18 +71,23 @@ public class CommandCreoleColorChange implements Command {
 		return m.group(2).length();
 	}
 
-	public String executeAndGetRemaining(String line, StripeSimple stripe) {
+	public String executeAndGetRemaining(String line, StripeSimple stripe) throws NoSuchColorRuntimeException {
 		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
-		final HColor color = HColorSet.instance().getColorIfValid(m.group(2));
-		final FontConfiguration fc2 = fc1.changeColor(color);
-		stripe.setActualFontConfiguration(fc2);
-		stripe.analyzeAndAdd(m.group(3));
-		stripe.setActualFontConfiguration(fc1);
-		return line.substring(m.group(1).length());
+		final String s = m.group(2);
+		try {
+			final HColor color = HColorSet.instance().getColor(s);
+			final FontConfiguration fc2 = fc1.changeColor(color);
+			stripe.setActualFontConfiguration(fc2);
+			stripe.analyzeAndAdd(m.group(3));
+			stripe.setActualFontConfiguration(fc1);
+			return line.substring(m.group(1).length());
+		} catch (NoSuchColorException e) {
+			throw new NoSuchColorRuntimeException();
+		}
 	}
 
 }

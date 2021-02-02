@@ -164,7 +164,7 @@ public class PathDrawerInterface implements PathDrawer {
 		// // final double theta = Math.atan2(
 		// // -direction.getX() + position.getX(), direction.getY()
 		// // - position.getY());
-		// if (decor == LinkDecor.SQUARRE) {
+		// if (decor == LinkDecor.SQUARE) {
 		// middle1 = drawSquare(ug, position.getX(), position.getY());
 		// } else if (decor == LinkDecor.EXTENDS) {
 		// middle1 = drawExtends(ug, position.getX(), position.getY(), theta);

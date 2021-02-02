@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -72,7 +73,7 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));

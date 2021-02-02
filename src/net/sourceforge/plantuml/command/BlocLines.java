@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class BlocLines implements Iterable<StringLocated> {
 
@@ -92,7 +93,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		this.lines = Collections.unmodifiableList(lines);
 	}
 
-	public Display toDisplay() {
+	public Display toDisplay() throws NoSuchColorException {
 		return Display.createFoo(lines);
 	}
 

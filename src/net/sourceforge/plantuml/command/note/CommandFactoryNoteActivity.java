@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class CommandFactoryNoteActivity implements SingleMultiFactoryCommand<ActivityDiagram> {
@@ -98,7 +99,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				return "(?i)^[%s]*end[%s]?note$";
 			}
 
-			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
+			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) throws NoSuchColorException {
 				// StringUtils.trim(lines, true);
 				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
@@ -135,7 +136,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 			@Override
 			protected CommandExecutionResult executeArg(final ActivityDiagram diagram, LineLocation location,
-					RegexResult arg) {
+					RegexResult arg) throws NoSuchColorException {
 				final String tmp = UniqueSequence.getString("GN");
 				final Ident ident = diagram.buildLeafIdent(tmp);
 				final Code code = diagram.V1972() ? ident : diagram.buildCode(tmp);
@@ -145,10 +146,11 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		};
 	}
 
-	private CommandExecutionResult executeInternal(ActivityDiagram diagram, RegexResult arg, IEntity note) {
+	private CommandExecutionResult executeInternal(ActivityDiagram diagram, RegexResult arg, IEntity note) throws NoSuchColorException {
 
+		final String s = arg.get("COLOR", 0);
 		note.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 
 		IEntity activity = diagram.getLastEntityConsulted();
 		if (activity == null) {
@@ -157,8 +159,8 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 		final Link link;
 
-		final Position position = Position.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0))).withRankdir(
-				diagram.getSkinParam().getRankdir());
+		final Position position = Position.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)))
+				.withRankdir(diagram.getSkinParam().getRankdir());
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 

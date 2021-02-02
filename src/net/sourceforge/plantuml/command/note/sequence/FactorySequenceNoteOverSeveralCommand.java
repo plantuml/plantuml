@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
@@ -123,7 +124,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location,
-					RegexResult arg) {
+					RegexResult arg) throws NoSuchColorException {
 				final BlocLines strings = BlocLines.getWithNewlines(arg.get("NOTE", 0));
 
 				return executeInternal(system, arg, strings);
@@ -141,7 +142,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				return "(?i)^end[%s]?(note|hnote|rnote)$";
 			}
 
-			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
+			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
@@ -151,7 +152,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines) {
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines) throws NoSuchColorException {
 		final Participant p1 = diagram.getOrCreateParticipant(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P1", 0)));
 		final Participant p2 = diagram.getOrCreateParticipant(StringUtils

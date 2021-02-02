@@ -206,7 +206,7 @@ public class GroupRoot implements IGroup {
 	}
 
 	public SingleStrategy getSingleStrategy() {
-		return SingleStrategy.SQUARRE;
+		return SingleStrategy.SQUARE;
 	}
 
 	public boolean isRemoved() {

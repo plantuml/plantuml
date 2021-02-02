@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public abstract class CommandMultilines2<S extends Diagram> implements Command<S> {
 
@@ -106,10 +107,14 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		if (syntaxWithFinalBracket()) {
 			lines = lines.eventuallyMoveBracket();
 		}
-		return executeNow(system, lines);
+		try {
+			return executeNow(system, lines);
+		} catch (NoSuchColorException e) {
+			return CommandExecutionResult.badColor();
+		}
 	}
 
-	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines);
+	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines) throws NoSuchColorException;
 
 	protected boolean isCommandForbidden() {
 		return false;

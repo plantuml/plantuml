@@ -120,15 +120,16 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it) {
 		final Step step = getCandidate(it);
 		if (step == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", it.peek().getLocation());
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation());
 			it.next();
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}
 
 		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines);
 		if (result.isOk() == false) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-					((StringLocated) step.blocLines.getFirst()).getLocation());
+			final LineLocation location = ((StringLocated) step.blocLines.getFirst()).getLocation();
+			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(),
+					location);
 			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace());
 		}
 		if (result.getNewDiagram() != null) {
