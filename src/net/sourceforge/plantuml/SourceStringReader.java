@@ -225,7 +225,7 @@ public class SourceStringReader {
 
 	}
 
-	private void noStartumlFound(OutputStream os, FileFormatOption fileFormatOption, long seed) throws IOException {
+	public ImageData noStartumlFound(OutputStream os, FileFormatOption fileFormatOption, long seed) throws IOException {
 		final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList("No @startuml/@enduml found"),
 				fileFormatOption.isUseRedForError());
 		HColor backcolor = error.getBackcolor();
@@ -233,7 +233,7 @@ public class SourceStringReader {
 				null, ClockwiseTopRightBottomLeft.none(), backcolor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(error);
-		imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}
 
 	public final List<BlockUml> getBlocks() {
