@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
@@ -72,11 +73,13 @@ public class PicoWebServer implements Runnable {
 	}
 
 	public static void main(String[] args) throws IOException {
-		startServer(8080);
+		startServer(8080, null);
 	}
 
-	public static void startServer(final int port) throws IOException {
-		final ServerSocket serverConnect = new ServerSocket(port);
+	public static void startServer(final int port, final String bindAddress) throws IOException {
+		final InetAddress bindAddress1 = bindAddress == null ? null : InetAddress.getByName(bindAddress);
+		final ServerSocket serverConnect = new ServerSocket(port, 50, bindAddress1);
+		System.err.println("webPort=" + serverConnect.getLocalPort());
 		while (true) {
 			final PicoWebServer myServer = new PicoWebServer(serverConnect.accept());
 			final Thread thread = new Thread(myServer);
