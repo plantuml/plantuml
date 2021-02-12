@@ -60,8 +60,37 @@ import net.sourceforge.plantuml.ugraphic.UFont;
  * 
  */
 public enum FileFormat {
-	PNG, SVG, EPS, EPS_TEXT, ATXT, UTXT, XMI_STANDARD, XMI_STAR, XMI_ARGO, SCXML, PDF, MJPEG, ANIMATED_GIF, HTML, HTML5,
-	VDX, LATEX, LATEX_NO_PREAMBLE, BASE64, BRAILLE_PNG, PREPROC;
+	PNG("image/png"),
+	SVG("image/svg+xml"),
+	EPS("application/postscript"),
+	EPS_TEXT("application/postscript"),
+	ATXT("text/plain"),
+	UTXT("text/plain;charset=UTF-8"),
+	XMI_STANDARD("application/vnd.xmi+xml"),
+	XMI_STAR("application/vnd.xmi+xml"),
+	XMI_ARGO("application/vnd.xmi+xml"),
+	SCXML("application/scxml+xml"),
+	PDF("application/pdf"),
+	MJPEG("video/x-msvideo"),
+	ANIMATED_GIF("image/gif"),
+	HTML("text/html"),
+	HTML5("text/html"),
+	VDX("application/vnd.visio.xml"),
+	LATEX("application/x-latex"),
+	LATEX_NO_PREAMBLE("application/x-latex"),
+	BASE64("text/plain; charset=x-user-defined"),
+	BRAILLE_PNG("image/png"),
+	PREPROC("text/plain");
+
+	private final String mimeType;
+
+	FileFormat(String mimeType) {
+		this.mimeType = mimeType;
+	}
+
+	public String getMimeType() {
+		return mimeType;
+	}
 
 	/**
 	 * Returns the file format to be used for that format.
