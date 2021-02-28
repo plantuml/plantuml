@@ -45,6 +45,9 @@ public abstract class UGraphicNo {
 	final public void startGroup(String groupId) {
 	}
 
+	final public void startGroupWithClass(String groupClasses) {
+	}
+
 	final public void closeUrl() {
 	}
 

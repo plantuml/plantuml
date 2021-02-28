@@ -86,6 +86,10 @@ public abstract class UGraphicDelegator implements UGraphic {
 		ug.startGroup(groupId);
 	}
 
+	public void startGroupWithClass(String groupClasses) {
+		ug.startGroupWithClass(groupClasses);
+	}
+
 	public void closeGroup() {
 		ug.closeGroup();
 	}

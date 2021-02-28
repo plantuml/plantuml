@@ -201,6 +201,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	final public void drawU(UGraphic ug) {
 		final Url url = getEntity().getUrl99();
+
+		ug.startGroupWithClass("elem " + getEntity().getCode() + " selected");
+
 		if (url != null) {
 			ug.startUrl(url);
 		}
@@ -236,6 +239,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		if (url != null) {
 			ug.closeUrl();
 		}
+
+		ug.closeGroup();
 	}
 
 	private double getRoundCorner() {
