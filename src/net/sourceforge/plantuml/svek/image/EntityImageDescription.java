@@ -294,6 +294,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
+		ug.startGroupWithClass("elem " + getEntity().getCode() + " selected");
+
 		if (url != null) {
 			ug.startUrl(url);
 		}
@@ -320,6 +322,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (url != null) {
 			ug.closeUrl();
 		}
+
+		ug.closeGroup();
 	}
 
 	private void drawHexagon(UGraphic ug) {

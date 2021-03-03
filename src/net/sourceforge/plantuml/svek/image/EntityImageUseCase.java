@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -143,7 +143,10 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		ug = ug.apply(backcolor.bg());
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
 
+		ug2.startGroupWithClass("elem " + getEntity().getCode() + " selected");
 		ellipse.drawU(ug2);
+		ug2.closeGroup();
+
 		if (getEntity().getLeafType() == LeafType.USECASE_BUSINESS) {
 			specialBusiness(ug, ellipse.getUEllipse());
 		}

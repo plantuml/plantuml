@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -158,10 +158,143 @@ public class SvgGraphics {
 			if (hover != null) {
 				defs.appendChild(getPathHover(hover));
 			}
+
+			// Add styles and script for interactive SVG
+			defs.appendChild(getStylesForInteractiveMode());
+			defs.appendChild(getScriptForInteractiveMode());
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 			throw new IllegalStateException(e);
 		}
+	}
+
+	private Element getStylesForInteractiveMode() {
+		final Element style = simpleElement("style");
+		final CDATASection cdata = document.createCDATASection(
+			".elem {cursor: pointer;} " + "\n" +
+			".elem, .link {opacity: 0.3;}" + "\n" +
+			".elem.selected, .link.selected {opacity: 1;}"
+		);
+		style.setAttribute("type", "text/css");
+		style.appendChild(cdata);
+		return style;
+	}
+
+	private Element getScriptForInteractiveMode() {
+		final Element script = document.createElement("script");
+		script.setTextContent(
+			"function addItemToMapOfLists(mapOfLists, name, item) {" + "\n" +
+      "  // mapOfLists = {" + "\n" +
+      "  //   'key1': [item1, item2, ...]," + "\n" +
+      "  //   'key2': [item3, item4, ...]," + "\n" +
+      "  // }" + "\n" +
+      "  if (mapOfLists[name].length > 0) {" + "\n" +
+      "    if (!mapOfLists[name].includes(item)) {" + "\n" +
+      "      mapOfLists[name].push(item);" + "\n" +
+      "    }" + "\n" +
+      "  } else {" + "\n" +
+      "    mapOfLists[name] = [item];" + "\n" +
+      "  }" + "\n" +
+      "}" + "\n" +
+			"" + "\n" +
+      "function main() {" + "\n" +
+      "  let elems = Array.from(document.getElementsByClassName('elem'));" + "\n" +
+      "  let links = Array.from(document.getElementsByClassName('link'));" + "\n" +
+			"" + "\n" +
+      "  let elemsMap = {};" + "\n" +
+      "  let linkedElems = {};" + "\n" +
+      "  let linkedLinks = {};" + "\n" +
+			"" + "\n" +
+      "  elems.forEach(elem => {" + "\n" +
+      "    let name = elem.classList[1];" + "\n" +
+      "    elemsMap[name] = elem;" + "\n" +
+      "    linkedElems[name] = [];" + "\n" +
+      "    linkedLinks[name] = [];" + "\n" +
+      "  });" + "\n" +
+			"" + "\n" +
+      "  links.forEach(link => {" + "\n" +
+      "    if (elemsMap[name1]) {" + "\n" +
+      "      if (elemsMap[name2]) {" + "\n" +
+      "        let name1 = link.classList[1];" + "\n" +
+      "        let name2 = link.classList[2];" + "\n" +
+			"" + "\n" +
+      "        let elem1 = elemsMap[name1];" + "\n" +
+      "        let elem2 = elemsMap[name2];" + "\n" +
+			"" + "\n" +
+      "        addItemToMapOfLists(linkedElems, name1, elem2);" + "\n" +
+      "        addItemToMapOfLists(linkedElems, name2, elem1);" + "\n" +
+			"" + "\n" +
+      "        addItemToMapOfLists(linkedLinks, name1, link);" + "\n" +
+      "        addItemToMapOfLists(linkedLinks, name2, link);" + "\n" +
+      "      }" + "\n" +
+      "    }" + "\n" +
+      "  });" + "\n" +
+			"" + "\n" +
+      "  let selectedElems = [];" + "\n" +
+      "  let selectedLinks = [];" + "\n" +
+      "  let selectedElemName = null;" + "\n" +
+			"" + "\n" +
+      "  function clearSelected() {" + "\n" +
+      "    selectedElems.forEach(item => {" + "\n" +
+      "      item.classList.remove('selected');" + "\n" +
+      "    });" + "\n" +
+      "    selectedElems = [];" + "\n" +
+			"" + "\n" +
+      "    selectedLinks.forEach(item => {" + "\n" +
+      "      item.classList.remove('selected');" + "\n" +
+      "    });" + "\n" +
+      "    selectedLinks = [];" + "\n" +
+      "  }" + "\n" +
+			"" + "\n" +
+      "  function selectAll() {" + "\n" +
+      "    selectedElemName = null;" + "\n" +
+			"" + "\n" +
+      "    selectedElems = Array.from(elems);" + "\n" +
+      "    selectedElems.forEach(item => {" + "\n" +
+      "      item.classList.add('selected');" + "\n" +
+      "    });" + "\n" +
+			"" + "\n" +
+      "    selectedLinks = Array.from(links);" + "\n" +
+      "    selectedLinks.forEach(item => {" + "\n" +
+      "      item.classList.add('selected');" + "\n" +
+      "    });" + "\n" +
+      "  }" + "\n" +
+			"" + "\n" +
+      "  function selectElem(elemName) {" + "\n" +
+      "    if (elemName === selectedElemName) {" + "\n" +
+      "      selectAll();" + "\n" +
+			"" + "\n" +
+      "    } else {" + "\n" +
+      "      clearSelected();" + "\n" +
+      "      selectedElemName = elemName;" + "\n" +
+			"" + "\n" +
+      "      elemsMap[elemName].classList.add('selected');" + "\n" +
+      "      selectedElems.push(elemsMap[elemName]);" + "\n" +
+			"" + "\n" +
+      "      linkedElems[elemName].forEach(linkedElem => {" + "\n" +
+      "        selectedElems.push(linkedElem);" + "\n" +
+      "        linkedElem.classList.add('selected');" + "\n" +
+      "      });" + "\n" +
+			"" + "\n" +
+      "      linkedLinks[elemName].forEach(linkedLink => {" + "\n" +
+      "        selectedLinks.push(linkedLink);" + "\n" +
+      "        linkedLink.classList.add('selected');" + "\n" +
+      "      });" + "\n" +
+      "    }" + "\n" +
+      "  }" + "\n" +
+			"" + "\n" +
+      "  Object.keys(elemsMap).forEach(name => {" + "\n" +
+      "    elemsMap[name].onclick = () => { selectElem(name); };" + "\n" +
+      "  });" + "\n" +
+			"" + "\n" +
+      "  selectAll();" + "\n" +
+      "}" + "\n" +
+			"" + "\n" +
+      "document.addEventListener('DOMContentLoaded', (event) => {" + "\n" +
+      "  main();" + "\n" +
+      "});"
+		);
+		return script;
 	}
 
 	private Element getPathHover(String hover) {
@@ -930,6 +1063,11 @@ public class SvgGraphics {
 	public void startGroup(String groupId) {
 		pendingAction.add(0, (Element) document.createElement("g"));
 		pendingAction.get(0).setAttribute("id", groupId);
+	}
+
+	public void startGroupWithClass(String groupClasses) {
+		pendingAction.add(0, (Element) document.createElement("g"));
+		pendingAction.get(0).setAttribute("class", groupClasses);
 	}
 
 	public void closeGroup() {

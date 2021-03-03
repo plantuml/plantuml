@@ -624,6 +624,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 			return;
 		}
 		ug.draw(link.commentForSvg());
+		ug.startGroupWithClass("link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
 		double x = 0;
 		double y = 0;
 		final Url url = link.getUrl();
@@ -750,6 +751,8 @@ public class Line implements Moveable, Hideable, GuideLine {
 			link.getLinkConstraint().setPosition(link, minPt);
 			link.getLinkConstraint().drawMe(ug, skinParam);
 		}
+
+		ug.closeGroup();
 	}
 
 	private List<Point2D> getSquare(double x, double y) {

@@ -57,6 +57,8 @@ public interface UGraphic {
 
 	public void startGroup(String id);
 
+	public void startGroupWithClass(String groupClasses);
+
 	public void closeGroup();
 
 	public void flushUg();
