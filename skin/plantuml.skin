@@ -278,3 +278,40 @@ ganttDiagram {
       Shadowing 0.0
 	}
 }
+
+
+usecase {
+  HorizontalAlignment center
+}
+
+yamlDiagram {
+  arrow {
+    LineThickness 1
+    LineStyle 3;3
+  }
+  node {
+    LineThickness 1.5
+  	RoundCorner 10
+  	separator {
+      LineThickness 1
+      LineColor #A80036
+  	}
+  }
+}
+
+jsonDiagram {
+  arrow {
+    LineThickness 1
+    LineStyle 3;3
+  }
+  node {
+    LineThickness 1.5
+  	RoundCorner 10
+  	separator {
+      LineThickness 1
+      LineColor #A80036
+  	}
+  }
+}
+
+

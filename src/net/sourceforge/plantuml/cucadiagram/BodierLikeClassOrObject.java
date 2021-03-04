@@ -211,7 +211,8 @@ public class BodierLikeClassOrObject implements Bodier {
 
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
-				return BodyFactory.create1(rawBodyWithoutHidden(), fontParam, skinParam, stereotype, leaf, style);
+				return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
+						rawBodyWithoutHidden(), fontParam, skinParam, stereotype, leaf, style);
 			}
 			return null;
 		}
@@ -222,7 +223,8 @@ public class BodierLikeClassOrObject implements Bodier {
 			if (showFields == false) {
 				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
 			}
-			return BodyFactory.create1(rawBodyWithoutHidden(), fontParam, skinParam, stereotype, leaf, style);
+			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
+					rawBodyWithoutHidden(), fontParam, skinParam, stereotype, leaf, style);
 		}
 		assert type.isLikeClass();
 

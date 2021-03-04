@@ -67,7 +67,9 @@ public class NotesTile extends AbstractTile implements Tile {
 		return notes;
 	}
 
-	public NotesTile(LivingSpaces livingSpaces, Notes notes, Rose skin, ISkinParam skinParam) {
+	public NotesTile(StringBounder stringBounder, LivingSpaces livingSpaces, Notes notes, Rose skin,
+			ISkinParam skinParam) {
+		super(stringBounder);
 		this.livingSpaces = livingSpaces;
 		this.notes = notes;
 		this.skin = skin;
@@ -138,39 +140,39 @@ public class NotesTile extends AbstractTile implements Tile {
 		}
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
+	public double getPreferredHeight() {
 		double result = 0;
 		for (Note note : notes) {
-			final Component comp = getComponent(stringBounder, note);
-			final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+			final Component comp = getComponent(getStringBounder(), note);
+			final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 			result = Math.max(result, dim.getHeight());
 		}
 		return result;
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 		final List<Note> all = notes.asList();
 		for (int i = 0; i < all.size() - 1; i++) {
 			for (int j = i + 1; j < all.size(); j++) {
-				final double center1 = getXcenter(stringBounder, all.get(i)).getCurrentValue();
-				final double center2 = getXcenter(stringBounder, all.get(j)).getCurrentValue();
+				final double center1 = getXcenter(getStringBounder(), all.get(i)).getCurrentValue();
+				final double center2 = getXcenter(getStringBounder(), all.get(j)).getCurrentValue();
 				if (center2 > center1) {
-					final Real point1b = getX2(stringBounder, all.get(i));
-					final Real point2 = getX(stringBounder, all.get(j));
+					final Real point1b = getX2(getStringBounder(), all.get(i));
+					final Real point2 = getX(getStringBounder(), all.get(j));
 					point2.ensureBiggerThan(point1b);
 				} else {
-					final Real point1 = getX(stringBounder, all.get(i));
-					final Real point2b = getX2(stringBounder, all.get(j));
+					final Real point1 = getX(getStringBounder(), all.get(i));
+					final Real point2b = getX2(getStringBounder(), all.get(j));
 					point1.ensureBiggerThan(point2b);
 				}
 			}
 		}
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
+	public Real getMinX() {
 		final List<Real> reals = new ArrayList<Real>();
 		for (Note note : notes) {
-			reals.add(getX(stringBounder, note));
+			reals.add(getX(getStringBounder(), note));
 		}
 		return RealUtils.min(reals);
 	}
@@ -179,10 +181,10 @@ public class NotesTile extends AbstractTile implements Tile {
 		return getX(stringBounder, note).addFixed(getUsedWidth(stringBounder, note));
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
+	public Real getMaxX() {
 		final List<Real> reals = new ArrayList<Real>();
 		for (Note note : notes) {
-			reals.add(getX2(stringBounder, note));
+			reals.add(getX2(getStringBounder(), note));
 		}
 		return RealUtils.max(reals);
 	}

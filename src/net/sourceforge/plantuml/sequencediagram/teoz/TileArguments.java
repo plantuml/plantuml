@@ -62,8 +62,8 @@ public class TileArguments implements Bordered {
 	}
 
 	public TileArguments withBackColorGeneral(HColor backColorElement, HColor backColorGeneral) {
-		return new TileArguments(stringBounder, livingSpaces, skin, new SkinParamBackcolored(skinParam,
-				backColorElement, backColorGeneral), origin);
+		return new TileArguments(stringBounder, livingSpaces, skin,
+				new SkinParamBackcolored(skinParam, backColorElement, backColorGeneral), origin);
 	}
 
 	public TileArguments withBackColor(Reference reference) {

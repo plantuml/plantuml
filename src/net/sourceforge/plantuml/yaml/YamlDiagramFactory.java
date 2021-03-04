@@ -39,14 +39,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 
 public class YamlDiagramFactory extends PSystemAbstractFactory {
 
@@ -55,13 +55,15 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	public Diagram createSystem(UmlSource source) {
-		JsonObject yaml = null;
+		JsonValue yaml = null;
+		StyleExtractor styleExtractor = null;
 		try {
 			final List<String> list = new ArrayList<String>();
-			final Iterator<StringLocated> it = source.iterator2();
+			styleExtractor = new StyleExtractor(source.iterator2());
+			final Iterator<String> it = styleExtractor.getIterator();
 			it.next();
 			while (true) {
-				final String line = it.next().getString();
+				final String line = it.next();
 				if (it.hasNext() == false) {
 					break;
 				}
@@ -72,6 +74,9 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 			e.printStackTrace();
 		}
 		final JsonDiagram result = new JsonDiagram(UmlDiagramType.YAML, yaml, new ArrayList<String>());
+		if (styleExtractor != null) {
+			styleExtractor.applyStyles(result.getSkinParam());
+		}
 		result.setSource(source);
 		return result;
 	}

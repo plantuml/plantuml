@@ -82,11 +82,10 @@ public class LinkAnchor {
 
 	public void drawAnchor(UGraphic ug, YPositionedTile tile1, YPositionedTile tile2, ISkinParam param) {
 
-		final StringBounder stringBounder = ug.getStringBounder();
-		final double y1 = tile1.getY(stringBounder);
-		final double y2 = tile2.getY(stringBounder);
-		final double xx1 = tile1.getMiddleX(stringBounder);
-		final double xx2 = tile2.getMiddleX(stringBounder);
+		final double y1 = tile1.getY();
+		final double y2 = tile2.getY();
+		final double xx1 = tile1.getMiddleX();
+		final double xx2 = tile2.getMiddleX();
 		final double x = (xx1 + xx2) / 2;
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);

@@ -68,10 +68,13 @@ public class LiveBoxesDrawer {
 	private final Collection<Segment> delays;
 
 	public LiveBoxesDrawer(Context2D context, Rose skin, ISkinParam skinParam, Map<Double, Double> delays) {
-		this.cross = skin.createComponent(new Style[] { ComponentType.DESTROY.getDefaultStyleDefinition()
-				.getMergedStyle(skinParam.getCurrentStyleBuilder()) }, ComponentType.DESTROY, null, skinParam, null);
-		this.compForWidth = skin.createComponent(new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE
-				.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder()) },
+		this.cross = skin.createComponent(
+				new Style[] { ComponentType.DESTROY.getDefaultStyleDefinition()
+						.getMergedStyle(skinParam.getCurrentStyleBuilder()) },
+				ComponentType.DESTROY, null, skinParam, null);
+		this.compForWidth = skin.createComponent(
+				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getDefaultStyleDefinition()
+						.getMergedStyle(skinParam.getCurrentStyleBuilder()) },
 				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam, null);
 		this.context = context;
 		this.skin = skin;
@@ -121,8 +124,8 @@ public class LiveBoxesDrawer {
 	private void drawInternal(UGraphic ug, StairsPosition yposition, double ya, double yb, ComponentType type) {
 		final double width = getWidth(ug.getStringBounder());
 		final Area area = new Area(width, yb - ya);
-		ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, symbolContext == null ? null
-				: symbolContext.getBackColor());
+		ISkinParam skinParam2 = new SkinParamBackcolored(skinParam,
+				symbolContext == null ? null : symbolContext.getBackColor());
 		Style style = type.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		if (style != null) {
 			style = style.eventuallyOverride(symbolContext);

@@ -79,9 +79,9 @@ public class ComponentTextNote extends AbstractComponentText {
 			}
 		}
 		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawStringsLRUnicode(stringsToDisplay.as(), 3, 1);
+			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), 3, 1);
 		} else {
-			charArea.drawStringsLRSimple(stringsToDisplay.as(), 3, 1);
+			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 3, 1);
 		}
 	}
 

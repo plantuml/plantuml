@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class UGraphicInterceptorTile extends UGraphicDelegator implements Context2D {
-	
+
 	private final boolean isBackground;
 
 	public UGraphicInterceptorTile(UGraphic ug, boolean isBackground) {

@@ -41,8 +41,10 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class BodierSimple implements Bodier {
 
@@ -63,8 +65,9 @@ public class BodierSimple implements Bodier {
 		this.leaf = leaf;
 	}
 
-	public void addFieldOrMethod(String s) {
-		rawBody.add(s);
+	public void addFieldOrMethod(String s) throws NoSuchColorException {
+		final Display display = Display.getWithNewlines2(s);
+		rawBody.addAll(display.asList());
 	}
 
 	public Display getMethodsToDisplay() {
@@ -85,7 +88,8 @@ public class BodierSimple implements Bodier {
 
 	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
 			Stereotype stereotype, Style style) {
-		return BodyFactory.create1(rawBody, fontParam, skinParam, stereotype, leaf, style);
+		return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), rawBody, fontParam,
+				skinParam, stereotype, leaf, style);
 	}
 
 }

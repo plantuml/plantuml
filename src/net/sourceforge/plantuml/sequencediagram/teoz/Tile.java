@@ -35,29 +35,27 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
-import net.sourceforge.plantuml.ugraphic.UShape;
 
-public interface Tile extends UDrawable, UShape {
+public interface Tile extends Tile2 {
 
-	public double getPreferredHeight(StringBounder stringBounder);
+	public double getPreferredHeight();
 
-	public void addConstraints(StringBounder stringBounder);
+	public void callbackY(double y);
 
-	public Real getMinX(StringBounder stringBounder);
+	public void addConstraints();
 
-	public Real getMaxX(StringBounder stringBounder);
+	public Real getMinX();
+
+	public Real getMaxX();
 
 	public Event getEvent();
 
-	public double getYPoint(StringBounder stringBounder);
+	public double getContactPointRelative();
 
-	public double getZ(StringBounder stringBounder);
-	
+	public double getZZZ();
+
 	public boolean matchAnchorV1(String anchor);
-
 
 }

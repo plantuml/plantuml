@@ -85,8 +85,9 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 			throw new IllegalArgumentException();
 		}
 
-		this.desc = BodyFactory.create2(entity.getDisplay(), symbol.getFontParam(), skinParam,
-				HorizontalAlignment.CENTER, stereotype, entity, getStyle(symbol.getFontParam()));
+		this.desc = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
+				entity.getDisplay(), symbol.getFontParam(), skinParam, stereotype, entity,
+				getStyle(symbol.getFontParam()));
 
 		this.url = entity.getUrl99();
 

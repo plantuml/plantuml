@@ -179,11 +179,12 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	public void startGroup(String groupId) {
 		getGraphicObject().startGroup(groupId);
 	}
-
+	
 	@Override
 	public void startGroupWithClass(String groupClasses) {
 		getGraphicObject().startGroupWithClass(groupClasses);
 	}
+
 
 	@Override
 	public void closeGroup() {

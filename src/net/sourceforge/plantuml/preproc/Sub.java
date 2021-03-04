@@ -102,7 +102,6 @@ public class Sub {
 				result.add(s);
 			}
 		}
-		reader.close();
 		return result;
 	}
 

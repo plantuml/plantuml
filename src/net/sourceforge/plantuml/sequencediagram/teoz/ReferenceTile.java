@@ -62,6 +62,7 @@ public class ReferenceTile extends AbstractTile implements Tile {
 	}
 
 	public ReferenceTile(Reference reference, TileArguments tileArguments) {
+		super(tileArguments.getStringBounder());
 		this.reference = reference;
 		this.tileArguments = tileArguments;
 	}
@@ -94,8 +95,8 @@ public class ReferenceTile extends AbstractTile implements Tile {
 		strings = strings.add("ref");
 		strings = strings.addAll(reference.getStrings());
 
-		final Component comp = tileArguments.getSkin().createComponent(null, ComponentType.REFERENCE,
-				null, tileArguments.getSkinParam(), strings);
+		final Component comp = tileArguments.getSkin().createComponent(null, ComponentType.REFERENCE, null,
+				tileArguments.getSkinParam(), strings);
 		return comp;
 	}
 
@@ -110,22 +111,22 @@ public class ReferenceTile extends AbstractTile implements Tile {
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		init(stringBounder);
+	public Real getMinX() {
+		init(getStringBounder());
 		return this.first;
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		init(stringBounder);
+	public Real getMaxX() {
+		init(getStringBounder());
 		return this.last;
 	}
 

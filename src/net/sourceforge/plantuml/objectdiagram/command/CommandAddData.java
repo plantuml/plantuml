@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
@@ -63,7 +64,7 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
-			RegexResult arg) {
+			RegexResult arg) throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
 		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(name),
 				diagram.buildCode(name), null, null);

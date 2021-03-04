@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DelayTile extends AbstractTile implements Tile, TileWithCallbackY {
+public class DelayTile extends AbstractTile implements Tile {
 
 	private final Delay delay;
 	private final TileArguments tileArguments;
@@ -62,11 +62,13 @@ public class DelayTile extends AbstractTile implements Tile, TileWithCallbackY {
 		return delay;
 	}
 
-	public void callbackY(double y) {
+	@Override
+	public void callbackY_internal(double y) {
 		this.y = y;
 	}
 
 	public DelayTile(Delay delay, TileArguments tileArguments) {
+		super(tileArguments.getStringBounder());
 		this.delay = delay;
 		this.tileArguments = tileArguments;
 	}
@@ -102,27 +104,27 @@ public class DelayTile extends AbstractTile implements Tile, TileWithCallbackY {
 		final Area area = new Area(getPreferredWidth(stringBounder), dim.getHeight());
 		tileArguments.getLivingSpaces().delayOn(y, dim.getHeight());
 
-		ug = ug.apply(UTranslate.dx(getMinX(stringBounder).getCurrentValue()));
+		ug = ug.apply(UTranslate.dx(getMinX().getCurrentValue()));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		init(stringBounder);
-		return this.middle.addFixed(-getPreferredWidth(stringBounder) / 2);
+	public Real getMinX() {
+		init(getStringBounder());
+		return this.middle.addFixed(-getPreferredWidth(getStringBounder()) / 2);
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		init(stringBounder);
-		return this.middle.addFixed(getPreferredWidth(stringBounder) / 2);
+	public Real getMaxX() {
+		init(getStringBounder());
+		return this.middle.addFixed(getPreferredWidth(getStringBounder()) / 2);
 	}
 
 	// private double startingY;

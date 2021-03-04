@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.awt.geom.Dimension2D;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -76,6 +78,9 @@ public class TimingRuler {
 		if (times.size() == 0) {
 			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));
 		}
+		if (getMax().getTime().signum() > 0 && getMin().getTime().signum() < 0) {
+			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));
+		}
 	}
 
 	public TimingRuler(ISkinParam skinParam) {
@@ -99,22 +104,39 @@ public class TimingRuler {
 
 	private long highestCommonFactor() {
 		if (highestCommonFactorInternal == -1) {
-			for (TimeTick time : times) {
-				long tick = time.getTime().longValue();
-				if (tick > 0) {
-					if (highestCommonFactorInternal == -1) {
-						highestCommonFactorInternal = time.getTime().longValue();
-					} else {
-						highestCommonFactorInternal = computeHighestCommonFactor(highestCommonFactorInternal,
-								Math.abs(time.getTime().longValue()));
+			for (long tick : getAbsolutesTicks()) {
+				if (highestCommonFactorInternal == -1) {
+					highestCommonFactorInternal = tick;
+				} else {
+					final long candidate = computeHighestCommonFactor(highestCommonFactorInternal, tick);
+					final double size = (getMax().getTime().doubleValue() - getMin().getTime().doubleValue())
+							/ candidate;
+					if (size > 200) {
+						return highestCommonFactorInternal;
 					}
+					highestCommonFactorInternal = candidate;
 				}
 			}
 		}
 		return highestCommonFactorInternal;
 	}
 
-	private int getNbTick(boolean capped) {
+	private Set<Long> getAbsolutesTicks() {
+		final Set<Long> result = new TreeSet<Long>(new Comparator<Long>() {
+			public int compare(Long o1, Long o2) {
+				return o2.compareTo(o1);
+			}
+		});
+		for (TimeTick time : times) {
+			final long value = Math.abs(time.getTime().longValue());
+			if (value > 0) {
+				result.add(value);
+			}
+		}
+		return result;
+	}
+
+	private int getNbTick() {
 		if (times.size() == 0) {
 			return 1;
 		}
@@ -123,7 +145,9 @@ public class TimingRuler {
 	}
 
 	public double getWidth() {
-		return getNbTick(false) * tickIntervalInPixels;
+		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
+
+		return (delta / tickUnitary() + 1) * tickIntervalInPixels;
 	}
 
 	public final double getPosInPixel(TimeTick when) {
@@ -160,17 +184,28 @@ public class TimingRuler {
 		ug = ug.apply(new UStroke(2.0)).apply(HColorUtils.BLACK);
 		final double tickHeight = 5;
 		final ULine line = ULine.vline(tickHeight);
-		final int nb = getNbTick(true);
-		for (int i = 0; i <= nb; i++) {
-			ug.apply(UTranslate.dx(tickIntervalInPixels * i)).draw(line);
+		final double firstTickPosition = getPosInPixelInternal(getFirstPositiveOrZeroValue().doubleValue());
+		int nb = 0;
+		while (firstTickPosition + nb * tickIntervalInPixels <= getWidth()) {
+			ug.apply(UTranslate.dx(firstTickPosition + nb * tickIntervalInPixels)).draw(line);
+			nb++;
 		}
-		ug.draw(ULine.hline(nb * tickIntervalInPixels));
+		ug.apply(UTranslate.dx(firstTickPosition)).draw(ULine.hline((nb - 1) * tickIntervalInPixels));
 
 		for (long round : roundValues()) {
 			final TextBlock text = getTimeTextBlock(round);
 			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
 			text.drawU(ug.apply(new UTranslate(getPosInPixelInternal(round) - dim.getWidth() / 2, tickHeight + 1)));
 		}
+	}
+
+	private BigDecimal getFirstPositiveOrZeroValue() {
+		for (TimeTick time : times) {
+			if (time.getTime().signum() >= 0) {
+				return time.getTime();
+			}
+		}
+		throw new IllegalStateException();
 	}
 
 	private Collection<Long> roundValues() {
@@ -181,7 +216,7 @@ public class TimingRuler {
 				result.add(round);
 			}
 		} else {
-			final int nb = getNbTick(true);
+			final int nb = getNbTick();
 			for (int i = 0; i <= nb; i++) {
 				final long round = tickToTime(i);
 				result.add(round);
@@ -196,7 +231,7 @@ public class TimingRuler {
 	public void drawVlines(UGraphic ug, double height) {
 		ug = applyForVLines(ug);
 		final ULine line = ULine.vline(height);
-		final int nb = getNbTick(true);
+		final int nb = getNbTick();
 		for (int i = 0; i <= nb; i++) {
 			ug.apply(UTranslate.dx(tickIntervalInPixels * i)).draw(line);
 		}

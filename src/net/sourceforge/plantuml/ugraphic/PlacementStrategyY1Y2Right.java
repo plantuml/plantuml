@@ -33,45 +33,34 @@
  * 
  *
  */
-package net.sourceforge.plantuml.sequencediagram.teoz;
+package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class YPositionedTile {
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 
-	private final Tile tile;
-	private final double y;
+public class PlacementStrategyY1Y2Right extends AbstractPlacementStrategy {
 
-	public YPositionedTile(Tile tile, double y) {
-		this.tile = tile;
-		this.y = y;
-		tile.callbackY(y);
+	public PlacementStrategyY1Y2Right(StringBounder stringBounder) {
+		super(stringBounder);
 	}
 
-	@Override
-	public String toString() {
-		return "y=" + y + " " + tile;
-	}
+	public Map<TextBlock, Point2D> getPositions(double width, double height) {
+		final double usedHeight = getSumHeight();
 
-	public void drawInArea(UGraphic ug) {
-		// System.err.println("YPositionedTile::drawU y=" + y + " " + tile);
-		tile.drawU(ug.apply(UTranslate.dy(y)));
-	}
-
-	public boolean matchAnchorV2(String anchor) {
-		final boolean result = tile.matchAnchorV1(anchor);
+		final double space = (height - usedHeight) / (getDimensions().size() + 1);
+		final Map<TextBlock, Point2D> result = new LinkedHashMap<TextBlock, Point2D>();
+		double y = space;
+		for (Map.Entry<TextBlock, Dimension2D> ent : getDimensions().entrySet()) {
+			final double x = width - ent.getValue().getWidth();
+			result.put(ent.getKey(), new Point2D.Double(x, y));
+			y += ent.getValue().getHeight() + space;
+		}
 		return result;
-	}
-
-	public final double getY() {
-		return y + tile.getContactPointRelative();
-	}
-
-	public double getMiddleX() {
-		final double max = tile.getMaxX().getCurrentValue();
-		final double min = tile.getMinX().getCurrentValue();
-		return (min + max) / 2;
 	}
 
 }

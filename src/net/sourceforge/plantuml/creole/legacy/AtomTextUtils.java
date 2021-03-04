@@ -80,7 +80,7 @@ public class AtomTextUtils {
 		final Display display = Display.getWithNewlines(url.getLabel());
 		if (display.size() > 1) {
 			final List<Atom> all = new ArrayList<Atom>();
-			for (CharSequence s : display.as()) {
+			for (CharSequence s : display.asList()) {
 				all.add(createAtomText(s.toString(), url, fontConfiguration, skinSimple));
 			}
 			return new AtomVerticalTexts(all);

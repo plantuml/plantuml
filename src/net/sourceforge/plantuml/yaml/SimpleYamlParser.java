@@ -42,65 +42,28 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonString;
 import net.sourceforge.plantuml.json.JsonValue;
 
 public class SimpleYamlParser {
 
-	private static final String KEY = "([_0-9\\w][- _0-9\\w./]*)";
-
-	private JsonObject result;
+	private JsonValue result;
 	private final List<Integer> pendingIndents = new ArrayList<Integer>();
 
-	public JsonObject parse(List<String> lines) {
-		List<String> tmp = new ArrayList<String>();
-		for (String s : lines) {
-			if (s.trim().length() == 0)
-				continue;
-			if (s.trim().startsWith("#"))
-				continue;
-			tmp.add(s);
-		}
-		tmp = mergeMultiline(tmp);
+	public JsonValue parse(List<String> lines) {
 		result = new JsonObject();
 		pendingIndents.clear();
 		pendingIndents.add(0);
-		for (String s : tmp) {
+		final YamlLines yamlLines = new YamlLines(lines);
+		for (String s : yamlLines) {
 			parseSingleLine(s);
 		}
 		return result;
 
 	}
 
-	private List<String> mergeMultiline(List<String> tmp) {
-		final List<String> result = new ArrayList<String>();
-		for (int i = 0; i < tmp.size(); i++) {
-			if (nameOnly(tmp.get(i)) != null && textOnly(tmp.get(i + 1))) {
-				final StringBuilder sb = new StringBuilder(tmp.get(i));
-				while (textOnly(tmp.get(i + 1))) {
-					sb.append(" " + tmp.get(i + 1).trim());
-					i++;
-				}
-				result.add(sb.toString());
-			} else {
-				result.add(tmp.get(i));
-			}
-		}
-		return result;
-	}
-
-	private String[] dashNameAndValue(String s) {
-		final Pattern p1 = Pattern.compile("^\\s*[-]\\s*" + KEY + "\\s*:\\s*(\\S.*)$");
-		final Matcher m1 = p1.matcher(s);
-		if (m1.matches()) {
-			final String name = m1.group(1);
-			final String data = m1.group(2).trim();
-			return new String[] { name, data };
-		}
-		return null;
-	}
-
 	private String[] nameAndValue(String s) {
-		final Pattern p1 = Pattern.compile("^\\s*" + KEY + "\\s*:\\s*(\\S.*)$");
+		final Pattern p1 = Pattern.compile("^\\s*" + YamlLines.KEY + "\\s*: \\s*(\\S.*)$");
 		final Matcher m1 = p1.matcher(s);
 		if (m1.matches()) {
 			final String name = m1.group(1);
@@ -108,47 +71,14 @@ public class SimpleYamlParser {
 			return new String[] { name, data };
 		}
 		return null;
-	}
-
-	private String nameOnly(String s) {
-		final Pattern p1 = Pattern.compile("^\\s*" + KEY + "\\s*:\\s*\\|?\\s*$");
-		final Matcher m1 = p1.matcher(s);
-		if (m1.matches()) {
-			final String name = m1.group(1);
-			return name;
-		}
-		return null;
-	}
-
-	private String listedValue(String s) {
-		final Pattern p1 = Pattern.compile("^\\s*[-]\\s*(\\S.*)$");
-		final Matcher m1 = p1.matcher(s);
-		if (m1.matches()) {
-			final String name = m1.group(1).trim();
-			return name;
-		}
-		return null;
-	}
-
-	private boolean textOnly(String s) {
-		if (isList(s))
-			return false;
-		return s.indexOf(':') == -1;
 	}
 
 	private void parseSingleLine(String s) {
-		// System.err.println("s=" + s);
 		final int indent = getIndent(s);
+//		System.err.println("s=" + s);
 
 		if (isListStrict(s)) {
-			muteToArray(indent);
-			return;
-		}
-
-		final String[] dashNameAndValue = dashNameAndValue(s);
-		if (dashNameAndValue != null) {
-			muteToArray(indent);
-			parseSingleLine(s.replaceFirst("[-]", " "));
+			strictMuteToArray(indent);
 			return;
 		}
 
@@ -159,7 +89,7 @@ public class SimpleYamlParser {
 			return;
 		}
 
-		final JsonObject working = getWorking(indent);
+		final JsonObject working = (JsonObject) getWorking(indent);
 		if (working == null) {
 			System.err.println("ERROR: ignoring " + s);
 			return;
@@ -173,7 +103,7 @@ public class SimpleYamlParser {
 			return;
 		}
 
-		final String nameOnly = nameOnly(s);
+		final String nameOnly = YamlLines.nameOnly(s);
 		if (nameOnly != null) {
 			working.add(nameOnly, new JsonObject());
 			return;
@@ -182,11 +112,27 @@ public class SimpleYamlParser {
 		throw new UnsupportedOperationException(s);
 	}
 
+	private String listedValue(String s) {
+		final Pattern p1 = Pattern.compile("^\\s*[-]\\s*(\\S.*)$");
+		final Matcher m1 = p1.matcher(s);
+		if (m1.matches()) {
+			final String name = m1.group(1).trim();
+			return name;
+		}
+		return null;
+	}
+
 	private JsonArray getForceArray(int indent) {
+		if (indent == 0 && getLastIndent() == 0) {
+			if (result instanceof JsonArray == false) {
+				result = new JsonArray();
+			}
+			return (JsonArray) result;
+		}
 		while (getLastIndent() > indent - 1)
 			pendingIndents.remove(pendingIndents.size() - 1);
 
-		final JsonObject last = search(result, pendingIndents.size());
+		final JsonObject last = (JsonObject) search(result, pendingIndents.size());
 		final String field = last.names().get(last.size() - 1);
 		if (last.get(field) instanceof JsonArray == false) {
 			last.set(field, new JsonArray());
@@ -194,21 +140,28 @@ public class SimpleYamlParser {
 		return (JsonArray) last.get(field);
 	}
 
-	private void muteToArray(int indent) {
+	private void strictMuteToArray(int indent) {
+		if (indent == 0 && getLastIndent() == 0) {
+			if (result instanceof JsonArray == false) {
+				result = new JsonArray();
+			}
+			return;
+		}
 		while (getLastIndent() > indent)
 			pendingIndents.remove(pendingIndents.size() - 1);
 
-		final JsonObject last = search(result, pendingIndents.size());
+		if (result instanceof JsonArray) {
+			((JsonArray) result).add(new JsonObject());
+			return;
+		}
+
+		final JsonObject last = (JsonObject) search(result, pendingIndents.size());
 		final String field = last.names().get(last.size() - 1);
 		if (last.get(field) instanceof JsonArray == false) {
 			last.set(field, new JsonArray());
 		} else {
 			((JsonArray) last.get(field)).add(new JsonObject());
 		}
-	}
-
-	private boolean isList(String s) {
-		return s.trim().startsWith("-");
 	}
 
 	private boolean isListStrict(String s) {
@@ -219,7 +172,7 @@ public class SimpleYamlParser {
 		return pendingIndents.get(pendingIndents.size() - 1);
 	}
 
-	private JsonObject getWorking(int indent) {
+	private JsonValue getWorking(int indent) {
 		if (indent > getLastIndent()) {
 			pendingIndents.add(indent);
 			return search(result, pendingIndents.size());
@@ -238,10 +191,24 @@ public class SimpleYamlParser {
 		return search(result, pendingIndents.size());
 	}
 
-	private static JsonObject search(JsonObject current, int size) {
-		if (size <= 1) {
-			return current;
+	private static JsonValue search(JsonValue current1, int size) {
+		if (current1 instanceof JsonArray) {
+			JsonArray array = (JsonArray) current1;
+
+			final JsonValue tmp;
+			if (array.size() == 0) {
+				tmp = new JsonObject();
+				array.add(tmp);
+			} else {
+				tmp = array.get(array.size() - 1);
+			}
+			return tmp;
 		}
+		if (size <= 1) {
+			return current1;
+		}
+
+		final JsonObject current = (JsonObject) current1;
 		final String last = current.names().get(current.size() - 1);
 		// System.err.println("last=" + last);
 		JsonValue tmp = current.get(last);
@@ -254,7 +221,11 @@ public class SimpleYamlParser {
 				tmp = array.get(array.size() - 1);
 			}
 		}
-		return search((JsonObject) tmp, size - 1);
+		if (tmp instanceof JsonString) {
+			System.err.println("JsonString? " + tmp);
+			return null;
+		}
+		return search(tmp, size - 1);
 	}
 
 	private int getIndent(String s) {

@@ -131,7 +131,7 @@ public final class CucaDiagramTxtMaker {
 		final int w = getWidth(ent);
 		final int h = getHeight(ent);
 		ug.getCharArea().drawBoxSimple(0, 0, w, h);
-		ug.getCharArea().drawStringsLRSimple(ent.getDisplay().as(), 1, 1);
+		ug.getCharArea().drawStringsLRSimple(ent.getDisplay().asList(), 1, 1);
 		if (showMember(ent)) {
 			int y = 2;
 			ug.getCharArea().drawHLine('-', y, 1, w - 1);

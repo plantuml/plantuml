@@ -63,14 +63,14 @@ public class BodyFactory {
 		return new BodierSimple();
 	}
 
-	public static TextBlock create1(List<CharSequence> rawBody, FontParam fontParam, ISkinParam skinParam,
-			Stereotype stereotype, ILeaf entity, Style style) {
-		return new BodyEnhanced1(rawBody, fontParam, skinParam, stereotype, entity, style);
+	public static TextBlock create1(HorizontalAlignment align, List<CharSequence> rawBody, FontParam fontParam,
+			ISkinParam skinParam, Stereotype stereotype, ILeaf entity, Style style) {
+		return new BodyEnhanced1(align, rawBody, fontParam, skinParam, stereotype, entity, style);
 	}
 
-	public static TextBlock create2(Display display, FontParam fontParam, ISkinParam skinParam,
-			HorizontalAlignment align, Stereotype stereotype, ILeaf entity, Style style) {
-		return new BodyEnhanced1(display, fontParam, skinParam, align, stereotype, entity, style);
+	public static TextBlock create2(HorizontalAlignment align, Display display, FontParam fontParam,
+			ISkinParam skinParam, Stereotype stereotype, ILeaf entity, Style style) {
+		return new BodyEnhanced1(align, display, fontParam, skinParam, stereotype, entity, style);
 	}
 
 	public static TextBlock create3(Display rawBody, FontParam fontParam, ISkinSimple skinParam,

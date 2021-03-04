@@ -76,7 +76,7 @@ public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 					gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
 		} else if (back == null || back instanceof HColorBackground) {
-			svg.setFillColor("none");
+			svg.setFillColor("#00000000");
 		} else {
 			final String backcolor = mapper.toSvg(back);
 			svg.setFillColor(backcolor);

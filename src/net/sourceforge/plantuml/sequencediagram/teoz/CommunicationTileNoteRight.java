@@ -51,9 +51,9 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTileNoteRight extends AbstractTile implements TileWithUpdateStairs, TileWithCallbackY {
+public class CommunicationTileNoteRight extends AbstractTile {
 
-	private final TileWithUpdateStairs tile;
+	private final Tile tile;
 	private final AbstractMessage message;
 	private final Rose skin;
 	private final ISkinParam skinParam;
@@ -69,12 +69,13 @@ public class CommunicationTileNoteRight extends AbstractTile implements TileWith
 	}
 
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
-		return tile.getYPoint(stringBounder);
+	public double getContactPointRelative() {
+		return tile.getContactPointRelative();
 	}
 
-	public CommunicationTileNoteRight(TileWithUpdateStairs tile, AbstractMessage message, Rose skin,
-			ISkinParam skinParam, LivingSpace livingSpace, Note noteOnMessage) {
+	public CommunicationTileNoteRight(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
+			LivingSpace livingSpace, Note noteOnMessage) {
+		super(((AbstractTile) tile).getStringBounder());
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
@@ -83,8 +84,9 @@ public class CommunicationTileNoteRight extends AbstractTile implements TileWith
 		this.livingSpace = livingSpace;
 	}
 
-	public void updateStairs(StringBounder stringBounder, double y) {
-		tile.updateStairs(stringBounder, y);
+	@Override
+	public void callbackY_internal(double y) {
+		tile.callbackY(y);
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
@@ -114,30 +116,24 @@ public class CommunicationTileNoteRight extends AbstractTile implements TileWith
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return Math.max(tile.getPreferredHeight(stringBounder), dim.getHeight());
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		return Math.max(tile.getPreferredHeight(), dim.getHeight());
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
-		tile.addConstraints(stringBounder);
+	public void addConstraints() {
+		tile.addConstraints();
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		return tile.getMinX(stringBounder);
+	public Real getMinX() {
+		return tile.getMinX();
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return getNotePosition(stringBounder).addFixed(dim.getWidth());
-	}
-
-	public void callbackY(double y) {
-		if (tile instanceof TileWithCallbackY) {
-			((TileWithCallbackY) tile).callbackY(y);
-		}
+	public Real getMaxX() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());
 	}
 
 }

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.eggs;
@@ -73,8 +73,9 @@ public class PSystemWelcome extends AbstractPSystem {
 		strings.add(" ");
 		strings.add("You will find more information about PlantUML syntax on <u>https://plantuml.com</u>");
 		strings.add(" ");
-		strings.add("If you use this software, you accept its license.");
+		strings.add("(If you use this software, you accept its license.)");
 		strings.add("(details by typing \"\"license\"\" keyword)");
+		strings.add(" ");
 		if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
 			strings.add(" ");
 			strings.add(" ");

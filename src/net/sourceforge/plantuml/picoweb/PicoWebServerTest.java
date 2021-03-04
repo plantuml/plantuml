@@ -248,11 +248,16 @@ public class PicoWebServerTest {
 	}
 
 	private static String httpRaw(String request) throws Exception {
-		try (Socket socket = socketConnection()) {
+		Socket socket = null;
+		try {
+			socket = socketConnection();
 			socket.getOutputStream().write(request.getBytes(UTF_8));
 			socket.shutdownOutput();
-			return readStreamAsString(socket.getInputStream())
-					.replaceAll("\r\n", "\n");
+			return readStreamAsString(socket.getInputStream()).replaceAll("\r\n", "\n");
+		} finally {
+			if (socket != null) {
+				socket.close();
+			}
 		}
 	}
 

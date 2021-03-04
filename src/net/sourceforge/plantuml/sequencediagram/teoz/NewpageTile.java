@@ -35,23 +35,23 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class NewpageTile extends AbstractTile implements TileWithCallbackY {
+public class NewpageTile extends AbstractTile {
 
 	private final Newpage newpage;
 	private final TileArguments tileArguments;
 
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
+	public double getContactPointRelative() {
 		return 0;
 	}
 
 	public NewpageTile(Newpage newpage, TileArguments tileArguments) {
+		super(tileArguments.getStringBounder());
 		this.newpage = newpage;
 		this.tileArguments = tileArguments;
 	}
@@ -59,24 +59,25 @@ public class NewpageTile extends AbstractTile implements TileWithCallbackY {
 	public void drawU(UGraphic ug) {
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
+	public double getPreferredHeight() {
 		return 0;
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
+	public Real getMinX() {
 		return tileArguments.getOrigin();
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
+	public Real getMaxX() {
 		return tileArguments.getOrigin();
 	}
 
 	private double y;
 
-	public void callbackY(double y) {
+	@Override
+	public void callbackY_internal(double y) {
 		this.y = y;
 	}
 
