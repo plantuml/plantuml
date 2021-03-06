@@ -28,11 +28,11 @@ function main() {
   });
 
   links.forEach(link => {
+    let name1 = link.classList[1];
+    let name2 = link.classList[2];
+
     if (elemsMap[name1]) {
       if (elemsMap[name2]) {
-        let name1 = link.classList[1];
-        let name2 = link.classList[2];
-
         let elem1 = elemsMap[name1];
         let elem2 = elemsMap[name2];
 
