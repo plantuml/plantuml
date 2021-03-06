@@ -76,6 +76,12 @@
 				<include name="**/*.skin" />
 			</fileset>
 		</copy>
+		<copy todir="build/svg">
+			<fileset dir="svg">
+				<include name="**/*.js" />
+				<include name="**/*.css" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="dist" depends="compile">

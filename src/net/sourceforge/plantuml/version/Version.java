@@ -68,7 +68,7 @@ public class Version {
 	private static String dotted(int nb) {
 		final String minor = "" + nb % MAJOR_SEPARATOR;
 		final String major = "" + nb / MAJOR_SEPARATOR;
-		return major + "." + minor.substring(0, 4) + "." + minor.substring(4);
+		return major + "." + minor.substring(0, 4) + "." + Integer.parseInt(minor.substring(4));
 	}
 
 	public static String versionString(int size) {
@@ -80,7 +80,7 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int beta = 0;
+		final int beta = 11;
 		return beta;
 	}
 

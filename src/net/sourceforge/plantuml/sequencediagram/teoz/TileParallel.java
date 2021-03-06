@@ -47,23 +47,18 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbackY {
+public class TileParallel extends CommonTile {
+
+	public TileParallel(StringBounder stringBounder) {
+		super(stringBounder);
+	}
 
 	private final List<Tile> tiles = new ArrayList<Tile>();
 
-	public void callbackY(double y) {
+	@Override
+	public void callbackY_internal(double y) {
 		for (Tile tile : tiles) {
-			if (tile instanceof TileWithCallbackY) {
-				((TileWithCallbackY) tile).callbackY(y);
-			}
-		}
-	}
-
-	public void updateStairs(StringBounder stringBounder, double y) {
-		for (Tile tile : tiles) {
-			if (tile instanceof TileWithUpdateStairs) {
-				((TileWithUpdateStairs) tile).updateStairs(stringBounder, y);
-			}
+			tile.callbackY(y);
 		}
 	}
 
@@ -72,44 +67,40 @@ public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbac
 	}
 
 	public void drawU(UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		// final double totalHeight = getPreferredHeight(stringBounder);
-		final double yPointAll = getYPoint(stringBounder);
+		final double yPointAll = getContactPointRelative();
 		for (Tile tile : tiles) {
-			final double yPoint = tile.getYPoint(stringBounder);
-			// tile.drawU(ug.apply(UTranslate.dy(totalHeight -
-			// tile.getPreferredHeight(stringBounder))));
+			final double yPoint = tile.getContactPointRelative();
 			tile.drawU(ug.apply(UTranslate.dy(yPointAll - yPoint)));
 		}
 	}
 
-	public double getYPoint(StringBounder stringBounder) {
+	public double getContactPointRelative() {
 		double result = 0;
 		for (Tile tile : tiles) {
-			result = Math.max(result, tile.getYPoint(stringBounder));
+			result = Math.max(result, tile.getContactPointRelative());
 		}
 		return result;
 	}
 
-	public double getZ(StringBounder stringBounder) {
+	public double getZZZ() {
 		double result = 0;
 		for (Tile tile : tiles) {
-			result = Math.max(result, tile.getZ(stringBounder));
+			result = Math.max(result, tile.getZZZ());
 		}
 		return result;
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		return getYPoint(stringBounder) + getZ(stringBounder);
+	public double getPreferredHeight() {
+		return getContactPointRelative() + getZZZ();
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 		for (Tile tile : tiles) {
-			tile.addConstraints(stringBounder);
+			tile.addConstraints();
 		}
 	}
 
-	public Real getMinX(final StringBounder stringBounder) {
+	public Real getMinX() {
 		return RealUtils.min(new AbstractCollection<Real>() {
 			public Iterator<Real> iterator() {
 				return new Iterator<Real>() {
@@ -120,7 +111,7 @@ public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbac
 					}
 
 					public Real next() {
-						return source.next().getMinX(stringBounder);
+						return source.next().getMinX();
 					}
 
 					public void remove() {
@@ -135,7 +126,7 @@ public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbac
 		});
 	}
 
-	public Real getMaxX(final StringBounder stringBounder) {
+	public Real getMaxX() {
 		return RealUtils.max(new AbstractCollection<Real>() {
 			public Iterator<Real> iterator() {
 				return new Iterator<Real>() {
@@ -146,7 +137,7 @@ public class TileParallel implements Tile, TileWithUpdateStairs, TileWithCallbac
 					}
 
 					public Real next() {
-						return source.next().getMaxX(stringBounder);
+						return source.next().getMaxX();
 					}
 
 					public void remove() {

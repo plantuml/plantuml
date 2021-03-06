@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.ugraphic.PlacementStrategy;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyVisibility;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Center;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Left;
+import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Right;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -284,7 +285,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			} else if (align == HorizontalAlignment.CENTER) {
 				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);
 			} else {
-				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);
+				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);
 			}
 			group = new ULayoutGroup(placementStrategy);
 			for (CharSequence cs : members) {

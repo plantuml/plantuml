@@ -66,11 +66,13 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
-		return getComponent(stringBounder).getPreferredHeight(stringBounder) / 2;
+	public double getContactPointRelative() {
+		return getComponent(getStringBounder()).getPreferredHeight(getStringBounder()) / 2;
 	}
 
-	public NoteTile(LivingSpace livingSpace1, LivingSpace livingSpace2, Note note, Rose skin, ISkinParam skinParam) {
+	public NoteTile(StringBounder stringBounder, LivingSpace livingSpace1, LivingSpace livingSpace2, Note note,
+			Rose skin, ISkinParam skinParam) {
+		super(stringBounder);
 		this.livingSpace1 = livingSpace1;
 		this.livingSpace2 = livingSpace2;
 		this.note = note;
@@ -140,20 +142,20 @@ public class NoteTile extends AbstractTile implements Tile {
 		}
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 		// final Component comp = getComponent(stringBounder);
 		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		// final double width = dim.getWidth();
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		final Real result = getX(stringBounder);
+	public Real getMinX() {
+		final Real result = getX(getStringBounder());
 		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
 			final Real x1 = livingSpace1.getPosB();
 			return RealUtils.min(result, x1);
@@ -161,10 +163,10 @@ public class NoteTile extends AbstractTile implements Tile {
 		return result;
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		final Real result = getX(stringBounder).addFixed(getUsedWidth(stringBounder));
+	public Real getMaxX() {
+		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));
 		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
-			final Real x2 = livingSpace2.getPosD(stringBounder);
+			final Real x2 = livingSpace2.getPosD(getStringBounder());
 			return RealUtils.max(result, x2);
 		}
 		return result;

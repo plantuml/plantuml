@@ -79,13 +79,20 @@ public class BlocLines implements Iterable<StringLocated> {
 		return loadInternal(br, location);
 	}
 
+	public static BlocLines from(List<StringLocated> lines) {
+		return new BlocLines(lines);
+	}
+
 	private static BlocLines loadInternal(final BufferedReader br, LineLocation location) throws IOException {
 		final List<StringLocated> result = new ArrayList<StringLocated>();
 		String s;
-		while ((s = br.readLine()) != null) {
-			result.add(new StringLocated(s, location));
+		try {
+			while ((s = br.readLine()) != null) {
+				result.add(new StringLocated(s, location));
+			}
+		} finally {
+			br.close();
 		}
-		br.close();
 		return new BlocLines(result);
 	}
 

@@ -35,8 +35,25 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.graphic.StringBounder;
 
-public interface TileWithCallbackY extends Tile {
+public abstract class CommonTile implements Tile {
 
-	public void callbackY(double y);
+	private final StringBounder stringBounder;
+
+	public CommonTile(StringBounder stringBounder) {
+		this.stringBounder = stringBounder;
+	}
+
+	final public void callbackY(double y) {
+		callbackY_internal(y);
+	}
+
+	public void callbackY_internal(double y) {
+	}
+
+	protected final StringBounder getStringBounder() {
+		return stringBounder;
+	}
+
 }

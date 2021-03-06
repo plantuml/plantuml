@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 
@@ -66,7 +67,7 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String codeString = arg.getLazzy("CODE", 0);
 		final String field = arg.get("FIELD", 0);
 

@@ -39,12 +39,14 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -56,10 +58,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTile extends AbstractTile implements TileWithUpdateStairs, TileWithCallbackY {
+public class CommunicationTile extends AbstractTile {
 
 	private final LivingSpace livingSpace1;
 	private final LivingSpace livingSpace2;
+	private final LivingSpaces livingSpaces;
 	private final Message message;
 	private final Rose skin;
 	private final ISkinParam skinParam;
@@ -73,13 +76,12 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		return super.toString() + " " + message;
 	}
 
-	public CommunicationTile(LivingSpace livingSpace1, LivingSpace livingSpace2, Message message, Rose skin,
+	public CommunicationTile(StringBounder stringBounder, LivingSpaces livingSpaces, Message message, Rose skin,
 			ISkinParam skinParam) {
-		if (livingSpace1 == livingSpace2) {
-			throw new IllegalArgumentException();
-		}
-		this.livingSpace1 = livingSpace1;
-		this.livingSpace2 = livingSpace2;
+		super(stringBounder);
+		this.livingSpace1 = livingSpaces.get(message.getParticipant1());
+		this.livingSpace2 = livingSpaces.get(message.getParticipant2());
+		this.livingSpaces = livingSpaces;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
@@ -87,11 +89,6 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		if (message.isCreate()) {
 			livingSpace2.goCreate();
 		}
-		// for (LifeEvent lifeEvent : message.getLiveEvents()) {
-		// System.err.println("lifeEvent = " + lifeEvent);
-		// // livingSpace1.addLifeEvent(this, lifeEvent);
-		// // livingSpace2.addLifeEvent(this, lifeEvent);
-		// }
 	}
 
 	public boolean isReverse(StringBounder stringBounder) {
@@ -117,37 +114,45 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
-		/*
-		 * if (isSelf()) { arrowConfiguration = arrowConfiguration.self(); } else
-		 */
 		if (isReverse(stringBounder)) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
 		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());
 
-		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
+		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
 				message.getLabelNumbered());
-		return comp;
+	}
+
+	private ArrowComponent getComponentMulticast(StringBounder stringBounder, boolean reverse) {
+		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
+		if (reverse) {
+			arrowConfiguration = arrowConfiguration.reverse();
+		}
+		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());
+
+		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam, Display.NULL);
 	}
 
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
-		return getComponent(stringBounder).getYPoint(stringBounder);
+	public double getContactPointRelative() {
+		return getComponent(getStringBounder()).getYPoint(getStringBounder());
 	}
 
 	public static final double LIVE_DELTA_SIZE = 5;
 
-	public void updateStairs(StringBounder stringBounder, double y) {
-		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		// final Point2D p2 = comp.getEndPoint(stringBounder, dim);
-		// System.err.println("CommunicationTile::updateStairs y=" + y + " p1=" + p1 + " p2=" + p2 + " dim=" + dim);
-		final double arrowY = comp.getStartPoint(stringBounder, dim).getY();
+	@Override
+	public void callbackY_internal(double y) {
+		if (message.isCreate()) {
+			livingSpace2.goCreate(y);
+		}
+
+		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+
+		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
 		livingSpace1.addStepForLivebox(getEvent(), y + arrowY);
 		livingSpace2.addStepForLivebox(getEvent(), y + arrowY);
-
-		// System.err.println("CommunicationTile::updateStairs msg=" + message + " y=" + y + " arrowY=" + arrowY);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -161,6 +166,7 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		double x1 = getPoint1(stringBounder).getCurrentValue();
 		double x2 = getPoint2(stringBounder).getCurrentValue();
+		drawMulticast(ug.apply(UTranslate.dy(comp.getPosArrow(stringBounder))));
 
 		final Area area;
 		if (isReverse(stringBounder)) {
@@ -193,24 +199,45 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	private void drawMulticast(final UGraphic ug) {
+		if (message.getMulticast().size() == 0) {
+			return;
+		}
+		final StringBounder stringBounder = ug.getStringBounder();
+
+		final double x1 = getPoint1(stringBounder).getCurrentValue();
+		double dy = 2;
+		for (Participant participant : message.getMulticast()) {
+			final double x2 = livingSpaces.get(participant).getPosC(stringBounder).getCurrentValue();
+			final boolean reverse = x2 < x1;
+			final ArrowComponent comp = getComponentMulticast(stringBounder, reverse);
+			final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+			final Area area = new Area(Math.abs(x2 - x1), dim.getHeight());
+			final UGraphic ug2 = ug.apply(UTranslate.dx(Math.min(x1, x2))).apply(UTranslate.dy(dy));
+			dy += 2;
+			comp.drawU(ug2, area, (Context2D) ug2);
+		}
+
+	}
+
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		double height = dim.getHeight();
 		if (isCreate()) {
-			height = Math.max(height, livingSpace2.getHeadPreferredDimension(stringBounder).getHeight());
+			height = Math.max(height, livingSpace2.getHeadPreferredDimension(getStringBounder()).getHeight());
 		}
 		return height;
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public void addConstraints() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double width = dim.getWidth();
 
-		Real point1 = getPoint1(stringBounder);
-		Real point2 = getPoint2(stringBounder);
-		if (isReverse(stringBounder)) {
+		Real point1 = getPoint1(getStringBounder());
+		Real point2 = getPoint2(getStringBounder());
+		if (isReverse(getStringBounder())) {
 			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 			if (level1 > 0) {
@@ -241,24 +268,18 @@ public class CommunicationTile extends AbstractTile implements TileWithUpdateSta
 		return livingSpace2.getPosC(stringBounder);
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		if (isReverse(stringBounder)) {
-			return getPoint2(stringBounder);
+	public Real getMinX() {
+		if (isReverse(getStringBounder())) {
+			return getPoint2(getStringBounder());
 		}
-		return getPoint1(stringBounder);
+		return getPoint1(getStringBounder());
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		if (isReverse(stringBounder)) {
-			return getPoint1(stringBounder);
+	public Real getMaxX() {
+		if (isReverse(getStringBounder())) {
+			return getPoint1(getStringBounder());
 		}
-		return getPoint2(stringBounder);
-	}
-
-	public void callbackY(double y) {
-		if (message.isCreate()) {
-			livingSpace2.goCreate(y);
-		}
+		return getPoint2(getStringBounder());
 	}
 
 }

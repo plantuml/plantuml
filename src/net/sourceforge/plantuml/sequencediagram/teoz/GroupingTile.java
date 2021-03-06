@@ -59,12 +59,13 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GroupingTile extends AbstractTile implements TileWithCallbackY {
+public class GroupingTile extends AbstractTile {
 
 	private static final int EXTERNAL_MARGINX1 = 3;
 	private static final int EXTERNAL_MARGINX2 = 9;
 	private static final int MARGINX = 16;
-	private static final int MARGINY = 10;
+	// private static final int MARGINY = 10;
+	private static final int MARGINY_MAGIC = 20;
 	private List<Tile> tiles = new ArrayList<Tile>();
 	private final Real min;
 	private final Real max;
@@ -83,24 +84,27 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 	}
 
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
+	public double getContactPointRelative() {
 		return 0;
 	}
 
-	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBachColorChanged,
+	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBackColorChanged,
 			TileArguments tileArgumentsOriginal) {
+		super(tileArgumentsBackColorChanged.getStringBounder());
 		final StringBounder stringBounder = tileArgumentsOriginal.getStringBounder();
 		this.start = start;
 		this.display = start.getTitle().equals("group") ? Display.create(start.getComment())
 				: Display.create(start.getTitle(), start.getComment());
 		this.skin = tileArgumentsOriginal.getSkin();
 		// this.skinParam = tileArgumentsOriginal.getSkinParam();
-		this.skinParam = tileArgumentsBachColorChanged.getSkinParam();
+		this.skinParam = tileArgumentsBackColorChanged.getSkinParam();
 
 		final List<Real> min2 = new ArrayList<Real>();
 		final List<Real> max2 = new ArrayList<Real>();
 
 		final List<Tile> allElses = new ArrayList<Tile>();
+		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
+
 		while (it.hasNext()) {
 			final Event ev = it.next();
 			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.END) {
@@ -110,31 +114,31 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 				tiles.add(tile);
 			}
 		}
-		tiles = mergeParallel(tiles);
+
+		tiles = mergeParallel(getStringBounder(), tiles);
+
 		for (Tile tile : tiles) {
-			bodyHeight += tile.getPreferredHeight(stringBounder);
+			bodyHeight += tile.getPreferredHeight();
 			final Event ev = tile.getEvent();
 			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
 				allElses.add(tile);
 				continue;
 			}
-			min2.add(tile.getMinX(stringBounder).addFixed(-MARGINX));
-			final Real m = tile.getMaxX(stringBounder);
+			min2.add(tile.getMinX().addFixed(-MARGINX));
+			final Real m = tile.getMaxX();
 			// max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
 			max2.add(m.addFixed(MARGINX));
 		}
-		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		final double width = dim1.getWidth();
 		if (min2.size() == 0) {
 			min2.add(tileArgumentsOriginal.getOrigin());
 		}
 		this.min = RealUtils.min(min2);
 		for (Tile anElse : allElses) {
-			max2.add(anElse.getMaxX(stringBounder));
+			max2.add(anElse.getMaxX());
 		}
 		max2.add(this.min.addFixed(width + 16));
 		this.max = RealUtils.max(max2);
-
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
@@ -154,36 +158,31 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
 
-		if (ug instanceof LiveBoxFinder == false) {
-			comp.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())), area, (Context2D) ug);
-			drawAllElses(ug);
-		}
-		// ug.apply(UChangeBackColor.nnn(HtmlColorUtils.LIGHT_GRAY)).draw(new
-		// URectangle(area.getDimensionToUse()));
+		comp.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())), area, (Context2D) ug);
+		drawAllElses(ug);
 
-		double h = dim1.getHeight() + MARGINY / 2;
+		double h = dim1.getHeight() + MARGINY_MAGIC / 2;
 		for (Tile tile : tiles) {
-			ug.apply(UTranslate.dy(h)).draw(tile);
-			final double preferredHeight = tile.getPreferredHeight(stringBounder);
+			tile.drawU(ug.apply(UTranslate.dy(h)));
+			final double preferredHeight = tile.getPreferredHeight();
 			h += preferredHeight;
 		}
 	}
 
 	private double getTotalHeight(StringBounder stringBounder) {
 		final Dimension2D dimIfEmpty = getPreferredDimensionIfEmpty(stringBounder);
-		return bodyHeight + dimIfEmpty.getHeight() + MARGINY / 2;
+		return bodyHeight + dimIfEmpty.getHeight() + MARGINY_MAGIC / 2;
 	}
 
 	private void drawAllElses(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double totalHeight = getTotalHeight(stringBounder);
-		// final double suppHeight =
-		// getPreferredDimensionIfEmpty(stringBounder).getHeight() + MARGINY / 2;
+
 		final List<Double> ys = new ArrayList<Double>();
 		for (Tile tile : tiles) {
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
-				ys.add(elseTile.getCallbackY() - y + MARGINY / 2/* suppHeight */);
+				ys.add(elseTile.getCallbackY() - y + MARGINY_MAGIC / 2);
 			}
 		}
 		ys.add(totalHeight);
@@ -199,34 +198,35 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 		}
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
-		return dim1.getHeight() + bodyHeight + MARGINY;
+	public double getPreferredHeight() {
+		final Dimension2D dim1 = getPreferredDimensionIfEmpty(getStringBounder());
+		return dim1.getHeight() + bodyHeight + MARGINY_MAGIC;
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 		for (Tile tile : tiles) {
-			tile.addConstraints(stringBounder);
+			tile.addConstraints();
 		}
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
+	public Real getMinX() {
 		return min.addFixed(-EXTERNAL_MARGINX1);
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
+	public Real getMaxX() {
 		return max.addFixed(EXTERNAL_MARGINX2);
 	}
 
 	private double y;
 
-	public void callbackY(double y) {
+	@Override
+	public void callbackY_internal(double y) {
 		this.y = y;
 	}
 
 	public static double fillPositionelTiles(StringBounder stringBounder, double y, List<Tile> tiles,
 			final List<YPositionedTile> local, List<YPositionedTile> full) {
-		for (Tile tile : mergeParallel(tiles)) {
+		for (Tile tile : mergeParallel(stringBounder, tiles)) {
 			final YPositionedTile ytile = new YPositionedTile(tile, y);
 			local.add(ytile);
 			full.add(ytile);
@@ -236,7 +236,7 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 				final ArrayList<YPositionedTile> local2 = new ArrayList<YPositionedTile>();
 				fillPositionelTiles(stringBounder, y + headerHeight, groupingTile.tiles, local2, full);
 			}
-			y += tile.getPreferredHeight(stringBounder);
+			y += tile.getPreferredHeight();
 		}
 		return y;
 
@@ -246,14 +246,14 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 		return getPreferredDimensionIfEmpty(stringBounder).getHeight() + 10;
 	}
 
-	private static List<Tile> mergeParallel(List<Tile> tiles) {
+	private static List<Tile> mergeParallel(StringBounder stringBounder, List<Tile> tiles) {
 		TileParallel pending = null;
 		tiles = removeEmptyCloseToParallel(tiles);
 		final List<Tile> result = new ArrayList<Tile>();
 		for (Tile tile : tiles) {
 			if (isParallel(tile)) {
 				if (pending == null) {
-					pending = new TileParallel();
+					pending = new TileParallel(stringBounder);
 					final Tile tmp = result.get(result.size() - 1);
 					if (tmp instanceof LifeEventTile) {
 						pending.add(result.get(result.size() - 2));
@@ -293,7 +293,7 @@ public class GroupingTile extends AbstractTile implements TileWithCallbackY {
 		}
 	}
 
-	private static boolean isParallel(Tile tile) {
+	public static boolean isParallel(Tile tile) {
 		return tile instanceof TileParallel == false && tile.getEvent().isParallel();
 	}
 

@@ -418,7 +418,7 @@ public class Display implements Iterable<CharSequence> {
 				this.defaultCreoleMode);
 	}
 
-	public List<? extends CharSequence> as() {
+	public List<? extends CharSequence> asList() {
 		return Collections.unmodifiableList(displayData);
 	}
 

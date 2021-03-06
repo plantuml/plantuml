@@ -92,7 +92,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClassMultilines.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
-				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class|entity)"), //
+				new RegexLeaf("TYPE", "(interface|enum|annotation|abstract[%s]+class|abstract|class|entity)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//

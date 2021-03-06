@@ -97,9 +97,9 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 		}
 
 		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawStringsLRUnicode(stringsToDisplay.as(), 6, 1);
+			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), 6, 1);
 		} else {
-			charArea.drawStringsLRSimple(stringsToDisplay.as(), 6, 1);
+			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 6, 1);
 		}
 	}
 
@@ -126,5 +126,10 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 	public double getYPoint(StringBounder stringBounder) {
 		throw new UnsupportedOperationException();
 	}
+	
+	public double getPosArrow(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
 
 }

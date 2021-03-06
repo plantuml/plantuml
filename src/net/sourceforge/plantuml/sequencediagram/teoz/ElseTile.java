@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class ElseTile extends AbstractTile implements TileWithCallbackY {
+public class ElseTile extends AbstractTile {
 
 	private final Rose skin;
 	private final ISkinParam skinParam;
@@ -61,11 +61,12 @@ public class ElseTile extends AbstractTile implements TileWithCallbackY {
 	}
 
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
+	public double getContactPointRelative() {
 		return 0;
 	}
 
 	public ElseTile(GroupingLeaf anElse, Rose skin, ISkinParam skinParam, Tile parent) {
+		super(((AbstractTile) parent).getStringBounder());
 		this.anElse = anElse;
 		this.skin = skin;
 		this.skinParam = skinParam;
@@ -96,14 +97,15 @@ public class ElseTile extends AbstractTile implements TileWithCallbackY {
 		// // final double totalParentHeight = parent.getPreferredHeight(stringBounder);
 		// // height = totalParentHeight - (startingY - y);
 		// // }
-		// final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(), height);
+		// final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(),
+		// height);
 		// ug = ug.apply(new UTranslate(min.getCurrentValue(), 0));
 		// comp.drawU(ug, area, context);
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 
 		double height = dim.getHeight();
 		if (anElse.getComment() != null) {
@@ -112,25 +114,26 @@ public class ElseTile extends AbstractTile implements TileWithCallbackY {
 		return height;
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 		// final Component comp = getComponent(stringBounder);
 		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		// final double width = dim.getWidth();
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		return parent.getMinX(stringBounder);
+	public Real getMinX() {
+		return parent.getMinX();
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return getMinX(stringBounder).addFixed(dim.getWidth());
+	public Real getMaxX() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		return getMinX().addFixed(dim.getWidth());
 	}
 
 	private double y;
 
-	public void callbackY(double y) {
+	@Override
+	public void callbackY_internal(double y) {
 		this.y = y;
 	}
 

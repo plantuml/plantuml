@@ -63,6 +63,7 @@ public class DividerTile extends AbstractTile implements Tile {
 	}
 
 	public DividerTile(Divider divider, TileArguments tileArguments) {
+		super(tileArguments.getStringBounder());
 		this.tileArguments = tileArguments;
 		this.divider = divider;
 		this.skin = tileArguments.getSkin();
@@ -87,25 +88,25 @@ public class DividerTile extends AbstractTile implements Tile {
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 		// final Component comp = getComponent(stringBounder);
 		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		// final double width = dim.getWidth();
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
+	public Real getMinX() {
 		return origin;
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public Real getMaxX() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return origin.addFixed(dim.getWidth());
 	}
 

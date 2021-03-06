@@ -53,6 +53,7 @@ import h.ST_Agnodeinfo_t;
 import h.ST_Agraph_s;
 import h.ST_GVC_s;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.style.PName;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import smetana.core.CString;
@@ -106,16 +106,21 @@ public class SmetanaForJson {
 	public SmetanaForJson(UGraphic ug, ISkinParam skinParam) {
 		this.stringBounder = ug.getStringBounder();
 		this.skinParam = skinParam;
-		this.ug = getStyle().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
+		this.ug = ug;
 	}
 
-	private Style getStyle() {
-		return StyleSignature.of(SName.root, SName.element, SName.jsonDiagram)
+	private UGraphic getUgFor(SName name) {
+		return getStyle(name).applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
+	}
+
+	private Style getStyle(SName name) {
+		return StyleSignature.of(SName.root, SName.element,
+				skinParam.getUmlDiagramType() == UmlDiagramType.YAML ? SName.yamlDiagram : SName.jsonDiagram, name)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private ST_Agnode_s manageOneNode(JsonValue current, List<String> highlighted) {
-		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted);
+		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted, getStyle(SName.node));
 		final ST_Agnode_s node1 = createNode(block.calculateDimension(stringBounder), block.size(), current.isArray(),
 				(int) block.getWidthColA(stringBounder), (int) block.getWidthColB(stringBounder));
 		nodes.add(new InternalNode(block, node1));
@@ -157,14 +162,15 @@ public class SmetanaForJson {
 		xMirror = new Mirror(max);
 
 		for (InternalNode node : nodes) {
-			node.block.drawU(ug.apply(getPosition(node.node)));
+			node.block.drawU(getUgFor(SName.node).apply(getPosition(node.node)));
 		}
-		final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor color = getStyle(SName.arrow).value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		for (ST_Agedge_s edge : edges) {
 			final JsonCurve curve = getCurve(edge, 13);
-			curve.drawCurve(color, ug.apply(new UStroke(3, 3, 1)));
-			curve.drawSpot(ug.apply(color.bg()));
+			// curve.drawCurve(color, getUgFor(SName.arrow).apply(new UStroke(3, 3, 1)));
+			curve.drawCurve(color, getUgFor(SName.arrow));
+			curve.drawSpot(getUgFor(SName.arrow).apply(color.bg()));
 		}
 	}
 
@@ -235,7 +241,8 @@ public class SmetanaForJson {
 		agsafeset(node, new CString("height"), new CString("" + width), new CString(""));
 		agsafeset(node, new CString("width"), new CString("" + height), new CString(""));
 
-		final String dotLabel = getDotLabel(size, isArray, colAwidth - 8, colBwidth - 8);
+		final int lineHeight = 0;
+		final String dotLabel = getDotLabel(size, isArray, colAwidth - 8, colBwidth - 8, lineHeight);
 		if (size > 0) {
 			agsafeset(node, new CString("label"), new CString(dotLabel), new CString(""));
 		}
@@ -250,14 +257,15 @@ public class SmetanaForJson {
 		return node;
 	}
 
-	private String getDotLabel(int size, boolean isArray, int widthA, int widthB) {
+	private String getDotLabel(int size, boolean isArray, int widthA, int widthB, int height) {
 		final StringBuilder sb = new StringBuilder("");
 		if (isArray == false) {
-			sb.append("{_dim_0_" + widthA + "_|{");
+			// "+height+"
+			sb.append("{_dim_" + height + "_" + widthA + "_|{");
 		}
 		for (int i = 0; i < size; i++) {
 			sb.append("<P" + i + ">");
-			sb.append("_dim_0_" + widthB + "_");
+			sb.append("_dim_" + height + "_" + widthB + "_");
 			if (i < size - 1)
 				sb.append("|");
 		}

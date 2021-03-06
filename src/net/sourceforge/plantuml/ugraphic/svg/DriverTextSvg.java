@@ -86,6 +86,11 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 			textDecoration = "underline";
 		} else if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			textDecoration = "line-through";
+		} else if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
+			// Beware that some current SVG implementations do not render the wave properly
+			// (e.g. Chrome just draws a straight line)
+			// Works ok on Firefox 85.
+			textDecoration = "wavy underline";
 		}
 
 		String text = shape.getText();

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class JsonDiagram extends UmlDiagram {
+public class JsonDiagram extends TitledDiagram {
 
 	private final JsonValue root;
 	private final List<String> highlighted;
@@ -93,7 +93,7 @@ public class JsonDiagram extends UmlDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final Scale scale = getScale();
 

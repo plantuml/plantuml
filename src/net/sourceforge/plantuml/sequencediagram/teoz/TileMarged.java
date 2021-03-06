@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,6 +49,7 @@ public class TileMarged extends AbstractTile implements Tile {
 	private final double y2;
 
 	public TileMarged(Tile tile, double x1, double x2, double y1, double y2) {
+		super(((AbstractTile) tile).getStringBounder());
 		this.tile = tile;
 		this.x1 = x1;
 		this.x2 = x2;
@@ -62,20 +62,20 @@ public class TileMarged extends AbstractTile implements Tile {
 
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		return tile.getPreferredHeight(stringBounder) + y1 + y2;
+	public double getPreferredHeight() {
+		return tile.getPreferredHeight() + y1 + y2;
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
-		tile.addConstraints(stringBounder);
+	public void addConstraints() {
+		tile.addConstraints();
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		return tile.getMinX(stringBounder);
+	public Real getMinX() {
+		return tile.getMinX();
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		return tile.getMaxX(stringBounder).addFixed(x1 + x2);
+	public Real getMaxX() {
+		return tile.getMaxX().addFixed(x1 + x2);
 	}
 
 	public Event getEvent() {

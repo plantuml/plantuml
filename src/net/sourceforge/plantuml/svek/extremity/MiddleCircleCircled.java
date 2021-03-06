@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 class MiddleCircleCircled extends Extremity {
 
@@ -80,11 +80,11 @@ class MiddleCircleCircled extends Extremity {
 		final double d = 0;
 		if (mode == MiddleCircleCircledMode.MODE1 || mode == MiddleCircleCircledMode.BOTH) {
 			final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, angle, 90);
-			ug.apply(new UTranslate(-radius2 + d, -radius2 + d)).draw(arc1);
+			ug.apply(new HColorNone().bg()).apply(new UTranslate(-radius2 + d, -radius2 + d)).draw(arc1);
 		}
 		if (mode == MiddleCircleCircledMode.MODE2 || mode == MiddleCircleCircledMode.BOTH) {
 			final UEllipse arc2 = new UEllipse(2 * radius2, 2 * radius2, angle + 180, 90);
-			ug.apply(new UTranslate(-radius2 + d, -radius2 + d)).draw(arc2);
+			ug.apply(new HColorNone().bg()).apply(new UTranslate(-radius2 + d, -radius2 + d)).draw(arc2);
 		}
 		ug.apply(new UTranslate(-radius1, -radius1)).draw(circle);
 	}

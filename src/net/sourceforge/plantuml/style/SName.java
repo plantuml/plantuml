@@ -105,7 +105,8 @@ public enum SName {
 	task, //
 	title, //
 	usecase, //
-	wbsDiagram; //
+	wbsDiagram, //
+	yamlDiagram; //
 
 	public static String depth(int level) {
 		return "depth(" + level + ")";

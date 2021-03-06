@@ -30,35 +30,56 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.jsondiagram;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleLoader;
 
-public interface Bodier {
+public class StyleExtractor {
 
-	public void setLeaf(ILeaf leaf);
+	private final List<String> list = new ArrayList<String>();
+	private final List<StringLocated> style = new ArrayList<StringLocated>();
 
-	public Display getFieldsToDisplay();
+	public StyleExtractor(Iterator<StringLocated> data) {
+		while (data.hasNext()) {
+			StringLocated line = data.next();
+			if (line.getString().trim().equals("<style>")) {
+				while (data.hasNext()) {
+					style.add(line);
+					if (line.getString().trim().equals("</style>")) {
+						break;
+					}
+					line = data.next();
+				}
+			} else {
+				list.add(line.getString());
+			}
+		}
+	}
 
-	public Display getMethodsToDisplay();
+	public void applyStyles(ISkinParam skinParam) {
+		if (style.size() > 0) {
+			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
+			final BlocLines blocLines = BlocLines.from(style);
+			for (Style modifiedStyle : StyleLoader.getDeclaredStyles(blocLines.subExtract(1, 1), styleBuilder)) {
+				skinParam.muteStyle(modifiedStyle);
+			}
+		}
+	}
 
-	public void addFieldOrMethod(String s) throws NoSuchColorException;
+	public Iterator<String> getIterator() {
+		return list.iterator();
+	}
 
-	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype, Style style);
-
-	public List<CharSequence> getRawBody();
-
-	public void muteClassToObject();
-
-	public boolean hasUrl();
 }

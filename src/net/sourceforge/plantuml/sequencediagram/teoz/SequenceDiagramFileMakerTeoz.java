@@ -227,7 +227,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.englobers = new Englobers(tileArguments);
 		final PlayingSpace mainTile = new PlayingSpace(diagram, englobers, tileArguments);
 		this.livingSpaces.addConstraints(stringBounder);
-		mainTile.addConstraints(stringBounder);
+		mainTile.addConstraints();
 		this.englobers.addConstraints(stringBounder);
 		origin.compileNow();
 		tileArguments.setBordered(mainTile);

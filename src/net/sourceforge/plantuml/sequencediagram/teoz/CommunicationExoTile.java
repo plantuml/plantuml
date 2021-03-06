@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationExoTile extends AbstractTile implements TileWithUpdateStairs {
+public class CommunicationExoTile extends AbstractTile {
 
 	private final LivingSpace livingSpace;
 	private final MessageExo message;
@@ -68,6 +68,7 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 
 	public CommunicationExoTile(LivingSpace livingSpace, MessageExo message, Rose skin, ISkinParam skinParam,
 			TileArguments tileArguments) {
+		super(tileArguments.getStringBounder());
 		this.tileArguments = tileArguments;
 		this.livingSpace = livingSpace;
 		this.message = message;
@@ -76,8 +77,8 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 	}
 
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
-		return getComponent(stringBounder).getYPoint(stringBounder);
+	public double getContactPointRelative() {
+		return getComponent(getStringBounder()).getYPoint(getStringBounder());
 	}
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
@@ -129,9 +130,9 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 		return message.isShortArrow();
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 
@@ -141,15 +142,15 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 		return dim.getWidth();
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public void addConstraints() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double width = dim.getWidth();
 
 		if (message.getType().isRightBorder()) {
 
 		} else {
-			livingSpace.getPosC(stringBounder).ensureBiggerThan(tileArguments.getOrigin().addFixed(width));
+			livingSpace.getPosC(getStringBounder()).ensureBiggerThan(tileArguments.getOrigin().addFixed(width));
 		}
 
 		// final Real point1 = getPoint1(stringBounder);
@@ -165,10 +166,11 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 		// }
 	}
 
-	public void updateStairs(StringBounder stringBounder, double y) {
-		final ArrowComponent comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final double arrowY = comp.getStartPoint(stringBounder, dim).getY();
+	@Override
+	public void callbackY_internal(double y) {
+		final ArrowComponent comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
 		livingSpace.addStepForLivebox(getEvent(), y + arrowY);
 
@@ -201,15 +203,15 @@ public class CommunicationExoTile extends AbstractTile implements TileWithUpdate
 		return livingSpace.getPosC(stringBounder).getCurrentValue();
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		return getPoint1(stringBounder);
+	public Real getMinX() {
+		return getPoint1(getStringBounder());
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+	public Real getMaxX() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double width = dim.getWidth();
-		return getPoint1(stringBounder).addFixed(width);
+		return getPoint1(getStringBounder()).addFixed(width);
 	}
 
 }

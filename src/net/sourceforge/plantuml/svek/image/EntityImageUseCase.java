@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -87,8 +87,15 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		final TextBlock tmp = BodyFactory.create2(entity.getDisplay(), FontParam.USECASE, skinParam,
-				HorizontalAlignment.CENTER, stereotype, entity, getStyle());
+		final HorizontalAlignment align;
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getStyle();
+			align = style.getHorizontalAlignment();
+		} else {
+			align = HorizontalAlignment.CENTER;
+		}
+		final TextBlock tmp = BodyFactory.create2(skinParam.getDefaultTextAlignment(align), entity.getDisplay(),
+				FontParam.USECASE, skinParam, stereotype, entity, getStyle());
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {

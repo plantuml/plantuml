@@ -135,9 +135,9 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		// final int position = Math.max(0, (width - textWidth) / 2);
 
 		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawStringsLRUnicode(stringsToDisplay.as(), (width - textWidth) / 2, 0);
+			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), (width - textWidth) / 2, 0);
 		} else {
-			charArea.drawStringsLRSimple(stringsToDisplay.as(), (width - textWidth) / 2, 0);
+			charArea.drawStringsLRSimple(stringsToDisplay.asList(), (width - textWidth) / 2, 0);
 		}
 	}
 
@@ -166,6 +166,10 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 	}
 
 	public double getYPoint(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
+	public double getPosArrow(StringBounder stringBounder) {
 		throw new UnsupportedOperationException();
 	}
 

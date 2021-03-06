@@ -217,13 +217,16 @@ public class LicenseInfo {
 		if (br == null) {
 			return null;
 		}
-		final String s = br.readLine();
-		br.close();
-		final LicenseInfo result = retrieveNamed(s);
-		if (result != null) {
-			Log.info("Reading license from " + f.getAbsolutePath());
+		try {
+			final String s = br.readLine();
+			final LicenseInfo result = retrieveNamed(s);
+			if (result != null) {
+				Log.info("Reading license from " + f.getAbsolutePath());
+			}
+			return result;
+		} finally {
+			br.close();
 		}
-		return result;
 	}
 
 	public static void main(String[] args) {

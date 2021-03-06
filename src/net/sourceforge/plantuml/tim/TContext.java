@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
@@ -195,17 +194,6 @@ public class TContext {
 		} catch (Exception e) {
 			return TValue.fromString(result);
 		}
-	}
-
-	private TValue fromJsonOld(TMemory memory, String name) {
-		final int x = name.indexOf('.');
-		final TValue data = memory.getVariable(name.substring(0, x));
-		if (data == null) {
-			return null;
-		}
-		final JsonObject json = (JsonObject) data.toJson();
-		final JsonValue result = json.get(name.substring(x + 1));
-		return TValue.fromJson(result);
 	}
 
 	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body) {
@@ -498,9 +486,13 @@ public class TContext {
 						if (reader == null) {
 							throw EaterException.located("cannot include " + location);
 						}
-						ReadLine readerline = ReadLineReader.create(reader, location, s.getLocation());
-						readerline = new UncommentReadLine(readerline);
-						sub = Sub.fromFile(readerline, blocname, this, memory);
+						try {
+							ReadLine readerline = ReadLineReader.create(reader, location, s.getLocation());
+							readerline = new UncommentReadLine(readerline);
+							sub = Sub.fromFile(readerline, blocname, this, memory);
+						} finally {
+							reader.close();
+						}
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -526,7 +518,7 @@ public class TContext {
 		include.analyze(this, memory);
 		final String definitionName = include.getLocation();
 		final List<String> definition = definitionsContainer.getDefinition(definitionName);
-		ReadLine reader2 = new ReadLineList(definition, s.getLocation());
+		final ReadLine reader2 = new ReadLineList(definition, s.getLocation());
 
 		try {
 			final List<StringLocated> body = new ArrayList<StringLocated>();
@@ -541,6 +533,12 @@ public class TContext {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw EaterException.located("" + e);
+		} finally {
+			try {
+				reader2.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -565,9 +563,7 @@ public class TContext {
 					throw EaterException.located("Cannot open URL");
 				}
 				reader2 = PreprocessorUtils.getReaderIncludeUrl2(url, s, suf, charset);
-
-			}
-			if (location.startsWith("<") && location.endsWith(">")) {
+			} else if (location.startsWith("<") && location.endsWith(">")) {
 				reader2 = PreprocessorUtils.getReaderStdlibInclude(s, location.substring(1, location.length() - 1));
 			} else {
 				final FileWithSuffix f2 = importedFiles.getFile(location, suf);
@@ -614,6 +610,14 @@ public class TContext {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw EaterException.located("cannot include " + e);
+		} finally {
+			if (reader2 != null) {
+				try {
+					reader2.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		throw EaterException.located("cannot include " + location);

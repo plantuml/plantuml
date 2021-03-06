@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.HSpace;
@@ -51,6 +50,7 @@ public class HSpaceTile extends AbstractTile implements Tile {
 	}
 
 	public HSpaceTile(HSpace hspace, TileArguments tileArguments) {
+		super(tileArguments.getStringBounder());
 		this.hspace = hspace;
 		this.origin = tileArguments.getOrigin();
 	}
@@ -58,18 +58,18 @@ public class HSpaceTile extends AbstractTile implements Tile {
 	public void drawU(UGraphic ug) {
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
+	public double getPreferredHeight() {
 		return hspace.getPixel();
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
+	public void addConstraints() {
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
+	public Real getMinX() {
 		return origin;
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
+	public Real getMaxX() {
 		return origin.addFixed(10);
 	}
 

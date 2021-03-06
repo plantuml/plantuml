@@ -160,6 +160,11 @@ public class FileUtils {
 		return readSvg(br, false, false);
 	}
 
+	static public String readText(InputStream is) throws IOException {
+		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		return readSvg(br, true, true);
+	}
+
 	static public String readFile(SFile svgFile) throws IOException {
 		final BufferedReader br = svgFile.openBufferedReader();
 		if (br == null) {

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 
@@ -65,7 +66,7 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);

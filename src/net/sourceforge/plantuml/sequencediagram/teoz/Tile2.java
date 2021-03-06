@@ -35,12 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UDrawable;
 
-public interface TileWithUpdateStairs extends Tile {
-
-	public void updateStairs(StringBounder stringBounder, double y);
-
-	public double getYPoint(StringBounder stringBounder);
+public interface Tile2 extends UDrawable {
 
 }

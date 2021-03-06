@@ -1,0 +1,3 @@
+.elem {cursor: pointer;} 
+.elem, .link {opacity: 0.3;}
+.elem.selected, .link.selected {opacity: 1;}

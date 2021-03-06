@@ -94,8 +94,9 @@ public class EntityImageState2 extends AbstractEntityImage {
 		this.url = entity.getUrl99();
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
-		final TextBlock desc = BodyFactory.create2(entity.getDisplay(), symbol.getFontParam(), skinParam,
-				HorizontalAlignment.CENTER, stereotype, entity, getStyle(symbol.getFontParam()));
+		final TextBlock desc = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
+				entity.getDisplay(), symbol.getFontParam(), skinParam, stereotype, entity,
+				getStyle(symbol.getFontParam()));
 
 		asSmall = symbol.asSmall(null, desc, stereo, ctx, skinParam.getStereotypeAlignment());
 

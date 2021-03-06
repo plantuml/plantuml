@@ -36,6 +36,9 @@
  */
 package net.sourceforge.plantuml.picoweb;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.sourceforge.plantuml.ErrorUmlType.SYNTAX_ERROR;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -66,9 +69,6 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.version.Version;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static net.sourceforge.plantuml.ErrorUmlType.SYNTAX_ERROR;
 
 public class PicoWebServer implements Runnable {
 
@@ -127,8 +127,7 @@ public class PicoWebServer implements Runnable {
 		} catch (Throwable e) {
 			try {
 				sendError(e, out);
-			}
-			catch (Throwable e1) {
+			} catch (Throwable e1) {
 				e.printStackTrace();
 			}
 		} finally {
@@ -142,7 +141,8 @@ public class PicoWebServer implements Runnable {
 		}
 	}
 
-	private boolean handleGET(ReceivedHTTPRequest request, BufferedOutputStream out, final FileFormat format) throws IOException {
+	private boolean handleGET(ReceivedHTTPRequest request, BufferedOutputStream out, final FileFormat format)
+			throws IOException {
 		final int x = request.getPath().lastIndexOf('/');
 		final String compressed = request.getPath().substring(x + 1);
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoderProtected();
@@ -156,7 +156,8 @@ public class PicoWebServer implements Runnable {
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
 			final ImageData imageData = system.exportDiagram(os, 0, fileFormatOption);
 			os.close();
-			sendDiagram(out, system, fileFormatOption, httpReturnCode(imageData.getStatus()), imageData, os.toByteArray());
+			sendDiagram(out, system, fileFormatOption, httpReturnCode(imageData.getStatus()), imageData,
+					os.toByteArray());
 			return true;
 		}
 		return false;
@@ -176,8 +177,7 @@ public class PicoWebServer implements Runnable {
 
 		final Option option = new Option(renderRequest.getOptions());
 
-		final String source = renderRequest.getSource().startsWith("@start")
-				? renderRequest.getSource()
+		final String source = renderRequest.getSource().startsWith("@start") ? renderRequest.getSource()
 				: "@startuml\n" + renderRequest.getSource() + "\n@enduml";
 
 		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, option.getConfig());
@@ -186,13 +186,10 @@ public class PicoWebServer implements Runnable {
 		final ImageData imageData;
 
 		if (ssr.getBlocks().size() == 0) {
-			system = PSystemErrorUtils.buildV2(
-					null,
-					new ErrorUml(SYNTAX_ERROR, "No @startuml/@enduml found", 0, new LineLocationImpl("", null)),
-					null,
-					Collections.<StringLocated>emptyList()
-			);
-			imageData = ssr.noStartumlFound(os, option.getFileFormatOption(),42);
+			system = PSystemErrorUtils.buildV2(null,
+					new ErrorUml(SYNTAX_ERROR, "No @startuml/@enduml found", 0, new LineLocationImpl("", null)), null,
+					Collections.<StringLocated>emptyList());
+			imageData = ssr.noStartumlFound(os, option.getFileFormatOption(), 42);
 		} else {
 			system = ssr.getBlocks().get(0).getDiagram();
 			imageData = system.exportDiagram(os, 0, option.getFileFormatOption());
@@ -201,9 +198,9 @@ public class PicoWebServer implements Runnable {
 		sendDiagram(out, system, option.getFileFormatOption(), "200", imageData, os.toByteArray());
 	}
 
-	private void sendDiagram(final BufferedOutputStream out, final Diagram system, final FileFormatOption fileFormatOption,
-							 final String returnCode, final ImageData imageData, final byte[] fileData)
-			throws IOException {
+	private void sendDiagram(final BufferedOutputStream out, final Diagram system,
+			final FileFormatOption fileFormatOption, final String returnCode, final ImageData imageData,
+			final byte[] fileData) throws IOException {
 
 		write(out, "HTTP/1.1 " + returnCode);
 		write(out, "Cache-Control: no-cache");

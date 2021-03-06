@@ -77,15 +77,15 @@ public enum HorizontalAlignment {
 		return toString().substring(0, 1).toLowerCase();
 	}
 
-	public void draw(UGraphic ug, TextBlock tb, double padding, Dimension2D dimTotal) {
+	public void draw(UGraphic ug, TextBlock tb, double padding, double width) {
 		if (this == HorizontalAlignment.LEFT) {
 			tb.drawU(ug.apply(new UTranslate(padding, padding)));
 		} else if (this == HorizontalAlignment.RIGHT) {
 			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
-			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding, padding)));
+			tb.drawU(ug.apply(new UTranslate(width - dimTb.getWidth() - padding, padding)));
 		} else if (this == HorizontalAlignment.CENTER) {
 			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
-			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding)));
+			tb.drawU(ug.apply(new UTranslate((width - dimTb.getWidth()) / 2, padding)));
 		}
 
 	}

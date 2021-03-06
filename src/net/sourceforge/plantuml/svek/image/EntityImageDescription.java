@@ -200,8 +200,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 					HorizontalAlignment.CENTER, getSkinParam());
 		}
 
-		name = BodyFactory.create2(codeDisplay, symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER,
-				stereotype, entity, style);
+		name = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,
+				symbol.getFontParam(), getSkinParam(), stereotype, entity, style);
 
 		if (hideText) {
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),

@@ -83,9 +83,9 @@ public class ComponentTextParticipant extends AbstractComponentText {
 			}
 		}
 		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawStringsLRUnicode(stringsToDisplay.as(), 1, 1);
+			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), 1, 1);
 		} else {
-			charArea.drawStringsLRSimple(stringsToDisplay.as(), 1, 1);
+			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 1, 1);
 		}
 	}
 

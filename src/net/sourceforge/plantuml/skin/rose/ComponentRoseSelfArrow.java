@@ -194,5 +194,10 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return Math.max(getTextWidth(stringBounder), arrowWidth);
 	}
+	
+	public double getPosArrow(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
 
 }

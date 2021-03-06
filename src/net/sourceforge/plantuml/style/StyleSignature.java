@@ -90,6 +90,10 @@ public class StyleSignature {
 		return new StyleSignature(result);
 	}
 
+	public StyleSignature add(SName name) {
+		return add(name.name().toLowerCase().replace("_", ""));
+	}
+
 	public StyleSignature addStar() {
 		final Set<String> result = new HashSet<String>(names);
 		result.add("*");

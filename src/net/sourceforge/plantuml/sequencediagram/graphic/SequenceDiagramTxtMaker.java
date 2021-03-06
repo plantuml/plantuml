@@ -113,13 +113,13 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		if (title.isWhite()) {
 			ug2 = ug;
 		} else {
-			ug2 = (UGraphicTxt) ug.apply(UTranslate.dy(title.as().size() + 1));
+			ug2 = (UGraphicTxt) ug.apply(UTranslate.dy(title.asList().size() + 1));
 		}
 		drawableSet.drawU22(ug2, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
 		if (title.isWhite() == false) {
 			final int widthTitle = StringUtils.getWcWidth(title);
 			final UmlCharArea charArea = ug.getCharArea();
-			charArea.drawStringsLRSimple(title.as(), (int) ((fullDimension.getWidth() - widthTitle) / 2), 0);
+			charArea.drawStringsLRSimple(title.asList(), (int) ((fullDimension.getWidth() - widthTitle) / 2), 0);
 		}
 
 	}

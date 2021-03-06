@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTileSelfNoteRight extends AbstractTile implements TileWithUpdateStairs {
+public class CommunicationTileSelfNoteRight extends AbstractTile {
 
 	private final CommunicationTileSelf tile;
 	private final Message message;
@@ -62,14 +62,15 @@ public class CommunicationTileSelfNoteRight extends AbstractTile implements Tile
 	public Event getEvent() {
 		return message;
 	}
-	
+
 	@Override
-	public double getYPoint(StringBounder stringBounder) {
-		return tile.getYPoint(stringBounder);
+	public double getContactPointRelative() {
+		return tile.getContactPointRelative();
 	}
 
 	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Rose skin, ISkinParam skinParam,
 			Note noteOnMessage) {
+		super(((AbstractTile) tile).getStringBounder());
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
@@ -77,18 +78,19 @@ public class CommunicationTileSelfNoteRight extends AbstractTile implements Tile
 		this.noteOnMessage = noteOnMessage;
 	}
 
-	public void updateStairs(StringBounder stringBounder, double y) {
-		tile.updateStairs(stringBounder, y);
+	@Override
+	public void callbackY_internal(double y) {
+		tile.callbackY(y);
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(null, ComponentType.NOTE,
-				null, noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings());
+		final Component comp = skin.createComponent(null, ComponentType.NOTE, null,
+				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings());
 		return comp;
 	}
 
 	private Real getNotePosition(StringBounder stringBounder) {
-		return tile.getMaxX(stringBounder);
+		return tile.getMaxX();
 	}
 
 	public void drawU(UGraphic ug) {
@@ -102,24 +104,24 @@ public class CommunicationTileSelfNoteRight extends AbstractTile implements Tile
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}
 
-	public double getPreferredHeight(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return Math.max(tile.getPreferredHeight(stringBounder), dim.getHeight());
+	public double getPreferredHeight() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		return Math.max(tile.getPreferredHeight(), dim.getHeight());
 	}
 
-	public void addConstraints(StringBounder stringBounder) {
-		tile.addConstraints(stringBounder);
+	public void addConstraints() {
+		tile.addConstraints();
 	}
 
-	public Real getMinX(StringBounder stringBounder) {
-		return tile.getMinX(stringBounder);
+	public Real getMinX() {
+		return tile.getMinX();
 	}
 
-	public Real getMaxX(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return getNotePosition(stringBounder).addFixed(dim.getWidth());
+	public Real getMaxX() {
+		final Component comp = getComponent(getStringBounder());
+		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());
 	}
 
 }

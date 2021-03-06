@@ -74,10 +74,9 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	private final boolean inEllipse;
 	private final Style style;
 
-	BodyEnhanced1(List<CharSequence> rawBody, FontParam fontParam, ISkinParam skinParam, Stereotype stereotype,
-			ILeaf entity, Style style) {
-		super(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
-				new FontConfiguration(skinParam, fontParam, stereotype));
+	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, FontParam fontParam, ISkinParam skinParam,
+			Stereotype stereotype, ILeaf entity, Style style) {
+		super(align, new FontConfiguration(skinParam, fontParam, stereotype));
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
 		this.stereotype = stereotype;
@@ -90,11 +89,10 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		this.inEllipse = false;
 	}
 
-	BodyEnhanced1(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
+	BodyEnhanced1(HorizontalAlignment align, Display display, FontParam fontParam, ISkinParam skinParam,
 			Stereotype stereotype, ILeaf entity, Style style) {
-		super(skinParam.getDefaultTextAlignment(align),
-				style == null ? new FontConfiguration(skinParam, fontParam, stereotype)
-						: style.getFontConfiguration(skinParam.getIHtmlColorSet()));
+		super(align, style == null ? new FontConfiguration(skinParam, fontParam, stereotype)
+				: style.getFontConfiguration(skinParam.getIHtmlColorSet()));
 
 		this.style = style;
 		this.entity = entity;
