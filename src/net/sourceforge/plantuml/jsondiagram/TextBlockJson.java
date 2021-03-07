@@ -71,6 +71,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 	private final List<Line> lines = new ArrayList<Line>();
 
 	private final Style style;
+	private final Style styleHightlight;
 	private final ISkinParam skinParam;
 	private double totalWidth;
 	private final JsonValue root;
@@ -100,7 +101,13 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 
 	}
 
-	public TextBlockJson(ISkinParam skinParam, JsonValue root, List<String> highlighted, Style style) {
+	private HColor getToto() {
+		return styleHightlight.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+	}
+
+	public TextBlockJson(ISkinParam skinParam, JsonValue root, List<String> allHighlighteds, Style style,
+			Style styleHightlight) {
+		this.styleHightlight = styleHightlight;
 		this.skinParam = skinParam;
 		this.style = style;
 		this.root = root;
@@ -109,18 +116,27 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 				final String key = member.getName();
 				final String value = getShortString(member.getValue());
 
-				final TextBlock block1 = getTextBlock(key);
-				final TextBlock block2 = getTextBlock(value);
-				this.lines.add(new Line(block1, block2, isHighlighted(key, highlighted)));
+				final boolean highlighted = isHighlighted(key, allHighlighteds);
+				final TextBlock block1 = getTextBlock(getRightStyle(highlighted), key);
+				final TextBlock block2 = getTextBlock(getRightStyle(highlighted), value);
+				this.lines.add(new Line(block1, block2, highlighted));
 			}
 		if (root instanceof JsonArray) {
 			int i = 0;
 			for (JsonValue value : (JsonArray) root) {
-				final TextBlock block2 = getTextBlock(getShortString(value));
-				this.lines.add(new Line(block2, isHighlighted("" + i, highlighted)));
+				final boolean highlighted = isHighlighted("" + i, allHighlighteds);
+				final TextBlock block2 = getTextBlock(getRightStyle(highlighted), getShortString(value));
+				this.lines.add(new Line(block2, highlighted));
 				i++;
 			}
 		}
+	}
+
+	private Style getRightStyle(boolean highlighted) {
+		if (highlighted) {
+			return styleHightlight;
+		}
+		return style;
 	}
 
 	private boolean isHighlighted(String key, List<String> highlighted) {
@@ -266,8 +282,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 			final double heightOfRow = line.getHeightOfRow(stringBounder);
 			if (line.highlighted) {
 				final URectangle back = new URectangle(trueWidth - 2, heightOfRow).rounded(4);
-				final HColor yellow = skinParam.getIHtmlColorSet().getColorOrWhite("#ccff02");
-				ugline.apply(yellow).apply(yellow.bg()).apply(new UTranslate(1.5, 0)).draw(back);
+				ugline.apply(getToto()).apply(getToto().bg()).apply(new UTranslate(1.5, 0)).draw(back);
 			}
 
 			if (y > 0)
@@ -296,7 +311,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 		return height;
 	}
 
-	private TextBlock getTextBlock(String key) {
+	private TextBlock getTextBlock(Style style, String key) {
 		final Display display = Display.getWithNewlines(key);
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final LineBreakStrategy wrap = style.wrapWidth();

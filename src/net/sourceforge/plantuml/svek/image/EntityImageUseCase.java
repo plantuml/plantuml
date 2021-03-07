@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -71,6 +72,7 @@ import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.TextBlockInEllipse;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -83,8 +85,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	final private Url url;
 
-	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
-		super(entity, skinParam);
+	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam2, PortionShower portionShower) {
+		super(entity, entity.getColors(skinParam2).mute(skinParam2));
 		final Stereotype stereotype = entity.getStereotype();
 
 		final HorizontalAlignment align;
@@ -94,8 +96,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		} else {
 			align = HorizontalAlignment.CENTER;
 		}
-		final TextBlock tmp = BodyFactory.create2(skinParam.getDefaultTextAlignment(align), entity.getDisplay(),
-				FontParam.USECASE, skinParam, stereotype, entity, getStyle());
+		final TextBlock tmp = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(align), entity.getDisplay(),
+				FontParam.USECASE, getSkinParam(), stereotype, entity, getStyle());
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
@@ -107,7 +109,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			} else {
 				stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
 						new FontConfiguration(getSkinParam(), FontParam.USECASE_STEREOTYPE, stereotype),
-						HorizontalAlignment.CENTER, skinParam);
+						HorizontalAlignment.CENTER, getSkinParam());
 			}
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}
@@ -121,10 +123,11 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			return style.getStroke();
 		}
 		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
-
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}
+		final Colors colors = getEntity().getColors(getSkinParam());
+		stroke = colors.muteStroke(stroke);
 		return stroke;
 	}
 
@@ -150,7 +153,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		ug = ug.apply(backcolor.bg());
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
 
-		ug2.startGroupWithClass("elem " + getEntity().getCode() + " selected");
+		ug2.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		ellipse.drawU(ug2);
 		ug2.closeGroup();
 

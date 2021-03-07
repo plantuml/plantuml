@@ -71,8 +71,17 @@ final class WElement {
 			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
 					.add(stereotype).add(depth);
 		}
+		if (shape == IdeaShape.NONE && isLeaf()) {
+			return StyleSignature
+					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
+					.add(stereotype).add(depth);
+		}
 		if (isLeaf()) {
 			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
+					.add(stereotype).add(depth);
+		}
+		if (shape == IdeaShape.NONE) {
+			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
 					.add(stereotype).add(depth);
 		}
 		return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node).add(stereotype).add(depth);

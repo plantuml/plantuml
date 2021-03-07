@@ -58,13 +58,15 @@ public class CommandWBSOrgmode extends SingleLineCommand2<WBSDiagram> {
 		return RegexConcat.build(CommandWBSOrgmode.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "([*]+)"), //
 				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
+				new RegexLeaf("SHAPE", "(_)?"), //
 				new RegexLeaf("DIRECTION", "([<>])?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
 		final String stringColor = arg.get("BACKCOLOR", 0);
@@ -74,7 +76,7 @@ public class CommandWBSOrgmode extends SingleLineCommand2<WBSDiagram> {
 		}
 		final String direction = arg.get("DIRECTION", 0);
 		final Direction dir = "<".equals(direction) ? Direction.LEFT : Direction.RIGHT;
-		return diagram.addIdea(backColor, type.length() - 1, label, dir, IdeaShape.BOX);
+		return diagram.addIdea(backColor, type.length() - 1, label, dir, IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
 
 }

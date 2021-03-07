@@ -202,7 +202,7 @@ public final class GeneralImageBuilder {
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE) {
 			return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
-					null, bibliotekon);
+					bibliotekon);
 		}
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
@@ -211,11 +211,8 @@ public final class GeneralImageBuilder {
 			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
 			} else {
-				final UStroke forced = leaf.getUSymbol() == USymbol.PACKAGE
-						? getForcedStroke(leaf.getStereotype(), skinParam)
-						: null;
 				return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
-						forced, bibliotekon);
+						bibliotekon);
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE) {
@@ -247,12 +244,10 @@ public final class GeneralImageBuilder {
 		}
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null) {
-				// final HtmlColor black = HtmlColorUtils.BLACK;
 				final HColor black = SkinParamUtils.getColor(skinParam, leaf.getStereotype(),
 						leaf.getUSymbol().getColorParamBorder());
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
-						links, umlDiagramType.getStyleName(), getForcedStroke(leaf.getStereotype(), skinParam),
-						bibliotekon);
+						links, umlDiagramType.getStyleName(), bibliotekon);
 			}
 			return new EntityImageEmptyPackage(leaf, skinParam, portionShower, umlDiagramType.getStyleName());
 		}
@@ -324,8 +319,12 @@ public final class GeneralImageBuilder {
 		this.mergeIntricated = mergeIntricated;
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.of(SName.root, SName.element, styleName, SName.arrow);
+	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype) {
+		StyleSignature result = StyleSignature.of(SName.root, SName.element, styleName, SName.arrow);
+		if (stereotype != null) {
+			result = result.with(stereotype);
+		}
+		return result;
 	}
 
 	private boolean isOpalisable(IEntity entity) {
@@ -418,8 +417,8 @@ public final class GeneralImageBuilder {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont;
 				if (UseStyle.useBetaStyle()) {
-					final Style style = getDefaultStyleDefinitionArrow()
-							.getMergedStyle(skinParam.getCurrentStyleBuilder());
+					final Style style = getDefaultStyleDefinitionArrow(link.getStereotype())
+							.getMergedStyle(link.getStyleBuilder());
 					labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 				} else {
 					labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
@@ -544,8 +543,8 @@ public final class GeneralImageBuilder {
 			throw new IllegalStateException();
 		}
 		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
-		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
-				stringBounder);
+		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image,
+				dotStringFactory.getColorSequence(), stringBounder);
 		dotStringFactory.addNode(node);
 	}
 

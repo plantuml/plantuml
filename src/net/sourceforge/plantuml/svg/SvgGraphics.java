@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
@@ -122,6 +123,8 @@ public class SvgGraphics {
 	private final boolean svgDimensionStyle;
 	private final LengthAdjust lengthAdjust;
 
+	private final boolean INTERACTIVE = false;
+
 	final protected void ensureVisible(double x, double y) {
 		if (x > maxX) {
 			maxX = (int) (x + 1);
@@ -161,14 +164,15 @@ public class SvgGraphics {
 				defs.appendChild(getPathHover(hover));
 			}
 
-			final Element styles = getStylesForInteractiveMode();
-			if (styles != null) {
-				defs.appendChild(styles);
-			}
-
-			final Element script = getScriptForInteractiveMode();
-			if (script != null) {
-				defs.appendChild(script);
+			if (INTERACTIVE) {
+				final Element styles = getStylesForInteractiveMode();
+				if (styles != null) {
+					defs.appendChild(styles);
+				}
+				final Element script = getScriptForInteractiveMode();
+				if (script != null) {
+					defs.appendChild(script);
+				}
 			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -971,15 +975,14 @@ public class SvgGraphics {
 		}
 	}
 
-	public void startGroup(String groupId) {
-		pendingAction.add(0, (Element) document.createElement("g"));
-		pendingAction.get(0).setAttribute("id", groupId);
-	}
-
-	public void startGroupWithClass(String groupClasses) {
-
-		pendingAction.add(0, (Element) document.createElement("g"));
-		pendingAction.get(0).setAttribute("class", groupClasses);
+	public void startGroup(UGroupType type, String ident) {
+		if (type == UGroupType.ID) {
+			pendingAction.add(0, (Element) document.createElement("g"));
+			pendingAction.get(0).setAttribute("id", ident);
+		} else if (INTERACTIVE && type == UGroupType.CLASS) {
+			pendingAction.add(0, (Element) document.createElement("g"));
+			pendingAction.get(0).setAttribute("class", ident);
+		}
 	}
 
 	public void closeGroup() {

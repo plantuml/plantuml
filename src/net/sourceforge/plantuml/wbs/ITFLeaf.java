@@ -38,19 +38,16 @@ package net.sourceforge.plantuml.wbs;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class ITFLeaf extends AbstractTextBlock implements ITF {
@@ -61,9 +58,8 @@ class ITFLeaf extends AbstractTextBlock implements ITF {
 		if (shape == IdeaShape.BOX) {
 			this.box = FtileBox.createWbs(style, skinParam, label);
 		} else {
-			final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-			final TextBlock text = label.create(FontConfiguration.blackBlueTrue(font), HorizontalAlignment.LEFT,
-					skinParam);
+			final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),
+					style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 			this.box = TextBlockUtils.withMargin(text, 0, 3, 1, 1);
 		}
 	}

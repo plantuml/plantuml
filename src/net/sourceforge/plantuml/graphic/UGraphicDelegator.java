@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -82,12 +83,8 @@ public abstract class UGraphicDelegator implements UGraphic {
 		ug.closeUrl();
 	}
 
-	public void startGroup(String groupId) {
-		ug.startGroup(groupId);
-	}
-
-	public void startGroupWithClass(String groupClasses) {
-		ug.startGroupWithClass(groupClasses);
+	public void startGroup(UGroupType type, String ident) {
+		ug.startGroup(type, ident);
 	}
 
 	public void closeGroup() {

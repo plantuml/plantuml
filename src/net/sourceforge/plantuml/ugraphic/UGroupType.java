@@ -30,87 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.ugraphic;
 
-public enum SName {
-	activity, //
-	activityBar, //
-	activityDiagram, //
-	actor, //
-	agent, //
-	archimate, //
-	arrow, //
-	artifact, //
-	boundary, //
-	box, //
-	boxless, //
-	caption, //
-	card, //
-	circle, //
-	classDiagram, //
-	class_, //
-	clickable, //
-	cloud, //
-	collection, //
-	collections, //
-	component, //
-	componentDiagram, //
-	control, //
-	database, //
-	delay, //
-	destroy, //
-	diamond, //
-	document, //
-	element, //
-	entity, //
-	file, //
-	folder, //
-	footer, //
-	frame, //
-	ganttDiagram, //
-	group, //
-	groupHeader, //
-	highlight, //
-	header, //
-	interface_, //
-	jsonDiagram, //
-	gitDiagram, //
-	label, //
-	leafNode, //
-	legend, //
-	lifeLine, //
-	milestone, //
-	mindmapDiagram, //
-	node, //
-	note, //
-	objectDiagram, //
-	package_, //
-	participant, //
-	partition, //
-	queue, //
-	rectangle, //
-	reference, //
-	referenceHeader, //
-	root, //
-	rootNode, //
-	saltDiagram, //
-	separator, //
-	sequenceDiagram, //
-	stack, //
-	stateDiagram, //
-	stereotype, //
-	storage, //
-	swimlane, //
-	task, //
-	title, //
-	usecase, //
-	wbsDiagram, //
-	yamlDiagram; //
+public enum UGroupType {
+	ID, CLASS
 
-	public static String depth(int level) {
-		return "depth(" + level + ")";
-	}
 }

@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -116,7 +117,7 @@ public class EntityImageState extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.startGroup(getEntity().getIdent().toString("."));
+		ug.startGroup(UGroupType.ID, getEntity().getIdent().toString("."));
 		if (url != null) {
 			ug.startUrl(url);
 		}

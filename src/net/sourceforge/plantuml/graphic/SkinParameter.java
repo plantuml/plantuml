@@ -56,7 +56,7 @@ public class SkinParameter {
 
 	public static final SkinParameter COMPONENT1 = new SkinParameter(SName.component, "COMPONENT1",
 			ColorParam.componentBackground, ColorParam.componentBorder, FontParam.COMPONENT,
-			FontParam.COMPONENT_STEREOTYPE, LineParam.componentBorder, CornerParam.component);
+			FontParam.COMPONENT_STEREOTYPE, CornerParam.component, LineParam.componentBorder);
 
 	public static final SkinParameter NODE = new SkinParameter(SName.node, "NODE", ColorParam.nodeBackground,
 			ColorParam.nodeBorder, FontParam.NODE, FontParam.NODE_STEREOTYPE);
@@ -78,11 +78,11 @@ public class SkinParameter {
 
 	public static final SkinParameter COMPONENT2 = new SkinParameter(SName.component, "COMPONENT2",
 			ColorParam.componentBackground, ColorParam.componentBorder, FontParam.COMPONENT,
-			FontParam.COMPONENT_STEREOTYPE, LineParam.componentBorder, CornerParam.component);
+			FontParam.COMPONENT_STEREOTYPE, CornerParam.component, LineParam.componentBorder);
 
 	public static final SkinParameter AGENT = new SkinParameter(SName.agent, "AGENT", ColorParam.agentBackground,
-			ColorParam.agentBorder, FontParam.AGENT, FontParam.AGENT_STEREOTYPE, LineParam.agentBorder,
-			CornerParam.agent);
+			ColorParam.agentBorder, FontParam.AGENT, FontParam.AGENT_STEREOTYPE, CornerParam.agent,
+			LineParam.agentBorder);
 
 	public static final SkinParameter FOLDER = new SkinParameter(SName.folder, "FOLDER", ColorParam.folderBackground,
 			ColorParam.folderBorder, FontParam.FOLDER, FontParam.FOLDER_STEREOTYPE);
@@ -91,25 +91,26 @@ public class SkinParameter {
 			ColorParam.fileBorder, FontParam.FILE, FontParam.FILE_STEREOTYPE);
 
 	public static final SkinParameter PACKAGE = new SkinParameter(SName.package_, "PACKAGE",
-			ColorParam.packageBackground, ColorParam.packageBorder, FontParam.PACKAGE, FontParam.PACKAGE_STEREOTYPE);
+			ColorParam.packageBackground, ColorParam.packageBorder, FontParam.PACKAGE, FontParam.PACKAGE_STEREOTYPE,
+			CornerParam.DEFAULT, LineParam.packageBorder);
 
 	public static final SkinParameter CARD = new SkinParameter(SName.card, "CARD", ColorParam.cardBackground,
-			ColorParam.cardBorder, FontParam.CARD, FontParam.CARD_STEREOTYPE, LineParam.cardBorder, CornerParam.card);
+			ColorParam.cardBorder, FontParam.CARD, FontParam.CARD_STEREOTYPE, CornerParam.card, LineParam.cardBorder);
 
 	public static final SkinParameter RECTANGLE = new SkinParameter(SName.rectangle, "RECTANGLE",
 			ColorParam.rectangleBackground, ColorParam.rectangleBorder, FontParam.RECTANGLE,
-			FontParam.RECTANGLE_STEREOTYPE, LineParam.rectangleBorder, CornerParam.rectangle);
+			FontParam.RECTANGLE_STEREOTYPE, CornerParam.rectangle, LineParam.rectangleBorder);
 
 	public static final SkinParameter LABEL = new SkinParameter(SName.label, "LABEL", ColorParam.rectangleBackground,
 			ColorParam.rectangleBorder, FontParam.LABEL, FontParam.LABEL_STEREOTYPE);
 
 	public static final SkinParameter HEXAGON = new SkinParameter(SName.rectangle, "HEXAGON",
 			ColorParam.hexagonBackground, ColorParam.hexagonBorder, FontParam.HEXAGON, FontParam.HEXAGON_STEREOTYPE,
-			LineParam.hexagonBorder, CornerParam.hexagon);
+			CornerParam.hexagon, LineParam.hexagonBorder);
 
 	public static final SkinParameter ARCHIMATE = new SkinParameter(SName.archimate, "ARCHIMATE",
 			ColorParam.archimateBackground, ColorParam.archimateBorder, FontParam.ARCHIMATE,
-			FontParam.ARCHIMATE_STEREOTYPE, LineParam.archimateBorder, CornerParam.archimate);
+			FontParam.ARCHIMATE_STEREOTYPE, CornerParam.archimate, LineParam.archimateBorder);
 
 	public static final SkinParameter COLLECTIONS = new SkinParameter(SName.collections, "COLLECTIONS",
 			ColorParam.collectionsBackground, ColorParam.collectionsBorder, FontParam.RECTANGLE,
@@ -158,7 +159,7 @@ public class SkinParameter {
 	}
 
 	private SkinParameter(SName styleName, String name, ColorParam colorParamBack, ColorParam colorParamBorder,
-			FontParam fontParam, FontParam fontParamStereotype, LineParam lineParam, CornerParam roundParam) {
+			FontParam fontParam, FontParam fontParamStereotype, CornerParam roundParam, LineParam lineParam) {
 		this.name = name;
 		this.styleName = styleName;
 		this.colorParamBack = colorParamBack;
@@ -171,8 +172,8 @@ public class SkinParameter {
 
 	private SkinParameter(SName styleName, String name, ColorParam colorParamBack, ColorParam colorParamBorder,
 			FontParam fontParam, FontParam fontParamStereotype) {
-		this(styleName, name, colorParamBack, colorParamBorder, fontParam, fontParamStereotype, null,
-				CornerParam.DEFAULT);
+		this(styleName, name, colorParamBack, colorParamBorder, fontParam, fontParamStereotype, CornerParam.DEFAULT,
+				null);
 	}
 
 	public String getUpperCaseName() {

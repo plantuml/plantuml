@@ -311,6 +311,9 @@ jsonDiagram {
       LineThickness 1
       LineColor #A80036
   	}
+    highlight {
+	  BackGroundColor #ccff02
+    }
   }
 }
 

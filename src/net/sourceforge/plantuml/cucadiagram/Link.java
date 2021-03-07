@@ -98,6 +98,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private String sametail;
 	private VisibilityModifier visibilityModifier;
 	private final StyleBuilder styleBuilder;
+	private Stereotype stereotype;
 
 	private Url url;
 
@@ -197,6 +198,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		result.port2 = this.port1;
 		result.url = this.url;
 		result.linkConstraint = this.linkConstraint;
+		result.stereotype = stereotype;
 		return result;
 	}
 
@@ -593,6 +595,14 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public void setCodeLine(LineLocation location) {
 		this.codeLine = location;
+	}
+
+	public void setStereotype(Stereotype stereotype) {
+		this.stereotype = stereotype;
+	}
+
+	public final Stereotype getStereotype() {
+		return stereotype;
 	}
 
 }

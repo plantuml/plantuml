@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -86,6 +86,15 @@ public class FingerImpl implements Finger, UDrawable {
 		final String depth = SName.depth(level);
 		if (level == 0) {
 			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
+					.add(stereotype).add(depth);
+		}
+		if (shape == IdeaShape.NONE && nail.size() == 0) {
+			return StyleSignature
+					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
+					.add(stereotype).add(depth);
+		}
+		if (shape == IdeaShape.NONE) {
+			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
 					.add(stereotype).add(depth);
 		}
 		if (nail.size() == 0) {
@@ -234,8 +243,8 @@ public class FingerImpl implements Finger, UDrawable {
 
 		assert shape == IdeaShape.NONE;
 		final Style styleNode = getDefaultStyleDefinitionNode().getMergedStyle(styleBuilder);
-		final TextBlock text = label.create(styleNode.getFontConfiguration(skinParam.getIHtmlColorSet()),
-				HorizontalAlignment.LEFT, skinParam);
+		final TextBlock text = label.create0(styleNode.getFontConfiguration(skinParam.getIHtmlColorSet()),
+				styleNode.getHorizontalAlignment(), skinParam, styleNode.wrapWidth(), CreoleMode.FULL, null, null);
 		if (direction == Direction.RIGHT) {
 			return TextBlockUtils.withMargin(text, 3, 0, 1, 1);
 		}

@@ -170,12 +170,8 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	public void closeUrl() {
 	}
 
-	public void startGroup(String groupId) {
+	public void startGroup(UGroupType type, String ident) {
 	}
-	
-	public void startGroupWithClass(String groupClasses) {
-	}
-
 
 	public void closeGroup() {
 	}

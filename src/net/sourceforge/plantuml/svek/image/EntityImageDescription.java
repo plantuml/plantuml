@@ -72,12 +72,13 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
-import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -103,9 +104,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	private final SymbolContext ctx;
 
-	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
-			Collection<Link> links, SName styleName, UStroke forceStroke, Bibliotekon bibliotekon) {
-		super(entity, entity.getColors(skinParam).mute(skinParam));
+	public EntityImageDescription(ILeaf entity, ISkinParam skinParam2, PortionShower portionShower,
+			Collection<Link> links, SName styleName, Bibliotekon bibliotekon) {
+		super(entity, entity.getColors(skinParam2).mute(skinParam2));
 		this.useRankSame = getSkinParam().useRankSame();
 		this.bibliotekon = bibliotekon;
 		this.fixCircleLabelOverlapping = getSkinParam().fixCircleLabelOverlapping();
@@ -127,7 +128,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		this.url = entity.getUrl99();
 
-		final Colors colors = entity.getColors(skinParam);
+		final Colors colors = entity.getColors(getSkinParam());
 		HColor backcolor = colors.getColor(ColorType.BACK);
 		final HColor forecolor;
 		final double roundCorner;
@@ -145,9 +146,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 			style = tmp.with(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			final Style styleStereo = tmp.withStereotype(stereotype)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			forecolor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			forecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 			if (backcolor == null) {
-				backcolor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 			}
 			roundCorner = style.value(PName.RoundCorner).asDouble();
 			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
@@ -164,11 +165,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 			roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
 			diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
 			deltaShadow = getSkinParam().shadowing2(getEntity().getStereotype(), symbol.getSkinParameter()) ? 3 : 0;
-			if (forceStroke == null) {
-				stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
-			} else {
-				stroke = forceStroke;
-			}
+			stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
 			fcTitle = new FontConfiguration(getSkinParam(), symbol.getFontParam(), stereotype);
 			fcStereo = new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype);
 			defaultAlign = HorizontalAlignment.LEFT;
@@ -200,14 +197,14 @@ public class EntityImageDescription extends AbstractEntityImage {
 					HorizontalAlignment.CENTER, getSkinParam());
 		}
 
-		name = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,
+		name = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,
 				symbol.getFontParam(), getSkinParam(), stereotype, entity, style);
 
 		if (hideText) {
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
-					ctx, skinParam.getStereotypeAlignment());
+					ctx, getSkinParam().getStereotypeAlignment());
 		} else {
-			asSmall = symbol.asSmall(name, desc, stereo, ctx, skinParam.getStereotypeAlignment());
+			asSmall = symbol.asSmall(name, desc, stereo, ctx, getSkinParam().getStereotypeAlignment());
 		}
 	}
 
@@ -294,7 +291,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
-		ug.startGroupWithClass("elem " + getEntity().getCode() + " selected");
+		ug.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 
 		if (url != null) {
 			ug.startUrl(url);

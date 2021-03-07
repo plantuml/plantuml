@@ -214,8 +214,8 @@ public class QuoteUtils {
 			"Gur zber vg snvyf, gur zber yvxryl vg vf gung vg jvyy jbex",
 			"V ubcr V qvqa'g gnxr hc gbb zhpu bs lbhe gvzr", "Lbh'er tbaan arrq n ovttre obng",
 			"Dhnaq ibhf rgrf rzorgrf, rzoebhvyyrm gbhg", "Gurer nva'g ab phevat jung'f jebat jvgu gung guvat",
-			"Vs lbh cevpx hf, qb jr abg oyrrq?", "V qvq lbhe wbo bapr - V jnf tbbq ng vg.",
-			"Vyf cbheenvrag snver har fryrpgvba nh fgnaqneq...", "Gung'f ab jnl gb gerng n sevraq.",
+			"V qvq lbhe wbo bapr - V jnf tbbq ng vg.", "Vyf cbheenvrag snver har fryrpgvba nh fgnaqneq...",
+			"Gung'f ab jnl gb gerng n sevraq.",
 			"Ubjrire ornhgvshy gur fgengrtl, lbh fubhyq bppnfvbanyyl ybbx ng gur erfhygf",
 			"Qba'g svk vg vs vg'f abg oebxra",
 			"Fhqqrayl V'z gnxvat fhttrfgvbaf sebz fbzr fgebat-nez zna jvgu na VD bs zvahf 50.",
@@ -288,9 +288,12 @@ public class QuoteUtils {
 			"Gunax lbh, lbh'ir znqr lbhe cbvag pyrne gung lbh oryvrir vg vf n qrongnoyr cbvag",
 			"Gur obng vf fnsre jura va cbeg, ohg gung vf abg jung obngf jrer ohvyg sbe.",
 			"Vg'f abg gernfba. Vg'f nygreangvir yblnygl",
-			"Gur zna jub zbirf n zbhagnva ortvaf ol pneelvat njnl fznyy fgbarf"
-
-	);
+			"Gur zna jub zbirf n zbhagnva ortvaf ol pneelvat njnl fznyy fgbarf",
+			"Gbhpuqbja pbasvezrq, jr ner fnsr ba Znef", "Yrg'f fcyvg hc, jr pna qb zber qnzntr gung jnl",
+			"Gebyy gur erfcnja, Wrerzl", "Bhoyvr dhr g'nf nhphar punapr. Fhe ha znyragraqh pn crhg znepure.",
+			"Obl, gur fhcrevagraqrag'f tbaan or cvffrq!", "BX, jub oebhtug gur qbt?", "Rg yn, p'rfg yr qenzr...",
+			"V'z shmml ba gur jubyr tbbq/onq guvat. Jung qb lbh zrna, 'onq'?",
+			"Lbh'er evtug. Ab uhzna orvat jbhyq fgnpx obbxf yvxr guvf.");
 
 	private QuoteUtils() {
 	}

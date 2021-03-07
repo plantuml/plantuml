@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -84,12 +85,14 @@ import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -619,12 +622,13 @@ public class Line implements Moveable, Hideable, GuideLine {
 
 	}
 
-	public void drawU(UGraphic ug, HColor color, Set<String> ids) {
+	public void drawU(UGraphic ug, UStroke suggestedStroke, HColor color, Set<String> ids) {
 		if (opale) {
 			return;
 		}
 		ug.draw(link.commentForSvg());
-		ug.startGroupWithClass("link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
+		ug.startGroup(UGroupType.CLASS,
+				"link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
 		double x = 0;
 		double y = 0;
 		final Url url = link.getUrl();
@@ -659,7 +663,9 @@ public class Line implements Moveable, Hideable, GuideLine {
 
 		ug = ug.apply(new HColorNone().bg()).apply(color);
 		final LinkType linkType = link.getType();
-		UStroke stroke = linkType.getStroke3(defaultThickness);
+		UStroke stroke = suggestedStroke == null || linkType.getStyle().isNormal() == false
+				? linkType.getStroke3(defaultThickness)
+				: suggestedStroke;
 		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null) {
 			stroke = link.getColors().getSpecificLineStroke();
 		}
@@ -1019,6 +1025,14 @@ public class Line implements Moveable, Hideable, GuideLine {
 			return link.getOther(entity);
 		}
 		return null;
+	}
+
+	public StyleBuilder getCurrentStyleBuilder() {
+		return link.getStyleBuilder();
+	}
+
+	public Stereotype getStereotype() {
+		return link.getStereotype();
 	}
 
 }

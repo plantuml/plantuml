@@ -38,22 +38,17 @@ package net.sourceforge.plantuml.wbs;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -95,16 +90,13 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 	}
 
 	final protected TextBlock buildMain(WElement idea) {
-		Display label = idea.getLabel();
-		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-
+		final Display label = idea.getLabel();
+		final Style style = idea.getStyle();
 		if (idea.getShape() == IdeaShape.BOX) {
-			final FtileBox box = FtileBox.createWbs(idea.getStyle(), idea.withBackColor(skinParam), label);
+			final FtileBox box = FtileBox.createWbs(style, idea.withBackColor(skinParam), label);
 			return box;
 		}
-
-		final TextBlock text = label.create(FontConfiguration.blackBlueTrue(font), HorizontalAlignment.LEFT, skinParam);
-		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
+		throw new UnsupportedOperationException();
 	}
 
 }

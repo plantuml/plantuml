@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -176,15 +177,10 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	@Override
-	public void startGroup(String groupId) {
-		getGraphicObject().startGroup(groupId);
+	public void startGroup(UGroupType type, String ident) {
+		getGraphicObject().startGroup(type, ident);
 	}
 	
-	@Override
-	public void startGroupWithClass(String groupClasses) {
-		getGraphicObject().startGroupWithClass(groupClasses);
-	}
-
 
 	@Override
 	public void closeGroup() {
