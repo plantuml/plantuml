@@ -53,10 +53,8 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Scale;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -172,21 +170,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final Scale scale = getScale();
-
-		final int margin1;
-		final int margin2;
-		if (UseStyle.useBetaStyle()) {
-			margin1 = SkinParam.zeroMargin(0);
-			margin2 = SkinParam.zeroMargin(0);
-		} else {
-			margin1 = 0;
-			margin2 = 0;
-		}
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
-		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, dpiFactor,
-				getMetadata(), "", margins, null);
-
+		final ImageParameter imageParameter = new ImageParameter(this, new ColorMapperIdentity(), false, null, dpiFactor,
+				getMetadata(), "", null);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
@@ -737,4 +723,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	}
 
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.none();
+	}
 }

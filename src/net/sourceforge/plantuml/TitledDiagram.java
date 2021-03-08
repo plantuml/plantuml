@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.StyleBuilder;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
@@ -212,4 +213,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return getSkinParam().getDpi() * fileFormatOption.getScaleCoef() / 96.0;
 	}
 
+	// This is for backwards compatibility with earlier default margins
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.same(10);
+	}
 }

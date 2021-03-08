@@ -228,8 +228,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 		final HColor backcolor = skinParam.getBackgroundColor(false);
 		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-		final ImageParameter imageParameter = new ImageParameter(skinParam, getAnimation(), dpiFactor, metadata,
-				getWarningOrError(), margins, backcolor);
+		final ImageParameter imageParameter = new ImageParameter(this, getAnimation(), dpiFactor, metadata,
+				getWarningOrError(), backcolor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);

@@ -80,6 +80,10 @@ public class Style {
 		return result;
 	}
 
+	public boolean hasValue(PName name) {
+		return map.containsKey(name);
+	}
+
 	public Style mergeWith(Style other) {
 		if (other == null) {
 			return this;

@@ -69,7 +69,6 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -90,10 +89,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -446,20 +443,11 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// }
 
 			final double scale = 1;
-
-			final ClockwiseTopRightBottomLeft margins;
-			if (UseStyle.useBetaStyle()) {
-				final Style style = StyleSignature.of(SName.root, SName.document)
-						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-				margins = style.getMargin();
-			} else {
-				margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
-			}
 			ISkinParam skinParam = diagram.getSkinParam();
 			final HColor backcolor = skinParam.getBackgroundColor(false);
 			final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-			final ImageParameter imageParameter = new ImageParameter(skinParam, diagram.getAnimation(), scale, metadata,
-					null, margins, backcolor);
+			final ImageParameter imageParameter = new ImageParameter(diagram, diagram.getAnimation(), scale, metadata,
+					null, backcolor);
 
 			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
