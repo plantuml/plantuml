@@ -40,9 +40,15 @@ import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SvgCharSizeHack;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -84,15 +90,21 @@ public class ImageParameter {
 		this.lengthAdjust = LengthAdjust.defaultValue();
 	}
 
-	public ImageParameter(ISkinParam skinParam, Animation animation, double dpiFactor, String metadata,
-			String warningOrError, ClockwiseTopRightBottomLeft margins, HColor backcolor) {
+	public ImageParameter(TitledDiagram diagram, ColorMapper colorMapper, boolean useHandwritten, Animation animation, double dpiFactor,
+						  String metadata, String warningOrError, HColor backcolor) {
+		this(colorMapper, useHandwritten, animation, dpiFactor, metadata, warningOrError, calculateDiagramMargin(diagram), backcolor);
+	}
+
+	public ImageParameter(TitledDiagram diagram, Animation animation, double dpiFactor, String metadata,
+			String warningOrError, HColor backcolor) {
+		final ISkinParam skinParam = diagram.getSkinParam();
 		this.colorMapper = skinParam.getColorMapper();
 		this.useHandwritten = skinParam.handwritten();
 		this.animation = animation;
 		this.dpiFactor = dpiFactor;
 		this.metadata = metadata;
 		this.warningOrError = warningOrError;
-		this.margins = margins;
+		this.margins = calculateDiagramMargin(diagram);
 		this.backcolor = backcolor;
 		this.svgDimensionStyle = skinParam.svgDimensionStyle();
 
@@ -167,4 +179,13 @@ public class ImageParameter {
 		return lengthAdjust;
 	}
 
+	private static ClockwiseTopRightBottomLeft calculateDiagramMargin(TitledDiagram diagram) {
+		if (UseStyle.useBetaStyle()) {
+			final Style style = StyleSignature.of(SName.root, SName.document).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+			if (style.hasValue(PName.Margin)) {
+				return style.getMargin();
+			}
+		}
+		return diagram.getDefaultMargins();
+	}
 }

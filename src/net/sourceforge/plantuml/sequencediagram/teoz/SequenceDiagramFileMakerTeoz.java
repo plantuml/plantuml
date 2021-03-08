@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -152,19 +151,11 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final double scale = 1;
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ClockwiseTopRightBottomLeft margins;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document)
-					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-			margins = style.getMargin();
-		} else {
-			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 5);
-		}
 		ISkinParam skinParam = diagram.getSkinParam();
 		final HColor backcolor = skinParam.getBackgroundColor(false);
 		final double factor = oneOf(scale, dpiFactor);
-		final ImageParameter imageParameter = new ImageParameter(skinParam, diagram.getAnimation(), factor, metadata,
-				null, margins, backcolor);
+		final ImageParameter imageParameter = new ImageParameter(diagram, diagram.getAnimation(), factor, metadata,
+				null, backcolor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 

@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMaker
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SequenceDiagram extends UmlDiagram {
@@ -539,5 +540,10 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public List<LinkAnchor> getLinkAnchors() {
 		return Collections.unmodifiableList(linkAnchors);
+	}
+
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.same(5);
 	}
 }

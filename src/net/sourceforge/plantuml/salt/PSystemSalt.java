@@ -51,11 +51,9 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.ScaleSimple;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -129,22 +127,11 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			final Scale scale = getScale();
 			final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 			final ISkinParam skinParam = getSkinParam();
-
-			final double margin1;
-			final double margin2;
-			if (UseStyle.useBetaStyle()) {
-				margin1 = SkinParam.zeroMargin(5);
-				margin2 = SkinParam.zeroMargin(5);
-			} else {
-				margin1 = 5;
-				margin2 = 5;
-			}
 			HColor backcolor = skinParam.getBackgroundColor(false);
-			final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
 			final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
 
-			final ImageParameter imageParameter = new ImageParameter(skinParam.getColorMapper(),
-					skinParam.handwritten(), null, dpiFactor, metadata, "", margins, backcolor);
+			final ImageParameter imageParameter = new ImageParameter(this, skinParam.getColorMapper(),
+					skinParam.handwritten(), null, dpiFactor, metadata, "", backcolor);
 
 			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
@@ -289,4 +276,8 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 		return iamSalt;
 	}
 
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.same(5);
+	}
 }

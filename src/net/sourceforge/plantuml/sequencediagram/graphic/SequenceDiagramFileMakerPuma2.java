@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -197,20 +196,11 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ClockwiseTopRightBottomLeft margins;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.sequenceDiagram, SName.document)
-					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-			// margins = style.getMargin();
-			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
-		} else {
-			margins = ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
-		}
 		ISkinParam skinParam = diagram.getSkinParam();
 		final HColor backcolor = skinParam.getBackgroundColor(false);
 		final double factor = oneOf(scale, dpiFactor);
-		final ImageParameter imageParameter = new ImageParameter(skinParam, diagram.getAnimation(), factor, metadata,
-				null, margins, backcolor);
+		final ImageParameter imageParameter = new ImageParameter(diagram, diagram.getAnimation(), factor, metadata,
+				null, backcolor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		imageBuilder.setUDrawable(new UDrawable() {
