@@ -129,7 +129,7 @@ public class ImageParameter {
 		this.fileFormatOption = fileFormatOption;
 		this.colorMapper = skinParam.getColorMapper();
 		this.useHandwritten = skinParam.handwritten();
-		this.animation = diagram instanceof UmlDiagram ? ((UmlDiagram) diagram).getAnimation() : null;  // TODO move animation to TitledDiagram ?
+		this.animation = diagram.getAnimation();
 		this.dpiFactor = dpiFactor;
 		this.metadata = metadata;
 		this.warningOrError = warningOrError;
