@@ -55,10 +55,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
@@ -89,18 +85,9 @@ public class BoardDiagram extends UmlDiagram {
 
 		final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final Style style = StyleSignature.of(SName.root, SName.document, SName.mindmapDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-		if (backgroundColor == null) {
-			backgroundColor = HColorUtils.transparent();
-		}
-
-		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-
-		final ImageParameter imageParameter = new ImageParameter(this, skinParam.getColorMapper(), skinParam.handwritten(),
-				null, dpiFactor, metadata, "", backgroundColor);
+		final ImageParameter imageParameter = new ImageParameter(this,
+				fileFormatOption, null, dpiFactor, "");
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
@@ -110,7 +97,7 @@ public class BoardDiagram extends UmlDiagram {
 				.addAdd(result);
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
+		return imageBuilder.writeImageTOBEMOVED(seed(), os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {

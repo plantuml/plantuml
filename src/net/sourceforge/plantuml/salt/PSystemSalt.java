@@ -127,11 +127,8 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			final Scale scale = getScale();
 			final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 			final ISkinParam skinParam = getSkinParam();
-			HColor backcolor = skinParam.getBackgroundColor(false);
-			final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-
-			final ImageParameter imageParameter = new ImageParameter(this, skinParam.getColorMapper(),
-					skinParam.handwritten(), null, dpiFactor, metadata, "", backcolor);
+			final ImageParameter imageParameter = new ImageParameter(this,
+					fileFormatOption, null, dpiFactor, "");
 
 			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
@@ -140,7 +137,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			result = new AnnotatedWorker(this, skinParam, stringBounder).addAdd(result);
 			imageBuilder.setUDrawable(result);
 
-			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
+			return imageBuilder.writeImageTOBEMOVED(seed(), os);
 		} catch (Exception e) {
 			e.printStackTrace();
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, seed, getMetadata(), "none",

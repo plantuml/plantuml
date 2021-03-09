@@ -100,11 +100,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final double dpiFactor = 1;
-		ISkinParam skinParam1 = getSkinParam();
-		final HColor backcolor = skinParam1.getBackgroundColor(false);
-		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-		final ImageParameter imageParameter = new ImageParameter(this, getAnimation(), dpiFactor, metadata,
-				getWarningOrError(), backcolor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, getAnimation(), dpiFactor,
+				getWarningOrError());
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		TextBlock result = getTextBlock();
@@ -113,7 +110,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 				.addAdd(result);
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
+		return imageBuilder.writeImageTOBEMOVED(seed(), os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {

@@ -42,7 +42,6 @@ import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -52,7 +51,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class BpmDiagram extends UmlDiagram {
 
@@ -84,16 +82,13 @@ public class BpmDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final double dpiFactor = 1;
-		ISkinParam skinParam = getSkinParam();
-		final HColor backcolor = skinParam.getBackgroundColor(false);
-		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-		final ImageParameter imageParameter = new ImageParameter(this, getAnimation(), dpiFactor, metadata,
-				getWarningOrError(), backcolor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, getAnimation(), dpiFactor,
+				getWarningOrError());
 		
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(getUDrawable());
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
+		return imageBuilder.writeImageTOBEMOVED(seed(), os);
 	}
 
 	private UDrawable getUDrawable() {

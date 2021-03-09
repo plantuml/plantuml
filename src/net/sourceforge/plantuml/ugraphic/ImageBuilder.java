@@ -118,6 +118,10 @@ public class ImageBuilder {
 		this.udrawable = udrawable;
 	}
 
+	public ImageData writeImageTOBEMOVED(long seed, OutputStream os) throws IOException {
+		return writeImageTOBEMOVED(param.getFileFormatOption(), seed, os);
+	}
+
 	public ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, long seed, OutputStream os)
 			throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();

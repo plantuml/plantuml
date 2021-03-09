@@ -124,12 +124,12 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		final HColor backcolor = result.getBackcolor();
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ImageParameter imageParameter = new ImageParameter(diagram, diagram.getAnimation(), scale, metadata,
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, diagram.getAnimation(), scale, metadata,
 				warningOrError, backcolor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
-		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
+		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(diagram.seed(), os);
 		if (isGraphvizCrash) {
 			((ImageDataAbstract) imageData).setStatus(503);
 		}

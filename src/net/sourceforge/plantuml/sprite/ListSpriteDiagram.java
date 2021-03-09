@@ -41,7 +41,6 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -59,7 +58,6 @@ import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ListSpriteDiagram extends UmlDiagram {
@@ -78,15 +76,12 @@ public class ListSpriteDiagram extends UmlDiagram {
 
 		final TextBlock result = getTable();
 		final double dpiFactor = 1;
-		ISkinParam skinParam = getSkinParam();
-		final HColor backcolor = skinParam.getBackgroundColor(false);
-		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-		final ImageParameter imageParameter = new ImageParameter(this, getAnimation(), dpiFactor, metadata,
-				getWarningOrError(), backcolor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, getAnimation(), dpiFactor,
+				getWarningOrError());
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
+		return imageBuilder.writeImageTOBEMOVED(seed(), os);
 	}
 
 	private TextBlock getTable() {
