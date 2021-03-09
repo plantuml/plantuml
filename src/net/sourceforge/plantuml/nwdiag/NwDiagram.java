@@ -221,8 +221,7 @@ public class NwDiagram extends UmlDiagram {
 
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, null, dpiFactor,
-				"");
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))

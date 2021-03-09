@@ -443,8 +443,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// }
 
 			final double scale = 1;
-			final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, diagram.getAnimation(), scale,
-					null);
+			final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, scale);
 
 			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 

@@ -50,10 +50,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.script.ScriptException;
-
-import net.sourceforge.plantuml.anim.Animation;
-import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
@@ -96,8 +92,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	private int minwidth = Integer.MAX_VALUE;
 
-	private Animation animation;
-
 	public UmlDiagram(UmlDiagramType type) {
 		super(type);
 	}
@@ -130,20 +124,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			return getHeader();
 		}
 		throw new IllegalArgumentException();
-	}
-
-	final public void setAnimation(Iterable<CharSequence> animationData) {
-		try {
-			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
-			this.animation = Animation.create(animationDecoder.decode());
-		} catch (ScriptException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	final public Animation getAnimation() {
-		return animation;
 	}
 
 	public final boolean isHideUnlinkedData() {

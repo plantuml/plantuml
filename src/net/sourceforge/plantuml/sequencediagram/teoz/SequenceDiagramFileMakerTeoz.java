@@ -151,8 +151,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final double scale = 1;
 
 		final double factor = oneOf(scale, dpiFactor);
-		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, diagram.getAnimation(), factor,
-				null);
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, factor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 

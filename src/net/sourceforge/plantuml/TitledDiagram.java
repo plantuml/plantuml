@@ -37,6 +37,8 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.anim.Animation;
+import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -47,6 +49,8 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.StyleBuilder;
+
+import javax.script.ScriptException;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
@@ -62,6 +66,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	private final UmlDiagramType type;
 
 	private final SkinParam skinParam;
+
+	private Animation animation;
 
 	private final Pragma pragma = new Pragma();
 
@@ -216,5 +222,19 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	// This is for backwards compatibility with earlier default margins
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(10);
+	}
+
+	final public void setAnimation(Iterable<CharSequence> animationData) {
+		try {
+			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
+			this.animation = Animation.create(animationDecoder.decode());
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	final public Animation getAnimation() {
+		return animation;
 	}
 }

@@ -195,8 +195,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		// System.err.println("scale=" + scale);
 
 		final double factor = oneOf(scale, dpiFactor);
-		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, diagram.getAnimation(), factor,
-				null);
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, factor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		imageBuilder.setUDrawable(new UDrawable() {
