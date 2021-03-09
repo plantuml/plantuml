@@ -147,7 +147,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 	private HColor arrowLollipopColor;
 	private final ISkinParam skinParam;
 
-	// private final UmlDiagramType umlType;
+	private final double labelShield;
 
 	@Override
 	public String toString() {
@@ -304,6 +304,12 @@ public class Line implements Moveable, Hideable, GuideLine {
 					skinParam);
 		}
 
+		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE) {
+			this.labelShield = 0;
+		} else {
+			this.labelShield = 7;
+		}
+
 	}
 
 	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
@@ -376,8 +382,9 @@ public class Line implements Moveable, Hideable, GuideLine {
 			} else {
 				sb.append("label=<");
 			}
-			final Dimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder)
-					: CONSTRAINT_SPOT;
+			Dimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
+			dimNote = Dimension2DDouble.delta(dimNote, 2 * labelShield);
+
 			appendTable(sb, eventuallyDivideByTwo(dimNote), noteLabelColor, graphvizVersion);
 			sb.append(">");
 		}
@@ -711,8 +718,8 @@ public class Line implements Moveable, Hideable, GuideLine {
 
 		if (hasNoteLabelText() && this.labelXY != null
 				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED) {
-			this.labelText.drawU(ug.apply(
-					new UTranslate(x + this.labelXY.getPosition().getX(), y + this.labelXY.getPosition().getY())));
+			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX() + labelShield,
+					y + this.labelXY.getPosition().getY() + labelShield)));
 		}
 		if (this.startTailText != null && this.startTailLabelXY != null
 				&& this.startTailLabelXY.getPosition() != null) {

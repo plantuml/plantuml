@@ -123,6 +123,7 @@ public final class EntityFactory {
 		final USymbol symbol = g.getUSymbol();
 		folder.setUSymbol(symbol);
 		folder.setStereotype(g.getStereotype());
+		folder.setColors(g.getColors(skinParam));
 		if (g.getUrl99() != null) {
 			folder.addUrl(g.getUrl99());
 		}

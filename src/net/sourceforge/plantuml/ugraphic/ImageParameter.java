@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ImageParameter {
 
@@ -93,20 +94,32 @@ public class ImageParameter {
 		this.fileFormatOption = null;
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation, double dpiFactor, String warningOrError) {
-		this(
-				diagram,
-				fileFormatOption,
-				animation,
-				dpiFactor,
-				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
-				warningOrError,
-				diagram.getSkinParam().getBackgroundColor(false)
-		);
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation,
+			double dpiFactor, String warningOrError) {
+		this(diagram, fileFormatOption, animation, dpiFactor,
+				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError,
+				getBackgroundColor(diagram));
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation, double dpiFactor, String metadata,
-			String warningOrError, HColor backcolor) {
+	private static HColor getBackgroundColor(TitledDiagram diagram) {
+		if (UseStyle.useBetaStyle()) {
+			final Style style = StyleSignature
+					.of(SName.root, SName.document, diagram.getUmlDiagramType().getStyleName())
+					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+
+			HColor backgroundColor = style.value(PName.BackGroundColor)
+					.asColor(diagram.getSkinParam().getIHtmlColorSet());
+			if (backgroundColor == null) {
+				backgroundColor = HColorUtils.transparent();
+			}
+			return backgroundColor;
+
+		}
+		return diagram.getSkinParam().getBackgroundColor(false);
+	}
+
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation,
+			double dpiFactor, String metadata, String warningOrError, HColor backcolor) {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		this.fileFormatOption = fileFormatOption;
 		this.colorMapper = skinParam.getColorMapper();
@@ -196,7 +209,8 @@ public class ImageParameter {
 
 	private static ClockwiseTopRightBottomLeft calculateDiagramMargin(TitledDiagram diagram) {
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+			final Style style = StyleSignature.of(SName.root, SName.document)
+					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			if (style.hasValue(PName.Margin)) {
 				return style.getMargin();
 			}

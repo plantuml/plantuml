@@ -98,7 +98,9 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), RegexLeaf.end());
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
+				RegexLeaf.end());
 	}
 
 	private static ColorParser color() {

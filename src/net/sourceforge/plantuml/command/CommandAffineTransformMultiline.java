@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 
-public class CommandAffineTransformMultiline extends CommandMultilines<UmlDiagram> {
+public class CommandAffineTransformMultiline extends CommandMultilines<TitledDiagram> {
 
 	public CommandAffineTransformMultiline() {
 		super("(?i)^!transformation[%s]+\\{[%s]*$");
@@ -48,7 +48,7 @@ public class CommandAffineTransformMultiline extends CommandMultilines<UmlDiagra
 		return "(?i)^[%s]*!\\}[%s]*$";
 	}
 
-	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) {
 		// lines = lines.subExtract(1, 1);
 		// diagram.setAnimation(lines);
 		return CommandExecutionResult.error("Not yet implemented");

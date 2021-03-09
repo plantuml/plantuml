@@ -171,7 +171,15 @@ public class Run {
 					dir = f;
 				}
 			}
-			new MainWindow2(option, dir);
+			try {
+				new MainWindow2(option, dir);
+			} catch (java.awt.HeadlessException e) {
+				System.err.println("There is an issue with your server. You will find some tips here:");
+				System.err.println("https://forum.plantuml.net/3399/problem-with-x11-and-headless-exception");
+				System.err.println("https://plantuml.com/en/faq#239d64f675c3e515");
+				throw e;
+			}
+
 		} else if (option.isPipe() || option.isPipeMap() || option.isSyntax()) {
 			managePipe(option, error);
 			forceQuit = true;
