@@ -99,7 +99,6 @@ import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -171,8 +170,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			throws IOException {
 		final Scale scale = getScale();
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
-		final ImageParameter imageParameter = new ImageParameter(this, new ColorMapperIdentity(), false, null, dpiFactor,
-				getMetadata(), "", null);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, null, dpiFactor,
+				"");
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
@@ -180,7 +179,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		result = new AnnotatedWorker(this, getSkinParam(), stringBounder).addAdd(result);
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
+		return imageBuilder.writeImageTOBEMOVED(seed, os);
 	}
 
 	public void setPrintScale(PrintScale printScale) {

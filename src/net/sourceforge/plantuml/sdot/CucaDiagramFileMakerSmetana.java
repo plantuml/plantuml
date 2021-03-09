@@ -443,11 +443,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// }
 
 			final double scale = 1;
-			ISkinParam skinParam = diagram.getSkinParam();
-			final HColor backcolor = skinParam.getBackgroundColor(false);
-			final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-			final ImageParameter imageParameter = new ImageParameter(diagram, diagram.getAnimation(), scale, metadata,
-					null, backcolor);
+			final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, diagram.getAnimation(), scale,
+					null);
 
 			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
@@ -460,7 +457,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(dim.getHeight()), dim)));
 
-			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
+			return imageBuilder.writeImageTOBEMOVED(diagram.seed(), os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),

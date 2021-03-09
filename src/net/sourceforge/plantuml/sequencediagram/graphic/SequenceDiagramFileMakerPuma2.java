@@ -194,13 +194,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		// System.err.println("dpiFactor=" + dpiFactor);
 		// System.err.println("scale=" + scale);
 
-		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-
-		ISkinParam skinParam = diagram.getSkinParam();
-		final HColor backcolor = skinParam.getBackgroundColor(false);
 		final double factor = oneOf(scale, dpiFactor);
-		final ImageParameter imageParameter = new ImageParameter(diagram, diagram.getAnimation(), factor, metadata,
-				null, backcolor);
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, diagram.getAnimation(), factor,
+				null);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		imageBuilder.setUDrawable(new UDrawable() {
@@ -237,7 +233,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			}
 
 		});
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
+		return imageBuilder.writeImageTOBEMOVED(diagram.seed(), os);
 	}
 
 	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {

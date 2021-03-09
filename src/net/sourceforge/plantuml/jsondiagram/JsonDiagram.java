@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class JsonDiagram extends TitledDiagram {
@@ -96,16 +95,15 @@ public class JsonDiagram extends TitledDiagram {
 
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-		final ImageParameter imageParameter = new ImageParameter(this, new ColorMapperIdentity(), false, null, dpiFactor,
-				metadata, "", null);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, null, dpiFactor,
+				"");
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))
 				.addAdd(result);
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, 0, os);
+		return imageBuilder.writeImageTOBEMOVED(0, os);
 	}
 
 	private void drawInternal(UGraphic ug) {

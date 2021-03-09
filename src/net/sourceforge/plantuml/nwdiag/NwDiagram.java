@@ -74,7 +74,6 @@ import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
@@ -222,15 +221,15 @@ public class NwDiagram extends UmlDiagram {
 
 		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final ImageParameter imageParameter = new ImageParameter(this, new ColorMapperIdentity(), false, null, dpiFactor, "",
-				"", null);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, null, dpiFactor,
+				"");
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))
 				.addAdd(result);
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, 0, os);
+		return imageBuilder.writeImageTOBEMOVED(0, os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {

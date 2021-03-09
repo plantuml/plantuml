@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SvgCharSizeHack;
@@ -70,6 +71,7 @@ public class ImageParameter {
 	private final UStroke borderStroke;
 	private final HColor borderColor;
 	private final double borderCorner;
+	private final FileFormatOption fileFormatOption;
 
 	public ImageParameter(ColorMapper colorMapper, boolean useHandwritten, Animation animation, double dpiFactor,
 			String metadata, String warningOrError, ClockwiseTopRightBottomLeft margins, HColor backcolor) {
@@ -88,16 +90,25 @@ public class ImageParameter {
 		this.borderStroke = null;
 		this.svgCharSizeHack = SvgCharSizeHack.NO_HACK;
 		this.lengthAdjust = LengthAdjust.defaultValue();
+		this.fileFormatOption = null;
 	}
 
-	public ImageParameter(TitledDiagram diagram, ColorMapper colorMapper, boolean useHandwritten, Animation animation, double dpiFactor,
-						  String metadata, String warningOrError, HColor backcolor) {
-		this(colorMapper, useHandwritten, animation, dpiFactor, metadata, warningOrError, calculateDiagramMargin(diagram), backcolor);
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation, double dpiFactor, String warningOrError) {
+		this(
+				diagram,
+				fileFormatOption,
+				animation,
+				dpiFactor,
+				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
+				warningOrError,
+				diagram.getSkinParam().getBackgroundColor(false)
+		);
 	}
 
-	public ImageParameter(TitledDiagram diagram, Animation animation, double dpiFactor, String metadata,
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation, double dpiFactor, String metadata,
 			String warningOrError, HColor backcolor) {
 		final ISkinParam skinParam = diagram.getSkinParam();
+		this.fileFormatOption = fileFormatOption;
 		this.colorMapper = skinParam.getColorMapper();
 		this.useHandwritten = skinParam.handwritten();
 		this.animation = animation;
@@ -177,6 +188,10 @@ public class ImageParameter {
 
 	public final LengthAdjust getlengthAdjust() {
 		return lengthAdjust;
+	}
+
+	public FileFormatOption getFileFormatOption() {
+		return fileFormatOption;
 	}
 
 	private static ClockwiseTopRightBottomLeft calculateDiagramMargin(TitledDiagram diagram) {

@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -68,7 +67,6 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class MindMapDiagram extends UmlDiagram {
 
@@ -99,15 +97,8 @@ public class MindMapDiagram extends UmlDiagram {
 		final Style style = StyleSignature.of(SName.root, SName.document, SName.mindmapDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-		if (backgroundColor == null) {
-			backgroundColor = HColorUtils.transparent();
-		}
-
-		final String metadata = fileFormatOption.isWithMetadata() ? getMetadata() : null;
-
-		final ImageParameter imageParameter = new ImageParameter(this, skinParam.getColorMapper(), skinParam.handwritten(),
-				null, dpiFactor, metadata, "", backgroundColor);
+		final ImageParameter imageParameter = new ImageParameter(this,
+				fileFormatOption, null, dpiFactor, "");
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
@@ -117,7 +108,7 @@ public class MindMapDiagram extends UmlDiagram {
 				.addAdd(result);
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
+		return imageBuilder.writeImageTOBEMOVED(seed(), os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {
