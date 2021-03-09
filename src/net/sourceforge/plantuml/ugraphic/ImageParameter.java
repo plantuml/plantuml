@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SvgCharSizeHack;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -94,11 +95,15 @@ public class ImageParameter {
 		this.fileFormatOption = null;
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation,
-			double dpiFactor, String warningOrError) {
-		this(diagram, fileFormatOption, animation, dpiFactor,
-				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError,
-				getBackgroundColor(diagram));
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, double dpiFactor) {
+		this(
+				diagram,
+				fileFormatOption,
+				dpiFactor,
+				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
+				diagram.getWarningOrError(),
+				getBackgroundColor(diagram)
+		);
 	}
 
 	private static HColor getBackgroundColor(TitledDiagram diagram) {
@@ -118,13 +123,13 @@ public class ImageParameter {
 		return diagram.getSkinParam().getBackgroundColor(false);
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, Animation animation,
-			double dpiFactor, String metadata, String warningOrError, HColor backcolor) {
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, double dpiFactor, String metadata,
+			String warningOrError, HColor backcolor) {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		this.fileFormatOption = fileFormatOption;
 		this.colorMapper = skinParam.getColorMapper();
 		this.useHandwritten = skinParam.handwritten();
-		this.animation = animation;
+		this.animation = diagram instanceof UmlDiagram ? ((UmlDiagram) diagram).getAnimation() : null;  // TODO move animation to TitledDiagram ?
 		this.dpiFactor = dpiFactor;
 		this.metadata = metadata;
 		this.warningOrError = warningOrError;

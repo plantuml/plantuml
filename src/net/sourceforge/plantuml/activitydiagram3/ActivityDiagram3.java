@@ -226,8 +226,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final double dpiFactor = getDpiFactor(fileFormatOption,
 				Dimension2DDouble.delta(dim, margins.getLeft() + margins.getRight(), 0));
 
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, getAnimation(), dpiFactor,
-				getWarningOrError());
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);

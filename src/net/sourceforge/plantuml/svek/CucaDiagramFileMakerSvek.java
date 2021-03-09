@@ -124,7 +124,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		final HColor backcolor = result.getBackcolor();
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, diagram.getAnimation(), scale, metadata,
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, scale, metadata,
 				warningOrError, backcolor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
