@@ -86,8 +86,7 @@ public class BoardDiagram extends UmlDiagram {
 		final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
 
-		final ImageParameter imageParameter = new ImageParameter(this,
-				fileFormatOption, null, dpiFactor, "");
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 

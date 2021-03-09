@@ -56,10 +56,7 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
@@ -94,11 +91,8 @@ public class MindMapDiagram extends UmlDiagram {
 
 		final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final Style style = StyleSignature.of(SName.root, SName.document, SName.mindmapDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		final ImageParameter imageParameter = new ImageParameter(this,
-				fileFormatOption, null, dpiFactor, "");
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
