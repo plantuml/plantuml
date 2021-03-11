@@ -1,0 +1,13 @@
+@startjcckit (200,140)
+jcckit
+data/curves = curve1
+data/curve1/x = 0.1 0.9
+data/curve1/y = 0.1 0.9
+plot/coordinateSystem/xAxis/axisLabel = jcckit
+plot/coordinateSystem/xAxis/automaticTicCalculation = false
+plot/coordinateSystem/xAxis/numberOfTics = 4
+plot/coordinateSystem/yAxis/axisLabel =
+plot/coordinateSystem/yAxis/automaticTicCalculation = false
+plot/coordinateSystem/yAxis/numberOfTics = 4
+plot/legendVisible = false
+@endjcckit

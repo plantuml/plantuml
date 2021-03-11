@@ -1,0 +1,4 @@
+@startuml
+' Expect error "Assertion error : undefined" on line 2
+!assert 0 : error_preprocessor
+@enduml

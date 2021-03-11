@@ -1,0 +1,5 @@
+@startuml
+digraph foo {
+  dot [shape=box]
+}
+@enduml

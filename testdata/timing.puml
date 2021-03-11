@@ -1,0 +1,7 @@
+@startuml
+concise timing
+@0
+timing is _
+@100
+timing is _
+@enduml

@@ -156,7 +156,7 @@ public abstract class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
-	private List<String> getPureAsciiFormatted() {
+	public List<String> getPureAsciiFormatted() {
 		final List<String> result = getTextFromStack();
 		result.addAll(getTextFullBody());
 		result.add("^^^^^");

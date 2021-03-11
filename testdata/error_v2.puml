@@ -1,0 +1,4 @@
+@startuml
+' Expect error "Syntax Error?" on line 2
+error_v2
+@enduml

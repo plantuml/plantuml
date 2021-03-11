@@ -1,0 +1,7 @@
+@startuml
+xearth
+GMT=1970/01/01 01:00
+viewPositionType=Fixed
+viewPosLat=-40.9
+viewPosLong=+174.9
+@enduml

@@ -1,0 +1,3 @@
+@startuml
+colors
+@enduml

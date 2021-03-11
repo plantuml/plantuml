@@ -1,0 +1,7 @@
+@startuml
+nwdiag {
+    network {
+        network ;
+    }
+}
+@enduml
