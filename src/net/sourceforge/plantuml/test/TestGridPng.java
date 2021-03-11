@@ -120,7 +120,7 @@ public class TestGridPng {
 		} else if (value instanceof File) {
 			drawImage(g2d, (File) value, y, x);
 		} else {
-			log("Dont know hor to draw %s", value.getClass());
+			log("Dont know how to draw %s", value.getClass());
 		}
 	}
 
