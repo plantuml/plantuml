@@ -41,9 +41,11 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -96,7 +98,9 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 			final FtileBox box = FtileBox.createWbs(style, idea.withBackColor(skinParam), label);
 			return box;
 		}
-		throw new UnsupportedOperationException();
+		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),
+				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
+		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
 	}
 
 }

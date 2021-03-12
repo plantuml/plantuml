@@ -146,7 +146,7 @@ public class WBSDiagram extends UmlDiagram {
 				if (root != null) {
 					return CommandExecutionResult.error("Error 44");
 				}
-				initRoot(backColor, label, stereotype);
+				initRoot(backColor, label, stereotype, shape);
 				return CommandExecutionResult.ok();
 			}
 			return add(backColor, level, label, stereotype, direction, shape);
@@ -159,9 +159,9 @@ public class WBSDiagram extends UmlDiagram {
 	private WElement root;
 	private WElement last;
 
-	private void initRoot(HColor backColor, String label, String stereotype) {
+	private void initRoot(HColor backColor, String label, String stereotype, IdeaShape shape) {
 		root = new WElement(backColor, Display.getWithNewlines(label), stereotype,
-				getSkinParam().getCurrentStyleBuilder());
+				getSkinParam().getCurrentStyleBuilder(), shape);
 		last = root;
 	}
 

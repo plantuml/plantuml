@@ -35,43 +35,42 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-public class YPositionedTile {
+public class Stairs {
 
-	private final Tile tile;
-	private final double y;
+	private final List<Step> values = new ArrayList<Step>();
 
-	public YPositionedTile(Tile tile, double y) {
-		this.tile = tile;
-		this.y = y;
-		tile.callbackY(y);
+	public void addStep(Step step) {
+		if (step.getIndent() < 0) {
+			throw new IllegalArgumentException();
+		}
+		if (values.size() > 0) {
+			final double lastY = values.get(values.size() - 1).getValue();
+			if (step.getValue() <= lastY) {
+				// throw new IllegalArgumentException();
+				return;
+			}
+		}
+		values.add(step);
 	}
 
-	@Override
-	public String toString() {
-		return "y=" + y + " " + tile;
+	public int getMaxIndent() {
+		int max = Integer.MIN_VALUE;
+		for (Step step : values) {
+			final int v = step.getIndent();
+			if (v > max) {
+				max = v;
+			}
+		}
+		return max;
 	}
 
-	public void drawInArea(UGraphic ug) {
-		// System.err.println("YPositionedTile::drawU y=" + y + " " + tile);
-		tile.drawU(ug.apply(UTranslate.dy(y)));
-	}
-
-	public boolean matchAnchorV2(String anchor) {
-		final boolean result = tile.matchAnchorV1(anchor);
-		return result;
-	}
-
-	public final double getY() {
-		return y + tile.getContactPointRelative();
-	}
-
-	public double getMiddleX() {
-		final double max = tile.getMaxX().getCurrentValue();
-		final double min = tile.getMinX().getCurrentValue();
-		return (min + max) / 2;
+	public Collection<Step> getSteps() {
+		return Collections.unmodifiableCollection(values);
 	}
 
 }

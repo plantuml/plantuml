@@ -78,9 +78,8 @@ public class LifeEvent extends AbstractEvent implements Event {
 		return type == LifeEventType.DEACTIVATE || type == LifeEventType.DESTROY;
 	}
 
-	@Deprecated
-	public boolean isDestroy() {
-		return type == LifeEventType.DESTROY;
+	public boolean isDeactivate() {
+		return type == LifeEventType.DEACTIVATE;
 	}
 
 	public boolean isDestroy(Participant p) {

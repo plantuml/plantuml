@@ -44,6 +44,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -163,7 +164,7 @@ public class GroupingTile extends AbstractTile {
 
 		double h = dim1.getHeight() + MARGINY_MAGIC / 2;
 		for (Tile tile : tiles) {
-			tile.drawU(ug.apply(UTranslate.dy(h)));
+			((UDrawable) tile).drawU(ug.apply(UTranslate.dy(h)));
 			final double preferredHeight = tile.getPreferredHeight();
 			h += preferredHeight;
 		}
@@ -182,7 +183,7 @@ public class GroupingTile extends AbstractTile {
 		for (Tile tile : tiles) {
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
-				ys.add(elseTile.getCallbackY() - y + MARGINY_MAGIC / 2);
+				ys.add(elseTile.getY() - getY() + MARGINY_MAGIC / 2);
 			}
 		}
 		ys.add(totalHeight);
@@ -217,23 +218,16 @@ public class GroupingTile extends AbstractTile {
 		return max.addFixed(EXTERNAL_MARGINX2);
 	}
 
-	private double y;
-
-	@Override
-	public void callbackY_internal(double y) {
-		this.y = y;
-	}
-
 	public static double fillPositionelTiles(StringBounder stringBounder, double y, List<Tile> tiles,
-			final List<YPositionedTile> local, List<YPositionedTile> full) {
+			final List<CommonTile> local, List<CommonTile> full) {
 		for (Tile tile : mergeParallel(stringBounder, tiles)) {
-			final YPositionedTile ytile = new YPositionedTile(tile, y);
-			local.add(ytile);
-			full.add(ytile);
+			tile.callbackY(y);
+			local.add((CommonTile) tile);
+			full.add((CommonTile) tile);
 			if (tile instanceof GroupingTile) {
 				final GroupingTile groupingTile = (GroupingTile) tile;
 				final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
-				final ArrayList<YPositionedTile> local2 = new ArrayList<YPositionedTile>();
+				final ArrayList<CommonTile> local2 = new ArrayList<CommonTile>();
 				fillPositionelTiles(stringBounder, y + headerHeight, groupingTile.tiles, local2, full);
 			}
 			y += tile.getPreferredHeight();
@@ -303,7 +297,7 @@ public class GroupingTile extends AbstractTile {
 				((GroupingTile) tile).addYNewPages(yNewPages);
 			}
 			if (tile instanceof NewpageTile) {
-				final double y = ((NewpageTile) tile).getCallbackY();
+				final double y = ((NewpageTile) tile).getY();
 				yNewPages.add(y);
 			}
 		}

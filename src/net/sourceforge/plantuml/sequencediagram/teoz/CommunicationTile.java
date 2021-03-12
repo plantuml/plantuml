@@ -141,7 +141,7 @@ public class CommunicationTile extends AbstractTile {
 	public static final double LIVE_DELTA_SIZE = 5;
 
 	@Override
-	public void callbackY_internal(double y) {
+	final protected void callbackY_internal(double y) {
 		if (message.isCreate()) {
 			livingSpace2.goCreate(y);
 		}

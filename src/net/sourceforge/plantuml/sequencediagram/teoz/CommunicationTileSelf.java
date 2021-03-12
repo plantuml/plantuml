@@ -100,7 +100,7 @@ public class CommunicationTileSelf extends AbstractTile {
 	}
 
 	@Override
-	public void callbackY_internal(double y) {
+	final protected void callbackY_internal(double y) {
 		final ArrowComponent comp = getComponent(getStringBounder());
 		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final Point2D p1 = comp.getStartPoint(getStringBounder(), dim);

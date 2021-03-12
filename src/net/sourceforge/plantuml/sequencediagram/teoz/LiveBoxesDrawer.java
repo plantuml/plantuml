@@ -94,8 +94,8 @@ public class LiveBoxesDrawer {
 		this.symbolContext = symbolContext;
 	}
 
-	public void doDrawing(UGraphic ug, StairsPosition yposition) {
-		final Segment full = new Segment(y1, yposition.getValue());
+	public void doDrawing(UGraphic ug, double yposition) {
+		final Segment full = new Segment(y1, yposition);
 		final Collection<Segment> segments = full.cutSegmentIfNeed(delays);
 		ComponentType type = ComponentType.ALIVE_BOX_CLOSE_CLOSE;
 		if (segments.size() > 1) {
@@ -106,22 +106,21 @@ public class LiveBoxesDrawer {
 			if (it.hasNext() == false && type != ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
 				type = ComponentType.ALIVE_BOX_OPEN_CLOSE;
 			}
-			drawInternal(ug, yposition, seg.getPos1(), seg.getPos2(), type);
+			drawInternal(ug, seg.getPos1(), seg.getPos2(), type);
 			type = ComponentType.ALIVE_BOX_OPEN_OPEN;
 		}
 		y1 = Double.MAX_VALUE;
 	}
 
-	public void drawDestroyIfNeeded(UGraphic ug, StairsPosition yposition) {
-		if (yposition.isDestroy()) {
+	public void drawDestroyIfNeeded(UGraphic ug, Step step) {
+		if (step.isDestroy()) {
 			final Dimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());
-			cross.drawU(
-					ug.apply(new UTranslate(-dimCross.getWidth() / 2, yposition.getValue() - dimCross.getHeight() / 2)),
+			cross.drawU(ug.apply(new UTranslate(-dimCross.getWidth() / 2, step.getValue() - dimCross.getHeight() / 2)),
 					null, context);
 		}
 	}
 
-	private void drawInternal(UGraphic ug, StairsPosition yposition, double ya, double yb, ComponentType type) {
+	private void drawInternal(UGraphic ug, double ya, double yb, ComponentType type) {
 		final double width = getWidth(ug.getStringBounder());
 		final Area area = new Area(width, yb - ya);
 		ISkinParam skinParam2 = new SkinParamBackcolored(skinParam,

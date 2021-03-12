@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 
 public class YamlLines implements Iterable<String> {
 
-	public static final String KEY = "([_0-9\\w].*)";
+	public static final String KEY = "([^:\\s]+)";
 
 	private List<String> lines = new ArrayList<String>();
 

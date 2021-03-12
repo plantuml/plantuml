@@ -104,8 +104,8 @@ final class WElement {
 		return result;
 	}
 
-	public WElement(HColor backColor, Display label, String stereotype, StyleBuilder styleBuilder) {
-		this(backColor, 0, label, stereotype, null, IdeaShape.BOX, styleBuilder);
+	public WElement(HColor backColor, Display label, String stereotype, StyleBuilder styleBuilder, IdeaShape shape) {
+		this(backColor, 0, label, stereotype, null, shape, styleBuilder);
 	}
 
 	private WElement(HColor backColor, int level, Display label, String stereotype, WElement parent, IdeaShape shape,

@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.UPixel;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -148,6 +149,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
 		}
 		registerDriver(ULine.class, new DriverLineSvg(this));
+		registerDriver(UPixel.class, new DriverPixelSvg());
 		registerDriver(UPolygon.class, new DriverPolygonSvg(this));
 		registerDriver(UEllipse.class, new DriverEllipseSvg(this));
 		registerDriver(UImage.class, new DriverImagePng(this));

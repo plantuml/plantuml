@@ -55,6 +55,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	public Diagram createSystem(UmlSource source) {
+		final List<String> highlighted = new ArrayList<String>();
 		JsonValue yaml = null;
 		StyleExtractor styleExtractor = null;
 		try {
@@ -67,13 +68,17 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 				if (it.hasNext() == false) {
 					break;
 				}
+				if (line.startsWith("#highlight ")) {
+					highlighted.add(line.substring("#highlight ".length()).trim());
+					continue;
+				}
 				list.add(line);
 			}
 			yaml = new SimpleYamlParser().parse(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		final JsonDiagram result = new JsonDiagram(UmlDiagramType.YAML, yaml, new ArrayList<String>());
+		final JsonDiagram result = new JsonDiagram(UmlDiagramType.YAML, yaml, highlighted);
 		if (styleExtractor != null) {
 			styleExtractor.applyStyles(result.getSkinParam());
 		}

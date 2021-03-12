@@ -79,7 +79,7 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 	}
 
 	@Override
-	public void callbackY_internal(double y) {
+	final protected void callbackY_internal(double y) {
 		tile.callbackY(y);
 	}
 

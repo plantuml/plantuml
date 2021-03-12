@@ -74,17 +74,6 @@ public class NewpageTile extends AbstractTile {
 		return tileArguments.getOrigin();
 	}
 
-	private double y;
-
-	@Override
-	public void callbackY_internal(double y) {
-		this.y = y;
-	}
-
-	public double getCallbackY() {
-		return y;
-	}
-
 	public Event getEvent() {
 		return newpage;
 	}

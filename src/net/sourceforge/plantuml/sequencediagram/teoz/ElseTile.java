@@ -130,15 +130,4 @@ public class ElseTile extends AbstractTile {
 		return getMinX().addFixed(dim.getWidth());
 	}
 
-	private double y;
-
-	@Override
-	public void callbackY_internal(double y) {
-		this.y = y;
-	}
-
-	public double getCallbackY() {
-		return y;
-	}
-
 }

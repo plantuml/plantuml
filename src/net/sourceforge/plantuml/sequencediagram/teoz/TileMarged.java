@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -58,7 +59,7 @@ public class TileMarged extends AbstractTile implements Tile {
 	}
 
 	public void drawU(UGraphic ug) {
-		tile.drawU(ug.apply(new UTranslate(x1, y1)));
+		((UDrawable) tile).drawU(ug.apply(new UTranslate(x1, y1)));
 
 	}
 

@@ -37,30 +37,38 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.graphic.SymbolContext;
 
-public class IntegerColored {
+public class Step {
 
-	private final int value;
+	private final double value;
+	private final boolean destroy;
+	private final int indent;
 	private final SymbolContext color;
 
-	public IntegerColored(int value, SymbolContext color) {
-		if (value < 0) {
+	public Step(double value, boolean destroy, int indent, SymbolContext color) {
+		if (indent < 0) {
 			throw new IllegalArgumentException();
 		}
-		this.value = value;
+		this.indent = indent;
 		this.color = color;
+		this.value = value;
+		this.destroy = destroy;
 	}
 
-	@Override
-	public String toString() {
-		return "" + value + " " + color;
-	}
-
-	public int getValue() {
+	public double getValue() {
 		return value;
+	}
+
+	public boolean isDestroy() {
+		return destroy;
+	}
+	
+	public int getIndent() {
+		return indent;
 	}
 
 	public SymbolContext getColors() {
 		return color;
 	}
+
 
 }

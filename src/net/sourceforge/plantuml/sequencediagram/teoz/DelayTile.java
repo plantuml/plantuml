@@ -56,15 +56,9 @@ public class DelayTile extends AbstractTile implements Tile {
 	// private Real first;
 	// private Real last;
 	private Real middle;
-	private double y;
 
 	public Event getEvent() {
 		return delay;
-	}
-
-	@Override
-	public void callbackY_internal(double y) {
-		this.y = y;
 	}
 
 	public DelayTile(Delay delay, TileArguments tileArguments) {
@@ -102,7 +96,7 @@ public class DelayTile extends AbstractTile implements Tile {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = new Area(getPreferredWidth(stringBounder), dim.getHeight());
-		tileArguments.getLivingSpaces().delayOn(y, dim.getHeight());
+		tileArguments.getLivingSpaces().delayOn(getY(), dim.getHeight());
 
 		ug = ug.apply(UTranslate.dx(getMinX().getCurrentValue()));
 		comp.drawU(ug, area, (Context2D) ug);

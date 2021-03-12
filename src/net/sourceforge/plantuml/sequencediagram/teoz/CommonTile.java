@@ -36,24 +36,37 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UDrawable;
 
-public abstract class CommonTile implements Tile {
+public abstract class CommonTile implements Tile, UDrawable {
 
 	private final StringBounder stringBounder;
+	private double y = -1;
 
 	public CommonTile(StringBounder stringBounder) {
 		this.stringBounder = stringBounder;
 	}
 
 	final public void callbackY(double y) {
+		this.y = y;
 		callbackY_internal(y);
 	}
 
-	public void callbackY_internal(double y) {
+	protected void callbackY_internal(double y) {
 	}
 
 	protected final StringBounder getStringBounder() {
 		return stringBounder;
+	}
+
+	final public double getMiddleX() {
+		final double max = getMaxX().getCurrentValue();
+		final double min = getMinX().getCurrentValue();
+		return (min + max) / 2;
+	}
+
+	public final double getY() {
+		return y;
 	}
 
 }

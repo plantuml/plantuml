@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -81,7 +82,7 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 	}
 
 	@Override
-	public void callbackY_internal(double y) {
+	final protected void callbackY_internal(double y) {
 		tile.callbackY(y);
 	}
 
@@ -102,7 +103,7 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = new Area(dim.getWidth(), dim.getHeight());
-		tile.drawU(ug);
+		((UDrawable) tile).drawU(ug);
 		final Real p = getNotePosition(stringBounder);
 
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);

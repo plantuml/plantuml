@@ -167,7 +167,7 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	@Override
-	public void callbackY_internal(double y) {
+	final protected void callbackY_internal(double y) {
 		final ArrowComponent comp = getComponent(getStringBounder());
 		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();

@@ -59,7 +59,7 @@ public class LifeEventTile extends AbstractTile {
 	private final ISkinParam skinParam;
 
 	@Override
-	public void callbackY_internal(double y) {
+	final protected void callbackY_internal(double y) {
 		// System.err.println("LifeEventTile::updateStairs " + lifeEvent + " " +
 		// livingSpace.getParticipant() + " y=" + y);
 		livingSpace.addStepForLivebox(getEvent(), y);

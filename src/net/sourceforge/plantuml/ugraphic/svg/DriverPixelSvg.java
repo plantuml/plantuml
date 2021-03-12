@@ -30,13 +30,31 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.sequencediagram.teoz;
+package net.sourceforge.plantuml.ugraphic.svg;
 
-import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.svg.SvgGraphics;
+import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UParam;
+import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
-public interface Tile2 extends UDrawable {
+public class DriverPixelSvg implements UDriver<SvgGraphics> {
 
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
+		final HColor color = param.getColor();
+		if (color instanceof HColorGradient) {
+			final HColorGradient gr = (HColorGradient) color;
+			svg.setStrokeColor(mapper.toSvg(gr.getColor1()));
+		} else {
+			svg.setStrokeColor(mapper.toSvg(color));
+		}
+		svg.setStrokeWidth(0.5, "");
+
+		svg.svgRectangle(x, y, 0.5, 0.5, 0, 0, 0, null, null);
+
+	}
 }

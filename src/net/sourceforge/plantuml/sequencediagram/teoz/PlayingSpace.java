@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.sequencediagram.LinkAnchor;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class PlayingSpace implements Bordered {
 
@@ -106,15 +107,16 @@ public class PlayingSpace implements Bordered {
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final List<YPositionedTile> local = new ArrayList<YPositionedTile>();
-		final List<YPositionedTile> full = new ArrayList<YPositionedTile>();
+		final List<CommonTile> local = new ArrayList<CommonTile>();
+		final List<CommonTile> full = new ArrayList<CommonTile>();
 		final double y = GroupingTile.fillPositionelTiles(stringBounder, startingY, tiles, local, full);
-		for (YPositionedTile tile : local) {
-			tile.drawInArea(ug);
+		for (CommonTile tile : local) {
+			final UTranslate dy = UTranslate.dy(((CommonTile) tile).getY());
+			((CommonTile) tile).drawU(ug.apply(dy));
 		}
 		for (LinkAnchor linkAnchor : linkAnchors) {
-			final YPositionedTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());
-			final YPositionedTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());
+			final CommonTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());
+			final CommonTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());
 			if (ytile1 != null && ytile2 != null) {
 				linkAnchor.drawAnchor(ug, ytile1, ytile2, skinParam);
 			}
@@ -123,10 +125,9 @@ public class PlayingSpace implements Bordered {
 		return y;
 	}
 
-	private YPositionedTile getFromAnchor(List<YPositionedTile> positionedTiles, String anchor) {
-		for (YPositionedTile ytile : positionedTiles) {
-			final boolean matchAnchorV2 = ytile.matchAnchorV2(anchor);
-			if (matchAnchorV2) {
+	private CommonTile getFromAnchor(List<CommonTile> positionedTiles, String anchor) {
+		for (CommonTile ytile : positionedTiles) {
+			if (ytile.matchAnchor(anchor)) {
 				return ytile;
 			}
 		}
@@ -180,7 +181,7 @@ public class PlayingSpace implements Bordered {
 				((GroupingTile) tile).addYNewPages(yNewPages);
 			}
 			if (tile instanceof NewpageTile) {
-				final double y = ((NewpageTile) tile).getCallbackY();
+				final double y = ((NewpageTile) tile).getY();
 				yNewPages.add(y);
 			}
 		}

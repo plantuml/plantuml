@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 
-public interface Tile extends Tile2 {
+public interface Tile {
 
 	public double getPreferredHeight();
 
@@ -50,12 +50,14 @@ public interface Tile extends Tile2 {
 
 	public Real getMaxX();
 
+	public double getMiddleX();
+
 	public Event getEvent();
 
 	public double getContactPointRelative();
 
 	public double getZZZ();
 
-	public boolean matchAnchorV1(String anchor);
+	public boolean matchAnchor(String anchor);
 
 }

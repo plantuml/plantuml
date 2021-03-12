@@ -136,7 +136,7 @@ public class LivingSpaces {
 			// }
 			// System.err.println("drawing lines " + livingSpace);
 			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();
-			livingSpace.drawLineAndLiveBoxes(ug.apply(UTranslate.dx(x)), height, context);
+			livingSpace.drawLineAndLiveboxes(ug.apply(UTranslate.dx(x)), height, context);
 		}
 	}
 
