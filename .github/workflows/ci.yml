@@ -27,9 +27,9 @@ jobs:
         with:
           java-version: 8
 
+      # Downloading all the dependencies is very log spammy so we do this in its own step
       - name: Download Maven Dependencies
         run: mvn --batch-mode dependency:go-offline
-#        run: mvn --batch-mode dependency:resolve dependency:resolve-plugins -Dtype=jar,pom
 
       - name: Get Project Info
         id: project_info
