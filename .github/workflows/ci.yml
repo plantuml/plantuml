@@ -28,7 +28,7 @@ jobs:
           java-version: 8
 
       - name: Download Maven Dependencies
-        run: mvn dependency:resolve dependency:resolve-plugins
+        run: mvn --batch-mode dependency:resolve dependency:resolve-plugins
 
       - name: Get Project Info
         id: project_info
@@ -38,7 +38,8 @@ jobs:
         run: mvn --batch-mode compile
 
       - name: Publish Snapshot
-        if: endsWith( steps.project_info.outputs.version, '-SNAPSHOT' ) # && github.ref == 'refs/heads/test' # TODO change test to master
+        if: endsWith( steps.project_info.outputs.version, '-SNAPSHOT' )
+        # && github.ref == 'refs/heads/test' # TODO change test to master
         # See https://docs.github.com/en/actions/guides/publishing-java-packages-with-maven
         run: mvn --batch-mode deploy -DaltSnapshotDeploymentRepository=https://maven.pkg.github.com/${{github.repository}}-snapshots
         env:
