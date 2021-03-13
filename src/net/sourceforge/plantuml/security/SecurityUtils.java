@@ -66,7 +66,7 @@ public class SecurityUtils {
 		return current;
 	}
 
-	public static void setCurrent(SecurityProfile current) {
+	public static void getSecurityProfile(SecurityProfile current) {
 		SecurityUtils.current = current;
 	}
 
