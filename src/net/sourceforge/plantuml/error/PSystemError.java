@@ -115,6 +115,10 @@ public abstract class PSystemError extends AbstractPSystem {
 		return Collections.singleton(singleError);
 	}
 
+	final public ErrorUml getFirstError() {
+		return singleError;
+	}
+
 	final public String getWarningOrError() {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(getDescription());
