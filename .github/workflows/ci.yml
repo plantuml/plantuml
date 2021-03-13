@@ -43,7 +43,7 @@ jobs:
         if: ${{ endsWith(steps.project_info.outputs.version, '-SNAPSHOT') && github.ref == 'refs/heads/test' }}
         # See https://docs.github.com/en/actions/guides/publishing-java-packages-with-maven
         run: |
-          mvn -X \
+          mvn \
             --batch-mode \
             -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{github.repository}} \
             -Dmaven.javadoc.skip=true \
