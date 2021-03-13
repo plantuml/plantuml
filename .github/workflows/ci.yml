@@ -28,11 +28,12 @@ jobs:
           java-version: 8
 
       - name: Download Maven Dependencies
-        run: mvn --batch-mode dependency:resolve dependency:resolve-plugins -Dtype=jar,pom
+        run: mvn --batch-mode dependency:go-offline
+#        run: mvn --batch-mode dependency:resolve dependency:resolve-plugins -Dtype=jar,pom
 
       - name: Get Project Info
         id: project_info
-        run: echo "::set-output version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+        run: echo "::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
 
       - name: Compile
         run: mvn --batch-mode compile
