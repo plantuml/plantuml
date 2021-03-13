@@ -66,6 +66,10 @@ public class SecurityUtils {
 		return current;
 	}
 
+	public static void setCurrent(SecurityProfile current) {
+		SecurityUtils.current = current;
+	}
+
 	public static boolean getJavascriptUnsecure() {
 		final String env = getenv("PLANTUML_JAVASCRIPT_UNSECURE");
 		if ("true".equalsIgnoreCase(env)) {
