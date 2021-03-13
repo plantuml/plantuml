@@ -45,7 +45,7 @@ jobs:
         run: |
           mvn \
             --batch-mode \
-            -DaltSnapshotDeploymentRepository=https://maven.pkg.github.com/${{github.repository}}-snapshots \
+            -DaltSnapshotDeploymentRepository=github-snapshots::https://maven.pkg.github.com/${{github.repository}}-snapshots \
             -Dmaven.javadoc.skip=true \
             deploy
         env:
