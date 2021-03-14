@@ -116,7 +116,6 @@
                     <include>skin/**/*.skin</include>
                     <include>svg/**/*.css</include>
                     <include>svg/**/*.js</include>
-                    <include>testdata/**/*</include>
                 </includes>
             </resource>
         </resources>        

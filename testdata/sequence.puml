@@ -1,4 +1,0 @@
-@startuml
-skinparam Footbox hide
-sequence -> sequence
-@enduml
