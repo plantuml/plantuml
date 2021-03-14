@@ -94,6 +94,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		if (url != null) {
 			ug.startUrl(url);
 		}
+
 		ug.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		ug.apply(new UStroke(1.5)).draw(circle);
 		ug.closeGroup();
