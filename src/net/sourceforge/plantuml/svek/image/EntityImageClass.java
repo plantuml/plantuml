@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
@@ -131,7 +132,10 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		if (url != null) {
 			ug.startUrl(url);
 		}
+
+		ug.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		drawInternal(ug);
+		ug.closeGroup();
 
 		if (url != null) {
 			ug.closeUrl();
