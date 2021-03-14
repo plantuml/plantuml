@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 
 public class EntityImageObject extends AbstractEntityImage implements Stencil {
 
@@ -156,6 +157,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		}
 
 		final UStroke stroke = getStroke();
+
+		ug.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		ug.apply(stroke).draw(rect);
 
 		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
@@ -171,6 +174,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		if (url != null) {
 			ug.closeUrl();
 		}
+
+		ug.closeGroup();
 	}
 
 	private UStroke getStroke() {
