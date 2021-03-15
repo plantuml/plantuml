@@ -1541,7 +1541,7 @@ LEAVING("zuxoswju917kyl08a5f0gtp6","flat_reorder");
 
 
 
-@Reviewed(when = "16/11/2020²")
+@Reviewed(when = "16/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="reorder", key="inv6wazjcnh4xkzzphsdcmg4", definition="static void reorder(graph_t * g, int r, int reverse, int hasfixed)")
 public static void reorder(ST_Agraph_s g, int r, boolean reverse, boolean hasfixed) {
 ENTERING("inv6wazjcnh4xkzzphsdcmg4","reorder");
