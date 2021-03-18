@@ -212,6 +212,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return useSmetana;
 	}
 
+	@Deprecated
+	// TODO Well I think it's deprecated - whatever uses it should be looked at closely
 	public final double getScaleCoef(FileFormatOption fileFormatOption) {
 		if (getSkinParam().getDpi() == 96) {
 			return fileFormatOption.getScaleCoef();

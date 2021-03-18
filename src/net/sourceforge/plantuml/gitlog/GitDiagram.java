@@ -43,7 +43,6 @@ import java.util.Collection;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -80,9 +79,7 @@ public class GitDiagram extends UmlDiagram {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final Scale scale = getScale();
 
-		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
 		final int margin1;
 		final int margin2;
@@ -93,7 +90,8 @@ public class GitDiagram extends UmlDiagram {
 			margin1 = 10;
 			margin2 = 10;
 		}
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, dpiFactor, "",
+		// TODO change to other ImageParameter constructor?
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, "",
 				"", ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();

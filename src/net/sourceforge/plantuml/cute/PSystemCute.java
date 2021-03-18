@@ -100,7 +100,7 @@ public class PSystemCute extends AbstractPSystem {
 			margin2 = 10;
 		}
 		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, null,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
 				null, margins, null);
 		final ImageBuilder builder = ImageBuilder.build(imageParameter);
 		builder.setUDrawable(root);

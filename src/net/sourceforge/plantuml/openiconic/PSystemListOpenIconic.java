@@ -68,7 +68,7 @@ public class PSystemListOpenIconic extends AbstractPSystem {
 		final UDrawable result = getGraphicStrings();
 		HColor backcolor = HColorUtils.WHITE;
 		final String metadata = fileFormat.isWithMetadata() ? getMetadata() : null;
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, metadata,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, metadata,
 				null, ClockwiseTopRightBottomLeft.none(), backcolor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);

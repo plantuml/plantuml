@@ -72,7 +72,7 @@ public class PSystemAppleTwo extends AbstractPSystem {
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		HColor backcolor = result.getBackcolor();
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
 				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);

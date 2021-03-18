@@ -170,7 +170,7 @@ public class ImageBuilder {
 		if (ug instanceof UGraphicG2d) {
 			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
 			if (urls.size() > 0) {
-				final CMapData cmap = CMapData.cmapString(urls, param.getDpiFactor());
+				final CMapData cmap = CMapData.cmapString(urls, param.getDpi());
 				return new ImageDataComplex(dim, cmap, param.getWarningOrError());
 			}
 		}
@@ -281,13 +281,15 @@ public class ImageBuilder {
 	private UGraphic2 createUGraphic(FileFormatOption option, long seed, final Dimension2D dim, Animation animationArg,
 			double dx, double dy) {
 		final ColorMapper colorMapper = param.getColorMapper();
+		final double scaleFactor = (param.getScale() == null ? 1 : param.getScale().getScale(dim.getWidth(), dim.getHeight()))
+				* param.getDpi() / 96.0;
 		final FileFormat fileFormat = option.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
-			return createUGraphicPNG(colorMapper, param.getDpiFactor(), dim, param.getBackcolor(), animationArg, dx, dy,
+			return createUGraphicPNG(colorMapper, scaleFactor, dim, param.getBackcolor(), animationArg, dx, dy,
 					option.getWatermark());
 		case SVG:
-			return createUGraphicSVG(colorMapper, param.getDpiFactor(), dim, param.getBackcolor(),
+			return createUGraphicSVG(colorMapper, scaleFactor, dim, param.getBackcolor(),
 					option.getSvgLinkTarget(), option.getHoverColor(), seed, option.getPreserveAspectRatio(),
 					param.getlengthAdjust());
 		case EPS:
@@ -299,9 +301,9 @@ public class ImageBuilder {
 		case VDX:
 			return new UGraphicVdx(colorMapper);
 		case LATEX:
-			return new UGraphicTikz(colorMapper, param.getDpiFactor(), true, option.getTikzFontDistortion());
+			return new UGraphicTikz(colorMapper, scaleFactor, true, option.getTikzFontDistortion());
 		case LATEX_NO_PREAMBLE:
-			return new UGraphicTikz(colorMapper, param.getDpiFactor(), false, option.getTikzFontDistortion());
+			return new UGraphicTikz(colorMapper, scaleFactor, false, option.getTikzFontDistortion());
 		case BRAILLE_PNG:
 			return new UGraphicBraille(colorMapper, fileFormat);
 		case UTXT:
@@ -312,7 +314,7 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, final HColor suggested,
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scaleFactor, Dimension2D dim, final HColor suggested,
 			String svgLinkTarget, String hover, long seed, String preserveAspectRatio, LengthAdjust lengthAdjust) {
 		HColor backColor = HColorUtils.WHITE;
 		if (suggested instanceof HColorSimple) {
@@ -321,22 +323,22 @@ public class ImageBuilder {
 		final boolean dimensionStyle = param.isSvgDimensionStyle();
 		final UGraphicSvg ug;
 		if (suggested instanceof HColorGradient) {
-			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, (HColorGradient) suggested, false, scale,
+			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, (HColorGradient) suggested, false, scaleFactor,
 					svgLinkTarget, hover, seed, preserveAspectRatio, param.getSvgCharSizeHack(),
 					param.getlengthAdjust());
 		} else if (backColor == null || colorMapper.toColor(backColor).equals(Color.WHITE)) {
-			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed,
+			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, false, scaleFactor, svgLinkTarget, hover, seed,
 					preserveAspectRatio, param.getSvgCharSizeHack(), param.getlengthAdjust());
 		} else {
 			final String tmp = colorMapper.toSvg(backColor);
-			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, tmp, false, scale, svgLinkTarget, hover, seed,
+			ug = new UGraphicSvg(dimensionStyle, dim, colorMapper, tmp, false, scaleFactor, svgLinkTarget, hover, seed,
 					preserveAspectRatio, param.getSvgCharSizeHack(), param.getlengthAdjust());
 		}
 		return ug;
 
 	}
 
-	private UGraphic2 createUGraphicPNG(ColorMapper colorMapper, double dpiFactor, final Dimension2D dim,
+	private UGraphic2 createUGraphicPNG(ColorMapper colorMapper, double scaleFactor, final Dimension2D dim,
 			HColor mybackcolor, Animation affineTransforms, double dx, double dy, String watermark) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HColorSimple) {
@@ -345,16 +347,16 @@ public class ImageBuilder {
 			backColor = null;
 		}
 
-		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * dpiFactor),
-				(int) (dim.getHeight() * dpiFactor), backColor);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),
+				(int) (dim.getHeight() * scaleFactor), backColor);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
-		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, dpiFactor,
+		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, scaleFactor,
 				affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
 		if (mybackcolor instanceof HColorGradient) {
-			ug.apply(mybackcolor.bg()).draw(new URectangle(im.getWidth() / dpiFactor, im.getHeight() / dpiFactor));
+			ug.apply(mybackcolor.bg()).draw(new URectangle(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
 		}
 
 		return ug;

@@ -172,7 +172,7 @@ public class FontChecker {
 
 	public BufferedImage getBufferedImage(final char c) throws IOException {
 		assert c != '\t';
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, null,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
 				null, ClockwiseTopRightBottomLeft.none(), null);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		final double dim = 20;

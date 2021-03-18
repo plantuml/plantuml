@@ -43,7 +43,6 @@ import java.util.List;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -91,11 +90,9 @@ public class JsonDiagram extends TitledDiagram {
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
-		final Scale scale = getScale();
 
-		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))

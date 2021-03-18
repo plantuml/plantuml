@@ -135,23 +135,11 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final double heightEnglober1;
 	private final double heightEnglober2;
 
-	private double oneOf(double a, double b) {
-		if (a == 1) {
-			return b;
-		}
-		return a;
-	}
-
 	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
 		if (this.index != index) {
 			throw new IllegalStateException();
 		}
-		final double dpiFactor = diagram.getDpiFactor(fileFormatOption, dimTotal);
-
-		final double scale = 1;
-
-		final double factor = oneOf(scale, dpiFactor);
-		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, factor);
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 

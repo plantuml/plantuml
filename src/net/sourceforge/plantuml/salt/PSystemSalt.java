@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -124,10 +123,8 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 			final Dimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
 
-			final Scale scale = getScale();
-			final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 			final ISkinParam skinParam = getSkinParam();
-			final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
+			final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 
 			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 

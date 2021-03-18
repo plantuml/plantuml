@@ -52,7 +52,6 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.WithSprite;
@@ -168,9 +167,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
-		final Scale scale = getScale();
-		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());

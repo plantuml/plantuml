@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.NamedOutputStream;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.core.ImageData;
@@ -118,13 +117,11 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
 			warningOrError = svek2.getWarningOrError(Integer.parseInt(widthwarning));
 		}
-		final Dimension2D dim = result.calculateDimension(stringBounder);
-		final double scale = getScale(fileFormatOption, dim);
 
 		final HColor backcolor = result.getBackcolor();
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, scale, metadata,
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, metadata,
 				warningOrError, backcolor);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
@@ -160,17 +157,6 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 			}
 		}
 		result.add(link);
-	}
-
-	private double getScale(FileFormatOption fileFormatOption, final Dimension2D dim) {
-		final double scale;
-		final Scale diagScale = diagram.getScale();
-		if (diagScale == null) {
-			scale = diagram.getScaleCoef(fileFormatOption);
-		} else {
-			scale = diagScale.getScale(dim.getWidth(), dim.getHeight());
-		}
-		return scale;
 	}
 
 }
