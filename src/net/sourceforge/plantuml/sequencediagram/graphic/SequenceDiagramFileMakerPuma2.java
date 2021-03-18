@@ -82,8 +82,6 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	private final FileFormatOption fileFormatOption;
 	private final StringBounder stringBounder;
 
-	private double scale;
-
 	public SequenceDiagramFileMakerPuma2(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption) {
 		this.diagram = diagram;
 		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
@@ -188,14 +186,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final Dimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
 		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());
 
-		scale = getScale(area.getWidth(), area.getHeight());
-
-		final double dpiFactor = diagram.getScaleCoef(fileFormatOption);
-		// System.err.println("dpiFactor=" + dpiFactor);
-		// System.err.println("scale=" + scale);
-
-		final double factor = oneOf(scale, dpiFactor);
-		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, factor);
+		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		imageBuilder.setUDrawable(new UDrawable() {
@@ -253,33 +244,6 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		}
 		text.drawU(ug.apply(
 				new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area.getHeaderY())));
-	}
-
-	private double oneOf(double a, double b) {
-		if (a == 1) {
-			return b;
-		}
-		return a;
-	}
-
-	private double getImageWidth(SequenceDiagramArea area, double dpiFactor, double legendWidth) {
-		final int minsize = diagram.getMinwidth();
-		final double w = Math.max(area.getWidth() * getScale(area.getWidth(), area.getHeight()) * dpiFactor,
-				legendWidth);
-		if (minsize == Integer.MAX_VALUE) {
-			return w;
-		}
-		if (w >= minsize) {
-			return w;
-		}
-		return minsize;
-	}
-
-	private double getScale(double width, double height) {
-		if (diagram.getScale() == null) {
-			return 1;
-		}
-		return diagram.getScale().getScale(width, height);
 	}
 
 	private PngTitler getPngTitler(final FontParam fontParam, int page) {

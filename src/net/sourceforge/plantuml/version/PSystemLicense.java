@@ -62,7 +62,7 @@ public class PSystemLicense extends AbstractPSystem implements UDrawable {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
 				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), null);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(this);

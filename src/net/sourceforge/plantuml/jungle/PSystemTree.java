@@ -83,7 +83,7 @@ public class PSystemTree extends AbstractPSystem {
 		HColor backcolor = HColorUtils.WHITE;
 
 		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, null,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
 				null, margins, backcolor);
 		final ImageBuilder builder = ImageBuilder.build(imageParameter);
 

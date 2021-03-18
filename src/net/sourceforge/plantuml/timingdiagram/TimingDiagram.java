@@ -99,8 +99,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final double dpiFactor = 1;
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
 		TextBlock result = getTextBlock();

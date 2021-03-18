@@ -76,7 +76,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 			margin2 = 5;
 		}
 		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0, null,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
 				null, margins, null);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(icon.asTextBlock(HColorUtils.BLACK, factor));

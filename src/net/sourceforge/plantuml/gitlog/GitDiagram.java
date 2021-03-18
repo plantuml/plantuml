@@ -43,23 +43,18 @@ import java.util.Collection;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Scale;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class GitDiagram extends UmlDiagram {
@@ -80,21 +75,9 @@ public class GitDiagram extends UmlDiagram {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final Scale scale = getScale();
 
-		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final int margin1;
-		final int margin2;
-		if (UseStyle.useBetaStyle()) {
-			margin1 = SkinParam.zeroMargin(10);
-			margin2 = SkinParam.zeroMargin(10);
-		} else {
-			margin1 = 10;
-			margin2 = 10;
-		}
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, dpiFactor, "",
-				"", ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2), null);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();
 		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))

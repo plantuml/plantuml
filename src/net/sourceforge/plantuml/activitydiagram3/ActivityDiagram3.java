@@ -35,20 +35,16 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
-import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -64,7 +60,6 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -215,35 +210,13 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final ISkinParam skinParam = getSkinParam();
 		result = new AnnotatedWorker(this, skinParam, stringBounder).addAdd(result);
 
-		final Dimension2D dim = result.getMinMax(stringBounder).getDimension();
-		final ClockwiseTopRightBottomLeft margins;
-		if (UseStyle.useBetaStyle()) {
-			margins = ClockwiseTopRightBottomLeft.marginForDocument(skinParam.getCurrentStyleBuilder());
-		} else {
-			margins = ClockwiseTopRightBottomLeft.margin1margin2(10, 10);
-		}
-
-		final double dpiFactor = getDpiFactor(fileFormatOption,
-				Dimension2DDouble.delta(dim, margins.getLeft() + margins.getRight(), 0));
-
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(seed(), os);
 
-	}
-
-	private final double getDpiFactor(FileFormatOption fileFormatOption, final Dimension2D dim) {
-		final double dpiFactor;
-		final Scale scale = getScale();
-		if (scale == null) {
-			dpiFactor = getScaleCoef(fileFormatOption);
-		} else {
-			dpiFactor = scale.getScale(dim.getWidth(), dim.getHeight());
-		}
-		return dpiFactor;
 	}
 
 	public void fork() {

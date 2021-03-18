@@ -40,9 +40,9 @@ import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SvgCharSizeHack;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -61,7 +61,8 @@ public class ImageParameter {
 	private final ColorMapper colorMapper;
 	private final boolean useHandwritten;
 	private final Animation animation;
-	private final double dpiFactor;
+	private final Scale scale;
+	private int dpi;
 	private final String metadata;
 	private final String warningOrError;
 	private final ClockwiseTopRightBottomLeft margins;
@@ -75,12 +76,13 @@ public class ImageParameter {
 	private final double borderCorner;
 	private final FileFormatOption fileFormatOption;
 
-	public ImageParameter(ColorMapper colorMapper, boolean useHandwritten, Animation animation, double dpiFactor,
+	public ImageParameter(ColorMapper colorMapper, boolean useHandwritten, Animation animation,
 			String metadata, String warningOrError, ClockwiseTopRightBottomLeft margins, HColor backcolor) {
 		this.colorMapper = colorMapper;
 		this.useHandwritten = useHandwritten;
 		this.animation = animation;
-		this.dpiFactor = dpiFactor;
+		this.scale = null;
+		this.dpi = 96;
 		this.metadata = metadata;
 		this.warningOrError = warningOrError;
 		this.margins = margins;
@@ -95,11 +97,10 @@ public class ImageParameter {
 		this.fileFormatOption = null;
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, double dpiFactor) {
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption) {
 		this(
 				diagram,
 				fileFormatOption,
-				dpiFactor,
 				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
 				diagram.getWarningOrError(),
 				getBackgroundColor(diagram)
@@ -123,14 +124,15 @@ public class ImageParameter {
 		return diagram.getSkinParam().getBackgroundColor(false);
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, double dpiFactor, String metadata,
+	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, String metadata,
 			String warningOrError, HColor backcolor) {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		this.fileFormatOption = fileFormatOption;
 		this.colorMapper = skinParam.getColorMapper();
 		this.useHandwritten = skinParam.handwritten();
 		this.animation = diagram.getAnimation();
-		this.dpiFactor = dpiFactor;
+		this.scale = diagram.getScale();
+		this.dpi = skinParam.getDpi();
 		this.metadata = metadata;
 		this.warningOrError = warningOrError;
 		this.margins = calculateDiagramMargin(diagram);
@@ -164,8 +166,12 @@ public class ImageParameter {
 		return animation;
 	}
 
-	public final double getDpiFactor() {
-		return dpiFactor;
+	public Scale getScale() {
+		return scale;
+	}
+
+	public int getDpi() {
+		return dpi;
 	}
 
 	public final String getMetadata() {

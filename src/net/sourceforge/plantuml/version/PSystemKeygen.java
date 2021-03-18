@@ -77,7 +77,7 @@ public class PSystemKeygen extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		HColor backcolor = HColorUtils.WHITE;
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, 1.0,
+		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
 				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 

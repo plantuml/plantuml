@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -83,11 +82,9 @@ public class WireDiagram extends UmlDiagram {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final Scale scale = getScale();
 
-		final double dpiFactor = scale == null ? getScaleCoef(fileFormatOption) : scale.getScale(100, 100);
 		final ISkinParam skinParam = getSkinParam();
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		TextBlock result = getTextBlock();

@@ -75,8 +75,7 @@ public class ListSpriteDiagram extends UmlDiagram {
 			throws IOException {
 
 		final TextBlock result = getTable();
-		final double dpiFactor = 1;
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption, dpiFactor);
+		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
 		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 		imageBuilder.setUDrawable(result);
 
