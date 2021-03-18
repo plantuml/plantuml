@@ -22,26 +22,20 @@ jobs:
         with:
           java-version: 8
 
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       # Downloading all the dependencies is very log spammy so we do this in its own step
       - name: Download Maven Dependencies
         run: mvn --batch-mode dependency:go-offline
 
-      - name: Get Project Info
-        id: project_info
-        run: echo "::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
-
       - name: Compile
         run: mvn --batch-mode compile
 
-      - name: Publish Snapshot
-        # TODO change test to master
-        if: ${{ endsWith(steps.project_info.outputs.version, '-SNAPSHOT') && github.ref == 'refs/heads/test' }}
-        # See https://docs.github.com/en/actions/guides/publishing-java-packages-with-maven
-        run: |
-          mvn \
-            --batch-mode \
-            -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{github.repository}} \
-            -Dmaven.javadoc.skip=true \
-            deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Package
+        run: mvn --batch-mode package
