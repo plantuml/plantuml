@@ -74,32 +74,37 @@ public class TimeHeaderWeekly extends TimeHeader {
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawCalendar(ug, totalHeightWithoutFooter);
 		drawHline(ug, 0);
 		drawHline(ug, Y_POS_ROW16());
 		drawHline(ug, getFullHeaderHeight());
 	}
 
-	@Override
-	public void drawTimeFooter(UGraphic ug) {
-		drawHline(ug, 0);
-		printMonths(ug);
-		drawHline(ug, getTimeFooterHeight());
+	class Pending {
+		final double x1;
+		double x2;
+		final HColor color;
+
+		Pending(HColor color, double x1, double x2) {
+			this.x1 = x1;
+			this.x2 = x2;
+			this.color = color;
+		}
+
+		public void draw(UGraphic ug, double height) {
+			drawRectangle(ug.apply(color.bg()), height, x1, x2);
+		}
 	}
 
-	private void drawCalendar(final UGraphic ug, double totalHeightWithoutFooter) {
-		drawTexts(ug, totalHeightWithoutFooter);
-		printDaysOfMonth(ug);
-		printSmallVbars(ug, totalHeightWithoutFooter);
-		printMonths(ug);
-	}
+	private void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-	private void drawTexts(final UGraphic ug, double totalHeightWithoutFooter) {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
-		Day firstDay = null;
-		HColor lastColor = null;
+		Pending pending = null;
 
 		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = colorDays.get(wink);
 			// Day of week should be stronger than period of time (back color).
 			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
@@ -110,20 +115,34 @@ public class TimeHeaderWeekly extends TimeHeader {
 				back = veryLightGray;
 			}
 			if (back == null) {
-				if (lastColor != null)
-					drawBack(ug.apply(lastColor.bg()), firstDay, wink, height);
-				firstDay = null;
-				lastColor = null;
+				if (pending != null)
+					pending.draw(ug, height);
+				pending = null;
 			} else {
-				assert back != null;
-				if (lastColor != null && lastColor.equals(back) == false) {
-					drawBack(ug.apply(lastColor.bg()), firstDay, wink, height);
+				if (pending != null && pending.color.equals(back) == false) {
+					pending.draw(ug, height);
+					pending = null;
 				}
-				if (firstDay == null)
-					firstDay = wink;
-				lastColor = back;
+				if (pending == null) {
+					pending = new Pending(back, x1, x2);
+				} else {
+					pending.x2 = x2;
+				}
 			}
 		}
+	}
+
+	@Override
+	public void drawTimeFooter(UGraphic ug) {
+		drawHline(ug, 0);
+		printMonths(ug);
+		drawHline(ug, getTimeFooterHeight());
+	}
+
+	private void drawCalendar(final UGraphic ug, double totalHeightWithoutFooter) {
+		printDaysOfMonth(ug);
+		printSmallVbars(ug, totalHeightWithoutFooter);
+		printMonths(ug);
 	}
 
 	private void drawBack(UGraphic ug, Day start, Day end, double height) {

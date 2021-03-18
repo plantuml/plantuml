@@ -51,6 +51,11 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderMonthly extends TimeHeader {
+	
+	private final LoadPlanable defaultPlan;
+	private final Map<Day, HColor> colorDays;
+	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
+
 
 	protected double getTimeHeaderHeight() {
 		return 16 + 13;
@@ -63,10 +68,65 @@ public class TimeHeaderMonthly extends TimeHeader {
 	public TimeHeaderMonthly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
 			Map<DayOfWeek, HColor> colorDaysOfWeek, Map<Day, String> nameDays) {
 		super(min, max, new TimeScaleCompressed(calendar, PrintScale.MONTHLY.getCompress()));
+		this.defaultPlan = defaultPlan;
+		this.colorDays = colorDays;
+		this.colorDaysOfWeek = colorDaysOfWeek;
+	}
+
+	class Pending {
+		final double x1;
+		double x2;
+		final HColor color;
+
+		Pending(HColor color, double x1, double x2) {
+			this.x1 = x1;
+			this.x2 = x2;
+			this.color = color;
+		}
+
+		public void draw(UGraphic ug, double height) {
+			drawRectangle(ug.apply(color.bg()), height, x1, x2);
+		}
+	}
+
+	private void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
+
+		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
+		Pending pending = null;
+
+		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+			final double x1 = getTimeScale().getStartingPosition(wink);
+			final double x2 = getTimeScale().getEndingPosition(wink);
+			HColor back = colorDays.get(wink);
+			// Day of week should be stronger than period of time (back color).
+			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
+			if (backDoW != null) {
+				back = backDoW;
+			}
+			if (back == null && defaultPlan.getLoadAt(wink) == 0) {
+				back = veryLightGray;
+			}
+			if (back == null) {
+				if (pending != null)
+					pending.draw(ug, height);
+				pending = null;
+			} else {
+				if (pending != null && pending.color.equals(back) == false) {
+					pending.draw(ug, height);
+					pending = null;
+				}
+				if (pending == null) {
+					pending = new Pending(back, x1, x2);
+				} else {
+					pending.x2 = x2;
+				}
+			}
+		}
 	}
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawYears(ug);
 		drawMonths(ug.apply(UTranslate.dy(16)));
 		drawHline(ug, 0);

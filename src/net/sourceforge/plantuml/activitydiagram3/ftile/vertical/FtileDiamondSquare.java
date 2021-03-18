@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -68,6 +69,11 @@ public class FtileDiamondSquare extends AbstractFtile {
 			TextBlock label) {
 		this(skinParam, backColor, borderColor, swimlane, label, TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
 				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));
+	}
+	
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.emptyList();
 	}
 
 	public FtileDiamondSquare withNorth(TextBlock north) {
