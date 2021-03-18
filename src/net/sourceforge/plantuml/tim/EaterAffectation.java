@@ -51,12 +51,23 @@ public class EaterAffectation extends Eater {
 		String varname = eatAndGetVarname();
 		TVariableScope scope = null;
 		skipSpaces();
+		boolean conditional = false;
+		if (peekChar() == '?') {
+			checkAndEatChar('?');
+			conditional = true;
+		}
 		if (peekChar() != '=') {
 			scope = TVariableScope.valueOf(varname.toUpperCase());
 			varname = eatAndGetVarname();
 			skipSpaces();
 		}
 		checkAndEatChar('=');
+		if (conditional) {
+			final TValue already = memory.getVariable(varname);
+			if (already != null) {
+				return;
+			}
+		}
 		skipSpaces();
 		final TValue value = eatExpression(context, memory);
 		memory.putVariable(varname, value, scope);

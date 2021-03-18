@@ -62,7 +62,7 @@ public enum TLineType {
 		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
 			return AFFECTATION_DEFINE;
 		}
-		if (s.matches("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*=.*")) {
+		if (s.matches("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*\\??=.*")) {
 			return AFFECTATION;
 		}
 		if (s.matches("^\\s*'.*")) {
