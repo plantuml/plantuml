@@ -243,9 +243,10 @@ public class PSystemUtils {
 		}
 
 		if (fileFormat.getFileFormat() == FileFormat.PNG) {
+			final int dpi = system.getSkinParam().getDpi();
 			result = new PngSplitter(suggestedFile, system.getHorizontalPages(), system.getVerticalPages(),
-					system.getMetadata(), (int) (system.getScaleCoef(fileFormat) * 96), fileFormat.isWithMetadata(),
-					system.getSkinParam().getSplitParam()).getFiles();
+					system.getMetadata(), dpi, fileFormat.isWithMetadata(), system.getSkinParam().getSplitParam())
+							.getFiles();
 		}
 		final List<FileImageData> result2 = new ArrayList<FileImageData>();
 		for (SFile f : result) {
@@ -254,29 +255,6 @@ public class PSystemUtils {
 		return result2;
 
 	}
-
-	// static private List<FileImageData> exportDiagramsGantt1(GanttDiagram system,
-	// SuggestedFile suggestedFile,
-	// FileFormatOption fileFormat) throws IOException {
-	// if (suggestedFile.getFile(0).exists() &&
-	// suggestedFile.getFile(0).isDirectory()) {
-	// throw new IllegalArgumentException("File is a directory " + suggestedFile);
-	// }
-	// OutputStream os = null;
-	// ImageData imageData = null;
-	// try {
-	// if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
-	// return Collections.emptyList();
-	// }
-	// os = SecurityUtils.BufferedOutputStream(suggestedFile.getFile(0)));
-	// imageData = system.exportDiagram(os, 0, fileFormat);
-	// } finally {
-	// if (os != null) {
-	// os.close();
-	// }
-	// }
-	// return Arrays.asList(new FileImageData(suggestedFile.getFile(0), imageData));
-	// }
 
 	static private List<FileImageData> exportDiagramsGantt2(GanttDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {

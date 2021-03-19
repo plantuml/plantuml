@@ -117,6 +117,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
 			warningOrError = svek2.getWarningOrError(Integer.parseInt(widthwarning));
 		}
+		
+		// Sorry about this hack. There is a side effect in SvekResult::calculateDimension()
 		result.calculateDimension(stringBounder);  // Ensure text near the margins is not cut off
 
 		final HColor backcolor = result.getBackcolor();

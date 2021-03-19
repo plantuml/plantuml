@@ -37,6 +37,8 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 
+import javax.script.ScriptException;
+
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -49,8 +51,6 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.StyleBuilder;
-
-import javax.script.ScriptException;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
@@ -210,15 +210,6 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		if (FORCE_SMETANA)
 			return true;
 		return useSmetana;
-	}
-
-	@Deprecated
-	// TODO Well I think it's deprecated - whatever uses it should be looked at closely
-	public final double getScaleCoef(FileFormatOption fileFormatOption) {
-		if (getSkinParam().getDpi() == 96) {
-			return fileFormatOption.getScaleCoef();
-		}
-		return getSkinParam().getDpi() * fileFormatOption.getScaleCoef() / 96.0;
 	}
 
 	// This is for backwards compatibility with earlier default margins

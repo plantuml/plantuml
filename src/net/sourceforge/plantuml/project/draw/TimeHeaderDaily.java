@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class TimeHeaderDaily extends TimeHeader {
+public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	protected double getTimeHeaderHeight() {
 		return Y_POS_ROW28() + 13;
@@ -60,17 +60,11 @@ public class TimeHeaderDaily extends TimeHeader {
 		return 24 + 14;
 	}
 
-	private final LoadPlanable defaultPlan;
-	private final Map<Day, HColor> colorDays;
-	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
 	private final Map<Day, String> nameDays;
 
 	public TimeHeaderDaily(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
 			Map<DayOfWeek, HColor> colorDaysOfWeek, Map<Day, String> nameDays, Day printStart, Day printEnd) {
-		super(min, max, new TimeScaleDaily(calendar, printStart));
-		this.defaultPlan = defaultPlan;
-		this.colorDays = colorDays;
-		this.colorDaysOfWeek = colorDaysOfWeek;
+		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleDaily(calendar, printStart));
 		this.nameDays = nameDays;
 	}
 
@@ -81,7 +75,8 @@ public class TimeHeaderDaily extends TimeHeader {
 		drawTextDayOfMonth(ug.apply(UTranslate.dy(Y_POS_ROW28())));
 		drawMonths(ug);
 		drawVBars(ug, totalHeightWithoutFooter);
-		drawVbar(ug, getTimeScale().getStartingPosition(max.increment()), 0, totalHeightWithoutFooter + getTimeFooterHeight());
+		drawVbar(ug, getTimeScale().getStartingPosition(max.increment()), 0,
+				totalHeightWithoutFooter + getTimeFooterHeight());
 		printNamedDays(ug);
 		drawHline(ug, 0);
 		drawHline(ug, getFullHeaderHeight());
@@ -94,26 +89,6 @@ public class TimeHeaderDaily extends TimeHeader {
 		drawMonths(ug.apply(UTranslate.dy(24)));
 		drawHline(ug, 0);
 		drawHline(ug, getTimeFooterHeight());
-	}
-
-	private void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
-		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
-			final double x1 = getTimeScale().getStartingPosition(wink);
-			final double x2 = getTimeScale().getEndingPosition(wink);
-			HColor back = colorDays.get(wink);
-			// Day of week should be stronger than period of time (back color).
-			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
-			if (backDoW != null) {
-				back = backDoW;
-			}
-			if (back == null && defaultPlan.getLoadAt(wink) == 0) {
-				back = veryLightGray;
-			}
-			if (back != null) {
-				drawRectangle(ug.apply(back.bg()), height, x1 + 1, x2);
-			}
-		}
 	}
 
 	private void drawTextsDayOfWeek(UGraphic ug) {

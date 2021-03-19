@@ -241,11 +241,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (openClose.getCalendar() == null) {
 			return new TimeHeaderSimple(min, max);
 		} else if (printScale == PrintScale.WEEKLY) {
-			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
-					nameDays);
+			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
 		} else if (printScale == PrintScale.MONTHLY) {
-			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
-					nameDays);
+			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
 		} else {
 			return new TimeHeaderDaily(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
 					nameDays, printStart, printEnd);
