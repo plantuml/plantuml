@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class ActivityDiagram extends CucaDiagram {
@@ -207,9 +206,4 @@ public class ActivityDiagram extends CucaDiagram {
 		lastEntityBrancheConsulted = null;
 	}
 
-	@Override
-	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		// Strange numbers here for backwards compatibility
-		return ClockwiseTopRightBottomLeft.topRightBottomLeft(-1, 5, 5, 6);
-	}
 }
