@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class StateDiagram extends AbstractEntityDiagram {
@@ -307,4 +308,9 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	}
 
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		// Strange numbers here for backwards compatibility
+		return ClockwiseTopRightBottomLeft.topRightBottomLeft(-2, 5, 5, 7);
+	}
 }

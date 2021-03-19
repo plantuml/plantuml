@@ -531,6 +531,8 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		return ClockwiseTopRightBottomLeft.same(5);
+		return modeTeoz()  // this is for backward compatibility
+				? ClockwiseTopRightBottomLeft.same(5)
+				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
 	}
 }
