@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
@@ -235,9 +234,4 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		return super.checkFinalError();
 	}
 
-	@Override
-	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		// Strange numbers here for backwards compatibility
-		return ClockwiseTopRightBottomLeft.topRightBottomLeft(-1, 5, 5, 7);
-	}
 }

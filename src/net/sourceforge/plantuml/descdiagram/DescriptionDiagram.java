@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
@@ -128,9 +127,4 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		return super.checkFinalError();
 	}
 
-	@Override
-	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		// Strange numbers here for backwards compatibility
-		return ClockwiseTopRightBottomLeft.topRightBottomLeft(-1, 5, 5, 7);
-	}
 }
