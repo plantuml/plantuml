@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -918,10 +917,5 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		link1.setLinkConstraint(linkConstraint);
 		link2.setLinkConstraint(linkConstraint);
 		return CommandExecutionResult.ok();
-	}
-
-	@Override
-	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		return ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
 	}
 }
