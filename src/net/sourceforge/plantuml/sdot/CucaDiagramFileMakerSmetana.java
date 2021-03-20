@@ -102,6 +102,7 @@ import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageParameter;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -126,14 +127,18 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	class Drawing extends AbstractTextBlock implements TextBlockBackcolored {
 
 		private final YMirror ymirror;
-		private final Dimension2D dim;
+		private final MinMax minMax;
 
-		public Drawing(YMirror ymirror, Dimension2D dim) {
+		public Drawing(YMirror ymirror, MinMax minMax) {
 			this.ymirror = ymirror;
-			this.dim = dim;
+			this.minMax = minMax;
 		}
 
 		public void drawU(UGraphic ug) {
+			if (minMax != null) {
+				// Matches the adjustment in SvekResult.calculateDimension()
+				ug = ug.apply(new UTranslate(6 - minMax.getMinX(), 6 - minMax.getMinY()));
+			}
 
 			for (Map.Entry<IGroup, ST_Agraph_s> ent : clusters.entrySet()) {
 				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
@@ -161,10 +166,10 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 
 		public Dimension2D calculateDimension(StringBounder stringBounder) {
-			if (dim == null) {
+			if (minMax == null) {
 				throw new UnsupportedOperationException();
 			}
-			return dim;
+			return minMax.getDimension();
 		}
 
 		private Point2D getCorner(ST_Agnode_s n) {
@@ -446,14 +451,13 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
 
-			imageBuilder.setUDrawable(new Drawing(null, null));
-			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);
+			final MinMax minMax = TextBlockUtils.getMinMax(new Drawing(null, null), stringBounder, false);
 
 			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, diagram.getSkinParam(),
 					fileFormatOption.getDefaultStringBounder(diagram.getSkinParam()));
 
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
-			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(dim.getHeight()), dim)));
+			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(minMax.getHeight()), minMax)));
 
 			return imageBuilder.writeImageTOBEMOVED(diagram.seed(), os);
 		} catch (Throwable e) {
