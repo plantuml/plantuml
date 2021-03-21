@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.crossing.UGraphicCrossing;
+import net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
@@ -281,17 +282,16 @@ public class ImageBuilder {
 	private UGraphic2 createUGraphic(FileFormatOption option, long seed, final Dimension2D dim, Animation animationArg,
 			double dx, double dy) {
 		final ColorMapper colorMapper = param.getColorMapper();
-		final double scaleFactor = (param.getScale() == null ? 1 : param.getScale().getScale(dim.getWidth(), dim.getHeight()))
-				* param.getDpi() / 96.0;
+		final double scaleFactor = (param.getScale() == null ? 1
+				: param.getScale().getScale(dim.getWidth(), dim.getHeight())) * param.getDpi() / 96.0;
 		final FileFormat fileFormat = option.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
 			return createUGraphicPNG(colorMapper, scaleFactor, dim, param.getBackcolor(), animationArg, dx, dy,
 					option.getWatermark());
 		case SVG:
-			return createUGraphicSVG(colorMapper, scaleFactor, dim, param.getBackcolor(),
-					option.getSvgLinkTarget(), option.getHoverColor(), seed, option.getPreserveAspectRatio(),
-					param.getlengthAdjust());
+			return createUGraphicSVG(colorMapper, scaleFactor, dim, param.getBackcolor(), option.getSvgLinkTarget(),
+					option.getHoverColor(), seed, option.getPreserveAspectRatio(), param.getlengthAdjust());
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -309,13 +309,16 @@ public class ImageBuilder {
 		case UTXT:
 		case ATXT:
 			return new UGraphicTxt();
+		case DEBUG:
+			return new UGraphicDebug();
 		default:
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scaleFactor, Dimension2D dim, final HColor suggested,
-			String svgLinkTarget, String hover, long seed, String preserveAspectRatio, LengthAdjust lengthAdjust) {
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scaleFactor, Dimension2D dim,
+			final HColor suggested, String svgLinkTarget, String hover, long seed, String preserveAspectRatio,
+			LengthAdjust lengthAdjust) {
 		HColor backColor = HColorUtils.WHITE;
 		if (suggested instanceof HColorSimple) {
 			backColor = suggested;

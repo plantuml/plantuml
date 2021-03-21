@@ -80,7 +80,8 @@ public enum FileFormat {
 	LATEX_NO_PREAMBLE("application/x-latex"),
 	BASE64("text/plain; charset=x-user-defined"),
 	BRAILLE_PNG("image/png"),
-	PREPROC("text/plain");
+	PREPROC("text/plain"),
+	DEBUG("text/plain");
 
 	private final String mimeType;
 

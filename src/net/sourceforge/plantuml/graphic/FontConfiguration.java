@@ -65,6 +65,10 @@ public class FontConfiguration {
 	private final boolean useUnderlineForHyperlink;
 	private final int tabSize;
 
+	public String toStringDebug() {
+		return getFont().toStringDebug() + " " + styles.toString();
+	}
+
 	public FontConfiguration(UFont font, HColor color, HColor hyperlinkColor, boolean useUnderlineForHyperlink) {
 		this(font, color, hyperlinkColor, useUnderlineForHyperlink, 8);
 	}

@@ -92,4 +92,8 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		return diffRed * .3 + diffGreen * .59 + diffBlue * .11;
 	}
 
+	public final boolean isMonochrome() {
+		return monochrome;
+	}
+
 }

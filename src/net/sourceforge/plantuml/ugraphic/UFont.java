@@ -62,6 +62,14 @@ public class UFont {
 		}
 	}
 
+	public String toStringDebug() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append(font.getFontName());
+		sb.append("/");
+		sb.append(font.getSize());
+		return sb.toString();
+	}
+
 	public UFont(String fontFamily, int fontStyle, int fontSize) {
 		this(buildFont(fontFamily, fontStyle, fontSize), fontFamily);
 	}
