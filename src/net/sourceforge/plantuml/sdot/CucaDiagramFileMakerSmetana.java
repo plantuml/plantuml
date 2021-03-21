@@ -136,8 +136,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 		public void drawU(UGraphic ug) {
 			if (minMax != null) {
-				// Matches the adjustment in SvekResult.calculateDimension()
-				ug = ug.apply(new UTranslate(6 - minMax.getMinX(), 6 - minMax.getMinY()));
+				// Matches the adjustment in SvekResult.calculateDimension() except no need to adjust for minY because
+				// mirroring takes care of that
+				ug = ug.apply(new UTranslate(6 - minMax.getMinX(), 6));
 			}
 
 			for (Map.Entry<IGroup, ST_Agraph_s> ent : clusters.entrySet()) {
@@ -457,7 +458,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 					fileFormatOption.getDefaultStringBounder(diagram.getSkinParam()));
 
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
-			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(minMax.getHeight()), minMax)));
+			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(minMax.getMaxY()), minMax)));
 
 			return imageBuilder.writeImageTOBEMOVED(diagram.seed(), os);
 		} catch (Throwable e) {
