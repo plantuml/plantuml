@@ -1,6 +1,6 @@
 package demo1;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,10 +33,7 @@ class SimpleSequenceDiagramTest {
 		final String desc = new String(baos.toByteArray(), "UTF-8");
 
 		final String expected = getExpectedResult();
-		// assertEquals(expected, desc);
-		// We simplify this test until we understand why an OS dependant
-		// StringBounder is used here.
-		assertTrue(desc.startsWith("DPI: 96"));
+		assertEquals(expected, desc);
 
 	}
 
@@ -52,22 +49,22 @@ class SimpleSequenceDiagramTest {
 				"DPI: 96", //
 				"", //
 				"LINE:", //
-				"  pt1: 29;41", //
-				"  pt2: 29;91", //
+				"  pt1: 49;38", //
+				"  pt2: 49;85", //
 				"  stroke: 5.0-5.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"", //
 				"LINE:", //
-				"  pt1: 84;41", //
-				"  pt2: 84;91", //
+				"  pt1: 138;38", //
+				"  pt2: 138;85", //
 				"  stroke: 5.0-5.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
 				"  pt1: 5;5", //
-				"  pt2: 49;36", //
+				"  pt2: 89;33", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -83,8 +80,8 @@ class SimpleSequenceDiagramTest {
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
-				"  pt1: 5;90", //
-				"  pt2: 49;122", //
+				"  pt1: 5;84", //
+				"  pt2: 89;112", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -94,14 +91,14 @@ class SimpleSequenceDiagramTest {
 				"", //
 				"TEXT:", //
 				"  text: Alice", //
-				"  position: 12;108", //
+				"  position: 12;101", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/14 []", //
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
-				"  pt1: 63;5", //
-				"  pt2: 102;36", //
+				"  pt1: 108;5", //
+				"  pt2: 164;33", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -111,14 +108,14 @@ class SimpleSequenceDiagramTest {
 				"", //
 				"TEXT:", //
 				"  text: Bob", //
-				"  position: 70;22", //
+				"  position: 115;22", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/14 []", //
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
-				"  pt1: 63;90", //
-				"  pt2: 102;122", //
+				"  pt1: 108;84", //
+				"  pt2: 164;112", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -128,35 +125,36 @@ class SimpleSequenceDiagramTest {
 				"", //
 				"TEXT:", //
 				"  text: Bob", //
-				"  position: 70;108", //
+				"  position: 115;101", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/14 []", //
 				"  color: ffa80036", //
 				"", //
 				"POLYGON:", //
 				"  points:", //
-				"   - 72;69", //
-				"   - 82;73", //
-				"   - 72;77", //
-				"   - 76;73", //
+				"   - 126;63", //
+				"   - 136;67", //
+				"   - 126;71", //
+				"   - 130;67", //
 				"  stroke: 0.0-0.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"  backcolor: ffa80036", //
 				"", //
 				"LINE:", //
-				"  pt1: 29;73", //
-				"  pt2: 78;73", //
+				"  pt1: 49;67", //
+				"  pt2: 132;67", //
 				"  stroke: 0.0-0.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"", //
 				"TEXT:", //
 				"  text: Hello", //
-				"  position: 36;65", //
+				"  position: 56;62", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/13 []", //
-				"  color: ffa80036");
+				"  color: ffa80036" //
+		);
 	}
 
 	private String packString(String... list) {

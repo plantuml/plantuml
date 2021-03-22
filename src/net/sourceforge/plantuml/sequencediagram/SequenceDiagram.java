@@ -410,7 +410,8 @@ public class SequenceDiagram extends UmlDiagram {
 	@Override
 	public int getNbImages() {
 		try {
-			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.PNG)).getNbPages();
+			// The DEBUG StringBounder is ok just to compute the number of pages here.
+			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();
 		} catch (Throwable t) {
 			t.printStackTrace();
 			return 1;

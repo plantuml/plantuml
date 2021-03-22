@@ -37,12 +37,13 @@ package net.sourceforge.plantuml.ugraphic.debug;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.StringBounderRaw;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
-public class StringBounderDebug implements StringBounder {
+public class StringBounderDebug extends StringBounderRaw {
 
-	public Dimension2D calculateDimension(UFont font, String text) {
+	@Override
+	protected Dimension2D calculateDimensionInternal(UFont font, String text) {
 		final double size = font.getSize2D();
 		final double height = size;
 		final double width = size * text.length();
