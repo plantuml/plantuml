@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,11 +32,59 @@ class SimpleSequenceDiagramTest {
 
 		assertEquals("(2 participants)", diagramDescription.getDescription());
 
-		final String desc = new String(baos.toByteArray(), "UTF-8");
+		final String actual = new String(baos.toByteArray(), "UTF-8");
 
 		final String expected = getExpectedResult();
-		assertEquals(expected, desc);
+		assertSameDebugGraphic(expected, actual);
+	}
 
+	private void assertSameDebugGraphic(String expectedString, String actualString) {
+		final String[] expected = expectedString.split("\n");
+		final String[] actual = actualString.split("\n");
+
+		if (expected.length != actual.length) {
+			// We know it will fail here, but we want to print the full info
+			assertEquals(expectedString, actualString);
+			return;
+		}
+
+		for (int i = 0; i < actual.length; i++) {
+			if (sameString(expected[i], actual[i]) == false) {
+				System.err.println("expected: " + expected[i]);
+				System.err.println("actual  : " + actual[i]);
+				// We know it will fail here, but we want to print the full info
+				assertEquals(expectedString, actualString);
+			}
+		}
+	}
+
+	private final Pattern pointLine = Pattern.compile("^(.*?)\\[ ([-.0-9]+) ; ([-.0-9]+) \\]$");
+
+	private boolean sameString(String s1, String s2) {
+		final Matcher line1 = pointLine.matcher(s1);
+		final Matcher line2 = pointLine.matcher(s2);
+		if (line1.matches() && line2.matches()) {
+			final String start1 = line1.group(1);
+			final String start2 = line2.group(1);
+			final String x1 = line1.group(2);
+			final String x2 = line2.group(2);
+			final String y1 = line1.group(3);
+			final String y2 = line2.group(3);
+			return start1.equals(start2) && sameDouble(x1, x2) && sameDouble(y1, y2);
+
+		}
+		return s1.equals(s2);
+	}
+
+	private boolean sameDouble(String double1, String double2) {
+		final double value1 = Double.parseDouble(double1);
+		final double value2 = Double.parseDouble(double2);
+		final double diff = Math.abs(value1 - value2);
+		final boolean result = diff < 0.005;
+		if (result == false) {
+			System.err.println("sameDouble:Non null diff=" + diff);
+		}
+		return result;
 	}
 
 	private String getText() {
@@ -49,22 +99,22 @@ class SimpleSequenceDiagramTest {
 				"DPI: 96", //
 				"", //
 				"LINE:", //
-				"  pt1: 49;38", //
-				"  pt2: 49;85", //
+				"  pt1: [ 49.0000 ; 38.0000 ]", //
+				"  pt2: [ 49.0000 ; 85.0000 ]", //
 				"  stroke: 5.0-5.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"", //
 				"LINE:", //
-				"  pt1: 138;38", //
-				"  pt2: 138;85", //
+				"  pt1: [ 138.0000 ; 38.0000 ]", //
+				"  pt2: [ 138.0000 ; 85.0000 ]", //
 				"  stroke: 5.0-5.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
-				"  pt1: 5;5", //
-				"  pt2: 89;33", //
+				"  pt1: [ 5.0000 ; 5.0000 ]", //
+				"  pt2: [ 89.0000 ; 33.0000 ]", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -74,14 +124,14 @@ class SimpleSequenceDiagramTest {
 				"", //
 				"TEXT:", //
 				"  text: Alice", //
-				"  position: 12;22", //
+				"  position: [ 12.0000 ; 22.9238 ]", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/14 []", //
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
-				"  pt1: 5;84", //
-				"  pt2: 89;112", //
+				"  pt1: [ 5.0000 ; 84.0000 ]", //
+				"  pt2: [ 89.0000 ; 112.0000 ]", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -91,14 +141,14 @@ class SimpleSequenceDiagramTest {
 				"", //
 				"TEXT:", //
 				"  text: Alice", //
-				"  position: 12;101", //
+				"  position: [ 12.0000 ; 101.9238 ]", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/14 []", //
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
-				"  pt1: 108;5", //
-				"  pt2: 164;33", //
+				"  pt1: [ 108.0000 ; 5.0000 ]", //
+				"  pt2: [ 164.0000 ; 33.0000 ]", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -108,14 +158,14 @@ class SimpleSequenceDiagramTest {
 				"", //
 				"TEXT:", //
 				"  text: Bob", //
-				"  position: 115;22", //
+				"  position: [ 115.0000 ; 22.9238 ]", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/14 []", //
 				"  color: ffa80036", //
 				"", //
 				"RECTANGLE:", //
-				"  pt1: 108;84", //
-				"  pt2: 164;112", //
+				"  pt1: [ 108.0000 ; 84.0000 ]", //
+				"  pt2: [ 164.0000 ; 112.0000 ]", //
 				"  xCorner: 0", //
 				"  yCorner: 0", //
 				"  stroke: 0.0-0.0-1.5", //
@@ -125,35 +175,36 @@ class SimpleSequenceDiagramTest {
 				"", //
 				"TEXT:", //
 				"  text: Bob", //
-				"  position: 115;101", //
+				"  position: [ 115.0000 ; 101.9238 ]", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/14 []", //
 				"  color: ffa80036", //
 				"", //
 				"POLYGON:", //
 				"  points:", //
-				"   - 126;63", //
-				"   - 136;67", //
-				"   - 126;71", //
-				"   - 130;67", //
+				"   - [ 126.0000 ; 63.0000 ]", //
+				"   - [ 136.0000 ; 67.0000 ]", //
+				"   - [ 126.0000 ; 71.0000 ]", //
+				"   - [ 130.0000 ; 67.0000 ]", //
 				"  stroke: 0.0-0.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"  backcolor: ffa80036", //
 				"", //
 				"LINE:", //
-				"  pt1: 49;67", //
-				"  pt2: 132;67", //
+				"  pt1: [ 49.0000 ; 67.0000 ]", //
+				"  pt2: [ 132.0000 ; 67.0000 ]", //
 				"  stroke: 0.0-0.0-1.0", //
 				"  shadow: 0", //
 				"  color: ffa80036", //
 				"", //
 				"TEXT:", //
 				"  text: Hello", //
-				"  position: 56;62", //
+				"  position: [ 56.0000 ; 62.1436 ]", //
 				"  orientation: 0", //
 				"  font: SansSerif.plain/13 []", //
 				"  color: ffa80036" //
+
 		);
 	}
 
