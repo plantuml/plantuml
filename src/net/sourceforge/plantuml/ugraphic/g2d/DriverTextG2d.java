@@ -100,7 +100,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 
 		if (orientation == 90) {
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g2d.setFont(font.getFont());
+			g2d.setFont(font.getUnderlayingFont());
 			g2d.setColor(mapper.toColor(fontConfiguration.getColor()));
 			final AffineTransform orig = g2d.getTransform();
 			g2d.translate(x, y);
@@ -133,7 +133,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			visible.ensureVisible(x + dimBack.getWidth(), y + 1.5);
 
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g2d.setFont(font.getFont());
+			g2d.setFont(font.getUnderlayingFont());
 			g2d.setColor(mapper.toColor(fontConfiguration.getColor()));
 			g2d.drawString(text, (float) x, (float) y);
 
@@ -163,7 +163,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 				final Dimension2D dim = calculateDimension(
 						FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault()), font, text);
-				final FontMetrics fm = g2d.getFontMetrics(font.getFont());
+				final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont());
 				final int ypos = (int) (y - fm.getDescent() - 0.5);
 				if (extended != null) {
 					g2d.setColor(mapper.toColor(extended));

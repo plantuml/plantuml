@@ -69,7 +69,7 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 		final UFont font = fontConfiguration.getFont();
 
-		final TextLayout t = new TextLayout(shape.getText(), font.getFont(), fontRenderContext);
+		final TextLayout t = new TextLayout(shape.getText(), font.getUnderlayingFont(), fontRenderContext);
 		svg.drawPathIterator(x, y, t.getOutline(null).getPathIterator(null));
 	}
 

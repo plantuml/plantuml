@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.creole.legacy;
 
-import java.awt.font.LineMetrics;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +54,6 @@ import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -158,7 +156,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 			// final int ypos = fontConfiguration.getSpace();
 			final Dimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);
-			final double descent = getDescent();
+			final double descent = getDescent(ug.getStringBounder());
 			final double ypos = rect.getHeight() - descent;
 
 			double x = 0;
@@ -209,9 +207,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 		return "        ";
 	}
 
-	private double getDescent() {
-		final LineMetrics fm = TextBlockUtils.getLineMetrics(fontConfiguration.getFont(), text);
-		return fm.getDescent();
+	private double getDescent(StringBounder stringBounder) {
+		return stringBounder.getDescent(fontConfiguration.getFont(), text);
 	}
 
 	private double getTabSize(StringBounder stringBounder) {

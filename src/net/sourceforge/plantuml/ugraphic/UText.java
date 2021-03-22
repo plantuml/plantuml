@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.font.LineMetrics;
-
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class UText implements UShape {
 
@@ -74,10 +72,8 @@ public class UText implements UShape {
 		return font;
 	}
 
-	public double getDescent() {
-		final LineMetrics fm = TextBlockUtils.getLineMetrics(font.getFont(), text);
-		final double descent = fm.getDescent();
-		return descent;
+	public double getDescent(StringBounder stringBounder) {
+		return stringBounder.getDescent(font.getFont(), text);
 	}
 
 	public final int getOrientation() {
