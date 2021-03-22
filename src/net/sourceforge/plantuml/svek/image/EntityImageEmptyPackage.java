@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
@@ -59,7 +60,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
@@ -73,22 +77,53 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 	private final TextBlock desc;
 	private final static int MARGIN = 10;
-	private final HColor specificBackColor;
-	private final ISkinParam skinParam;
+
 	private final Stereotype stereotype;
 	private final TextBlock stereoBlock;
 	private final Url url;
 	private final SName styleName;
+	private final double shadowing;
+	private final HColor borderColor;
+	private final UStroke stroke;
+	private final double roundCorner;
+	private final HColor back;
+
+	private Style getStyle() {
+		return getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
+	private StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, styleName, SName.package_);
+	}
 
 	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower, SName styleName) {
 		super(entity, skinParam);
 		this.styleName = styleName;
-		this.skinParam = skinParam;
-		this.specificBackColor = entity.getColors(skinParam).getColor(ColorType.BACK);
+
+		final HColor specificBackColor = entity.getColors(skinParam).getColor(ColorType.BACK);
 		this.stereotype = entity.getStereotype();
 		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype),
 				HorizontalAlignment.CENTER, skinParam);
 		this.url = entity.getUrl99();
+
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getStyle();
+			this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			this.shadowing = style.value(PName.Shadowing).asDouble();
+			this.stroke = style.getStroke();
+			this.roundCorner = style.value(PName.RoundCorner).asDouble();
+			if (specificBackColor == null) {
+				this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+			} else {
+				this.back = specificBackColor;
+			}
+		} else {
+			this.borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder);
+			this.shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
+			this.stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
+			this.roundCorner = 0;
+			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName);
+		}
 
 		final DisplayPositionned legend = ((EntityImpl) entity).getLegend();
 		if (legend != null) {
@@ -127,18 +162,14 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 
-		final HColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName);
-		final double roundCorner = 0;
-
-		final UStroke stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,
 				stereoBlock, 0, 0, widthTotal, heightTotal, stroke);
 
-		final double shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
-		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder),
-				shadowing, roundCorner,
-				getSkinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
-				getSkinParam().getStereotypeAlignment());
+		final HorizontalAlignment horizontalAlignment = getSkinParam()
+				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false);
+		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();
+
+		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment);
 
 		if (url != null) {
 			ug.closeUrl();

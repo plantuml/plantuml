@@ -75,6 +75,12 @@ public enum UmlDiagramType {
 		if (this == SALT) {
 			return SName.saltDiagram;
 		}
+		if (this == YAML) {
+			return SName.yamlDiagram;
+		}
+		if (this == JSON) {
+			return SName.jsonDiagram;
+		}
 		return SName.activityDiagram;
 	}
 }

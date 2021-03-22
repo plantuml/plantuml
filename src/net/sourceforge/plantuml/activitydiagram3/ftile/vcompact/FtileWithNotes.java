@@ -115,6 +115,7 @@ public class FtileWithNotes extends AbstractFtile {
 			final FontConfiguration fc;
 			final double shadowing;
 
+			final LineBreakStrategy wrapWidth;
 			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
 						.eventuallyOverride(note.getColors());
@@ -122,17 +123,19 @@ public class FtileWithNotes extends AbstractFtile {
 				borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 				fc = style.getFontConfiguration(getIHtmlColorSet());
 				shadowing = style.value(PName.Shadowing).asDouble();
+				wrapWidth = style.wrapWidth();
 			} else {
 				noteBackgroundColor = rose.getHtmlColor(skinParam2, ColorParam.noteBackground);
 				borderColor = rose.getHtmlColor(skinParam2, ColorParam.noteBorder);
 				fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 				shadowing = skinParam.shadowing(null) ? 4 : 0;
+				wrapWidth = skinParam.wrapWidth();
 			}
 
 			final Sheet sheet = Parser
 					.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 					.createSheet(note.getDisplay());
-			final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
+			final SheetBlock1 sheet1 = new SheetBlock1(sheet, wrapWidth, skinParam.getPadding());
 			final SheetBlock2 sheet2 = new SheetBlock2(sheet1, new Stencil() {
 				// -6 and 15 value comes from Opale: this is very ugly!
 				public double getStartingX(StringBounder stringBounder, double y) {

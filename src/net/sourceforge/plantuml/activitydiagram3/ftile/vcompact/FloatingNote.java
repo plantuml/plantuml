@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -54,6 +55,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -63,7 +65,7 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 	private final Opale opale;
 
-	public FloatingNote(Display note, ISkinParam skinParam) {
+	public FloatingNote(Display note, ISkinParam skinParam, Style style) {
 
 		final Rose rose = new Rose();
 
@@ -72,11 +74,19 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
+		final LineBreakStrategy wrapWidth;
+
+		if (UseStyle.useBetaStyle()) {
+			wrapWidth = style.wrapWidth();
+		} else {
+			wrapWidth = skinParam.wrapWidth();
+
+		}
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 				.createSheet(note);
-		final SheetBlock2 sheetBlock2 = new SheetBlock2(
-				new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), this, new UStroke(1));
+		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
+				new UStroke(1));
 		final double shadowing;
 		shadowing = skinParam.shadowing(null) ? 4 : 0;
 		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, false);
