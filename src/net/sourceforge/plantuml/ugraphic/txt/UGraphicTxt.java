@@ -82,7 +82,7 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 		// final UClip clip = getClip();
 		if (shape instanceof UText) {
 			final UText txt = (UText) shape;
-			final int y = ((int) (getTranslateY() + txt.getDescent())) / 10;
+			final int y = ((int) (getTranslateY() + txt.getDescent(getStringBounder()))) / 10;
 			if (txt.getFontConfiguration().containsStyle(FontStyle.WAVE)) {
 				charArea.drawHLine('^', y, getDx(), txt.getText().length());
 				charArea.drawStringLR(txt.getText(), getDx(), y + 1);

@@ -57,7 +57,7 @@ public class DriverCenteredCharacterG2d implements UDriver<Graphics2D> {
 		final double xpos = x - unusedSpace.getCenterX();
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
-		g2d.setFont(font.getFont());
+		g2d.setFont(font.getUnderlayingFont());
 		g2d.drawString("" + c, (float) xpos, (float) ypos);
 	}
 

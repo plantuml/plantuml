@@ -93,7 +93,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 		final UFont font = fontConfiguration.getFont();
 
-		final TextLayout textLayout = new TextLayout(shape.getText(), font.getFont(), fontRenderContext);
+		final TextLayout textLayout = new TextLayout(shape.getText(), font.getUnderlayingFont(), fontRenderContext);
 		// System.err.println("text=" + shape.getText());
 
 		MinMax dim = null;

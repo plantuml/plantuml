@@ -85,7 +85,7 @@ public class UnusedSpace {
 	private UnusedSpace(UFont font, char c) {
 		final BufferedImage im = new BufferedImage(2 * HALF_SIZE, 2 * HALF_SIZE, BufferedImage.TYPE_INT_RGB);
 		final Graphics2D g2d = im.createGraphics();
-		g2d.setFont(font.getFont());
+		g2d.setFont(font.getUnderlayingFont());
 		g2d.drawString("" + c, HALF_SIZE, HALF_SIZE);
 
 		int minI = Integer.MAX_VALUE;

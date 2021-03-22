@@ -68,7 +68,7 @@ public class StringUtils {
 	public static final char PACKAGE_PRIVATE_METHOD = '\uEEF5';
 	public static final char PUBLIC_METHOD = '\uEEF4';
 	public static final char IE_MANDATORY = '\uEEF3';
-	
+
 	public static final char BOLD_START = '\uEEF2';
 	public static final char BOLD_END = '\uEEF1';
 
@@ -539,6 +539,16 @@ public class StringUtils {
 
 	public static String manageEscapedTabs(String s) {
 		return s.replace("\\t", "\t");
+	}
+
+	public static long seed(String string) {
+		long h = 1125899906842597L; // prime
+		final int len = string.length();
+
+		for (int i = 0; i < len; i++) {
+			h = 31 * h + string.charAt(i);
+		}
+		return h;
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html

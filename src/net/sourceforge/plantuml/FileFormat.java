@@ -177,7 +177,7 @@ public enum FileFormat {
 	}
 
 	static private Dimension2DDouble getJavaDimension(UFont font, String text) {
-		final Font javaFont = font.getFont();
+		final Font javaFont = font.getUnderlayingFont();
 		final FontMetrics fm = gg.getFontMetrics(javaFont);
 		final Rectangle2D rect = fm.getStringBounds(text, gg);
 		return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
