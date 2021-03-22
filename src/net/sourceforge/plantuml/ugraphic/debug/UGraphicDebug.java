@@ -41,6 +41,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -79,8 +80,6 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	}
 
 	public void draw(UShape shape) {
-		final int dx = (int) getTranslateX();
-		final int dy = (int) getTranslateY();
 		if (shape instanceof ULine) {
 			outLine((ULine) shape);
 		} else if (shape instanceof URectangle) {
@@ -90,8 +89,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		} else if (shape instanceof UPolygon) {
 			outPolygon((UPolygon) shape);
 		} else {
-			output.add("DEBUG " + shape.getClass().getSimpleName() + " " + dx + " " + dy);
-			output.add("");
+			throw new UnsupportedOperationException("UGraphicDebug " + shape.getClass().getSimpleName());
 		}
 
 	}
@@ -148,12 +146,8 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	}
 
-	private String point(int x, int y) {
-		return "" + x + ";" + y;
-	}
-
 	private String pointd(double x, double y) {
-		return point((int) x, (int) y);
+		return String.format(Locale.US, "[ %.4f ; %.4f ]", x, y);
 	}
 
 	private String colorToString(HColor color) {
