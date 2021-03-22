@@ -71,7 +71,7 @@ public class OptionFlags {
 	static public final boolean USE_INTERFACE_EYE2 = false;
 	// static public final boolean SWI2 = false;
 	// static public final boolean USE_COMPOUND = false;
-	static public final boolean OMEGA_CROSSING = false;
+	// static public final boolean OMEGA_CROSSING = false;
 
 	// static public final boolean LINK_BETWEEN_FIELDS = true;
 

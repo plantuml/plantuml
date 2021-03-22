@@ -60,6 +60,9 @@ public class TimeConstraint {
 	private final ISkinParam skinParam;
 
 	public TimeConstraint(TimeTick tick1, TimeTick tick2, String label, ISkinParam skinParam) {
+		if (tick1 == null || tick2 == null) {
+			throw new IllegalArgumentException();
+		}
 		this.tick1 = tick1;
 		this.tick2 = tick2;
 		this.label = Display.getWithNewlines(label);

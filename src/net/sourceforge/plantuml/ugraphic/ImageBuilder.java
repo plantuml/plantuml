@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
@@ -78,7 +77,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
-import net.sourceforge.plantuml.ugraphic.crossing.UGraphicCrossing;
 import net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -203,11 +201,11 @@ public class ImageBuilder {
 		if (param.isUseHandwritten()) {
 			return new UGraphicHandwritten(ug);
 		}
-		if (OptionFlags.OMEGA_CROSSING) {
-			return new UGraphicCrossing(ug);
-		} else {
-			return ug;
-		}
+//		if (OptionFlags.OMEGA_CROSSING) {
+//			return new UGraphicCrossing(ug);
+//		} else {
+		return ug;
+//		}
 	}
 
 	private ImageData writeImageMjpeg(OutputStream os, StringBounder stringBounder) throws IOException {

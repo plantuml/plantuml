@@ -101,11 +101,13 @@ public class FtileGroup extends AbstractFtile {
 		this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
 
 		final FontConfiguration fc;
+		final Style style;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			fc = style.getFontConfiguration(getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
+			style = null;
 			final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
 			final HColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
 			fc = new FontConfiguration(font, fontColor, skinParam.getHyperlinkColor(),
@@ -120,7 +122,7 @@ public class FtileGroup extends AbstractFtile {
 		if (Display.isNull(displayNote)) {
 			this.headerNote = TextBlockUtils.empty(0, 0);
 		} else {
-			this.headerNote = new FloatingNote(displayNote, skinParam);
+			this.headerNote = new FloatingNote(displayNote, skinParam, style);
 		}
 
 		final UStroke thickness = skinParam.getThickness(LineParam.partitionBorder, null);

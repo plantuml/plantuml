@@ -89,8 +89,14 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 			}
 		}
 		final TimeTick tick1 = TimeTickBuilder.parseTimeTick("TIME1", arg, diagram);
+		if (tick1 == null) {
+			return CommandExecutionResult.error("Unknown time label");
+		}
 		diagram.updateNow(tick1);
 		final TimeTick tick2 = TimeTickBuilder.parseTimeTick("TIME2", arg, diagram);
+		if (tick2 == null) {
+			return CommandExecutionResult.error("Unknown time label");
+		}
 		player1.createConstraint(tick1, tick2, arg.get("MESSAGE", 0));
 		return CommandExecutionResult.ok();
 	}
