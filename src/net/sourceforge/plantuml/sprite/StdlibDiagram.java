@@ -59,13 +59,13 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.Stdlib;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class StdlibDiagram extends UmlDiagram {
 
@@ -84,13 +84,9 @@ public class StdlibDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		final TextBlock result = getTable();
-
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(result);
-
-		return imageBuilder.writeImageTOBEMOVED(seed(), os);
+		return styledImageBuilder(this, getTable(), index, fileFormatOption, seed())
+				.annotations(false)
+				.write(os);
 	}
 
 	private TextBlock getTable() {

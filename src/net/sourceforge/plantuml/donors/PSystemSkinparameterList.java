@@ -37,43 +37,24 @@ package net.sourceforge.plantuml.donors;
 
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class PSystemSkinparameterList extends AbstractPSystem {
+public class PSystemSkinparameterList extends PlainDiagram {
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
-		final UDrawable result = getGraphicStrings();
-		HColor backcolor = HColorUtils.WHITE;
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
-				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
-	}
-
-	private UDrawable getGraphicStrings() throws IOException {
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
 		final List<TextBlock> cols = getCols(getDonors(), 5);
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {

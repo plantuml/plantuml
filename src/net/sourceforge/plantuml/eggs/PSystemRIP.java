@@ -35,32 +35,16 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
-import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.security.ImageIO;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class PSystemRIP extends AbstractPSystem {
-
-	private final List<String> strings = new ArrayList<String>();
-	private final BufferedImage image;
+public class PSystemRIP extends PlainStringsDiagram {
 
 	public PSystemRIP() throws IOException {
 		strings.add(" To my Grandfather,");
@@ -77,22 +61,8 @@ public class PSystemRIP extends AbstractPSystem {
 		final InputStream is = new ByteArrayInputStream(imm);
 		image = ImageIO.read(is);
 		is.close();
-	}
 
-	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
-		final TextBlockBackcolored result = getGraphicStrings();
-		HColor backcolor = result.getBackcolor();
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
-				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
-	}
-
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
-		return GraphicStrings.createBlackOnWhite(strings, image, GraphicPosition.BOTTOM);
+		imagePosition = GraphicPosition.BOTTOM;
 	}
 
 	public DiagramDescription getDescription() {

@@ -36,22 +36,16 @@
 package net.sourceforge.plantuml.cute;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
-public class PSystemCute extends AbstractPSystem {
+public class PSystemCute extends PlainDiagram {
 
 	// private final List<Positionned> shapes = new ArrayList<Positionned>();
 	// private final Map<String, Group> groups = new HashMap<String, Group>();
@@ -88,22 +82,12 @@ public class PSystemCute extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
-		final int margin1;
-		final int margin2;
-		if (UseStyle.useBetaStyle()) {
-			margin1 = SkinParam.zeroMargin(10);
-			margin2 = SkinParam.zeroMargin(10);
-		} else {
-			margin1 = 10;
-			margin2 = 10;
-		}
-		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
-				null, margins, null);
-		final ImageBuilder builder = ImageBuilder.build(imageParameter);
-		builder.setUDrawable(root);
-		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
+		return root;
+	}
+
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.same(10);
 	}
 }

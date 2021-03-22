@@ -42,10 +42,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -53,10 +51,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -64,6 +59,8 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class BoardDiagram extends UmlDiagram {
 
@@ -81,19 +78,8 @@ public class BoardDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		final ISkinParam skinParam = getSkinParam();
-
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-
-		TextBlock result = getTextBlock();
-
-		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))
-				.addAdd(result);
-		imageBuilder.setUDrawable(result);
-
-		return imageBuilder.writeImageTOBEMOVED(seed(), os);
+		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption, seed())
+				.write(os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {

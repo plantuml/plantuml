@@ -35,22 +35,14 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class PSystemOpenIconic extends AbstractPSystem {
+public class PSystemOpenIconic extends PlainDiagram {
 
 	private final String iconName;
 	private final double factor;
@@ -61,26 +53,11 @@ public class PSystemOpenIconic extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
 		final OpenIcon icon = OpenIcon.retrieve(iconName);
 		// final Dimension2D dim = new Dimension2DDouble(100, 100);
 
-		final int margin1;
-		final int margin2;
-		if (UseStyle.useBetaStyle()) {
-			margin1 = SkinParam.zeroMargin(5);
-			margin2 = SkinParam.zeroMargin(5);
-		} else {
-			margin1 = 5;
-			margin2 = 5;
-		}
-		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
-				null, margins, null);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(icon.asTextBlock(HColorUtils.BLACK, factor));
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
+		return icon.asTextBlock(HColorUtils.BLACK, factor);
 
 		// UGraphic2 ug = fileFormat.createUGraphic(dim);
 		// ug = (UGraphic2) ug.apply(new UTranslate(10, 10));
@@ -101,6 +78,11 @@ public class PSystemOpenIconic extends AbstractPSystem {
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Open iconic)");
+	}
+
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.same(5);
 	}
 
 }

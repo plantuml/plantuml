@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,30 +30,28 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.eggs;
+package net.sourceforge.plantuml;
 
-import java.io.IOException;
-
-import net.sourceforge.plantuml.PlainStringsDiagram;
-import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
-import net.sourceforge.plantuml.version.PSystemVersion;
+import net.sourceforge.plantuml.graphic.UDrawable;
 
-public class PSystemAppleTwo extends PlainStringsDiagram {
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
-	public PSystemAppleTwo() throws IOException {
-		strings.add("                             <b><size:18>Apple //e for ever !                             ");
-		strings.add(" ");
+import static net.sourceforge.plantuml.graphic.GraphicStrings.createBlackOnWhite;
 
-		image = PSystemVersion.getApple2Image();
-		imagePosition = GraphicPosition.BOTTOM;
+public abstract class PlainStringsDiagram extends PlainDiagram {
+
+	protected BufferedImage image = null;
+	protected GraphicPosition imagePosition = null;
+
+	protected final List<String> strings = new ArrayList<String>();
+
+	@Override
+	public UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
+		return createBlackOnWhite(strings, image, imagePosition);
 	}
-
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Apple //e)");
-	}
-
 }

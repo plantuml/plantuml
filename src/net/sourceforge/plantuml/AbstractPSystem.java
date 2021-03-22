@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
@@ -161,5 +162,9 @@ public abstract class AbstractPSystem implements Diagram {
 
 	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption,
 			long seed) throws IOException;
+
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.same(0);
+	}
 
 }

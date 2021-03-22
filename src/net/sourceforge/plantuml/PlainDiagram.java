@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,30 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.eggs;
+package net.sourceforge.plantuml;
+
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
-import net.sourceforge.plantuml.PlainStringsDiagram;
-import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.graphic.GraphicPosition;
-import net.sourceforge.plantuml.version.PSystemVersion;
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
 
-public class PSystemAppleTwo extends PlainStringsDiagram {
+// This class doesnt feel like a wonderful idea, just a stepping stone towards something
+public abstract class PlainDiagram extends AbstractPSystem {
 
-	public PSystemAppleTwo() throws IOException {
-		strings.add("                             <b><size:18>Apple //e for ever !                             ");
-		strings.add(" ");
+	@Override
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
+			throws IOException {
 
-		image = PSystemVersion.getApple2Image();
-		imagePosition = GraphicPosition.BOTTOM;
+		final UDrawable drawable = getRootDrawable(fileFormatOption);
+
+		final ImageBuilder builder = plainImageBuilder(drawable, fileFormatOption, seed)
+				.margin(getDefaultMargins())
+				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null);
+
+		return adjustImageBuilder(builder).write(os);
 	}
 
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Apple //e)");
+	// kind of a kludge but good enough for now!
+	protected ImageBuilder adjustImageBuilder(ImageBuilder builder) {
+		return builder;
 	}
 
+	protected abstract UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException;
 }

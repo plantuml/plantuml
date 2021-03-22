@@ -35,30 +35,21 @@
 package net.sourceforge.plantuml.jungle;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SvgCharSizeHack;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UDrawableUtils;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class PSystemTree extends AbstractPSystem {
+public class PSystemTree extends PlainDiagram {
 
 	private GNode root;
 	private List<GNode> stack = new ArrayList<GNode>();
@@ -69,35 +60,17 @@ public class PSystemTree extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
-		final int margin1;
-		final int margin2;
-		if (UseStyle.useBetaStyle()) {
-			margin1 = SkinParam.zeroMargin(5);
-			margin2 = SkinParam.zeroMargin(5);
-		} else {
-			margin1 = 5;
-			margin2 = 5;
-		}
-		HColor backcolor = HColorUtils.WHITE;
-
-		final ClockwiseTopRightBottomLeft margins = ClockwiseTopRightBottomLeft.margin1margin2(margin1, margin2);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
-				null, margins, backcolor);
-		final ImageBuilder builder = ImageBuilder.build(imageParameter);
-
+	protected UDrawable getRootDrawable(FileFormatOption fileFormat) throws IOException {
 		if (rendering == Rendering.NEEDLE) {
 			final UDrawable tmp = Needle.getNeedle(root, 200, 0, 60);
 			final LimitFinder limitFinder = new LimitFinder(fileFormat.getDefaultStringBounder(SvgCharSizeHack.NO_HACK),
 					true);
 			tmp.drawU(limitFinder);
 			final double minY = limitFinder.getMinY();
-			builder.setUDrawable(UDrawableUtils.move(tmp, 0, -minY));
+			return UDrawableUtils.move(tmp, 0, -minY);
 		} else {
-			builder.setUDrawable(new GTileOneLevelFactory().createGTile(root));
+			return new GTileOneLevelFactory().createGTile(root);
 		}
-		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	public CommandExecutionResult addParagraph(int level, String label) {
@@ -124,4 +97,8 @@ public class PSystemTree extends AbstractPSystem {
 		return CommandExecutionResult.ok();
 	}
 
+	@Override
+	public ClockwiseTopRightBottomLeft getDefaultMargins() {
+		return ClockwiseTopRightBottomLeft.same(5);
+	}
 }

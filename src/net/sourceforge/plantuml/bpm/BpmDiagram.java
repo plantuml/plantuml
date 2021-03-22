@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class BpmDiagram extends UmlDiagram {
 
@@ -81,12 +81,10 @@ public class BpmDiagram extends UmlDiagram {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-		
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(getUDrawable());
 
-		return imageBuilder.writeImageTOBEMOVED(seed(), os);
+		return styledImageBuilder(this, getUDrawable(), index, fileFormatOption, seed())
+				.annotations(false)
+				.write(os);
 	}
 
 	private UDrawable getUDrawable() {

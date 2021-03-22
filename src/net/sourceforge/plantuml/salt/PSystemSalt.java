@@ -44,10 +44,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -63,7 +61,6 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
 import net.sourceforge.plantuml.salt.factory.ElementFactory;
@@ -87,13 +84,13 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class PSystemSalt extends TitledDiagram implements WithSprite {
 
@@ -115,25 +112,14 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		try {
 			final Element salt = createElement(manageSprite());
-
 			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 			final Dimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
-
-			final ISkinParam skinParam = getSkinParam();
-			final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-
-			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-
-			TextBlock result = getTextBlock(salt, size);
-
-			result = new AnnotatedWorker(this, skinParam, stringBounder).addAdd(result);
-			imageBuilder.setUDrawable(result);
-
-			return imageBuilder.writeImageTOBEMOVED(seed(), os);
+			return styledImageBuilder(this, getTextBlock(salt, size), index, fileFormatOption, seed())
+					.write(os);
 		} catch (Exception e) {
 			e.printStackTrace();
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, seed, getMetadata(), "none",

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Scale;
@@ -53,9 +52,11 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
+// TODO merge these fields into ImageBuilder
 public class ImageParameter {
 
 	private final ColorMapper colorMapper;
@@ -63,10 +64,6 @@ public class ImageParameter {
 	private final Animation animation;
 	private final Scale scale;
 	private int dpi;
-	private final String metadata;
-	private final String warningOrError;
-	private final ClockwiseTopRightBottomLeft margins;
-	private final HColor backcolor;
 	private final boolean svgDimensionStyle;
 	private final SvgCharSizeHack svgCharSizeHack;
 	private final LengthAdjust lengthAdjust;
@@ -74,19 +71,13 @@ public class ImageParameter {
 	private final UStroke borderStroke;
 	private final HColor borderColor;
 	private final double borderCorner;
-	private final FileFormatOption fileFormatOption;
 
-	public ImageParameter(ColorMapper colorMapper, boolean useHandwritten, Animation animation,
-			String metadata, String warningOrError, ClockwiseTopRightBottomLeft margins, HColor backcolor) {
-		this.colorMapper = colorMapper;
-		this.useHandwritten = useHandwritten;
-		this.animation = animation;
+	public ImageParameter() {
+		this.colorMapper = new ColorMapperIdentity();
+		this.useHandwritten = false;
+		this.animation = null;
 		this.scale = null;
 		this.dpi = 96;
-		this.metadata = metadata;
-		this.warningOrError = warningOrError;
-		this.margins = margins;
-		this.backcolor = backcolor;
 		this.svgDimensionStyle = true;
 
 		this.borderColor = null;
@@ -94,20 +85,9 @@ public class ImageParameter {
 		this.borderStroke = null;
 		this.svgCharSizeHack = SvgCharSizeHack.NO_HACK;
 		this.lengthAdjust = LengthAdjust.defaultValue();
-		this.fileFormatOption = null;
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption) {
-		this(
-				diagram,
-				fileFormatOption,
-				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
-				diagram.getWarningOrError(),
-				getBackgroundColor(diagram)
-		);
-	}
-
-	private static HColor getBackgroundColor(TitledDiagram diagram) {
+	public static HColor getBackgroundColor(TitledDiagram diagram) {
 		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature
 					.of(SName.root, SName.document, diagram.getUmlDiagramType().getStyleName())
@@ -124,19 +104,13 @@ public class ImageParameter {
 		return diagram.getSkinParam().getBackgroundColor(false);
 	}
 
-	public ImageParameter(TitledDiagram diagram, FileFormatOption fileFormatOption, String metadata,
-			String warningOrError, HColor backcolor) {
+	public ImageParameter(TitledDiagram diagram) {
 		final ISkinParam skinParam = diagram.getSkinParam();
-		this.fileFormatOption = fileFormatOption;
 		this.colorMapper = skinParam.getColorMapper();
 		this.useHandwritten = skinParam.handwritten();
 		this.animation = diagram.getAnimation();
 		this.scale = diagram.getScale();
 		this.dpi = skinParam.getDpi();
-		this.metadata = metadata;
-		this.warningOrError = warningOrError;
-		this.margins = calculateDiagramMargin(diagram);
-		this.backcolor = backcolor;
 		this.svgDimensionStyle = skinParam.svgDimensionStyle();
 
 		final Rose rose = new Rose();
@@ -174,22 +148,6 @@ public class ImageParameter {
 		return dpi;
 	}
 
-	public final String getMetadata() {
-		return metadata;
-	}
-
-	public final String getWarningOrError() {
-		return warningOrError;
-	}
-
-	public final ClockwiseTopRightBottomLeft getMargins() {
-		return margins;
-	}
-
-	public final HColor getBackcolor() {
-		return backcolor;
-	}
-
 	public final boolean isSvgDimensionStyle() {
 		return svgDimensionStyle;
 	}
@@ -214,11 +172,7 @@ public class ImageParameter {
 		return lengthAdjust;
 	}
 
-	public FileFormatOption getFileFormatOption() {
-		return fileFormatOption;
-	}
-
-	private static ClockwiseTopRightBottomLeft calculateDiagramMargin(TitledDiagram diagram) {
+	public static ClockwiseTopRightBottomLeft calculateDiagramMargin(TitledDiagram diagram) {
 		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.document)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
