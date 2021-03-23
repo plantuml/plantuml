@@ -50,16 +50,15 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.security.ImageIO;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
 public class ScientificEquationSafe {
 
@@ -100,10 +99,10 @@ public class ScientificEquationSafe {
 			return svg;
 		} catch (Exception e) {
 			printTrace(e);
-			final ImageBuilder imageBuilder = getRollback();
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				dimSvg = imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.SVG), 42, baos);
+				dimSvg = plainImageBuilder(getRollback(), new FileFormatOption(FileFormat.SVG), 42)
+						.write(baos);
 			} catch (IOException e1) {
 				return null;
 			}
@@ -116,11 +115,9 @@ public class ScientificEquationSafe {
 			return equation.getImage(foregroundColor, backgroundColor);
 		} catch (Exception e) {
 			printTrace(e);
-			final ImageBuilder imageBuilder = getRollback();
-			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, baos);
-				return new PixelImage(ImageIO.read(new ByteArrayInputStream(baos.toByteArray())),
+				final byte[] bytes = plainPngBuilder(getRollback()).writeByteArray();
+				return new PixelImage(ImageIO.read(new ByteArrayInputStream(bytes)),
 						AffineTransformType.TYPE_BILINEAR);
 			} catch (IOException e1) {
 				return null;
@@ -136,13 +133,8 @@ public class ScientificEquationSafe {
 		e.printStackTrace();
 	}
 
-	private ImageBuilder getRollback() {
-		final TextBlock block = GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
-				null, ClockwiseTopRightBottomLeft.none(), null);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(block);
-		return imageBuilder;
+	private TextBlockBackcolored getRollback() {
+		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));
 	}
 
 	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, Color foregroundColor,

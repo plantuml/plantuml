@@ -35,18 +35,15 @@
  */
 package net.sourceforge.plantuml.creole.legacy;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -54,13 +51,10 @@ import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 
-public class PSystemCreole extends AbstractPSystem {
+public class PSystemCreole extends PlainDiagram {
 
 	private final List<String> lines = new ArrayList<String>();
 
@@ -76,20 +70,13 @@ public class PSystemCreole extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
 		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT,
 				SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL).createSheet(display);
-		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
-				null, ClockwiseTopRightBottomLeft.none(), null);
-
-		final ImageBuilder builder = ImageBuilder.build(imageParameter);
-		builder.setUDrawable(sheetBlock);
-		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
+		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
 		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1,

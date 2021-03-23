@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -46,7 +45,6 @@ import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.NamedOutputStream;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -54,9 +52,8 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
@@ -109,9 +106,11 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT_AND_XLABEL, stringBounder);
 			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		}
-		final boolean isGraphvizCrash = result instanceof GraphvizCrash;
+		// TODO There is something strange with the left margin of mainframe, I think because AnnotatedWorker is used here
+		//      It can be looked at in another PR
 		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder).addAdd(result);
 
+		// TODO UmlDiagram.getWarningOrError() looks similar so this might be simplified? - will leave for a separate PR
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
 		String warningOrError = null;
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
@@ -121,19 +120,11 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		// Sorry about this hack. There is a side effect in SvekResult::calculateDimension()
 		result.calculateDimension(stringBounder);  // Ensure text near the margins is not cut off
 
-		final HColor backcolor = result.getBackcolor();
-		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-
-		final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption, metadata,
-				warningOrError, backcolor);
-
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(result);
-		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(diagram.seed(), os);
-		if (isGraphvizCrash) {
-			((ImageDataAbstract) imageData).setStatus(503);
-		}
-		return imageData;
+		return styledImageBuilder(diagram, result, 1, fileFormatOption, diagram.seed())
+				.annotations(false)  // backwards compatibility (AnnotatedWorker is used above)
+				.status(result instanceof GraphvizCrash ? 503 : 0)
+				.warningOrError(warningOrError)
+				.write(os);
 	}
 
 	private List<Link> getOrderedLinks() {

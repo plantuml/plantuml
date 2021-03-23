@@ -51,7 +51,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -68,20 +67,15 @@ import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.ImageSelection;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.version.PSystemVersion;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
 class ImageWindow2 extends JFrame {
 
@@ -332,16 +326,9 @@ class ImageWindow2 extends JFrame {
 		} catch (IOException ex) {
 			final String msg = "Error reading file: " + ex.toString();
 			final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList(msg), false);
-			HColor backcolor = error.getBackcolor();
-			final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
-					null, ClockwiseTopRightBottomLeft.none(), backcolor);
-			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-			imageBuilder.setUDrawable(error);
-			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, baos);
-				baos.close();
-				image = ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
+				final byte[] bytes = plainPngBuilder(error).writeByteArray();
+				image = ImageIO.read(new ByteArrayInputStream(bytes));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

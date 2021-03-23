@@ -42,6 +42,7 @@ import static gen.lib.cgraph.node__c.agnode;
 import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
@@ -63,7 +64,6 @@ import h.ST_Agraphinfo_t;
 import h.ST_Agrec_s;
 import h.ST_GVC_s;
 import h.ST_boxf;
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -100,8 +100,6 @@ import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -448,19 +446,12 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// DebugUtils.printDebugEdge(e);
 			// }
 
-			final ImageParameter imageParameter = new ImageParameter(diagram, fileFormatOption);
-
-			final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-
 			final MinMax minMax = TextBlockUtils.getMinMax(new Drawing(null, null), stringBounder, false);
 
-			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, diagram.getSkinParam(),
-					fileFormatOption.getDefaultStringBounder(diagram.getSkinParam()));
-
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
-			imageBuilder.setUDrawable(annotatedWorker.addAdd(new Drawing(new YMirror(minMax.getMaxY()), minMax)));
-
-			return imageBuilder.writeImageTOBEMOVED(diagram.seed(), os);
+			final TextBlock drawable = new Drawing(new YMirror(minMax.getMaxY()), minMax);
+			return styledImageBuilder(diagram, drawable, 1, fileFormatOption, diagram.seed())
+					.write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),

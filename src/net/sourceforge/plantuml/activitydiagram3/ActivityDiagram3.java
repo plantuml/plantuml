@@ -38,9 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -60,11 +58,11 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionXorYBuilder;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class ActivityDiagram3 extends UmlDiagram {
 
@@ -207,16 +205,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);
 
 		result = new TextBlockRecentred(result);
-		final ISkinParam skinParam = getSkinParam();
-		result = new AnnotatedWorker(this, skinParam, stringBounder).addAdd(result);
-
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(result);
-
-		return imageBuilder.writeImageTOBEMOVED(seed(), os);
-
+		return styledImageBuilder(this, result, index, fileFormatOption, seed())
+				.write(os);
 	}
 
 	public void fork() {

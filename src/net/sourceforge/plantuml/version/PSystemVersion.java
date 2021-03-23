@@ -37,22 +37,17 @@ package net.sourceforge.plantuml.version;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.OptionPrint;
+import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dedication.Dedication;
-import net.sourceforge.plantuml.graphic.GraphicPosition;
-import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
@@ -60,29 +55,24 @@ import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class PSystemVersion extends AbstractPSystem {
+import static net.sourceforge.plantuml.graphic.GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT;
 
-	private final List<String> strings = new ArrayList<String>();
-	private BufferedImage image;
+public class PSystemVersion extends PlainStringsDiagram {
 
 	PSystemVersion(boolean withImage, List<String> args) {
 		this.strings.addAll(args);
 		if (withImage) {
 			this.image = getPlantumlImage();
+			this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
 		}
 	}
 
 	private PSystemVersion(List<String> args, BufferedImage image) {
 		this.strings.addAll(args);
 		this.image = image;
+		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
 	}
 
 	public static BufferedImage getPlantumlImage() {
@@ -165,19 +155,6 @@ public class PSystemVersion extends AbstractPSystem {
 			}
 		}
 		return transparentIcon;
-	}
-
-	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
-		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image,
-				GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
-		HColor backcolor = result.getBackcolor();
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
-				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	public static PSystemVersion createShowVersion() {

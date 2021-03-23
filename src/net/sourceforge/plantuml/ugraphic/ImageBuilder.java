@@ -51,25 +51,32 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.AnimatedGifEncoder;
+import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.CMapData;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
+import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -87,38 +94,124 @@ import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
 
+import static net.sourceforge.plantuml.ugraphic.ImageParameter.calculateDiagramMargin;
+import static net.sourceforge.plantuml.ugraphic.ImageParameter.getBackgroundColor;
+
 public class ImageBuilder {
 
 	private final ImageParameter param;
 
-	private final double top;
-	private final double right;
-	private final double bottom;
-	private final double left;
+	private double top;
+	private double right;
+	private double bottom;
+	private double left;
 
+	private boolean annotations;
+	private HColor backcolor = HColorUtils.WHITE;
+	private final TitledDiagram titledDiagram;
 	private UDrawable udrawable;
+	private final FileFormatOption fileFormatOption;
+	private final long seed;
+	private int status = 0;
+	private String metadata;
 	private boolean randomPixel;
+	private String warningOrError;
 
-	public static ImageBuilder build(ImageParameter imageParameter) {
-		return new ImageBuilder(imageParameter);
+	public static ImageBuilder plainImageBuilder(UDrawable drawable, FileFormatOption fileFormatOption, long seed) {
+		return new ImageBuilder(drawable, null, fileFormatOption, seed, new ImageParameter());
 	}
 
-	private ImageBuilder(ImageParameter imageParameter) {
-		this.param = imageParameter;
-
-		this.top = imageParameter.getMargins().getTop();
-		this.right = imageParameter.getMargins().getRight();
-		this.bottom = imageParameter.getMargins().getBottom();
-		this.left = imageParameter.getMargins().getLeft();
-
+	public static ImageBuilder plainPngBuilder(UDrawable drawable) {
+		return plainImageBuilder(drawable, new FileFormatOption(FileFormat.PNG), 42);
 	}
 
-	public void setUDrawable(UDrawable udrawable) {
-		this.udrawable = udrawable;
+	// TODO do something with "index"
+	public static ImageBuilder styledImageBuilder(TitledDiagram diagram, UDrawable drawable, int index,
+												  FileFormatOption fileFormatOption, long seed) {
+		return new ImageBuilder(drawable, diagram, fileFormatOption, seed, new ImageParameter(diagram))
+				.annotations(true)
+				.backcolor(getBackgroundColor(diagram))
+				.margin(calculateDiagramMargin(diagram))
+				.metadata(fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null)
+				.warningOrError(diagram.getWarningOrError());
+	}
+
+	private ImageBuilder(UDrawable drawable, TitledDiagram titledDiagram, FileFormatOption fileFormatOption, long seed, ImageParameter param) {
+		this.udrawable = drawable;
+		this.titledDiagram = titledDiagram;
+		this.fileFormatOption = fileFormatOption;
+		this.seed = seed;
+		this.param = param;
+
+		if (drawable instanceof TextBlockBackcolored) {
+			backcolor = ((TextBlockBackcolored) drawable).getBackcolor();
+		}
+	}
+
+	public ImageBuilder annotations(boolean annotations) {
+		this.annotations = annotations;
+		return this;
+	}
+
+	public ImageBuilder backcolor(HColor backcolor) {
+		this.backcolor = backcolor;
+		return this;
+	}
+
+	public ImageBuilder blackBackcolor() {
+		return backcolor(HColorUtils.BLACK);
+	}
+
+	public ImageBuilder margin(ClockwiseTopRightBottomLeft margin) {
+		this.top = margin.getTop();
+		this.right = margin.getRight();
+		this.bottom = margin.getBottom();
+		this.left = margin.getLeft();
+		return this;
+	}
+
+	public ImageBuilder metadata(String metadata) {
+		this.metadata = metadata;
+		return this;
+	}
+
+	public ImageBuilder randomPixel() {
+		this.randomPixel = true;
+		return this;
+	}
+
+	public ImageBuilder status(int status) {
+		this.status = status;
+		return this;
+	}
+
+	public ImageBuilder warningOrError(String warningOrError) {
+		this.warningOrError = warningOrError;
+		return this;
+	}
+
+	public ImageData write(OutputStream os) throws IOException {
+		if (annotations && titledDiagram != null) {
+			if (!(udrawable instanceof TextBlock)) throw new IllegalStateException("udrawable is not a TextBlock");
+			final ISkinParam skinParam = titledDiagram.getSkinParam();
+			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
+			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(titledDiagram, skinParam, stringBounder);
+			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
+		}
+		final ImageData imageData = writeImageTOBEMOVED(fileFormatOption, seed, os);
+		((ImageDataAbstract) imageData).setStatus(status);
+		return imageData;
+	}
+
+	public byte[] writeByteArray() throws IOException {
+		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+			write(baos);
+			return baos.toByteArray();
+		}
 	}
 
 	public ImageData writeImageTOBEMOVED(long seed, OutputStream os) throws IOException {
-		return writeImageTOBEMOVED(param.getFileFormatOption(), seed, os);
+		return writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}
 
 	public ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, long seed, OutputStream os)
@@ -163,14 +256,14 @@ public class ImageBuilder {
 		final UGraphic ugDecored = handwritten(ug2);
 		udrawable.drawU(ugDecored);
 		ugDecored.flushUg();
-		ug.writeImageTOBEMOVED(os, param.getMetadata(), 96);
+		ug.writeImageTOBEMOVED(os, metadata, 96);
 		os.flush();
 
 		if (ug instanceof UGraphicG2d) {
 			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
 			if (urls.size() > 0) {
 				final CMapData cmap = CMapData.cmapString(urls, param.getDpi());
-				return new ImageDataComplex(dim, cmap, param.getWarningOrError());
+				return new ImageDataComplex(dim, cmap, warningOrError);
 			}
 		}
 		return new ImageDataSimple(dim);
@@ -285,10 +378,10 @@ public class ImageBuilder {
 		final FileFormat fileFormat = option.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
-			return createUGraphicPNG(colorMapper, scaleFactor, dim, param.getBackcolor(), animationArg, dx, dy,
+			return createUGraphicPNG(colorMapper, scaleFactor, dim, backcolor, animationArg, dx, dy,
 					option.getWatermark());
 		case SVG:
-			return createUGraphicSVG(colorMapper, scaleFactor, dim, param.getBackcolor(), option.getSvgLinkTarget(),
+			return createUGraphicSVG(colorMapper, scaleFactor, dim, backcolor, option.getSvgLinkTarget(),
 					option.getHoverColor(), seed, option.getPreserveAspectRatio(), param.getlengthAdjust());
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
@@ -361,11 +454,6 @@ public class ImageBuilder {
 		}
 
 		return ug;
-	}
-
-	public void setRandomPixel(boolean randomPixel) {
-		this.randomPixel = randomPixel;
-
 	}
 
 }
