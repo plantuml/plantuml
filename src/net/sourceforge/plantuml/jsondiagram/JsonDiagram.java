@@ -86,10 +86,10 @@ public class JsonDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption, 0)
+		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption)
 				.write(os);
 	}
 

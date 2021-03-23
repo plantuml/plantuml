@@ -112,17 +112,17 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		try {
 			final Element salt = createElement(manageSprite());
 			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 			final Dimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
-			return styledImageBuilder(this, getTextBlock(salt, size), index, fileFormatOption, seed())
+			return styledImageBuilder(this, getTextBlock(salt, size), index, fileFormatOption)
 					.write(os);
 		} catch (Exception e) {
 			e.printStackTrace();
-			UmlDiagram.exportDiagramError(os, e, fileFormatOption, seed, getMetadata(), "none",
+			UmlDiagram.exportDiagramError(os, e, fileFormatOption, seed(), getMetadata(), "none",
 					new ArrayList<String>());
 			return ImageDataSimple.error();
 		}

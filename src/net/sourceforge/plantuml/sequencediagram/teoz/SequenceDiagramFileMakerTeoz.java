@@ -139,7 +139,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		if (this.index != index) {
 			throw new IllegalStateException();
 		}
-		return styledImageBuilder(diagram, new Foo(index), index, fileFormatOption, diagram.seed())
+		return styledImageBuilder(diagram, new Foo(index), index, fileFormatOption)
 				.annotations(false)   // they are managed in drawInternal()
 				.write(os);
 	}

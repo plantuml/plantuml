@@ -63,7 +63,7 @@ public class PSystemMath extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromAsciiMath(math);
 		return asciiMath.export(os, fileFormat, scale, color, backColor);

@@ -205,7 +205,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);
 
 		result = new TextBlockRecentred(result);
-		return styledImageBuilder(this, result, index, fileFormatOption, seed())
+		return styledImageBuilder(this, result, index, fileFormatOption)
 				.write(os);
 	}
 

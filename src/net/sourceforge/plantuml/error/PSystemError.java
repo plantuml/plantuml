@@ -222,7 +222,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
@@ -232,7 +232,7 @@ public abstract class PSystemError extends PlainDiagram {
 			return new ImageDataSimple(1, 1);
 
 		}
-		return super.exportDiagramNow(os, num, fileFormat, seed);
+		return super.exportDiagramNow(os, num, fileFormat);
 	}
 
 	@Override

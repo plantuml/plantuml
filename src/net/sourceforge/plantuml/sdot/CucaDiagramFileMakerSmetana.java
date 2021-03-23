@@ -450,7 +450,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 			final TextBlock drawable = new Drawing(new YMirror(minMax.getMaxY()), minMax);
-			return styledImageBuilder(diagram, drawable, 1, fileFormatOption, diagram.seed())
+			return styledImageBuilder(diagram, drawable, 1, fileFormatOption)
 					.write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();

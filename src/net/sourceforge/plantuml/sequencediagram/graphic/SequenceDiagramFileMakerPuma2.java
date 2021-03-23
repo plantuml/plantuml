@@ -220,7 +220,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			}
 
 		};
-		return styledImageBuilder(diagram, drawable, index, fileFormatOption, diagram.seed())
+		return styledImageBuilder(diagram, drawable, index, fileFormatOption)
 				.annotations(false)  // they are managed above
 				.write(os);
 	}

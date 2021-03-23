@@ -84,7 +84,7 @@ public class StdlibDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getTable(), index, fileFormatOption, seed())
+		return styledImageBuilder(this, getTable(), index, fileFormatOption)
 				.annotations(false)
 				.write(os);
 	}

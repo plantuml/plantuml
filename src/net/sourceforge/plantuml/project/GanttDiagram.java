@@ -163,10 +163,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		return styledImageBuilder(this, getTextBlock(stringBounder), index, fileFormatOption, seed())
+		return styledImageBuilder(this, getTextBlock(stringBounder), index, fileFormatOption)
 				.write(os);
 	}
 
