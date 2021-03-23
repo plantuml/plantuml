@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
-	public static final boolean FORCE_SMETANA = false;
+	public static boolean FORCE_SMETANA = false;
 
 	private DisplayPositionned title = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 

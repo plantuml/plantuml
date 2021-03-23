@@ -40,20 +40,29 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.UComment;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.USegment;
+import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorMiddle;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
 public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContainer, UGraphic2 {
@@ -88,9 +97,50 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 			outText((UText) shape);
 		} else if (shape instanceof UPolygon) {
 			outPolygon((UPolygon) shape);
+		} else if (shape instanceof UEllipse) {
+			outEllipse((UEllipse) shape);
+		} else if (shape instanceof UEmpty) {
+			outEmpty((UEmpty) shape);
+		} else if (shape instanceof UPath) {
+			outPath((UPath) shape);
+		} else if (shape instanceof UComment) {
+			outComment((UComment) shape);
+		} else if (shape instanceof DotPath) {
+			outPath(((DotPath) shape).toUPath());
 		} else {
-			throw new UnsupportedOperationException("UGraphicDebug " + shape.getClass().getSimpleName());
+			System.err.println("UGraphicDebug " + shape.getClass().getSimpleName());
+			output.add("UGraphicDebug " + shape.getClass().getSimpleName() + " " + new Date());
 		}
+	}
+
+	private void outComment(UComment shape) {
+		output.add("COMMENT: " + shape.getComment());
+	}
+
+	private void outPath(UPath shape) {
+		output.add("PATH:");
+		for (USegment seg : shape) {
+			final USegmentType type = seg.getSegmentType();
+			final double coord[] = seg.getCoord();
+			output.add("   - type: " + type);
+			if (type == USegmentType.SEG_ARCTO) {
+				output.add("     radius: " + pointd(coord[0], coord[1]));
+				output.add("     angle: " + coord[2]);
+				output.add("     largeArcFlag: " + (coord[3] != 0));
+				output.add("     sweepFlag: " + (coord[4] != 0));
+				output.add("     dest: " + pointd(coord[5], coord[6]));
+			} else
+				for (int i = 0; i < type.getNbPoints(); i++) {
+					final String key = "     pt" + (i + 1) + ": ";
+					output.add(key + pointd(coord[2 * i], coord[2 * i + 1]));
+				}
+		}
+
+		output.add("  stroke: " + getParam().getStroke());
+		output.add("  shadow: " + (int) shape.getDeltaShadow());
+		output.add("  color: " + colorToString(getParam().getColor()));
+		output.add("  backcolor: " + colorToString(getParam().getBackcolor()));
+		output.add("");
 
 	}
 
@@ -117,6 +167,27 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		output.add("  orientation: " + shape.getOrientation());
 		output.add("  font: " + shape.getFontConfiguration().toStringDebug());
 		output.add("  color: " + colorToString(getParam().getColor()));
+		output.add("");
+	}
+
+	private void outEmpty(UEmpty shape) {
+		output.add("EMPTY:");
+		output.add("  pt1: " + pointd(getTranslateX(), getTranslateY()));
+		output.add("  pt2: " + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));
+		output.add("");
+
+	}
+
+	private void outEllipse(UEllipse shape) {
+		output.add("ELLIPSE:");
+		output.add("  pt1: " + pointd(getTranslateX(), getTranslateY()));
+		output.add("  pt2: " + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));
+		output.add("  start: " + shape.getStart());
+		output.add("  extend: " + shape.getExtend());
+		output.add("  stroke: " + getParam().getStroke());
+		output.add("  shadow: " + (int) shape.getDeltaShadow());
+		output.add("  color: " + colorToString(getParam().getColor()));
+		output.add("  backcolor: " + colorToString(getParam().getBackcolor()));
 		output.add("");
 
 	}
@@ -151,6 +222,9 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	}
 
 	private String colorToString(HColor color) {
+		if (color == null) {
+			return "NULL_COLOR";
+		}
 		if (color instanceof HColorSimple) {
 			final HColorSimple simple = (HColorSimple) color;
 			final Color internal = simple.getColor999();
@@ -158,9 +232,13 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 				return "monochrome " + Integer.toHexString(internal.getRGB());
 			}
 			return Integer.toHexString(internal.getRGB());
-
 		}
-		return color.getClass().getSimpleName();
+		if (color instanceof HColorMiddle) {
+			final HColorMiddle middle = (HColorMiddle) color;
+			return "middle(" + colorToString(middle.getC1()) + " & " + colorToString(middle.getC1()) + " )";
+		}
+		System.err.println("Error colorToString " + color.getClass().getSimpleName());
+		return color.getClass().getSimpleName() + " " + new Date();
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {

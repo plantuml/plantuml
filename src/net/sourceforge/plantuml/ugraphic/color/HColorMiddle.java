@@ -63,4 +63,12 @@ public class HColorMiddle extends HColorAbstract implements HColor {
 		return new Color(r, g, b);
 	}
 
+	public final HColor getC1() {
+		return c1;
+	}
+
+	public final HColor getC2() {
+		return c2;
+	}
+
 }
