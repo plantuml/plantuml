@@ -14,7 +14,7 @@ Alice -> Bob : Hello
 
 
  */
-class A0000 {
+class A0000_Test {
 
 	@Test
 	void testSimple() throws IOException {
