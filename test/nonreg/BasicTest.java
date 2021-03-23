@@ -23,7 +23,6 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 
 /*
  * All non-regression tests must extends BasicTest class.
- * 
  * The tests must have a single test method that call the 'checkImage()' method.
  * Diagram to be tested must be stored in the test itself, separated by triple-quoted strings
  * The expected result (build using UGraphicDebug) is stored in a class xxxxResult.java, also separated by triple-quoted strings.
