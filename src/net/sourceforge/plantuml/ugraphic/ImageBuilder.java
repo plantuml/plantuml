@@ -111,36 +111,36 @@ public class ImageBuilder {
 	private final TitledDiagram titledDiagram;
 	private UDrawable udrawable;
 	private final FileFormatOption fileFormatOption;
-	private final long seed;
+	private long seed = 42;
 	private int status = 0;
 	private String metadata;
 	private boolean randomPixel;
 	private String warningOrError;
 
-	public static ImageBuilder plainImageBuilder(UDrawable drawable, FileFormatOption fileFormatOption, long seed) {
-		return new ImageBuilder(drawable, null, fileFormatOption, seed, new ImageParameter());
+	public static ImageBuilder plainImageBuilder(UDrawable drawable, FileFormatOption fileFormatOption) {
+		return new ImageBuilder(drawable, null, fileFormatOption, new ImageParameter());
 	}
 
 	public static ImageBuilder plainPngBuilder(UDrawable drawable) {
-		return plainImageBuilder(drawable, new FileFormatOption(FileFormat.PNG), 42);
+		return plainImageBuilder(drawable, new FileFormatOption(FileFormat.PNG));
 	}
 
 	// TODO do something with "index"
 	public static ImageBuilder styledImageBuilder(TitledDiagram diagram, UDrawable drawable, int index,
-												  FileFormatOption fileFormatOption, long seed) {
-		return new ImageBuilder(drawable, diagram, fileFormatOption, seed, new ImageParameter(diagram))
+												  FileFormatOption fileFormatOption) {
+		return new ImageBuilder(drawable, diagram, fileFormatOption, new ImageParameter(diagram))
 				.annotations(true)
 				.backcolor(getBackgroundColor(diagram))
 				.margin(calculateDiagramMargin(diagram))
 				.metadata(fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null)
+				.seed(diagram.seed())
 				.warningOrError(diagram.getWarningOrError());
 	}
 
-	private ImageBuilder(UDrawable drawable, TitledDiagram titledDiagram, FileFormatOption fileFormatOption, long seed, ImageParameter param) {
+	private ImageBuilder(UDrawable drawable, TitledDiagram titledDiagram, FileFormatOption fileFormatOption, ImageParameter param) {
 		this.udrawable = drawable;
 		this.titledDiagram = titledDiagram;
 		this.fileFormatOption = fileFormatOption;
-		this.seed = seed;
 		this.param = param;
 
 		if (drawable instanceof TextBlockBackcolored) {
@@ -180,6 +180,11 @@ public class ImageBuilder {
 		return this;
 	}
 
+	public ImageBuilder seed(long seed) {
+		this.seed = seed;
+		return this;
+	}
+
 	public ImageBuilder status(int status) {
 		this.status = status;
 		return this;
@@ -198,7 +203,7 @@ public class ImageBuilder {
 			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(titledDiagram, skinParam, stringBounder);
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
-		final ImageData imageData = writeImageTOBEMOVED(fileFormatOption, seed, os);
+		final ImageData imageData = writeImageTOBEMOVED(fileFormatOption, os);
 		((ImageDataAbstract) imageData).setStatus(status);
 		return imageData;
 	}
@@ -210,11 +215,11 @@ public class ImageBuilder {
 		}
 	}
 
-	public ImageData writeImageTOBEMOVED(long seed, OutputStream os) throws IOException {
-		return writeImageTOBEMOVED(fileFormatOption, seed, os);
+	public ImageData writeImageTOBEMOVED(OutputStream os) throws IOException {
+		return writeImageTOBEMOVED(fileFormatOption, os);
 	}
 
-	public ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, long seed, OutputStream os)
+	public ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, OutputStream os)
 			throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.MJPEG) {
@@ -222,10 +227,10 @@ public class ImageBuilder {
 		} else if (fileFormat == FileFormat.ANIMATED_GIF) {
 			return writeImageAnimatedGif(os, fileFormatOption.getDefaultStringBounder(param.getSvgCharSizeHack()));
 		}
-		return writeImageInternal(fileFormatOption, seed, os, param.getAnimation());
+		return writeImageInternal(fileFormatOption, os, param.getAnimation());
 	}
 
-	private ImageData writeImageInternal(FileFormatOption fileFormatOption, long seed, OutputStream os,
+	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os,
 			Animation animationArg) throws IOException {
 		Dimension2D dim = getFinalDimension(fileFormatOption.getDefaultStringBounder(param.getSvgCharSizeHack()));
 		double dx = 0;
@@ -238,7 +243,7 @@ public class ImageBuilder {
 			dy = -minmax.getMinY();
 		}
 
-		final UGraphic2 ug = createUGraphic(fileFormatOption, seed, dim, animationArg, dx, dy);
+		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
 		UGraphic ug2 = ug;
 
 		final UStroke borderStroke = param.getBorderStroke();
@@ -361,7 +366,7 @@ public class ImageBuilder {
 
 	private Image getAviImage(AffineTransformation affineTransform) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		writeImageInternal(new FileFormatOption(FileFormat.PNG), 42, baos, Animation.singleton(affineTransform));
+		writeImageInternal(new FileFormatOption(FileFormat.PNG), baos, Animation.singleton(affineTransform));
 		baos.close();
 
 		final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
@@ -370,7 +375,7 @@ public class ImageBuilder {
 		return im;
 	}
 
-	private UGraphic2 createUGraphic(FileFormatOption option, long seed, final Dimension2D dim, Animation animationArg,
+	private UGraphic2 createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg,
 			double dx, double dy) {
 		final ColorMapper colorMapper = param.getColorMapper();
 		final double scaleFactor = (param.getScale() == null ? 1
@@ -382,7 +387,7 @@ public class ImageBuilder {
 					option.getWatermark());
 		case SVG:
 			return createUGraphicSVG(colorMapper, scaleFactor, dim, backcolor, option.getSvgLinkTarget(),
-					option.getHoverColor(), seed, option.getPreserveAspectRatio(), param.getlengthAdjust());
+					option.getHoverColor(), option.getPreserveAspectRatio(), param.getlengthAdjust());
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -408,7 +413,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scaleFactor, Dimension2D dim,
-			final HColor suggested, String svgLinkTarget, String hover, long seed, String preserveAspectRatio,
+			final HColor suggested, String svgLinkTarget, String hover, String preserveAspectRatio,
 			LengthAdjust lengthAdjust) {
 		HColor backColor = HColorUtils.WHITE;
 		if (suggested instanceof HColorSimple) {

@@ -49,7 +49,7 @@ public class PSystemSudoku extends AbstractPSystem {
 	final private ISudoku sudoku;
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
 		if (fileFormat.getFileFormat() == FileFormat.EPS) {

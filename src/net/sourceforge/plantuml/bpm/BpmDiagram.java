@@ -82,7 +82,7 @@ public class BpmDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getUDrawable(), index, fileFormatOption, seed())
+		return styledImageBuilder(this, getUDrawable(), index, fileFormatOption)
 				.annotations(false)
 				.write(os);
 	}

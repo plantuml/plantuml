@@ -143,7 +143,7 @@ public abstract class AbstractPSystem implements Diagram {
 			throws IOException {
 		final long now = System.currentTimeMillis();
 		try {
-			return exportDiagramNow(os, index, fileFormatOption, seed());
+			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
 			if (OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
@@ -160,8 +160,8 @@ public abstract class AbstractPSystem implements Diagram {
 		return scale;
 	}
 
-	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption,
-			long seed) throws IOException;
+	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption
+			) throws IOException;
 
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(0);

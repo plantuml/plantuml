@@ -101,7 +101,7 @@ public class ScientificEquationSafe {
 			printTrace(e);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				dimSvg = plainImageBuilder(getRollback(), new FileFormatOption(FileFormat.SVG), 42)
+				dimSvg = plainImageBuilder(getRollback(), new FileFormatOption(FileFormat.SVG))
 						.write(baos);
 			} catch (IOException e1) {
 				return null;

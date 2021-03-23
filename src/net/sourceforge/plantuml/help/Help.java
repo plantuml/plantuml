@@ -78,7 +78,7 @@ public class Help extends UmlDiagram {
 		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam(), CreoleMode.FULL)
 				.createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
-		return styledImageBuilder(this, sheetBlock, 1, fileFormat, 0)
+		return styledImageBuilder(this, sheetBlock, 1, fileFormat)
 				.annotations(false)
 				.write(os);
 	}

@@ -146,7 +146,7 @@ public class SourceStringReader {
 	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
 			throws IOException {
 		if (blocks.size() == 0) {
-			noStartumlFound(os, fileFormatOption, 42);
+			noStartumlFound(os, fileFormatOption);
 			return null;
 		}
 		for (BlockUml b : blocks) {
@@ -222,11 +222,11 @@ public class SourceStringReader {
 
 	}
 
-	public ImageData noStartumlFound(OutputStream os, FileFormatOption fileFormatOption, long seed) throws IOException {
+	public ImageData noStartumlFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
 		final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList("No @startuml/@enduml found"),
 				fileFormatOption.isUseRedForError());
 
-		return plainImageBuilder(error, fileFormatOption, seed)
+		return plainImageBuilder(error, fileFormatOption)
 				.write(os);
 	}
 

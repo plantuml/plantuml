@@ -78,7 +78,7 @@ public class BoardDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption, seed())
+		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption)
 				.write(os);
 	}
 

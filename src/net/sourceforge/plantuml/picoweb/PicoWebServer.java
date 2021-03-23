@@ -189,7 +189,7 @@ public class PicoWebServer implements Runnable {
 			system = PSystemErrorUtils.buildV2(null,
 					new ErrorUml(SYNTAX_ERROR, "No @startuml/@enduml found", 0, new LineLocationImpl("", null)), null,
 					Collections.<StringLocated>emptyList());
-			imageData = ssr.noStartumlFound(os, option.getFileFormatOption(), 42);
+			imageData = ssr.noStartumlFound(os, option.getFileFormatOption());
 		} else {
 			system = ssr.getBlocks().get(0).getDiagram();
 			imageData = system.exportDiagram(os, 0, option.getFileFormatOption());

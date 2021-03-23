@@ -198,7 +198,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			final RowLayout rawLayout = getRawLayout(i);
 			fullLayout.addRowLayout(rawLayout);
 		}
-		return styledImageBuilder(this, fullLayout, index, fileFormatOption, seed())
+		return styledImageBuilder(this, fullLayout, index, fileFormatOption)
 				.annotations(false) // Backwards compatibility - this only applies when "layout_new_line" is used
 				.write(os);
 	}

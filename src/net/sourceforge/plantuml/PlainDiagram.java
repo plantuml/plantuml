@@ -47,14 +47,15 @@ import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
 public abstract class PlainDiagram extends AbstractPSystem {
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		final UDrawable drawable = getRootDrawable(fileFormatOption);
 
-		final ImageBuilder builder = plainImageBuilder(drawable, fileFormatOption, seed)
+		final ImageBuilder builder = plainImageBuilder(drawable, fileFormatOption)
 				.margin(getDefaultMargins())
-				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null);
+				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)
+				.seed(seed());
 
 		return adjustImageBuilder(builder).write(os);
 	}

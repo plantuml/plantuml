@@ -132,7 +132,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		final HColor hover = getSkinParam().hoverPathColor();
@@ -155,20 +155,20 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			return imageData;
 		} catch (NoStyleAvailableException e) {
 			// e.printStackTrace();
-			exportDiagramError(os, e, fileFormatOption, seed, null);
+			exportDiagramError(os, e, fileFormatOption, null);
 		} catch (UnparsableGraphvizException e) {
 			e.printStackTrace();
-			exportDiagramError(os, e.getCause(), fileFormatOption, seed, e.getGraphvizVersion());
+			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
 		} catch (Throwable e) {
 			//e.printStackTrace();
-			exportDiagramError(os, e, fileFormatOption, seed, null);
+			exportDiagramError(os, e, fileFormatOption, null);
 		}
 		return ImageDataSimple.error();
 	}
 
-	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
+	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
 			String graphvizVersion) throws IOException {
-		exportDiagramError(os, exception, fileFormat, seed, getMetadata(), getFlashData(),
+		exportDiagramError(os, exception, fileFormat, seed(), getMetadata(), getFlashData(),
 				getFailureText1(exception, graphvizVersion, getFlashData()));
 	}
 
@@ -208,8 +208,9 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 				}
 			};
 
-		plainImageBuilder(drawable, fileFormat, seed)
+		plainImageBuilder(drawable, fileFormat)
 				.metadata(metadata)
+				.seed(seed)
 				.write(os);
 	}
 

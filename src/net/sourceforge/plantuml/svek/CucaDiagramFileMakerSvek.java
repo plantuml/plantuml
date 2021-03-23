@@ -120,7 +120,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		// Sorry about this hack. There is a side effect in SvekResult::calculateDimension()
 		result.calculateDimension(stringBounder);  // Ensure text near the margins is not cut off
 
-		return styledImageBuilder(diagram, result, 1, fileFormatOption, diagram.seed())
+		return styledImageBuilder(diagram, result, 1, fileFormatOption)
 				.annotations(false)  // backwards compatibility (AnnotatedWorker is used above)
 				.status(result instanceof GraphvizCrash ? 503 : 0)
 				.warningOrError(warningOrError)
