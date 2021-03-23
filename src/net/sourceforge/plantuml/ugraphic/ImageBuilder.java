@@ -29,7 +29,7 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
+ * Original Author:  Matthew Leather
  * 
  *
  */
