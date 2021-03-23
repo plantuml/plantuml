@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
@@ -143,6 +144,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final FontConfiguration fc;
 
 		final double shadowing;
+		final LineBreakStrategy wrapWidth;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
 					.eventuallyOverride(note.getColors());
@@ -150,18 +152,20 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 			borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 			fc = style.getFontConfiguration(getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
+			wrapWidth = style.wrapWidth();
 		} else {
 			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
 			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 			shadowing = skinParam.shadowing(null) ? 4 : 0;
+			wrapWidth = skinParam.wrapWidth();
 		}
 
 		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
 				false);
 		final Sheet sheet = Parser.build(fc, align, skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
-		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, skinParam.wrapWidth(), skinParam.getPadding()),
-				this, new UStroke(1));
+		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
+				new UStroke(1));
 		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink);
 
 	}
