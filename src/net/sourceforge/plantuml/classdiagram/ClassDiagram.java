@@ -56,8 +56,8 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
@@ -198,10 +198,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			final RowLayout rawLayout = getRawLayout(i);
 			fullLayout.addRowLayout(rawLayout);
 		}
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(fullLayout);
-		return imageBuilder.writeImageTOBEMOVED(seed(), os);
+		return styledImageBuilder(this, fullLayout, index, fileFormatOption, seed())
+				.annotations(false) // Backwards compatibility - this only applies when "layout_new_line" is used
+				.write(os);
 	}
 
 	private RowLayout getRawLayout(int raw) {

@@ -36,26 +36,12 @@
 package net.sourceforge.plantuml.font;
 
 import java.awt.GraphicsEnvironment;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class PSystemListFonts extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+public class PSystemListFonts extends PlainStringsDiagram {
 
 	public PSystemListFonts(String text) {
 		strings.add("   <b><size:16>Fonts available:");
@@ -72,22 +58,6 @@ public class PSystemListFonts extends AbstractPSystem {
 			strings.add(n + " : <font:" + n + ">" + text);
 		}
 
-	}
-
-	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
-		final TextBlockBackcolored result = getGraphicStrings();
-		HColor backcolor = result.getBackcolor();
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
-				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
-	}
-
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
-		return GraphicStrings.createBlackOnWhite(strings);
 	}
 
 	public DiagramDescription getDescription() {

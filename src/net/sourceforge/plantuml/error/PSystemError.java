@@ -46,7 +46,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ErrorUml;
@@ -54,9 +53,9 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileImageData;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -74,21 +73,19 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockRaw;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
@@ -98,10 +95,18 @@ import net.sourceforge.plantuml.version.LicenseInfo;
 import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
-public abstract class PSystemError extends AbstractPSystem {
+public abstract class PSystemError extends PlainDiagram {
 
 	protected List<StringLocated> trace;
 	protected ErrorUml singleError;
+
+	@Override
+	protected ImageBuilder adjustImageBuilder(ImageBuilder builder) {
+		return builder
+				.blackBackcolor()
+				.randomPixel()
+				.status(FileImageData.ERROR);
+	}
 
 	final protected StringLocated getLastLine() {
 		return trace.get(trace.size() - 1);
@@ -227,14 +232,14 @@ public abstract class PSystemError extends AbstractPSystem {
 			return new ImageDataSimple(1, 1);
 
 		}
+		return super.exportDiagramNow(os, num, fileFormat, seed);
+	}
+
+	@Override
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
 		final TextBlockBackcolored result = getGraphicalFormatted();
 
 		TextBlock udrawable;
-		HColor backcolor = result.getBackcolor();
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
-				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setRandomPixel(true);
 		if (getSource().getTotalLineCountLessThan5()) {
 			udrawable = addWelcome(result);
 		} else {
@@ -251,10 +256,7 @@ public abstract class PSystemError extends AbstractPSystem {
 		} else if (getSource().containsIgnoreCase("arecibo")) {
 			udrawable = addMessageArecibo(udrawable);
 		}
-		imageBuilder.setUDrawable(udrawable);
-		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
-		((ImageDataAbstract) imageData).setStatus(FileImageData.ERROR);
-		return imageData;
+		return udrawable;
 	}
 
 	private void append(List<String> result, LineLocation lineLocation) {

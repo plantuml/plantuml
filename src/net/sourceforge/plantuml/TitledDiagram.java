@@ -212,7 +212,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return useSmetana;
 	}
 
-	// This is for backwards compatibility with earlier default margins
+	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(10);
 	}

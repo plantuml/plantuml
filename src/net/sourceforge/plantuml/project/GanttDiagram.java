@@ -49,7 +49,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -61,7 +60,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.core.Moment;
 import net.sourceforge.plantuml.project.core.MomentImpl;
 import net.sourceforge.plantuml.project.core.PrintScale;
@@ -93,14 +91,14 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite {
 
@@ -167,15 +165,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		TextBlock result = getTextBlock(stringBounder);
-		result = new AnnotatedWorker(this, getSkinParam(), stringBounder).addAdd(result);
-		imageBuilder.setUDrawable(result);
-
-		return imageBuilder.writeImageTOBEMOVED(seed, os);
+		return styledImageBuilder(this, getTextBlock(stringBounder), index, fileFormatOption, seed())
+				.write(os);
 	}
 
 	public void setPrintScale(PrintScale printScale) {

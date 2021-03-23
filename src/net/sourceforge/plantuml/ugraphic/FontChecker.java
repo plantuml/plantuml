@@ -52,18 +52,16 @@ import java.util.Set;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
 public class FontChecker {
 
@@ -172,11 +170,9 @@ public class FontChecker {
 
 	public BufferedImage getBufferedImage(final char c) throws IOException {
 		assert c != '\t';
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null, null,
-				null, ClockwiseTopRightBottomLeft.none(), null);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
+
 		final double dim = 20;
-		imageBuilder.setUDrawable(new UDrawable() {
+		final UDrawable drawable = new UDrawable() {
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(HColorUtils.BLACK);
 				ug.draw(new URectangle(dim - 1, dim - 1));
@@ -186,11 +182,9 @@ public class FontChecker {
 					ug.draw(text);
 				}
 			}
-		});
-		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, os);
-		os.close();
-		return ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
+		};
+		final byte[] bytes = plainPngBuilder(drawable).writeByteArray();
+		return ImageIO.read(new ByteArrayInputStream(bytes));
 	}
 
 	// public BufferedImage getBufferedImageOld(char c) throws IOException {

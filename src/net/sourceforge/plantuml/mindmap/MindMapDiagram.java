@@ -40,7 +40,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -52,16 +51,15 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class MindMapDiagram extends UmlDiagram {
 
@@ -86,15 +84,8 @@ public class MindMapDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-
-		TextBlock result = getTextBlock();
-		result = new AnnotatedWorker(this, getSkinParam(), fileFormatOption.getDefaultStringBounder(getSkinParam()))
-				.addAdd(result);
-		imageBuilder.setUDrawable(result);
-
-		return imageBuilder.writeImageTOBEMOVED(seed(), os);
+		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption, seed())
+				.write(os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {

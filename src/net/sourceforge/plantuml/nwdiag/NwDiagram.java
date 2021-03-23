@@ -46,10 +46,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -66,8 +64,6 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -75,6 +71,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class NwDiagram extends UmlDiagram {
 
@@ -217,15 +215,8 @@ public class NwDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		final ISkinParam skinParam = getSkinParam();
-		final ImageParameter imageParameter = new ImageParameter(this, fileFormatOption);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		TextBlock result = getTextBlock();
-		result = new AnnotatedWorker(this, skinParam, fileFormatOption.getDefaultStringBounder(getSkinParam()))
-				.addAdd(result);
-		imageBuilder.setUDrawable(result);
-
-		return imageBuilder.writeImageTOBEMOVED(0, os);
+		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption, 0)
+				.write(os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {

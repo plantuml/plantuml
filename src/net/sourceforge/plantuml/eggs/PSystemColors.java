@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.eggs;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -46,34 +44,29 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageParameter;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 // http://www.redblobgames.com/grids/hexagons/
-public class PSystemColors extends AbstractPSystem implements UDrawable {
+public class PSystemColors extends PlainDiagram implements UDrawable {
 
 	private final double rectangleHeight = 28;
 	private final double rectangleWidth = 175;
@@ -90,14 +83,8 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
-			throws IOException {
-		HColor backcolor = HColorUtils.WHITE;
-		final ImageParameter imageParameter = new ImageParameter(new ColorMapperIdentity(), false, null,
-				getMetadata(), null, ClockwiseTopRightBottomLeft.none(), backcolor);
-		final ImageBuilder imageBuilder = ImageBuilder.build(imageParameter);
-		imageBuilder.setUDrawable(this);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
+		return this;
 	}
 
 	public DiagramDescription getDescription() {
