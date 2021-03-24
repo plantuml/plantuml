@@ -44,10 +44,11 @@ public class ImageDataComplex extends ImageDataAbstract {
 	private final CMapData cmap;
 	private final String warningOrError;
 
-	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError) {
+	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError, int status) {
 		super(info);
 		this.cmap = cmap;
 		this.warningOrError = warningOrError;
+		setStatus(status);
 	}
 
 	public boolean containsCMapData() {

@@ -49,6 +49,11 @@ public class ImageDataSimple extends ImageDataAbstract {
 		super(dim);
 	}
 
+	public ImageDataSimple(Dimension2D dim, int status) {
+		super(dim);
+		setStatus(status);
+	}
+
 	private ImageDataSimple() {
 		this(0, 0);
 	}
