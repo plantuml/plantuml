@@ -68,7 +68,7 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 		return new UGraphicBraille(this);
 	}
 
-	public UGraphicBraille(ColorMapper colorMapper, FileFormat fileFormat) {
+	public UGraphicBraille(ColorMapper colorMapper) {
 		this(colorMapper, new BrailleGrid(QUANTA));
 	}
 
