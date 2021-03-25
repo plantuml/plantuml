@@ -45,24 +45,47 @@ public class UrlBuilder {
 		STRICT, ANYWHERE
 	}
 
-	// private static String level0() {
-	// return "(?:[^{}]|\\{[^{}]*\\})+";
-	// }
-	//
-	// private static String levelN(int n) {
-	// if (n == 0) {
-	// return level0();
-	// }
-	// return "(?:[^{}]|\\{" + levelN(n - 1) + "\\})+";
-	// }
+	private static final String S_QUOTED = "\\[\\[[%s]*" + //
+			"[%g]([^%g]+)[%g]" + // Quoted part
+			"(?:[%s]*\\{([^{}]*)\\})?" + // Optional tooltip
+			"(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?" + // Optional label
+			"[%s]*\\]\\]";
 
-	// private static final String URL_PATTERN_OLD =
-	// "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{((?:[^{}]|\\{[^{}]*\\})+)\\})?(?:[%s]*([^\\]\\[]+))?\\]\\]";
-	private static final String URL_PATTERN = "\\[\\[([%g][^%g]+[%g])?([\\w\\W]*?)\\]\\]";
+	private static final String S_ONLY_TOOLTIP = "\\[\\[[%s]*" + //
+			"\\{(.*)\\}" + // Tooltip
+			"[%s]*\\]\\]";
 
-	// private static final String URL_PATTERN_BAD = "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{" + "(" +
-	// levelN(3)
-	// + ")" + "\\})?(?:[%s]*([^\\]\\[]+))?\\]\\]";
+	private static final String S_ONLY_TOOLTIP_AND_LABEL = "\\[\\[[%s]*" + //
+			"\\{([^{}]*)\\}" + // Tooltip
+			"[%s]*" + //
+			"([^\\[%s\\{\\}\\[\\]][^\\[\\]]*)" // Label
+			+ "[%s]*\\]\\]";
+
+	private static final String S_LINK_TOOLTIP_NOLABEL = "\\[\\[[%s]*" + //
+			"([^\\s%g{}]+?)" + // Link
+			"[%s]*\\{(.+)\\}" + // Tooltip
+			"[%s]*\\]\\]";
+
+	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = "\\[\\[[%s]*" + //
+			"([^%s%g]+?)" + // Link
+			"(?:[%s]*\\{([^{}]*)\\})?" + // Optional tooltip
+			"(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?" + // Optional label
+			"[%s]*\\]\\]";
+
+	public static String getRegexp() {
+		return S_QUOTED + "|" + //
+				S_ONLY_TOOLTIP + "|" + //
+				S_ONLY_TOOLTIP_AND_LABEL + "|" + //
+				S_LINK_TOOLTIP_NOLABEL + "|" + //
+				S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL;
+	}
+
+	private static final Pattern2 QUOTED = MyPattern.cmpile(S_QUOTED);
+	private static final Pattern2 ONLY_TOOLTIP = MyPattern.cmpile(S_ONLY_TOOLTIP);
+	private static final Pattern2 ONLY_TOOLTIP_AND_LABEL = MyPattern.cmpile(S_ONLY_TOOLTIP_AND_LABEL);
+	private static final Pattern2 LINK_TOOLTIP_NOLABEL = MyPattern.cmpile(S_LINK_TOOLTIP_NOLABEL);
+	private static final Pattern2 LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = MyPattern
+			.cmpile(S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL);
 
 	private final String topurl;
 	private ModeUrl mode;
@@ -73,67 +96,44 @@ public class UrlBuilder {
 	}
 
 	public Url getUrl(String s) {
-		final Pattern2 p;
+		Matcher2 m;
+		m = QUOTED.matcher(s);
+		if (matchesOrFind(m)) {
+			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
+		}
+
+		m = ONLY_TOOLTIP.matcher(s);
+		if (matchesOrFind(m)) {
+			return new Url("", m.group(1), null);
+		}
+
+		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);
+		if (matchesOrFind(m)) {
+			return new Url("", m.group(1), m.group(2));
+		}
+
+		m = LINK_TOOLTIP_NOLABEL.matcher(s);
+		if (matchesOrFind(m)) {
+			return new Url(withTopUrl(m.group(1)), m.group(2), null);
+		}
+
+		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);
+		if (matchesOrFind(m)) {
+			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
+		}
+
+		return null;
+
+	}
+
+	private boolean matchesOrFind(Matcher2 m) {
 		if (mode == ModeUrl.STRICT) {
-			p = MyPattern.cmpile("(?i)^" + URL_PATTERN + "$");
+			return m.matches();
 		} else if (mode == ModeUrl.ANYWHERE) {
-			p = MyPattern.cmpile("(?i).*" + URL_PATTERN + ".*");
+			return m.find();
 		} else {
 			throw new IllegalStateException();
 		}
-		final Matcher2 m = p.matcher(StringUtils.trinNoTrace(s));
-		if (m.matches() == false) {
-			return null;
-		}
-
-		final String quotedPart = m.group(1);
-		final String fullpp = m.group(2).replaceAll("\\{scale=([0-9.]+)\\}", "\uE000scale=$1\uE001");
-
-		final int openBracket = openBracketBeforeSpace(fullpp);
-		final int closeBracket;
-		if (openBracket == -1) {
-			closeBracket = -1;
-		} else {
-			closeBracket = fullpp.lastIndexOf('}');
-		}
-		final String full = fullpp.replace('\uE000', '{').replace('\uE001', '}');
-		if (quotedPart == null) {
-			if (openBracket != -1 && closeBracket != -1) {
-				return new Url(withTopUrl(full.substring(0, openBracket)),
-						full.substring(openBracket + 1, closeBracket), full.substring(closeBracket + 1).trim());
-			}
-			final int firstSpace = full.indexOf(' ');
-			if (firstSpace == -1) {
-				return new Url(full, null, null);
-			}
-			return new Url(withTopUrl(full.substring(0, firstSpace)), null, full.substring(firstSpace + 1).trim());
-		}
-		if (openBracket != -1 && closeBracket != -1) {
-			return new Url(withTopUrl(quotedPart), full.substring(openBracket + 1, closeBracket), full.substring(
-					closeBracket + 1).trim());
-		}
-		return new Url(withTopUrl(quotedPart), null, null);
-	}
-
-	// private int openBracketBeforeSpace(final String full) {
-	// return full.indexOf('{');
-	// }
-
-	private int openBracketBeforeSpace(final String full) {
-		// final int firstSpace = full.indexOf(' ');
-		final int result = full.indexOf('{');
-		// if (result != -1 && full.substring(result).startsWith("{scale")) {
-		// return -1;
-		// }
-		// if (firstSpace == -1 || result == -1) {
-		// return result;
-		// }
-		// assert firstSpace >= 0;
-		// assert result >= 0;
-		// if (result > firstSpace + 1) {
-		// return -1;
-		// }
-		return result;
 	}
 
 	private String withTopUrl(String url) {
@@ -142,20 +142,5 @@ public class UrlBuilder {
 		}
 		return url;
 	}
-
-	public static String getRegexp() {
-		return URL_PATTERN;
-	}
-
-	// private static String purgeUrl(final String label) {
-	// final Pattern2 p = MyPattern.cmpile("[%s]*" + URL_PATTERN + "[%s]*");
-	// final Matcher2 m = p.matcher(label);
-	// if (m.find() == false) {
-	// return label;
-	// }
-	// final String url = m.group(0);
-	// final int x = label.indexOf(url);
-	// return label.substring(0, x) + label.substring(x + url.length());
-	// }
 
 }
