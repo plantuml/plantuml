@@ -387,11 +387,11 @@ public class ImageBuilder {
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
 		switch (option.getFileFormat()) {
 		case PNG:
-			return createUGraphicPNG(colorMapper, scaleFactor, dim, backcolor, animationArg, dx, dy,
+			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy,
 					option.getWatermark());
 		case SVG:
-			return createUGraphicSVG(colorMapper, scaleFactor, dim, backcolor, option.getSvgLinkTarget(),
-					option.getHoverColor(), option.getPreserveAspectRatio(), lengthAdjust);
+			return createUGraphicSVG(scaleFactor, dim, option.getSvgLinkTarget(),
+					option.getHoverColor(), option.getPreserveAspectRatio());
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -416,16 +416,15 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scaleFactor, Dimension2D dim,
-			final HColor suggested, String svgLinkTarget, String hover, String preserveAspectRatio,
-			LengthAdjust lengthAdjust) {
-		HColor backColor = HColorUtils.WHITE;
-		if (suggested instanceof HColorSimple) {
-			backColor = suggested;
+	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim,
+			String svgLinkTarget, String hover, String preserveAspectRatio) {
+		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
+		if (this.backcolor instanceof HColorSimple) {
+			backColor = this.backcolor;
 		}
 		final UGraphicSvg ug;
-		if (suggested instanceof HColorGradient) {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HColorGradient) suggested, false, scaleFactor,
+		if (this.backcolor instanceof HColorGradient) {
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HColorGradient) this.backcolor, false, scaleFactor,
 					svgLinkTarget, hover, seed, preserveAspectRatio, svgCharSizeHack, lengthAdjust);
 		} else if (backColor == null || colorMapper.toColor(backColor).equals(Color.WHITE)) {
 			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scaleFactor, svgLinkTarget, hover, seed,
@@ -439,12 +438,12 @@ public class ImageBuilder {
 
 	}
 
-	private UGraphic2 createUGraphicPNG(ColorMapper colorMapper, double scaleFactor, final Dimension2D dim,
-			HColor mybackcolor, Animation affineTransforms, double dx, double dy, String watermark) {
-		Color backColor = Color.WHITE;
-		if (mybackcolor instanceof HColorSimple) {
-			backColor = colorMapper.toColor(mybackcolor);
-		} else if (mybackcolor instanceof HColorBackground) {
+	private UGraphic2 createUGraphicPNG(double scaleFactor, final Dimension2D dim,
+			Animation affineTransforms, double dx, double dy, String watermark) {
+		Color backColor = Color.WHITE;  // TODO simplify backcolor some more in a future PR
+		if (this.backcolor instanceof HColorSimple) {
+			backColor = colorMapper.toColor(this.backcolor);
+		} else if (this.backcolor instanceof HColorBackground) {
 			backColor = null;
 		}
 
@@ -455,9 +454,9 @@ public class ImageBuilder {
 		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, scaleFactor,
 				affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
-		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
-		if (mybackcolor instanceof HColorGradient) {
-			ug.apply(mybackcolor.bg()).draw(new URectangle(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
+		final BufferedImage im = ug.getBufferedImage();
+		if (this.backcolor instanceof HColorGradient) {
+			ug.apply(this.backcolor.bg()).draw(new URectangle(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
 		}
 
 		return ug;
