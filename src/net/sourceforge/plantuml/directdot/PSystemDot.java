@@ -41,6 +41,7 @@ import java.util.Arrays;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.CounterOutputStream;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FileImageData;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -51,9 +52,8 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
 
 public class PSystemDot extends AbstractPSystem {
 
@@ -75,9 +75,10 @@ public class PSystemDot extends AbstractPSystem {
 		if (graphviz.getExeState() != ExeState.OK) {
 			final TextBlock result = GraphicStrings
 					.createForError(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
-			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HColorUtils.WHITE,
-					result);
-			return ImageDataSimple.error();
+			return plainImageBuilder(result, fileFormat)
+					.seed(seed())
+					.status(FileImageData.CRASH)
+					.write(os);
 		}
 		final CounterOutputStream counter = new CounterOutputStream(os);
 		final ProcessState state = graphviz.createFile3(counter);
@@ -86,9 +87,10 @@ public class PSystemDot extends AbstractPSystem {
 		// }
 		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {
 			final TextBlock result = GraphicStrings.createForError(Arrays.asList("GraphViz has crashed"), false);
-			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HColorUtils.WHITE,
-					result);
-			return ImageDataSimple.error();
+			return plainImageBuilder(result, fileFormat)
+					.seed(seed())
+					.status(FileImageData.CRASH)
+					.write(os);
 		}
 
 		return ImageDataSimple.ok();

@@ -114,6 +114,7 @@ public class ImageBuilder {
 	private double borderCorner;
 	private UStroke borderStroke;
 	private ColorMapper colorMapper = new ColorMapperIdentity();
+	private Dimension2D dimension;
 	private int dpi = 96;
 	private final FileFormatOption fileFormatOption;
 	private boolean handwritten;
@@ -166,6 +167,11 @@ public class ImageBuilder {
 
 	public ImageBuilder blackBackcolor() {
 		return backcolor(HColorUtils.BLACK);
+	}
+
+	public ImageBuilder dimension(Dimension2D dimension) {
+		this.dimension = dimension;
+		return this;
 	}
 
 	public ImageBuilder margin(ClockwiseTopRightBottomLeft margin) {
@@ -249,7 +255,8 @@ public class ImageBuilder {
 
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os,
 			Animation animationArg) throws IOException {
-		Dimension2D dim = getFinalDimension(fileFormatOption.getDefaultStringBounder(svgCharSizeHack));
+		Dimension2D dim = (dimension == null)
+				? getFinalDimension(fileFormatOption.getDefaultStringBounder(svgCharSizeHack)) : dimension;
 		double dx = 0;
 		double dy = 0;
 		if (animationArg != null) {
