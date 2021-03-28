@@ -123,11 +123,13 @@ public class ImageBuilder {
 	private UDrawable udrawable;
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
+	private String preserveAspectRatio;
 	private Scale scale;
 	private long seed = 42;
 	private int status = 0;
 	private SvgCharSizeHack svgCharSizeHack = SvgCharSizeHack.NO_HACK;
 	private boolean svgDimensionStyle = true;
+	private String svgLinkTarget;
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
 	private String warningOrError;
@@ -220,10 +222,14 @@ public class ImageBuilder {
 		lengthAdjust = skinParam.getlengthAdjust();
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
+		preserveAspectRatio = (fileFormatOption.getPreserveAspectRatio() != null)
+				? fileFormatOption.getPreserveAspectRatio() : skinParam.getPreserveAspectRatio();
 		scale = diagram.getScale();
 		seed = diagram.seed();
 		svgCharSizeHack = skinParam;
 		svgDimensionStyle = skinParam.svgDimensionStyle();
+		svgLinkTarget = (fileFormatOption.getSvgLinkTarget() != null)
+				? fileFormatOption.getSvgLinkTarget() : skinParam.getSvgLinkTarget();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
 		return this;
@@ -399,8 +405,7 @@ public class ImageBuilder {
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy,
 					option.getWatermark());
 		case SVG:
-			return createUGraphicSVG(scaleFactor, dim, option.getSvgLinkTarget(),
-					option.getPreserveAspectRatio());
+			return createUGraphicSVG(scaleFactor, dim);
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -425,8 +430,7 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim,
-			String svgLinkTarget, String preserveAspectRatio) {
+	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim) {
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
 			backColor = this.backcolor;
