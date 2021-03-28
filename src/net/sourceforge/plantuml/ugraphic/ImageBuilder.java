@@ -118,6 +118,7 @@ public class ImageBuilder {
 	private int dpi = 96;
 	private final FileFormatOption fileFormatOption;
 	private boolean handwritten;
+	private String hoverPathColorRGB;
 	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();
 	private UDrawable udrawable;
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
@@ -215,6 +216,7 @@ public class ImageBuilder {
 		colorMapper = skinParam.getColorMapper();
 		dpi = skinParam.getDpi();
 		handwritten = skinParam.handwritten();
+		hoverPathColorRGB = calculateHoverPathColor(skinParam);
 		lengthAdjust = skinParam.getlengthAdjust();
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
@@ -398,7 +400,7 @@ public class ImageBuilder {
 					option.getWatermark());
 		case SVG:
 			return createUGraphicSVG(scaleFactor, dim, option.getSvgLinkTarget(),
-					option.getHoverColor(), option.getPreserveAspectRatio());
+					option.getPreserveAspectRatio());
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -424,7 +426,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim,
-			String svgLinkTarget, String hover, String preserveAspectRatio) {
+			String svgLinkTarget, String preserveAspectRatio) {
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
 			backColor = this.backcolor;
@@ -432,13 +434,13 @@ public class ImageBuilder {
 		final UGraphicSvg ug;
 		if (this.backcolor instanceof HColorGradient) {
 			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HColorGradient) this.backcolor, false, scaleFactor,
-					svgLinkTarget, hover, seed, preserveAspectRatio, svgCharSizeHack, lengthAdjust);
+					svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, svgCharSizeHack, lengthAdjust);
 		} else if (backColor == null || colorMapper.toColor(backColor).equals(Color.WHITE)) {
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scaleFactor, svgLinkTarget, hover, seed,
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scaleFactor, svgLinkTarget, hoverPathColorRGB, seed,
 					preserveAspectRatio, svgCharSizeHack, lengthAdjust);
 		} else {
 			final String tmp = colorMapper.toSvg(backColor);
-			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, tmp, false, scaleFactor, svgLinkTarget, hover, seed,
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, tmp, false, scaleFactor, svgLinkTarget, hoverPathColorRGB, seed,
 					preserveAspectRatio, svgCharSizeHack, lengthAdjust);
 		}
 		return ug;
@@ -489,6 +491,14 @@ public class ImageBuilder {
 	private static UStroke calculateBorderStroke(HColor borderColor, ISkinParam skinParam) {
 		final UStroke thickness = skinParam.getThickness(LineParam.diagramBorder, null);
 		return (thickness == null && borderColor != null) ? new UStroke() : thickness;
+	}
+
+	private String calculateHoverPathColor(ISkinParam skinParam) {
+		if (fileFormatOption.getHoverColor() != null) {
+			return fileFormatOption.getHoverColor();
+		}
+		final HColor color = skinParam.hoverPathColor();
+		return color == null ? null : colorMapper.toRGB(color);
 	}
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
