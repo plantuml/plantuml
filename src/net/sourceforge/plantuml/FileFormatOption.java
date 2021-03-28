@@ -65,11 +65,11 @@ public final class FileFormatOption implements Serializable {
 	}
 
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, null, true, false, "_top", false, null, TikzFontDistortion.getDefault(), 1.0, "none", null);
+		this(fileFormat, null, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null);
 	}
 
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, null, withMetadata, false, "_top", false, null, TikzFontDistortion.getDefault(), 1.0, "none",
+		this(fileFormat, null, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null,
 				null);
 	}
 
