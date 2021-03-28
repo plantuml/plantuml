@@ -293,7 +293,9 @@ public class QuoteUtils {
 			"Gebyy gur erfcnja, Wrerzl", "Bhoyvr dhr g'nf nhphar punapr. Fhe ha znyragraqh pn crhg znepure.",
 			"Obl, gur fhcrevagraqrag'f tbaan or cvffrq!", "BX, jub oebhtug gur qbt?", "Rg yn, p'rfg yr qenzr...",
 			"V'z shmml ba gur jubyr tbbq/onq guvat. Jung qb lbh zrna, 'onq'?",
-			"Lbh'er evtug. Ab uhzna orvat jbhyq fgnpx obbxf yvxr guvf.");
+			"Lbh'er evtug. Ab uhzna orvat jbhyq fgnpx obbxf yvxr guvf.",
+			"V nz fb pyrire gung fbzrgvzrf V qba'g haqrefgnaq n fvatyr jbeq bs jung V nz fnlvat.",
+			"Jnxr zr hc orsber lbh tb-tb");
 
 	private QuoteUtils() {
 	}

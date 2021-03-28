@@ -137,7 +137,8 @@ public class UrlBuilder {
 	}
 
 	private String withTopUrl(String url) {
-		if (url.startsWith("http:") == false && url.startsWith("https:") == false && topurl != null) {
+		if (url.startsWith("http:") == false && url.startsWith("https:") == false && url.startsWith("file:") == false
+				&& topurl != null) {
 			return topurl + url;
 		}
 		return url;
