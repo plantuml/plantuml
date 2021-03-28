@@ -44,6 +44,13 @@ public class ImageDataComplex extends ImageDataAbstract {
 	private final CMapData cmap;
 	private final String warningOrError;
 
+	@SuppressWarnings("unused")  // available publicly so retained for backwards compatibility
+	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError) {
+		super(info);
+		this.cmap = cmap;
+		this.warningOrError = warningOrError;
+	}
+
 	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError, int status) {
 		super(info);
 		this.cmap = cmap;
