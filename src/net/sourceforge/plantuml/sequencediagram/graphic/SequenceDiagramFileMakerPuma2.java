@@ -154,7 +154,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			compTitle = null;
 		} else {
 			if (UseStyle.useBetaStyle()) {
-				final Style style = StyleSignature.of(SName.root, SName.title)
+				final Style style = StyleSignature.of(SName.root, SName.document, SName.title)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
 						diagram.getSkinParam());
@@ -175,7 +175,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			if (UseStyle.useBetaStyle()) {
-				final Style style = StyleSignature.of(SName.root, SName.legend)
+				final Style style = StyleSignature.of(SName.root, SName.document, SName.legend)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
 						diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam());

@@ -170,7 +170,7 @@ public class AnnotatedWorker {
 			return TextBlockUtils.empty(0, 0);
 		}
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.caption)
+			final Style style = StyleSignature.of(SName.root, SName.document, SName.caption)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		}
@@ -186,7 +186,7 @@ public class AnnotatedWorker {
 
 		final TextBlock block;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.title)
+			final Style style = StyleSignature.of(SName.root, SName.document, SName.title)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		} else {
@@ -206,13 +206,23 @@ public class AnnotatedWorker {
 		}
 		TextBlock textFooter = null;
 		if (footer.isNull() == false) {
+			Style style = null;
+			if (UseStyle.useBetaStyle()) {
+				style = StyleSignature.of(SName.root, SName.document, SName.footer)
+						.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			}
 			textFooter = footer.createRibbon(new FontConfiguration(getSkinParam(), FontParam.FOOTER, null),
-					getSkinParam());
+					getSkinParam(), style);
 		}
 		TextBlock textHeader = null;
 		if (header.isNull() == false) {
+			Style style = null;
+			if (UseStyle.useBetaStyle()) {
+				style = StyleSignature.of(SName.root, SName.document, SName.header)
+						.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			}
 			textHeader = header.createRibbon(new FontConfiguration(getSkinParam(), FontParam.HEADER, null),
-					getSkinParam());
+					getSkinParam(), style);
 		}
 
 		return DecorateEntityImage.addTopAndBottom(original, textHeader, header.getHorizontalAlignment(), textFooter,

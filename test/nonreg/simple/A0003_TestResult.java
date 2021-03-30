@@ -5,6 +5,12 @@ public class A0003_TestResult {
 /*
 """
 DPI: 96
+dimension: [ 367.7447 ; 78.0000 ]
+scaleFactor: 2.0000
+seed: -6040919743496430850
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
 
 RECTANGLE:
   pt1: [ 8.0000 ; 29.0000 ]
@@ -71,42 +77,48 @@ TEXT:
   position: [ 21.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: 26
   position: [ 49.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: 2
   position: [ 77.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: 9
   position: [ 105.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: 16
   position: [ 133.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: 23
   position: [ 161.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 16.0000 ; 16.0000 ]
@@ -176,7 +188,8 @@ TEXT:
   position: [ 17.4989 ; 9.3333 ]
   orientation: 0
   font: Serif.bold/12 [BOLD]
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 168.0000 ; 0.0000 ]
@@ -190,7 +203,8 @@ TEXT:
   position: [ 72.7816 ; 9.3333 ]
   orientation: 0
   font: Serif.bold/12 [BOLD]
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 0.0000 ; 0.0000 ]
@@ -407,14 +421,16 @@ TEXT:
   position: [ 142.0000 ; 39.0556 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Testing
   position: [ 170.0000 ; 55.0556 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 0.0000 ; 61.0000 ]
@@ -442,7 +458,8 @@ TEXT:
   position: [ 17.4989 ; 70.3333 ]
   orientation: 0
   font: Serif.bold/12 [BOLD]
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 168.0000 ; 61.0000 ]
@@ -456,7 +473,8 @@ TEXT:
   position: [ 72.7816 ; 70.3333 ]
   orientation: 0
   font: Serif.bold/12 [BOLD]
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 0.0000 ; 77.0000 ]

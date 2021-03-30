@@ -187,13 +187,13 @@ public enum FontParam {
 
 	public StyleSignature getStyleDefinition(SName diagramType) {
 		if (this == FOOTER) {
-			return StyleSignature.of(SName.root, SName.footer);
+			return StyleSignature.of(SName.root, SName.document, SName.footer);
 		}
 		if (this == HEADER) {
-			return StyleSignature.of(SName.root, SName.header);
+			return StyleSignature.of(SName.root, SName.document, SName.header);
 		}
 		if (this == TITLE) {
-			return StyleSignature.of(SName.root, SName.title);
+			return StyleSignature.of(SName.root, SName.document, SName.title);
 		}
 		if (this == CLASS_ATTRIBUTE) {
 			return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.class_);

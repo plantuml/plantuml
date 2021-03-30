@@ -36,7 +36,7 @@ public class BasicTest {
 	private static final Charset UTF8 = Charset.forName("UTF-8");
 
 	private static final boolean FORCE_RESULT_GENERATION = false;
-	private static final boolean ENABLE_RESULT_GENERATION_IF_NONE_PRESENT = true;
+	private static final boolean ENABLE_RESULT_GENERATION_IF_NONE_PRESENT = false;
 
 	public BasicTest() {
 		// We want a fully portable way of non regression test, so we force the usage of

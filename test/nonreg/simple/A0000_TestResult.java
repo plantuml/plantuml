@@ -5,6 +5,12 @@ public class A0000_TestResult {
 /*
 """
 DPI: 96
+dimension: [ 193.5185 ; 125.0000 ]
+scaleFactor: 1.0000
+seed: 5605069588648637213
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
 
 LINE:
   pt1: [ 50.0000 ; 38.0000 ]
@@ -35,7 +41,8 @@ TEXT:
   position: [ 12.0000 ; 22.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 5.0000 ; 84.0000 ]
@@ -52,7 +59,8 @@ TEXT:
   position: [ 12.0000 ; 101.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 130.8135 ; 5.0000 ]
@@ -69,7 +77,8 @@ TEXT:
   position: [ 137.8135 ; 22.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 130.8135 ; 84.0000 ]
@@ -86,7 +95,8 @@ TEXT:
   position: [ 137.8135 ; 101.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 POLYGON:
   points:
@@ -111,7 +121,8 @@ TEXT:
   position: [ 57.9786 ; 62.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 """
 */

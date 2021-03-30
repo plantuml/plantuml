@@ -71,7 +71,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 
 	public static ITF build2(ISkinParam skinParam, WElement idea) {
 		if (idea.isLeaf()) {
-			return new ITFLeaf(idea.getStyle(), skinParam, idea.getLabel(), idea.getShape());
+			return new ITFLeaf(idea.getStyle(), idea.withBackColor(skinParam), idea.getLabel(), idea.getShape());
 		}
 		final List<ITF> left = new ArrayList<ITF>();
 		final List<ITF> right = new ArrayList<ITF>();
@@ -120,8 +120,8 @@ class ITFComposed extends WBSTextBlock implements ITF {
 	public final Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D mainDim = main.calculateDimension(stringBounder);
 		final double mainWidth = mainDim.getWidth();
-		final double height = mainDim.getHeight()
-				+ Math.max(getCollHeight(stringBounder, left, marginBottom), getCollHeight(stringBounder, right, marginBottom));
+		final double height = mainDim.getHeight() + Math.max(getCollHeight(stringBounder, left, marginBottom),
+				getCollHeight(stringBounder, right, marginBottom));
 		final double width = Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, left))
 				+ Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, right));
 		return new Dimension2DDouble(width, height);
@@ -166,7 +166,8 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		return result;
 	}
 
-	final private double getCollHeight(StringBounder stringBounder, Collection<? extends TextBlock> all, double deltay) {
+	final private double getCollHeight(StringBounder stringBounder, Collection<? extends TextBlock> all,
+			double deltay) {
 		double result = 0;
 		for (TextBlock child : all) {
 			result += deltay + child.calculateDimension(stringBounder).getHeight();

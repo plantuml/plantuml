@@ -5,6 +5,12 @@ public class A0004_TestResult {
 /*
 """
 DPI: 96
+dimension: [ 559.6156 ; 681.0000 ]
+scaleFactor: 1.0000
+seed: 6985134683589840646
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
 
 ELLIPSE:
   pt1: [ 139.0000 ; 7.0000 ]
@@ -31,7 +37,8 @@ TEXT:
   position: [ 49.5000 ; 87.3333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 POLYGON:
   points:
@@ -60,7 +67,8 @@ TEXT:
   position: [ 17.0000 ; 198.3333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 ELLIPSE:
   pt1: [ 128.0000 ; 650.0000 ]
@@ -97,7 +105,8 @@ TEXT:
   position: [ 155.5000 ; 248.3333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 235.0000 ; 298.0000 ]
@@ -146,7 +155,8 @@ TEXT:
   position: [ 272.0000 ; 470.3333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 351.0000 ; 401.0000 ]
@@ -163,7 +173,8 @@ TEXT:
   position: [ 361.0000 ; 420.3333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 115.5000 ; 581.0000 ]
@@ -180,7 +191,8 @@ TEXT:
   position: [ 125.5000 ; 600.3333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 PATH:
    - type: SEG_MOVETO
@@ -239,7 +251,8 @@ TEXT:
   position: [ 138.0000 ; 133.1969 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 PATH:
    - type: SEG_MOVETO
@@ -274,7 +287,8 @@ TEXT:
   position: [ 34.1176 ; 165.1119 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 PATH:
    - type: SEG_MOVETO
@@ -345,7 +359,8 @@ TEXT:
   position: [ 217.0000 ; 198.0556 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 PATH:
    - type: SEG_MOVETO
@@ -404,7 +419,8 @@ TEXT:
   position: [ 264.0000 ; 355.5079 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 PATH:
    - type: SEG_MOVETO
@@ -443,7 +459,8 @@ TEXT:
   position: [ 139.0000 ; 470.0556 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 PATH:
    - type: SEG_MOVETO
@@ -482,7 +499,8 @@ TEXT:
   position: [ 278.0000 ; 420.0556 ]
   orientation: 0
   font: SansSerif.plain/11 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 PATH:
    - type: SEG_MOVETO

@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.ugraphic.debug;
 
 import java.awt.Color;
+import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -48,6 +49,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
@@ -68,20 +70,41 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContainer, UGraphic2 {
 
 	private final List<String> output;
+	private final double scaleFactor;
+	private final Dimension2D dim;
+	private final String svgLinkTarget;
+	private final String hoverPathColorRGB;
+	private final long seed;
+	private final String preserveAspectRatio;
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicDebug(this, output);
+		return new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB, seed,
+				preserveAspectRatio);
 	}
 
-	private UGraphicDebug(UGraphicDebug other, List<String> output) {
+	private UGraphicDebug(UGraphicDebug other, List<String> output, double scaleFactor, Dimension2D dim,
+			String svgLinkTarget, String hoverPathColorRGB, long seed, String preserveAspectRatio) {
 		super(other);
 		this.output = output;
+		this.scaleFactor = scaleFactor;
+		this.dim = dim;
+		this.svgLinkTarget = svgLinkTarget;
+		this.hoverPathColorRGB = hoverPathColorRGB;
+		this.seed = seed;
+		this.preserveAspectRatio = preserveAspectRatio;
 	}
 
-	public UGraphicDebug() {
+	public UGraphicDebug(double scaleFactor, Dimension2D dim, String svgLinkTarget, String hoverPathColorRGB, long seed,
+			String preserveAspectRatio) {
 		super(new ColorMapperIdentity());
 		this.output = new ArrayList<String>();
+		this.scaleFactor = scaleFactor;
+		this.dim = dim;
+		this.svgLinkTarget = svgLinkTarget;
+		this.hoverPathColorRGB = hoverPathColorRGB;
+		this.seed = seed;
+		this.preserveAspectRatio = preserveAspectRatio;
 	}
 
 	public StringBounder getStringBounder() {
@@ -107,10 +130,22 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 			outComment((UComment) shape);
 		} else if (shape instanceof DotPath) {
 			outPath(((DotPath) shape).toUPath());
+		} else if (shape instanceof UCenteredCharacter) {
+			outCenteredCharacter(((UCenteredCharacter) shape));
 		} else {
 			System.err.println("UGraphicDebug " + shape.getClass().getSimpleName());
 			output.add("UGraphicDebug " + shape.getClass().getSimpleName() + " " + new Date());
 		}
+	}
+
+	private void outCenteredCharacter(UCenteredCharacter shape) {
+		output.add("CENTERED_CHAR:");
+		output.add("  char: " + shape.getChar());
+		output.add("  position: " + pointd(getTranslateX(), getTranslateY()));
+		output.add("  font: " + shape.getFont().toStringDebug());
+		output.add("  color: " + colorToString(getParam().getColor()));
+		output.add("");
+
 	}
 
 	private void outComment(UComment shape) {
@@ -166,7 +201,8 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		output.add("  position: " + pointd(getTranslateX(), getTranslateY()));
 		output.add("  orientation: " + shape.getOrientation());
 		output.add("  font: " + shape.getFontConfiguration().toStringDebug());
-		output.add("  color: " + colorToString(getParam().getColor()));
+		output.add("  color: " + colorToString(shape.getFontConfiguration().getColor()));
+		output.add("  extendedColor: " + colorToString(shape.getFontConfiguration().getExtendedColor()));
 		output.add("");
 	}
 
@@ -243,6 +279,12 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 		print(os, "DPI: " + dpi);
+		print(os, "dimension: " + pointd(dim.getWidth(), dim.getHeight()));
+		print(os, "scaleFactor: " + String.format(Locale.US, "%.4f", scaleFactor));
+		print(os, "seed: " + seed);
+		print(os, "svgLinkTarget: " + svgLinkTarget);
+		print(os, "hoverPathColorRGB: " + hoverPathColorRGB);
+		print(os, "preserveAspectRatio: " + preserveAspectRatio);
 		print(os, "");
 
 		for (String s : output) {

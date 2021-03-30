@@ -5,6 +5,12 @@ public class A0002_TestResult {
 /*
 """
 DPI: 96
+dimension: [ 763.0498 ; 895.5000 ]
+scaleFactor: 1.0000
+seed: -9181376250803721714
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
 
 ELLIPSE:
   pt1: [ 170.9019 ; 35.5000 ]
@@ -57,21 +63,24 @@ TEXT:
   position: [ 36.0000 ; 245.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: is a 
   position: [ 36.0000 ; 258.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: note
   position: [ 36.0000 ; 271.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 EMPTY:
   pt1: [ 218.3794 ; 65.5000 ]
@@ -114,161 +123,184 @@ TEXT:
   position: [ 234.3794 ; 90.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 103.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 116.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 129.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 142.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 155.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 168.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 181.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 194.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 207.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 220.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 233.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 234.3794 ; 246.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long note
   position: [ 234.3794 ; 259.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: This 
   position: [ 234.3794 ; 272.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: note 
   position: [ 234.3794 ; 285.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: is on 
   position: [ 234.3794 ; 298.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: several
   position: [ 234.3794 ; 311.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: lines
   position: [ 234.3794 ; 324.6111 ]
   orientation: 0
   font: SansSerif.italic/13 [ITALIC]
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text:  
   position: [ 315.7608 ; 324.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: and can
   position: [ 234.3794 ; 337.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: contain 
   position: [ 234.3794 ; 350.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: HTML
   position: [ 321.5906 ; 350.6111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 228.3794 ; 358.5000 ]
@@ -299,49 +331,56 @@ TEXT:
   position: [ 246.8146 ; 373.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: the 
   position: [ 246.8146 ; 386.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: method 
   position: [ 246.8146 ; 399.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: foo()
   position: [ 342.9676 ; 399.6111 ]
   orientation: 0
   font: Monospaced.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text:  is 
   position: [ 246.8146 ; 412.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: prohibited
   position: [ 304.4687 ; 412.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
-  color: ffa80036
+  color: ff000000
+  extendedColor: ffff0000
 
 TEXT:
   text: overlap
   position: [ 246.8146 ; 425.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
-  color: ffa80036
+  color: ff000000
+  extendedColor: ffff0000
 
 RECTANGLE:
   pt1: [ 143.4243 ; 238.5000 ]
@@ -358,7 +397,8 @@ TEXT:
   position: [ 153.4243 ; 257.8333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 EMPTY:
   pt1: [ 10.0000 ; 12.5000 ]
@@ -432,175 +472,200 @@ TEXT:
   position: [ 553.7092 ; 468.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
-  color: ffa80036
+  color: ff000000
+  extendedColor: ffff0000
 
 TEXT:
   text: this note
   position: [ 553.7092 ; 481.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
-  color: ffa80036
+  color: ff000000
+  extendedColor: ffff0000
 
 TEXT:
   text: A Long
   position: [ 553.7092 ; 494.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 507.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 520.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 533.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 546.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 559.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 572.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 585.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 598.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 611.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 624.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 637.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long 
   position: [ 553.7092 ; 650.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Long note
   position: [ 553.7092 ; 663.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: This 
   position: [ 553.7092 ; 676.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: note 
   position: [ 553.7092 ; 689.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: is on 
   position: [ 553.7092 ; 702.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: several
   position: [ 553.7092 ; 715.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: lines
   position: [ 553.7092 ; 728.6111 ]
   orientation: 0
   font: SansSerif.italic/13 [ITALIC]
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text:  
   position: [ 635.0906 ; 728.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: and can
   position: [ 553.7092 ; 741.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: contain 
   position: [ 553.7092 ; 754.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: HTML
   position: [ 640.9204 ; 754.6111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 LINE:
   pt1: [ 547.7092 ; 762.5000 ]
@@ -631,42 +696,48 @@ TEXT:
   position: [ 566.1444 ; 777.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: the 
   position: [ 566.1444 ; 790.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: method 
   position: [ 566.1444 ; 803.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: foo()
   position: [ 662.2974 ; 803.6111 ]
   orientation: 0
   font: Monospaced.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text:  is 
   position: [ 566.1444 ; 816.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: prohibited
   position: [ 566.1444 ; 829.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 452.7562 ; 629.5000 ]
@@ -683,7 +754,8 @@ TEXT:
   position: [ 462.7562 ; 648.8333 ]
   orientation: 0
   font: SansSerif.plain/12 []
-  color: ffa80036
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 ELLIPSE:
   pt1: [ 479.2327 ; 857.5000 ]
@@ -800,14 +872,16 @@ TEXT:
   position: [ 163.2884 ; 26.5000 ]
   orientation: 0
   font: SansSerif.plain/18 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 TEXT:
   text: Actor 2
   position: [ 525.0409 ; 26.5000 ]
   orientation: 0
   font: SansSerif.plain/18 []
-  color: NULL_COLOR
+  color: ff000000
+  extendedColor: NULL_COLOR
 
 """
 */

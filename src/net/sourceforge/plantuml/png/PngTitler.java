@@ -64,9 +64,8 @@ public class PngTitler {
 	private final HColorSet set;
 	private final ISkinSimple spriteContainer;
 
-	public PngTitler(HColor textColor, DisplaySection text, int fontSize, String fontFamily,
-			HColor hyperlinkColor, boolean useUnderlineForHyperlink, Style style, HColorSet set,
-			ISkinSimple spriteContainer) {
+	public PngTitler(HColor textColor, DisplaySection text, int fontSize, String fontFamily, HColor hyperlinkColor,
+			boolean useUnderlineForHyperlink, Style style, HColorSet set, ISkinSimple spriteContainer) {
 		this.style = style;
 		this.set = set;
 		this.spriteContainer = spriteContainer;
@@ -103,8 +102,7 @@ public class PngTitler {
 			return style.createTextBlockBordered(display, set, spriteContainer);
 		}
 		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-		return text.createRibbon(
-				new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
-				new SpriteContainerEmpty());
+		return text.createRibbon(new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
+				new SpriteContainerEmpty(), null);
 	}
 }

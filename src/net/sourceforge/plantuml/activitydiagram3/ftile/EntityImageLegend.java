@@ -57,8 +57,8 @@ public class EntityImageLegend {
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature
-					.of(SName.root, skinParam.getUmlDiagramType().getStyleName(), SName.legend)
+			final Style style = StyleSignature.of(SName.root, SName.root, SName.document,
+					skinParam.getUmlDiagramType().getStyleName(), SName.legend)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam);
 		}

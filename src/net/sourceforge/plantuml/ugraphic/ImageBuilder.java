@@ -424,7 +424,7 @@ public class ImageBuilder {
 		case ATXT:
 			return new UGraphicTxt();
 		case DEBUG:
-			return new UGraphicDebug();
+			return new UGraphicDebug(scaleFactor, dim, svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio);
 		default:
 			throw new UnsupportedOperationException(option.getFileFormat().toString());
 		}

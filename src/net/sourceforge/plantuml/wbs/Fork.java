@@ -59,7 +59,7 @@ class Fork extends WBSTextBlock {
 		}
 		this.main = buildMain(idea);
 		for (WElement child : idea.getChildren(Direction.RIGHT)) {
-			this.right.add(ITFComposed.build2(child.withBackColor(skinParam), child));
+			this.right.add(ITFComposed.build2(skinParam, child));
 		}
 	}
 
