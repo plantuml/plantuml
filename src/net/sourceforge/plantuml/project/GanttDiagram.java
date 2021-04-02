@@ -79,8 +79,10 @@ import net.sourceforge.plantuml.project.draw.TaskDrawSeparator;
 import net.sourceforge.plantuml.project.draw.TimeHeader;
 import net.sourceforge.plantuml.project.draw.TimeHeaderDaily;
 import net.sourceforge.plantuml.project.draw.TimeHeaderMonthly;
+import net.sourceforge.plantuml.project.draw.TimeHeaderQuarterly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
+import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
@@ -236,6 +238,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
 		} else if (printScale == PrintScale.MONTHLY) {
 			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
+		} else if (printScale == PrintScale.QUARTERLY) {
+			return new TimeHeaderQuarterly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
+		} else if (printScale == PrintScale.YEARLY) {
+			return new TimeHeaderYearly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
 		} else {
 			return new TimeHeaderDaily(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
 					nameDays, printStart, printEnd);
