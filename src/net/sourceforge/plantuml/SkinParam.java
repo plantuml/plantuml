@@ -89,6 +89,9 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class SkinParam implements ISkinParam {
 
+	// TODO not clear whether SkinParam or ImageBuilder is responsible for defaults
+	public static final String DEFAULT_PRESERVE_ASPECT_RATIO = "none";
+
 	// private String skin = "debug.skin";
 
 	private String skin = "plantuml.skin";
@@ -1056,7 +1059,7 @@ public class SkinParam implements ISkinParam {
 	public String getPreserveAspectRatio() {
 		final String value = getValue("preserveaspectratio");
 		if (value == null) {
-			return "none";
+			return DEFAULT_PRESERVE_ASPECT_RATIO;
 		}
 		return value;
 	}
