@@ -61,9 +61,9 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	public TimeHeaderMonthly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek) {
+			Map<DayOfWeek, HColor> colorDaysOfWeek, int compress) {
 		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
-				new TimeScaleCompressed(calendar, PrintScale.MONTHLY.getCompress()));
+				new TimeScaleCompressed(calendar, compress));
 	}
 
 	@Override

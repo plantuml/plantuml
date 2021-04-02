@@ -61,9 +61,9 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	public TimeHeaderWeekly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek) {
+			Map<DayOfWeek, HColor> colorDaysOfWeek, int compress) {
 		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
-				new TimeScaleCompressed(calendar, PrintScale.WEEKLY.getCompress()));
+				new TimeScaleCompressed(calendar, compress));
 	}
 
 	@Override
