@@ -142,6 +142,15 @@ public final class GeneralImageBuilder {
 	public static IEntityImage createEntityImageBlock(ILeaf leaf, ISkinParam skinParam,
 			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
 			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
+		final IEntityImage result = createEntityImageBlockInternal(leaf, skinParam, isHideEmptyDescriptionForState,
+				portionShower, bibliotekon, graphvizVersion, umlDiagramType, links);
+		// System.err.println("leaf " + leaf + " " + result.getClass());
+		return result;
+	}
+
+	private static IEntityImage createEntityImageBlockInternal(ILeaf leaf, ISkinParam skinParam,
+			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
+			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
 		if (leaf.isRemoved()) {
 			throw new IllegalStateException();
 		}

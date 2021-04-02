@@ -164,7 +164,8 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 
 	private void drawAsText(UText shape, double x, double y, UParam param, EpsGraphics eps, ColorMapper mapper) {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		// final FontMetrics fm = g2dummy.getFontMetrics(fontConfiguration.getFont().getFont());
+		// final FontMetrics fm =
+		// g2dummy.getFontMetrics(fontConfiguration.getFont().getFont());
 		// final double ypos = y - fm.getDescent() + 0.5;
 		final double ypos = y - 1;
 

@@ -215,6 +215,8 @@ public class Run {
 		if (OptionFlags.getInstance().isGui() == false) {
 			if (error.hasError() || error.isNoData()) {
 				option.getStdrpt().finalMessage(error);
+			}
+			if (error.hasError()) {
 				System.exit(error.getExitCode());
 			}
 

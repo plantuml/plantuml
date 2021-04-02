@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -213,6 +214,9 @@ public class Colors {
 		}
 		final ColorType colorType = ColorType.TEXT;
 		if (getColor(colorType) != null) {
+			return this;
+		}
+		if (UseStyle.useBetaStyle()) {
 			return this;
 		}
 		final HColor col = skinParam.getFontHtmlColor(stereotype, param);

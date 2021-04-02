@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -93,37 +94,45 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	}
 
 	private StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, styleName, SName.package_);
+		return StyleSignature.of(SName.root, SName.element, styleName, SName.package_).with(stereotype);
 	}
 
 	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower, SName styleName) {
 		super(entity, skinParam);
 		this.styleName = styleName;
 
-		final HColor specificBackColor = entity.getColors(skinParam).getColor(ColorType.BACK);
+		final Colors colors = entity.getColors(getSkinParam());
+		final HColor specificBackColor = colors.getColor(ColorType.BACK);
 		this.stereotype = entity.getStereotype();
-		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype),
-				HorizontalAlignment.CENTER, skinParam);
+		final FontConfiguration titleFontConfiguration;
+		final HorizontalAlignment titleHorizontalAlignment;
 		this.url = entity.getUrl99();
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyle();
+			Style style = getStyle();
+			style = style.eventuallyOverride(colors);
 			this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
-			this.stroke = style.getStroke();
+			this.stroke = style.getStroke(colors);
 			this.roundCorner = style.value(PName.RoundCorner).asDouble();
 			if (specificBackColor == null) {
 				this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 			} else {
 				this.back = specificBackColor;
 			}
+			titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+			titleHorizontalAlignment = style.getHorizontalAlignment();
 		} else {
 			this.borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder);
 			this.shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
 			this.stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
 			this.roundCorner = 0;
 			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName);
+			titleFontConfiguration = new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype);
+			titleHorizontalAlignment = HorizontalAlignment.CENTER;
 		}
+
+		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, skinParam);
 
 		final DisplayPositionned legend = ((EntityImpl) entity).getLegend();
 		if (legend != null) {
@@ -136,7 +145,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 			} else {
 				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet()))
 						.create(new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
-								HorizontalAlignment.CENTER, skinParam),
+								titleHorizontalAlignment, skinParam),
 						1, 0);
 			}
 		}

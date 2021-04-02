@@ -144,6 +144,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 			final StyleSignature tmp = StyleSignature.of(SName.root, SName.element, styleName,
 					symbol.getSkinParameter().getStyleName());
 			style = tmp.with(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			style = style.eventuallyOverride(colors);
 			final Style styleStereo = tmp.withStereotype(stereotype)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			forecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
@@ -153,7 +154,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 			roundCorner = style.value(PName.RoundCorner).asDouble();
 			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 			deltaShadow = style.value(PName.Shadowing).asDouble();
-			stroke = style.getStroke();
+			stroke = style.getStroke(colors);
 			fcTitle = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 			fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 			defaultAlign = style.getHorizontalAlignment();

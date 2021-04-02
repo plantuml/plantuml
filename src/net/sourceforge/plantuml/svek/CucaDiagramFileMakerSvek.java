@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -52,8 +54,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.StringBounder;
-
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 

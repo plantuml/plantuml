@@ -125,6 +125,10 @@ public class Style {
 			if (line != null) {
 				result = result.eventuallyOverride(PName.LineColor, line);
 			}
+			final HColor text = colors.getColor(ColorType.TEXT);
+			if (text != null) {
+				result = result.eventuallyOverride(PName.FontColor, text);
+			}
 		}
 		return result;
 	}
@@ -182,6 +186,14 @@ public class Style {
 		} catch (Exception e) {
 			return new UStroke(thickness);
 		}
+	}
+
+	public UStroke getStroke(Colors colors) {
+		final UStroke stroke = colors.getSpecificLineStroke();
+		if (stroke == null) {
+			return getStroke();
+		}
+		return stroke;
 	}
 
 	public LineBreakStrategy wrapWidth() {
