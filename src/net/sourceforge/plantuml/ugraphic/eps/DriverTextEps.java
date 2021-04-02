@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsGraphicsMacroAndText;
 import net.sourceforge.plantuml.eps.EpsStrategy;
@@ -70,7 +69,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	private final EpsStrategy strategy;
 
 	public DriverTextEps(ClipContainer clipContainer, EpsStrategy strategy) {
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
+		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		this.clipContainer = clipContainer;
 		this.fontRenderContext = TextBlockUtils.getFontRenderContext();
 		this.strategy = strategy;
