@@ -105,6 +105,8 @@ import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
 
+import static net.sourceforge.plantuml.SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;
+
 public class ImageBuilder {
 
 	private Animation animation;
@@ -152,6 +154,7 @@ public class ImageBuilder {
 	private ImageBuilder(UDrawable drawable, FileFormatOption fileFormatOption) {
 		this.udrawable = drawable;
 		this.fileFormatOption = fileFormatOption;
+		this.preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, null);
 
 		if (drawable instanceof TextBlockBackcolored) {
 			backcolor = ((TextBlockBackcolored) drawable).getBackcolor();
@@ -185,6 +188,10 @@ public class ImageBuilder {
 	public ImageBuilder metadata(String metadata) {
 		this.metadata = metadata;
 		return this;
+	}
+
+	public String getPreserveAspectRatio() {
+		return preserveAspectRatio;
 	}
 
 	public ImageBuilder randomPixel() {
@@ -222,8 +229,7 @@ public class ImageBuilder {
 		lengthAdjust = skinParam.getlengthAdjust();
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-		preserveAspectRatio = (fileFormatOption.getPreserveAspectRatio() != null)
-				? fileFormatOption.getPreserveAspectRatio() : skinParam.getPreserveAspectRatio();
+		preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, skinParam);
 		scale = diagram.getScale();
 		seed = diagram.seed();
 		svgCharSizeHack = skinParam;
@@ -514,6 +520,16 @@ public class ImageBuilder {
 			}
 		}
 		return diagram.getDefaultMargins();
+	}
+
+	private static String calculatePreserveAspectRatio(FileFormatOption fileFormatOption, ISkinParam skinParam) {
+		if (fileFormatOption.getPreserveAspectRatio() != null) {
+			return fileFormatOption.getPreserveAspectRatio();
+		} else if (skinParam != null) {
+			return skinParam.getPreserveAspectRatio();
+		} else {
+			return DEFAULT_PRESERVE_ASPECT_RATIO;
+		}
 	}
 
 	private ImageDataSimple createImageData(Dimension2D dim) {
