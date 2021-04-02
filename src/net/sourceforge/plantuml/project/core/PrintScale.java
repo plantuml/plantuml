@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.project.core;
 
 public enum PrintScale {
-	DAILY(1), WEEKLY(4), MONTHLY(15);
+	DAILY(1), WEEKLY(4), MONTHLY(15), QUARTERLY(40), YEARLY(150);
 
 	private final int compress;
 
@@ -54,6 +54,12 @@ public enum PrintScale {
 		}
 		if (value.startsWith("m")) {
 			return MONTHLY;
+		}
+		if (value.startsWith("q")) {
+			return QUARTERLY;
+		}
+		if (value.startsWith("y")) {
+			return YEARLY;
 		}
 		return DAILY;
 	}

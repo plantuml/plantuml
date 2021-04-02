@@ -59,6 +59,8 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 						new RegexLeaf("printscale")), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr("SCALE", //
+						new RegexLeaf("yearly"), //
+						new RegexLeaf("quarterly"), //
 						new RegexLeaf("monthly"), //
 						new RegexLeaf("daily"), //
 						new RegexLeaf("weekly")), //
