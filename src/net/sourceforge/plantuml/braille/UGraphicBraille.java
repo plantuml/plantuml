@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -118,7 +117,7 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	}
 
 	public StringBounder getStringBounder() {
-		return FileFormat.BRAILLE_PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
+		return FileFormat.BRAILLE_PNG.getDefaultStringBounder();
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {

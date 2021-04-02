@@ -128,6 +128,10 @@ public enum FileFormat {
 		gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	}
 
+	public StringBounder getDefaultStringBounder() {
+		return getDefaultStringBounder(TikzFontDistortion.getDefault(), SvgCharSizeHack.NO_HACK);
+	}
+
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion) {
 		return getDefaultStringBounder(tikzFontDistortion, SvgCharSizeHack.NO_HACK);
 	}

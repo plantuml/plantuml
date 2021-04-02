@@ -44,7 +44,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -158,7 +157,7 @@ public class WireDiagram extends UmlDiagram {
 	public CommandExecutionResult print(String indent, String text) {
 		final int level = computeIndentationLevel(indent);
 
-		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
+		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		return this.root.print(stringBounder, getSkinParam(), level, text);
 	}
 
