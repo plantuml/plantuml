@@ -118,6 +118,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private final Map<Day, String> nameDays = new HashMap<Day, String>();
 
 	private PrintScale printScale = PrintScale.DAILY;
+	private Integer compress;
 	private Day today;
 	private double totalHeightWithoutFooter;
 	private Day min = Day.create(0);
@@ -176,6 +177,17 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.printScale = printScale;
 	}
 
+	
+	public void setCompress(int compress) {
+		this.compress = compress;
+	}
+	
+	private int getCompress() {
+		if (this.compress != null) {
+			return this.compress;
+		}
+		return printScale.getCompress();
+	}
 	private boolean isHidden(Task task) {
 		if (printStart == null || task instanceof TaskSeparator) {
 			return false;
@@ -235,13 +247,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (openClose.getCalendar() == null) {
 			return new TimeHeaderSimple(min, max);
 		} else if (printScale == PrintScale.WEEKLY) {
-			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
+			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
 		} else if (printScale == PrintScale.MONTHLY) {
-			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
+			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
 		} else if (printScale == PrintScale.QUARTERLY) {
-			return new TimeHeaderQuarterly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
+			return new TimeHeaderQuarterly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
 		} else if (printScale == PrintScale.YEARLY) {
-			return new TimeHeaderYearly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek);
+			return new TimeHeaderYearly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
 		} else {
 			return new TimeHeaderDaily(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
 					nameDays, printStart, printEnd);
