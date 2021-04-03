@@ -42,7 +42,6 @@ import static gen.lib.cgraph.node__c.agnode;
 import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
@@ -450,7 +449,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 			final TextBlock drawable = new Drawing(new YMirror(minMax.getMaxY()), minMax);
-			return styledImageBuilder(diagram, drawable, 1, fileFormatOption)
+			return diagram.createImageBuilder(fileFormatOption)
+					.drawable(drawable)
 					.write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();

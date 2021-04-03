@@ -67,7 +67,10 @@ import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
 
 public class SequenceDiagram extends UmlDiagram {
 
@@ -242,6 +245,12 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private boolean modeTeoz() {
 		return OptionFlags.FORCE_TEOZ || getPragma().useTeozLayout();
+	}
+
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) {
+		return imageBuilder(fileFormatOption)
+				.styled(this)
+				.annotations(false);  // they are managed in the SequenceDiagramFileMaker* classes
 	}
 
 	@Override
