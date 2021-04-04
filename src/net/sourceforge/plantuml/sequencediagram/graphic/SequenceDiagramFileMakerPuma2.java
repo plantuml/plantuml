@@ -71,8 +71,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private final SequenceDiagram diagram;
@@ -220,8 +218,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			}
 
 		};
-		return styledImageBuilder(diagram, drawable, index, fileFormatOption)
-				.annotations(false)  // they are managed above
+		return diagram.createImageBuilder(fileFormatOption)
+				.drawable(drawable)
 				.write(os);
 	}
 

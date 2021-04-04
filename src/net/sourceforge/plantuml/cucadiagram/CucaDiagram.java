@@ -65,9 +65,12 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
+
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
 
 public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower {
 
@@ -618,6 +621,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private void createFilesScxml(OutputStream suggestedFile) throws IOException {
 		final StateDiagramScxmlMaker maker = new StateDiagramScxmlMaker((StateDiagram) this);
 		maker.createFiles(suggestedFile);
+	}
+
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) {
+		return imageBuilder(fileFormatOption)
+				.styled(this);
 	}
 
 	@Override

@@ -136,29 +136,31 @@ public class ImageBuilder {
 	private boolean randomPixel;
 	private String warningOrError;
 
+	public static ImageBuilder imageBuilder(FileFormatOption fileFormatOption) {
+		return new ImageBuilder(fileFormatOption);
+	}
+
 	public static ImageBuilder plainImageBuilder(UDrawable drawable, FileFormatOption fileFormatOption) {
-		return new ImageBuilder(drawable, fileFormatOption);
+		return imageBuilder(fileFormatOption)
+				.drawable(drawable);
 	}
 
 	public static ImageBuilder plainPngBuilder(UDrawable drawable) {
-		return plainImageBuilder(drawable, new FileFormatOption(FileFormat.PNG));
+		return imageBuilder(new FileFormatOption(FileFormat.PNG))
+				.drawable(drawable);
 	}
 
 	// TODO do something with "index"
 	public static ImageBuilder styledImageBuilder(TitledDiagram diagram, UDrawable drawable, int index,
 												  FileFormatOption fileFormatOption) {
-		return new ImageBuilder(drawable, fileFormatOption)
+		return imageBuilder(fileFormatOption)
+				.drawable(drawable)
 				.styled(diagram);
 	}
 
-	private ImageBuilder(UDrawable drawable, FileFormatOption fileFormatOption) {
-		this.udrawable = drawable;
+	private ImageBuilder(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
 		this.preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, null);
-
-		if (drawable instanceof TextBlockBackcolored) {
-			backcolor = ((TextBlockBackcolored) drawable).getBackcolor();
-		}
 	}
 
 	public ImageBuilder annotations(boolean annotations) {
@@ -177,6 +179,14 @@ public class ImageBuilder {
 
 	public ImageBuilder dimension(Dimension2D dimension) {
 		this.dimension = dimension;
+		return this;
+	}
+
+	public ImageBuilder drawable(UDrawable drawable) {
+		this.udrawable = drawable;
+		if (backcolor == null && drawable instanceof TextBlockBackcolored) {
+			backcolor = ((TextBlockBackcolored) drawable).getBackcolor();
+		}
 		return this;
 	}
 
@@ -214,7 +224,7 @@ public class ImageBuilder {
 		return this;
 	}
 
-	private ImageBuilder styled(TitledDiagram diagram) {
+	public ImageBuilder styled(TitledDiagram diagram) {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		animation = diagram.getAnimation();
 		annotations = true;

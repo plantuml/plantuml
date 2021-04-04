@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -139,8 +137,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		if (this.index != index) {
 			throw new IllegalStateException();
 		}
-		return styledImageBuilder(diagram, new Foo(index), index, fileFormatOption) //
-				.annotations(false) // they are managed in drawInternal()
+		return diagram.createImageBuilder(fileFormatOption)
+				.drawable(new Foo(index))
 				.write(os);
 	}
 
