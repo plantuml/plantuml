@@ -144,6 +144,8 @@ public enum ColorParam {
 	rectangleBorder(HColorUtils.BLACK, ColorType.LINE),
 	hexagonBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
 	hexagonBorder(HColorUtils.BLACK, ColorType.LINE),
+	personBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	personBorder(HColorUtils.BLACK, ColorType.LINE),
 	archimateBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
 	archimateBorder(HColorUtils.BLACK, ColorType.LINE),
 	cardBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),

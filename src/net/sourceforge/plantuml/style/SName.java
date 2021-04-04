@@ -73,6 +73,7 @@ public enum SName {
 	ganttDiagram, //
 	group, //
 	groupHeader, //
+	hexagon, //
 	highlight, //
 	header, //
 	interface_, //
@@ -90,6 +91,7 @@ public enum SName {
 	package_, //
 	participant, //
 	partition, //
+	person, //
 	queue, //
 	rectangle, //
 	reference, //

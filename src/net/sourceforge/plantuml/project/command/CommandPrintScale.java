@@ -79,7 +79,8 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 		final String scaleString = arg.get("SCALE", 0);
 		final PrintScale scale = PrintScale.fromString(scaleString);
 		diagram.setPrintScale(scale);
-		RegexPartialMatch compress = arg.get("COMPRESS");
+		
+		final RegexPartialMatch compress = arg.get("COMPRESS");
 		if (compress.size() > 0 && compress.get(0) != null) {
 			diagram.setCompress(Integer.parseInt(compress.get(0)));
 		}

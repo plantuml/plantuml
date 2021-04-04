@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -99,8 +101,6 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
-
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite {
 
@@ -169,25 +169,24 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		return styledImageBuilder(this, getTextBlock(stringBounder), index, fileFormatOption)
-				.write(os);
+		return styledImageBuilder(this, getTextBlock(stringBounder), index, fileFormatOption).write(os);
 	}
 
 	public void setPrintScale(PrintScale printScale) {
 		this.printScale = printScale;
 	}
 
-	
 	public void setCompress(int compress) {
 		this.compress = compress;
 	}
-	
+
 	private int getCompress() {
 		if (this.compress != null) {
 			return this.compress;
 		}
 		return printScale.getCompress();
 	}
+
 	private boolean isHidden(Task task) {
 		if (printStart == null || task instanceof TaskSeparator) {
 			return false;
@@ -247,13 +246,17 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		if (openClose.getCalendar() == null) {
 			return new TimeHeaderSimple(min, max);
 		} else if (printScale == PrintScale.WEEKLY) {
-			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
+			return new TimeHeaderWeekly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
+					getCompress());
 		} else if (printScale == PrintScale.MONTHLY) {
-			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
+			return new TimeHeaderMonthly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
+					getCompress());
 		} else if (printScale == PrintScale.QUARTERLY) {
-			return new TimeHeaderQuarterly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
+			return new TimeHeaderQuarterly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
+					getCompress());
 		} else if (printScale == PrintScale.YEARLY) {
-			return new TimeHeaderYearly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek, getCompress());
+			return new TimeHeaderYearly(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
+					getCompress());
 		} else {
 			return new TimeHeaderDaily(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
 					nameDays, printStart, printEnd);

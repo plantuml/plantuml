@@ -104,9 +104,13 @@ public class SkinParameter {
 	public static final SkinParameter LABEL = new SkinParameter(SName.label, "LABEL", ColorParam.rectangleBackground,
 			ColorParam.rectangleBorder, FontParam.LABEL, FontParam.LABEL_STEREOTYPE);
 
-	public static final SkinParameter HEXAGON = new SkinParameter(SName.rectangle, "HEXAGON",
+	public static final SkinParameter HEXAGON = new SkinParameter(SName.hexagon, "HEXAGON",
 			ColorParam.hexagonBackground, ColorParam.hexagonBorder, FontParam.HEXAGON, FontParam.HEXAGON_STEREOTYPE,
 			CornerParam.hexagon, LineParam.hexagonBorder);
+
+	public static final SkinParameter PERSON = new SkinParameter(SName.person, "PERSON",
+			ColorParam.personBackground, ColorParam.personBorder, FontParam.PERSON, FontParam.PERSON_STEREOTYPE,
+			CornerParam.person, LineParam.personBorder);
 
 	public static final SkinParameter ARCHIMATE = new SkinParameter(SName.archimate, "ARCHIMATE",
 			ColorParam.archimateBackground, ColorParam.archimateBorder, FontParam.ARCHIMATE,

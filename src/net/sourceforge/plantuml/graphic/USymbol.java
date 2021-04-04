@@ -67,6 +67,7 @@ public abstract class USymbol {
 	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE,
 			new USymbolRectangle(SkinParameter.RECTANGLE));
 	public final static USymbol HEXAGON = record("HEXAGON", SkinParameter.HEXAGON, new USymbolHexagon());
+	public final static USymbol PERSON = record("PERSON", SkinParameter.PERSON, new USymbolPerson());
 	public final static USymbol LABEL = record("LABEL", SkinParameter.LABEL,
 			new USymbolLabel(SkinParameter.LABEL));
 	public final static USymbol ARCHIMATE = record("ARCHIMATE", SkinParameter.ARCHIMATE,
@@ -218,6 +219,8 @@ public abstract class USymbol {
 			usymbol = USymbol.PACKAGE;
 		} else if (symbol.equalsIgnoreCase("rectangle")) {
 			usymbol = USymbol.RECTANGLE;
+		} else if (symbol.equalsIgnoreCase("person")) {
+			usymbol = USymbol.PERSON;
 		} else if (symbol.equalsIgnoreCase("hexagon")) {
 			usymbol = USymbol.HEXAGON;
 		} else if (symbol.equalsIgnoreCase("label")) {
