@@ -101,8 +101,8 @@ public abstract class PSystemError extends PlainDiagram {
 	protected ErrorUml singleError;
 
 	@Override
-	protected ImageBuilder adjustImageBuilder(ImageBuilder builder) {
-		return builder
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return super.createImageBuilder(fileFormatOption)
 				.blackBackcolor()
 				.randomPixel()
 				.status(FileImageData.ERROR);

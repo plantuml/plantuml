@@ -90,8 +90,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	private final List<String> data;
@@ -118,7 +116,8 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			final Element salt = createElement(manageSprite());
 			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 			final Dimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
-			return styledImageBuilder(this, getTextBlock(salt, size), index, fileFormatOption)
+			return createImageBuilder(fileFormatOption)
+					.drawable(getTextBlock(salt, size))
 					.write(os);
 		} catch (Exception e) {
 			e.printStackTrace();

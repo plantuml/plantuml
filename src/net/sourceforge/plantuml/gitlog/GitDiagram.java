@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class GitDiagram extends UmlDiagram {
 
 	private final Collection<GNode> gnodes;
@@ -73,7 +71,8 @@ public class GitDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption)
+		return createImageBuilder(fileFormatOption)
+				.drawable(getTextBlock())
 				.write(os);
 	}
 

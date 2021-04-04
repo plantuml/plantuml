@@ -70,8 +70,6 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
-
 public class SequenceDiagram extends UmlDiagram {
 
 	private final List<Participant> participantsList = new ArrayList<Participant>();
@@ -247,9 +245,8 @@ public class SequenceDiagram extends UmlDiagram {
 		return OptionFlags.FORCE_TEOZ || getPragma().useTeozLayout();
 	}
 
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) {
-		return imageBuilder(fileFormatOption)
-				.styled(this)
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return super.createImageBuilder(fileFormatOption)
 				.annotations(false);  // they are managed in the SequenceDiagramFileMaker* classes
 	}
 

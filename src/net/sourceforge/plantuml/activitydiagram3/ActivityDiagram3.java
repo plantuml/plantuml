@@ -62,8 +62,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionXorYBuilder;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class ActivityDiagram3 extends UmlDiagram {
 
 	enum SwimlaneStrategy {
@@ -205,7 +203,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);
 
 		result = new TextBlockRecentred(result);
-		return styledImageBuilder(this, result, index, fileFormatOption)
+		return createImageBuilder(fileFormatOption)
+				.drawable(result)
 				.write(os);
 	}
 

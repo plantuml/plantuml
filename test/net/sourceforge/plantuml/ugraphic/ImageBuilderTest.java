@@ -43,7 +43,7 @@ class ImageBuilderTest {
 			},
 			nullValues = {"NULL"}
 	)
-	public void test_preserveAspectRatio_styledDiagram(String inSkinParam, String inFileFormatOption, String expected) {
+	public void test_preserveAspectRatio_styledDiagram(String inSkinParam, String inFileFormatOption, String expected) throws Exception {
 		final WBSDiagram diagram = new WBSDiagram();
 		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
 

@@ -68,8 +68,6 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	public static final double marginX1 = 5;
@@ -98,7 +96,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption)
+		return createImageBuilder(fileFormatOption)
+				.drawable(getTextBlock())
 				.write(os);
 	}
 

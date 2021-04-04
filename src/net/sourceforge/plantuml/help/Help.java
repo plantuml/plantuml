@@ -53,9 +53,8 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UFont;
-
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class Help extends UmlDiagram {
 
@@ -70,6 +69,12 @@ public class Help extends UmlDiagram {
 	}
 
 	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return super.createImageBuilder(fileFormatOption)
+				.annotations(false);
+	}
+
+	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormat)
 			throws IOException {
 		final Display display = Display.create(lines);
@@ -78,8 +83,8 @@ public class Help extends UmlDiagram {
 		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam(), CreoleMode.FULL)
 				.createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
-		return styledImageBuilder(this, sheetBlock, 1, fileFormat)
-				.annotations(false)
+		return createImageBuilder(fileFormat)
+				.drawable(sheetBlock)
 				.write(os);
 	}
 

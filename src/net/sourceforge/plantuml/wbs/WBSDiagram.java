@@ -57,12 +57,9 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
 
 public class WBSDiagram extends UmlDiagram {
 
@@ -74,17 +71,12 @@ public class WBSDiagram extends UmlDiagram {
 		super(UmlDiagramType.WBS);
 	}
 
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) {
-		// TODO index should not be -1 here but we currently dont use it anyway,
-		//      the real value we need is "index" in exportDiagramInternal()
-		return styledImageBuilder(this, getTextBlock(), -1, fileFormatOption);
-	}
-
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		return createImageBuilder(fileFormatOption)
+				.drawable(getTextBlock())
 				.write(os);
 	}
 

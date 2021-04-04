@@ -41,15 +41,12 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
-
 // This class doesnt feel like a wonderful idea, just a stepping stone towards something
 public abstract class PlainDiagram extends AbstractPSystem {
 
+	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		final UDrawable drawable = getRootDrawable(fileFormatOption);
-
-		return plainImageBuilder(drawable, fileFormatOption)
+		return super.createImageBuilder(fileFormatOption)
 				.margin(getDefaultMargins())
 				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)
 				.seed(seed());
@@ -59,13 +56,9 @@ public abstract class PlainDiagram extends AbstractPSystem {
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		final ImageBuilder builder = createImageBuilder(fileFormatOption);
-		return adjustImageBuilder(builder).write(os);
-	}
-
-	// kind of a kludge but good enough for now!
-	protected ImageBuilder adjustImageBuilder(ImageBuilder builder) {
-		return builder;
+		return createImageBuilder(fileFormatOption)
+				.drawable(getRootDrawable(fileFormatOption))
+				.write(os);
 	}
 
 	protected abstract UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException;

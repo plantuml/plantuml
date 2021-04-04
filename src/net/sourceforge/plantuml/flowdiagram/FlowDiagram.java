@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -68,7 +69,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
 
 public class FlowDiagram extends UmlDiagram implements TextBlock {
 
@@ -121,14 +122,20 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		return plainImageBuilder(this, fileFormatOption)
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return imageBuilder(fileFormatOption)
 				.dimension(calculateDimension(fileFormatOption.getDefaultStringBounder(getSkinParam())))
 				.margin(getDefaultMargins())
 				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)
-				.seed(seed())
+				.seed(seed());
+	}
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+		return createImageBuilder(fileFormatOption)
+				.drawable(this)
 				.write(os);
 	}
 

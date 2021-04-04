@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;

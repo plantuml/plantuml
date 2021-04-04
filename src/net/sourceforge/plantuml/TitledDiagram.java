@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
@@ -229,5 +230,11 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	final public Animation getAnimation() {
 		return animation;
+	}
+
+	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return super.createImageBuilder(fileFormatOption)
+				.styled(this);
 	}
 }

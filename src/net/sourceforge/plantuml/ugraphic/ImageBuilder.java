@@ -150,14 +150,6 @@ public class ImageBuilder {
 				.drawable(drawable);
 	}
 
-	// TODO do something with "index"
-	public static ImageBuilder styledImageBuilder(TitledDiagram diagram, UDrawable drawable, int index,
-												  FileFormatOption fileFormatOption) {
-		return imageBuilder(fileFormatOption)
-				.drawable(drawable)
-				.styled(diagram);
-	}
-
 	private ImageBuilder(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
 		this.preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, null);

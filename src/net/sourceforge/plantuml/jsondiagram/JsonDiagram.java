@@ -60,8 +60,6 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class JsonDiagram extends TitledDiagram {
 
 	private final JsonValue root;
@@ -89,7 +87,8 @@ public class JsonDiagram extends TitledDiagram {
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption)
+		return createImageBuilder(fileFormatOption)
+				.drawable(getTextBlock())
 				.write(os);
 	}
 
