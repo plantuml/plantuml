@@ -300,6 +300,19 @@ public class SkinParam implements ISkinParam {
 		return null;
 	}
 
+	public String getValue(String key, String defaultValue) {
+		final String result = getValue(key);
+		return result == null ? defaultValue : result;
+	}
+
+	private boolean valueIs(String key, String expected) {
+		return expected.equalsIgnoreCase(getValue(key));
+	}
+
+	private boolean isTrue(String key) {
+		return valueIs(key, "true");
+	}
+
 	static String humanName(String key) {
 		final StringBuilder sb = new StringBuilder();
 		boolean upper = true;
@@ -818,24 +831,18 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean stereotypePositionTop() {
-		final String value = getValue("stereotypePosition");
-		if ("bottom".equalsIgnoreCase(value)) {
-			return false;
-		}
-		return true;
+		return !valueIs("stereotypePosition", "bottom");
 	}
 
 	public boolean useSwimlanes(UmlDiagramType type) {
 		if (type != UmlDiagramType.ACTIVITY) {
 			return false;
 		}
-		if ("true".equalsIgnoreCase(getValue("swimlane"))) {
-			return true;
-		}
-		if ("true".equalsIgnoreCase(getValue("swimlanes"))) {
-			return true;
-		}
-		return false;
+		return swimlanes();
+	}
+	
+	public boolean swimlanes() {
+		return isTrue("swimlane") || isTrue("swimlanes");
 	}
 
 	public double getNodesep() {
@@ -949,19 +956,11 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean strictUmlStyle() {
-		final String value = getValue("style");
-		if ("strictuml".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return valueIs("style", "strictuml");
 	}
 
 	public boolean forceSequenceParticipantUnderlined() {
-		final String value = getValue("sequenceParticipant");
-		if ("underline".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return valueIs("sequenceParticipant", "underline");
 	}
 
 	public ConditionStyle getConditionStyle() {
@@ -987,7 +986,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean sameClassWidth() {
-		return "true".equals(getValue("sameclasswidth"));
+		return isTrue("sameclasswidth");
 	}
 
 	public final Rankdir getRankdir() {
@@ -1023,11 +1022,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean useUnderlineForHyperlink() {
-		final String value = getValue("hyperlinkunderline");
-		if ("false".equalsIgnoreCase(value)) {
-			return false;
-		}
-		return true;
+		return !valueIs("hyperlinkunderline", "false");
 	}
 
 	public int groupInheritance() {
@@ -1041,35 +1036,19 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean handwritten() {
-		final String value = getValue("handwritten");
-		if ("true".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return isTrue("handwritten");
 	}
 
 	public String getSvgLinkTarget() {
-		final String value = getValue("svglinktarget");
-		if (value == null) {
-			return "_top";
-		}
-		return value;
+		return getValue("svglinktarget", "_top");
 	}
 
 	public String getPreserveAspectRatio() {
-		final String value = getValue("preserveaspectratio");
-		if (value == null) {
-			return DEFAULT_PRESERVE_ASPECT_RATIO;
-		}
-		return value;
+		return getValue("preserveaspectratio", DEFAULT_PRESERVE_ASPECT_RATIO);
 	}
 
 	public String getMonospacedFamily() {
-		final String value = getValue("defaultMonospacedFontName");
-		if (value == null) {
-			return Parser.MONOSPACED;
-		}
-		return value;
+		return getValue("defaultMonospacedFontName", Parser.MONOSPACED);
 	}
 
 	public int getTabSize() {
@@ -1147,19 +1126,11 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean displayGenericWithOldFashion() {
-		final String value = getValue("genericDisplay");
-		if ("old".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return valueIs("genericDisplay", "old");
 	}
 
 	public boolean responseMessageBelowArrow() {
-		final String value = getValue("responsemessagebelowarrow");
-		if ("true".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return isTrue("responsemessagebelowarrow");
 	}
 
 	public TikzFontDistortion getTikzFontDistortion() {
@@ -1168,19 +1139,11 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean svgDimensionStyle() {
-		final String value = getValue("svgdimensionstyle");
-		if ("false".equalsIgnoreCase(value)) {
-			return false;
-		}
-		return true;
+		return !valueIs("svgdimensionstyle", "false");
 	}
 
 	public boolean fixCircleLabelOverlapping() {
-		final String value = getValue("fixcirclelabeloverlapping");
-		if ("true".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return isTrue("fixcirclelabeloverlapping");
 	}
 
 	public void setUseVizJs(boolean useVizJs) {

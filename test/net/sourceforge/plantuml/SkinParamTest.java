@@ -12,6 +12,7 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -265,21 +266,51 @@ class SkinParamTest {
 	}
 
 	@Test
-	public void testCircledCharacterRadius() {
+	public void test_circledCharacterRadius() {
 		final SkinParam skinParam = createSkinParam("circledCharacterRadius", "123");
 		assertThat(skinParam.getCircledCharacterRadius()).isEqualTo(123);
 	}
 
 	@Test
-	public void testClassAttributeIconSize() {
+	public void test_classAttributeIconSize() {
 		final SkinParam skinParam = createSkinParam("classAttributeIconSize", "123");
 		assertThat(skinParam.classAttributeIconSize()).isEqualTo(123);
 	}
 
 	@Test
-	public void testDpi() {
+	public void test_defaultMonospacedFontName() {
+		final SkinParam skinParam = createSkinParam("defaultMonospacedFontName", "foo");
+		assertThat(skinParam.getMonospacedFamily()).isEqualTo("foo");
+	}
+
+	@Test
+	public void test_dpi() {
 		final SkinParam skinParam = createSkinParam("dpi", "123");
 		assertThat(skinParam.getDpi()).isEqualTo(123);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"true,        true",
+			"tRUe,        true",
+			"TRUE,        true",
+			"other_value, false",
+	})
+	public void test_fixCircleLabelOverlapping(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("fixCircleLabelOverlapping", paramValue);
+		assertThat(skinParam.fixCircleLabelOverlapping()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"old,         true",
+			"oLd,         true",
+			"OLD,         true",
+			"other_value, false",
+	})
+	public void test_genericDisplay(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("genericDisplay", paramValue);
+		assertThat(skinParam.displayGenericWithOldFashion()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
@@ -289,33 +320,99 @@ class SkinParamTest {
 			"2, 2",
 			"123, 123"
 	})
-	public void testGroupInheritance(String paramValue, String expectedValue) {
+	public void test_groupInheritance(String paramValue, String expectedValue) {
 		final SkinParam skinParam = createSkinParam("groupInheritance", paramValue);
 		assertThat(skinParam.groupInheritance()).isEqualTo(intFromCsv(expectedValue));
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+			"true,        true",
+			"tRUe,        true",
+			"TRUE,        true",
+			"other_value, false",
+	})
+	public void test_handwritten(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("handwritten", paramValue);
+		assertThat(skinParam.handwritten()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"false,       false",
+			"fALSe,       false",
+			"FALSE,       false",
+			"other_value, true",
+	})
+	public void test_hyperlinkUnderline(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("hyperlinkUnderline", paramValue);
+		assertThat(skinParam.useUnderlineForHyperlink()).isEqualTo(expected);
+	}
+
 	@Test
-	public void testMaxAsciiMessageLength() {
+	public void test_maxAsciiMessageLength() {
 		final SkinParam skinParam = createSkinParam("maxAsciiMessageLength", "123");
 		assertThat(skinParam.maxAsciiMessageLength()).isEqualTo(123);
 	}
 
 	@Test
-	public void testMinClassWidth() {
+	public void test_minClassWidth() {
 		final SkinParam skinParam = createSkinParam("minClassWidth", "123");
 		assertThat(skinParam.minClassWidth()).isEqualTo(123);
 	}
 
 	@Test
-	public void testNodeSep() {
+	public void test_nodeSep() {
 		final SkinParam skinParam = createSkinParam("nodeSep", "123");
 		assertThat(skinParam.getNodesep()).isEqualTo(123);
 	}
 
 	@Test
-	public void testRankSep() {
+	public void test_preserveAspectRatio() {
+		final SkinParam skinParam = createSkinParam("preserveAspectRatio", "foo");
+		assertThat(skinParam.getPreserveAspectRatio()).isEqualTo("foo");
+	}
+
+	@Test
+	public void test_rankSep() {
 		final SkinParam skinParam = createSkinParam("rankSep", "123");
 		assertThat(skinParam.getRanksep()).isEqualTo(123);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"true,        true",
+			"tRUe,        true",
+			"TRUE,        true",
+			"other_value, false",
+	})
+	public void test_responseMessageBelowArrow(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("responseMessageBelowArrow", paramValue);
+		assertThat(skinParam.responseMessageBelowArrow()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"true,        true",
+			"tRUe,        true",
+			"TRUE,        true",
+			"other_value, false",
+	})
+	public void test_sameClassWidth(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("sameClassWidth", paramValue);
+		assertThat(skinParam.sameClassWidth()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"underline,   true",
+			"undERLine,   true",
+			"UNDERLINE,   true",
+			"other_value, false",
+	})
+	public void test_sequenceParticipant(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("sequenceParticipant", paramValue);
+		assertThat(skinParam.forceSequenceParticipantUnderlined()).isEqualTo(expected);
 	}
 
 	@Test
@@ -332,8 +429,69 @@ class SkinParamTest {
 		assertThat(splitParam.getExternalMargin()).isEqualTo(123);
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+			"bottom,      false",
+			"boTTom,      false",
+			"BOTTOM,      false",
+			"other_value, true",
+	})
+	public void test_stereotypePosition(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("stereotypePosition", paramValue);
+		assertThat(skinParam.stereotypePositionTop()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"strictuml,   true",
+			"strICTuml,   true",
+			"STRICTUML,   true",
+			"other_value, false",
+	})
+	public void test_style(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("style", paramValue);
+		assertThat(skinParam.strictUmlStyle()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"false,       false",
+			"fALSe,       false",
+			"FALSE,       false",
+			"other_value, true",
+	})
+	public void test_svgDimensionStyle(String paramValue, boolean expected) {
+		final SkinParam skinParam = createSkinParam("svgDimensionStyle", paramValue);
+		assertThat(skinParam.svgDimensionStyle()).isEqualTo(expected);
+	}
+
 	@Test
-	public void testTabSize() {
+	public void test_svgLinkTarget() {
+		final SkinParam skinParam = createSkinParam("svgLinkTarget", "foo");
+		assertThat(skinParam.getSvgLinkTarget()).isEqualTo("foo");
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			// swimlane     swimlanes    expected
+			"  true,        any_value,   true",
+			"  tRUe,        any_value,   true",
+			"  TRUE,        any_value,   true",
+			"  other_value, true,        true",
+			"  other_value, tRUe,        true",
+			"  other_value, TRUE,        true",
+			"  other_value, other_value, false",
+	})
+	public void test_swimlanes(String swimlane, String swimlanes, boolean expected) {
+		final SkinParam skinParam = createSkinParam(
+				"swimlane", swimlane,
+				"swimlanes", swimlanes
+		);
+		assertThat(skinParam.swimlanes()).isEqualTo(expected);
+	}
+
+	@Test
+	public void test_tabSize() {
 		final SkinParam skinParam = createSkinParam("tabSize", "123");
 		assertThat(skinParam.getTabSize()).isEqualTo(123);
 	}
