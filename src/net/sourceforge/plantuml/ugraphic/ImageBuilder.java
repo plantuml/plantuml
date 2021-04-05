@@ -313,7 +313,8 @@ public class ImageBuilder {
 		if (ug instanceof UGraphicG2d) {
 			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
 			if (urls.size() > 0) {
-				final CMapData cmap = CMapData.cmapString(urls, dpi);
+				final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
+				final CMapData cmap = CMapData.cmapString(urls, scaleFactor);
 				return new ImageDataComplex(dim, cmap, warningOrError, status);
 			}
 		}
