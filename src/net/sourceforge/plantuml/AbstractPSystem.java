@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -51,6 +53,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
@@ -160,6 +163,11 @@ public abstract class AbstractPSystem implements Diagram {
 		return scale;
 	}
 
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return imageBuilder(fileFormatOption);
+	}
+
+	// TODO "index" isnt really being used
 	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption
 			) throws IOException;
 

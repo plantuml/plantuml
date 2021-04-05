@@ -57,8 +57,6 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	public ClassDiagram(ISkinSimple skinParam) {
@@ -198,8 +196,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			final RowLayout rawLayout = getRawLayout(i);
 			fullLayout.addRowLayout(rawLayout);
 		}
-		return styledImageBuilder(this, fullLayout, index, fileFormatOption)
+		return createImageBuilder(fileFormatOption)
 				.annotations(false) // Backwards compatibility - this only applies when "layout_new_line" is used
+				.drawable(fullLayout)
 				.write(os);
 	}
 

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.project;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -169,7 +167,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		return styledImageBuilder(this, getTextBlock(stringBounder), index, fileFormatOption).write(os);
+		return createImageBuilder(fileFormatOption)
+				.drawable(getTextBlock(stringBounder))
+				.write(os);
 	}
 
 	public void setPrintScale(PrintScale printScale) {

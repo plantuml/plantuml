@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.eggs;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
@@ -56,8 +57,9 @@ public class PSystemCharlie extends PlainDiagram {
 	}
 
 	@Override
-	protected ImageBuilder adjustImageBuilder(ImageBuilder builder) {
-		return builder.blackBackcolor();
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return super.createImageBuilder(fileFormatOption)
+				.blackBackcolor();
 	}
 
 	@Override

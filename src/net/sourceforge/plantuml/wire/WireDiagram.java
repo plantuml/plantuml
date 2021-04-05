@@ -58,8 +58,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.styledImageBuilder;
-
 public class WireDiagram extends UmlDiagram {
 
 	private final WBlock root = new WBlock("", new UTranslate(), 0, 0, null);
@@ -79,7 +77,8 @@ public class WireDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return styledImageBuilder(this, getTextBlock(), index, fileFormatOption)
+		return createImageBuilder(fileFormatOption)
+				.drawable(getTextBlock())
 				.write(os);
 	}
 
