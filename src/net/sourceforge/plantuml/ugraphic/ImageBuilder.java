@@ -114,22 +114,13 @@ public class ImageBuilder {
 	private HColor backcolor = HColorUtils.WHITE;
 	private ColorMapper colorMapper = new ColorMapperIdentity();
 	private Dimension2D dimension;
-	private int dpi = 96;
 	private final FileFormatOption fileFormatOption;
-	private boolean handwritten;
-	private String hoverPathColorRGB;
-	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();
 	private UDrawable udrawable;
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
-	private String preserveAspectRatio;
-	private Scale scale;
 	private long seed = 42;
 	private ISkinParam skinParam;
 	private int status = 0;
-	private SvgCharSizeHack svgCharSizeHack = SvgCharSizeHack.NO_HACK;
-	private boolean svgDimensionStyle = true;
-	private String svgLinkTarget;
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
 	private String warningOrError;
@@ -150,7 +141,6 @@ public class ImageBuilder {
 
 	private ImageBuilder(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
-		this.preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, null);
 	}
 
 	public ImageBuilder annotations(boolean annotations) {
@@ -172,6 +162,10 @@ public class ImageBuilder {
 		return this;
 	}
 
+	private int getDpi() {
+		return skinParam == null ? 96 : skinParam.getDpi();
+	}
+	
 	public ImageBuilder drawable(UDrawable drawable) {
 		this.udrawable = drawable;
 		if (backcolor == null && drawable instanceof TextBlockBackcolored) {
@@ -190,10 +184,6 @@ public class ImageBuilder {
 		return this;
 	}
 
-	public String getPreserveAspectRatio() {
-		return preserveAspectRatio;
-	}
-
 	public ImageBuilder randomPixel() {
 		this.randomPixel = true;
 		return this;
@@ -209,6 +199,20 @@ public class ImageBuilder {
 		return this;
 	}
 
+	private SvgCharSizeHack getSvgCharSizeHack() {
+		return skinParam == null ? SvgCharSizeHack.NO_HACK : skinParam;
+	}
+	
+	private String getSvgLinkTarget() {
+		if (fileFormatOption.getSvgLinkTarget() != null) {
+			return fileFormatOption.getSvgLinkTarget();
+		} else if (skinParam != null) {
+			return skinParam.getSvgLinkTarget();
+		} else {
+			return null;
+		}
+	}
+	
 	public ImageBuilder warningOrError(String warningOrError) {
 		this.warningOrError = warningOrError;
 		return this;
@@ -220,19 +224,9 @@ public class ImageBuilder {
 		annotations = true;
 		backcolor = calculateBackColor(diagram);
 		colorMapper = skinParam.getColorMapper();
-		dpi = skinParam.getDpi();
-		handwritten = skinParam.handwritten();
-		hoverPathColorRGB = calculateHoverPathColor(skinParam);
-		lengthAdjust = skinParam.getlengthAdjust();
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-		preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, skinParam);
-		scale = diagram.getScale();
 		seed = diagram.seed();
-		svgCharSizeHack = skinParam;
-		svgDimensionStyle = skinParam.svgDimensionStyle();
-		svgLinkTarget = (fileFormatOption.getSvgLinkTarget() != null)
-				? fileFormatOption.getSvgLinkTarget() : skinParam.getSvgLinkTarget();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
 		return this;
@@ -266,8 +260,7 @@ public class ImageBuilder {
 
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os,
 			Animation animationArg) throws IOException {
-		Dimension2D dim = (dimension == null)
-				? getFinalDimension(fileFormatOption.getDefaultStringBounder(svgCharSizeHack)) : dimension;
+		Dimension2D dim = getFinalDimension();
 		double dx = 0;
 		double dy = 0;
 		if (animationArg != null) {
@@ -277,8 +270,9 @@ public class ImageBuilder {
 			dx = -minmax.getMinX();
 			dy = -minmax.getMinY();
 		}
-
-		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
+		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
+		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi() / 96.0;
+		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor);
 		UGraphic ug2 = ug;
 		maybeDrawBorder(ug, dim);
 		if (randomPixel) {
@@ -293,7 +287,6 @@ public class ImageBuilder {
 		if (ug instanceof UGraphicG2d) {
 			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
 			if (urls.size() > 0) {
-				final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
 				final CMapData cmap = CMapData.cmapString(urls, scaleFactor);
 				return new ImageDataComplex(dim, cmap, warningOrError, status);
 			}
@@ -326,19 +319,18 @@ public class ImageBuilder {
 		ug2.apply(color).apply(color.bg()).draw(new URectangle(1, 1));
 	}
 
-	private Dimension2D getFinalDimension(StringBounder stringBounder) {
-		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
-		udrawable.drawU(limitFinder);
-		return new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
-				limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());
-	}
-
 	private Dimension2D getFinalDimension() {
-		return getFinalDimension(fileFormatOption.getDefaultStringBounder(svgCharSizeHack));
+		if (dimension == null) {
+			final LimitFinder limitFinder = new LimitFinder(fileFormatOption.getDefaultStringBounder(getSvgCharSizeHack()), true);
+			udrawable.drawU(limitFinder);
+			dimension = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
+					limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());
+		}
+		return dimension;
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
-		if (handwritten) {
+		if (skinParam != null && skinParam.handwritten()) {
 			return new UGraphicHandwritten(ug);
 		}
 //		if (OptionFlags.OMEGA_CROSSING) {
@@ -410,8 +402,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg,
-			double dx, double dy) {
-		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
+			double dx, double dy, double scaleFactor) {
 		switch (option.getFileFormat()) {
 		case PNG:
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy,
@@ -436,13 +427,19 @@ public class ImageBuilder {
 		case ATXT:
 			return new UGraphicTxt();
 		case DEBUG:
-			return new UGraphicDebug(scaleFactor, dim, svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio);
+			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed, getPreserveAspectRatio());
 		default:
 			throw new UnsupportedOperationException(option.getFileFormat().toString());
 		}
 	}
 
 	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim) {
+		final String hoverPathColorRGB = getHoverPathColorRGB();
+		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
+		final String preserveAspectRatio = getPreserveAspectRatio();
+		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
+		final boolean svgDimensionStyle = skinParam == null || skinParam.svgDimensionStyle();
+		final String svgLinkTarget = getSvgLinkTarget();
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
 			backColor = this.backcolor;
@@ -504,12 +501,16 @@ public class ImageBuilder {
 		return diagram.getSkinParam().getBackgroundColor(false);
 	}
 
-	private String calculateHoverPathColor(ISkinParam skinParam) {
+	private String getHoverPathColorRGB() {
 		if (fileFormatOption.getHoverColor() != null) {
 			return fileFormatOption.getHoverColor();
+		} else if (skinParam != null) {
+			final HColor color = skinParam.hoverPathColor();
+			if (color != null) {
+				return colorMapper.toRGB(color);
+			}
 		}
-		final HColor color = skinParam.hoverPathColor();
-		return color == null ? null : colorMapper.toRGB(color);
+		return null;
 	}
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
@@ -523,7 +524,7 @@ public class ImageBuilder {
 		return diagram.getDefaultMargins();
 	}
 
-	private static String calculatePreserveAspectRatio(FileFormatOption fileFormatOption, ISkinParam skinParam) {
+	public String getPreserveAspectRatio() {
 		if (fileFormatOption.getPreserveAspectRatio() != null) {
 			return fileFormatOption.getPreserveAspectRatio();
 		} else if (skinParam != null) {
