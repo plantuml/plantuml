@@ -279,8 +279,8 @@ public class ImageBuilder {
 			dx = -minmax.getMinX();
 			dy = -minmax.getMinY();
 		}
-
-		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
+		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
+		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor);
 		UGraphic ug2 = ug;
 		maybeDrawBorder(ug, dim);
 		if (randomPixel) {
@@ -295,7 +295,6 @@ public class ImageBuilder {
 		if (ug instanceof UGraphicG2d) {
 			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
 			if (urls.size() > 0) {
-				final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
 				final CMapData cmap = CMapData.cmapString(urls, scaleFactor);
 				return new ImageDataComplex(dim, cmap, warningOrError, status);
 			}
@@ -412,8 +411,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg,
-			double dx, double dy) {
-		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
+			double dx, double dy, double scaleFactor) {
 		switch (option.getFileFormat()) {
 		case PNG:
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy,
