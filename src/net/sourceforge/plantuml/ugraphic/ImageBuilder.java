@@ -121,7 +121,6 @@ public class ImageBuilder {
 	private long seed = 42;
 	private ISkinParam skinParam;
 	private int status = 0;
-	private String svgLinkTarget;
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
 	private String warningOrError;
@@ -204,6 +203,16 @@ public class ImageBuilder {
 		return skinParam == null ? SvgCharSizeHack.NO_HACK : skinParam;
 	}
 	
+	private String getSvgLinkTarget() {
+		if (fileFormatOption.getSvgLinkTarget() != null) {
+			return fileFormatOption.getSvgLinkTarget();
+		} else if (skinParam != null) {
+			return skinParam.getSvgLinkTarget();
+		} else {
+			return null;
+		}
+	}
+	
 	public ImageBuilder warningOrError(String warningOrError) {
 		this.warningOrError = warningOrError;
 		return this;
@@ -218,8 +227,6 @@ public class ImageBuilder {
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 		seed = diagram.seed();
-		svgLinkTarget = (fileFormatOption.getSvgLinkTarget() != null)
-				? fileFormatOption.getSvgLinkTarget() : skinParam.getSvgLinkTarget();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
 		return this;
@@ -420,7 +427,7 @@ public class ImageBuilder {
 		case ATXT:
 			return new UGraphicTxt();
 		case DEBUG:
-			return new UGraphicDebug(scaleFactor, dim, svgLinkTarget, getHoverPathColorRGB(), seed, getPreserveAspectRatio());
+			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed, getPreserveAspectRatio());
 		default:
 			throw new UnsupportedOperationException(option.getFileFormat().toString());
 		}
@@ -432,6 +439,7 @@ public class ImageBuilder {
 		final String preserveAspectRatio = getPreserveAspectRatio();
 		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
 		final boolean svgDimensionStyle = skinParam == null || skinParam.svgDimensionStyle();
+		final String svgLinkTarget = getSvgLinkTarget();
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
 			backColor = this.backcolor;
