@@ -115,7 +115,6 @@ public class ImageBuilder {
 	private ColorMapper colorMapper = new ColorMapperIdentity();
 	private Dimension2D dimension;
 	private final FileFormatOption fileFormatOption;
-	private String hoverPathColorRGB;
 	private UDrawable udrawable;
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
@@ -223,7 +222,6 @@ public class ImageBuilder {
 		annotations = true;
 		backcolor = calculateBackColor(diagram);
 		colorMapper = skinParam.getColorMapper();
-		hoverPathColorRGB = calculateHoverPathColor(skinParam);
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 		preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, skinParam);
@@ -431,13 +429,14 @@ public class ImageBuilder {
 		case ATXT:
 			return new UGraphicTxt();
 		case DEBUG:
-			return new UGraphicDebug(scaleFactor, dim, svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio);
+			return new UGraphicDebug(scaleFactor, dim, svgLinkTarget, getHoverPathColorRGB(), seed, preserveAspectRatio);
 		default:
 			throw new UnsupportedOperationException(option.getFileFormat().toString());
 		}
 	}
 
 	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim) {
+		final String hoverPathColorRGB = getHoverPathColorRGB();
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
@@ -501,12 +500,16 @@ public class ImageBuilder {
 		return diagram.getSkinParam().getBackgroundColor(false);
 	}
 
-	private String calculateHoverPathColor(ISkinParam skinParam) {
+	private String getHoverPathColorRGB() {
 		if (fileFormatOption.getHoverColor() != null) {
 			return fileFormatOption.getHoverColor();
+		} else if (skinParam != null) {
+			final HColor color = skinParam.hoverPathColor();
+			if (color != null) {
+				return colorMapper.toRGB(color);
+			}
 		}
-		final HColor color = skinParam.hoverPathColor();
-		return color == null ? null : colorMapper.toRGB(color);
+		return null;
 	}
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
