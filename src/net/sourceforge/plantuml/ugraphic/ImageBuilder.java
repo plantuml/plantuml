@@ -127,7 +127,6 @@ public class ImageBuilder {
 	private long seed = 42;
 	private ISkinParam skinParam;
 	private int status = 0;
-	private SvgCharSizeHack svgCharSizeHack = SvgCharSizeHack.NO_HACK;
 	private boolean svgDimensionStyle = true;
 	private String svgLinkTarget;
 	private TitledDiagram titledDiagram;
@@ -209,6 +208,10 @@ public class ImageBuilder {
 		return this;
 	}
 
+	private SvgCharSizeHack getSvgCharSizeHack() {
+		return skinParam == null ? SvgCharSizeHack.NO_HACK : skinParam;
+	}
+	
 	public ImageBuilder warningOrError(String warningOrError) {
 		this.warningOrError = warningOrError;
 		return this;
@@ -229,7 +232,6 @@ public class ImageBuilder {
 		preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, skinParam);
 		scale = diagram.getScale();
 		seed = diagram.seed();
-		svgCharSizeHack = skinParam;
 		svgDimensionStyle = skinParam.svgDimensionStyle();
 		svgLinkTarget = (fileFormatOption.getSvgLinkTarget() != null)
 				? fileFormatOption.getSvgLinkTarget() : skinParam.getSvgLinkTarget();
@@ -267,7 +269,7 @@ public class ImageBuilder {
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os,
 			Animation animationArg) throws IOException {
 		Dimension2D dim = (dimension == null)
-				? getFinalDimension(fileFormatOption.getDefaultStringBounder(svgCharSizeHack)) : dimension;
+				? getFinalDimension(fileFormatOption.getDefaultStringBounder(getSvgCharSizeHack())) : dimension;
 		double dx = 0;
 		double dy = 0;
 		if (animationArg != null) {
@@ -334,7 +336,7 @@ public class ImageBuilder {
 	}
 
 	private Dimension2D getFinalDimension() {
-		return getFinalDimension(fileFormatOption.getDefaultStringBounder(svgCharSizeHack));
+		return getFinalDimension(fileFormatOption.getDefaultStringBounder(getSvgCharSizeHack()));
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
@@ -443,6 +445,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim) {
+		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
 			backColor = this.backcolor;
