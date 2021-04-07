@@ -120,7 +120,6 @@ public class ImageBuilder {
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
 	private String preserveAspectRatio;
-	private Scale scale;
 	private long seed = 42;
 	private ISkinParam skinParam;
 	private int status = 0;
@@ -228,7 +227,6 @@ public class ImageBuilder {
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 		preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, skinParam);
-		scale = diagram.getScale();
 		seed = diagram.seed();
 		svgDimensionStyle = skinParam.svgDimensionStyle();
 		svgLinkTarget = (fileFormatOption.getSvgLinkTarget() != null)
@@ -277,6 +275,7 @@ public class ImageBuilder {
 			dx = -minmax.getMinX();
 			dy = -minmax.getMinY();
 		}
+		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi() / 96.0;
 		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor);
 		UGraphic ug2 = ug;
