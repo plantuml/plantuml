@@ -50,21 +50,21 @@ public interface TaskDraw extends UDrawable {
 
 	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
 
-	public double getY();
+	public double getY(StringBounder stringBounder);
 
-	public double getY(Direction direction);
+	public double getY(StringBounder stringBounder, Direction direction);
 
 	public void pushMe(double deltaY);
 	
 	public void drawTitle(UGraphic ug);
 
-	public double getHeightTask();
+	public double getHeightTask(StringBounder stringBounder);
 
 	public double getHeightMax(StringBounder stringBounder);
 
 	public Task getTask();
 
-	public FingerPrint getFingerPrint();
+	public FingerPrint getFingerPrint(StringBounder stringBounder);
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
 

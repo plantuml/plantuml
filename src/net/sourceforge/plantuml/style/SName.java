@@ -107,6 +107,7 @@ public enum SName {
 	storage, //
 	swimlane, //
 	task, //
+	timeline, //
 	title, //
 	usecase, //
 	wbsDiagram, //

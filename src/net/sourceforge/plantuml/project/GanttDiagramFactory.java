@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.project.command.CommandPage;
 import net.sourceforge.plantuml.project.command.CommandPrintBetween;
 import net.sourceforge.plantuml.project.command.CommandPrintScale;
 import net.sourceforge.plantuml.project.command.CommandSeparator;
+import net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
 import net.sourceforge.plantuml.project.command.NaturalCommand;
 import net.sourceforge.plantuml.project.lang.SentenceAnd;
 import net.sourceforge.plantuml.project.lang.SentenceAndAnd;
@@ -61,7 +62,6 @@ import net.sourceforge.plantuml.project.lang.Subject;
 import net.sourceforge.plantuml.project.lang.SubjectDayAsDate;
 import net.sourceforge.plantuml.project.lang.SubjectDayOfWeek;
 import net.sourceforge.plantuml.project.lang.SubjectDaysAsDates;
-import net.sourceforge.plantuml.project.lang.SubjectLinks;
 import net.sourceforge.plantuml.project.lang.SubjectProject;
 import net.sourceforge.plantuml.project.lang.SubjectResource;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
@@ -73,8 +73,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 
 	static private final List<Subject> subjects() {
 		return Arrays.<Subject>asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek(),
-				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday(),
-				new SubjectLinks());
+				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday());
 	}
 
 	public GanttDiagramFactory(DiagramType type) {
@@ -99,6 +98,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandGanttArrow2());
 		cmds.add(new CommandColorTask());
 		cmds.add(new CommandSeparator());
+		cmds.add(new CommandWeekNumberStrategy());
 
 		cmds.add(new CommandPrintScale());
 		cmds.add(new CommandPrintBetween());

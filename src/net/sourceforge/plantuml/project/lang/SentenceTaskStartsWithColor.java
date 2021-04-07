@@ -62,7 +62,8 @@ public class SentenceTaskStartsWithColor extends SentenceSimple {
 		task.setStart(when.getInstantPrecise());
 		if (when.isTask()) {
 			final HColor color = complement22.getCenter();
-			final GanttConstraint link = new GanttConstraint(when, new TaskInstant(task, TaskAttribute.START), color);
+			final GanttConstraint link = new GanttConstraint(project.getIHtmlColorSet(),
+					project.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color);
 			link.applyStyle(complement22.getStyle());
 			project.addContraint(link);
 		}

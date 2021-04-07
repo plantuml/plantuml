@@ -48,10 +48,18 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TaskDrawSeparator implements TaskDraw {
@@ -61,8 +69,13 @@ public class TaskDrawSeparator implements TaskDraw {
 	private final Day min;
 	private final Day max;
 	private final String name;
+	private final StyleBuilder styleBuilder;
+	private final HColorSet colorSet;
 
-	public TaskDrawSeparator(String name, TimeScale timeScale, double y, Day min, Day max) {
+	public TaskDrawSeparator(String name, TimeScale timeScale, double y, Day min, Day max, StyleBuilder styleBuilder,
+			HColorSet colorSet) {
+		this.styleBuilder = styleBuilder;
+		this.colorSet = colorSet;
 		this.name = name;
 		this.y = y;
 		this.timeScale = timeScale;
@@ -71,7 +84,19 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	public void drawTitle(UGraphic ug) {
-		getTitle().drawU(ug.apply(UTranslate.dx(MARGIN1)));
+		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
+		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
+		final double dx = margin.getLeft() + padding.getLeft();
+		final double dy = margin.getTop() + padding.getTop();
+		getTitle().drawU(ug.apply(new UTranslate(dx, dy)));
+	}
+
+	private StyleSignature getStyleSignature() {
+		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.separator);
+	}
+
+	private Style getStyle() {
+		return getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
 	private TextBlock getTitle() {
@@ -83,43 +108,67 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+		return getStyle().getFontConfiguration(colorSet);
 	}
 
-	private final static double MARGIN1 = 10;
-	private final static double MARGIN2 = 2;
-
 	public void drawU(UGraphic ug) {
-		final double widthTitle = getTitle().calculateDimension(ug.getStringBounder()).getWidth();
-		final double start = timeScale.getStartingPosition(min) + widthTitle;
+		final StringBounder stringBounder = ug.getStringBounder();
+		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();
+		final double start = timeScale.getStartingPosition(min);
+		// final double start2 = start1 + widthTitle;
 		final double end = timeScale.getEndingPosition(max);
 
-		ug = ug.apply(HColorUtils.BLACK);
-		ug = ug.apply(UTranslate.dy(getHeightTask() / 2));
+		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
+		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
+		ug = ug.apply(new UTranslate(0, margin.getTop()));
+
+		final HColor backColor = getStyle().value(PName.BackGroundColor).asColor(colorSet);
+
+		if (HColorUtils.isTransparent(backColor) == false) {
+			final double height = padding.getTop() + getTextHeight(stringBounder) + padding.getBottom();
+			if (height > 0) {
+				final URectangle rect = new URectangle(end - start, height);
+				ug.apply(backColor.bg()).draw(rect);
+			}
+		}
+
+		final HColor lineColor = getStyle().value(PName.LineColor).asColor(colorSet);
+		ug = ug.apply(lineColor);
+		ug = ug.apply(UTranslate.dy(padding.getTop() + getTextHeight(stringBounder) / 2));
 
 		if (widthTitle == 0) {
 			final ULine line = ULine.hline(end - start);
 			ug.draw(line);
 		} else {
-			final ULine line1 = ULine.hline(MARGIN1 - MARGIN2);
-			final ULine line2 = ULine.hline(end - start - MARGIN1 - MARGIN2);
-			ug.draw(line1);
-			ug.apply(UTranslate.dx(widthTitle + MARGIN1 + MARGIN2)).draw(line2);
+			if (padding.getLeft() > 1) {
+				final ULine line1 = ULine.hline(padding.getLeft());
+				ug.draw(line1);
+			}
+			final double x1 = padding.getLeft() + margin.getLeft() + widthTitle + margin.getRight();
+			final double x2 = end - 1;
+			final ULine line2 = ULine.hline(x2 - x1);
+			ug.apply(UTranslate.dx(x1)).draw(line2);
 		}
 	}
 
-	public FingerPrint getFingerPrint() {
-		final double h = getHeightTask();
+	public FingerPrint getFingerPrint(StringBounder stringBounder) {
+		final double h = getHeightTask(stringBounder);
 		final double end = timeScale.getEndingPosition(max);
 		return new FingerPrint(0, y, end, y + h);
 	}
 
-	public double getHeightTask() {
-		return 16;
+	public double getHeightTask(StringBounder stringBounder) {
+		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
+		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
+		return margin.getTop() + padding.getTop() + getTextHeight(stringBounder) + padding.getBottom()
+				+ margin.getBottom();
 	}
 
-	public double getY() {
+	private double getTextHeight(StringBounder stringBounder) {
+		return getTitle().calculateDimension(stringBounder).getHeight();
+	}
+
+	public double getY(StringBounder stringBounder) {
 		return y;
 	}
 
@@ -138,7 +187,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		throw new UnsupportedOperationException();
 	}
 
-	public double getY(Direction direction) {
+	public double getY(StringBounder stringBounder, Direction direction) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -147,7 +196,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	public double getHeightMax(StringBounder stringBounder) {
-		return getHeightTask();
+		return getHeightTask(stringBounder);
 	}
 
 }

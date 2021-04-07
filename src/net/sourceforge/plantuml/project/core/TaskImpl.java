@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.project.solver.Solver;
 import net.sourceforge.plantuml.project.solver.SolverImpl;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
@@ -76,8 +77,8 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.url = url;
 	}
 
-	public TaskImpl(TaskCode code, OpenClose openClose) {
-		super(code);
+	public TaskImpl(StyleBuilder styleBuilder, TaskCode code, OpenClose openClose) {
+		super(styleBuilder, code);
 		this.defaultPlan = openClose;
 		this.solver = new SolverImpl(this);
 		if (openClose.getCalendar() == null) {
@@ -153,7 +154,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public String getPrettyDisplay() {
 		if (resources.size() > 0) {
-			final StringBuilder result = new StringBuilder(code.getSimpleDisplay());
+			final StringBuilder result = new StringBuilder(getCode().getSimpleDisplay());
 			result.append(" ");
 			for (Iterator<Map.Entry<Resource, Integer>> it = resources.entrySet().iterator(); it.hasNext();) {
 				final Map.Entry<Resource, Integer> ent = it.next();
@@ -170,20 +171,16 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 			}
 			return result.toString();
 		}
-		return code.getSimpleDisplay();
+		return getCode().getSimpleDisplay();
 	}
 
 	@Override
 	public String toString() {
-		return code.toString();
+		return getCode().toString();
 	}
 
 	public String debug() {
 		return "" + getStart() + " ---> " + getEnd() + "   [" + getLoad() + "]";
-	}
-
-	public TaskCode getCode() {
-		return code;
 	}
 
 	public Day getStart() {

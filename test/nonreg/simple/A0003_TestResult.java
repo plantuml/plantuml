@@ -73,7 +73,7 @@ RECTANGLE:
   backcolor: ffe0e8e8
 
 TEXT:
-  text: 19
+  text: 43
   position: [ 21.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
@@ -81,7 +81,7 @@ TEXT:
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: 26
+  text: 44
   position: [ 49.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
@@ -89,7 +89,7 @@ TEXT:
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: 2
+  text: 45
   position: [ 77.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
@@ -97,7 +97,7 @@ TEXT:
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: 9
+  text: 46
   position: [ 105.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
@@ -105,7 +105,7 @@ TEXT:
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: 16
+  text: 47
   position: [ 133.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []
@@ -113,7 +113,7 @@ TEXT:
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: 23
+  text: 48
   position: [ 161.0000 ; 23.7778 ]
   orientation: 0
   font: Serif.plain/10 []

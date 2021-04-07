@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderDaily extends TimeHeaderCalendar {
 
-	protected double getTimeHeaderHeight() {
+	public double getTimeHeaderHeight() {
 		return Y_POS_ROW28() + 13;
 	}
 
@@ -153,7 +153,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		final TextBlock tiny = getTextBlock(monthYear.shortName(), 12, true, HColorUtils.BLACK);
 		final TextBlock small = getTextBlock(monthYear.longName(), 12, true, HColorUtils.BLACK);
 		final TextBlock big = getTextBlock(monthYear.longNameYYYY(), 12, true, HColorUtils.BLACK);
-		printCentered(ug, start, end, tiny, small, big);
+		printCentered(ug, false, start, end, tiny, small, big);
 	}
 
 	private void drawVbar(UGraphic ug, double x, double y1, double y2) {

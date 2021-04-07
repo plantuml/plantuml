@@ -39,10 +39,10 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.MonthYear;
+import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -52,7 +52,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
-	protected double getTimeHeaderHeight() {
+	private final WeekNumberStrategy weekNumberStrategy;
+
+	public double getTimeHeaderHeight() {
 		return 16 + 13;
 	}
 
@@ -60,10 +62,10 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		return 16;
 	}
 
-	public TimeHeaderWeekly(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, int compress) {
-		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
-				new TimeScaleCompressed(calendar, compress));
+	public TimeHeaderWeekly(double scale, Day calendar, Day min, Day max, LoadPlanable defaultPlan,
+			Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek, WeekNumberStrategy weekNumberStrategy) {
+		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleCompressed(calendar, scale));
+		this.weekNumberStrategy = weekNumberStrategy;
 	}
 
 	@Override
@@ -111,7 +113,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private void printSmallVbars(final UGraphic ug, double totalHeightWithoutFooter) {
 		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
-			if (wink.getDayOfWeek() == DayOfWeek.MONDAY) {
+			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				drawVbar(ug, getTimeScale().getStartingPosition(wink), Y_POS_ROW16(), totalHeightWithoutFooter);
 			}
 		}
@@ -120,9 +122,11 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private void printDaysOfMonth(final UGraphic ug) {
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
-			if (wink.getDayOfWeek() == DayOfWeek.MONDAY) {
-				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16())),
-						getTextBlock("" + wink.getDayOfMonth(), 10, false, HColorUtils.BLACK),
+			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
+				final String num = "" + wink.getWeekOfYear(weekNumberStrategy);
+				// final String num = "" + wink.getDayOfMonth();
+				final TextBlock textBlock = getTextBlock(num, 10, false, HColorUtils.BLACK);
+				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16())), textBlock,
 						getTimeScale().getStartingPosition(wink) + 5);
 			}
 		}
@@ -131,7 +135,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
 		final TextBlock small = getTextBlock(monthYear.shortName(), 12, true, HColorUtils.BLACK);
 		final TextBlock big = getTextBlock(monthYear.shortNameYYYY(), 12, true, HColorUtils.BLACK);
-		printCentered(ug, start, end, small, big);
+		printCentered(ug, false, start, end, small, big);
 	}
 
 	private void drawVbar(UGraphic ug, double x, double y1, double y2) {

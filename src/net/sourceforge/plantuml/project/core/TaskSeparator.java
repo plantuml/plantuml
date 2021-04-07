@@ -41,18 +41,15 @@ import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class TaskSeparator extends AbstractTask implements Task {
 
 	private final String comment;
 
-	public TaskSeparator(String comment, int id) {
-		super(new TaskCode("##" + id));
+	public TaskSeparator(StyleBuilder styleBuilder, String comment, int id) {
+		super(styleBuilder, new TaskCode("##" + id));
 		this.comment = comment;
-	}
-
-	public TaskCode getCode() {
-		return code;
 	}
 
 	public Day getStart() {

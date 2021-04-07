@@ -54,7 +54,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		return getTimeHeaderHeight() + getHeaderNameDayHeight();
 	}
 
-	protected double getTimeHeaderHeight() {
+	public double getTimeHeaderHeight() {
 		return 16;
 	}
 

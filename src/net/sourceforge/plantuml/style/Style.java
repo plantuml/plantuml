@@ -114,6 +114,16 @@ public class Style {
 		return new Style(this.signature, result);
 	}
 
+	public Style eventuallyOverride(PName param, double value) {
+		return eventuallyOverride(param, "" + value);
+	}
+
+	public Style eventuallyOverride(PName param, String value) {
+		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
+		result.put(param, new ValueImpl(value, Integer.MAX_VALUE));
+		return new Style(this.signature, result);
+	}
+
 	public Style eventuallyOverride(Colors colors) {
 		Style result = this;
 		if (colors != null) {
@@ -167,6 +177,17 @@ public class Style {
 		final HColor foreColor = value(PName.LineColor).asColor(set);
 		final double deltaShadowing = value(PName.Shadowing).asDouble();
 		return new SymbolContext(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing);
+	}
+
+	public Style eventuallyOverride(UStroke stroke) {
+		if (stroke == null) {
+			return this;
+		}
+		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());
+		final double space = stroke.getDashSpace();
+		final double visible = stroke.getDashVisible();
+		result = result.eventuallyOverride(PName.LineStyle, "" + visible + ";" + space);
+		return result;
 	}
 
 	public UStroke getStroke() {

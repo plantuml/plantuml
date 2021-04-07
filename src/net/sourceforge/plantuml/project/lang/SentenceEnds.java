@@ -53,7 +53,8 @@ public class SentenceEnds extends SentenceSimple {
 		final Task task = (Task) subject;
 		final TaskInstant when = (TaskInstant) complement;
 		task.setEnd(when.getInstantPrecise().decrement());
-		project.addContraint(new GanttConstraint(when, new TaskInstant(task, TaskAttribute.END)));
+		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(), when,
+				new TaskInstant(task, TaskAttribute.END)));
 		return CommandExecutionResult.ok();
 	}
 

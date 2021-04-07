@@ -44,18 +44,33 @@ import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class GanttConstraint extends WithLinkType {
 
 	private final TaskInstant source;
 	private final TaskInstant dest;
+	private final StyleBuilder styleBuilder;
+	private final HColorSet colorSet;
 
-	public GanttConstraint(TaskInstant source, TaskInstant dest, HColor forcedColor) {
+	public GanttConstraint(HColorSet colorSet, StyleBuilder styleBuilder, TaskInstant source, TaskInstant dest,
+			HColor forcedColor) {
+		this.styleBuilder = styleBuilder;
+		this.colorSet = colorSet;
 		this.source = source;
 		this.dest = dest;
 		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
 		this.setSpecificColor(forcedColor);
+	}
+
+	public GanttConstraint(HColorSet colorSet, StyleBuilder styleBuilder, TaskInstant source, TaskInstant dest) {
+		this(colorSet, styleBuilder, source, dest, null);
 	}
 
 	public boolean isOn(Task task) {
@@ -73,20 +88,20 @@ public class GanttConstraint extends WithLinkType {
 		return false;
 	}
 
-	public GanttConstraint(TaskInstant source, TaskInstant dest) {
-		this(source, dest, null);
-	}
-
 	@Override
 	public String toString() {
 		return source.toString() + " --> " + dest.toString();
 	}
 
-	public UDrawable getUDrawable(TimeScale timeScale, HColor color, ToTaskDraw toTaskDraw) {
-		if (getSpecificColor() == null) {
-			return new GanttArrow(timeScale, source, dest, color, getType(), toTaskDraw);
-		}
-		return new GanttArrow(timeScale, source, dest, getSpecificColor(), getType(), toTaskDraw);
+	final public StyleSignature getStyleSignature() {
+		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
+	}
+
+	public UDrawable getUDrawable(TimeScale timeScale, ToTaskDraw toTaskDraw) {
+		Style style = styleBuilder.getMergedStyle(getStyleSignature()).eventuallyOverride(PName.LineColor,
+				getSpecificColor());
+		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));
+		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw);
 	}
 
 	public boolean isHidden(Day min, Day max) {

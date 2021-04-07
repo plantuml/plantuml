@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 
+// Removed
 public class SubjectLinks implements Subject {
 
 	public IRegex toRegex() {
@@ -68,7 +69,7 @@ public class SubjectLinks implements Subject {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final CenterBorderColor colors = (CenterBorderColor) complement;
-			project.setLinksColor(colors.getCenter());
+			// project.setLinksColor(colors.getCenter());
 			return CommandExecutionResult.ok();
 
 		}

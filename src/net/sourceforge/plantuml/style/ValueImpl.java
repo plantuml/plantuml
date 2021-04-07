@@ -55,6 +55,11 @@ public class ValueImpl implements Value {
 		this.priority = counter.getNextInt();
 	}
 
+	public ValueImpl(String value, int priority) {
+		this.value = value;
+		this.priority = priority;
+	}
+
 	@Override
 	public String toString() {
 		return value + " (" + priority + ")";

@@ -35,12 +35,17 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import net.sourceforge.plantuml.style.StyleBuilder;
+
 public abstract class AbstractTask implements Task {
 
-	protected final TaskCode code;
+	private final TaskCode code;
+	private final StyleBuilder styleBuilder;
+
 	private Task row;
 
-	protected AbstractTask(TaskCode code) {
+	protected AbstractTask(StyleBuilder styleBuilder, TaskCode code) {
+		this.styleBuilder = styleBuilder;
 		this.code = code;
 	}
 
@@ -50,6 +55,14 @@ public abstract class AbstractTask implements Task {
 
 	public final Task getRow() {
 		return row;
+	}
+
+	public final TaskCode getCode() {
+		return code;
+	}
+
+	public final StyleBuilder getStyleBuilder() {
+		return styleBuilder;
 	}
 
 }

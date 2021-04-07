@@ -273,9 +273,22 @@ milestone {
 }
 
 ganttDiagram {
+	arrow {
+	  LineThickness 1.5
+	}
 	note {
 	  FontSize 9
       Shadowing 0.0
+	}
+	separator {
+	  FontSize 11
+	  FontStyle plain
+	  BackGroundColor transparent
+	  Margin 5
+	  Padding 5
+	}
+	timeline {
+	    BackgroundColor transparent
 	}
 }
 

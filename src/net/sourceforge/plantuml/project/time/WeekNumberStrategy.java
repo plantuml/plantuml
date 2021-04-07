@@ -33,35 +33,29 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.core;
+package net.sourceforge.plantuml.project.time;
 
-public enum PrintScale {
-	DAILY(1), WEEKLY(4), MONTHLY(15), QUARTERLY(40), YEARLY(60);
+public class WeekNumberStrategy {
 
-	private final double defaultScale;
+	private final DayOfWeek firstDayOfWeek;
+	private final int minimalDaysInFirstWeek;
 
-	private PrintScale(int compress) {
-		this.defaultScale = 1.0 / compress;
+	public WeekNumberStrategy(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {
+		this.firstDayOfWeek = firstDayOfWeek;
+		this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;
+
 	}
 
-	public final double getDefaultScale() {
-		return defaultScale;
+	public final int getFirstDayOfWeekAsLegacyInt() {
+		return firstDayOfWeek.getLegacyJavaValue();
 	}
 
-	static public PrintScale fromString(String value) {
-		if (value.startsWith("w")) {
-			return WEEKLY;
-		}
-		if (value.startsWith("m")) {
-			return MONTHLY;
-		}
-		if (value.startsWith("q")) {
-			return QUARTERLY;
-		}
-		if (value.startsWith("y")) {
-			return YEARLY;
-		}
-		return DAILY;
+	public final int getMinimalDaysInFirstWeek() {
+		return minimalDaysInFirstWeek;
+	}
+
+	public final DayOfWeek getFirstDayOfWeek() {
+		return firstDayOfWeek;
 	}
 
 }

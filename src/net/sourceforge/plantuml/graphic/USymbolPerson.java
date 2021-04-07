@@ -51,21 +51,21 @@ class USymbolPerson extends USymbol {
 		return SkinParameter.PERSON;
 	}
 
-	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double roundCorner,
-			double diagonalCorner) {
-		final UEllipse head = new UEllipse(headSize(), headSize());
-		final URectangle body = new URectangle(width, height - headSize()).rounded(headSize());
+	private void drawHeadAndBody(UGraphic ug, boolean shadowing, Dimension2D dimBody, double headSize) {
+		final UEllipse head = new UEllipse(headSize, headSize);
+		final URectangle body = new URectangle(dimBody).rounded(headSize);
 		if (shadowing) {
 			body.setDeltaShadow(3.0);
 			head.setDeltaShadow(1.0);
 		}
-		final double posx = (width - headSize()) / 2;
+		final double posx = (dimBody.getWidth() - headSize) / 2;
 		ug.apply(UTranslate.dx(posx)).draw(head);
-		ug.apply(UTranslate.dy(headSize())).draw(body);
+		ug.apply(UTranslate.dy(headSize)).draw(body);
 	}
 
-	private double headSize() {
-		return 20;
+	private double headSize(Dimension2D dimBody) {
+		final double surface = dimBody.getWidth() * dimBody.getHeight();
+		return Math.sqrt(surface) * .42;
 	}
 
 	private Margin getMargin() {
@@ -78,21 +78,26 @@ class USymbolPerson extends USymbol {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
-				ug = UGraphicStencil.create(ug, dim);
+				final Dimension2D dimFull = calculateDimension(ug.getStringBounder());
+				final Dimension2D dimBody = bodyDimension(ug.getStringBounder());
+				ug = UGraphicStencil.create(ug, dimFull);
 				ug = symbolContext.apply(ug);
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
-						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
-				final Margin margin = getMargin();
+				final double headSize = headSize(dimBody);
+				drawHeadAndBody(ug, symbolContext.isShadowing(), dimBody, headSize);
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);
-				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + headSize())));
+				final Margin margin = getMargin();
+				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + headSize)));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				final Dimension2D body = bodyDimension(stringBounder);
+				return Dimension2DDouble.delta(body, 0, headSize(body));
+			}
+
+			private Dimension2D bodyDimension(StringBounder stringBounder) {
 				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return Dimension2DDouble.delta(getMargin().addDimension(Dimension2DDouble.mergeTB(dimStereo, dimLabel)),
-						0, headSize());
+				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimStereo, dimLabel));
 			}
 		};
 	}
@@ -101,39 +106,7 @@ class USymbolPerson extends USymbol {
 	public TextBlock asBig(final TextBlock title, final HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final SymbolContext symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-		return new AbstractTextBlock() {
-			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
-				ug = symbolContext.apply(ug);
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
-						symbolContext.getRoundCorner(), 0);
-				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
-				final double posStereoX;
-				final double posStereoY;
-				if (stereoAlignment == HorizontalAlignment.RIGHT) {
-					posStereoX = width - dimStereo.getWidth() - getMargin().getX1() / 2;
-					posStereoY = getMargin().getY1() / 2;
-				} else {
-					posStereoX = (width - dimStereo.getWidth()) / 2;
-					posStereoY = 2;
-				}
-				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));
-				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-				final double posTitle;
-				if (labelAlignment == HorizontalAlignment.LEFT) {
-					posTitle = 3;
-				} else if (labelAlignment == HorizontalAlignment.RIGHT) {
-					posTitle = width - dimTitle.getWidth() - 3;
-				} else {
-					posTitle = (width - dimTitle.getWidth()) / 2;
-				}
-				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
-			}
-		};
+		throw new UnsupportedOperationException();
 	}
 
 }

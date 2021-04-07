@@ -75,7 +75,7 @@ public abstract class TimeHeader {
 		this.max = max;
 	}
 
-	protected abstract double getTimeHeaderHeight();
+	public abstract double getTimeHeaderHeight();
 
 	public abstract double getTimeFooterHeight();
 
@@ -116,12 +116,13 @@ public abstract class TimeHeader {
 		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));
 	}
 
-	protected final void printCentered(UGraphic ug, double start, double end, TextBlock... texts) {
+	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end,
+			TextBlock... texts) {
 		final double available = end - start;
 		for (int i = texts.length - 1; i >= 0; i--) {
 			final TextBlock text = texts[i];
 			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
-			if (i == 0 || width <= available) {
+			if ((i == 0 && hideIfTooBig == false) || width <= available) {
 				final double diff = Math.max(0, available - width);
 				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));
 				return;

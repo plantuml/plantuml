@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
@@ -47,7 +48,10 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public abstract class AbstractTaskDraw implements TaskDraw {
 
@@ -59,7 +63,8 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	private double y;
 	protected final String prettyDisplay;
 	protected final Day start;
-	protected final ISkinParam skinParam;
+	private final StyleBuilder styleBuilder;
+	private final HColorSet colorSet;
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
 
@@ -78,35 +83,40 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	public AbstractTaskDraw(TimeScale timeScale, double y, String prettyDisplay, Day start, ISkinParam skinParam,
-			Task task, ToTaskDraw toTaskDraw) {
+			Task task, ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, HColorSet colorSet) {
 		this.y = y;
+		this.colorSet = colorSet;
+		this.styleBuilder = styleBuilder;
 		this.toTaskDraw = toTaskDraw;
 		this.start = start;
 		this.prettyDisplay = prettyDisplay;
 		this.timeScale = timeScale;
-		this.skinParam = skinParam;
 		this.task = task;
 	}
 
+	abstract StyleSignature getStyleSignature();
+
 	final protected HColor getLineColor() {
-		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		return getStyle().value(PName.LineColor).asColor(colorSet);
 	}
 
 	final protected HColor getBackgroundColor() {
-		return getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		return getStyle().value(PName.BackGroundColor).asColor(colorSet);
 	}
 
 	final protected FontConfiguration getFontConfiguration() {
-		return getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
+		return getStyle().getFontConfiguration(colorSet);
 	}
 
-	abstract protected Style getStyle();
-
-	final protected double getShapeHeight() {
-		return getHeightTask() - 2 * margin;
+	final protected Style getStyle() {
+		return getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
-	final public double getHeightTask() {
+	final protected double getShapeHeight(StringBounder stringBounder) {
+		return getHeightTask(stringBounder) - 2 * margin;
+	}
+
+	final public double getHeightTask(StringBounder stringBounder) {
 		return getFontConfiguration().getFont().getSize2D() + 5;
 	}
 
@@ -114,11 +124,11 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		return toTaskDraw.getTaskDraw(task.getRow());
 	}
 
-	final public double getY() {
+	final public double getY(StringBounder stringBounder) {
 		if (task.getRow() == null) {
 			return y;
 		}
-		return getTrueRow().getY();
+		return getTrueRow().getY(stringBounder);
 	}
 
 	public void pushMe(double deltaY) {
@@ -131,14 +141,22 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		return task;
 	}
 
-	public final double getY(Direction direction) {
+	public final double getY(StringBounder stringBounder, Direction direction) {
 		if (direction == Direction.UP) {
-			return getY();
+			return getY(stringBounder);
 		}
 		if (direction == Direction.DOWN) {
-			return getY() + getHeightTask();
+			return getY(stringBounder) + getHeightTask(stringBounder);
 		}
-		return getY() + getHeightTask() / 2;
+		return getY(stringBounder) + getHeightTask(stringBounder) / 2;
+	}
+
+	protected final StyleBuilder getStyleBuilder() {
+		return styleBuilder;
+	}
+
+	protected final HColorSet getColorSet() {
+		return colorSet;
 	}
 
 }

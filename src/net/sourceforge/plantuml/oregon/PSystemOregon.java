@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.oregon;
 
+import static net.sourceforge.plantuml.graphic.GraphicStrings.createGreenOnBlackMonospaced;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +46,7 @@ import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.graphic.UDrawable;
-
-import static net.sourceforge.plantuml.graphic.GraphicStrings.createGreenOnBlackMonospaced;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemOregon extends PlainDiagram {
 
@@ -63,6 +64,11 @@ public class PSystemOregon extends PlainDiagram {
 		} catch (NoInputException e) {
 			this.screen = game.getScreen();
 		}
+	}
+
+	@Override
+	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
+		return super.createImageBuilder(fileFormatOption).blackBackcolor();
 	}
 
 	public PSystemOregon() {

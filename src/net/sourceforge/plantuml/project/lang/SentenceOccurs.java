@@ -64,10 +64,10 @@ public class SentenceOccurs extends SentenceSimple {
 		}
 		task.setStart(from.getEnd());
 		task.setEnd(to.getEnd());
-		project.addContraint(new GanttConstraint(new TaskInstant(from, TaskAttribute.START),
-				new TaskInstant(task, TaskAttribute.START)));
-		project.addContraint(
-				new GanttConstraint(new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
+		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
+				new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
+		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
+				new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
 		return CommandExecutionResult.ok();
 	}
 

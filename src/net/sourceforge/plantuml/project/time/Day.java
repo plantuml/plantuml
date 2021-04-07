@@ -65,6 +65,16 @@ public class Day implements Comparable<Day>, Value {
 		return create(System.currentTimeMillis());
 	}
 
+	public int getWeekOfYear(WeekNumberStrategy strategy) {
+		synchronized (gmt) {
+			gmt.clear();
+			gmt.setTimeInMillis(ms1);
+			gmt.setFirstDayOfWeek(strategy.getFirstDayOfWeekAsLegacyInt());
+			gmt.setMinimalDaysInFirstWeek(strategy.getMinimalDaysInFirstWeek());
+			return gmt.get(Calendar.WEEK_OF_YEAR);
+		}
+	}
+
 	private Day(int year, Month month, int dayOfMonth) {
 		this.dayOfMonth = dayOfMonth;
 		this.monthYear = MonthYear.create(year, month);

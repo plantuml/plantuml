@@ -44,12 +44,23 @@ import net.sourceforge.plantuml.StringUtils;
 
 public enum DayOfWeek {
 
-	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+	MONDAY(Calendar.MONDAY), TUESDAY(Calendar.TUESDAY), WEDNESDAY(Calendar.WEDNESDAY), THURSDAY(Calendar.THURSDAY),
+	FRIDAY(Calendar.FRIDAY), SATURDAY(Calendar.SATURDAY), SUNDAY(Calendar.SUNDAY);
 
 	static final private Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 	static final private SimpleDateFormat dateFormatGmt = new SimpleDateFormat("dd MMM yyyy HH:mm:ss.SSS", Locale.US);
 	static {
 		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+	}
+
+	private final int legacy;
+
+	private DayOfWeek(int legacy) {
+		this.legacy = legacy;
+	}
+
+	public int getLegacyJavaValue() {
+		return legacy;
 	}
 
 	public static synchronized DayOfWeek fromTime(long time) {
