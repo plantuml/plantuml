@@ -121,7 +121,6 @@ public class ImageBuilder {
 	private long seed = 42;
 	private ISkinParam skinParam;
 	private int status = 0;
-	private boolean svgDimensionStyle = true;
 	private String svgLinkTarget;
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
@@ -219,7 +218,6 @@ public class ImageBuilder {
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 		seed = diagram.seed();
-		svgDimensionStyle = skinParam.svgDimensionStyle();
 		svgLinkTarget = (fileFormatOption.getSvgLinkTarget() != null)
 				? fileFormatOption.getSvgLinkTarget() : skinParam.getSvgLinkTarget();
 		titledDiagram = diagram;
@@ -433,6 +431,7 @@ public class ImageBuilder {
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final String preserveAspectRatio = getPreserveAspectRatio();
 		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
+		final boolean svgDimensionStyle = skinParam == null || skinParam.svgDimensionStyle();
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
 			backColor = this.backcolor;
