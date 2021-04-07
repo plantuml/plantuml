@@ -112,9 +112,6 @@ public class ImageBuilder {
 	private Animation animation;
 	private boolean annotations;
 	private HColor backcolor = HColorUtils.WHITE;
-	private HColor borderColor;
-	private double borderCorner;
-	private UStroke borderStroke;
 	private ColorMapper colorMapper = new ColorMapperIdentity();
 	private Dimension2D dimension;
 	private int dpi = 96;
@@ -128,6 +125,7 @@ public class ImageBuilder {
 	private String preserveAspectRatio;
 	private Scale scale;
 	private long seed = 42;
+	private ISkinParam skinParam;
 	private int status = 0;
 	private SvgCharSizeHack svgCharSizeHack = SvgCharSizeHack.NO_HACK;
 	private boolean svgDimensionStyle = true;
@@ -217,13 +215,10 @@ public class ImageBuilder {
 	}
 
 	public ImageBuilder styled(TitledDiagram diagram) {
-		final ISkinParam skinParam = diagram.getSkinParam();
+		skinParam = diagram.getSkinParam();
 		animation = diagram.getAnimation();
 		annotations = true;
 		backcolor = calculateBackColor(diagram);
-		borderColor = new Rose().getHtmlColor(skinParam, ColorParam.diagramBorder);
-		borderCorner = skinParam.getRoundCorner(CornerParam.diagramBorder, null);
-		borderStroke = calculateBorderStroke(borderColor, skinParam);
 		colorMapper = skinParam.getColorMapper();
 		dpi = skinParam.getDpi();
 		handwritten = skinParam.handwritten();
@@ -285,14 +280,7 @@ public class ImageBuilder {
 
 		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
 		UGraphic ug2 = ug;
-
-		if (borderStroke != null) {
-			final HColor color = borderColor == null ? HColorUtils.BLACK : borderColor;
-			final double width = dim.getWidth() - borderStroke.getThickness();
-			final double height = dim.getHeight() - borderStroke.getThickness();
-			final URectangle shape = new URectangle(width, height).rounded(borderCorner);
-			ug2.apply(color).apply(borderStroke).draw(shape);
-		}
+		maybeDrawBorder(ug, dim);
 		if (randomPixel) {
 			drawRandomPoint(ug2);
 		}
@@ -311,6 +299,21 @@ public class ImageBuilder {
 			}
 		}
 		return createImageData(dim);
+	}
+
+	private void maybeDrawBorder(UGraphic ug, Dimension2D dim) {
+		if (skinParam == null) return;
+
+		final HColor color = new Rose().getHtmlColor(skinParam, ColorParam.diagramBorder);
+
+		UStroke stroke = skinParam.getThickness(LineParam.diagramBorder, null);
+		if (stroke == null && color != null) stroke = new UStroke();
+		if (stroke == null) return;
+
+		final URectangle rectangle = new URectangle(dim.getWidth() - stroke.getThickness(), dim.getHeight() - stroke.getThickness())
+				.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));
+		
+		ug.apply(color == null ? HColorUtils.BLACK : color).apply(stroke).draw(rectangle);
 	}
 
 	private void drawRandomPoint(UGraphic ug2) {
@@ -499,11 +502,6 @@ public class ImageBuilder {
 
 		}
 		return diagram.getSkinParam().getBackgroundColor(false);
-	}
-
-	private static UStroke calculateBorderStroke(HColor borderColor, ISkinParam skinParam) {
-		final UStroke thickness = skinParam.getThickness(LineParam.diagramBorder, null);
-		return (thickness == null && borderColor != null) ? new UStroke() : thickness;
 	}
 
 	private String calculateHoverPathColor(ISkinParam skinParam) {
