@@ -118,7 +118,6 @@ public class ImageBuilder {
 	private UDrawable udrawable;
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
-	private String preserveAspectRatio;
 	private long seed = 42;
 	private ISkinParam skinParam;
 	private int status = 0;
@@ -144,7 +143,6 @@ public class ImageBuilder {
 
 	private ImageBuilder(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
-		this.preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, null);
 	}
 
 	public ImageBuilder annotations(boolean annotations) {
@@ -188,10 +186,6 @@ public class ImageBuilder {
 		return this;
 	}
 
-	public String getPreserveAspectRatio() {
-		return preserveAspectRatio;
-	}
-
 	public ImageBuilder randomPixel() {
 		this.randomPixel = true;
 		return this;
@@ -224,7 +218,6 @@ public class ImageBuilder {
 		colorMapper = skinParam.getColorMapper();
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-		preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, skinParam);
 		seed = diagram.seed();
 		svgDimensionStyle = skinParam.svgDimensionStyle();
 		svgLinkTarget = (fileFormatOption.getSvgLinkTarget() != null)
@@ -429,7 +422,7 @@ public class ImageBuilder {
 		case ATXT:
 			return new UGraphicTxt();
 		case DEBUG:
-			return new UGraphicDebug(scaleFactor, dim, svgLinkTarget, getHoverPathColorRGB(), seed, preserveAspectRatio);
+			return new UGraphicDebug(scaleFactor, dim, svgLinkTarget, getHoverPathColorRGB(), seed, getPreserveAspectRatio());
 		default:
 			throw new UnsupportedOperationException(option.getFileFormat().toString());
 		}
@@ -438,6 +431,7 @@ public class ImageBuilder {
 	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim) {
 		final String hoverPathColorRGB = getHoverPathColorRGB();
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
+		final String preserveAspectRatio = getPreserveAspectRatio();
 		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
@@ -523,7 +517,7 @@ public class ImageBuilder {
 		return diagram.getDefaultMargins();
 	}
 
-	private static String calculatePreserveAspectRatio(FileFormatOption fileFormatOption, ISkinParam skinParam) {
+	public String getPreserveAspectRatio() {
 		if (fileFormatOption.getPreserveAspectRatio() != null) {
 			return fileFormatOption.getPreserveAspectRatio();
 		} else if (skinParam != null) {
