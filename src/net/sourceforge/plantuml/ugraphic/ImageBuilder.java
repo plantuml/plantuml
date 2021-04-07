@@ -264,8 +264,7 @@ public class ImageBuilder {
 
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os,
 			Animation animationArg) throws IOException {
-		Dimension2D dim = (dimension == null)
-				? getFinalDimension(fileFormatOption.getDefaultStringBounder(getSvgCharSizeHack())) : dimension;
+		Dimension2D dim = getFinalDimension();
 		double dx = 0;
 		double dy = 0;
 		if (animationArg != null) {
@@ -324,15 +323,14 @@ public class ImageBuilder {
 		ug2.apply(color).apply(color.bg()).draw(new URectangle(1, 1));
 	}
 
-	private Dimension2D getFinalDimension(StringBounder stringBounder) {
-		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
-		udrawable.drawU(limitFinder);
-		return new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
-				limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());
-	}
-
 	private Dimension2D getFinalDimension() {
-		return getFinalDimension(fileFormatOption.getDefaultStringBounder(getSvgCharSizeHack()));
+		if (dimension == null) {
+			final LimitFinder limitFinder = new LimitFinder(fileFormatOption.getDefaultStringBounder(getSvgCharSizeHack()), true);
+			udrawable.drawU(limitFinder);
+			dimension = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
+					limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());
+		}
+		return dimension;
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
