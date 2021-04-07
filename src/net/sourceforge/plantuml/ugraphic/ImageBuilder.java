@@ -114,7 +114,6 @@ public class ImageBuilder {
 	private HColor backcolor = HColorUtils.WHITE;
 	private ColorMapper colorMapper = new ColorMapperIdentity();
 	private Dimension2D dimension;
-	private int dpi = 96;
 	private final FileFormatOption fileFormatOption;
 	private boolean handwritten;
 	private String hoverPathColorRGB;
@@ -171,6 +170,10 @@ public class ImageBuilder {
 		return this;
 	}
 
+	private int getDpi() {
+		return skinParam == null ? 96 : skinParam.getDpi();
+	}
+	
 	public ImageBuilder drawable(UDrawable drawable) {
 		this.udrawable = drawable;
 		if (backcolor == null && drawable instanceof TextBlockBackcolored) {
@@ -223,7 +226,6 @@ public class ImageBuilder {
 		annotations = true;
 		backcolor = calculateBackColor(diagram);
 		colorMapper = skinParam.getColorMapper();
-		dpi = skinParam.getDpi();
 		handwritten = skinParam.handwritten();
 		hoverPathColorRGB = calculateHoverPathColor(skinParam);
 		lengthAdjust = skinParam.getlengthAdjust();
@@ -279,7 +281,7 @@ public class ImageBuilder {
 			dx = -minmax.getMinX();
 			dy = -minmax.getMinY();
 		}
-		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * dpi / 96.0;
+		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi() / 96.0;
 		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor);
 		UGraphic ug2 = ug;
 		maybeDrawBorder(ug, dim);
