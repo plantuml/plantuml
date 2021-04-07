@@ -115,7 +115,6 @@ public class ImageBuilder {
 	private ColorMapper colorMapper = new ColorMapperIdentity();
 	private Dimension2D dimension;
 	private final FileFormatOption fileFormatOption;
-	private boolean handwritten;
 	private String hoverPathColorRGB;
 	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();
 	private UDrawable udrawable;
@@ -226,7 +225,6 @@ public class ImageBuilder {
 		annotations = true;
 		backcolor = calculateBackColor(diagram);
 		colorMapper = skinParam.getColorMapper();
-		handwritten = skinParam.handwritten();
 		hoverPathColorRGB = calculateHoverPathColor(skinParam);
 		lengthAdjust = skinParam.getlengthAdjust();
 		margin = calculateMargin(diagram);
@@ -341,7 +339,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
-		if (handwritten) {
+		if (skinParam != null && skinParam.handwritten()) {
 			return new UGraphicHandwritten(ug);
 		}
 //		if (OptionFlags.OMEGA_CROSSING) {
