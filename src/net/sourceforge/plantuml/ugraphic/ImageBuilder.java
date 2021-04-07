@@ -116,7 +116,6 @@ public class ImageBuilder {
 	private Dimension2D dimension;
 	private final FileFormatOption fileFormatOption;
 	private String hoverPathColorRGB;
-	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();
 	private UDrawable udrawable;
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
@@ -226,7 +225,6 @@ public class ImageBuilder {
 		backcolor = calculateBackColor(diagram);
 		colorMapper = skinParam.getColorMapper();
 		hoverPathColorRGB = calculateHoverPathColor(skinParam);
-		lengthAdjust = skinParam.getlengthAdjust();
 		margin = calculateMargin(diagram);
 		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 		preserveAspectRatio = calculatePreserveAspectRatio(fileFormatOption, skinParam);
@@ -443,6 +441,7 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicSVG(double scaleFactor, Dimension2D dim) {
+		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
 		HColor backColor = HColorUtils.WHITE; // TODO simplify backcolor some more in a future PR
 		if (this.backcolor instanceof HColorSimple) {
