@@ -169,6 +169,9 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			for (int j = i + 1; j < groups.size(); j++) {
 				final NwGroup group1 = groups.get(i);
 				final NwGroup group2 = groups.get(j);
+				if (group1.size() == 0 || group2.size() == 0) {
+					continue;
+				}
 				if (group1.getNetwork() != group2.getNetwork()) {
 					continue;
 				}

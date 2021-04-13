@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class DriverTextEps implements UDriver<EpsGraphics> {
 
@@ -84,12 +85,16 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 
 		final UText shape = (UText) ushape;
 
+		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
+		if (HColorUtils.isTransparent(fontConfiguration.getColor())) {
+			return;
+		}
+
 		if (strategy == EpsStrategy.WITH_MACRO_AND_TEXT) {
 			drawAsText(shape, x, y, param, eps, mapper);
 			return;
 		}
 
-		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 		final UFont font = fontConfiguration.getFont();
 
 		final TextLayout textLayout = new TextLayout(shape.getText(), font.getUnderlayingFont(), fontRenderContext);

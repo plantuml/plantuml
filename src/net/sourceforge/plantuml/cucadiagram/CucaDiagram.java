@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.elk.CucaDiagramFileMakerElk;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -650,9 +651,14 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		entityFactory.buildSuperGroups();
 
-		final CucaDiagramFileMaker maker = this.isUseSmetana()
-				? new CucaDiagramFileMakerSmetana(this, fileFormatOption.getDefaultStringBounder(getSkinParam()))
-				: new CucaDiagramFileMakerSvek(this);
+		final CucaDiagramFileMaker maker;
+		if (this.isUseElk()) {
+			maker = new CucaDiagramFileMakerElk(this, fileFormatOption.getDefaultStringBounder(getSkinParam()));
+		} else if (this.isUseSmetana()) {
+			maker = new CucaDiagramFileMakerSmetana(this, fileFormatOption.getDefaultStringBounder(getSkinParam()));
+		} else {
+			maker = new CucaDiagramFileMakerSvek(this);
+		}
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
 
 		if (result == null) {

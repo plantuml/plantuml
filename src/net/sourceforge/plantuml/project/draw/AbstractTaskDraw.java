@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -67,8 +68,6 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	private final HColorSet colorSet;
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
-
-	protected final double margin = 2;
 
 	@Override
 	final public String toString() {
@@ -112,12 +111,12 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		return getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
-	final protected double getShapeHeight(StringBounder stringBounder) {
-		return getHeightTask(stringBounder) - 2 * margin;
-	}
+	abstract protected double getShapeHeight(StringBounder stringBounder);
 
-	final public double getHeightTask(StringBounder stringBounder) {
-		return getFontConfiguration().getFont().getSize2D() + 5;
+	final public double getFullHeightTask(StringBounder stringBounder) {
+		final Style style = getStyle();
+		final ClockwiseTopRightBottomLeft margin = style.getMargin();
+		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();
 	}
 
 	public TaskDraw getTrueRow() {
@@ -142,13 +141,21 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	public final double getY(StringBounder stringBounder, Direction direction) {
+		final Style style = getStyle();
+		final ClockwiseTopRightBottomLeft margin = style.getMargin();
+		final ClockwiseTopRightBottomLeft padding = style.getPadding();
+
+		final double y1 = margin.getTop() + getY(stringBounder);
+		final double y2 = y1 + getShapeHeight(stringBounder);
+
 		if (direction == Direction.UP) {
-			return getY(stringBounder);
+			return y1;
 		}
 		if (direction == Direction.DOWN) {
-			return getY(stringBounder) + getHeightTask(stringBounder);
+			return y2;
 		}
-		return getY(stringBounder) + getHeightTask(stringBounder) / 2;
+		return (y1 + y2) / 2;
+
 	}
 
 	protected final StyleBuilder getStyleBuilder() {

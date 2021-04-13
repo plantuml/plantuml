@@ -71,6 +71,10 @@ public class NwGroup {
 		this.network = network;
 	}
 
+	public int size() {
+		return elements.size();
+	}
+
 	public final String getName() {
 		return name;
 	}

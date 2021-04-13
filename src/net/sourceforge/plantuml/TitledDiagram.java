@@ -202,9 +202,18 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	}
 
 	private boolean useSmetana;
+	private boolean useElk;
 
 	public void setUseSmetana(boolean useSmetana) {
 		this.useSmetana = useSmetana;
+	}
+
+	public void setUseElk(boolean useElk) {
+		this.useElk = useElk;
+	}
+
+	public boolean isUseElk() {
+		return this.useElk;
 	}
 
 	public boolean isUseSmetana() {
@@ -234,7 +243,6 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption)
-				.styled(this);
+		return super.createImageBuilder(fileFormatOption).styled(this);
 	}
 }

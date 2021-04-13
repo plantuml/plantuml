@@ -101,7 +101,7 @@ public class GanttConstraint extends WithLinkType {
 		Style style = styleBuilder.getMergedStyle(getStyleSignature()).eventuallyOverride(PName.LineColor,
 				getSpecificColor());
 		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));
-		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw);
+		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);
 	}
 
 	public boolean isHidden(Day min, Day max) {

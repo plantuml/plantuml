@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.Moment;
 import net.sourceforge.plantuml.project.core.MomentImpl;
 import net.sourceforge.plantuml.project.core.PrintScale;
@@ -93,6 +94,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -215,28 +217,35 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
-				final Style timelineStyle = StyleSignature
-						.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
-						.getMergedStyle(getCurrentStyleBuilder());
+				try {
+					final Style timelineStyle = StyleSignature
+							.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
+							.getMergedStyle(getCurrentStyleBuilder());
 
-				final HColor back = timelineStyle.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-				if (HColorUtils.isTransparent(back) == false) {
-					final URectangle rect1 = new URectangle(calculateDimension(ug.getStringBounder()).getWidth(),
-							timeHeader.getTimeHeaderHeight());
-					final URectangle rect2 = new URectangle(calculateDimension(ug.getStringBounder()).getWidth(),
-							timeHeader.getTimeFooterHeight());
-					ug.apply(back.bg()).draw(rect1);
-					ug.apply(back.bg()).apply(UTranslate.dy(totalHeightWithoutFooter)).draw(rect2);
-				}
+					final HColor back = timelineStyle.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+					if (HColorUtils.isTransparent(back) == false) {
+						final URectangle rect1 = new URectangle(calculateDimension(ug.getStringBounder()).getWidth(),
+								timeHeader.getTimeHeaderHeight());
+						final URectangle rect2 = new URectangle(calculateDimension(ug.getStringBounder()).getWidth(),
+								timeHeader.getTimeFooterHeight());
+						ug.apply(back.bg()).draw(rect1);
+						ug.apply(back.bg()).apply(UTranslate.dy(totalHeightWithoutFooter)).draw(rect2);
+					}
 
-				timeHeader.drawTimeHeader(ug, totalHeightWithoutFooter);
+					timeHeader.drawTimeHeader(ug, totalHeightWithoutFooter);
 
-				drawConstraints(ug, timeHeader.getTimeScale());
-				drawTasksRect(ug);
-				drawTasksTitle(ug);
-				drawResources(ug);
-				if (showFootbox) {
-					timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(totalHeightWithoutFooter)));
+					drawConstraints(ug, timeHeader.getTimeScale());
+					drawTasksRect(ug);
+					drawTasksTitle(ug);
+					drawResources(ug);
+					if (showFootbox) {
+						timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(totalHeightWithoutFooter)));
+					}
+				} catch (Throwable t) {
+					t.printStackTrace();
+					final UDrawable crash = new GraphvizCrash(getSource().getPlainString(), false, t);
+					crash.drawU(ug);
+
 				}
 			}
 
@@ -366,7 +375,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote());
 			}
 			if (task.getRow() == null) {
-				y += draw.getHeightTask(stringBounder);
+				y += draw.getFullHeightTask(stringBounder);
 			}
 			draws.put(task, draw);
 		}

@@ -99,23 +99,27 @@ public class Segment {
 		Collections.sort(sortedDelay, new SortPos1());
 		final List<Segment> result2 = new ArrayList<Segment>();
 		double pendingStart = pos1;
-		for (Segment d : sortedDelay) {
-			if (d.pos1 <= pendingStart) {
+		for (Segment pause : sortedDelay) {
+			if (pause.pos1 == pendingStart) {
+				pendingStart = pause.pos2;
 				continue;
 			}
-			if (d.pos1 > this.pos2) {
-				result2.add(new Segment(pendingStart, this.pos2));
+			if (pause.pos1 < pendingStart) {
+				continue;
+			}
+			if (pause.pos1 > this.pos2) {
+				if (pendingStart < this.pos2)
+					result2.add(new Segment(pendingStart, this.pos2));
 				return Collections.unmodifiableCollection(result2);
 			}
-			// if (this.contains(d) == false) {
-			// throw new IllegalStateException();
-			// }
-			if (this.contains(d)) {
-				result2.add(new Segment(pendingStart, d.pos1));
-				pendingStart = d.pos2;
+			if (this.contains(pause)) {
+				if (pendingStart < pause.pos1)
+					result2.add(new Segment(pendingStart, pause.pos1));
+				pendingStart = pause.pos2;
 			}
 		}
-		result2.add(new Segment(pendingStart, this.pos2));
+		if (pendingStart < this.pos2)
+			result2.add(new Segment(pendingStart, this.pos2));
 		return Collections.unmodifiableCollection(result2);
 	}
 

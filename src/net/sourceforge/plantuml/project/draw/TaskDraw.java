@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -58,7 +59,7 @@ public interface TaskDraw extends UDrawable {
 	
 	public void drawTitle(UGraphic ug);
 
-	public double getHeightTask(StringBounder stringBounder);
+	public double getFullHeightTask(StringBounder stringBounder);
 
 	public double getHeightMax(StringBounder stringBounder);
 
@@ -67,6 +68,10 @@ public interface TaskDraw extends UDrawable {
 	public FingerPrint getFingerPrint(StringBounder stringBounder);
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
+
+	public double getX1(TaskAttribute taskAttribute);
+
+	public double getX2(TaskAttribute taskAttribute);
 
 
 }

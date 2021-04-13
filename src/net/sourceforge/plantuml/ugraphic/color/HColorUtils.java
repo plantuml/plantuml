@@ -146,6 +146,9 @@ public class HColorUtils {
 		if (back instanceof HColorBackground && ((HColorBackground) back).getBack() == TRANSPARENT) {
 			return true;
 		}
+		if (back instanceof HColorSimple && ((HColorSimple) back).isTransparent()) {
+			return true;
+		}
 		return false;
 	}
 

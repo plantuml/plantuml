@@ -41,26 +41,26 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 
 public class PathUtils {
 
-	private final static double round = 4;
-
-	public static UPath UtoRight(double width, double height) {
+	public static UPath UtoRight(double width, double height, double round) {
+		final double halfRound = round / 2;
 		final UPath result = new UPath();
 		result.moveTo(0, 0);
-		result.lineTo(width - round, 0);
-		result.arcTo(new Point2D.Double(width, round), round, 0, 1);
-		result.lineTo(width, height - round);
-		result.arcTo(new Point2D.Double(width - round, height), round, 0, 1);
+		result.lineTo(width - halfRound, 0);
+		result.arcTo(new Point2D.Double(width, halfRound), halfRound, 0, 1);
+		result.lineTo(width, height - halfRound);
+		result.arcTo(new Point2D.Double(width - halfRound, height), halfRound, 0, 1);
 		result.lineTo(0, height);
 		return result;
 	}
 
-	public static UPath UtoLeft(double width, double height) {
+	public static UPath UtoLeft(double width, double height, double round) {
+		final double halfRound = round / 2;
 		final UPath result = new UPath();
 		result.moveTo(width, height);
-		result.lineTo(round, height);
-		result.arcTo(new Point2D.Double(0, height - round), round, 0, 1);
-		result.lineTo(0, round);
-		result.arcTo(new Point2D.Double(round, 0), round, 0, 1);
+		result.lineTo(halfRound, height);
+		result.arcTo(new Point2D.Double(0, height - halfRound), halfRound, 0, 1);
+		result.lineTo(0, halfRound);
+		result.arcTo(new Point2D.Double(halfRound, 0), halfRound, 0, 1);
 		result.lineTo(width, 0);
 		return result;
 	}

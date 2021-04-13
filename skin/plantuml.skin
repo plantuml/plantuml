@@ -290,6 +290,15 @@ ganttDiagram {
 	timeline {
 	    BackgroundColor transparent
 	}
+	task {
+		RoundCorner 0
+        Margin 2 2 2 2
+        Padding 0
+	}
+	milestone {
+        Margin 2
+        Padding 3
+	}
 }
 
 

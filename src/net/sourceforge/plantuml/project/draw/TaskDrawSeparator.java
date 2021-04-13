@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -152,12 +153,12 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
-		final double h = getHeightTask(stringBounder);
+		final double h = getFullHeightTask(stringBounder);
 		final double end = timeScale.getEndingPosition(max);
 		return new FingerPrint(0, y, end, y + h);
 	}
 
-	public double getHeightTask(StringBounder stringBounder) {
+	public double getFullHeightTask(StringBounder stringBounder) {
 		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
 		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
 		return margin.getTop() + padding.getTop() + getTextHeight(stringBounder) + padding.getBottom()
@@ -196,7 +197,15 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	public double getHeightMax(StringBounder stringBounder) {
-		return getHeightTask(stringBounder);
+		return getFullHeightTask(stringBounder);
+	}
+
+	public double getX1(TaskAttribute taskAttribute) {
+		throw new UnsupportedOperationException();
+	}
+
+	public double getX2(TaskAttribute taskAttribute) {
+		throw new UnsupportedOperationException();
 	}
 
 }

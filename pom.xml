@@ -94,6 +94,21 @@
 			<version>1.0.7</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.elk</groupId>
+			<artifactId>org.eclipse.elk.core</artifactId>
+			<version>0.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.elk</groupId>
+			<artifactId>org.eclipse.elk.alg.layered</artifactId>
+			<version>0.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.elk</groupId>
+			<artifactId>org.eclipse.elk.alg.mrtree</artifactId>
+			<version>0.7.1</version>
+		</dependency>
     </dependencies>
 
     <licenses>
