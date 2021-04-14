@@ -59,15 +59,19 @@ import org.eclipse.elk.graph.ElkNode;
 import org.eclipse.elk.graph.util.ElkGraphUtil;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -91,12 +95,43 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 	private final DotStringFactory dotStringFactory;
 
 	private final Map<ILeaf, ElkNode> nodes = new LinkedHashMap<ILeaf, ElkNode>();
+	private final Map<Link, ElkEdge> edges = new LinkedHashMap<Link, ElkEdge>();
 
 	public CucaDiagramFileMakerElk(CucaDiagram diagram, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
 
+	}
+
+	// Unused right now
+	private TextBlock getLabel(Link link) {
+		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
+		ISkinParam skinParam = diagram.getSkinParam();
+		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+		final TextBlock label = link.getLabel().create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		if (TextBlockUtils.isEmpty(label, stringBounder)) {
+			return label;
+		}
+		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
+	}
+
+	// Unused right now
+	private TextBlock getQualifier(Link link, int n) {
+		final String tmp = n == 1 ? link.getQualifier1() : link.getQualifier2();
+		if (tmp == null) {
+			return null;
+		}
+		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
+		ISkinParam skinParam = diagram.getSkinParam();
+		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+		final TextBlock label = Display.getWithNewlines(tmp).create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		if (TextBlockUtils.isEmpty(label, stringBounder)) {
+			return label;
+		}
+		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
 	}
 
 	// The Drawing class does the real drawing
@@ -125,6 +160,17 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				image.drawU(ug.apply(new UTranslate(corner)));
 			}
 
+			// Draw all edges
+			for (Entry<Link, ElkEdge> ent : edges.entrySet()) {
+				final Link link = ent.getKey();
+				if (link.isInvis()) {
+					continue;
+				}
+				final ElkEdge edge = ent.getValue();
+				new ElkPath(link, edge, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2))
+						.drawU(ug);
+			}
+
 		}
 
 		public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -146,7 +192,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 		try {
 			final ElkNode root = ElkGraphUtil.createGraph();
-			final ElkPadding labelPadding = new ElkPadding(2.0);
+
+			// This padding setting have no impact ?
+			final ElkPadding labelPadding = new ElkPadding(100.0);
 
 			// Convert all "leaf" to ELK node
 			for (ILeaf leaf : diagram.getLeafsvalues()) {
@@ -162,7 +210,11 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				// There is no real "label" here
 				// We just would like to force node dimension
 				final ElkLabel label = ElkGraphUtil.createLabel(node);
-				label.setDimensions(dimension.getWidth(), dimension.getHeight());
+				label.setText("X");
+
+				// I don't know why we have to do this hack, but somebody has to fix it
+				final double VERY_STRANGE_OFFSET = 10;
+				label.setDimensions(dimension.getWidth() - VERY_STRANGE_OFFSET, dimension.getHeight());
 
 				// No idea of what we are doing here :-)
 				label.setProperty(CoreOptions.NODE_LABELS_PLACEMENT, EnumSet.of(NodeLabelPlacement.INSIDE,
@@ -175,22 +227,31 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				nodes.put(leaf, node);
 			}
 
+			// https://www.eclipse.org/forums/index.php/t/1095737/
+
 			for (final Link link : diagram.getLinks()) {
 				final ElkEdge edge = ElkGraphUtil.createEdge(root);
-				System.err.println("edge=" + edge);
 				edge.getSources().add(nodes.get(link.getEntity1()));
 				edge.getTargets().add(nodes.get(link.getEntity2()));
+				edges.put(link, edge);
 			}
 
 			final RecursiveGraphLayoutEngine engine = new RecursiveGraphLayoutEngine();
 			engine.layout(root, new NullElkProgressMonitor());
 
 			// Debug
-			for (final ElkNode node : nodes.values()) {
-				final String name = node.getLabels().get(0).getText();
-				System.out.println("node " + name + " : " + node.getX() + ", " + node.getY() + " (" + node.getWidth()
-						+ ", " + node.getHeight() + ")");
-			}
+//			for (final ElkNode node : nodes.values()) {
+//				final String name = node.getLabels().get(0).getText();
+//				System.out.println("node " + name + " : " + node.getX() + ", " + node.getY() + " (" + node.getWidth()
+//						+ ", " + node.getHeight() + ")");
+//			}
+//			for (final ElkEdge edge : edges.values()) {
+//				final EList<ElkEdgeSection> sections = edge.getSections();
+//				System.out.println("edge=" + edge.getSections());
+//				System.out.println("edge=" + edge.getProperty(LayeredOptions.JUNCTION_POINTS));
+//				for (ElkEdgeSection s : sections)
+//					System.out.println(s.getBendPoints());
+//			}
 
 			final MinMax minMax = TextBlockUtils.getMinMax(new Drawing(null), stringBounder, false);
 
