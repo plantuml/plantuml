@@ -49,6 +49,8 @@ import java.util.Map.Entry;
 import org.eclipse.elk.core.RecursiveGraphLayoutEngine;
 import org.eclipse.elk.core.math.ElkPadding;
 import org.eclipse.elk.core.options.CoreOptions;
+import org.eclipse.elk.core.options.Direction;
+import org.eclipse.elk.core.options.EdgeType;
 import org.eclipse.elk.core.options.NodeLabelPlacement;
 import org.eclipse.elk.core.options.SizeConstraint;
 import org.eclipse.elk.core.options.SizeOptions;
@@ -169,6 +171,13 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				final ElkEdge edge = ent.getValue();
 				new ElkPath(link, edge, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2))
 						.drawU(ug);
+				if (Display.isNull(link.getLabel()) == false) {
+					final ElkLabel label = edge.getLabels().get(0);
+					final double x = label.getX();
+					final double y = label.getY();
+					final TextBlock labelLink = getLabel(link);
+					labelLink.drawU(ug.apply(new UTranslate(x, y)));
+				}
 			}
 
 		}
@@ -192,6 +201,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 		try {
 			final ElkNode root = ElkGraphUtil.createGraph();
+			root.setProperty(CoreOptions.DIRECTION, Direction.DOWN);
 
 			// This padding setting have no impact ?
 			final ElkPadding labelPadding = new ElkPadding(100.0);
@@ -214,7 +224,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 				// I don't know why we have to do this hack, but somebody has to fix it
 				final double VERY_STRANGE_OFFSET = 10;
-				label.setDimensions(dimension.getWidth() - VERY_STRANGE_OFFSET, dimension.getHeight());
+				label.setDimensions(dimension.getWidth(), dimension.getHeight() - VERY_STRANGE_OFFSET);
 
 				// No idea of what we are doing here :-)
 				label.setProperty(CoreOptions.NODE_LABELS_PLACEMENT, EnumSet.of(NodeLabelPlacement.INSIDE,
@@ -231,6 +241,16 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 			for (final Link link : diagram.getLinks()) {
 				final ElkEdge edge = ElkGraphUtil.createEdge(root);
+				if (Display.isNull(link.getLabel()) == false) {
+					final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
+					final TextBlock labelLink = getLabel(link);
+					final Dimension2D labelLinkDim = labelLink.calculateDimension(stringBounder);
+					edgeLabel.setText("X");
+					edgeLabel.setDimensions(labelLinkDim.getWidth(), labelLinkDim.getHeight());
+					edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);
+					edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
+
+				}
 				edge.getSources().add(nodes.get(link.getEntity1()));
 				edge.getTargets().add(nodes.get(link.getEntity2()));
 				edges.put(link, edge);
