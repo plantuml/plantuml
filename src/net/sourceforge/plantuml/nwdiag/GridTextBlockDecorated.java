@@ -178,8 +178,10 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 				final Footprint footprint1 = getFootprint(group1);
 				final Footprint footprint2 = getFootprint(group2);
 				final Footprint inter = footprint1.intersection(footprint2);
-				data.swapCols(inter.getMin(), inter.getMax());
-				return;
+				if (inter != null) {
+					data.swapCols(inter.getMin(), inter.getMax());
+					return;
+				}
 			}
 		}
 

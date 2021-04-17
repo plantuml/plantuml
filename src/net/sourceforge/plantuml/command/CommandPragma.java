@@ -78,15 +78,19 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 			system.getPragma().define(name, value);
 			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot")) {
 				return CommandExecutionResult.error(
-						"This directive has been renamed to '!pragma graphviz_dot smetana'. Please update your diagram.");
+						"This directive has been renamed to '!pragma layout smetana'. Please update your diagram.");
 			}
-			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("smetana")) {
+			if (name.equalsIgnoreCase("graphviz_dot")) {
+				return CommandExecutionResult.error("This directive has been renamed to '!pragma layout " + value
+						+ "'. Please update your diagram.");
+			}
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana")) {
 				system.setUseSmetana(true);
 			}
-			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("elk")) {
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk")) {
 				system.setUseElk(true);
 			}
-			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase(GraphvizUtils.VIZJS)) {
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizUtils.VIZJS)) {
 				system.getSkinParam().setUseVizJs(true);
 			}
 		}

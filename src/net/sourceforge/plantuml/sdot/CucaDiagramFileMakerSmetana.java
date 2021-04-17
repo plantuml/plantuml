@@ -194,7 +194,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		this.stringBounder = stringBounder;
 		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
 
-		printGroups(diagram.getRootGroup());
+		printAllSubgroups(diagram.getRootGroup());
 		printEntities(getUnpackagedEntities());
 
 	}
@@ -227,7 +227,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void printGroups(IGroup parent) {
+	private void printAllSubgroups(IGroup parent) {
 		for (IGroup g : diagram.getChildrenGroups(parent)) {
 			if (g.isRemoved()) {
 				continue;
@@ -238,12 +238,12 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				final ILeaf folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
 				printEntityNew(folder);
 			} else {
-				printGroup(g);
+				printSingleGroup(g);
 			}
 		}
 	}
 
-	private void printGroup(IGroup g) {
+	private void printSingleGroup(IGroup g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE) {
 			return;
 		}
@@ -274,7 +274,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		dotStringFactory.openCluster(titleAndAttributeWidth, titleAndAttributeHeight, title, stereo, g);
 		this.printEntities(g.getLeafsDirect());
 
-		printGroups(g);
+		printAllSubgroups(g);
 
 		dotStringFactory.closeCluster();
 	}
@@ -284,8 +284,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private void printEntities(Collection<ILeaf> entities2) {
-		for (ILeaf ent : entities2) {
+	private void printEntities(Collection<ILeaf> entities) {
+		for (ILeaf ent : entities) {
 			if (ent.isRemoved()) {
 				continue;
 			}
@@ -293,8 +293,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void exportEntities(ST_Agraph_s g, Collection<ILeaf> entities2) {
-		for (ILeaf ent : entities2) {
+	private void exportEntities(ST_Agraph_s g, Collection<ILeaf> entities) {
+		for (ILeaf ent : entities) {
 			if (ent.isRemoved()) {
 				continue;
 			}

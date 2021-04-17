@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.elk;
 import org.eclipse.elk.graph.ElkBendPoint;
 import org.eclipse.elk.graph.ElkEdge;
 import org.eclipse.elk.graph.ElkEdgeSection;
+import org.eclipse.elk.graph.ElkLabel;
 import org.eclipse.emf.common.util.EList;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -62,18 +63,18 @@ public class ElkPath implements UDrawable {
 	private final ElkEdge edge;
 
 	private final CucaDiagram diagram;
-	private final TextBlock label;
+	private final TextBlock centerLabel;
 	private final TextBlock headLabel;
 	private final TextBlock tailLabel;
 	private final Rose rose = new Rose();
 
-	public ElkPath(Link link, ElkEdge edge, CucaDiagram diagram, TextBlock label, TextBlock tailLabel,
+	public ElkPath(Link link, ElkEdge edge, CucaDiagram diagram, TextBlock centerLabel, TextBlock tailLabel,
 			TextBlock headLabel) {
 		this.link = link;
 		this.edge = edge;
 
 		this.diagram = diagram;
-		this.label = label;
+		this.centerLabel = centerLabel;
 		this.tailLabel = tailLabel;
 		this.headLabel = headLabel;
 	}
@@ -119,9 +120,39 @@ public class ElkPath implements UDrawable {
 		ug = ug.apply(stroke).apply(color);
 
 		final EList<ElkEdgeSection> sections = edge.getSections();
+		if (sections.size() == 0) {
+			System.err.println("Strange: no section?");
+			System.err.println("Maybe a 'Long hierarchical edge' " + edge.isHierarchical());
+		} else {
+			drawSections(ug, sections);
+		}
 
+		drawLabels(ug);
+
+	}
+
+	private void drawLabels(UGraphic ug) {
+		for (ElkLabel label : edge.getLabels()) {
+			final double x = label.getX();
+			final double y = label.getY();
+			final TextBlock labelLink;
+			// Nasty trick: we store the type of label (center/head/tail) in the text
+			final String type = label.getText();
+			if ("X".equals(type)) {
+				labelLink = centerLabel;
+			} else if ("1".equals(type)) {
+				labelLink = tailLabel;
+			} else if ("2".equals(type)) {
+				labelLink = headLabel;
+			} else {
+				continue;
+			}
+			labelLink.drawU(ug.apply(new UTranslate(x, y)));
+		}
+	}
+
+	private void drawSections(UGraphic ug, final EList<ElkEdgeSection> sections) {
 		for (ElkEdgeSection section : sections) {
-
 			final EList<ElkBendPoint> points = section.getBendPoints();
 
 			double x1 = section.getStartX();
@@ -136,7 +167,6 @@ public class ElkPath implements UDrawable {
 			drawLine(ug, x1, y1, section.getEndX(), section.getEndY());
 
 		}
-
 	}
 
 	private void drawLine(UGraphic ug, final double x1, final double y1, final double x2, final double y2) {
