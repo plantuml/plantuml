@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
-import net.sourceforge.plantuml.svek.Line;
+import net.sourceforge.plantuml.svek.SvekLine;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -300,11 +300,11 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return ShapeType.RECTANGLE;
 	}
 
-	private Line opaleLine;
+	private SvekLine opaleLine;
 	private SvekNode node;
 	private SvekNode other;
 
-	public void setOpaleLine(Line line, SvekNode node, SvekNode other) {
+	public void setOpaleLine(SvekLine line, SvekNode node, SvekNode other) {
 		if (other == null) {
 			throw new IllegalArgumentException();
 		}

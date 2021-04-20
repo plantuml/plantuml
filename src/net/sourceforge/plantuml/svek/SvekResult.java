@@ -98,7 +98,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 		final Set<String> ids = new HashSet<String>();
 
-		for (Line line : dotStringFactory.getBibliotekon().allLines()) {
+		for (SvekLine line : dotStringFactory.getBibliotekon().allLines()) {
 			final UGraphic ug2 = line.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
 
 			if (UseStyle.useBetaStyle()) {

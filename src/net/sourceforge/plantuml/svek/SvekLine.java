@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class Line implements Moveable, Hideable, GuideLine {
+public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	private static final Dimension2DDouble CONSTRAINT_SPOT = new Dimension2DDouble(10, 10);
 
@@ -205,7 +205,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 		throw new IllegalArgumentException();
 	}
 
-	public Line(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
+	public SvekLine(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma) {
 
 		if (link == null) {
@@ -985,7 +985,7 @@ public class Line implements Moveable, Hideable, GuideLine {
 		return link.isHidden();
 	}
 
-	public boolean sameConnections(Line other) {
+	public boolean sameConnections(SvekLine other) {
 		return link.sameConnections(other.link);
 	}
 

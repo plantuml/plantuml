@@ -55,9 +55,9 @@ public class Bibliotekon {
 
 	private final Map<ILeaf, SvekNode> nodeMap = new LinkedHashMap<ILeaf, SvekNode>();;
 
-	private final List<Line> lines0 = new ArrayList<Line>();
-	private final List<Line> lines1 = new ArrayList<Line>();
-	private final List<Line> allLines = new ArrayList<Line>();
+	private final List<SvekLine> lines0 = new ArrayList<SvekLine>();
+	private final List<SvekLine> lines1 = new ArrayList<SvekLine>();
+	private final List<SvekLine> allLines = new ArrayList<SvekLine>();
 
 	public SvekNode createNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
 		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);
@@ -74,13 +74,13 @@ public class Bibliotekon {
 		return null;
 	}
 
-	public void addLine(Line line) {
+	public void addLine(SvekLine line) {
 		allLines.add(line);
 		if (first(line)) {
 			if (line.hasNoteLabelText()) {
 				// lines0.add(0, line);
 				for (int i = 0; i < lines0.size(); i++) {
-					final Line other = lines0.get(i);
+					final SvekLine other = lines0.get(i);
 					if (other.hasNoteLabelText() == false && line.sameConnections(other)) {
 						lines0.add(i, line);
 						return;
@@ -95,7 +95,7 @@ public class Bibliotekon {
 		}
 	}
 
-	private static boolean first(Line line) {
+	private static boolean first(SvekLine line) {
 		final int length = line.getLength();
 		if (length == 1) {
 			return true;
@@ -158,15 +158,15 @@ public class Bibliotekon {
 		return Collections.unmodifiableMap(result);
 	}
 
-	public List<Line> allLines() {
+	public List<SvekLine> allLines() {
 		return Collections.unmodifiableList(allLines);
 	}
 
-	public List<Line> lines0() {
+	public List<SvekLine> lines0() {
 		return Collections.unmodifiableList(lines0);
 	}
 
-	public List<Line> lines1() {
+	public List<SvekLine> lines1() {
 		return Collections.unmodifiableList(lines1);
 	}
 
@@ -178,9 +178,9 @@ public class Bibliotekon {
 		return Collections.unmodifiableCollection(nodeMap.values());
 	}
 
-	public List<Line> getAllLineConnectedTo(IEntity leaf) {
-		final List<Line> result = new ArrayList<Line>();
-		for (Line line : allLines) {
+	public List<SvekLine> getAllLineConnectedTo(IEntity leaf) {
+		final List<SvekLine> result = new ArrayList<SvekLine>();
+		for (SvekLine line : allLines) {
 			if (line.isLinkFromOrTo(leaf)) {
 				result.add(line);
 			}
@@ -188,8 +188,8 @@ public class Bibliotekon {
 		return Collections.unmodifiableList(result);
 	}
 
-	public Line getLine(Link link) {
-		for (Line line : allLines) {
+	public SvekLine getLine(Link link) {
+		for (SvekLine line : allLines) {
 			if (line.isLink(link)) {
 				return line;
 			}
@@ -198,7 +198,7 @@ public class Bibliotekon {
 	}
 
 	public IEntity getOnlyOther(IEntity entity) {
-		for (Line line : allLines) {
+		for (SvekLine line : allLines) {
 			final IEntity other = line.getOther(entity);
 			if (other != null) {
 				return other;

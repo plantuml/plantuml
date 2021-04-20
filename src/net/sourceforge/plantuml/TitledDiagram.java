@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
 	public static boolean FORCE_SMETANA = false;
+	public static boolean FORCE_ELK = false;
 
 	private DisplayPositionned title = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 
@@ -213,6 +214,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	}
 
 	public boolean isUseElk() {
+		if (FORCE_ELK)
+			return true;
 		return this.useElk;
 	}
 

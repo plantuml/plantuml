@@ -46,7 +46,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.Line;
+import net.sourceforge.plantuml.svek.SvekLine;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -68,7 +68,7 @@ public class Neighborhood {
 	public void drawU(UGraphic ug, double minX, double minY, Bibliotekon bibliotekon, Dimension2D shapeDim) {
 		final Set<Point2D> contactPoints = new HashSet<Point2D>();
 		for (Link link : sametailLinks) {
-			final Line line = bibliotekon.getLine(link);
+			final SvekLine line = bibliotekon.getLine(link);
 			final Point2D contact = line.getStartContactPoint();
 			contactPoints.add(contact);
 		}
@@ -90,7 +90,7 @@ public class Neighborhood {
 		}
 
 		for (Link link : allButSametails) {
-			final Line line = bibliotekon.getLine(link);
+			final SvekLine line = bibliotekon.getLine(link);
 			final Point2D contact = link.getEntity1() == leaf ? line.getStartContactPoint() : line.getEndContactPoint();
 			if (contact == null) {
 				assert false;

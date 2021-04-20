@@ -424,17 +424,10 @@ public final class GeneralImageBuilder {
 			}
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont;
-				if (UseStyle.useBetaStyle()) {
-					final Style style = getDefaultStyleDefinitionArrow(link.getStereotype())
-							.getMergedStyle(link.getStyleBuilder());
-					labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-				} else {
-					labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
-				}
+				final FontConfiguration labelFont = getFontForLink(link, skinParam);
 
-				final Line line = new Line(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
-						labelFont, dotStringFactory.getBibliotekon(), dotData.getPragma());
+				final SvekLine line = new SvekLine(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
+						labelFont, dotStringFactory.getBibliotekon(), pragma);
 
 				dotStringFactory.getBibliotekon().addLine(line);
 
@@ -487,6 +480,18 @@ public final class GeneralImageBuilder {
 			throw new UnparsableGraphvizException(e, graphvizVersion, svg, source.getPlainString());
 		}
 
+	}
+
+	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
+		final FontConfiguration labelFont;
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinitionArrow(link.getStereotype())
+					.getMergedStyle(link.getStyleBuilder());
+			labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		} else {
+			labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+		}
+		return labelFont;
 	}
 
 	private boolean isSvekTrace() {

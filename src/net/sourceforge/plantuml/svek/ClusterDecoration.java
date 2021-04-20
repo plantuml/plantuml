@@ -76,13 +76,6 @@ public class ClusterDecoration {
 		return style.toUSymbol();
 	}
 
-	public final static int marginTitleX1 = 3;
-	public final static int marginTitleX2 = 3;
-	public final static int marginTitleX3 = 7;
-	public final static int marginTitleY0 = 0;
-	public final static int marginTitleY1 = 3;
-	public final static int marginTitleY2 = 3;
-
 	public void drawU(UGraphic ug, HColor backColor, HColor borderColor, double shadowing, double roundCorner,
 			HorizontalAlignment titleAlignment, HorizontalAlignment stereoAlignment) {
 		final SymbolContext biColor = new SymbolContext(backColor, borderColor);
@@ -91,8 +84,8 @@ public class ClusterDecoration {
 		}
 		final SymbolContext symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke)
 				.withCorner(roundCorner, 0);
-		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext, stereoAlignment).drawU(
-				ug.apply(new UTranslate(minX, minY)));
+		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext, stereoAlignment)
+				.drawU(ug.apply(new UTranslate(minX, minY)));
 	}
 
 }

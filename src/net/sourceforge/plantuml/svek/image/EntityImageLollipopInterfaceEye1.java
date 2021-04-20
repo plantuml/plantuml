@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.Line;
+import net.sourceforge.plantuml.svek.SvekLine;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -100,10 +100,10 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 
 		Point2D pos = bibliotekon.getNode(getEntity()).getPosition();
 
-		final List<Line> lines = bibliotekon.getAllLineConnectedTo(getEntity());
+		final List<SvekLine> lines = bibliotekon.getAllLineConnectedTo(getEntity());
 		final UTranslate reverse = new UTranslate(pos).reverse();
 		final ConnectedCircle connectedCircle = new ConnectedCircle(SIZE / 2);
-		for (Line line : lines) {
+		for (SvekLine line : lines) {
 			Point2D pt = line.getMyPoint(getEntity());
 			pt = reverse.getTranslated(pt);
 			connectedCircle.addSecondaryConnection(pt);
