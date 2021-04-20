@@ -27,13 +27,14 @@ public class ElkWithProperty {
 		return this.obj.equals(((ElkWithProperty) other).obj);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	final public void setProperty(Object key, Object value) {
 		if (value instanceof EnumSet) {
 			EnumSet result = null;
 			for (Object foo : (Collection) value) {
 				final EnumProxy elk = (EnumProxy) foo;
 				if (result == null) {
-					result = EnumSet.noneOf((Class<Enum>) elk.getClass());
+					result = EnumSet.noneOf((Class) elk.getClass());
 				}
 				result.add(elk);
 			}
