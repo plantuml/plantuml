@@ -101,7 +101,6 @@ public class OptionPrint {
 		System.out.println("    -o[utput] \"dir\"\tTo generate images in the specified directory");
 		System.out.println("    -DVAR1=value\tTo set a preprocessing variable as if '!define VAR1 value' were used");
 		System.out.println("    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used");
-		System.out.println("    -r[ecurse]\t\trecurse through directories");
 		// System.out.println(" -config \"file\"\tTo read the provided config file
 		// before each diagram");
 		final char separator = SFile.separatorChar;
