@@ -191,8 +191,6 @@ public class Option {
 			} else if (s.startsWith("-o") && s.length() > 3) {
 				s = s.substring(2);
 				outputDir = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
-			} else if (s.equalsIgnoreCase("-recurse") || s.equalsIgnoreCase("-r")) {
-				// recurse = true;
 			} else if (s.equalsIgnoreCase("-exclude") || s.equalsIgnoreCase("-x")) {
 				i++;
 				if (i == arg.length) {
