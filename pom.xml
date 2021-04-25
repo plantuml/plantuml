@@ -35,7 +35,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>1.2021.5-SNAPSHOT</version>
+    <version>1.2021.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -93,21 +93,6 @@
 			<artifactId>jlatexmath</artifactId>
 			<version>1.0.7</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.elk</groupId>
-			<artifactId>org.eclipse.elk.core</artifactId>
-			<version>0.7.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.elk</groupId>
-			<artifactId>org.eclipse.elk.alg.layered</artifactId>
-			<version>0.7.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.elk</groupId>
-			<artifactId>org.eclipse.elk.alg.mrtree</artifactId>
-			<version>0.7.1</version>
 		</dependency>
     </dependencies>
 

@@ -271,23 +271,28 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TimeHeader getTimeHeader() {
 		if (openClose.getCalendar() == null) {
-			return new TimeHeaderSimple(min, max);
+			return new TimeHeaderSimple(min, max, getClosedStyle(), getIHtmlColorSet());
 		} else if (printScale == PrintScale.WEEKLY) {
 			return new TimeHeaderWeekly(getFactorScale(), openClose.getCalendar(), min, max, openClose, colorDays,
-					colorDaysOfWeek, weekNumberStrategy);
+					colorDaysOfWeek, weekNumberStrategy, getClosedStyle(), getIHtmlColorSet());
 		} else if (printScale == PrintScale.MONTHLY) {
 			return new TimeHeaderMonthly(getFactorScale(), openClose.getCalendar(), min, max, openClose, colorDays,
-					colorDaysOfWeek);
+					colorDaysOfWeek, getClosedStyle(), getIHtmlColorSet());
 		} else if (printScale == PrintScale.QUARTERLY) {
 			return new TimeHeaderQuarterly(getFactorScale(), openClose.getCalendar(), min, max, openClose, colorDays,
-					colorDaysOfWeek);
+					colorDaysOfWeek, getClosedStyle(), getIHtmlColorSet());
 		} else if (printScale == PrintScale.YEARLY) {
 			return new TimeHeaderYearly(getFactorScale(), openClose.getCalendar(), min, max, openClose, colorDays,
-					colorDaysOfWeek);
+					colorDaysOfWeek, getClosedStyle(), getIHtmlColorSet());
 		} else {
 			return new TimeHeaderDaily(openClose.getCalendar(), min, max, openClose, colorDays, colorDaysOfWeek,
-					nameDays, printStart, printEnd);
+					nameDays, printStart, printEnd, getClosedStyle(), getIHtmlColorSet());
 		}
+	}
+
+	private Style getClosedStyle() {
+		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.closed)
+				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
 	private double getTotalHeight(TimeHeader timeHeader) {

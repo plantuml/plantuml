@@ -290,6 +290,10 @@ ganttDiagram {
 	timeline {
 	    BackgroundColor transparent
 	}
+	closed {
+        BackGroundColor #E0E8E8
+        FontColor #909898
+    }
 	task {
 		RoundCorner 0
         Margin 2 2 2 2

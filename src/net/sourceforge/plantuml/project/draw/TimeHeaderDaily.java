@@ -43,10 +43,12 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderDaily extends TimeHeaderCalendar {
@@ -63,8 +65,10 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private final Map<Day, String> nameDays;
 
 	public TimeHeaderDaily(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, Map<Day, String> nameDays, Day printStart, Day printEnd) {
-		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleDaily(calendar, printStart));
+			Map<DayOfWeek, HColor> colorDaysOfWeek, Map<Day, String> nameDays, Day printStart, Day printEnd,
+			Style style, HColorSet colorSet) {
+		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleDaily(calendar, printStart),
+				style, colorSet);
 		this.nameDays = nameDays;
 	}
 
@@ -111,7 +115,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	private HColor getTextBackColor(Day wink) {
 		if (defaultPlan.getLoadAt(wink) <= 0) {
-			return lightGray;
+			return closedFontColor();
 		}
 		return HColorUtils.BLACK;
 	}

@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.version;
 
+import static net.sourceforge.plantuml.graphic.GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +49,7 @@ import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
-import net.sourceforge.plantuml.dedication.Dedication;
+import net.sourceforge.plantuml.dedication.PSystemDedication;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
@@ -56,8 +58,6 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
-
-import static net.sourceforge.plantuml.graphic.GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT;
 
 public class PSystemVersion extends PlainStringsDiagram {
 
@@ -126,7 +126,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	private static BufferedImage getImageWebp(final String name) {
 		try {
 			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
-			final BufferedImage image = Dedication.getBufferedImage(is);
+			final BufferedImage image = PSystemDedication.getBufferedImage(is);
 			is.close();
 			return image;
 		} catch (IOException e) {

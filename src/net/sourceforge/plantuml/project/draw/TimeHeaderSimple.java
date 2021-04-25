@@ -42,9 +42,11 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderSimple extends TimeHeader {
@@ -66,8 +68,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(Day min, Day max) {
-		super(min, max, new TimeScaleWink());
+	public TimeHeaderSimple(Day min, Day max, Style style, HColorSet colorSet) {
+		super(min, max, new TimeScaleWink(), style, colorSet);
 	}
 
 	private void drawSmallVlinesDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {

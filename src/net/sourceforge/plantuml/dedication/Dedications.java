@@ -35,79 +35,60 @@
  */
 package net.sourceforge.plantuml.dedication;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.sourceforge.plantuml.SignatureUtils;
+import net.sourceforge.plantuml.FileUtils;
 
 public class Dedications {
 
-	private static final Map<String, Dedication> normal = new HashMap<String, Dedication>();
-	private static final Map<String, Dedication> crypted = new HashMap<String, Dedication>();
+	private static final List<Dedication> all = new ArrayList<Dedication>();
 
 	static {
-		addNormal("Write your own dedication!", "dedication");
-		addNormal("linux_china", "linux_china");
-		addNormal("ARKBAN", "arkban");
-		addNormal("Boundaries allow discipline to create true strength", "boundaries");
-		addNormal("Thank you, Dr. Chet. I wouldn't be where I am without you", "dr_chet");
-		addNormal("Ben and Jen 2020", "ben");
-		addCrypted("0", "pOhci6rKgPXw32AeYXhOpSY0suoauHq5VUSwFqHLHsLYgSO6WaJ7BW5vtHBAoU6ePbcW7d8Flx99MWjPSKQTDm00");
-		addCrypted("1", "LTxN3hdnhSJ515qcA7IQ841axt4GXfUd3n2wgNirYCdLnyX2360Gv1OEOnJ1-gwFzRW5B3HAqLBkR6Ge0WW_Z000");
-		addCrypted("2", "lZqLduj4j1yRqSfAvkhbqVpqK8diklatiFeenDUXSdna9bKYQTzdS264YfUBScUVDYCp2Vcq04updoN98RwxE000");
+
+		try {
+			all.add(new DedicationSimple(load("dedication"), "Write your own dedication!"));
+			all.add(new DedicationSimple(load("linux_china"), "linux_china"));
+			all.add(new DedicationSimple(load("arkban"), "arkban"));
+			all.add(new DedicationSimple(load("boundaries"), "Boundaries allow discipline to create true strength"));
+			all.add(new DedicationSimple(load("dr_chet"), "Thank you, Dr. Chet. I wouldn't be where I am without you"));
+			all.add(new DedicationSimple(load("ben"), "Ben and Jen 2020"));
+			all.add(secret(5, "835ff5d643b58cd35a20db6480071d05751aa6a0e01da78662ceafd0161f3f5e", new BigInteger(
+					"1182423723677118831606503500858825217076578422970565964857326298418401529955036896808663335300684244453386039908536275400945824932191521017102701344437753036730900076162922741167523337650578479960119614237031234925702200473053235777")));
+			all.add(secret(3, "514816d583044efbd336882227deb822194ff63e3bdc3cf707a01f17770d5a6a", new BigInteger(
+					"538955952645999836068094511687012232127213955837942782605199622268460518023083462090291844640318324475656060087513198129259364840841077651829017347845508167869708224054456044836844382437974410757740941102771969965334031780041648873")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	private static void addNormal(String sentence, String name) {
-		normal.put(keepLetter(sentence), new Dedication(name));
+	private static DedicationCrypted secret(int tiny, String sig, BigInteger pq) throws IOException {
+		return new DedicationCrypted(load(sig), tiny, sig, pq);
 	}
 
-	private static void addCrypted(String name, String contentKey) {
-		crypted.put(contentKey, new Dedication(name));
+	private static byte[] load(String name) throws IOException {
+		final InputStream tmp = PSystemDedication.class.getResourceAsStream(name + ".png");
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		FileUtils.copyInternal(tmp, baos, true);
+		return baos.toByteArray();
 	}
 
 	private Dedications() {
 	}
 
-	public static Dedication get(String line) {
-		final String keepLetter = keepLetter(line);
-		final Dedication result = normal.get(keepLetter);
-		if (result != null) {
-			return result;
-		}
-		for (Map.Entry<String, Dedication> ent : crypted.entrySet()) {
-			final Dedication dedication = ent.getValue();
-			InputStream is = null;
-			try {
-				is = dedication.getInputStream(keepLetter);
-				final String signature = SignatureUtils.getSignatureSha512(is);
-				if (signature.equals(ent.getKey())) {
-					return dedication;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (is != null)
-						is.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	public synchronized static BufferedImage get(String line) {
+		for (Dedication dedication : all) {
+			final BufferedImage image = dedication.getImage(line);
+			if (image != null) {
+				return image;
 			}
-
 		}
 		return null;
-	}
-
-	public static String keepLetter(String s) {
-		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			if (Character.isLetterOrDigit(c)) {
-				sb.append(c);
-			}
-		}
-		return sb.toString();
 	}
 
 }

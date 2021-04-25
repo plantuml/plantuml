@@ -44,10 +44,12 @@ import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderWeekly extends TimeHeaderCalendar {
@@ -63,8 +65,10 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	public TimeHeaderWeekly(double scale, Day calendar, Day min, Day max, LoadPlanable defaultPlan,
-			Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek, WeekNumberStrategy weekNumberStrategy) {
-		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleCompressed(calendar, scale));
+			Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek, WeekNumberStrategy weekNumberStrategy,
+			Style style, HColorSet colorSet) {
+		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleCompressed(calendar, scale),
+				style, colorSet);
 		this.weekNumberStrategy = weekNumberStrategy;
 	}
 

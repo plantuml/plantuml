@@ -63,21 +63,14 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class EntityImageState2 extends AbstractEntityImage {
 
 	final private Url url;
-
-	final private LineConfigurable lineConfig;
+	// final private LineConfigurable lineConfig;
 
 	private final TextBlock asSmall;
 
 	public EntityImageState2(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
-		this.lineConfig = entity;
+		// this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
-
-//		Display list = Display.empty();
-//		for (Member att : entity.getBodier().getFieldsToDisplay()) {
-//			list = list.addAll(Display.getWithNewlines(att.getDisplay(true)));
-//		}
-		// final Display list = Display.create(entity.getBodier().getRawBody());
 
 		final USymbol symbol = USymbol.FRAME;
 

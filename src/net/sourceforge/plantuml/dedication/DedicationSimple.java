@@ -35,38 +35,41 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 
-import net.sourceforge.plantuml.utils.MTRandom;
+public class DedicationSimple implements Dedication {
 
-public class NoisyInputStream extends InputStream {
+	private final byte crypted[];
+	private final String sentence;
 
-	private final MTRandom rnd;
-	private final InputStream source;
-
-	public NoisyInputStream(InputStream source, byte[] pass) {
-		this.source = source;
-		this.rnd = new MTRandom(pass);
+	public DedicationSimple(byte crypted[], String sentence) {
+		this.crypted = crypted;
+		this.sentence = sentence;
 	}
 
-	private byte getNextByte() {
-		return (byte) rnd.nextInt();
-	}
-
-	@Override
-	public void close() throws IOException {
-		source.close();
-	}
-
-	@Override
-	public int read() throws IOException {
-		int b = source.read();
-		if (b == -1) {
-			return -1;
+	public synchronized BufferedImage getImage(String sentence) {
+		if (same(this.sentence, sentence) == false) {
+			return null;
 		}
-		b = (b ^ getNextByte()) & 0xFF;
-		return b;
+
+		try {
+			byte[] current = crypted.clone();
+
+			final RBlocks init = RBlocks.readFrom(current, 513);
+			final RBlocks decoded = init.change(E, N);
+			current = decoded.toByteArray(512);
+			return PSystemDedication.getBufferedImage(new ByteArrayInputStream(current));
+		} catch (Throwable t) {
+			t.printStackTrace();
+			return null;
+		}
+	}
+
+	private boolean same(String s1, String s2) {
+		s1 = s1.replaceAll("[^\\p{L}0-9]+", "");
+		s2 = s2.replaceAll("[^\\p{L}0-9]+", "");
+		return s1.equalsIgnoreCase(s2);
 	}
 
 }

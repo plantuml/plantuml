@@ -37,51 +37,20 @@ package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.svek.AbstractEntityImage;
-import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class EntityImageStateEmptyDescription extends AbstractEntityImage {
-
-	final private TextBlock desc;
-	final private Url url;
+public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 	final private static int MIN_WIDTH = 50;
 	final private static int MIN_HEIGHT = 40;
 
 	public EntityImageStateEmptyDescription(IEntity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
-		final Stereotype stereotype = entity.getStereotype();
-
-		this.desc = entity.getDisplay().create8(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
-				HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
-
-//		Display list = Display.empty();
-//		for (Member att : entity.getBodier().getFieldsToDisplay()) {
-//			list = list.addAll(Display.getWithNewlines(att.getDisplay(true)));
-//		}
-//		final Display list = Display.create(entity.getBodier().getRawBody());
-
-		this.url = entity.getUrl99();
 
 	}
 
@@ -99,32 +68,16 @@ public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
 
-		final double widthTotal = dimTotal.getWidth();
-		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(CORNER);
-		if (getSkinParam().shadowing(getEntity().getStereotype())) {
-			rect.setDeltaShadow(4);
-		}
+		ug = applyColor(ug);
+		ug.draw(getShape(dimTotal));
 
-		ug = ug.apply(new UStroke(1.5))
-				.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder));
-		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
-		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
-		}
-		ug = ug.apply(backcolor.bg());
-		ug.draw(rect);
-		final double xDesc = (widthTotal - dimDesc.getWidth()) / 2;
-		final double yDesc = (heightTotal - dimDesc.getHeight()) / 2;
+		final double xDesc = (dimTotal.getWidth() - dimDesc.getWidth()) / 2;
+		final double yDesc = (dimTotal.getHeight() - dimDesc.getHeight()) / 2;
 		desc.drawU(ug.apply(new UTranslate(xDesc, yDesc)));
 
 		if (url != null) {
 			ug.closeUrl();
 		}
-	}
-
-	public ShapeType getShapeType() {
-		return ShapeType.ROUND_RECTANGLE;
 	}
 
 }

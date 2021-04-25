@@ -54,6 +54,7 @@ public enum SName {
 	class_, //
 	clickable, //
 	cloud, //
+	closed, //
 	collection, //
 	collections, //
 	component, //

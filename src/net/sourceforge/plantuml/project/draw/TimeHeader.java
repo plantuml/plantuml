@@ -42,6 +42,8 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -62,17 +64,30 @@ public abstract class TimeHeader {
 		return 28;
 	}
 
-	protected final HColor veryLightGray = HColorSet.instance().getColorOrWhite("#E0E8E8");
-	protected final HColor lightGray = HColorSet.instance().getColorOrWhite("#909898");
-
 	private final TimeScale timeScale;
+	private final Style style;
+	private final HColorSet colorSet;
+
 	protected final Day min;
 	protected final Day max;
 
-	public TimeHeader(Day min, Day max, TimeScale timeScale) {
+	public TimeHeader(Day min, Day max, TimeScale timeScale, Style style, HColorSet colorSet) {
+		if (style == null) {
+			throw new IllegalArgumentException();
+		}
 		this.timeScale = timeScale;
 		this.min = min;
 		this.max = max;
+		this.style = style;
+		this.colorSet = colorSet;
+	}
+
+	protected final HColor closedBackgroundColor() {
+		return style.value(PName.BackGroundColor).asColor(colorSet);
+	}
+
+	protected final HColor closedFontColor() {
+		return style.value(PName.FontColor).asColor(colorSet);
 	}
 
 	public abstract double getTimeHeaderHeight();

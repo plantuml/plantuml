@@ -41,8 +41,10 @@ import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
 
@@ -51,8 +53,8 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 	protected final Map<DayOfWeek, HColor> colorDaysOfWeek;
 
 	public TimeHeaderCalendar(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, TimeScale timeScale) {
-		super(min, max, timeScale);
+			Map<DayOfWeek, HColor> colorDaysOfWeek, TimeScale timeScale, Style style, HColorSet colorSet) {
+		super(min, max, timeScale, style, colorSet);
 		this.defaultPlan = defaultPlan;
 		this.colorDays = colorDays;
 		this.colorDaysOfWeek = colorDaysOfWeek;
@@ -89,7 +91,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 				back = backDoW;
 			}
 			if (back == null && defaultPlan.getLoadAt(wink) == 0) {
-				back = veryLightGray;
+				back = closedBackgroundColor();
 			}
 			if (back == null) {
 				if (pending != null)

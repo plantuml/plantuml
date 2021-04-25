@@ -53,22 +53,20 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 
 public class PSystemDedication extends PlainDiagram {
 
-	private final Dedication dedication;
-	private final String keepLetter;
+	private final BufferedImage img;
 
-	public PSystemDedication(Dedication dedication, String keepLetter) {
-		this.dedication = dedication;
-		this.keepLetter = keepLetter;
+	public PSystemDedication(BufferedImage img) {
+		this.img = img;
+		if (img == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				final BufferedImage bufferedImage = dedication.getBufferedImage(keepLetter);
-				if (bufferedImage != null) {
-					ug.draw(new UImage(new PixelImage(bufferedImage, AffineTransformType.TYPE_BILINEAR)));
-				}
+				ug.draw(new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR)));
 			}
 		};
 	}
