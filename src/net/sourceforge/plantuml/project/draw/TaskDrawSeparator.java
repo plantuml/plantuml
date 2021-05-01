@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
@@ -84,12 +85,19 @@ public class TaskDrawSeparator implements TaskDraw {
 		this.max = max;
 	}
 
-	public void drawTitle(UGraphic ug) {
+	@Override
+	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double leftColumnWidth) {
 		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
 		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
 		final double dx = margin.getLeft() + padding.getLeft();
 		final double dy = margin.getTop() + padding.getTop();
-		getTitle().drawU(ug.apply(new UTranslate(dx, dy)));
+		getTitle().drawU(ug.apply(new UTranslate(leftColumnWidth + dx, dy)));
+	}
+
+	@Override
+	public double getTitleWidth(StringBounder stringBounder) {
+		// Never used in first column
+		return 0;
 	}
 
 	private StyleSignature getStyleSignature() {

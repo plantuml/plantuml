@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
@@ -84,26 +85,38 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	}
 
-	final public void drawTitle(UGraphic ug) {
+	@Override
+	final public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double leftColumnWidth) {
 
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
+
+		final TextBlock title = getTitle();
+
 		ug = ug.apply(UTranslate.dy(margin.getTop()));
 
-		final TextBlock title = Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double titleHeight = title.calculateDimension(stringBounder).getHeight();
 		final double h = (getShapeHeight(stringBounder) - titleHeight) / 2;
 
-		final double x1 = timeScale.getStartingPosition(start);
-		final double x2 = timeScale.getEndingPosition(start);
-		final double width = getShapeHeight(ug.getStringBounder());
-		final double delta = x2 - x1 - width;
-
-		final double x = x2 - delta / 2 + padding.getLeft();
+		final double x;
+		if (labelStrategy == LabelStrategy.LEFT_COLUMN) {
+			x = margin.getLeft();
+		} else {
+			final double x1 = timeScale.getStartingPosition(start);
+			final double x2 = timeScale.getEndingPosition(start);
+			final double width = getShapeHeight(ug.getStringBounder());
+			final double delta = x2 - x1 - width;
+			x = x2 - delta / 2 + padding.getLeft();
+		}
 		title.drawU(ug.apply(new UTranslate(x, h)));
+	}
+
+	@Override
+	protected TextBlock getTitle() {
+		return Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
+				new SpriteContainerEmpty());
 	}
 
 	public void drawU(UGraphic ug) {

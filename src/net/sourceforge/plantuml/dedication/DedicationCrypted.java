@@ -58,27 +58,28 @@ public class DedicationCrypted implements Dedication {
 		this.tinyHash = tinyHash;
 	}
 
-	public synchronized BufferedImage getImage(final String sentence) {
-		if (sentence.length() < 40) {
+	public synchronized BufferedImage getImage(final TinyHashableString sentence) {
+		final String line = sentence.getSentence();
+
+		if (line.length() < 40) {
 			return null;
 		}
 
 		try {
-			if (solution == null || sentence.equals(this.solution) == false) {
+			if (solution == null || line.equals(this.solution) == false) {
 				if (System.currentTimeMillis() < next) {
 					return null;
 				}
-				final int tinyHash = Noise.shortHash(sentence.getBytes("UTF-8"), N.toByteArray());
-				if (this.tinyHash != tinyHash) {
+				if (this.tinyHash != sentence.tinyHash()) {
 					return null;
 				}
 				this.next = System.currentTimeMillis() + 5000L;
 			}
 
-			final byte[] hash1 = Noise.computeArgon2bytes(sentence.getBytes("UTF-8"),
-					(pq.toString(35) + sentence).getBytes("UTF-8"));
-			final byte[] hash2 = Noise.computeArgon2bytes(sentence.getBytes("UTF-8"),
-					(pq.toString(36) + sentence).getBytes("UTF-8"));
+			final byte[] hash1 = Noise.computeArgon2bytes(line.getBytes("UTF-8"),
+					(pq.toString(35) + line).getBytes("UTF-8"));
+			final byte[] hash2 = Noise.computeArgon2bytes(line.getBytes("UTF-8"),
+					(pq.toString(36) + line).getBytes("UTF-8"));
 
 			final BlumBlumShub rndBBS = new BlumBlumShub(pq, hash1);
 			final MTRandom rndMT = new MTRandom(hash2);
@@ -86,7 +87,7 @@ public class DedicationCrypted implements Dedication {
 			byte[] current = crypted.clone();
 			Noise.shuffle(current, rndMT);
 			Noise.xor(current, rndBBS);
-			Noise.xor(current, sentence.getBytes("UTF-8"));
+			Noise.xor(current, line.getBytes("UTF-8"));
 
 			Noise.shuffle(current, rndMT);
 
@@ -98,7 +99,7 @@ public class DedicationCrypted implements Dedication {
 			Noise.shuffle(current, rndMT);
 			Noise.xor(current, rndBBS);
 
-			final String argon = Noise.computeArgon2String(current, (pq.toString(34) + sentence).getBytes("UTF-8"));
+			final String argon = Noise.computeArgon2String(current, (pq.toString(34) + line).getBytes("UTF-8"));
 
 			if (this.argon2.equals(argon) == false) {
 				return null;
@@ -107,7 +108,7 @@ public class DedicationCrypted implements Dedication {
 			current = Noise.reverse(current, rndMT.nextInt());
 
 			final BufferedImage img = PSystemDedication.getBufferedImage(new ByteArrayInputStream(current));
-			this.solution = sentence;
+			this.solution = line;
 			return img;
 		} catch (Throwable t) {
 			t.printStackTrace();

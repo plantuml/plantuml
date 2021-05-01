@@ -48,32 +48,43 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandWBSTabulation extends SingleLineCommand2<WBSDiagram> {
+public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 
-	public CommandWBSTabulation() {
+	public CommandWBSItem() {
 		super(false, getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandWBSTabulation.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*+-])"), //
+		return RegexConcat.build(CommandWBSItem.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
+				new RegexLeaf("DIRECTION", "([<>])?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
-		final Direction dir = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 		}
-		return diagram.addIdea(backColor, type.length() - 1, label, dir, IdeaShape.fromDesc(arg.get("SHAPE", 0)));
+
+		Direction dir = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
+		final String direction = arg.get("DIRECTION", 0);
+		if ("<".equals(direction)) {
+			dir = Direction.LEFT;
+		} else if (">".equals(direction)) {
+			dir = Direction.RIGHT;
+		}
+
+		return diagram.addIdea(backColor, diagram.getSmartLevel(type), label, dir,
+				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
 
 }

@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 
 /*
 import org.eclipse.elk.core.RecursiveGraphLayoutEngine;
+import org.eclipse.elk.core.math.ElkPadding;
 import org.eclipse.elk.core.options.CoreOptions;
 import org.eclipse.elk.core.options.Direction;
 import org.eclipse.elk.core.options.EdgeLabelPlacement;
@@ -92,6 +93,7 @@ import org.eclipse.elk.graph.util.ElkGraphUtil;
 */
 
 import net.sourceforge.plantuml.elk.proxy.core.RecursiveGraphLayoutEngine;
+import net.sourceforge.plantuml.elk.proxy.core.math.ElkPadding;
 import net.sourceforge.plantuml.elk.proxy.core.options.CoreOptions;
 import net.sourceforge.plantuml.elk.proxy.core.options.Direction;
 import net.sourceforge.plantuml.elk.proxy.core.options.EdgeLabelPlacement;
@@ -406,6 +408,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				// We create the "cluster" in ELK for this group
 				final ElkNode elkCluster = ElkGraphUtil.createNode(cluster);
 				elkCluster.setProperty(CoreOptions.DIRECTION, Direction.DOWN);
+				elkCluster.setProperty(CoreOptions.PADDING, new ElkPadding(40, 15, 15, 15));
 
 				// Not sure this is usefull to put a label on a "cluster"
 				final ElkLabel label = ElkGraphUtil.createLabel(elkCluster);

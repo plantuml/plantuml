@@ -1,0 +1,36 @@
+
+skinparam  {
+defaultTextAlignment center
+shadowing false
+RoundCorner 10
+TitleFontSize 18
+TitleFontColor #eaeaea
+BackgroundColor transparent
+}
+<style>
+ wbsDiagram {
+LineColor #b5e853
+BorderThickness 3
+BackgroundColor #151515
+FontColor #eaeaea
+:depth(0) {
+fontSize 16
+fontStyle bold
+fontColor #6a9fb5
+}
+:depth(1) {
+fontSize 14
+padding 5
+fontStyle bold
+}
+:depth(2) {
+fontSize 12
+padding 3
+}
+:depth(3) {
+fontSize 10
+padding 2
+}
+
+}
+</style>

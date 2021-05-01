@@ -268,6 +268,9 @@ public class TContext {
 		if (type == TLineType.INCLUDESUB) {
 			this.executeIncludesub(memory, s);
 			return null;
+		} else if (type == TLineType.THEME) {
+			this.executeTheme(memory, s);
+			return null;
 		} else if (type == TLineType.INCLUDE) {
 			this.executeInclude(memory, s);
 			return null;
@@ -542,6 +545,36 @@ public class TContext {
 		}
 	}
 
+	private void executeTheme(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+		final EaterTheme include = new EaterTheme(s.getTrimmed());
+		include.analyze(this, memory);
+		final String location = include.getLocation();
+		final ReadLine reader = PreprocessorUtils.getReaderTheme(s, location);
+		if (reader == null) {
+			throw EaterException.located("No such theme " + location);
+		}
+		try {
+			final List<StringLocated> body = new ArrayList<StringLocated>();
+			do {
+				final StringLocated sl = reader.readLine();
+				if (sl == null) {
+					executeLines(memory, body, null, false);
+					return;
+				}
+				body.add(sl);
+			} while (true);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw EaterException.located("Error reading theme " + e);
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	private void executeInclude(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
 		final EaterInclude include = new EaterInclude(s.getTrimmed());
 		include.analyze(this, memory);
@@ -554,7 +587,7 @@ public class TContext {
 			location = location.substring(0, idx);
 		}
 
-		ReadLine reader2 = null;
+		ReadLine reader = null;
 		ImportedFiles saveImportedFiles = null;
 		try {
 			if (location.startsWith("http://") || location.startsWith("https://")) {
@@ -562,9 +595,9 @@ public class TContext {
 				if (url == null) {
 					throw EaterException.located("Cannot open URL");
 				}
-				reader2 = PreprocessorUtils.getReaderIncludeUrl2(url, s, suf, charset);
+				reader = PreprocessorUtils.getReaderIncludeUrl2(url, s, suf, charset);
 			} else if (location.startsWith("<") && location.endsWith(">")) {
-				reader2 = PreprocessorUtils.getReaderStdlibInclude(s, location.substring(1, location.length() - 1));
+				reader = PreprocessorUtils.getReaderStdlibInclude(s, location.substring(1, location.length() - 1));
 			} else {
 				final FileWithSuffix f2 = importedFiles.getFile(location, suf);
 				if (f2.fileOk()) {
@@ -576,25 +609,25 @@ public class TContext {
 					}
 
 					if (StartDiagramExtractReader.containsStartDiagram(f2, s, charset)) {
-						reader2 = StartDiagramExtractReader.build(f2, s, charset);
+						reader = StartDiagramExtractReader.build(f2, s, charset);
 					} else {
-						final Reader reader = f2.getReader(charset);
-						if (reader == null) {
+						final Reader tmp = f2.getReader(charset);
+						if (tmp == null) {
 							throw EaterException.located("Cannot include file");
 						}
-						reader2 = ReadLineReader.create(reader, location, s.getLocation());
+						reader = ReadLineReader.create(tmp, location, s.getLocation());
 					}
 					saveImportedFiles = this.importedFiles;
 					this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
-					assert reader2 != null;
+					assert reader != null;
 					filesUsedCurrent.add(f2);
 				}
 			}
-			if (reader2 != null) {
+			if (reader != null) {
 				try {
 					final List<StringLocated> body = new ArrayList<StringLocated>();
 					do {
-						final StringLocated sl = reader2.readLine();
+						final StringLocated sl = reader.readLine();
 						if (sl == null) {
 							executeLines(memory, body, null, false);
 							return;
@@ -611,9 +644,9 @@ public class TContext {
 			e.printStackTrace();
 			throw EaterException.located("cannot include " + e);
 		} finally {
-			if (reader2 != null) {
+			if (reader != null) {
 				try {
-					reader2.close();
+					reader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -75,9 +75,7 @@ public class WBSDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption)
-				.drawable(getTextBlock())
-				.write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {
@@ -143,6 +141,7 @@ public class WBSDiagram extends UmlDiagram {
 
 	private WElement root;
 	private WElement last;
+	private String first;
 
 	private void initRoot(HColor backColor, String label, String stereotype, IdeaShape shape) {
 		root = new WElement(backColor, Display.getWithNewlines(label), stereotype,
@@ -156,6 +155,25 @@ public class WBSDiagram extends UmlDiagram {
 			result = result.getParent();
 		}
 		return result;
+	}
+
+	public int getSmartLevel(String type) {
+		if (root == null) {
+			assert first == null;
+			first = type;
+			return 0;
+		}
+		type = type.replace('\t', ' ');
+		if (type.contains(" ") == false) {
+			return type.length() - 1;
+		}
+		if (type.trim().length() == 1) {
+			return type.length() - 1;
+		}
+		if (type.startsWith(first)) {
+			return type.length() - first.length();
+		}
+		throw new UnsupportedOperationException("type=<" + type + ">[" + first + "]");
 	}
 
 	private CommandExecutionResult add(HColor backColor, int level, String label, String stereotype,
@@ -175,7 +193,7 @@ public class WBSDiagram extends UmlDiagram {
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}
-			return CommandExecutionResult.error("error42L");
+			return CommandExecutionResult.error("Bad tree structure");
 		} catch (NoStyleAvailableException e) {
 			// e.printStackTrace();
 			return CommandExecutionResult.error("General failure: no style available.");

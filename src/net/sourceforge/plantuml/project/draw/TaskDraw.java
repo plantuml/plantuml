@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
@@ -56,8 +57,10 @@ public interface TaskDraw extends UDrawable {
 	public double getY(StringBounder stringBounder, Direction direction);
 
 	public void pushMe(double deltaY);
+
+	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double leftColumnWidth);
 	
-	public void drawTitle(UGraphic ug);
+	public double getTitleWidth(StringBounder stringBounder);
 
 	public double getFullHeightTask(StringBounder stringBounder);
 
@@ -72,6 +75,5 @@ public interface TaskDraw extends UDrawable {
 	public double getX1(TaskAttribute taskAttribute);
 
 	public double getX2(TaskAttribute taskAttribute);
-
 
 }

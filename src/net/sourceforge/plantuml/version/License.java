@@ -539,6 +539,7 @@ public enum License {
 		text.add("ASCIIMathML (c) David Lippman http://www.pierce.ctc.edu/dlippman");
 		text.add("CafeUndZopfli ported by Eugene Klyuchnikov https://github.com/eustas/CafeUndZopfli");
 		text.add("Brotli (c) by the Brotli Authors https://github.com/google/brotli");
+		text.add("Themes (c) by Brett Schwarz https://github.com/bschwarz/puml-themes");
 		text.add(" ");
 	}
 }

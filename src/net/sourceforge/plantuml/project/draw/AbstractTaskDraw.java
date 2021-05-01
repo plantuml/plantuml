@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
@@ -110,6 +111,15 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	final protected Style getStyle() {
 		return getStyleSignature().getMergedStyle(styleBuilder);
 	}
+	
+	final public double getTitleWidth(StringBounder stringBounder) {
+		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final ClockwiseTopRightBottomLeft margin = style.getMargin();
+		return margin.getLeft() + getTitle().calculateDimension(stringBounder).getWidth() + margin.getRight();
+	}
+
+
+	protected abstract TextBlock getTitle();
 
 	abstract protected double getShapeHeight(StringBounder stringBounder);
 

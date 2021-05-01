@@ -3,7 +3,7 @@ package net.sourceforge.plantuml.elk.proxy.graph;
 import java.util.Collection;
 import java.util.EnumSet;
 
-import net.sourceforge.plantuml.elk.proxy.EnumProxy;
+import net.sourceforge.plantuml.elk.proxy.ElkObjectProxy;
 import net.sourceforge.plantuml.elk.proxy.Reflect;
 
 public class ElkWithProperty {
@@ -32,15 +32,15 @@ public class ElkWithProperty {
 		if (value instanceof EnumSet) {
 			EnumSet result = null;
 			for (Object foo : (Collection) value) {
-				final EnumProxy elk = (EnumProxy) foo;
+				final ElkObjectProxy elk = (ElkObjectProxy) foo;
 				if (result == null) {
 					result = EnumSet.noneOf((Class) elk.getClass());
 				}
 				result.add(elk);
 			}
 			Reflect.call2(obj, "setProperty", key, result);
-		} else if (value instanceof EnumProxy) {
-			final Enum elk = ((EnumProxy) value).getTrueObject();
+		} else if (value instanceof ElkObjectProxy) {
+			final Object elk = ((ElkObjectProxy) value).getTrueObject();
 			Reflect.call2(obj, "setProperty", key, elk);
 		} else {
 			Reflect.call2(obj, "setProperty", key, value);

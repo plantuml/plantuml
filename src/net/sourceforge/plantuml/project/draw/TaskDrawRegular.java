@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.GanttConstraint;
+import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
@@ -111,19 +112,26 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	protected double getShapeHeight(StringBounder stringBounder) {
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
-		return padding.getTop() + getTextBlock().calculateDimension(stringBounder).getHeight() + padding.getBottom();
+		return padding.getTop() + getTitle().calculateDimension(stringBounder).getHeight() + padding.getBottom();
 	}
 
-	public void drawTitle(UGraphic ug) {
-		final TextBlock title = getTextBlock();
+	@Override
+	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double leftColumnWidth) {
+		final TextBlock title = getTitle();
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dim = title.calculateDimension(stringBounder);
 
 		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
+		
 		ug = ug.apply(UTranslate.dy(margin.getTop() + padding.getTop()));
 
+		if (labelStrategy == LabelStrategy.LEFT_COLUMN) {
+			title.drawU(ug.apply(UTranslate.dx(margin.getLeft())));
+			return;
+		}
+		
 		final double pos1 = timeScale.getStartingPosition(start) + 6;
 		final double pos2 = timeScale.getEndingPosition(end) - 6;
 		final double pos;
@@ -134,7 +142,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		title.drawU(ug.apply(UTranslate.dx(pos)));
 	}
 
-	private TextBlock getTextBlock() {
+	@Override
+	protected TextBlock getTitle() {
 		return Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}

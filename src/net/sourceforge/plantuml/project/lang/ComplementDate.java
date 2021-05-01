@@ -108,7 +108,7 @@ public class ComplementDate implements Something {
 
 	private Day resultD(GanttDiagram system, RegexResult arg, String suffix) {
 		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
-		return system.getStartingDate(day);
+		return system.getStartingDate().addDays(day);
 	}
 
 	private Day resultA(RegexResult arg, String suffix) {

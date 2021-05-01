@@ -50,10 +50,10 @@ public class SentenceTaskEndsAbsolute extends SentenceSimple {
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final Day end = (Day) complement;
-		final Day startingDate = project.getStartingDate();
-		if (startingDate == null) {
-			return CommandExecutionResult.error("No starting date for the project");
-		}
+//		final Day startingDate = project.getStartingDate();
+//		if (startingDate == null) {
+//			return CommandExecutionResult.error("No starting date for the project");
+//		}
 		task.setEnd(end);
 		return CommandExecutionResult.ok();
 	}

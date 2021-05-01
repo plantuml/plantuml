@@ -35,7 +35,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>1.2021.6-SNAPSHOT</version>
+    <version>1.2021.5-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -145,6 +145,7 @@
                 <includes>
                     <include>stdlib/**/*.repx</include>
                     <include>skin/**/*.skin</include>
+                    <include>themes/**/*.puml</include>
                     <include>svg/**/*.css</include>
                     <include>svg/**/*.js</include>
                 </includes>

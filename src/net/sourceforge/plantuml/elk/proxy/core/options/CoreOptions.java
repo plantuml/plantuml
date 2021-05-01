@@ -12,5 +12,6 @@ public class CoreOptions {
 	public static final Object EDGE_TYPE = Reflect.field("org.eclipse.elk.core.options.CoreOptions", "EDGE_TYPE");
 	public static final Object NODE_LABELS_PLACEMENT = Reflect.field("org.eclipse.elk.core.options.CoreOptions", "NODE_LABELS_PLACEMENT");
 	public static final Object NODE_SIZE_OPTIONS = Reflect.field("org.eclipse.elk.core.options.CoreOptions", "NODE_SIZE_OPTIONS");
+	public static final Object PADDING = Reflect.field("org.eclipse.elk.core.options.CoreOptions", "PADDING");
 
 }

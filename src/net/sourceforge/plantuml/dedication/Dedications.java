@@ -50,7 +50,6 @@ public class Dedications {
 	private static final List<Dedication> all = new ArrayList<Dedication>();
 
 	static {
-
 		try {
 			all.add(new DedicationSimple(load("dedication"), "Write your own dedication!"));
 			all.add(new DedicationSimple(load("linux_china"), "linux_china"));
@@ -62,8 +61,8 @@ public class Dedications {
 					"1182423723677118831606503500858825217076578422970565964857326298418401529955036896808663335300684244453386039908536275400945824932191521017102701344437753036730900076162922741167523337650578479960119614237031234925702200473053235777")));
 			all.add(secret(3, "514816d583044efbd336882227deb822194ff63e3bdc3cf707a01f17770d5a6a", new BigInteger(
 					"538955952645999836068094511687012232127213955837942782605199622268460518023083462090291844640318324475656060087513198129259364840841077651829017347845508167869708224054456044836844382437974410757740941102771969965334031780041648873")));
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
 	}
 
@@ -82,8 +81,9 @@ public class Dedications {
 	}
 
 	public synchronized static BufferedImage get(String line) {
+		final TinyHashableString sentence = new TinyHashableString(line);
 		for (Dedication dedication : all) {
-			final BufferedImage image = dedication.getImage(line);
+			final BufferedImage image = dedication.getImage(sentence);
 			if (image != null) {
 				return image;
 			}

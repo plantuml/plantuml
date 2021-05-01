@@ -118,6 +118,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private final Map<Day, HColor> colorDays = new HashMap<Day, HColor>();
 	private final Map<DayOfWeek, HColor> colorDaysOfWeek = new HashMap<DayOfWeek, HColor>();
 	private final Map<Day, String> nameDays = new HashMap<Day, String>();
+	private LabelStrategy labelStrategy = LabelStrategy.LEGACY;
 
 	// Let's follow ISO-8601 rules
 	private WeekNumberStrategy weekNumberStrategy = new WeekNumberStrategy(DayOfWeek.MONDAY, 4);
@@ -218,6 +219,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 			public void drawU(UGraphic ug) {
 				try {
+					final UGraphic ugOrig = ug;
+					ug = ug.apply(UTranslate.dx(getLeftColumnWidth(ug.getStringBounder())));
 					final Style timelineStyle = StyleSignature
 							.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
 							.getMergedStyle(getCurrentStyleBuilder());
@@ -236,7 +239,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 					drawConstraints(ug, timeHeader.getTimeScale());
 					drawTasksRect(ug);
-					drawTasksTitle(ug);
+					drawTasksTitle(ugOrig, getLeftColumnWidth(ug.getStringBounder()));
 					drawResources(ug);
 					if (showFootbox) {
 						timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(totalHeightWithoutFooter)));
@@ -249,6 +252,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				}
 			}
 
+			private double getLeftColumnWidth(StringBounder stringBounder) {
+				if (labelStrategy == LabelStrategy.LEGACY) {
+					return 0;
+				}
+				return getLeftColumnWidthInternal(stringBounder);
+			}
+
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
@@ -256,7 +266,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				final double xmin = timeHeader.getTimeScale().getStartingPosition(min);
 				final double xmax = timeHeader.getTimeScale().getEndingPosition(max);
-				return new Dimension2DDouble(xmax - xmin, getTotalHeight(timeHeader));
+				return new Dimension2DDouble(getLeftColumnWidth(stringBounder) + xmax - xmin,
+						getTotalHeight(timeHeader));
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
@@ -327,14 +338,26 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
 	}
 
-	private void drawTasksTitle(final UGraphic ug1) {
+	private double getLeftColumnWidthInternal(StringBounder stringBounder) {
+		double width = 0;
 		for (Task task : tasks.values()) {
 			if (isHidden(task)) {
 				continue;
 			}
 			final TaskDraw draw = draws.get(task);
-			final UTranslate move = UTranslate.dy(draw.getY(ug1.getStringBounder()));
-			draw.drawTitle(ug1.apply(move));
+			width = Math.max(width, draw.getTitleWidth(stringBounder));
+		}
+		return width;
+	}
+
+	private void drawTasksTitle(UGraphic ug, double leftColumnWidth) {
+		for (Task task : tasks.values()) {
+			if (isHidden(task)) {
+				continue;
+			}
+			final TaskDraw draw = draws.get(task);
+			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()));
+			draw.drawTitle(ug.apply(move), labelStrategy, leftColumnWidth);
 		}
 	}
 
@@ -596,14 +619,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public Day getStartingDate() {
-		return openClose.getCalendar();
-	}
-
-	public Day getStartingDate(int nday) {
 		if (openClose.getCalendar() == null) {
-			return null;
+			return min;
 		}
-		return openClose.getCalendar().addDays(nday);
+		return openClose.getCalendar();
 	}
 
 	public int daysInWeek() {
@@ -755,6 +774,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.none();
+	}
+
+	public void labelOnFirstColumn() {
+		this.labelStrategy = LabelStrategy.LEFT_COLUMN;
 	}
 
 }

@@ -48,8 +48,8 @@ public class DedicationSimple implements Dedication {
 		this.sentence = sentence;
 	}
 
-	public synchronized BufferedImage getImage(String sentence) {
-		if (same(this.sentence, sentence) == false) {
+	public synchronized BufferedImage getImage(TinyHashableString sentence) {
+		if (same(this.sentence, sentence.getSentence()) == false) {
 			return null;
 		}
 

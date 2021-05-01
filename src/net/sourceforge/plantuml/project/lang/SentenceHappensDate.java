@@ -52,10 +52,10 @@ public class SentenceHappensDate extends SentenceSimple {
 		final Task task = (Task) subject;
 		task.setLoad(Load.inWinks(1));
 		final Day start = (Day) complement;
-		final Day startingDate = project.getStartingDate();
-		if (startingDate == null) {
-			return CommandExecutionResult.error("No starting date for the project");
-		}
+//		final Day startingDate = project.getStartingDate2();
+//		if (startingDate == null) {
+//			return CommandExecutionResult.error("No starting date for the project");
+//		}
 		task.setStart(start);
 		task.setDiamond(true);
 		return CommandExecutionResult.ok();

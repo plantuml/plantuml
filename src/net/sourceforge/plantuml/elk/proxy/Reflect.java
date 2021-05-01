@@ -100,6 +100,17 @@ public class Reflect {
 		}
 	}
 
+	public static Object newInstance(String className, double arg1, double arg2, double arg3, double arg4) {
+		try {
+			final Class<?> cl = Class.forName(className);
+			final Constructor<?> m = cl.getConstructor(Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE);
+			return m.newInstance(arg1, arg2, arg3, arg4);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			throw new IllegalArgumentException(t);
+		}
+	}
+
 	public static Object field(String className, String fieldName) {
 		try {
 			final Class<?> cl = Class.forName(className);

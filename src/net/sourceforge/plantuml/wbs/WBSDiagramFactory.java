@@ -53,10 +53,8 @@ public class WBSDiagramFactory extends PSystemCommandFactory {
 
 		final List<Command> cmds = new ArrayList<Command>();
 		addCommonCommands1(cmds);
-		cmds.add(new CommandWBSOrgmode());
-		cmds.add(new CommandWBSPlus());
-		cmds.add(new CommandWBSTabulation());
-		
+		cmds.add(new CommandWBSItem());
+
 		return cmds;
 	}
 

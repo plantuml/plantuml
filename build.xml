@@ -76,6 +76,11 @@
 				<include name="**/*.skin" />
 			</fileset>
 		</copy>
+		<copy todir="build/themes">
+			<fileset dir="themes">
+				<include name="**/*.puml" />
+			</fileset>
+		</copy>
 		<copy todir="build/svg">
 			<fileset dir="svg">
 				<include name="**/*.js" />
