@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -196,7 +197,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				}
 
 				if (compTitle != null) {
-					compTitle.drawU(ug.apply(new UTranslate(area.getTitleX(), area.getTitleY())));
+					final HColor back = ImageBuilder.calculateBackColor(diagram);
+					compTitle.drawU(ug.apply(back.bg()).apply(new UTranslate(area.getTitleX(), area.getTitleY())));
 				}
 				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));
 
@@ -218,9 +220,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			}
 
 		};
-		return diagram.createImageBuilder(fileFormatOption)
-				.drawable(drawable)
-				.write(os);
+		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
 	}
 
 	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {

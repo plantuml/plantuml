@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.version.License;
@@ -146,6 +147,13 @@ public abstract class AbstractPSystem implements Diagram {
 			throws IOException {
 		final long now = System.currentTimeMillis();
 		try {
+//			if (this instanceof TitledDiagram) {
+//				final TitledDiagram titledDiagram = (TitledDiagram) this;
+//				final StyleBuilder styleBuilder = titledDiagram.getCurrentStyleBuilder();
+//				if (styleBuilder != null) {
+//					styleBuilder.printMe();
+//				}
+//			}
 			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
 			if (OptionFlags.getInstance().isEnableStats()) {
@@ -168,8 +176,8 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	// TODO "index" isnt really being used
-	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption
-			) throws IOException;
+	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException;
 
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(0);

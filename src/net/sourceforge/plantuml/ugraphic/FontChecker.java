@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
+
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Shape;
@@ -60,8 +62,6 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
-
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
 public class FontChecker {
 

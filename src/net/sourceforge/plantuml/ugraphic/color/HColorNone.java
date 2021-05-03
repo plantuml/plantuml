@@ -36,8 +36,9 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import net.sourceforge.plantuml.ugraphic.UBackground;
 
-public class HColorNone implements HColor {
+public class HColorNone extends HColorAbstract implements HColor {
 
+	@Override
 	public UBackground bg() {
 		return new UBackground() {
 			public HColor getBackColor() {

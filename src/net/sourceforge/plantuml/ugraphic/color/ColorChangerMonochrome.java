@@ -43,21 +43,8 @@ public class ColorChangerMonochrome {
 		if (color == null) {
 			return null;
 		}
-		final int grayScale = getGrayScale(color);
+		final int grayScale = ColorUtils.getGrayScale(color);
 		return new Color(grayScale, grayScale, grayScale);
 	}
 
-	private static int getGrayScale(Color color) {
-		final int red = color.getRed();
-		final int green = color.getGreen();
-		final int blue = color.getBlue();
-		return (int) (red * .3 + green * .59 + blue * .11);
-	}
-
-	public static int getGrayScale(int rgb) {
-		final int red = rgb & 0x00FF0000;
-		final int green = (rgb & 0x0000FF00) >> 8;
-		final int blue = (rgb & 0x000000FF) >> 16;
-		return (int) (red * .3 + green * .59 + blue * .11);
-	}
 }

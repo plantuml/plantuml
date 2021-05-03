@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -32,26 +32,39 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.ugraphic.color;
+package net.sourceforge.plantuml.tim.stdlib;
 
-public class HColorAutomatic extends HColorAbstract implements HColor {
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-	private final HColor color1;
-	private final HColor color2;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	public HColorAutomatic(HColor color1, HColor color2) {
-		this.color1 = color1;
-		this.color2 = color2;
+public class Feature extends SimpleReturnFunction {
+
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%feature", 1);
 	}
 
-	public HColor getAppropriateColor(HColor back) {
-		if (back == null) {
-			return color2;
-		}
-		if (back.isDark()) {
-			return color2;
-		}
-		return color1;
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
+		return nbArg == 1;
 	}
 
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+		final String arg = values.get(0).toString();
+		if ("style".equalsIgnoreCase(arg)) {
+			return TValue.fromInt(1);
+		}
+		if ("theme".equalsIgnoreCase(arg)) {
+			return TValue.fromInt(1);
+		}
+		return TValue.fromInt(0);
+	}
 }

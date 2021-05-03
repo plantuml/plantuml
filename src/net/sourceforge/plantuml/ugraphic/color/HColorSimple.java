@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
+import net.sourceforge.plantuml.svek.DotStringFactory;
+
 public class HColorSimple extends HColorAbstract implements HColor {
 
 	private final Color color;
@@ -53,6 +55,36 @@ public class HColorSimple extends HColorAbstract implements HColor {
 			return "transparent";
 		}
 		return color.toString() + " alpha=" + color.getAlpha() + " monochrome=" + monochrome;
+	}
+
+	@Override
+	public String asString() {
+		if (isTransparent()) {
+			return "transparent";
+		}
+		if (color.getAlpha() == 255) {
+			return DotStringFactory.sharp000000(color.getRGB());
+		}
+		return super.asString();
+	}
+
+	@Override
+	public HColor lighten(int ratio) {
+		final float[] hsl = new HSLColor(color).getHSL();
+		hsl[2] += hsl[2] * (ratio / 100.0);
+		return new HColorSimple(new HSLColor(hsl).getRGB(), false);
+	}
+
+	@Override
+	public HColor darken(int ratio) {
+		final float[] hsl = new HSLColor(color).getHSL();
+		hsl[2] -= hsl[2] * (ratio / 100.0);
+		return new HColorSimple(new HSLColor(hsl).getRGB(), false);
+	}
+
+	@Override
+	public boolean isDark() {
+		return ColorUtils.getGrayScale(color) < 128;
 	}
 
 	public boolean isTransparent() {

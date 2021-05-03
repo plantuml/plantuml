@@ -67,6 +67,19 @@ public class Style {
 		this.signature = signature;
 	}
 
+	public void printMe() {
+		if (map.size() == 0) {
+			return;
+		}
+		System.err.println(signature + " {");
+		for (Entry<PName, Value> ent : map.entrySet()) {
+			System.err.println("  " + ent.getKey() + ": " + ent.getValue().asString());
+
+		}
+		System.err.println("}");
+
+	}
+
 	@Override
 	public String toString() {
 		return signature + " " + map;

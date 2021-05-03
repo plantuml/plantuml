@@ -39,9 +39,21 @@ import java.awt.Color;
 
 public class ColorUtils {
 
-	static int getGrayScale(Color color) {
-		final int grayScale = (int) (color.getRed() * .3 + color.getGreen() * .59 + color.getBlue() * .11);
+	public static int getGrayScale(Color color) {
+		return getGrayScale(color.getRed(), color.getGreen(), color.getBlue());
+	}
+
+	public static int getGrayScale(int red, int green, int blue) {
+		// YIQ equation from http://24ways.org/2010/calculating-color-contrast
+		final int grayScale = (red * 299 + green * 587 + blue * 114) / 1000;
 		return grayScale;
+	}
+
+	public static int getGrayScale(int rgb) {
+		final int red = (rgb & 0x00FF0000) >> 16;
+		final int green = (rgb & 0x0000FF00) >> 8;
+		final int blue = (rgb & 0x000000FF);
+		return getGrayScale(red, green, blue);
 	}
 
 	public static Color getGrayScaleColor(Color color) {

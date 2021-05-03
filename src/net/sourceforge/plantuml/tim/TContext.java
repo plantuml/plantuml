@@ -82,8 +82,10 @@ import net.sourceforge.plantuml.tim.iterator.CodeIteratorWhile;
 import net.sourceforge.plantuml.tim.stdlib.AlwaysFalse;
 import net.sourceforge.plantuml.tim.stdlib.AlwaysTrue;
 import net.sourceforge.plantuml.tim.stdlib.CallUserFunction;
+import net.sourceforge.plantuml.tim.stdlib.Darken;
 import net.sourceforge.plantuml.tim.stdlib.DateFunction;
 import net.sourceforge.plantuml.tim.stdlib.Dirpath;
+import net.sourceforge.plantuml.tim.stdlib.Feature;
 import net.sourceforge.plantuml.tim.stdlib.FileExists;
 import net.sourceforge.plantuml.tim.stdlib.Filename;
 import net.sourceforge.plantuml.tim.stdlib.FunctionExists;
@@ -92,6 +94,9 @@ import net.sourceforge.plantuml.tim.stdlib.GetVersion;
 import net.sourceforge.plantuml.tim.stdlib.Getenv;
 import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeProcedure;
+import net.sourceforge.plantuml.tim.stdlib.IsDark;
+import net.sourceforge.plantuml.tim.stdlib.IsLight;
+import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
@@ -149,15 +154,20 @@ public class TContext {
 		functionsSet.addFunction(new Lower());
 		functionsSet.addFunction(new StringFunction());
 		functionsSet.addFunction(new Newline());
+		functionsSet.addFunction(new Feature());
+		functionsSet.addFunction(new Lighten());
+		functionsSet.addFunction(new Darken());
+		functionsSet.addFunction(new IsDark());
+		functionsSet.addFunction(new IsLight());
+		// %standard_exists_function
+		// %str_replace
 		// !exit
 		// !log
 		// %min
 		// %max
 		// Regexp
-		// %plantuml_version
 		// %time
 		// %trim
-		// %str_replace
 	}
 
 	public TContext(ImportedFiles importedFiles, Defines defines, String charset,

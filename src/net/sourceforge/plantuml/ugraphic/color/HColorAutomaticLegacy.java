@@ -34,24 +34,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
-public class HColorAutomatic extends HColorAbstract implements HColor {
-
-	private final HColor color1;
-	private final HColor color2;
-
-	public HColorAutomatic(HColor color1, HColor color2) {
-		this.color1 = color1;
-		this.color2 = color2;
-	}
-
-	public HColor getAppropriateColor(HColor back) {
-		if (back == null) {
-			return color2;
-		}
-		if (back.isDark()) {
-			return color2;
-		}
-		return color1;
-	}
+public class HColorAutomaticLegacy extends HColorAbstract implements HColor {
 
 }

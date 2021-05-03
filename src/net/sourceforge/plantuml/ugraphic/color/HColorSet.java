@@ -238,17 +238,36 @@ public class HColorSet {
 			this.s2 = s2;
 		}
 
-		boolean isGradientValid() {
+		boolean isValid() {
 			return isColorValid(s1) && isColorValid(s2);
 		}
 
-		HColorGradient buildGradient(HColor background) {
+		HColorGradient buildInternal(HColor background) {
 			return new HColorGradient(build(s1, background), build(s2, background), sep);
 		}
 
 	}
 
-	private Gradient fromString(String s) {
+	class Automatic {
+		private final String s1;
+		private final String s2;
+
+		Automatic(String s1, String s2) {
+			this.s1 = s1;
+			this.s2 = s2;
+		}
+
+		boolean isValid() {
+			return isColorValid(s1) && isColorValid(s2);
+		}
+
+		HColorAutomatic buildInternal(HColor background) {
+			return new HColorAutomatic(build(s1, background), build(s2, background));
+		}
+
+	}
+
+	private Gradient gradientFromString(String s) {
 		final Matcher2 m = MyPattern.cmpile("[-\\\\|/]").matcher(s);
 		if (m.find()) {
 			final char sep = m.group(0).charAt(0);
@@ -256,6 +275,22 @@ public class HColorSet {
 			final String s1 = s.substring(0, idx);
 			final String s2 = s.substring(idx + 1);
 			return new Gradient(s1, sep, s2);
+		}
+		return null;
+	}
+
+	private Automatic automaticFromString(String s) {
+		if (s.startsWith("#")) {
+			s = s.substring(1);
+		}
+		if (s.startsWith("?") == false) {
+			return null;
+		}
+		final int idx = s.indexOf(':');
+		if (idx != -1) {
+			final String s1 = s.substring(1, idx);
+			final String s2 = s.substring(idx + 1);
+			return new Automatic(s1, s2);
 		}
 		return null;
 	}
@@ -290,9 +325,13 @@ public class HColorSet {
 		if (isColorValid(s) == false) {
 			throw new NoSuchColorException();
 		}
-		final Gradient gradient = fromString(s);
+		final Automatic automatic = automaticFromString(s);
+		if (automatic != null) {
+			return automatic.buildInternal(background);
+		}
+		final Gradient gradient = gradientFromString(s);
 		if (gradient != null) {
-			return gradient.buildGradient(background);
+			return gradient.buildInternal(background);
 		}
 		if (background == null && (s.equalsIgnoreCase("#transparent") || s.equalsIgnoreCase("transparent")))
 			s = "#00000000";
@@ -301,9 +340,13 @@ public class HColorSet {
 
 	private boolean isColorValid(String s) {
 		s = removeFirstDieseAndgoLowerCase(s);
-		final Gradient gradient = fromString(s);
+		final Automatic automatic = automaticFromString(s);
+		if (automatic != null) {
+			return automatic.isValid();
+		}
+		final Gradient gradient = gradientFromString(s);
 		if (gradient != null) {
-			return gradient.isGradientValid();
+			return gradient.isValid();
 		}
 		if (s.matches("[0-9A-Fa-f]{3}")) {
 			return true;
@@ -333,7 +376,7 @@ public class HColorSet {
 		if (s.equalsIgnoreCase("transparent") || s.equalsIgnoreCase("background")) {
 			return new HColorBackground(background);
 		} else if (s.equalsIgnoreCase("automatic")) {
-			return new HColorAutomatic();
+			return new HColorAutomaticLegacy();
 		} else if (s.matches("[0-9A-Fa-f]{3}")) {
 			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(1) + s.charAt(1) + s.charAt(2) + s.charAt(2);
 			color = new Color(Integer.parseInt(s, 16));

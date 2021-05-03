@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import static net.sourceforge.plantuml.SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -104,8 +106,6 @@ import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
-
-import static net.sourceforge.plantuml.SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;
 
 public class ImageBuilder {
 
@@ -484,7 +484,7 @@ public class ImageBuilder {
 		return ug;
 	}
 
-	private static HColor calculateBackColor(TitledDiagram diagram) {
+	public static HColor calculateBackColor(TitledDiagram diagram) {
 		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature
 					.of(SName.root, SName.document, diagram.getUmlDiagramType().getStyleName())

@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorAutomatic;
+import net.sourceforge.plantuml.ugraphic.color.HColorAutomaticLegacy;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.utils.CharHidder;
 
@@ -144,8 +145,13 @@ public final class AtomText extends AbstractAtom implements Atom {
 			}
 			HColor textColor = fontConfiguration.getColor();
 			FontConfiguration useFontConfiguration = fontConfiguration;
-			if (textColor instanceof HColorAutomatic && ug.getParam().getBackcolor() != null) {
+			if (textColor instanceof HColorAutomaticLegacy && ug.getParam().getBackcolor() != null) {
 				textColor = ((HColorSimple) ug.getParam().getBackcolor()).opposite();
+				useFontConfiguration = fontConfiguration.changeColor(textColor);
+			}
+			if (textColor instanceof HColorAutomatic) {
+				final HColor backcolor = ug.getParam().getBackcolor();
+				textColor = ((HColorAutomatic) textColor).getAppropriateColor(backcolor);
 				useFontConfiguration = fontConfiguration.changeColor(textColor);
 			}
 			if (marginLeft != AtomTextUtils.ZERO) {

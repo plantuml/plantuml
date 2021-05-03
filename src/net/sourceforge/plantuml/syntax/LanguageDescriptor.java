@@ -184,6 +184,7 @@ public class LanguageDescriptor {
 
 		preproc.add("!exit");
 		preproc.add("!include");
+		preproc.add("!theme");
 		preproc.add("!pragma");
 		preproc.add("!define");
 		preproc.add("!undef");

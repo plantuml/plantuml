@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.style;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -72,7 +71,7 @@ public class StyleSignature {
 		if (url == null) {
 			return this;
 		}
-		final Set<String> result = new HashSet<String>(names);
+		final Set<String> result = new LinkedHashSet<String>(names);
 		result.add(SName.clickable.name());
 		return new StyleSignature(result);
 
@@ -85,7 +84,7 @@ public class StyleSignature {
 		if (s.contains("*") || s.contains("&") || s.contains("-")) {
 			throw new IllegalArgumentException();
 		}
-		final Set<String> result = new HashSet<String>(names);
+		final Set<String> result = new LinkedHashSet<String>(names);
 		result.add(clean(s));
 		return new StyleSignature(result);
 	}
@@ -95,7 +94,7 @@ public class StyleSignature {
 	}
 
 	public StyleSignature addStar() {
-		final Set<String> result = new HashSet<String>(names);
+		final Set<String> result = new LinkedHashSet<String>(names);
 		result.add("*");
 		return new StyleSignature(result);
 	}

@@ -223,6 +223,12 @@ public class Option {
 				this.failfast2 = true;
 			} else if (s.equalsIgnoreCase("-checkonly")) {
 				this.checkOnly = true;
+			} else if (s.equalsIgnoreCase("-theme")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				this.config.add(0, "!theme " + arg[i]);
 			} else if (s.equalsIgnoreCase("-config")) {
 				i++;
 				if (i == arg.length) {
