@@ -71,10 +71,10 @@ public class PngTitler {
 		this.spriteContainer = spriteContainer;
 
 		if (UseStyle.useBetaStyle()) {
-			textColor = style.value(PName.FontColor).asColor(set);
+			textColor = style.value(PName.FontColor).asColor(spriteContainer.getThemeStyle(), set);
 			fontSize = style.value(PName.FontSize).asInt();
 			fontFamily = style.value(PName.FontName).asString();
-			hyperlinkColor = style.value(PName.HyperLinkColor).asColor(set);
+			hyperlinkColor = style.value(PName.HyperLinkColor).asColor(spriteContainer.getThemeStyle(), set);
 		}
 		this.textColor = textColor;
 		this.text = text;

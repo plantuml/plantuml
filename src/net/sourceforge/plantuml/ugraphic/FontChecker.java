@@ -158,7 +158,7 @@ public class FontChecker {
 	}
 
 	private String getSvgImage(char c) throws IOException, TransformerException {
-		final SvgGraphics svg = new SvgGraphics(true, new Dimension2DDouble(0, 0), 1.0, null, 42, "none",
+		final SvgGraphics svg = new SvgGraphics(null, true, new Dimension2DDouble(0, 0), 1.0, null, 42, "none",
 				LengthAdjust.defaultValue());
 		svg.setStrokeColor("black");
 		svg.svgImage(getBufferedImage(c), 0, 0);

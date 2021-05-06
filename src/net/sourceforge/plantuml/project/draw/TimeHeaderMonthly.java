@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import java.util.Map;
 
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.time.Day;
@@ -61,10 +62,11 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		return 16 + 13 - 1;
 	}
 
-	public TimeHeaderMonthly(double scale, Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, Style style, HColorSet colorSet) {
-		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
-				new TimeScaleCompressed(calendar, scale), style, colorSet);
+	public TimeHeaderMonthly(double scale, Day calendar, Day min, Day max, LoadPlanable defaultPlan,
+			Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek, Style style, HColorSet colorSet,
+			ThemeStyle themeStyle) {
+		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleCompressed(calendar, scale),
+				style, colorSet, themeStyle);
 	}
 
 	@Override

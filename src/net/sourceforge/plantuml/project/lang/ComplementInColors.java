@@ -48,11 +48,13 @@ public class ComplementInColors implements Something {
 		return new RegexLeaf("COMPLEMENT" + suffix, "in[%s]+(#?\\w+)(?:/(#?\\w+))?");
 	}
 
-	public Failable<CenterBorderColor> getMe(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
 		final String color1 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color2 = arg.get("COMPLEMENT" + suffix, 1);
-		final HColor col1 = color1 == null ? null : system.getIHtmlColorSet().getColorOrWhite(color1);
-		final HColor col2 = color2 == null ? null : system.getIHtmlColorSet().getColorOrWhite(color2);
+		final HColor col1 = color1 == null ? null
+				: diagram.getIHtmlColorSet().getColorOrWhite(diagram.getSkinParam().getThemeStyle(), color1);
+		final HColor col2 = color2 == null ? null
+				: diagram.getIHtmlColorSet().getColorOrWhite(diagram.getSkinParam().getThemeStyle(), color2);
 		return Failable.ok(new CenterBorderColor(col1, col2));
 	}
 }

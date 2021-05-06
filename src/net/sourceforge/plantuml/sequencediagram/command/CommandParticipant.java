@@ -83,7 +83,8 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String code = arg.get("CODE", 0);
 		if (diagram.participantsContainsKey(code)) {
 			diagram.putParticipantInLast(code);
@@ -123,8 +124,8 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);
 		}
 		final String s = arg.get("COLOR", 0);
-		participant.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		participant.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

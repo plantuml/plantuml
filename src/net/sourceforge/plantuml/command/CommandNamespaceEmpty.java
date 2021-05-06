@@ -81,7 +81,8 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Ident idNewLong = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? idNewLong : diagram.buildCode(idShort);
@@ -104,7 +105,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
 			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), color));
 		}
 		diagram.endGroup();
 		return CommandExecutionResult.ok();

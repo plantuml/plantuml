@@ -80,7 +80,8 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		if (diagram.isBoxPending()) {
 			return CommandExecutionResult.error("Box cannot be nested");
 		}
@@ -94,8 +95,10 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 			stereotype = new Stereotype(stereo);
 		}
 
-		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(argColor);
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		// final HtmlColor color =
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(argColor);
+		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		final String title = argTitle == null ? "" : argTitle;
 		diagram.boxStart(Display.getWithNewlines(title), colors.getColor(ColorType.BACK), stereotype);
 		return CommandExecutionResult.ok();

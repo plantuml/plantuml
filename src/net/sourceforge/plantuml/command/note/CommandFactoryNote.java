@@ -116,7 +116,8 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				return "(?i)^[%s]*end[%s]?note$";
 			}
 
-			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines)
+					throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
@@ -126,7 +127,8 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		};
 	}
 
-	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, BlocLines display) throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, BlocLines display)
+			throws NoSuchColorException {
 		final String idShort = arg.get("CODE", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
@@ -137,8 +139,8 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		final IEntity entity = diagram.createLeaf(ident, code, display.toDisplay(), LeafType.NOTE, null);
 		assert entity != null;
 		final String s = arg.get("COLOR", 0);
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 		return CommandExecutionResult.ok();
 	}

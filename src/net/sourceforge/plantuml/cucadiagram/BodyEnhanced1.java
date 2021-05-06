@@ -92,7 +92,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	BodyEnhanced1(HorizontalAlignment align, Display display, FontParam fontParam, ISkinParam skinParam,
 			Stereotype stereotype, ILeaf entity, Style style) {
 		super(align, style == null ? new FontConfiguration(skinParam, fontParam, stereotype)
-				: style.getFontConfiguration(skinParam.getIHtmlColorSet()));
+				: style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()));
 
 		this.style = style;
 		this.entity = entity;

@@ -64,7 +64,8 @@ abstract class CommandChangeState extends SingleLineCommand2<TimingDiagram> {
 	protected CommandExecutionResult addState(TimingDiagram diagram, RegexResult arg, final Player player,
 			final TimeTick now) throws NoSuchColorException {
 		final String comment = arg.get("COMMENT", 0);
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		player.setState(now, comment, colors, getStates(arg));
 		return CommandExecutionResult.ok();
 	}

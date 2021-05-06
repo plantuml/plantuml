@@ -147,16 +147,19 @@ public class EntityImageDescription extends AbstractEntityImage {
 			style = style.eventuallyOverride(colors);
 			final Style styleStereo = tmp.withStereotype(stereotype)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			forecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			forecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			if (backcolor == null) {
-				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
 			}
 			roundCorner = style.value(PName.RoundCorner).asDouble();
 			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 			deltaShadow = style.value(PName.Shadowing).asDouble();
 			stroke = style.getStroke(colors);
-			fcTitle = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
-			fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+			fcTitle = style.getFontConfiguration(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
+			fcStereo = styleStereo.getFontConfiguration(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			defaultAlign = style.getHorizontalAlignment();
 		} else {
 			forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());

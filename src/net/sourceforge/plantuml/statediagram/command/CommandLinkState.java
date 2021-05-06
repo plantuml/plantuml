@@ -97,7 +97,8 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
 
@@ -118,7 +119,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		if (arg.get("ENT1", 2) != null) {
 			final String s = arg.get("ENT1", 2);
 			cl1.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		}
 		if (arg.get("ENT2", 1) != null) {
 			cl2.setStereotype(new Stereotype(arg.get("ENT2", 1)));
@@ -126,7 +127,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		if (arg.get("ENT2", 2) != null) {
 			final String s = arg.get("ENT2", 2);
 			cl2.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		}
 
 		String queue = arg.get("ARROW_BODY1", 0) + arg.get("ARROW_BODY2", 0);
@@ -148,7 +149,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
-		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
+		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 		link.setUmlDiagramType(UmlDiagramType.STATE);
 		diagram.addLink(link);
 

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipContainer, UGraphic2 {
 
@@ -76,12 +77,12 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		register(strategyTOBEREMOVED);
 	}
 
-	public UGraphicEps(ColorMapper colorMapper, EpsStrategy strategy) {
-		this(colorMapper, strategy, strategy.creatEpsGraphics());
+	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy strategy) {
+		this(defaultBackground, colorMapper, strategy, strategy.creatEpsGraphics());
 	}
 
-	private UGraphicEps(ColorMapper colorMapper, EpsStrategy strategy, EpsGraphics eps) {
-		super(colorMapper, eps);
+	private UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy strategy, EpsGraphics eps) {
+		super(defaultBackground, colorMapper, eps);
 		this.strategyTOBEREMOVED = strategy;
 		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		register(strategy);
@@ -119,9 +120,9 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		this.getGraphicObject().drawEps(eps, x, y);
 	}
 
-	static public String getEpsString(ColorMapper colorMapper, EpsStrategy epsStrategy, UDrawable udrawable)
-			throws IOException {
-		final UGraphicEps ug = new UGraphicEps(colorMapper, epsStrategy);
+	static public String getEpsString(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy epsStrategy,
+			UDrawable udrawable) throws IOException {
+		final UGraphicEps ug = new UGraphicEps(defaultBackground, colorMapper, epsStrategy);
 		udrawable.drawU(ug);
 		return ug.getEPSCode();
 	}

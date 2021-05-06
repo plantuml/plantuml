@@ -65,7 +65,7 @@ public class Lighten extends SimpleReturnFunction {
 		final String colorString = values.get(0).toString();
 		final int ratio = values.get(1).toInt();
 		try {
-			HColor color = HColorSet.instance().getColor(colorString);
+			HColor color = HColorSet.instance().getColorLEGACY(colorString);
 			color = color.lighten(ratio);
 			return TValue.fromString(color.asString());
 		} catch (NoSuchColorException e) {

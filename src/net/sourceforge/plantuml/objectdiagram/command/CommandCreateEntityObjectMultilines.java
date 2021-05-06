@@ -86,7 +86,8 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines)
+			throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final IEntity entity = executeArg0(diagram, line0);
@@ -121,8 +122,8 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 					diagram.getSkinParam().getIHtmlColorSet()));
 		}
 		final String s = line0.get("COLOR", 0);
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		return entity;
 	}
 

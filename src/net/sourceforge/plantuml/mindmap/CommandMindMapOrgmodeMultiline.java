@@ -89,7 +89,8 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 		final String stringColor = line0.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
+					stringColor);
 		}
 
 		if (stereotype == null) {

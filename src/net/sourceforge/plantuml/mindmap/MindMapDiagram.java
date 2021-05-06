@@ -82,9 +82,7 @@ public class MindMapDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption)
-				.drawable(getTextBlock())
-				.write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {
@@ -241,6 +239,31 @@ public class MindMapDiagram extends UmlDiagram {
 			return CommandExecutionResult.error("error42L");
 		}
 
+	}
+
+	private String first;
+
+	public int getSmartLevel(String type) {
+		if (first == null) {
+			first = type;
+		}
+		if (type.endsWith("**")) {
+			type = type.replace('\t', ' ').trim();
+		}
+		type = type.replace('\t', ' ');
+		if (type.contains(" ") == false) {
+			return type.length() - 1;
+		}
+		if (type.endsWith(first)) {
+			return type.length() - first.length();
+		}
+		if (type.trim().length() == 1) {
+			return type.length() - 1;
+		}
+		if (type.startsWith(first)) {
+			return type.length() - first.length();
+		}
+		throw new UnsupportedOperationException("type=<" + type + ">[" + first + "]");
 	}
 
 }

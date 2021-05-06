@@ -102,7 +102,8 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 				return "(?i)^end[%s]?note$";
 			}
 
-			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines) throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines)
+					throws NoSuchColorException {
 				final String line0 = lines.getFirst().getTrimmed().getString();
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
@@ -120,14 +121,16 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 		return new SingleLineCommand2<CucaDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final CucaDiagram system, LineLocation location, RegexResult arg) throws NoSuchColorException {
+			protected CommandExecutionResult executeArg(final CucaDiagram system, LineLocation location,
+					RegexResult arg) throws NoSuchColorException {
 				final BlocLines note = BlocLines.getWithNewlines(arg.get("NOTE", 0));
 				return executeInternal(system, note, arg);
 			}
 		};
 	}
 
-	private CommandExecutionResult executeInternal(CucaDiagram diagram, BlocLines note, final RegexResult arg) throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(CucaDiagram diagram, BlocLines note, final RegexResult arg)
+			throws NoSuchColorException {
 		final Link link = diagram.getLastLink();
 		if (link == null) {
 			return CommandExecutionResult.error("No link defined");
@@ -141,7 +144,8 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 			url = urlBuilder.getUrl(arg.get("URL", 0));
 		}
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		link.addNote(note.toDisplay(), position, colors);
 		return CommandExecutionResult.ok();
 	}

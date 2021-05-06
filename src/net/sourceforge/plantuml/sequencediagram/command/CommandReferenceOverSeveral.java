@@ -77,10 +77,13 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		String s1 = arg.get("REF", 0);
-		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);
-		// final HtmlColor backColorGeneral = HtmlColorSetSimple.instance().getColorIfValid(arg.get("REF").get(1));
+		final HColor backColorElement = s1 == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s1);
+		// final HtmlColor backColorGeneral =
+		// HtmlColorSetSimple.instance().getColorIfValid(arg.get("REF").get(1));
 
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
 		final String url = arg.get("URL", 0);
@@ -100,8 +103,8 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		}
 
 		final HColor backColorGeneral = null;
-		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement, diagram.getSkinParam()
-				.getCurrentStyleBuilder());
+		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,
+				diagram.getSkinParam().getCurrentStyleBuilder());
 		diagram.addReference(ref);
 		return CommandExecutionResult.ok();
 	}

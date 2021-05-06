@@ -111,16 +111,19 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		if (UseStyle.useBetaStyle()) {
 			Style style = getStyle();
 			style = style.eventuallyOverride(colors);
-			this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 			this.stroke = style.getStroke(colors);
 			this.roundCorner = style.value(PName.RoundCorner).asDouble();
 			if (specificBackColor == null) {
-				this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+				this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
 			} else {
 				this.back = specificBackColor;
 			}
-			titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+			titleFontConfiguration = style.getFontConfiguration(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			titleHorizontalAlignment = style.getHorizontalAlignment();
 		} else {
 			this.borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder);

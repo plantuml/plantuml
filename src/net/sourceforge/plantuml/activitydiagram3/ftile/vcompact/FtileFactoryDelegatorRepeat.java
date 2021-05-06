@@ -90,11 +90,13 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 					.getMergedStyle(skinParam().getCurrentStyleBuilder());
 			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
 					.getMergedStyle(skinParam().getCurrentStyleBuilder());
-			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
-			diamondColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
-			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
-			fcDiamond = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());
-			fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
+			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
+					skinParam().getIHtmlColorSet());
+			diamondColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
+					skinParam().getIHtmlColorSet());
+			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+			fcDiamond = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
+			fcArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
 		} else {
 			borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
 			// diamondColor = color == null ? getRose().getHtmlColor(skinParam(),

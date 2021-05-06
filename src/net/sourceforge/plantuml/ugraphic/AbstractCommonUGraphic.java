@@ -56,6 +56,13 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private UClip clip;
 	private double scale = 1;
 
+	private final HColor defaultBackground;
+
+	@Override
+	public HColor getDefaultBackground() {
+		return defaultBackground;
+	}
+
 	public double dpiFactor() {
 		return 1;
 	}
@@ -100,11 +107,13 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 		this.enlargeClip = true;
 	}
 
-	public AbstractCommonUGraphic(ColorMapper colorMapper) {
+	public AbstractCommonUGraphic(HColor defaultBackground, ColorMapper colorMapper) {
 		this.colorMapper = colorMapper;
+		this.defaultBackground = defaultBackground;
 	}
 
 	protected AbstractCommonUGraphic(AbstractCommonUGraphic other) {
+		this.defaultBackground = other.defaultBackground;
 		this.enlargeClip = other.enlargeClip;
 		this.colorMapper = other.colorMapper;
 		this.translate = other.translate;

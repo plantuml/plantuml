@@ -378,4 +378,12 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getlengthAdjust();
 	}
 
+	public void assumeTransparent(ThemeStyle style) {
+		skinParam.assumeTransparent(style);
+	}
+
+	public ThemeStyle getThemeStyle() {
+		return skinParam.getThemeStyle();
+	}
+
 }

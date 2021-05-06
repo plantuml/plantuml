@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import java.util.Map;
 
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.project.LoadPlanable;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
@@ -53,8 +54,9 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 	protected final Map<DayOfWeek, HColor> colorDaysOfWeek;
 
 	public TimeHeaderCalendar(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, TimeScale timeScale, Style style, HColorSet colorSet) {
-		super(min, max, timeScale, style, colorSet);
+			Map<DayOfWeek, HColor> colorDaysOfWeek, TimeScale timeScale, Style style, HColorSet colorSet,
+			ThemeStyle themeStyle) {
+		super(min, max, timeScale, style, colorSet, themeStyle);
 		this.defaultPlan = defaultPlan;
 		this.colorDays = colorDays;
 		this.colorDaysOfWeek = colorDaysOfWeek;

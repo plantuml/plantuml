@@ -84,7 +84,8 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBar);
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionBar().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			color = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
 		}
 		rect.setDeltaShadow(shadowing);

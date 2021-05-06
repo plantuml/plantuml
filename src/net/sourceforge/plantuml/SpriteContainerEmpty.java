@@ -102,4 +102,8 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 		return s;
 	}
 
+	public ThemeStyle getThemeStyle() {
+		return ThemeStyle.LIGHT;
+	}
+
 }

@@ -33,38 +33,10 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.command;
+package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.GanttDiagram;
+public enum LabelPosition {
 
-public class CommandLabelOnFirstColumn extends SingleLineCommand2<GanttDiagram> {
-
-	public CommandLabelOnFirstColumn() {
-		super(getRegexConcat());
-	}
-
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandLabelOnFirstColumn.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("labels?"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("on"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("first"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("column"), RegexLeaf.end()); //
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
-		diagram.labelOnFirstColumn();
-		return CommandExecutionResult.ok();
-	}
+	LEGACY, FIRST_COLUMN, LAST_COLUMN
 
 }

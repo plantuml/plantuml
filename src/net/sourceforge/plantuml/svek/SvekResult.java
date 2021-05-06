@@ -104,7 +104,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			if (UseStyle.useBetaStyle()) {
 				final StyleBuilder currentStyleBuilder = line.getCurrentStyleBuilder();
 				final Style style = getDefaultStyleDefinition(line.getStereotype()).getMergedStyle(currentStyleBuilder);
-				color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
+				color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
+						dotData.getSkinParam().getIHtmlColorSet());
 				stroke = style.getStroke();
 				color = HColorUtils.noGradient(color);
 			}
@@ -143,7 +144,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature.of(SName.root, SName.document)
 					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
-			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
+			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
+					dotData.getSkinParam().getIHtmlColorSet());
 		}
 		return dotData.getSkinParam().getBackgroundColor(false);
 	}

@@ -76,7 +76,7 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 
 	private void doAffectation(StringLocated result) throws EaterException, EaterExceptionLocated {
 		int lastLocation = -1;
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 9999; i++)
 			try {
 				this.executeAffectation(context, memory, result);
 				return;

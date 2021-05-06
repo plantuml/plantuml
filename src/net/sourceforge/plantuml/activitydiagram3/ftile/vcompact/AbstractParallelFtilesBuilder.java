@@ -137,7 +137,7 @@ public abstract class AbstractParallelFtilesBuilder {
 		final FontConfiguration fontConfiguration;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
+			fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
 		} else {
 			fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 		}

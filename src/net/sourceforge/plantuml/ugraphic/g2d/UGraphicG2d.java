@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureVisible, UGraphic2 {
 
@@ -117,13 +118,13 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		register(dpiFactor);
 	}
 
-	public UGraphicG2d(ColorMapper colorMapper, Graphics2D g2d, double dpiFactor) {
-		this(colorMapper, g2d, dpiFactor, null, 0, 0);
+	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, Graphics2D g2d, double dpiFactor) {
+		this(defaultBackground, colorMapper, g2d, dpiFactor, null, 0, 0);
 	}
 
-	public UGraphicG2d(ColorMapper colorMapper, Graphics2D g2d, double dpiFactor, AffineTransformation affineTransform,
-			double dx, double dy) {
-		super(colorMapper, g2d);
+	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, Graphics2D g2d, double dpiFactor,
+			AffineTransformation affineTransform, double dx, double dy) {
+		super(defaultBackground, colorMapper, g2d);
 		this.hasAffineTransform = affineTransform != null;
 		this.dpiFactor = dpiFactor;
 		if (dpiFactor != 1.0) {

@@ -58,8 +58,8 @@ public interface TaskDraw extends UDrawable {
 
 	public void pushMe(double deltaY);
 
-	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double leftColumnWidth);
-	
+	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars);
+
 	public double getTitleWidth(StringBounder stringBounder);
 
 	public double getFullHeightTask(StringBounder stringBounder);

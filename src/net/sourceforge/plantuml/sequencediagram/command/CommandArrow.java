@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -51,7 +52,6 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -265,7 +265,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			config = config.reverseDefine();
 		}
 
-		config = applyStyle(arg.getLazzy("ARROW_STYLE", 0), config);
+		config = applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0), config);
 
 		final String activationSpec = arg.get("ACTIVATION", 0);
 
@@ -298,7 +298,8 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		}
 		final String s = arg.get("LIFECOLOR", 0);
 
-		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor activationColor = s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
 
 		if (activationSpec != null) {
 			return manageActivations(activationSpec, diagram, p1, p2, activationColor);
@@ -352,7 +353,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		return sa.length() + sb.length();
 	}
 
-	public static ArrowConfiguration applyStyle(String arrowStyle, ArrowConfiguration config)
+	public static ArrowConfiguration applyStyle(ThemeStyle themeStyle, String arrowStyle, ArrowConfiguration config)
 			throws NoSuchColorException {
 		if (arrowStyle == null) {
 			return config;
@@ -372,7 +373,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				config = config.withBody(ArrowBody.HIDDEN);
 				// link.goHidden();
 			} else {
-				config = config.withColor(HColorSet.instance().getColor(s));
+				config = config.withColor(HColorSet.instance().getColor(themeStyle, s));
 			}
 		}
 		return config;

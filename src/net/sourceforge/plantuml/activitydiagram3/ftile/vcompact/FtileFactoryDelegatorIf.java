@@ -82,20 +82,22 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 				: FontParam.ARROW;
 		final FontConfiguration fcArrow;
 		if (UseStyle.useBetaStyle()) {
-			final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(
-					skinParam().getCurrentStyleBuilder());
-			final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(
-					skinParam().getCurrentStyleBuilder());
-			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
-			backColor = branch0.getColor() == null ? styleDiamond.value(PName.BackGroundColor).asColor(
-					skinParam().getIHtmlColorSet()) : branch0.getColor();
-			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
-			fcTest = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());
-			fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
+			final Style styleArrow = getDefaultStyleDefinitionArrow()
+					.getMergedStyle(skinParam().getCurrentStyleBuilder());
+			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
+					.getMergedStyle(skinParam().getCurrentStyleBuilder());
+			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
+					skinParam().getIHtmlColorSet());
+			backColor = branch0.getColor() == null ? styleDiamond.value(PName.BackGroundColor)
+					.asColor(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet()) : branch0.getColor();
+			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+			fcTest = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
+			fcArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
 		} else {
 			borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-			backColor = branch0.getColor() == null ? getRose().getHtmlColor(skinParam(),
-					ColorParam.activityDiamondBackground) : branch0.getColor();
+			backColor = branch0.getColor() == null
+					? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
+					: branch0.getColor();
 			arrowColor = Rainbow.build(skinParam());
 			fcTest = new FontConfiguration(skinParam(), testParam, null)
 					.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));

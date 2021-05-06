@@ -76,7 +76,7 @@ class SingleLine extends AbstractTextBlock implements Line {
 		this.horizontalAlignment = horizontalAlignment;
 		final Splitter lineSplitter = new Splitter(text);
 
-		for (HtmlCommand cmd : lineSplitter.getHtmlCommands(false)) {
+		for (HtmlCommand cmd : lineSplitter.getHtmlCommands(spriteContainer.getThemeStyle(), false)) {
 			if (cmd instanceof Text) {
 				final String s = ((Text) cmd).getText();
 				blocs.add(new TileText(s, fontConfiguration, null));
@@ -111,13 +111,16 @@ class SingleLine extends AbstractTextBlock implements Line {
 
 	// private double maxDeltaY(Graphics2D g2d) {
 	// double result = 0;
-	// final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d));
+	// final Dimension2D dim =
+	// calculateDimension(StringBounderUtils.asStringBounder(g2d));
 	// for (TextBlock b : blocs) {
 	// if (b instanceof TileText == false) {
 	// continue;
 	// }
-	// final Dimension2D dimBloc = b.calculateDimension(StringBounderUtils.asStringBounder(g2d));
-	// final double deltaY = dim.getHeight() - dimBloc.getHeight() + ((TileText) b).getFontSize2D();
+	// final Dimension2D dimBloc =
+	// b.calculateDimension(StringBounderUtils.asStringBounder(g2d));
+	// final double deltaY = dim.getHeight() - dimBloc.getHeight() + ((TileText)
+	// b).getFontSize2D();
 	// result = Math.max(result, deltaY);
 	// }
 	// return result;

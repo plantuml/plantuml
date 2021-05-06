@@ -91,7 +91,8 @@ public class FontConfiguration {
 
 	public FontConfiguration(ISkinParam skinParam, Style style) {
 		// User getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()) instead ?
-		this(style.getUFont(), style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet()),
+		this(style.getUFont(),
+				style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
 				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 	}
 

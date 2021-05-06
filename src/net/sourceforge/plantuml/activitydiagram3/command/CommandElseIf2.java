@@ -96,9 +96,11 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
-		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor color = s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
 
 		String test = arg.get("TEST", 0);
 		if (test.length() == 0) {

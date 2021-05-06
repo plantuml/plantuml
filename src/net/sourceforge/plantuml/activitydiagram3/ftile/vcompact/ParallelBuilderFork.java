@@ -138,7 +138,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			final Rainbow def;
 			if (UseStyle.useBetaStyle()) {
 				Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
-				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			} else {
 				def = Rainbow.build(skinParam());
 			}
@@ -203,7 +203,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			final Rainbow def;
 			if (UseStyle.useBetaStyle()) {
 				Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			} else {
 				def = Rainbow.build(skinParam());
 			}
@@ -248,8 +248,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			final Point2D p1 = new Point2D.Double(geo2.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo2.getLeft(), geo2.getInY());
 
-			Snake snake = Snake.create(arrowColor, Arrows.asToDown())
-					.ignoreForCompression();
+			Snake snake = Snake.create(arrowColor, Arrows.asToDown()).ignoreForCompression();
 			if (Display.isNull(label) == false) {
 				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());
 			}
@@ -305,8 +304,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			final Point2D p1 = new Point2D.Double(geo.getLeft(), barHeight + geo.getOutY());
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), justBeforeBar2);
 
-			Snake snake = Snake.create(arrowColor, Arrows.asToDown())
-					.ignoreForCompression();
+			Snake snake = Snake.create(arrowColor, Arrows.asToDown()).ignoreForCompression();
 			if (Display.isNull(label) == false) {
 				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());
 			}

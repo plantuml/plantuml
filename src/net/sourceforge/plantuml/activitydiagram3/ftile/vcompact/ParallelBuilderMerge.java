@@ -82,7 +82,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 			final Rainbow def;
 			if (UseStyle.useBetaStyle()) {
 				Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
-				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			} else {
 				def = Rainbow.build(skinParam());
 			}
@@ -114,7 +114,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 			final Rainbow def;
 			if (UseStyle.useBetaStyle()) {
 				Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
-				def = Rainbow.build(style, skinParam().getIHtmlColorSet());
+				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			} else {
 				def = Rainbow.build(skinParam());
 			}
@@ -126,7 +126,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		return FtileUtils.addConnection(result, conns);
 	}
 
-	class ConnectionHorizontalThenVertical extends AbstractConnection /* implements ConnectionTranslatable */{
+	class ConnectionHorizontalThenVertical extends AbstractConnection /* implements ConnectionTranslatable */ {
 
 		private final Rainbow arrowColor;
 		private final UTranslate diamondTranslate;
@@ -170,8 +170,8 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		}
 
 		private Point2D getP2(final StringBounder stringBounder) {
-			final Point2D result = diamondTranslate.getTranslated(getFtile2().calculateDimension(stringBounder)
-					.getPointOut());
+			final Point2D result = diamondTranslate
+					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointOut());
 			final Dimension2D dim = getFtile2().calculateDimension(stringBounder);
 			UTranslate arrival = new UTranslate();
 			if (counter == 0) {

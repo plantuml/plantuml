@@ -96,7 +96,8 @@ public class Branch {
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(styleBuilder);
 			this.color = color == null
-					? style.value(PName.BackGroundColor).asColor(styleBuilder.getSkinParam().getIHtmlColorSet())
+					? style.value(PName.BackGroundColor).asColor(styleBuilder.getSkinParam().getThemeStyle(),
+							styleBuilder.getSkinParam().getIHtmlColorSet())
 					: color;
 		} else {
 			this.color = color;

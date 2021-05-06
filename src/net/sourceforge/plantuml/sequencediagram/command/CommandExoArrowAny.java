@@ -65,7 +65,8 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String body = arg.getLazzy("ARROW_BODYA", 0) + arg.getLazzy("ARROW_BODYB", 0);
 		final String dressing = arg.getLazzy("ARROW_DRESSING", 0);
 		final Participant p = diagram.getOrCreateParticipant(
@@ -94,7 +95,8 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		final MessageExoType messageExoType = getMessageExoType(arg);
 
 		config = config.withPart(getArrowPart(dressing, messageExoType));
-		config = CommandArrow.applyStyle(arg.getLazzy("ARROW_STYLE", 0), config);
+		config = CommandArrow.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0),
+				config);
 
 		final String activationSpec = arg.get("ACTIVATION", 0);
 
@@ -154,7 +156,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		final String s = arg.get("LIFECOLOR", 0);
 
 		final HColor activationColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
 
 		if (activationSpec != null) {
 			switch (activationSpec.charAt(0)) {

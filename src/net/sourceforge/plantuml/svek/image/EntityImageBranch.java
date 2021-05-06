@@ -88,8 +88,10 @@ public class EntityImageBranch extends AbstractEntityImage {
 		UStroke stroke = new UStroke(1.5);
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
-			back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+			border = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+			back = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			stroke = style.getStroke();
 			shadowing = style.value(PName.Shadowing).asDouble();
 		} else {

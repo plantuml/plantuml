@@ -39,7 +39,11 @@ import net.sourceforge.plantuml.project.time.Day;
 
 public class TimeScaleWink implements TimeScale {
 
-	private final double scale = 16.0;
+	private final double scale;
+
+	public TimeScaleWink(double scale) {
+		this.scale = 16.0 * scale;
+	}
 
 	public double getStartingPosition(Day instant) {
 		final long wink = instant.getMillis();

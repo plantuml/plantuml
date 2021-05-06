@@ -154,7 +154,7 @@ public class Stereotype implements CharSequence {
 					local = null;
 				}
 				final String colName = mCircleSprite.get("COLOR", 0);
-				final HColor col = colName == null ? null : htmlColorSet.getColor(colName);
+				final HColor col = colName == null ? null : htmlColorSet.getColorLEGACY(colName);
 				this.htmlColor = col == null ? HColorUtils.BLACK : col;
 				this.spriteName = mCircleSprite.get("NAME", 0);
 				this.character = '\0';
@@ -166,7 +166,7 @@ public class Stereotype implements CharSequence {
 					local = null;
 				}
 				final String colName = mCircleChar.get("COLOR", 0);
-				this.htmlColor = colName == null ? null : htmlColorSet.getColor(colName);
+				this.htmlColor = colName == null ? null : htmlColorSet.getColorLEGACY(colName);
 				this.character = mCircleChar.get("CHAR", 0).charAt(0);
 				this.spriteName = null;
 			}

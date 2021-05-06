@@ -102,7 +102,7 @@ public class GanttArrow implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = style.applyStrokeAndLineColor(ug, colorSet);
+		ug = style.applyStrokeAndLineColor(ug, colorSet, styleBuilder.getSkinParam().getThemeStyle());
 
 		double x1 = getX(source.getAttribute(), getSource(), atStart);
 		final StringBounder stringBounder = ug.getStringBounder();
@@ -144,7 +144,8 @@ public class GanttArrow implements UDrawable {
 			throw new IllegalArgumentException();
 		}
 
-		ug = ug.apply(new UStroke(1.5)).apply(style.value(PName.LineColor).asColor(colorSet).bg());
+		ug = ug.apply(new UStroke(1.5)).apply(
+				style.value(PName.LineColor).asColor(styleBuilder.getSkinParam().getThemeStyle(), colorSet).bg());
 		ug.apply(new UTranslate(x2, y2)).draw(Arrows.asTo(atEnd));
 
 	}

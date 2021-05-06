@@ -30,47 +30,58 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.command;
+package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.LabelPosition;
+import net.sourceforge.plantuml.project.LabelStrategy;
 
-public class CommandLink3 extends SingleLineCommand2<ActivityDiagram3> {
+public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 
-	public CommandLink3() {
+	public CommandLabelOnColumn() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandLink3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("link"), //
+		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("labels?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("COLOR", "(#\\w+)"), //
-				new RegexLeaf(";?"), //
-				RegexLeaf.end());
+				new RegexLeaf("on"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("POSITION", "(first|last)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("column"), //
+				new RegexOptional(new RegexConcat( //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("and"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("ALIGNED", "(left|right)"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("aligned") //
+				)), RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg)
-			throws NoSuchColorException {
-		final String s = arg.get("COLOR", 0);
-		final HColor color = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
-		if (color != null) {
-			diagram.setColorNextArrow(Rainbow.fromColor(color, null));
-		}
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
+		final LabelPosition position = "first".equalsIgnoreCase(arg.get("POSITION", 0)) ? LabelPosition.FIRST_COLUMN
+				: LabelPosition.LAST_COLUMN;
+		final HorizontalAlignment alignment = "right".equalsIgnoreCase(arg.get("ALIGNED", 0))
+				? HorizontalAlignment.RIGHT
+				: HorizontalAlignment.LEFT;
+		final LabelStrategy strategy = new LabelStrategy(position, alignment);
+		diagram.setLabelStrategy(strategy);
 		return CommandExecutionResult.ok();
 	}
 

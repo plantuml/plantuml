@@ -114,7 +114,7 @@ public class NwGroup {
 		}
 		HColor color = getColor();
 		if (color == null) {
-			color = colors.getColorOrWhite("#AAA");
+			color = colors.getColorOrWhite(skinParam.getThemeStyle(), "#AAA");
 		}
 		size.draw(ug, color);
 

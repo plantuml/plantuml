@@ -44,6 +44,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -70,7 +71,7 @@ public class TimingRuler {
 
 	static UGraphic applyForVLines(UGraphic ug) {
 		final UStroke stroke = new UStroke(3, 5, 0.5);
-		final HColor color = HColorSet.instance().getColorOrWhite("#AAA");
+		final HColor color = HColorSet.instance().getColorOrWhite(ThemeStyle.LIGHT, "#AAA");
 		return ug.apply(stroke).apply(color);
 	}
 

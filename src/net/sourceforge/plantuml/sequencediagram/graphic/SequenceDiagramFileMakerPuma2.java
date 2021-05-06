@@ -67,7 +67,6 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -197,7 +196,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				}
 
 				if (compTitle != null) {
-					final HColor back = ImageBuilder.calculateBackColor(diagram);
+					final HColor back = diagram.calculateBackColor();
 					compTitle.drawU(ug.apply(back.bg()).apply(new UTranslate(area.getTitleX(), area.getTitleY())));
 				}
 				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));

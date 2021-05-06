@@ -81,9 +81,10 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 		}
 		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), colorParam);
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(
-					getSkinParam().getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			final Style style = getDefaultStyleDefinitionCircle()
+					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			color = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
 		}
 		circle.setDeltaShadow(shadowing);

@@ -78,13 +78,14 @@ public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
 
 		final String stringColor = arg.get("COLOR", 0);
 		HColor color = null;
 		if (stringColor != null) {
-			color = HColorSet.instance().getColor(stringColor);
+			color = HColorSet.instance().getColor(diagram.getSkinParam().getThemeStyle(), stringColor);
 		}
 
 		final String x = arg.get("X", 0);

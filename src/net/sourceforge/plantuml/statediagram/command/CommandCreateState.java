@@ -104,7 +104,8 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String idShort = arg.getLazzy("CODE", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
@@ -131,10 +132,12 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			ent.addUrl(url);
 		}
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor lineColor = s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
 		if (lineColor != null) {
 			colors = colors.add(ColorType.LINE, lineColor);
 		}

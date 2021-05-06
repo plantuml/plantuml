@@ -113,8 +113,9 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 		final LineBreakStrategy wrapWidth;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-			borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
 			wrapWidth = style.wrapWidth();
 		} else {
@@ -129,8 +130,8 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 				.createSheet(note);
-		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()),
-				this, new UStroke(1));
+		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
+				new UStroke(1));
 		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, false);
 
 	}

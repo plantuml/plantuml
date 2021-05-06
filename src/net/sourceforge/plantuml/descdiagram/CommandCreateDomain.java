@@ -84,7 +84,8 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		String type = arg.get("TYPE", 0);
 		String display = arg.getLazzy("DISPLAY", 0);
 		String codeString = arg.getLazzy("CODE", 0);
@@ -130,8 +131,8 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 			entity.addUrl(url);
 		}
 		final String s = arg.get("COLOR", 0);
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		if (type.equalsIgnoreCase("domain")) {
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Machine>>")) {
 				type = "machine";

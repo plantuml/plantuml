@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class PSystemLogo extends AbstractPSystem {
@@ -67,7 +68,7 @@ public class PSystemLogo extends AbstractPSystem {
 		final int height = 480;
 		final EmptyImageBuilder builder = new EmptyImageBuilder(fileFormat.getWatermark(), width, height, Color.WHITE);
 		final BufferedImage im = builder.getBufferedImage();
-		final UGraphic ug = new UGraphicG2d(new ColorMapperIdentity(), builder.getGraphics2D(), 1.0);
+		final UGraphic ug = new UGraphicG2d(HColorUtils.WHITE, new ColorMapperIdentity(), builder.getGraphics2D(), 1.0);
 		((UGraphicG2d) ug).setBufferedImage(im);
 
 		final TurtleGraphicsPane turtleGraphicsPane = new TurtleGraphicsPane(width, height);

@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public abstract class UGraphicNo {
 
@@ -49,6 +51,10 @@ public abstract class UGraphicNo {
 	}
 
 	final public void closeGroup() {
+	}
+
+	public HColor getDefaultBackground() {
+		return HColorUtils.BLACK;
 	}
 
 }

@@ -72,9 +72,10 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		super(style, LineBreakStrategy.NONE, stringsToDisplay.subList(1, stringsToDisplay.size()), font,
 				HorizontalAlignment.LEFT, 4, 4, 4, spriteContainer, false, null, null);
 		if (UseStyle.useBetaStyle()) {
-			this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());
-			this.symbolContextBody = style.getSymbolContext(getIHtmlColorSet());
-			fcHeader = styleHeader.getFontConfiguration(getIHtmlColorSet());
+			this.symbolContextHeader = styleHeader.getSymbolContext(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
+			this.symbolContextBody = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+			fcHeader = styleHeader.getFontConfiguration(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 			this.position = style.getHorizontalAlignment();
 		} else {
 			this.symbolContextHeader = symbolContext;
@@ -93,8 +94,9 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		final int textHeaderWidth = (int) (getHeaderWidth(stringBounder));
 		final int textHeaderHeight = (int) (getHeaderHeight(stringBounder));
 
-		final URectangle rect = new URectangle(dimensionToUse.getWidth() - xMargin * 2
-				- symbolContextHeader.getDeltaShadow(), dimensionToUse.getHeight() - heightFooter);
+		final URectangle rect = new URectangle(
+				dimensionToUse.getWidth() - xMargin * 2 - symbolContextHeader.getDeltaShadow(),
+				dimensionToUse.getHeight() - heightFooter);
 		rect.setDeltaShadow(symbolContextHeader.getDeltaShadow());
 		ug = symbolContextBody.apply(ug);
 		ug.apply(UTranslate.dx(xMargin)).draw(rect);

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -68,8 +69,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(Day min, Day max, Style style, HColorSet colorSet) {
-		super(min, max, new TimeScaleWink(), style, colorSet);
+	public TimeHeaderSimple(double scale, Day min, Day max, Style style, HColorSet colorSet, ThemeStyle themeStyle) {
+		super(min, max, new TimeScaleWink(scale), style, colorSet, themeStyle);
 	}
 
 	private void drawSmallVlinesDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {

@@ -71,8 +71,10 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 		super(style, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4,
 				spriteContainer, false, null, null);
 		if (UseStyle.useBetaStyle()) {
-			this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-			this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			this.background = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
+			this.borderColor = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
 			this.stroke = style.getStroke();
 			this.roundCorner = style.value(PName.RoundCorner).asInt();
 		} else {
@@ -112,7 +114,8 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 			ug.apply(new UTranslate(xpos, ypos)).draw(rect);
 			textBlock.drawU(ug.apply(new UTranslate(xpos + deltaX, ypos + getMarginY())));
 
-			// drawSep(ug.apply(new UTranslate(xpos + deltaX + textWidth + stroke.getThickness() + , dimensionToUse
+			// drawSep(ug.apply(new UTranslate(xpos + deltaX + textWidth +
+			// stroke.getThickness() + , dimensionToUse
 			// .getHeight() / 2)), 10);
 		}
 	}

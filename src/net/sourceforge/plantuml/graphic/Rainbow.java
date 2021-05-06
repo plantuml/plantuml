@@ -41,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
@@ -85,8 +86,8 @@ public class Rainbow {
 		return fromColor(arrow, arrowHead);
 	}
 
-	public static Rainbow build(Style style, HColorSet set) {
-		final HColor color = style.value(PName.LineColor).asColor(set);
+	public static Rainbow build(Style style, HColorSet set, ThemeStyle themeStyle) {
+		final HColor color = style.value(PName.LineColor).asColor(themeStyle, set);
 		return fromColor(color, null);
 	}
 
@@ -106,7 +107,8 @@ public class Rainbow {
 		return result;
 	}
 
-	public static Rainbow build(ISkinParam skinParam, String colorString, int colorArrowSeparationSpace) throws NoSuchColorException {
+	public static Rainbow build(ISkinParam skinParam, String colorString, int colorArrowSeparationSpace)
+			throws NoSuchColorException {
 		if (colorString == null) {
 			return Rainbow.none();
 		}

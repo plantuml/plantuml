@@ -66,7 +66,8 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 		super(style, maxMessageSize, stringsToDisplay, font, textHorizontalAlignment, 7, 7, 1, spriteContainer, false,
 				null, null);
 		if (UseStyle.useBetaStyle()) {
-			this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+			this.foregroundColor = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
 			final UStroke stroke = style.getStroke();
 			this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());
 		} else {
@@ -77,8 +78,9 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 
 	@Override
 	final protected TextBlock getTextBlock() {
-		final Padder padder = getISkinSimple() instanceof ISkinParam ? ((ISkinParam) getISkinSimple())
-				.sequenceDiagramPadder() : Padder.NONE;
+		final Padder padder = getISkinSimple() instanceof ISkinParam
+				? ((ISkinParam) getISkinSimple()).sequenceDiagramPadder()
+				: Padder.NONE;
 
 		return padder.apply(super.getTextBlock());
 	}

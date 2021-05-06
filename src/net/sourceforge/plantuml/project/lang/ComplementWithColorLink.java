@@ -50,11 +50,12 @@ public class ComplementWithColorLink implements Something {
 				"with[%s]+" + optionalStyle + "(#?\\w+)[%s]+" + optionalStyle + "link");
 	}
 
-	public Failable<CenterBorderColor> getMe(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
 		final String style0 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color1 = arg.get("COMPLEMENT" + suffix, 1);
 		final String style2 = arg.get("COMPLEMENT" + suffix, 2);
-		final HColor col1 = color1 == null ? null : system.getIHtmlColorSet().getColorOrWhite(color1);
+		final HColor col1 = color1 == null ? null
+				: diagram.getIHtmlColorSet().getColorOrWhite(diagram.getSkinParam().getThemeStyle(), color1);
 		final String style = style0 == null ? style2 : style0;
 		return Failable.ok(new CenterBorderColor(col1, col1, style));
 	}

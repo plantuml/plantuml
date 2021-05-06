@@ -167,6 +167,9 @@ public class WBSDiagram extends UmlDiagram {
 		if (type.contains(" ") == false) {
 			return type.length() - 1;
 		}
+		if (type.endsWith(first)) {
+			return type.length() - first.length();
+		}
 		if (type.trim().length() == 1) {
 			return type.length() - 1;
 		}

@@ -124,7 +124,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines)
+			throws NoSuchColorException {
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
@@ -185,7 +186,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		// final HColor backColor =
 		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR",
 		// 0));
-		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
+				diagram.getSkinParam().getIHtmlColorSet());
 		result.setColors(colors);
 		// result.setSpecificColorTOBEREMOVED(ColorType.BACK, backColor);
 

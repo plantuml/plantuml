@@ -91,7 +91,7 @@ public class HtmlColorAndStyle {
 		HColor arrowHeadColor = null;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			arrowColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else {
 			arrowColor = Rainbow.build(skinParam).getColors().get(0).arrowColor;
 			arrowColor = Rainbow.build(skinParam).getColors().get(0).arrowHeadColor;
@@ -104,7 +104,7 @@ public class HtmlColorAndStyle {
 				style = tmpStyle;
 				continue;
 			}
-			final HColor tmpColor = s == null ? null : set.getColor(s);
+			final HColor tmpColor = s == null ? null : set.getColor(skinParam.getThemeStyle(), s);
 			if (tmpColor != null) {
 				arrowColor = tmpColor;
 			}

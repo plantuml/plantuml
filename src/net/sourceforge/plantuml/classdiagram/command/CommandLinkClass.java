@@ -227,8 +227,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			link = link.getInv();
 		}
 		link.setLinkArrow(labels.getLinkArrow());
-		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
-		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
+		link.setColors(color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet()));
+		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 		link.setCodeLine(location);
 
 		addLink(diagram, link, arg.get("HEADER", 0));
@@ -332,7 +333,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 	}
 
-	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg) throws NoSuchColorException {
+	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg)
+			throws NoSuchColorException {
 		final String ent1String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final String ent2String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
 		final IEntity cl1 = diagram.V1972() ? diagram.getGroupVerySmart(diagram.buildLeafIdent(ent1String))
@@ -354,11 +356,12 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final Link link = new Link(cl1, cl2, linkType, labelLink, queue, firstLabel, secondLabel,
 				diagram.getLabeldistance(), diagram.getLabelangle(), diagram.getSkinParam().getCurrentStyleBuilder());
-		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
+		link.setColors(color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet()));
 
 		diagram.resetPragmaLabel();
 
-		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
+		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 
 		addLink(diagram, link, arg.get("HEADER", 0));
 		return CommandExecutionResult.ok();

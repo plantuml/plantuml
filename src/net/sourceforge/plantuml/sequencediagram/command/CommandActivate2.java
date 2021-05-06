@@ -64,12 +64,13 @@ public class CommandActivate2 extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final LifeEventType type = arg.get("TYPE", 0).equals("++") ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;
 		final Participant p = diagram.getOrCreateParticipant(arg.get("NAME", 0));
 		final String s = arg.get("COLOR", 0);
-		final String error = diagram.activate(p, type,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		final String error = diagram.activate(p, type, s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		if (error == null) {
 			return CommandExecutionResult.ok();
 		}

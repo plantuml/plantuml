@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
@@ -67,8 +68,8 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 		return new UGraphicBraille(this);
 	}
 
-	public UGraphicBraille(ColorMapper colorMapper) {
-		this(colorMapper, new BrailleGrid(QUANTA));
+	public UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper) {
+		this(defaultBackground, colorMapper, new BrailleGrid(QUANTA));
 	}
 
 	private UGraphicBraille(UGraphicBraille other) {
@@ -97,8 +98,8 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	// svg.paintBackcolorGradient(mapper, gr);
 	// }
 
-	private UGraphicBraille(ColorMapper colorMapper, BrailleGrid grid) {
-		super(colorMapper, grid);
+	private UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper, BrailleGrid grid) {
+		super(defaultBackground, colorMapper, grid);
 		this.grid = grid;
 		register();
 	}

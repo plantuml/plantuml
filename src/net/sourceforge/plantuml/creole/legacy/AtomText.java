@@ -150,7 +150,10 @@ public final class AtomText extends AbstractAtom implements Atom {
 				useFontConfiguration = fontConfiguration.changeColor(textColor);
 			}
 			if (textColor instanceof HColorAutomatic) {
-				final HColor backcolor = ug.getParam().getBackcolor();
+				HColor backcolor = ug.getParam().getBackcolor();
+				if (backcolor == null) {
+					backcolor = ug.getDefaultBackground();
+				}
 				textColor = ((HColorAutomatic) textColor).getAppropriateColor(backcolor);
 				useFontConfiguration = fontConfiguration.changeColor(textColor);
 			}

@@ -33,30 +33,10 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.ThemeStyle;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+public enum ThemeStyle {
 
-public class ValueColor extends ValueAbstract {
-
-	private final HColor color;
-	private final int priority;
-
-	public ValueColor(HColor color, int priority) {
-		this.color = color;
-		this.priority = priority;
-	}
-
-	@Override
-	public HColor asColor(ThemeStyle themeStyle, HColorSet set) {
-		return color;
-	}
-
-	@Override
-	public int getPriority() {
-		return priority;
-	}
+	DARK, LIGHT
 
 }

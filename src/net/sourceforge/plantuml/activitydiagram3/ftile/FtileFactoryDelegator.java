@@ -88,7 +88,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinitionArrow()
 						.getMergedStyle(skinParam().getCurrentStyleBuilder());
-				return Rainbow.build(style, skinParam().getIHtmlColorSet());
+				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			} else {
 				color = Rainbow.build(skinParam());
 			}
@@ -99,7 +99,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinitionArrow()
 						.getMergedStyle(skinParam().getCurrentStyleBuilder());
-				return Rainbow.build(style, skinParam().getIHtmlColorSet());
+				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			} else {
 				color = Rainbow.build(skinParam());
 			}
@@ -115,7 +115,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		final FontConfiguration fontConfiguration;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
+			fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
 		} else {
 			fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 		}

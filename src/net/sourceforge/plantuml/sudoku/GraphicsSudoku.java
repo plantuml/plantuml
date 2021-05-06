@@ -81,23 +81,25 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageEps(OutputStream os) throws IOException {
-		final UGraphicEps ug = new UGraphicEps(new ColorMapperIdentity(), EpsStrategy.WITH_MACRO_AND_TEXT);
+		final UGraphicEps ug = new UGraphicEps(HColorUtils.WHITE, new ColorMapperIdentity(),
+				EpsStrategy.WITH_MACRO_AND_TEXT);
 		drawInternal(ug);
 		os.write(ug.getEPSCode().getBytes());
 		return ImageDataSimple.ok();
 	}
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
-		final UGraphicSvg ug = new UGraphicSvg(true, new Dimension2DDouble(0, 0), new ColorMapperIdentity(),
-				(String) null, false, 1.0, null, null, 0, "none", SvgCharSizeHack.NO_HACK, LengthAdjust.defaultValue());
+		final UGraphicSvg ug = new UGraphicSvg(HColorUtils.WHITE, true, new Dimension2DDouble(0, 0),
+				new ColorMapperIdentity(), false, 1.0, null, null, 0, "none", SvgCharSizeHack.NO_HACK,
+				LengthAdjust.defaultValue());
 		drawInternal(ug);
 		ug.createXml(os, null);
 		return ImageDataSimple.ok();
 	}
 
 	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
-		final UGraphicTikz ug = new UGraphicTikz(new ColorMapperIdentity(), 1, fileFormat == FileFormat.LATEX,
-				TikzFontDistortion.getDefault());
+		final UGraphicTikz ug = new UGraphicTikz(HColorUtils.WHITE, new ColorMapperIdentity(), 1,
+				fileFormat == FileFormat.LATEX, TikzFontDistortion.getDefault());
 		drawInternal(ug);
 		ug.createTikz(os);
 		return ImageDataSimple.ok();
@@ -109,7 +111,7 @@ public class GraphicsSudoku {
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
-		final UGraphic ug = new UGraphicG2d(new ColorMapperIdentity(), g3d, 1.0);
+		final UGraphic ug = new UGraphicG2d(HColorUtils.WHITE, new ColorMapperIdentity(), g3d, 1.0);
 
 		drawInternal(ug);
 		g3d.dispose();

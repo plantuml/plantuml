@@ -185,7 +185,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				return "(?i)^[%s]*(end[%s]?note)$";
 			}
 
-			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines)
+					throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
@@ -236,7 +237,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		else
 			note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE, null);
 
-		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
+				diagram.getSkinParam().getIHtmlColorSet());
 
 		final String stereotypeString = line0.get("STEREO", 0);
 		if (stereotypeString != null) {

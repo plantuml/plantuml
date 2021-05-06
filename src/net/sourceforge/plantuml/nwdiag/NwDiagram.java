@@ -213,9 +213,7 @@ public class NwDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption)
-				.drawable(getTextBlock())
-				.write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {
@@ -357,7 +355,8 @@ public class NwDiagram extends UmlDiagram {
 			currentNetwork().setFullWidth("full".equalsIgnoreCase(value));
 		}
 		if ("color".equalsIgnoreCase(property)) {
-			final HColor color = value == null ? null : NwGroup.colors.getColorOrWhite(value);
+			final HColor color = value == null ? null
+					: NwGroup.colors.getColorOrWhite(getSkinParam().getThemeStyle(), value);
 			if (currentGroup != null) {
 				currentGroup.setColor(color);
 			} else if (currentNetwork() != null) {

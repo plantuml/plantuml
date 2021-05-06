@@ -152,7 +152,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false) {
 			return CommandExecutionResult.error("Use 'allowmixing' if you want to mix classes and other UML elements.");
 		}
@@ -224,8 +225,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		}
 		final String s = arg.get("COLOR", 0);
 
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		return CommandExecutionResult.ok();
 	}
 

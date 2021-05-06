@@ -133,7 +133,7 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 			}
 		}
 
-		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
+		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

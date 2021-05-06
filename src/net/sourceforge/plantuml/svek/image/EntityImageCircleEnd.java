@@ -83,9 +83,10 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 		}
 		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), param);
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(
-					getSkinParam().getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			final Style style = getDefaultStyleDefinitionCircle()
+					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			color = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
 		}
 		circle.setDeltaShadow(shadowing);
@@ -93,8 +94,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 
 		final double delta = 4;
 		final UShape circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
-		ug.apply(color.bg()).apply(new HColorNone())
-				.apply(new UTranslate(delta + 0.5, delta + 0.5)).draw(circleSmall);
+		ug.apply(color.bg()).apply(new HColorNone()).apply(new UTranslate(delta + 0.5, delta + 0.5)).draw(circleSmall);
 	}
 
 	public ShapeType getShapeType() {

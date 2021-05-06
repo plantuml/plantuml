@@ -269,8 +269,9 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
-		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
-		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
+		link.setColors(color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet()));
+		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 		if (arg.get("STEREOTYPE", 0) != null) {
 			final Stereotype stereotype = new Stereotype(arg.get("STEREOTYPE", 0));
 			if (UseStyle.useBetaStyle()) {

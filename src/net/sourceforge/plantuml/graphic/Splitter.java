@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -145,11 +146,11 @@ public class Splitter {
 		return s.replaceAll(htmlTag, "");
 	}
 
-	public List<HtmlCommand> getHtmlCommands(boolean newLineAlone) {
+	public List<HtmlCommand> getHtmlCommands(ThemeStyle themeStyle, boolean newLineAlone) {
 		final HtmlCommandFactory factory = new HtmlCommandFactory();
 		final List<HtmlCommand> result = new ArrayList<HtmlCommand>();
 		for (String s : getSplittedInternal()) {
-			final HtmlCommand cmd = factory.getHtmlCommand(s);
+			final HtmlCommand cmd = factory.getHtmlCommand(themeStyle, s);
 			if (newLineAlone && cmd instanceof Text) {
 				result.addAll(splitText((Text) cmd));
 			} else {

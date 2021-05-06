@@ -71,7 +71,8 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 	final protected void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
 		final ULine line = new ULine(p1, p2);
 		if (UseStyle.useBetaStyle()) {
-			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet())
+			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet(),
+					skinParam.getThemeStyle())
 					.draw(line);
 		} else {
 			final HColor color = ColorParam.activityBorder.getDefaultValue();
@@ -98,7 +99,8 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 			final FtileBox box = FtileBox.createWbs(style, idea.withBackColor(skinParam), label);
 			return box;
 		}
-		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),
+		final TextBlock text = label.create0(
+				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
 				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
 	}

@@ -84,7 +84,7 @@ public class SmetanaForGit {
 	public SmetanaForGit(UGraphic ug, ISkinParam skinParam) {
 		this.stringBounder = ug.getStringBounder();
 		this.skinParam = skinParam;
-		this.ug = getStyle().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
+		this.ug = getStyle().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
 	}
 
 	private Style getStyle() {

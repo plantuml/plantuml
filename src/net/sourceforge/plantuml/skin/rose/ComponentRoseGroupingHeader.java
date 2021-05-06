@@ -70,19 +70,21 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final SymbolContext symbolContextCorner;
 	private final double roundCorner;
 
-	public ComponentRoseGroupingHeader(Style style, Style styleHeader, HColor background,
-			SymbolContext symbolContext, FontConfiguration bigFont, FontConfiguration smallFont2, Display strings,
-			ISkinSimple spriteContainer, double roundCorner) {
+	public ComponentRoseGroupingHeader(Style style, Style styleHeader, HColor background, SymbolContext symbolContext,
+			FontConfiguration bigFont, FontConfiguration smallFont2, Display strings, ISkinSimple spriteContainer,
+			double roundCorner) {
 		super(styleHeader, LineBreakStrategy.NONE, strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1,
 				spriteContainer, null, null);
 
 		if (UseStyle.useBetaStyle()) {
 			this.roundCorner = style.value(PName.RoundCorner).asInt();
-			this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-			this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
-			this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());
-			bigFont = style.getFontConfiguration(getIHtmlColorSet());
-			smallFont2 = style.getFontConfiguration(getIHtmlColorSet());
+			this.background = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
+			this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+			this.symbolContextCorner = styleHeader.getSymbolContext(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
+			bigFont = style.getFontConfiguration(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+			smallFont2 = style.getFontConfiguration(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 		} else {
 			this.roundCorner = roundCorner;
 			this.background = background;

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.ugraphic;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface UGraphic {
 
@@ -62,5 +63,7 @@ public interface UGraphic {
 	public void flushUg();
 
 	public boolean matchesProperty(String propertyName);
+
+	public HColor getDefaultBackground();
 
 }

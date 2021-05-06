@@ -134,12 +134,12 @@ public class Rose {
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			final HColor borderColor = getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder);
-			return new ComponentRoseLine(styles == null ? null : styles[0], borderColor, false,
+			return new ComponentRoseLine(param.getThemeStyle(), styles == null ? null : styles[0], borderColor, false,
 					getStroke(param, LineParam.sequenceLifeLineBorder, 1), param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.CONTINUE_LINE) {
 			final HColor borderColor = getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder);
-			return new ComponentRoseLine(styles == null ? null : styles[0], borderColor, true,
+			return new ComponentRoseLine(param.getThemeStyle(), styles == null ? null : styles[0], borderColor, true,
 					getStroke(param, LineParam.sequenceLifeLineBorder, 1.5), param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.ACTOR_HEAD) {
@@ -256,22 +256,22 @@ public class Rose {
 			return new ComponentRoseGroupingSpace(7);
 		}
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0],
+			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0],
 					getSymbolContext(stereotype, param, ColorParam.sequenceLifeLineBorder), true, true,
 					param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN) {
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0],
+			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0],
 					getSymbolContext(stereotype, param, ColorParam.sequenceLifeLineBorder), true, false,
 					param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0],
+			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0],
 					getSymbolContext(stereotype, param, ColorParam.sequenceLifeLineBorder), false, true,
 					param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN) {
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0],
+			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0],
 					getSymbolContext(stereotype, param, ColorParam.sequenceLifeLineBorder), false, false,
 					param.getIHtmlColorSet());
 		}

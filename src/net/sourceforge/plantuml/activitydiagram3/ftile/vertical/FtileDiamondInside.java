@@ -83,8 +83,8 @@ public class FtileDiamondInside extends AbstractFtile implements Styleable {
 
 	public FtileDiamondInside(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
 			TextBlock label) {
-		this(skinParam, backColor, borderColor, swimlane, label, TextBlockUtils.empty(0, 0),
-				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));
+		this(skinParam, backColor, borderColor, swimlane, label, TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
+				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));
 	}
 
 	public FtileDiamondInside withNorth(TextBlock north) {
@@ -112,8 +112,8 @@ public class FtileDiamondInside extends AbstractFtile implements Styleable {
 		super(skinParam);
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-			this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
 			this.backColor = backColor;
@@ -185,7 +185,8 @@ public class FtileDiamondInside extends AbstractFtile implements Styleable {
 		final Dimension2D dimEast = east.calculateDimension(stringBounder);
 		final double northHeight = north.calculateDimension(stringBounder).getHeight();
 		return dimDiamonAlone.incHeight(northHeight);
-		// return dimDiamonAlone.incHeight(northHeight).addMarginX(dimWest.getWidth(), dimEast.getWidth());
+		// return dimDiamonAlone.incHeight(northHeight).addMarginX(dimWest.getWidth(),
+		// dimEast.getWidth());
 	}
 
 	public double getEastLabelWidth(StringBounder stringBounder) {

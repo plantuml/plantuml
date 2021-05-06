@@ -104,7 +104,7 @@ public class FtileGroup extends AbstractFtile {
 		final Style style;
 		if (UseStyle.useBetaStyle()) {
 			style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			fc = style.getFontConfiguration(getIHtmlColorSet());
+			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
 			style = null;

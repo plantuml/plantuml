@@ -120,7 +120,8 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				return "(?i)^end[%s]?(note|hnote|rnote)$";
 			}
 
-			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines)
+					throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
@@ -141,9 +142,10 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, BlocLines strings) throws NoSuchColorException {
-		final Participant p = diagram.getOrCreateParticipant(StringUtils
-				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0)));
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, BlocLines strings)
+			throws NoSuchColorException {
+		final Participant p = diagram.getOrCreateParticipant(
+				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0)));
 
 		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)));
 
@@ -152,7 +154,8 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			final boolean parallel = arg.get("PARALLEL", 0) != null;
 			final Display display = diagram.manageVariable(strings.toDisplay());
 			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());
-			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+			Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+					diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = arg.get("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = new Stereotype(stereotypeString);

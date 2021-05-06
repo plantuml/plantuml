@@ -276,10 +276,12 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			result.addUrl(url);
 		}
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor lineColor = s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
 		if (lineColor != null) {
 			colors = colors.add(ColorType.LINE, lineColor);
 		}

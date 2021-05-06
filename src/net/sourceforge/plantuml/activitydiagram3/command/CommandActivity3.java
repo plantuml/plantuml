@@ -113,7 +113,8 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 			url = urlBuilder.getUrl(arg.get("URL", 0));
 		}
 
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		final String stereo = arg.get("STEREO", 0);
 		Stereotype stereotype = null;
 		if (stereo != null) {

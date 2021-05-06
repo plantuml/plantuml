@@ -100,7 +100,7 @@ public class LaneDivider extends AbstractTextBlock {
 		}
 		UStroke thickness = Rose.getStroke(skinParam, LineParam.swimlaneBorder, 2);
 		if (UseStyle.useBetaStyle()) {
-			color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			thickness = getStyle().getStroke();
 		}
 		ug.apply(UTranslate.dx(x1)).apply(thickness).apply(color).draw(ULine.vline(height));

@@ -44,6 +44,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
@@ -249,20 +250,28 @@ public class HColorSet {
 	}
 
 	class Automatic {
-		private final String s1;
-		private final String s2;
+		private final String[] colors;
 
-		Automatic(String s1, String s2) {
-			this.s1 = s1;
-			this.s2 = s2;
+		public Automatic(String[] colors) {
+			this.colors = colors;
 		}
 
 		boolean isValid() {
-			return isColorValid(s1) && isColorValid(s2);
+			for (String color : colors) {
+				if (isColorValid(color) == false) {
+					return false;
+				}
+			}
+			return true;
 		}
 
-		HColorAutomatic buildInternal(HColor background) {
-			return new HColorAutomatic(build(s1, background), build(s2, background));
+		HColorAutomatic buildInternal(ThemeStyle themeStyle, HColor background) {
+			if (colors.length == 2) {
+				return new HColorAutomatic(themeStyle, build(colors[0], background), build(colors[1], background),
+						null);
+			}
+			return new HColorAutomatic(themeStyle, build(colors[0], background), build(colors[1], background),
+					build(colors[2], background));
 		}
 
 	}
@@ -288,18 +297,20 @@ public class HColorSet {
 		}
 		final int idx = s.indexOf(':');
 		if (idx != -1) {
-			final String s1 = s.substring(1, idx);
-			final String s2 = s.substring(idx + 1);
-			return new Automatic(s1, s2);
+			return new Automatic(s.substring(1).split(":"));
 		}
 		return null;
 	}
 
 	public HColor getColorOrWhite(String s) {
-		return getColorOrWhite(s, null);
+		return getColorOrWhite(ThemeStyle.LIGHT, s, null);
 	}
 
-	public HColor getColorOrWhite(String s, HColor background) {
+	public HColor getColorOrWhite(ThemeStyle themeStyle, String s) {
+		return getColorOrWhite(themeStyle, s, null);
+	}
+
+	public HColor getColorOrWhite(ThemeStyle themeStyle, String s, HColor background) {
 		if (s == null) {
 			throw new IllegalArgumentException();
 		}
@@ -307,18 +318,22 @@ public class HColorSet {
 			return HColorUtils.WHITE;
 		}
 		try {
-			return getColor(s, background);
+			return getColor(themeStyle, s, background);
 		} catch (NoSuchColorException e) {
 			assert false;
 			return HColorUtils.WHITE;
 		}
 	}
 
-	public HColor getColor(String s) throws NoSuchColorException {
-		return getColor(s, null);
+	public HColor getColor(ThemeStyle themeStyle, String s) throws NoSuchColorException {
+		return getColor(themeStyle, s, null);
 	}
 
-	public HColor getColor(String s, HColor background) throws NoSuchColorException {
+	public HColor getColorLEGACY(String s) throws NoSuchColorException {
+		return getColor(ThemeStyle.LIGHT, s, null);
+	}
+
+	public HColor getColor(ThemeStyle themeStyle, String s, HColor background) throws NoSuchColorException {
 		if (s == null) {
 			throw new IllegalArgumentException();
 		}
@@ -327,7 +342,7 @@ public class HColorSet {
 		}
 		final Automatic automatic = automaticFromString(s);
 		if (automatic != null) {
-			return automatic.buildInternal(background);
+			return automatic.buildInternal(themeStyle, background);
 		}
 		final Gradient gradient = gradientFromString(s);
 		if (gradient != null) {

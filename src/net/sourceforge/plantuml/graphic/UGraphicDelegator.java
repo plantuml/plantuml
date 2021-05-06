@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public abstract class UGraphicDelegator implements UGraphic {
 
@@ -97,6 +98,11 @@ public abstract class UGraphicDelegator implements UGraphic {
 
 	public void flushUg() {
 		ug.flushUg();
+	}
+
+	@Override
+	public HColor getDefaultBackground() {
+		return ug.getDefaultBackground();
 	}
 
 }

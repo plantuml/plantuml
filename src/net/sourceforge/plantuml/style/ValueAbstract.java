@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -45,7 +46,7 @@ public abstract class ValueAbstract implements Value {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
-	public HColor asColor(HColorSet set) {
+	public HColor asColor(ThemeStyle themeStyle, HColorSet set) {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 

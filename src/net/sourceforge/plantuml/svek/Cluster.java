@@ -312,7 +312,8 @@ public class Cluster implements Moveable {
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			borderColor = style.value(PName.LineColor).asColor(skinParam2.getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(skinParam2.getThemeStyle(),
+					skinParam2.getIHtmlColorSet());
 
 		} else {
 			if (umlDiagramType == UmlDiagramType.STATE) {
@@ -926,7 +927,8 @@ public class Cluster implements Moveable {
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition(styleName).getMergedStyle(skinParam.getCurrentStyleBuilder());
 			if (backColor == null) {
-				backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+				backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+						skinParam.getIHtmlColorSet());
 			}
 			if (backColor == null || backColor.equals(HColorUtils.transparent())) {
 				backColor = new HColorBackground(skinParam.getBackgroundColor(false));

@@ -119,9 +119,10 @@ public class FtileWithNotes extends AbstractFtile {
 			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
 						.eventuallyOverride(note.getColors());
-				noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-				borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-				fc = style.getFontConfiguration(getIHtmlColorSet());
+				noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+						getIHtmlColorSet());
+				borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+				fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 				shadowing = style.value(PName.Shadowing).asDouble();
 				wrapWidth = style.wrapWidth();
 			} else {

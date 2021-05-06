@@ -120,7 +120,8 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String codeRaw = arg.getLazzy("CODE", 0);
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
@@ -141,12 +142,14 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(USymbol.ARCHIMATE);
 		if (icon != null) {
-			entity.setStereotype(new Stereotype("<<$archimate/" + icon + ">>", diagram.getSkinParam()
-					.getCircledCharacterRadius(), diagram.getSkinParam().getFont(null, false,
-					FontParam.CIRCLED_CHARACTER), diagram.getSkinParam().getIHtmlColorSet()));
+			entity.setStereotype(
+					new Stereotype("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),
+							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
+							diagram.getSkinParam().getIHtmlColorSet()));
 		}
 
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		entity.setColors(colors);
 
 		return CommandExecutionResult.ok();

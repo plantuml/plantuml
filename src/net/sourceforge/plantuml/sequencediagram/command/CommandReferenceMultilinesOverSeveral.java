@@ -68,7 +68,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 				lines.getFirst().getTrimmed().getString());
 		final String s1 = line0.get(0);
 		final HColor backColorElement = s1 == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s1);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s1);
 		// final HtmlColor backColorGeneral =
 		// HtmlColorSetSimple.instance().getColorIfValid(line0.get(1));
 

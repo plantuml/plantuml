@@ -34,24 +34,34 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
+import net.sourceforge.plantuml.ThemeStyle;
+
 public class HColorAutomatic extends HColorAbstract implements HColor {
 
-	private final HColor color1;
-	private final HColor color2;
+	private final HColor colorForLight;
+	private final HColor colorForDark;
+	private final HColor colorForTransparent;
+	private final ThemeStyle themeStyle;
 
-	public HColorAutomatic(HColor color1, HColor color2) {
-		this.color1 = color1;
-		this.color2 = color2;
+	public HColorAutomatic(ThemeStyle themeStyle, HColor colorForLight, HColor colorForDark,
+			HColor colorForTransparent) {
+		this.themeStyle = themeStyle;
+		this.colorForLight = colorForLight;
+		this.colorForDark = colorForDark;
+		this.colorForTransparent = colorForTransparent;
 	}
 
 	public HColor getAppropriateColor(HColor back) {
-		if (back == null) {
-			return color2;
+		if (back == null || HColorUtils.isTransparent(back)) {
+			if (colorForTransparent != null) {
+				return colorForTransparent;
+			}
+			return themeStyle == ThemeStyle.LIGHT ? colorForLight : colorForDark;
 		}
 		if (back.isDark()) {
-			return color2;
+			return colorForDark;
 		}
-		return color1;
+		return colorForLight;
 	}
 
 }

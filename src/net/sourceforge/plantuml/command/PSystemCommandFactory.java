@@ -225,6 +225,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	final protected void addCommonCommands2(List<Command> cmds) {
 		cmds.add(new CommandNope());
 		cmds.add(new CommandPragma());
+		cmds.add(new CommandAssumeTransparent());
 
 		cmds.add(new CommandSkinParam());
 		cmds.add(new CommandSkinParamMultilines());

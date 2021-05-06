@@ -82,7 +82,8 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 
 		final String name1 = arg.get("NAME1", 0);
 		final String x1 = arg.get("X1", 0);
@@ -97,7 +98,7 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 		final String stringColor = arg.get("COLOR", 0);
 		HColor color = null;
 		if (stringColor != null) {
-			color = HColorSet.instance().getColor(stringColor);
+			color = HColorSet.instance().getColor(diagram.getSkinParam().getThemeStyle(), stringColor);
 		}
 
 		final Display label;

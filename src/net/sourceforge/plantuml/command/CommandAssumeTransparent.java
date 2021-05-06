@@ -30,33 +30,40 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.ThemeStyle;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class ValueColor extends ValueAbstract {
+public class CommandAssumeTransparent extends SingleLineCommand2<TitledDiagram> {
 
-	private final HColor color;
-	private final int priority;
+	public CommandAssumeTransparent() {
+		super(getRegexConcat());
+	}
 
-	public ValueColor(HColor color, int priority) {
-		this.color = color;
-		this.priority = priority;
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandAssumeTransparent.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("!assume"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("transparent"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("TYPE", "(dark|light)"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	public HColor asColor(ThemeStyle themeStyle, HColorSet set) {
-		return color;
-	}
-
-	@Override
-	public int getPriority() {
-		return priority;
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
+		final String type = arg.get("TYPE", 0).toUpperCase();
+		system.getSkinParam().assumeTransparent(ThemeStyle.valueOf(type));
+		return CommandExecutionResult.ok();
 	}
 
 }

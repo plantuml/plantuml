@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.awt.geom.Dimension2D;
+
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -86,7 +88,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	}
 
 	@Override
-	final public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double leftColumnWidth) {
+	final public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars) {
 
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
@@ -97,12 +99,18 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		ug = ug.apply(UTranslate.dy(margin.getTop()));
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final double titleHeight = title.calculateDimension(stringBounder).getHeight();
-		final double h = (getShapeHeight(stringBounder) - titleHeight) / 2;
+		final Dimension2D titleDim = title.calculateDimension(stringBounder);
+		final double h = (getShapeHeight(stringBounder) - titleDim.getHeight()) / 2;
 
 		final double x;
-		if (labelStrategy == LabelStrategy.LEFT_COLUMN) {
-			x = margin.getLeft();
+		if (labelStrategy.titleInFirstColumn()) {
+			if (labelStrategy.rightAligned())
+				x = colTitles - titleDim.getWidth() - margin.getRight();
+			else
+
+				x = margin.getLeft();
+		} else if (labelStrategy.titleInLastColumn()) {
+			x = colBars + margin.getLeft();
 		} else {
 			final double x1 = timeScale.getStartingPosition(start);
 			final double x2 = timeScale.getEndingPosition(start);

@@ -66,7 +66,7 @@ public class ComponentRoseControl extends AbstractTextualComponent {
 		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
 				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 		if (UseStyle.useBetaStyle()) {
-			biColor = style.getSymbolContext(getIHtmlColorSet());
+			biColor = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 		}
 		this.head = head;
 		this.stickman = new Control(biColor);

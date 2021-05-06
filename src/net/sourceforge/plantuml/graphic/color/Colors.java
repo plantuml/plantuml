@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -82,7 +83,7 @@ public class Colors {
 	private Colors() {
 	}
 
-	public Colors(String data, HColorSet set, ColorType mainType) throws NoSuchColorException {
+	public Colors(ThemeStyle themeStyle, String data, HColorSet set, ColorType mainType) throws NoSuchColorException {
 		data = StringUtils.goLowerCase(data);
 
 		for (final StringTokenizer st = new StringTokenizer(data, "#;"); st.hasMoreTokens();) {
@@ -90,7 +91,7 @@ public class Colors {
 			final int x = s.indexOf(':');
 			if (x == -1) {
 				if (s.contains(".") == false) {
-					map.put(mainType, set.getColor(s));
+					map.put(mainType, set.getColor(themeStyle, s));
 				}
 			} else {
 				final String name = s.substring(0, x);
@@ -99,7 +100,7 @@ public class Colors {
 					this.shadowing = value.equalsIgnoreCase("true");
 				} else {
 					final ColorType key = ColorType.getType(name);
-					final HColor color = set.getColor(value);
+					final HColor color = set.getColor(themeStyle, value);
 					map.put(key, color);
 				}
 			}
@@ -187,7 +188,8 @@ public class Colors {
 		return ug.apply(colors.lineStyle.getStroke3());
 	}
 
-	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param) throws NoSuchColorException {
+	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param)
+			throws NoSuchColorException {
 		if (stereotype == null) {
 			throw new IllegalArgumentException();
 		}

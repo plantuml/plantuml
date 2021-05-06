@@ -110,12 +110,15 @@ public class ConditionalBuilder {
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-			this.backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-			this.arrowColor = Rainbow.fromColor(styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet()),
+			this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
+			this.backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
+			this.arrowColor = Rainbow.fromColor(
+					styleArrow.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
 					null);
-			this.fontTest = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());
-			this.fontArrow = styleArrow.getFontConfiguration(skinParam.getIHtmlColorSet());
+			this.fontTest = styleDiamond.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			this.fontArrow = styleArrow.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else {
 			this.borderColor = borderColor;
 			this.backColor = backColor;

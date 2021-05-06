@@ -67,9 +67,8 @@ public class ComponentRoseActor extends AbstractTextualComponent {
 				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
 		if (UseStyle.useBetaStyle()) {
-			biColor = style.getSymbolContext(getIHtmlColorSet());
+			biColor = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 		}
-		// this.stickman = new ActorStickMan(biColor);
 		this.stickman = actorStyle.getTextBlock(biColor);
 	}
 

@@ -42,5 +42,7 @@ public interface SpriteContainer extends SvgCharSizeHack {
 	public Sprite getSprite(String name);
 
 	public Guillemet guillemet();
+	
+	public ThemeStyle getThemeStyle();
 
 }

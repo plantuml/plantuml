@@ -72,7 +72,7 @@ public class GraphicsPath {
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 
-		final UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, 1.0);
+		final UGraphicG2d ug = new UGraphicG2d(HColorUtils.WHITE, colorMapper, g2d, 1.0);
 		ug.setBufferedImage(im);
 		final UMotif motif = new UMotif(path);
 		motif.drawHorizontal(ug.apply((UChange) HColorUtils.BLACK), 20, 20, 1);

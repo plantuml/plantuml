@@ -48,12 +48,15 @@ import java.util.List;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
+	private final Color background;
 
 	public EmptyImageBuilder(String watermark, double width, double height, Color background) {
 		this(watermark, (int) width, (int) height, background);
@@ -68,6 +71,7 @@ public class EmptyImageBuilder {
 			Log.info("Height too large " + height + ". You should set PLANTUML_LIMIT_SIZE");
 			height = GraphvizUtils.getenvImageLimit();
 		}
+		this.background = background;
 		Log.info("Creating image " + width + "x" + height);
 		im = new BufferedImage(width, height, getType(background));
 		g2d = im.createGraphics();
@@ -161,7 +165,8 @@ public class EmptyImageBuilder {
 	}
 
 	public UGraphicG2d getUGraphicG2d() {
-		final UGraphicG2d result = new UGraphicG2d(new ColorMapperIdentity(), g2d, 1.0);
+		final HColor back = new HColorSimple(background, false);
+		final UGraphicG2d result = new UGraphicG2d(back, new ColorMapperIdentity(), g2d, 1.0);
 		result.setBufferedImage(im);
 		return result;
 	}

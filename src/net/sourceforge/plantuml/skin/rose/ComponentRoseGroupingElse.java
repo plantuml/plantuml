@@ -63,8 +63,8 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final HColor groupBorder;
 	private final HColor backgroundColor;
 
-	public ComponentRoseGroupingElse(Style style, HColor groupBorder, FontConfiguration smallFont,
-			CharSequence comment, ISkinSimple spriteContainer, HColor backgroundColor) {
+	public ComponentRoseGroupingElse(Style style, HColor groupBorder, FontConfiguration smallFont, CharSequence comment,
+			ISkinSimple spriteContainer, HColor backgroundColor) {
 		super(style, LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
 				HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, null, null);
 		if (UseStyle.useBetaStyle()) {
@@ -72,8 +72,10 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 				style = style.eventuallyOverride(PName.BackGroundColor,
 						((SkinParamBackcolored) spriteContainer).getBackgroundColor(false));
 			}
-			this.groupBorder = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-			this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+			this.groupBorder = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
+			this.backgroundColor = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
+					getIHtmlColorSet());
 		} else {
 			this.groupBorder = groupBorder;
 			this.backgroundColor = backgroundColor;

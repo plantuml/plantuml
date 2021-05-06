@@ -64,7 +64,7 @@ public class IsLight extends SimpleReturnFunction {
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final String colorString = values.get(0).toString();
 		try {
-			final HColor color = HColorSet.instance().getColor(colorString);
+			final HColor color = HColorSet.instance().getColorLEGACY(colorString);
 			return TValue.fromBoolean(!color.isDark());
 		} catch (NoSuchColorException e) {
 			throw EaterException.located("No such color");

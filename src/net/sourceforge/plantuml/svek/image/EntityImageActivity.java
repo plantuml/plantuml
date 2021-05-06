@@ -84,7 +84,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 		final HorizontalAlignment horizontalAlignment;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+			fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			horizontalAlignment = style.getHorizontalAlignment();
 			shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
@@ -167,10 +167,12 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 			backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 			if (backcolor == null) {
-				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
 			}
 		}
 		ug = ug.apply(borderColor);

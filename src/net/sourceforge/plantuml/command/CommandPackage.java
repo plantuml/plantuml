@@ -102,7 +102,8 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String idShort;
 		/* final */String display;
 		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
@@ -154,7 +155,8 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 			p.addUrl(url);
 		}
 
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 		p.setColors(colors);
 
 		return CommandExecutionResult.ok();

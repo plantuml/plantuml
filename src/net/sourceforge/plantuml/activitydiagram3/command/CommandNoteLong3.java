@@ -68,15 +68,18 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
-		// final List<? extends CharSequence> in = StringUtils.removeEmptyColumns2(lines.subList(1, lines.size() - 1));
+	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines)
+			throws NoSuchColorException {
+		// final List<? extends CharSequence> in =
+		// StringUtils.removeEmptyColumns2(lines.subList(1, lines.size() - 1));
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final NotePosition position = NotePosition.defaultLeft(line0.get("POSITION", 0));
 		final NoteType type = NoteType.defaultType(line0.get("TYPE", 0));
 		final Display note = lines.toDisplay();
-		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
+				diagram.getSkinParam().getIHtmlColorSet());
 		return diagram.addNote(note, position, type, colors);
 	}
 

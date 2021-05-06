@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -55,11 +56,11 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeUp;
 	private final boolean closeDown;
 
-	public ComponentRoseActiveLine(Style style, SymbolContext symbolContext, boolean closeUp, boolean closeDown,
-			HColorSet set) {
+	public ComponentRoseActiveLine(ThemeStyle themeStyle, Style style, SymbolContext symbolContext, boolean closeUp,
+			boolean closeDown, HColorSet set) {
 		super(style);
 		if (UseStyle.useBetaStyle()) {
-			symbolContext = style.getSymbolContext(set);
+			symbolContext = style.getSymbolContext(themeStyle, set);
 		}
 		this.symbolContext = symbolContext;
 		this.closeUp = closeUp;
@@ -84,8 +85,8 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 			ug.apply(symbolContext.getBackColor().bg()).apply(UTranslate.dx(x)).draw(rect);
 			return;
 		}
-		ug.apply(symbolContext.getBackColor().bg())
-				.apply(symbolContext.getBackColor()).apply(UTranslate.dx(x)).draw(rect);
+		ug.apply(symbolContext.getBackColor().bg()).apply(symbolContext.getBackColor()).apply(UTranslate.dx(x))
+				.draw(rect);
 
 		final ULine vline = ULine.vline(dimensionToUse.getHeight());
 		ug.apply(UTranslate.dx(x)).draw(vline);

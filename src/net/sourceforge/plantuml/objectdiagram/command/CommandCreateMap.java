@@ -141,8 +141,8 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 					diagram.getSkinParam().getIHtmlColorSet()));
 		}
 		final String s = line0.get("COLOR", 0);
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		return entity;
 	}
 

@@ -60,11 +60,11 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 
 	public ComponentRoseEnglober(Style style, SymbolContext symbolContext, Display strings, FontConfiguration font,
 			ISkinSimple spriteContainer, double roundCorner) {
-		super(style, LineBreakStrategy.NONE, strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer,
-				false, null, null);
+		super(style, LineBreakStrategy.NONE, strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, false,
+				null, null);
 		if (UseStyle.useBetaStyle()) {
 			roundCorner = style.value(PName.RoundCorner).asDouble();
-			symbolContext = style.getSymbolContext(getIHtmlColorSet());
+			symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 		}
 		this.roundCorner = roundCorner;
 		this.symbolContext = symbolContext;

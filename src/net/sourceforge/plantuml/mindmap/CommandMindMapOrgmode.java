@@ -63,24 +63,17 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
+					stringColor);
 		}
-		final int level = getLevel(type);
-		return diagram.addIdea(backColor, level, Display.getWithNewlines(label),
+		return diagram.addIdea(backColor, diagram.getSmartLevel(type), Display.getWithNewlines(label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
-
-	private int getLevel(String type) {
-		if (type.endsWith("**")) {
-			type = type.replace('\t', ' ').trim();
-		}
-		return type.length() - 1;
-	}
-
 }

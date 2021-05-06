@@ -58,23 +58,25 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer, UGraphic2 {
 
 	private final StringBounder stringBounder;
 	private final TikzFontDistortion tikzFontDistortion;
 
-	private UGraphicTikz(ColorMapper colorMapper, TikzGraphics tikz, TikzFontDistortion tikzFontDistortion) {
-		super(colorMapper, tikz);
+	private UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, TikzGraphics tikz,
+			TikzFontDistortion tikzFontDistortion) {
+		super(defaultBackground, colorMapper, tikz);
 		this.tikzFontDistortion = tikzFontDistortion;
 		this.stringBounder = FileFormat.LATEX.getDefaultStringBounder(tikzFontDistortion);
 		register();
 
 	}
 
-	public UGraphicTikz(ColorMapper colorMapper, double scale, boolean withPreamble,
+	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, double scale, boolean withPreamble,
 			TikzFontDistortion tikzFontDistortion) {
-		this(colorMapper, new TikzGraphics(scale, withPreamble), tikzFontDistortion);
+		this(defaultBackground, colorMapper, new TikzGraphics(scale, withPreamble), tikzFontDistortion);
 
 	}
 

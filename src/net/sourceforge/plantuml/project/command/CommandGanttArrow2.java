@@ -80,7 +80,7 @@ public class CommandGanttArrow2 extends SingleLineCommand2<GanttDiagram> {
 		final Task task2 = diagram.getOrCreateTask(name2, null, false);
 
 		final GanttConstraint link = diagram.forceTaskOrder(task1, task2);
-		link.applyStyle(arg.get("ARROW_STYLE", 0));
+		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.get("ARROW_STYLE", 0));
 
 		return CommandExecutionResult.ok();
 	}

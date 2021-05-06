@@ -134,12 +134,7 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover, long seed,
-			String preserveAspectRatio, LengthAdjust lengthAdjust) {
-		this(svgDimensionStyle, minDim, null, scale, hover, seed, preserveAspectRatio, lengthAdjust);
-	}
-
-	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, String backcolor, double scale, String hover,
+	public SvgGraphics(String backcolor, boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover,
 			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust) {
 		try {
 			this.lengthAdjust = lengthAdjust;

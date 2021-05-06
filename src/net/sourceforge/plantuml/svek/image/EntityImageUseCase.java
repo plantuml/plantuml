@@ -199,8 +199,11 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			if (UseStyle.useBetaStyle()) {
-				final Style style = getStyle();
-				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+				Style style = getStyle();
+				final Colors colors = getEntity().getColors(getSkinParam());
+				style = style.eventuallyOverride(colors);
+				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
 			} else {
 				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBackground);
 			}
@@ -213,7 +216,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.usecase);
+		return StyleSignature.of(SName.root, SName.element, SName.componentDiagram, SName.usecase).with(getStereo());
 	}
 
 	private HColor getLineColor() {
@@ -221,7 +224,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		if (linecolor == null) {
 			if (UseStyle.useBetaStyle()) {
 				final Style style = getStyle();
-				linecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+				linecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
 			} else {
 				linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBorder);
 			}

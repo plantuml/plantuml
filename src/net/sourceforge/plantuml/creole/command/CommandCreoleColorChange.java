@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.creole.command;
 
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -49,17 +50,19 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorRuntimeException;
 public class CommandCreoleColorChange implements Command {
 
 	private final Pattern2 pattern;
+	private final ThemeStyle themeStyle;
 
-	public static Command create() {
-		return new CommandCreoleColorChange("^(?i)(" + Splitter.fontColorPattern2 + "(.*?)\\</color\\>)");
+	public static Command create(ThemeStyle themeStyle) {
+		return new CommandCreoleColorChange(themeStyle, "^(?i)(" + Splitter.fontColorPattern2 + "(.*?)\\</color\\>)");
 	}
 
-	public static Command createEol() {
-		return new CommandCreoleColorChange("^(?i)(" + Splitter.fontColorPattern2 + "(.*)$)");
+	public static Command createEol(ThemeStyle themeStyle) {
+		return new CommandCreoleColorChange(themeStyle, "^(?i)(" + Splitter.fontColorPattern2 + "(.*)$)");
 	}
 
-	private CommandCreoleColorChange(String p) {
+	private CommandCreoleColorChange(ThemeStyle themeStyle, String p) {
 		this.pattern = MyPattern.cmpile(p);
+		this.themeStyle = themeStyle;
 
 	}
 
@@ -79,7 +82,7 @@ public class CommandCreoleColorChange implements Command {
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
 		final String s = m.group(2);
 		try {
-			final HColor color = HColorSet.instance().getColor(s);
+			final HColor color = HColorSet.instance().getColor(themeStyle, s);
 			final FontConfiguration fc2 = fc1.changeColor(color);
 			stripe.setActualFontConfiguration(fc2);
 			stripe.analyzeAndAdd(m.group(3));

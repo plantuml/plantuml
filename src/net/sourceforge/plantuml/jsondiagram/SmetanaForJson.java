@@ -110,7 +110,7 @@ public class SmetanaForJson {
 	}
 
 	private UGraphic getUgFor(SName name) {
-		return getStyle(name).applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
+		return getStyle(name).applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
 	}
 
 	private SName getDiagramType() {
@@ -173,7 +173,8 @@ public class SmetanaForJson {
 		for (InternalNode node : nodes) {
 			node.block.drawU(getUgFor(SName.node).apply(getPosition(node.node)));
 		}
-		final HColor color = getStyle(SName.arrow).value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor color = getStyle(SName.arrow).value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
 		for (ST_Agedge_s edge : edges) {
 			final JsonCurve curve = getCurve(edge, 13);

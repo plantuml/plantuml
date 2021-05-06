@@ -55,11 +55,12 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 	private final int cornersize = 10;
 	private final SymbolContext symbolContext;
 
-	public ComponentRoseNoteHexagonal(Style style, SymbolContext symbolContext, FontConfiguration font,
-			Display strings, ISkinSimple spriteContainer, HorizontalAlignment alignment) {
-		super(style, spriteContainer.wrapWidth(), strings, font, alignment, 12, 12, 4, spriteContainer, false, null, null);
+	public ComponentRoseNoteHexagonal(Style style, SymbolContext symbolContext, FontConfiguration font, Display strings,
+			ISkinSimple spriteContainer, HorizontalAlignment alignment) {
+		super(style, spriteContainer.wrapWidth(), strings, font, alignment, 12, 12, 4, spriteContainer, false, null,
+				null);
 		if (UseStyle.useBetaStyle()) {
-			this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
+			this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 		} else {
 			this.symbolContext = symbolContext;
 		}

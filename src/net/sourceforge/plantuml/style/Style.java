@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -178,16 +179,16 @@ public class Style {
 		return new UFont(family, fontStyle, size);
 	}
 
-	public FontConfiguration getFontConfiguration(HColorSet set) {
+	public FontConfiguration getFontConfiguration(ThemeStyle themeStyle, HColorSet set) {
 		final UFont font = getUFont();
-		final HColor color = value(PName.FontColor).asColor(set);
-		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);
+		final HColor color = value(PName.FontColor).asColor(themeStyle, set);
+		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(themeStyle, set);
 		return new FontConfiguration(font, color, hyperlinkColor, true);
 	}
 
-	public SymbolContext getSymbolContext(HColorSet set) {
-		final HColor backColor = value(PName.BackGroundColor).asColor(set);
-		final HColor foreColor = value(PName.LineColor).asColor(set);
+	public SymbolContext getSymbolContext(ThemeStyle themeStyle, HColorSet set) {
+		final HColor backColor = value(PName.BackGroundColor).asColor(themeStyle, set);
+		final HColor foreColor = value(PName.LineColor).asColor(themeStyle, set);
 		final double deltaShadowing = value(PName.Shadowing).asDouble();
 		return new SymbolContext(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing);
 	}
@@ -251,7 +252,7 @@ public class Style {
 
 	private TextBlock createTextBlockInternal(Display display, HColorSet set, ISkinSimple spriteContainer,
 			HorizontalAlignment alignment) {
-		final FontConfiguration fc = getFontConfiguration(set);
+		final FontConfiguration fc = getFontConfiguration(spriteContainer.getThemeStyle(), set);
 		return display.create(fc, alignment, spriteContainer);
 	}
 
@@ -259,8 +260,8 @@ public class Style {
 		final HorizontalAlignment alignment = this.getHorizontalAlignment();
 		final TextBlock textBlock = this.createTextBlockInternal(note, set, spriteContainer, alignment);
 
-		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);
-		final HColor lineColor = this.value(PName.LineColor).asColor(set);
+		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(), set);
+		final HColor lineColor = this.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(), set);
 		final UStroke stroke = this.getStroke();
 		final int cornersize = this.value(PName.RoundCorner).asInt();
 		final ClockwiseTopRightBottomLeft margin = this.getMargin();
@@ -270,8 +271,8 @@ public class Style {
 		return TextBlockUtils.withMargin(result, margin);
 	}
 
-	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet) {
-		final HColor color = value(PName.LineColor).asColor(colorSet);
+	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet, ThemeStyle themeStyle) {
+		final HColor color = value(PName.LineColor).asColor(themeStyle, colorSet);
 		if (color == null) {
 			ug = ug.apply(new HColorNone());
 		} else {

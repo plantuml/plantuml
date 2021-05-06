@@ -64,13 +64,15 @@ public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
+					stringColor);
 		}
 		final Direction direction = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
 		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(label),

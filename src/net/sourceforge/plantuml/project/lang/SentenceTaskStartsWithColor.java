@@ -51,7 +51,7 @@ public class SentenceTaskStartsWithColor extends SentenceSimple {
 	}
 
 	@Override
-	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+	public CommandExecutionResult execute(GanttDiagram diagram, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final TaskInstant when;
 
@@ -62,10 +62,10 @@ public class SentenceTaskStartsWithColor extends SentenceSimple {
 		task.setStart(when.getInstantPrecise());
 		if (when.isTask()) {
 			final HColor color = complement22.getCenter();
-			final GanttConstraint link = new GanttConstraint(project.getIHtmlColorSet(),
-					project.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color);
-			link.applyStyle(complement22.getStyle());
-			project.addContraint(link);
+			final GanttConstraint link = new GanttConstraint(diagram.getIHtmlColorSet(),
+					diagram.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color);
+			link.applyStyle(diagram.getSkinParam().getThemeStyle(), complement22.getStyle());
+			diagram.addContraint(link);
 		}
 		return CommandExecutionResult.ok();
 

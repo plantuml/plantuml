@@ -76,7 +76,8 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 
 		AbstractMessage message1 = diagram.getActivatingMessage();
 		boolean doDeactivation = true;
@@ -92,7 +93,7 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			arrow = arrow.withColor(HColorSet.instance().getColor(color));
+			arrow = arrow.withColor(HColorSet.instance().getColor(diagram.getSkinParam().getThemeStyle(), color));
 		}
 
 		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));
