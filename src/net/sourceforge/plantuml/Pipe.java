@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.security.SFile;
 
 public class Pipe {
 
@@ -78,7 +79,9 @@ public class Pipe {
 			}
 			nb++;
 			final Defines defines = option.getDefaultDefines();
-			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, option.getConfig());
+			final SFile newCurrentDir = option.getFileDir() == null ? null : new SFile(option.getFileDir());
+			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, "UTF-8",
+					option.getConfig(), newCurrentDir);
 			if (option.isComputeurl()) {
 				for (BlockUml s : sourceStringReader.getBlocks()) {
 					ps.println(s.getEncodedUrl());
