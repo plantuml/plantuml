@@ -85,6 +85,7 @@ public class Option {
 	private boolean checkMetadata = false;
 	private int stdrpt = 0;
 	private int imageIndex = 0;
+	private String fileDir;
 
 	private File outputDir = null;
 	private File outputFile = null;
@@ -188,6 +189,12 @@ public class Option {
 					continue;
 				}
 				filename = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);
+			} else if (s.equalsIgnoreCase("-filedir")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				fileDir = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);
 			} else if (s.startsWith("-o") && s.length() > 3) {
 				s = s.substring(2);
 				outputDir = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
@@ -670,4 +677,7 @@ public class Option {
 	// this.preprocessorOutput = preprocessorOutput;
 	// }
 
+	public String getFileDir() {
+		return fileDir;
+	}
 }

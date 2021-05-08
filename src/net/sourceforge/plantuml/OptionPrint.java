@@ -153,6 +153,7 @@ public class OptionPrint {
 		System.out.println("    -pipeimageindex N\tTo generate the Nth image with pipe option");
 		System.out.println("    -stdlib\t\tTo print standard library info");
 		System.out.println("    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder");
+		System.out.println("    -filedir xxx\tTo behave as if the PlantUML source is in this dir (only affects '-pipe' and PicoWeb 'POST /render')");
 		System.out.println("    -filename \"example.puml\"\tTo override %filename% variable");
 		System.out.println("    -preproc\t\tTo output preprocessor text of diagrams");
 		System.out.println("    -cypher\t\tTo cypher texts of diagrams so that you can share them");
