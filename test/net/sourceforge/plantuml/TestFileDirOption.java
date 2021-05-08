@@ -3,15 +3,16 @@ package net.sourceforge.plantuml;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.util.Lists.newArrayList;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -48,7 +49,6 @@ public class TestFileDirOption {
 		assertThat(output).contains("included-ok");
 	}
 
-
 	@Test
 	public void test_pipe_without_filedir_cannot_find_include() throws Exception {
 
@@ -80,7 +80,9 @@ public class TestFileDirOption {
 
 	private String[] optionArray(String... extraOptions) {
 
-		return ArrayUtils.addAll(COMMON_OPTIONS, extraOptions);
+		final List<String> list = newArrayList(COMMON_OPTIONS);
+		Collections.addAll(list, extraOptions);
+		return list.toArray(new String[0]);
 	}
 
 	private String renderViaPicoWeb(String... extraOptions) throws Exception {
@@ -95,7 +97,7 @@ public class TestFileDirOption {
 
 		final String httpResponse = new String(baos.toByteArray(), UTF_8);
 
-		return StringUtils.substringAfter(httpResponse, "\n\r\n");
+		return httpResponse.substring(httpResponse.indexOf("\n\r\n") + 3);  // return just the HTTP body
 	}
 
 	private String renderViaPipe(String... extraOptions) throws Exception {
