@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
@@ -70,12 +71,9 @@ abstract class AbstractGraphviz implements Graphviz {
 	}
 
 	AbstractGraphviz(ISkinParam skinParam, String dotString, String... type) {
-		if (type == null) {
-			throw new IllegalArgumentException();
-		}
 		this.dotExe = searchDotExe();
 		this.dotString = dotString;
-		this.type = type;
+		this.type = Objects.requireNonNull(type);
 	}
 	
 	protected boolean findExecutableOnPath() {
@@ -98,9 +96,7 @@ abstract class AbstractGraphviz implements Graphviz {
 	abstract protected String getExeName();
 
 	final public ProcessState createFile3(OutputStream os) {
-		if (dotString == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(dotString);
 
 		if (getExeState() != ExeState.OK) {
 			// createPngNoGraphviz(os, new

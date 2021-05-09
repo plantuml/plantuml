@@ -41,6 +41,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -65,10 +66,7 @@ public class Snake implements UShape {
 		private final HorizontalAlignment horizontalAlignment;
 
 		Text(TextBlock textBlock, VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment) {
-			if (textBlock == null) {
-				throw new IllegalArgumentException();
-			}
-			this.textBlock = textBlock;
+			this.textBlock = Objects.requireNonNull(textBlock);
 			this.verticalAlignment = verticalAlignment;
 			this.horizontalAlignment = horizontalAlignment;
 		}
@@ -161,17 +159,11 @@ public class Snake implements UShape {
 	private Snake(UPolygon startDecoration, Rainbow color, UPolygon endDecoration, Worm worm, MergeStrategy mergeable,
 			Direction emphasizeDirection, List<Text> texts) {
 
-		if (color == null) {
-			throw new IllegalArgumentException();
-		}
-		if (color.size() == 0) {
-			throw new IllegalArgumentException();
-		}
-		if (texts == null) {
+		if (Objects.requireNonNull(color).size() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.worm = worm;
-		this.texts = texts;
+		this.texts = Objects.requireNonNull(texts);
 		this.emphasizeDirection = emphasizeDirection;
 		this.startDecoration = startDecoration;
 		this.endDecoration = endDecoration;

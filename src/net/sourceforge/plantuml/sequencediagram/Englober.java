@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
@@ -103,9 +104,7 @@ public class Englober implements WithStyle {
 
 	private Englober(ParticipantEnglober participantEnglober, Participant first, TileArguments tileArguments,
 			boolean isTeoz, StyleBuilder styleBuilder) {
-		if (tileArguments == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(tileArguments);
 		this.styleBuilder = styleBuilder;
 		this.isTeoz = isTeoz;
 		this.participantEnglober = participantEnglober;

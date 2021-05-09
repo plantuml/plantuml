@@ -39,6 +39,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -215,9 +216,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private USymbol getUSymbol(ILeaf entity) {
 		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toUSymbol()
 				: entity.getUSymbol();
-		if (result == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(result);
 		return result;
 	}
 

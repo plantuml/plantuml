@@ -224,7 +224,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		add(strings, "<u>Logo</u>: Benjamin Croizet", withTag);
 
 		add(strings, " ", withTag);
-		add(strings, "http://plantuml.com", withTag);
+		add(strings, "https://plantuml.com", withTag);
 		add(strings, " ", withTag);
 		return strings;
 	}

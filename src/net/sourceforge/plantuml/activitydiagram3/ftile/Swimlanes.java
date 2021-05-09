@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
@@ -413,10 +414,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	public void setNextLinkRenderer(LinkRendering link) {
-		if (link == null) {
-			throw new IllegalArgumentException();
-		}
-		this.nextLinkRenderer = link;
+		this.nextLinkRenderer = Objects.requireNonNull(link);
 	}
 
 	public Swimlane getCurrentSwimlane() {

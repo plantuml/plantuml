@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,10 +63,7 @@ public class BodierMap implements Bodier {
 	}
 
 	public void setLeaf(ILeaf leaf) {
-		if (leaf == null) {
-			throw new IllegalArgumentException();
-		}
-		this.leaf = leaf;
+		this.leaf = Objects.requireNonNull(leaf);
 
 	}
 

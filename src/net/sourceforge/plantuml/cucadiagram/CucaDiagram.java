@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.BackSlash;
@@ -172,9 +173,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final protected ILeaf getOrCreateLeafDefault(Ident idNewLong, Code code, LeafType type, USymbol symbol) {
 		checkNotNull(idNewLong);
-		if (type == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(type);
 		ILeaf result;
 		if (this.V1972())
 			result = entityFactory.getLeafStrict(idNewLong);
@@ -244,9 +243,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	protected final void checkNotNull(Object id) {
-		if (id == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(id);
 	}
 
 	public boolean leafExist(Code code) {
@@ -308,9 +305,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	protected final String getNamespace1972(Code fullyCode, String separator) {
 		String name = fullyCode.getName();
-		if (separator == null) {
-			throw new IllegalArgumentException(toString());
-		}
+		Objects.requireNonNull(separator);
 		do {
 			final int x = name.lastIndexOf(separator);
 			if (x == -1) {
@@ -441,10 +436,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	final protected Code getFullyQualifiedCode1972(Code code) {
-		final String separator = getNamespaceSeparator();
-		if (separator == null) {
-			throw new IllegalArgumentException();
-		}
+		final String separator = Objects.requireNonNull(getNamespaceSeparator());
 		final String full = code.getName();
 		if (full.startsWith(separator)) {
 			return buildCode(full.substring(separator.length()));
@@ -468,33 +460,21 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public final IGroup getGroup(Code code) {
 		final IGroup p = entityFactory.getGroup(code);
-		if (p == null) {
-			throw new IllegalArgumentException();
-			// return null;
-		}
-		return p;
+		return Objects.requireNonNull(p);
 	}
 
 	public final IGroup getGroupStrict(Ident ident) {
 		if (!this.V1972())
 			throw new UnsupportedOperationException();
 		final IGroup p = entityFactory.getGroupStrict(ident);
-		if (p == null) {
-			throw new IllegalArgumentException();
-			// return null;
-		}
-		return p;
+		return Objects.requireNonNull(p);
 	}
 
 	public final IGroup getGroupVerySmart(Ident ident) {
 		if (!this.V1972())
 			throw new UnsupportedOperationException();
 		final IGroup p = entityFactory.getGroupVerySmart(ident);
-		if (p == null) {
-			throw new IllegalArgumentException();
-			// return null;
-		}
-		return p;
+		return Objects.requireNonNull(p);
 	}
 
 	public final boolean isGroup(Code code) {

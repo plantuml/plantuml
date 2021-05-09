@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import java.util.Objects;
+
 public class ArrowDressing {
 
 	private final ArrowHead head;
@@ -51,11 +53,8 @@ public class ArrowDressing {
 	}
 
 	private ArrowDressing(ArrowHead head, ArrowPart part) {
-		if (head == null || part == null) {
-			throw new IllegalArgumentException();
-		}
-		this.head = head;
-		this.part = part;
+		this.head = Objects.requireNonNull(head);
+		this.part = Objects.requireNonNull(part);
 	}
 
 	public static ArrowDressing create() {
@@ -77,6 +76,5 @@ public class ArrowDressing {
 	public ArrowPart getPart() {
 		return part;
 	}
-
 
 }

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -131,9 +132,7 @@ public class Stereotype implements CharSequence {
 
 	public Stereotype(String label, double radius, UFont circledFont, boolean automaticPackageStyle,
 			HColorSet htmlColorSet) throws NoSuchColorException {
-		if (label == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(label);
 		if (label.startsWith("<<") == false || label.endsWith(">>") == false) {
 			throw new IllegalArgumentException(label);
 		}

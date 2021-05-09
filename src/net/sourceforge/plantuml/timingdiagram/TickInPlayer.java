@@ -34,15 +34,15 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.util.Objects;
+
 public class TickInPlayer {
 
 	private final Player player;
 	private final TimeTick tick;
 
 	public TickInPlayer(Player player, TimeTick tick) {
-		if (player == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(player);
 		this.player = player;
 		this.tick = tick;
 	}

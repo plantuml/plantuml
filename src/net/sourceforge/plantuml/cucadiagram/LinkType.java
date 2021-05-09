@@ -36,6 +36,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class LinkType {
@@ -106,11 +108,8 @@ public class LinkType {
 
 	private LinkType(LinkHat hat1, LinkDecor decor1, LinkStyle style, LinkMiddleDecor middleDecor, LinkDecor decor2,
 			LinkHat hat2) {
-		if (style == null) {
-			throw new IllegalArgumentException();
-		}
 		this.decor1 = decor1;
-		this.linkStyle = style;
+		this.linkStyle = Objects.requireNonNull(style);
 		this.decor2 = decor2;
 		this.middleDecor = middleDecor;
 		this.hat1 = hat1;

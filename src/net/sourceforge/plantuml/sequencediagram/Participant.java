@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -94,9 +95,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		this.hiddenPortions = hiddenPortions;
 		this.styleBuilder = styleBuilder;
 		this.order = order;
-		if (type == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(type);
 		if (code == null || code.length() == 0) {
 			throw new IllegalArgumentException();
 		}
@@ -140,9 +139,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		if (this.stereotype != null) {
 			throw new IllegalStateException();
 		}
-		if (stereotype == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(stereotype);
 		this.stereotype = stereotype;
 		this.stereotypePositionTop = stereotypePositionTop;
 

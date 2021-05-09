@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -553,9 +554,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public Task getExistingTask(String id) {
-		if (id == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(id);
 		Task result = byShortName.get(id);
 		if (result != null) {
 			return result;
@@ -574,9 +573,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public Task getOrCreateTask(String codeOrShortName, String shortName, boolean linkedToPrevious) {
-		if (codeOrShortName == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(codeOrShortName);
 		Task result = shortName == null ? null : byShortName.get(shortName);
 		if (result != null) {
 			return result;

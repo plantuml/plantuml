@@ -34,15 +34,14 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
+import java.util.Objects;
+
 public class HColorBackground extends HColorAbstract implements HColor {
 
 	private final HColor back;
 
 	public HColorBackground(HColor back) {
-		if (back == null) {
-			throw new IllegalArgumentException();
-		}
-		this.back = back;
+		this.back = Objects.requireNonNull(back);
 	}
 
 	public HColor getNull() {

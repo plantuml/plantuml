@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -356,9 +357,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public char getCircledCharacter(Stereotype stereotype) {
-		if (stereotype == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(stereotype);
 		final String value2 = getValue("spotchar" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 		if (value2 != null && value2.length() > 0) {
 			return value2.charAt(0);
@@ -761,9 +760,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter) {
-		if (skinParameter == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(skinParameter);
 		final String name = skinParameter.getUpperCaseName();
 		if (stereotype != null) {
 			checkStereotype(stereotype);

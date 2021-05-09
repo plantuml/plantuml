@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -46,13 +48,10 @@ public class ConditionalContext {
 	private final ConditionalContext parent;
 
 	public ConditionalContext(ConditionalContext parent, IEntity branch, Direction direction) {
-		if (branch == null) {
-			throw new IllegalArgumentException("branch is null");
-		}
+		this.branch = Objects.requireNonNull(branch);
 		if (branch.getLeafType() != LeafType.BRANCH) {
 			throw new IllegalArgumentException();
 		}
-		this.branch = branch;
 		this.direction = direction;
 		this.parent = parent;
 	}

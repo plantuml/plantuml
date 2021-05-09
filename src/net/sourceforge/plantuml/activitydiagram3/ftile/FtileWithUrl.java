@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -45,10 +47,7 @@ public class FtileWithUrl extends FtileDecorate {
 
 	public FtileWithUrl(Ftile ftile, Url url) {
 		super(ftile);
-		if (url == null) {
-			throw new IllegalArgumentException();
-		}
-		this.url = url;
+		this.url = Objects.requireNonNull(url);
 	}
 
 	public void drawU(UGraphic ug) {

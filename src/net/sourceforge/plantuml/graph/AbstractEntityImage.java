@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graph;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -62,10 +63,7 @@ abstract class AbstractEntityImage {
 	final private HColor rose = HColorUtils.COL_EB937F;
 
 	public AbstractEntityImage(IEntity entity) {
-		if (entity == null) {
-			throw new IllegalArgumentException("entity null");
-		}
-		this.entity = entity;
+		this.entity = Objects.requireNonNull(entity);;
 	}
 
 	public abstract Dimension2D getDimension(StringBounder stringBounder);

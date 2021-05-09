@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.salt;
 
+import java.util.Objects;
+
 public class Terminated<O> {
 
 	private final O element;
 	private final Terminator terminator;
 
 	public Terminated(O element, Terminator terminator) {
-		if (terminator == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(terminator);
 		this.element = element;
 		this.terminator = terminator;
 	}

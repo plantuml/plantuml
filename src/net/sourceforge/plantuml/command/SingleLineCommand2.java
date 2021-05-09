@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -54,10 +56,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 
 	public SingleLineCommand2(boolean doTrim, IRegex pattern) {
 		this.doTrim = doTrim;
-		if (pattern == null) {
-			throw new IllegalArgumentException();
-		}
-		this.pattern = pattern;
+		this.pattern = Objects.requireNonNull(pattern);
 	}
 
 	public boolean syntaxWithFinalBracket() {

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graph2;
 
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.geom.Orientation;
 
@@ -94,9 +95,8 @@ public class Neighborhood2 {
 	// }
 	//
 	public Point2D.Double getPointInNeighborhood(double dist, Point2D p1, Point2D p2) {
-		if (p1 == null || p2 == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(p1);
+		Objects.requireNonNull(p2);
 		if (dist <= 0) {
 			throw new IllegalArgumentException();
 		}

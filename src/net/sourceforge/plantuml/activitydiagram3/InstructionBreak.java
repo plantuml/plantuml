@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileBreak;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -46,10 +48,7 @@ public class InstructionBreak extends MonoSwimable implements Instruction {
 
 	public InstructionBreak(Swimlane swimlane, LinkRendering inlinkRendering) {
 		super(swimlane);
-		this.inlinkRendering = inlinkRendering;
-		if (inlinkRendering == null) {
-			throw new IllegalArgumentException();
-		}
+		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

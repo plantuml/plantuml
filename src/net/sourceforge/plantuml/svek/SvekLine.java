@@ -40,6 +40,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
@@ -208,9 +209,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	public SvekLine(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma) {
 
-		if (link == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(link);
 		this.skinParam = skinParam;
 		// this.umlType = link.getUmlDiagramType();
 		this.useRankSame = skinParam.useRankSame();

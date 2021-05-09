@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -57,9 +58,7 @@ public class SpriteImage implements Sprite {
 	private final UImage img;
 
 	public SpriteImage(BufferedImage img) {
-		if (img == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(img);
 		this.img = new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR));
 	}
 

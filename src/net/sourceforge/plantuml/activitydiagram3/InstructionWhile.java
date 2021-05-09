@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -83,19 +84,10 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	public InstructionWhile(Swimlane swimlane, Instruction parent, Display test, LinkRendering nextLinkRenderer,
 			Display yes, HColor color, ISkinParam skinParam) {
-		if (test == null) {
-			throw new IllegalArgumentException();
-		}
-		if (yes == null) {
-			throw new IllegalArgumentException();
-		}
 		this.parent = parent;
-		this.test = test;
-		this.nextLinkRenderer = nextLinkRenderer;
-		if (nextLinkRenderer == null) {
-			throw new IllegalArgumentException();
-		}
-		this.yes = yes;
+		this.test = Objects.requireNonNull(test);
+		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);
+		this.yes = Objects.requireNonNull(yes);
 		this.swimlane = swimlane;
 		this.color = color;
 		this.skinParam = skinParam;
@@ -136,10 +128,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	public void outDisplay(Display out) {
-		if (out == null) {
-			throw new IllegalArgumentException();
-		}
-		this.outColor = outColor.withDisplay(out);
+		this.outColor = outColor.withDisplay(Objects.requireNonNull(out));
 	}
 
 	public void outColor(Rainbow rainbow) {

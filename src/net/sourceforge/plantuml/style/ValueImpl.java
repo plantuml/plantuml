@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.style;
 
 import java.awt.Font;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -49,9 +50,7 @@ public class ValueImpl implements Value {
 	private final int priority;
 
 	public ValueImpl(String value, AutomaticCounter counter) {
-		if (value == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(value);
 		this.value = value;
 		this.priority = counter.getNextInt();
 	}

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -58,14 +60,11 @@ public class ArrowConfiguration {
 	private ArrowConfiguration(ArrowBody body, ArrowDressing dressing1, ArrowDressing dressing2,
 			ArrowDecoration decoration1, ArrowDecoration decoration2, HColor color, boolean isSelf,
 			double thickness, boolean reverseDefine) {
-		if (body == null || dressing1 == null || dressing2 == null) {
-			throw new IllegalArgumentException();
-		}
 		this.reverseDefine = reverseDefine;
 		this.thickness = thickness;
-		this.body = body;
-		this.dressing1 = dressing1;
-		this.dressing2 = dressing2;
+		this.body = Objects.requireNonNull(body);
+		this.dressing1 = Objects.requireNonNull(dressing1);
+		this.dressing2 = Objects.requireNonNull(dressing2);
 		this.decoration1 = decoration1;
 		this.decoration2 = decoration2;
 		this.color = color;

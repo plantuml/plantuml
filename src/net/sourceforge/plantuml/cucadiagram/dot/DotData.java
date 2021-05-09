@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Pragma;
@@ -84,10 +85,7 @@ final public class DotData implements PortionShower {
 			String namespaceSeparator, Pragma pragma) {
 		this.namespaceSeparator = namespaceSeparator;
 		this.pragma = pragma;
-		this.topParent = topParent;
-		if (topParent == null) {
-			throw new IllegalArgumentException();
-		}
+		this.topParent = Objects.requireNonNull(topParent);
 		this.dotMode = dotMode;
 		this.isHideEmptyDescriptionForState = isHideEmptyDescriptionForState;
 		this.colorMapper = colorMapper;

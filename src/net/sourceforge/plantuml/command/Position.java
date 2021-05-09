@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 
@@ -46,10 +48,7 @@ public enum Position {
 	}
 
 	public Position withRankdir(Rankdir rankdir) {
-		if (rankdir == null) {
-			throw new IllegalArgumentException();
-		}
-		if (rankdir == Rankdir.TOP_TO_BOTTOM) {
+		if (Objects.requireNonNull(rankdir) == Rankdir.TOP_TO_BOTTOM) {
 			// Default
 			return this;
 		}

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -73,13 +74,10 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 	public InstructionSwitch(Swimlane swimlane, Instruction parent, Display labelTest, LinkRendering inlinkRendering,
 			HColor color, ISkinParam skinParam) {
-		this.topInlinkRendering = inlinkRendering;
+		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.parent = parent;
 		this.skinParam = skinParam;
 		this.labelTest = labelTest;
-		if (inlinkRendering == null) {
-			throw new IllegalArgumentException();
-		}
 		this.swimlane = swimlane;
 	}
 

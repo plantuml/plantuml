@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Path {
 
@@ -54,11 +55,8 @@ public class Path {
 	private final Map<Point2DCharge, Integer> points2 = new HashMap<Point2DCharge, Integer>();
 
 	public Path(Frame f1, Frame f2) {
-		if (f1 == null || f2 == null) {
-			throw new IllegalArgumentException();
-		}
-		this.frame1 = f1;
-		this.frame2 = f2;
+		this.frame1 = Objects.requireNonNull(f1);
+		this.frame2 = Objects.requireNonNull(f2);
 		updateCharges();
 	}
 

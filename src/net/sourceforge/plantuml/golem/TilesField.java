@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -181,10 +182,7 @@ public class TilesField extends AbstractTextBlock implements TextBlock {
 	}
 
 	public Position getPosition(Tile tile) {
-		final Position result = positions.get(tile);
-		if (result == null) {
-			throw new IllegalArgumentException();
-		}
+		final Position result = Objects.requireNonNull(positions.get(tile));
 		return result;
 	}
 

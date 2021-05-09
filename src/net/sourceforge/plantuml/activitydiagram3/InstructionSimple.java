@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -62,18 +64,12 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle style, Url url,
 			Colors colors, Stereotype stereotype) {
 		super(swimlane);
-		if (colors == null) {
-			throw new IllegalArgumentException();
-		}
 		this.stereotype = stereotype;
 		this.url = url;
 		this.style = style;
 		this.label = label;
-		this.inlinkRendering = inlinkRendering;
-		if (inlinkRendering == null) {
-			throw new IllegalArgumentException();
-		}
-		this.colors = colors;
+		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
+		this.colors = Objects.requireNonNull(colors);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.creole.rosetta;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -56,10 +58,7 @@ public class CreoleParser2 implements SheetBuilder {
 		this.stereotype = stereotype;
 		this.creoleMode = creoleMode;
 		this.fontConfiguration = fontConfiguration;
-		this.skinParam = skinParam;
-		if (skinParam == null) {
-			throw new IllegalArgumentException();
-		}
+		this.skinParam = Objects.requireNonNull(skinParam);
 		this.horizontalAlignment = horizontalAlignment;
 	}
 

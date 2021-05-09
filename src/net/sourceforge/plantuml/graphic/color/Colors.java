@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graphic.color;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -115,10 +116,7 @@ public class Colors {
 	}
 
 	public HColor getColor(ColorType key) {
-		if (key == null) {
-			throw new IllegalArgumentException();
-		}
-		return map.get(key);
+		return map.get(Objects.requireNonNull(key));
 	}
 
 	public HColor getColor(ColorType key1, ColorType key2) {
@@ -169,11 +167,8 @@ public class Colors {
 	}
 
 	public Colors addLegacyStroke(String s) {
-		if (s == null) {
-			throw new IllegalArgumentException();
-		}
 		final Colors result = copy();
-		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(s));
+		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(Objects.requireNonNull(s)));
 		return result;
 
 	}
@@ -190,16 +185,9 @@ public class Colors {
 
 	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param)
 			throws NoSuchColorException {
-		if (stereotype == null) {
-			throw new IllegalArgumentException();
-		}
-		if (param == null) {
-			throw new IllegalArgumentException();
-		}
-		final ColorType colorType = param.getColorType();
-		if (colorType == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(stereotype);
+		Objects.requireNonNull(param);
+		final ColorType colorType = Objects.requireNonNull(param.getColorType());
 		if (getColor(colorType) != null) {
 			return this;
 		}
@@ -208,9 +196,7 @@ public class Colors {
 	}
 
 	private Colors applyFontParamStereotype(Stereotype stereotype, ISkinParam skinParam, FontParam param) {
-		if (stereotype == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(stereotype);
 		if (param == null) {
 			return this;
 		}
@@ -227,14 +213,9 @@ public class Colors {
 
 	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, FontParam fontParam,
 			ColorParam... params) throws NoSuchColorException {
-		if (stereotype == null) {
-			throw new IllegalArgumentException();
-		}
-		if (params == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(stereotype);
 		Colors result = this;
-		for (ColorParam param : params) {
+		for (ColorParam param : Objects.requireNonNull(params)) {
 			result = result.applyStereotype(stereotype, skinParam, param);
 		}
 		result = result.applyFontParamStereotype(stereotype, skinParam, fontParam);

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.dedication;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import javax.imageio.stream.ImageInputStream;
 
@@ -56,10 +57,7 @@ public class PSystemDedication extends PlainDiagram {
 	private final BufferedImage img;
 
 	public PSystemDedication(BufferedImage img) {
-		this.img = img;
-		if (img == null) {
-			throw new IllegalArgumentException();
-		}
+		this.img = Objects.requireNonNull(img);
 	}
 
 	@Override

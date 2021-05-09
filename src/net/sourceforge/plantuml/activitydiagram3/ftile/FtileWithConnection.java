@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -62,10 +63,7 @@ class FtileWithConnection extends FtileDecorate {
 	}
 
 	public FtileWithConnection(Ftile ftile, Connection connection) {
-		this(ftile, Arrays.asList(connection));
-		if (connection == null) {
-			throw new IllegalArgumentException();
-		}
+		this(ftile, Arrays.asList(Objects.requireNonNull(connection)));
 	}
 
 	public void drawU(UGraphic ug) {

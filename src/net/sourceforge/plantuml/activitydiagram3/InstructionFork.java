@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -73,14 +74,11 @@ public class InstructionFork extends WithNote implements Instruction {
 
 	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam, Swimlane swimlane) {
 		this.parent = parent;
-		this.inlinkRendering = inlinkRendering;
+		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.skinParam = skinParam;
 		this.swimlaneIn = swimlane;
 		this.swimlaneOut = swimlane;
 		this.forks.add(new InstructionList());
-		if (inlinkRendering == null) {
-			throw new IllegalArgumentException();
-		}
 	}
 
 	private InstructionList getLastList() {

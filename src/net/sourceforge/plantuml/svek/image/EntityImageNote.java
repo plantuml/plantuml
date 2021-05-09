@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
@@ -307,9 +308,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private SvekNode other;
 
 	public void setOpaleLine(SvekLine line, SvekNode node, SvekNode other) {
-		if (other == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(other);
 		this.opaleLine = line;
 		this.node = node;
 		this.other = other;

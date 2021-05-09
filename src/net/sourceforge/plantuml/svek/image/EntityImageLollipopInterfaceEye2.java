@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
@@ -81,9 +82,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 
 		final USymbol symbol = entity.getUSymbol() == null ? skinParam.componentStyle().toUSymbol()
 				: entity.getUSymbol();
-		if (symbol == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(symbol);
 
 		this.desc = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
 				entity.getDisplay(), symbol.getFontParam(), skinParam, stereotype, entity,

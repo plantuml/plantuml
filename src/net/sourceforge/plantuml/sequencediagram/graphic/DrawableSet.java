@@ -44,6 +44,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -85,12 +86,8 @@ public class DrawableSet {
 	private double topStartingY;
 
 	DrawableSet(Rose skin, ISkinParam skinParam) {
-		if (skin == null) {
-			throw new IllegalArgumentException();
-		}
-		if (skinParam == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(skin);
+		Objects.requireNonNull(skinParam);
 		this.skin = skin;
 		this.skinParam = skinParam;
 	}

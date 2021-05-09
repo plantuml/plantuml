@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.command.regex.FoxSignature;
 import net.sourceforge.plantuml.tim.TLineType;
 
@@ -69,9 +71,7 @@ final public class StringLocated {
 	}
 
 	public StringLocated(String s, LineLocation location, String preprocessorError) {
-		if (s == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(s);
 		this.s = s;
 		this.location = location;
 		this.preprocessorError = preprocessorError;

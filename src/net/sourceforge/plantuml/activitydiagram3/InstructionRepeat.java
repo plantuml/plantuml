@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -86,10 +87,7 @@ public class InstructionRepeat implements Instruction {
 		this.startLabel = startLabel;
 		this.parent = parent;
 		this.swimlane = swimlane;
-		this.nextLinkRenderer = nextLinkRenderer;
-		if (nextLinkRenderer == null) {
-			throw new IllegalArgumentException();
-		}
+		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);
 		this.colors = colors;
 	}
 
@@ -146,18 +144,9 @@ public class InstructionRepeat implements Instruction {
 	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering,
 			LinkRendering back, Swimlane swimlaneOut) {
 		this.swimlaneOut = swimlaneOut;
-		this.test = test;
-		this.yes = yes;
-		this.out = out;
-		if (test == null) {
-			throw new IllegalArgumentException();
-		}
-		if (yes == null) {
-			throw new IllegalArgumentException();
-		}
-		if (out == null) {
-			throw new IllegalArgumentException();
-		}
+		this.test = Objects.requireNonNull(test);
+		this.yes = Objects.requireNonNull(yes);
+		this.out = Objects.requireNonNull(out);
 		this.endRepeatLinkRendering = endRepeatLinkRendering;
 		if (back.isNone() == false)
 			this.incoming1 = back;

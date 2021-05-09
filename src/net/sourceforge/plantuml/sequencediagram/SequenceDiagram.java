@@ -44,6 +44,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
 
@@ -246,8 +247,8 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption)
-				.annotations(false);  // they are managed in the SequenceDiagramFileMaker* classes
+		return super.createImageBuilder(fileFormatOption).annotations(false); // they are managed in the
+																				// SequenceDiagramFileMaker* classes
 	}
 
 	@Override
@@ -450,10 +451,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void putParticipantInLast(String code) {
-		final Participant p = participantsget(code);
-		if (p == null) {
-			throw new IllegalArgumentException(code);
-		}
+		final Participant p = Objects.requireNonNull(participantsget(code), code);
 		final boolean ok = participantsList.remove(p);
 		assert ok;
 		addWithOrder(p);
@@ -538,7 +536,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		return modeTeoz()  // this is for backward compatibility
+		return modeTeoz() // this is for backward compatibility
 				? ClockwiseTopRightBottomLeft.same(5)
 				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
 	}

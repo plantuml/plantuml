@@ -44,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
@@ -141,13 +142,11 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	private EntityImpl(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
 			String namespaceSeparator, int rawLayout) {
-		checkNotNull(ident);
+		Objects.requireNonNull(ident);
 		if (entityFactory.namespaceSeparator.V1972()) {
 			code = ident;
 		}
-		if (code == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(code);
 		this.ident = ident;
 		this.entityFactory = entityFactory;
 		this.bodier = bodier;
@@ -158,8 +157,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
 			LeafType leafType, String namespaceSeparator, int rawLayout) {
-		this(ident, entityFactory, code, bodier, parentContainer, namespaceSeparator, rawLayout);
-		checkNotNull(ident);
+		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator, rawLayout);
 		// System.err.println("ID for leaf=" + code + " " + ident);
 		// ident.checkSameAs(code, namespaceSeparator);
 		this.leafType = leafType;
@@ -167,26 +165,16 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
 			GroupType groupType, Code namespace, String namespaceSeparator, int rawLayout) {
-		this(ident, entityFactory, code, bodier, parentContainer, namespaceSeparator, rawLayout);
-		checkNotNull(ident);
+		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator, rawLayout);
 		// System.err.println("ID for group=" + code + " " + ident);
 		ident.checkSameAs(code, namespaceSeparator, entityFactory.namespaceSeparator);
 		this.groupType = groupType;
 		this.namespace = namespace;
 	}
 
-	private void checkNotNull(Ident id) {
-		if (id == null) {
-			throw new IllegalArgumentException();
-		}
-	}
-
 	public void setContainer(IGroup container) {
 		checkNotGroup();
-		if (container == null) {
-			throw new IllegalArgumentException();
-		}
-		this.parentContainer = container;
+		this.parentContainer = Objects.requireNonNull(container);
 	}
 
 	public LeafType getLeafType() {
@@ -195,9 +183,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public boolean muteToType(LeafType newType, USymbol newSymbol) {
 		checkNotGroup();
-		if (newType == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(newType);
 		if (leafType != LeafType.STILL_UNKNOWN) {
 			if (newType == this.leafType) {
 				return true;
@@ -258,9 +244,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public final IGroup getParentContainer() {
 		return entityFactory.getParentContainer(ident, parentContainer);
-		// if (parentContainer == null) {
-		// throw new IllegalArgumentException();
-		// }
+		// Objects.requireNonNull(parentContainer);
 		// return parentContainer;
 	}
 
@@ -376,9 +360,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean containsLeafRecurse(ILeaf leaf) {
-		if (leaf == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(leaf);
 		if (leaf.isGroup()) {
 			throw new IllegalArgumentException();
 		}

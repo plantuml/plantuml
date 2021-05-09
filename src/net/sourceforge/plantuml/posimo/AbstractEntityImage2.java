@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.posimo;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
@@ -54,10 +55,7 @@ abstract class AbstractEntityImage2 implements IEntityImageBlock {
 	private final Rose rose = new Rose();
 
 	public AbstractEntityImage2(IEntity entity, ISkinParam skinParam) {
-		if (entity == null) {
-			throw new IllegalArgumentException("entity null");
-		}
-		this.entity = entity;
+		this.entity = Objects.requireNonNull(entity);
 		this.skinParam = skinParam;
 	}
 

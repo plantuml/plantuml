@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.tim;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
 public class TFunctionSignature {
@@ -48,9 +49,7 @@ public class TFunctionSignature {
 	}
 
 	public TFunctionSignature(String functionName, int nbArg, Set<String> namedArguments) {
-		if (functionName == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(functionName);
 		this.functionName = functionName;
 		this.nbArg = nbArg;
 		this.namedArguments = namedArguments;

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.awt.geom.AffineTransform;
 import java.io.Serializable;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 
@@ -85,9 +86,7 @@ public final class FileFormatOption implements Serializable {
 		this.tikzFontDistortion = tikzFontDistortion;
 		this.scale = scale;
 		this.preserveAspectRatio = preserveAspectRatio;
-		if (tikzFontDistortion == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(tikzFontDistortion);
 	}
 
 	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {

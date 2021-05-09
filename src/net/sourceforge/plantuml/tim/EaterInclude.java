@@ -66,6 +66,8 @@ public class EaterInclude extends Eater {
 		}
 		skipSpaces();
 		this.location = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
+//		final TValue value = eatExpression(context, memory);
+//		this.location = value.toString();
 
 	}
 

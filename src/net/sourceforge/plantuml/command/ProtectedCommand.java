@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.version.Version;
@@ -44,10 +46,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 	private final Command<S> cmd;
 
 	public ProtectedCommand(Command<S> cmd) {
-		this.cmd = cmd;
-		if (cmd == null) {
-			throw new IllegalArgumentException();
-		}
+		this.cmd = Objects.requireNonNull(cmd);
 	}
 
 	public CommandExecutionResult execute(S system, BlocLines lines) {

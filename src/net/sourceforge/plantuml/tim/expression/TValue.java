@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.tim.expression;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.json.JsonValue;
 
 public class TValue {
@@ -49,9 +51,7 @@ public class TValue {
 	}
 
 	private TValue(String stringValue) {
-		if (stringValue == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(stringValue);
 		this.intValue = 0;
 		this.jsonValue = null;
 		this.stringValue = stringValue;
@@ -125,14 +125,14 @@ public class TValue {
 		if (this.isNumber() && v2.isNumber()) {
 			return new TValue(this.intValue * v2.intValue);
 		}
-		return new TValue(toString() + v2.toString());
+		return new TValue(toString() + "*" + v2.toString());
 	}
 
 	public TValue dividedBy(TValue v2) {
 		if (this.isNumber() && v2.isNumber()) {
 			return new TValue(this.intValue / v2.intValue);
 		}
-		return new TValue(toString() + v2.toString());
+		return new TValue(toString() + "/" + v2.toString());
 	}
 
 	public boolean isNumber() {

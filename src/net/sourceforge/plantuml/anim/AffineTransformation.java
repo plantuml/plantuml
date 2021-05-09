@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.anim;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,10 +58,7 @@ public class AffineTransformation {
 	private Dimension2D dimension;
 
 	private AffineTransformation(AffineTransform affineTransform) {
-		this.affineTransform = affineTransform;
-		if (affineTransform == null) {
-			throw new IllegalArgumentException();
-		}
+		this.affineTransform = Objects.requireNonNull(affineTransform);
 	}
 
 	private AffineTransformation compose(AffineTransformation other) {

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -48,14 +50,8 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 	private final ISkinParam skinParam;
 
 	public AbstractEntityImage(IEntity entity, ISkinParam skinParam) {
-		if (entity == null) {
-			throw new IllegalArgumentException("entity null");
-		}
-		if (skinParam == null) {
-			throw new IllegalArgumentException("skinParam null");
-		}
-		this.entity = entity;
-		this.skinParam = skinParam;
+		this.entity = Objects.requireNonNull(entity);
+		this.skinParam = Objects.requireNonNull(skinParam);
 	}
 
 	public boolean isHidden() {

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 public class MinFinder {
 
@@ -52,9 +53,7 @@ public class MinFinder {
 	}
 
 	public void manage(Point2D p) {
-		if (p == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(p);
 		manage(p.getX(), p.getY());
 	}
 

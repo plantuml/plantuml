@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinSimple;
@@ -429,17 +430,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	private void setNextLinkRendererInternal(LinkRendering link) {
-		if (link == null) {
-			throw new IllegalArgumentException();
-		}
 		// System.err.println("setNextLinkRendererInternal=" + link);
-		swinlanes.setNextLinkRenderer(link);
+		swinlanes.setNextLinkRenderer(Objects.requireNonNull(link));
 	}
 
 	private void setNextLink(LinkRendering linkRenderer) {
-		if (linkRenderer == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(linkRenderer);
 		// System.err.println("setNextLink=" + linkRenderer);
 		if (current() instanceof InstructionCollection) {
 			final Instruction last = ((InstructionCollection) current()).getLast();

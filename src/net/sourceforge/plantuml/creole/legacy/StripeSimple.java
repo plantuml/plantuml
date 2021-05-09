@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.creole.legacy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.ISkinSimple;
@@ -197,10 +198,7 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void analyzeAndAdd(String line) {
-		if (line == null) {
-			throw new IllegalArgumentException();
-		}
-		if (line.contains("" + BackSlash.hiddenNewLine())) {
+		if (Objects.requireNonNull(line).contains("" + BackSlash.hiddenNewLine())) {
 			throw new IllegalArgumentException(line);
 		}
 		line = CharHidder.hide(line);

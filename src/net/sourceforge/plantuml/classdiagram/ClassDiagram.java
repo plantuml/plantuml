@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinSimple;
@@ -64,10 +65,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	}
 
 	private Code getShortName1972(Code code) {
-		final String separator = getNamespaceSeparator();
-		if (separator == null) {
-			throw new IllegalArgumentException();
-		}
+		final String separator = Objects.requireNonNull(getNamespaceSeparator());
 		final String codeString = code.getName();
 		final String namespace = getNamespace1972(code, getNamespaceSeparator());
 		if (namespace == null) {

@@ -39,6 +39,7 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
 
@@ -54,9 +55,7 @@ public class PixelImage implements MutableImage {
 	}
 
 	private PixelImage(BufferedImage bufferedImage, AffineTransformType type, double scale) {
-		if (type == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(type);
 		this.bufferedImageScale1 = bufferedImage;
 		this.scale = scale;
 		this.type = type;

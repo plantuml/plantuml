@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.graphic.SpecialText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -51,9 +52,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	public AbstractUGraphic(HColor defaultBackground, ColorMapper colorMapper, O graphic) {
 		super(defaultBackground, colorMapper);
 		this.graphic = graphic;
-		if (defaultBackground == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(defaultBackground);
 	}
 
 	protected AbstractUGraphic(AbstractUGraphic<O> other) {

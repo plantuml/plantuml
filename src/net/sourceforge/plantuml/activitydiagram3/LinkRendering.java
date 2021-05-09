@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
 
@@ -48,10 +50,7 @@ public class LinkRendering {
 	}
 
 	private LinkRendering(Rainbow rainbow, Display display) {
-		if (rainbow == null) {
-			throw new IllegalArgumentException();
-		}
-		this.rainbow = rainbow;
+		this.rainbow = Objects.requireNonNull(rainbow);
 		this.display = display;
 	}
 

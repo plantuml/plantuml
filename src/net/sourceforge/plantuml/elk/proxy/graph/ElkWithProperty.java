@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.elk.proxy.graph;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.elk.proxy.ElkObjectProxy;
 import net.sourceforge.plantuml.elk.proxy.Reflect;
@@ -11,10 +12,7 @@ public class ElkWithProperty {
 	public final Object obj;
 
 	public ElkWithProperty(Object obj) {
-		if (obj == null) {
-			throw new IllegalArgumentException();
-		}
-		this.obj = obj;
+		this.obj = Objects.requireNonNull(obj);
 	}
 
 	@Override

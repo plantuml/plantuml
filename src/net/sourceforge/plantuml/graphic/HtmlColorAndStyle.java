@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
@@ -62,10 +64,7 @@ public class HtmlColorAndStyle {
 	}
 
 	public HtmlColorAndStyle(HColor arrowColor, LinkStyle style, HColor arrowHeadColor) {
-		if (arrowColor == null) {
-			throw new IllegalArgumentException();
-		}
-		this.arrowColor = arrowColor;
+		this.arrowColor = Objects.requireNonNull(arrowColor);
 		this.arrowHeadColor = arrowHeadColor == null ? arrowColor : arrowHeadColor;
 		this.style = style;
 	}

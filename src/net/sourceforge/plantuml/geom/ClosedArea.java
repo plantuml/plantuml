@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.geom;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class ClosedArea extends AbstractFigure {
 
@@ -218,10 +219,7 @@ public class ClosedArea extends AbstractFigure {
 			final LineSegmentInt seg0 = segmentsList.get(0);
 			final LineSegmentInt seg1 = segmentsList.get(1);
 			points.clear();
-			final Point2DInt common = seg0.getCommonExtremities(seg1);
-			if (common == null) {
-				throw new IllegalArgumentException();
-			}
+			final Point2DInt common = Objects.requireNonNull(seg0.getCommonExtremities(seg1));
 			assert common.equals(seg1.getCommonExtremities(seg0));
 			points.add(seg0.getOtherExtremity(common));
 			points.add(common);

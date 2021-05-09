@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
+import java.util.Objects;
 
 public class HColorGradient extends HColorAbstract implements HColor {
 
@@ -43,17 +44,14 @@ public class HColorGradient extends HColorAbstract implements HColor {
 	private final char policy;
 
 	public HColorGradient(HColor color1, HColor color2, char policy) {
-		if (color1 == null || color2 == null) {
-			throw new IllegalArgumentException();
-		}
 		if (color1 instanceof HColorGradient) {
 			color1 = ((HColorGradient) color1).color1;
 		}
 		if (color2 instanceof HColorGradient) {
 			color2 = ((HColorGradient) color2).color2;
 		}
-		this.color1 = color1;
-		this.color2 = color2;
+		this.color1 = Objects.requireNonNull(color1);
+		this.color2 = Objects.requireNonNull(color2);
 		this.policy = policy;
 	}
 

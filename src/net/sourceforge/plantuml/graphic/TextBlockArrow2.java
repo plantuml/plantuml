@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.svek.GuideLine;
@@ -52,10 +53,7 @@ public class TextBlockArrow2 extends AbstractTextBlock implements TextBlock {
 	private final HColor color;
 
 	public TextBlockArrow2(GuideLine angle, FontConfiguration fontConfiguration) {
-		if (angle == null) {
-			throw new IllegalArgumentException();
-		}
-		this.angle = angle;
+		this.angle = Objects.requireNonNull(angle);
 		this.size = fontConfiguration.getFont().getSize2D();
 		this.color = fontConfiguration.getColor();
 

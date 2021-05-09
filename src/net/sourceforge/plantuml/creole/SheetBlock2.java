@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.creole;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -74,11 +75,8 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 
 	public SheetBlock2(SheetBlock1 block, Stencil stencil, UStroke defaultStroke) {
 		this.block = block;
-		this.stencil = stencil;
+		this.stencil = Objects.requireNonNull(stencil);
 		this.defaultStroke = defaultStroke;
-		if (stencil == null) {
-			throw new IllegalArgumentException();
-		}
 	}
 
 	@Override

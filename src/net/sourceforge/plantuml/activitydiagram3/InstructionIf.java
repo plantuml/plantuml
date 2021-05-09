@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -88,10 +89,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		this.url = url;
 		this.parent = parent;
 		this.skinParam = skinParam;
-		this.topInlinkRendering = inlinkRendering;
-		if (inlinkRendering == null) {
-			throw new IllegalArgumentException();
-		}
+		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.swimlane = swimlane;
 		this.thens.add(new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, labelTest, color,
 				LinkRendering.none()));

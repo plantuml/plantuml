@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class OutputStreamProtected implements Closeable {
 
+	public static final int MAX_OUTPUT_SIZE = 5 * 1024 * 1024;
+
 	private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	private int counter = 0;
 
@@ -29,7 +31,7 @@ public class OutputStreamProtected implements Closeable {
 	public void write(int b) throws IOException {
 		this.counter++;
 		baos.write(b);
-		if (counter > 128000) {
+		if (counter > MAX_OUTPUT_SIZE) {
 			throw new IOException("Too big");
 		}
 

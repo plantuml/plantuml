@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.awt.geom.Dimension2D;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -60,9 +61,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 	private double ymax;
 
 	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {
-		if (playingSpace == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(playingSpace);
 		this.playingSpace = playingSpace;
 	}
 

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
@@ -71,18 +72,14 @@ public class BodierLikeClassOrObject implements Bodier {
 		if (type == LeafType.MAP) {
 			throw new IllegalArgumentException();
 		}
-		if (type == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(type);
 		assert type.isLikeClass() || type == LeafType.OBJECT;
 		this.hides = hides;
 		this.type = type;
 	}
 
 	public void setLeaf(ILeaf leaf) {
-		if (leaf == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(leaf);
 		this.leaf = leaf;
 
 	}

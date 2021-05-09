@@ -45,6 +45,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -109,9 +110,7 @@ public class Defines implements Truth {
 	}
 
 	public static Defines createWithFileName(SFile file) {
-		if (file == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(file);
 		final Defines result = createEmpty();
 		result.overrideFilename(file.getName());
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
@@ -123,9 +122,7 @@ public class Defines implements Truth {
 	}
 
 	public static Defines createWithFileName(java.io.File file) {
-		if (file == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(file);
 		final Defines result = createEmpty();
 		result.overrideFilename(file.getName());
 		result.environment.put("filedate", new Date(file.lastModified()).toString());

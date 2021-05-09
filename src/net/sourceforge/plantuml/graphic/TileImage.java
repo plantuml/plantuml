@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
@@ -51,10 +52,7 @@ public class TileImage extends AbstractTextBlock implements TextBlock {
 	private final int vspace;
 
 	public TileImage(BufferedImage image, ImgValign valign, int vspace) {
-		if (image == null) {
-			throw new IllegalArgumentException();
-		}
-		this.image = image;
+		this.image = Objects.requireNonNull(image);
 		this.vspace = vspace;
 	}
 

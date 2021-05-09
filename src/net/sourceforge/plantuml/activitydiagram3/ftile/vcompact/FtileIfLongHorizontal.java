@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -143,9 +144,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, Branch branch2,
 			FontConfiguration fcArrow, LinkRendering topInlinkRendering, LinkRendering afterEndwhile,
 			FontConfiguration fcTest) {
-		if (afterEndwhile == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(afterEndwhile);
 		final List<Ftile> tiles = new ArrayList<Ftile>();
 
 		for (Branch branch : thens) {

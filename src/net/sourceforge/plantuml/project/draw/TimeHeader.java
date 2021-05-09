@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -74,9 +76,7 @@ public abstract class TimeHeader {
 	protected final Day max;
 
 	public TimeHeader(Day min, Day max, TimeScale timeScale, Style style, HColorSet colorSet, ThemeStyle themeStyle) {
-		if (style == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(style);
 		this.timeScale = timeScale;
 		this.min = min;
 		this.max = max;

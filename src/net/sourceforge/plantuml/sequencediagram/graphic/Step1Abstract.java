@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
@@ -63,9 +64,7 @@ abstract class Step1Abstract {
 
 	Step1Abstract(ParticipantRange range, StringBounder stringBounder, AbstractMessage message, DrawableSet drawingSet,
 			Frontier freeY2) {
-		if (freeY2 == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(freeY2);
 		this.range = range;
 		this.stringBounder = stringBounder;
 		this.message = message;

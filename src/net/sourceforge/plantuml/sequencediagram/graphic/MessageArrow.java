@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Url;
@@ -62,11 +63,8 @@ class MessageArrow extends Arrow {
 		if (p1 == p2) {
 			throw new IllegalArgumentException();
 		}
-		if (p1 == null || p2 == null) {
-			throw new IllegalArgumentException();
-		}
-		this.p1 = p1;
-		this.p2 = p2;
+		this.p1 = Objects.requireNonNull(p1);
+		this.p2 = Objects.requireNonNull(p2);
 		this.compAliveBox = compAliveBox;
 	}
 

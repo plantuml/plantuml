@@ -45,6 +45,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Board {
@@ -196,10 +197,7 @@ public class Board {
 	}
 
 	public void applyMove(Move move) {
-		final ANode piece = getNodeAt(move.getRow(), move.getCol());
-		if (piece == null) {
-			throw new IllegalArgumentException();
-		}
+		final ANode piece = Objects.requireNonNull(getNodeAt(move.getRow(), move.getCol()));
 		final ANode piece2 = getNodeAt(move.getRow(), move.getNewCol());
 		nodesCols.put(piece, move.getNewCol());
 		if (piece2 != null) {

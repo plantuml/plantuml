@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -59,9 +60,7 @@ public enum HorizontalAlignment {
 	}
 
 	public static HorizontalAlignment fromString(String s, HorizontalAlignment defaultValue) {
-		if (defaultValue == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(defaultValue);
 		if (s == null) {
 			return defaultValue;
 		}

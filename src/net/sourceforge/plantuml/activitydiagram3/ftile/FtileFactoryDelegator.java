@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -163,17 +164,11 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	public Ftile decorateIn(Ftile ftile, LinkRendering linkRendering) {
-		if (linkRendering == null) {
-			throw new IllegalArgumentException();
-		}
-		return factory.decorateIn(ftile, linkRendering);
+		return factory.decorateIn(ftile, Objects.requireNonNull(linkRendering));
 	}
 
 	public Ftile decorateOut(Ftile ftile, LinkRendering linkRendering) {
-		if (linkRendering == null) {
-			throw new IllegalArgumentException();
-		}
-		return factory.decorateOut(ftile, linkRendering);
+		return factory.decorateOut(ftile, Objects.requireNonNull(linkRendering));
 	}
 
 	public Ftile assembly(Ftile tile1, Ftile tile2) {

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Dictionary;
 import net.sourceforge.plantuml.salt.Terminated;
@@ -58,10 +60,7 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 
 		String name = next.getElement();
 		name = name.substring(2, name.length() - 2);
-		final Element retrieve = dictionary.get(name);
-		if (retrieve == null) {
-			throw new IllegalArgumentException("Cannot retrieve " + name);
-		}
+		final Element retrieve = Objects.requireNonNull(dictionary.get(name), name);
 
 		return new Terminated<Element>(retrieve, next.getTerminator());
 	}

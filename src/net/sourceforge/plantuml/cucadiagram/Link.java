@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinSimple;
@@ -138,16 +139,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		if (length < 1) {
 			throw new IllegalArgumentException();
 		}
-		if (cl1 == null) {
-			throw new IllegalArgumentException();
-		}
-		if (cl2 == null) {
-			throw new IllegalArgumentException();
-		}
-
 		this.styleBuilder = styleBuilder;
-		this.cl1 = cl1;
-		this.cl2 = cl2;
+		this.cl1 = Objects.requireNonNull(cl1);
+		this.cl2 = Objects.requireNonNull(cl2);
 		this.type = type;
 		if (Display.isNull(label)) {
 			this.label = Display.NULL;

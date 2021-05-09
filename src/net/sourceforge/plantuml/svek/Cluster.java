@@ -47,6 +47,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
@@ -167,9 +168,7 @@ public class Cluster implements Moveable {
 	}
 
 	public void addNode(SvekNode node) {
-		if (node == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(node);
 		this.nodes.add(node);
 		node.setCluster(this);
 	}

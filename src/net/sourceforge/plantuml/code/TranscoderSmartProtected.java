@@ -68,12 +68,7 @@ public class TranscoderSmartProtected implements Transcoder {
 		try {
 			return zlib.decode(code);
 		} catch (Exception ex) {
-			try {
-				oldOne.decode(code);
-				return textProtectedDeflate2(code);
-			} catch (Exception ex2) {
-				return textProtectedDeflate(code);
-			}
+			return textProtectedDeflate2(code);
 		}
 	}
 
@@ -123,28 +118,6 @@ public class TranscoderSmartProtected implements Transcoder {
 		appendLine(result, "http://www.plantuml.com/plantuml/png/~1" + codeshort);
 		appendLine(result, "");
 		appendLine(result, "It will work this way");
-		appendLine(result, "You may contact the PlantUML team at plantuml@gmail.com");
-		appendLine(result,
-				"But you should also probably contact the plugin authors you are currently using and send them this image");
-		appendLine(result, "");
-		appendLine(result, "For the record, here is your data:");
-		appendLine(result, "");
-		appendURL(result, code);
-		appendLine(result, "endlegend");
-		appendLine(result, "@enduml");
-
-		return result.toString();
-	}
-
-	private String textProtectedDeflate(String code) {
-		final StringBuilder result = new StringBuilder();
-		appendLine(result, "@startuml");
-		appendLine(result, "legend");
-		appendLine(result, "The plugin you are using seems to generated a bad URL.");
-		appendLine(result, "This URL does not look like DEFLATE data.");
-		appendLine(result, "");
-		appendLine(result, "See https://plantuml.com/pte");
-		appendLine(result, "");
 		appendLine(result, "You may contact the PlantUML team at plantuml@gmail.com");
 		appendLine(result,
 				"But you should also probably contact the plugin authors you are currently using and send them this image");

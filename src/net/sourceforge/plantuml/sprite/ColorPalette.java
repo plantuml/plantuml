@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sprite;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
@@ -65,9 +66,7 @@ public class ColorPalette {
 
 	private HColorSimple getHtmlColorSimpleFor(char c) {
 		final Color color = getColorFor(c);
-		if (color == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(color);
 		return new HColorSimple(color, false);
 	}
 

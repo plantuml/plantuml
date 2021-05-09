@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -311,9 +312,7 @@ public class HColorSet {
 	}
 
 	public HColor getColorOrWhite(ThemeStyle themeStyle, String s, HColor background) {
-		if (s == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(s);
 		if (isColorValid(s) == false) {
 			return HColorUtils.WHITE;
 		}
@@ -334,9 +333,7 @@ public class HColorSet {
 	}
 
 	public HColor getColor(ThemeStyle themeStyle, String s, HColor background) throws NoSuchColorException {
-		if (s == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(s);
 		if (isColorValid(s) == false) {
 			throw new NoSuchColorException();
 		}
@@ -401,9 +398,7 @@ public class HColorSet {
 			color = fromRGBa(s);
 		} else {
 			final String value = htmlNames.get(s);
-			if (value == null) {
-				throw new IllegalArgumentException(s);
-			}
+			Objects.requireNonNull(value);
 			color = new Color(Integer.parseInt(value.substring(1), 16));
 		}
 		return new HColorSimple(color, false);

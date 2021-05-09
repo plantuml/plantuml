@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.atom.AbstractAtom;
@@ -56,10 +57,7 @@ public class Fission {
 
 	public Fission(Stripe stripe, LineBreakStrategy maxWidth) {
 		this.stripe = stripe;
-		this.maxWidth = maxWidth;
-		if (maxWidth == null) {
-			throw new IllegalArgumentException();
-		}
+		this.maxWidth = Objects.requireNonNull(maxWidth);
 	}
 
 	public List<Stripe> getSplitted(StringBounder stringBounder) {

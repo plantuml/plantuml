@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.code;
 
-import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
-import net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
-import net.sourceforge.plantuml.code.deflate.Decompressor;
-
-public class CompressionZlibPure implements Compression {
+@Deprecated
+public class CompressionZlibAttic implements Compression {
 
 	private static boolean USE_ZOPFLI = false;
 	private static final int COMPRESSION_LEVEL = 9;
@@ -57,6 +57,12 @@ public class CompressionZlibPure implements Compression {
 		if (len < 1000) {
 			len = 1000;
 		}
+		byte[] result = null;
+		result = tryCompress(in, len);
+		return result;
+	}
+
+	private byte[] tryCompress(byte[] in, final int len) {
 		// Compress the bytes
 		final Deflater compresser = new Deflater(COMPRESSION_LEVEL, true);
 		compresser.setInput(in);
@@ -71,11 +77,46 @@ public class CompressionZlibPure implements Compression {
 	}
 
 	public ByteArray decompress(byte[] in) throws NoPlantumlCompressionException {
-		final ByteBitInputStream in2 = new ByteBitInputStream(new ByteArrayInputStream(in));
 		try {
-			return ByteArray.from(Decompressor.decompress(in2));
-		} catch (Exception e) {
+			final byte in2[] = new byte[in.length + 256];
+			System.arraycopy(in, 0, in2, 0, in.length);
+
+			int len = 100_000;
+			byte[] result = null;
+			result = tryDecompress(in2, len);
+			if (result == null) {
+				throw new NoPlantumlCompressionException("Too big?");
+
+			}
+
+			return ByteArray.from(result);
+		} catch (IOException e) {
+			// e.printStackTrace();
 			throw new NoPlantumlCompressionException(e);
+		}
+
+	}
+
+	private byte[] tryDecompress(byte[] in, final int len) throws IOException {
+		if (len > 200_000) {
+			throw new IOException("OutOfMemory");
+		}
+		// Decompress the bytes
+		final byte[] tmp = new byte[len];
+		final Inflater decompresser = new Inflater(true);
+		decompresser.setInput(in);
+		try {
+			final int resultLength = decompresser.inflate(tmp);
+			if (decompresser.finished() == false) {
+				return null;
+			}
+			decompresser.end();
+
+			final byte[] result = copyArray(tmp, resultLength);
+			return result;
+		} catch (DataFormatException e) {
+			// e.printStackTrace();
+			throw new IOException(e.toString());
 		}
 	}
 

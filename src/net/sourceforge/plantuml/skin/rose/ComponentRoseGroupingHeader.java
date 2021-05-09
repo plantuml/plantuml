@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
@@ -98,9 +99,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 			// final FontConfiguration smallFont2 = bigFont.forceFont(smallFont, null);
 			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, spriteContainer);
 		}
-		if (this.background == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(this.background);
 	}
 
 	// new FontConfiguration(smallFont, bigFont.getColor(),

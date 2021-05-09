@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
@@ -247,9 +248,7 @@ class DrawableSetInitializer {
 	}
 
 	public double getYposition(StringBounder stringBounder, Newpage newpage) {
-		if (newpage == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(newpage);
 		final GraphicalNewpage graphicalNewpage = (GraphicalNewpage) drawableSet.getEvent(newpage);
 		return graphicalNewpage.getStartingY();
 	}

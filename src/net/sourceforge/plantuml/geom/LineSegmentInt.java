@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.geom;
 
 import java.awt.geom.Point2D;
 import java.util.Locale;
+import java.util.Objects;
 
 public class LineSegmentInt extends AbstractLineSegment {
 
@@ -136,9 +137,7 @@ public class LineSegmentInt extends AbstractLineSegment {
 	}
 
 	public Point2DInt getOtherExtremity(Point2DInt extremity1) {
-		if (extremity1 == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(extremity1);
 		if (extremity1.equals(p1)) {
 			return p2;
 		}

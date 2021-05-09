@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -99,11 +100,8 @@ public class Rainbow {
 	}
 
 	public static Rainbow build(HtmlColorAndStyle color) {
-		if (color == null) {
-			throw new IllegalArgumentException();
-		}
 		final Rainbow result = new Rainbow(0);
-		result.colors.add(color);
+		result.colors.add(Objects.requireNonNull(color));
 		return result;
 	}
 

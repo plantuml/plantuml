@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.salt;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
@@ -61,9 +62,7 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 
 	public Element get(String name) {
 		final Element result = data.get(name);
-		if (result == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(result);
 		return new WrappedElement(result);
 	}
 

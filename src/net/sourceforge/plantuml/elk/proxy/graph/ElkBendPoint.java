@@ -1,5 +1,7 @@
 package net.sourceforge.plantuml.elk.proxy.graph;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.elk.proxy.Reflect;
 
 public class ElkBendPoint {
@@ -7,10 +9,7 @@ public class ElkBendPoint {
 	public final Object obj;
 
 	public ElkBendPoint(Object obj) {
-		if (obj == null) {
-			throw new IllegalArgumentException();
-		}
-		this.obj = obj;
+		this.obj = Objects.requireNonNull(obj);
 	}
 
 	@Override

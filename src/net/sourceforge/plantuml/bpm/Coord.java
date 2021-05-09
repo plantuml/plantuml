@@ -35,17 +35,16 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import java.util.Objects;
+
 public class Coord {
 
 	private final Line line;
 	private final Col col;
 
 	public Coord(Line line, Col row) {
-		if (line == null || row == null) {
-			throw new IllegalArgumentException();
-		}
-		this.line = line;
-		this.col = row;
+		this.line = Objects.requireNonNull(line);
+		this.col = Objects.requireNonNull(row);
 	}
 
 	public final Col getCol() {

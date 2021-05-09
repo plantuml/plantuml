@@ -44,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -222,10 +223,7 @@ public final class EntityFactory {
 
 	public ILeaf createLeaf(Ident ident, Code code, Display display, LeafType entityType, IGroup parentContainer,
 			Set<VisibilityModifier> hides, String namespaceSeparator) {
-		if (entityType == null) {
-			throw new IllegalArgumentException();
-		}
-		final Bodier bodier = entityType == LeafType.MAP ? new BodierMap() : BodyFactory.createLeaf(entityType, hides);
+		final Bodier bodier = Objects.requireNonNull(entityType) == LeafType.MAP ? new BodierMap() : BodyFactory.createLeaf(entityType, hides);
 		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, entityType,
 				namespaceSeparator, rawLayout);
 		bodier.setLeaf(result);
@@ -235,9 +233,7 @@ public final class EntityFactory {
 
 	public IGroup createGroup(Ident ident, Code code, Display display, Code namespace, GroupType groupType,
 			IGroup parentContainer, Set<VisibilityModifier> hides, String namespaceSeparator) {
-		if (groupType == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(groupType);
 		for (Entry<Ident, IGroup> ent : groups2.entrySet()) {
 			if (ent.getKey().equals(ident)) {
 				return ent.getValue();
@@ -277,10 +273,7 @@ public final class EntityFactory {
 	void removeGroup(String name) {
 		if (namespaceSeparator.V1972())
 			throw new UnsupportedOperationException();
-		final IEntity removed = groupsByCode.remove(name);
-		if (removed == null) {
-			throw new IllegalArgumentException();
-		}
+		final IEntity removed = Objects.requireNonNull(groupsByCode.remove(name));
 		final IEntity removed2 = groups2.remove(removed.getIdent());
 		if (removed != removed2) {
 			bigError();
@@ -288,10 +281,7 @@ public final class EntityFactory {
 	}
 
 	void removeGroup(Ident ident) {
-		final IEntity removed = groups2.remove(ident);
-		if (removed == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(groups2.remove(ident));
 	}
 
 	public static void bigError() {
@@ -303,10 +293,7 @@ public final class EntityFactory {
 	void removeLeaf(String name) {
 		if (namespaceSeparator.V1972())
 			throw new UnsupportedOperationException();
-		final IEntity removed = leafsByCode.remove(name);
-		if (removed == null) {
-			throw new IllegalArgumentException();
-		}
+		final IEntity removed = Objects.requireNonNull(leafsByCode.remove(name));
 		final IEntity removed2 = leafs2.remove(removed.getIdent());
 		if (removed != removed2) {
 			bigError();
@@ -519,10 +506,7 @@ public final class EntityFactory {
 			addGroup(result);
 			return result;
 		}
-		if (parentContainer == null) {
-			throw new IllegalArgumentException();
-		}
-		return parentContainer;
+		return Objects.requireNonNull(parentContainer);
 	}
 
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
@@ -139,9 +140,7 @@ public class USymbolFolder extends USymbol {
 	@Override
 	public TextBlock asSmall(final TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
-		if (name == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(name);
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

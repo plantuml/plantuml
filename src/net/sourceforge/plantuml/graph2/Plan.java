@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graph2.Dijkstra.Vertex;
@@ -69,11 +70,8 @@ public class Plan {
 	}
 
 	public void createLink(Point2D p1, Point2D p2) {
-		final Singularity2 s1 = points.get(p1);
-		final Singularity2 s2 = points.get(p2);
-		if (s1 == null || s2 == null) {
-			throw new IllegalArgumentException();
-		}
+		final Singularity2 s1 = Objects.requireNonNull(points.get(p1));
+		final Singularity2 s2 = Objects.requireNonNull(points.get(p2));
 		final Line2D.Double line = new Line2D.Double(p1, p2);
 
 		s1.addLineSegment(line);
@@ -83,10 +81,7 @@ public class Plan {
 
 	Singularity2 getSingularity(Point2D pt) {
 		final Singularity2 result = points.get(pt);
-		if (result == null) {
-			throw new IllegalArgumentException();
-		}
-		return result;
+		return Objects.requireNonNull(result);
 	}
 
 	List<Neighborhood2> getShortestPathToInternal(Point2D start, Point2D end) {

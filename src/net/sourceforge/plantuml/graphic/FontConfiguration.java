@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -175,10 +176,7 @@ public class FontConfiguration {
 	}
 
 	public FontConfiguration mute(Colors colors) {
-		if (colors == null) {
-			throw new IllegalArgumentException();
-		}
-		final HColor color = colors.getColor(ColorType.TEXT);
+		final HColor color = Objects.requireNonNull(colors).getColor(ColorType.TEXT);
 		if (color == null) {
 			return this;
 		}

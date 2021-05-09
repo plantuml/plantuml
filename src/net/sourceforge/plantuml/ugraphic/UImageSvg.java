@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,9 +47,7 @@ public class UImageSvg implements UShape {
 	private final double scale;
 
 	public UImageSvg(String svg, double scale) {
-		if (svg == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(svg);
 		this.svg = svg;
 		this.scale = scale;
 	}

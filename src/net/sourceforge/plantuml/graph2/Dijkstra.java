@@ -66,6 +66,7 @@ package net.sourceforge.plantuml.graph2;
 // http://www.edenwaith.com/products/pige/tutorials/a-star.php
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 public class Dijkstra {
@@ -81,10 +82,7 @@ public class Dijkstra {
 		}
 
 		public void addAdjacencies(Vertex target, double dist) {
-			if (target == null) {
-				throw new IllegalArgumentException();
-			}
-			adjacencies.add(new Edge(target, dist));
+			adjacencies.add(new Edge(Objects.requireNonNull(target), dist));
 		}
 
 		public String toString() {

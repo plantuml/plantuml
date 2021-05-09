@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import java.util.Objects;
+
 public class LineLocationImpl implements LineLocation {
 
 	private final String desc;
@@ -51,9 +53,7 @@ public class LineLocationImpl implements LineLocation {
 	}
 
 	private LineLocationImpl(String desc, LineLocation parent, int position) {
-		if (desc == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(desc);
 		this.parent = parent;
 		this.desc = desc;
 		this.position = position;

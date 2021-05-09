@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -469,9 +470,7 @@ public class Display implements Iterable<CharSequence> {
 	// ------
 
 	public static boolean isNull(Display display) {
-		// if (display == null) {
-		// throw new IllegalArgumentException();
-		// }
+		// Objects.requireNonNull(display);
 		return display == null || display.isNull;
 	}
 
@@ -506,9 +505,7 @@ public class Display implements Iterable<CharSequence> {
 	public TextBlock create0(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			UFont fontForStereotype, HColor htmlColorForStereotype) {
-		if (maxMessageSize == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(maxMessageSize);
 		if (getNaturalHorizontalAlignment() != null) {
 			horizontalAlignment = getNaturalHorizontalAlignment();
 		}

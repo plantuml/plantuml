@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.EnsureVisible;
@@ -186,9 +187,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	}
 
 	public void startUrl(Url url) {
-		if (url == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(url);
 		urls.add(url);
 		allUrls.add(url);
 	}

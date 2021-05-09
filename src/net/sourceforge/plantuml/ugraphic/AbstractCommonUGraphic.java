@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperTransparentWrapper;
@@ -68,9 +70,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	public UGraphic apply(UChange change) {
-		if (change == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(change);
 		final AbstractCommonUGraphic copy = copyUGraphic();
 		if (change instanceof UTranslate) {
 			copy.translate = ((UTranslate) change).scaled(scale).compose(copy.translate);

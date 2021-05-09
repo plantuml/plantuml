@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
@@ -51,10 +52,7 @@ public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
 	private final HColor color;
 
 	public TextBlockArrow(Direction arrow, FontConfiguration fontConfiguration) {
-		if (arrow == null) {
-			throw new IllegalArgumentException();
-		}
-		this.arrow = arrow;
+		this.arrow = Objects.requireNonNull(arrow);
 		// this.size = fontConfiguration.getFont().getSize2D() * 0 + 30;
 		this.size = fontConfiguration.getFont().getSize2D();
 		this.color = fontConfiguration.getColor();

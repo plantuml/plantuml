@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -50,9 +51,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	public GroupingLeaf(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, GroupingStart start, StyleBuilder styleBuilder) {
 		super(title, comment, type, backColorElement, styleBuilder);
-		if (start == null) {
-			throw new IllegalArgumentException();
-		}
+		Objects.requireNonNull(start);
 		this.backColorGeneral = backColorGeneral;
 		this.start = start;
 		start.addChildren(this);

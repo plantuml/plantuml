@@ -76,7 +76,7 @@ public class ShuntingYard {
 					if (isVariableName(name) == false) {
 						throw EaterException.unlocated("Parsing syntax error about " + name);
 					}
-					ouputQueue.add(new Token("undefined", TokenType.QUOTED_STRING, null));
+					ouputQueue.add(new Token(name, TokenType.QUOTED_STRING, null));
 				} else {
 					ouputQueue.add(variable.toToken());
 				}
