@@ -59,6 +59,7 @@ public class HelpFactory extends PSystemCommandFactory {
 		cmds.add(new CommandHelpKeyword());
 		cmds.add(new CommandHelpSkinparam());
 		cmds.add(new CommandHelpType());
+		cmds.add(new CommandHelpTheme());
 
 		return cmds;
 	}

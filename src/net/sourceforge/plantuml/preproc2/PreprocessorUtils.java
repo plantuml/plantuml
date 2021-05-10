@@ -90,17 +90,6 @@ public class PreprocessorUtils {
 		return result;
 	}
 
-	public static ReadLine getReaderTheme(StringLocated s, String filename) {
-		Log.info("Loading theme " + filename);
-		final String res = "/themes/puml-theme-" + filename + ".puml";
-		final String description = "<" + res + ">";
-		final InputStream is = Stdlib.class.getResourceAsStream(res);
-		if (is == null) {
-			return null;
-		}
-		return ReadLineReader.create(new InputStreamReader(is), description);
-	}
-
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) {
 		Log.info("Loading sdlib " + filename);
 		InputStream is = getStdlibInputStream(filename);

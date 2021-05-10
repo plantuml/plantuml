@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.theme.ThemeUtils;
 import net.sourceforge.plantuml.tim.expression.Knowledge;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.iterator.CodeIterator;
@@ -559,7 +560,7 @@ public class TContext {
 		final EaterTheme include = new EaterTheme(s.getTrimmed());
 		include.analyze(this, memory);
 		final String location = include.getLocation();
-		final ReadLine reader = PreprocessorUtils.getReaderTheme(s, location);
+		final ReadLine reader = ThemeUtils.getReaderTheme(s, location);
 		if (reader == null) {
 			throw EaterException.located("No such theme " + location);
 		}
