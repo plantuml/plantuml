@@ -2,15 +2,15 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2021, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -29,47 +29,56 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
- * 
+ * Original Author:  Matthew Leather
+ *
  *
  */
 package net.sourceforge.plantuml.help;
 
+import java.io.IOException;
+
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.theme.ThemeUtils;
 
-public class CommandHelp extends SingleLineCommand2<Help> {
+public class CommandHelpTheme extends SingleLineCommand2<Help> {
 
-	public CommandHelp() {
+	public CommandHelpTheme() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandHelp.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandHelpTheme.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("help"), //
-				RegexLeaf.end());
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("themes?"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg) {
-		diagram.add("<b>General help");
+		diagram.add("<b>Help on themes");
 		diagram.add(" ");
 		diagram.add("The code of this command is located in <i>net.sourceforge.plantuml.help</i> package.");
 		diagram.add("You may improve it on <i>https://github.com/plantuml/plantuml/tree/master/src/net/sourceforge/plantuml/help</i>");
 		diagram.add(" ");
-		diagram.add(" There are some other help command:");
-		diagram.add("* help types");
-		diagram.add("* help keywords");
-		diagram.add("* help preprocessors");
-		diagram.add("* help colors");
-		diagram.add("* help font");
-		diagram.add("* help skinparams");
-		diagram.add("* help themes");
+		diagram.add(" The possible themes are :");
+
+		try {
+			for (String theme : ThemeUtils.getAllThemeNames()) {
+				diagram.add("* " + theme);
+			}
+		} catch (IOException e) {
+			final String message = "Unexpected error listing themes: " + e.getMessage();
+			Log.error(message);
+			e.printStackTrace();
+			return CommandExecutionResult.error(message);
+		}
 
 		return CommandExecutionResult.ok();
 	}
