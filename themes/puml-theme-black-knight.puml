@@ -1,61 +1,100 @@
 ''
 '' Colors representing the black knight
+'' Looks best on a dark background
 ''
 '' Author: Brett Schwarz
-
+''
+''
 !$THEME = "black-knight"
-
+''
+'' Assume if the background is transparent, that the 
+'' background will be dark for this theme
+''
+!assume transparent dark
+''
+'' If no background color is given, then default transparent
+''
 !if %not(%variable_exists("$BGCOLOR"))
 !$BGCOLOR = "transparent"
 !endif
-
+''
+''
+'' If no gradient is given, default to 20
+''
+!if %not(%variable_exists("$GRADIENT"))
+!$GRADIENT = 20
+!endif
+''
 skinparam backgroundColor $BGCOLOR
 skinparam useBetaStyle false
-
 ''
-'' Colors taken from the _default_colors.scss file
+'' Default color palette to be used in the definitions below
 ''
 !$PRIMARY = "#303030"
-!$PRIMARY_DARK = "#262626"
-!$PRIMARY_LIGHT = "#595959"
-' !$PRIMARY_TEXT = "#0060a8"
+!$PRIMARY_DARK = %darken($PRIMARY, $GRADIENT)
+!$PRIMARY_LIGHT = %lighten($PRIMARY, $GRADIENT)
 !$PRIMARY_TEXT = "#fff200"
 !$SECONDARY = "#484848"
-!$SECONDARY_DARK = "#3a3a3a"
-!$SECONDARY_LIGHT = "#6d6d6d"
+!$SECONDARY_DARK = %darken($SECONDARY, $GRADIENT)
+!$SECONDARY_LIGHT = %lighten($SECONDARY, $GRADIENT)
 !$SECONDARY_TEXT = "#fefefe"
 !$SUCCESS = "#00FF00"
-!$SUCCESS_DARK = "#00cc00"
-!$SUCCESS_LIGHT = "#33ff33"
+!$SUCCESS_DARK = %darken($SUCCESS, $GRADIENT)
+!$SUCCESS_LIGHT = %lighten($SUCCESS, $GRADIENT)
+!$SUCCESS_TEXT = "ffffff"
 !$INFO = "#0060a8"
-!$INFO_DARK = "#004d86"
-!$INFO_LIGHT = "#3380b9"
+!$INFO_DARK = %darken($INFO, $GRADIENT)
+!$INFO_LIGHT = %lighten($INFO, $GRADIENT)
+!$INFO_TEXT = "ffffff"
 !$WARNING = "#ff8000"
-!$WARNING_DARK = "#cc6600"
-!$WARNING_LIGHT = "#ff9933"
+!$WARNING_DARK = %darken($WARNING, $GRADIENT)
+!$WARNING_LIGHT = %lighten($WARNING, $GRADIENT)
 !$WARNING_TEXT = "#222222"
 !$DANGER = "#ff0000"
-!$DANGER_DARK = "#cc0000"
-!$DANGER_LIGHT = "#ff3333"
+!$DANGER_DARK = %darken($DANGER, $GRADIENT)
+!$DANGER_LIGHT = %lighten($DANGER, $GRADIENT)
+!$DANGER_TEXT = "ffffff"
 !$LIGHT = "#fff200"
 !$DARK = "#484848"
-
+''
+'' proc to highlight text in the success color
+'' 
 !procedure $success($msg)
   <font color=$SUCCESS><b>$msg
 !endprocedure
-
+''
+'' proc to highlight text in the danger color
+'' 
 !procedure $failure($msg)
   <font color=$DANGER><b>$msg
 !endprocedure
-
+''
+'' proc to highlight text in the warning color
+'' 
 !procedure $warning($msg)
   <font color=$WARNING><b>$msg
 !endprocedure
-
+''
+'' proc to highlight text in the info color
+'' 
+!procedure $info($msg)
+  <font color=$INFO><b>$msg
+!endprocedure
+''
+'' proc to generate color scheme for primary color
+'' 
 !procedure $primary_scheme()
 	FontColor $PRIMARY_TEXT
 	BorderColor $PRIMARY_DARK
 	BackgroundColor $PRIMARY_LIGHT-$PRIMARY_DARK
+!endprocedure
+''
+'' proc to generate color scheme for secondary color
+'' 
+!procedure $secondary_scheme()
+	FontColor $SECONDARY_TEXT
+	BorderColor $SECONDARY_DARK
+	BackgroundColor $SECONDARY_LIGHT-$SECONDARY_DARK
 !endprocedure
 
 skinparam  {
@@ -92,6 +131,7 @@ skinparam stereotype {
     NBackgroundColor $INFO_LIGHT
     NBorderColor $INFO_DARK
 }
+
 skinparam title {
 	FontColor	                 $SECONDARY_TEXT
 	BorderColor	                 $SECONDARY_DARK
@@ -101,7 +141,6 @@ skinparam title {
 	BackgroundColor              $SECONDARY_LIGHT-$SECONDARY
 }
 
-
 skinparam legend {
 	BackgroundColor $PRIMARY
 	BorderColor $PRIMARY_DARK
@@ -109,7 +148,7 @@ skinparam legend {
 }
 
 !startsub swimlane
-	skinparam swimlane {
+skinparam swimlane {
 	BorderColor $INFO
 	BorderThickness 2
 	TitleBackgroundColor  $SECONDARY_LIGHT-$SECONDARY
@@ -131,7 +170,6 @@ skinparam activity {
 !endsub
 
 !startsub participant
-
 skinparam participant {
 	$primary_scheme()
 	ParticipantBorderThickness 2
@@ -139,14 +177,12 @@ skinparam participant {
 !endsub
 
 !startsub actor
-
 skinparam actor {
 	$primary_scheme()
 }
 !endsub
 
 !startsub arrow
-
 skinparam arrow {
 	Thickness 3
 	Color $PRIMARY
@@ -154,9 +190,7 @@ skinparam arrow {
 }
 !endsub
 
-
 !startsub sequence
-
 skinparam sequence {
 	BorderColor $PRIMARY
 	' For some reason sequence title font color does not pick up from global
@@ -177,6 +211,7 @@ skinparam sequence {
 	GroupFontColor $DARK
 	GroupHeaderFontColor $INFO
 	GroupBackgroundColor $SECONDARY
+	GroupBodyBackgroundColor $BGCOLOR
 	GroupHeaderBackgroundColor $BGCOLOR
 	''
 	DividerBackgroundColor $DARK
@@ -192,7 +227,6 @@ skinparam sequence {
 !endsub
 
 !startsub partition
-
 skinparam partition {
 	BorderColor $PRIMARY
 	FontColor $PRIMARY_LIGHT
@@ -201,35 +235,30 @@ skinparam partition {
 !endsub
 
 !startsub collections
-
 skinparam collections {
 	$primary_scheme()
 }
 !endsub
 
 !startsub control
-
 skinparam control {
 	$primary_scheme()
 }
 !endsub
 
 !startsub entity
-
 skinparam entity {
 	$primary_scheme()
 }
 !endsub
 
 !startsub boundary
-
 skinparam boundary {
 	$primary_scheme()
 }
 !endsub
 
 !startsub agent
-
 skinparam agent {
 	BackgroundColor $WARNING
 	BorderColor $WARNING_LIGHT
@@ -238,33 +267,29 @@ skinparam agent {
 !endsub
 
 !startsub note
-
 skinparam note {
 	BorderThickness 1
 	BackgroundColor $INFO
 	BorderColor $INFO_DARK
-	FontColor $WHITE
+	FontColor $INFO_TEXT
 }
 !endsub
 
 !startsub artifact
-
 skinparam artifact {
-	BackgroundColor $DARK
-	BorderColor $DARK_DARK
+	BackgroundColor $SECONDARY_LIGHT-$SECONDARY_DARK
+	BorderColor $LIGHT
 	FontColor $LIGHT
 }
 !endsub
 
 !startsub component
-
 skinparam component {
 	$primary_scheme()
 }
 !endsub
 
 !startsub interface
-
 skinparam interface {
 	BackgroundColor  $DANGER_DARK
 	BorderColor  $DANGER
@@ -273,16 +298,14 @@ skinparam interface {
 !endsub
 
 !startsub storage
-
 skinparam storage {
-	BackgroundColor $WARNING
+	BackgroundColor $WARNING_LIGHT-$WARNING_DARK
   	BorderColor $WARNING_DARK
 	FontColor $WARNING_TEXT
 }
 !endsub
 
 !startsub node
-
 skinparam node {
 	BackgroundColor $BGCOLOR
 	BorderColor $PRIMARY_LIGHT
@@ -291,16 +314,14 @@ skinparam node {
 !endsub
 
 !startsub cloud
-
 skinparam cloud {
-	BackgroundColor $DARK-black
-	BorderColor $DARK
+	BackgroundColor transparent
+	BorderColor $PRIMARY_LIGHT
 	FontColor $LIGHT
 }
 !endsub
 
 !startsub database
-
 skinparam database {
 	$primary_scheme()
 	BackgroundColor  $BGCOLOR
@@ -308,10 +329,9 @@ skinparam database {
 !endsub
 
 !startsub class
-
 skinparam class {
 	$primary_scheme()
-	HeaderBackgroundColor $PRIMARY_LIGHT
+	HeaderBackgroundColor $SECONDARY_DARK-$SECONDARY
 	StereotypeFontColor $DARK
 	BorderThickness 1
 	AttributeFontColor $LIGHT
@@ -320,7 +340,6 @@ skinparam class {
 !endsub
 
 !startsub object
-
 skinparam object {
 	$primary_scheme()
 	StereotypeFontColor $DARK
@@ -331,7 +350,6 @@ skinparam object {
 !endsub
 
 !startsub usecase
-
 skinparam usecase {
 	$primary_scheme()
 	BorderThickness 2
@@ -340,7 +358,6 @@ skinparam usecase {
 !endsub
 
 !startsub rectangle
-
 skinparam rectangle {
 	$primary_scheme()
 	BackgroundColor $BGCOLOR
@@ -350,7 +367,6 @@ skinparam rectangle {
 !endsub
 
 !startsub package
-
 skinparam package {
 	$primary_scheme()
 	BackgroundColor $BGCOLOR
@@ -359,7 +375,6 @@ skinparam package {
 !endsub
 
 !startsub folder
-
 skinparam folder {
 	BackgroundColor $SECONDARY_LIGHT
   	BorderColor $WARNING
@@ -369,7 +384,6 @@ skinparam folder {
 !endsub
 
 !startsub frame
-
 skinparam frame {
 	BackgroundColor $SECONDARY_LIGHT
   	BorderColor $INFO
@@ -379,7 +393,6 @@ skinparam frame {
 !endsub
 
 !startsub state
-
 skinparam state {
 	$primary_scheme()
 	StartColor $INFO
@@ -390,39 +403,35 @@ skinparam state {
 !endsub
 
 !startsub queue
-
 skinparam queue {
 	$primary_scheme()
 }
 !endsub
 
 !startsub card
-
 skinparam card {
-	BackgroundColor $INFO
+	BackgroundColor $INFO_LIGHT-$INFO_DARK
 	BorderColor $INFO_DARK
 	FontColor $INFO_TEXT
 }
 !endsub
 
 !startsub file
-
 skinparam file {
-	BackgroundColor $SECONDARY_LIGHT-$SECONDARY
+	BackgroundColor $SECONDARY_LIGHT-$SECONDARY_DARK
 	BorderColor $INFO
 	FontColor $SECONDARY_TEXT
 }
 !endsub
 
 !startsub stack
-
 skinparam stack {
 	$primary_scheme()
 }
 !endsub
 
 !if %variable_exists("NEWSTYLE")
-<style>
+<>
 wbsDiagram {
     LineColor $PRIMARY
     BorderThickness 3
@@ -449,5 +458,5 @@ wbsDiagram {
     }
 
 }
-</style>
+</>
 !endif
